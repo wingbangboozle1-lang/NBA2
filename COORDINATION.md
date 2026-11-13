@@ -125,3 +125,4 @@ Reason: PR #3 (arena-23927d63) was merged into `main` (59a01c1) before its audit
 **Irregularities still open (not blocking merge):** FR-01 to FR-13 in `data/verified/flagged.json`, published at `verified/flagged-review.html`. The stale 2024-25 injury URL, the NBA Stats FAQ download prohibition, and the PDF extraction gaps are all in that list.
 
 **Overlap log:** arena-23927d63 and arena-36543e84 both claimed the landing page and flagged page, and this pass edited them. Both are merged and closed, so no live conflict remains. Future sessions should check the claim table first.
+- COORDINATION.md (arena-71f94203, push of rebased claim): the branch's first push (5190952) predated the rebase onto main@7fa2a24, so the rebased history was rejected as non-fast-forward. Resolved with a merge that keeps main's full board (every other session's entry) and this session's sections. No content from either side was dropped.
