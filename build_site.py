@@ -13,7 +13,10 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "nba2", "data")
-SITE = os.path.join(HERE, "site")
+# GitHub Pages for this repo is configured to deploy from the `main` branch root
+# (branch-based, path "/"). So the static site is written directly to the repo
+# root, with shared assets under <root>/assets/.
+SITE = HERE
 ASSETS = os.path.join(SITE, "assets")
 
 
@@ -686,7 +689,7 @@ def main():
     write("questions.html", build_questions())
     write("flagged.html", build_flagged(flagged))
 
-    print("Site built: 9 pages written to site/")
+    print("Site built: 9 pages written to the repo root (GitHub Pages: main branch, path /)")
 
 
 if __name__ == "__main__":
