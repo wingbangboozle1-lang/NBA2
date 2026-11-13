@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "name": "NBA2 strategy catalog",
+    "version": "1.0.0",
+    "updated": "2026-11-13",
+    "notes": "Single source of truth for strategies. status: research (idea, no picks), candidate (paper trade; demo-mode output only), active (may generate picks).  Gates reference docs/validation-gates.html G1-G10. No strategy produces real picks until every gate passes on out-of-sample data."
+  },
+  "strategies": [
+    {
+      "id": "S01",
+      "name": "Power-rating spread gap (single bet)",
+      "bet_type": "single \u2014 game spread",
+      "signal": "Our nightly power-rating line vs. our originated fair line differ by >= 2.0 pts; originate first, then compare to market only for sizing/CLV tracking.",
+      "edge_mechanism": "Model vs. market mispricing; per Dare/Dennis/Paul (2015) opening lines carry biases in specific spots, and biases vanish by close \u2014 the edge must be captured before the market moves.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227"
+      ]
+    },
+    {
+      "id": "S02",
+      "name": "Schedule-spot spread/total (single bet)",
+      "bet_type": "single \u2014 spread or total",
+      "signal": "Back-to-back (road B2B strongest), 3-in-4, altitude/travel legs, and first-game-off-rest spots; adjust minutes projections per docs/injuries-rotations.html before originating.",
+      "edge_mechanism": "Fatigue/rest effects on pace and defense; NBA schedule structure makes these spots systematic.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.nba.com/news/2026-27-nba-regular-season-schedule"
+      ]
+    },
+    {
+      "id": "S03",
+      "name": "Injury-report reprice (single bet)",
+      "bet_type": "single \u2014 spread, total, or moneyline",
+      "signal": "Act in the window after the official injury report drop (5 p.m. local day before; game-day updates 11 a.m.-1 p.m. local) when our injury-adjusted line differs from our pre-report originated line by >= 1.5 pts.",
+      "edge_mechanism": "Opening lines have documented errors when players are absent; the market corrects by close. Value lives between report release and market convergence.",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "candidate",
+      "sources": [
+        "https://official.nba.com/nba-injury-report-2026-27-season/",
+        "https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227"
+      ]
+    },
+    {
+      "id": "S04",
+      "name": "Big home underdog value (single bet)",
+      "bet_type": "single \u2014 moneyline/spread, home underdog >= +10",
+      "signal": "Historically documented anomaly (Paul & Weinbach; Compton & Sigler 2013 found home underdogs of 10+ profitable 2000-01 to 2007-08).",
+      "edge_mechanism": "Uninformed bettors over-bet favorites; books shade toward the favorite.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "research",
+      "sources": [
+        "https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/"
+      ]
+    },
+    {
+      "id": "S05",
+      "name": "High-total over fade (single bet \u2014 total)",
+      "bet_type": "single \u2014 total (over 210 zone)",
+      "signal": "Literature reports overs over-bet at the highest totals (fair bet rejected for some totals ranges in Compton & Sigler).",
+      "edge_mechanism": "Behavioral bias toward overs in high-scoring expected environments.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "research",
+      "sources": [
+        "https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/"
+      ]
+    },
+    {
+      "id": "S06",
+      "name": "Minutes-driven player props",
+      "bet_type": "single \u2014 player props (PRA: points+rebounds+assists)",
+      "signal": "Projected rotation minutes (from depth chart + injury redistribution, docs/injuries-rotations.html) x per-minute production rates vs. posted prop lines.",
+      "edge_mechanism": "Prop lines are sensitive to minutes; systematic minutes mispricing around injuries, B2Bs, and blowouts.",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "candidate",
+      "sources": [
+        "https://official.nba.com/nba-injury-report-2026-27-season/"
+      ]
+    },
+    {
+      "id": "S07",
+      "name": "Star-absence usage redistribution props",
+      "bet_type": "single \u2014 player props",
+      "signal": "When a high-usage player is Out, redistribute usage to next-man-up; project teammate props above baseline.",
+      "edge_mechanism": "Usage is roughly conserved within a lineup; books under-adjust secondary players' props at open.",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227"
+      ]
+    },
+    {
+      "id": "S08",
+      "name": "Repriced same-game combo (2 legs)",
+      "bet_type": "player-prop combo / SGP \u2014 2 legs, same game",
+      "signal": "Only combos we reprice ourselves: joint fair probability = P1*P2 + Cov(leg1, leg2), with Cov estimated from historical co-occurrence. Bet only when our joint probability exceeds the offered implied joint probability by >= 2 percentage points.",
+      "edge_mechanism": "Books adjust SGP pricing for correlation (documented in house rules); our repricing must beat their adjustment, not ignore it.",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G11_corr_matrix_required",
+        "G12_sgp_reprice"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.fanduel.com/fanduel-sportsbook-house-rules-pa",
+        "https://www.goldennugget.com/globalassets/lake-charles/_pdfs/draftkings-gnlc-retail-house-rules.pdf"
+      ]
+    },
+    {
+      "id": "S09",
+      "name": "Gated multi-game parlay",
+      "bet_type": "parlay \u2014 2-3 legs, different games",
+      "signal": "Every leg must individually pass all gates as a single bet; parlay EV must exceed straight-bet EV of the best leg after applying the correlation haircut from the matrix (different-game legs are near-independent, but shared-game-date/spread-market overlap is haircut).",
+      "edge_mechanism": "Parlay compounding of small edges; math documented on docs/correlation.html.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G11_corr_matrix_required",
+        "G13_parlay_haircut"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.saracenresort.com/wp-content/uploads/2026/08/2026-BetSaracen-SportsBook-House-Rules-August.pdf"
+      ]
+    },
+    {
+      "id": "S10",
+      "name": "Rest-spot under (single bet \u2014 total)",
+      "bet_type": "single \u2014 total (under)",
+      "signal": "Under in PPP-constrained rest spots and pre-break games, when our rotation projections show reduced starter minutes but no single star absence (books price star absence, not diffuse rotation reduction).",
+      "edge_mechanism": "Diffuse load-management minutes reduction lowers pace and efficiency; market focuses on named stars.",
+      "gates": [
+        "G1_sample_n500",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G9_regime_check"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023"
+      ]
+    },
+    {
+      "id": "S11",
+      "name": "Clutch-time environment props",
+      "bet_type": "player-prop combo / SGP",
+      "signal": "Late-game free-throw-heavy environments raise player-stat variance; use L2M officiating data to model end-game foul rates for overtime/last-3-min scenarios.",
+      "edge_mechanism": "Intentional fouling in final 2 minutes changes scoring distribution shape; L2M reports are official data.",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G7_significance_tstat2",
+        "G11_corr_matrix_required"
+      ],
+      "status": "research",
+      "sources": [
+        "https://official.nba.com/nba-last-two-minute-reports-frequently-asked-questions/"
+      ]
+    },
+    {
+      "id": "S12",
+      "name": "Cup-night motivation spots",
+      "bet_type": "single \u2014 spread",
+      "signal": "Emirates NBA Cup group/knockout games carry separate incentives (prize pool, advancement) that change rotation usage vs. ordinary regular-season games.",
+      "edge_mechanism": "Motivation asymmetries between teams still alive vs. eliminated in Cup play.",
+      "gates": [
+        "G1_sample_n200",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G9_regime_check"
+      ],
+      "status": "research",
+      "sources": [
+        "https://www.nba.com/news/2026-27-nba-regular-season-schedule"
+      ]
+    }
+  ],
+  "global_rules": {
+    "no_market_anchor": "Originate every line from the model BEFORE viewing any market number. Market lines are recorded only after origination, for CLV measurement.",
+    "no_pick_without_gates": "The generator may not emit a pick for any strategy whose gates have not all passed on out-of-sample data. Until backtests exist, every strategy is research/candidate and produces zero real picks.",
+    "demo_mode": "Demo mode uses synthetic data with player placeholders; output is marked demo:true and is never displayed as live picks.",
+    "staking": "Quarter-Kelly, capped at 2% of bankroll per single bet and 1% per parlay/SGP leg-combination.",
+    "portfolio_caps": "Max 8 singles + 2 parlays + 2 SGPs per slate; total exposure cap 12% of bankroll; pairwise |correlation| of portfolio positions <= 0.35."
+  }
+}

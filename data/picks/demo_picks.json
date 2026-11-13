@@ -1,0 +1,139 @@
+{
+  "generated_utc_note": "slate window 2026-11-13 .. 2026-11-16 (max 3 days ahead)",
+  "mode": "DEMO \u2014 synthetic data, not real picks",
+  "data_feed_status": "NOT CONNECTED \u2014 schedule/injuries/odds feeds must be wired before real picks are possible (see docs/picks.html)",
+  "active_strategies": [],
+  "real_picks_possible": false,
+  "picks": [
+    {
+      "demo": true,
+      "game_id": "DEMO-G1",
+      "market": "SPREAD",
+      "side": "HOME",
+      "our_line": "-3.5",
+      "our_odds_american": "-110",
+      "fair_prob": 0.54,
+      "breakeven_prob": 0.5238,
+      "edge": 0.0162,
+      "full_kelly": 0.034,
+      "stake_fraction_bankroll": 0.0085,
+      "strategy_id": "S03",
+      "strategy_status": "candidate",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "gate_result": "DEMO \u2014 gates not backtested; pick is illustrative only",
+      "market_line_context": "blank \u2014 no odds feed connected",
+      "line_status": "originated - no market feed connected"
+    },
+    {
+      "demo": true,
+      "game_id": "DEMO-G2",
+      "market": "PLAYER_PROP",
+      "side": "Demo Player 1 (G) PRA",
+      "our_line": "27.5",
+      "our_odds_american": "-110",
+      "fair_prob": 0.545,
+      "breakeven_prob": 0.5238,
+      "edge": 0.0212,
+      "full_kelly": 0.0445,
+      "stake_fraction_bankroll": 0.0111,
+      "strategy_id": "S06",
+      "strategy_status": "candidate",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "gate_result": "DEMO \u2014 gates not backtested; pick is illustrative only",
+      "market_line_context": "blank \u2014 no odds feed connected",
+      "line_status": "originated - no market feed connected"
+    },
+    {
+      "demo": true,
+      "game_id": "DEMO-G3",
+      "market": "PLAYER_PROP",
+      "side": "Demo Player 2 (F) Points",
+      "our_line": "18.5",
+      "our_odds_american": "-110",
+      "fair_prob": 0.542,
+      "breakeven_prob": 0.5238,
+      "edge": 0.0182,
+      "full_kelly": 0.0382,
+      "stake_fraction_bankroll": 0.0096,
+      "strategy_id": "S06",
+      "strategy_status": "candidate",
+      "gates": [
+        "G1_sample_n300",
+        "G2_roi_positive",
+        "G3_clv_positive",
+        "G4_calibration_brier",
+        "G5_walk_forward",
+        "G6_drawdown_limit",
+        "G7_significance_tstat2",
+        "G8_no_cherry_pick",
+        "G9_regime_check",
+        "G10_portfolio_cap"
+      ],
+      "gate_result": "DEMO \u2014 gates not backtested; pick is illustrative only",
+      "market_line_context": "blank \u2014 no odds feed connected",
+      "line_status": "originated - no market feed connected"
+    }
+  ],
+  "context_lines_not_picks": [
+    {
+      "game_id": "DEMO-G1",
+      "market": "TOTAL",
+      "side": "",
+      "strategy_id": "-",
+      "reason": "no strategy attached; game lines are context only, not picks"
+    },
+    {
+      "game_id": "DEMO-G2",
+      "market": "SPREAD",
+      "side": "AWAY",
+      "strategy_id": "-",
+      "reason": "no strategy attached; game lines are context only, not picks"
+    },
+    {
+      "game_id": "DEMO-G3",
+      "market": "TOTAL",
+      "side": "",
+      "strategy_id": "-",
+      "reason": "no strategy attached; game lines are context only, not picks"
+    },
+    {
+      "game_id": "DEMO-G4",
+      "market": "SPREAD",
+      "side": "HOME",
+      "strategy_id": "-",
+      "reason": "no strategy attached; game lines are context only, not picks"
+    },
+    {
+      "game_id": "DEMO-G5",
+      "market": "TOTAL",
+      "side": "",
+      "strategy_id": "-",
+      "reason": "no strategy attached; game lines are context only, not picks"
+    }
+  ],
+  "staking_policy": "Quarter-Kelly, capped at 2% of bankroll per single bet and 1% per parlay/SGP leg-combination.",
+  "portfolio_caps": "Max 8 singles + 2 parlays + 2 SGPs per slate; total exposure cap 12% of bankroll; pairwise |correlation| of portfolio positions <= 0.35.",
+  "no_market_anchor_rule": "Originate every line from the model BEFORE viewing any market number. Market lines are recorded only after origination, for CLV measurement."
+}

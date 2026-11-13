@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Questions — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav><div class="wrap"><div class="brand">NBA<span>2</span></div><a href="index.html" class="">Dashboard</a><a href="picks.html" class="">Picks & Lines</a><a href="strategies.html" class="">Strategies</a><a href="injuries.html" class="">Injuries & Flow</a><a href="correlations.html" class="">Correlations</a><a href="executive-summary.html" class="">Executive Summary</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="active">Open Questions</a><a href="flagged.html" class="">Flagged for Review</a></div></nav>
+<div class="wrap">
+<header class="page"><h1>Open Questions</h1><p>The questions, information, and answers needed before decisions, plus how to discover missing info.</p></header>
+
+<section class="panel">
+<h2>Questions, information &amp; answers to address before decisions</h2>
+<p class="sub">A clear list of what must be resolved before a decision can reasonably be made — what
+we already have, what we do not have, and a suggestion to discover the missing information.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Question</th><th>What we already have</th><th>What we still need</th><th>Suggestion to discover</th><th>Status</th><th>Reference</th></tr></thead><tbody><tr><td>What verified team-level inputs should anchor the model?</td><td>Win-loss records for all 30 teams (verified to NBA.com).</td><td>Verified PPG/OPPG/pace for all teams to replace the unverified total baseline.</td><td>Pull NBA.com/stats team traditional stats for all 30 teams and verify line by line.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>How should injury impact be quantified?</td><td>Official per-game injury statuses (Out/Doubtful/Questionable/Probable/Available), verified to the NBA.com injury report.</td><td>Player-level importance (usage, box-score share) to weight each absence&#x27;s rotation/production impact.</td><td>Pull player usage &amp; box-score data from NBA.com/stats; build a weighted impact model.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>How do we prove a strategy is skill, not luck?</td><td>A transparent skill basis and a validation-gate framework for every strategy.</td><td>Tracked results over a minimum sample plus a binomial test vs .500 and ROI convergence.</td><td>Build the results tracker, then run statistical tests on accumulated hit rates.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>What correlations must be computed?</td><td>A documented methodology (Pearson r) and the parlay correlation gate (distinct-game legs).</td><td>Concrete historical correlation values between factors (win%, pace, efficiency, etc.).</td><td>Accumulate a historical dataset via the results tracker, then compute correlations over it.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Where do player-prop lines come from?</td><td>A defined Player Prop Combo strategy (S5) and the requirement to use verified sources only.</td><td>Verified player-level production projections for each prop market.</td><td>Source player stats/projections from NBA.com/stats; leave props blank until then.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>How far ahead can picks be generated?</td><td>The 3-day slate window (Nov 13–15) is fully covered with originated lines.</td><td>Confirm whether 3 days is the hard limit or whether longer horizons are needed.</td><td>Confirm scope with the reviewer; the pipeline already supports any slate window from the schedule.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>What defines a passing validation gate?</td><td>Five gates defined: data integrity, edge, correlation, sample size, luck/skill.</td><td>Exact thresholds (e.g., minimum win-prob, strong-margin, sample size) and whether they are acceptable.</td><td>Review the threshold constants in nba2/model.py and nba2/strategies.py; tune with the reviewer.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Which sportsbook/odds source (if any) is trusted?</td><td>None currently — the system originates its own lines and never infers odds.</td><td>A verified, trusted odds source if market-comparison is desired.</td><td>Confirm whether a trusted odds source is available; if not, keep market comparison unflagged/off.</td><td><span class="pill warn">Open</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Decision rule</h2>
+<div class="note"><p>No decision is made until the corresponding "what we still need" item is verified
+from an official source. Where information is missing, the suggestion column states how to discover it
+— never fill gaps by inference.</p></div>
+</section>
+</div>
+<footer>NBA2 — originated lines, signals &amp; picks. Factual data verified to NBA.com. Model outputs are labeled <em>Model</em> and are not official. Unverified values are left blank and flagged.</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

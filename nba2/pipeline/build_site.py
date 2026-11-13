@@ -46,6 +46,7 @@ NAV = [
     ("pages/repo-review.html", "Repo Review"),
     ("pages/questions.html", "Open Questions"),
     ("pages/suggestions.html", "Suggestions Queue"),
+    ("pages/reconciliation.html", "Cross-session Reconciliation"),
     ("pages/flagged-review.html", "Flagged for Review"),
     ("pages/sources.html", "Sources & Verification"),
 ]
@@ -69,6 +70,8 @@ INTROS = {
     "pages/methodology.html": "<p>How a line gets made here, which parameters are fitted, and which are still someone's opinion.</p>",
     "pages/requirements.html": "<p>The full requirements list from the brief, with a status you can argue with.</p>",
     "pages/repo-review.html": "<p>Line-by-line review of the repository, including work already merged by other sessions.</p>",
+    "pages/reconciliation.html": "<p>Same official documents, two sessions, two answers. Every disagreement "
+                                 "is listed rather than averaged.</p>",
     "pages/questions.html": "<p>What must be known before a reasonable decision can be made — and how to go find out.</p>",
     "pages/suggestions.html": "<p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p>",
     "pages/flagged-review.html": "<p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p>",
@@ -250,7 +253,8 @@ def _pages() -> dict[str, list[str]]:
                           "anchor": "summary-flags"}, L),
         ],
         "pages/picks.html": [render_table(sec("picks"), L)],
-        "pages/lines.html": [render_table(sec("lines"), L), render_table(sec("slate"), L)],
+        "pages/lines.html": [render_table(sec("lines"), L), render_table(sec("slate"), L),
+                             render_table(sec("corroboration"), L)],
         "pages/strategies.html": [render_table(sec("leaderboard"), L), render_table(sec("gates"), L),
                                   render_table(sec("gate_matrix"), L)],
         "pages/parlays.html": [render_table(sec("correlation"), L), render_table(sec("parlays"), L)],
@@ -264,6 +268,8 @@ def _pages() -> dict[str, list[str]]:
         "pages/repo-review.html": [render_table(sec("repo_review"), L)],
         "pages/questions.html": [render_table(sec("questions"), L)],
         "pages/suggestions.html": [render_table(sec("suggestions"), L)],
+        "pages/reconciliation.html": [render_table(sec("surfaces"), L), render_table(sec("xrecords"), L),
+                                        render_table(sec("xlines"), L), render_table(sec("xinjuries"), L)],
         "pages/flagged-review.html": [render_table(sec("flags"), L)],
         "pages/sources.html": [render_table(sec("sources"), L)],
     }

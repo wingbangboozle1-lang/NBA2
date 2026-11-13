@@ -125,6 +125,10 @@ def lint_html(data: dict, root: Path) -> list[str]:
     for p in html_pages:
         text = p.read_text(encoding="utf-8")
         rel = p.relative_to(root).as_posix()
+        if rel.startswith("archive/"):
+            # Frozen copies of superseded pages. They are kept byte-for-byte for audit, so their
+            # internal links point into the tree as it was; rewriting them would falsify the copy.
+            continue
         # internal links
         for href in re.findall(r'href="([^"]+)"', text):
             if href.startswith(("http", "mailto:", "#")):

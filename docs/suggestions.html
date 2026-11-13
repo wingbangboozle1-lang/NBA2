@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Suggestions</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-suggestions">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Suggestions — review before anything changes</h1>
+  <p class="lede">A dedicated review section: every proposed improvement to the system or this site is listed
+  here with benefit, cost, and risk. <strong>Nothing is implemented until you pick a path.</strong> Set a
+  proposal's status to Approved / Rejected / Needs-info; unreviewed proposals stay Proposed and dormant.</p>
+
+  <h2 id="workflow">Review workflow</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>State</th><th>Meaning</th><th>Who acts</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td><span class="badge b-info">PROPOSED</span></td><td>Dormant. Documented here; no work started. (<a href="#workflow">workflow</a>)</td><td>Nobody — waiting for review</td></tr>
+      <tr data-row data-row-type="internal"><td><span class="badge b-warn">NEEDS-INFO</span></td><td>Reviewable but depends on an unanswered question in <a href="questions.html#unanswered">Section B</a>.</td><td>Owner supplies the missing answer</td></tr>
+      <tr data-row data-row-type="internal"><td><span class="badge b-ok">APPROVED</span></td><td>Path chosen; implementation may start (logged in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md">COORDINATION.md</a>).</td><td>Owner marks; sessions implement</td></tr>
+      <tr data-row data-row-type="internal"><td><span class="badge b-blocked">REJECTED</span></td><td>Won't do; keep the record and the reason. (<a href="#workflow">workflow</a>)</td><td>Owner marks</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Backlog — system &amp; site improvements</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Proposal</th><th>Benefit for decision-making</th><th>Effort</th><th>Risk / notes</th><th>Depends on</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>P-1</td><td>Connect an odds feed (results + opening/closing lines) for CLV tracking</td><td>Turns CLV gate (G3) measurable; validates or kills strategies early</td><td>M</td><td>Cost; choose licensed provider (see <a href="https://www.sportico.com/business/sports-betting/2021/nba-sportradar-data-equity-1234646790/">official data channel</a>)</td><td><a href="questions.html#unanswered">Q-B3</a></td><td><span class="badge b-warn">NEEDS-INFO</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-2</td><td>Automate official injury-report ingestion (timestamped PDFs) + schedule feed</td><td>Removes manual runbook steps; faster reaction after 5 p.m. drops</td><td>S</td><td>Reports are public; automation must respect site terms — <a href="https://official.nba.com/nba-injury-report-2026-27-season/">source page</a></td><td>—</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-3</td><td>Backtest harness + historical odds archive purchase</td><td>Unlocks all gates; the single biggest blocker for activation</td><td>L</td><td>Cost; archive quality must be verified (open vs. close, props coverage)</td><td><a href="questions.html#unanswered">Q-B3, Q-B5</a></td><td><span class="badge b-warn">NEEDS-INFO</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-4</td><td>Calibration dashboard (Brier by market, decile reliability plots)</td><td>Makes G4 visible; shows whether "edges" are honest probabilities</td><td>M</td><td>Needs settled picks; demo until then (<a href="validation-gates.html#gates">G4</a>)</td><td>P-1, P-3</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-5</td><td>CLV tracker page (per-strategy mean CLV over time)</td><td>Forward-looking skill monitor; earlier than profit-based verdicts</td><td>S</td><td>Needs odds feed (<a href="validation-gates.html#gates">G3 CLV</a>)</td><td>P-1</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-6</td><td>Slate alerting (report-drop notifications at official deadlines; pick-ledger diff emails)</td><td>Decision speed at the 5 p.m. and game-day report windows</td><td>S</td><td>Delivery channel choice (email/RSS) is an owner preference</td><td><a href="questions.html#unanswered">Q-B6</a></td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-7</td><td>Operator SGP sampling study (2 weeks of prop/SGP menus, hold %)</td><td>Ground truth for whether prop strategies can exist at chosen operators</td><td>M</td><td>Requires operator accounts (owner)</td><td><a href="questions.html#unanswered">Q-B4, Q-B7</a></td><td><span class="badge b-warn">NEEDS-INFO</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-8</td><td>SGP repricing calculator UI (joint prob + covariance editor)</td><td>Lets you review/adjust combo pricing before trusting the generator</td><td>M</td><td>Matrix placeholders must be replaced first (G11)</td><td><a href="correlation.html#estimation">correlation estimation</a></td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-9</td><td>Gate thresholds ratification form (lock G1–G13 values as owner-approved)</td><td>Makes activation criteria explicit and non-negotiable</td><td>S</td><td>Decision, not code</td><td><a href="questions.html#unanswered">Q-B5</a></td><td><span class="badge b-warn">NEEDS-INFO</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-10</td><td>CI: run verify_site.py + link checker + generator demo on every push</td><td>Keeps the "every row sourced, no broken links" guarantee permanent</td><td>S</td><td>Actions minutes cost (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/verify_site.py">verifier</a>)</td><td>—</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-11</td><td>Immutable pick-ledger viewer (append-only, timestamps)</td><td>Audit trail for leaderboard integrity and dispute resolution</td><td>M</td><td>Storage choice (repo JSON vs. external) (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">ledger source</a>)</td><td>First real picks</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>P-12</td><td>Site: per-strategy detail pages + JSON-LD data export of every table</td><td>Machine-readable tables make re-verification and third-party review easy</td><td>M</td><td>Keep single source of truth in data/ files to avoid drift (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">strategies.json</a>)</td><td>—</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Site improvements specifically for decision-making</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Improvement</th><th>Decision it improves</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>SI-1</td><td>Add a "What changed today" strip (report drops, gate flips, ledger updates) on the home page</td><td>Daily triage: what needs attention in 30 seconds (<a href="index.html">home</a>)</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>SI-2</td><td>Show gate progress bars per strategy (which of its gates pass)</td><td>Activation readiness at a glance (<a href="strategies.html">strategies</a>)</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>SI-3</td><td>Distinguish "blank because unknown" vs. "zero" visually everywhere (already the rule; add tooltips)</td><td>Prevents misreading missing data as measured values (<a href="flagged-for-review.html">flags</a>)</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>SI-4</td><td>One-click "verify this row" — link table rows to the exact source anchor</td><td>Speeds your line-by-line review (<a href="sources.html">sources</a>)</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+      <tr data-row data-row-type="internal"><td>SI-5</td><td>Print/PDF mode for the executive summary and flagged pages</td><td>Offline review and record-keeping (<a href="executive-summary.html">exec summary</a>)</td><td><span class="badge b-info">PROPOSED</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How to submit a new suggestion</h2>
+  <ol>
+    <li>Open an issue in the repo (<a href="https://github.com/wingbangboozle1-lang/NBA2/issues">Issues</a>) titled <code>SUGGESTION: &lt;title&gt;</code>, or edit this page directly on your branch.</li>
+    <li>State: the decision it improves, benefit, effort (S/M/L), risk, and any dependency on <a href="questions.html#unanswered">Section B</a>.</li>
+    <li>A session will add it to the backlog with status <span class="badge b-info">PROPOSED</span>; it stays dormant until you change the status.</li>
+  </ol>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

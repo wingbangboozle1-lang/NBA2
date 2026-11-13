@@ -1,0 +1,36 @@
+{
+  "dataset": "official_game_times_and_matchups_from_injury_report",
+  "purpose": "Second-official-document corroboration of the slate. The NBA's referee-operations injury report prints a 'Game Date / Game Time / Matchup' triple on every row, so it independently confirms (a) which games exist on a given date and (b) their ET tip times, without relying on the /schedule page layout.",
+  "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+  "retrieved_at_utc": "2026-11-13T23:05:00Z",
+  "why_this_matters": "FLAG-SLATE-04 exists because www.nba.com/schedule prints tip times as a list that is not reliably attached to the game beside it. This document attaches the time to the matchup inside the same table row, which is exactly the confirmation that was missing for 11 of the 31 games.",
+  "reading_rules": [
+    "A time is recorded only when the printed row for that matchup carries the time cell itself. Where the PDF table broke across a page and the time cell was lost, time_et is null and the matchup is still recorded — the matchup cells repeat on the continuation rows.",
+    "11/14 rows exist in this report because the report covers tomorrow's games as well; all of them carry 'NOT YET SUBMITTED' for team status, so they confirm schedule only, never availability."
+  ],
+  "columns": ["date", "matchup", "time_et", "time_captured"],
+  "records": [
+    ["2026-11-13", "MIL@ORL", "19:00", true],
+    ["2026-11-13", "NYK@IND", "19:00", true],
+    ["2026-11-13", "ATL@CHI", "20:00", true],
+    ["2026-11-13", "CLE@MIA", null, false],
+    ["2026-11-13", "MEM@NOP", null, false],
+    ["2026-11-13", "UTA@HOU", "20:30", true],
+    ["2026-11-13", "GSW@SAS", "21:30", true],
+    ["2026-11-13", "POR@SAC", "22:00", true],
+    ["2026-11-13", "OKC@LAC", "22:30", true],
+    ["2026-11-14", "DEN@NOP", "19:00", true],
+    ["2026-11-14", "DAL@CLE", "19:30", true],
+    ["2026-11-14", "BKN@MEM", "20:00", true],
+    ["2026-11-14", "CHI@MIN", "20:00", true],
+    ["2026-11-14", "DET@MIA", null, false]
+  ],
+  "time_convention": "Stored in 24h ET, converted from the printed '(ET)' label: 07:00 (ET) -> 19:00, 10:30 (ET) -> 22:30. The document prints evening times on a 12-hour clock with an explicit (ET) suffix.",
+  "coverage": {
+    "games_confirmed_in_document": 14,
+    "times_confirmed": 11,
+    "matchups_confirmed_time_lost_to_page_break": 3,
+    "dates_covered": ["2026-11-13", "2026-11-14"],
+    "not_covered": "2026-11-15 and 2026-11-16 games are absent from the 11/13 release; they appear in the report for their own game day, which had not been published at build time."
+  }
+}

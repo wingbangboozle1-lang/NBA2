@@ -162,6 +162,11 @@ def make_row(key: str, source_key: str, flag_ids: Iterable[str] = (), note: str 
     src = SOURCES[source_key]
     flag_ids = list(flag_ids)
     for name, value in values.items():
+        if isinstance(value, str) and not value.strip():
+            # an empty string looks like a value but carries nothing: force it to blank so the
+            # "every blank must be flagged" rule sees it (and the table renders the blank marker)
+            values[name] = None
+            value = None
         if value is _MISSING:
             raise ValueError(f"row {key!r} field {name!r}: use None for unknown, never a placeholder")
         if value is not None and src.cls == Src.BLOCKED and name not in BLOCKED_ALLOWED_FIELDS:

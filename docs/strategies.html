@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Strategies</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-strategies">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Strategies</h1>
+  <p class="lede">The line-origination pipeline, then the 12-strategy catalog across single bets, multi-game
+  parlays, and same-game player-prop combos. Every strategy is pre-registered in
+  <code>data/strategies_lab.json</code> — its signal, its gates, and its activation status. Nothing generates a
+  real pick until all of its gates pass out-of-sample.</p>
+
+  <h2 id="origination">How a line is originated (order matters)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Step</th><th>Input</th><th>Output</th><th>Rule / source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>1. Base ratings</td><td>Team efficiencies and minutes-weighted lineups from completed games.</td><td>Offensive/defensive ratings per team per game context.</td><td>Internal method — defined in <a href="game-flow.html#factors">Game Flow</a>; requires data feed (see <a href="flagged-for-review.html#i2">I-2</a>)</td></tr>
+      <tr data-row data-row-type="fact"><td>2. Availability pass</td><td>Official injury report (5 p.m. local the day before; 1 p.m. local for B2B game day; continuous updates).</td><td>Projected rotation minutes per player; usage redistribution.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com injury report policy</a> · <a href="injuries-rotations.html#redistribution">framework</a></td></tr>
+      <tr data-row data-row-type="fact"><td>3. Environment pass</td><td>Schedule spot (B2B, 3-in-4, travel), rest rules, clutch/garbage-time tendencies.</td><td>Pace/efficiency adjustments.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">official schedule</a> · <a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">PPP rest rules</a></td></tr>
+      <tr data-row data-row-type="internal"><td>4. Originate lines</td><td>Ratings × minutes × environment.</td><td>Fair spread, total, moneyline, and player-prop numbers (PRA etc.).</td><td>Internal method — <strong>no market anchor:</strong> lines are fixed before any market number is viewed (<code>data/strategies_lab.json</code> → <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">global_rules</a>)</td></tr>
+      <tr data-row data-row-type="fact"><td>5. Record market context</td><td>Market lines (only after origination).</td><td>Edge = our fair probability − breakeven probability; CLV measured later at close.</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare/Dennis/Paul (2015)</a>: closing line is fair; edge must be captured early — <a href="validation-gates.html#g3">CLV gate</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="catalog">Strategy catalog — 12 strategies</h2>
+  <p class="small">Status: <span class="badge b-res">RESEARCH</span> idea, no picks ·
+  <span class="badge b-info">CANDIDATE</span> paper-trading only (demo output permitted) ·
+  <span class="badge b-ok">ACTIVE</span> may generate real picks (none yet — requires gates passed).
+  Full machine-readable definitions: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">data/strategies_lab.json</a>.</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Strategy</th><th>Bet type</th><th>Signal</th><th>Premise source</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>S01</td><td>Power-rating spread gap</td><td>Single — spread</td><td>Our rating line vs. originated fair line differs ≥2.0 pts.</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare/Dennis/Paul 2015</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S02</td><td>Schedule-spot spread/total</td><td>Single</td><td>B2B (road strongest), 3-in-4, travel; minutes-adjusted origination.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">schedule structure</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S03</td><td>Injury-report reprice</td><td>Single</td><td>Reprice immediately after official report drops; act where pre-report and post-report lines differ ≥1.5 pts.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">report timing</a> + <a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">opening-line bias at absences</a></td><td><span class="badge b-info">CANDIDATE</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S04</td><td>Big home underdog value</td><td>Single — ML/spread, home dog ≥ +10</td><td>Documented historical anomaly; must be re-validated on current seasons.</td><td><a href="https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/">Compton &amp; Sigler</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S05</td><td>High-total over fade</td><td>Single — total</td><td>Overs over-bet at highest totals in prior samples; re-validate.</td><td><a href="https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/">Compton &amp; Sigler</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S06</td><td>Minutes-driven player props</td><td>Single — prop (PRA)</td><td>Projected minutes × per-minute rates vs. posted prop line.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">availability data</a></td><td><span class="badge b-info">CANDIDATE</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S07</td><td>Star-absence usage redistribution</td><td>Single — prop</td><td>High-usage Out → next-man-up usage bump above baseline.</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">absence effects</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S08</td><td>Repriced same-game combo</td><td>SGP — 2 legs</td><td>Bet only when our joint probability (P1·P2 + Cov) beats offered implied joint probability by ≥2 pts.</td><td><a href="https://www.fanduel.com/fanduel-sportsbook-house-rules-pa">FanDuel house rules</a> · <a href="correlation.html">our repricing math</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S09</td><td>Gated multi-game parlay</td><td>Parlay — 2–3 legs, different games</td><td>Every leg independently gate-passed; parlay EV must beat best single leg after correlation haircut.</td><td><a href="https://www.saracenresort.com/wp-content/uploads/2026/08/2026-BetSaracen-SportsBook-House-Rules-August.pdf">house-rule parlay conventions</a> · <a href="correlation.html#parlay-math">math</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S10</td><td>Rest-spot under</td><td>Single — total under</td><td>Diffuse rotation reduction (PPP-constrained rest spots) lowers pace; books price named stars, not diffuse reduction.</td><td><a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">PPP</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S11</td><td>Clutch-time environment props</td><td>SGP / prop combo</td><td>Late-game foul-heavy environments raise variance; model from official L2M data.</td><td><a href="https://official.nba.com/nba-last-two-minute-reports-frequently-asked-questions/">L2M FAQ</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+      <tr data-row data-row-type="fact"><td>S12</td><td>Cup-night motivation spots</td><td>Single — spread</td><td>NBA Cup games carry separate incentives (advancement, prize pool) changing usage.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">Cup structure in schedule release</a></td><td><span class="badge b-res">RESEARCH</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Cross-cutting rules that apply to every strategy</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Rule</th><th>Definition</th><th>Where enforced</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>No market anchor</td><td>Originate every line before viewing any market number; market lines are recorded afterward only for CLV measurement.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">strategies.json</a> global_rules · <a href="validation-gates.html#g8">Gate G8</a></td></tr>
+      <tr data-row data-row-type="internal"><td>No pick without gates</td><td>Generator refuses picks from any strategy not in <code>active</code> status.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generate_picks_lab.py (code-enforced)</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Staking</td><td>Quarter-Kelly, ≤2% bankroll per single bet, ≤1% per parlay/SGP combo, portfolio ≤12%.</td><td><a href="https://masters.donntu.ru/2009/fvti/kravchenko/library/article2.htm">Kelly (1956)</a> · <a href="validation-gates.html#staking">policy</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Portfolio caps</td><td>Max 8 singles + 2 parlays + 2 SGPs per slate; pairwise |correlation| ≤ 0.35.</td><td><a href="correlation.html#caps">caps</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generator</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Demo hygiene</td><td>Demo data is synthetic, suffixed <code>.demo.</code>, player names are placeholders, output stamped <code>demo:true</code>.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/README.md">data/README.md</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What graduates a strategy to ACTIVE?</h2>
+  <p>Only the gate engine: every listed gate for that strategy must pass on out-of-sample data, with the
+  evidence recorded in <code>tools/generate_picks_lab.py</code>'s <code>BACKTEST_EVIDENCE</code> table (currently
+  empty by design). See <a href="validation-gates.html">Validation Gates</a> and
+  <a href="questions.html#unanswered">the open questions</a> (backtest infrastructure and historical-odds
+  archive are unresolved decisions).</p>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

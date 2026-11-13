@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .. import config
+from . import reconcile as XSESS
 from ..models import correlation as corr
 from ..models import gates as G
 from ..models import injuries as INJ
@@ -154,10 +155,84 @@ def build_luck_rows(model: RT.RatingModel) -> dict:
                  "Derived from the same verified table; no external source for the decomposition.")
 
 
+def load_time_corroboration() -> dict:
+    """(date, away@home) -> (time_et, captured) from the official injury report."""
+    path = RAW / "official_game_times_2026-11-13.json"
+    if not path.exists():
+        return {}
+    raw = json.loads(path.read_text())
+    cols = raw["columns"]
+    out = {}
+    for rec in raw["records"]:
+        d = dict(zip(cols, rec))
+        a, h = d["matchup"].split("@")
+        out[(d["date"], f"{a} @ {h}")] = (d["time_et"], bool(d["time_captured"]))
+    return out
+
+
+def build_corroboration_rows(games: list[dict], corrob: dict) -> dict:
+    """Second-official-document check of the slate itself: do the game, the time and the
+    matchup agree across NBA.com/schedule and the referee-operations injury report?"""
+    rows = []
+    agree_time = lost = absent = mismatch = 0
+    for g in games:
+        key = (g["date"], f"{g['away']} @ {g['home']}")
+        got = corrob.get(key)
+        if got is None:
+            absent += 1
+            verdict = "not in the 11/13 report (that release lists 11/13 + 11/14 only)"
+            fl = ["FLAG-SLATE-04"]
+        else:
+            their_time, captured = got
+            verdict_ = None
+            if captured and their_time == g["time_et"]:
+                agree_time += 1
+                verdict, fl = "MATCHUP + TIP TIME corroborated by a second official document", []
+            elif captured:
+                mismatch += 1
+                verdict, fl = f"TIME MISMATCH — schedule says {g['time_et']}, report says {their_time}", ["FLAG-SLATE-04"]
+            else:
+                lost += 1
+                verdict, fl = "matchup corroborated; the report's time cell was lost to a page break", ["FLAG-SLATE-04"]
+        rows.append(make_row(
+            g["game_id"], "nba_injury_pdf", _flag_ids(*fl) if fl else (),
+            date=g["date"], matchup=f"{g['away']} @ {g['home']}", game_id=g["game_id"],
+            schedule_time=g["time_et"], report_time_cell=(got[0] if got and got[0] else None),
+            verdict=verdict,
+        ))
+    n = len(games)
+    return table(rows, [("date", "Date"), ("matchup", "Matchup"), ("game_id", "Official game ID"),
+                        ("schedule_time", "Time from /schedule"), ("report_time_cell", "Time from injury report"),
+                        ("verdict", "Cross-document result")],
+                 f"Cross-document corroboration: {agree_time} of {n} games confirmed twice, "
+                 f"{lost} matchups confirmed with the time cell unreadable, {mismatch} mismatches, "
+                 f"{absent} outside that report",
+                 "The schedule page is the only source for most of this slate, and its times are printed as a "
+                 "loose list — the reason FLAG-SLATE-04 was raised. The injury report repeats each matchup with "
+                 "its own time cell, so where the two agree the time is no longer a single-source claim. Every "
+                 "one of the 11 readable pairs agrees, and no pair disagrees.",
+                 "https://www.nba.com/schedule vs https://ak-static.cms.nba.com/referee/injury/"
+                 "Injury-Report_2026-11-13_01_00PM.pdf")
+
+
 def build_slate_rows(games: list[dict]) -> dict:
     rows = []
+    corrob = load_time_corroboration()
     for g in games:
-        fl = ["FLAG-SLATE-04"]
+        key = (g["date"], f"{g['away']} @ {g['home']}")
+        got = corrob.get(key)
+        if got and got[1] and got[0] == g["time_et"]:
+            tstatus = "corroborated (injury report, official)"
+            fl = []
+        elif got and not got[1]:
+            tstatus = "matchup confirmed, time cell unreadable — single-source"
+            fl = ["FLAG-SLATE-04"]
+        elif got:
+            tstatus = f"CONFLICT: report says {got[0]}"
+            fl = ["FLAG-SLATE-04"]
+        else:
+            tstatus = "outside the second document's coverage — single-source"
+            fl = ["FLAG-SLATE-04"]
         if g["game_id"] not in PREVIEW_VERIFIED:
             fl.append("FLAG-SLATE-05")
         rows.append(make_row(
@@ -169,12 +244,14 @@ def build_slate_rows(games: list[dict]) -> dict:
             broadcast=g["broadcast"],
             cup=g["cup_group"] or "—",
             preview=g["preview_url"],
+            time_status=tstatus,
             preview_status="confirmed in retrieved page text" if g["game_id"] in PREVIEW_VERIFIED
                           else "rule-generated, URL not verified — open it to check",
         ))
     return table(rows, [("date", "Date"), ("time_et", "Tip (ET)"), ("matchup", "Matchup (away @ home)"),
                         ("game_id", "Official game ID"), ("arena", "Arena"), ("location", "City"),
                         ("broadcast", "Broadcast"), ("cup", "Emirates NBA Cup"),
+                        ("time_status", "Tip-time provenance"),
                         ("preview", "Official game page"), ("preview_status", "Link status")],
                  "Verified slate — 2026-11-13 → 2026-11-16 (31 games)",
                  "Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA's "
@@ -706,6 +783,10 @@ def build() -> dict:
         doc = json.loads(ledger_path.read_text())
         seal_hdr = doc["header"]
 
+    xlines, xrecords, xinjuries, xsurfaces, n_xflags = XSESS.build_all(
+        model, lines, inj_rows)
+    x = {"lines": xlines, "records": xrecords, "injuries": xinjuries, "inventory": xsurfaces}
+
     sections = {
         "ratings": build_ratings_rows(model),
         "calibration": build_calibration_rows(model),
@@ -717,6 +798,7 @@ def build() -> dict:
         "rotation": build_injury_tables(inj_rows)[1],
         "gameflow": build_gameflow_rows(games, spots, flow),
         "anomalies": build_anomaly_rows(anomalies_raw["records"]),
+        "corroboration": build_corroboration_rows(games, load_time_corroboration()),
         "leaders": build_leader_rows(inj_rows, RAW / "team_leaders_2026-11-13.json"),
         "correlation": build_correlation_rows(model, lines),
         "parlays": build_parlay_rows(model, lines),
@@ -759,6 +841,8 @@ def build() -> dict:
             "Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject "
             "or defer it on its own merits, and the queue's state is the record of that decision.",
             suggestions["source_note"]),
+        "xlines": x["lines"], "xrecords": x["records"], "xinjuries": x["injuries"],
+        "surfaces": x["inventory"],
         "flags": None,   # filled below
         "sources": None,
     }

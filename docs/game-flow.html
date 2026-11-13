@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Game Flow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-game-flow">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Game flow analysis</h1>
+  <p class="lede">"Game flow" is how a game's environment — pace, clock structure, clutch time, blowouts, late
+  fouling, rest — changes the distribution of scoring and minutes. It determines not just spreads and totals
+  but the shape of player-prop outcomes. Below: the verified structural facts, and the framework for turning
+  them into line adjustments.</p>
+
+  <h2 id="factors">Verified structural facts</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Fact</th><th>Value</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Regulation length</td><td>Four periods of 12 minutes (48 minutes), 15-minute halftime; tied games go to 5-minute overtime periods.</td><td><a href="https://official.nba.com/rulebook/">NBA Rulebook (official)</a> · <a href="https://thechamplair.com/basketball/how-long-is-a-game/">independent rules summary (corroboration)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Shot clock</td><td>24 seconds in the NBA.</td><td><a href="https://official.nba.com/rulebook/">NBA Rulebook (official)</a> · <a href="https://sportsfoundation.org/basketball-rules/">independent rules summary (corroboration)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Season length</td><td>82 games per team; 2026-27 ran from Oct 20, 2026 with schedule released Aug 13, 2026.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com schedule release</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Last Two Minute reports</td><td>Official L2M reports cover all calls and material non-calls in the last two minutes of the 4th/OT for close games (≤3 points); issued since March 2015, expanded 2017-18; league states officials are correct ≈90%.</td><td><a href="https://official.nba.com/nba-last-two-minute-reports-frequently-asked-questions/">official.nba.com L2M FAQ</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Cup structure in-season</td><td>Emirates NBA Cup group play (Oct 30–Nov 27), knockout Dec 4–9, final Dec 11; all Cup games except the final count in regular-season standings.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com</a> · <a href="https://www.ticketmaster.com/emirates-nba-cup-tickets/artist/3050896">Ticketmaster Cup listing</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Rest constraints</td><td>PPP limits star resting (max one star per game; national TV/Cup games protected) — shapes which rotations appear in which games.</td><td><a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">NBA.com PPP</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Flow factors → model adjustments (our framework)</h2>
+  <p class="small">The mapping below is internal methodology (<span class="badge b-info">INTERNAL</span>): it is
+  what we will estimate once feeds exist. The framework is stated now so its assumptions can be reviewed and
+  challenged on the <a href="suggestions.html">Suggestions</a> page before any data is collected.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Factor</th><th>What it changes</th><th>How we model it</th><th>Link to strategy</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Pace (possessions/game)</td><td>Total points environment; prop volume for all players.</td><td>Team pace blend weighted by projected minutes; late-game pace drops when leading.</td><td><a href="strategies.html#catalog">S02, S05, S10</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Clutch time</td><td>Variance increases; fouling extends games; star usage spikes.</td><td>Scenario model: close-game probability → expected clutch possessions; L2M data calibrates late foul rates.</td><td><a href="strategies.html#catalog">S11</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Blowout risk (garbage time)</td><td>Starters rest; deep-bench players exceed prop expectations.</td><td>Blowout probability from spread + team quality; props adjusted by bench-minute scenarios.</td><td><a href="strategies.html#catalog">S06, S07</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Overtime probability</td><td>+5-minute periods add possessions and variance.</td><td>OT probability from projected spread distribution; adds to total variance, rarely to mean.</td><td><a href="correlation.html">combo pricing</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Rest / B2B</td><td>Minutes and defensive intensity; veteran B2B rest is rule-forecastable.</td><td>Schedule-spot modifiers from the official calendar; PPP-based rest scenarios.</td><td><a href="strategies.html#catalog">S02, S10</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Officiating environment</td><td>Foul rates drive FT volume and pace stoppage.</td><td>Ref-crew foul tendencies once assignments feed exists; L2M as ground truth.</td><td><a href="strategies.html#catalog">S11</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Cup motivation</td><td>Usage intensity when advancement is at stake.</td><td>Cup-stage flags from the official calendar on the slate feed.</td><td><a href="strategies.html#catalog">S12</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What we will NOT do</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Rule</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>No flow factor is asserted numerically until measured (e.g., "B2B under hits X%").</td><td>Any number without data would be invented — values stay blank until estimated (see <a href="flagged-for-review.html#f7">F-7</a>).</td></tr>
+      <tr data-row data-row-type="internal"><td>No flow adjustment is applied without a pre-registered rule in <code>data/strategies_lab.json</code>.</td><td>Prevents post-hoc storytelling about why a bet "should" have won (<a href="validation-gates.html#g8">G8</a>).</td></tr>
+      <tr data-row data-row-type="internal"><td>No use of unofficial "power rankings" or aggregator stats without provenance.</td><td>Verification-first: inputs must trace to official or documented sources (<a href="sources.html">Sources</a>).</td></tr>
+    </tbody>
+  </table></div>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

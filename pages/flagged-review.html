@@ -13,15 +13,15 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="50">
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:02 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="65">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -531,6 +531,156 @@
 <td>Owner decides.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="FLAG-XSESS-01">
+<td>FLAG-XSESS-01</td>
+<td>medium</td>
+<td>cross-session</td>
+<td>Two independent models priced the same games and disagree by more than 1.5 points on the spread for some games. Neither has a market to check against, so the disagreement is the best available estimate of model uncertainty.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</td>
+<td>Treat the spread delta as an uncertainty band; widen triggers until an odds feed exists.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+</tr>
+<tr id="FLAG-XSESS-02">
+<td>FLAG-XSESS-02</td>
+<td>low</td>
+<td>cross-session</td>
+<td>Some games exist in only one session&#x27;s slate because the two captures covered different date ranges (11/13–15 vs 11/13–16).</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/schedule.json</td>
+<td>Use the union of dates when scheduling the next build.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="FLAG-XSESS-03">
+<td>FLAG-XSESS-03</td>
+<td>high</td>
+<td>cross-session</td>
+<td>A win-loss record disagrees between two sessions that each claim to have read NBA.com. One of the two retrievals is wrong; until it is re-checked on the official page, neither record may be used for pricing.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Re-confirm the specific team page; correct whichever snapshot is wrong.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-03">FLAG-XSESS-03</a></td>
+</tr>
+<tr id="FLAG-XSESS-04">
+<td>FLAG-XSESS-04</td>
+<td>high</td>
+<td>cross-session</td>
+<td>The same player carries different statuses in the two sessions&#x27; captures of the injury report. Most likely explanation: the NBA republishes the report several times a day (we read the 16:15 ET revision, the prior session read 13:00 ET), so both can be correct at their own timestamp. Nothing may depend on the newer one without checking the revision time.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
+<td>Store the revision timestamp with every row (see S-09) and always use the latest before tip.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
+</tr>
+<tr id="FLAG-XSESS-05">
+<td>FLAG-XSESS-05</td>
+<td>medium</td>
+<td>cross-session</td>
+<td>Players appear in one session&#x27;s injury capture but not the other&#x27;s, because the two captures cover different games and different report revisions. This is a coverage difference, not a correction.</td>
+<td>https://www.nba.com/</td>
+<td>Take the union of revisions; mark which rows are unreconciled.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="FLAG-XSESS-06">
+<td>FLAG-XSESS-06</td>
+<td>high</td>
+<td>cross-session</td>
+<td>Two models built from the same official inputs disagree on 21 of 23 matched spreads (median |Δ| 6.0 pts) — a spread difference larger than the entire edge any model can plausibly have. This is the strongest argument on the site for never betting a single model&#x27;s number without a market check.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</td>
+<td>Ensemble or abstain: require the two models to agree before a trigger is armed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-06">FLAG-XSESS-06</a></td>
+</tr>
+<tr id="FLAG-XSESS-F1">
+<td>FLAG-XSESS-F1</td>
+<td>medium</td>
+<td>cross-session (prior)</td>
+<td>Predicted totals use an unverified league-average baseline for 23 of 23 games — Predicted totals equal the model baseline (224.0) with no verified pace adjustment because verified PPG/OPPG were not available for both teams in those games. Game-level detail is on the Picks page; each row there links to its official NBA.com game page. [prior-session value: unverified baseline (224.0)]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F1">FLAG-XSESS-F1</a></td>
+</tr>
+<tr id="FLAG-XSESS-F2">
+<td>FLAG-XSESS-F2</td>
+<td>medium</td>
+<td>cross-session (prior)</td>
+<td>Injury impact weights (Out/Doubtful/Questionable -&gt; points) — Per-player impact weights are transparent model estimates of rotation-minute/production impact, not verified importance values (which require player-level usage/box-score data). [prior-session value: model estimate (unverified importance)]</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F2">FLAG-XSESS-F2</a></td>
+</tr>
+<tr id="FLAG-XSESS-F3">
+<td>FLAG-XSESS-F3</td>
+<td>high</td>
+<td>cross-session (prior)</td>
+<td>Player prop values (S5_PlayerPropCombo) — No verified player-level production data available; prop values are intentionally left blank/unverified rather than inferred. [prior-session value: blank / unverified]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F3">FLAG-XSESS-F3</a></td>
+</tr>
+<tr id="FLAG-XSESS-F4">
+<td>FLAG-XSESS-F4</td>
+<td>medium</td>
+<td>cross-session (prior)</td>
+<td>PPG/OPPG unverified for 28 of 30 teams — PPG/OPPG verified only for TOR and WAS (official team pages). Left blank (unverified) for all other teams; never inferred. [prior-session value: 28 teams unverified]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F4">FLAG-XSESS-F4</a></td>
+</tr>
+<tr id="FLAG-XSESS-F5">
+<td>FLAG-XSESS-F5</td>
+<td>low</td>
+<td>cross-session (prior)</td>
+<td>Correlation win% vs PPG — PPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required. [prior-session value: pending historical dataset]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F5">FLAG-XSESS-F5</a></td>
+</tr>
+<tr id="FLAG-XSESS-F6">
+<td>FLAG-XSESS-F6</td>
+<td>low</td>
+<td>cross-session (prior)</td>
+<td>Correlation win% vs OPPG — OPPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required. [prior-session value: pending historical dataset]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F6">FLAG-XSESS-F6</a></td>
+</tr>
+<tr id="FLAG-XSESS-F7">
+<td>FLAG-XSESS-F7</td>
+<td>low</td>
+<td>cross-session (prior)</td>
+<td>Correlation PPG vs OPPG — Requires verified PPG/OPPG for all teams + historical sample. [prior-session value: pending historical dataset]</td>
+<td>https://www.nba.com/stats</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F7">FLAG-XSESS-F7</a></td>
+</tr>
+<tr id="FLAG-XSESS-F8">
+<td>FLAG-XSESS-F8</td>
+<td>low</td>
+<td>cross-session (prior)</td>
+<td>Injury reports for 11/14 and 11/15 games not yet submitted — The league&#x27;s official injury report lists these games as &#x27;NOT YET SUBMITTED&#x27;. Injury data for those games will be populated when the league publishes updated reports. [prior-session value: not yet submitted]</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F8">FLAG-XSESS-F8</a></td>
+</tr>
+<tr id="FLAG-XSESS-F9">
+<td>FLAG-XSESS-F9</td>
+<td>low</td>
+<td>cross-session (prior)</td>
+<td>All strategies are provisional (no tracked results) — The leaderboard rewards top-performing strategies, but no games have been tracked to completion yet. Strategies remain provisional until results are recorded. [prior-session value: provisional]</td>
+<td>https://www.nba.com/schedule</td>
+<td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F9">FLAG-XSESS-F9</a></td>
 </tr>
 </tbody></table></div>
 <p class="tablenote">Also mirrored in COORDINATION.md</p>
