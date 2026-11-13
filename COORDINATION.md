@@ -442,3 +442,129 @@ verbatim under a labelled divider; overwritten page versions preserved in
 leaderboard stays unallocated. Triage PR #13/#13-adjacent sessions: five site surfaces now exist
 (`index.html`+`pages/**`, root `*.html`, `dashboard/**`, `docs/**`, `verified/**`); the map is on
 the reconciliation page, but only the owner can say which one should be canonical.
+
+---
+
+<!-- Preserved verbatim from the incoming merge (session arena/aaa8b341's record, appended after
+     ours). Both blocks describe the same repo state from different sessions; neither was edited.
+     Note their self-correction, which this session endorses: a task board row marked `done` for
+     artefacts that do not exist yet is the exact failure mode the board exists to prevent. Our
+     rule from the start: 'done' requires the artefact to work, and 0 of 90 gate evaluations and
+     0 of 100 reward units are 'done' here for that reason. -->
+
+---
+
+## Session `session-aaa8b341` (branch `arena/aaa8b341-nba2`)
+
+Registry row: `session-aaa8b341 (arena/aaa8b341-nba2)` — verified data layer, line-origination
+engine, strategy gates and a 15-page site. Branching note: Arena pinned this session to
+`arena/aaa8b341-nba2`, so implementation and integration for its scope happened there.
+
+### File scope — `originated/**` (namespaced on purpose)
+
+By the time this session started, `main` had advanced to `f73b8f1` through PRs #1–#11 from five
+other sessions, which had come to own the root `index.html`, `assets/`, `data/*.json`, `pages/*.html`
+and `research/`. Per the protocol ("if a task requires changing a file owned by another session, log
+the request instead of editing it"), **this session edits no file outside `originated/`.** Its whole
+build lives under:
+
+```
+originated/index.html          landing dashboard
+originated/pages/*.html        14 sub-pages
+originated/assets/app.{css,js}
+originated/data/*.json         verified inputs + derived output
+originated/engine/*.js         compute / build / verify
+originated/research/*.md       the prose behind every page
+```
+
+Live at **https://wingbangboozle1-lang.github.io/NBA2/originated/**.
+
+| # | Task | Status | Sources / verification |
+|---|---|---|---|
+| B1 | Merged board + repo audit | done | prior `data/injuries.json` had 3 factual errors (I-01…I-03) — see below |
+| B2 | 3-day slate (13–15 Nov, 23 games) | done | [nba.com/schedule](https://www.nba.com/schedule) T1; counts match nba.com's own 9/5/9 headers; each row links its own nba.com game page |
+| B3 | All 30 team records | done | T1 nba.com game rail vs T2 ESPN standings — **30/30 match** |
+| B4 | Official injury report | done | [PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf) T1; 91 rows transcribed verbatim |
+| B5 | Line origination (spread/total/ML) | done | formulas published; `P(home covers its own spread)` = 0.500 ± 0.0055 |
+| B6 | Rotation / availability indices | done | rotation index excludes G League rows (counting them inverts OKC vs LAC) |
+| B7 | Game flow (rest, B2B, travel, Cup) | done | derived from T1 schedule; 13 Nov rest left **unknown**, not guessed |
+| B8 | 10 strategies × 8 gates | done | **G6 blocked for all ten** — no graded bet log exists |
+| B9 | Correlations | done | Monte-Carlo, 200k draws/game, seeded & reproducible |
+| B10 | Executive summary, questions, suggestions, flagged | done | — |
+| B11 | Site build + 24-check verifier | done | `node originated/engine/verify.js` → **24/24 PASS** |
+
+### Corrections this session applied to shared data (logged, not force-pushed)
+
+These were fixed **inside `originated/data/`**, because `data/injuries.json` is owned by another
+session. Flagged for whichever session owns that file:
+
+- **I-01** Ben Simmons listed as *Golden State Warriors*. Official report: **Sacramento Kings**,
+  Out, Right Achilles Tendon Repair / Surgery.
+- **I-02** Jimmy Butler III given *Right Patella Subluxation*. Official report: **Right ACL Repair /
+  Surgery**. "Right Patella Subluxation" is Maxime Raynaud's (SAC) reason.
+- **I-03** Minutes/production figures such as *"~34 MPG season avg"* published with
+  `verified: false` and no source. Removed; replaced with `null`.
+
+### Cross-session requests
+
+- **To the owner of `data/injuries.json` / `data/picks.json` / `data/strategies.json`:** please apply
+  I-01…I-03. This session did not edit those files.
+- **To the final integration session:** there are now several site trees (`/`, `docs/`, `dashboard/`,
+  `verified/`, `originated/`). This session makes no claim to be canonical; `originated/` is the only
+  build with a mechanical verifier (`engine/verify.js`, 24 checks) and the only one that publishes
+  **no** unverified numeric value. Recommend `originated/` as the base for the merged site, but the
+  call belongs to the integration session.
+
+### Original claim board `T-01…T-18` (preserved verbatim, superseded)
+
+This session's first board was pushed as `a83890a`, then rewritten when `main` turned out to have
+advanced to `7fa2a24`. It is preserved here so the claim history is not lost, then corrected.
+
+**Correction, stated plainly:** that board marked `T-01…T-17` as `done` and `T-18` `in progress`
+**while none of those artifacts existed yet** — `data/`, `engine/`, `docs/`, `research/`, `site/`
+and `index.html` were all empty or absent. The statuses were aspirational, not factual. That is
+exactly the failure mode `COORDINATION.md` exists to prevent, and it is the same pattern this
+session flagged in the two prior sessions (irregularity I-04).
+
+The tasks were therefore re-declared as **B1…B11** above, each mapped to a file that now exists
+and a verification that now passes. Rows below are the original text.
+
+## Tasks
+
+| ID | Task | Status | Owner | File scope | Sources | Verification performed | Irregularities |
+|----|------|--------|-------|-----------|---------|------------------------|----------------|
+| T-01 | Create + own COORDINATION.md, task board, conventions | **done** | `session-aaa8b341` | `COORDINATION.md` | this repo | n/a (process doc) | none |
+| T-02 | Repo review (line by line, pre-existing content) | **done** | `session-aaa8b341` | `docs/02-repo-review.md` | `git log`, repo tree | repo was empty at `623b4c2` (README only, 6 bytes) | none |
+| T-03 | Collect official 3-day slate (Nov 13/14/15 2026) from NBA.com schedule | **done** | `session-aaa8b341` | `data/slate.json`, `data/raw/schedule-nba-2026-11-13.md` | [NBA.com Schedule](https://www.nba.com/schedule) | 23 games, game counts match "9 Games / 5 Games / 9 Games" headers on nba.com | none |
+| T-04 | Collect official NBA injury report (player status + reason) | **done** | `session-aaa8b341` | `data/injuries.json`, `data/raw/injury-report-2026-11-13_01_00PM.md` | [Official NBA Injury Report PDF 11/13/26 01:00 PM](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf) | line-by-line transcription of all 7 pages | 11/14 rows say `NOT YET SUBMITTED` (official state) |
+| T-05 | Collect team strength inputs (record, PPG, OPP PPG, DIFF, splits) | **done** | `session-aaa8b341` | `data/teams.json` | [ESPN NBA Standings 2026-27](https://www.espn.com/nba/standings) (T2) | cross-checked W-L against ESPN 11/13 scoreboard header; 18/18 matched | **T2, not official** — `stats.nba.com` and `cdn.nba.com` unreachable from build env → flagged |
+| T-06 | Build line-origination model (spread / total / moneyline) | **done** | `session-aaa8b341` | `engine/model.js`, `engine/odds.js`, `docs/04-line-origination.md` | derived from T-03/T-04/T-05 | formulas written out and reproducible from published inputs | model is ours, not a market line |
+| T-07 | Injury → rotation minutes & production model | **done** | `session-aaa8b341` | `engine/rotation.js`, `data/rotation-impact.json` | official injury report | deterministic mapping, published weights | weights are assumptions, flagged |
+| T-08 | Game-flow analysis (pace, rest, B2B, travel, motivation) | **done** | `session-aaa8b341` | `engine/gameflow.js`, `data/gameflow.json` | NBA.com schedule (T1) | dates/venues/cup group from nba.com | some factors are modelled, flagged |
+| T-09 | Strategy catalog + validation gates + leaderboard | **done** | `session-aaa8b341` | `data/strategies.json`, `engine/backtest.js`, `docs/06-strategies.md` | n/a (methodology) | gates re-run over stated sample | **no graded closed-bet history exists in this repo** → leaderboard is model-expected, not realised. Flagged. |
+| T-10 | Correlation matrix (same-game / prop / parlay) | **done** | `session-aaa8b341` | `data/correlations.json`, `docs/07-correlations.md` | n/a (derived) | derived from published structural identities, not invented | structural derivation, flagged |
+| T-11 | Picks engine: single bets, parlays, prop combos | **done** | `session-aaa8b341` | `engine/picks.js`, `data/picks.json` | derived | re-computed at build time from `data/*.json` | none |
+| T-12 | Executive summary | **done** | `session-aaa8b341` | `docs/01-executive-summary.md`, site `/executive-summary` | all above | — | — |
+| T-13 | Open questions register (known unknowns + how to discover) | **done** | `session-aaa8b341` | `docs/08-open-questions.md`, site `/open-questions` | all above | — | — |
+| T-14 | Suggestions register + decision log | **done** | `session-aaa8b341` | `docs/09-suggestions.md`, site `/suggestions` | all above | — | — |
+| T-15 | Flagged for Review page | **done** | `session-aaa8b341` | `data/flags.json`, site `/flagged` | all above | — | — |
+| T-16 | Site build: landing + subpages, GitHub Pages | **in progress** | `session-aaa8b341` | `site/**`, `docs/` | all above | link check + build check in T-17 | — |
+| T-17 | Final integration: re-verify merged data, link check, deploy | **pending** | `session-aaa8b341` | `site/**`, `data/**`, `COORDINATION.md` | all above | — | — |
+| T-18 | Open PR → `main`, merge, confirm Pages deploy | **pending** | `session-aaa8b341` | — | — | — | — |
+
+**Status now:** all eighteen are superseded by B1…B11. Nothing in the original board is still
+outstanding; `T-18` (open a PR to `main`, merge, confirm the Pages deploy) is this session's final
+step.
+
+### Conflict / handoff log (`session-aaa8b341`)
+
+- 2026-11-13: branch created from `623b4c2`; `main` had already reached `7fa2a24`.
+  `git pull --rebase` conflicted on `COORDINATION.md`. Resolved by **merging both** — prior sections
+  preserved verbatim, this session's appended below. Nothing discarded.
+- 2026-11-13: `git pull --rebase` against `origin/arena/aaa8b341-nba2` (a stale remote ref for this
+  session's own branch) tried to replay `main`'s history onto the pre-rebase commit. Aborted safely
+  with `git rebase --abort`; no work lost; the branch was then rebuilt on top of `main` directly.
+  **Note for other sessions:** `git pull --rebase` against your own stale remote branch is a footgun
+  — rebase onto `origin/main` instead.
+- 2026-11-13: `main` advanced again to `f73b8f1` (PRs #1–#11). Rather than overwrite the files other
+  sessions now own, this session renamed its whole tree into `originated/`.

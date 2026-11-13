@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open Questions · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="active">Open Questions</a><a href="suggestions.html" class="">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="">Verification</a><a href="data-and-sources.html" class="">Data &amp; Sources</a><a href="repo-review.html" class="">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Open Questions</h1>
+  <div class="md"><p>A single register of <strong>what we know</strong>, <strong>what we do not know</strong>, and <strong>how to go and find out</strong>. Nothing here is speculation — every "do not know" is a specific, named missing input.</p>
+<p>Ordered by how much it blocks.</p>
+<hr>
+<h2>BLOCKERS — the system cannot produce a bettable edge until these are answered</h2>
+<h3 id="q-01">Q-01 · What price will the market actually give us?</h3>
+<ul>
+<li><strong>We have:</strong> fair originated lines for every game in the window.</li>
+<li><strong>We do not have:</strong> any market price, from any book, for any game.</li>
+<li><strong>Why it blocks:</strong> "edge" is <code>our probability − the market's implied probability</code>. With no market</li>
+<p>  price there is no edge, only a fair price. Every EV number on this site is computed against an   <strong>assumed</strong> −110 and an <strong>assumed</strong> 4.77% overround. Those are placeholders.</p>
+<li><strong>How to find out:</strong> add a market adapter. Options, cheapest first: (a) a paid odds API key</li>
+<p>  (The Odds API, SportsDataIO) with a per-day call budget; (b) manual capture of closing prices   for the slate; (c) scrape of a licensed sportsbook — check terms of service and local law first.</p>
+<li><strong>Decision needed:</strong> which source, what budget, and do we store <strong>closing</strong> prices only (better</li>
+<p>  for backtesting) or the full price history (better for CLV)?</p>
+<li><strong>Affects:</strong> Strategies, Leaderboard, Picks, Correlations. <strong>Blocks gates G5 (partly) and G6.</strong></li>
+</ul>
+<h3 id="q-02">Q-02 · What are the official per-player season averages and minutes?</h3>
+<ul>
+<li><strong>We have:</strong> player status and reason from the official injury report, for 81 players.</li>
+<li><strong>We do not have:</strong> any per-player minutes, usage, points, rebounds or assists.</li>
+<li><strong>Why it blocks:</strong> player props cannot be originated at all without it. Every prop cell on this</li>
+<p>  site is deliberately blank.</p>
+<li><strong>How to find out:</strong> restore <code>stats.nba.com</code> access in the build environment, or obtain an</li>
+<p>  official NBA Stats API key and pull <code>leaguedashplayerstats</code>. Failing that, an official team   roster page per team (30 fetches) gives minutes only.</p>
+<li><strong>Decision needed:</strong> is a paid NBA data licence in scope for this project?</li>
+<li><strong>Affects:</strong> Props page, strategy S10, the injuries→production model. <strong>Blocks gate G2 for S10.</strong></li>
+</ul>
+<h3 id="q-03">Q-03 · What actually happened in past games?</h3>
+<ul>
+<li><strong>We have:</strong> season-to-date aggregates (W-L, PPG, OPP PPG, splits).</li>
+<li><strong>We do not have:</strong> a single box score, and no graded record of any bet.</li>
+<li><strong>Why it blocks:</strong> gate <strong>G6 (out-of-sample validation) cannot be run at all.</strong> Eight of ten</li>
+<p>  strategies are otherwise deployable and are held back solely by this. It also blocks calibrating   <code>injuryK</code>, <code>restB2B</code> and <code>tzPerHour</code>, which are currently educated guesses.</p>
+<li><strong>How to find out:</strong> pull <code>stats.nba.com/stats/leaguegamelog</code> for the last 2–3 seasons (one</li>
+<p>  request per season) and store the results in <code>data/history/</code>. Then start logging every signal the   system emits, with a result column filled in after each game.</p>
+<li><strong>Decision needed:</strong> how many seasons of history, and who owns the daily grading step?</li>
+<li><strong>Affects:</strong> every strategy, the leaderboard, all calibrated parameters.</li>
+</ul>
+<hr>
+<h2>HIGH — materially degrades accuracy</h2>
+<h3 id="q-04">Q-04 · How many points is a missing rotation player worth?</h3>
+<ul>
+<li><strong>We have:</strong> a rotation-availability index built from the official report (T1).</li>
+<li><strong>We do not have:</strong> any estimate of its conversion into points.</li>
+<li><strong>Why it matters:</strong> <code>injuryK = 0.35</code> is an uncalibrated guess. It is reported as an overlay and</li>
+<p>  as strategy S04 rather than baked into every published line, but it is still the largest   unquantified term in the model.</p>
+<li><strong>How to find out:</strong> with Q-03 answered, regress realised margin on the index differential across</li>
+<p>  a full season.</p>
+<li><strong>Decision needed:</strong> none — this is purely a data problem. It self-resolves once Q-03 is done.</li>
+</ul>
+<h3 id="q-05">Q-05 · What is each team's pace and schedule strength?</h3>
+<ul>
+<li><strong>We have:</strong> per-game scoring and allowed.</li>
+<li><strong>We do not have:</strong> possessions, so all ratings are <strong>per game</strong>, not per 100 possessions.</li>
+<li><strong>Why it matters:</strong> two teams with identical PPG can be very different if one plays at a fast</li>
+<p>  pace. It also means we cannot compute true offensive/defensive ratings, and we apply no   opponent adjustment (ratings are only shrunk toward the mean, not adjusted for who was played).</p>
+<li><strong>How to find out:</strong> <code>stats.nba.com</code> <code>leaguedashteamstats</code> exposes PACE. Schedule strength can be</li>
+<p>  computed from the game log in Q-03.</p>
+<li><strong>Decision needed:</strong> none.</li>
+</ul>
+<h3 id="q-06">Q-06 · What is the official Emirates NBA Cup group tiebreaker?</h3>
+<ul>
+<li><strong>We have:</strong> which games are Cup games, and which group (T1, from nba.com).</li>
+<li><strong>We do not have:</strong> the official tiebreaker rule.</li>
+<li><strong>Why it matters:</strong> if the tiebreaker is point differential, teams have an incentive to run up the</li>
+<p>  score, which biases Cup games toward the over. Strategy <strong>S05</strong> rests entirely on this.</p>
+<li><strong>How to find out:</strong> read the official rules at</li>
+<p>  <a href="https://www.nba.com/nba-cup/2026" target="_blank" rel="noopener">nba.com/nba-cup/2026</a>. One page. <strong>S05 is held at gate G2   (provenance) = FAIL until this is confirmed.</strong></p>
+<li><strong>Decision needed:</strong> none — it is a verification task, and it is the cheapest blocker on this list.</li>
+</ul>
+<hr>
+<h2>MEDIUM — affects specific outputs</h2>
+<h3 id="q-07">Q-07 · What is the real margin-vs-total correlation?</h3>
+<ul>
+<li><strong>We have:</strong> a model-derived value of ≈ 0 (see Correlations).</li>
+<li><strong>We do not have:</strong> the empirical value.</li>
+<li><strong>Why it matters:</strong> it is the whole basis of strategy S09. Our model says independence pricing is</li>
+<p>  nearly fair for winner × totals parlays; real data may disagree.</p>
+<li><strong>How to find out:</strong> with Q-03 answered, compute the realised correlation of margin and total</li>
+<p>  across a season, and the realised φ between moneyline and totals outcomes.</p>
+<li><strong>Decision needed:</strong> none.</li>
+</ul>
+<h3 id="q-08">Q-08 · Did the teams playing on 13 Nov play the night before?</h3>
+<ul>
+<li><strong>We have:</strong> the full 13–15 Nov slate.</li>
+<li><strong>We do not have:</strong> the 12 Nov slate.</li>
+<li><strong>Why it matters:</strong> the rest/back-to-back adjustment is <strong>set to zero</strong> for all nine 13 Nov games</li>
+<p>  because we cannot tell whether either team is on a back-to-back. It is not guessed.</p>
+<li><strong>How to find out:</strong> one extra fetch of <code>nba.com/schedule</code> covering 12 Nov, or extend the schedule</li>
+<p>  collection window to 7 days and keep it in <code>data/</code>.</p>
+<li><strong>Decision needed:</strong> how wide should the schedule collection window be? (Recommend 10 days: it</li>
+<p>  costs one fetch and answers rest for every game in the 3-day window.)</p>
+</ul>
+<h3 id="q-09">Q-09 · Is the derived home-court advantage real, or small-sample noise?</h3>
+<ul>
+<li><strong>We have:</strong> 89-84 (.5145) across 173 split games → <strong>+0.53 points</strong>.</li>
+<li><strong>We do not have:</strong> enough games to trust it. The standard error on the home win rate is about</li>
+<p>  ±3.8 percentage points, and the multi-season NBA norm is usually quoted much higher.</p>
+<li><strong>Why it matters:</strong> it is the single largest source of error in the originated spreads. Two games</li>
+<p>  on this slate flip favourite between HCA 0.5 and HCA 2.5.</p>
+<li><strong>How to find out:</strong> recompute after ~20 games per team, or blend with a documented multi-season</li>
+<p>  prior — which requires that prior to be sourced, not remembered.</p>
+<li><strong>Decision needed:</strong> do we publish the season-derived value (data-faithful, unstable) or a</li>
+<p>  blended value (more accurate, needs a sourced prior)? <strong>This is a genuine judgement call and is   the top item on the Suggestions page.</strong></p>
+</ul>
+<h3 id="q-10">Q-10 · Are the 14 Nov and 15 Nov injury reports available yet?</h3>
+<ul>
+<li><strong>We have:</strong> <code>NOT YET SUBMITTED</code> for all ten 14 Nov team rows, and nothing at all for 15 Nov.</li>
+<li><strong>Why it matters:</strong> the availability index is at its most valuable close to tip-off. Right now the</li>
+<p>  15 Nov games have no injury input whatsoever.</p>
+<li><strong>How to find out:</strong> re-pull the injury report later on 13 Nov (teams typically re-file at 05:00</li>
+<p>  PM) and again on 14 and 15 Nov. The report URL is predictable:   <code>Injury-Report_<YYYY-MM-DD>_<HH>_<MM><AM|PM>.pdf</code>.</p>
+<li><strong>Decision needed:</strong> how often should the pipeline re-pull? (Recommend: on demand, plus a</li>
+<p>  scheduled pull at 1 PM, 5 PM and 8 PM ET on slate days.)</p>
+</ul>
+<hr>
+<h2>Answers we DO have (so nobody re-derives them)</h2>
+<div class="tablewrap"><table><thead><tr><th>Question</th><th>Answer</th><th>Source</th></tr></thead><tbody><tr><td>How many games on each day of the window?</td><td>9 / 5 / 9 = 23</td><td><a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com/schedule</a></td></tr><tr><td>Are the 13 Nov games Cup games?</td><td>Yes, all nine; three groups per conference</td><td><a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com/schedule</a></td></tr><tr><td>Do all 30 teams appear in the window?</td><td>Yes — 18 on 13 Nov, +5 on 14 Nov, +7 on 15 Nov</td><td><a href="https://www.nba.com/game/nyk-vs-ind-0022600034" target="_blank" rel="noopener">nba.com game rail</a></td></tr><tr><td>Do ESPN's W-L records match nba.com's?</td><td>Yes, 30/30</td><td>S04 vs S02</td></tr><tr><td>Do the accounted points balance?</td><td>Yes — weighted mean PPG 113.43 vs OPP 113.42</td><td>derived</td></tr><tr><td>Is the line self-consistent?</td><td>Yes — P(home covers its own spread) = 0.500 ± 0.0055</td><td>derived</td></tr><tr><td>What is the largest correlation on the board?</td><td>home win ↔ home covers, φ ≈ 0.80</td><td>derived (Monte-Carlo)</td></tr><tr><td>What is the winner × totals correlation?</td><td>≈ 0, max \</td><td>φ\</td><td>0.0136</td><td>derived (Monte-Carlo)</td></tr><tr><td>What does a 3-leg parlay cost with no edge?</td><td>13.05%</td><td>derived, at 4.77% overround</td></tr></tbody></table></div></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>
