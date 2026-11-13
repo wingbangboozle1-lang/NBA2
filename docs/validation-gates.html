@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Validation Gates</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-validation-gates">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Validation gates</h1>
+  <p class="lede">Every strategy must pass every gate listed for it, on out-of-sample data, before it may
+  generate a single pick. The gates exist to remove luck from the equation: variance makes any short hot
+  streak indistinguishable from skill, so the acceptance criteria are statistical, not anecdotal.</p>
+
+  <div class="note blocked"><strong>Current status: 0 / 13 gates have passing evidence.</strong> No backtests
+  have been run (no historical odds archive or data feed is connected — <a href="flagged-for-review.html#i2">I-2</a>).
+  The pick generator enforces this: <code>BACKTEST_EVIDENCE</code> is empty by design, so every strategy is
+  blocked from real picks. <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">See the enforcement code</a>.</div>
+
+  <h2 id="gates">The gates</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Gate</th><th>Definition / threshold</th><th>What it protects against</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal" id="g1"><td>G1 — Minimum sample</td><td>n ≥ 500 bets (spreads/totals), n ≥ 300 (props/combos), n ≥ 200 (low-frequency spots) in backtest.</td><td>Small-sample noise; a 12–5 stretch is meaningless at n=17.</td><td>Internal; binomial variance math (derivable) — per-strategy gate lists in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">strategies.json</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G2 — Positive ROI</td><td>ROI &gt; 0 after commission (standard -110 ⇒ breakeven rate 110/210 ≈ 52.38%; derived arithmetic — <a href="correlation.html#parlay-math">math</a>).</td><td>Strategies that win often but lose money.</td><td><a href="https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/">market-commission convention (Compton &amp; Sigler)</a></td></tr>
+      <tr data-row data-row-type="internal" id="g3"><td>G3 — Positive closing-line value</td><td>Mean CLV &gt; 0 over the sample: our taken price must beat the closing price on average.</td><td>Being right for the wrong reason; CLV is the forward-looking skill proxy because the close is fair (Dare/Dennis/Paul 2015).</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare/Dennis/Paul (2015)</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G4 — Calibration</td><td>Brier score of our fair probabilities must beat the market's Brier score on the same events, and predicted win rates must match observed rates within ±3 pts per decile.</td><td>Confident-but-wrong probabilities (mispriced edges compound into mis-sized stakes).</td><td>Internal; Brier (1950) scoring is standard probability practice (derivable method) — <a href="suggestions.html">dashboard proposal P-4</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G5 — Walk-forward</td><td>All evidence must be walk-forward (train on past, bet next game only, roll forward). No in-sample declarations.</td><td>Look-ahead bias and overfitting.</td><td>Internal method — pre-registered in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">strategies.json</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G6 — Drawdown limit</td><td>Max historical drawdown ≤ 25% of bankroll under quarter-Kelly staking; 10% live kill-switch suspends the strategy pending review.</td><td>Ruin risk; Kelly grows fast when variance is underestimated.</td><td><a href="https://masters.donntu.ru/2009/fvti/kravchenko/library/article2.htm">Kelly (1956)</a> basis; thresholds internal policy</td></tr>
+      <tr data-row data-row-type="internal"><td>G7 — Significance</td><td>t-stat ≥ 2.0 on per-bet returns (≈ p&lt;0.05) AND binomial test on cover rate vs. breakeven rate rejects fairness at 95%.</td><td>Luck: at 52.38% breakeven, even a true 55% bettor needs hundreds of bets for 95% confidence.</td><td>Standard statistics (derivable); sample burden consistent with <a href="https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/">10k-game market studies</a></td></tr>
+      <tr data-row data-row-type="internal" id="g8"><td>G8 — No cherry-picking</td><td>Rules fixed and pre-registered before the test window; parameter changes reset the backtest clock; the ledger of every historical pick is immutable.</td><td>Backtesting to a chosen rule-set (the main way luck is laundered into "skill").</td><td>Internal method; enforced via <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">pre-registration file</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G9 — Regime check</td><td>Edge must persist across seasons, months, and both conferences; not dependent on one roster era or rule change.</td><td>Regime-dependent artifacts (e.g., pre-PPP rest patterns).</td><td>Internal; regime context from <a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">PPP (2023)</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G10 — Portfolio cap</td><td>Positions per slate: ≤8 singles, ≤2 parlays, ≤2 SGPs; total exposure ≤12% bankroll; pairwise |corr| ≤ 0.35.</td><td>Concentration risk making a good strategy blow up.</td><td><a href="correlation.html#caps">correlation caps</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G11 — Correlation matrix required</td><td>Combo strategies may not trade until the matrix in <code>data/demo/correlation.demo.csv</code> is replaced with coefficients estimated from historical co-occurrence data.</td><td>Guessing covariance → mispriced joint probability → mispriced SGP edge.</td><td><a href="correlation.html#estimation">estimation method</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G12 — SGP reprice</td><td>Same-game combos must be repriced by us (joint probability incl. covariance) and only bet when edge ≥ 2 pts over offered implied joint probability.</td><td>Books already price correlation into SGPs (house rules); ignoring it is negative-EV.</td><td><a href="https://www.fanduel.com/fanduel-sportsbook-house-rules-pa">FanDuel house rules</a> · <a href="https://www.goldennugget.com/globalassets/lake-charles/_pdfs/draftkings-gnlc-retail-house-rules.pdf">DraftKings rules</a></td></tr>
+      <tr data-row data-row-type="internal"><td>G13 — Parlay haircut</td><td>Multi-game parlay EV must exceed the best single-leg EV after subtracting a documented correlation/compounding haircut.</td><td>Parlays amplify variance and book margin; must clear a higher bar than singles.</td><td><a href="correlation.html#parlay-math">compounding math</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="luck">How luck is removed (and skill proven) — four independent tests</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Test</th><th>What it shows</th><th>Pass condition</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Cover-rate binomial test</td><td>Whether win rate exceeds the commission breakeven rate (52.38% at -110) more than chance allows.</td><td>Reject "fair coin at breakeven" at 95% given n (G7).</td><td>Requires n ≈ 600+ for a true 55% edge to be distinguishable at 95% — computed via standard binomial power (derivable arithmetic; <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">tool computes exact n</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>CLV test</td><td>Whether we beat the closing line on average — the market's fairest price (biases removed by close).</td><td>Mean CLV &gt; 0 with t-stat ≥ 2.0 (G3+G7).</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Closing-line fairness: Dare/Dennis/Paul (2015)</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Calibration / Brier</td><td>Whether our stated probabilities are honest, not just profitable in one sample.</td><td>Brier better than market's; decile errors ≤ ±3 pts (G4).</td><td>Internal standard method — see <a href="suggestions.html">P-4 dashboard</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Bootstrap drawdown</td><td>Resample bet sequence 10,000× to estimate the distribution of future drawdowns under the staking policy.</td><td>95th-percentile drawdown ≤ 25% (G6).</td><td>Internal standard method; Kelly stakes per <a href="https://masters.donntu.ru/2009/fvti/kravchenko/library/article2.htm">Kelly (1956)</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="staking">Staking policy</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th>Policy</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Fraction</td><td>Quarter-Kelly (f*/4), capped at 2% per single bet and 1% per parlay/SGP combo.</td><td>Full Kelly is growth-optimal but variance-brutal; quarter-Kelly sacrifices ~little growth for much less variance (Kelly (1956) <a href="https://masters.donntu.ru/2009/fvti/kravchenko/library/article2.htm">original</a>; fractions standard practice).</td></tr>
+      <tr data-row data-row-type="internal"><td>Worked example</td><td>p=0.545 at -110 → full Kelly f* = 4.45% → stake 1.11% of bankroll.</td><td>Arithmetic from the Kelly formula (verifiable in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generate_picks_lab.py</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Kill-switches</td><td>−10% rolling drawdown suspends a strategy; edge decay below 1.0% mean CLV over 100 bets suspends it.</td><td>Live protection the backtest cannot provide (<a href="#luck">bootstrap drawdown test</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Units, not dollars</td><td>All stakes tracked in bankroll fractions; actual currency conversion is an owner decision (see <a href="questions.html#unanswered">bankroll question</a>).</td><td>Keeps skill measurement independent of bankroll size</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Acceptance workflow</h2>
+  <ol>
+    <li>Strategy defined and frozen in <code>data/strategies_lab.json</code> (pre-registration = <a href="validation-gates.html#g8">G8</a>).</li>
+    <li>Backtest harness runs walk-forward (G5) on historical odds archive — <strong>needs the archive decision first</strong> (<a href="questions.html#unanswered">Q-B3</a>).</li>
+    <li>Evidence appended to <code>BACKTEST_EVIDENCE</code> in <code>tools/generate_picks_lab.py</code> with dates, n, ROI, CLV, t-stat, Brier, drawdown.</li>
+    <li>Independent re-run by a different session re-computes the numbers (four-eyes principle, logged in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md">COORDINATION.md</a>).</li>
+    <li>Only then does the strategy flip to <code>active</code>, and the generator starts emitting picks for it.</li>
+  </ol>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Leaderboard</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-leaderboard">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Leaderboard competition</h1>
+  <p class="lede">Strategies are the entrants. The leaderboard ranks them on risk-adjusted, luck-discounted
+  performance and pays rewards to the top tier — designed so that only demonstrated skill (not variance) can
+  win. The full design below is a proposal awaiting your sign-off via the
+  <a href="suggestions.html">Suggestions</a> workflow before any scoring goes live.</p>
+
+  <div class="note blocked"><strong>Leaderboard state: pre-launch.</strong> Scoring requires settled, gate-passed
+  bets, which require (a) odds/results feeds and (b) an activated strategy. Both are pending —
+  <a href="questions.html#unanswered">open questions Q-B1…Q-B5</a> decide launch parameters.</div>
+
+  <h2>Scoring formula (proposal P-L1)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Component</th><th>Points</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Profit</td><td>+100 × ROI (in units) (<a href="validation-gates.html#gates">G2</a>)</td><td>Raw performance, but only the base of the score</td></tr>
+      <tr data-row data-row-type="internal"><td>CLV</td><td>+50 × mean CLV (fraction)</td><td>Rewards beating the fair closing line — the skill signal (<a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare/Dennis/Paul 2015</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Calibration</td><td>+25 × max(0, market Brier − our Brier) normalized</td><td>Rewards honest probabilities (<a href="validation-gates.html#luck">G4</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Drawdown penalty</td><td>−25 × (max drawdown / 25%) capped at −25 (<a href="validation-gates.html#staking">staking</a>)</td><td>Punishes variance without punishing aggression outright</td></tr>
+      <tr data-row data-row-type="internal"><td>Sample bonus</td><td>+10 once n ≥ 300 settled bets (<a href="validation-gates.html#gates">G1</a>)</td><td>Encourages durable, testable strategies</td></tr>
+      <tr data-row data-row-type="internal"><td>Correlation breach</td><td>−50 per breach of pairwise cap</td><td>Keeps entrants inside the risk envelope (<a href="correlation.html#caps">caps</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="tiers">Tiers and rewards (proposal P-L2)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tier</th><th>Qualification</th><th>Reward share of pool</th><th>Movement rules</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Gold</td><td>Top 3 strategies by score, n ≥ 300, no breaches</td><td>50%</td><td>Promoted from Silver after one qualifying month (<a href="#tiers">rules</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Silver</td><td>Next 5, n ≥ 200</td><td>30%</td><td>Up/down between Silver and Bronze monthly (<a href="#tiers">rules</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Bronze</td><td>All other gate-passed strategies, n ≥ 100</td><td>20%</td><td>Two consecutive months bottom-decile → strategy archived (<a href="#tiers">rules</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Research</td><td>n &lt; 100 or gates pending</td><td>0% (no rewards)</td><td>Must graduate via <a href="validation-gates.html">gates</a> to earn anything</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Anti-gaming rules</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Rule</th><th>Definition</th><th>Blocks</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Pre-registration</td><td>Strategy rules frozen in <code>data/strategies_lab.json</code> before any scoring; edits reset the sample to zero.</td><td>Rule-tweaking until the backtest looks good (<a href="validation-gates.html#g8">G8</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Walk-forward only</td><td>Every scored bet was produced by the model as it existed at pick time.</td><td>Hindsight bets (<a href="validation-gates.html#gates">G5</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Immutable ledger</td><td>All picks logged at issuance (JSON, timestamped) — no post-hoc additions.</td><td>Score inflation after results are known (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">ledger emitted by generator</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Units, not currency</td><td>Scoring in bankroll-fraction units; stakes follow the staking policy, not discretionary sizing.</td><td>Stake-sizing games (betting more only when confident after the fact) (<a href="validation-gates.html#staking">policy</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Correlation envelope</td><td>Pairwise cap and slate composition caps enforced mechanically.</td><td>Hidden concentration risk (<a href="correlation.html#caps">caps</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Minimum sample for rewards</td><td>No reward payout before n ≥ 300 settled bets at the qualification sample (G1).</td><td>Lucky short campaigns cashing out (<a href="validation-gates.html#gates">G1</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Current standings</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Strategy</th><th>Tier</th><th>n</th><th>ROI</th><th>Mean CLV</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>All 12 strategies (S01–S12)</td><td><span class="badge b-res">RESEARCH/CANDIDATE</span></td><td class="flag-unverified">—</td><td class="flag-unverified">—</td><td class="flag-unverified">—</td><td class="flag-unverified">—</td><td>— <a href="flagged-for-review.html#f7">F-7</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">All performance cells are blank by rule: no settled bets exist. They fill only from the
+  immutable ledger once feeds are live — never manually. See <a href="flagged-for-review.html#f7">Flagged F-7</a>.</p>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

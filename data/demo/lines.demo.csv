@@ -1,0 +1,9 @@
+game_id,market,side,our_line,our_odds_american,fair_prob,market_line,market_odds_american,strategy_id,line_status
+DEMO-G1,SPREAD,HOME,-3.5,-110,0.540,,,S03,originated - no market feed connected
+DEMO-G1,TOTAL,,226.5,-110,0.528,,,-,originated - no market feed connected
+DEMO-G2,SPREAD,AWAY,+5.0,-110,0.525,,,-,originated - no market feed connected
+DEMO-G2,PLAYER_PROP,Demo Player 1 (G) PRA,27.5,-110,0.545,,,S06,originated - no market feed connected
+DEMO-G3,TOTAL,,219.0,-110,0.521,,,-,originated - no market feed connected
+DEMO-G3,PLAYER_PROP,Demo Player 2 (F) Points,18.5,-110,0.542,,,S06,originated - no market feed connected
+DEMO-G4,SPREAD,HOME,-1.5,-108,0.530,,,-,originated - no market feed connected
+DEMO-G5,TOTAL,,223.5,-112,0.522,,,-,originated - no market feed connected

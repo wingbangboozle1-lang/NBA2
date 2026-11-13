@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Flagged for Review</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-flagged-for-review">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Flagged for review</h1>
+  <p class="lede">Everything irregular, unverifiable, or uncertain — published openly so you can review after
+  the site is live and request changes. These items do <strong>not</strong> block the launch; blank values were
+  left blank rather than guessed.</p>
+
+  <h2>Irregularities (I-1 … I-4)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Irregularity</th><th>Impact</th><th>Handling</th><th>Links</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal" id="i1"><td>I-1</td><td><strong>Empty repo.</strong> The repository contained only a one-line README ("# NBA2") at the base commit — there was no pre-existing code, data, or site to review line-by-line, contrary to the working assumption that content existed.</td><td>All content on this site is newly authored; a "line-by-line review of existing content" had nothing to review.</td><td>Documented here and in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md">COORDINATION.md</a>; everything is built verification-first instead.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/commit/623b4c2fff949848ab272d84871a70ec357f7701">base commit 623b4c2</a></td></tr>
+      <tr data-row data-row-type="internal" id="i2"><td>I-2</td><td><strong>No live data feeds.</strong> No schedule, injury-report ingestion, or odds feed is connected, so pick generation cannot produce real picks and runs in DEMO mode on synthetic data.</td><td>All current-season fixture/stat/odds cells are blank; the picks page shows demo output only.</td><td>Generator is live and correctly refuses real picks; unlock conditions listed on <a href="picks.html">Slate Picks</a>; discovery paths in <a href="questions.html#unanswered">Q-B2/Q-B3</a>. Verified static snapshots from session arena-71f94203 (31-game slate + official 11/13 injury rows) are cross-linked on <a href="picks.html">Picks</a> — they are point-in-time, not feeds.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generator code</a></td></tr>
+      <tr data-row data-row-type="internal" id="i3"><td>I-3</td><td><strong>Data-acquisition compliance risk.</strong> NBA platform Terms of Use prohibit unauthorized spidering/scraping/harvesting, and the stats API is not a documented public interface.</td><td>Automated bulk collection of nba.com data without licensing could violate terms.</td><td>Recommendation recorded: use licensed channels (Sportradar is the exclusive official betting-data distributor) or explicit permission before automating collection.</td><td><a href="https://www.nba.com/nuggets/terms-of-use">NBA platform terms</a> · <a href="https://www.sportico.com/business/sports-betting/2021/nba-sportradar-data-equity-1234646790/">Sportradar deal (Sportico)</a></td></tr>
+      <tr data-row data-row-type="internal" id="i4"><td>I-4</td><td><strong>Current-season fixtures not verifiable at build time.</strong> Without a schedule feed, 2026-27 game-level data cannot be verified, so no fixture-level values appear anywhere.</td><td>The picks page names the verified calendar facts only (season dates, Cup nights) and leaves fixtures blank.</td><td>Feeds to resolve via <a href="questions.html#unanswered">Q-B2</a>; official schedule release cited for calendar-level facts.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com schedule release</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Verification notes / unresolved citations (F-1 … F-8)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Item</th><th>Status</th><th>Links</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal" id="f1"><td>F-1</td><td>PPP fine amounts ($100k first, $250k second, +$1M each subsequent) are reported by NBA.com <em>citing ESPN</em>; the league's own release does not state the amounts.</td><td><span class="badge b-warn">UNVERIFIED OFFICIALLY</span> — used with attribution; treat as reported, not official numbers.</td><td><a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">NBA.com (attribution note)</a></td></tr>
+      <tr data-row data-row-type="internal" id="f2"><td>F-2</td><td>KSA licence register (Kansspelwijzer) contents were not fetched at build time; the register must be checked at decision time for any specific operator.</td><td><span class="badge b-warn">CHECK AT DECISION TIME</span> — regulator identity verified; register contents pending.</td><td><a href="https://kansspelautoriteit.nl">kansspelautoriteit.nl</a></td></tr>
+      <tr data-row data-row-type="internal" id="f3"><td>F-3</td><td>65-game rule details (20-minute condition, near-miss and injury protections) come from The Athletic's reporting of the 2023 CBA, corroborated by multiple outlets; the CBA's primary text was not fetched directly.</td><td><span class="badge b-warn">SECONDARY SOURCE</span> — verify against CBA text (NBPA-published) before relying on precise exceptions.</td><td><a href="https://www.nytimes.com/athletic/4421655/2023/04/17/cba-minimum-games-mvp-awards/">The Athletic</a></td></tr>
+      <tr data-row data-row-type="internal" id="f4"><td>F-4</td><td>Dare, Dennis &amp; Paul (2015) full text is paywalled; conclusions verified from the published abstract and citing literature.</td><td><span class="badge b-warn">ABSTRACT-LEVEL</span> — core finding (open-line bias on absences, fair close) is consistently described by citing papers.</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">ScienceDirect abstract</a></td></tr>
+      <tr data-row data-row-type="internal" id="f5"><td>F-5</td><td>Season-opening game times (e.g., 3 p.m. ET tip) come from secondary schedule summaries; the official NBA.com release verifies the date and matchups but not every tip time.</td><td><span class="badge b-warn">SECONDARY SOURCE</span> — date/structure verified officially; tip times not asserted on this site.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">official release</a></td></tr>
+      <tr data-row data-row-type="internal" id="f6"><td>F-6</td><td>NBA Cup 2026 final venue (Hinkle Fieldhouse, Indianapolis) verified from the official Ticketmaster event listing, not yet from a league press release.</td><td><span class="badge b-warn">SECONDARY-OFFICIAL</span> — corroborated by multiple outlets.</td><td><a href="https://www.ticketmaster.com/emirates-nba-cup-tickets/artist/3050896">Ticketmaster listing</a></td></tr>
+      <tr data-row data-row-type="internal" id="f7"><td>F-7</td><td>All numeric strategy-performance cells (ROI, CLV, n) are blank because no settled bets exist; the correlation matrix contains placeholder values clearly marked DEMO.</td><td><span class="badge b-warn">BY DESIGN</span> — values are never inferred; they fill only from the immutable ledger and the estimation pipeline.</td><td><a href="correlation.html#matrix">matrix page</a> · <a href="leaderboard.html">leaderboard</a></td></tr>
+      <tr data-row data-row-type="internal" id="f8"><td>F-8</td><td>Designation probabilities (e.g., "Questionable ≈ 50%") sometimes quoted by third-party sites have no official basis; this site does not use them.</td><td><span class="badge b-warn">FOLKLORE — EXCLUDED</span> — designations treated as uncertainty states; probabilities to be estimated internally from history.</td><td><a href="injuries-rotations.html#policy">policy page note</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What was checked and passed</h2>
+  <ul class="checklist">
+    <li>Every factual table row across all 13 pages carries a link to its source (enforced by <code>tools/verify_site.py</code> — the build fails otherwise).</li>
+    <li>All internal links and anchors resolve; no unfinished-content markers anywhere.</li>
+    <li>Math shown on <a href="correlation.html">Correlation</a> is derivable arithmetic, labeled DERIVED, and reproducible from <code>tools/generate_picks_lab.py</code>.</li>
+    <li>Demo data is confined to <code>data/demo/*</code>, uses synthetic player names, and stamps <code>demo:true</code> in output.</li>
+    <li>No real player is assigned any synthetic injury status; no live odds or stats are asserted anywhere.</li>
+  </ul>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>
