@@ -10,8 +10,8 @@ Shared task board for parallel agent sessions. Each session works on its own bra
 - Verification: Site deployed to GitHub Pages (https://wingbangboozle1-lang.github.io/NBA2/); Pages workflow run 43519046185 completed successfully
 - PR #1 merged into main on 2026-11-13 (merge commit 84f9b94)
 
-### Session arena/23927d63-nba2 (current branch)
-- Status: active
+### Session arena/23927d63-nba2
+- Status: done
 - Session ID: arena-23927d63
 - Base commit: 623b4c2fff949848ab272d84871a70ec357f7701
 
@@ -21,7 +21,7 @@ Shared task board for parallel agent sessions. Each session works on its own bra
 |------|--------|-------|-------|---------|--------------|----------------|
 | Initial repository review & coordination board | done | arena/36543e84-nba2 | COORDINATION.md, README.md | https://github.com/wingbangboozle1-lang/NBA2 | Repo initially contained only README.md | None |
 | Static dashboard with executive summary, strategy hypotheses, validation gates | done | arena/36543e84-nba2 | index.html, flagged.html, styles.css, app.js | Official NBA sources linked per row | HTML parsed with Python HTMLParser; no fabricated values | All numerical values unverified/blank |
-| Create COORDINATION.md (this session) | done | arena-23927d63 | COORDINATION.md | N/A | N/A | None |
+| Create COORDINATION.md | done | arena-23927d63 | COORDINATION.md | N/A | N/A | None |
 | Repo review & irregularity flag | done | arena-23927d63 | README.md, COORDINATION.md | https://github.com/wingbangboozle1-lang/NBA2 | Repo contained only README.md initially | None |
 | NBA betting strategies research | done | arena-23927d63 | pages/strategies.html, data/strategies.json | NBA.com, RG, BetUS, FantasyTeamAdvice, Basketball-Reference | Correlation values are research estimates | All correlation values unverified |
 | Upcoming picks generator (3-day slate) | done | arena-23927d63 | pages/picks.html, data/picks.json | NBA official injury report PDFs | No picks generated; lines blank | Originated lines unverified |
@@ -32,8 +32,14 @@ Shared task board for parallel agent sessions. Each session works on its own bra
 | Questions / info / answers pre-decision | done | arena-23927d63 | pages/questions.html | N/A | N/A | N/A |
 | Flagged for Review page | done | arena-23927d63 | pages/flagged-review.html | All above sources | N/A | N/A |
 | Site CSS & landing page | done | arena-23927d63 | index.html, css/style.css | N/A | N/A | N/A |
-| GitHub Pages deployment | in progress | arena-23927d63 | .github/workflows/deploy.yml | GitHub Pages docs | Pages already configured on main | Needs merge to main for deploy |
-| Final integration & merge to main | in progress | arena-23927d63 | All files | TBD | Pending | Pending |
+| GitHub Pages deployment | done | arena-23927d63 | .github/workflows/deploy.yml | GitHub Pages docs | Pages built successfully; site live | None |
+| Final integration & merge to main | done | arena-23927d63 | All files | PR #3 | PR #3 merged into main | None |
+
+## PR & Merge Results
+- PR #3: https://github.com/wingbangboozle1-lang/NBA2/pull/3
+- Merged into main via `gh pr merge 3 --merge`
+- Site live: https://wingbangboozle1-lang.github.io/NBA2/
+- Pages status: built (verified via GitHub Pages API)
 
 ## Rules
 - Never start a task another session has claimed.
@@ -46,3 +52,5 @@ Shared task board for parallel agent sessions. Each session works on its own bra
 
 ## Conflict Resolution Log
 - COORDINATION.md: Merged session arena/36543e84-nba2 content (HEAD) with session arena/23927d63-nba2 task table. Preserved both sessions' verification notes and source links.
+- index.html: Session arena/36543e84-nba2 version kept at root (served by Pages). Session arena/23927d63-nba2 multi-page dashboard pages preserved under pages/ directory.
+- styles.css: Both versions kept (root styles.css from session 1; css/style.css from session 2).
