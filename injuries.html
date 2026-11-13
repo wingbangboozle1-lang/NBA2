@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Injuries &amp; Game Flow — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html" class="active">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Injuries &amp; Game Flow</div>
+        <div class="page-sub">
+          Tracks how injuries affect rotation minutes and production, plus game-flow analysis. All player-level injury/minutes values are blank + unverified because the official NBA injury report could not be retrieved.
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <b>Injury data is unavailable from the official source.</b> The official NBA.com injuries page (<code>https://www.nba.com/injuries</code>) returned "Content Unavailable" when fetched. Per the verification rule, all injury, rotation-minutes, and production-impact values below are left <b>blank</b> and flagged <span class="tag tag-unverified">unverified</b>. Nothing is inferred.
+      </div>
+
+      <div class="card">
+        <h2>Injury &amp; rotation impact register (Nov 13–15 slates)</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Player</th><th>Team</th><th>Injury / status</th><th>Expected minutes impact</th><th>Production impact (pts/reb/ast)</th><th>Game-flow impact</th><th>Source</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Game-flow analysis framework</h2>
+        <p>For each upcoming game, assess pace, matchup advantages, and likely game script. Values blank + unverified until calculated from official stats.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Game</th><th>Pace (poss/48)</th><th>Expected game script</th><th>Key matchup</th><th>Injury-adjusted advantage</th><th>Source</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>How injury/minutes data should be captured (method, not values)</h2>
+        <ul style="margin:6px 0 0 18px; color:var(--muted); font-size:0.9rem; line-height:1.7;">
+          <li>Pull the official NBA injury report for each slate date.</li>
+          <li>For each injured player, record: status (out / questionable / probable), expected minutes restriction, and replacement player.</li>
+          <li>Estimate production impact (pts/reb/ast) for the injured player and their likely replacement, sourced from official NBA.com player stats.</li>
+          <td></td>
+          <li>Feed the adjusted minutes into player-prop signals and game-flow analysis before emitting picks.</li>
+          <li>Every value must link to an official source; blank + unverified otherwise.</li>
+        </ul>
+      </div>
+
+      <div class="callout info">
+        <b>Suggested discovery action (see Questions &amp; Answers and Suggestions pages):</b> identify an accessible official injury-report source (NBA.com injury endpoint or team injury reports) and integrate it so this page can be populated with verified values.
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="questions.html">Questions &amp; Answers &rarr;</a> &nbsp;|&nbsp;
+        <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

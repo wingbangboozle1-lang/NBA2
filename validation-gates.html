@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validation Gates — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="validation-gates.html" class="active">Validation Gates</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Validation Gates</div>
+        <div class="page-sub">Each strategy must pass every validation gate before it is used to generate picks. Gate results are blank + unverified until a strategy is actually evaluated against verified data.</div>
+      </div>
+
+      <div class="callout warn">
+        <b>Rule:</b> no strategy produces a pick unless it passes <i>all</i> gates below. Gate outcomes and thresholds are left blank until verified against official data and a sportsbook market source.
+      </div>
+
+      <div class="card">
+        <h2>Validation gate register</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Gate ID</th><th>Gate</th><th>What it checks</th><th>Pass threshold</th><th>Result</th><th>Evidence / source</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GATE-01</td><td>Official-source baseline</td><td>Every input value traced to an official source (NBA.com) or explicitly flagged unverified.</td><td>100% of values sourced or blank</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-02</td><td>No inferred values</td><td>No line, odds, or probability is inferred or filled in.</td><td>Zero inferred values</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-03</td><td>Edge vs sportsbook market</td><td>Originated line differs from sportsbook line by a validated amount.</td><td>Edge &gt; 0 with sportsbook source linked</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-04</td><td>Correlation accounted</td><td>Parlay / prop-combo legs have correlation values determined and applied.</td><td>Correlation table complete</td><td class="blank">— blank —</td><td><a href="correlation.html">correlation.html</a></td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-05</td><td>Injury / rotation adjusted</td><td>Injury impact on minutes and production reflected in the signal.</td><td>Injury status checked for key players</td><td class="blank">— blank —</td><td><a href="injuries.html">injuries.html</a></td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-06</td><td>Slate within 3 days</td><td>Pick is for an upcoming game at most 3 days in advance.</td><td>Game date − today &le; 3 days</td><td class="blank">— blank —</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>GATE-07</td><td>Skill-based, not luck</td><td>Signal derives from repeatable team/player stats, not a one-off outcome.</td><td>Documented repeatable signal basis</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Gate evaluation log</h2>
+        <p>Each time a strategy is evaluated, record the result here. No evaluations have been performed yet, so all rows are blank + unverified.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Evaluation ID</th><th>Strategy</th><th>Date evaluated</th><th>Gates passed (of 7)</th><th>Result</th><th>Notes</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">—</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="correlation.html">Correlation Values &rarr;</a> &nbsp;|&nbsp;
+        <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

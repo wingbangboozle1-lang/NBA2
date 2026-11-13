@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correlation Values — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="validation-gates.html">Validation Gates</a>
+      <a href="correlation.html" class="active">Correlation Values</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Correlation Values</div>
+        <div class="page-sub">Correlation between parlay legs and player-prop combo legs is determined and applied so multi-leg tickets are priced correctly. All correlation values are blank + unverified until calculated from verified data.</div>
+      </div>
+
+      <div class="callout warn">
+        <b>Rule:</b> correlation values are never inferred. A blank value means the correlation has not been determined from verified data. Parlays and prop combos cannot pass validation gate GATE-04 until their correlation values are populated and sourced.
+      </div>
+
+      <div class="card">
+        <h2>Leg-to-leg correlation matrix (framework)</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Pair ID</th><th>Leg A</th><th>Leg B</th><th>Correlation coefficient</th><th>Method</th><th>Data source</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">—</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Player-prop correlation (framework)</h2>
+        <p>Correlation between a player prop and the game total / teammate props (e.g., player points vs. game over-under).</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Combo ID</th><th>Player prop</th><th>Related market</th><th>Correlation coefficient</th><th>Data source</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">—</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>How correlation is determined (method, not values)</h2>
+        <ul style="margin:6px 0 0 18px; color:var(--muted); font-size:0.9rem; line-height:1.7;">
+          <li>Use verified official NBA.com player/team stats as the data input.</li>
+          <li>Compute the Pearson (or Spearman) correlation between the two legs over a historical window.</li>
+          <li>Adjust the parlay implied probability by the correlation; do not treat legs as independent when they are not.</li>
+          <li>Record the coefficient, the window, and the source link; flag unverified if any input is blank.</li>
+          <li>Only populated correlation values may be used in validation gate GATE-04.</li>
+        </ul>
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="picks.html">Picks &rarr;</a> &nbsp;|&nbsp;
+        <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

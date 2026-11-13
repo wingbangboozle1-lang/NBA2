@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html" class="active">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Suggestions</div>
+        <div class="page-sub">A dedicated section for suggestions to improve the site and decision making. Review each suggestion, choose the best path, then implement. No suggestion is applied automatically.</div>
+      </div>
+
+      <div class="callout info">
+        <b>Process:</b> someone reviews each suggestion, chooses the best path, and only then implements a change. Suggestions are logged here first and are not implemented by default.
+      </div>
+
+      <div class="card">
+        <h2>Site-improvement suggestions (for decision making)</h2>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-001</div>
+          <h4>Integrate a sportsbook market source for lines and odds</h4>
+          <p>All betting-line values are blank because NBA.com does not publish odds. Connect an accessible licensed-sportsbook source (or an odds API) so originated lines can be compared to market lines and validation gate GATE-03 can be evaluated.</p>
+          <div class="meta">Impact: high &bull; Owner: data/engineering &bull; Path: choose a source, confirm access, add line table, mark verified/unverified per value.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-002</div>
+          <h4>Integrate an official injury-report source</h4>
+          <p>nba.com/injuries returned "Content Unavailable." Find an accessible official injury endpoint (NBA.com stats API or team injury reports) so rotation-minutes and production-impact values can be verified and fed into picks.</p>
+          <div class="meta">Impact: high &bull; Owner: data/engineering &bull; Path: locate source, test fetch, populate injuries.html, flag unverified values.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-003</div>
+          <h4>Extract the 2026-27 standings table</h4>
+          <p>The standings page exists but its table is JavaScript-rendered and was not captured. Use the official NBA stats API or a static standings export so team W/L records are verified.</p>
+          <div class="meta">Impact: medium &bull; Owner: data/engineering &bull; Path: call standings endpoint, parse W/L, update standings references.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-004</div>
+          <h4>Confirm Nov 14 and Nov 15 matchups</h2>
+          <p>Only game counts were extracted for those dates. Fetch the official schedule for each date so picks can be generated for the full 3-day window.</p>
+          <div class="meta">Impact: medium &bull; Owner: data/engineering &bull; Path: fetch schedule for 11/14 and 11/15, list matchups, mark verified.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-005</div>
+          <h4>Build and validate strategies against all gates</h2>
+          <p>No strategy has passed GATE-01–GATE-07. Define signal logic, compute correlation values, and run the gate evaluation log before emitting any pick.</p>
+          <div class="meta">Impact: high &bull; Owner: strategy/quant &bull; Path: implement STRAT-001/002/003, run gates, record results.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-006</div>
+          <h4>Add a pick ledger with outcomes</h2>
+          <p>Track every emitted pick, its strategy, line, result, and whether it was validated, so the leaderboard rewards genuinely top-performing strategies.</p>
+          <div class="meta">Impact: high &bull; Owner: product/engineering &bull; Path: add ledger table, outcome column, leaderboard ranking.</div>
+        </div>
+        <div class="sugg">
+          <div class="sugg-id">SUGG-007</div>
+          <h4>Add a "review before implement" gate for site changes</h2>
+          <p>Require that any change to the site or data be reviewed against this suggestions list and approved before deployment, so unverified values are never silently filled in.</p>
+          <div class="meta">Impact: medium &bull; Owner: product &bull; Path: add change-review checklist to deployment process.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Suggestion review log</h2>
+        <p>Record who reviewed each suggestion, the path chosen, and whether it was implemented. Empty until the first review.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Suggestion</th><th>Reviewed by</th><th>Date</th><th>Path chosen</th><th>Implemented?</th><th>Notes</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">— blank —</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="questions.html">Questions &amp; Answers &rarr;</a> &nbsp;|&nbsp;
+        <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

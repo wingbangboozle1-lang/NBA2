@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flagged for Review — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" class="active" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" class="active" style="color:#f2a14f;"><span style="width:16px;height:16px;border-radius:4px;background:#f2a14f;display:inline-block;"></span> Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Flagged for Review</div>
+        <div class="page-sub">Unverified items and irregularities are published here. They do <b>not</b> block the merge. Review each item, confirm against an official source, then request changes or correct the data.</div>
+      </div>
+
+      <div class="callout warn">
+        <b>Purpose:</b> this is the shared "Flagged for Review" page referenced in COORDINATION.md. Flagged irregularities and unverified items are listed with source links so they can be reviewed after the site is live. Nothing here is inferred or filled in.
+      </div>
+
+      <div class="card">
+        <h2>Flagged irregularities &amp; unverified items</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Ref</th><th>Item</th><th>Where it appears</th><th>Source link</th><th>Reason flagged</th><th>Action needed</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FLAG-001</td><td>All betting lines / odds (spread, ML, total, player props)</td><td>lines.html, picks.html</td><td class="blank">— no official NBA source (sportsbook only)</td>
+                <td>NBA.com does not publish betting lines; values cannot be confirmed from an official source.</td><td>Integrate a sportsbook source; confirm each value or leave blank + unverified.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-002</td><td>Official NBA injury report</td><td>injuries.html, questions.html (Q3)</td><td><a href="https://www.nba.com/injuries" target="_blank" rel="noopener">nba.com/injuries</a> (returned "Content Unavailable")</td>
+                <td>Page did not return content; injury/minutes/production values cannot be confirmed.</td><td>Find an accessible official injury source; populate or keep blank + unverified.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-003</td><td>2026-27 standings W/L table</td><td>executive-summary.html (Q4)</td><td><a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a> (table JS-rendered, not captured)</td>
+                <td>Standings page exists but table was not extracted from the fetch.</td><td>Extract W/L per team via official NBA stats API or static export; mark verified.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-004</td><td>Nov 14 and Nov 15 matchups</td><td>picks.html, questions.html (Q5)</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a> (only counts extracted: 5 and 9)</td>
+                <td>Game counts confirmed, but specific matchups not extractable from the fetched page.</td><td>Fetch official schedule for 11/14 and 11/15; list matchups or keep blank + unverified.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-005</td><td>Validated strategies and emitted picks</td><td>strategies.html, picks.html, validation-gates.html</td><td><a href="validation-gates.html">validation-gates.html</a></td>
+                <td>No strategy has passed gates GATE-01–GATE-07; no pick has been emitted.</td><td>Build strategies, run gates, determine correlation, then emit picks only from validated strategies.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-006</td><td>Correlation values for parlay / prop-combo legs</td><td>correlation.html</td><td><a href="correlation.html">correlation.html</a></td>
+                <td>All correlation values blank; not determined from verified data.</td><td>Compute from verified official stats; source each coefficient or leave blank.</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>FLAG-007</td><td>Repo started essentially empty</td><td>REPO-REVIEW.md</td><td class="blank">local repository (Initial commit: README.md only)</td>
+                <td>Repository contained only "# NBA2"; all site/content created in this session.</td><td>Review REPO-REVIEW.md; confirm no pre-existing data was discarded.</td><td><span class="tag tag-blank">not applicable</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Verification policy applied</h2>
+        <ul style="margin:6px 0 0 18px; color:var(--muted); font-size:0.9rem; line-height:1.7;">
+          <li>Every table row that presents a value carries a source link to an official site.</li>
+          <li>If a value cannot be confirmed from an official source, it is left <b>blank</b> and flagged <span class="tag tag-unverified">unverified</span>.</li>
+          <li>Nothing is inferred or filled in.</li>
+          <li>Flagged items do <b>not</b> block the merge; they are published here for review.</li>
+        </ul>
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="questions.html">Questions &amp; Answers &rarr;</a> &nbsp;|&nbsp;
+        <a href="sources.html">View all sources</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

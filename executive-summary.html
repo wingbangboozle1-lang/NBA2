@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive Summary — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html">Strategies</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html" class="active">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html">Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Executive Summary</div>
+        <div class="page-sub">Important details about the NBA2 originated-lines system, current status, and what must happen before any betting decision is reasonably made.</div>
+      </div>
+
+      <div class="card">
+        <h2>What this system is</h2>
+        <p>NBA2 collects, organizes, and analyzes <b>originated NBA lines</b> and strategy signals for <b>single bets, parlays, and player-prop combinations</b>. It operates as a leaderboard competition that rewards top-performing strategies. Every strategy must pass validation gates, correlation values are determined, and the design removes luck so strategies are selectively skill-based. Picks are generated for every upcoming slate up to a maximum of 3 days in advance using originated lines. Injury impact on rotation minutes and production, plus game-flow analysis, are tracked.</p>
+      </div>
+
+      <div class="card">
+        <h2>Current status (as of 2026-11-13)</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Item</th><th>Status</th><th>Detail</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>NBA season</td><td><span class="tag tag-verified">verified</span></td><td>2026-27 regular season</td><td><a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr>
+              <tr><td>Upcoming slates (max 3 days)</td><td><span class="tag tag-verified">verified (counts)</span></td><td>Nov 13 = 9 games, Nov 14 = 5 games, Nov 15 = 9 games</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td></tr>
+              <tr><td>Nov 13 matchups</td><td><span class="tag tag-verified">verified</span></td><td>9 matchups with team records as displayed on NBA.com</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td></tr>
+              <tr><td>Nov 14 / 15 matchups</td><td><span class="tag tag-unverified">unverified</span></td><td>Matchups not extractable from official fetch; game counts only</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td></tr>
+              <tr><td>Player/team stat leaders</td><td><span class="tag tag-verified">verified</span></td><td>11/12/2026 leaders (e.g., Cade Cunningham 52 PTS, Anthony Davis 15 REB)</td><td><a href="https://www.nba.com/stats/overview" target="_blank" rel="noopener">nba.com/stats/overview</a></td></tr>
+              <tr><td>Betting lines / odds</td><td><span class="tag tag-unverified">unverified (blank)</span></td><td>Not published by NBA.com; left blank until a sportsbook source is integrated</td><td class="blank">—</td></tr>
+              <tr><td>Injury report</td><td><span class="tag tag-unverified">unverified (blank)</span></td><td>nba.com/injuries returned "Content Unavailable"</td><td><a href="https://www.nba.com/injuries" target="_blank" rel="noopener">nba.com/injuries</a> (unavailable)</td></tr>
+              <tr><td>Strategies emitted</td><td><span class="tag tag-blank">none</span></td><td>No strategy has passed validation gates yet</td><td class="blank">—</td></tr>
+              <tr><td>Picks emitted</td><td><span class="tag tag-blank">none</span></td><td>No validated pick exists yet</td><td class="blank">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Key findings</h2>
+        <ul style="margin:6px 0 0 18px; color:var(--muted); font-size:0.92rem; line-height:1.7;">
+          <li><b>Verified baseline exists.</b> Official NBA.com provides schedule, game counts, team records (as displayed), and player/team stat leaders. These are the only inputs safe to use.</li>
+          <li><b>No official betting lines.</b> NBA.com does not publish spreads, moneylines, totals, or player props. All originated-line and odds values are blank + unverified.</li>
+          <li><b>Injury report inaccessible.</b> The official NBA injuries page did not return content; all injury/minutes/production values are blank + unverified.</li>
+          <li><b>Standings table not extracted.</b> The standings page exists but its table is JavaScript-rendered and was not captured; team W/L records are blank + unverified except where shown on the games page.</li>
+          <li><b>Zero validated strategies or picks.</b> Until lines and injuries are sourced from verified providers, no strategy can pass validation gates and no pick can be emitted.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>What must happen before any decision</h2>
+        <ol style="margin:6px 0 0 20px; color:var(--muted); font-size:0.92rem; line-height:1.7;">
+          <li>Integrate an accessible sportsbook market source and confirm every line/odds value against it (or leave blank + unverified).</li>
+          <li>Integrate an accessible official injury-report source and confirm injury/minutes/production values.</li>
+          <li>Extract the 2026-27 standings table (W/L per team) from an official source.</li>
+          <li>Confirm Nov 14 and Nov 15 matchups from an official source.</li>
+          <li>Build and validate strategies against all gates (GATE-01–GATE-07) and correlation values.</li>
+          <li>Emit picks only for slates within 3 days, only from strategies that pass all gates.</li>
+          <li>Review the <a href="questions.html">Questions &amp; Answers</a> and <a href="suggestions.html">Suggestions</a> pages before acting.</li>
+        </ol>
+      </div>
+
+      <div class="callout warn">
+        <b>No betting decision should be made from this site in its current state.</b> All line, odds, injury, and pick values are blank + unverified. The site is a framework; verified data must be added before it supports decisions.
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="questions.html">Questions &amp; Answers &rarr;</a> &nbsp;|&nbsp;
+        <a href="suggestions.html">Suggestions &rarr;</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>

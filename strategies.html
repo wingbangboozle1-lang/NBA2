@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategies — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <div style="font-weight:700; font-size:1.06rem;">NBA2</div>
+        <div class="tag">Originated Lines &bull; Strategy Signals &bull; Verified Picks</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html">Dashboard</a>
+      <a href="lines.html">Originated Lines</a>
+      <a href="strategies.html" class="active">Strategies</a>
+      <a href="picks.html">Picks</a>
+      <a href="injuries.html">Injuries &amp; Game Flow</a>
+      <a href="executive-summary.html">Executive Summary</a>
+      <a href="suggestions.html">Suggestions</a>
+      <a href="questions.html">Questions &amp; Answers</a>
+      <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sidebar-head">NBA2</div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><span style="width:16px;height:16px;border-radius:4px;background:var(--accent);display:inline-block;"></span> Dashboard</a></li>
+        <li><a href="lines.html">Originated Lines</a></li>
+        <li><a href="strategies.html" class="active"><span style="width:16px;height:16px;border-radius:4px;background:#6c757d;display:inline-block;"></span> Strategies</a></li>
+        <li><a href="validation-gates.html">Validation Gates</a></li>
+        <li><a href="correlation.html">Correlation Values</a></li>
+        <li><a href="picks.html">Picks (up to 3 days)</a></li>
+        <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+        <li><a href="executive-summary.html">Executive Summary</a></li>
+        <li><a href="suggestions.html">Suggestions</a></li>
+        <li><a href="questions.html">Questions &amp; Answers</a></li>
+        <li><a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a></li>
+        <li><a href="sources.html">Sources</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="section-title">Data status</div>
+      <span class="tag tag-verified" style="margin-right:6px;">Verified</span>
+      <span class="tag tag-unverified" style="margin-right:6px;">Unverified</span>
+      <span class="tag tag-blank">Blank (no official source)</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="page">
+      <div class="page-header">
+        <div class="page-title">Strategies</div>
+        <div class="page-sub">
+          Signal-generation strategies for <b>single bets</b>, <b>parlays</b>, and <b>player-prop bet combos</b>. Treated as a leaderboard competition that rewards top-performing strategies. Each strategy must pass validation gates before it is used to generate picks.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <b>Design principle:</b> remove luck from the equation; build strategies that are selectively skill-based. Signals must come from verified official NBA data (schedule, standings, player/team stats) plus a sportsbook market comparison. Where a value cannot be confirmed from an official source, it is left blank and flagged unverified.
+      </div>
+
+      <div class="card">
+        <h2>Strategy leaderboard (framework)</h2>
+        <p>Strategies are ranked by validated performance on originated lines. No performance figures are filled in until verified.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Strategy ID</th><th>Type</th><th>Markets</th><th>Signal basis</th><th>Validation gate passed?</th><th>Leaderboard rank</th><th>Source / verification</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>STRAT-001</td><td>Single bet</td><td class="blank">— blank —</td><td class="blank">— blank —</td>
+                <td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>STRAT-002</td><td>Parlay (2–4 legs)</td><td class="blank">— blank —</td><td class="blank">— blank —</td>
+                <td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+              <tr>
+                <td>STRAT-003</td><td>Player-prop combo</td><td class="blank">— blank —</td><td class="blank">— blank —</td>
+                <td class="blank">— blank —</td><td class="blank">— blank —</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Strategy types</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Type</th><th>Description</th><th>Legs</th><th>Correlation check required?</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Single bet</td><td>One market on one game (spread / moneyline / total).</td><td>1</td><td>No</td><td><span class="tag tag-blank">framework only</span></td>
+              </tr>
+              <tr>
+                <td>Parlay</td><td>2–4 single bets combined into one ticket; all legs must win.</td><td>2–4</td><td>Yes — see Correlation Values</td><td><span class="tag tag-blank">framework only</span></td>
+              </tr>
+              <tr>
+                <td>Player-prop combo</td><td>Player props (pts / reb / ast / 3PM etc.) combined across one or more games.</td><td>1+</td><td>Yes — see Correlation Values</td><td><span class="tag tag-blank">framework only</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Signal sources (verified baseline)</h2>
+        <p>These are the only inputs confirmed from an official source. Strategy edge values derived from them are blank + unverified until validated.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Signal</th><th>Official source</th><th>Confirmed?</th><th>Link</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Team schedule &amp; game slates</td><td>NBA.com games page</td><td>Yes (game counts; Nov 14/15 matchups blank)</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td><td><span class="tag tag-verified">verified</span></td></tr>
+              <tr><td>Team records</td><td>NBA.com games page / standings</td><td>Partially (records as displayed on games page; standings table JS-rendered)</td><td><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a> · <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td><td><span class="tag tag-unverified">partial</span></td></tr>
+              <tr><td>Player/team stat leaders</td><td>NBA.com stats overview</td><td>Yes (11/12/2026 leaders)</td><td><a href="https://www.nba.com/stats/overview" target="_blank" rel="noopener">nba.com/stats/overview</a></td><td><span class="tag tag-verified">verified</span></td></tr>
+              <tr><td>Injury report</td><td>NBA.com injuries page</td><td>No — page returned "Content Unavailable"</td><td><a href="https://www.nba.com/injuries" target="_blank" rel="noopener">nba.com/injuries</a> (unavailable)</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+              <tr><td>Betting lines / odds</td><td>Licensed sportsbooks (not NBA.com)</td><td>No — not an official NBA source</td><td class="blank">—</td><td><span class="tag tag-unverified">unverified</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>How a strategy becomes a pick</h2>
+        <ol style="margin:6px 0 0 20px; color:var(--muted); font-size:0.9rem; line-height:1.7;">
+          <li>Originate a line for a market using verified official NBA data as baseline.</li>
+          <li>Check the strategy against every validation gate (see Validation Gates page).</li>
+          <li>Determine correlation values between legs (see Correlation Values page) for parlays / prop combos.</li>
+          <li>Adjust for injuries and rotation minutes (see Injuries &amp; Game Flow page).</li>
+          <li>If all gates pass and a validated edge exists vs the sportsbook market, emit a pick for the upcoming slate (max 3 days ahead).</li>
+          <li>Record the pick, its source links, and its unverified/verified status on the Picks page.</li>
+        </ol>
+      </div>
+
+      <footer>
+        <a href="index.html">&larr; Back to Dashboard</a> &nbsp;|&nbsp;
+        <a href="validation-gates.html">Validation Gates &rarr;</a> &nbsp;|&nbsp;
+        <a href="flagged-review.html" style="color:#f2a14f;">Flagged for Review</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="assets/script.js"></script>
+</body>
+</html>
