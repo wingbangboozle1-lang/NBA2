@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategies — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav><div class="wrap"><div class="brand">NBA<span>2</span></div><a href="index.html" class="">Dashboard</a><a href="picks.html" class="">Picks & Lines</a><a href="strategies.html" class="active">Strategies</a><a href="injuries.html" class="">Injuries & Flow</a><a href="correlations.html" class="">Correlations</a><a href="executive-summary.html" class="">Executive Summary</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="">Open Questions</a><a href="flagged.html" class="">Flagged for Review</a></div></nav>
+<div class="wrap">
+<header class="page"><h1>Strategies &amp; Validation Gates</h1><p>Signal-generation strategies, the validation gates each must pass, and the leaderboard.</p></header>
+
+<section class="panel">
+<h2>Strategy definitions</h2>
+<p class="sub">Five strategies covering single bets, parlays, and player-prop combos.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Margin Favorite (Single)</td><td>single</td><td>Single straight bet on the model&#x27;s outright favorite where model win probability clears the edge threshold.</td></tr><tr><td>Spread Value (Single)</td><td>single</td><td>Single bet on the favorite to cover when the model&#x27;s predicted margin is strong (clears the strong-margin threshold).</td></tr><tr><td>Totals (Single)</td><td>single</td><td>Single over/under on the originated total where the predicted-total edge clears the threshold.</td></tr><tr><td>Lean Parlay (Combo)</td><td>parlay</td><td>2–3 single-bet legs from different games, each clearing the edge gate, combined into a parlay (correlation gate: distinct games).</td></tr><tr><td>Player Prop Combo</td><td>prop</td><td>Player-prop combination (over/under player totals). Requires verified player-level data; values left blank until sourced.</td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Validation gates</h2>
+<p class="sub">Every strategy must pass these gates before its signal is eligible.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Gate</th><th>Requirement</th></tr></thead><tbody><tr><td>G1_data_integrity</td><td>All factual inputs trace to an official verified source; model outputs are labeled Model.</td></tr><tr><td>G2_edge</td><td>Model edge clears break-even (0.524) / thresholds.</td></tr><tr><td>G3_correlation</td><td>Multi-leg parlays use legs from distinct games (low correlation); same-game legs excluded.</td></tr><tr><td>G4_sample_size</td><td>Minimum observations before a strategy is trusted (provisional otherwise).</td></tr><tr><td>G5_variance_luck</td><td>Skill-based selection; realized results checked for luck vs skill (see correlations).</td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Strategy validation results</h2>
+<p class="sub">Gate outcomes for each strategy this slate. G4 (sample size) fails for all because no
+results have been tracked yet — strategies are provisional until tracked results prove skill over luck.</p>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Strategy</th><th>Type</th><th>Signals</th><th>G1</th><th>G2</th><th>G3</th><th>G4</th><th>G5</th><th>Status</th><th>Source</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Margin Favorite (Single)</td><td>single</td><td>11</td><td><span class="pill ok">Pass</span></td><td><span class="pill ok">Pass</span></td><td><span class="blank">—</span></td><td><span class="pill bad">Fail</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Provisional</span></td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>2</strong></td><td>Spread Value (Single)</td><td>single</td><td>9</td><td><span class="pill ok">Pass</span></td><td><span class="pill ok">Pass</span></td><td><span class="blank">—</span></td><td><span class="pill bad">Fail</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Provisional</span></td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>3</strong></td><td>Totals (Single)</td><td>single</td><td>0</td><td><span class="pill bad">Fail</span></td><td><span class="pill bad">Fail</span></td><td><span class="blank">—</span></td><td><span class="pill bad">Fail</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Provisional</span></td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>4</strong></td><td>Lean Parlay (Combo)</td><td>parlay</td><td>1</td><td><span class="pill ok">Pass</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Fail</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Provisional</span></td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>5</strong></td><td>Player Prop Combo</td><td>prop</td><td>0</td><td><span class="pill bad">Fail</span></td><td><span class="blank">—</span></td><td><span class="blank">—</span></td><td><span class="pill bad">Fail</span></td><td><span class="pill ok">Pass</span></td><td><span class="pill bad">Provisional</span></td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Leaderboard</h2>
+<p class="sub">Ranked by tracked performance (ROI / hit rate). No games tracked to completion yet,
+so all strategies are provisional — the leaderboard rewards top performers once results are recorded.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Rank</th><th>Strategy</th><th>Performance</th><th>ROI</th><th>Hit Rate</th><th>Source</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Margin Favorite (Single)</td><td>pending tracked results</td><td>—</td><td>—</td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>2</strong></td><td>Spread Value (Single)</td><td>pending tracked results</td><td>—</td><td>—</td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>3</strong></td><td>Totals (Single)</td><td>pending tracked results</td><td>—</td><td>—</td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>4</strong></td><td>Lean Parlay (Combo)</td><td>pending tracked results</td><td>—</td><td>—</td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td><strong>5</strong></td><td>Player Prop Combo</td><td>pending tracked results</td><td>—</td><td>—</td><td><a class="src" href="https://www.nba.com/schedule" target="_blank" rel="noopener">source ↗</a></td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Removing luck</h2>
+<div class="note"><p>Luck is removed by requiring: a documented skill basis, a minimum sample size, and realized results statistically distinguishable from chance (binomial test vs .500, ROI convergence). New strategies are provisional until tracked.</p></div>
+</section>
+</div>
+<footer>NBA2 — originated lines, signals &amp; picks. Factual data verified to NBA.com. Model outputs are labeled <em>Model</em> and are not official. Unverified values are left blank and flagged.</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

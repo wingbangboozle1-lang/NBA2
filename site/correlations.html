@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correlations — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav><div class="wrap"><div class="brand">NBA<span>2</span></div><a href="index.html" class="">Dashboard</a><a href="picks.html" class="">Picks & Lines</a><a href="strategies.html" class="">Strategies</a><a href="injuries.html" class="">Injuries & Flow</a><a href="correlations.html" class="active">Correlations</a><a href="executive-summary.html" class="">Executive Summary</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="">Open Questions</a><a href="flagged.html" class="">Flagged for Review</a></div></nav>
+<div class="wrap">
+<header class="page"><h1>Correlations</h1><p>Correlation methodology, parlay correlation gate, and how luck is separated from skill.</p></header>
+
+<section class="panel">
+<h2>Correlation analysis</h2>
+<p class="sub">Pearson correlation between verified team-level factors. Values marked
+<span class="pill warn">pending</span> require a historical dataset — the current snapshot has win%
+for all 30 teams but PPG/OPPG only for 2, which is not enough to compute a meaningful correlation.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Factor A</th><th>Factor B</th><th>Correlation (r)</th><th>n</th><th>Note</th><th>Source</th></tr></thead><tbody><tr><td>win%</td><td>PPG</td><td><span class="pill warn">pending</span></td><td><span class='num'>2</span></td><td>PPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required.</td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>win%</td><td>OPPG</td><td><span class="pill warn">pending</span></td><td><span class='num'>2</span></td><td>OPPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required.</td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>PPG</td><td>OPPG</td><td><span class="pill warn">pending</span></td><td><span class='num'>2</span></td><td>Requires verified PPG/OPPG for all teams + historical sample.</td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>Parlay correlation gate</h2>
+<div class="note blue"><p>Different-game outcomes are treated as approximately independent (near-zero correlation). Same-game legs are high-correlation and are excluded from parlays.</p></div>
+<p class="sub">This gate (G3) keeps parlay legs independent so the system avoids self-correlated
+combos that inflate variance without adding skill.</p>
+</section>
+
+<section class="panel">
+<h2>Luck vs. skill</h2>
+<div class="note"><p>Luck is removed by requiring: a documented skill basis, a minimum sample size, and realized results statistically distinguishable from chance (binomial test vs .500, ROI convergence). New strategies are provisional until tracked.</p></div>
+</section>
+</div>
+<footer>NBA2 — originated lines, signals &amp; picks. Factual data verified to NBA.com. Model outputs are labeled <em>Model</em> and are not official. Unverified values are left blank and flagged.</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
