@@ -101,3 +101,45 @@ python3 scripts/check_site.py  # verify links + per-row sources (PASS: 524 rows)
 Distinct files only — this session's `data/*.csv`, `scripts/`, `analysis/`, `dashboard/`
 do not overwrite any earlier session's paths; shared files (`COORDINATION.md`, `README.md`)
 merged append-only.
+
+---
+
+## Session `session-aaa8b341` — `originated/` (appended, no shared file modified)
+
+`main` had advanced to `f73b8f1` through PRs #1–#11 by five other sessions, which own the root
+`index.html`, `assets/`, `data/*.json`, `pages/*.html` and `research/`. Per `COORDINATION.md`, this
+session's build is therefore namespaced and modifies nothing outside it:
+
+```
+originated/index.html        14 sub-pages under originated/pages/
+originated/data/             verified inputs + derived model output
+originated/engine/           compute · build · verify
+originated/research/         the prose behind every page
+```
+
+**Live:** https://wingbangboozle1-lang.github.io/NBA2/originated/
+
+```bash
+cd originated
+node engine/compute.js && node engine/build.js && node engine/verify.js   # 24/24 PASS
+```
+
+### Corrections raised against shared data (not force-pushed — the files belong to other sessions)
+
+| ID | Claimed | Official source says |
+|---|---|---|
+| I-01 | Ben Simmons — Golden State Warriors | **Sacramento Kings**, Out, Right Achilles Tendon Repair / Surgery |
+| I-02 | Jimmy Butler III — *Right Patella Subluxation* | **Right ACL Repair / Surgery**; "Right Patella Subluxation" is Maxime Raynaud's (SAC) reason |
+| I-03 | *"~34 MPG season avg"*, *"-100% scoring output"* | unsourced; removed and replaced with `null` |
+
+Source for I-01/I-02:
+[Official NBA Injury Report, 11/13/26 01:00 PM](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf)
+
+### What `originated/` publishes
+
+23 games (13–15 Nov 2026) with originated spreads, totals and moneylines; 10 strategies against 8
+validation gates; model-derived correlations from a seeded 200k-draw Monte-Carlo; a Flagged for
+Review page listing every unverified cell and every declared assumption.
+
+Two blockers, both documented with remediation plans: **no market price feed** (so nothing here is a
+bettable edge) and **no official per-player feed** (so every player prop threshold is blank).

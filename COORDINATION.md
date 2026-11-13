@@ -176,3 +176,79 @@ F-1 ratings source is trusted-secondary (sandbox blocks NBA stats APIs) · F-2 C
 | Live site verified | https://wingbangboozle1-lang.github.io/NBA2/ (root dashboard, intact), /NBA2/docs/ (35264d96 site, intact), **/NBA2/dashboard/ (this session's 12-page site)** fetched post-deploy — picks (NYK −11.0, ORL −4.0, HOU −23.0), luck ledger, nav confirmed live |
 | Post-merge verification | `scripts/check_site.py` PASS (524 source-linked rows); `tools/check_links_all.py` whole-repo PASS (52 HTML files, 824 internal links) |
 | Follow-up | this record committed via follow-up [PR #11](https://github.com/wingbangboozle1-lang/NBA2/pull/11) from `arena/10957a28-nba2`; rebase-vs-merge note: `git pull --rebase` flattens merge commits and was aborted safely (`git rebase --abort`) during integration — direct push used instead; no work discarded |
+
+---
+
+## Session `session-aaa8b341` (branch `arena/aaa8b341-nba2`)
+
+Registry row: `session-aaa8b341 (arena/aaa8b341-nba2)` — verified data layer, line-origination
+engine, strategy gates and a 15-page site. Branching note: Arena pinned this session to
+`arena/aaa8b341-nba2`, so implementation and integration for its scope happened there.
+
+### File scope — `originated/**` (namespaced on purpose)
+
+By the time this session started, `main` had advanced to `f73b8f1` through PRs #1–#11 from five
+other sessions, which had come to own the root `index.html`, `assets/`, `data/*.json`, `pages/*.html`
+and `research/`. Per the protocol ("if a task requires changing a file owned by another session, log
+the request instead of editing it"), **this session edits no file outside `originated/`.** Its whole
+build lives under:
+
+```
+originated/index.html          landing dashboard
+originated/pages/*.html        14 sub-pages
+originated/assets/app.{css,js}
+originated/data/*.json         verified inputs + derived output
+originated/engine/*.js         compute / build / verify
+originated/research/*.md       the prose behind every page
+```
+
+Live at **https://wingbangboozle1-lang.github.io/NBA2/originated/**.
+
+| # | Task | Status | Sources / verification |
+|---|---|---|---|
+| B1 | Merged board + repo audit | done | prior `data/injuries.json` had 3 factual errors (I-01…I-03) — see below |
+| B2 | 3-day slate (13–15 Nov, 23 games) | done | [nba.com/schedule](https://www.nba.com/schedule) T1; counts match nba.com's own 9/5/9 headers; each row links its own nba.com game page |
+| B3 | All 30 team records | done | T1 nba.com game rail vs T2 ESPN standings — **30/30 match** |
+| B4 | Official injury report | done | [PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf) T1; 91 rows transcribed verbatim |
+| B5 | Line origination (spread/total/ML) | done | formulas published; `P(home covers its own spread)` = 0.500 ± 0.0055 |
+| B6 | Rotation / availability indices | done | rotation index excludes G League rows (counting them inverts OKC vs LAC) |
+| B7 | Game flow (rest, B2B, travel, Cup) | done | derived from T1 schedule; 13 Nov rest left **unknown**, not guessed |
+| B8 | 10 strategies × 8 gates | done | **G6 blocked for all ten** — no graded bet log exists |
+| B9 | Correlations | done | Monte-Carlo, 200k draws/game, seeded & reproducible |
+| B10 | Executive summary, questions, suggestions, flagged | done | — |
+| B11 | Site build + 24-check verifier | done | `node originated/engine/verify.js` → **24/24 PASS** |
+
+### Corrections this session applied to shared data (logged, not force-pushed)
+
+These were fixed **inside `originated/data/`**, because `data/injuries.json` is owned by another
+session. Flagged for whichever session owns that file:
+
+- **I-01** Ben Simmons listed as *Golden State Warriors*. Official report: **Sacramento Kings**,
+  Out, Right Achilles Tendon Repair / Surgery.
+- **I-02** Jimmy Butler III given *Right Patella Subluxation*. Official report: **Right ACL Repair /
+  Surgery**. "Right Patella Subluxation" is Maxime Raynaud's (SAC) reason.
+- **I-03** Minutes/production figures such as *"~34 MPG season avg"* published with
+  `verified: false` and no source. Removed; replaced with `null`.
+
+### Cross-session requests
+
+- **To the owner of `data/injuries.json` / `data/picks.json` / `data/strategies.json`:** please apply
+  I-01…I-03. This session did not edit those files.
+- **To the final integration session:** there are now several site trees (`/`, `docs/`, `dashboard/`,
+  `verified/`, `originated/`). This session makes no claim to be canonical; `originated/` is the only
+  build with a mechanical verifier (`engine/verify.js`, 24 checks) and the only one that publishes
+  **no** unverified numeric value. Recommend `originated/` as the base for the merged site, but the
+  call belongs to the integration session.
+
+### Conflict / handoff log (`session-aaa8b341`)
+
+- 2026-11-13: branch created from `623b4c2`; `main` had already reached `7fa2a24`.
+  `git pull --rebase` conflicted on `COORDINATION.md`. Resolved by **merging both** — prior sections
+  preserved verbatim, this session's appended below. Nothing discarded.
+- 2026-11-13: `git pull --rebase` against `origin/arena/aaa8b341-nba2` (a stale remote ref for this
+  session's own branch) tried to replay `main`'s history onto the pre-rebase commit. Aborted safely
+  with `git rebase --abort`; no work lost; the branch was then rebuilt on top of `main` directly.
+  **Note for other sessions:** `git pull --rebase` against your own stale remote branch is a footgun
+  — rebase onto `origin/main` instead.
+- 2026-11-13: `main` advanced again to `f73b8f1` (PRs #1–#11). Rather than overwrite the files other
+  sessions now own, this session renamed its whole tree into `originated/`.
