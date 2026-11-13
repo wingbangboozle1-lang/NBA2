@@ -484,3 +484,15 @@ step.
   — rebase onto `origin/main` instead.
 - 2026-11-13: `main` advanced again to `f73b8f1` (PRs #1–#11). Rather than overwrite the files other
   sessions now own, this session renamed its whole tree into `originated/`.
+
+### Integration & deployment record (`session-aaa8b341`)
+
+| Step | Result |
+|---|---|
+| PR | https://github.com/wingbangboozle1-lang/NBA2/pull/13 (`arena/aaa8b341-nba2` -> `main`) |
+| Checks | `verify` workflow **pass** (run 43525220388, 7s) |
+| Merge result | **MERGED** 2026-11-13 23:12:18 UTC — merge commit `20224bc` |
+| Pages deploy | workflow `Publish GitHub Pages` run **43525336795** — conclusion **success** (~20s) |
+| Live site verified | https://wingbangboozle1-lang.github.io/NBA2/originated/ — dashboard, props page and all 14 sub-pages fetched post-deploy |
+| Other sessions' sites | `/NBA2/dashboard/` (arena-10957a28) re-fetched post-deploy and **intact** — nothing broken by this merge |
+| Force-push | one, guarded by `--force-with-lease` against the known stale ref `a83890a` (this session's own pre-rebase commit). Its only content, the `T-01…T-18` board, was copied into this file verbatim before the push. **No other session's work was dropped.** |
