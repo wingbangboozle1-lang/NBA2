@@ -47,6 +47,6 @@ Board created: 2026-11-13 (UTC)
 
 ## Integration record
 
-- PR: see "PULL REQUEST AND MERGE" entry appended at merge time (PR number/link below).
-- Pages: GitHub Pages enabled on `main` / root (`docs/` published via root serving config recorded at deploy).
+- PR: [#10 — NBA2: line origination platform, verified data, strategy framework, and GitHub Pages dashboard](https://github.com/wingbangboozle1-lang/NBA2/pull/10) (arena/10957a28-nba2 → main).
+- Pages: to be enabled on `main`, published from `/docs`; deploy result appended post-merge.
 - Post-merge verification: site build check re-run on merged tree; all checks PASS.
