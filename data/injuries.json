@@ -1,0 +1,170 @@
+{
+  "reportDate": "2026-11-13",
+  "integration_note": "Corrected in the integration pass against the official 11/13 5:15 PM ET PDF. The earlier version (arena-23927d63) had wrong team, game and time values for 5 records and unsourced minutes/production estimates; those were removed. Full row set: data/verified/injuries_2026-11-13_0515PM.json.",
+  "sources": [
+    "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+    "https://www.nba.com/schedule"
+  ],
+  "injuries": [
+    {
+      "player": "Paolo Banchero",
+      "team": "Orlando Magic",
+      "status": "Out",
+      "injury": "Injury/Illness - Right High AnkleSprain",
+      "game": "MIL@ORL",
+      "tipTimeET": "7:00 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Tyrese Haliburton",
+      "team": "Indiana Pacers",
+      "status": "Out",
+      "injury": "Injury/Illness - Left Hamstring Strain",
+      "game": "NYK@IND",
+      "tipTimeET": "7:00 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Jimmy Butler III",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Injury/Illness - Right ACL Repair / Surgery",
+      "game": "GSW@SAS",
+      "tipTimeET": "9:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Ben Simmons",
+      "team": "Sacramento Kings",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+      "game": "POR@SAC",
+      "tipTimeET": "10:00 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Chet Holmgren",
+      "team": "Oklahoma City Thunder",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Knee/ Injury Recovery",
+      "game": "OKC@LAC",
+      "tipTimeET": "10:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Evan Mobley",
+      "team": "Cleveland Cavaliers",
+      "status": "Out",
+      "injury": "Injury/Illness - Left Great Toe - Sprain",
+      "game": "CLE@MIA",
+      "tipTimeET": "8:00 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Lauri Markkanen",
+      "team": "Utah Jazz",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Hand Fracture",
+      "game": "UTA@HOU",
+      "tipTimeET": "8:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Jaren Jackson Jr.",
+      "team": "Utah Jazz",
+      "status": "Out",
+      "injury": "Injury/Illness - Right MCL Tear",
+      "game": "UTA@HOU",
+      "tipTimeET": "8:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Stephen Curry",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Oblique Tear",
+      "game": "GSW@SAS",
+      "tipTimeET": "9:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    },
+    {
+      "player": "Kristaps Porzingis",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Not With Team",
+      "game": "GSW@SAS",
+      "tipTimeET": "9:30 PM ET",
+      "minutesImpact": null,
+      "productionImpact": null,
+      "minutes_status": "blank: unverified (no official minutes baseline retrieved)",
+      "verified": true,
+      "verified_against": [
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+        "https://www.nba.com/schedule"
+      ]
+    }
+  ]
+}

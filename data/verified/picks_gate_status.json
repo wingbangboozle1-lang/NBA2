@@ -1,0 +1,447 @@
+{
+ "generated_from": [
+  "data/verified/schedule_2026-11-13_to_16.json",
+  "data/verified/injuries_2026-11-13_0515PM.json",
+  "data/verified/strategy_gates.json",
+  "data/verified/lines.json (absent => no lines)"
+ ],
+ "as_of": "2026-11-13",
+ "picks_issued": 0,
+ "games": 31,
+ "rows": [
+  {
+   "game_id": "0022600034",
+   "date": "2026-11-13",
+   "tip_et": "7:00 PM",
+   "matchup": "NYK@IND",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600035",
+   "date": "2026-11-13",
+   "tip_et": "7:00 PM",
+   "matchup": "MIL@ORL",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600036",
+   "date": "2026-11-13",
+   "tip_et": "8:00 PM",
+   "matchup": "CLE@MIA",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600037",
+   "date": "2026-11-13",
+   "tip_et": "8:00 PM",
+   "matchup": "ATL@CHI",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600038",
+   "date": "2026-11-13",
+   "tip_et": "8:00 PM",
+   "matchup": "MEM@NOP",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600039",
+   "date": "2026-11-13",
+   "tip_et": "8:30 PM",
+   "matchup": "UTA@HOU",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600040",
+   "date": "2026-11-13",
+   "tip_et": "9:30 PM",
+   "matchup": "GSW@SAS",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600041",
+   "date": "2026-11-13",
+   "tip_et": "10:00 PM",
+   "matchup": "POR@SAC",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600042",
+   "date": "2026-11-13",
+   "tip_et": "10:30 PM",
+   "matchup": "OKC@LAC",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Rotation-minute impact of injuries unverified (no official minutes baseline)"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "tip_et": "7:00 PM",
+   "matchup": "DEN@NOP",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "tip_et": "7:30 PM",
+   "matchup": "DAL@CLE",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "tip_et": "8:00 PM",
+   "matchup": "DET@MIA",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "tip_et": "8:00 PM",
+   "matchup": "BKN@MEM",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "tip_et": "8:00 PM",
+   "matchup": "CHI@MIN",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600236",
+   "date": "2026-11-15",
+   "tip_et": "1:00 PM",
+   "matchup": "IND@PHI",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600237",
+   "date": "2026-11-15",
+   "tip_et": "4:00 PM",
+   "matchup": "LAL@PHX",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600238",
+   "date": "2026-11-15",
+   "tip_et": "4:30 PM",
+   "matchup": "CHA@LAC",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600239",
+   "date": "2026-11-15",
+   "tip_et": "5:00 PM",
+   "matchup": "SAS@UTA",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600240",
+   "date": "2026-11-15",
+   "tip_et": "6:00 PM",
+   "matchup": "DAL@BOS",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600241",
+   "date": "2026-11-15",
+   "tip_et": "6:00 PM",
+   "matchup": "NYK@TOR",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600242",
+   "date": "2026-11-15",
+   "tip_et": "7:00 PM",
+   "matchup": "HOU@WAS",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600243",
+   "date": "2026-11-15",
+   "tip_et": "8:00 PM",
+   "matchup": "ATL@MIL",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600244",
+   "date": "2026-11-15",
+   "tip_et": "9:00 PM",
+   "matchup": "OKC@SAC",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600245",
+   "date": "2026-11-16",
+   "tip_et": "7:00 PM",
+   "matchup": "ORL@BOS",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600246",
+   "date": "2026-11-16",
+   "tip_et": "7:00 PM",
+   "matchup": "CHI@CLE",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600247",
+   "date": "2026-11-16",
+   "tip_et": "7:00 PM",
+   "matchup": "MEM@WAS",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600248",
+   "date": "2026-11-16",
+   "tip_et": "7:30 PM",
+   "matchup": "PHI@BKN",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600249",
+   "date": "2026-11-16",
+   "tip_et": "7:30 PM",
+   "matchup": "HOU@MIA",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600250",
+   "date": "2026-11-16",
+   "tip_et": "8:00 PM",
+   "matchup": "POR@MIN",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600251",
+   "date": "2026-11-16",
+   "tip_et": "8:00 PM",
+   "matchup": "GSW@NOP",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600252",
+   "date": "2026-11-16",
+   "tip_et": "9:00 PM",
+   "matchup": "PHX@DEN",
+   "status": "NO PICK",
+   "blockers": [
+    "No originated line for this game (no model output in repository)",
+    "No strategy family has passed validation gates (0 of 4 evaluated as PASSED)",
+    "No timestamped market price from a permitted source",
+    "Official injury report for this date not yet published in the snapshot used"
+   ],
+   "schedule_source": "https://www.nba.com/schedule"
+  }
+ ]
+}

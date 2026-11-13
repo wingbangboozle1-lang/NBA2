@@ -1,0 +1,314 @@
+{
+ "dataset": "audit_arena-23927d63",
+ "audited_branch": "arena/23927d63-nba2",
+ "audited_commit": "2d4a6899863019b9955ae63e45a64b76db7d99c9",
+ "audited_files": [
+  "data/injuries.json",
+  "data/picks.json",
+  "data/strategies.json"
+ ],
+ "audit_date": "2026-11-13",
+ "policy": "Each claim was compared with the official source named in its row. A claim is 'Match' only if the official source printed the same value. 'Mismatch' = official source contradicts it. 'Unsupported' = no official source retrieved in this audit contains the value. Nothing in the audited branch was edited.",
+ "official_sources_used": [
+  {
+   "label": "NBA injury report 11/13/26 05:15 PM (PDF)",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "label": "NBA Schedule",
+   "url": "https://www.nba.com/schedule"
+  },
+  {
+   "label": "NBA.com/Stats FAQ",
+   "url": "https://www.nba.com/stats/help/faq"
+  },
+  {
+   "label": "NBA official injury reporting page",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/"
+  }
+ ],
+ "summary": {
+  "injury_records_audited": 10,
+  "injury_records_with_identity_or_time_mismatch": 5,
+  "injury_records_matching_identity_and_status": 5,
+  "minutes_or_production_claims_unsupported": 10,
+  "pick_rows_audited": 7,
+  "pick_rows_with_time_mismatch": 2,
+  "pick_rows_with_non_nba_game_id": 7,
+  "official_games_missing_from_picks": [
+   "0022600034 NYK@IND 7:00 PM ET",
+   "0022600041 POR@SAC 10:00 PM ET"
+  ],
+  "strategy_rows_audited": 8,
+  "strategy_correlation_or_numeric_values_unsupported": 8
+ },
+ "findings": [
+  {
+   "id": "A-INJ-01",
+   "file": "data/injuries.json",
+   "record": "Paolo Banchero",
+   "claim": "Orlando Magic; Out; Injury/Illness - Right High Ankle Sprain; MIL @ ORL",
+   "official": "Orlando Magic; Out; Injury/Illness - Right High AnkleSprain (PDF spacing); MIL@ORL 07:00 (ET)",
+   "result": "Match",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-02",
+   "file": "data/injuries.json",
+   "record": "Tyrese Haliburton",
+   "claim": "Indiana Pacers; Out; Left Hamstring Strain; game '(game time TBD)'",
+   "official": "Indiana Pacers; Out; Left Hamstring Strain; NYK@IND 07:00 (ET); schedule tip 7:00 PM ET",
+   "result": "Mismatch (game/time)",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-03",
+   "file": "data/injuries.json",
+   "record": "Jimmy Butler III",
+   "claim": "Golden State Warriors; Out; Right Patella Subluxation; GSW @ SAS",
+   "official": "Golden State Warriors; Out; Right ACL Repair / Surgery; GSW@SAS 09:30 (ET)",
+   "result": "Mismatch (injury reason)",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-04",
+   "file": "data/injuries.json",
+   "record": "Ben Simmons",
+   "claim": "Golden State Warriors; Out; Right Achilles Tendon Repair / Surgery; GSW @ SAS",
+   "official": "Sacramento Kings; Out; Right Achilles Tendon Repair / Surgery; POR@SAC 10:00 (ET)",
+   "result": "Mismatch (team and game)",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-05",
+   "file": "data/injuries.json",
+   "record": "Chet Holmgren",
+   "claim": "Oklahoma City Thunder; Out; Right Knee / Injury Recovery; OKC @ LAC",
+   "official": "Oklahoma City Thunder; Out; Right Knee/ Injury Recovery; OKC@LAC 10:30 (ET)",
+   "result": "Match",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-06",
+   "file": "data/injuries.json",
+   "record": "Evan Mobley",
+   "claim": "Cleveland Cavaliers; Out; Left Great Toe - Sprain; CLE @ MIA",
+   "official": "Cleveland Cavaliers; Out; Left Great Toe - Sprain; CLE@MIA",
+   "result": "Match",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-07",
+   "file": "data/injuries.json",
+   "record": "Lauri Markkanen",
+   "claim": "Utah Jazz; Out; Right Hand Fracture; UTA @ HOU",
+   "official": "Utah Jazz; Out; Right Hand Fracture; UTA@HOU 08:30 (ET)",
+   "result": "Match",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-08",
+   "file": "data/injuries.json",
+   "record": "Jaren Jackson Jr.",
+   "claim": "Memphis Grizzlies; Out; Right MCL Tear; MEM @ NOP",
+   "official": "Utah Jazz; Out; Right MCL Tear; UTA@HOU 08:30 (ET)",
+   "result": "Mismatch (team and game)",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-09",
+   "file": "data/injuries.json",
+   "record": "Stephen Curry",
+   "claim": "Golden State Warriors; Out; Right Oblique Tear; GSW @ SAS",
+   "official": "Golden State Warriors; Out; Right Oblique Tear; GSW@SAS 09:30 (ET)",
+   "result": "Match",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-10",
+   "file": "data/injuries.json",
+   "record": "Kristaps Porzingis",
+   "claim": "Boston Celtics; Out; Not With Team; game '(game time TBD)'",
+   "official": "Golden State Warriors; Out; Not With Team; GSW@SAS 09:30 (ET)",
+   "result": "Mismatch (team and game/time)",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-11",
+   "file": "data/injuries.json",
+   "record": "All 10 injury records",
+   "claim": "minutesImpact e.g. 'Starter out — ~0 min (vs. ~34 MPG season avg)'; productionImpact e.g. '-100% scoring/rebounding/playmaking output'",
+   "official": "No official minutes or production baseline was retrieved; the '~NN MPG' figures have no source in the file or in the official documents audited here. Official check: the 11/13 5:15 PM PDF has no minutes or production field.",
+   "result": "Unsupported",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf"
+  },
+  {
+   "id": "A-INJ-12",
+   "file": "data/injuries.json",
+   "record": "sources[]",
+   "claim": "Cites 01_00PM and 04_15PM report PDFs",
+   "official": "The official report list on the injury page includes the 5:15 PM ET report for 11/13 (latest at check time). The file cites earlier snapshots.",
+   "result": "Stale snapshot",
+   "source_url": "https://official.nba.com/nba-injury-report-2026-27-season/"
+  },
+  {
+   "id": "A-PCK-01",
+   "file": "data/picks.json",
+   "record": "MIL @ ORL",
+   "claim": "gameId GAME-20261113-001; Fri 11/13, 7:00 PM",
+   "official": "Official game ID 0022600035; tip 7:00 PM ET",
+   "result": "Time match; game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-02",
+   "file": "data/picks.json",
+   "record": "ATL @ CHI",
+   "claim": "gameId GAME-20261113-002; Fri 11/13, 8:00 PM",
+   "official": "Official game ID 0022600037; tip 8:00 PM ET",
+   "result": "Time match; game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-03",
+   "file": "data/picks.json",
+   "record": "MEM @ NOP",
+   "claim": "gameId GAME-20261113-003; Fri 11/13, 8:30 PM",
+   "official": "Official game ID 0022600038; tip 8:00 PM ET",
+   "result": "Mismatch (time); game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-04",
+   "file": "data/picks.json",
+   "record": "GSW @ SAS",
+   "claim": "gameId GAME-20261113-004; Fri 11/13, 9:30 PM",
+   "official": "Official game ID 0022600040; tip 9:30 PM ET",
+   "result": "Time match; game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-05",
+   "file": "data/picks.json",
+   "record": "OKC @ LAC",
+   "claim": "gameId GAME-20261113-005; Fri 11/13, 10:30 PM",
+   "official": "Official game ID 0022600042; tip 10:30 PM ET",
+   "result": "Time match; game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-06",
+   "file": "data/picks.json",
+   "record": "CLE @ MIA",
+   "claim": "gameId GAME-20261113-006; Fri 11/13, TBD",
+   "official": "Official game ID 0022600036; tip 8:00 PM ET",
+   "result": "Mismatch (time 'TBD'); game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-07",
+   "file": "data/picks.json",
+   "record": "UTA @ HOU",
+   "claim": "gameId GAME-20261113-007; Fri 11/13, 8:30 PM",
+   "official": "Official game ID 0022600039; tip 8:30 PM ET",
+   "result": "Time match; game ID not an NBA ID",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-PCK-08",
+   "file": "data/picks.json",
+   "record": "Coverage",
+   "claim": "slate '2026-11-13 through 2026-11-16' with 7 rows",
+   "official": "Window has 31 games (Fri 9, Sat 5, Sun 9, Mon 8). Missing: NYK@IND 0022600034 and POR@SAC 0022600041 (Fri), and all Sat-Mon games.",
+   "result": "Incomplete",
+   "source_url": "https://www.nba.com/schedule"
+  },
+  {
+   "id": "A-STR-01",
+   "file": "data/strategies.json",
+   "record": "STRAT-001",
+   "claim": "Minutes-to-points correlation r ≈ 0.82 (per-minute usage)",
+   "official": "Value not present in https://www.nba.com/stats/help/faq (both chunks read)",
+   "result": "Unsupported",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": null
+  },
+  {
+   "id": "A-STR-02",
+   "file": "data/strategies.json",
+   "record": "STRAT-002",
+   "claim": "r ≈ 0.65 (estimated); source rg.org",
+   "official": "No official source. rg.org is not an official NBA or league source. Official check: the NBA.com/Stats FAQ (both chunks) was read; the value/claim does not appear there.",
+   "result": "Unsupported; non-official source",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": "https://rg.org/guides/basketball/same-game-parlay"
+  },
+  {
+   "id": "A-STR-03",
+   "file": "data/strategies.json",
+   "record": "STRAT-003",
+   "claim": "Negative correlation between blowout margin and total points; source fantasyteamadvice.com",
+   "official": "No official source; source is not official. Official check: the NBA.com/Stats FAQ (both chunks) was read; the value/claim does not appear there.",
+   "result": "Unsupported; non-official source",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": "https://fantasyteamadvice.com/nba/betting"
+  },
+  {
+   "id": "A-STR-04",
+   "file": "data/strategies.json",
+   "record": "STRAT-004",
+   "claim": "r ≈ 0.58 (estimated); source basketball-reference.com",
+   "official": "No official NBA source. Basketball-Reference is a third-party site. Official check: the NBA.com/Stats FAQ (both chunks) was read; the value/claim does not appear there.",
+   "result": "Unsupported; non-official source",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": "https://www.basketball-reference.com/about/factors.html"
+  },
+  {
+   "id": "A-STR-05",
+   "file": "data/strategies.json",
+   "record": "STRAT-005",
+   "claim": "Pace × usage × assist% correlation r ≈ 0.71 (estimated); source nba.com/stats/help/faq",
+   "official": "Value not present in the cited FAQ (both chunks read).",
+   "result": "Unsupported",
+   "source_url": "https://www.nba.com/stats/help/faq"
+  },
+  {
+   "id": "A-STR-06",
+   "file": "data/strategies.json",
+   "record": "STRAT-006",
+   "claim": "Zero intra-team correlation by design; inter-game independence assumed; source bestnbabetsystems.com",
+   "official": "Assumption, not a finding; source is a betting-systems site, not official. Official check: the NBA.com/Stats FAQ (both chunks) was read; the value/claim does not appear there.",
+   "result": "Unsupported; non-official source",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": "https://bestnbabetsystems.com/articles/nba-player-props-strategy/"
+  },
+  {
+   "id": "A-STR-07",
+   "file": "data/strategies.json",
+   "record": "STRAT-007",
+   "claim": "Back-to-back fatigue reduces pace by ~1.5 possessions (estimated); source nba.com/stats/help/faq",
+   "official": "Value not present in the cited FAQ (both chunks read).",
+   "result": "Unsupported",
+   "source_url": "https://www.nba.com/stats/help/faq"
+  },
+  {
+   "id": "A-STR-08",
+   "file": "data/strategies.json",
+   "record": "STRAT-008",
+   "claim": "r ≈ -0.48 (estimated); source betus.com.pa",
+   "official": "No official source; sportsbook marketing page. Official check: the NBA.com/Stats FAQ (both chunks) was read; the value/claim does not appear there.",
+   "result": "Unsupported; non-official source",
+   "source_url": "https://www.nba.com/stats/help/faq",
+   "non_official_source_cited": "https://www.betus.com.pa/help/how-to/sport/nba/how-to-bet-on-nba-parlays-a-complete-guide-to-odds-strategy/"
+  },
+  {
+   "id": "A-DATA-01",
+   "file": "data/strategies.json",
+   "record": "Data-use terms",
+   "claim": "Plan implies downloading or systematically using NBA.com stats",
+   "official": "NBA.com/Stats FAQ: 'Our stats are not available for download for either academic or personal use. They are for viewing and enjoying on NBA.com/Stats.'",
+   "result": "Terms question; needs legal review before any data pipeline",
+   "source_url": "https://www.nba.com/stats/help/faq"
+  }
+ ]
+}

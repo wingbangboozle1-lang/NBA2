@@ -1,0 +1,10 @@
+{
+  "as_of": "2026-11-13",
+  "gate_reference": "Gate definitions follow the 8 validation gates on the shared dashboard (https://wingbangboozle1-lang.github.io/NBA2/#validation). Gates are governance criteria; they are not findings.",
+  "families": [
+    {"family": "Game sides & totals", "gate_status": "NOT EVALUATED", "evaluated_strategies": 0, "blockers": ["No historical game results pulled from an official source in this repository", "No timestamped market prices from a permitted source", "No model output"], "source_url": "https://www.nba.com/stats/teams/traditional"},
+    {"family": "Player props", "gate_status": "NOT EVALUATED", "evaluated_strategies": 0, "blockers": ["No player-prop price feed", "No historical player game logs pulled from an official source", "Minutes distribution not modelled"], "source_url": "https://www.nba.com/stats/players/traditional"},
+    {"family": "Parlays / prop combos", "gate_status": "NOT EVALUATED", "evaluated_strategies": 0, "blockers": ["No joint (multi-leg) outcome sample", "No measured correlation values from official data", "No parlay price source"], "source_url": "https://www.nba.com/stats/"},
+    {"family": "Injury / rotation response", "gate_status": "NOT EVALUATED", "evaluated_strategies": 0, "blockers": ["No archived injury report history for the window (only the 11/13 5:15 PM snapshot was retrieved)", "No official minutes baseline retrieved", "Minutes and production response unmodelled"], "source_url": "https://official.nba.com/nba-injury-report-2026-27-season/"}
+  ]
+}

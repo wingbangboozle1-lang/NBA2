@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<hmtl>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flagged for Review - NBA2</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body><p style="max-width:1160px;margin:12px auto;padding:12px 18px;background:#fff9e9;border-left:3px solid #e2a72e"><b>Integration note:</b> the full list of flagged items, with a source link for each, is at <a href="../verified/flagged-review.html">verified/flagged-review.html</a> (FR-01 to FR-13).</p>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Flagged for Review &bull; Unverified Items &bull; Irregularities</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Dashboard</a></li>
+          <li><a href="strategies.html">Betting Strategies</a></li>
+          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="injuries.html">Injuries & Rotation</a></li>
+          <li><a href="game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="executive-summary.html">Executive Summary</a></li>
+          <li><a href="suggestions.html">Site Suggestions</a></li>
+          <li><a href="questions.html">Questions & Answers</a></li>
+          <li><a href="flagged-review.html" class="active">Flagged for Review</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="card">
+        <h2>Flagged for Review</h2>
+        <p class="font-small text-muted mb-2">All unverified items, blank values, and irregularities are listed here. These do not block the site launch but must be reviewed by the user before any decisions are made based on this data.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Flag ID</th>
+                <th>Item</th>
+                <th>Page</th>
+                <th>Issue</th>
+                <th>Source Link (for manual review)</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>FLAG-001</code></td>
+                <td>All correlation values in strategies table</td>
+                <td>strategies.html</td>
+                <td>Values are research estimates (values removed in integration; see verified/audit.html), not verified from official NBA play-by-play data.</td>
+                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a>, <a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-002</td>
+                <td>All originated spread and total lines</td>
+                <td>picks.html</td>
+                <td>Blank — no live odds feed or line-generation model connected. No values inferred.</td>
+                <td>—</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-003</td>
+                <td>All recommended picks</td>
+                <td>picks.html</td>
+                <td>Blank/unverified — no picks generated yet; requires data integration.</td>
+                <td>—</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-004</td>
+                <td>Rotation-minutes impact estimates</td>
+                <td>injuries.html</td>
+                <td>Minutes impact values are estimates, not verified against official box-score data.</td>
+                <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" class="source-link">NBA Injury Report 11/13/26</a></td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-005</td>
+                <td>Production impact estimates</td>
+                <td>injuries.html</td>
+                <td>Production delta values are estimates, not verified against official box-score data.</td>
+                <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" class="source-link">NBA Injury Report 11/13/26</a></td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-006</td>
+                <td>League-average pace (94.43)</td>
+                <td>game-flow.html</td>
+                <td>From NBA Stats FAQ; season/year not specified.</td>
+                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-007</td>
+                <td>PIE correlation to win % (.948)</td>
+                <td>game-flow.html, executive-summary.html</td>
+                <td>Figure from Reddit analysis, not directly confirmed from NBA.com.</td>
+                <td><a href="https://www.reddit.com/r/nba/comments/g4w5bp/the_nbas_most_valuable_statistic_award_goes_to/" class="source-link">Reddit analysis</a></td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-008</td>
+                <td>Game script classifications</td>
+                <td>game-flow.html</td>
+                <td>Shootout/Grind/Blowout/Close Game definitions are analytical frameworks, not verified from official data.</td>
+                <td>—</td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-009</td>
+                <td>Strategy win rates and ROI</td>
+                <td>executive-summary.html</td>
+                <td>No backtesting performed; no historical performance data.</td>
+                <td>—</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-010</td>
+                <td>Missing information (Q-001 to Q-010)</td>
+                <td>questions.html</td>
+                <td>Ten open questions with no confirmed answers; must be resolved before decisions.</td>
+                <td>—</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>FLAG-011</td>
+                <td>Repo initially empty</td>
+                <td>COORDINATION.md</td>
+                <td>Repository contained only README.md ("# NBA2"); no source code, data, or configuration.</td>
+                <td><a href="https://github.com/wingbangboozle1-lang/NBA2" class="source-link">GitHub Repo</a></td>
+                <td>Low</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notice notice-info mt-2">
+          <p><strong>Flagged items do not block the merge.</strong> They are published here for review. The user can review them after the site is live and request changes.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Flagged for Review &bull; Review before making decisions
+    </footer>
+  </div>
+</body>
+</html>

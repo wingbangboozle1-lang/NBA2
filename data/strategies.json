@@ -1,0 +1,93 @@
+{
+  "strategies": [
+    {
+      "id": "STRAT-001",
+      "type": "Single Bet",
+      "description": "Player points prop over — target players with minutes floor above bookmaker-implied minutes; edge from minutes deviation.",
+      "correlation": null,
+      "validation_gate": "Projected minutes > line-implied minutes by ≥ 5 min; usage rate ≥ league avg for position",
+      "status": "unverified",
+      "source": "https://www.nba.com/stats/help/faq",
+      "correlation_claim_removed": "Minutes-to-points correlation r ≈ 0.82 (per-minute usage)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-002",
+      "type": "Parlay",
+      "description": "Same-game parlay: team moneyline + star player points over + game total over. Positive correlation: high-scoring star performance lifts team win probability and total.",
+      "correlation": null,
+      "validation_gate": "All three legs share same game script thesis; no contradictory legs",
+      "status": "unverified",
+      "source": "https://rg.org/guides/basketball/same-game-parlay",
+      "correlation_claim_removed": "Positive correlation between star points and team win; r ≈ 0.65 (estimated)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-003",
+      "type": "Parlay",
+      "description": "Same-game parlay: favorite spread + under on game total + under on starters' 4th-quarter props. Projected blowout → starters sit early → lower total.",
+      "correlation": null,
+      "validation_gate": "Projected spread ≥ 12 points; total line ≥ 5 pts above projected blowout total",
+      "status": "unverified",
+      "source": "https://fantasyteamadvice.com/nba/betting",
+      "correlation_claim_removed": "Negative correlation between blowout margin and total points; starters' minutes reduced in blowouts",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-004",
+      "type": "Player Prop",
+      "description": "Player rebounds over — target players vs. teams with high opponent rebound rate allowed at their position (Defense vs. Position).",
+      "correlation": null,
+      "validation_gate": "Opponent allows ≥ league average + 3% rebound rate to player's position",
+      "status": "unverified",
+      "source": "https://www.basketball-reference.com/about/factors.html",
+      "correlation_claim_removed": "Positional defensive vulnerability correlation; r ≈ 0.58 (estimated)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-005",
+      "type": "Player Prop",
+      "description": "Player assists over — high-usage point guard vs. team with high opponent assists allowed per game; pace-adjusted.",
+      "correlation": null,
+      "validation_gate": "Pace ≥ 96 possessions; player usage% ≥ 25%; opponent DvP assists allowed ≥ league avg + 4%",
+      "status": "unverified",
+      "source": "https://www.nba.com/stats/help/faq",
+      "correlation_claim_removed": "Pace × usage × assist% correlation; r ≈ 0.71 (estimated)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-006",
+      "type": "Parlay",
+      "description": "Multi-game player prop parlay across 2–3 games, one prop per team per game, no correlated legs within same team.",
+      "correlation": null,
+      "validation_gate": "Max 1 prop per team per game; no two props from same team; max 4 legs",
+      "status": "unverified",
+      "source": "https://bestnbabetsystems.com/articles/nba-player-props-strategy/",
+      "correlation_claim_removed": "Zero intra-team correlation by design; inter-game independence assumed",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-007",
+      "type": "Single Bet",
+      "description": "Game total under — back-to-back road game for high-pace offense; fatigue reduces shooting efficiency and pace.",
+      "correlation": null,
+      "validation_gate": "Team playing 2nd game of back-to-back on road; opponent resting ≥ 2 days",
+      "status": "unverified",
+      "source": "https://www.nba.com/stats/help/faq",
+      "correlation_claim_removed": "Back-to-back fatigue reduces pace by ~1.5 possessions (estimated)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    },
+    {
+      "id": "STRAT-008",
+      "type": "Parlay",
+      "description": "Same-game parlay: under on both teams' primary scorer props + under on game total. Projected defensive grind → low usage for both stars.",
+      "correlation": null,
+      "validation_gate": "Both teams ranked top-10 in defensive rating; projected pace ≤ 92; total line ≥ 6 pts above projected",
+      "status": "unverified",
+      "source": "https://www.betus.com.pa/help/how-to/sport/nba/how-to-bet-on-nba-parlays-a-complete-guide-to-odds-strategy/",
+      "correlation_claim_removed": "Negative correlation between defensive game script and star scoring; r ≈ -0.48 (estimated)",
+      "correlation_status": "blank: unverified (no official source for the value)"
+    }
+  ],
+  "integration_note": "Correlation values were removed in integration: none had an official source (see data/verified/audit_arena-23927d63.json, findings A-STR-01..08). Strategy templates are unvalidated."
+}
