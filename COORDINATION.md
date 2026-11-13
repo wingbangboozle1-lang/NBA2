@@ -83,3 +83,48 @@ workflow deploys the root directory to GitHub Pages.
 **Result:** merged successfully; GitHub Pages redeployed from the `main` branch root.
 Flagged irregularities and unverified items do not block the merge and are published on
 the [Flagged for Review](flagged.html) page with source links for post-launch review.
+
+---
+
+## Session arena-35264d96 (branch `arena/35264d96-nba2`, base `623b4c2`, rebuilt additively on top of main @ `1a04144`)
+
+Claimed 2026-11-13 (UTC ~22:21). This session runs on a platform-fixed branch (`arena/35264d96-nba2`);
+it is used as the session's working branch. Scope below; all claims were made and pushed before work started.
+
+**Scope (files this session may edit):** `docs/**` (verification-first documentation site), `research/SOURCES.md`,
+`data/strategies_lab.json`, `data/demo/**`, `data/picks/demo_picks.json`, `data/README.md`,
+`tools/generate_picks_lab.py`, `tools/verify_site.py`, `tools/check_links_all.py`, plus shared-file merges into
+`COORDINATION.md` (this board, append-only) and `README.md` (merged, preserving all prior content).
+Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `styles.css`, `app.js`), `pages/**`,
+`css/**`, `verified/**`, `data/strategies.json`, `data/injuries.json`, `data/picks.json`, `data/verified/**`,
+`tools/verify_data.py`, `tools/build_verified.py`, `tools/generate_picks.py` (arena-71f94203's gate generator),
+`.github/workflows/pages.yml`.
+
+| Task | Status | Notes |
+|---|---|---|
+| Coordination board setup + claim | done | Created own board section; pushed claim before work |
+| Repo audit (pre-existing content) | done | Repo contained only `README.md` (`# NBA2`) at base commit `623b4c2` — logged as irregularity I-1 |
+| Verified research + sources ledger | done | `research/SOURCES.md` (20 rows) + `docs/sources.html` (23 rows); NBA official pages fetched/verified; unverifiable items flagged, never inferred |
+| Strategy framework (singles, parlays, SGP prop combos) | done | `data/strategies_lab.json`: 12 strategies, per-strategy gates; `docs/strategies.html` |
+| Validation gates + luck removal | done | G1–G13 defined; `docs/validation-gates.html`; generator refuses picks without gate evidence (`BACKTEST_EVIDENCE` empty by design) |
+| Correlation framework | done | Derived math (labeled DERIVED) + placeholder matrix marked DEMO, excluded from use by gate G11; `docs/correlation.html` |
+| Leaderboard competition design | done | Scoring, tiers, rewards, anti-gaming rules; `docs/leaderboard.html` (proposals awaiting owner sign-off) |
+| Injury/rotation + game-flow frameworks | done | Official report deadlines verified verbatim from official.nba.com; `docs/injuries-rotations.html`, `docs/game-flow.html` |
+| Slate pick generator (≤3-day window enforced in code) | done | `tools/generate_picks_lab.py` — refuses slates beyond T+3; refuses picks from non-gate-passed strategies; demo mode emits synthetic illustrative picks with full provenance |
+| Executive summary; questions/answers; suggestions | done | `docs/executive-summary.html`, `docs/questions.html` (Section A answered with sources / Section B decision-blocking / Section C discovery paths), `docs/suggestions.html` (review-before-implement workflow) |
+| Site build + mechanical verification | done | 13 pages; `tools/verify_site.py` enforces row-has-source-link (248 data rows, 299 links), no broken anchors, no placeholders — PASSED |
+| Cross-session integration (additive) | done | Rebased onto main `1a04144`; own files namespaced (`generate_picks_lab.py`, `strategies_lab.json`) to avoid clobbering; docs cross-link the verified slate/injury data and root dashboard; `tools/check_links_all.py` added for whole-site link check |
+| PR to main + merge + Pages confirm | in progress | PR #8 open; main advanced twice (PR #6 @1a04144, PR #7 @18665ed) — merged main into branch twice; shared files (this board, README) content-merged preserving ALL sessions' sections; then PR #8 merged |
+
+### Verification log (arena-35264d96)
+- Official.nba.com injury-report 2026-27 page fetched directly 2026-11-13; deadlines quoted verbatim.
+- NBA.com schedule release (Aug 13, 2026), Finals 2026 page, PPP release verified via official domains.
+- Kelly (1956) bibliographic details corroborated; Dare/Dennis/Paul (2015) abstract verified (paywalled full text — flagged F-4).
+- FanDuel/DraftKings/BetSaracen official house rules verified for SGP correlation conventions.
+- KSA (kansspelautoriteit.nl) verified as NL regulator; register contents flagged F-2 (check at decision time).
+- `tools/verify_site.py` PASS (248 rows / 299 links); `tools/check_links_all.py` whole-repo link check recorded below.
+- No live odds/stats asserted anywhere; demo data synthetic; real injury statuses only via official PDFs (verified snapshot by arena-71f94203 cited with link).
+
+### Conflict / handoff log (arena-35264d96)
+- 2026-11-13 ~22:55 UTC: `git pull --rebase origin main` conflicted on COORDINATION.md — main had advanced to `1a04144` (PRs #1–#6 by sessions arena/36543e84-nba2, arena/23927d63-nba2, arena-71f94203; PR #7 open by arena/7b4973eb-nba2). Rebase **aborted without discarding anything**; branch rebuilt additively on top of main: this session's generator/catalog renamed to non-conflicting paths; no other session's file modified; shared files merged append-only (this board, README).
+- Note for integration: PR #7 (arena/7b4973eb-nba2) was OPEN and belongs to that session — left untouched.

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Slate Picks</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-picks">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Slate picks (≤ 3 days ahead)</h1>
+  <p class="lede">The generator produces picks for every game on an upcoming slate within a maximum 3-day
+  window, using our originated lines. It is live code with hard-coded safety rules — and today it correctly
+  emits <strong>zero real picks</strong>, because no strategy has passed its gates and no data feed is connected.</p>
+
+  <div class="note blocked"><strong>Real picks: BLOCKED (correct behavior).</strong> Two unlock conditions,
+  neither met yet: (1) at least one strategy flips to <code>active</code> after passing all its gates out-of-sample
+  (<a href="validation-gates.html">gates</a>); (2) schedule / injury / odds feeds are connected
+  (<a href="flagged-for-review.html#i2">Flagged I-2</a>). The ≤3-day window is enforced in code — a slate file
+  containing anything beyond T+3 makes the generator refuse to run.</div>
+
+  <h2>Pipeline</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Stage</th><th>What happens</th><th>Timing anchor</th><th>Source / rule</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>1. Slate intake</td><td>Load upcoming games for T+0…T+3 from the schedule feed; reject anything outside the window.</td><td>Schedule release / daily refresh</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">official schedule release</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">window check in code</a></td></tr>
+      <tr data-row data-row-type="fact"><td>2. Injury intake</td><td>Parse official injury-report PDFs each update: statuses, reasons, rotation notes.</td><td>5 p.m. local day before; 1 p.m. local B2B game day; game-day updates 11 a.m.–1 p.m. local; continuous thereafter</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com injury report</a></td></tr>
+      <tr data-row data-row-type="internal"><td>3. Re-project</td><td>Rotation minutes + usage redistribution → updated fair lines and props.</td><td>Immediately after each report drop</td><td><a href="injuries-rotations.html#redistribution">minutes framework</a></td></tr>
+      <tr data-row data-row-type="internal"><td>4. Originate</td><td>Freeze our fair lines for the slate (before market viewing).</td><td>After step 3</td><td><a href="strategies.html#origination">no-market-anchor rule</a></td></tr>
+      <tr data-row data-row-type="internal"><td>5. Signal + gates</td><td>Candidate bets from each strategy; gates checked; only active strategies pass through.</td><td>Post-origination</td><td><a href="validation-gates.html">gate engine</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">enforced in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>6. Price combos</td><td>Parlay/SGP joint probabilities incl. covariance; correlation caps applied.</td><td>Post-signal</td><td><a href="correlation.html">correlation math</a> · <a href="validation-gates.html#gates">G11–G13</a></td></tr>
+      <tr data-row data-row-type="internal"><td>7. Stake &amp; emit</td><td>Quarter-Kelly sizing with caps; picks written to <code>data/picks/</code> with full provenance (immutable ledger).</td><td>Final step</td><td><a href="validation-gates.html#staking">staking policy</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generator</a></td></tr>
+      <tr data-row data-row-type="internal"><td>8. Publish</td><td>Slate picks rendered on this page from the ledger; kills/emergencies (late scratch) re-run steps 2–7.</td><td>Continuous to tip-off</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">continuous report updates</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Operator runbook (daily, once feeds exist)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>When (local team time)</th><th>Action</th><th>Why then</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>5 p.m. day before</td><td>Ingest first official report; re-project minutes; re-originate lines; emit first picks.</td><td>That's when the league's first report is due (<a href="https://official.nba.com/nba-injury-report-2026-27-season/">official policy</a>)</td></tr>
+      <tr data-row data-row-type="fact"><td>11 a.m.–1 p.m. game day (8–10 a.m. early tips)</td><td>Ingest game-day update; re-run pipeline; adjust stakes (no new strategies).</td><td>Official game-day report window (<a href="https://official.nba.com/nba-injury-report-2026-27-season/">official policy</a>)</td></tr>
+      <tr data-row data-row-type="fact"><td>Continuous</td><td>Monitor report PDF updates and late news; kill-switch checks before tip.</td><td>Reports "updated on a continual basis throughout the day" (<a href="https://official.nba.com/nba-injury-report-2026-27-season/">official policy</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Demo output (current run)</h2>
+  <div class="note demo"><strong>DEMO — synthetic data, never real picks.</strong> Generated by
+  <code>python3 tools/generate_picks_lab.py --demo</code>; full JSON with provenance at
+  <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/picks/demo_picks.json">data/picks/demo_picks.json</a>.
+  Teams are placeholders and all players are synthetic; real picks require the unlock conditions above.</div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Slate window</th><th>Game</th><th>Market</th><th>Our line</th><th>Fair p</th><th>Breakeven</th><th>Edge</th><th>Stake</th><th>Strategy</th><th>Gate result</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="demo"><td>2026-11-13 → 11-16</td><td>DEMO-G1</td><td>Spread (home)</td><td>-3.5 @ -110</td><td>0.540</td><td>0.5238</td><td>+1.62%</td><td>0.85% bankroll</td><td>S03 <a href="strategies.html#catalog">candidate</a></td><td><span class="badge b-demo">DEMO — gates not backtested</span></td></tr>
+      <tr data-row data-row-type="demo"><td>2026-11-13 → 11-16</td><td>DEMO-G2</td><td>Player prop PRA</td><td>27.5 @ -110</td><td>0.545</td><td>0.5238</td><td>+2.12%</td><td>1.11% bankroll</td><td>S06 <a href="strategies.html#catalog">candidate</a></td><td><span class="badge b-demo">DEMO — gates not backtested</span></td></tr>
+      <tr data-row data-row-type="demo"><td>2026-11-13 → 11-16</td><td>DEMO-G3</td><td>Player prop Points</td><td>18.5 @ -110</td><td>0.542</td><td>0.5238</td><td>+1.82%</td><td>0.96% bankroll</td><td>S06 <a href="strategies.html#catalog">candidate</a></td><td><span class="badge b-demo">DEMO — gates not backtested</span></td></tr>
+      <tr data-row data-row-type="internal"><td>2026-11-13 → 11-16</td><td>5 context lines across DEMO-G1…G5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="badge b-blocked">REJECTED: no strategy attached / below 1.5% edge / research-status</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">generator rules</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Running it</h2>
+  <pre><code># demo (synthetic, safe):
+python3 tools/generate_picks_lab.py --demo
+
+# real mode (only meaningful once feeds exist and a strategy is active):
+python3 tools/generate_picks_lab.py \
+  --slate data/slate.csv --lines data/lines.csv \
+  --injuries data/injuries.csv --corr data/correlation.csv \
+  --out data/picks/</code></pre>
+  <p class="small">Slate window rule: the tool exits with an error if the slate file contains any game beyond
+  today + 3 days — the 3-day maximum is enforced, not advisory (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">see the check</a>).</p>
+
+  <h2>Upcoming real slate context (verified calendar facts only)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Fact</th><th>Detail</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Today is an NBA Cup night</td><td>Nov 13, 2026 is Cup group-play night 3 of 7 (Oct 30 – Nov 27); Cup games count in regular-season standings except the final.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com schedule release</a> · <a href="https://www.ticketmaster.com/emirates-nba-cup-tickets/artist/3050896">Ticketmaster official Cup listing</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Slate window</td><td>Nov 13–16, 2026 (T+0…T+3). Specific fixtures intentionally blank — fixture-level data requires the schedule feed (<a href="flagged-for-review.html#i4">Flagged I-4</a>).</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">window logic</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Season structure</td><td>2026-27 regular season opened Oct 20, 2026 and ends April 11, 2027; SoFi Play-In April 13–16, 2027.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com official release</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Verified slate (parallel session)</td><td>Session arena-71f94203 verified the actual 2026-11-13→16 slate: 31 games (Fri 9, Sat 5, Sun 9, Mon 8) copied row-by-row from nba.com/schedule, plus official 11/13 5:15 PM ET injury rows; their gate generator emits NO PICK for every game (correct: no gate-passed strategies, no market prices).</td><td><a href="../verified/schedule.html">verified slate page</a> · <a href="../data/verified/schedule_2026-11-13_to_16.json">slate JSON</a> · <a href="../verified/picks.html">gate status</a></td></tr>
+    </tbody>
+  </table></div>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

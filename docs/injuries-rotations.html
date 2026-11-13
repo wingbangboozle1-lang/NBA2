@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Injuries &amp; Rotations</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-injuries-rotations">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Injuries → rotation minutes → production</h1>
+  <p class="lede">Availability is the single largest driver of short-term NBA line movement. This page pins down
+  the league's official reporting rules (verified verbatim), explains what each designation does and does not
+  tell you, and defines the minutes-redistribution framework that turns an injury report into line and prop
+  adjustments.</p>
+
+  <h2 id="policy">Official reporting policy (verified verbatim)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Rule</th><th>Verified text / value</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>What must be reported</td><td>"NBA teams must report information concerning player injuries, illnesses, other medical conditions, or rest for all NBA games."</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com (2026-27)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>First deadline</td><td>"By 5 p.m. local time the day before a game (other than the second day of a back-to-back)" teams must designate a participation status and identify a specific reason.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Back-to-back exception</td><td>"For the second game of a back-to-back, teams must report the above information by 1 p.m. local time on the day of the game."</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Game-day updates</td><td>Required between 11 a.m. and 1 p.m. local time (8–10 a.m. for tip-offs 5 p.m. or earlier), except second game of a back-to-back.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Update cadence</td><td>"Reports are updated on a continual basis throughout the day" — the league publishes timestamped PDFs (e.g., 15-minute increments).</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Report format</td><td>Columns: Game Date, Game Time, Matchup, Team, Player Name, Current Status, Reason — statuses include Available / Questionable / Doubtful / Out / Probable; reasons include Injury/Illness, Rest, G League - Two-Way, Personal Reasons, Not With Team.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-02_01_45PM.pdf">official report PDF sample</a></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><strong>Reading the designations honestly:</strong> the NBA publishes statuses and
+  reasons — it does <strong>not</strong> publish probabilities attached to them. Any mapping like
+  "Questionable ≈ 50%" is folklore, not official. Our framework treats designations as <em>states of
+  uncertainty</em> and estimates availability probabilities from each player's own history — a value we
+  compute and label <span class="badge b-info">INTERNAL</span>, never an official fact.</div>
+
+  <h2>League rest constraints that shape rotation decisions</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Policy</th><th>Verified rule</th><th>Rotation impact</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Player Participation Policy (2023)</td><td>Star = All-Star or All-NBA selection in any of the past three seasons. Teams may rest no more than one star per game; stars must be available for national TV and NBA Cup games; rest balanced home/road (preference for home); no long-term shutdowns; healthy rested players present and visible. Fines: $100k first violation, $250k second, +$1M each subsequent (amounts per NBA.com citing ESPN).</td><td>Rest spots are constrained and more predictable — a list of rules the projection engine can rely on</td><td><a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">NBA.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Pre-approved B2B rest</td><td>Pre-approved rest allowances exist for back-to-backs for players who are 35+ years old on opening night, have 34,000+ regular-season minutes, or 1,000+ combined regular-season and postseason games.</td><td>Specific veteran B2B absences become forecastable</td><td><a href="https://ftw.usatoday.com/story/sports/nba/2023/09/13/nba-load-management-rules-explained-player-participation/80914603007/">USA TODAY FTW explainer</a></td></tr>
+      <tr data-row data-row-type="fact"><td>65-game awards rule (2023 CBA)</td><td>Awards eligibility requires 65 games with 20+ minutes (two 15–19-min near-misses count; 62-game protection for season-ending injuries).</td><td>Gives late-season incentives to keep borderline players active — and to shut down eliminated teams' stars</td><td><a href="https://www.nytimes.com/athletic/4421655/2023/04/17/cba-minimum-games-mvp-awards/">The Athletic</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="redistribution">Minutes-redistribution framework (our method)</h2>
+  <p class="small">Steps 1–5 are internal methodology (<span class="badge b-info">INTERNAL</span>) — they are
+  our model, not sourced facts. They exist precisely because official sources report <em>availability</em>, not
+  <em>minutes consequences</em>.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Step</th><th>Input</th><th>Method</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>1. Depth chart</td><td>Lineups/minutes from completed games.</td><td>Minutes shares per position group; declines with distance from starter.</td><td>Baseline minutes per player (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">rules file</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>2. Absorption</td><td>Official status (Out / Doubtful / Questionable / Probable / Available).</td><td>Out → 0 min; minutes redistributed to same-position bench first, then small-ball arrangements; Doubtful/Questionable handled as probability-weighted scenarios, not single numbers.</td><td>Projected minutes per player per scenario (<a href="https://official.nba.com/nba-injury-report-2026-27-season/">status source</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>3. Usage shift</td><td>Usage rates of absent players.</td><td>Absent usage redistributed mostly to remaining high-usage players (documented motivation: opening lines misprice absences — <a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare/Dennis/Paul 2015</a>).</td><td>Per-minute production rate changes</td></tr>
+      <tr data-row data-row-type="internal"><td>4. Production projection</td><td>Minutes × per-minute rates × usage shift.</td><td>Scenario table: best/median/worst availability outcomes.</td><td>Player prop projections (PRA etc.) + team-level pace/efficiency deltas (<a href="validation-gates.html#gates">gated before use</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>5. Line translation</td><td>Team deltas.</td><td>Map efficiency deltas to spread/total points; freeze as our originated lines before viewing market.</td><td>Originated lines → <a href="strategies.html#origination">pipeline</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Worked example (synthetic, DEMO)</h2>
+  <div class="note demo">Illustrative arithmetic on synthetic players from <code>data/demo/injuries.demo.csv</code> —
+  no real player is ever assigned a synthetic status.</div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Scenario</th><th>Input</th><th>Redistribution</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="demo"><td>Starting center Questionable</td><td>"Demo Player 3 (C)" Questionable (ankle sprain), projected 28 min if playing.</td><td>If Out: 12 min → backup C, 6 min → small-ball PF, rest → pace decrease scenario.</td><td>Two-scenario prop and total lines; bet only if our median line clears gates (<a href="validation-gates.html">gates</a>)</td></tr>
+      <tr data-row data-row-type="demo"><td>Guard Out — Rest</td><td>"Demo Player 6 (G)" Out (Rest), 24 starter minutes.</td><td>24 min redistributed per depth chart shares; usage concentrates on next creator.</td><td>Under-total tilt + teammate prop bump (<a href="strategies.html#catalog">S10 / S07</a> candidates)</td></tr>
+      <tr data-row data-row-type="demo"><td>Forward Probable on B2B</td><td>"Demo Player 7 (F)" Probable (knee management), B2B second game.</td><td>Minute-cap scenario weighted higher (B2B + injury management).</td><td>Prop lines shaded down vs. baseline (<a href="strategies.html#catalog">S06</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Where the data comes from (and what's missing)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Need</th><th>Status</th><th>Path to resolution</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Official injury reports</td><td><span class="badge b-ok">PUBLIC</span> — league publishes timestamped PDFs daily.</td><td>Ingest from <a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a> (manual or automated; automation choice = <a href="questions.html#unanswered">Q-B2</a>)</td></tr>
+      <tr data-row data-row-type="fact"><td>Lineups / minutes history</td><td><span class="badge b-blocked">MISSING</span> — no feed connected; NBA platform terms restrict scraping.</td><td>Licensed data (Sportradar is the exclusive official distributor — <a href="https://www.sportico.com/business/sports-betting/2021/nba-sportradar-data-equity-1234646790/">Sportico</a>) or official partnerships; see <a href="flagged-for-review.html#i3">I-3</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Player availability probabilities</td><td><span class="badge b-warn">NOT OFFICIAL</span> — statuses only; no league-published probabilities.</td><td>Estimate internally from each player's designation→play history once data exists (<a href="injuries-rotations.html#policy">statuses only — see note</a>)</td></tr>
+    </tbody>
+  </table></div>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

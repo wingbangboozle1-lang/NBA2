@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Correlation</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-correlation">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Correlation</h1>
+  <p class="lede">Combos (parlays, same-game player-prop combos) live or die on correlation. This page defines
+  the math we use, the market conventions books apply, the caps we enforce, and — critically — the honest state
+  of our own correlation estimates: none exist yet, so the matrix ships as a template with placeholder values
+  that are <strong>never used</strong> until replaced by data-derived coefficients.</p>
+
+  <h2 id="market-convention">Market convention: books price correlation deliberately</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Convention</th><th>Documented behavior</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Correlated legs banned in standard parlays</td><td>Parlays may not combine related outcomes unless explicitly offered as a Same Game Parlay product; violators may be voided or settled as singles.</td><td><a href="https://www.fanduel.com/fanduel-sportsbook-house-rules-pa">FanDuel house rules (PA/OH)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Related outcomes voided if accepted in error</td><td>Books reserve the right to void parlay parts that include related contingencies not priced for the relationship.</td><td><a href="https://www.goldennugget.com/globalassets/lake-charles/_pdfs/draftkings-gnlc-retail-house-rules.pdf">DraftKings betting rules (Golden Nugget retail)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>SGPs may be restricted "due to correlation"</td><td>Books may limit or suspend SGP offerings on specific games/markets precisely because of correlation risk.</td><td><a href="https://www.saracenresort.com/wp-content/uploads/2026/08/2026-BetSaracen-SportsBook-House-Rules-August.pdf">BetSaracen house rules (Aug 2026)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Push recalculation</td><td>Parlay legs that push/no-action reduce the parlay to remaining legs (relevant for spreads/totals on whole numbers).</td><td><a href="https://www.saracenresort.com/wp-content/uploads/2026/08/2026-BetSaracen-SportsBook-House-Rules-August.pdf">BetSaracen house rules</a> · <a href="https://www.fanduel.com/fanduel-sportsbook-house-rules-pa">FanDuel</a></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><strong>Implication:</strong> the market already charges for correlation in SGPs. Our edge
+  must come from pricing the correlation <em>better than the book does</em> — never from pretending it isn't
+  there. That is gate <a href="validation-gates.html#gates">G12</a>.</div>
+
+  <h2 id="parlay-math">The math toolkit (derived arithmetic — no external source needed)</h2>
+  <p class="small">All figures below are exact consequences of probability arithmetic; verify them against
+  <code>tools/generate_picks_lab.py</code> or any calculator. They are labeled <span class="badge b-info">DERIVED</span> rather than sourced.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Quantity</th><th>Formula</th><th>Worked value</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Breakeven at -110</td><td>p* = |odds| / (|odds| + 100)</td><td>110/210 = <strong>52.38%</strong></td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>2-leg parlay at -110 each (true compounding)</td><td>Decimal = (1 + 10/11)² = 441/121; breakeven p* = 121/441</td><td>Decimal 3.6446; breakeven <strong>27.44%</strong></td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>3-leg parlay at -110 each</td><td>Decimal = (21/11)³ = 9261/1331; breakeven p* = 1331/9261</td><td>Decimal 6.9587; breakeven <strong>14.37%</strong></td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Joint probability, independent legs</td><td>P(AB) = P(A)·P(B)</td><td>0.55 × 0.55 = 0.3025 → EV vs. true-parlay price = 0.3025×3.6446 − 1 = <strong>+10.25%</strong></td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Joint probability, correlated legs</td><td>P(AB) = P(A)·P(B) + Cov(A,B)</td><td>With Cov = +0.04: P = 0.3425 → EV = 0.3425×3.6446 − 1 = <strong>+24.83%</strong> at the same price — i.e., the price must move, which is exactly what books do</td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Kelly worked example</td><td>f* = (p·b − q)/b, b = 0.9091 (-110); quarter-Kelly = f*/4, cap 2%</td><td>p = 0.545 → f* = 4.45% → stake <strong>1.11%</strong></td><td><span class="badge b-info">DERIVED</span> <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">reproducible in code</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="estimation">How correlation coefficients will be estimated (when data exists)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Step</th><th>Procedure</th><th>Output</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>1. Define legs</td><td>Enumerate market pairs used by S08/S09/S11 (spread, total, player PRA/points, ML).</td><td>Pair list</td><td><span class="badge b-ok">DONE</span> — <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">template</a></td></tr>
+      <tr data-row data-row-type="internal"><td>2. Collect outcomes</td><td>Historical results: for each past game, whether each market's closing side covered.</td><td>Co-occurrence dataset</td><td><span class="badge b-blocked">BLOCKED</span> — needs historical archive (<a href="questions.html#unanswered">Q-B3</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>3. Estimate</td><td>Pairwise phi coefficient (binary correlation) per pair, split by season to test stability (G9).</td><td>Correlation matrix CSV (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">schema template</a>)</td><td><span class="badge b-blocked">BLOCKED</span> — depends on step 2</td></tr>
+      <tr data-row data-row-type="internal"><td>4. Validate</td><td>Out-of-sample check: estimated covariance must predict observed joint frequencies within tolerance before S08/S09 unlock.</td><td>Gate G11/G12 evidence (<a href="validation-gates.html#gates">gates</a>)</td><td><span class="badge b-blocked">BLOCKED</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="matrix">Correlation matrix — current state</h2>
+  <div class="note demo"><strong>Everything below is DEMO placeholder data</strong> — plausible-looking but
+  <em>not estimated from data</em>. They exist only so the schema and tooling are testable. Real coefficients
+  replace them after the estimation pipeline runs; until then gate <a href="validation-gates.html#gates">G11</a>
+  forbids any combo strategy from trading.</div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Pair</th><th>Placeholder value</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="demo"><td>Spread ↔ ML (same game)</td><td class="flag-demo">0.80</td><td><span class="badge b-demo">PLACEHOLDER</span> — <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">template file</a></td></tr>
+      <tr data-row data-row-type="demo"><td>Spread ↔ Total</td><td class="flag-demo">0.55</td><td><span class="badge b-demo">PLACEHOLDER</span> — <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">template file</a></td></tr>
+      <tr data-row data-row-type="demo"><td>Player PRA ↔ Player Points</td><td class="flag-demo">0.70</td><td><span class="badge b-demo">PLACEHOLDER</span> — <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">template file</a></td></tr>
+      <tr data-row data-row-type="demo"><td>Total ↔ Player PRA</td><td class="flag-demo">0.30</td><td><span class="badge b-demo">PLACEHOLDER</span> — <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/demo/correlation.demo.csv">template file</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="caps">Portfolio correlation caps</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Cap</th><th>Value</th><th>Enforcement</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Pairwise |corr| across open positions</td><td>≤ 0.35</td><td>Generator + ledger check (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">code</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Slate composition</td><td>≤8 singles, ≤2 parlays, ≤2 SGPs</td><td>Generator (<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/strategies_lab.json">strategies.json caps</a>)</td></tr>
+      <tr data-row data-row-type="internal"><td>Total slate exposure</td><td>≤12% of bankroll</td><td>Generator + <a href="validation-gates.html#staking">staking policy</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Same-game leg count</td><td>SGPs limited to 2 legs until matrix validated (G11/G12)</td><td><a href="strategies.html#catalog">S08 definition</a></td></tr>
+    </tbody>
+  </table></div>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>
