@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Suggestions - NBA2</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Site Improvement Suggestions &bull; Review Before Implementing</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Dashboard</a></li>
+          <li><a href="strategies.html">Betting Strategies</a></li>
+          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="injuries.html">Injuries & Rotation</a></li>
+          <li><a href="game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="executive-summary.html">Executive Summary</a></li>
+          <li><a href="suggestions.html" class="active">Site Suggestions</a></li>
+          <li><a href="questions.html">Questions & Answers</a></li>
+          <li><a href="flagged-review.html">Flagged for Review</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="card">
+        <h2>Site Improvement Suggestions</h2>
+        <p class="font-small text-muted mb-2">This section is dedicated to suggestions for improving the site and decision-making framework. Each suggestion should be reviewed and the best path chosen before implementing any changes. No suggestion is implemented without review.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Suggestion ID</th>
+                <th>Category</th>
+                <th>Suggestion</th>
+                <th>Expected Benefit</th>
+                <th>Effort</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Review Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>SUGG-001</code></td>
+                <td>Data Integration</td>
+                <td>Connect live odds API (DraftKings, FanDuel, BetMGM, Caesars) for real-time line comparison.</td>
+                <td>Enables originated-line vs. market-line edge detection for every pick.</td>
+                <td>High</td>
+                <td>High</td>
+                <td>Proposed</td>
+                <td>Requires API credentials and cost evaluation.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-002</td>
+                <td>Data Integration</td>
+                <td>Connect official NBA play-by-play and box-score API for backtesting and minutes validation.</td>
+                <td>Enables backtesting of all 8 strategy templates against historical seasons.</td>
+                <td>High</td>
+                <td>High</td>
+                <td>Proposed</td>
+                <td>NBA official stats API endpoint needs identification.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-003</td>
+                <td>UI / UX</td>
+                <td>Add a toggle between "Dashboard" and "Detailed Analysis" views on each page.</td>
+                <td>Improves decision-making by letting users choose summary vs. depth.</td>
+                <td>Low</td>
+                <td>Medium</td>
+                <td>Proposed</td>
+                <td>Simple CSS/JS toggle; no data impact.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-004</td>
+                <td>UI / UX</td>
+                <td>Add color-coded confidence indicators (High/Medium/Low) on pick cards.</td>
+                <td>Faster visual triage of picks; reduces decision fatigue.</td>
+                <td>Low</td>
+                <td>Medium</td>
+                <td>Proposed</td>
+                <td>Confidence thresholds need definition.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-005</td>
+                <td>Feature</td>
+                <td>Add a "correlation heatmap" showing which player props correlate within each game.</td>
+                <td>Prevents correlation trap parlays; identifies +EV correlated combinations.</td>
+                <td>Medium</td>
+                <td>High</td>
+                <td>Proposed</td>
+                <td>Requires historical prop outcome data.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-006</td>
+                <td>Feature</td>
+                <td>Add email/Slack alerts for injury status changes (Out → Questionable → Available).</td>
+                <td>Ensures picks are voided or adjusted before game time when injuries change.</td>
+                <td>Medium</td>
+                <td>High</td>
+                <td>Proposed</td>
+                <td>Requires notification service integration.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-007</td>
+                <td>Feature</td>
+                <td>Add backtesting results dashboard showing win rate, ROI, and edge per strategy.</td>
+                <td>Quantifies skill vs. luck; identifies which strategies pass validation over time.</td>
+                <td>High</td>
+                <td>High</td>
+                <td>Proposed</td>
+                <td>Requires historical data + pick logging.</td>
+              </tr>
+              <tr>
+                <td><code>SUGG-008</td>
+                <td>UI / UX</td>
+                <td>Add a mobile-responsive navigation drawer (sidebar collapses on mobile).</td>
+                <td>Improves mobile usability for checking picks on game day.</td>
+                <td>Low</td>
+                <td>Low</td>
+                <td>Proposed</td>
+                <td>Already partially styled; needs JS toggle.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notice notice-info mt-2">
+          <p><strong>Review process:</strong> Any change to the site must be proposed here first, reviewed for impact on data integrity and verification standards, and approved before implementation. Suggestions marked "Proposed" are not yet implemented.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Site Suggestions &bull; Review before implementing
+    </footer>
+  </div>
+</body>
+</html>

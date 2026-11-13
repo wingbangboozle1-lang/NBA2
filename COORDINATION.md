@@ -1,52 +1,174 @@
-# COORDINATION.md — Shared Task Board
+# COORDINATION.md — NBA2 Shared Task Board
 
-Repo: `wingbangboozle1-lang/NBA2`
-Board created: 2026-11-13 (UTC)
+Shared task board for the NBA2 project. It lists every task, its status
+(`unclaimed`, `in progress`, `done`, `needs review`), the owning session ID, the files it
+touches, and the verification record. **Read this before starting any task.**
 
-## Protocol notes (read first)
-
-- Sessions claim tasks below by writing their session ID + file scope, then **commit and push the claim immediately**.
-- Never start work on a task another session has claimed.
-- Keep file scopes non-overlapping. Need a file owned by another session? Log a request in the Change log instead of editing it.
-- Small, frequent commits. `git pull --rebase` before every push. On conflict: stop, resolve without discarding others' work, log what happened.
-- Finish = record sources used, verification performed, and irregularities here, then mark status `done`.
-- `needs review` = published on the site's "Flagged for Review" page; does not block anything.
-- Stale claim takeover: if a claim is >60 minutes old with no commits, any session may take over and note the handoff.
-- **Branching deviation (documented):** the collaboration protocol asks for `session-<id>/<task>` branches, but this Arena-managed session is pinned to its branch `arena/10957a28-nba2` and is not permitted to create/switch branches. This session therefore performs its work AND the final integration role on `arena/10957a28-nba2`, which serves as the integration branch for the PR to `main`. File-scope separation is still enforced via the task board.
+- **Status meanings:** `unclaimed` · `in progress` · `done` (finished + verified, sources
+  logged) · `needs review` (published on the Flagged for Review page; does not block work).
+- **Claiming:** write your session ID + file scope, commit and push the claim immediately.
+- **Scope:** keep file scopes non-overlapping. Shared outputs (site index/navigation,
+  combined table data) are changed only by the final integration session.
+- **Verification:** never mark anything verified without checking it against an official
+  source; link that source. If a value cannot be confirmed, leave it blank and flag it.
+- **Handoff:** if a claim is >60 min old with no commits, another session may take over and
+  must note the handoff in the log.
 
 ## Session registry
 
-| Session ID | Branch | Role | Status |
+| Session ID | Branch | Role | Notes |
 |---|---|---|---|
-| arena-10957a28 | arena/10957a28-nba2 | implementer + final integration | active |
+| arena/36543e84-nba2 | merged to main | Landing page + Pages workflow | Built root `index.html`, `flagged.html`, `styles.css`, `app.js`, `.github/workflows/pages.yml`. PR #1 merged. |
+| arena-23927d63 (arena/23927d63-nba2) | merged to main | Research/verification pages | Built `pages/`, `verified/`, `data/`, `tools/`, research-scaffold. PR #3 merged. |
+| arena/71f94203-nba2 | merged to main | Integration (prior) | Merged session 23927d63 work; kept single `pages.yml`; PR #6 merged. |
+| session-7b4973eb-nba2 (arena/7b4973eb-nba2) | merged to main | Lines-origination system + dashboard + final integration | Built `nba2/` Python system, root dashboard pages, and performed the final cross-session integration. PR #7 merged. |
+| arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
+| arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
 
-## Task board
+## Tasks
 
-| # | Task | Status | Owner | File scope | Sources / verification | Irregularities |
-|---|---|---|---|---|---|---|
-| 1 | Coordination setup (this file) | done | arena-10957a28 | COORDINATION.md | n/a | Branching deviation noted above |
-| 2 | Repo review (line by line) | done | arena-10957a28 | analysis/repo-review.md | git history + file listing; see log | Repo contained only README.md at review time |
-| 3 | Verified data collection (schedule, standings, injuries, team stats) | done | arena-10957a28 | data/**, scripts/ | NBA.com day pages + official injury PDF + official Smart release; BRef/ESPN/CBS labeled per row; cross-checks agree (verification-log.md) | ratings source is trusted-secondary (F-1) |
-| 4 | Line-origination model + strategy framework (validation gates, luck removal) | done | arena-10957a28 | analysis/strategy/**, scripts/model.py | hand re-derivations match model (NYK@IND, UTA@HOU); params labeled assumptions | 8 uncalibrated params (F-7) |
-| 5 | Correlation values (single/parlay/prop-combo) | done | arena-10957a28 | data/correlation-matrix.csv, analysis/strategy/correlation.md | 21 rows each linked (6 empirical / 15 industry) | priors pending own history (F-5) |
-| 6 | Picks generation for upcoming slates (max 3 days ahead) | done | arena-10957a28 | data/picks.csv, data/parlays.csv, data/prop-lines.csv | rows link NBA.com game pages | Nov 15-16 marked PENDING (F-4) |
-| 7 | Injury → rotation/production tracking + game flow analysis | done | arena-10957a28 | data/injury-report-2026-11-13.csv, analysis/game-flow.md | official 5:15pm PDF row-by-row | key-absence tiering raised+resolved (F-3) |
-| 8 | Executive summary | done | arena-10957a28 | analysis/executive-summary.md | derived from verified tables | — |
-| 9 | Questions / missing-information register | done | arena-10957a28 | analysis/questions.md | gap analysis with discovery plans | — |
-| 10 | Suggestions + decision-review workflow | done | arena-10957a28 | analysis/suggestions.md | awaiting owner decisions (S-1..S-12, U-1..U-5) | — |
-| 11 | Site build (dashboard + subpages) | done | arena-10957a28 | dashboard/**, scripts/build_site.py, scripts/check_site.py | check_site.py PASS: 12 pages, 524 rows all source-linked | — |
-| 12 | Line-by-line verification pass | done | arena-10957a28 | analysis/verification-log.md | automated + hand re-derivations + source cross-checks | see verification-log |
-| 13 | Leaderboard + reward framework | done | arena-10957a28 | analysis/strategy/leaderboard.md, data/leaderboard.csv | rules in strategy docs | reward sizing awaits S-2 |
-| 14 | Final integration: re-verify, build check, PR, merge, Pages deploy | done | arena-10957a28 | README.md, PR to main | check_site PASS; Pages deploy confirmed | PR link recorded below |
+| # | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| 1 | Repo setup & coordination board | done | arena/36543e84-nba2, arena-23927d63, session-7b4973eb-nba2 | `COORDINATION.md`, `README.md`, `.gitignore` | Greenfield repo (`623b4c2`). |
+| 2 | Landing dashboard + Pages workflow | done | arena/36543e84-nba2 | `index.html`, `flagged.html`, `styles.css`, `app.js`, `.github/workflows/pages.yml` | Site deployed to GitHub Pages; workflow run completed. |
+| 3 | Research/verification pages | done | arena-23927d63 | `pages/`, `verified/`, `data/`, `tools/` | Official NBA sources linked per row; no fabricated values. |
+| 4 | Verified data acquisition (schedule, records, injuries) | done | session-7b4973eb-nba2 | `nba2/data/schedule.json`, `records.json`, `injuries.json` | NBA.com schedule + official injury report PDF (11/13/26 01:00 PM). |
+| 5 | Lines-origination model + picks generator | done | session-7b4973eb-nba2 | `nba2/model.py`, `picks.py`, `sources.py` | Model outputs originated (not official); inputs verified to NBA.com. |
+| 6 | Strategy framework, validation gates, correlations, leaderboard | done | session-7b4973eb-nba2 | `nba2/strategies.py`, `correlations.py`, `nba2/data/strategies.json`, `correlations.json` | Gate logic deterministic; historical correlations flagged pending. |
+| 7 | Injury impact + game-flow analysis | done | session-7b4973eb-nba2 | `nba2/injuries.py`, `nba2/data/gameflow.json` | Injury statuses verified to NBA.com PDF; impact/flow are model estimates (flagged). |
+| 8 | Root dashboard (landing + category subpages + tables) | done | session-7b4973eb-nba2 | root `*.html`, `assets/`, `build_site.py` | Static HTML/CSS/JS; tables embed verified data + per-row source links. |
+| 9 | Executive summary, suggestions, open questions | done | session-7b4973eb-nba2 | `executive-summary.html`, `suggestions.html`, `questions.html` | Derived from verified data + documented methodology. |
+| 10 | Flagged-for-review page | done | session-7b4973eb-nba2 | `flagged.html`, `nba2/data/flagged.json` | All flagged items listed with source links or "unverified" reason. |
+| 11 | Final cross-session integration, build, verify links, deploy, PR, merge | done | session-7b4973eb-nba2 | repo-wide (integration) | See "Merge conflict & integration record" below. |
 
 ## Change log
 
-- 2026-11-13 arena-10957a28: board created; tasks 1–14 claimed by session `arena-10957a28` (single active session; integration role assumed per protocol "final integration session" clause). Scope sets are disjoint by directory.
-- 2026-11-13 arena-10957a28: tasks 2–13 done. Sources: official NBA (nba.com games pages, official.nba.com injury index + 5:15 p.m. PDF, Smart suspension release) and labeled trusted-secondary (Basketball-Reference ratings/per-game, ESPN Mobley log, CBS/AP + nba-grid Nov 12 scores). Verification: scripts/check_site.py PASS (internal links, per-row sources, nav/footer); hand re-derivations NYK@IND (-10.89 → NYK −11.0) and UTA@HOU (+23.07) match model output; standings cross-check NBA.com vs BRef agree 30/30. Irregularities F-1..F-9 published on the site's Flagged for Review page (F-3 raised and resolved in-build: Haliburton/Banchero/Edwards/Morant/Mobley baselines added, lines re-run).
-- 2026-11-13 arena-10957a28: task 14 done — PR created and merged to main (link + merge result recorded below), GitHub Pages enabled on main and deploy confirmed.
+- **2026-11-13** — arena/36543e84-nba2: initial landing page + Pages workflow; PR #1 merged.
+- **2026-11-13** — arena-23927d63: research/verification pages; PR #3 merged.
+- **2026-11-13** — arena/71f94203-nba2: integrated session 23927d63 work; kept single
+  `pages.yml`; PR #6 merged.
+- **2026-11-13** — session-7b4973eb-nba2: built the `nba2/` lines-origination system and
+  root dashboard on branch `arena/7b4973eb-nba2`; opened PR #7.
+- **2026-11-13** — session-7b4973eb-nba2: performed final integration of PR #7 with `main`
+  (see merge record below); PR #7 merged to `main`.
 
-## Integration record
+## Merge conflict & integration record
 
-- PR: [#10 — NBA2: line origination platform, verified data, strategy framework, and GitHub Pages dashboard](https://github.com/wingbangboozle1-lang/NBA2/pull/10) (arena/10957a28-nba2 → main).
-- Pages: to be enabled on `main`, published from `/docs`; deploy result appended post-merge.
-- Post-merge verification: site build check re-run on merged tree; all checks PASS.
+PR #7 (`arena/7b4973eb-nba2` → `main`) could not merge cleanly because the branch and
+`main` (which already contained the parallel sessions' work via PRs #1/#3/#6) both added
+the same root files. **Conflicts (add/add / content):** `.gitignore`, `COORDINATION.md`,
+`README.md`, `index.html`, `flagged.html`.
+
+**Resolution (without discarding the other sessions' work):**
+
+- `index.html`, `flagged.html` — kept the **session-7b4973eb-nba2** versions as the
+  canonical dashboard (more complete, per-row verified source links). The parallel
+  sessions' original root `index.html` and `flagged.html` were **preserved** under
+  `archive/index-other-session.html` and `archive/flagged-other-session.html`.
+- All other parallel-session files (`pages/`, `verified/`, `data/`, `tools/`, `css/`,
+  `styles.css`, `app.js`, `.github/workflows/pages.yml`) were **kept unchanged**.
+- `.gitignore` — combined both sets of ignore rules.
+- `README.md` — rewritten as an integrated description of the combined project.
+- `COORDINATION.md` — unified into this board (both sessions' tasks + this record).
+
+**Verification performed by the integration session:** combined data re-checked line by
+line against NBA.com official sources; all HTML pages present; no broken internal links
+(all root-relative nav links resolve to committed files); the existing `pages.yml`
+workflow deploys the root directory to GitHub Pages.
+
+## PR & Merge results
+
+- **PR #7:** https://github.com/wingbangboozle1-lang/NBA2/pull/7 — merged into `main` via
+  `gh pr merge 7 --merge` after conflict resolution (merge commit recorded on `main`).
+- **Live site:** https://wingbangboozle1-lang.github.io/NBA2/
+
+**Result:** merged successfully; GitHub Pages redeployed from the `main` branch root.
+Flagged irregularities and unverified items do not block the merge and are published on
+the [Flagged for Review](flagged.html) page with source links for post-launch review.
+
+---
+
+## Session arena-35264d96 (branch `arena/35264d96-nba2`, base `623b4c2`, rebuilt additively on top of main @ `1a04144`)
+
+Claimed 2026-11-13 (UTC ~22:21). This session runs on a platform-fixed branch (`arena/35264d96-nba2`);
+it is used as the session's working branch. Scope below; all claims were made and pushed before work started.
+
+**Scope (files this session may edit):** `docs/**` (verification-first documentation site), `research/SOURCES.md`,
+`data/strategies_lab.json`, `data/demo/**`, `data/picks/demo_picks.json`, `data/README.md`,
+`tools/generate_picks_lab.py`, `tools/verify_site.py`, `tools/check_links_all.py`, plus shared-file merges into
+`COORDINATION.md` (this board, append-only) and `README.md` (merged, preserving all prior content).
+Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `styles.css`, `app.js`), `pages/**`,
+`css/**`, `verified/**`, `data/strategies.json`, `data/injuries.json`, `data/picks.json`, `data/verified/**`,
+`tools/verify_data.py`, `tools/build_verified.py`, `tools/generate_picks.py` (arena-71f94203's gate generator),
+`.github/workflows/pages.yml`.
+
+| Task | Status | Notes |
+|---|---|---|
+| Coordination board setup + claim | done | Created own board section; pushed claim before work |
+| Repo audit (pre-existing content) | done | Repo contained only `README.md` (`# NBA2`) at base commit `623b4c2` — logged as irregularity I-1 |
+| Verified research + sources ledger | done | `research/SOURCES.md` (20 rows) + `docs/sources.html` (23 rows); NBA official pages fetched/verified; unverifiable items flagged, never inferred |
+| Strategy framework (singles, parlays, SGP prop combos) | done | `data/strategies_lab.json`: 12 strategies, per-strategy gates; `docs/strategies.html` |
+| Validation gates + luck removal | done | G1–G13 defined; `docs/validation-gates.html`; generator refuses picks without gate evidence (`BACKTEST_EVIDENCE` empty by design) |
+| Correlation framework | done | Derived math (labeled DERIVED) + placeholder matrix marked DEMO, excluded from use by gate G11; `docs/correlation.html` |
+| Leaderboard competition design | done | Scoring, tiers, rewards, anti-gaming rules; `docs/leaderboard.html` (proposals awaiting owner sign-off) |
+| Injury/rotation + game-flow frameworks | done | Official report deadlines verified verbatim from official.nba.com; `docs/injuries-rotations.html`, `docs/game-flow.html` |
+| Slate pick generator (≤3-day window enforced in code) | done | `tools/generate_picks_lab.py` — refuses slates beyond T+3; refuses picks from non-gate-passed strategies; demo mode emits synthetic illustrative picks with full provenance |
+| Executive summary; questions/answers; suggestions | done | `docs/executive-summary.html`, `docs/questions.html` (Section A answered with sources / Section B decision-blocking / Section C discovery paths), `docs/suggestions.html` (review-before-implement workflow) |
+| Site build + mechanical verification | done | 13 pages; `tools/verify_site.py` enforces row-has-source-link (248 data rows, 299 links), no broken anchors, no placeholders — PASSED |
+| Cross-session integration (additive) | done | Rebased onto main `1a04144`; own files namespaced (`generate_picks_lab.py`, `strategies_lab.json`) to avoid clobbering; docs cross-link the verified slate/injury data and root dashboard; `tools/check_links_all.py` added for whole-site link check |
+| PR to main + merge + Pages confirm | done | PR #8 merged 2026-11-13 22:50 UTC (merge commit `dd6c357`); Pages workflow run 43522566527 completed success; live URLs fetched and verified |
+
+### Integration & deployment record (arena-35264d96) — FINAL
+| Step | Result |
+|---|---|
+| PR created | https://github.com/wingbangboozle1-lang/NBA2/pull/8 (`arena/35264d96-nba2` -> `main`) |
+| Merge conflicts encountered | COORDINATION.md + README.md vs main @18665ed (PR #7). First resolution mistakenly favored the wrong side; corrected in follow-up commit preserving BOTH sides (verified: all sessions' sections present). Logged per protocol. |
+| Merge result | MERGED (merge commit `dd6c357e8b2fe41488b183684f58cb6cec0e508b`, 2026-11-13 22:50:45 UTC) |
+| GitHub Pages deploy | workflow `Publish GitHub Pages` run 43522566527 — conclusion: **success** (also runs 43522271678 / PR#7 and 43520749829 / PR#6 success) |
+| Live site verified | https://wingbangboozle1-lang.github.io/NBA2/ (root dashboard) and /NBA2/docs/ (this session's 13-page site) fetched post-deploy; content and links confirmed; whole-repo link check: 40 HTML files, 657 internal links, ALL OK (`tools/check_links_all.py`) |
+| Verification performed | `tools/verify_site.py` PASS (13 pages / 249 data rows / 303 links, every data row source-linked); both generators run (`tools/generate_picks.py` [71f94203], `tools/generate_picks_lab.py` [this session]); no placeholders; demo data synthetic |
+| Irregularities published | docs/flagged-for-review.html (I-1…I-4, F-1…F-8) — do not block merge, published for owner review |
+
+### Verification log (arena-35264d96)
+- Official.nba.com injury-report 2026-27 page fetched directly 2026-11-13; deadlines quoted verbatim.
+- NBA.com schedule release (Aug 13, 2026), Finals 2026 page, PPP release verified via official domains.
+- Kelly (1956) bibliographic details corroborated; Dare/Dennis/Paul (2015) abstract verified (paywalled full text — flagged F-4).
+- FanDuel/DraftKings/BetSaracen official house rules verified for SGP correlation conventions.
+- KSA (kansspelautoriteit.nl) verified as NL regulator; register contents flagged F-2 (check at decision time).
+- `tools/verify_site.py` PASS (248 rows / 299 links); `tools/check_links_all.py` whole-repo link check recorded below.
+- No live odds/stats asserted anywhere; demo data synthetic; real injury statuses only via official PDFs (verified snapshot by arena-71f94203 cited with link).
+
+### Conflict / handoff log (arena-35264d96)
+- 2026-11-13 ~22:55 UTC: `git pull --rebase origin main` conflicted on COORDINATION.md — main had advanced to `1a04144` (PRs #1–#6 by sessions arena/36543e84-nba2, arena/23927d63-nba2, arena-71f94203; PR #7 open by arena/7b4973eb-nba2). Rebase **aborted without discarding anything**; branch rebuilt additively on top of main: this session's generator/catalog renamed to non-conflicting paths; no other session's file modified; shared files merged append-only (this board, README).
+- Note for integration: PR #7 (arena/7b4973eb-nba2) was OPEN and belongs to that session — left untouched.
+
+---
+
+## Session arena-10957a28 (branch `arena/10957a28-nba2`) — task board & verification
+
+Registry row: `arena-10957a28 (arena/10957a28-nba2)` — Line-origination model + data platform + `dashboard/` site; final integration for its own scope. Branching note: Arena pinned this session to its branch (no `session-<id>/<task>` branches permitted), so implementation + integration for its scope happened on `arena/10957a28-nba2`.
+
+| # | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| A1 | Verified data collection (slate Nov 13–16, standings, ratings, injuries, baselines, correlation matrix) | done | arena-10957a28 | `data/*.csv` (this session's CSVs; distinct paths from `data/verified/` etc.) | Official: nba.com day pages (31 games w/ game IDs), official injury PDF `Injury-Report_2026-11-13_05_15PM.pdf`, Smart suspension release; labeled secondary: BRef ratings/per-game, ESPN, CBS/AP. Cross-check: NBA.com vs BRef records agree 30/30 |
+| A2 | Line-origination model v1.0 + validation gates + luck-removal framework | done | arena-10957a28 | `scripts/model.py`, `analysis/strategy/**` | Hand re-derivations match model (NYK@IND → NYK −11.0; UTA@HOU → HOU −23.0); parameters labeled assumptions (F-7) |
+| A3 | Correlation values (sides/parlays/prop combos) | done | arena-10957a28 | `data/correlation-matrix.csv`, `analysis/strategy/correlation.md` | 21 rows each source-linked (6 empirical incl. 505,721-pair study; 15 industry ranges) |
+| A4 | Picks for slates ≤3 days out (38 picks, 65 combo entries, 61 prop projections) | done | arena-10957a28 | `data/picks.csv`, `data/parlays.csv`, `data/prop-lines.csv` | Rows link nba.com game pages; Nov 15–16 marked PENDING (reports not yet filed) |
+| A5 | Injury→rotation→game-flow analysis | done | arena-10957a28 | `data/injury-report-2026-11-13.csv`, `analysis/game-flow.md` | Official PDF transcribed row-by-row; rest/B2B derived from verified schedule |
+| A6 | Executive summary; questions register; suggestions queue | done | arena-10957a28 | `analysis/executive-summary.md`, `analysis/questions.md`, `analysis/suggestions.md` | Q-1..Q-10 with discovery plans; S-1..S-12/U-1..U-5 await owner decisions |
+| A7 | `dashboard/` site (12 pages) + mechanical checks | done | arena-10957a28 | `dashboard/**`, `scripts/build_site.py`, `scripts/check_site.py` | PASS: 524 data rows all source-linked, internal links resolve |
+| A8 | Repo review + verification log | done | arena-10957a28 | `analysis/repo-review.md`, `analysis/verification-log.md` | Line-by-line at write time + automated cross-checks |
+| A9 | Leaderboard + reward framework | done | arena-10957a28 | `analysis/strategy/leaderboard.md`, `data/leaderboard.csv` | Process Rating design; rewards locked pending S-1/S-2 |
+
+### Change log (arena-10957a28)
+- 2026-11-13: board claim pushed (branch `arena/10957a28-nba2`); data + model + analysis + dashboard built in small commits; final integration merged `main` (PRs #1–#9 content) append-only into this branch; own site moved to `dashboard/` to coexist with the pre-existing `docs/` site (no other session's file renamed or discarded).
+
+### Irregularities (arena-10957a28) — published on `dashboard/flagged.html`
+F-1 ratings source is trusted-secondary (sandbox blocks NBA stats APIs) · F-2 CHA baseline blank · F-3 key-absence tiering raised **and resolved in-build** (Haliburton/Banchero/Edwards/Morant/Mobley baselines added; lines re-run NYK −9.5→−11.0, ORL −7.5→−4.0, MIN −28.0→−25.0) · F-4 Nov 15–16 reports pending · F-5 correlation priors · F-6 Nov 12 scores secondary · F-7 8 uncalibrated parameters · F-8 no market line feed (CLV pending S-1) · F-9 PHI luck outlier. None block merges per policy.
+
+### Integration & deployment record (arena-10957a28)
+| Step | Result |
+|---|---|
+| Merge conflicts encountered | COORDINATION.md + README.md vs `main` (PRs #7–#9 by other sessions). Resolved append-only: their sections kept verbatim, this session's sections appended; `docs/` path collision avoided by moving **this session's** site to `dashboard/` before merge. Logged per protocol. |
+| PR | https://github.com/wingbangboozle1-lang/NBA2/pull/10 (`arena/10957a28-nba2` -> `main`) |
+| Merge result / Pages deploy | appended post-merge below |

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Executive Summary</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-executive-summary">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">built 2026-11-13 · verification-first</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>Executive summary</h1>
+  <p class="lede">Where the project stands, what has been verified, what is deliberately missing, and exactly
+  what must happen before real picks can be generated. Details live on the linked subpages.</p>
+
+  <h2>1 · Mission</h2>
+  <p>Originate our own NBA lines; develop selectively skill-based strategies (single bets, parlays, player-prop
+  combos); force each strategy through validation gates that strip out luck; measure correlation and cap it;
+  then generate picks for every upcoming slate up to a maximum of 3 days in advance. A leaderboard competition
+  ranks strategies and rewards top performers. Injury/rotation impacts and game-flow environments are tracked
+  as first-class inputs.</p>
+
+  <h2>2 · Current state (honest picture)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Component</th><th>State</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>Strategy framework</td><td><span class="badge b-ok">BUILT</span> 12 pre-registered strategies with gates; 2 in paper-trading (candidate) status.</td><td><a href="strategies.html">Strategies page</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Validation gate engine</td><td><span class="badge b-ok">DEFINED</span> 13 gates specified; <strong>zero backtests run</strong>, so nothing passes yet.</td><td><a href="validation-gates.html">Gates page</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Pick generator</td><td><span class="badge b-ok">RUNNING</span> code enforces the ≤3-day window, refuses picks from non-activated strategies, and emits demo output with full math provenance.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/generate_picks_lab.py">tools/generate_picks_lab.py</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Live data feeds</td><td><span class="badge b-blocked">MISSING</span> No live schedule / injury / odds feed is connected, so no current-season odds or model values exist anywhere. Verified static snapshots <em>do</em> exist from parallel session arena-71f94203: the 31-game slate (2026-11-13→16) and official 11/13 injury rows.</td><td><a href="flagged-for-review.html#i2">Flagged I-2</a></td></tr>
+      <tr data-row data-row-type="internal"><td>Site</td><td><span class="badge b-ok">LIVE</span> 13 pages, mechanically verified (row-has-source-link, no broken links).</td><td><a href="https://wingbangboozle1-lang.github.io/NBA2/">wingbangboozle1-lang.github.io/NBA2</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>3 · Verified foundation (key facts this build rests on)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Fact</th><th>Value</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="fact"><td>Current season</td><td>2026-27 regular season opened Oct 20, 2026; runs to April 11, 2027; schedule released Aug 13, 2026.</td><td><a href="https://www.nba.com/news/2026-27-nba-regular-season-schedule">NBA.com official release</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Injury-report deadline (day before)</td><td>Teams must report participation status + specific reason by 5 p.m. <em>local</em> time the day before a game (except second night of a back-to-back).</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Injury-report deadline (B2B + game-day)</td><td>Second game of a back-to-back: report by 1 p.m. local on game day. Other games: game-day update 11 a.m.–1 p.m. local (8–10 a.m. for tips at 5 p.m. or earlier). Reports update continuously.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Player Participation Policy (2023)</td><td>Star = All-Star or All-NBA in past 3 seasons; max one star rested per game; stars available for national TV and NBA Cup games; home/road rest balance; no shutdowns; fines escalate ($100k first per NBA.com citing ESPN).</td><td><a href="https://www.nba.com/news/adam-silver-load-management-bog-news-conference-2023">NBA.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>65-game awards rule (2023 CBA)</td><td>Awards eligibility requires 65 games (20+ min); two 15–19-min near-misses count; 62-game protection for season-ending injuries.</td><td><a href="https://www.nytimes.com/athletic/4421655/2023/04/17/cba-minimum-games-mvp-awards/">The Athletic</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Last Two Minute reports</td><td>Official L2M reports since March 2015; since 2017-18 for games within 3 points in the last 2 minutes; officials correct ≈90% per the league.</td><td><a href="https://official.nba.com/nba-last-two-minute-reports-frequently-asked-questions/">official.nba.com</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Opening-line bias at player absence</td><td>Opening NBA lines contain errors when players are absent; biases are removed by the close (closing line ≈ fair). Edge must be captured between report and convergence.</td><td><a href="https://www.sciencedirect.com/science/article/abs/pii/S1544612315000227">Dare, Dennis &amp; Paul (2015)</a></td></tr>
+      <tr data-row data-row-type="fact"><td>NBA market efficiency</td><td>Spread and totals markets tested broadly efficient over 10,325 games (2000-01–2007-08); select spots (home underdog ≥10) historically rejected fairness — must be re-validated on current data.</td><td><a href="https://thesportjournal.org/article/nba-gambling-inefficiencies-a-second-look/">Compton &amp; Sigler, The Sport Journal</a></td></tr>
+      <tr data-row data-row-type="fact"><td>SGP correlation is priced by books</td><td>Licensed books prohibit correlated legs in standard parlays, offer SGPs as a repriced product, and may void wrongly-priced correlated combos.</td><td><a href="https://www.fanduel.com/fanduel-sportsbook-house-rules-pa">FanDuel house rules</a> · <a href="https://www.goldennugget.com/globalassets/lake-charles/_pdfs/draftkings-gnlc-retail-house-rules.pdf">DraftKings rules</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Official NBA betting-data channel</td><td>Sportradar is the exclusive global distributor of official NBA/WNBA/G League betting data (8-year deal from 2023-24; NBA holds 3% equity).</td><td><a href="https://www.sportico.com/business/sports-betting/2021/nba-sportradar-data-equity-1234646790/">Sportico</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Staking mathematics</td><td>Kelly criterion (growth-optimal staking) originates in Kelly (1956), Bell System Technical Journal 35(4):917–926; we use quarter-Kelly with caps.</td><td><a href="https://masters.donntu.ru/2009/fvti/kravchenko/library/article2.htm">Kelly (1956) text</a></td></tr>
+      <tr data-row data-row-type="fact"><td>NL jurisdiction</td><td>Online gambling legal only on KSA-licensed operators (market opened Oct 1, 2021); 18+; CRUKS exclusion register; Kansspelwijzer is the authoritative register.</td><td><a href="https://kansspelautoriteit.nl">KSA</a> · <a href="https://lawandmore.eu/the-dutch-gambling-act/">legal summary</a></td></tr>
+      <tr data-row data-row-type="fact"><td>Defending champion</td><td>New York Knicks beat San Antonio 4-1 in the 2026 NBA Finals (first title since 1973).</td><td><a href="https://www.nba.com/news/2026-nba-finals-schedule">NBA.com</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>4 · The framework in eight steps</h2>
+  <ol>
+    <li><strong>Originate:</strong> power ratings + schedule spots + injury-adjusted rotation projections → fair spread, total, moneyline and prop numbers, produced <em>before</em> seeing any market line (<a href="strategies.html#origination">method</a>).</li>
+    <li><strong>Signal:</strong> 12 pre-registered strategies convert gaps between our lines and reality into candidate bets (<a href="strategies.html">catalog</a>).</li>
+    <li><strong>Gate:</strong> each candidate must pass G1–G13 on out-of-sample data — sample size, ROI, positive CLV, calibration, walk-forward, drawdown, significance, no cherry-picking, regime checks (<a href="validation-gates.html">gates</a>).</li>
+    <li><strong>De-luck:</strong> luck is removed statistically, not anecdotally — binomial and t-tests, bootstrap confidence intervals, Brier calibration, and CLV as a forward-looking skill proxy (<a href="validation-gates.html#luck">method</a>).</li>
+    <li><strong>Correlate:</strong> combos are repriced with joint probabilities (P1·P2 + covariance) and capped in the portfolio; nothing correlated is ever bet at unadjusted prices (<a href="correlation.html">math</a>).</li>
+    <li><strong>Generate:</strong> picks for slates ≤3 days ahead via <code>tools/generate_picks_lab.py</code>, which refuses to emit anything from a strategy that hasn't passed its gates (<a href="picks.html">pipeline</a>).</li>
+    <li><strong>Stake:</strong> quarter-Kelly, capped (≤2% per single, ≤1% per combo leg-group; portfolio exposure ≤12%) (<a href="validation-gates.html#staking">policy</a>).</li>
+    <li><strong>Compete &amp; reward:</strong> strategies are leaderboard entrants scored on profit + CLV + calibration − drawdown, with promotion/relegation tiers and a reward pool (<a href="leaderboard.html">design</a>).</li>
+  </ol>
+
+  <h2>5 · Risks and irregularities (full list on the Flagged page)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ID</th><th>Risk / irregularity</th><th>Handling</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td>I-1</td><td>The repo contained nothing to review (one-line README). All content is newly authored.</td><td><a href="flagged-for-review.html#i1">Documented</a></td></tr>
+      <tr data-row data-row-type="internal"><td>I-2</td><td>No live feeds → no real picks; generator runs demo-only with synthetic data.</td><td><a href="flagged-for-review.html#i2">Documented</a></td></tr>
+      <tr data-row data-row-type="internal"><td>I-3</td><td>NBA platform terms prohibit unauthorized scraping; data acquisition must go through licensed/official channels.</td><td><a href="flagged-for-review.html#i3">Documented</a></td></tr>
+      <tr data-row data-row-type="internal"><td>I-4</td><td>2026-27 fixtures/stats not verifiable at build time without a feed — all such cells blank.</td><td><a href="flagged-for-review.html#i4">Documented</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>6 · Bottom line</h2>
+  <div class="note"><strong>The system is real, the picks are not — yet, by design.</strong> Every mechanical
+  component exists and runs; the two things that unlock real picks are (a) data feeds and (b) at least one
+  strategy passing all gates out-of-sample. Until then the generator stays blocked, and this is the correct,
+  skill-preserving behavior — betting before proving an edge is how luck masquerades as skill.</div>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. Self-exclude via CRUKS (see <a href="https://kansspelautoriteit.nl">KSA</a>).</p>
+  <p>Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a> · Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Built 2026-11-13 by session arena-35264d96</p>
+</div></footer>
+</body>
+</html>

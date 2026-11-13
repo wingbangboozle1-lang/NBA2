@@ -1,0 +1,168 @@
+{
+  "description": "Verified NBA official injury report, 11/13/2026 01:00 PM edition. Source: official NBA.com injury report PDF. 11/14 and 11/15 games are listed as NOT YET SUBMITTED by the league (reports are filed closer to tip-off).",
+  "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+  "retrieved_utc": "2026-11-13T22:2x:00Z",
+  "games": [
+    {
+      "date": "2026-11-13", "matchup": "MIL@ORL", "game_id": "0022600035",
+      "source": "https://www.nba.com/game/mil-vs-orl-0022600035",
+      "injuries": [
+        {"team": "ORL", "player": "Paolo Banchero", "status": "Out", "reason": "Right High Ankle Sprain"},
+        {"team": "ORL", "player": "Jamal Cain", "status": "Questionable", "reason": "Left Shoulder Contusion"},
+        {"team": "ORL", "player": "Tristan da Silva", "status": "Questionable", "reason": "Left Calf Strain"},
+        {"team": "ORL", "player": "Jonathan Isaac", "status": "Out", "reason": "Left Knee Injury Management"},
+        {"team": "ORL", "player": "Izaiyah Nelson", "status": "Out", "reason": "Left Ankle Injury Recovery"},
+        {"team": "ORL", "player": "Noah Penda", "status": "Out", "reason": "Right Partially Torn Hamstring"},
+        {"team": "ORL", "player": "Jalen Suggs", "status": "Questionable", "reason": "Right Knee Contusion/Bone Bruise"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "NYK@IND", "game_id": "0022600034",
+      "source": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+      "injuries": [
+        {"team": "IND", "player": "Johnny Furphy", "status": "Out", "reason": "Right ACL Repair/Surgery"},
+        {"team": "IND", "player": "Tyrese Haliburton", "status": "Out", "reason": "Left Hamstring Strain"},
+        {"team": "IND", "player": "T.J. McConnell", "status": "Probable", "reason": "Right Hamstring Strain"},
+        {"team": "IND", "player": "Aaron Nesmith", "status": "Questionable", "reason": "Right Knee Soreness"},
+        {"team": "IND", "player": "Ben Sheppard", "status": "Out", "reason": "Left Meniscus Surgery"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "ATL@CHI", "game_id": "0022600037",
+      "source": "https://www.nba.com/game/atl-vs-chi-0022600037",
+      "injuries": [
+        {"team": "ATL", "player": "RayJ Dennis", "status": "Questionable", "reason": "G League - Two-Way"},
+        {"team": "ATL", "player": "Kingston Flemings", "status": "Questionable", "reason": "Lumbar Spasm"},
+        {"team": "ATL", "player": "Keshon Gilbert", "status": "Out", "reason": "Left Knee Inflammation; Non-Surgical Procedure"},
+        {"team": "ATL", "player": "Mouhamed Gueye", "status": "Out", "reason": "Left Foot Fracture"},
+        {"team": "ATL", "player": "Jock Landale", "status": "Available", "reason": "Face Mask"},
+        {"team": "ATL", "player": "Asa Newell", "status": "Out", "reason": "Left Great Toe Hyperextension"},
+        {"team": "ATL", "player": "Henri Veesaar", "status": "Out", "reason": "Right ACL Tear"},
+        {"team": "ATL", "player": "Jalen Wilson", "status": "Doubtful", "reason": "G League - Two-Way"},
+        {"team": "CHI", "player": "Tobe Awaka", "status": "Out", "reason": "Disc Irritation"},
+        {"team": "CHI", "player": "Norman Powell", "status": "Questionable", "reason": "Low Back Spasms"},
+        {"team": "CHI", "player": "Jaylin Sellers", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "CHI", "player": "Dailyn Swain", "status": "Questionable", "reason": "Right Disc Irritation"},
+        {"team": "CHI", "player": "Caleb Wilson", "status": "Out", "reason": "Right Metacarpal Fracture"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "CLE@MIA", "game_id": "0022600036",
+      "source": "https://www.nba.com/game/cle-vs-mia-0022600036",
+      "injuries": [
+        {"team": "CLE", "player": "Khalifa Diop", "status": "Out", "reason": "G League - On Assignment"},
+        {"team": "CLE", "player": "Sam Merrill", "status": "Out", "reason": "Right Elbow Injury Management"},
+        {"team": "CLE", "player": "Evan Mobley", "status": "Out", "reason": "Left Great Toe - Sprain"},
+        {"team": "CLE", "player": "Nae'Qwan Tomlin", "status": "Out", "reason": "Low Back Stress Reaction"},
+        {"team": "CLE", "player": "Ernest Udeh Jr.", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "MIA", "player": "Giannis Antetokounmpo", "status": "Probable", "reason": "Right Wrist Sprain"},
+        {"team": "MIA", "player": "Vladislav Goldin", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "MIA", "player": "Pelle Larsson", "status": "Questionable", "reason": "Illness"},
+        {"team": "MIA", "player": "Klay Thompson", "status": "Questionable", "reason": "Left Ankle Soreness"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "MEM@NOP", "game_id": "0022600038",
+      "source": "https://www.nba.com/game/mem-vs-nop-0022600038",
+      "injuries": [
+        {"team": "MEM", "player": "Zach Edey", "status": "Out", "reason": "Left Ankle Injury Management"},
+        {"team": "MEM", "player": "Karim Lopez", "status": "Out", "reason": "G League - On Assignment"},
+        {"team": "MEM", "player": "Jahmai Mashack", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "MEM", "player": "Scotty Pippen Jr.", "status": "Out", "reason": "Lumbar Disc Herniation"},
+        {"team": "MEM", "player": "Quinten Post", "status": "Out", "reason": "Concussion Protocol"},
+        {"team": "MEM", "player": "Richie Saunders", "status": "Out", "reason": "Right Knee Surgery"},
+        {"team": "NOP", "player": "Malik Dia", "status": "Available", "reason": "G League - Two-Way"},
+        {"team": "NOP", "player": "Bennedict Mathurin", "status": "Questionable", "reason": "Right Thumb Sprain"},
+        {"team": "NOP", "player": "Bryce McGowens", "status": "Out", "reason": "Left Elbow Infection"},
+        {"team": "NOP", "player": "Yves Missi", "status": "Out", "reason": "Left Knee Contusion / Bone Bruise"},
+        {"team": "NOP", "player": "Trey Murphy III", "status": "Out", "reason": "Bilateral Patellar Tendinopathy"},
+        {"team": "NOP", "player": "Dejounte Murray", "status": "Doubtful", "reason": "Left Ankle Sprain"},
+        {"team": "NOP", "player": "Jaron Pierre Jr.", "status": "Available", "reason": "G League - Two-Way"},
+        {"team": "NOP", "player": "Trendon Watford", "status": "Out", "reason": "Right Ankle Sprain"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "UTA@HOU", "game_id": "0022600039",
+      "source": "https://www.nba.com/game/uta-vs-hou-0022600039",
+      "injuries": [
+        {"team": "UTA", "player": "Trey Alexander", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "UTA", "player": "Kobe Bufkin", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "UTA", "player": "Harrison Ingram", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "UTA", "player": "Jaren Jackson Jr.", "status": "Out", "reason": "Right MCL Tear"},
+        {"team": "UTA", "player": "Lauri Markkanen", "status": "Out", "reason": "Right Hand Fracture"},
+        {"team": "UTA", "player": "Jusuf Nurkic", "status": "Out", "reason": "Right 2nd Plantar Plate Tear"},
+        {"team": "HOU", "player": "Steven Adams", "status": "Out", "reason": "Right Soleus Strain"},
+        {"team": "HOU", "player": "Clint Capela", "status": "Out", "reason": "Right Ankle Sprain"},
+        {"team": "HOU", "player": "Quadir Copeland", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "HOU", "player": "Julian Phillips", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "HOU", "player": "Marcus Smart", "status": "Out", "reason": "League Suspension"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "GSW@SAS", "game_id": "0022600040",
+      "source": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+      "injuries": [
+        {"team": "GSW", "player": "Charles Bassey", "status": "Probable", "reason": "Left Toe Soreness"},
+        {"team": "GSW", "player": "Jimmy Butler III", "status": "Out", "reason": "Right ACL Repair / Surgery"},
+        {"team": "GSW", "player": "Stephen Curry", "status": "Out", "reason": "Right Oblique Tear"},
+        {"team": "GSW", "player": "Moses Moody", "status": "Out", "reason": "Left Patellar Tendon Repair / Surgery"},
+        {"team": "GSW", "player": "Kristaps Porzingis", "status": "Out", "reason": "Not With Team"},
+        {"team": "GSW", "player": "Brandon Williams", "status": "Out", "reason": "Left Hamstring Strain"},
+        {"team": "SAS", "player": "De'Aaron Fox", "status": "Questionable", "reason": "Left Hip Soreness"},
+        {"team": "SAS", "player": "Tobias Harris", "status": "Out", "reason": "Left Calf Strain"},
+        {"team": "SAS", "player": "Jayden Quaintance", "status": "Out", "reason": "Right Knee Surgery"},
+        {"team": "SAS", "player": "Devin Vassell", "status": "Questionable", "reason": "Left Adductor Tightness"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "POR@SAC", "game_id": "0022600041",
+      "source": "https://www.nba.com/game/por-vs-sac-0022600041",
+      "injuries": [
+        {"team": "POR", "player": "Vit Krejci", "status": "Out", "reason": "Left Ankle Fracture"},
+        {"team": "POR", "player": "Ja Morant", "status": "Out", "reason": "Left Hamstring Strain"},
+        {"team": "POR", "player": "Shaedon Sharpe", "status": "Out", "reason": "Right Meniscus Surgery"},
+        {"team": "POR", "player": "Chris Youngblood", "status": "Out", "reason": "Right Bone Bruise"},
+        {"team": "SAC", "player": "Precious Achiuwa", "status": "Questionable", "reason": "Left Ankle Soreness"},
+        {"team": "SAC", "player": "Alex Karaban", "status": "Out", "reason": "G League - On Assignment"},
+        {"team": "SAC", "player": "Jonathan Mogbo", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "SAC", "player": "Sean Pedulla", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "SAC", "player": "Maxime Raynaud", "status": "Out", "reason": "Right Patella Subluxation"},
+        {"team": "SAC", "player": "Ben Simmons", "status": "Out", "reason": "Right Achilles Tendon Repair / Surgery"}
+      ]
+    },
+    {
+      "date": "2026-11-13", "matchup": "OKC@LAC", "game_id": "0022600042",
+      "source": "https://www.nba.com/game/okc-vs-lac-0022600042",
+      "injuries": [
+        {"team": "OKC", "player": "Chet Holmgren", "status": "Out", "reason": "Right Knee/ Injury Recovery"},
+        {"team": "OKC", "player": "Ajay Mitchell", "status": "Questionable", "reason": "Left Ankle Sprain"},
+        {"team": "OKC", "player": "Thomas Sorber", "status": "Out", "reason": "Right Knee Surgery"},
+        {"team": "OKC", "player": "Nikola Topic", "status": "Available", "reason": "-"},
+        {"team": "OKC", "player": "Cason Wallace", "status": "Out", "reason": "Left Shoulder Surgery"},
+        {"team": "OKC", "player": "Jalen Williams", "status": "Out", "reason": "Left Ankle Surgery"},
+        {"team": "OKC", "player": "Jaylin Williams", "status": "Out", "reason": "Low Back Spasms"},
+        {"team": "LAC", "player": "Bradley Beal", "status": "Out", "reason": "Right Knee Injury Management"},
+        {"team": "LAC", "player": "Brandon Ingram", "status": "Out", "reason": "Right Heel Surgery"},
+        {"team": "LAC", "player": "Nick Martinelli", "status": "Out", "reason": "G League - Two-Way"},
+        {"team": "LAC", "player": "Jordan Miller", "status": "Out", "reason": "Left Rotator Cuff Surgery"},
+        {"team": "LAC", "player": "Yanic Konan Niederhauser", "status": "Out", "reason": "Right Lisfranc Surgery"}
+      ]
+    }
+  ],
+  "upcoming_not_submitted": [
+    {"date": "2026-11-14", "matchup": "DEN@NOP", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-14", "matchup": "DAL@CLE", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-14", "matchup": "DET@MIA", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-14", "matchup": "BKN@MEM", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-14", "matchup": "CHI@MIN", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "IND@PHI", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "LAL@PHX", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "CHA@LAC", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "SAS@UTA", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "DAL@BOS", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "NYK@TOR", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "HOU@WAS", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "ATL@MIL", "status": "NOT YET SUBMITTED"},
+    {"date": "2026-11-15", "matchup": "OKC@SAC", "status": "NOT YET SUBMITTED"}
+  ]
+}

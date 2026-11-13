@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA2 — Line Origination &amp; Strategy Lab</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-index">
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">NBA2 <span>Line Origination &amp; Strategy Lab</span></a>
+    <div class="updated">2026-27 NBA season · built 2026-11-13 · verification-first: every factual row links an official source</div>
+  </div>
+  <nav><div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive Summary</a>
+    <a href="strategies.html">Strategies</a>
+    <a href="validation-gates.html">Validation Gates</a>
+    <a href="correlation.html">Correlation</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="picks.html">Slate Picks</a>
+    <a href="injuries-rotations.html">Injuries &amp; Rotations</a>
+    <a href="game-flow.html">Game Flow</a>
+    <a href="questions.html">Questions &amp; Answers</a>
+    <a href="suggestions.html">Suggestions</a>
+    <a href="flagged-for-review.html">⚠ Flagged for Review</a>
+    <a href="sources.html">Sources</a>
+  </div></nav>
+</header>
+
+<main class="wrap">
+  <h1>NBA line origination, verified from the ground up</h1>
+  <p class="lede">This project originates its own NBA lines, develops signal-based strategies across single
+  bets, parlays and player-prop combos, and only lets strategies that pass every validation gate generate
+  picks — for slates up to three days ahead. Nothing on this site is asserted without a source, and values
+  that cannot be confirmed from an official source are left blank and flagged.</p>
+
+  <div class="note warn"><strong>Scope &amp; legality notice.</strong> This site is research documentation,
+  not betting advice. The project owner is in the Netherlands: online gambling is legal there only on
+  operators licensed by the <a href="https://kansspelautoriteit.nl">Kansspelautoriteit (KSA)</a>, for players
+  18+, with the <a href="https://kansspelautoriteit.nl">Kansspelwijzer register</a> as the authoritative licence
+  check and CRUKS as the national self-exclusion register. See <a href="questions.html">Questions &amp; Answers</a> (Q-A1).</div>
+
+  <h2>Status dashboard</h2>
+  <div class="cards">
+    <div class="card"><div class="k">Strategies defined</div><div class="v">12</div><div class="n">2 candidate · 10 research · 0 active — see <a href="strategies.html">Strategies</a></div></div>
+    <div class="card"><div class="k">Validation gates passed</div><div class="v">0 / 13</div><div class="n">No backtests run yet — <a href="validation-gates.html">Gates</a></div></div>
+    <div class="card"><div class="k">Real picks generated</div><div class="v">0</div><div class="n">Generator is live but correctly blocked — <a href="picks.html">Slate Picks</a></div></div>
+    <div class="card"><div class="k">Data feeds connected</div><div class="v">0 / 3</div><div class="n">no LIVE feeds; verified static snapshots exist — <a href="picks.html">Picks</a> · <a href="flagged-for-review.html#i2">flagged I-2</a></div></div>
+    <div class="card"><div class="k">Verified sources</div><div class="v">23</div><div class="n">Ledger with method — <a href="sources.html">Sources</a></div></div>
+    <div class="card"><div class="k">Flagged / unverified items</div><div class="v">12</div><div class="n">Published, never silently filled — <a href="flagged-for-review.html">Flagged</a></div></div>
+  </div>
+
+  <h2>What this system does</h2>
+  <ul class="tight">
+    <li><strong>Originates its own lines first</strong> — power ratings, schedule spots, and injury-adjusted rotation projections produce fair spread / total / prop numbers <em>before</em> any market line is looked at (anchoring prevention rule). <a href="strategies.html#origination">Method</a></li>
+    <li><strong>Runs 12 pre-registered strategies</strong> across single bets, multi-game parlays and same-game player-prop combos, each with its own signal and gate list. <a href="strategies.html">Catalog</a></li>
+    <li><strong>Removes luck from evaluation</strong> — sample-size minimums, positive CLV, calibration, walk-forward out-of-sample testing and significance tests decide what graduates; a hot streak alone never does. <a href="validation-gates.html">Gates</a></li>
+    <li><strong>Prices correlation explicitly</strong> — no combo is bet without our own joint-probability repricing and a portfolio correlation cap. <a href="correlation.html">Correlation</a></li>
+    <li><strong>Generates slate picks up to 3 days ahead</strong> from the originated lines through a runnable pipeline that refuses to emit picks until gates pass. <a href="picks.html">Picks</a></li>
+    <li><strong>Tracks injuries → rotation minutes → production</strong> and game-flow environments on the league's official reporting clock. <a href="injuries-rotations.html">Injuries</a> · <a href="game-flow.html">Game flow</a></li>
+    <li><strong>Complements parallel sessions' work</strong> — the root <a href="../index.html">dashboard</a>, the verified 3-day slate (<a href="../verified/schedule.html">31 games, Nov 13–16</a>) and the official injury snapshot (<a href="../verified/injuries.html">11/13 report rows</a>) are cross-linked here, not duplicated.</li>
+  </ul>
+
+  <h2>Site directory</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Page</th><th>Contents</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr data-row data-row-type="internal"><td><a href="executive-summary.html">Executive Summary</a></td><td>The whole project on one page: state, framework, verified facts, risks, and what is required for success.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="strategies.html">Strategies</a></td><td>Line-origination pipeline and the 12-strategy catalog (singles, parlays, prop combos) with sources for each premise.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="validation-gates.html">Validation Gates</a></td><td>G1–G13: the gates every strategy must pass before it can generate picks; luck-removal methods.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="correlation.html">Correlation</a></td><td>Parlay/SGP math, joint-probability repricing, correlation matrix template, portfolio caps.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="leaderboard.html">Leaderboard</a></td><td>Leaderboard-competition design: scoring, tiers, rewards, anti-gaming rules.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="picks.html">Slate Picks</a></td><td>The T+3-day pick pipeline, daily runbook on the official injury-report clock, and demo output.</td><td><span class="badge b-demo">DEMO MODE</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="injuries-rotations.html">Injuries &amp; Rotations</a></td><td>Official injury-report policy (verified), designation semantics, minutes-redistribution framework.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="game-flow.html">Game Flow</a></td><td>Pace, clutch time, blowouts, late-game fouling, rest/B2B and how each changes lines and props.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="questions.html">Questions &amp; Answers</a></td><td>What we know (with answers + sources), what we don't, and concrete ways to discover the missing information.</td><td><span class="badge b-ok">READY</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="suggestions.html">Suggestions</a></td><td>Site/decision improvements with a review workflow — nothing is implemented until you pick a path.</td><td><span class="badge b-info">AWAITING REVIEW</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="flagged-for-review.html">Flagged for Review</a></td><td>Every irregularity and unverified value, with links — review after the site is live and request changes.</td><td><span class="badge b-warn">12 ITEMS</span></td></tr>
+      <tr data-row data-row-type="internal"><td><a href="sources.html">Sources</a></td><td>Master source ledger: what each source supports and how it was verified.</td><td><span class="badge b-ok">23 ROWS</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Verification protocol (how to read every table here)</h2>
+  <ul class="checklist">
+    <li>Every table row carries a <strong>source link</strong>. Factual rows link official or documented sources; internal methodology rows link to the section of this site that defines them.</li>
+    <li>A value that could not be confirmed from an official source is <strong>left blank</strong> and marked <span class="badge b-warn">UNVERIFIED</span>. Values are never inferred.</li>
+    <li>Demo/synthetic values are marked <span class="badge b-demo">DEMO</span> and never mixed into factual tables.</li>
+    <li>The repo tool <code>tools/verify_site.py</code> enforces these rules mechanically (row-has-link, no broken links, no placeholders) and the build fails if they break.</li>
+  </ul>
+</main>
+
+<footer><div class="wrap">
+  <p><strong>NBA2 Line Origination &amp; Strategy Lab</strong> — research documentation; not betting advice. 18+. If gambling stops being fun, self-exclude via <a href="https://kansspelautoriteit.nl">CRUKS (via KSA)</a>.</p>
+  <p>Repo: <a href="https://github.com/wingbangboozle1-lang/NBA2">github.com/wingbangboozle1-lang/NBA2</a> · Task board: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md">COORDINATION.md</a> · Sources: <a href="sources.html">Sources</a> · Flags: <a href="flagged-for-review.html">Flagged for Review</a></p>
+  <p>Built by session arena-35264d96 · 2026-11-13 · <a href="https://wingbangboozle1-lang.github.io/NBA2/">wingbangboozle1-lang.github.io/NBA2</a></p>
+</div></footer>
+</body>
+</html>
