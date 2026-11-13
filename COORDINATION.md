@@ -22,6 +22,8 @@ touches, and the verification record. **Read this before starting any task.**
 | arena-23927d63 (arena/23927d63-nba2) | merged to main | Research/verification pages | Built `pages/`, `verified/`, `data/`, `tools/`, research-scaffold. PR #3 merged. |
 | arena/71f94203-nba2 | merged to main | Integration (prior) | Merged session 23927d63 work; kept single `pages.yml`; PR #6 merged. |
 | session-7b4973eb-nba2 (arena/7b4973eb-nba2) | merged to main | Lines-origination system + dashboard + final integration | Built `nba2/` Python system, root dashboard pages, and performed the final cross-session integration. PR #7 merged. |
+| arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
+| arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
 
 ## Tasks
 
@@ -201,6 +203,7 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
 | CR-1 | `arena/20c4f2f9` | `data/injuries.json` | Replace estimated `minutesImpact` / `productionImpact` strings with blank + flag; keep only official rows | **applied by integration session** (owned scope after PR #3 merged) |
 | CR-2 | `arena/20c4f2f9` | `data/strategies.json` | Remove correlation values attributed to `nba.com/stats/help/faq`; that page does not contain them | **applied by integration session** |
 | CR-3 | `arena/20c4f2f9` | `data/picks.json` | Use official NBA `game_id` instead of synthetic `GAME-YYYYMMDD-NNN` | **applied by integration session** |
+| CR-4 | `arena/20c4f2f9` → `arena/10957a28` | `dashboard/data.html` | Their whole-site lint flags one empty `<td>` in `dashboard/data.html` (an unstyled blank, not our blank marker). Not fixed by us: `dashboard/**` is owned by arena/10957a28 and their own checker (scripts/check_site.py) passes. | **open — owner of that file decides** |
 
 ---
 
@@ -327,3 +330,40 @@ build confirmation recorded in the next entry.
 **Not done, and why.** No strategy promoted and no reward paid (nothing has settled); no prop or
 injury-impact numbers (no official input); no point-in-time backtest (no results history); the
 suggestions queue is untouched by design until the owner chooses. See R-101…R-106 and Q-01…Q-05.
+
+---
+
+<!-- Preserved verbatim from the incoming merge (session arena/10957a28's board entries). -->
+
+## Session arena-10957a28 (branch `arena/10957a28-nba2`) — task board & verification
+
+Registry row: `arena-10957a28 (arena/10957a28-nba2)` — Line-origination model + data platform + `dashboard/` site; final integration for its own scope. Branching note: Arena pinned this session to its branch (no `session-<id>/<task>` branches permitted), so implementation + integration for its scope happened on `arena/10957a28-nba2`.
+
+| # | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| A1 | Verified data collection (slate Nov 13–16, standings, ratings, injuries, baselines, correlation matrix) | done | arena-10957a28 | `data/*.csv` (this session's CSVs; distinct paths from `data/verified/` etc.) | Official: nba.com day pages (31 games w/ game IDs), official injury PDF `Injury-Report_2026-11-13_05_15PM.pdf`, Smart suspension release; labeled secondary: BRef ratings/per-game, ESPN, CBS/AP. Cross-check: NBA.com vs BRef records agree 30/30 |
+| A2 | Line-origination model v1.0 + validation gates + luck-removal framework | done | arena-10957a28 | `scripts/model.py`, `analysis/strategy/**` | Hand re-derivations match model (NYK@IND → NYK −11.0; UTA@HOU → HOU −23.0); parameters labeled assumptions (F-7) |
+| A3 | Correlation values (sides/parlays/prop combos) | done | arena-10957a28 | `data/correlation-matrix.csv`, `analysis/strategy/correlation.md` | 21 rows each source-linked (6 empirical incl. 505,721-pair study; 15 industry ranges) |
+| A4 | Picks for slates ≤3 days out (38 picks, 65 combo entries, 61 prop projections) | done | arena-10957a28 | `data/picks.csv`, `data/parlays.csv`, `data/prop-lines.csv` | Rows link nba.com game pages; Nov 15–16 marked PENDING (reports not yet filed) |
+| A5 | Injury→rotation→game-flow analysis | done | arena-10957a28 | `data/injury-report-2026-11-13.csv`, `analysis/game-flow.md` | Official PDF transcribed row-by-row; rest/B2B derived from verified schedule |
+| A6 | Executive summary; questions register; suggestions queue | done | arena-10957a28 | `analysis/executive-summary.md`, `analysis/questions.md`, `analysis/suggestions.md` | Q-1..Q-10 with discovery plans; S-1..S-12/U-1..U-5 await owner decisions |
+| A7 | `dashboard/` site (12 pages) + mechanical checks | done | arena-10957a28 | `dashboard/**`, `scripts/build_site.py`, `scripts/check_site.py` | PASS: 524 data rows all source-linked, internal links resolve |
+| A8 | Repo review + verification log | done | arena-10957a28 | `analysis/repo-review.md`, `analysis/verification-log.md` | Line-by-line at write time + automated cross-checks |
+| A9 | Leaderboard + reward framework | done | arena-10957a28 | `analysis/strategy/leaderboard.md`, `data/leaderboard.csv` | Process Rating design; rewards locked pending S-1/S-2 |
+
+### Change log (arena-10957a28)
+- 2026-11-13: board claim pushed (branch `arena/10957a28-nba2`); data + model + analysis + dashboard built in small commits; final integration merged `main` (PRs #1–#9 content) append-only into this branch; own site moved to `dashboard/` to coexist with the pre-existing `docs/` site (no other session's file renamed or discarded).
+
+### Irregularities (arena-10957a28) — published on `dashboard/flagged.html`
+F-1 ratings source is trusted-secondary (sandbox blocks NBA stats APIs) · F-2 CHA baseline blank · F-3 key-absence tiering raised **and resolved in-build** (Haliburton/Banchero/Edwards/Morant/Mobley baselines added; lines re-run NYK −9.5→−11.0, ORL −7.5→−4.0, MIN −28.0→−25.0) · F-4 Nov 15–16 reports pending · F-5 correlation priors · F-6 Nov 12 scores secondary · F-7 8 uncalibrated parameters · F-8 no market line feed (CLV pending S-1) · F-9 PHI luck outlier. None block merges per policy.
+
+### Integration & deployment record (arena-10957a28)
+| Step | Result |
+|---|---|
+| Merge conflicts encountered | COORDINATION.md + README.md vs `main` (PRs #7–#9 by other sessions). Resolved append-only: their sections kept verbatim, this session's sections appended; `docs/` path collision avoided by moving **this session's** site to `dashboard/` before merge. Logged per protocol. |
+| PR | https://github.com/wingbangboozle1-lang/NBA2/pull/10 (`arena/10957a28-nba2` -> `main`) |
+| Merge result | **MERGED** 2026-11-13 23:02:57 UTC (merge commit `ab8939270e558a523d7edbe1babedfab7069caf8`) |
+| GitHub Pages deploy | workflow `Publish GitHub Pages` run **43524115981** — conclusion: **success** (~20s) |
+| Live site verified | https://wingbangboozle1-lang.github.io/NBA2/ (root dashboard, intact), /NBA2/docs/ (35264d96 site, intact), **/NBA2/dashboard/ (this session's 12-page site)** fetched post-deploy — picks (NYK −11.0, ORL −4.0, HOU −23.0), luck ledger, nav confirmed live |
+| Post-merge verification | `scripts/check_site.py` PASS (524 source-linked rows); `tools/check_links_all.py` whole-repo PASS (52 HTML files, 824 internal links) |
+| Follow-up | this record committed via follow-up [PR #11](https://github.com/wingbangboozle1-lang/NBA2/pull/11) from `arena/10957a28-nba2`; rebase-vs-merge note: `git pull --rebase` flattens merge commits and was aborted safely (`git rebase --abort`) during integration — direct push used instead; no work discarded |

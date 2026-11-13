@@ -269,7 +269,9 @@ def _pages() -> dict[str, list[str]]:
         "pages/questions.html": [render_table(sec("questions"), L)],
         "pages/suggestions.html": [render_table(sec("suggestions"), L)],
         "pages/reconciliation.html": [render_table(sec("surfaces"), L), render_table(sec("xrecords"), L),
-                                        render_table(sec("xlines"), L), render_table(sec("xinjuries"), L)],
+                                        render_table(sec("x3way"), L), render_table(sec("xlines"), L),
+                                        render_table(sec("xadjudicate"), L),
+                                        render_table(sec("xinjuries"), L)],
         "pages/flagged-review.html": [render_table(sec("flags"), L)],
         "pages/sources.html": [render_table(sec("sources"), L)],
     }

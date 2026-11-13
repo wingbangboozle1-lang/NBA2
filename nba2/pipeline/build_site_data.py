@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .. import config
+from . import adjudicate as ADJ
 from . import reconcile as XSESS
 from ..models import correlation as corr
 from ..models import gates as G
@@ -742,6 +743,36 @@ def build_generic(name: str, items: list[dict], columns: list[tuple[str, str]],
 
 
 # --------------------------------------------------------------------------- main
+def input_digest() -> str:
+    """sha256 over every committed input, so 'the same inputs produce the same bytes' is checkable.
+
+    The build is deliberately *idempotent*: if the inputs have not changed since the last build,
+    the previously published generated_at_utc is reused instead of stamped fresh. That is what
+    makes CI's "committed artefacts must equal a rebuild" step meaningful — a timestamp that
+    moved on every run would make the check pass or fail at random.
+    """
+    import hashlib
+    h = hashlib.sha256()
+    names = [config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
+             config.SNAPSHOT_CONTEXT, config.SNAPSHOT_LEADERS,
+             "official_game_times_2026-11-13.json"]
+    for n in names:
+        f = RAW / n
+        if f.exists():
+            h.update(n.encode())
+            h.update(f.read_bytes())
+    for rel in ("requirements/REQUIREMENTS.json", "requirements/QUESTIONS.json",
+                "requirements/REPO_REVIEW.json", "suggestions/SUGGESTIONS.json",
+                "nba2/data/picks.json", "nba2/data/records.json", "nba2/data/injuries.json",
+                "nba2/data/flagged.json", "data/our-lines.csv",
+                "data/verified/injuries_2026-11-13_0515PM.json"):
+        f = ROOT / rel
+        if f.exists():
+            h.update(rel.encode())
+            h.update(f.read_bytes())
+    return h.hexdigest()
+
+
 def build() -> dict:
     # Flags recorded *inside* the data snapshots are registered from the files themselves, so the
     # Flagged page can never drift from the provenance stored with the data.
@@ -753,6 +784,16 @@ def build() -> dict:
         for f in snap.get("flags", []):
             flag(f["id"], f.get("severity", "medium"), area, f["issue"],
                  SOURCES[skey].url, f.get("action_required", f.get("action", "")))
+    digest = input_digest()
+    prev = {}
+    if OUT.exists():
+        try:
+            prev = json.loads(OUT.read_text()).get("meta", {})
+        except Exception:
+            prev = {}
+    same_inputs = prev.get("input_digest") == digest
+    stamp = prev.get("generated_at_utc") if same_inputs else \
+        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     data_as_of = json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["as_of"]
     model = RT.build(ROOT)
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
@@ -785,6 +826,10 @@ def build() -> dict:
 
     xlines, xrecords, xinjuries, xsurfaces, n_xflags = XSESS.build_all(
         model, lines, inj_rows)
+    inj_theirs_raw = XSESS._load(XSESS.THEIRS / "injuries.json") or {"games": []}
+    picks_theirs = XSESS._load(XSESS.THEIRS / "picks.json") or {"lines": []}
+    xadj = ADJ.adjudicate(inj_theirs_raw, inj_rows)
+    x3 = ADJ.reconcile_three_way(lines, picks_theirs)
     x = {"lines": xlines, "records": xrecords, "injuries": xinjuries, "inventory": xsurfaces}
 
     sections = {
@@ -843,6 +888,7 @@ def build() -> dict:
             suggestions["source_note"]),
         "xlines": x["lines"], "xrecords": x["records"], "xinjuries": x["injuries"],
         "surfaces": x["inventory"],
+        "x3way": x3, "xadjudicate": xadj,
         "flags": None,   # filled below
         "sources": None,
     }
@@ -876,7 +922,9 @@ def build() -> dict:
 
     return {
         "meta": {
-            "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+            "generated_at_utc": stamp,
+            "input_digest": digest,
+            "build_is_idempotent": same_inputs,
             "snapshot_as_of": "2026-11-13",
             "slate_window": "2026-11-13 → 2026-11-16 (today + 3 days)",
             "games": len(games), "teams": len(model.order),

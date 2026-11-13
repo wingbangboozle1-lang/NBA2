@@ -1,0 +1,6 @@
+strategy,focus,picks_logged,record,raw_roi,process_rating,gate_status,reward_points,rules
+S1 originate-side,single bets: spread,0,0-0,,n/a (pre-sample),"provisional - gates G1,G4 pass; G2 sample pending",0,analysis/strategy/leaderboard.md
+S2 originate-total,single bets: total,0,0-0,,n/a (pre-sample),"provisional - gates G1,G4 pass; G2 sample pending",0,analysis/strategy/leaderboard.md
+S3 correlated-pair,same-game 2-leg parlays,0,0-0,,n/a (pre-sample),provisional - gate G4 correlation cap enforced; G2 pending,0,analysis/strategy/leaderboard.md
+S4 prop-combo,player prop + game leg,0,0-0,,n/a (pre-sample),provisional - market prop feed missing (Q-2); projections only,0,analysis/strategy/leaderboard.md
+S5 dog-upset (reserved),moneyline underdogs vs model,0,0-0,,n/a (pre-sample),not activated - needs market ML feed (Q-1),0,analysis/strategy/leaderboard.md

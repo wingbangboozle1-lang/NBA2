@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Reconciliation</h2><p>Same official documents, two sessions, two answers. Every disagreement is listed rather than averaged.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:02 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="surfaces" data-rows="6">
 <h2>Everything published in this repository, and who made it</h2>
 <p class="blurb">Four independent site layers now exist in one repo because four sessions worked in parallel. This page is the honest map: it states which one is the canonical dashboard and where the others live, instead of pretending the repo has one generator.</p>
@@ -462,6 +462,425 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">theirs: nba2/data/records.json · ours: data/raw/team_ratings_2026-11-13.json</p>
+</section><section class="card table-card" id="x3way" data-rows="31">
+<h2>Three originated lines for the same games — and how much of the gap is convention</h2>
+<p class="blurb">Mean |gap| across 31 games: 2.9 pts as published, 2.7 pts once session 3&#x27;s own injury adjustment is stripped out using the fields it published. The reduction is the point: two teams reading the same official data and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter nobody ratified is not evidence.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Three originated lines for the same games — and how much of the gap is convention</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Ours</th>
+<th scope="col">Session 2</th>
+<th scope="col">Session 3 (with its injury adj.)</th>
+<th scope="col">Session 3 minus that adjustment</th>
+<th scope="col">Gap</th>
+<th scope="col">Gap after stripping</th>
+<th scope="col">Why they differ</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>+5.0</td>
+<td>+2.5</td>
+<td>+11.0 (inj +4.1/+0.0)</td>
+<td>+6.9</td>
+<td>+6.0 pts</td>
+<td>+1.9 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>-8.0</td>
+<td>-2.0</td>
+<td>-4.0 (inj +6.4/+0.0)</td>
+<td>-10.4</td>
+<td>+4.0 pts</td>
+<td>-2.4 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>+3.0</td>
+<td>-6.5</td>
+<td>+0.5 (inj +0.8/+3.6)</td>
+<td>+3.3</td>
+<td>-2.5 pts</td>
+<td>+0.3 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>+10.5</td>
+<td>+1.0</td>
+<td>+12.5 (inj +3.6/+3.6)</td>
+<td>+12.5</td>
+<td>+2.0 pts</td>
+<td>+2.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>+8.5</td>
+<td>-0.5</td>
+<td>+12.0 (inj +4.4/+3.2)</td>
+<td>+10.8</td>
+<td>+3.5 pts</td>
+<td>+2.3 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>-17.5</td>
+<td>-13.0</td>
+<td>-23.0 (inj +2.4/+2.4)</td>
+<td>-23.0</td>
+<td>-5.5 pts</td>
+<td>-5.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>-3.0</td>
+<td>-8.0</td>
+<td>-8.0 (inj +2.4/+7.3)</td>
+<td>-3.1</td>
+<td>-5.0 pts</td>
+<td>-0.1 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>+13.5</td>
+<td>+6.0</td>
+<td>+16.0 (inj +2.4/+4.4)</td>
+<td>+18.0</td>
+<td>+2.5 pts</td>
+<td>+4.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>+6.5</td>
+<td>+2.5</td>
+<td>+8.0 (inj +3.2/+4.4)</td>
+<td>+9.2</td>
+<td>+1.5 pts</td>
+<td>+2.7 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>+6.0</td>
+<td>-0.0</td>
+<td>+10.0 (inj +0.0/+0.0)</td>
+<td>+10.0</td>
+<td>+4.0 pts</td>
+<td>+4.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>-1.0</td>
+<td>-2.5</td>
+<td>-2.0 (inj +0.0/+2.9)</td>
+<td>+0.9</td>
+<td>-1.0 pts</td>
+<td>+1.9 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>+6.0</td>
+<td>-0.0</td>
+<td>+4.0 (inj +0.0/+1.6)</td>
+<td>+5.6</td>
+<td>-2.0 pts</td>
+<td>-0.4 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>-10.5</td>
+<td>-8.0</td>
+<td>-14.5 (inj +0.0/+0.5)</td>
+<td>-14.0</td>
+<td>-4.0 pts</td>
+<td>-3.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>-23.0</td>
+<td>-12.0</td>
+<td>-25.0 (inj +4.8/+0.0)</td>
+<td>-29.8</td>
+<td>-2.0 pts</td>
+<td>-6.8 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td>-4.5</td>
+<td>-9.0</td>
+<td>-6.0 (inj +0.0/+0.0)</td>
+<td>-6.0</td>
+<td>-1.5 pts</td>
+<td>-1.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td>+6.0</td>
+<td>+1.5</td>
+<td>+6.0 (inj +0.0/+0.0)</td>
+<td>+6.0</td>
+<td>+0.0 pts</td>
+<td>+0.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td>-7.5</td>
+<td>-2.0</td>
+<td>-12.5 (inj +0.0/+0.0)</td>
+<td>-12.5</td>
+<td>-5.0 pts</td>
+<td>-5.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td>+14.5</td>
+<td>+6.0</td>
+<td>+17.5 (inj +0.0/+0.0)</td>
+<td>+17.5</td>
+<td>+3.0 pts</td>
+<td>+3.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td>-6.5</td>
+<td>-7.0</td>
+<td>-5.5 (inj +0.0/+0.0)</td>
+<td>-5.5</td>
+<td>+1.0 pts</td>
+<td>+1.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td>+1.5</td>
+<td>-2.0</td>
+<td>+2.0 (inj +0.0/+0.0)</td>
+<td>+2.0</td>
+<td>+0.5 pts</td>
+<td>+0.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td>+13.0</td>
+<td>+2.0</td>
+<td>+21.0 (inj +0.0/+0.0)</td>
+<td>+21.0</td>
+<td>+8.0 pts</td>
+<td>+8.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td>+10.0</td>
+<td>+3.0</td>
+<td>+11.5 (inj +0.0/+0.0)</td>
+<td>+11.5</td>
+<td>+1.5 pts</td>
+<td>+1.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td>+11.5</td>
+<td>+4.0</td>
+<td>+15.0 (inj +0.0/+0.0)</td>
+<td>+15.0</td>
+<td>+3.5 pts</td>
+<td>+3.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td>-12.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>-13.0 (inj +0.0/+0.0)</td>
+<td>-13.0</td>
+<td>-1.0 pts</td>
+<td>-1.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td>-14.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>-18.0 (inj +0.0/+0.0)</td>
+<td>-18.0</td>
+<td>-4.0 pts</td>
+<td>-4.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td>+8.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>+11.0 (inj +0.0/+0.0)</td>
+<td>+11.0</td>
+<td>+2.5 pts</td>
+<td>+2.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td>+3.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>+4.0 (inj +0.0/+0.0)</td>
+<td>+4.0</td>
+<td>+0.5 pts</td>
+<td>+0.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td>+10.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>+15.0 (inj +0.0/+0.0)</td>
+<td>+15.0</td>
+<td>+5.0 pts</td>
+<td>+5.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td>-5.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>-4.5 (inj +0.0/+0.0)</td>
+<td>-4.5</td>
+<td>+0.5 pts</td>
+<td>+0.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td>+11.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>+18.0 (inj +0.0/+0.0)</td>
+<td>+18.0</td>
+<td>+6.5 pts</td>
+<td>+6.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td>-4.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>-5.0 (inj +0.0/+0.0)</td>
+<td>-5.0</td>
+<td>-0.5 pts</td>
+<td>-0.5 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">ours: data/site.json · session 2: nba2/data/picks.json · session 3: data/our-lines.csv (scripts/model.py)</p>
 </section><section class="card table-card" id="xlines" data-rows="23">
 <h2>Line-for-line: this model vs the model already on main</h2>
 <p class="blurb">2 of 23 matched games agree within 1.5 points; 21 disagree | median |Δ| 6.0 pts, max 11.0 pts across 23 matched games. Both numbers are shown because neither is verified against a market — averaging them would manufacture a false consensus, and deleting one would hide a real uncertainty.</p>
@@ -825,6 +1244,93 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/raw snapshots → nba2/models/lines.py · theirs: nba2/data/picks.json → nba2/picks.py</p>
+</section><section class="card table-card" id="xadjudicate" data-rows="6">
+<h2>Status conflicts, adjudicated against a third official revision — 6 of 6 resolved in favour of the latest read</h2>
+<p class="blurb">Two sessions disagreed on six statuses and both believed they had read the same document correctly. A third session had ingested the 17:15 ET revision, which is later than ours, so the disagreement is now testable instead of a matter of trust. This is what &#x27;verify against official sources&#x27; is actually worth: not a claim of care, but a second and third copy to compare against.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Status conflicts, adjudicated against a third official revision — 6 of 6 resolved in favour of the latest read</caption><thead><tr>
+<th scope="col">Game date</th>
+<th scope="col">Team</th>
+<th scope="col">Player</th>
+<th scope="col">13:00 ET (prior session)</th>
+<th scope="col">16:15 ET (ours)</th>
+<th scope="col">17:15 ET (third session)</th>
+<th scope="col">Official reason</th>
+<th scope="col">Adjudication</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="2026-11-13|ATL|wilson">
+<td>2026-11-13</td>
+<td>Atlanta Hawks</td>
+<td>Wilson, Jalen</td>
+<td>Doubtful</td>
+<td>Out</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|MIA|antetokounmpo">
+<td>2026-11-13</td>
+<td>Miami Heat</td>
+<td>Antetokounmpo, Giannis</td>
+<td>Probable</td>
+<td>Available</td>
+<td>Available</td>
+<td>Injury/Illness - Right Wrist Sprain</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|MIA|larsson">
+<td>2026-11-13</td>
+<td>Miami Heat</td>
+<td>Larsson, Pelle</td>
+<td>Questionable</td>
+<td>Doubtful</td>
+<td>Doubtful</td>
+<td>Injury/Illness - Illness</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|MIA|thompson">
+<td>2026-11-13</td>
+<td>Miami Heat</td>
+<td>Thompson, Klay</td>
+<td>Questionable</td>
+<td>Probable</td>
+<td>Probable</td>
+<td>Injury/Illness - Left Ankle Soreness</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|NOP|murray">
+<td>2026-11-13</td>
+<td>New Orleans Pelicans</td>
+<td>Murray, Dejounte</td>
+<td>Doubtful</td>
+<td>Out</td>
+<td>Out</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|SAC|achiuwa">
+<td>2026-11-13</td>
+<td>Sacramento Kings</td>
+<td>Achiuwa, Precious</td>
+<td>Questionable</td>
+<td>Out</td>
+<td>Out</td>
+<td>Injury/Illness - Left Ankle Soreness</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Injury-Report_2026-11-13_01_00PM.pdf / _04_15PM.pdf / _05_15PM.pdf</p>
 </section><section class="card table-card" id="xinjuries" data-rows="109">
 <h2>Injury rows: 78 in both captures (6 status conflicts), 14 only theirs, 17 only ours</h2>
 <p class="blurb">Two sessions read two different revisions of the same official PDF. Where they differ, the report — not the model — changed underneath us, which is exactly why an injury-aware line must be re-issued at game time rather than sealed three days early.</p>

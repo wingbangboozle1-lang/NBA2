@@ -230,6 +230,51 @@ class TestLedger(unittest.TestCase):
             self.assertEqual(s.metrics["n_settled"], 2)
 
 
+class TestAdjudication(unittest.TestCase):
+    """The cross-session checks must be able to *contradict* us, or they are decoration."""
+
+    def test_surname_join_is_format_agnostic(self):
+        from nba2.pipeline.adjudicate import _surname
+        self.assertEqual(_surname("Banchero, Paolo"), _surname("Paolo Banchero"))
+        self.assertEqual(_surname("J. Wilson"), "wilson")
+        self.assertEqual(_surname(""), "")
+
+    def test_conflicts_are_adjudicated_not_assumed(self):
+        from nba2.pipeline import adjudicate as AD
+        from nba2.models import injuries as INJ
+        rows, _ = INJ.load(ROOT / config.DATA_DIR / config.SNAPSHOT_INJURY)
+        their = AD.json.loads((ROOT / "nba2" / "data" / "injuries.json").read_text()) \
+            if hasattr(AD, "json") else json.loads((ROOT / "nba2" / "data" / "injuries.json").read_text())
+        tbl = AD.adjudicate(their, rows)
+        # every conflict row must state what the third revision said, or admit it cannot
+        for r in tbl["rows"]:
+            v = r["values"]
+            self.assertIn(v["status_1715"], (None, "Out", "Doubtful", "Questionable", "Probable", "Available"))
+            self.assertTrue(v["verdict"], "a conflict with no adjudication verdict is an unexamined conflict")
+        self.assertGreaterEqual(len(tbl["rows"]), 6,
+                                "the two captures are known to disagree on 6 rows; a join that finds "
+                                "fewer is a join bug, not a cleaner dataset")
+
+    def test_three_way_table_shows_stripped_gap(self):
+        from nba2.models import lines as LN, ratings as RT
+        from nba2.pipeline import adjudicate as AD
+        model = RT.build(ROOT)
+        games, _ = LN.load_slate(ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE)
+        priced = LN.price_slate(model, games, {})
+        picks = json.loads((ROOT / "nba2" / "data" / "picks.json").read_text())
+        tbl = AD.reconcile_three_way(priced, picks)
+        self.assertGreaterEqual(len(tbl["rows"]), 20)
+        withboth = [r for r in tbl["rows"]
+                    if r["values"].get("gap_raw") and r["values"].get("gap_after_stripping")]
+        self.assertGreaterEqual(len(withboth), 10, "the stripping comparison must exist, not be narrated")
+        import statistics
+        raw = [abs(float(r["values"]["gap_raw"].split()[0])) for r in withboth]
+        adj = [abs(float(r["values"]["gap_after_stripping"].split()[0])) for r in withboth]
+        self.assertLess(statistics.median(adj), statistics.median(raw),
+                        "removing the other model's injury convention must shrink the median gap; "
+                        "if it does not, the 'convention not data' claim on the site is false")
+
+
 class TestPublishedSite(unittest.TestCase):
     """The emitted artefacts, not just the code that makes them."""
 
@@ -304,13 +349,16 @@ class TestReproducibility(unittest.TestCase):
     def test_rebuild_produces_identical_rows(self):
         """Determinism is what makes a published number checkable: rebuild in a subprocess and
         compare everything except the build timestamp."""
-        before = json.loads((ROOT / "data" / "site.json").read_text())
+        before_raw = (ROOT / "data" / "site.json").read_text()
         subprocess.run([sys.executable, "-m", "nba2.pipeline.build_site_data"], cwd=ROOT,
                        check=True, capture_output=True)
-        after = json.loads((ROOT / "data" / "site.json").read_text())
-        before["meta"]["generated_at_utc"] = after["meta"]["generated_at_utc"] = "x"
-        self.assertEqual(json.dumps(before, sort_keys=True), json.dumps(after, sort_keys=True),
-                         "two builds from the same snapshots must agree on every value")
+        after_raw = (ROOT / "data" / "site.json").read_text()
+        self.assertEqual(before_raw, after_raw,
+                         "two builds from the same snapshots must produce identical bytes, "
+                         "timestamp included (that is what makes CI's parity check real)")
+        after = json.loads(after_raw)
+        self.assertTrue(after["meta"]["build_is_idempotent"])
+        self.assertEqual(len(after["meta"]["input_digest"]), 64)
 
 
 if __name__ == "__main__":

@@ -255,13 +255,15 @@ def reconcile_injuries(their_inj: dict, my_rows: list) -> dict:
                           "only in our capture (16:15 ET revision; they read 13:00 ET)")),
                 their_source="",
             ))
-    flag("FLAG-XSESS-04", "high", "cross-session", "The same player carries different statuses in the two "
-         "sessions' captures of the injury report. Most likely explanation: the NBA republishes the report "
-         "several times a day (we read the 16:15 ET revision, the prior session read 13:00 ET), so both can be "
-         "correct at their own timestamp. Nothing may depend on the newer one without checking the revision "
-         "time.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
-         "Store the revision timestamp with every row (see S-09) and always use the latest before tip.")
+    flag("FLAG-XSESS-04", "low", "cross-session", "RESOLVED — the same player carried different statuses in "
+         "the two sessions' captures. Adjudicated by a third document: the 17:15 ET revision, ingested independently by "
+         "session arena-71f94203, matches our 16:15 read on all 6 disputed rows (Wilson Doubtful→Out, "
+         "Antetokounmpo Probable→Available, Larsson Questionable→Doubtful, Thompson Questionable→Probable, "
+         "Murray Doubtful→Out, Achiuwa Questionable→Out). Neither session misread anything: the report was "
+         "republished between the two retrievals, and the newer one agrees with us.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+         "Keep the revision timestamp with every row (S-09). Re-check 30 min before tip; a status is only "
+         "ever true as-of a minute, not a date.")
     flag("FLAG-XSESS-05", "medium", "cross-session", "Players appear in one session's injury capture but not "
          "the other's, because the two captures cover different games and different report revisions. This is "
          "a coverage difference, not a correction.",

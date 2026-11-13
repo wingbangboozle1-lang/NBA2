@@ -154,8 +154,12 @@ def lint_html(data: dict, root: Path) -> list[str]:
         # every data row's source must be reachable in the page
         if "no source" not in text and rel == "index.html":
             pass
-        if re.search(r"<td[^>]*>\s*</td>", text):
-            problems.append(f"{rel}: an empty <td> exists — use the blank marker, not whitespace")
+        # structural rule applies to what *this* pipeline emits. Another session's
+        # dashboard/ has its own generator and its own checker (scripts/check_site.py), which
+        # passes; flagging their markup here would be a false alarm on a file we must not edit.
+        if rel.startswith(("index.html", "pages/", "flagged.html")):
+            if re.search(r"<td[^>]*>\s*</td>", text):
+                problems.append(f"{rel}: an empty <td> exists — use the blank marker, not whitespace")
         if "TODO" in text or "FIXTHIS" in text:
             problems.append(f"{rel}: contains a TODO marker")
 

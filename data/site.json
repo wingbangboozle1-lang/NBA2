@@ -1,6 +1,8 @@
 {
  "meta": {
-  "generated_at_utc": "2026-11-13 23:03 UTC",
+  "generated_at_utc": "2026-11-13 23:08 UTC",
+  "input_digest": "02c363614c051f06343277eb2d0ff8e954c88b902b9610510f70af744c3978a9",
+  "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-13",
   "slate_window": "2026-11-13 → 2026-11-16 (today + 3 days)",
   "games": 31,
@@ -27405,6 +27407,1280 @@
     }
    ]
   },
+  "x3way": {
+   "title": "Three originated lines for the same games — and how much of the gap is convention",
+   "blurb": "Mean |gap| across 31 games: 2.9 pts as published, 2.7 pts once session 3's own injury adjustment is stripped out using the fields it published. The reduction is the point: two teams reading the same official data and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter nobody ratified is not evidence.",
+   "source_note": "ours: data/site.json · session 2: nba2/data/picks.json · session 3: data/our-lines.csv (scripts/model.py)",
+   "columns": [
+    {
+     "key": "date",
+     "label": "Date"
+    },
+    {
+     "key": "matchup",
+     "label": "Matchup"
+    },
+    {
+     "key": "ours",
+     "label": "Ours"
+    },
+    {
+     "key": "session2",
+     "label": "Session 2"
+    },
+    {
+     "key": "session3",
+     "label": "Session 3 (with its injury adj.)"
+    },
+    {
+     "key": "session3_ex_injury",
+     "label": "Session 3 minus that adjustment"
+    },
+    {
+     "key": "gap_raw",
+     "label": "Gap"
+    },
+    {
+     "key": "gap_after_stripping",
+     "label": "Gap after stripping"
+    },
+    {
+     "key": "note",
+     "label": "Why they differ"
+    }
+   ],
+   "rows": [
+    {
+     "key": "0022600034",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "NYK @ IND",
+      "ours": "+5.0",
+      "session2": "+2.5",
+      "session3": "+11.0 (inj +4.1/+0.0)",
+      "session3_ex_injury": "+6.9",
+      "gap_raw": "+6.0 pts",
+      "gap_after_stripping": "+1.9 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600035",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "MIL @ ORL",
+      "ours": "-8.0",
+      "session2": "-2.0",
+      "session3": "-4.0 (inj +6.4/+0.0)",
+      "session3_ex_injury": "-10.4",
+      "gap_raw": "+4.0 pts",
+      "gap_after_stripping": "-2.4 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600036",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "CLE @ MIA",
+      "ours": "+3.0",
+      "session2": "-6.5",
+      "session3": "+0.5 (inj +0.8/+3.6)",
+      "session3_ex_injury": "+3.3",
+      "gap_raw": "-2.5 pts",
+      "gap_after_stripping": "+0.3 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600037",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "ATL @ CHI",
+      "ours": "+10.5",
+      "session2": "+1.0",
+      "session3": "+12.5 (inj +3.6/+3.6)",
+      "session3_ex_injury": "+12.5",
+      "gap_raw": "+2.0 pts",
+      "gap_after_stripping": "+2.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600038",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "MEM @ NOP",
+      "ours": "+8.5",
+      "session2": "-0.5",
+      "session3": "+12.0 (inj +4.4/+3.2)",
+      "session3_ex_injury": "+10.8",
+      "gap_raw": "+3.5 pts",
+      "gap_after_stripping": "+2.3 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600039",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "UTA @ HOU",
+      "ours": "-17.5",
+      "session2": "-13.0",
+      "session3": "-23.0 (inj +2.4/+2.4)",
+      "session3_ex_injury": "-23.0",
+      "gap_raw": "-5.5 pts",
+      "gap_after_stripping": "-5.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600040",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "GSW @ SAS",
+      "ours": "-3.0",
+      "session2": "-8.0",
+      "session3": "-8.0 (inj +2.4/+7.3)",
+      "session3_ex_injury": "-3.1",
+      "gap_raw": "-5.0 pts",
+      "gap_after_stripping": "-0.1 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600041",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "POR @ SAC",
+      "ours": "+13.5",
+      "session2": "+6.0",
+      "session3": "+16.0 (inj +2.4/+4.4)",
+      "session3_ex_injury": "+18.0",
+      "gap_raw": "+2.5 pts",
+      "gap_after_stripping": "+4.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600042",
+     "values": {
+      "date": "2026-11-13",
+      "matchup": "OKC @ LAC",
+      "ours": "+6.5",
+      "session2": "+2.5",
+      "session3": "+8.0 (inj +3.2/+4.4)",
+      "session3_ex_injury": "+9.2",
+      "gap_raw": "+1.5 pts",
+      "gap_after_stripping": "+2.7 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600231",
+     "values": {
+      "date": "2026-11-14",
+      "matchup": "DEN @ NOP",
+      "ours": "+6.0",
+      "session2": "-0.0",
+      "session3": "+10.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+10.0",
+      "gap_raw": "+4.0 pts",
+      "gap_after_stripping": "+4.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600232",
+     "values": {
+      "date": "2026-11-14",
+      "matchup": "DAL @ CLE",
+      "ours": "-1.0",
+      "session2": "-2.5",
+      "session3": "-2.0 (inj +0.0/+2.9)",
+      "session3_ex_injury": "+0.9",
+      "gap_raw": "-1.0 pts",
+      "gap_after_stripping": "+1.9 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600233",
+     "values": {
+      "date": "2026-11-14",
+      "matchup": "DET @ MIA",
+      "ours": "+6.0",
+      "session2": "-0.0",
+      "session3": "+4.0 (inj +0.0/+1.6)",
+      "session3_ex_injury": "+5.6",
+      "gap_raw": "-2.0 pts",
+      "gap_after_stripping": "-0.4 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600234",
+     "values": {
+      "date": "2026-11-14",
+      "matchup": "BKN @ MEM",
+      "ours": "-10.5",
+      "session2": "-8.0",
+      "session3": "-14.5 (inj +0.0/+0.5)",
+      "session3_ex_injury": "-14.0",
+      "gap_raw": "-4.0 pts",
+      "gap_after_stripping": "-3.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600235",
+     "values": {
+      "date": "2026-11-14",
+      "matchup": "CHI @ MIN",
+      "ours": "-23.0",
+      "session2": "-12.0",
+      "session3": "-25.0 (inj +4.8/+0.0)",
+      "session3_ex_injury": "-29.8",
+      "gap_raw": "-2.0 pts",
+      "gap_after_stripping": "-6.8 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600236",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "IND @ PHI",
+      "ours": "-4.5",
+      "session2": "-9.0",
+      "session3": "-6.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-6.0",
+      "gap_raw": "-1.5 pts",
+      "gap_after_stripping": "-1.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600237",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "LAL @ PHX",
+      "ours": "+6.0",
+      "session2": "+1.5",
+      "session3": "+6.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+6.0",
+      "gap_raw": "+0.0 pts",
+      "gap_after_stripping": "+0.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600238",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "CHA @ LAC",
+      "ours": "-7.5",
+      "session2": "-2.0",
+      "session3": "-12.5 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-12.5",
+      "gap_raw": "-5.0 pts",
+      "gap_after_stripping": "-5.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600239",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "SAS @ UTA",
+      "ours": "+14.5",
+      "session2": "+6.0",
+      "session3": "+17.5 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+17.5",
+      "gap_raw": "+3.0 pts",
+      "gap_after_stripping": "+3.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600240",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "DAL @ BOS",
+      "ours": "-6.5",
+      "session2": "-7.0",
+      "session3": "-5.5 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-5.5",
+      "gap_raw": "+1.0 pts",
+      "gap_after_stripping": "+1.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600241",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "NYK @ TOR",
+      "ours": "+1.5",
+      "session2": "-2.0",
+      "session3": "+2.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+2.0",
+      "gap_raw": "+0.5 pts",
+      "gap_after_stripping": "+0.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600242",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "HOU @ WAS",
+      "ours": "+13.0",
+      "session2": "+2.0",
+      "session3": "+21.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+21.0",
+      "gap_raw": "+8.0 pts",
+      "gap_after_stripping": "+8.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600243",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "ATL @ MIL",
+      "ours": "+10.0",
+      "session2": "+3.0",
+      "session3": "+11.5 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+11.5",
+      "gap_raw": "+1.5 pts",
+      "gap_after_stripping": "+1.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600244",
+     "values": {
+      "date": "2026-11-15",
+      "matchup": "OKC @ SAC",
+      "ours": "+11.5",
+      "session2": "+4.0",
+      "session3": "+15.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+15.0",
+      "gap_raw": "+3.5 pts",
+      "gap_after_stripping": "+3.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600245",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "ORL @ BOS",
+      "ours": "-12.0",
+      "session2": null,
+      "session3": "-13.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-13.0",
+      "gap_raw": "-1.0 pts",
+      "gap_after_stripping": "-1.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600246",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "CHI @ CLE",
+      "ours": "-14.0",
+      "session2": null,
+      "session3": "-18.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-18.0",
+      "gap_raw": "-4.0 pts",
+      "gap_after_stripping": "-4.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600247",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "MEM @ WAS",
+      "ours": "+8.5",
+      "session2": null,
+      "session3": "+11.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+11.0",
+      "gap_raw": "+2.5 pts",
+      "gap_after_stripping": "+2.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600248",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "PHI @ BKN",
+      "ours": "+3.5",
+      "session2": null,
+      "session3": "+4.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+4.0",
+      "gap_raw": "+0.5 pts",
+      "gap_after_stripping": "+0.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600249",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "HOU @ MIA",
+      "ours": "+10.0",
+      "session2": null,
+      "session3": "+15.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+15.0",
+      "gap_raw": "+5.0 pts",
+      "gap_after_stripping": "+5.0 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600250",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "POR @ MIN",
+      "ours": "-5.0",
+      "session2": null,
+      "session3": "-4.5 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-4.5",
+      "gap_raw": "+0.5 pts",
+      "gap_after_stripping": "+0.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600251",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "GSW @ NOP",
+      "ours": "+11.5",
+      "session2": null,
+      "session3": "+18.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "+18.0",
+      "gap_raw": "+6.5 pts",
+      "gap_after_stripping": "+6.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    },
+    {
+     "key": "0022600252",
+     "values": {
+      "date": "2026-11-16",
+      "matchup": "PHX @ DEN",
+      "ours": "-4.5",
+      "session2": null,
+      "session3": "-5.0 (inj +0.0/+0.0)",
+      "session3_ex_injury": "-5.0",
+      "gap_raw": "-0.5 pts",
+      "gap_after_stripping": "-0.5 pts"
+     },
+     "source": {
+      "name": "Third session's originated lines (data/our-lines.csv)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+     },
+     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "flags": [
+      "FLAG-XSESS-07"
+     ],
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    },
+    {
+     "name": "Third session's originated lines (data/our-lines.csv)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
+    }
+   ]
+  },
+  "xadjudicate": {
+   "title": "Status conflicts, adjudicated against a third official revision — 6 of 6 resolved in favour of the latest read",
+   "blurb": "Two sessions disagreed on six statuses and both believed they had read the same document correctly. A third session had ingested the 17:15 ET revision, which is later than ours, so the disagreement is now testable instead of a matter of trust. This is what 'verify against official sources' is actually worth: not a claim of care, but a second and third copy to compare against.",
+   "source_note": "Injury-Report_2026-11-13_01_00PM.pdf / _04_15PM.pdf / _05_15PM.pdf",
+   "columns": [
+    {
+     "key": "game_date",
+     "label": "Game date"
+    },
+    {
+     "key": "team",
+     "label": "Team"
+    },
+    {
+     "key": "player",
+     "label": "Player"
+    },
+    {
+     "key": "status_1300",
+     "label": "13:00 ET (prior session)"
+    },
+    {
+     "key": "status_1615",
+     "label": "16:15 ET (ours)"
+    },
+    {
+     "key": "status_1715",
+     "label": "17:15 ET (third session)"
+    },
+    {
+     "key": "our_reason",
+     "label": "Official reason"
+    },
+    {
+     "key": "verdict",
+     "label": "Adjudication"
+    }
+   ],
+   "rows": [
+    {
+     "key": "2026-11-13|ATL|wilson",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "Atlanta Hawks",
+      "player": "Wilson, Jalen",
+      "status_1300": "Doubtful",
+      "status_1615": "Out",
+      "status_1715": "Out",
+      "our_reason": "G League - Two-Way",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "2026-11-13|MIA|antetokounmpo",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "Miami Heat",
+      "player": "Antetokounmpo, Giannis",
+      "status_1300": "Probable",
+      "status_1615": "Available",
+      "status_1715": "Available",
+      "our_reason": "Injury/Illness - Right Wrist Sprain",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "2026-11-13|MIA|larsson",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "Miami Heat",
+      "player": "Larsson, Pelle",
+      "status_1300": "Questionable",
+      "status_1615": "Doubtful",
+      "status_1715": "Doubtful",
+      "our_reason": "Injury/Illness - Illness",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "2026-11-13|MIA|thompson",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "Miami Heat",
+      "player": "Thompson, Klay",
+      "status_1300": "Questionable",
+      "status_1615": "Probable",
+      "status_1715": "Probable",
+      "our_reason": "Injury/Illness - Left Ankle Soreness",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "2026-11-13|NOP|murray",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "New Orleans Pelicans",
+      "player": "Murray, Dejounte",
+      "status_1300": "Doubtful",
+      "status_1615": "Out",
+      "status_1715": "Out",
+      "our_reason": "Injury/Illness - Left Ankle Sprain",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "2026-11-13|SAC|achiuwa",
+     "values": {
+      "game_date": "2026-11-13",
+      "team": "Sacramento Kings",
+      "player": "Achiuwa, Precious",
+      "status_1300": "Questionable",
+      "status_1615": "Out",
+      "status_1715": "Out",
+      "our_reason": "Injury/Illness - Left Ankle Soreness",
+      "verdict": "17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read"
+     },
+     "source": {
+      "name": "Third session's ingest of the 17:15 ET official report",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    },
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    },
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    },
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    },
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    },
+    {
+     "name": "Third session's ingest of the 17:15 ET official report",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison."
+    }
+   ]
+  },
   "flags": {
    "title": "Flagged for review — every unverified value on this site",
    "blurb": "This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.",
@@ -28587,6 +29863,75 @@
      "verified": false
     },
     {
+     "key": "FLAG-XADJ-01",
+     "values": {
+      "id": "FLAG-XADJ-01",
+      "severity": "high",
+      "area": "cross-session",
+      "statement": "A status conflict where the latest official revision agrees with neither capture, or with the older one: our snapshot would be stale or wrong. Each such row is listed and must be re-read from the PDF before it influences anything.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf",
+      "action": "Re-parse the newest revision; do not trust any cached snapshot past tip-off."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-XADJ-02",
+     "values": {
+      "id": "FLAG-XADJ-02",
+      "severity": "medium",
+      "area": "cross-session",
+      "statement": "The third session's ingest does not contain a row for a disputed player, so the conflict cannot be adjudicated from it. Absence in that file is not absence from the report — their parse is partial by their own note.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "action": "Read the 17:15 PDF directly for these rows."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-02"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-XADJ-03",
+     "values": {
+      "id": "FLAG-XADJ-03",
+      "severity": "low",
+      "area": "cross-session",
+      "statement": "Rows where the 17:15 ET revision corroborates our 16:15 capture. Recorded so the corroboration is auditable rather than asserted in prose.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "action": "None; keep the three timestamps side by side when the next revision lands."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XADJ-03"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-XSESS-01",
      "values": {
       "id": "FLAG-XSESS-01",
@@ -28659,11 +30004,11 @@
      "key": "FLAG-XSESS-04",
      "values": {
       "id": "FLAG-XSESS-04",
-      "severity": "high",
+      "severity": "low",
       "area": "cross-session",
-      "statement": "The same player carries different statuses in the two sessions' captures of the injury report. Most likely explanation: the NBA republishes the report several times a day (we read the 16:15 ET revision, the prior session read 13:00 ET), so both can be correct at their own timestamp. Nothing may depend on the newer one without checking the revision time.",
-      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
-      "action": "Store the revision timestamp with every row (see S-09) and always use the latest before tip."
+      "statement": "RESOLVED — the same player carried different statuses in the two sessions' captures. Adjudicated by a third document: the 17:15 ET revision, ingested independently by session arena-71f94203, matches our 16:15 read on all 6 disputed rows (Wilson Doubtful→Out, Antetokounmpo Probable→Available, Larsson Questionable→Doubtful, Thompson Questionable→Probable, Murray Doubtful→Out, Achiuwa Questionable→Out). Neither session misread anything: the report was republished between the two retrievals, and the newer one agrees with us.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "action": "Keep the revision timestamp with every row (S-09). Re-check 30 min before tip; a status is only ever true as-of a minute, not a date."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -28721,6 +30066,29 @@
      "note": "",
      "flags": [
       "FLAG-XSESS-06"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-XSESS-07",
+     "values": {
+      "id": "FLAG-XSESS-07",
+      "severity": "high",
+      "area": "cross-session",
+      "statement": "Three models, one slate: mean absolute spread disagreement is 2.9 pts, and 2.7 pts after removing session 3's own injury adjustment from its line. Most of the apparent model disagreement is unratified convention, not a difference in the evidence — which is why every convention on this site is labelled and none is treated as a fact.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py",
+      "action": "Ratify one injury/rest convention (or none) before any trigger is armed; see S-04."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-XSESS-07"
      ],
      "verified": false
     },
@@ -28933,6 +30301,34 @@
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -29711,6 +31107,52 @@
      "verified": false
     },
     {
+     "key": "third_revision",
+     "values": {
+      "src_id": "third_revision",
+      "src_name": "Third session's ingest of the 17:15 ET official report",
+      "src_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json",
+      "src_class": "Derived in-repo from a verified snapshot",
+      "src_note": "Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session's transcription of it, ingested here for comparison.",
+      "usable": "yes"
+     },
+     "source": {
+      "name": "nba2/provenance.py SOURCES registry",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SRC-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "third_model_csv",
+     "values": {
+      "src_id": "third_model_csv",
+      "src_name": "Third session's originated lines (data/our-lines.csv)",
+      "src_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv",
+      "src_class": "Derived in-repo from a verified snapshot",
+      "src_note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment.",
+      "usable": "yes"
+     },
+     "source": {
+      "name": "nba2/provenance.py SOURCES registry",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SRC-01"
+     ],
+     "verified": false
+    },
+    {
      "key": "xsession_data",
      "values": {
       "src_id": "xsession_data",
@@ -29735,6 +31177,20 @@
     }
    ],
    "sources": [
+    {
+     "name": "nba2/provenance.py SOURCES registry",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+    },
+    {
+     "name": "nba2/provenance.py SOURCES registry",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+    },
     {
      "name": "nba2/provenance.py SOURCES registry",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",

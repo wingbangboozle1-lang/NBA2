@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:02 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="65">
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="69">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -532,6 +532,36 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
+<tr id="FLAG-XADJ-01">
+<td>FLAG-XADJ-01</td>
+<td>high</td>
+<td>cross-session</td>
+<td>A status conflict where the latest official revision agrees with neither capture, or with the older one: our snapshot would be stale or wrong. Each such row is listed and must be re-read from the PDF before it influences anything.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf</td>
+<td>Re-parse the newest revision; do not trust any cached snapshot past tip-off.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="FLAG-XADJ-02">
+<td>FLAG-XADJ-02</td>
+<td>medium</td>
+<td>cross-session</td>
+<td>The third session&#x27;s ingest does not contain a row for a disputed player, so the conflict cannot be adjudicated from it. Absence in that file is not absence from the report — their parse is partial by their own note.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td>Read the 17:15 PDF directly for these rows.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-02">FLAG-XADJ-02</a></td>
+</tr>
+<tr id="FLAG-XADJ-03">
+<td>FLAG-XADJ-03</td>
+<td>low</td>
+<td>cross-session</td>
+<td>Rows where the 17:15 ET revision corroborates our 16:15 capture. Recorded so the corroboration is auditable rather than asserted in prose.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td>None; keep the three timestamps side by side when the next revision lands.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
 <tr id="FLAG-XSESS-01">
 <td>FLAG-XSESS-01</td>
 <td>medium</td>
@@ -564,11 +594,11 @@
 </tr>
 <tr id="FLAG-XSESS-04">
 <td>FLAG-XSESS-04</td>
-<td>high</td>
+<td>low</td>
 <td>cross-session</td>
-<td>The same player carries different statuses in the two sessions&#x27; captures of the injury report. Most likely explanation: the NBA republishes the report several times a day (we read the 16:15 ET revision, the prior session read 13:00 ET), so both can be correct at their own timestamp. Nothing may depend on the newer one without checking the revision time.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
-<td>Store the revision timestamp with every row (see S-09) and always use the latest before tip.</td>
+<td>RESOLVED — the same player carried different statuses in the two sessions&#x27; captures. Adjudicated by a third document: the 17:15 ET revision, ingested independently by session arena-71f94203, matches our 16:15 read on all 6 disputed rows (Wilson Doubtful→Out, Antetokounmpo Probable→Available, Larsson Questionable→Doubtful, Thompson Questionable→Probable, Murray Doubtful→Out, Achiuwa Questionable→Out). Neither session misread anything: the report was republished between the two retrievals, and the newer one agrees with us.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td>Keep the revision timestamp with every row (S-09). Re-check 30 min before tip; a status is only ever true as-of a minute, not a date.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
@@ -591,6 +621,16 @@
 <td>Ensemble or abstain: require the two models to agree before a trigger is armed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-06">FLAG-XSESS-06</a></td>
+</tr>
+<tr id="FLAG-XSESS-07">
+<td>FLAG-XSESS-07</td>
+<td>high</td>
+<td>cross-session</td>
+<td>Three models, one slate: mean absolute spread disagreement is 2.9 pts, and 2.7 pts after removing session 3&#x27;s own injury adjustment from its line. Most of the apparent model disagreement is unratified convention, not a difference in the evidence — which is why every convention on this site is labelled and none is treated as a fact.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py</td>
+<td>Ratify one injury/rest convention (or none) before any trigger is armed; see S-04.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
 </tr>
 <tr id="FLAG-XSESS-F1">
 <td>FLAG-XSESS-F1</td>
