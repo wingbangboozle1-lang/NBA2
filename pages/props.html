@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Props · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html" class="active">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Props</h2><p>The pricing code is real; the inputs are not available. That asymmetry is the whole page.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="props" data-rows="7">
+<h2>Player props and prop combos</h2>
+<p class="blurb">The pricing code exists and is unit-tested (negative-binomial tails, minutes-implied lines, copula combos). What does not exist is a single official player-level input in this repository, so every row is blank. The last row is the one number we can give: treating combo legs as independent mis-states the price by a factor, and that is a math fact, not an estimate.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Player props and prop combos</caption><thead><tr>
+<th scope="col">Prop market</th>
+<th scope="col">Player</th>
+<th scope="col">Book line</th>
+<th scope="col">Projection</th>
+<th scope="col">P(over)</th>
+<th scope="col">Minutes floor</th>
+<th scope="col">Status</th>
+<th scope="col">Missing input</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="prop-points">
+<td>points</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-rebounds">
+<td>rebounds</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-assists">
+<td>assists</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-3PM">
+<td>3PM</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-points+rebounds combo">
+<td>points+rebounds combo</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-points+assists combo">
+<td>points+assists combo</td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-PROP-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — no official player-level input</td>
+<td>official per-player minutes, usage and on/off per 100 (stats.nba.com boxedgamelog/boxscoring); bookmaker prop lines and prices (no licensed odds feed connected)</td>
+<td class="srccell"><span class="badge badge-blocked">no source</span><span class="nosrc">Market odds feed</span></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
+</tr>
+<tr id="prop-mechanism">
+<td>mechanism demo: two legs at p=0.55 with ρ=0.40</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>joint 0.3671 vs product 0.3025</td>
+<td><span class="blank" title="blank because: FLAG-PROP-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>arithmetic illustration (×1.2137 error), NOT a prediction</td>
+<td>shows why combo legs cannot be multiplied</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-02">FLAG-PROP-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">nba2/models/props.py</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

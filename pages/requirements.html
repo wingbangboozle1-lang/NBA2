@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requirements · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html" class="active">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Requirements</h2><p>The full requirements list from the brief, with a status you can argue with.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="requirements" data-rows="66">
+<h2>Requirements register</h2>
+<p class="blurb">Every requirement in the brief, decomposed to something a reviewer can say yes/no to. Status is only &#x27;met&#x27; when the artefact exists in the repository.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Requirements register</caption><thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Category</th>
+<th scope="col">Requirement</th>
+<th scope="col">Acceptance criteria</th>
+<th scope="col">Status</th>
+<th scope="col">Owner</th>
+<th scope="col">How it is met / what blocks it</th>
+<th scope="col">P</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="R-001">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Collect, organise and analyse NBA data behind one full requirements list</td>
+<td>A register with IDs, acceptance criteria and status that a reviewer can tick line by line</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>This file, rendered on /pages/requirements.html</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-002">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Originate our own NBA lines rather than consuming a book&#x27;s</td>
+<td>Spread and total for every game in the window produced by code from stored inputs</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/lines.py; 31/31 games priced on the current slate</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-003">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Research and develop strategies that generate useful signals</td>
+<td>Named strategies with hypothesis, inputs, edge origin and correlation consequence</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>9 strategies registered in nba2/config.py::STRATEGIES; usefulness is unproven until gates can be measured</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-004">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Treat it as a leaderboard competition rewarding top strategies</td>
+<td>Scoring, tiers, clustering and reward allocation implemented and refusing to pay unmeasured entries</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/leaderboard.py; pool currently 100% unallocated by design</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-005">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Cover single bets</td>
+<td>Spread, total and moneyline priced per game with probabilities and fair odds</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>lines table</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-006">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Cover parlays</td>
+<td>Joint pricing that is not the product of the legs, with a correlation sweep</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/correlation.py::quote_pair (bivariate quadrature) + parlays table</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-007">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Cover player prop bet combos</td>
+<td>Prop pricing math present and tested; combo legs priced with dependence</td>
+<td>blocked</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/props.py implements NB tails + copula combos, but no official player-level input exists in the repo — every prop row is blank</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-008">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Every strategy must pass validation gates</td>
+<td>Gate engine where BLOCKED/AT-RISK are distinct from PASS and FAIL</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/gates.py::evaluate, 10 gates</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-009">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Determine correlation values</td>
+<td>Correlations computed where data exists; band + sign-stability where it does not</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>1 of 5 relevant correlations computable today (r(SRS, margin/G)); the other 4 need game/player level data</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-010">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Remove luck from the equation</td>
+<td>Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>Implemented in gates/leaderboard; cannot be evaluated until bets settle</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-011">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Build selectively skill-based strategies</td>
+<td>Promotion requires measured edge surviving the luck checks; abstention is a first-class output</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>Tier logic + TRAF/S-02 selective betting; no promotions yet</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-012">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Generate picks for every upcoming slate up to 3 days ahead</td>
+<td>100% of games in the T+0..T+3 window have a line and a pick record</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>31/31 games priced for 2026-11-13..16; picks expressed as triggers because no market price exists</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-013">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Track how injuries affect rotation minutes and production</td>
+<td>Official statuses joined to per-team rotation depth, with minutes/production impact fields present</td>
+<td>partial</td>
+<td>arena/20c4f2f9 + arena-23927d63</td>
+<td>91 official rows ingested; minutes/production columns blank by policy (report has no such fields)</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-014">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Provide game flow analysis</td>
+<td>Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/gameflow.py: B2B/3-in-4/load computed; pace, garbage time, foul trouble, closing lineups = None</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-015">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Executive summary of important details</td>
+<td>One page with KPIs, findings, blockers and the single decision needed next</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>/pages/executive-summary.html</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-016">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Suggest how to improve the site&#x27;s decision quality</td>
+<td>Each suggestion states problem, proposal, benefit, effort, risk, recommendation</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>18 items in suggestions/SUGGESTIONS.json</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-017">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Dedicated suggestions section, reviewed before anything is implemented</td>
+<td>Nothing in the queue is auto-applied; queue state records the decision</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>/pages/suggestions.html reads the queue; status stays &#x27;awaiting owner decision&#x27;</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-018">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Clear list of questions/information/answers needed before decisions</td>
+<td>Each question states what we have, what we lack, how to find out and what it changes</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>22 questions in requirements/QUESTIONS.json</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-019">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Suggestions for discovering missing information</td>
+<td>Every open question carries a concrete retrieval route (endpoint, document or owner decision)</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>&#x27;How to find out&#x27; column</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-020">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>No manual input required from the owner</td>
+<td>One command rebuilds everything from snapshots; no spreadsheet or copy-paste step</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-021">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Work line by line, verify against official trusted sources, no hallucinations</td>
+<td>Per-row source on every table; unverifiable values blank; enforced by a build-time lint that fails the build</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/provenance.py::make_row raises on unsourceable values; nba2/pipeline/lint.py checks the emitted site</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-022">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Provide links for manual review</td>
+<td>Every row&#x27;s source is a clickable URL to the document it came from</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>source object per row in data/site.json; rendered as SRC link</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-023">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Flag irregularities for review</td>
+<td>Flag registry with severity + action, published on its own page</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>28 flags on /pages/flagged-review.html</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-024">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>GitHub Pages live site with clean landing page and subpages by category</td>
+<td>Site builds, publishes, and every nav link resolves</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>15 pages; lint checks internal links; Pages workflow on push to main</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-025">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Clean, user-friendly, simple dashboard UI with all entries in readable tables</td>
+<td>One table per topic, frozen headers, no data-less chrome</td>
+<td>met</td>
+<td>arena/20c4f2f9 + arena-23927d63</td>
+<td>css/style.css + shared renderer in app.js</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-026">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Every table row must have a source link to an official site</td>
+<td>Row without a source is impossible: constructor raises</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>make_row(source_key) required; lint re-checks the emitted JSON</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-027">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>If a value cannot be confirmed officially, leave it blank and flag it</td>
+<td>Blank cells are None in data and render as &#x27;no official source&#x27;; never a dash pretending to be data</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>BLOCKED_ALLOWED_FIELDS carve-out in provenance.py; 100+ blank cells across the site</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-028">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Never infer or fill in values</td>
+<td>No imputation anywhere in the pipeline; grep for fillna/backfill returns nothing</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2 contains no imputation routine; verified by review and by tests</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-029">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Parallel-session coordination via COORDINATION.md</td>
+<td>Board with claims, scopes, conflict log, handoff rule, takeover rule</td>
+<td>met</td>
+<td>all sessions</td>
+<td>COORDINATION.md, including the recorded add/add conflict resolution against main</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-030">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>PR to main, merge without waiting, confirm Pages deploy, record result</td>
+<td>PR opened, merged, deploy confirmed, all recorded on the board</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>see COORDINATION.md PR &amp; Merge Results</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-031">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Brief</td>
+<td>Do not merge a broken site; publish flagged items instead of blocking</td>
+<td>Build gate + link check runs before merge; flags never block</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/pipeline/lint.py is a CI step</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-032">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Reproduce every published number from committed inputs</td>
+<td>Deterministic rebuild byte-compares except the generated timestamp</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>seeded bootstrap, fixed grids, sorted output; test_reproducible_build</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-033">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Home-court advantage and margin volatility must not be copied from folklore</td>
+<td>Both fitted from the snapshot; disagreement between fit and implied value disclosed</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>ratings.calibrate + FLAG-PARAM-02</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-034">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Small-sample ratings must be shrunk, not trusted</td>
+<td>Reliability weight derived from the table&#x27;s own dispersion</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>ratings.apply_shrinkage (empirical-Bayes)</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-035">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>A pick must not depend on where an unratified parameter sits</td>
+<td>Every line re-priced across the sensitivity box; side must hold on &gt;=90% of the grid</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>lines._stability + gate G-08</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-036">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>No lookahead in evaluation</td>
+<td>Backtests rejected while inputs are not point-in-time</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>G-07 reports AT-RISK on purpose: an as-of standings table leaks; only the forward ledger is clean</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-037">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Pre-register predictions so the leaderboard cannot be re-fitted</td>
+<td>Sealed JSON + sha256 committed with the site</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/models/ledger.py; digest shown in the site header</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-038">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Settle predictions against official final scores</td>
+<td>Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>ledger.settle implemented and unit-tested on fixtures; no finals file in repo yet</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-039">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Engine</td>
+<td>Stake sizing must respect model uncertainty, not confidence</td>
+<td>Fractional Kelly with a hard cap, and zero stake while no price exists</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>config staking + picks table stake column pinned to 0.00%</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-040">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Slate ingest: date, time, teams, arena, broadcast, official game ID</td>
+<td>All 31 games with IDs read from the official page, none inferred</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>data/raw/slate_2026-11-13_to_11-16.json</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-041">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Official injury report ingest with per-row attribution confidence</td>
+<td>Rows tagged explicit vs block-continuation; partial parse disclosed</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>data/raw/injury_report_2026-11-13.json + FLAG-INJ-01/03</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-042">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Team rating inputs with cross-check against an official source</td>
+<td>Two W-L columns printed; mismatch fails the build</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>ratings table; lint rule wl_match</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-043">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Market prices (spread/total/moneyline closing numbers)</td>
+<td>&gt;=1 licensed book&#x27;s opening and closing line per game</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>No odds feed reachable; this is the single largest blocker for CLV, ROI and &#x27;value&#x27;</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-044">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Player-level minutes, usage and production</td>
+<td>Per-player per-game box score with minutes, plus on/off</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>stats.nba.com unreachable from this environment (F-02)</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-045">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Game-level results history for calibration and backtests</td>
+<td>&gt;=2 seasons of final scores with game IDs</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>not in repo; every fitted parameter would be circular without it</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-046">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Lineup/rotation data before tip</td>
+<td>Projected or confirmed lineups from an official source</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>NBA does not publish pre-tip lineups; starters are confirmable only after the game</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-047">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data</td>
+<td>Play-by-play for game flow</td>
+<td>Possession-level feed with timestamps</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>required before pace/garbage-time columns can be non-blank</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-048">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Governance</td>
+<td>Owner ratifies all unratified thresholds before money is risked</td>
+<td>Sign-off recorded in COORDINATION.md; config status flipped to &#x27;ratified&#x27;</td>
+<td>not started</td>
+<td>owner (you)</td>
+<td>11 parameters/gate thresholds listed on the Parameters page</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-049">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Governance</td>
+<td>Trial-count registry so multiple-testing correction is real</td>
+<td>Every evaluation attempt appended to a ledger and fed to G-06</td>
+<td>not started</td>
+<td>arena/20c4f2f9</td>
+<td>S-11; without it Deflated Sharpe has no N</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-050">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Governance</td>
+<td>No live-money automation</td>
+<td>Site publishes lines and triggers only; no bet placement, no account credentials</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>no execution code exists in the repo, by design</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-051">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Quality</td>
+<td>Tests for the statistical machinery</td>
+<td>pytest suite covering calibration, shrinkage, gates math, copula pricing, ledger seal</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>nba2/tests/</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-052">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Quality</td>
+<td>CI that fails on unsourceable rows, broken links or test failures</td>
+<td>Workflow runs lint + pytest on PR</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>.github/workflows/ci.yml</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-053">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Quality</td>
+<td>Site must render with JavaScript disabled enough to read the flags</td>
+<td>static HTML contains headline numbers; tables hydrate from data/site.json</td>
+<td>partial</td>
+<td>arena/20c4f2f9</td>
+<td>tables are hydrated client-side; headline cards are server-written into HTML</td>
+<td>P2</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-054">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Quality</td>
+<td>Timestamp and staleness visible everywhere</td>
+<td>as-of + generated-at + &#x27;T-3 injury blind&#x27; notice on each data page</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>meta block rendered in every page header</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-055">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Quality</td>
+<td>Responsible-gambling and eligibility notice on a betting-related public site</td>
+<td>Footer notice with jurisdiction/age warning, no guarantees implied</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>footer on every page</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-056">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Ops</td>
+<td>Daily rebuild cadence with game-day 13:00 ET injury refresh</td>
+<td>Scheduled workflow; build aborts if snapshot is stale</td>
+<td>not started</td>
+<td>owner (you)</td>
+<td>needs a runner with network access to the official endpoints (this sandbox has none)</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-057">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Ops</td>
+<td>Snapshot retention so any published line can be re-derived</td>
+<td>dated files committed under data/raw/ + manifest</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>data/snapshots.meta.json</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-058">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Ops</td>
+<td>One Pages publishing path, no racing workflows</td>
+<td>exactly one workflow deploys</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>I-04 fixed: deploy.yml removed, pages.yml kept</td>
+<td>P2</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-059">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Analysis</td>
+<td>State what the model cannot see (injuries, motivation, refs) inside the output, not in a footnote</td>
+<td>INJURY-BLIND column on every line row; Cup-game context column on the slate</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>lines table + game flow page</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-060">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Analysis</td>
+<td>Distinguish verified from derived from third-party on every row</td>
+<td>source class badge per row</td>
+<td>met</td>
+<td>arena/20c4f2f9</td>
+<td>badge in every table</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-101">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Licensed odds feed (opening + closing, spread/total/ML, and prop lines)</td>
+<td>vendor decision + API key + retention of closing prices per game</td>
+<td>blocked</td>
+<td>owner (you)</td>
+<td>unblocks G-02, real edge, ROI, and stake sizing</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-102">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Official player-level game data (minutes, usage, on/off)</td>
+<td>stats.nba.com equivalent reachable from the build environment</td>
+<td>blocked</td>
+<td>owner (you)</td>
+<td>unblocks injury impact, props, and combo correlation</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-103">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Historical final scores (&gt;= 2 seasons) with NBA game IDs</td>
+<td>committed CSV/JSON snapshot + licence note</td>
+<td>blocked</td>
+<td>owner (you)</td>
+<td>unblocks point-in-time backtests, sigma/HCA re-fit, margin/total correlation</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-104">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Official standings/stats snapshot at a fixed daily time</td>
+<td>timestamped retrieval we can replay, replacing the third-party table</td>
+<td>blocked</td>
+<td>arena/20c4f2f9</td>
+<td>removes FLAG-RAT-01; needs network access from the runner</td>
+<td>P1</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-105">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Bankroll and payout policy definition</td>
+<td>owner states bankroll units, max stake, and what the leaderboard pool pays on</td>
+<td>blocked</td>
+<td>owner (you)</td>
+<td>Q-03/Q-13; staking currently pinned to 0%</td>
+<td>P0</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="R-106">
+<td><span class="blank" title="blank because: FLAG-REQ-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data request</td>
+<td>Roster-mover and trade-context feed</td>
+<td>transactions with effective dates so ratings are re-based after a trade</td>
+<td>blocked</td>
+<td>data vendor / owner</td>
+<td>this season already contains cross-team moves that change team-level ratings mid-window</td>
+<td>P2</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Decomposed from the project brief (Arena session request of 2026-11-13) plus the engineering requirements needed to satisfy it. Status is a self-assessment against files in this repository, reviewed by a human owner next.</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

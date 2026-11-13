@@ -1,0 +1,58 @@
+name: Verify data, model and site
+
+# This workflow is the build gate the brief asks for: a number cannot reach the published
+# site unless it is reproducible from the committed snapshots and carries a source.
+# Deploy (pages.yml) publishes whatever is on main, so main should only ever receive
+# commits that pass here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Model + pipeline tests (stdlib unittest, no dependencies)
+        run: python -m unittest discover -s nba2/tests -t . -v
+
+      - name: Verify the sealed prediction ledger (never rewrite it)
+        run: python -m nba2.pipeline.seal_predictions --verify
+
+      - name: Rebuild site data and HTML
+        run: python -m nba2.pipeline.build_site_data && python -m nba2.pipeline.build_site
+
+      - name: Provenance gate (every row sourced, every blank flagged, no broken links)
+        run: python -m nba2.pipeline.lint
+
+      - name: Fail if the committed site does not match a rebuild of the committed data
+        run: |
+          git add -A
+          if ! git diff --cached --quiet -- data/raw/ledger; then
+            echo "::error::a sealed ledger changed during verification — the seal must be immutable"; exit 1
+          fi
+          if ! git diff --cached --quiet -- data/site.json; then
+            echo "::error::data/site.json differs from a rebuild of data/raw — commit the rebuild"; exit 1
+          fi
+          if ! git diff --cached --quiet -- '*.html'; then
+            echo "::error::the HTML does not match a rebuild of data/site.json — commit the rebuild"; exit 1
+          fi
+          echo "published artefacts match the pipeline"
+
+      - name: Sealed predictions digest
+        run: python -c "import json,pathlib; d=json.loads(pathlib.Path('data/raw/ledger/sealed-2026-11-13.json').read_text()); print('sealed', d['header']['n_predictions'], d['header']['sha256'])"

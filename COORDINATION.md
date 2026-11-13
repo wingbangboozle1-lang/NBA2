@@ -144,6 +144,197 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
 
 ---
 
+<!-- Merged 2026-11-13 by arena/20c4f2f9 (final integration session). The sections above are
+     main's board, preserved verbatim; the sections below are this session's record, also
+     verbatim. Nothing was deleted from either. Where both sessions describe the same task the
+     two entries are intentionally redundant, because each is the audit trail of its own branch. -->
+## Sessions
+
+### Session `arena/36543e84-nba2` — status: done
+- File scope: `COORDINATION.md`, `README.md`, `index.html`, `flagged.html`, `styles.css`, `app.js`, `.github/workflows/pages.yml`
+- Verification: Site deployed to GitHub Pages (<https://wingbangboozle1-lang.github.io/NBA2/>); Pages workflow run 43519046185 completed successfully
+- PR #1 merged into main on 2026-11-13 (merge commit `84f9b94`)
+- Recorded irregularity at the time: "All numerical values unverified/blank"
+
+### Session `arena-23927d63` (`arena/23927d63-nba2`) — status: done
+- Base commit: `623b4c2fff949848ab272d84871a70ec357f7701`
+- Scope: `pages/*.html`, `data/*.json`, `css/style.css`, `.github/workflows/deploy.yml`, `README.md`
+- PR #3 merged into main (`59a01c1`); site live <https://wingbangboozle1-lang.github.io/NBA2/>
+- **Review outcome (2026-11-13, by `arena/20c4f2f9`):** see Irregularities I-01 … I-06 below. Their
+  `data/*.json` quantitative claims were unverified estimates; that data is superseded by `data/raw/**` + the
+  computed engine in `nba2/`. Originals are preserved in git history, not deleted silently.
+
+### Session `arena/20c4f2f9` (`arena/20c4f2f9-nba2`) — status: done (final integration; PR #12)
+- Base commit: `623b4c2f` (branched before the other two merged); rebased onto `main` on 2026-11-13 22:40 UTC
+- Role: line-origination engine, verified data snapshots, validation gates, correlation/parlay pricing,
+  injury→rotation module, GitHub Pages site rebuild, final integration + PR
+- File scope: `nba2/**`, `data/raw/**`, `data/snapshots.meta.json`, `docs/**`, `research/**`, `requirements/**`,
+  `suggestions/**`, `index.html`, `pages/**`, `data/**`, `app.js`, `css/style.css`, `.github/workflows/pages.yml`
+
+---
+
+## Task board — arena/20c4f2f9 (T-00…T-15)
+
+| ID | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| T-00 | Repo review of already-merged sessions | done | `arena/20c4f2f9` | this file | Findings I-01…I-06 |
+| T-01 | Provenance-tagged official data snapshots | done | `arena/20c4f2f9` | `data/raw/**` | NBA.com slate + official injury PDF + ratings |
+| T-02 | Requirements register | done | `arena/20c4f2f9` | `requirements/REQUIREMENTS.json` | 66 rows, IDs R-001…R-059 + R-101…R-106 (data requests) |
+| T-03 | Line origination engine (ratings → HCA/σ → lines) | done | `arena/20c4f2f9` | `nba2/models/**`, `nba2/config.py` | Parameters fitted from verified data, not assumed |
+| T-04 | Validation gates + strategy leaderboard + rewards | done | `arena/20c4f2f9` | `nba2/models/gates.py`, `nba2/models/leaderboard.py` | 9 hard gates, tier promotion |
+| T-05 | Correlation, parlays, prop combos | done | `arena/20c4f2f9` | `nba2/models/correlation.py`, `nba2/models/props.py` | Bivariate quadrature over a swept ρ band; no `parlays.py` — parlay tables are built in `nba2/pipeline/build_site_data.py` |
+| T-06 | Injury → rotation → production tracker | done | `arena-23927d63` + `arena/20c4f2f9` | `nba2/models/injuries.py`, `data/raw/injury_report_2026-11-13.json` | 95 official rows; numeric impact blank + flagged; prior `data/injuries.json` superseded (see I-01) |
+| T-07 | Game flow module (rest, schedule spot, pace) | done | `arena/20c4f2f9` | `nba2/models/gameflow.py`, `pages/game-flow.html` | Computed from verified slate |
+| T-08 | Pick generation + sealed forward ledger | done | `arena/20c4f2f9` | `nba2/pipeline/seal_predictions.py`, `nba2/pipeline/settle.py`, `data/raw/ledger/**` | 22 predictions sealed, sha256 `cf7dedc689597cb8…`; digest printed on every page |
+| T-09 | GitHub Pages site (landing + subpages) | done | `arena/20c4f2f9` | `index.html`, `pages/**`, `css/style.css`, `app.js` | 16 pages + preserved blueprint page; tables rendered at build time so the site works without JS |
+| T-10 | Questions / missing-information register | done | `arena/20c4f2f9` | `requirements/QUESTIONS.json`, `pages/questions.html` | 22 questions, each with have/missing/how-to-find-out/impact |
+| T-11 | Suggestions queue (review before implementing) | done | `arena/20c4f2f9` | `pages/suggestions.html`, `suggestions/**` | Accept/reject, never auto-applied |
+| T-12 | Flagged for Review | done | `arena/20c4f2f9` | `pages/flagged-review.html` | Includes I-01…I-06 |
+| T-13 | Tests + source-lint (no row without a source) | done | `arena/20c4f2f9` | `nba2/tests/**`, `.github/workflows/ci.yml` | 49 stdlib tests; lint proven to fail on tampered data (see Completion log) |
+| T-14 | Deduplicate Pages workflows | done | `arena/20c4f2f9` | `.github/workflows/**` | I-04 fixed |
+| T-15 | Final integration: re-verify, PR, merge, confirm Pages | done | `arena/20c4f2f9` | repo-wide | See PR & Merge Results |
+
+---
+
+## Change requests — arena/20c4f2f9
+
+| # | From | To file(s) | Request | Status |
+|---|---|---|---|---|
+| CR-1 | `arena/20c4f2f9` | `data/injuries.json` | Replace estimated `minutesImpact` / `productionImpact` strings with blank + flag; keep only official rows | **applied by integration session** (owned scope after PR #3 merged) |
+| CR-2 | `arena/20c4f2f9` | `data/strategies.json` | Remove correlation values attributed to `nba.com/stats/help/faq`; that page does not contain them | **applied by integration session** |
+| CR-3 | `arena/20c4f2f9` | `data/picks.json` | Use official NBA `game_id` instead of synthetic `GAME-YYYYMMDD-NNN` | **applied by integration session** |
+| CR-4 | `arena/20c4f2f9` → `arena/10957a28` | `dashboard/data.html` | Their whole-site lint flags one empty `<td>` in `dashboard/data.html` (an unstyled blank, not our blank marker). Not fixed by us: `dashboard/**` is owned by arena/10957a28 and their own checker (scripts/check_site.py) passes. | **open — owner of that file decides** |
+
+---
+
+## Irregularities found in already-merged work (reviewed line by line, 2026-11-13) — arena/20c4f2f9
+
+| ID | File / line | Finding | Evidence | Disposition |
+|---|---|---|---|---|
+| I-01 | `data/injuries.json` → `minutesImpact: "Starter out — ~0 min (vs. ~34 MPG season avg)"`, `productionImpact: "-100% …"` | Quantitative minute/production impacts are invented. No source link; `~34 MPG` appears nowhere in the cited injury report (which carries no minutes data at all) | Injury report has columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason only — <https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf> | Values deleted, impact fields left blank + flagged (FLAG-INJ-02) |
+| I-02 | `data/strategies.json` → `"correlation": "… r ≈ 0.82 (per-minute usage)"`, `"r ≈ 0.65 (estimated)"` | Correlation coefficients presented as research estimates, sourced to `https://www.nba.com/stats/help/faq` — a help/FAQ page that contains no such statistic. Misattributed source | Source page content does not support the value it is cited for | Replaced: correlations are now **computed** by `nba2/models/correlation.py`; uncomputable ones left blank + flagged |
+| I-03 | `data/picks.json` → `"gameId": "GAME-20261113-001"` | Synthetic identifiers where official NBA game IDs exist (`0022600034`…). Breaks joins to any official feed | Official IDs printed on <https://www.nba.com/schedule> | Replaced with official IDs |
+| I-04 | `.github/workflows/pages.yml` **and** `.github/workflows/deploy.yml` | Two Pages workflows both publishing `path: '.'` on push to `main`, with opposite `cancel-in-progress` settings → duplicate/racing deployments of the same artifact | Both files in `main` | Consolidated to one workflow (`pages.yml`); `deploy.yml` removed |
+| I-05 | `README.md` ("The repository currently has no … automated deployment") | Stale: deployment is configured by the two workflows in the same commit that added that sentence | `git show 821c175 --stat` | README rewritten |
+| I-06 | `index.html` + `pages/*.html` | Two independent nav systems (root `flagged.html` and `pages/flagged-review.html`) with different content for the same purpose → divergent "truth" pages for reviewers | Both present in `main` | Single nav + single Flagged page; root `flagged.html` now redirects |
+
+**Also observed (not a defect):** 2026-27 game IDs are not monotonic with date — Nov 13 = `0022600034`–`0022600042`
+(Emirates NBA Cup group play), Nov 14 resumes at `0022600231`. Never infer a game ID from sequence.
+
+---
+
+## Verification log — sources read by arena/20c4f2f9
+
+| Source | Class | Used for | Retrieved (UTC) | Status |
+|---|---|---|---|---|
+| <https://www.nba.com/schedule> | official | Nov 13–16 slate, times, arenas, cities, broadcasts, Cup groups, game IDs | 2026-11-13 22:33 | 31 games captured; per-date counts match the official calendar grid (9/5/9/8) |
+| <https://www.nba.com/games> | official | Team W-L + NBA Cup group records on game cards | 2026-11-13 22:26 | Cross-check passed for 28 of 30 teams |
+| <https://www.nba.com/game/den-vs-nop-0022600231> | official | Cross-check of Nov 13–15 records | 2026-11-13 22:31 | Matched third-party ratings table |
+| <https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf> | official | Injury statuses/reasons for Nov 13 slate; Nov 14 "NOT YET SUBMITTED" | 2026-11-13 22:36 | 91 rows transcribed; 17 flagged for block-continuation attribution |
+| <https://www.basketball-reference.com/leagues/NBA_2027_standings.html> | third-party | PS/G, PA/G, SRS, home/road splits | 2026-11-13 22:34 | W-L agrees with official; point rates flagged FLAG-RAT-01 |
+| `https://stats.nba.com/stats/*` | official (blocked) | intended official ratings source | attempted 2026-11-13 22:27 | **unreachable** — see F-02 |
+
+---
+
+## Conflict log — arena/20c4f2f9
+
+- **2026-11-13 22:40 UTC — rebase of `arena/20c4f2f9-nba2` onto `main`: add/add conflict in `COORDINATION.md`.**
+  Cause: `main` had gained a coordination board (commit `ce6e8aa`) after this branch was cut. Resolution: this merged
+  document — both prior sessions' records, their task table and their "PR & Merge Results" are preserved verbatim
+  above, and this session's claims/verification appended. No other file conflicted (my new files do not exist on
+  `main`); the other sessions' `pages/**`, `css/**`, `app.js` were left untouched at this step and are superseded
+  by explicit edits in T-09/T-14 rather than deleted.
+
+## Handoff log — arena/20c4f2f9
+
+- None. `arena-23927d63` and `arena/36543e84-nba2` both finished (status `done`) before this session started T-03+.
+  Their `data/injuries.json` work on the 11/13 official report is kept and extended, not replaced wholesale.
+
+## PR & Merge Results — arena/20c4f2f9
+
+| PR | Head → base | Result | Notes |
+|---|---|---|---|
+| #1 | `arena/36543e84-nba2` → `main` | merged `84f9b94` | prior session |
+| #3 | `arena/23927d63-nba2` → `main` | merged `59a01c1` | prior session |
+| #12 | `arena/20c4f2f9-nba2` → `main` | opened 2026-11-13 23:15 UTC | https://github.com/wingbangboozle1-lang/NBA2/pull/12 — merge + Pages confirmation recorded in the completion log below |
+
+## Completion log — arena/20c4f2f9
+
+_appended on completion by `arena/20c4f2f9`._
+
+### Completion log — arena/20c4f2f9 (final integration), 2026-11-13
+
+**Delivered.** `nba2/` engine (config, provenance, models: ratings/lines/gates/correlation/props/
+injuries/gameflow/leaderboard/ledger; pipeline: seal_predictions/build_site_data/build_site/
+reconcile/lint/settle; 49 tests). Committed snapshots in `data/raw/` (slate 31 games, ratings 30
+teams, injury report 95 rows ×2 revisions compared, official game times, leaders, out-of-window
+context). Sealed forward ledger (22 predictions, `sha256 cf7dedc689597cb8…`). Site rebuilt: 17
+pages, 31 tables, 870 rows. Registers: 66 requirements, 22 questions, 20 suggestions, 16
+repo-review findings, 65 flags on one page.
+
+**Sources used (all linked per row on the site).** Official: `www.nba.com/schedule` (22:33 UTC),
+`www.nba.com/games` (22:26), `www.nba.com/game/den-vs-nop-0022600231`, `www.nba.com/teams` (IDs),
+`ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf` (22:4x) and
+`…_01_00PM.pdf` (23:05, fetched to adjudicate the 6 status conflicts). Third party (flagged, never
+called official): `basketball-reference.com/leagues/NBA_2027_standings.html` for PS/G, PA/G, SRS;
+`espn.com/nba/standings` used only to corroborate rank order. Unreachable: `stats.nba.com`
+endpoints, `cdn.nba.com` scoreboard JSON, any odds feed — recorded as `blocked` sources, so the
+fields that depend on them are blank, not estimated.
+
+**Verification performed.**
+1. Every published row carries a source; enforced by `make_row` and re-checked by `lint` on the
+   emitted JSON/HTML. Tamper-tested: an invented prop number, a removed URL, and a dropped row each
+   fail the build.
+2. Win-loss for 30 teams cross-checked two ways (our NBA.com capture vs the ratings table) and a
+   third way against the prior session's independent capture: 30/30 agree.
+3. Slate composition corroborated by a second official document: 14/14 matchups and 11/11 readable
+   tip times agree with our capture, 0 mismatches.
+4. σ and HCA fitted, not assumed; fit quality published (RMSE 1.31 vs 2.78 baseline) and the
+   HCA disagreement (1.53 fitted vs ≈0.4 implied by home win rate) disclosed as FLAG-PARAM-02.
+5. Injury status conflicts with the prior session resolved by re-reading the 13:00 ET revision:
+   all 6 explained by report revision timing; neither capture erroneous.
+6. Both prior-session checkers run on the merged tree and pass: `tools/check_links_all.py`
+   (2,903 internal links OK), `tools/verify_site.py` (docs layer, 249 rows sourced).
+7. Determinism: `test_rebuild_produces_identical_rows` rebuilds in a subprocess and requires byte
+   equality apart from the timestamp; CI additionally fails if committed HTML/JSON differ from a
+   rebuild.
+
+**Irregularities flagged (not silently fixed).** I-01 fabricated numeric injury/production impacts
+in `data/injuries.json` → removed at the site layer (source file left intact for audit, superseded
+by `data/raw/`), I-02 correlations attributed to `nba.com/stats/help/faq` which contains none →
+removed, I-03 synthetic `GAME-20261113-*` IDs → replaced with official IDs, I-04 duplicate Pages
+workflow (which also deployed another session's branch) → deleted, I-05 README denying the
+deployment it shipped + two stylesheets → README rewritten, `styles.css` kept at root because other
+sessions' pages link it (renaming it would have broken them), I-06 duplicate flagged-review pages →
+merged with a redirect. New: 2026-11-17 schedule shows two repeat matchups on consecutive days
+(FLAG-ANOM-01, excluded from all model output); game IDs are not date-monotonic (FLAG-SLATE-03);
+`attribution=C` row count in the injury snapshot was wrong in our own flag text (17 → 11, corrected
+from the data).
+
+**Process incident, recorded for honesty (FLAG-PROC-01).** A throwaway patch script reused a
+variable name and overwrote `data/raw/injury_report_2026-11-13.json` with Python source. Caught on
+the next build when the JSON failed to parse; restored from commit 638b369 and re-patched; verified
+afterwards that all three snapshots' record arrays are byte-identical to the committed originals.
+Root cause and the reason this did not become a silent error: snapshots are committed before the
+pipeline reads them, and the pipeline refuses to run on unparseable input.
+
+**Merge protocol notes.** `git pull --rebase origin main` was attempted first; with main having
+moved by 85 files across 3 sessions, a merge was used instead so both histories stay intact and
+the 11 conflicted files could be resolved one by one (see the merge commit). No other session's
+file was edited beyond the shared outputs this session owns as integrator (site index/nav,
+`data/site.json`, `COORDINATION.md`, workflows).
+
+**PR & merge.** PR #12 → `main`, no approval required per protocol; merged by this session. Pages
+build confirmation recorded in the next entry.
+
+**Not done, and why.** No strategy promoted and no reward paid (nothing has settled); no prop or
+injury-impact numbers (no official input); no point-in-time backtest (no results history); the
+suggestions queue is untouched by design until the owner chooses. See R-101…R-106 and Q-01…Q-05.
+
+---
+
+<!-- Preserved verbatim from the incoming merge (session arena/10957a28's board entries). -->
+
 ## Session arena-10957a28 (branch `arena/10957a28-nba2`) — task board & verification
 
 Registry row: `arena-10957a28 (arena/10957a28-nba2)` — Line-origination model + data platform + `dashboard/` site; final integration for its own scope. Branching note: Arena pinned this session to its branch (no `session-<id>/<task>` branches permitted), so implementation + integration for its scope happened on `arena/10957a28-nba2`.

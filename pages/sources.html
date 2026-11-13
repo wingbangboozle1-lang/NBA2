@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sources · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html" class="active">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Sources</h2><p>What we read, when, and what we could not read at all.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="sources" data-rows="16">
+<h2>Source register + verification log</h2>
+<p class="blurb">Retrieval times are UTC. Anything marked &#x27;no — blocked&#x27; contributed no value to any table on this site.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Source register + verification log</caption><thead><tr>
+<th scope="col">Key</th>
+<th scope="col">Source</th>
+<th scope="col">URL</th>
+<th scope="col">Class</th>
+<th scope="col">Usable in build</th>
+<th scope="col">Note</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="nba_schedule">
+<td>nba_schedule</td>
+<td>NBA.com Schedule (official)</td>
+<td>https://www.nba.com/schedule</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="nba_games">
+<td>nba_games</td>
+<td>NBA.com Games &amp; Scores (official)</td>
+<td>https://www.nba.com/games</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Game cards with W-L and Emirates NBA Cup group records. Retrieved 2026-11-13 22:26 UTC.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="nba_game_card">
+<td>nba_game_card</td>
+<td>NBA.com Game Preview (official)</td>
+<td>https://www.nba.com/game/den-vs-nop-0022600231</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Cross-check of Nov 13-15 win-loss records.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="nba_injury_pdf">
+<td>nba_injury_pdf</td>
+<td>NBA Official Injury Report 11/13 16:15 ET (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="bref_standings">
+<td>bref_standings</td>
+<td>Basketball-Reference 2026-27 Standings</td>
+<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td>Third-party (not NBA-official)</td>
+<td>yes</td>
+<td>Conference + Expanded standings. W-L cross-checks against NBA.com for 28/30 teams.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="nba_stats_blocked">
+<td>nba_stats_blocked</td>
+<td>stats.nba.com JSON endpoints</td>
+<td>https://stats.nba.com/stats/leaguestandingsv3</td>
+<td>Unavailable — blocked / not connected</td>
+<td>no — blocked</td>
+<td>Unreachable from this environment; nba.com/stats tables are client-rendered.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="odds_blocked">
+<td>odds_blocked</td>
+<td>Market odds feed</td>
+<td><span class="blank" title="blank because: FLAG-SRC-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Unavailable — blocked / not connected</td>
+<td>no — blocked</td>
+<td>No licensed odds source connected. NBA.com renders odds client-side only; picks.nba.com exposes no lines.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="derived_ratings">
+<td>derived_ratings</td>
+<td>Derived: nba2.models.ratings</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Calibration + shrinkage computed from the verified snapshot at build time.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="derived_lines">
+<td>derived_lines</td>
+<td>Derived: nba2.models.lines</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="derived_corr">
+<td>derived_corr</td>
+<td>Derived: nba2.models.correlation</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Empirical correlation where inputs exist; sensitivity band otherwise.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="git_repo">
+<td>git_repo</td>
+<td>This repository (git history)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Repo review facts: commit list, file tree.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="source_register">
+<td>source_register</td>
+<td>nba2/provenance.py SOURCES registry</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Meta-table: which sources were used, and which were attempted and unreachable.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="coordination">
+<td>coordination</td>
+<td>COORDINATION.md</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Session claims, conflict log, irregularity findings.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="third_revision">
+<td>third_revision</td>
+<td>Third session&#x27;s ingest of the 17:15 ET official report</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Underlying document is official (ak-static.cms.nba.com, Injury-Report_2026-11-13_05_15PM.pdf); the JSON is another session&#x27;s transcription of it, ingested here for comparison.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="third_model_csv">
+<td>third_model_csv</td>
+<td>Third session&#x27;s originated lines (data/our-lines.csv)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session&#x27;s own header comment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="xsession_data">
+<td>xsession_data</td>
+<td>Prior session&#x27;s committed dataset (this repo)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">retrieved 2026-11-13 22:25–22:40 UTC</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

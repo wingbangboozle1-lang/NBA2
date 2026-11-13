@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questions & Answers - NBA2</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Open Questions &bull; Missing Information &bull; Pre-Decision Review</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Dashboard</a></li>
+          <li><a href="strategies.html">Betting Strategies</a></li>
+          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="injuries.html">Injuries & Rotation</a></li>
+          <li><a href="game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="executive-summary.html">Executive Summary</a></li>
+          <li><a href="suggestions.html">Site Suggestions</a></li>
+          <li><a href="questions.html" class="active">Questions & Answers</a></li>
+          <li><a href="flagged-review.html">Flagged for Review</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="card">
+        <h2>Questions, Information, and Answers Required Before Decisions</h2>
+        <p class="font-small text-muted mb-2">These items must be addressed before any betting, line-origination, or pick-generation decision can be reasonably made. Items with no answer are information gaps that must be discovered.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Question / Information Needed</th>
+                <th>Current Answer (if known)</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th>How to Discover Missing Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Q-001</code></td>
+                <td>What is the official NBA API endpoint for play-by-play and box-score data?</td>
+                <td>Not yet identified</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Search NBA.com developer portal; contact NBA stats team; review NBA.com/stats/help</td>
+              </tr>
+              <tr>
+                <td><code>Q-002</td>
+                <td>Which sportsbook APIs provide live NBA odds (spread, total, player props)?</td>
+                <td>Not yet identified</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Review DraftKings, FanDuel, BetMGM, Caesars developer portals; odds API aggregators</td>
+              </tr>
+              <tr>
+                <td><code>Q-003</td>
+                <td>What are the verified correlation coefficients between player minutes and points/rebounds/assists?</td>
+                <td>Correlation value blank; not verified</td>
+                <td>Research articles (not official NBA)</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Compute from official NBA play-by-play/box-score data across multiple seasons</td>
+              </tr>
+              <tr>
+                <td><code>Q-004</td>
+                <td>What is the verified league-average pace for the current NBA season?</td>
+                <td>≈ 94.4 possessions (from NBA FAQ, season unspecified)</td>
+                <td>https://www.nba.com/stats/help/faq</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Query NBA.com/stats for current season team pace; confirm season/year</td>
+              </tr>
+              <tr>
+                <td><code>Q-005</td>
+                <td>Does the NBA publish an official injury report in machine-readable format?</td>
+                <td>PDFs published at ak-static.cms.nba.com; no confirmed JSON API</td>
+                <td>https://ak-static.cms.nba.com/referee/injury/</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Search for official NBA injury-report API; check if PDF parsing is the only option</td>
+              </tr>
+              <tr>
+                <td><code>Q-006</td>
+                <td>What is the historical win rate and ROI of each strategy template (STRAT-001 to STRAT-008)?</td>
+                <td>No backtesting performed yet</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Build backtesting engine; run against 2024-25 and 2025-26 seasons</td>
+              </tr>
+              <tr>
+                <td><code>Q-007</td>
+                <td>How much does a starter's injury reduce teammates' minutes and production?</td>
+                <td>Estimated -100% for injured player; teammate impact unverified</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Analyze official box scores before/after starter injuries; compute minute redistribution</td>
+              </tr>
+              <tr>
+                <td><code>Q-008</td>
+                <td>What is the validation threshold for "edge" on player props vs. bookmaker lines?</td>
+                <td>Estimated ≥ 2.5 points on props; not verified</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Backtest different edge thresholds; find the threshold where win rate exceeds break-even + vig</td>
+              </tr>
+              <tr>
+                <td><code>Q-009</td>
+                <td>Are same-game parlay odds from major sportsbooks priced with correlation adjustments?</td>
+                <td>Yes, per industry guides (not verified from sportsbooks directly)</td>
+                <td>RG, BetUS, FantasyTeamAdvice articles</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Compare SGP payouts vs. individual leg parlay payouts at multiple sportsbooks</td>
+              </tr>
+              <tr>
+                <td><code>Q-010</td>
+                <td>What is the maximum number of days in advance that NBA lines are typically available?</td>
+                <td>Usually 1–2 days; 3-day advance lines may be limited</td>
+                <td>—</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Check sportsbook line-posting schedules; monitor line availability timelines</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notice notice-warning mt-2">
+          <p><strong>No decision should be made</strong> on strategy selection, pick generation, or wagering until Q-001 through Q-010 are resolved or explicitly acknowledged as accepted risks.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Questions & Answers &bull; Pre-decision review required
+    </footer>
+  </div>
+</body>
+</html>

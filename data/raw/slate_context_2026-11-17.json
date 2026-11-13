@@ -1,0 +1,37 @@
+{
+  "dataset": "slate_context_outside_window",
+  "purpose": "Rows seen on the official schedule page that fall OUTSIDE the 3-day pick window. Held separately so the pick slate cannot be silently widened, and so scheduling anomalies are recorded rather than explained away.",
+  "source": "https://www.nba.com/schedule",
+  "retrieved_at_utc": "2026-11-13T22:39:00Z",
+  "anomalies_note": "The two consecutive-day repeat matchups below were transcribed exactly as rendered by the official schedule page. They are NOT used by any model output. Either the schedule genuinely repeats a pairing at the same arena on back-to-back nights, or the page rendered a duplicate card; the difference matters for any automated ingest, so it is flagged for a human with the site open.",
+  "records": [
+    {
+      "game_id": "0022600253",
+      "date": "2026-11-17",
+      "matchup": "NYK @ TOR",
+      "observation": "Identical matchup and arena (Scotiabank Arena) as 0022600241 on 2026-11-15, two days apart. Both were read from the same official schedule page.",
+      "window": "outside pick window (11/13-11/16)"
+    },
+    {
+      "game_id": "0022600254",
+      "date": "2026-11-17",
+      "matchup": "POR @ MIN",
+      "observation": "Identical matchup and arena (Target Center) as 0022600250 on 2026-11-16, on consecutive days. Not a normal NBA scheduling pattern; recorded as a data-integrity flag.",
+      "window": "outside pick window (11/13-11/16)"
+    },
+    {
+      "game_id": "0022600231",
+      "date": "2026-11-14",
+      "matchup": "DEN @ NOP",
+      "observation": "Game IDs are not monotonic with date: Nov 13 runs 0022600034-0022600042 (Emirates NBA Cup group play) and Nov 14 resumes at 0022600231. Any pipeline that infers an ID from sequence will join the wrong game.",
+      "window": "inside pick window"
+    },
+    {
+      "game_id": "n/a",
+      "date": "2026-11-13",
+      "matchup": "—",
+      "observation": "https://www.nba.com/games?dates=MM/DD/YYYY ignores the dates parameter for non-browser clients and always returns the current day's slate; the day picker is applied client-side. Date-window scrapes must use /schedule, not /games?dates=.",
+      "window": "ingest hazard"
+    }
+  ]
+}

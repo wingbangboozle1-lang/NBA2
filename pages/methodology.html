@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html" class="active">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Methodology</h2><p>How a line gets made here, which parameters are fitted, and which are still someone's opinion.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="calibration" data-rows="6">
+<h2>Model parameters — derived, not assumed</h2>
+<p class="blurb">These are the only two structural numbers the whole site depends on. Both are fitted against the verified standings snapshot; where the fit is weak we say so instead of quietly picking a convention.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Model parameters — derived, not assumed</caption><thead><tr>
+<th scope="col">Parameter</th>
+<th scope="col">Fitted value</th>
+<th scope="col">How it was obtained</th>
+<th scope="col">Cross-check</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="margin_sd">
+<td>σ (margin sd)</td>
+<td>13.58 pts</td>
+<td>least-squares fit of (sigma, hca) to the 30 verified win totals, grid 6.00-25.00 step 0.25 then refine step 0.01</td>
+<td>NBA game margins are widely reported near 13-14 pts; our fit is independent of that</td>
+<td>derived from snapshot</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-01">FLAG-PARAM-01</a></td>
+</tr>
+<tr id="hca">
+<td>h (home-court advantage)</td>
+<td>1.53 pts</td>
+<td>same joint fit</td>
+<td>league home win rate implied by verified home/road splits = 51.1%; that rate alone implies a smaller h than the joint fit</td>
+<td>derived from snapshot — WEAKLY IDENTIFIED</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-02">FLAG-PARAM-02</a></td>
+</tr>
+<tr id="league_avg_points">
+<td>LG (league average team points)</td>
+<td>113.41 pts</td>
+<td>unweighted mean of the 30 teams&#x27; PS/G</td>
+<td>schedule effects ignored</td>
+<td>derived from snapshot</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="reliability">
+<td>τ² (true rating variance)</td>
+<td>51.57</td>
+<td>tau^2 = max(0, Var(SRS) - mean(se^2)), se = sigma/sqrt(games)</td>
+<td>mean se = 3.99; shrinkage lambda therefore ~0.74-0.78 per team</td>
+<td>derived from snapshot</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-03">FLAG-PARAM-03</a></td>
+</tr>
+<tr id="fit_quality">
+<td>RMSE(wins)</td>
+<td>1.315 wins</td>
+<td>model win total error at the optimum</td>
+<td>vs 2.781 for a .500 baseline; improvement 53%</td>
+<td>derived from snapshot</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="total_sd">
+<td>τ (total-line sd)</td>
+<td>20.0 pts</td>
+<td>NOT fitted: no game-level totals available; used only inside the parlay sensitivity band</td>
+<td>level-sensitive, so parlay output is reported as a ratio, not a price</td>
+<td>unratified placeholder</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-04">FLAG-PARAM-04</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Inputs: data/raw/team_ratings_2026-11-13.json (third-party) with win-loss cross-checked against NBA.com game cards (official).</p>
+</section><section class="card table-card" id="params" data-rows="9">
+<h2>Every tunable number in the system, and whether anyone has justified it</h2>
+<p class="blurb">This is the anti-overfitting page: any value whose status is not &#x27;derived&#x27; or &#x27;verified&#x27; is a place where a human could have cheated, so they are listed with their bands.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Every tunable number in the system, and whether anyone has justified it</caption><thead><tr>
+<th scope="col">Parameter</th>
+<th scope="col">Value</th>
+<th scope="col">Unit</th>
+<th scope="col">Status</th>
+<th scope="col">Sensitivity band</th>
+<th scope="col">Rationale</th>
+<th scope="col">Source</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="margin_sd">
+<td>margin_sd</td>
+<td>—</td>
+<td>points per game</td>
+<td>derived-from-snapshot</td>
+<td>0.9 … 1.1</td>
+<td>SD of a team&#x27;s per-game margin. Searched over [6, 25]; the value used is the least-squares optimum against observed wins, so it is a fitted quantity, not an assumption.</td>
+<td>derived: data/raw/team_ratings_2026-11-13.json</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-MARGIN_SD">FLAG-PARAM-MARGIN_SD</a></td>
+</tr>
+<tr id="hca_points">
+<td>hca_points</td>
+<td>—</td>
+<td>points</td>
+<td>derived-from-snapshot</td>
+<td>0.5 … 2.0</td>
+<td>Added to the home team&#x27;s expected margin; fitted jointly with margin_sd.</td>
+<td>derived: data/raw/team_ratings_2026-11-13.json</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-HCA_POINTS">FLAG-PARAM-HCA_POINTS</a></td>
+</tr>
+<tr id="shrinkage">
+<td>shrinkage</td>
+<td>—</td>
+<td>multiplier in [0,1]</td>
+<td>derived-from-snapshot</td>
+<td>—</td>
+<td>Per-team James-Stein style reliability lambda = tau^2 / (tau^2 + se^2), where se = margin_sd / sqrt(games) and tau^2 = max(0, Var(rating) - mean(se^2)).</td>
+<td>derived: data/raw/team_ratings_2026-11-13.json</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-SHRINKAGE">FLAG-PARAM-SHRINKAGE</a></td>
+</tr>
+<tr id="league_avg_points">
+<td>league_avg_points</td>
+<td>—</td>
+<td>points per team per game</td>
+<td>derived-from-snapshot</td>
+<td>—</td>
+<td>Unweighted mean of the 30 teams&#x27; points-per-game (schedule effects ignored).</td>
+<td>derived: data/raw/team_ratings_2026-11-13.json</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-LEAGUE_AVG_POINTS">FLAG-PARAM-LEAGUE_AVG_POINTS</a></td>
+</tr>
+<tr id="model_disagreement_tolerance">
+<td>model_disagreement_tolerance</td>
+<td>2.0</td>
+<td>points</td>
+<td>unratified</td>
+<td>1.0 … 3.0</td>
+<td>If |SRS line - raw-margin line| exceeds this, the game is marked DISAGREE and is excluded from Tier A. Chosen as ~1/6 of margin_sd; must be ratified by the owner and re-checked on the first 30 days of sealed predictions.</td>
+<td>proposed by nba2.models.ratings — no external source</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-MODEL_DISAGREEMENT_TOLERANCE">FLAG-PARAM-MODEL_DISAGREEMENT_TOLERANCE</a></td>
+</tr>
+<tr id="tier_a_min_conviction">
+<td>tier_a_min_conviction</td>
+<td>0.2</td>
+<td>margin_sd units</td>
+<td>unratified</td>
+<td>0.1 … 0.35</td>
+<td>Tier A requires |expected margin| &gt;= 0.20 * margin_sd AND agreement between the two base models AND no material availability gap. Arbitrary until ratified.</td>
+<td>proposed by nba2.models.lines — no external source</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-TIER_A_MIN_CONVICTION">FLAG-PARAM-TIER_A_MIN_CONVICTION</a></td>
+</tr>
+<tr id="total_sd">
+<td>total_sd</td>
+<td>20.0</td>
+<td>points</td>
+<td>unratified</td>
+<td>17.0 … 23.0</td>
+<td>Placeholder so bivariate parlay pricing can run at all. Levels derived with this number are not publishable; only the ratio between independent and correlated pricing is reported, because that ratio is nearly insensitive to it.</td>
+<td>BLOCKED: requires game-level totals (requirements R-103)</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-TOTAL_SD">FLAG-PARAM-TOTAL_SD</a></td>
+</tr>
+<tr id="parlay_rho_spread_total">
+<td>parlay_rho_spread_total</td>
+<td>—</td>
+<td>correlation</td>
+<td>unknown</td>
+<td>-0.2 … 0.4</td>
+<td>Correlation between game margin and game total. Must be estimated from game-level box scores (unavailable); instead we price a sensitivity band and only publish parlays whose edge survives the whole band.</td>
+<td>BLOCKED: requires game-level results feed (requirements R-101/R-103)</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-PARLAY_RHO_SPREAD_TOTAL">FLAG-PARAM-PARLAY_RHO_SPREAD_TOTAL</a></td>
+</tr>
+<tr id="rho_band">
+<td>rho_band</td>
+<td>(-0.2, 0.4)</td>
+<td>correlation</td>
+<td>unratified</td>
+<td>—</td>
+<td>Sensitivity band used for every correlation-adjusted joint price.</td>
+<td>proposed by nba2.models.correlation — no external source</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-RHO_BAND">FLAG-PARAM-RHO_BAND</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">nba2/config.py::PARAMS</p>
+</section><section class="card table-card" id="ratings" data-rows="30">
+<h2>Team ratings table (the model&#x27;s only inputs)</h2>
+<p class="blurb">W-L is confirmed against NBA.com for 28 of 30 clubs; TOR and WAS were not visible in the retrieved official page text and are flagged. PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single biggest data gap on this site.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Team ratings table (the model&#x27;s only inputs)</caption><thead><tr>
+<th scope="col">Team</th>
+<th scope="col">W-L (official NBA.com)</th>
+<th scope="col">W-L (ratings source)</th>
+<th scope="col">PS/G</th>
+<th scope="col">PA/G</th>
+<th scope="col">Margin/G</th>
+<th scope="col">SRS</th>
+<th scope="col">GP</th>
+<th scope="col">Reliability λ</th>
+<th scope="col">SRS × λ</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="ATL">
+<td>Atlanta Hawks</td>
+<td>7-5</td>
+<td>7-5</td>
+<td>118.3</td>
+<td>116.2</td>
+<td>+2.1</td>
+<td>-0.19</td>
+<td>12</td>
+<td>0.770</td>
+<td>-0.15</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="BOS">
+<td>Boston Celtics</td>
+<td>10-2</td>
+<td>10-2</td>
+<td>114.3</td>
+<td>103.1</td>
+<td>+11.2</td>
+<td>+5.77</td>
+<td>12</td>
+<td>0.770</td>
+<td>+4.45</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="BKN">
+<td>Brooklyn Nets</td>
+<td>3-8</td>
+<td>3-8</td>
+<td>110.2</td>
+<td>115.3</td>
+<td>-5.1</td>
+<td>-7.68</td>
+<td>11</td>
+<td>0.755</td>
+<td>-5.80</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CHA">
+<td>Charlotte Hornets</td>
+<td>4-8</td>
+<td>4-8</td>
+<td>98.6</td>
+<td>109.6</td>
+<td>-11.0</td>
+<td>-13.08</td>
+<td>12</td>
+<td>0.770</td>
+<td>-10.08</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CHI">
+<td>Chicago Bulls</td>
+<td>1-9</td>
+<td>1-9</td>
+<td>113.3</td>
+<td>128.8</td>
+<td>-15.5</td>
+<td>-15.25</td>
+<td>10</td>
+<td>0.737</td>
+<td>-11.23</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CLE">
+<td>Cleveland Cavaliers</td>
+<td>6-6</td>
+<td>6-6</td>
+<td>116.4</td>
+<td>114.3</td>
+<td>+2.1</td>
+<td>+1.10</td>
+<td>12</td>
+<td>0.770</td>
+<td>+0.85</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DAL">
+<td>Dallas Mavericks</td>
+<td>7-5</td>
+<td>7-5</td>
+<td>113.2</td>
+<td>112.2</td>
+<td>+1.0</td>
+<td>+3.45</td>
+<td>12</td>
+<td>0.770</td>
+<td>+2.66</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DEN">
+<td>Denver Nuggets</td>
+<td>6-4</td>
+<td>6-4</td>
+<td>114.5</td>
+<td>113.3</td>
+<td>+1.2</td>
+<td>+3.85</td>
+<td>10</td>
+<td>0.737</td>
+<td>+2.84</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DET">
+<td>Detroit Pistons</td>
+<td>8-3</td>
+<td>8-3</td>
+<td>115.5</td>
+<td>107.8</td>
+<td>+7.7</td>
+<td>+3.78</td>
+<td>11</td>
+<td>0.755</td>
+<td>+2.85</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="GSW">
+<td>Golden State Warriors</td>
+<td>8-4</td>
+<td>8-4</td>
+<td>119.3</td>
+<td>111.5</td>
+<td>+7.8</td>
+<td>+10.55</td>
+<td>12</td>
+<td>0.770</td>
+<td>+8.13</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="HOU">
+<td>Houston Rockets</td>
+<td>9-3</td>
+<td>9-3</td>
+<td>115.4</td>
+<td>106.5</td>
+<td>+8.9</td>
+<td>+12.85</td>
+<td>12</td>
+<td>0.770</td>
+<td>+9.90</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="IND">
+<td>Indiana Pacers</td>
+<td>4-8</td>
+<td>4-8</td>
+<td>111.6</td>
+<td>114.0</td>
+<td>-2.4</td>
+<td>-5.44</td>
+<td>12</td>
+<td>0.770</td>
+<td>-4.19</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="LAC">
+<td>LA Clippers</td>
+<td>2-8</td>
+<td>2-8</td>
+<td>112.2</td>
+<td>118.1</td>
+<td>-5.9</td>
+<td>-3.14</td>
+<td>10</td>
+<td>0.737</td>
+<td>-2.31</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="LAL">
+<td>Los Angeles Lakers</td>
+<td>11-2</td>
+<td>11-2</td>
+<td>122.2</td>
+<td>114.2</td>
+<td>+8.0</td>
+<td>+8.28</td>
+<td>13</td>
+<td>0.784</td>
+<td>+6.49</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MEM">
+<td>Memphis Grizzlies</td>
+<td>7-4</td>
+<td>7-4</td>
+<td>117.9</td>
+<td>111.9</td>
+<td>+6.0</td>
+<td>+4.61</td>
+<td>11</td>
+<td>0.755</td>
+<td>+3.48</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIA">
+<td>Miami Heat</td>
+<td>5-6</td>
+<td>5-6</td>
+<td>115.7</td>
+<td>120.0</td>
+<td>-4.3</td>
+<td>-4.29</td>
+<td>11</td>
+<td>0.755</td>
+<td>-3.24</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIL">
+<td>Milwaukee Bucks</td>
+<td>1-11</td>
+<td>1-11</td>
+<td>106.8</td>
+<td>121.3</td>
+<td>-14.5</td>
+<td>-13.09</td>
+<td>12</td>
+<td>0.770</td>
+<td>-10.08</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIN">
+<td>Minnesota Timberwolves</td>
+<td>9-3</td>
+<td>9-3</td>
+<td>119.3</td>
+<td>105.9</td>
+<td>+13.4</td>
+<td>+13.25</td>
+<td>12</td>
+<td>0.770</td>
+<td>+10.21</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="NOP">
+<td>New Orleans Pelicans</td>
+<td>4-8</td>
+<td>4-8</td>
+<td>116.9</td>
+<td>124.3</td>
+<td>-7.4</td>
+<td>-7.82</td>
+<td>12</td>
+<td>0.770</td>
+<td>-6.02</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="NYK">
+<td>New York Knicks</td>
+<td>6-5</td>
+<td>6-5</td>
+<td>110.3</td>
+<td>103.5</td>
+<td>+6.8</td>
+<td>+2.51</td>
+<td>11</td>
+<td>0.755</td>
+<td>+1.89</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="OKC">
+<td>Oklahoma City Thunder</td>
+<td>8-4</td>
+<td>8-4</td>
+<td>111.1</td>
+<td>106.9</td>
+<td>+4.2</td>
+<td>+8.14</td>
+<td>12</td>
+<td>0.770</td>
+<td>+6.27</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="ORL">
+<td>Orlando Magic</td>
+<td>4-7</td>
+<td>4-7</td>
+<td>108.5</td>
+<td>114.0</td>
+<td>-5.5</td>
+<td>-5.03</td>
+<td>11</td>
+<td>0.755</td>
+<td>-3.80</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="PHI">
+<td>Philadelphia 76ers</td>
+<td>10-3</td>
+<td>10-3</td>
+<td>111.2</td>
+<td>109.4</td>
+<td>+1.8</td>
+<td>-1.43</td>
+<td>13</td>
+<td>0.784</td>
+<td>-1.12</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="PHX">
+<td>Phoenix Suns</td>
+<td>5-6</td>
+<td>5-6</td>
+<td>111.7</td>
+<td>116.1</td>
+<td>-4.4</td>
+<td>+0.84</td>
+<td>11</td>
+<td>0.755</td>
+<td>+0.63</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="POR">
+<td>Portland Trail Blazers</td>
+<td>8-3</td>
+<td>8-3</td>
+<td>119.5</td>
+<td>112.3</td>
+<td>+7.2</td>
+<td>+10.62</td>
+<td>11</td>
+<td>0.755</td>
+<td>+8.01</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="SAC">
+<td>Sacramento Kings</td>
+<td>1-10</td>
+<td>1-10</td>
+<td>108.3</td>
+<td>121.0</td>
+<td>-12.7</td>
+<td>-9.64</td>
+<td>11</td>
+<td>0.755</td>
+<td>-7.27</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="SAS">
+<td>San Antonio Spurs</td>
+<td>10-2</td>
+<td>10-2</td>
+<td>119.2</td>
+<td>108.0</td>
+<td>+11.2</td>
+<td>+11.35</td>
+<td>12</td>
+<td>0.770</td>
+<td>+8.74</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="TOR">
+<td>Toronto Raptors</td>
+<td>5-7</td>
+<td>5-7</td>
+<td>114.3</td>
+<td>112.8</td>
+<td>+1.5</td>
+<td>+0.03</td>
+<td>12</td>
+<td>0.770</td>
+<td>+0.02</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="UTA">
+<td>Utah Jazz</td>
+<td>1-11</td>
+<td>1-11</td>
+<td>106.6</td>
+<td>118.1</td>
+<td>-11.5</td>
+<td>-7.95</td>
+<td>12</td>
+<td>0.770</td>
+<td>-6.12</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="WAS">
+<td>Washington Wizards</td>
+<td>4-9</td>
+<td>4-9</td>
+<td>110.0</td>
+<td>115.8</td>
+<td>-5.8</td>
+<td>-9.50</td>
+<td>13</td>
+<td>0.784</td>
+<td>-7.45</td>
+<td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Both W-L columns are printed on purpose: if they ever disagree, the table is wrong.</p>
+</section><section class="card table-card" id="luck" data-rows="30">
+<h2>Skill / luck decomposition</h2>
+<p class="blurb">Luck here means: wins beyond what a normal-margin model fitted to this same table implies, scaled by the binomial noise of that team&#x27;s schedule size. The two right-hand columns are deliberately blank — the close/blowout split we fetched does not balance league-wide, so we refuse to use it for a luck claim.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Skill / luck decomposition</caption><thead><tr>
+<th scope="col">Team</th>
+<th scope="col">Actual W-L</th>
+<th scope="col">Rating-implied wins</th>
+<th scope="col">Win luck</th>
+<th scope="col">z</th>
+<th scope="col">≤3-pt games</th>
+<th scope="col">≥10-pt games</th>
+<th scope="col">Verdict</th>
+<th scope="col">Note</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="ATL">
+<td>Atlanta Hawks</td>
+<td>7-5</td>
+<td>5.93</td>
+<td>+1.07</td>
+<td>+0.62</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="BOS">
+<td>Boston Celtics</td>
+<td>10-2</td>
+<td>7.96</td>
+<td>+2.04</td>
+<td>+1.25</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="BKN">
+<td>Brooklyn Nets</td>
+<td>3-8</td>
+<td>3.16</td>
+<td>-0.16</td>
+<td>-0.10</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CHA">
+<td>Charlotte Hornets</td>
+<td>4-8</td>
+<td>2.03</td>
+<td>+1.97</td>
+<td>+1.52</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CHI">
+<td>Chicago Bulls</td>
+<td>1-9</td>
+<td>1.32</td>
+<td>-0.32</td>
+<td>-0.30</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="CLE">
+<td>Cleveland Cavaliers</td>
+<td>6-6</td>
+<td>6.38</td>
+<td>-0.39</td>
+<td>-0.22</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DAL">
+<td>Dallas Mavericks</td>
+<td>7-5</td>
+<td>7.20</td>
+<td>-0.20</td>
+<td>-0.12</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DEN">
+<td>Denver Nuggets</td>
+<td>6-4</td>
+<td>6.11</td>
+<td>-0.11</td>
+<td>-0.07</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="DET">
+<td>Detroit Pistons</td>
+<td>8-3</td>
+<td>6.70</td>
+<td>+1.30</td>
+<td>+0.80</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="GSW">
+<td>Golden State Warriors</td>
+<td>8-4</td>
+<td>9.36</td>
+<td>-1.36</td>
+<td>-0.95</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="HOU">
+<td>Houston Rockets</td>
+<td>9-3</td>
+<td>9.92</td>
+<td>-0.92</td>
+<td>-0.70</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="IND">
+<td>Indiana Pacers</td>
+<td>4-8</td>
+<td>4.14</td>
+<td>-0.14</td>
+<td>-0.09</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="LAC">
+<td>LA Clippers</td>
+<td>2-8</td>
+<td>4.09</td>
+<td>-2.09</td>
+<td>-1.34</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="LAL">
+<td>Los Angeles Lakers</td>
+<td>11-2</td>
+<td>9.46</td>
+<td>+1.54</td>
+<td>+0.96</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MEM">
+<td>Memphis Grizzlies</td>
+<td>7-4</td>
+<td>6.95</td>
+<td>+0.05</td>
+<td>+0.03</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIA">
+<td>Miami Heat</td>
+<td>5-6</td>
+<td>4.14</td>
+<td>+0.85</td>
+<td>+0.53</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIL">
+<td>Milwaukee Bucks</td>
+<td>1-11</td>
+<td>2.03</td>
+<td>-1.03</td>
+<td>-0.79</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="MIN">
+<td>Minnesota Timberwolves</td>
+<td>9-3</td>
+<td>10.01</td>
+<td>-1.01</td>
+<td>-0.78</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="NOP">
+<td>New Orleans Pelicans</td>
+<td>4-8</td>
+<td>3.40</td>
+<td>+0.60</td>
+<td>+0.38</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="NYK">
+<td>New York Knicks</td>
+<td>6-5</td>
+<td>6.30</td>
+<td>-0.30</td>
+<td>-0.18</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="OKC">
+<td>Oklahoma City Thunder</td>
+<td>8-4</td>
+<td>8.69</td>
+<td>-0.69</td>
+<td>-0.45</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="ORL">
+<td>Orlando Magic</td>
+<td>4-7</td>
+<td>3.92</td>
+<td>+0.08</td>
+<td>+0.05</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="PHI">
+<td>Philadelphia 76ers</td>
+<td>10-3</td>
+<td>5.96</td>
+<td>+4.04</td>
+<td>+2.25</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>outside 5% band — investigate</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="PHX">
+<td>Phoenix Suns</td>
+<td>5-6</td>
+<td>5.77</td>
+<td>-0.77</td>
+<td>-0.47</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="POR">
+<td>Portland Trail Blazers</td>
+<td>8-3</td>
+<td>8.60</td>
+<td>-0.60</td>
+<td>-0.43</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="SAC">
+<td>Sacramento Kings</td>
+<td>1-10</td>
+<td>2.64</td>
+<td>-1.64</td>
+<td>-1.16</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="SAS">
+<td>San Antonio Spurs</td>
+<td>10-2</td>
+<td>9.56</td>
+<td>+0.44</td>
+<td>+0.31</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="TOR">
+<td>Toronto Raptors</td>
+<td>5-7</td>
+<td>6.01</td>
+<td>-1.01</td>
+<td>-0.58</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="UTA">
+<td>Utah Jazz</td>
+<td>1-11</td>
+<td>3.37</td>
+<td>-2.37</td>
+<td>-1.52</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+<tr id="WAS">
+<td>Washington Wizards</td>
+<td>4-9</td>
+<td>3.17</td>
+<td>+0.83</td>
+<td>+0.54</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>within noise (|z| &lt; 1.96)</td>
+<td><span class="blank" title="blank because: FLAG-RAT-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">Derived: nba2.models.ratings</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Derived from the same verified table; no external source for the decomposition.</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

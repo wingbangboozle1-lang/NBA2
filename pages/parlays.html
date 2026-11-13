@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parlays · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html" class="active">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Parlays</h2><p>Joint probabilities under an explicit correlation sweep, and what changes when legs are not independent.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="correlation" data-rows="5">
+<h2>Correlation register</h2>
+<p class="blurb">One of these five is measurable today. The other four are the difference between a parlay desk and a parlay hobby, and all four need the same thing: game-level and player-level data. Any site that prints correlation numbers for those pairs without that data made them up.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Correlation register</caption><thead><tr>
+<th scope="col">Correlation</th>
+<th scope="col">Pearson r</th>
+<th scope="col">Spearman ρ</th>
+<th scope="col">n</th>
+<th scope="col">Method / block</th>
+<th scope="col">What it feeds</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="srs_vs_net">
+<td>SRS vs raw scoring margin (30 teams)</td>
+<td>+0.938</td>
+<td>+0.935</td>
+<td>30</td>
+<td>computed on the verified ratings table</td>
+<td>tells us how much the schedule adjustment actually adds; if r were ~1 the two models are one model and the &#x27;agreement filter&#x27; buys nothing</td>
+<td>computed</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-01">FLAG-CORR-01</a></td>
+</tr>
+<tr id="margin_vs_total">
+<td>game margin vs game total (for spread+over parlays)</td>
+<td><span class="blank" title="blank because: FLAG-CORR-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — needs game-level margins and totals</td>
+<td>drives every same-game parlay price</td>
+<td>unavailable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-02">FLAG-CORR-02</a></td>
+</tr>
+<tr id="player_points_rebounds">
+<td>same-player points vs rebounds</td>
+<td><span class="blank" title="blank because: FLAG-CORR-03">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-03">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-03">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>BLOCKED — needs player box scores</td>
+<td>combo/prop parlay pricing</td>
+<td>unavailable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-03">FLAG-CORR-03</a></td>
+</tr>
+<tr id="same_team_two_games">
+<td>a team&#x27;s line on consecutive nights</td>
+<td><span class="blank" title="blank because: FLAG-CORR-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>structurally dependent by construction; never parlay two games of one team</td>
+<td>exclusion rule</td>
+<td>rule, not measurement</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-04">FLAG-CORR-04</a></td>
+</tr>
+<tr id="cross_game">
+<td>leg A in game 1 vs leg B in game 2</td>
+<td>≈0 assumed</td>
+<td><span class="blank" title="blank because: FLAG-CORR-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-CORR-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>near-independence is the standard assumption and is testable only with a bet ledger</td>
+<td>cross-game parlay pricing</td>
+<td>assumption — test when ledger has 300 bets</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-05">FLAG-CORR-05</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Derived in nba2/models/correlation.py; inputs from the verified ratings snapshot.</p>
+</section><section class="card table-card" id="parlays" data-rows="10">
+<h2>Same-game parlay pricing under a correlation sweep</h2>
+<p class="blurb">Priced on a bivariate normal with ρ swept across the ratified band because the true margin/total correlation is unknown. The ratio column is the point: how much a book that multiplies single-leg probabilities is off, which is far more robust than the absolute price.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Same-game parlay pricing under a correlation sweep</caption><thead><tr>
+<th scope="col">Game</th>
+<th scope="col">Legs (our numbers)</th>
+<th scope="col">P(leg A)</th>
+<th scope="col">P(leg B)</th>
+<th scope="col">Independent joint</th>
+<th scope="col">Joint @ ρ=-0.20</th>
+<th scope="col">Joint @ ρ=+0.40</th>
+<th scope="col">ratio low</th>
+<th scope="col">ratio high</th>
+<th scope="col">Sign stable?</th>
+<th scope="col">Verdict</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="prl-0022600235">
+<td>CHI @ MIN</td>
+<td>MIN -23.0 + OVER 233.5</td>
+<td>0.504</td>
+<td>0.503</td>
+<td>0.2533</td>
+<td>0.2212</td>
+<td>0.3188</td>
+<td>0.873×</td>
+<td>1.259×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600039">
+<td>UTA @ HOU</td>
+<td>HOU -17.5 + OVER 223.5</td>
+<td>0.497</td>
+<td>0.496</td>
+<td>0.2465</td>
+<td>0.2145</td>
+<td>0.3120</td>
+<td>0.870×</td>
+<td>1.266×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600239">
+<td>SAS @ UTA</td>
+<td>UTA +14.5 + OVER 226.0</td>
+<td>0.496</td>
+<td>0.499</td>
+<td>0.2473</td>
+<td>0.2153</td>
+<td>0.3128</td>
+<td>0.870×</td>
+<td>1.265×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600246">
+<td>CHI @ CLE</td>
+<td>CLE -14.0 + OVER 236.5</td>
+<td>0.503</td>
+<td>0.498</td>
+<td>0.2503</td>
+<td>0.2183</td>
+<td>0.3158</td>
+<td>0.872×</td>
+<td>1.262×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600041">
+<td>POR @ SAC</td>
+<td>SAC +13.5 + OVER 230.5</td>
+<td>0.496</td>
+<td>0.501</td>
+<td>0.2487</td>
+<td>0.2167</td>
+<td>0.3142</td>
+<td>0.871×</td>
+<td>1.263×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600242">
+<td>HOU @ WAS</td>
+<td>WAS +13.0 + OVER 224.0</td>
+<td>0.504</td>
+<td>0.497</td>
+<td>0.2507</td>
+<td>0.2186</td>
+<td>0.3162</td>
+<td>0.872×</td>
+<td>1.261×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600245">
+<td>ORL @ BOS</td>
+<td>BOS -12.0 + OVER 220.0</td>
+<td>0.501</td>
+<td>0.499</td>
+<td>0.2501</td>
+<td>0.2180</td>
+<td>0.3156</td>
+<td>0.872×</td>
+<td>1.262×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600244">
+<td>OKC @ SAC</td>
+<td>SAC +11.5 + OVER 223.5</td>
+<td>0.496</td>
+<td>0.503</td>
+<td>0.2493</td>
+<td>0.2172</td>
+<td>0.3148</td>
+<td>0.871×</td>
+<td>1.263×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600251">
+<td>GSW @ NOP</td>
+<td>NOP +11.5 + OVER 236.0</td>
+<td>0.503</td>
+<td>0.500</td>
+<td>0.2515</td>
+<td>0.2194</td>
+<td>0.3170</td>
+<td>0.873×</td>
+<td>1.260×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+<tr id="prl-0022600037">
+<td>ATL @ CHI</td>
+<td>CHI +10.5 + OVER 238.5</td>
+<td>0.499</td>
+<td>0.496</td>
+<td>0.2476</td>
+<td>0.2155</td>
+<td>0.3131</td>
+<td>0.871×</td>
+<td>1.265×</td>
+<td>no</td>
+<td>not publishable</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">nba2/models/correlation.py::quote_pair; ρ band unratified (FLAG-PRL-01).</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

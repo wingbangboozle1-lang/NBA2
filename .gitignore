@@ -11,3 +11,8 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+
+# Never publish Python bytecode: it is machine-generated, non-deterministic in path, and would
+# otherwise be committed by a blanket `git add -A` (which this repo's CI parity step uses).
+__pycache__/
+*.py[cod]

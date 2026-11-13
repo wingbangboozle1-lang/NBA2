@@ -1,0 +1,124 @@
+{
+  "dataset": "game_card_leaders",
+  "purpose": "The leader row printed on each official NBA.com game card for the 2026-11-13 slate, used only for an availability cross-check: is the player a club is presenting as its leader listed on the injury report?",
+  "source": "https://www.nba.com/games",
+  "retrieved_at_utc": "2026-11-13T22:26:00Z",
+  "field_meaning": {
+    "leader_player": "Name exactly as printed on the game card's 'Season Leaders' block for that team",
+    "ppg": "PPG column as printed",
+    "rpg": "RPG column as printed",
+    "apg": "APG column as printed",
+    "scope": "The card labels the block 'Season Leaders'; it does not state whether the row is the league leader or that club's leader. We record it as printed and do not interpret the label."
+  },
+  "completeness": "Only the rows whose numbers were present in the retrieved page text are included. The OKC/LAC and UTA/HOU cards were truncated in the extraction, so UTA carries nulls and LAC/OKC have no row here at all. Missing rows are an extraction gap, not a statement about those teams. The GSW card row was also truncated and is therefore absent rather than guessed.",
+  "columns": [
+    "tricode",
+    "team",
+    "leader_player",
+    "ppg",
+    "rpg",
+    "apg",
+    "game_id"
+  ],
+  "records": [
+    [
+      "NYK",
+      "New York Knicks",
+      "Towns, Karl-Anthony",
+      20.9,
+      13.5,
+      3.5,
+      "0022600034"
+    ],
+    [
+      "IND",
+      "Indiana Pacers",
+      "Siakam, Pascal",
+      22.7,
+      6.9,
+      4.4,
+      "0022600034"
+    ],
+    [
+      "MIL",
+      "Milwaukee Bucks",
+      "Herro, Tyler",
+      21.9,
+      4.4,
+      4.5,
+      "0022600035"
+    ],
+    [
+      "ORL",
+      "Orlando Magic",
+      "Wagner, Franz",
+      23.5,
+      6.5,
+      7.9,
+      "0022600035"
+    ],
+    [
+      "CLE",
+      "Cleveland Cavaliers",
+      "Mitchell, Donovan",
+      22.8,
+      5.0,
+      5.5,
+      "0022600036"
+    ],
+    [
+      "MIA",
+      "Miami Heat",
+      "Antetokounmpo, Giannis",
+      27.7,
+      12.6,
+      5.2,
+      "0022600036"
+    ],
+    [
+      "ATL",
+      "Atlanta Hawks",
+      "Johnson, Jalen",
+      19.2,
+      8.6,
+      7.2,
+      "0022600037"
+    ],
+    [
+      "CHI",
+      "Chicago Bulls",
+      "Wilson, Caleb",
+      18.9,
+      6.2,
+      1.9,
+      "0022600037"
+    ],
+    [
+      "MEM",
+      "Memphis Grizzlies",
+      "Jerome, Ty",
+      26.2,
+      3.5,
+      4.9,
+      "0022600038"
+    ],
+    [
+      "NOP",
+      "New Orleans Pelicans",
+      "Williamson, Zion",
+      21.7,
+      5.2,
+      2.6,
+      "0022600038"
+    ],
+    [
+      "UTA",
+      "Utah Jazz",
+      "George, Keyonte",
+      null,
+      null,
+      null,
+      "0022600039"
+    ]
+  ]
+}

@@ -1,147 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Suggestions - NBA2</title>
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggestions · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>NBA2</h1>
-      <div class="subtitle">Site Improvement Suggestions &bull; Review Before Implementing</div>
-    </header>
-
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li><a href="../index.html">Dashboard</a></li>
-          <li><a href="strategies.html">Betting Strategies</a></li>
-          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
-          <li><a href="injuries.html">Injuries & Rotation</a></li>
-          <li><a href="game-flow.html">Game Flow Analysis</a></li>
-          <li><a href="executive-summary.html">Executive Summary</a></li>
-          <li><a href="suggestions.html" class="active">Site Suggestions</a></li>
-          <li><a href="questions.html">Questions & Answers</a></li>
-          <li><a href="flagged-review.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
-      <section class="card">
-        <h2>Site Improvement Suggestions</h2>
-        <p class="font-small text-muted mb-2">This section is dedicated to suggestions for improving the site and decision-making framework. Each suggestion should be reviewed and the best path chosen before implementing any changes. No suggestion is implemented without review.</p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Suggestion ID</th>
-                <th>Category</th>
-                <th>Suggestion</th>
-                <th>Expected Benefit</th>
-                <th>Effort</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Review Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>SUGG-001</code></td>
-                <td>Data Integration</td>
-                <td>Connect live odds API (DraftKings, FanDuel, BetMGM, Caesars) for real-time line comparison.</td>
-                <td>Enables originated-line vs. market-line edge detection for every pick.</td>
-                <td>High</td>
-                <td>High</td>
-                <td>Proposed</td>
-                <td>Requires API credentials and cost evaluation.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-002</td>
-                <td>Data Integration</td>
-                <td>Connect official NBA play-by-play and box-score API for backtesting and minutes validation.</td>
-                <td>Enables backtesting of all 8 strategy templates against historical seasons.</td>
-                <td>High</td>
-                <td>High</td>
-                <td>Proposed</td>
-                <td>NBA official stats API endpoint needs identification.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-003</td>
-                <td>UI / UX</td>
-                <td>Add a toggle between "Dashboard" and "Detailed Analysis" views on each page.</td>
-                <td>Improves decision-making by letting users choose summary vs. depth.</td>
-                <td>Low</td>
-                <td>Medium</td>
-                <td>Proposed</td>
-                <td>Simple CSS/JS toggle; no data impact.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-004</td>
-                <td>UI / UX</td>
-                <td>Add color-coded confidence indicators (High/Medium/Low) on pick cards.</td>
-                <td>Faster visual triage of picks; reduces decision fatigue.</td>
-                <td>Low</td>
-                <td>Medium</td>
-                <td>Proposed</td>
-                <td>Confidence thresholds need definition.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-005</td>
-                <td>Feature</td>
-                <td>Add a "correlation heatmap" showing which player props correlate within each game.</td>
-                <td>Prevents correlation trap parlays; identifies +EV correlated combinations.</td>
-                <td>Medium</td>
-                <td>High</td>
-                <td>Proposed</td>
-                <td>Requires historical prop outcome data.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-006</td>
-                <td>Feature</td>
-                <td>Add email/Slack alerts for injury status changes (Out → Questionable → Available).</td>
-                <td>Ensures picks are voided or adjusted before game time when injuries change.</td>
-                <td>Medium</td>
-                <td>High</td>
-                <td>Proposed</td>
-                <td>Requires notification service integration.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-007</td>
-                <td>Feature</td>
-                <td>Add backtesting results dashboard showing win rate, ROI, and edge per strategy.</td>
-                <td>Quantifies skill vs. luck; identifies which strategies pass validation over time.</td>
-                <td>High</td>
-                <td>High</td>
-                <td>Proposed</td>
-                <td>Requires historical data + pick logging.</td>
-              </tr>
-              <tr>
-                <td><code>SUGG-008</td>
-                <td>UI / UX</td>
-                <td>Add a mobile-responsive navigation drawer (sidebar collapses on mobile).</td>
-                <td>Improves mobile usability for checking picks on game day.</td>
-                <td>Low</td>
-                <td>Low</td>
-                <td>Proposed</td>
-                <td>Already partially styled; needs JS toggle.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="notice notice-info mt-2">
-          <p><strong>Review process:</strong> Any change to the site must be proposed here first, reviewed for impact on data integrity and verification standards, and approved before implementation. Suggestions marked "Proposed" are not yet implemented.</p>
-        </div>
-      </section>
-    </main>
-
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html" class="active">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="suggestions" data-rows="20">
+<h2>Site-improvement suggestions — review queue</h2>
+<p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Suggestion</th>
+<th scope="col">Problem today</th>
+<th scope="col">Proposed change</th>
+<th scope="col">Expected decision-quality gain</th>
+<th scope="col">Effort</th>
+<th scope="col">Risk / cost</th>
+<th scope="col">Recommendation</th>
+<th scope="col">Owner decision</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="S-01">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Connect a licensed odds feed before anything else</td>
+<td>Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.</td>
+<td>Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.</td>
+<td>Unblocks gates G-02, G-05 on real PnL, G-09, and converts every table from &#x27;projection&#x27; to &#x27;decision&#x27;.</td>
+<td>M — ingest + storage + retention policy</td>
+<td>Vendor cost; storing closing lines needs storage rights (Q-18 style check).</td>
+<td>Accept first; nothing else on this list pays as well.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-02">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Ingest official game-level results daily</td>
+<td>σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.</td>
+<td>Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.</td>
+<td>Turns the two fitted constants into measured ones and kills the circularity in G-04.</td>
+<td>M</td>
+<td>Needs network access from a runner (unavailable in this sandbox).</td>
+<td>Accept with S-01 in the same sprint.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-03">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Store point-in-time snapshots, not &#x27;latest&#x27; tables</td>
+<td>An as-of standings table contains future information for games early in its window, which silently inflates any backtest (G-07 currently AT-RISK for exactly this).</td>
+<td>Key every snapshot by (as_of_date, game_date) and make the model read only rows with as_of &lt; tip-off.</td>
+<td>Makes historical results believable at all; the single most common way a betting model dies.</td>
+<td>M</td>
+<td>Storage growth; mitigation: parquet or compressed CSV in a data branch.</td>
+<td>Accept before any backtest is quoted on the site.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-04">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Ratify thresholds in one sitting</td>
+<td>Eleven numbers decide which games are actionable and who wins the leaderboard, and all eleven are currently mine.</td>
+<td>Owner reviews the Parameters page and signs off (or edits) in a single commit; status flips from &#x27;unratified&#x27; to &#x27;ratified&#x27; in config.</td>
+<td>Makes accountability real instead of implied; a one-hour task that removes a whole class of silent bias.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept now — it blocks &#x27;is this site trustworthy&#x27; more than any data purchase.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-05">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Preregister strategy trials with a counter</td>
+<td>G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.</td>
+<td>Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.</td>
+<td>Makes the leaderboard a science instead of a search result; costs ~20 lines.</td>
+<td>S</td>
+<td>Requires discipline to log failed attempts too — that is the point.</td>
+<td>Accept; pair with a rule &#x27;no evaluation without registration&#x27;.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-06">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Render &#x27;why is this blank&#x27; on every empty cell</td>
+<td>A blank cell reads as &#x27;no data&#x27; but not as &#x27;which missing input, and what would fill it&#x27;.</td>
+<td>The generator already attaches flag ids to blanks (see the strict rule in nba2/provenance.py::make_row): render the flag id as a tooltip on each blank cell, linking to its entry on the Flagged page.</td>
+<td>Turns every gap into a one-click work item for the reviewer instead of a mystery.</td>
+<td>S</td>
+<td>Adds ~40 lines of build logic; must stay in sync with the flag registry.</td>
+<td>Accept — cheap and it is what the Flagged page exists for.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-07">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Staleness banner with an explicit expiry</td>
+<td>Lines published from a 3-day-old snapshot look identical to fresh ones; nothing on the page says &#x27;stop&#x27;.</td>
+<td>Header banner computing age of snapshot vs a policy max age (e.g. 24h), turning red past expiry and disabling the picks tab.</td>
+<td>Prevents the most expensive realistic failure: betting yesterday&#x27;s number today.</td>
+<td>S</td>
+<td>Needs the scheduled rebuild (S-16) to be meaningful.</td>
+<td>Accept with S-16.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-08">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Replace third-party ratings with an official snapshot</td>
+<td>Every line currently derives from Basketball-Reference values (PS/G, PA/G, SRS) because the official endpoint was unreachable here; that is flagged (FLAG-RAT-01) but it is the load-bearing wall.</td>
+<td>When R-104 is possible, ingest official team stats at a fixed daily time and delete the third-party file; keep both during a parallel period to measure drift.</td>
+<td>Removes the largest single caveat on the site and satisfies the &#x27;official source&#x27; rule literally.</td>
+<td>M</td>
+<td>Official endpoint access/licensing (see Q-18&#x27;s twin problem).</td>
+<td>Accept after S-02.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-09">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Structured injury-PDF parser instead of text extraction</td>
+<td>17 of 91 rows needed team attribution from block continuation because the PDF table breaks across pages (FLAG-INJ-01).</td>
+<td>Parse the report with a table-aware reader keyed on the Game Date column, and store page/row coordinates for each record.</td>
+<td>Kills the attribution caveat and lets the site assert completeness (&#x27;all 7 pages parsed&#x27;).</td>
+<td>M</td>
+<td>PDF layout changes without notice mid-season.</td>
+<td>Accept; it is a correctness fix, not polish.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-10">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Add a game-day re-issue build (T-0) alongside the T-3 build</td>
+<td>Injury reports for future days are &#x27;NOT YET SUBMITTED&#x27; — proven this session — so a 3-day-ahead line is structurally injury-blind.</td>
+<td>Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.</td>
+<td>Converts a weakness into a measurable quantity: how much our line moves on availability news, which is a strategy family of its own.</td>
+<td>M</td>
+<td>Doubles storage of sealed ledgers (small).</td>
+<td>Accept — the best idea on this list for model quality per unit of data.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-11">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Show per-line contribution of every input</td>
+<td>&#x27;San Antonio -4.5&#x27; is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.</td>
+<td>Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.</td>
+<td>Reviewers can disagree with a component instead of the whole number; that is how a model gets better.</td>
+<td>S</td>
+<td>Wider tables on mobile.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-12">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Bankroll/staking page with the actual policy applied</td>
+<td>Stakes are pinned to 0% by rule until prices exist, which is correct but explains nothing to a reviewer.</td>
+<td>A page showing the staking maths with the current caps and what a bet would look like at each available price once S-01 lands.</td>
+<td>Makes the 0% legible as a policy rather than a gap.</td>
+<td>S</td>
+<td>Must not become a calculator that implies a recommendation.</td>
+<td>Accept with a disclaimer requirement.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-13">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Per-game chart: rating gap vs line, with the disagreement band</td>
+<td>Tables answer &#x27;what number&#x27; but not &#x27;how near the decision boundary is this game&#x27;.</td>
+<td>Small multiples drawn client-side from site.json; the band is the sensitivity box, so a narrow bar = fragile line.</td>
+<td>Fragile picks become visible without reading the stability column.</td>
+<td>M</td>
+<td>Chart code must render the same numbers as the table or we get two truths; generate from the same JSON.</td>
+<td>Defer until S-01/S-02 so there is something worth drawing.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-14">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Table ergonomics: sticky headers, density toggle, CSV export</td>
+<td>The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.</td>
+<td>Sticky thead, a compact-density class, and a per-table &#x27;download CSV&#x27; that includes the source column.</td>
+<td>Reviewers can work offline without losing provenance — export keeps the source link per row.</td>
+<td>S</td>
+<td>None material.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-15">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Accessibility and print path</td>
+<td>A dense analytical dashboard with no ARIA table semantics and no print stylesheet is hard to review with colleagues.</td>
+<td>scope=headers, caption elements, focus styles, and a print stylesheet that keeps source URLs.</td>
+<td>Reviewable in a meeting, which is where decisions actually happen.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-16">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Scheduled rebuild with a freshness gate</td>
+<td>The site updates only when a session commits; the numbers are a frozen 2026-11-13 snapshot.</td>
+<td>Daily Actions workflow that re-ingests, rebuilds, re-seals, and fails (not publishes) if any official source is unreachable.</td>
+<td>Ends the &#x27;is this current?&#x27; question. Failure to fetch becomes visible instead of silent staleness.</td>
+<td>M</td>
+<td>Runner needs network to the official endpoints; a failing schedule must not publish a stale site.</td>
+<td>Accept once S-02 exists.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-17">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Compliance framing on the front page</td>
+<td>A public page that prints spreads, parlays and staking language reads as betting advice; today the notice is a footer line.</td>
+<td>Front-page notice: research tool, no guarantees, 21+/jurisdiction responsibility, links to problem-gambling help.</td>
+<td>Reduces real-world harm and the risk of the site being read as a tipster service.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-18">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Keep the sealed ledger in git, not a database</td>
+<td>A leaderboard is only credible if predictions cannot be edited after the fact.</td>
+<td>Keep the current design: canonical JSON + sha256, committed with the site build; never rewrite history.</td>
+<td>Auditable by anyone with the repo, with no infrastructure to trust.</td>
+<td>S (already built)</td>
+<td>Git history bloat over a season; mitigate with monthly squash archives.</td>
+<td>Already applied; keep unless a DB is required for scale.</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-19">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Publish from a build directory instead of the repository root</td>
+<td>`path: &#x27;.&#x27;` makes every committed file public, including data snapshots and anything a future session commits by mistake.</td>
+<td>Build to `site/` (HTML + assets + data/site.json) and publish that directory only.</td>
+<td>Reduces accidental disclosure; keeps the public surface explicit.</td>
+<td>M (changes every relative link + breaks current live URLs unless redirected)</td>
+<td>URL churn; needs a redirect plan for the already-live root pages.</td>
+<td>Defer — real improvement, but it breaks existing links and none of the currently committed files are sensitive.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-20">
+<td><span class="blank" title="blank because: FLAG-SUGG-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Stop writing narrative into empty analysis columns</td>
+<td>The temptation this site is built to resist: a &#x27;game flow&#x27; page with adjectives where pace numbers should be.</td>
+<td>Keep policy as code (blank + flag is the only permitted empty state) and add a lint rule that fails any prose-only analysis column.</td>
+<td>The property that makes everything else on the site usable as evidence.</td>
+<td>S (already partly enforced)</td>
+<td>None.</td>
+<td>Already applied via make_row + lint; do not weaken it under time pressure.</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session&#x27;s opinion. Ordered by decision-quality gain per unit of effort.</p>
+</section>
     <footer class="footer">
-      NBA2 &bull; Site Suggestions &bull; Review before implementing
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
     </footer>
-  </div>
+  </main>
+</div>
+<script src="../app.js" defer></script>
 </body>
 </html>

@@ -1,9 +1,520 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Upcoming picks — superseded · NBA2</title><link rel="stylesheet" href="../styles.css"></head>
-<body><header class="top"><a class="brand" href="../index.html">NBA <span>LINES LAB</span></a></header>
-<main class="section"><p class="eyebrow">SUPERSEDED IN INTEGRATION</p><h1>Upcoming picks</h1>
-<p class="intro">The earlier version of this page showed picks and invented game IDs that had no official source. It has been replaced by the source-checked version. Original content remains in git history on main.</p>
-<p><a class="button" href="../verified/picks.html">Open the verified upcoming picks →</a></p>
-<p class="note"><b>Why:</b> see the audit of that branch: <a href="../verified/audit.html">verified/audit.html</a> and <a href="../verified/flagged-review.html">Flagged for Review</a>.</p>
-</main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Picks · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html" class="active">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Picks</h2><p>Every game in the window gets a lean, a trigger and a stake of 0% — 0% is the policy, not a placeholder.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="picks" data-rows="31">
+<h2>Picks — expressed as triggers, not as &#x27;bets&#x27;</h2>
+<p class="blurb">A pick with no price is a guess. So each row states the number the market would have to show before our line justifies action, and the stake stays 0% until an odds feed exists. This is the honest shape of a line-origination desk before it has execution.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Picks — expressed as triggers, not as &#x27;bets&#x27;</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Lean</th>
+<th scope="col">Our spread</th>
+<th scope="col">Our total</th>
+<th scope="col">P(home)</th>
+<th scope="col">Tier</th>
+<th scope="col">Spread trigger (act only past this)</th>
+<th scope="col">Total trigger</th>
+<th scope="col">Stake</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>BACK NYK</td>
+<td>+5.0 (home)</td>
+<td>219.5</td>
+<td>35.6%</td>
+<td>B</td>
+<td>home spread ≥ +6.5 → take home; home spread ≤ +3.5 → take away</td>
+<td>market total ≤ 218.0 → OVER; market total ≥ 221.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>BACK ORL</td>
+<td>-8.0 (home)</td>
+<td>225.5</td>
+<td>72.7%</td>
+<td>B</td>
+<td>home spread ≥ -6.5 → take home; home spread ≤ -9.5 → take away</td>
+<td>market total ≤ 224.0 → OVER; market total ≥ 227.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>BACK CLE</td>
+<td>+3.0 (home)</td>
+<td>233.0</td>
+<td>41.4%</td>
+<td>B</td>
+<td>home spread ≥ +4.5 → take home; home spread ≤ +1.5 → take away</td>
+<td>market total ≤ 231.5 → OVER; market total ≥ 234.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>BACK ATL</td>
+<td>+10.5 (home)</td>
+<td>238.5</td>
+<td>21.9%</td>
+<td>B</td>
+<td>home spread ≥ +12.0 → take home; home spread ≤ +9.0 → take away</td>
+<td>market total ≤ 237.0 → OVER; market total ≥ 240.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>BACK MEM</td>
+<td>+8.5 (home)</td>
+<td>235.5</td>
+<td>27.0%</td>
+<td>B</td>
+<td>home spread ≥ +10.0 → take home; home spread ≤ +7.0 → take away</td>
+<td>market total ≤ 234.0 → OVER; market total ≥ 237.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>BACK HOU</td>
+<td>-17.5 (home)</td>
+<td>223.5</td>
+<td>90.0%</td>
+<td>B</td>
+<td>home spread ≥ -16.0 → take home; home spread ≤ -19.0 → take away</td>
+<td>market total ≤ 222.0 → OVER; market total ≥ 225.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>BACK SAS</td>
+<td>-3.0 (home)</td>
+<td>229.0</td>
+<td>59.2%</td>
+<td>C</td>
+<td>home spread ≥ -1.5 → take home; home spread ≤ -4.5 → take away</td>
+<td>market total ≤ 227.5 → OVER; market total ≥ 230.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>BACK POR</td>
+<td>+13.5 (home)</td>
+<td>230.5</td>
+<td>15.8%</td>
+<td>B</td>
+<td>home spread ≥ +15.0 → take home; home spread ≤ +12.0 → take away</td>
+<td>market total ≤ 229.0 → OVER; market total ≥ 232.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>BACK OKC</td>
+<td>+6.5 (home)</td>
+<td>224.0</td>
+<td>31.5%</td>
+<td>B</td>
+<td>home spread ≥ +8.0 → take home; home spread ≤ +5.0 → take away</td>
+<td>market total ≤ 222.5 → OVER; market total ≥ 225.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>BACK DEN</td>
+<td>+6.0 (home)</td>
+<td>234.5</td>
+<td>32.4%</td>
+<td>C</td>
+<td>home spread ≥ +7.5 → take home; home spread ≤ +4.5 → take away</td>
+<td>market total ≤ 233.0 → OVER; market total ≥ 236.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>BACK CLE</td>
+<td>-1.0 (home)</td>
+<td>228.0</td>
+<td>53.1%</td>
+<td>C</td>
+<td>home spread ≥ +0.5 → take home; home spread ≤ -2.5 → take away</td>
+<td>market total ≤ 226.5 → OVER; market total ≥ 229.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>BACK DET</td>
+<td>+6.0 (home)</td>
+<td>229.5</td>
+<td>32.8%</td>
+<td>C</td>
+<td>home spread ≥ +7.5 → take home; home spread ≤ +4.5 → take away</td>
+<td>market total ≤ 228.0 → OVER; market total ≥ 231.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>BACK MEM</td>
+<td>-10.5 (home)</td>
+<td>227.5</td>
+<td>77.7%</td>
+<td>B</td>
+<td>home spread ≥ -9.0 → take home; home spread ≤ -12.0 → take away</td>
+<td>market total ≤ 226.0 → OVER; market total ≥ 229.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>BACK MIN</td>
+<td>-23.0 (home)</td>
+<td>233.5</td>
+<td>95.6%</td>
+<td>B</td>
+<td>home spread ≥ -21.5 → take home; home spread ≤ -24.5 → take away</td>
+<td>market total ≤ 232.0 → OVER; market total ≥ 235.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td>BACK PHI</td>
+<td>-4.5 (home)</td>
+<td>223.0</td>
+<td>63.5%</td>
+<td>B</td>
+<td>home spread ≥ -3.0 → take home; home spread ≤ -6.0 → take away</td>
+<td>market total ≤ 221.5 → OVER; market total ≥ 224.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td>BACK LAL</td>
+<td>+6.0 (home)</td>
+<td>232.0</td>
+<td>32.4%</td>
+<td>C</td>
+<td>home spread ≥ +7.5 → take home; home spread ≤ +4.5 → take away</td>
+<td>market total ≤ 230.5 → OVER; market total ≥ 233.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td>BACK LAC</td>
+<td>-7.5 (home)</td>
+<td>219.5</td>
+<td>70.9%</td>
+<td>C</td>
+<td>home spread ≥ -6.0 → take home; home spread ≤ -9.0 → take away</td>
+<td>market total ≤ 218.0 → OVER; market total ≥ 221.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td>BACK SAS</td>
+<td>+14.5 (home)</td>
+<td>226.0</td>
+<td>14.0%</td>
+<td>C</td>
+<td>home spread ≥ +16.0 → take home; home spread ≤ +13.0 → take away</td>
+<td>market total ≤ 224.5 → OVER; market total ≥ 227.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td>BACK BOS</td>
+<td>-6.5 (home)</td>
+<td>221.5</td>
+<td>68.0%</td>
+<td>C</td>
+<td>home spread ≥ -5.0 → take home; home spread ≤ -8.0 → take away</td>
+<td>market total ≤ 220.0 → OVER; market total ≥ 223.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td>BACK NYK</td>
+<td>+1.5 (home)</td>
+<td>220.5</td>
+<td>45.9%</td>
+<td>C</td>
+<td>home spread ≥ +3.0 → take home; home spread ≤ +0.0 → take away</td>
+<td>market total ≤ 219.0 → OVER; market total ≥ 222.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td>BACK HOU</td>
+<td>+13.0 (home)</td>
+<td>224.0</td>
+<td>17.2%</td>
+<td>C</td>
+<td>home spread ≥ +14.5 → take home; home spread ≤ +11.5 → take away</td>
+<td>market total ≤ 222.5 → OVER; market total ≥ 225.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td>BACK ATL</td>
+<td>+10.0 (home)</td>
+<td>231.5</td>
+<td>23.4%</td>
+<td>C</td>
+<td>home spread ≥ +11.5 → take home; home spread ≤ +8.5 → take away</td>
+<td>market total ≤ 230.0 → OVER; market total ≥ 233.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td>BACK OKC</td>
+<td>+11.5 (home)</td>
+<td>223.5</td>
+<td>19.5%</td>
+<td>B</td>
+<td>home spread ≥ +13.0 → take home; home spread ≤ +10.0 → take away</td>
+<td>market total ≤ 222.0 → OVER; market total ≥ 225.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td>BACK BOS</td>
+<td>-12.0 (home)</td>
+<td>220.0</td>
+<td>81.2%</td>
+<td>C</td>
+<td>home spread ≥ -10.5 → take home; home spread ≤ -13.5 → take away</td>
+<td>market total ≤ 218.5 → OVER; market total ≥ 221.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td>BACK CLE</td>
+<td>-14.0 (home)</td>
+<td>236.5</td>
+<td>85.0%</td>
+<td>B</td>
+<td>home spread ≥ -12.5 → take home; home spread ≤ -15.5 → take away</td>
+<td>market total ≤ 235.0 → OVER; market total ≥ 238.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td>BACK MEM</td>
+<td>+8.5 (home)</td>
+<td>228.0</td>
+<td>26.6%</td>
+<td>B</td>
+<td>home spread ≥ +10.0 → take home; home spread ≤ +7.0 → take away</td>
+<td>market total ≤ 226.5 → OVER; market total ≥ 229.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td>BACK PHI</td>
+<td>+3.5 (home)</td>
+<td>223.0</td>
+<td>40.0%</td>
+<td>B</td>
+<td>home spread ≥ +5.0 → take home; home spread ≤ +2.0 → take away</td>
+<td>market total ≤ 221.5 → OVER; market total ≥ 224.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td>BACK HOU</td>
+<td>+10.0 (home)</td>
+<td>229.0</td>
+<td>22.9%</td>
+<td>C</td>
+<td>home spread ≥ +11.5 → take home; home spread ≤ +8.5 → take away</td>
+<td>market total ≤ 227.5 → OVER; market total ≥ 230.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td>BACK MIN</td>
+<td>-5.0 (home)</td>
+<td>228.5</td>
+<td>64.6%</td>
+<td>C</td>
+<td>home spread ≥ -3.5 → take home; home spread ≤ -6.5 → take away</td>
+<td>market total ≤ 227.0 → OVER; market total ≥ 230.0 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td>BACK GSW</td>
+<td>+11.5 (home)</td>
+<td>236.0</td>
+<td>20.1%</td>
+<td>C</td>
+<td>home spread ≥ +13.0 → take home; home spread ≤ +10.0 → take away</td>
+<td>market total ≤ 234.5 → OVER; market total ≥ 237.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td>BACK DEN</td>
+<td>-4.5 (home)</td>
+<td>228.0</td>
+<td>63.6%</td>
+<td>C</td>
+<td>home spread ≥ -3.0 → take home; home spread ≤ -6.0 → take away</td>
+<td>market total ≤ 226.5 → OVER; market total ≥ 229.5 → UNDER</td>
+<td>0.00% — no price to size against</td>
+<td>PENDING A MARKET PRICE</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Triggers = our line ± 1.5 pts (unratified hurdle, see FLAG-LINE-03).</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>
