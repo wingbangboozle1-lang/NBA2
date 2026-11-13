@@ -25,6 +25,7 @@
           <li><a href="pages/suggestions.html">Site Suggestions</a></li>
           <li><a href="pages/questions.html">Questions & Answers</a></li>
 <li><a href="pages/flagged-review.html">Flagged for Review</a></li>
+<li><a href="verified/index.html">Verified Data (official sources)</a></li>
 <li><a href="pages/research-scaffold.html">Research Scaffold (Session 1)</a></li>
 </ul>
       </nav>
@@ -33,21 +34,21 @@
     <main class="main">
       <section class="hero">
         <h1>NBA2 Dashboard</h1>
-        <p>Originated NBA lines, validated betting strategies, player prop correlations, injury-aware rotation tracking, and game flow analysis for every upcoming slate up to 3 days in advance.</p>
+        <p>Originated NBA lines, strategy templates (none validated yet), player prop correlations, injury-aware rotation tracking, and game flow analysis for every upcoming slate up to 3 days in advance.</p>
       </section>
 
       <div class="grid-3">
         <div class="stat-card">
-          <div class="value" id="stat-strategies">-</div>
-          <div class="label">Validated Strategies</div>
+          <div class="value" id="stat-strategies">0</div>
+          <div class="label">Strategies validated (0 of 4 families)</div>
         </div>
         <div class="stat-card">
-          <div class="value" id="stat-picks">-</div>
-          <div class="label">Upcoming Picks</div>
+          <div class="value" id="stat-picks">0</div>
+          <div class="label">Picks issued (3-day window)</div>
         </div>
         <div class="stat-card">
-          <div class="value" id="stat-injuries">-</div>
-          <div class="label">Injury Flags</div>
+          <div class="value" id="stat-injuries">75</div>
+          <div class="label">Verified injury rows (11/13 5:15 PM ET)</div>
         </div>
       </div>
 
@@ -98,26 +99,10 @@
     </main>
 
     <footer class="footer">
-      NBA2 &bull; Data sourced from official NBA and verified sources &bull; Not financial or betting advice
+      NBA2 &bull; Official NBA sources linked per row; unverified values are blank and flagged &bull; Not financial or betting advice
     </footer>
   </div>
 
-  <script>
-    // Simple stats counters - populated from data files if available
-    document.addEventListener('DOMContentLoaded', function() {
-      fetch('data/strategies.json')
-        .then(r => r.ok ? r.json() : null)
-        .then(d => { if (d) document.getElementById('stat-strategies').textContent = d.length || '-'; })
-        .catch(() => {});
-      fetch('data/picks.json')
-        .then(r => r.ok ? r.json() : null)
-        .then(d => { if (d) document.getElementById('stat-picks').textContent = d.length || '-'; })
-        .catch(() => {});
-      fetch('data/injuries.json')
-        .then(r => r.ok ? r.json() : null)
-        .then(d => { if (d) document.getElementById('stat-injuries').textContent = d.length || '-'; })
-        .catch(() => {});
-    });
-  </script>
+  
 </body>
 </html>

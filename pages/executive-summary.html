@@ -43,8 +43,8 @@
             <h3>Current State</h3>
             <ul style="margin-left: 1.25rem;">
               <li>Repository initialized with coordination board and site structure.</li>
-              <li>8 validated strategy templates defined (STRAT-001 through STRAT-008).</li>
-              <li>3-day slate pick framework defined (GAME-20261113-001 through -007).</li>
+              <li>8 unvalidated strategy templates defined (none validated) (STRAT-001 through STRAT-008).</li>
+              <li>3-day slate pick framework defined; 31 official games listed in verified/schedule.html (NBA game IDs); 0 picks issued.</li>
               <li>Injury tracking integrated with official NBA injury report (11/13/2026).</li>
               <li>Game flow framework based on Pace and Dean Oliver's Four Factors.</li>
               <li>No live odds feed, no line-generation model, no backtesting engine connected yet.</li>
@@ -57,7 +57,7 @@
           <li><strong>Minutes are the single most important variable for player props.</strong> A player's statistical output is almost perfectly correlated with minutes played. Predicting minutes more accurately than the bookmaker is the primary edge.</li>
           <li><strong>Correlation matters in parlays.</strong> Positively correlated legs (star points + team win + game over) hit together more often than independent odds suggest. Negatively correlated legs (two players from same team both Over) compete for the same possessions and should be avoided.</li>
           <li><strong>Injuries drive rotation minutes.</strong> An Out starter removes ~100% of their projected minutes and production, redistributing to backups and remaining starters. This directly affects player-prop lines.</li>
-          <li><strong>Four Factors predict game outcomes.</strong> Dean Oliver's Four Factors (eFG% 40%, TOV% 25%, OREB% 20%, FTR 15%) correlate with team winning. PIE rating correlates at .948 with team win %.</li>
+          <li><strong>Four Factors predict game outcomes.</strong> Dean Oliver's Four Factors (eFG% 40%, TOV% 25%, OREB% 20%, FTR 15%) correlate with team winning. The NBA FAQ states team PIE R² of .908 vs win %, as NBA’s own claim (<a href="https://www.nba.com/stats/help/faq">NBA FAQ ↗</a>). The .948 figure is not reproduced here.</li>
           <li><strong>Back-to-back road fatigue reduces pace.</strong> Estimated ~1.5 possession reduction for the fatigued team (unverified).</li>
         </ul>
 
@@ -93,22 +93,22 @@
                 <td>Injury report data (11/13/2026)</td>
                 <td><span class="flag flag-verified">verified</span></td>
                 <td>Yes</td>
-                <td>Source: official NBA injury report PDFs (ak-static.cms.nba.com)</td>
+                <td>Source: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf">official NBA injury report PDF 11/13 5:15 PM ET ↗</a>. Minutes impact blank.</td>
               </tr>
               <tr>
                 <td>Four Factors definitions</td>
-                <td><span class="flag flag-verified">verified</span></td>
-                <td>Yes</td>
-                <td>Source: Basketball Reference, NBA Stats Help FAQ</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>No</td>
+                <td>Definitions not checked against an official NBA page. The only source cited was Basketball-Reference (not official).</td>
               </tr>
               <tr>
                 <td>PIE correlation to win %</td>
                 <td><span class="flag flag-unverified">unverified</span></td>
                 <td>Partial</td>
-                <td>.948 figure from Reddit analysis, not directly from NBA.com</td>
+                <td>NBA FAQ states .908 (team level). Reddit .948 not used; <a href="https://www.nba.com/stats/help/faq">NBA FAQ ↗</a></td>
               </tr>
               <tr>
-                <td>Pace league average (94.43)</td>
+                <td>Pace league average (value blank: unverified)</td>
                 <td><span class="flag flag-unverified">unverified</span></td>
                 <td>Partial</td>
                 <td>From NBA Stats FAQ; season/year not specified</td>
