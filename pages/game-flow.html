@@ -1,197 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Flow Analysis - NBA2</title>
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Flow · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>NBA2</h1>
-      <div class="subtitle">Game Flow Analysis &bull; Pace &bull; Four Factors &bull; Efficiency</div>
-    </header>
-
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li><a href="../index.html">Dashboard</a></li>
-          <li><a href="strategies.html">Betting Strategies</a></li>
-          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
-          <li><a href="injuries.html">Injuries & Rotation</a></li>
-          <li><a href="game-flow.html" class="active">Game Flow Analysis</a></li>
-          <li><a href="executive-summary.html">Executive Summary</a></li>
-          <li><a href="suggestions.html">Site Suggestions</a></li>
-          <li><a href="questions.html">Questions & Answers</a></li>
-          <li><a href="flagged-review.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
-      <section class="card">
-        <h2>Game Flow Framework</h2>
-        <p class="font-small text-muted mb-2">Game flow analysis projects how each game is likely to unfold: pace, shooting efficiency, turnovers, rebounding, free-throw rate, and the resulting script (blowout, close game, shootout, grind). These projections drive line origination and pick generation.</p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Metric</th>
-                <th>Definition / Formula</th>
-                <th>League Average</th>
-                <th>Impact on Game Flow</th>
-                <th>Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Pace</td>
-                <td>Possessions per 48 min</td>
-                <td>(Tm Poss + Opp Poss) / (Tm MP / 5)</td>
-                <td>≈ 94.4 possessions</td>
-                <td>Higher pace → more possessions → higher totals and more player prop opportunities</td>
-                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
-              </tr>
-              <tr>
-                <td>Four Factors</td>
-                <td>Effective FG% (eFG%)</td>
-                <td>(FGM + 0.5 × 3PM) / FGA</td>
-                <td>—</td>
-                <td>40% weight in Dean Oliver's Four Factors; primary driver of offensive efficiency</td>
-                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
-              </tr>
-              <tr>
-                <td>Four Factors</td>
-                <td>Turnover % (TOV%)</td>
-                <td>TOV / (FGA + 0.44 × FTA + TOV)</td>
-                <td>—</td>
-                <td>25% weight; fewer turnovers = more possessions and higher efficiency</td>
-                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
-              </tr>
-              <tr>
-                <td>Four Factors</td>
-                <td>Offensive Rebound % (OREB%)</td>
-                <td>OREB / (OREB + Opp DREB)</td>
-                <td>—</td>
-                <td>20% weight; second-chance possessions extend offensive efficiency</td>
-                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
-              </tr>
-              <tr>
-                <td>Four Factors</td>
-                <td>Free Throw Rate (FTR)</td>
-                <td>FTA / FGA</td>
-                <td>—</td>
-                <td>15% weight; free throws = efficient points + opponent foul trouble</td>
-                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
-              </tr>
-              <tr>
-                <td>PIE</td>
-                <td>Player Impact Estimate</td>
-                <td>% of total game events achieved by player/team</td>
-                <td>Team >50% likely winning; player >10% above average</td>
-                <td>High PIE correlates with winning (.948 correlation to team win % per NBA analysis)</td>
-                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Game Flow Classification</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Game Script</th>
-                <th>Pace Profile</th>
-                <th>Four Factor Profile</th>
-                <th>Betting Implications</th>
-                <th>Verified</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Shootout</td>
-                <td>High pace (96+ possessions)</td>
-                <td>High eFG% both teams, low TOV%</td>
-                <td>Game Over; player scoring props Over</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-              </tr>
-              <tr>
-                <td>Grind</td>
-                <td>Low pace (≤ 92 possessions)</td>
-                <td>Low eFG%, high TOV%, high defensive OREB%</td>
-                <td>Game Under; player scoring props Under</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-              </tr>
-              <tr>
-                <td>Blowout</td>
-                <td>Variable; pace drops in garbage time</td>
-                <td>One team dominates all 4 factors; net FF rating gap ≥ 15 pts</td>
-                <td>Favorite -spread early; starters' 4Q props Under</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-              </tr>
-              <tr>
-                <td>Close Game</td>
-                <td>Moderate pace (93–95)</td>
-                <td>Balanced factors; net FF gap ≤ 5 pts</td>
-                <td>Moneyline either way; player props with normal variance</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Upcoming Games — Game Flow Projections</h2>
-        <p class="font-small text-muted">Projections require live team-level Four Factors and pace data not yet connected. All entries blank/unverified pending data integration.</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Matchup</th>
-                <th>Projected Pace</th>
-                <th>Projected Script</th>
-                <th>Key Flow Driver</th>
-                <th>Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>MIL @ ORL</td>
-                <td>—</td>
-                <td>—</td>
-                <td>Banchero Out (Orlando offense); Haliburton Out (Indiana pace control)</td>
-                <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" class="source-link">NBA Injury Report</a></td>
-              </tr>
-              <tr>
-                <td>GSW @ SAS</td>
-                <td>—</td>
-                <td>—</td>
-                <td>Curry Out, Butler Out, Simmons Out (Warriors severely depleted)</td>
-                <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" class="source-link">NBA Injury Report</a></td>
-              </tr>
-              <tr>
-                <td>OKC @ LAC</td>
-                <td>—</td>
-                <td>—</td>
-                <td>Holmgren Out (OKC rim defense)</td>
-                <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" class="source-link">NBA Injury Report</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html" class="active">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Game Flow</h2><p>Schedule-spot facts from the official slate, and the in-game columns we refuse to narrate.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="gameflow" data-rows="31">
+<h2>Game flow — what the slate tells us, and everything it does not</h2>
+<p class="blurb">Left of the divider: computed from official schedule dates. Right of the divider: blank, because in-game flow needs play-by-play, lineups and foul data that this repository does not have. A &#x27;game flow analysis&#x27; that narrates those four columns without the data is storytelling, and it is how books get paid.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Game flow — what the slate tells us, and everything it does not</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Home load (window)</th>
+<th scope="col">Away load (window)</th>
+<th scope="col">Home B2B</th>
+<th scope="col">Away B2B</th>
+<th scope="col">Home 3-in-4</th>
+<th scope="col">Away 3-in-4</th>
+<th scope="col">Rest days (home)</th>
+<th scope="col">Rest days (away)</th>
+<th scope="col">Pace flow</th>
+<th scope="col">Garbage-time risk</th>
+<th scope="col">Foul trouble</th>
+<th scope="col">Closing lineup</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>2 (1H/1A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>2 (1H/1A)</td>
+<td>2 (1H/1A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>3 (3H/0A)</td>
+<td>3 (2H/1A)</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>3 (1H/2A)</td>
+<td>2 (0H/2A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>3 (3H/0A)</td>
+<td>3 (1H/2A)</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>3 (1H/2A)</td>
+<td>2 (1H/1A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>2 (1H/1A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>2 (2H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>2 (2H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>3 (3H/0A)</td>
+<td>2 (1H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>3 (2H/1A)</td>
+<td>2 (0H/2A)</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>3 (3H/0A)</td>
+<td>1 (0H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>3 (1H/2A)</td>
+<td>2 (1H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>2 (2H/0A)</td>
+<td>3 (1H/2A)</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td>2 (1H/1A)</td>
+<td>2 (1H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td>2 (1H/1A)</td>
+<td>1 (0H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td>2 (2H/0A)</td>
+<td>1 (0H/1A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td>2 (1H/1A)</td>
+<td>2 (1H/1A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td>2 (2H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>YES</td>
+<td>YES</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td>1 (1H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td>2 (2H/0A)</td>
+<td>3 (1H/2A)</td>
+<td>YES</td>
+<td>YES</td>
+<td>no</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td>2 (1H/1A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td>2 (2H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td>2 (2H/0A)</td>
+<td>2 (1H/1A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td>3 (2H/1A)</td>
+<td>3 (1H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>YES</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td>2 (2H/0A)</td>
+<td>3 (1H/2A)</td>
+<td>YES</td>
+<td>not in window</td>
+<td>no</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td>2 (1H/1A)</td>
+<td>2 (1H/1A)</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td>3 (3H/0A)</td>
+<td>3 (1H/2A)</td>
+<td>not in window</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td>2 (2H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td>3 (3H/0A)</td>
+<td>2 (0H/2A)</td>
+<td>not in window</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td>2 (1H/1A)</td>
+<td>2 (1H/1A)</td>
+<td>not in window</td>
+<td>YES</td>
+<td>no</td>
+<td>no</td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-FLOW-01 FLAG-FLOW-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a> <a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://www.nba.com/schedule</p>
+</section><section class="card table-card" id="anomalies" data-rows="4">
+<h2>Slate irregularities found while transcribing</h2>
+<p class="blurb">Recorded, not fixed. Each of these would corrupt an automated pipeline that trusted the pattern instead of the value.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Slate irregularities found while transcribing</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Game ID</th>
+<th scope="col">Observation</th>
+<th scope="col">In pick window?</th>
+<th scope="col">Disposition</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600253">
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td>0022600253</td>
+<td>Identical matchup and arena (Scotiabank Arena) as 0022600241 on 2026-11-15, two days apart. Both were read from the same official schedule page.</td>
+<td>outside pick window (11/13-11/16)</td>
+<td>FLAGGED — not used in any model output</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
+</tr>
+<tr id="0022600254">
+<td>2026-11-17</td>
+<td>POR @ MIN</td>
+<td>0022600254</td>
+<td>Identical matchup and arena (Target Center) as 0022600250 on 2026-11-16, on consecutive days. Not a normal NBA scheduling pattern; recorded as a data-integrity flag.</td>
+<td>outside pick window (11/13-11/16)</td>
+<td>FLAGGED — not used in any model output</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>0022600231</td>
+<td>Game IDs are not monotonic with date: Nov 13 runs 0022600034-0022600042 (Emirates NBA Cup group play) and Nov 14 resumes at 0022600231. Any pipeline that infers an ID from sequence will join the wrong game.</td>
+<td>inside pick window</td>
+<td>FLAGGED — not used in any model output</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
+</tr>
+<tr id="n/a">
+<td>2026-11-13</td>
+<td>—</td>
+<td>n/a</td>
+<td>https://www.nba.com/games?dates=MM/DD/YYYY ignores the dates parameter for non-browser clients and always returns the current day&#x27;s slate; the day picker is applied client-side. Date-window scrapes must use /schedule, not /games?dates=.</td>
+<td>ingest hazard</td>
+<td>FLAGGED — not used in any model output</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://www.nba.com/schedule retrieved 2026-11-13 22:39 UTC.</p>
+</section>
     <footer class="footer">
-      NBA2 &bull; Game Flow Analysis &bull; Sources: NBA.com, Basketball-Reference
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
     </footer>
-  </div>
+  </main>
+</div>
+<script src="../app.js" defer></script>
 </body>
 </html>

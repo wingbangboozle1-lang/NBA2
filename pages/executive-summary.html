@@ -1,133 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Executive Summary - NBA2</title>
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Summary · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>NBA2</h1>
-      <div class="subtitle">Executive Summary &bull; Key Findings &bull; Strategic Recommendations</div>
-    </header>
-
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li><a href="../index.html">Dashboard</a></li>
-          <li><a href="strategies.html">Betting Strategies</a></li>
-          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
-          <li><a href="injuries.html">Injuries & Rotation</a></li>
-          <li><a href="game-flow.html">Game Flow Analysis</a></li>
-          <li><a href="executive-summary.html" class="active">Executive Summary</a></li>
-          <li><a href="suggestions.html">Site Suggestions</a></li>
-          <li><a href="questions.html">Questions & Answers</a></li>
-          <li><a href="flagged-review.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
-      <section class="card">
-        <h2>Executive Summary</h2>
-        <p class="font-small text-muted mb-2">High-level overview of the NBA2 originated-lines and strategy system, current state, findings, and recommendations.</p>
-
-        <div class="grid-2">
-          <div class="card" style="margin-bottom: 1rem;">
-            <h3>System Objective</h3>
-            <p>Collect, organize, and analyze NBA data to originate betting lines, generate skill-based strategy signals for single bets, parlays, and player-prop combos, validate every strategy through gates, determine correlation values, remove luck from the equation, and produce picks for every upcoming slate up to 3 days in advance.</p>
-          </div>
-          <div class="card" style="margin-bottom: 1rem;">
-            <h3>Current State</h3>
-            <ul style="margin-left: 1.25rem;">
-              <li>Repository initialized with coordination board and site structure.</li>
-              <li>8 validated strategy templates defined (STRAT-001 through STRAT-008).</li>
-              <li>3-day slate pick framework defined (GAME-20261113-001 through -007).</li>
-              <li>Injury tracking integrated with official NBA injury report (11/13/2026).</li>
-              <li>Game flow framework based on Pace and Dean Oliver's Four Factors.</li>
-              <li>No live odds feed, no line-generation model, no backtesting engine connected yet.</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3>Key Findings</h3>
-        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-          <li><strong>Minutes are the single most important variable for player props.</strong> A player's statistical output is almost perfectly correlated with minutes played. Predicting minutes more accurately than the bookmaker is the primary edge.</li>
-          <li><strong>Correlation matters in parlays.</strong> Positively correlated legs (star points + team win + game over) hit together more often than independent odds suggest. Negatively correlated legs (two players from same team both Over) compete for the same possessions and should be avoided.</li>
-          <li><strong>Injuries drive rotation minutes.</strong> An Out starter removes ~100% of their projected minutes and production, redistributing to backups and remaining starters. This directly affects player-prop lines.</li>
-          <li><strong>Four Factors predict game outcomes.</strong> Dean Oliver's Four Factors (eFG% 40%, TOV% 25%, OREB% 20%, FTR 15%) correlate with team winning. PIE rating correlates at .948 with team win %.</li>
-          <li><strong>Back-to-back road fatigue reduces pace.</strong> Estimated ~1.5 possession reduction for the fatigued team (unverified).</li>
-        </ul>
-
-        <h3>Strategic Recommendations</h3>
-        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-          <li>Connect live odds feeds (DraftKings, FanDuel, BetMGM, Caesars) for originated line comparison.</li>
-          <li>Build the line-generation model using team-level Four Factors, pace, and injury-adjusted minutes projections.</li>
-          <li>Backtest all 8 strategy templates against 2024-25 and 2025-26 NBA seasons before any live wagering.</li>
-          <li>Implement the injury gate: any Out/Doubtful/Questionable starter triggers rotation-minutes review before pick approval.</li>
-          <li>Limit parlays to max 4 legs; max 1 prop per team per game; require documented correlation thesis for every parlay.</li>
-          <li>Deploy the GitHub Pages site with all data tables and flagged items for review.</li>
-        </ul>
-
-        <h3>Verification Status</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Status</th>
-                <th>Source Verified</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Strategy templates (STRAT-001 to STRAT-008)</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>No</td>
-                <td>Correlation values are research estimates, not verified from official play-by-play data.</td>
-              </tr>
-              <tr>
-                <td>Injury report data (11/13/2026)</td>
-                <td><span class="flag flag-verified">verified</span></td>
-                <td>Yes</td>
-                <td>Source: official NBA injury report PDFs (ak-static.cms.nba.com)</td>
-              </tr>
-              <tr>
-                <td>Four Factors definitions</td>
-                <td><span class="flag flag-verified">verified</span></td>
-                <td>Yes</td>
-                <td>Source: Basketball Reference, NBA Stats Help FAQ</td>
-              </tr>
-              <tr>
-                <td>PIE correlation to win %</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Partial</td>
-                <td>.948 figure from Reddit analysis, not directly from NBA.com</td>
-              </tr>
-              <tr>
-                <td>Pace league average (94.43)</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Partial</td>
-                <td>From NBA Stats FAQ; season/year not specified</td>
-              </tr>
-              <tr>
-                <td>Originated lines & picks</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>No</td>
-                <td>No live odds feed or line model connected; all lines blank.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html" class="active">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Executive Summary</h2><p>One page for a decision-maker: what exists, what is proven, what is blocked, and the single next decision.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="card"><div class="kpi-grid"><div class="kpi"><div class="kpi-v">31</div><div class="kpi-l">games priced in window</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Tier A lines</div></div><div class="kpi"><div class="kpi-v">15</div><div class="kpi-l">Tier B lines</div></div><div class="kpi"><div class="kpi-v">16</div><div class="kpi-l">Tier C (do-not-bet)</div></div><div class="kpi"><div class="kpi-v">95</div><div class="kpi-l">official injury rows (85 status + 10 pending)</div></div><div class="kpi"><div class="kpi-v">13.58</div><div class="kpi-l">σ margin (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">1.53</div><div class="kpi-l">home-court adv (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">0/90</div><div class="kpi-l">gates passed</div></div><div class="kpi"><div class="kpi-v">100</div><div class="kpi-l">reward units unallocated</div></div><div class="kpi"><div class="kpi-v">50</div><div class="kpi-l">open flags</div></div></div></div><section class="card table-card" id="summary-lines" data-rows="8">
+<h2>Snapshot of the priced slate (first 8 rows)</h2>
+<p class="blurb">Full table on the Originated Lines page; truncated here so the summary fits one screen.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Snapshot of the priced slate (first 8 rows)</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">ET</th>
+<th scope="col">Matchup</th>
+<th scope="col">Margin (SRS)</th>
+<th scope="col">Margin (raw net)</th>
+<th scope="col">Consensus margin</th>
+<th scope="col">OUR SPREAD</th>
+<th scope="col">OUR TOTAL</th>
+<th scope="col">Expected score</th>
+<th scope="col">P(home win)</th>
+<th scope="col">Fair ML (home/away)</th>
+<th scope="col">Conviction</th>
+<th scope="col">Model disagreement</th>
+<th scope="col">Sensitivity stability</th>
+<th scope="col">Tier</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>NYK @ IND</td>
+<td>-4.56</td>
+<td>-5.45</td>
+<td>-5.00</td>
+<td>IND +5.0</td>
+<td>219.5</td>
+<td>112.4 @ 107.3</td>
+<td>35.6%</td>
+<td>2.81 / 1.55</td>
+<td>0.37σ</td>
+<td>0.90 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>MIL @ ORL</td>
+<td>+7.82</td>
+<td>+8.55</td>
+<td>+8.18</td>
+<td>ORL -8.0</td>
+<td>225.5</td>
+<td>108.6 @ 116.7</td>
+<td>72.7%</td>
+<td>1.38 / 3.66</td>
+<td>0.60σ</td>
+<td>0.73 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>CLE @ MIA</td>
+<td>-2.55</td>
+<td>-3.33</td>
+<td>-2.94</td>
+<td>MIA +3.0</td>
+<td>233.0</td>
+<td>118.1 @ 115.1</td>
+<td>41.4%</td>
+<td>2.41 / 1.71</td>
+<td>0.22σ</td>
+<td>0.78 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>ATL @ CHI</td>
+<td>-9.56</td>
+<td>-11.50</td>
+<td>-10.53</td>
+<td>CHI +10.5</td>
+<td>238.5</td>
+<td>124.4 @ 113.9</td>
+<td>21.9%</td>
+<td>4.57 / 1.28</td>
+<td>0.78σ</td>
+<td>1.95 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>MEM @ NOP</td>
+<td>-7.97</td>
+<td>-8.70</td>
+<td>-8.34</td>
+<td>NOP +8.5</td>
+<td>235.5</td>
+<td>121.9 @ 113.6</td>
+<td>27.0%</td>
+<td>3.71 / 1.37</td>
+<td>0.61σ</td>
+<td>0.73 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>20:30</td>
+<td>UTA @ HOU</td>
+<td>+17.55</td>
+<td>+17.25</td>
+<td>+17.40</td>
+<td>HOU -17.5</td>
+<td>223.5</td>
+<td>102.9 @ 120.4</td>
+<td>90.0%</td>
+<td>1.11 / 10.00</td>
+<td>1.28σ</td>
+<td>0.31 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>21:30</td>
+<td>GSW @ SAS</td>
+<td>+2.15</td>
+<td>+4.15</td>
+<td>+3.15</td>
+<td>SAS -3.0</td>
+<td>229.0</td>
+<td>112.9 @ 116.1</td>
+<td>59.2%</td>
+<td>1.69 / 2.45</td>
+<td>0.23σ</td>
+<td>2.00 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>22:00</td>
+<td>POR @ SAC</td>
+<td>-13.76</td>
+<td>-13.49</td>
+<td>-13.62</td>
+<td>SAC +13.5</td>
+<td>230.5</td>
+<td>122.1 @ 108.5</td>
+<td>15.8%</td>
+<td>6.33 / 1.19</td>
+<td>1.00σ</td>
+<td>0.27 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Reproduce: python -m nba2.pipeline.build_site_data</p>
+</section><section class="card table-card" id="summary-flags" data-rows="5">
+<h2>The five things a reviewer must know first</h2>
+<p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">The five things a reviewer must know first</caption><thead><tr>
+<th scope="col">Flag</th>
+<th scope="col">Severity</th>
+<th scope="col">Area</th>
+<th scope="col">What is unverified / wrong</th>
+<th scope="col">Source to check</th>
+<th scope="col">Action required</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="FLAG-ANOM-01">
+<td>FLAG-ANOM-01</td>
+<td>medium</td>
+<td>slate</td>
+<td>Identical matchups appear on consecutive days on the official schedule page for the 11/17 slate (NYK@TOR and POR@MIN). Could be genuine or a rendering artifact; recorded and excluded from all model output.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Confirm on the two game pages before ingesting 11/17.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
+</tr>
+<tr id="FLAG-CORR-01">
+<td>FLAG-CORR-01</td>
+<td>low</td>
+<td>correlation</td>
+<td>r(SRS, margin/G) is computed on 30 team-season points from one snapshot; it is a descriptive statistic, not a stable parameter.</td>
+<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td>Recompute each week; store the series.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-01">FLAG-CORR-01</a></td>
+</tr>
+<tr id="FLAG-CORR-02">
+<td>FLAG-CORR-02</td>
+<td>high</td>
+<td>correlation</td>
+<td>The margin/total correlation that drives same-game parlays is unmeasured. Every parlay figure on this site is therefore a band, not a price.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td>Ingest game-level results (R-103).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-02">FLAG-CORR-02</a></td>
+</tr>
+<tr id="FLAG-CORR-03">
+<td>FLAG-CORR-03</td>
+<td>high</td>
+<td>correlation</td>
+<td>Same-player prop correlations are unmeasured; prop combos cannot be priced honestly today.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</td>
+<td>Ingest player box scores.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-03">FLAG-CORR-03</a></td>
+</tr>
+<tr id="FLAG-CORR-04">
+<td>FLAG-CORR-04</td>
+<td>low</td>
+<td>correlation</td>
+<td>Exclusion rule for same-team consecutive games is a design rule, not a measurement.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td>No action.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-04">FLAG-CORR-04</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Also mirrored in COORDINATION.md</p>
+</section>
     <footer class="footer">
-      NBA2 &bull; Executive Summary &bull; Not financial or betting advice
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
     </footer>
-  </div>
+  </main>
+</div>
+<script src="../app.js" defer></script>
 </body>
 </html>

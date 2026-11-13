@@ -1,145 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Questions & Answers - NBA2</title>
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questions · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>NBA2</h1>
-      <div class="subtitle">Open Questions &bull; Missing Information &bull; Pre-Decision Review</div>
-    </header>
-
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li><a href="../index.html">Dashboard</a></li>
-          <li><a href="strategies.html">Betting Strategies</a></li>
-          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
-          <li><a href="injuries.html">Injuries & Rotation</a></li>
-          <li><a href="game-flow.html">Game Flow Analysis</a></li>
-          <li><a href="executive-summary.html">Executive Summary</a></li>
-          <li><a href="suggestions.html">Site Suggestions</a></li>
-          <li><a href="questions.html" class="active">Questions & Answers</a></li>
-          <li><a href="flagged-review.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
-      <section class="card">
-        <h2>Questions, Information, and Answers Required Before Decisions</h2>
-        <p class="font-small text-muted mb-2">These items must be addressed before any betting, line-origination, or pick-generation decision can be reasonably made. Items with no answer are information gaps that must be discovered.</p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Question / Information Needed</th>
-                <th>Current Answer (if known)</th>
-                <th>Source</th>
-                <th>Status</th>
-                <th>How to Discover Missing Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>Q-001</code></td>
-                <td>What is the official NBA API endpoint for play-by-play and box-score data?</td>
-                <td>Not yet identified</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Search NBA.com developer portal; contact NBA stats team; review NBA.com/stats/help</td>
-              </tr>
-              <tr>
-                <td><code>Q-002</td>
-                <td>Which sportsbook APIs provide live NBA odds (spread, total, player props)?</td>
-                <td>Not yet identified</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Review DraftKings, FanDuel, BetMGM, Caesars developer portals; odds API aggregators</td>
-              </tr>
-              <tr>
-                <td><code>Q-003</td>
-                <td>What are the verified correlation coefficients between player minutes and points/rebounds/assists?</td>
-                <td>Estimated r ≈ 0.82 for points; not verified</td>
-                <td>Research articles (not official NBA)</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Compute from official NBA play-by-play/box-score data across multiple seasons</td>
-              </tr>
-              <tr>
-                <td><code>Q-004</td>
-                <td>What is the verified league-average pace for the current NBA season?</td>
-                <td>≈ 94.4 possessions (from NBA FAQ, season unspecified)</td>
-                <td>https://www.nba.com/stats/help/faq</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Query NBA.com/stats for current season team pace; confirm season/year</td>
-              </tr>
-              <tr>
-                <td><code>Q-005</td>
-                <td>Does the NBA publish an official injury report in machine-readable format?</td>
-                <td>PDFs published at ak-static.cms.nba.com; no confirmed JSON API</td>
-                <td>https://ak-static.cms.nba.com/referee/injury/</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Search for official NBA injury-report API; check if PDF parsing is the only option</td>
-              </tr>
-              <tr>
-                <td><code>Q-006</td>
-                <td>What is the historical win rate and ROI of each strategy template (STRAT-001 to STRAT-008)?</td>
-                <td>No backtesting performed yet</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Build backtesting engine; run against 2024-25 and 2025-26 seasons</td>
-              </tr>
-              <tr>
-                <td><code>Q-007</td>
-                <td>How much does a starter's injury reduce teammates' minutes and production?</td>
-                <td>Estimated -100% for injured player; teammate impact unverified</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Analyze official box scores before/after starter injuries; compute minute redistribution</td>
-              </tr>
-              <tr>
-                <td><code>Q-008</td>
-                <td>What is the validation threshold for "edge" on player props vs. bookmaker lines?</td>
-                <td>Estimated ≥ 2.5 points on props; not verified</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Backtest different edge thresholds; find the threshold where win rate exceeds break-even + vig</td>
-              </tr>
-              <tr>
-                <td><code>Q-009</td>
-                <td>Are same-game parlay odds from major sportsbooks priced with correlation adjustments?</td>
-                <td>Yes, per industry guides (not verified from sportsbooks directly)</td>
-                <td>RG, BetUS, FantasyTeamAdvice articles</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Compare SGP payouts vs. individual leg parlay payouts at multiple sportsbooks</td>
-              </tr>
-              <tr>
-                <td><code>Q-010</td>
-                <td>What is the maximum number of days in advance that NBA lines are typically available?</td>
-                <td>Usually 1–2 days; 3-day advance lines may be limited</td>
-                <td>—</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td>Check sportsbook line-posting schedules; monitor line availability timelines</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="notice notice-warning mt-2">
-          <p><strong>No decision should be made</strong> on strategy selection, pick generation, or wagering until Q-001 through Q-010 are resolved or explicitly acknowledged as accepted risks.</p>
-        </div>
-      </section>
-    </main>
-
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html" class="active">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="questions" data-rows="22">
+<h2>Open questions — the decision list</h2>
+<p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Question that blocks a decision</th>
+<th scope="col">What we already have</th>
+<th scope="col">What we do not have</th>
+<th scope="col">How to find out</th>
+<th scope="col">What changes once answered</th>
+<th scope="col">Blocking?</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="Q-01">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Which odds source are we measuring against — and are we allowed to store its closing prices?</td>
+<td>The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.</td>
+<td>Any licensed book price, opening or closing, for any sport.</td>
+<td>Owner picks a vendor (theScore Sportsdata/Odds API, Sportradar, or a sportsbook affiliate feed) and confirms storage rights; then add an ingest to data/raw.</td>
+<td>Everything. Without it there is no &#x27;edge&#x27;, no CLV, no gate G-02, no stake sizing, and no reason to prefer our number over a coin flip.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-02">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Is the product a line-setting desk or a betting-picks desk?</td>
+<td>Both capabilities sketched: pricing engine (works) and bet selection with triggers (needs prices).</td>
+<td>Owner decision on primary objective.</td>
+<td>Answer in one sentence; it changes which gate blocks promotion.</td>
+<td>A line-setting desk is graded on MAE/calibration and is buildable today with zero market data. A picks desk is not buildable until Q-01 is resolved.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-03">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>What is the bankroll unit and the maximum stake per bet?</td>
+<td>A config default of 1% hard cap and quarter-Kelly.</td>
+<td>Whether that is your risk tolerance at all.</td>
+<td>Owner states units (e.g. 1 unit = 0.25% of bankroll).</td>
+<td>Kelly fraction, promotion criteria (G-09) and the reward pool&#x27;s meaning.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-04">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Do we accept that game-day injury data arrives too late for a T-3 publication?</td>
+<td>The official report&#x27;s structure and cadence, plus proof: in the 11/13 16:15 ET release, all ten Nov 14 teams were &#x27;NOT YET SUBMITTED&#x27;.</td>
+<td>Whether you want T-3 lines (injury-blind) only, or a T-0 re-issue after the 13:00 ET report.</td>
+<td>Owner decision; implement as a second daily build at 13:30 ET.</td>
+<td>Determines whether &#x27;3 days in advance&#x27; is a feature or a self-inflicted handicap. Our lines currently apply no injury adjustment at all.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-05">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Can we get official player-level data (minutes, usage, on/off) from the build environment?</td>
+<td>The knowledge that stats.nba.com endpoints are unreachable from here and nba.com/stats tables are client-rendered.</td>
+<td>An accessible official source or a licensed alternative.</td>
+<td>Test from the CI runner (different network than this sandbox); if still blocked, evaluate a commercial feed.</td>
+<td>Props, prop combos, injury impact, and the margin/total correlation all sit behind this one answer.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-06">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Do Emirates NBA Cup group games belong in the same distribution as ordinary regular-season games?</td>
+<td>The 11/13 slate is entirely Cup group play, and Cup games count for group standing with different incentives (winning by margin matters as a tiebreaker).</td>
+<td>Historical evidence on whether Cup games differ in pace, rotations or margin distribution.</td>
+<td>Split the results snapshot by game_type once R-103 lands and test pace/margin differences.</td>
+<td>If Cup games differ, today&#x27;s entire slate is mis-calibrated and the model needs a game-type effect or an exclusion rule.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-07">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?</td>
+<td>Every one of them written down with its rationale and band on the Parameters page.</td>
+<td>A decision, because they currently control which games are actionable.</td>
+<td>Owner reviews the Parameters page and either accepts or edits config.py.</td>
+<td>Gate G-08 and Tier assignment are meaningless while thresholds are &#x27;mine&#x27; rather than &#x27;ours&#x27;.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-08">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Is a 12-game sample enough to trade at all?</td>
+<td>Reliability weights ~0.74-0.78 and a fitted RMSE of 1.31 wins vs 2.78 baseline.</td>
+<td>Your risk policy for early-season modelling.</td>
+<td>Owner decision; a hard rule could be &#x27;no Tier A before 25 games&#x27;.</td>
+<td>Decides whether this slate should have produced zero picks rather than 31 lines.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-09">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>What is the definition of &#x27;removing luck&#x27; you will accept as a gate?</td>
+<td>Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.</td>
+<td>Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.</td>
+<td>Owner picks; add to gates.</td>
+<td>Changes which strategies can win the leaderboard, and therefore what gets built next.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-10">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>How do you want the leaderboard to treat strategies that bet different numbers of games?</td>
+<td>Score components are per-bet averages, so abstention is neither rewarded nor punished beyond sample-size gates.</td>
+<td>Whether volume should carry weight (e.g. minimum coverage per slate).</td>
+<td>Owner decision.</td>
+<td>A &#x27;bet three games a season&#x27; strategy can look elite without a volume term.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-11">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Do we price parlays off our own singles only, or off book parlay prices when available?</td>
+<td>Correlation-swept joint pricing on our own numbers; the ratio (not the level) is publishable today.</td>
+<td>Book parlay prices to compare against.</td>
+<td>Comes free with Q-01.</td>
+<td>Determines whether S-04 is a strategy or an illustration.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-12">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>What is the correct treatment of a two-way/G-League assignment listed on the injury report?</td>
+<td>The report distinguishes &#x27;G League - Two-Way&#x27;, &#x27;G League - On Assignment&#x27; and &#x27;League Suspension&#x27; from injuries, and I count them as absent bodies.</td>
+<td>Whether those absences should affect a rotation-floor model identically to injury.</td>
+<td>Owner decision; implement as a reason-class weighting in injuries.py.</td>
+<td>Our rotation index currently treats a suspended starter and a assigned two-way as similar &#x27;missing bodies&#x27; at different weights.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-13">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Should rewards be paid at all before a strategy is promoted?</td>
+<td>Allocation logic that pays nothing when nothing is promoted (pool 100% unallocated).</td>
+<td>Confirmation that you do not want an activity-based payout.</td>
+<td>Owner decision.</td>
+<td>Paying for participation re-creates the exact incentive this project exists to remove.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-14">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>How should the site behave when the snapshot is stale?</td>
+<td>as-of and generated-at stamps on every page, and the build refuses to run on a future-dated slate.</td>
+<td>A maximum-age policy (e.g. refuse to publish lines older than 24h).</td>
+<td>Add to lint + a scheduled build.</td>
+<td>A 3-day-old line published as &#x27;picks&#x27; is worse than no page.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-15">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>What is the procedure when a game is postponed or a star is ruled out at warmups?</td>
+<td>Nothing — the model has no re-quote path.</td>
+<td>Trigger for re-pricing and a rule for voiding sealed predictions.</td>
+<td>Design a re-seal event in the ledger (new seal with reason, original kept).</td>
+<td>Settling against a cancelled game would corrupt the leaderboard.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-16">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Which team is &#x27;home&#x27; when the schedule says an arena hosts a neutral-site or international game?</td>
+<td>None in this window; the schedule page marks neutralSite only in the JSON endpoints we cannot reach.</td>
+<td>A rule + a data field.</td>
+<td>Add a `neutral` flag to the slate ingest, sourced from the game page.</td>
+<td>HCA would be wrongly applied and every line for that game shifts ~1.5-3 points.</td>
+<td>LOW</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-17">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Do we keep publishing from the repository root, or move to /docs?</td>
+<td>One workflow, root publish, working today.</td>
+<td>Preference.</td>
+<td>Owner picks; /docs is a one-line workflow change.</td>
+<td>Affects every relative link and the existing live URLs.</td>
+<td>LOW</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-18">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Are we allowed to commit third-party ratings data (Basketball-Reference) into this public repo?</td>
+<td>One small facts table, each value linked to its source page, and Sports Reference&#x27;s site terms are not re-checked here.</td>
+<td>A licence/permission reading, or replacement with our own ingestion of official data.</td>
+<td>Owner/legal reads the source&#x27;s terms of use; or implement R-104 and delete the file.</td>
+<td>It is the only input to every line on the site today; if it must go, the model goes blind until R-104 lands.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-19">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>How many strategies is it honest to evaluate at once?</td>
+<td>9 registered; G-06 deflation grows with the trial count.</td>
+<td>A cap or a preregistration rule for new strategies.</td>
+<td>Add a trial registry (S-11) and require preregistration before evaluation.</td>
+<td>With unlimited tries someone always wins the leaderboard by noise.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-20">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Is the ledger&#x27;s git-commit seal enough, or do you want an external timestamp?</td>
+<td>sha256 of canonical JSON, committed with the site.</td>
+<td>Whether you need a trusted third-party timestamp (e.g. RFC3161) for the competition to be credible.</td>
+<td>Owner decides; if yes, add a timestamping step to the build.</td>
+<td>Determines whether another session could dispute a seal after a bad run.</td>
+<td>LOW</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-21">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>What exactly should the executive summary optimise for — opportunity, risk, or project state?</td>
+<td>It currently reports project state and blockers first, because that is the truth today.</td>
+<td>Whether you want a picks-first summary as soon as prices exist.</td>
+<td>Owner decision; the summary is generated, so it is a template change.</td>
+<td>Avoids a summary that reads like a status report when you wanted a betting card.</td>
+<td>LOW</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-22">
+<td><span class="blank" title="blank because: FLAG-QUEST-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Which numbers on this site would change your decision if they moved by 10%?</td>
+<td>A sensitivity band for every structural parameter, and a stability fraction per line.</td>
+<td>Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.</td>
+<td>Owner states a threshold; encode in G-08.</td>
+<td>This is the difference between a research dashboard and a betting system.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.</p>
+</section>
     <footer class="footer">
-      NBA2 &bull; Questions & Answers &bull; Pre-decision review required
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
     </footer>
-  </div>
+  </main>
+</div>
+<script src="../app.js" defer></script>
 </body>
 </html>

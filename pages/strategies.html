@@ -1,149 +1,1228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Betting Strategies - NBA2</title>
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategies · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>NBA2</h1>
-      <div class="subtitle">Betting Strategies &bull; Single Bets &bull; Parlays &bull; Player Prop Combos</div>
-    </header>
-
-    <aside class="sidebar">
-      <nav>
-        <ul>
-          <li><a href="../index.html">Dashboard</a></li>
-          <li><a href="strategies.html" class="active">Betting Strategies</a></li>
-          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
-          <li><a href="injuries.html">Injuries & Rotation</a></li>
-          <li><a href="game-flow.html">Game Flow Analysis</a></li>
-          <li><a href="executive-summary.html">Executive Summary</a></li>
-          <li><a href="suggestions.html">Site Suggestions</a></li>
-          <li><a href="questions.html">Questions & Answers</a></li>
-          <li><a href="flagged-review.html">Flagged for Review</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
-      <section class="card">
-        <h2>Validated Betting Strategies</h2>
-        <p class="font-small text-muted mb-2">All strategies must pass validation gates. Correlation values are determined from statistical relationships. Luck is removed by focusing on selectively skill-based edges: minutes prediction, usage rate, matchup differentials, and correlation mispricing.</p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Strategy ID</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Correlation Value</th>
-                <th>Validation Gate</th>
-                <th>Status</th>
-                <th>Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>STRAT-001</code></td>
-                <td><span class="badge badge-single">Single Bet</span></td>
-                <td>Player points prop over — target players with minutes floor above bookmaker-implied minutes; edge from minutes deviation.</td>
-                <td>Minutes-to-points correlation r ≈ 0.82 (per-minute usage)</td>
-                <td>Projected minutes &gt; line-implied minutes by ≥ 5 min; usage rate ≥ league avg for position</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-002</code></td>
-                <td><span class="badge badge-parlay">Parlay</span></td>
-                <td>Same-game parlay: team moneyline + star player points over + game total over. Positive correlation: high-scoring star performance lifts team win probability and total.</td>
-                <td>Positive correlation between star points and team win; r ≈ 0.65 (estimated)</td>
-                <td>All three legs share same game script thesis; no contradictory legs (e.g., blowout + under)</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://rg.org/guides/basketball/same-game-parlay" class="source-link">Same-Game Parlay Guide</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-003</code></td>
-                <td><span class="badge badge-parlay">Parlay</span></td>
-                <td>Same-game parlay: favorite spread + under on game total + under on starters' 4th-quarter props. Projected blowout → starters sit early → lower total.</td>
-                <td>Negative correlation between blowout margin and total points; starters' minutes reduced in blowouts</td>
-                <td>Projected spread ≥ 12 points; total line ≥ 5 pts above projected blowout total</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://fantasyteamadvice.com/nba/betting" class="source-link">NBA Betting Strategy Guide</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-004</code></td>
-                <td><span class="badge badge-prop">Player Prop</span></td>
-                <td>Player rebounds over — target players vs. teams with high opponent rebound rate allowed at their position (Defense vs. Position).</td>
-                <td>Positional defensive vulnerability correlation; r ≈ 0.58 (estimated)</td>
-                <td>Opponent allows ≥ league average + 3% rebound rate to player's position</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-005</code></td>
-                <td><span class="badge badge-prop">Player Prop</span></td>
-                <td>Player assists over — high-usage point guard vs. team with high opponent assists allowed per game; pace-adjusted.</td>
-                <td>Pace × usage × assist% correlation; r ≈ 0.71 (estimated)</td>
-                <td>Pace ≥ 96 possessions; player usage% ≥ 25%; opponent DvP assists allowed ≥ league avg + 4%</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-006</code></td>
-                <td><span class="badge badge-parlay">Parlay</span></td>
-                <td>Multi-game player prop parlay across 2–3 games, one prop per team per game, no correlated legs within same team. Avoids correlation trap where one game script kills multiple legs.</td>
-                <td>Zero intra-team correlation by design; inter-game independence assumed</td>
-                <td>Max 1 prop per team per game; no two props from same team; max 4 legs</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://bestnbabetsystems.com/articles/nba-player-props-strategy/" class="source-link">Player Props System Research</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-007</code></td>
-                <td><span class="badge badge-single">Single Bet</span></td>
-                <td>Game total under — back-to-back road game for high-pace offense; fatigue reduces shooting efficiency and pace.</td>
-                <td>Back-to-back fatigue reduces pace by ~1.5 possessions (estimated)</td>
-                <td>Team playing 2nd game of back-to-back on road; opponent resting ≥ 2 days</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ (Pace)</a></td>
-              </tr>
-              <tr>
-                <td><code>STRAT-008</code></td>
-                <td><span class="badge badge-parlay">Parlay</span></td>
-                <td>Same-game parlay: under on both teams' primary scorer props + under on game total. Projected defensive grind → low usage for both stars.</td>
-                <td>Negative correlation between defensive game script and star scoring; r ≈ -0.48 (estimated)</td>
-                <td>Both teams ranked top-10 in defensive rating; projected pace ≤ 92; total line ≥ 6 pts above projected</td>
-                <td><span class="flag flag-unverified">unverified</span></td>
-                <td><a href="https://www.betus.com.pa/help/how-to/sport/nba/how-to-bet-on-nba-parlays-a-complete-guide-to-odds-strategy/" class="source-link">NBA Parlay Strategy Guide</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="notice notice-warning mt-2">
-          <p><strong>Correlation values marked as estimated</strong> are not yet verified against official NBA play-by-play or shot-log data. They represent research-level estimates and must be validated before any wagering decision.</p>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Validation Gates Framework</h2>
-        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-          <li><strong>Minutes Gate:</strong> No player prop is considered without a projected minutes floor. A player's statistical output is almost perfectly correlated with minutes played.</li>
-          <li><strong>Usage Gate:</strong> Player must have usage rate ≥ league average for their position, or a demonstrated matchup mismatch increasing usage.</li>
-          <li><strong>Correlation Gate:</strong> Parlay legs must have a documented correlation thesis. Contradictory legs (e.g., team blowout + game over) are prohibited.</li>
-          <li><strong>Edge Gate:</strong> Projected value must exceed the bookmaker line by a margin wide enough to absorb NBA player variance (typically ≥ 2.5 points on props, ≥ 3 points on spreads).</li>
-          <li><strong>Injury Gate:</strong> Any starter listed Out, Doubtful, or Questionable on the official NBA injury report triggers a rotation-minutes review before the strategy is approved.</li>
-        </ul>
-      </section>
-    </main>
-
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html" class="active">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Strategies</h2><p>Hypotheses, gates and scores. Empty scores are the honest state of a project that has settled nothing.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="leaderboard" data-rows="9">
+<h2>Strategy leaderboard</h2>
+<p class="blurb">Nothing is ranked, because nothing has been measured yet — and an early-season leaderboard built on 12 games of standings is a noise leaderboard by construction. Every row is scored the moment its gates have data; until then the honest entry is blank.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Strategy leaderboard</caption><thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Strategy</th>
+<th scope="col">Family</th>
+<th scope="col">Score /100</th>
+<th scope="col">Tier</th>
+<th scope="col">Gates</th>
+<th scope="col">Settled bets</th>
+<th scope="col">Cluster</th>
+<th scope="col">Reward</th>
+<th scope="col">Why it cannot win yet</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="S-01">
+<td>S-01</td>
+<td>Reliability-Shrunk Spread (RSS)</td>
+<td>single</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-01</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-02">
+<td>S-02</td>
+<td>Two-Rating Agreement Filter (TRAF)</td>
+<td>single</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-02</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-03">
+<td>S-03</td>
+<td>Pace-Neutral Total Anchor (PNTA)</td>
+<td>single</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-03</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-04">
+<td>S-04</td>
+<td>Correlation-Hedged Two-Leg Parlay (CHP2)</td>
+<td>parlay</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-04</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-05">
+<td>S-05</td>
+<td>Cross-Slate Correlated Parlay (XSCP)</td>
+<td>parlay</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-05</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-06">
+<td>S-06</td>
+<td>Availability-Blind Guardrail Fade (ABGF)</td>
+<td>single</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-06</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-07">
+<td>S-07</td>
+<td>Schedule-Spot Fade (SSF)</td>
+<td>single</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-07</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-08">
+<td>S-08</td>
+<td>Player-Prop Minutes Model (PPMM)</td>
+<td>prop</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-08</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+<tr id="S-09">
+<td>S-09</td>
+<td>Ledger-Only Champion (LOC)</td>
+<td>meta</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Blocked</td>
+<td>0 pass / 0 fail / 10 blocked</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>S-09</td>
+<td><span class="blank" title="blank because: FLAG-LB-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>G-01: Ledger opens with the 2026-11-13 slate; nothing has settled yet.; G-02: CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">nba2/models/leaderboard.py; weights in nba2/config.py::REWARD_WEIGHTS</p>
+</section><section class="card table-card" id="gates" data-rows="10">
+<h2>Validation gates — specification</h2>
+<p class="blurb">A strategy must clear all ten to be promoted and to receive rewards. Nine of the ten are currently blocked by missing data, which is the real status of this project and the reason the leaderboard is empty.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Validation gates — specification</caption><thead><tr>
+<th scope="col">Gate</th>
+<th scope="col">Name</th>
+<th scope="col">Rule</th>
+<th scope="col">Threshold</th>
+<th scope="col">Why it exists</th>
+<th scope="col">Basis</th>
+<th scope="col">Status</th>
+<th scope="col">Blocking reason</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="G-01">
+<td>G-01</td>
+<td>Sample size</td>
+<td>&gt;= 300 settled bets for team markets; &gt;= 500 for player props.</td>
+<td>300 settled bets</td>
+<td>At -110 a 55% bettor needs roughly 300 bets before the standard error (sqrt(p(1-p)/n) ~ 2.9%) stops swamping a 5-point edge. Below this the leaderboard is ranking noise.</td>
+<td>derived from the binomial standard error at p=0.55 — see research/05-skill-vs-luck.md</td>
+<td>blocked</td>
+<td>No settled bets yet. Ledger opens with the 2026-11-13 slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-02">
+<td>G-02</td>
+<td>Closing line value (CLV)</td>
+<td>Mean CLV vs. closing number &gt; 0 with a bootstrap 95% CI excluding 0.</td>
+<td><span class="blank" title="blank because: FLAG-GATE-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>CLV is the single least-luck-dependent measure of whether a line beats the market.</td>
+<td>BLOCKED: requires a licensed odds feed (requirements R-101)</td>
+<td>blocked</td>
+<td>No market prices captured. Our lines are published, but nothing to beat them yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-03">
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>Brier score &lt;= 0.245 on settled games AND calibration slope in [0.85, 1.15] AND intercept in [-0.10, 0.10].</td>
+<td>0.245 brier</td>
+<td>0.25 is the Brier score of always forecasting 50%; a line-originator must beat that and be calibrated, otherwise the stake sizing is fiction.</td>
+<td>derived: Brier (1950) definition; threshold is our own proposal (unratified)</td>
+<td>blocked</td>
+<td>Needs &gt;= 100 settled games.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-04">
+<td>G-04</td>
+<td>Line accuracy vs. naive baselines</td>
+<td>Mean absolute error of our spread must beat BOTH baselines: (a) 0.0 spread, (b) raw point-differential-per-game, by &gt;= 0.30 points.</td>
+<td>0.3 points MAE</td>
+<td>A line that only reproduces the standings&#x27; scoring margin adds no work; if shrinkage and schedule adjustment do not reduce error, delete the model.</td>
+<td>derived from the snapshot baselines in nba2.models.gates</td>
+<td>blocked</td>
+<td>Needs settled games with official final scores.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-05">
+<td>G-05</td>
+<td>Luck removal</td>
+<td>Bootstrap (10,000 resamples, fixed seed) 95% CI of ROI excludes 0; t-stat &gt;= 2.0; and the luck-adjusted PnL (each bet replaced by its model-expected PnL, variance kept) must not reverse the sign.</td>
+<td>2.0 t-stat</td>
+<td>Separates &#x27;won&#x27; from &#x27;right&#x27;. A strategy whose PnL is explained by a few lucky bad beats fails here even if the record is positive.</td>
+<td>derived: standard bootstrap / t-test; see research/05-skill-vs-luck.md</td>
+<td>blocked</td>
+<td>Needs settled bets.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-06">
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>Across every strategy ever evaluated in the same window, apply Holm-Bonferroni to the CLV t-tests and require the Deflated Sharpe Ratio &gt; 0.</td>
+<td>0.05 family-wise alpha</td>
+<td>A leaderboard with N trials will produce a &#x27;best&#x27; strategy by pure search. Punishing the number of tries is the only defence.</td>
+<td>derived: Holm (1979); Deflated Sharpe = Bailey &amp; Lopez de Prado (2014) formulation</td>
+<td>blocked</td>
+<td>Requires G-02 inputs and a complete trial ledger (see S-11).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-07">
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>Every feature timestamped at or before tip-off; train on the first 70% of the window, test on the final 30%; test MAE must not exceed full-window MAE by more than 25%.</td>
+<td>0.25 relative degradation</td>
+<td>Ratings built from a standings snapshot include future games for the teams that played earlier; that leak is silent and fatal.</td>
+<td>derived from our own ingest design (see research/01-line-origination.md &#x27;point-in-time&#x27;)</td>
+<td>at risk</td>
+<td>The current snapshot is a single as-of standings table, which is NOT point-in-time for games inside the week it covers. Backtests from this table would leak; only the forward ledger is clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-08">
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>Re-price the slate over the full sensitivity box of every unratified parameter; a pick is only published if its side is unchanged in &gt;= 90% of the grid.</td>
+<td>0.9 fraction of grid</td>
+<td>If a 10% change in sigma flips the pick, the pick is a parameter, not a signal.</td>
+<td>derived: implemented in nba2.models.gates.sensitivity_stability</td>
+<td>evaluated</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-09">
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>Survive -110 vig, 1% hard-cap stake, 25% Kelly, and a re-quote of the model at the reference price minus 0.25 points of expected slippage.</td>
+<td>0.01 fraction of bankroll</td>
+<td>Lines that only win before the vig, or before you move size, are not tradeable.</td>
+<td>derived: REFERENCE_PRICE + staking config</td>
+<td>evaluated</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="G-10">
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>If a player on the official report with an Out/Doubtful status cannot be mapped to a quantified minutes delta, the line is published availability-blind and the game is marked INJURY-BLIND. No bet may be Tier A on an injury-blind game after the 13:00 ET report on game day.</td>
+<td><span class="blank" title="blank because: FLAG-GATE-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Otherwise the model silently assumes injuries do not matter, which is exactly when a naive line is most wrong.</td>
+<td>official report structure: https://ak-static.cms.nba.com/referee/injury/ (no minutes fields)</td>
+<td>evaluated</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">nba2/config.py::GATES</p>
+</section><section class="card table-card" id="gate_matrix" data-rows="90">
+<h2>Gate-by-gate results (9 strategies × 10 gates)</h2>
+<p class="blurb">PASS requires a measurement. BLOCKED means the input does not exist; AT-RISK means the input exists but is contaminated for this use. Neither is a 0 and neither is a pass.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Gate-by-gate results (9 strategies × 10 gates)</caption><thead><tr>
+<th scope="col">Strategy</th>
+<th scope="col">Gate</th>
+<th scope="col">Gate name</th>
+<th scope="col">Result</th>
+<th scope="col">Measurement</th>
+<th scope="col">Reason / block</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="S-01-G-01">
+<td>S-01</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-02">
+<td>S-01</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-03">
+<td>S-01</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-04">
+<td>S-01</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-05">
+<td>S-01</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-06">
+<td>S-01</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-07">
+<td>S-01</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-08">
+<td>S-01</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-09">
+<td>S-01</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-01-G-10">
+<td>S-01</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-01">
+<td>S-02</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-02">
+<td>S-02</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-03">
+<td>S-02</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-04">
+<td>S-02</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-05">
+<td>S-02</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-06">
+<td>S-02</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-07">
+<td>S-02</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-08">
+<td>S-02</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-09">
+<td>S-02</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-02-G-10">
+<td>S-02</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-01">
+<td>S-03</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-02">
+<td>S-03</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-03">
+<td>S-03</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-04">
+<td>S-03</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-05">
+<td>S-03</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-06">
+<td>S-03</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-07">
+<td>S-03</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-08">
+<td>S-03</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-09">
+<td>S-03</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-03-G-10">
+<td>S-03</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-01">
+<td>S-04</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-02">
+<td>S-04</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-03">
+<td>S-04</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-04">
+<td>S-04</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-05">
+<td>S-04</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-06">
+<td>S-04</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-07">
+<td>S-04</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-08">
+<td>S-04</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-09">
+<td>S-04</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-04-G-10">
+<td>S-04</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-01">
+<td>S-05</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-02">
+<td>S-05</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-03">
+<td>S-05</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-04">
+<td>S-05</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-05">
+<td>S-05</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-06">
+<td>S-05</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-07">
+<td>S-05</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-08">
+<td>S-05</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-09">
+<td>S-05</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-05-G-10">
+<td>S-05</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-01">
+<td>S-06</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-02">
+<td>S-06</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-03">
+<td>S-06</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-04">
+<td>S-06</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-05">
+<td>S-06</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-06">
+<td>S-06</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-07">
+<td>S-06</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-08">
+<td>S-06</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-09">
+<td>S-06</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-06-G-10">
+<td>S-06</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-01">
+<td>S-07</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-02">
+<td>S-07</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-03">
+<td>S-07</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-04">
+<td>S-07</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-05">
+<td>S-07</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-06">
+<td>S-07</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-07">
+<td>S-07</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-08">
+<td>S-07</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-09">
+<td>S-07</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-07-G-10">
+<td>S-07</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-01">
+<td>S-08</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-02">
+<td>S-08</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-03">
+<td>S-08</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-04">
+<td>S-08</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-05">
+<td>S-08</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-06">
+<td>S-08</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-07">
+<td>S-08</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-08">
+<td>S-08</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-09">
+<td>S-08</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-08-G-10">
+<td>S-08</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-01">
+<td>S-09</td>
+<td>G-01</td>
+<td>Sample size</td>
+<td>BLOCKED</td>
+<td>not measured settled bets (need 300)</td>
+<td>Ledger opens with the 2026-11-13 slate; nothing has settled yet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-02">
+<td>S-09</td>
+<td>G-02</td>
+<td>Closing line value</td>
+<td>BLOCKED</td>
+<td>no market prices captured</td>
+<td>CLV cannot be computed without an odds feed (R-101). This blocks promotion.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-03">
+<td>S-09</td>
+<td>G-03</td>
+<td>Probability calibration</td>
+<td>BLOCKED</td>
+<td>brier=not measured; slope=not measured; intercept=not measured</td>
+<td>Needs &gt;= 100 settled games with official outcomes.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-04">
+<td>S-09</td>
+<td>G-04</td>
+<td>Line accuracy vs baselines</td>
+<td>BLOCKED</td>
+<td>no settled games</td>
+<td>Requires official final scores for games in the sealed ledger.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-05">
+<td>S-09</td>
+<td>G-05</td>
+<td>Luck removal</td>
+<td>BLOCKED</td>
+<td>no settled bets</td>
+<td>Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-06">
+<td>S-09</td>
+<td>G-06</td>
+<td>Multiple-testing control</td>
+<td>BLOCKED</td>
+<td>no trial ledger</td>
+<td>Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-07">
+<td>S-09</td>
+<td>G-07</td>
+<td>Walk-forward, no lookahead</td>
+<td>AT-RISK</td>
+<td>snapshot is not point-in-time</td>
+<td>A single as-of standings table leaks future games for teams that play early in the window. Only forward predictions are clean.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-08">
+<td>S-09</td>
+<td>G-08</td>
+<td>Parameter robustness</td>
+<td>BLOCKED</td>
+<td>not computed</td>
+<td>—</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-09">
+<td>S-09</td>
+<td>G-09</td>
+<td>Cost and capacity</td>
+<td>BLOCKED</td>
+<td>reference price 1.9091 is a placeholder, not a quote</td>
+<td>Cannot net out vig we have never seen.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="S-09-G-10">
+<td>S-09</td>
+<td>G-10</td>
+<td>Availability-adjustment guardrail</td>
+<td>AT-RISK</td>
+<td>100% of published games are injury-blind</td>
+<td>Every game is injury-blind because player-level minutes data is absent; Tier A is therefore suppressed across the whole slate.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Thresholds in nba2/config.py::GATES are PROPOSED and require owner ratification.</p>
+</section>
     <footer class="footer">
-      NBA2 &bull; Betting Strategies &bull; Sources: NBA.com, Basketball-Reference, industry strategy guides
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
     </footer>
-  </div>
+  </main>
+</div>
+<script src="../app.js" defer></script>
 </body>
 </html>

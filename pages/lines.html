@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lines · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html" class="active">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Lines</h2><p>Our numbers, one row per game, with the disagreement between the two base ratings printed next to the line.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="lines" data-rows="31">
+<h2>Originated lines for every game in the window</h2>
+<p class="blurb">Spread/total are our numbers, quoted in half-point increments so nothing pushes. Positive consensus margin = home team favoured. No column here is a market price: with no odds feed these lines cannot be compared to a book, and we do not pretend otherwise.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Originated lines for every game in the window</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">ET</th>
+<th scope="col">Matchup</th>
+<th scope="col">Margin (SRS)</th>
+<th scope="col">Margin (raw net)</th>
+<th scope="col">Consensus margin</th>
+<th scope="col">OUR SPREAD</th>
+<th scope="col">OUR TOTAL</th>
+<th scope="col">Expected score</th>
+<th scope="col">P(home win)</th>
+<th scope="col">Fair ML (home/away)</th>
+<th scope="col">Conviction</th>
+<th scope="col">Model disagreement</th>
+<th scope="col">Sensitivity stability</th>
+<th scope="col">Tier</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>NYK @ IND</td>
+<td>-4.56</td>
+<td>-5.45</td>
+<td>-5.00</td>
+<td>IND +5.0</td>
+<td>219.5</td>
+<td>112.4 @ 107.3</td>
+<td>35.6%</td>
+<td>2.81 / 1.55</td>
+<td>0.37σ</td>
+<td>0.90 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>MIL @ ORL</td>
+<td>+7.82</td>
+<td>+8.55</td>
+<td>+8.18</td>
+<td>ORL -8.0</td>
+<td>225.5</td>
+<td>108.6 @ 116.7</td>
+<td>72.7%</td>
+<td>1.38 / 3.66</td>
+<td>0.60σ</td>
+<td>0.73 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>CLE @ MIA</td>
+<td>-2.55</td>
+<td>-3.33</td>
+<td>-2.94</td>
+<td>MIA +3.0</td>
+<td>233.0</td>
+<td>118.1 @ 115.1</td>
+<td>41.4%</td>
+<td>2.41 / 1.71</td>
+<td>0.22σ</td>
+<td>0.78 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>ATL @ CHI</td>
+<td>-9.56</td>
+<td>-11.50</td>
+<td>-10.53</td>
+<td>CHI +10.5</td>
+<td>238.5</td>
+<td>124.4 @ 113.9</td>
+<td>21.9%</td>
+<td>4.57 / 1.28</td>
+<td>0.78σ</td>
+<td>1.95 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>MEM @ NOP</td>
+<td>-7.97</td>
+<td>-8.70</td>
+<td>-8.34</td>
+<td>NOP +8.5</td>
+<td>235.5</td>
+<td>121.9 @ 113.6</td>
+<td>27.0%</td>
+<td>3.71 / 1.37</td>
+<td>0.61σ</td>
+<td>0.73 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>20:30</td>
+<td>UTA @ HOU</td>
+<td>+17.55</td>
+<td>+17.25</td>
+<td>+17.40</td>
+<td>HOU -17.5</td>
+<td>223.5</td>
+<td>102.9 @ 120.4</td>
+<td>90.0%</td>
+<td>1.11 / 10.00</td>
+<td>1.28σ</td>
+<td>0.31 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>21:30</td>
+<td>GSW @ SAS</td>
+<td>+2.15</td>
+<td>+4.15</td>
+<td>+3.15</td>
+<td>SAS -3.0</td>
+<td>229.0</td>
+<td>112.9 @ 116.1</td>
+<td>59.2%</td>
+<td>1.69 / 2.45</td>
+<td>0.23σ</td>
+<td>2.00 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>22:00</td>
+<td>POR @ SAC</td>
+<td>-13.76</td>
+<td>-13.49</td>
+<td>-13.62</td>
+<td>SAC +13.5</td>
+<td>230.5</td>
+<td>122.1 @ 108.5</td>
+<td>15.8%</td>
+<td>6.33 / 1.19</td>
+<td>1.00σ</td>
+<td>0.27 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>22:30</td>
+<td>OKC @ LAC</td>
+<td>-7.05</td>
+<td>-6.05</td>
+<td>-6.55</td>
+<td>LAC +6.5</td>
+<td>224.0</td>
+<td>115.4 @ 108.8</td>
+<td>31.5%</td>
+<td>3.18 / 1.46</td>
+<td>0.48σ</td>
+<td>1.00 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>19:00</td>
+<td>DEN @ NOP</td>
+<td>-7.33</td>
+<td>-5.05</td>
+<td>-6.19</td>
+<td>NOP +6.0</td>
+<td>234.5</td>
+<td>120.3 @ 114.2</td>
+<td>32.4%</td>
+<td>3.08 / 1.48</td>
+<td>0.46σ</td>
+<td>2.28 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>19:30</td>
+<td>DAL @ CLE</td>
+<td>-0.28</td>
+<td>+2.38</td>
+<td>+1.05</td>
+<td>CLE -1.0</td>
+<td>228.0</td>
+<td>113.5 @ 114.5</td>
+<td>53.1%</td>
+<td>1.88 / 2.13</td>
+<td>0.08σ</td>
+<td>2.66 pts</td>
+<td>67%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>DET @ MIA</td>
+<td>-4.56</td>
+<td>-7.53</td>
+<td>-6.04</td>
+<td>MIA +6.0</td>
+<td>229.5</td>
+<td>117.8 @ 111.7</td>
+<td>32.8%</td>
+<td>3.05 / 1.49</td>
+<td>0.45σ</td>
+<td>2.97 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>BKN @ MEM</td>
+<td>+10.80</td>
+<td>+9.91</td>
+<td>+10.36</td>
+<td>MEM -10.5</td>
+<td>227.5</td>
+<td>108.6 @ 119.0</td>
+<td>77.7%</td>
+<td>1.29 / 4.49</td>
+<td>0.76σ</td>
+<td>0.90 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>CHI @ MIN</td>
+<td>+22.97</td>
+<td>+23.27</td>
+<td>+23.12</td>
+<td>MIN -23.0</td>
+<td>233.5</td>
+<td>105.3 @ 128.4</td>
+<td>95.6%</td>
+<td>1.05 / 22.56</td>
+<td>1.70σ</td>
+<td>0.30 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>13:00</td>
+<td>IND @ PHI</td>
+<td>+4.60</td>
+<td>+4.79</td>
+<td>+4.70</td>
+<td>PHI -4.5</td>
+<td>223.0</td>
+<td>109.2 @ 113.9</td>
+<td>63.5%</td>
+<td>1.57 / 2.74</td>
+<td>0.35σ</td>
+<td>0.19 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>16:00</td>
+<td>LAL @ PHX</td>
+<td>-4.33</td>
+<td>-8.06</td>
+<td>-6.20</td>
+<td>PHX +6.0</td>
+<td>232.0</td>
+<td>119.1 @ 113.0</td>
+<td>32.4%</td>
+<td>3.09 / 1.48</td>
+<td>0.46σ</td>
+<td>3.73 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>16:30</td>
+<td>CHA @ LAC</td>
+<td>+9.29</td>
+<td>+5.66</td>
+<td>+7.48</td>
+<td>LAC -7.5</td>
+<td>219.5</td>
+<td>105.9 @ 113.4</td>
+<td>70.9%</td>
+<td>1.41 / 3.44</td>
+<td>0.55σ</td>
+<td>3.64 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>17:00</td>
+<td>SAS @ UTA</td>
+<td>-13.34</td>
+<td>-15.96</td>
+<td>-14.65</td>
+<td>UTA +14.5</td>
+<td>226.0</td>
+<td>120.3 @ 105.7</td>
+<td>14.0%</td>
+<td>7.12 / 1.16</td>
+<td>1.08σ</td>
+<td>2.62 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>18:00</td>
+<td>DAL @ BOS</td>
+<td>+3.32</td>
+<td>+9.39</td>
+<td>+6.35</td>
+<td>BOS -6.5</td>
+<td>221.5</td>
+<td>107.5 @ 113.9</td>
+<td>68.0%</td>
+<td>1.47 / 3.12</td>
+<td>0.47σ</td>
+<td>6.07 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>18:00</td>
+<td>NYK @ TOR</td>
+<td>-0.34</td>
+<td>-2.45</td>
+<td>-1.39</td>
+<td>TOR +1.5</td>
+<td>220.5</td>
+<td>110.9 @ 109.5</td>
+<td>45.9%</td>
+<td>2.18 / 1.85</td>
+<td>0.10σ</td>
+<td>2.10 pts</td>
+<td>83%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>19:00</td>
+<td>HOU @ WAS</td>
+<td>-15.82</td>
+<td>-9.88</td>
+<td>-12.85</td>
+<td>WAS +13.0</td>
+<td>224.0</td>
+<td>118.3 @ 105.5</td>
+<td>17.2%</td>
+<td>5.81 / 1.21</td>
+<td>0.95σ</td>
+<td>5.94 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>20:00</td>
+<td>ATL @ MIL</td>
+<td>-8.41</td>
+<td>-11.26</td>
+<td>-9.83</td>
+<td>MIL +10.0</td>
+<td>231.5</td>
+<td>120.6 @ 110.7</td>
+<td>23.4%</td>
+<td>4.26 / 1.31</td>
+<td>0.72σ</td>
+<td>2.85 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>21:00</td>
+<td>OKC @ SAC</td>
+<td>-12.02</td>
+<td>-11.29</td>
+<td>-11.65</td>
+<td>SAC +11.5</td>
+<td>223.5</td>
+<td>117.7 @ 106.0</td>
+<td>19.5%</td>
+<td>5.12 / 1.24</td>
+<td>0.86σ</td>
+<td>0.73 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>ORL @ BOS</td>
+<td>+9.77</td>
+<td>+14.31</td>
+<td>+12.04</td>
+<td>BOS -12.0</td>
+<td>220.0</td>
+<td>104.0 @ 116.0</td>
+<td>81.2%</td>
+<td>1.23 / 5.33</td>
+<td>0.89σ</td>
+<td>4.54 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>CHI @ CLE</td>
+<td>+13.61</td>
+<td>+14.56</td>
+<td>+14.09</td>
+<td>CLE -14.0</td>
+<td>236.5</td>
+<td>111.2 @ 125.2</td>
+<td>85.0%</td>
+<td>1.18 / 6.68</td>
+<td>1.04σ</td>
+<td>0.95 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>MEM @ WAS</td>
+<td>-9.40</td>
+<td>-7.55</td>
+<td>-8.47</td>
+<td>WAS +8.5</td>
+<td>228.0</td>
+<td>118.1 @ 109.7</td>
+<td>26.6%</td>
+<td>3.75 / 1.36</td>
+<td>0.62σ</td>
+<td>1.85 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>19:30</td>
+<td>PHI @ BKN</td>
+<td>-3.14</td>
+<td>-3.73</td>
+<td>-3.44</td>
+<td>BKN +3.5</td>
+<td>223.0</td>
+<td>113.2 @ 109.8</td>
+<td>40.0%</td>
+<td>2.50 / 1.67</td>
+<td>0.25σ</td>
+<td>0.59 pts</td>
+<td>100%</td>
+<td>B</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>19:30</td>
+<td>HOU @ MIA</td>
+<td>-11.61</td>
+<td>-8.57</td>
+<td>-10.09</td>
+<td>MIA +10.0</td>
+<td>229.0</td>
+<td>119.4 @ 109.4</td>
+<td>22.9%</td>
+<td>4.37 / 1.30</td>
+<td>0.74σ</td>
+<td>3.04 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>20:00</td>
+<td>POR @ MIN</td>
+<td>+3.72</td>
+<td>+6.42</td>
+<td>+5.07</td>
+<td>MIN -5.0</td>
+<td>228.5</td>
+<td>111.7 @ 116.8</td>
+<td>64.6%</td>
+<td>1.55 / 2.82</td>
+<td>0.37σ</td>
+<td>2.70 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>20:00</td>
+<td>GSW @ NOP</td>
+<td>-12.62</td>
+<td>-10.18</td>
+<td>-11.40</td>
+<td>NOP +11.5</td>
+<td>236.0</td>
+<td>123.7 @ 112.3</td>
+<td>20.1%</td>
+<td>4.99 / 1.25</td>
+<td>0.84σ</td>
+<td>2.44 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>21:00</td>
+<td>PHX @ DEN</td>
+<td>+3.73</td>
+<td>+5.73</td>
+<td>+4.73</td>
+<td>DEN -4.5</td>
+<td>228.0</td>
+<td>111.5 @ 116.3</td>
+<td>63.6%</td>
+<td>1.57 / 2.75</td>
+<td>0.35σ</td>
+<td>2.00 pts</td>
+<td>100%</td>
+<td>C</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Reproduce: python -m nba2.pipeline.build_site_data</p>
+</section><section class="card table-card" id="slate" data-rows="31">
+<h2>Verified slate — 2026-11-13 → 2026-11-16 (31 games)</h2>
+<p class="blurb">Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA&#x27;s own; per-date game counts (9 / 5 / 9 / 8) match the calendar grid on the same page.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Verified slate — 2026-11-13 → 2026-11-16 (31 games)</caption><thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Tip (ET)</th>
+<th scope="col">Matchup (away @ home)</th>
+<th scope="col">Official game ID</th>
+<th scope="col">Arena</th>
+<th scope="col">City</th>
+<th scope="col">Broadcast</th>
+<th scope="col">Emirates NBA Cup</th>
+<th scope="col">Official game page</th>
+<th scope="col">Link status</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>NYK @ IND</td>
+<td>0022600034</td>
+<td>Gainbridge Fieldhouse</td>
+<td>Indianapolis, IN</td>
+<td>Prime Video</td>
+<td>East Group B</td>
+<td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>19:00</td>
+<td>MIL @ ORL</td>
+<td>0022600035</td>
+<td>Kia Center</td>
+<td>Orlando, FL</td>
+<td>League Pass</td>
+<td>East Group A</td>
+<td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>CLE @ MIA</td>
+<td>0022600036</td>
+<td>Kaseya Center</td>
+<td>Miami, FL</td>
+<td>League Pass</td>
+<td>East Group B</td>
+<td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>ATL @ CHI</td>
+<td>0022600037</td>
+<td>United Center</td>
+<td>Chicago, IL</td>
+<td>League Pass</td>
+<td>East Group C</td>
+<td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>20:00</td>
+<td>MEM @ NOP</td>
+<td>0022600038</td>
+<td>Smoothie King Center</td>
+<td>New Orleans, LA</td>
+<td>League Pass</td>
+<td>West Group B</td>
+<td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>20:30</td>
+<td>UTA @ HOU</td>
+<td>0022600039</td>
+<td>Toyota Center</td>
+<td>Houston, TX</td>
+<td>League Pass</td>
+<td>West Group A</td>
+<td>https://www.nba.com/game/uta-vs-hou-0022600039</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>21:30</td>
+<td>GSW @ SAS</td>
+<td>0022600040</td>
+<td>Frost Bank Center</td>
+<td>San Antonio, TX</td>
+<td>Prime Video</td>
+<td>West Group C</td>
+<td>https://www.nba.com/game/gsw-vs-sas-0022600040</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>22:00</td>
+<td>POR @ SAC</td>
+<td>0022600041</td>
+<td>Golden 1 Center</td>
+<td>Sacramento, CA</td>
+<td>League Pass</td>
+<td>West Group C</td>
+<td>https://www.nba.com/game/por-vs-sac-0022600041</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>22:30</td>
+<td>OKC @ LAC</td>
+<td>0022600042</td>
+<td>Intuit Dome</td>
+<td>Inglewood, CA</td>
+<td>League Pass</td>
+<td>West Group B</td>
+<td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>19:00</td>
+<td>DEN @ NOP</td>
+<td>0022600231</td>
+<td>Smoothie King Center</td>
+<td>New Orleans, LA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/den-vs-nop-0022600231</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>19:30</td>
+<td>DAL @ CLE</td>
+<td>0022600232</td>
+<td>Rocket Arena</td>
+<td>Cleveland, OH</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/dal-vs-cle-0022600232</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>DET @ MIA</td>
+<td>0022600233</td>
+<td>Kaseya Center</td>
+<td>Miami, FL</td>
+<td>NBA TV / League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/det-vs-mia-0022600233</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>BKN @ MEM</td>
+<td>0022600234</td>
+<td>FedExForum</td>
+<td>Memphis, TN</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/bkn-vs-mem-0022600234</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>20:00</td>
+<td>CHI @ MIN</td>
+<td>0022600235</td>
+<td>Target Center</td>
+<td>Minneapolis, MN</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/chi-vs-min-0022600235</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>13:00</td>
+<td>IND @ PHI</td>
+<td>0022600236</td>
+<td>Xfinity Mobile Arena</td>
+<td>Philadelphia, PA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/ind-vs-phi-0022600236</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>16:00</td>
+<td>LAL @ PHX</td>
+<td>0022600237</td>
+<td>Mortgage Matchup Center</td>
+<td>Phoenix, AZ</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/lal-vs-phx-0022600237</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>16:30</td>
+<td>CHA @ LAC</td>
+<td>0022600238</td>
+<td>Intuit Dome</td>
+<td>Inglewood, CA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/cha-vs-lac-0022600238</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>17:00</td>
+<td>SAS @ UTA</td>
+<td>0022600239</td>
+<td>Delta Center</td>
+<td>Salt Lake City, UT</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/sas-vs-uta-0022600239</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>18:00</td>
+<td>DAL @ BOS</td>
+<td>0022600240</td>
+<td>TD Garden</td>
+<td>Boston, MA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/dal-vs-bos-0022600240</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>18:00</td>
+<td>NYK @ TOR</td>
+<td>0022600241</td>
+<td>Scotiabank Arena</td>
+<td>Toronto, ON</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/nyk-vs-tor-0022600241</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>19:00</td>
+<td>HOU @ WAS</td>
+<td>0022600242</td>
+<td>Capital One Arena</td>
+<td>Washington, DC</td>
+<td>League Pass / MNMT</td>
+<td>—</td>
+<td>https://www.nba.com/game/hou-vs-was-0022600242</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>20:00</td>
+<td>ATL @ MIL</td>
+<td>0022600243</td>
+<td>Fiserv Forum</td>
+<td>Milwaukee, WI</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/atl-vs-mil-0022600243</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>21:00</td>
+<td>OKC @ SAC</td>
+<td>0022600244</td>
+<td>Golden 1 Center</td>
+<td>Sacramento, CA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/okc-vs-sac-0022600244</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>ORL @ BOS</td>
+<td>0022600245</td>
+<td>TD Garden</td>
+<td>Boston, MA</td>
+<td>Peacock / NBC Sports Network</td>
+<td>—</td>
+<td>https://www.nba.com/game/orl-vs-bos-0022600245</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>CHI @ CLE</td>
+<td>0022600246</td>
+<td>Rocket Arena</td>
+<td>Cleveland, OH</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/chi-vs-cle-0022600246</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>19:00</td>
+<td>MEM @ WAS</td>
+<td>0022600247</td>
+<td>Capital One Arena</td>
+<td>Washington, DC</td>
+<td>League Pass / MNMT</td>
+<td>—</td>
+<td>https://www.nba.com/game/mem-vs-was-0022600247</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>19:30</td>
+<td>PHI @ BKN</td>
+<td>0022600248</td>
+<td>Barclays Center</td>
+<td>Brooklyn, NY</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/phi-vs-bkn-0022600248</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>19:30</td>
+<td>HOU @ MIA</td>
+<td>0022600249</td>
+<td>Kaseya Center</td>
+<td>Miami, FL</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/hou-vs-mia-0022600249</td>
+<td>confirmed in retrieved page text</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>20:00</td>
+<td>POR @ MIN</td>
+<td>0022600250</td>
+<td>Target Center</td>
+<td>Minneapolis, MN</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/por-vs-min-0022600250</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>20:00</td>
+<td>GSW @ NOP</td>
+<td>0022600251</td>
+<td>Smoothie King Center</td>
+<td>New Orleans, LA</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/gsw-vs-nop-0022600251</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>21:00</td>
+<td>PHX @ DEN</td>
+<td>0022600252</td>
+<td>Ball Arena</td>
+<td>Denver, CO</td>
+<td>League Pass</td>
+<td>—</td>
+<td>https://www.nba.com/game/phx-vs-den-0022600252</td>
+<td>rule-generated, URL not verified — open it to check</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://www.nba.com/schedule retrieved 2026-11-13 22:33 UTC.</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

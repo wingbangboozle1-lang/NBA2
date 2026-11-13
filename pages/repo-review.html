@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Review · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html" class="active">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Repo Review</h2><p>Line-by-line review of the repository, including work already merged by other sessions.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 22:56 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="repo_review" data-rows="16">
+<h2>Repository review</h2>
+<p class="blurb">Reviewed from the git history and the working tree, not from a summary of it.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Repository review</caption><thead><tr>
+<th scope="col">#</th>
+<th scope="col">Area</th>
+<th scope="col">Finding (line-by-line)</th>
+<th scope="col">Evidence</th>
+<th scope="col">Action taken</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="RR-01">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Starting state</td>
+<td>The repo began as a single 6-byte README.md containing &#x27;# NBA2&#x27;. There was no code, data, CI, licence or Pages configuration.</td>
+<td>`git ls-tree -r --name-only 623b4c2` → README.md only; `git show 623b4c2:README.md` → &#x27;# NBA2&#x27;</td>
+<td>Nothing to inherit; everything below is net-new. Documented so no later session claims prior work existed.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-02">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Licence</td>
+<td>No LICENSE file at any commit.</td>
+<td>`git ls-tree -r --name-only 7fa2a24` contains no LICENSE</td>
+<td>FLAGGED, not fixed: adding a licence is an owner decision, especially while third-party data is embedded (see Q-18).</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-03">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data integrity</td>
+<td>Prior `data/injuries.json` published numeric impacts (&#x27;Starter out — ~0 min (vs. ~34 MPG season avg)&#x27;, &#x27;-100% scoring/rebounding/playmaking output&#x27;) that appear in no source. The official report has no minutes or MPG column.</td>
+<td>`git show 821c175:data/injuries.json` keys: player, team, status, injury, game, minutesImpact, productionImpact, verified — no source field; report columns are Game Date, Game Time, Matchup, Team, Player, Status, Reason</td>
+<td>Impact columns replaced with explicit blanks + FLAG-INJ-02. Rows kept and re-sourced to the official PDF.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-04">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Sourcing</td>
+<td>Prior `data/strategies.json` attributed correlation coefficients (r ≈ 0.82, r ≈ 0.65) to https://www.nba.com/stats/help/faq, a help/FAQ page that contains no such values. The rows were labelled &#x27;unverified&#x27; but still carried a source link that implies verification.</td>
+<td>field `source` on those rows vs. the page&#x27;s actual content</td>
+<td>Removed. Correlations are now computed where possible (r(SRS, margin/G)) and blank elsewhere; a misattributed source is worse than no source.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-05">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Identifiers</td>
+<td>Prior `data/picks.json` invented synthetic game IDs (GAME-20261113-001) for fixtures that have official IDs, and covered only 3 of the 9 games on 11/13.</td>
+<td>`git show 821c175:data/picks.json` vs `https://www.nba.com/schedule`</td>
+<td>Replaced with official IDs; slate now 31/31 games for the window.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-06">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Deployment</td>
+<td>Two GitHub Pages workflows deployed the same artifact: `.github/workflows/pages.yml` (cancel-in-progress: true) and `.github/workflows/deploy.yml` (cancel-in-progress: false), both `path: &#x27;.&#x27;`, both on push to main.</td>
+<td>`git show 7fa2a24:.github/workflows/` lists both</td>
+<td>Consolidated to one workflow so a run cannot be cancelled mid-deploy by its twin (T-14).</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-07">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Docs</td>
+<td>The commit that added a working Pages workflow also states in README.md that the repository has &#x27;no … automated deployment&#x27;.</td>
+<td>`git show 821c175:README.md` contains &#x27;no model&#x27; sentence; same commit adds deploy.yml</td>
+<td>README rewritten to describe what exists and what does not.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-08">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Site structure</td>
+<td>Two parallel navigations existed: root `index.html` + `flagged.html` (session 1) and `pages/*.html` incl. `pages/flagged-review.html` (session 2), with different content on the same subject.</td>
+<td>both files present in `main`; sidebar links to `pages/*` only</td>
+<td>One nav, one Flagged page; root `flagged.html` converted to a redirect so old URLs do not rot.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-09">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Schema</td>
+<td>Prior data files had no per-row source field, which is the specific thing the brief requires (&#x27;every table row must have a source link&#x27;).</td>
+<td>`git show 821c175:data/injuries.json | python -c ...keys` → no &#x27;source&#x27; key</td>
+<td>`make_row()` in nba2/provenance.py cannot produce a row without a source; lint re-checks the emitted JSON so the rule cannot be bypassed by editing site.json.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-10">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Correct data (credit)</td>
+<td>The prior injury page did cite real, correct official documents: Injury-Report_2026-11-13_01_00PM.pdf and _04_15PM.pdf exist at ak-static.cms.nba.com and their contents match what I independently retrieved.</td>
+<td>both PDFs fetched; status/reason fields agree for the overlapping rows</td>
+<td>Kept as the citation; only the invented numeric impacts were removed.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-11">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Reproducibility</td>
+<td>No prior commit contained executable model code, so no published number could be reproduced by anyone.</td>
+<td>file tree at 7fa2a24: html/css/js/json only</td>
+<td>Engine + deterministic rebuild (`python -m nba2.pipeline.build_site_data`) + reproducibility test.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-12">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Claims audit</td>
+<td>Prior COORDINATION.md recorded tasks as &#x27;done&#x27; for pages whose tables were empty; the entries were honest about the emptiness but the status column overstated completion.</td>
+<td>task table rows: &#x27;No picks generated; lines blank&#x27; with status done</td>
+<td>Board now distinguishes met / partial / blocked, and &#x27;done&#x27; requires the artefact to work, not to exist.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-13">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Numeracy check</td>
+<td>The prior &#x27;correlation&#x27; values were presented without n, method or confidence interval, so they could not be challenged or reused.</td>
+<td>strings like &#x27;r ≈ 0.65 (estimated)&#x27;</td>
+<td>Every correlation on this site now reports n and method, or is blank.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-14">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Security/privacy</td>
+<td>Site publishes from the repository root, so every committed file (including data snapshots) is publicly fetchable — including any file a future session commits by accident.</td>
+<td>pages.yml `path: &#x27;.&#x27;`</td>
+<td>Recommended only, not implemented: publish from a built directory (S-19). No secret is committed today (checked: no .env, no tokens in tree).</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-15">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Data window</td>
+<td>The Nov 13 slate is entirely Emirates NBA Cup group play, while Nov 14-16 are ordinary regular-season games. Treating them as one distribution is an unexamined assumption in the prior design.</td>
+<td>group labels on the official game cards (East/West Group A-C) vs blank groups for Nov 14+</td>
+<td>Recorded as Q-06 with a Cup-group column on the slate page; model behaviour unchanged and disclosed.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-16">
+<td><span class="blank" title="blank because: FLAG-REPO-01">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Tooling</td>
+<td>This sandbox has no outbound network except package/git hosts, so official data had to be brought in through the agent&#x27;s fetch tools and committed as snapshots. That is a provenance property of the whole dataset, not a detail.</td>
+<td>`curl https://www.nba.com` → 000; fetch tools return nba.com content</td>
+<td>Snapshot files carry retrieved_at + URL + extraction notes; CI cannot re-fetch from here, hence R-104.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">All findings also recorded in COORDINATION.md</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

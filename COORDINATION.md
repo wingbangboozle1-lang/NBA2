@@ -39,18 +39,18 @@ and file scope here, then commit and push immediately.
 |---|---|---|---|---|---|
 | T-00 | Repo review of already-merged sessions | done | `arena/20c4f2f9` | this file | Findings I-01…I-06 |
 | T-01 | Provenance-tagged official data snapshots | done | `arena/20c4f2f9` | `data/raw/**` | NBA.com slate + official injury PDF + ratings |
-| T-02 | Requirements register | done | `arena/20c4f2f9` | `requirements/**` | 64 requirements, IDs R-001… |
+| T-02 | Requirements register | done | `arena/20c4f2f9` | `requirements/REQUIREMENTS.json` | 66 rows, IDs R-001…R-059 + R-101…R-106 (data requests) |
 | T-03 | Line origination engine (ratings → HCA/σ → lines) | done | `arena/20c4f2f9` | `nba2/models/**`, `nba2/config.py` | Parameters fitted from verified data, not assumed |
 | T-04 | Validation gates + strategy leaderboard + rewards | done | `arena/20c4f2f9` | `nba2/models/gates.py`, `nba2/models/leaderboard.py` | 9 hard gates, tier promotion |
-| T-05 | Correlation, parlays, prop combos | done | `arena/20c4f2f9` | `nba2/models/correlation.py`, `parlays.py`, `props.py` | Independent vs same-game joint pricing |
-| T-06 | Injury → rotation → production tracker | done | `arena-23927d63` + `arena/20c4f2f9` | `nba2/models/injuries.py`, `data/injuries.json` | Official rows; numeric impact blank + flagged |
+| T-05 | Correlation, parlays, prop combos | done | `arena/20c4f2f9` | `nba2/models/correlation.py`, `nba2/models/props.py` | Bivariate quadrature over a swept ρ band; no `parlays.py` — parlay tables are built in `nba2/pipeline/build_site_data.py` |
+| T-06 | Injury → rotation → production tracker | done | `arena-23927d63` + `arena/20c4f2f9` | `nba2/models/injuries.py`, `data/raw/injury_report_2026-11-13.json` | 95 official rows; numeric impact blank + flagged; prior `data/injuries.json` superseded (see I-01) |
 | T-07 | Game flow module (rest, schedule spot, pace) | done | `arena/20c4f2f9` | `nba2/models/gameflow.py`, `pages/game-flow.html` | Computed from verified slate |
-| T-08 | Pick generation + sealed forward ledger | done | `arena/20c4f2f9` | `nba2/pipeline/**`, `data/ledger/**` | Pre-registered, hash-committed |
-| T-09 | GitHub Pages site (landing + subpages) | done | `arena/20c4f2f9` | `index.html`, `pages/**`, `assets/**` | Replaces placeholder tables with computed ones |
-| T-10 | Questions / missing-information register | done | `arena/20c4f2f9` | `pages/questions.html`, `requirements/QUESTIONS.md` | |
+| T-08 | Pick generation + sealed forward ledger | done | `arena/20c4f2f9` | `nba2/pipeline/seal_predictions.py`, `nba2/pipeline/settle.py`, `data/raw/ledger/**` | 22 predictions sealed, sha256 `cf7dedc689597cb8…`; digest printed on every page |
+| T-09 | GitHub Pages site (landing + subpages) | done | `arena/20c4f2f9` | `index.html`, `pages/**`, `css/style.css`, `app.js` | 16 pages + preserved blueprint page; tables rendered at build time so the site works without JS |
+| T-10 | Questions / missing-information register | done | `arena/20c4f2f9` | `requirements/QUESTIONS.json`, `pages/questions.html` | 22 questions, each with have/missing/how-to-find-out/impact |
 | T-11 | Suggestions queue (review before implementing) | done | `arena/20c4f2f9` | `pages/suggestions.html`, `suggestions/**` | Accept/reject, never auto-applied |
 | T-12 | Flagged for Review | done | `arena/20c4f2f9` | `pages/flagged-review.html` | Includes I-01…I-06 |
-| T-13 | Tests + source-lint (no row without a source) | done | `arena/20c4f2f9` | `nba2/tests/**`, CI | Build fails on unsourceable row |
+| T-13 | Tests + source-lint (no row without a source) | done | `arena/20c4f2f9` | `nba2/tests/**`, `.github/workflows/ci.yml` | 49 stdlib tests; lint proven to fail on tampered data (see Completion log) |
 | T-14 | Deduplicate Pages workflows | done | `arena/20c4f2f9` | `.github/workflows/**` | I-04 fixed |
 | T-15 | Final integration: re-verify, PR, merge, confirm Pages | done | `arena/20c4f2f9` | repo-wide | See PR & Merge Results |
 
