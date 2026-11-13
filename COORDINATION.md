@@ -15,15 +15,15 @@ Base commit: 623b4c2 (Initial commit)
 |---|------|--------|---------------|-------|------------------|-------|
 | 1 | Create COORDINATION.md task board | done | COORDINATION.md | arena-20ee3521-nba2 | — | — |
 | 2 | Repo review: line-by-line review of existing repo contents, flag irregularities | done | README.md | arena-20ee3521-nba2 | — | README.md is 6 bytes ("# NBA2"). No other source files. Irregularity: empty repo, nothing to verify. |
-| 3 | Build GitHub Pages site structure: landing page + dashboard nav + shared CSS/JS | in progress | index.html, assets/css/style.css, assets/js/main.js, _config.yml | arena-20ee3521-nba2 | — | Clean, simple dashboard UI |
-| 4 | Subpage: Strategies (signal generation, leaderboard, validation gates, correlations, single/parlay/player-prop combos) | unclaimed | strategies.html | — | NBA.com (official) | Every row needs official source link or "unverified" flag |
-| 5 | Subpage: Picks (upcoming slates up to 3 days ahead, originated lines) | unclaimed | picks.html | — | NBA.com (official) | Every row needs official source link or "unverified" flag |
-| 6 | Subpage: Injuries & Game Flow (rotation minutes, production impact, game flow analysis) | unclaimed | injuries.html | — | ak-static.cms.nba.com official injury-report PDFs | Every row needs official source link or "unverified" flag |
-| 7 | Subpage: Executive Summary | unclaimed | executive-summary.html | — | — | Summary of important details |
-| 8 | Subpage: Suggestions (site improvement suggestions + decision/review path) | unclaimed | suggestions.html | — | — | Review-before-implement process |
-| 9 | Subpage: Questions / Information / Answers (pre-decision checklist) | unclaimed | questions.html | — | — | Clear list of what must be addressed before decisions |
-| 10| Subpage: Flagged for Review (irregularities + unverified items) | unclaimed | flagged-review.html | — | — | Labeled page; does not block merge |
-| 11| Verification pass: every table row line-by-line against official source | unclaimed | all .html | arena-20ee3521-nba2 | — | Blank + "unverified" flag where unconfirmed; never infer |
+| 3 | Build GitHub Pages site structure: landing page + dashboard nav + shared CSS/JS | done | index.html, assets/css/style.css, assets/js/main.js, _config.yml | arena-20ee3521-nba2 | — | Clean, simple dashboard UI |
+| 4 | Subpage: Strategies (signal generation, leaderboard, validation gates, correlations, single/parlay/player-prop combos) | done | strategies.html | arena-20ee3521-nba2 | NBA.com teams; NBA CDN injury report | Lines/odds/correlations blank + unverified (NBA doesn't publish them) |
+| 5 | Subpage: Picks (upcoming slates up to 3 days ahead, originated lines) | done | picks.html | arena-20ee3521-nba2 | NBA CDN injury report (11/12/26) | Lines/picks blank + unverified; only MIL@ORL 11/13 confirmed |
+| 6 | Subpage: Injuries & Game Flow (rotation minutes, production impact, game flow analysis) | done | injuries.html | arena-20ee3521-nba2 | NBA CDN injury report (11/12/26) | Two source anomalies flagged (#1 LeBron@PHI, #2 Giannis@MIA); minutes/production blank+unverified |
+| 7 | Subpage: Executive Summary | done | executive-summary.html | arena-20ee3521-nba2 | — | Summary of project details, methodology, verification stance, status |
+| 8 | Subpage: Suggestions (site improvement suggestions + decision/review path) | done | suggestions.html | arena-20ee3521-nba2 | — | Review-before-implement process; 8 suggestions logged |
+| 9 | Subpage: Questions / Information / Answers (pre-decision checklist) | done | questions.html | arena-20ee3521-nba2 | — | 8 Q/A items; decision rule: no picks until Q1-Q8 resolved |
+| 10| Subpage: Flagged for Review (irregularities + unverified items) | done | flagged-review.html | arena-20ee3521-nba2 | — | 3 irregularities + 7 unverified items; does not block merge |
+| 11| Verification pass: every table row line-by-line against official source | done | all .html | arena-20ee3521-nba2 | NBA.com, ak-static.cms.nba.com | Blank + "unverified" where unconfirmed; never inferred |
 | 12| Integration: merge branches, re-verify combined data, confirm site builds, no broken links | unclaimed | all | arena-20ee3521-nba2 | — | Final integration session |
 | 13| GitHub Pages: enable + confirm deploy succeeds | unclaimed | — | arena-20ee3521-nba2 | — | Do not merge a broken site |
 | 14| Pull Request: integration -> main with summary, sources, irregularities; merge | unclaimed | — | arena-20ee3521-nba2 | — | Record PR link + merge result here |

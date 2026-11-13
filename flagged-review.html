@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flagged for Review — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a class="active" href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Flagged for Review</h1>
+    <p class="subtitle">Clearly labeled page of irregularities and unverified items with source links. These do <b>not</b> block the merge; they are published here so they can be reviewed after the site is live.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Source-data irregularities</span>
+        <h2>Irregularities found in official sources</h2>
+      </div>
+      <div class="flag-row">
+        <div class="flag-title">#1 &mdash; Player listed under wrong team (official injury PDF)</div>
+        <p><b>Source:</b> <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA official injury report, 11/12/26 08:00 PM ET</a> (ak-static.cms.nba.com)</p>
+        <p><b>Detail:</b> The official PDF lists "James, LeBron &mdash; Out &mdash; Injury/Illness - Low Back/Sciatica Management" under the <b>Philadelphia 76ers</b>. LeBron James plays for the Los Angeles Lakers, not the 76ers. Reproduced verbatim on the <a href="injuries.html">Injuries &amp; Game Flow</a> page and flagged.</p>
+        <p><b>Action:</b> Confirm against the Lakers&rsquo; official page / NBA.com before relying on this row.</p>
+      </div>
+      <div class="flag-row">
+        <div class="flag-title">#2 &mdash; Player listed under wrong team (official injury PDF)</div>
+        <p><b>Source:</b> <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA official injury report, 11/12/26 08:00 PM ET</a> (ak-static.cms.nba.com)</p>
+        <p><b>Detail:</b> The official PDF lists "Antetokounmpo, Giannis &mdash; Probable &mdash; Injury/Illness - Right Wrist Sprain" under the <b>Miami Heat</b>. Giannis Antetokounmpo plays for the Milwaukee Bucks, not the Heat. Reproduced verbatim and flagged.</p>
+        <p><b>Action:</b> Confirm against the Bucks&rsquo; official page / NBA.com before relying on this row.</p>
+      </div>
+      <div class="flag-row">
+        <div class="flag-title">#3 &mdash; Team mismatch in injuries table (transcription check)</div>
+        <p><b>Source:</b> <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA official injury report, 11/12/26 08:00 PM ET</a></p>
+        <p><b>Detail:</b> "Mobley, Evan &mdash; Out &mdash; Left Great Toe Sprain" appears under the Cleveland Cavaliers in the source; it was referenced on the Injuries page next to ATL@CHI for context. Reproduced verbatim with a flag; verify team attribution.</p>
+        <p><b>Action:</b> Confirm Mobley&rsquo;s team and status from the Cavaliers&rsquo; official page / NBA.com.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Unverified items</span>
+        <h2>Values left blank (unverified)</h2>
+      </div>
+      <p class="lead">Per the verification rule, any value that cannot be confirmed from an official NBA source is left blank and flagged unverified. Nothing is inferred or filled in.</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:6%;">#</th>
+            <th style="width:30%;">Item</th>
+            <th style="width:34%;">Where it appears</th>
+            <th style="width:30%;">Source needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Betting lines / odds / spreads / totals</td>
+            <td>Strategies, Picks</td>
+            <td class="source">Licensed sportsbook data source (NBA.com does not publish lines)</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Strategy performance / leaderboard results</td>
+            <td>Strategies</td>
+            <td class="source">Official results/odds source (not confirmed)</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Correlation values (strategies, parlay legs)</td>
+            <td>Strategies</td>
+            <td class="source">Results/odds source (not confirmed)</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Full 3-day slate game list (11/14, 11/15)</td>
+            <td>Picks</td>
+            <td class="source"><a href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com/schedule</a> (not yet pulled)</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Rotation-minutes impact</td>
+            <td>Injuries &amp; Game Flow</td>
+            <td class="source"><a href="https://www.nba.com/stats" target="_blank" rel="noopener">NBA.com/stats</a> minutes (not confirmed)</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Production impact</td>
+            <td>Injuries &amp; Game Flow</td>
+            <td class="source"><a href="https://www.nba.com/stats" target="_blank" rel="noopener">NBA.com/stats</a> production (not confirmed)</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Issued picks / sides</td>
+            <td>Picks</td>
+            <td class="source">Lines source + validation-gate results (none yet)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section callout callout-info">
+      <strong>Review note:</strong> These flagged items do not block the merge. Review them after the site is live and request changes via <a href="suggestions.html">Suggestions</a> or by opening an issue in <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">wingbangboozle1-lang/NBA2</a>.
+    </section>
+
+    <footer class="footer">
+      NBA2 Flagged for Review &middot; Sources: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA.com CDN injury report (11/12/26)</a>, <a href="https://www.nba.com">NBA.com (official)</a> &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

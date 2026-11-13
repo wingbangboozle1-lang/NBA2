@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Summary — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a class="active" href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Executive Summary</h1>
+    <p class="subtitle">Important project details, methodology, verification stance, and current status at a glance.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Objective</span>
+        <h2>Objective</h2>
+      </div>
+      <p>Originate NBA betting lines and generate useful betting signals (single bets, parlays, player-prop combos). Treat strategies as a leaderboard competition with rewards for top performers. Remove luck by requiring selectively skill-based signals that pass validation gates. Generate picks for every upcoming slate up to 3 days in advance using originated lines. Track injuries and their effect on rotation minutes and production, with game-flow analysis.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Components</span>
+        <h2>Components delivered</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:26%;">Component</th><th>Status</th><th style="width:30%;">Location</th><th>Source basis</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Strategy framework</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="strategies.html">Strategies</a></td>
+            <td class="source">NBA.com teams + official injury report</td>
+          </tr>
+          <tr>
+            <td>Validation gates</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="strategies.html">Strategies</a></td>
+            <td class="source"><span class="badge badge-blank">methodology</span></td>
+          </tr>
+          <tr>
+            <td>3-day slate picks</td>
+            <td><span class="badge badge-unverified">no picks issued</span></td>
+            <td><a href="picks.html">Picks</a></td>
+            <td class="source"><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Injury &amp; game-flow tracking</td>
+            <td><span class="badge badge-ok">done (source data)</span></td>
+            <td><a href="injuries.html">Injuries</a></td>
+            <td class="source">NBA.com CDN injury report (11/12/26)</td>
+          </tr>
+          <tr>
+            <td>Executive summary</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="executive-summary.html">Executive Summary</a></td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td>Suggestions &amp; review path</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="suggestions.html">Suggestions</a></td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td>Questions &amp; answers (pre-decision)</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="questions.html">Questions</a></td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td>Flagged for Review</td>
+            <td><span class="badge badge-ok">done</span></td>
+            <td><a href="flagged-review.html">Flagged for Review</a></td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Verification stance</span>
+        <h2>Verification stance</h2>
+      </div>
+      <ul class="checklist">
+        <li><b>Every table row that states a value carries a source link</b> to an official, verified, trusted site (NBA.com or NBA-owned CDN).</li>
+        <li><b>If a value cannot be confirmed from an official source, it is left blank</b> and flagged <span class="badge badge-unverified">unverified</span>.</li>
+        <li><b>Nothing is inferred or filled in.</b> No odds, lines, correlations, minutes, or projections are invented.</li>
+        <li><b>Betting lines and odds</b> are not published by the NBA &mdash; all wagering values are blank / unverified pending a licensed sportsbook data source.</li>
+        <li><b>Source-data anomalies</b> in the official injury PDF are reproduced verbatim and flagged (see <a href="flagged-review.html">Flagged for Review</a>).</li>
+        <li><b>No manual input</b> was required; all entries were researched and written by this session.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Status</span>
+        <h2>Current status</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:34%;">Item</th><th style="width:22%;">Status</th><th>Notes / source</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Repo</td>
+            <td><span class="badge badge-ok">live</span></td>
+            <td>Branch <code>arena/20ee3521-nba2</code>, <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">wingbangboozle1-lang/NBA2</a></td>
+          </tr>
+          <tr>
+            <td>Site</td>
+            <td><span class="badge badge-unverified">to deploy</span></td>
+            <td>GitHub Pages deploy pending (see integration task)</td>
+          </tr>
+          <tr>
+            <td>Official NBA teams confirmed</td>
+            <td><span class="badge badge-ok">30 teams</span></td>
+            <td><a href="https://www.nba.com/teams" target="_blank" rel="noopener">NBA.com/teams</a></td>
+          </tr>
+          <tr>
+            <td>Official injury data confirmed</td>
+            <td><span class="badge badge-ok">2 reports on file</span></td>
+            <td>11/02/26 and 11/12/26 NBA.com CDN PDFs</td>
+          </tr>
+          <tr>
+            <td>Betting lines / odds</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+            <td>Not published by NBA; blank throughout</td>
+          </tr>
+          <tr>
+            <td>Picks issued</td>
+            <td><span class="badge badge-unverified">none</span></td>
+            <td>No line/odds source &rarr; no picks</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section callout callout-warn">
+      <strong>Bottom line:</strong> The framework, verification stance, and official injury data are in place. No real betting lines, odds, or picks can be issued until a licensed sportsbook data source is added &mdash; and until then every wagering value is intentionally blank and flagged unverified.
+    </section>
+
+    <footer class="footer">
+      NBA2 Executive Summary &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a> &middot; Sources: <a href="https://www.nba.com">NBA.com (official)</a>, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA.com CDN injury report</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Picks (3-Day Slate) — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a class="active" href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Picks &mdash; Upcoming Slate (up to 3 days in advance)</h1>
+    <p class="subtitle">Current date: <b>2026-11-13 (Friday)</b>. Slate window: <b>2026-11-13 through 2026-11-15</b>. Picks are generated using our originated lines; line values and picks are left blank and flagged unverified where no official NBA source exists.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Slate</span>
+        <h2>Upcoming games &amp; picks</h2>
+      </div>
+      <p>The only game confirmed from an official NBA source within this window is below (taken from the 11/12/26 official injury report, which lists upcoming matchups). All other games in the 3-day window must be pulled from the NBA.com schedule and are not yet confirmed.</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:14%;">Date</th>
+            <th style="width:14%;">Time (ET)</th>
+            <th style="width:18%;">Matchup</th>
+            <th style="width:22%;">Originated line (blank = unverified)</th>
+            <th style="width:14%;">Pick / side</th>
+            <th style="width:18%;">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-11-13</td>
+            <td>07:00 PM</td>
+            <td>MIL @ ORL</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA injury report (11/12/26)</a></td>
+          </tr>
+          <tr>
+            <td>2026-11-14</td>
+            <td><span class="badge badge-blank">—</span></td>
+            <td><span class="badge badge-blank">—</span> (TBD from NBA schedule)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; NBA.com/schedule not yet pulled</td>
+          </tr>
+          <tr>
+            <td>2026-11-15</td>
+            <td><span class="badge badge-blank">—</span></td>
+            <td><span class="badge badge-blank">—</span> (TBD from NBA schedule)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; NBA.com/schedule not yet pulled</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Method</span>
+        <h2>How picks are generated</h2>
+      </div>
+      <ul class="checklist">
+        <li>For each game in the slate, compute an originated line from official NBA team/player data, injury report, and game context.</li>
+        <li>Run the signal through the validation gates (data validity, correlation, skill threshold, back-test, injury overlay) on the <a href="strategies.html">Strategies</a> page.</li>
+        <td></td>
+        <li>Only issue a pick if a strategy passes all gates; otherwise leave the pick blank and flag unverified.</li>
+        <li>Never infer a line, odds, or pick where no official source confirms it.</li>
+      </ul>
+    </section>
+
+    <section class="section callout callout-warn">
+      <strong>No picks issued yet.</strong> All line and pick values are blank and flagged unverified. The NBA does not publish betting lines or odds, so a licensed sportsbook data source is required before any real line or pick can be populated. See <a href="questions.html">Questions &amp; Answers</a> for what must be resolved before decisions.
+    </section>
+
+    <footer class="footer">
+      NBA2 Picks &middot; Sources: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA.com CDN injury report (11/12/26)</a>, <a href="https://www.nba.com">NBA.com (official)</a> &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

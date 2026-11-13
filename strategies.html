@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategies — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a class="active" href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Strategies</h1>
+    <p class="subtitle">Originated NBA lines and betting strategies, organized by bet type, with validation gates and correlation tracking. All wagering values are left blank and flagged unverified where no official NBA source exists.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Approach</span>
+        <h2>Signal-generation approach</h2>
+      </div>
+      <p>Strategies are treated as a leaderboard competition that rewards top-performing strategies. Each strategy generates a signal (side + confidence), is back-tested against available results, must pass validation gates, and is tracked for correlation with other strategies so the portfolio does not double-count the same edge. Luck is removed by requiring selective, skill-based signals rather than blanket coverage.</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:22%;">Element</th><th>Description</th><th style="width:20%;">Source</th><th style="width:14%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Signal source</td>
+            <td>Originated lines derived from official NBA team/player data, injury reports, and game context.</td>
+            <td class="source"><a href="https://www.nba.com/teams">NBA.com teams</a> &middot; <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA injury report (11/12/26)</a></td>
+            <td><span class="badge badge-ok">verified</span></td>
+          </tr>
+          <tr>
+            <td>Originated line values</td>
+            <td>Line / spread / total for each signal.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; NBA.com does not publish betting lines</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Leaderboard / rewards</td>
+            <td>Strategy performance leaderboard with rewards for top-performing strategies.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; no results data source confirmed</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Skill vs. luck filter</td>
+            <td>Selectively skill-based signals only; no blanket coverage.</td>
+            <td class="source"><span class="badge badge-blank">methodology</span></td>
+            <td><span class="badge badge-blank">internal</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Bet types</span>
+        <h2>Single bets, parlays &amp; player-prop combos</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:22%;">Bet type</th><th>Description</th><th style="width:20%;">Source</th><th style="width:14%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Single bet</td>
+            <td>One wager on one outcome (e.g. moneyline, spread, total). Lowest correlation risk.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; odds not published by NBA</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Parlay</td>
+            <td>Multiple single bets combined; all must win. Correlation between legs must be tracked.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; odds not published by NBA</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Player-prop combo</td>
+            <td>Multiple player-prop outcomes combined (points/rebounds/assists, etc.). Correlation between shared-game props tracked.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; prop odds not published by NBA</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Validation</span>
+        <h2>Validation gates</h2>
+      </div>
+      <p>Each strategy must pass every gate below before a pick is issued. Gate results are recorded per strategy.</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:26%;">Gate</th><th>Requirement</th><th style="width:20%;">Source</th><th style="width:14%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data validity</td>
+            <td>All inputs trace to an official NBA source or are flagged unverified.</td>
+            <td class="source"><a href="https://www.nba.com">NBA.com (official)</a></td>
+            <td><span class="badge badge-ok">verified</span></td>
+          </tr>
+          <tr>
+            <td>Correlation check</td>
+            <td>Strategy correlation with existing strategies computed; highly correlated pairs flagged.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; no results/odds source confirmed</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Skill threshold</td>
+            <td>Signal must demonstrate selective, skill-based edge (not luck-based blanket coverage).</td>
+            <td class="source"><span class="badge badge-blank">methodology</span></td>
+            <td><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td>Back-test</td>
+            <td>Strategy tested against historical results where a results source is available.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; results source not confirmed</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Injury overlay</td>
+            <td>Strategy adjusted for active injury report and rotation impact.</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA injury report (11/12/26)</a></td>
+            <td><span class="badge badge-ok">verified</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Correlation</span>
+        <h2>Correlation values</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:26%;">Pair</th><th>Correlation value</th><th style="width:20%;">Source</th><th style="width:14%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Strategy A vs Strategy B</td>
+            <td><span class="badge badge-blank">—</span> (placeholder; compute from results)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; results source not confirmed</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Parlay leg correlation</td>
+            <td><span class="badge badge-blank">—</span> (placeholder; compute from prop results)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; prop results source not confirmed</td>
+            <td><span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td>Injury impact on line</td>
+            <td><span class="badge badge-blank">—</span> (placeholder; derive from official injury report)</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA injury report (11/12/26)</a></td>
+            <td><span class="badge badge-blank">verified source, value blank</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="lead" style="font-size:0.85rem;">Correlation values cannot be computed without an official results/odds source. They are intentionally left blank and flagged unverified.</p>
+    </section>
+
+    <section class="section callout callout-warn">
+      <strong>No gambling advice.</strong> This page documents a methodology framework. Odds, lines, correlations, and strategy performance figures are not published by the NBA and are left blank / flagged unverified. No wagering values are inferred or filled in.
+    </section>
+
+    <footer class="footer">
+      NBA2 Strategies &middot; Sources: <a href="https://www.nba.com">NBA.com (official)</a>, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA.com CDN injury report</a> &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

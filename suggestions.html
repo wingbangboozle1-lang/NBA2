@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggestions — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a class="active" href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Suggestions</h1>
+    <p class="subtitle">Site-improvement suggestions and a dedicated review path. Changes are reviewed and chosen before any implementation &mdash; nothing is deployed straight from this list.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Process</span>
+        <h2>Review-before-implement path</h2>
+      </div>
+      <ol class="checklist">
+        <li><b>Submit:</strong> A suggestion is added to the table below (category, description, expected benefit, owner, proposed date).</li>
+        <li><b>Review:</strong> A reviewer evaluates feasibility, data needs, verification impact, and priority.</li>
+        <li><b>Choose:</strong> The reviewer selects the best path &mdash; implement, revise, defer, or decline &mdash; and records the decision.</li>
+        <li><b>Implement (only if chosen):</strong> Approved changes are implemented on a feature branch, verified, then merged via pull request.</li>
+        <li><b>Verify:</strong> After implementation, the change is re-verified against official sources where it states values.</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>Rule:</strong> No suggestion is implemented directly from this page. Each must pass the review steps above before any code or content change is made.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Suggestion log</span>
+        <h2>Suggestions for site &amp; decision-making improvement</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:6%;">#</th>
+            <th style="width:20%;">Category</th>
+            <th style="width:34%;">Suggestion</th>
+            <th style="width:20%;">Expected benefit</th>
+            <th style="width:10%;">Status</th>
+            <th style="width:10%;">Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Data</td>
+            <td>Add a licensed sportsbook data source (odds/lines) so real betting lines, parlay odds, and player-prop prices can populate instead of being blank.</td>
+            <td>Enables real originated lines and issued picks; reduces unverified count.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Data</td>
+            <td>Pull the official NBA schedule (NBA.com/schedule) for the 3-day slate window and confirm every game.</td>
+            <td>Complete picks slate with verified game list.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Data</td>
+            <td>Add an official minutes/production source (NBA.com/stats) so rotation-minutes and production-impact values can be filled instead of blank.</td>
+            <td>Injury/game-flow impact values become verifiable.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>UX</td>
+            <td>Add a date-picker / slate selector on the Picks page so users can view any upcoming slate within 3 days.</td>
+            <td>Faster decision making; clearer slate navigation.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>UX</td>
+            <td>Add per-row "verify" timestamps and source-capture dates so users know how fresh each official source is.</td>
+            <td>Transparency on data freshness; reduces stale-data risk.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Validation</td>
+            <td>Implement automated correlation computation between strategies once a results source exists, and block highly-correlated parlay legs.</td>
+            <td>Removes double-counted edge; sharper skill-based filtering.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Site</td>
+            <td>Add a search/filter box to each table so users can find a team, player, or strategy quickly.</td>
+            <td>Easier scanning of large tables; better decisions.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Process</td>
+            <td>Add a "decision gate" checkpoint on the Questions page that must be signed off before any real-money recommendation is surfaced.</td>
+            <td>Prevents premature decisions on incomplete data.</td>
+            <td><span class="badge badge-unverified">open</span></td>
+            <td><span class="badge badge-blank">pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section callout callout-warn">
+      <strong>Nothing is implemented from this list yet.</strong> Each suggestion awaits review and a chosen path before implementation. Use <a href="flagged-review.html">Flagged for Review</a> for irregularities/unverified items; use <a href="questions.html">Questions &amp; Answers</a> for pre-decision items.
+    </section>
+
+    <footer class="footer">
+      NBA2 Suggestions &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a> &middot; Process defined by this session; no external sources required.
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

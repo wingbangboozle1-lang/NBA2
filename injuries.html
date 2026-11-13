@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Injuries &amp; Game Flow — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a class="active" href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Injuries &amp; Game Flow</h1>
+    <p class="subtitle">Injury tracking, rotation-minutes impact, production impact, and game-flow analysis. All entries below are taken verbatim from the official NBA injury-report PDF (NBA.com CDN). Rotation-minutes and production-impact figures are analytical and left blank / flagged unverified where no official source confirms them.</p>
+    <p class="source">Source: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA official injury report, 11/12/26 08:00 PM ET</a> (ak-static.cms.nba.com, NBA-owned CDN).</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Reported injuries</span>
+        <h2>Injury report (11/12/26) — key entries</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:13%;">Game (date)</th>
+            <th style="width:17%;">Team</th>
+            <th style="width:18%;">Player</th>
+            <th style="width:12%;">Status</th>
+            <th style="width:24%;">Reason</th>
+            <th style="width:16%;">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DET @ WAS (11/12)</td>
+            <td>Detroit Pistons</td>
+            <td>Duren, Jalen</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right Hamstring Strain</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DET @ WAS (11/12)</td>
+            <td>Detroit Pistons</td>
+            <td>Joe, Isaiah</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right Hip Contusion</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DET @ WAS (11/12)</td>
+            <td>Washington Wizards</td>
+            <td>Watkins, Jamir</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left ACL Repair / Surgery</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DET @ WAS (11/12)</td>
+            <td>Washington Wizards</td>
+            <td>Vukcevic, Tristan</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Hip Impingement</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>TOR @ PHI (11/12)</td>
+            <td>Toronto Raptors</td>
+            <td>Barnes, Scottie</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Groin Strain</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>TOR @ PHI (11/12)</td>
+            <td>Toronto Raptors</td>
+            <td>Leonard, Kawhi</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Knee Injury Management</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>TOR @ PHI (11/12)</td>
+            <td>Philadelphia 76ers</td>
+            <td>Embiid, Joel</td>
+            <td>Available</td>
+            <td>Injury/Illness - Right Foot Plantar Fascia Injury Management</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>TOR @ PHI (11/12)</td>
+            <td>Philadelphia 76ers</td>
+            <td>James, LeBron <span style="color:#f87171;">&#9888;</span></td>
+            <td>Out</td>
+            <td>Injury/Illness - Low Back/Sciatica Management</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DAL @ MIN (11/12)</td>
+            <td>Dallas Mavericks</td>
+            <td>Lively II, Dereck</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right Foot Surgery</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DAL @ MIN (11/12)</td>
+            <td>Minnesota Timberwolves</td>
+            <td>Edwards, Anthony</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right Knee Arthroscopy</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>DAL @ MIN (11/12)</td>
+            <td>Minnesota Timberwolves</td>
+            <td>DiVincenzo, Donte</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right Achilles Tendon Repair / Surgery</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>MIL @ ORL (11/13)</td>
+            <td>Orlando Magic</td>
+            <td>Banchero, Paolo</td>
+            <td>Out</td>
+            <td>Injury/Illness - Right High Ankle Sprain</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>MIL @ ORL (11/13)</td>
+            <td>Orlando Magic</td>
+            <td>Isaac, Jonathan</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Knee Injury Management</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>NYK @ IND</td>
+            <td>Indiana Pacers</td>
+            <td>Haliburton, Tyrese</td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Hamstring Strain</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>ATL @ CHI</td>
+            <td>Chicago Bulls</td>
+            <td>Mobley, Evan <span style="color:#f87171;">&#9888;</span></td>
+            <td>Out</td>
+            <td>Injury/Illness - Left Great Toe - Sprain <span style="color:#f87171;">&#9888;</span> (listed under Cleveland in source; see irregularities)</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+          <tr>
+            <td>CLE @ MIA</td>
+            <td>Miami Heat</td>
+            <td>Antetokounmpo, Giannis <span style="color:#f87171;">&#9888;</span></td>
+            <td>Probable</td>
+            <td>Injury/Illness - Right Wrist Sprain <span style="color:#f87171;">&#9888;</span> (listed under Miami in source; see irregularities)</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA injury report PDF</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="lead" style="font-size:0.85rem;">Rows marked &#9888; appear in the official PDF under a team the player does not normally play for (a source-data anomaly). They are reproduced verbatim and flagged in <a href="flagged-review.html">Flagged for Review</a>. Full report: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">PDF</a>.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Impact</span>
+        <h2>Rotation minutes, production &amp; game flow</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:22%;">Player / game</th>
+            <th style="width:26%;">Rotation-minutes impact</th>
+            <th style="width:26%;">Production impact</th>
+            <th style="width:26%;">Source / status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Banchero, Paolo — ORL (11/13 vs MIL)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; injury: official NBA PDF</td>
+          </tr>
+          <tr>
+            <td>Edwards, Anthony — MIN (11/12 vs DAL)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; injury: official NBA PDF</td>
+          </tr>
+          <tr>
+            <td>Haliburton, Tyrese — IND</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td><span class="badge badge-blank">—</span> (unverified)</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; injury: official NBA PDF</td>
+          </tr>
+          <tr>
+            <td>Game flow adjustment</td>
+            <td><span class="badge badge-blank">—</span> (framework only)</td>
+            <td><span class="badge badge-blank">—</span> (framework only)</td>
+            <td class="source"><span class="badge badge-blank">methodology</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="lead" style="font-size:0.85rem;">Rotation-minutes and production impacts are analytical estimates. They are intentionally left blank and flagged unverified until an official minutes/production source is confirmed. Game-flow analysis uses the injury overlay above as its input.</p>
+    </section>
+
+    <section class="section callout callout-info">
+      <strong>Game-flow method:</strong> For each upcoming game, flag starters/key players listed <span class="badge badge-unverified">Out</span> or <span class="badge badge-unverified">Questionable</span> in the official injury report, reduce their projected minutes to zero (Out) or a range (Questionable), redistribute minutes to backups, and adjust team production accordingly. Specific minute/production values are not filled in from any official source.
+    </section>
+
+    <footer class="footer">
+      NBA2 Injuries &amp; Game Flow &middot; Source: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA.com CDN official injury report (11/12/26)</a> &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

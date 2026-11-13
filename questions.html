@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questions &amp; Answers — NBA2</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="index.html">&larr; Dashboard</a>
+    <a class="btn" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a class="active" href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <h1>Questions &amp; Answers</h1>
+    <p class="subtitle">Clear list of questions, information, and answers that must be addressed before any decision is reasonably made &mdash; based on what we already have and do not have. Also includes how to discover missing information.</p>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Pre-decision checklist</span>
+        <h2>Questions, information &amp; answers</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:6%;">#</th>
+            <th style="width:30%;">Question</th>
+            <th style="width:30%;">Information we have</th>
+            <th style="width:34%;">Information we do NOT have / answer needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>What are the real betting lines / odds for each game?</td>
+            <td>Official NBA teams list (<a href="https://www.nba.com/teams" target="_blank" rel="noopener">NBA.com/teams</a>) and official injury reports (<span class="badge badge-ok">verified source</span>).</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; NBA.com does not publish betting lines/odds. Need a licensed sportsbook data source. Answer: blank until sourced.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Which games are in the upcoming 3-day slate?</td>
+            <td>One confirmed game: MIL @ ORL on 2026-11-13 07:00 ET (from <span class="badge badge-ok">official NBA injury report PDF</span>).</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; full schedule not pulled. Answer: pull NBA.com/schedule and confirm every game 2026-11-13 to 2026-11-15.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>What are the originated line values for each signal?</td>
+            <td>Methodology defined on <a href="strategies.html">Strategies</a> page.</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; no odds/results source confirmed. Answer: blank until a sportsbook/historical-results source is added.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>What is the correlation between strategies / parlay legs?</td>
+            <td>Correlation gates defined; no values computed.</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; needs a results/odds source. Answer: blank until sourced; never infer.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Which players are out/questionable and how does it affect minutes &amp; production?</td>
+            <td>Official injury report entries (<span class="badge badge-ok">verified source</span>, 11/12/26).</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; rotation minutes and production impact not in official injury report. Need NBA.com/stats minutes source.</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Is the official injury data accurate?</td>
+            <td>Reproduced verbatim from the NBA CDN PDF.</td>
+            <td class="source">Two source-data anomalies found in the official PDF itself: "James, LeBron" under Philadelphia 76ers and "Antetokounmpo, Giannis" under Miami Heat. Answer: flagged in <a href="flagged-review.html">Flagged for Review</a>; treat with caution.</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Have strategies passed all validation gates?</td>
+            <td>Validation gates defined (<span class="badge badge-blank">methodology</span>).</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; no strategy results/back-test data. Answer: no strategy can pass until results data exists.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Should any real-money pick be issued?</td>
+            <td>None issued yet (correctly, given missing data).</td>
+            <td class="source"><span class="badge badge-unverified">NOT have</span> &mdash; decision gate pending (see <a href="suggestions.html">Suggestion 8</a>). Answer: do not issue picks until Q1&ndash;Q7 are resolved.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Discovery</span>
+        <h2>How to discover missing information</h2>
+      </div>
+      <ul class="checklist">
+        <li><b>Betting lines/odds:</b> evaluate licensed sportsbook data providers (official league data partners where available); document cost, update frequency, and terms.</li>
+        <li><b>Full schedule:</b> pull <a href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com/schedule</a> and team schedule pages (<a href="https://www.nba.com/teams" target="_blank" rel="noopener">NBA.com/teams</a> links each team to its schedule).</li>
+        <li><b>Minutes/production:</b> use <a href="https://www.nba.com/stats" target="_blank" rel="noopener">NBA.com/stats</a> (official) for player minutes and production; verify each value against the official source.</li>
+        <li><b>Results/back-test:</b> use official NBA game results (NBA.com) to back-test strategies and compute correlations.</li>
+        <li><b>Injury accuracy:</b> cross-check the official NBA CDN injury PDF against each team&rsquo;s official site; flag discrepancies in <a href="flagged-review.html">Flagged for Review</a>.</li>
+        <li><b>Each discovery item:</b> record the source link, date captured, and whether the value is verified or blank/unverified.</li>
+      </ul>
+    </section>
+
+    <section class="section callout callout-warn">
+      <strong>Decision rule:</strong> No betting decision or real-money recommendation should be made until questions 1&ndash;8 above are answered with verified data. Until then, all wagering values remain blank and flagged unverified.
+    </section>
+
+    <footer class="footer">
+      NBA2 Questions &amp; Answers &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">Repo</a> &middot; Sources: <a href="https://www.nba.com">NBA.com (official)</a>, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf" target="_blank" rel="noopener">NBA.com CDN injury report</a>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

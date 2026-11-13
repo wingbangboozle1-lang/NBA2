@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBA2 — Originated Lines &amp; Strategy Dashboard</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">N</div>
+      <span>NBA2</span>
+    </a>
+    <a class="btn btn-outline" href="flagged-review.html">Flagged for Review</a>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <ul class="nav-list">
+    <li><a class="active" href="index.html">Dashboard</a></li>
+    <li><a href="strategies.html">Strategies</a></li>
+    <li><a href="picks.html">Picks (3-Day Slate)</a></li>
+    <li><a href="injuries.html">Injuries &amp; Game Flow</a></li>
+    <li><a href="executive-summary.html">Executive Summary</a></li>
+    <li><a href="suggestions.html">Suggestions</a></li>
+    <li><a href="questions.html">Questions &amp; Answers</a></li>
+    <li><a href="flagged-review.html">Flagged for Review</a></li>
+  </ul>
+</nav>
+
+<div class="page-shell">
+  <main class="page-main">
+    <section class="hero">
+      <h1>NBA2</h1>
+      <p class="subtitle">Originated NBA lines, strategy signals, validation gates, and picks — built entirely from official NBA sources.</p>
+      <p>This dashboard collects, organizes, and analyzes NBA betting signals. Strategies are treated as a leaderboard competition (rewards for top performers), cover single bets, parlays, and player-prop combos, and must pass validation gates before any pick is issued. Picks are generated for every upcoming slate up to 3 days in advance using our originated lines.</p>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">NBA teams tracked (official)</div>
+          <div class="stat-value">30 <span>source: NBA.com/teams</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Official injury reports on file</div>
+          <div class="stat-value">2 <span>NBA.com CDN (ak-static)</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Betting lines / odds verified</div>
+          <div class="stat-value">0 <span>flagged: not published by NBA</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Verification rule</div>
+          <div class="stat-value">blank + unverified <span>never infer</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Site sections</span>
+        <h2>What&rsquo;s inside</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:22%;">Section</th><th>Contents</th><th style="width:26%;">Source</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="strategies.html">Strategies</a></td>
+            <td>Signal-generation approach, leaderboard competition framing, single-bet / parlay / player-prop combos, validation gates, correlation values, skill-vs-luck filtering.</td>
+            <td class="source"><a href="https://www.nba.com">NBA.com (official)</a> &middot; betting lines: <span class="badge badge-unverified">unverified</span></td>
+          </tr>
+          <tr>
+            <td><a href="picks.html">Picks (3-Day Slate)</a></td>
+            <td>Generated picks for every upcoming slate up to 3 days in advance using originated lines. Line values left blank and flagged unverified where no official source exists.</td>
+            <td class="source"><span class="badge badge-unverified">unverified</span> &middot; schedule: NBA.com</td>
+          </tr>
+          <tr>
+            <td><a href="injuries.html">Injuries &amp; Game Flow</a></td>
+            <td>Injury tracking, rotation-minutes impact, production impact, game-flow analysis from official NBA injury-report PDFs.</td>
+            <td class="source"><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-12_08_00PM.pdf">NBA.com CDN injury report (11/12/26)</a></td>
+          </tr>
+          <tr>
+            <td><a href="executive-summary.html">Executive Summary</a></td>
+            <td>Important project details, methodology, verification stance, and current status at a glance.</td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td><a href="suggestions.html">Suggestions</a></td>
+            <td>Site-improvement suggestions and a dedicated review path so changes are reviewed and chosen before implementation.</td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td><a href="questions.html">Questions &amp; Answers</a></td>
+            <td>Clear list of questions, information, and answers that must be addressed before any decision is made, plus how to discover missing information.</td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+          <tr>
+            <td><a href="flagged-review.html">Flagged for Review</a></td>
+            <td>Irregularities and unverified items with source links, clearly labeled; does not block the merge.</td>
+            <td class="source"><span class="badge badge-blank">internal</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Verification stance</span>
+        <h2>How data is verified</h2>
+      </div>
+      <ul class="checklist">
+        <li><b>Every table row that states a value carries a source link</b> to an official, verified, trusted site (NBA.com or NBA-owned CDN).</li>
+        <li><b>If a value cannot be confirmed from an official source, it is left blank</b> and flagged <span class="badge badge-unverified">unverified</span>.</li>
+        <li><b>Nothing is inferred or filled in.</b> No odds, lines, correlations, or player projections are invented.</li>
+        <li><b>Betting lines and odds</b> are not published by the NBA, so all wagering values are left blank and flagged unverified pending a licensed sportsbook data source.</li>
+        <li><b>Manual input required from you: none.</b> All entries were researched and written by this session.</li>
+      </ul>
+    </section>
+
+    <section class="section callout callout-info">
+      <strong>Next step:</strong> Review the <a href="flagged-review.html">Flagged for Review</a> page for irregularities and unverified items, then work through the subpages. Use <a href="suggestions.html">Suggestions</a> to propose site changes before implementing them.
+    </section>
+
+    <footer class="footer">
+      NBA2 &middot; Built on branch <code>arena/20ee3521-nba2</code> of <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">wingbangboozle1-lang/NBA2</a> &middot; Sources: NBA.com (official) and NBA-owned CDN (ak-static.cms.nba.com).
+    </footer>
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
