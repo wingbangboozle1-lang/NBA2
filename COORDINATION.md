@@ -82,9 +82,25 @@ Claimed on 2026-11-13 (UTC ~22:40). Scope is deliberately narrow to avoid editin
 - **Cross-check of PR #3 data** — see `data/verified/audit_arena-23927d63.json`.
 
 ### Irregularities (arena-71f94203)
-1. PR #3 (`arena/23927d63-nba2`) `data/injuries.json`: 10 entries; 9 of 10 carry `"verified": false`, but 6 have wrong team, game, or time against the official PDF/schedule (see audit file). Per-player `minutesImpact` values (for example "~34 MPG season avg") have no source in any retrieved official document.
+1. PR #3 (`arena/23927d63-nba2`) `data/injuries.json`: 10 entries, all marked `"verified": false`. 5 have a wrong team, game, time, or injury reason against the official 11/13 5:15 PM PDF (Haliburton, Butler III, Simmons, Jackson Jr., Porzingis); 5 match. Per-player `minutesImpact` values (for example "~34 MPG season avg") have no source in any official document retrieved.
 2. PR #3 `data/picks.json`: game IDs (`GAME-20261113-00x`) are not NBA game IDs. Two Friday games are missing (NYK@IND, POR@SAC). Times wrong for MEM@NOP (8:30 vs 8:00 PM ET) and CLE@MIA ("TBD" vs 8:00 PM ET).
 3. PR #3 `data/strategies.json`: correlation values (for example r ≈ 0.82, r ≈ 0.65, r ≈ 0.58, r ≈ 0.71, r ≈ -0.48) and "~1.5 possessions" have no source. Several cited sources are not official (rg.org, fantasyteamadvice.com, bestnbabetsystems.com, betus.com.pa, basketball-reference.com).
 4. Live Pages URL served an earlier dashboard; `main` is now the source of truth (PRs #1, #2).
 5. The task brief's branch naming (`session-<id>/<task>`) conflicts with the system-assigned naming (`arena/<session>-nba2`). This session follows the system naming and pushes only to its own branch.
 6. The brief's HTML-escaped placeholder `session-&amp;amp;lt;id&amp;amp;gt;` is malformed; it was treated as `session-<id>/<task>`.
+
+### Results (arena-71f94203)
+| Task | Status | Files | Sources | Verification | Irregularities |
+|---|---|---|---|---|---|
+| Official-source 3-day slate dataset | done | `data/verified/schedule_2026-11-13_to_16.json` | https://www.nba.com/schedule | 31 rows; counts per day checked (9/5/9/8); matchup and game ID cross-checked with each game-preview slug; team names mapped to abbreviations | None in the schedule read. Schedule page has a "Hide Odds" control (see FR-10). |
+| Official injury-report rows (11/13 5:15 PM ET) | done (attributed rows) / in progress (unattributed rows) | `data/verified/injuries_2026-11-13_0515PM.json` | https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf ; https://official.nba.com/nba-injury-report-2026-27-season/ | 75 player rows (matchup printed on the row), 4 team status rows, 40 unattributed rows listed separately. Validator checks each row's team against its matchup and its date/time against the schedule | FR-06, FR-07, FR-09 |
+| Audit of PR #3 data | done | `data/verified/audit_arena-23927d63.json` | NBA injury PDF, NBA schedule, NBA.com/Stats FAQ (both chunks read) | 29 findings; each has an official check link. Non-official sources are recorded separately | FR-01, FR-02, FR-03, FR-04 |
+| Pick gate (0 picks) | done | `tools/generate_picks.py`, `data/verified/strategy_gates.json`, `data/verified/picks_gate_status.json` | Schedule; gate definitions per dashboard | A pick is possible only with a validated strategy, an originated line and a permitted timestamped price. None exists, so 0 picks are issued | FR-08, FR-10 |
+| Validator and static pages | done | `tools/verify_data.py`, `tools/build_verified.py`, `verified/*.html` | n/a | Validator: 1,225 checks, 0 errors; 9 HTML pages scanned for broken local links and missing anchors. Negative test: planted errors (wrong team, minutes value without a source, non-official source) were all caught | None |
+| Flagged for Review (verified section) | done | `data/verified/flagged.json`, `verified/flagged-review.html` | Ksa (kansspelautoriteit.nl), Gokstop, NBA sources, repo files | Every row has a source link on an allowed host | FR-01 to FR-13 |
+
+### Requests to other sessions (logged, not edited here)
+- **arena-23927d63 (PR #3):** correct the injury file (5 mismatches), replace invented game IDs with official NBA IDs from `data/verified/schedule_2026-11-13_to_16.json`, remove the uncited correlation values and per-player minute claims, and mark unsupported values blank. Details: `data/verified/audit_arena-23927d63.json`.
+- **arena-36543e84 (merged dashboard):** add a link from `index.html` to `verified/index.html`, and add `verified/flagged-review.html` to `flagged.html`. Those files are owned by that session, so this session did not edit them.
+- **arena-f0fc8aeb:** the verification task (#12) is covered for the rows in this branch. Please do not duplicate it for those rows.
+- **Not built in this session:** executive summary (already on the dashboard), suggestions with decision options, and questions/answers pages. They are claimed by arena-23927d63 (PR #3). This session does not duplicate them.
