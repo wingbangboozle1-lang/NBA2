@@ -1,0 +1,32 @@
+date,game_id,away,home,our_spread_home,our_total,pred_margin_home,pred_total,away_nrtg_adj,home_nrtg_adj,away_injury_impact,home_injury_impact,away_injury_names,home_injury_names,away_rest,home_rest,source_url
+2026-11-13,0022600034,NYK,IND,+11.0,222.5,-10.89,222.43,3.27,-5.54,0.0,4.1,,"Furphy, Johnny (Out); Haliburton, Tyrese (Out); Nesmith, Aaron (Questionable); Sheppard, Ben (Out)",rested,rested,https://www.nba.com/game/nyk-vs-ind-0022600034
+2026-11-13,0022600035,MIL,ORL,-4.0,226.5,+4.09,226.72,-13.45,-4.96,0.0,6.4,,"Banchero, Paolo (Out); Isaac, Jonathan (Out); Nelson, Izaiyah (Out); Penda, Noah (Out)",rested,rested,https://www.nba.com/game/mil-vs-orl-0022600035
+2026-11-13,0022600036,CLE,MIA,+0.5,231.5,-0.32,231.68,1.02,-4.1,3.6,0.8,"Merrill, Sam (Out); Mobley, Evan (Out); Tomlin, Nae'Qwan (Out)","Larsson, Pelle (Doubtful)",rested,rested,https://www.nba.com/game/cle-vs-mia-0022600036
+2026-11-13,0022600037,ATL,CHI,+12.5,230.0,-12.44,229.93,-0.13,-14.57,3.6,3.6,"Flemings, Kingston (Questionable); Gilbert, Keshon (Out); Gueye, Mouhamed (Out); Newell, Asa (Out); Veesaar, Henri (Out)","Awaka, Tobe (Out); Powell, Norman (Questionable); Swain, Dailyn (Questionable); Wilson, Caleb (Out)",rested,rested,https://www.nba.com/game/atl-vs-chi-0022600037
+2026-11-13,0022600038,MEM,NOP,+12.0,231.0,-12.17,231.24,4.56,-8.41,3.2,4.4,"Edey, Zach (Out); Pippen Jr., Scotty (Out); Post, Quinten (Out); Saunders, Richie (Out)","Mathurin, Bennedict (Questionable); McGowens, Bryce (Out); Missi, Yves (Out); Murphy III, Trey (Out); Murray, Dejounte (Out); Watford, Trendon (Out)",rested,rested,https://www.nba.com/game/mem-vs-nop-0022600038
+2026-11-13,0022600039,UTA,HOU,-23.0,222.5,+23.07,222.47,-7.85,13.22,2.4,2.4,"Jackson Jr., Jaren (Out); Markkanen, Lauri (Out); Nurkic, Jusuf (Out)","Adams, Steven (Out); Capela, Clint (Out); Smart, Marcus (Out)",rested,rested,https://www.nba.com/game/uta-vs-hou-0022600039
+2026-11-13,0022600040,GSW,SAS,-8.0,227.5,+7.90,227.31,10.71,11.73,7.3,2.4,"Butler III, Jimmy (Out); Curry, Stephen (Out); Moody, Moses (Out); Porzingis, Kristaps (Out); Williams, Brandon (Out)","Fox, De'Aaron (Questionable); Harris, Tobias (Out); Quaintance, Jayden (Out); Vassell, Devin (Questionable)",rested,rested,https://www.nba.com/game/gsw-vs-sas-0022600040
+2026-11-13,0022600041,POR,SAC,+16.0,227.0,-16.19,226.90,10.81,-9.38,4.4,2.4,"Krejci, Vit (Out); Morant, Ja (Out); Sharpe, Shaedon (Out); Youngblood, Chris (Out)","Achiuwa, Precious (Out); Raynaud, Maxime (Out); Simmons, Ben (Out)",rested,rested,https://www.nba.com/game/por-vs-sac-0022600041
+2026-11-13,0022600042,OKC,LAC,+8.0,220.0,-7.97,219.98,7.84,-3.33,4.4,3.2,"Holmgren, Chet (Out); Mitchell, Ajay (Questionable); Sorber, Thomas (Out); Wallace, Cason (Out); Williams, Jalen (Out); Williams, Jaylin (Out)","Beal, Bradley (Out); Ingram, Brandon (Out); Miller, Jordan (Out); Niederhauser, Yanic Konan (Out)",rested,rested,https://www.nba.com/game/okc-vs-lac-0022600042
+2026-11-14,0022600231,DEN,NOP,+10.0,234.0,-9.83,234.07,3.42,-8.41,0.0,0.0,,,rested,rested,https://www.nba.com/game/den-vs-nop-0022600231
+2026-11-14,0022600232,DAL,CLE,-2.0,231.5,+2.14,231.44,3.76,1.02,2.9,0.0,"Biberovic, Tarik (Out); Christie, Max (Questionable); de Larrea, Sergio (Out); Lively II, Dereck (Out)",,rested,rested,https://www.nba.com/game/dal-vs-cle-0022600232
+2026-11-14,0022600233,DET,MIA,+4.0,227.5,-4.25,227.44,3.75,-4.1,1.6,0.0,"Duren, Jalen (Out); Joe, Isaiah (Out)",,rested,rested,https://www.nba.com/game/det-vs-mia-0022600233
+2026-11-14,0022600234,BKN,MEM,-14.5,229.0,+14.62,229.19,-7.58,4.56,0.5,0.0,"Brown Jr., Mikel (Questionable)",,rested,rested,https://www.nba.com/game/bkn-vs-mem-0022600234
+2026-11-14,0022600235,CHI,MIN,-25.0,227.5,+24.93,227.58,-14.57,13.16,0.0,4.8,,"DiVincenzo, Donte (Out); Edwards, Anthony (Out)",rested,rested,https://www.nba.com/game/chi-vs-min-0022600235
+2026-11-15,0022600236,IND,PHI,-6.0,223.0,+6.12,222.88,-5.54,-1.42,0.0,0.0,,,rested,rested,https://www.nba.com/game/ind-vs-phi-0022600236
+2026-11-15,0022600237,LAL,PHX,+6.0,234.5,-5.80,234.30,8.25,0.45,0.0,0.0,,,rested,rested,https://www.nba.com/game/lal-vs-phx-0022600237
+2026-11-15,0022600238,CHA,LAC,-12.5,222.5,+12.27,222.74,-13.6,-3.33,0.0,0.0,,,rested,rested,https://www.nba.com/game/cha-vs-lac-0022600238
+2026-11-15,0022600239,SAS,UTA,+17.5,225.0,-17.58,224.78,11.73,-7.85,0.0,0.0,,,rested,rested,https://www.nba.com/game/sas-vs-uta-0022600239
+2026-11-15,0022600240,DAL,BOS,-5.5,227.5,+5.42,227.69,3.76,6.18,0.0,0.0,,,3in4,rested,https://www.nba.com/game/dal-vs-bos-0022600240
+2026-11-15,0022600241,NYK,TOR,+2.0,226.5,-1.95,226.39,3.27,-0.68,0.0,0.0,,,rested,rested,https://www.nba.com/game/nyk-vs-tor-0022600241
+2026-11-15,0022600242,HOU,WAS,+21.0,228.5,-20.82,228.33,13.22,-9.6,0.0,0.0,,,rested,rested,https://www.nba.com/game/hou-vs-was-0022600242
+2026-11-15,0022600243,ATL,MIL,+11.5,229.5,-11.32,229.35,-0.13,-13.45,0.0,0.0,,,rested,rested,https://www.nba.com/game/atl-vs-mil-0022600243
+2026-11-15,0022600244,OKC,SAC,+15.0,221.5,-15.22,221.72,7.84,-9.38,0.0,0.0,,,rested,rested,https://www.nba.com/game/okc-vs-sac-0022600244
+2026-11-16,0022600245,ORL,BOS,-13.0,227.0,+13.14,226.92,-4.96,6.18,0.0,0.0,,,rested,rested,https://www.nba.com/game/orl-vs-bos-0022600245
+2026-11-16,0022600246,CHI,CLE,-18.0,236.5,+17.89,236.72,-14.57,1.02,0.0,0.0,,,3in4,3in4,https://www.nba.com/game/chi-vs-cle-0022600246
+2026-11-16,0022600247,MEM,WAS,+11.0,229.5,-11.16,229.29,4.56,-9.6,0.0,0.0,,,3in4,rested,https://www.nba.com/game/mem-vs-was-0022600247
+2026-11-16,0022600248,PHI,BKN,+4.0,224.5,-4.16,224.45,-1.42,-7.58,0.0,0.0,,,rested,rested,https://www.nba.com/game/phi-vs-bkn-0022600248
+2026-11-16,0022600249,HOU,MIA,+15.0,230.0,-15.02,229.91,13.22,-4.1,0.0,0.0,,,3in4,3in4,https://www.nba.com/game/hou-vs-mia-0022600249
+2026-11-16,0022600250,POR,MIN,-4.5,227.5,+4.35,227.39,10.81,13.16,0.0,0.0,,,rested,rested,https://www.nba.com/game/por-vs-min-0022600250
+2026-11-16,0022600251,GSW,NOP,+18.0,233.5,-17.82,233.29,10.71,-8.41,0.0,0.0,,,rested,3in4,https://www.nba.com/game/gsw-vs-nop-0022600251
+2026-11-16,0022600252,PHX,DEN,-5.0,232.0,+4.97,231.81,0.45,3.42,0.0,0.0,,,rested,rested,https://www.nba.com/game/phx-vs-den-0022600252

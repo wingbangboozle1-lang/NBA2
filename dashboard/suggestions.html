@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions · NBA2</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header><div class="wrap"><h1>NBA2 <span class="sub">line origination &amp; strategy platform</span></h1>
+<p class="snap">Snapshot 2026-11-13 · official injury report 5:15 p.m. ET · model v1.0 · every row source-linked · unverified values blank + flagged</p>
+<nav><a href="index.html" class="">Dashboard</a><a href="slates.html" class="">Slates & Picks</a><a href="injuries.html" class="">Injuries & Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="strategies.html" class="">Strategies & Gates</a><a href="correlation.html" class="">Correlation</a><a href="leaderboard.html" class="">Leaderboard</a><a href="data.html" class="">Data Tables</a><a href="suggestions.html" class="active">Suggestions</a><a href="questions.html" class="">Questions</a><a href="flagged.html" class="">Flagged for Review</a><a href="sources.html" class="">Sources</a></nav></div></header>
+<main class="wrap">
+<h2>Suggestions queue — review and decide before anything is implemented</h2>
+<p class="note">Nothing on this list is built until you mark it <b>approved</b>. The full decision table
+(with impact/effort columns and the decision log) lives in
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/suggestions.md">analysis/suggestions.md</a>
+and is mirrored here for review.</p>
+<div class="tblwrap"><table>
+<caption>Strategy &amp; data suggestions</caption>
+<thead><tr><th>ID</th><th>Suggestion</th><th>Why it improves decisions</th><th>Impact</th><th>Effort</th><th>Status</th><th>Decision</th></tr></thead><tbody>
+<tr><td>S-1</td><td>Connect a market odds feed (spreads/totals/ML/props)</td><td>unlocks edge, CLV scoring, S5, parlay pricing (Q-1/Q-2)</td><td>very high</td><td>low</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-2</td><td>Sign off reward sizing (weekly/monthly/season per leaderboard.md)</td><td>makes the competition real</td><td>high</td><td>decision only</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-3</td><td>Backtest calibration of 8 model parameters</td><td>fitted values replace assumptions (Q-3)</td><td>high</td><td>medium</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-4</td><td>Full rotation production table (30 teams × top-8)</td><td>fixes worst blind spot (Q-4, e.g. Edwards tiering)</td><td>very high</td><td>medium</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-5</td><td>Decide NBA Cup game weighting</td><td>grading policy clarity (9 Cup games tonight)</td><td>medium</td><td>decision only</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-6</td><td>Team-specific HCA table</td><td>tighter close-game margins (Q-7)</td><td>medium</td><td>medium</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-7</td><td>Daily automation: injury pull + model re-run + site regen</td><td>keeps 3-day window fresh (Q-8)</td><td>high</td><td>medium</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-8</td><td>Line-move tracker (snapshot diffs, &gt;2-pt flags)</td><td>line stability as a skill signal</td><td>medium</td><td>low (after S-1)</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-9</td><td>Prop market parser + S4 grading loop</td><td>activates prop-combo strategy</td><td>high</td><td>medium (after S-1)</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-10</td><td>Bankroll dashboard (Kelly calc, drawdown)</td><td>executes gate G4 mechanically</td><td>medium</td><td>low</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-11</td><td>Referee crew tendency tracking</td><td>extra totals signal</td><td>low</td><td>medium</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>S-12</td><td>Public pick-% contrarian signal (S5 input)</td><td>crowd bias pairs with luck ledger</td><td>medium</td><td>low</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+</tbody></table></div>
+<div class="tblwrap"><table>
+<caption>Site UX suggestions</caption>
+<thead><tr><th>ID</th><th>Suggestion</th><th>Why</th><th>Status</th><th>Decision</th></tr></thead><tbody>
+<tr><td>U-1</td><td>Confidence column on pick tables (provisional / validated / re-run-needed)</td><td>triage speed</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>U-2</td><td>Line snapshot diffs</td><td>see numbers move as injuries land</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>U-3</td><td>CSV download per table</td><td>own analysis off-site</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>U-4</td><td>Dark mode + mobile pass</td><td>comfort</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+<tr><td>U-5</td><td>Morning digest (email/JSON webhook)</td><td>decisions happen off-site</td><td>proposed</td><td class="dec">awaiting review</td></tr>
+</tbody></table></div>
+<h2>Decision workflow</h2>
+<ol><li>Read the row and its evidence links.</li>
+<li>Set status: <code>approved</code> / <code>rejected</code> / <code>needs-edit</code> (with note).</li>
+<li>Approved items are implemented in a later session and linked here; rejected items stay forever — the reasoning trail is part of the product.</li>
+<li>New ideas: append S-13… in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/suggestions.md">analysis/suggestions.md</a>.</li></ol>
+</main>
+<footer class="wrap"><p>NBA2 · built 2026-11-13 by session arena-10957a28 · sources: official NBA (nba.com, official.nba.com, ak-static.cms.nba.com) + labeled trusted-secondary · <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a> · Unverified values are never inferred — see <a href="flagged.html">Flagged for Review</a>.</p></footer>
+</body></html>

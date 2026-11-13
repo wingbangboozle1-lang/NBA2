@@ -79,3 +79,25 @@ python3 tools/generate_picks_lab.py --demo   # synthetic demo of the pick pipeli
 python3 tools/verify_site.py                 # verify docs tables are fully sourced
 python3 tools/check_links_all.py             # link check across root/, pages/, verified/, docs/
 ```
+
+## Line-origination data platform & dashboard (`dashboard/`) — session arena-10957a28
+
+A self-contained 12-page dashboard (served at `/NBA2/dashboard/`) plus the verified CSV
+datasets, deterministic model, and analysis documents behind it:
+
+| Area | Contents |
+|---|---|
+| [`dashboard/`](dashboard/) | Slates & Picks (31 games, our lines, picks, combos, props), Injuries & Rotation, Game Flow, Strategies & Gates, Correlation, Leaderboard, Data Tables, Suggestions, Questions, **Flagged for Review**, Sources |
+| [`data/`](data/) | `games.csv` (31 games w/ official IDs), `standings-2026-11-13.csv`, `team-ratings-2026-11-13.csv`, `injury-report-2026-11-13.csv` (official PDF), `player-baselines-2026-11-13.csv`, `correlation-matrix.csv`, `our-lines.csv`, `picks.csv`, `parlays.csv`, `prop-lines.csv`, `luck-table.csv`, `leaderboard.csv` — every row source-linked |
+| [`scripts/`](scripts/) | `model.py` (line origination v1.0), `build_site.py`, `check_site.py` (link + per-row source checks) |
+| [`analysis/`](analysis/) | executive summary, per-game flow notes, questions register (Q-1..Q-10), suggestions queue (S-1..S-12), repo review, verification log, `strategy/` methodology (model, gates G1–G5, luck removal, correlation, leaderboard) |
+
+```bash
+python3 scripts/model.py       # recompute lines/picks/combos/props/luck ledger
+python3 scripts/build_site.py  # regenerate dashboard/
+python3 scripts/check_site.py  # verify links + per-row sources (PASS: 524 rows)
+```
+
+Distinct files only — this session's `data/*.csv`, `scripts/`, `analysis/`, `dashboard/`
+do not overwrite any earlier session's paths; shared files (`COORDINATION.md`, `README.md`)
+merged append-only.

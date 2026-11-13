@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategies &amp; Gates · NBA2</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header><div class="wrap"><h1>NBA2 <span class="sub">line origination &amp; strategy platform</span></h1>
+<p class="snap">Snapshot 2026-11-13 · official injury report 5:15 p.m. ET · model v1.0 · every row source-linked · unverified values blank + flagged</p>
+<nav><a href="index.html" class="">Dashboard</a><a href="slates.html" class="">Slates & Picks</a><a href="injuries.html" class="">Injuries & Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="strategies.html" class="active">Strategies & Gates</a><a href="correlation.html" class="">Correlation</a><a href="leaderboard.html" class="">Leaderboard</a><a href="data.html" class="">Data Tables</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="">Questions</a><a href="flagged.html" class="">Flagged for Review</a><a href="sources.html" class="">Sources</a></nav></div></header>
+<main class="wrap">
+<p class="note">Full methodology with derivations and citations:
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/strategy/model.md">model.md</a> ·
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/strategy/validation-gates.md">validation-gates.md</a> ·
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/strategy/correlation.md">correlation.md</a> ·
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/strategy/leaderboard.md">leaderboard.md</a>.</p>
+<h2>Line origination (v1.0)</h2>
+<pre>predicted home margin = (NRtg/A_home − NRtg/A_away) + HCA − injury_home + injury_away + fatigue terms
+predicted total       = league mean + scoring-lean terms − 0.35 × combined injury impact</pre>
+<p>Inputs: schedule-adjusted net ratings
+(<a href="https://www.basketball-reference.com/leagues/NBA_2027_ratings.html" target="_blank" rel="noopener">Basketball-Reference</a>, trusted secondary — flagged per row),
+official injury statuses
+(<a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf" target="_blank" rel="noopener">official PDF</a>),
+verified rest. Parameters (HCA 2.0, tiers 4.0/2.0/0.8, fatigue −0.6/−1.1…) are documented assumptions pending calibration (Q-3).</p>
+<h2>Validation gates — every strategy must pass all five</h2>
+<table><thead><tr><th>Gate</th><th>Rule</th><th>Blocks</th></tr></thead><tbody>
+<tr><td>G1 Data integrity</td><td>≥95% picks with verified source links; unverified inputs void the pick</td><td>silent fabrication</td></tr>
+<tr><td>G2 Sample size</td><td>≥30 graded picks to rank; ≥100 to pay rewards</td><td>small-sample luck</td></tr>
+<tr><td>G3 Price honesty</td><td>graded at our recorded number; CLV logged when market feed exists</td><td>bad-price wins counted as skill</td></tr>
+<tr><td>G4 Risk &amp; correlation caps</td><td>≤2 same-game legs; banned combos enforced; ≤0.25 Kelly; no chase doubling</td><td>variance death, fake parlays</td></tr>
+<tr><td>G5 Luck separation</td><td>raw record must beat expected record (model win prob) for performance points</td><td>rewarding luck</td></tr>
+</tbody></table>
+<h2>Removing luck — three mechanisms</h2>
+<ol>
+<li><b>Expected-record ledger:</b> luck component = actual wins − Σ model win probability.
+Current extreme: PHI 10-3 with expected 5.8 → <b>+4.2 luck</b>.</li>
+<li><b>Process Rating</b> = 0.40·z(shrunk ROI) + 0.35·z(CLV) + 0.15·z(gates) − 0.10·z(drawdown);
+raw ROI is displayed but labeled luck-contaminated. CLV is the accepted skill measure —
+"closing line value accumulates with skill"
+(<a href="https://onlinenbabetting.com/spreads/" target="_blank" rel="noopener">source</a>).</li>
+<li><b>Conviction gating:</b> play only where |our margin| ≥ 4 or total lean ≥ 5 pts —
+selectively skill-based by construction.</li>
+</ol>
+<h2>Prop-combo rules</h2>
+<ul>
+<li>Projection = verified season baseline + 0.35 × opponent defense adjustment; bet-able at ±1.5-pt buffer around our line.</li>
+<li>Combos must follow documented correlation direction; big-favorite star props banned (blowout minutes); game-under + props banned.</li>
+<li>See <a href="correlation.html">Correlation</a> for every value and its source.</li>
+</ul>
+</main>
+<footer class="wrap"><p>NBA2 · built 2026-11-13 by session arena-10957a28 · sources: official NBA (nba.com, official.nba.com, ak-static.cms.nba.com) + labeled trusted-secondary · <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a> · Unverified values are never inferred — see <a href="flagged.html">Flagged for Review</a>.</p></footer>
+</body></html>

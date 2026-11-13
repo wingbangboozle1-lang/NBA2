@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flagged for Review · NBA2</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header><div class="wrap"><h1>NBA2 <span class="sub">line origination &amp; strategy platform</span></h1>
+<p class="snap">Snapshot 2026-11-13 · official injury report 5:15 p.m. ET · model v1.0 · every row source-linked · unverified values blank + flagged</p>
+<nav><a href="index.html" class="">Dashboard</a><a href="slates.html" class="">Slates & Picks</a><a href="injuries.html" class="">Injuries & Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="strategies.html" class="">Strategies & Gates</a><a href="correlation.html" class="">Correlation</a><a href="leaderboard.html" class="">Leaderboard</a><a href="data.html" class="">Data Tables</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="">Questions</a><a href="flagged.html" class="active">Flagged for Review</a><a href="sources.html" class="">Sources</a></nav></div></header>
+<main class="wrap">
+<h2>Flagged for Review</h2>
+<p class="note">These items are published, linked, and deliberately unresolved. Per policy they
+<b>do not block</b> anything. Review and request changes whenever you like — each item maps to a
+register entry (Q-n) or suggestion (S-n).</p>
+<div class="tblwrap"><table>
+<thead><tr><th>#</th><th>Flag</th><th>Detail</th><th>Evidence / source</th><th>Register</th></tr></thead><tbody>
+<tr><td>F-1</td><td>Ratings provenance</td><td>Team efficiency values are Basketball-Reference (trusted secondary), not official NBA — sandbox cannot reach NBA stats APIs. Every row labeled.</td><td><a href="https://www.basketball-reference.com/leagues/NBA_2027_ratings.html" target="_blank" rel="noopener">bball-ref ratings</a></td><td>Q-3 / S-3</td></tr>
+<tr><td>F-2</td><td>Blank baselines</td><td>LAL, CHA, TOR season-leader rows left blank and flagged (not collected from official source this session).</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/player-baselines-2026-11-13.csv">player-baselines CSV</a></td><td>Q-4</td></tr>
+<tr><td>F-3</td><td>Key-absence tiering (raised &amp; resolved during build)</td><td>First model run under-charged Haliburton/Banchero/Edwards/Morant/Mobley absences (uncollected baselines). Verified baselines added (Edwards 33.3, Banchero 24.5, Haliburton 21.8 PPG etc.) and lines re-run (NYK −9.5→−11.0, ORL −7.5→−4.0, MIN −28.0→−25.0). Residual: non-star rotation players still tiered as unknown (Q-4 continues).</td><td><a href="https://www.basketball-reference.com/leagues/NBA_2027_per_game.html" target="_blank" rel="noopener">BRef per-game</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf" target="_blank" rel="noopener">official report</a></td><td>Q-4 (partially resolved)</td></tr>
+<tr><td>F-4</td><td>Nov 15–16 picks PENDING</td><td>Official injury reports for Sun/Mon not yet published at snapshot; those lines are injury-unadjusted by design.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official injury index</a></td><td>Q-8</td></tr>
+<tr><td>F-5</td><td>Correlation evidence mix</td><td>15 of 21 matrix rows are industry range estimates; only 6 are empirical. Treated as priors pending our own history.</td><td><a href="https://kindoflost.com/2026/09/nba-dfs-correlation-measured/" target="_blank" rel="noopener">empirical study</a></td><td>Q-5</td></tr>
+<tr><td>F-6</td><td>Secondary rest-context sources</td><td>Nov 12 scores (used only for rest/B2B flags) come from CBS/AP and nba-grid, not NBA.com.</td><td><a href="https://www.cbssports.com/nba/gametracker/boxscore/NBA_20261112_TOR@PHI/" target="_blank" rel="noopener">CBS/AP</a></td><td>—</td></tr>
+<tr><td>F-7</td><td>Model parameters uncalibrated</td><td>HCA 2.0, impact tiers 4.0/2.0/0.8, fatigue values, defense scalar 0.35, logistic divisor 6.8 are documented assumptions.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/strategy/model.md">model.md</a></td><td>Q-3</td></tr>
+<tr><td>F-8</td><td>No market lines</td><td>Edge vs market, CLV, and reward payouts cannot activate until a feed exists. Picks are "make at our number" only.</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/questions.md">questions.md Q-1</a></td><td>Q-1 / S-1</td></tr>
+<tr><td>F-9</td><td>PHI luck outlier (context flag)</td><td>PHI 10-3 vs 5.8 expected wins (+4.2 luck). Not an error — a caution against trusting records blindly.</td><td><a href="https://www.basketball-reference.com/leagues/NBA_2027_ratings.html" target="_blank" rel="noopener">ratings source</a></td><td>luck ledger</td></tr>
+</tbody></table></div>
+</main>
+<footer class="wrap"><p>NBA2 · built 2026-11-13 by session arena-10957a28 · sources: official NBA (nba.com, official.nba.com, ak-static.cms.nba.com) + labeled trusted-secondary · <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a> · Unverified values are never inferred — see <a href="flagged.html">Flagged for Review</a>.</p></footer>
+</body></html>
