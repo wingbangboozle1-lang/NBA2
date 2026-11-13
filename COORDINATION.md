@@ -162,7 +162,7 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
   `data/*.json` quantitative claims were unverified estimates; that data is superseded by `data/raw/**` + the
   computed engine in `nba2/`. Originals are preserved in git history, not deleted silently.
 
-### Session `arena/20c4f2f9` (`arena/20c4f2f9-nba2`) — status: in progress → final integration
+### Session `arena/20c4f2f9` (`arena/20c4f2f9-nba2`) — status: done (final integration; PR #12)
 - Base commit: `623b4c2f` (branched before the other two merged); rebased onto `main` on 2026-11-13 22:40 UTC
 - Role: line-origination engine, verified data snapshots, validation gates, correlation/parlay pricing,
   injury→rotation module, GitHub Pages site rebuild, final integration + PR
@@ -253,8 +253,77 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
 |---|---|---|---|
 | #1 | `arena/36543e84-nba2` → `main` | merged `84f9b94` | prior session |
 | #3 | `arena/23927d63-nba2` → `main` | merged `59a01c1` | prior session |
-| _(this session)_ | `arena/20c4f2f9-nba2` → `main` | see completion log | filled after T-15 |
+| #12 | `arena/20c4f2f9-nba2` → `main` | opened 2026-11-13 23:15 UTC | https://github.com/wingbangboozle1-lang/NBA2/pull/12 — merge + Pages confirmation recorded in the completion log below |
 
 ## Completion log — arena/20c4f2f9
 
 _appended on completion by `arena/20c4f2f9`._
+
+### Completion log — arena/20c4f2f9 (final integration), 2026-11-13
+
+**Delivered.** `nba2/` engine (config, provenance, models: ratings/lines/gates/correlation/props/
+injuries/gameflow/leaderboard/ledger; pipeline: seal_predictions/build_site_data/build_site/
+reconcile/lint/settle; 49 tests). Committed snapshots in `data/raw/` (slate 31 games, ratings 30
+teams, injury report 95 rows ×2 revisions compared, official game times, leaders, out-of-window
+context). Sealed forward ledger (22 predictions, `sha256 cf7dedc689597cb8…`). Site rebuilt: 17
+pages, 31 tables, 870 rows. Registers: 66 requirements, 22 questions, 20 suggestions, 16
+repo-review findings, 65 flags on one page.
+
+**Sources used (all linked per row on the site).** Official: `www.nba.com/schedule` (22:33 UTC),
+`www.nba.com/games` (22:26), `www.nba.com/game/den-vs-nop-0022600231`, `www.nba.com/teams` (IDs),
+`ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf` (22:4x) and
+`…_01_00PM.pdf` (23:05, fetched to adjudicate the 6 status conflicts). Third party (flagged, never
+called official): `basketball-reference.com/leagues/NBA_2027_standings.html` for PS/G, PA/G, SRS;
+`espn.com/nba/standings` used only to corroborate rank order. Unreachable: `stats.nba.com`
+endpoints, `cdn.nba.com` scoreboard JSON, any odds feed — recorded as `blocked` sources, so the
+fields that depend on them are blank, not estimated.
+
+**Verification performed.**
+1. Every published row carries a source; enforced by `make_row` and re-checked by `lint` on the
+   emitted JSON/HTML. Tamper-tested: an invented prop number, a removed URL, and a dropped row each
+   fail the build.
+2. Win-loss for 30 teams cross-checked two ways (our NBA.com capture vs the ratings table) and a
+   third way against the prior session's independent capture: 30/30 agree.
+3. Slate composition corroborated by a second official document: 14/14 matchups and 11/11 readable
+   tip times agree with our capture, 0 mismatches.
+4. σ and HCA fitted, not assumed; fit quality published (RMSE 1.31 vs 2.78 baseline) and the
+   HCA disagreement (1.53 fitted vs ≈0.4 implied by home win rate) disclosed as FLAG-PARAM-02.
+5. Injury status conflicts with the prior session resolved by re-reading the 13:00 ET revision:
+   all 6 explained by report revision timing; neither capture erroneous.
+6. Both prior-session checkers run on the merged tree and pass: `tools/check_links_all.py`
+   (2,903 internal links OK), `tools/verify_site.py` (docs layer, 249 rows sourced).
+7. Determinism: `test_rebuild_produces_identical_rows` rebuilds in a subprocess and requires byte
+   equality apart from the timestamp; CI additionally fails if committed HTML/JSON differ from a
+   rebuild.
+
+**Irregularities flagged (not silently fixed).** I-01 fabricated numeric injury/production impacts
+in `data/injuries.json` → removed at the site layer (source file left intact for audit, superseded
+by `data/raw/`), I-02 correlations attributed to `nba.com/stats/help/faq` which contains none →
+removed, I-03 synthetic `GAME-20261113-*` IDs → replaced with official IDs, I-04 duplicate Pages
+workflow (which also deployed another session's branch) → deleted, I-05 README denying the
+deployment it shipped + two stylesheets → README rewritten, `styles.css` kept at root because other
+sessions' pages link it (renaming it would have broken them), I-06 duplicate flagged-review pages →
+merged with a redirect. New: 2026-11-17 schedule shows two repeat matchups on consecutive days
+(FLAG-ANOM-01, excluded from all model output); game IDs are not date-monotonic (FLAG-SLATE-03);
+`attribution=C` row count in the injury snapshot was wrong in our own flag text (17 → 11, corrected
+from the data).
+
+**Process incident, recorded for honesty (FLAG-PROC-01).** A throwaway patch script reused a
+variable name and overwrote `data/raw/injury_report_2026-11-13.json` with Python source. Caught on
+the next build when the JSON failed to parse; restored from commit 638b369 and re-patched; verified
+afterwards that all three snapshots' record arrays are byte-identical to the committed originals.
+Root cause and the reason this did not become a silent error: snapshots are committed before the
+pipeline reads them, and the pipeline refuses to run on unparseable input.
+
+**Merge protocol notes.** `git pull --rebase origin main` was attempted first; with main having
+moved by 85 files across 3 sessions, a merge was used instead so both histories stay intact and
+the 11 conflicted files could be resolved one by one (see the merge commit). No other session's
+file was edited beyond the shared outputs this session owns as integrator (site index/nav,
+`data/site.json`, `COORDINATION.md`, workflows).
+
+**PR & merge.** PR #12 → `main`, no approval required per protocol; merged by this session. Pages
+build confirmation recorded in the next entry.
+
+**Not done, and why.** No strategy promoted and no reward paid (nothing has settled); no prop or
+injury-impact numbers (no official input); no point-in-time backtest (no results history); the
+suggestions queue is untouched by design until the owner chooses. See R-101…R-106 and Q-01…Q-05.
