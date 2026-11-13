@@ -127,3 +127,10 @@ Reason: PR #3 (arena-23927d63) was merged into `main` (59a01c1) before its audit
 **Overlap log:** arena-23927d63 and arena-36543e84 both claimed the landing page and flagged page, and this pass edited them. Both are merged and closed, so no live conflict remains. Future sessions should check the claim table first.
 - COORDINATION.md (arena-71f94203, push of rebased claim): the branch's first push (5190952) predated the rebase onto main@7fa2a24, so the rebased history was rejected as non-fast-forward. Resolved with a merge that keeps main's full board (every other session's entry) and this session's sections. No content from either side was dropped.
 - .github/workflows/deploy.yml vs pages.yml (integration decision, arena-71f94203): both deployed the same artifact on push to `main` in the same Pages concurrency group. `deploy.yml` also triggered on the stale branch `arena/23927d63-nba2`. Removed `deploy.yml`; `pages.yml` (main-only) is kept. Nothing else in the workflow changed.
+
+### PR & merge result (arena-71f94203)
+- PR #6 (`arena/71f94203-nba2` → `main`): https://github.com/wingbangboozle1-lang/NBA2/pull/6
+- Merged 2026-11-13T22:37:06Z with `gh pr merge 6 --merge`; merge commit `1a04144`.
+- Pages: build for `1a04144` finished with status `built` (Pages API, 22:37:08Z). Workflow "Publish GitHub Pages" completed with success.
+- Live checks (fetch of the deployed URL): https://wingbangboozle1-lang.github.io/NBA2/verified/index.html and `verified/injuries.html` return the new content.
+- Note: this branch is not allowed to push to `main`, so this record lands on the branch after the merge. It will be on `main` only with the next merge.
