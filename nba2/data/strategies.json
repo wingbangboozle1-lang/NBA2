@@ -1,0 +1,112 @@
+{
+  "description": "Strategy validation gates and leaderboard.",
+  "gates": {
+    "G1_data_integrity": "All factual inputs trace to an official verified source; model outputs are labeled Model.",
+    "G2_edge": "Model edge clears break-even (0.524) / thresholds.",
+    "G3_correlation": "Multi-leg parlays use legs from distinct games (low correlation); same-game legs excluded.",
+    "G4_sample_size": "Minimum observations before a strategy is trusted (provisional otherwise).",
+    "G5_variance_luck": "Skill-based selection; realized results checked for luck vs skill (see correlations)."
+  },
+  "parlay_correlation_assumption": "Different-game outcomes are treated as approximately independent (near-zero correlation). Same-game legs are high-correlation and are excluded from parlays.",
+  "luck_vs_skill": "Luck is removed by requiring: a documented skill basis, a minimum sample size, and realized results statistically distinguishable from chance (binomial test vs .500, ROI convergence). New strategies are provisional until tracked.",
+  "records": [
+    {
+      "id": "S1_MarginFavorite",
+      "name": "Margin Favorite (Single)",
+      "type": "single",
+      "signals": 11,
+      "gates": {
+        "G1_data_integrity": true,
+        "G5_variance_luck": true,
+        "G5_note": "skill basis documented (provisional until results tracked)",
+        "G4_sample_size": false,
+        "G4_note": "obs=0 vs min 30",
+        "G2_edge": true
+      },
+      "status": "provisional",
+      "rank": 1,
+      "roi": null,
+      "hit_rate": null,
+      "performance": "pending tracked results"
+    },
+    {
+      "id": "S2_SpreadValue",
+      "name": "Spread Value (Single)",
+      "type": "single",
+      "signals": 9,
+      "gates": {
+        "G1_data_integrity": true,
+        "G5_variance_luck": true,
+        "G5_note": "skill basis documented (provisional until results tracked)",
+        "G4_sample_size": false,
+        "G4_note": "obs=0 vs min 30",
+        "G2_edge": true
+      },
+      "status": "provisional",
+      "rank": 2,
+      "roi": null,
+      "hit_rate": null,
+      "performance": "pending tracked results"
+    },
+    {
+      "id": "S3_Totals",
+      "name": "Totals (Single)",
+      "type": "single",
+      "signals": 0,
+      "gates": {
+        "G1_data_integrity": false,
+        "G5_variance_luck": true,
+        "G5_note": "skill basis documented (provisional until results tracked)",
+        "G4_sample_size": false,
+        "G4_note": "obs=0 vs min 30",
+        "G2_edge": false
+      },
+      "status": "provisional",
+      "rank": 3,
+      "roi": null,
+      "hit_rate": null,
+      "performance": "pending tracked results"
+    },
+    {
+      "id": "S4_LeanParlay",
+      "name": "Lean Parlay (Combo)",
+      "type": "parlay",
+      "signals": 1,
+      "gates": {
+        "G1_data_integrity": true,
+        "G5_variance_luck": true,
+        "G5_note": "skill basis documented (provisional until results tracked)",
+        "G4_sample_size": false,
+        "G4_note": "obs=0 vs min 30",
+        "G3_correlation": true,
+        "G3_note": "distinct games",
+        "G2_edge": true
+      },
+      "status": "provisional",
+      "rank": 4,
+      "roi": null,
+      "hit_rate": null,
+      "performance": "pending tracked results"
+    },
+    {
+      "id": "S5_PlayerPropCombo",
+      "name": "Player Prop Combo",
+      "type": "prop",
+      "signals": 0,
+      "gates": {
+        "G1_data_integrity": false,
+        "G5_variance_luck": true,
+        "G5_note": "skill basis documented (provisional until results tracked)",
+        "G4_sample_size": false,
+        "G4_note": "obs=0 vs min 30",
+        "G1_data_integrity_prop": false,
+        "G1_note_prop": "No verified player-level prop data available yet — values left blank/unverified."
+      },
+      "status": "provisional",
+      "rank": 5,
+      "roi": null,
+      "hit_rate": null,
+      "performance": "pending tracked results"
+    }
+  ]
+}

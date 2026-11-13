@@ -1,0 +1,28 @@
+{
+  "description": "Correlation analysis. Values marked 'pending' require a historical dataset (n insufficient in current snapshot).",
+  "rows": [
+    {
+      "factor_a": "win%",
+      "factor_b": "PPG",
+      "value": "pending",
+      "n": 2,
+      "note": "PPG verified for only 2 team(s); n<2 is not statistically meaningful. Historical dataset required."
+    },
+    {
+      "factor_a": "win%",
+      "factor_b": "OPPG",
+      "value": "pending",
+      "n": 2,
+      "note": "OPPG verified for only 2 team(s); n<2 is not statistically meaningful. Historical dataset required."
+    },
+    {
+      "factor_a": "PPG",
+      "factor_b": "OPPG",
+      "value": "pending",
+      "n": 2,
+      "note": "Requires verified PPG/OPPG for all teams + historical sample."
+    }
+  ],
+  "parlay_correlation_assumption": "Different-game outcomes are treated as approximately independent (near-zero correlation). Same-game legs are high-correlation and are excluded from parlays.",
+  "luck_vs_skill": "Luck is removed by requiring: a documented skill basis, a minimum sample size, and realized results statistically distinguishable from chance (binomial test vs .500, ROI convergence). New strategies are provisional until tracked."
+}

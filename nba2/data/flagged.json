@@ -1,0 +1,68 @@
+{
+  "description": "Items flagged for manual review. Each links to the official source where applicable; unverified values are left blank and never inferred.",
+  "items": [
+    {
+      "item": "Predicted totals use an unverified league-average baseline for 23 of 23 games",
+      "detail": "Predicted totals equal the model baseline (224.0) with no verified pace adjustment because verified PPG/OPPG were not available for both teams in those games. Game-level detail is on the Picks page; each row there links to its official NBA.com game page.",
+      "value": "unverified baseline (224.0)",
+      "source": "https://www.nba.com/stats",
+      "severity": "medium"
+    },
+    {
+      "item": "Injury impact weights (Out/Doubtful/Questionable -> points)",
+      "detail": "Per-player impact weights are transparent model estimates of rotation-minute/production impact, not verified importance values (which require player-level usage/box-score data).",
+      "value": "model estimate (unverified importance)",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+      "severity": "medium"
+    },
+    {
+      "item": "Player prop values (S5_PlayerPropCombo)",
+      "detail": "No verified player-level production data available; prop values are intentionally left blank/unverified rather than inferred.",
+      "value": "blank / unverified",
+      "source": "https://www.nba.com/stats",
+      "severity": "high"
+    },
+    {
+      "item": "PPG/OPPG unverified for 28 of 30 teams",
+      "detail": "PPG/OPPG verified only for TOR and WAS (official team pages). Left blank (unverified) for all other teams; never inferred.",
+      "value": "28 teams unverified",
+      "source": "https://www.nba.com/stats",
+      "severity": "medium"
+    },
+    {
+      "item": "Correlation win% vs PPG",
+      "detail": "PPG verified for only 2 team(s); n<2 is not statistically meaningful. Historical dataset required.",
+      "value": "pending historical dataset",
+      "source": "https://www.nba.com/stats",
+      "severity": "low"
+    },
+    {
+      "item": "Correlation win% vs OPPG",
+      "detail": "OPPG verified for only 2 team(s); n<2 is not statistically meaningful. Historical dataset required.",
+      "value": "pending historical dataset",
+      "source": "https://www.nba.com/stats",
+      "severity": "low"
+    },
+    {
+      "item": "Correlation PPG vs OPPG",
+      "detail": "Requires verified PPG/OPPG for all teams + historical sample.",
+      "value": "pending historical dataset",
+      "source": "https://www.nba.com/stats",
+      "severity": "low"
+    },
+    {
+      "item": "Injury reports for 11/14 and 11/15 games not yet submitted",
+      "detail": "The league's official injury report lists these games as 'NOT YET SUBMITTED'. Injury data for those games will be populated when the league publishes updated reports.",
+      "value": "not yet submitted",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+      "severity": "low"
+    },
+    {
+      "item": "All strategies are provisional (no tracked results)",
+      "detail": "The leaderboard rewards top-performing strategies, but no games have been tracked to completion yet. Strategies remain provisional until results are recorded.",
+      "value": "provisional",
+      "source": "https://www.nba.com/schedule",
+      "severity": "low"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions — NBA2</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav><div class="wrap"><div class="brand">NBA<span>2</span></div><a href="index.html" class="">Dashboard</a><a href="picks.html" class="">Picks & Lines</a><a href="strategies.html" class="">Strategies</a><a href="injuries.html" class="">Injuries & Flow</a><a href="correlations.html" class="">Correlations</a><a href="executive-summary.html" class="">Executive Summary</a><a href="suggestions.html" class="active">Suggestions</a><a href="questions.html" class="">Open Questions</a><a href="flagged.html" class="">Flagged for Review</a></div></nav>
+<div class="wrap">
+<header class="page"><h1>Suggestions</h1><p>Proposed improvements to strengthen decision-making, with a review path before implementation.</p></header>
+
+<section class="panel">
+<h2>Suggestions to improve decision-making</h2>
+<p class="sub">Proposed improvements, each with the rationale, the data/action needed to discover or
+implement it, and a priority. Reviewers choose the best path here before any change is implemented —
+status stays <span class="pill muted">Proposed</span> until accepted.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Suggestion</th><th>Category</th><th>Rationale</th><th>How to discover / implement</th><th>Priority</th><th>Status</th><th>Reference</th></tr></thead><tbody><tr><td>Acquire verified team pace &amp; efficiency data</td><td>Data</td><td>Verified PPG/OPPG for all 30 teams would activate the Totals strategy and remove the unverified 224 baseline, sharpening every total line.</td><td>Pull team traditional stats (PPG/OPPG/pace) from NBA.com/stats for all teams; verify per row.</td><td><span class="pill bad">High</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Acquire verified player-level box-score &amp; usage data</td><td>Data</td><td>Player-prop combos and real rotation-minute impact require player usage, box-score, and projection data currently left blank.</td><td>Pull player traditional + advanced stats and usage from NBA.com/stats; build a player projection layer.</td><td><span class="pill bad">High</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Build a historical results tracker</td><td>System</td><td>The leaderboard rewards top performers, but no games are tracked to completion yet, so all strategies are provisional.</td><td>Add a results ledger keyed by game_id/strategy that records hit/miss and computes ROI + hit rate after each slate.</td><td><span class="pill bad">High</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Compute historical correlations on the full dataset</td><td>Analysis</td><td>Correlation values are pending because the snapshot lacks a historical sample; this blocks luck-vs-skill stats.</td><td>Once a results tracker exists, compute correlations over accumulated observations and run binomial tests vs .500.</td><td><span class="pill warn">Medium</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Add a model-version &amp; parameter log</td><td>System</td><td>Model parameters (SPREAD_SCALE, HOME_ADV, thresholds) are tunable; documenting versions prevents silent drift.</td><td>Log parameter sets per generation run and show the active version on the dashboard.</td><td><span class="pill warn">Medium</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Add line movement / market comparison (optional)</td><td>Data</td><td>Comparing originated lines to market lines would surface true edges, but requires a verified odds source.</td><td>Only once a trusted, verifiable odds source is available; never infer odds. Flag if unavailable.</td><td><span class="pill ok">Low</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr><tr><td>Add a suggestions review workflow</td><td>UX</td><td>Suggestions need a review step so the best path is chosen before implementation, per the requirement.</td><td>Add status (proposed → accepted → implemented) to each suggestion, editable by the reviewer.</td><td><span class="pill warn">Medium</span></td><td><span class="pill muted">Proposed</span></td><td><a class="src" href="https://www.nba.com/stats" target="_blank" rel="noopener">source ↗</a></td></tr></tbody></table></div>
+</section>
+
+<section class="panel">
+<h2>How this section is used</h2>
+<div class="note blue"><p>This page is the review queue. A reviewer reads each suggestion, weighs
+priority and data needs, and marks the chosen path before implementation. Nothing here is implemented
+automatically — suggestions are proposals, not decisions.</p></div>
+</section>
+</div>
+<footer>NBA2 — originated lines, signals &amp; picks. Factual data verified to NBA.com. Model outputs are labeled <em>Model</em> and are not official. Unverified values are left blank and flagged.</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
