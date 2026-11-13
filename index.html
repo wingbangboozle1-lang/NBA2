@@ -35,7 +35,7 @@
   <main class="page-main">
     <section class="hero">
       <h1>NBA2</h1>
-      <p class="subtitle">Originated NBA lines, strategy signals, validation gates, and picks — built entirely from official NBA sources.</p>
+      <p class="subtitle">Originated NBA lines, strategy signals, validation gates, and picks — built entirely from official NBA sources. Evidence first: no fabricated picks, lines, or performance claims.</p>
       <p>This dashboard collects, organizes, and analyzes NBA betting signals. Strategies are treated as a leaderboard competition (rewards for top performers), cover single bets, parlays, and player-prop combos, and must pass validation gates before any pick is issued. Picks are generated for every upcoming slate up to 3 days in advance using our originated lines.</p>
       <div class="stat-grid">
         <div class="stat-card">
@@ -108,15 +108,141 @@
 
     <section class="section">
       <div class="section-head">
+        <span class="section-tag">Research foundations (integrated)</span>
+        <h2>What we can&mdash;and cannot&mdash;say</h2>
+      </div>
+      <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+        <div class="stat-card">
+          <div class="stat-label">Available (official NBA)</div>
+          <div class="lead" style="margin:0; font-size:0.85rem;">Schedules, player/team statistics, and team-submitted injury reports. Each is a potential input, not a ready-made betting signal.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Not available here</div>
+          <div class="lead" style="margin:0; font-size:0.85rem;">No historical snapshots, market prices, archived injury updates, model estimates, validation results, or bankroll records.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Live model / odds feed</div>
+          <div class="lead" style="margin:0; font-size:0.85rem;">None in this repository. No picks, lines, or returns are published until sourced and validated.</div>
+        </div>
+      </div>
+      <div class="callout callout-warn" style="margin-top:1rem;">
+        <strong>Decision:</strong> do not issue a wager recommendation until calibrated probabilities, executable price/odds, uncertainty, and all required validation gates are available.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Candidate strategy families</span>
+        <h2>Research backlog (hypotheses to test, not findings)</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:18%;">Family</th><th style="width:36%;">Signal hypothesis</th><th style="width:30%;">Measure / dependence</th><th style="width:16%;">Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Game sides &amp; totals</td>
+            <td>Team/player performance features may help estimate game outcomes; compare model probability to a time-stamped market quote.</td>
+            <td>Log loss, Brier score, calibration, closing-line value, net ROI after costs; estimate dependence by game/date.</td>
+            <td><span class="badge badge-unverified">unverified &middot; no model/data</span></td>
+          </tr>
+          <tr>
+            <td>Player props</td>
+            <td>Role, minutes opportunity, opponent/context and player production may inform a distribution; actual rotation is uncertain.</td>
+            <td>Distribution calibration and error by prop; conditional dependence across props and teammates.</td>
+            <td><span class="badge badge-unverified">unverified &middot; no prop feed</span></td>
+          </tr>
+          <tr>
+            <td>Parlays / prop combos</td>
+            <td>Test joint probability directly; multiplying marginal probabilities is invalid when legs are dependent unless independence is justified.</td>
+            <td>Joint calibration, correlation/covariance by pair and context, payout break-even, hold and net return.</td>
+            <td><span class="badge badge-unverified">blocked &middot; no joint sample</span></td>
+          </tr>
+          <tr>
+            <td>Injury / rotation response</td>
+            <td>Model status changes and observed role/minutes distributions; do not mechanically transfer absent-player production to teammates.</td>
+            <td>Minute and production distributions conditional on report timestamp/status; uncertainty and sample size.</td>
+            <td><span class="badge badge-unverified">blocked &middot; no archived reports</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Validation gates</span>
+        <h2>Evidence before leaderboard rewards (all required)</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:20%;">Gate</th><th style="width:34%;">Required evidence</th><th style="width:30%;">Fail condition</th><th>Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Point-in-time integrity</td>
+            <td>Immutable feature, injury, schedule and quote snapshots with event-time and ingestion-time; features available before decision cutoff.</td>
+            <td>Leakage, missing timestamps, retrospective injury/status substitution.</td>
+            <td class="source"><a href="https://official.nba.com/nba-injury-report-2026-27-season/">NBA injury reporting</a></td>
+          </tr>
+          <tr>
+            <td>2. Baselines &amp; holdout</td>
+            <td>Pre-registered baseline; chronological train/validation/test split; rolling-origin evaluation; no tuning on final holdout.</td>
+            <td>Random leakage, post-hoc selection, insufficient coverage.</td>
+            <td class="source"><a href="https://www.nba.com/stats/">NBA stats reference</a></td>
+          </tr>
+          <tr>
+            <td>3. Probability quality</td>
+            <td>Proper scoring (Brier/log loss), reliability/calibration by probability bucket, confidence intervals and subgroup checks.</td>
+            <td>Uncalibrated or unstable probabilities; any key metric omitted.</td>
+            <td class="source"><a href="https://www.nba.com/stats/">NBA stats reference</a></td>
+          </tr>
+          <tr>
+            <td>4. Tradable economics</td>
+            <td>Timestamped offered odds, rules/settlement, vig removal method, assumed execution/slippage and costs; compare ROI to break-even.</td>
+            <td>Backtest uses unavailable prices or ignores hold/costs.</td>
+            <td class="source"><a href="https://www.nba.com/schedule">Official schedule</a></td>
+          </tr>
+          <tr>
+            <td>5. Skill / luck control</td>
+            <td>Large pre-specified sample; uncertainty intervals; bootstrap by slate/date; multiple-testing correction across candidate strategies.</td>
+            <td>Winner selected from many variants without correction or uncertainty disclosure.</td>
+            <td class="source"><a href="https://www.nba.com/stats/">NBA Stats</a></td>
+          </tr>
+          <tr>
+            <td>6. Correlation &amp; combos</td>
+            <td>Report pairwise and joint dependence on out-of-sample observations, with sample counts, intervals and context; estimate combo probabilities directly.</td>
+            <td>Assume independent legs or present unsupported correlation as fact.</td>
+            <td class="source"><a href="https://www.nba.com/stats/players/traditional">NBA player stats</a></td>
+          </tr>
+          <tr>
+            <td>7. Prospective shadow run</td>
+            <td>Freeze model; record every eligible prediction before outcome; compare against benchmark over a defined prospective window.</td>
+            <td>Selective logging, missing losing picks, changed model without versioning.</td>
+            <td class="source"><a href="https://www.nba.com/schedule">NBA schedule</a></td>
+          </tr>
+          <tr>
+            <td>8. Responsible limits</td>
+            <td>Document jurisdiction, permitted data/market use, access controls, risk limits, and no-guarantee messaging before public wagering use.</td>
+            <td>Unreviewed legal/data rights or unsafe promises.</td>
+            <td class="source"><a href="https://www.nba.com/">NBA official site</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="lead" style="font-size:0.85rem;">Passing gates is a governance threshold, not proof of future profitability. No gate has been evaluated for a strategy in this repo.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <span class="section-tag">Verification stance</span>
         <h2>How data is verified</h2>
       </div>
       <ul class="checklist">
         <li><b>Every table row that states a value carries a source link</b> to an official, verified, trusted site (NBA.com or NBA-owned CDN).</li>
         <li><b>If a value cannot be confirmed from an official source, it is left blank</b> and flagged <span class="badge badge-unverified">unverified</span>.</li>
-        <li><b>Nothing is inferred or filled in.</b> No odds, lines, correlations, or player projections are invented.</li>
-        <li><b>Betting lines and odds</b> are not published by the NBA, so all wagering values are left blank and flagged unverified pending a licensed sportsbook data source.</li>
-        <li><b>Manual input required from you: none.</b> All entries were researched and written by this session.</li>
+        <li><b>Nothing is inferred or filled in.</b> No odds, lines, correlations, minutes, or projections are invented.</li>
+        <li><b>Betting lines and odds</b> are not published by the NBA &mdash; all wagering values are blank / unverified pending a licensed sportsbook data source.</li>
+        <li><b>Source-data anomalies</b> in the official injury PDF are reproduced verbatim and flagged (see <a href="flagged-review.html">Flagged for Review</a>).</li>
+        <li><b>No manual input</b> was required; all entries were researched and written by this session.</li>
       </ul>
     </section>
 
@@ -125,7 +251,7 @@
     </section>
 
     <footer class="footer">
-      NBA2 &middot; Built on branch <code>arena/20ee3521-nba2</code> of <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">wingbangboozle1-lang/NBA2</a> &middot; Sources: NBA.com (official) and NBA-owned CDN (ak-static.cms.nba.com).
+      NBA2 &middot; Integrated session <code>arena/20ee3521-nba2</code> with prior session <code>arena/36543e84-nba2</code> &middot; <a href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">wingbangboozle1-lang/NBA2</a> &middot; Sources: NBA.com (official) and NBA-owned CDN (ak-static.cms.nba.com).
     </footer>
   </main>
 </div>
