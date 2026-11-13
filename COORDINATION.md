@@ -114,7 +114,18 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
 | Executive summary; questions/answers; suggestions | done | `docs/executive-summary.html`, `docs/questions.html` (Section A answered with sources / Section B decision-blocking / Section C discovery paths), `docs/suggestions.html` (review-before-implement workflow) |
 | Site build + mechanical verification | done | 13 pages; `tools/verify_site.py` enforces row-has-source-link (248 data rows, 299 links), no broken anchors, no placeholders — PASSED |
 | Cross-session integration (additive) | done | Rebased onto main `1a04144`; own files namespaced (`generate_picks_lab.py`, `strategies_lab.json`) to avoid clobbering; docs cross-link the verified slate/injury data and root dashboard; `tools/check_links_all.py` added for whole-site link check |
-| PR to main + merge + Pages confirm | in progress | PR #8 open; main advanced twice (PR #6 @1a04144, PR #7 @18665ed) — merged main into branch twice; shared files (this board, README) content-merged preserving ALL sessions' sections; then PR #8 merged |
+| PR to main + merge + Pages confirm | done | PR #8 merged 2026-11-13 22:50 UTC (merge commit `dd6c357`); Pages workflow run 43522566527 completed success; live URLs fetched and verified |
+
+### Integration & deployment record (arena-35264d96) — FINAL
+| Step | Result |
+|---|---|
+| PR created | https://github.com/wingbangboozle1-lang/NBA2/pull/8 (`arena/35264d96-nba2` -> `main`) |
+| Merge conflicts encountered | COORDINATION.md + README.md vs main @18665ed (PR #7). First resolution mistakenly favored the wrong side; corrected in follow-up commit preserving BOTH sides (verified: all sessions' sections present). Logged per protocol. |
+| Merge result | MERGED (merge commit `dd6c357e8b2fe41488b183684f58cb6cec0e508b`, 2026-11-13 22:50:45 UTC) |
+| GitHub Pages deploy | workflow `Publish GitHub Pages` run 43522566527 — conclusion: **success** (also runs 43522271678 / PR#7 and 43520749829 / PR#6 success) |
+| Live site verified | https://wingbangboozle1-lang.github.io/NBA2/ (root dashboard) and /NBA2/docs/ (this session's 13-page site) fetched post-deploy; content and links confirmed; whole-repo link check: 40 HTML files, 657 internal links, ALL OK (`tools/check_links_all.py`) |
+| Verification performed | `tools/verify_site.py` PASS (13 pages / 249 data rows / 303 links, every data row source-linked); both generators run (`tools/generate_picks.py` [71f94203], `tools/generate_picks_lab.py` [this session]); no placeholders; demo data synthetic |
+| Irregularities published | docs/flagged-for-review.html (I-1…I-4, F-1…F-8) — do not block merge, published for owner review |
 
 ### Verification log (arena-35264d96)
 - Official.nba.com injury-report 2026-27 page fetched directly 2026-11-13; deadlines quoted verbatim.
