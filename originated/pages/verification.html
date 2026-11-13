@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verification · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="">Open Questions</a><a href="suggestions.html" class="">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="active">Verification</a><a href="data-and-sources.html" class="">Data &amp; Sources</a><a href="repo-review.html" class="">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Verification</h1>
+  <div class="md"><p>How every number on this site was checked, and what is still unchecked.</p>
+<hr>
+<h2>1. The rule</h2>
+<blockquote>
+<p>Every table row must carry a source link to an official site. If a value cannot be confirmed from</p>
+<p>an official source, it is left blank and flagged as unverified. No value is inferred or filled in.</p>
+</blockquote>
+<p>Enforcement is structural, not procedural:</p>
+<ul>
+<li>Every row in <code>data/*.json</code> carries a <code>src</code> field naming an entry in <code>data/sources.json</code>.</li>
+<li><code>data/sources.json</code> holds the URL, the tier and the retrieval date for each source.</li>
+<li>Unverifiable numeric fields are stored as <strong><code>null</code></strong>, not zero and not an estimate.</li>
+<li>The site renders <code>null</code> as <strong>— UNVERIFIED —</strong> and lists every such cell on the Flagged page.</li>
+<li>Model output is never presented as data; it is labelled MODEL OUTPUT and its formula is published</li>
+<p>  in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/research/04-line-origination.md">Line Origination</a>.</p>
+</ul>
+<h2>2. Automated checks</h2>
+<p><code>node engine/verify.js</code> runs all of these and exits non-zero on any structural failure.</p>
+<div class="tablewrap"><table><thead><tr><th>Check</th><th>Expectation</th><th>Result</th></tr></thead><tbody><tr><td>Every team referenced by the slate exists in <code>teams.json</code></td><td>0 dangling</td><td>PASS</td></tr><tr><td>Every team referenced by the injury report maps to a known team</td><td>0 dangling</td><td>PASS</td></tr><tr><td>Games per day match the nba.com headers</td><td>9 / 5 / 9</td><td>PASS</td></tr><tr><td><code>mean(PPG)</code> == <code>mean(OPP PPG)</code> (games-weighted)</td><td>\</td><td>diff\</td><td>< 0.05</td><td>PASS (113.43 / 113.42)</td></tr><tr><td><code>P(home covers its own originated spread)</code> ≈ 0.500</td><td>max deviation < 0.01</td><td>PASS (0.0055)</td></tr><tr><td>Every data row has a <code>src</code> that exists in <code>sources.json</code></td><td>0 missing</td><td>PASS</td></tr><tr><td>Every strategy has all 8 gates evaluated</td><td>8/8 present</td><td>PASS</td></tr><tr><td>No generated page contains an unresolved internal link</td><td>0 broken</td><td>PASS</td></tr><tr><td>Every <code>null</code> numeric cell appears on the Flagged page</td><td>0 unlisted</td><td>PASS</td></tr></tbody></table></div>
+<p>Run it yourself:</p>
+<pre><code>
+node engine/compute.js     # rebuild data/derived.json from data/*.json
+node engine/build.js       # rebuild index.html and pages/*.html
+node engine/verify.js      # run every check above
+</code></pre>
+<h2>3. Manual verification performed</h2>
+<h3>Official NBA schedule — <a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com/schedule</a></h3>
+<p>All 23 games were read row by row from the server-rendered page: date, tip time (ET), teams, venue, city, broadcaster and Cup group. The games-per-day counts were cross-checked against the page's own headers ("9 Games", "5 Games", "9 Games"). Each game additionally has its own official NBA.com game page linked from the Slates table — open any of them to confirm a row directly.</p>
+<h3>Official NBA injury report — <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" target="_blank" rel="noopener">PDF</a></h3>
+<p>All 7 pages transcribed row by row: 81 player rows plus 10 <code>NOT YET SUBMITTED</code> team rows. Player names, statuses and reason strings are reproduced verbatim, including the report's own punctuation (e.g. <em>"Injury/Illness - Left Great Toe - Sprain"</em>).</p>
+<p>Two teams that play on 13 Nov — <strong>Milwaukee</strong> and <strong>New York</strong> — have no player rows in this edition. That is the report as published, not a transcription gap, and it is flagged (F-INJ-01).</p>
+<h3>Team records — cross-verified between two independent sources</h3>
+<p>W-L for all 30 teams was taken from the T1 <a href="https://www.nba.com/game/nyk-vs-ind-0022600034" target="_blank" rel="noopener">NBA.com game rail</a> and compared row by row against the T2 <a href="https://www.espn.com/nba/standings" target="_blank" rel="noopener">ESPN standings</a>. <strong>30 of 30 match.</strong> The 18 teams playing on 13 Nov were independently re-read from the ESPN scoreboard as a third check: 18 of 18 agree.</p>
+<h3>Team scoring splits — T2 only</h3>
+<p>PPG, OPP PPG, DIFF, home/away/div/conf splits, streak and last-10 come from ESPN. These are <strong>not</strong> from an official NBA property, because <code>stats.nba.com</code> is unreachable from this build environment. Every one of these cells is therefore flagged <strong>"T2 — trusted, not official"</strong> on the site.</p>
+<hr>
+<h2>4. What is NOT verified</h2>
+<div class="tablewrap"><table><thead><tr><th>Item</th><th>Status</th><th>Why</th><th>Where to see it</th></tr></thead><tbody><tr><td>Every individual player prop threshold</td><td><strong>blank</strong></td><td>no official per-player feed (Q-02)</td><td>Props page; Flagged</td></tr><tr><td>Minutes vacated by an injured player</td><td><strong>blank</strong></td><td>needs per-player season minutes</td><td>Injuries page; Flagged</td></tr><tr><td>Production absorbed by the next man up</td><td><strong>blank</strong></td><td>same</td><td>Injuries page; Flagged</td></tr><tr><td><code>injuryK</code> = 0.35 (points per availability unit)</td><td><strong>assumption</strong></td><td>no history to calibrate against (Q-04)</td><td>Flagged</td></tr><tr><td><code>restB2B</code> = −1.6, <code>rest3Plus</code> = +0.25</td><td><strong>assumption</strong></td><td>no history</td><td>Flagged</td></tr><tr><td><code>tzPerHour</code> = −0.15</td><td><strong>assumption</strong></td><td>no history</td><td>Flagged</td></tr><tr><td><code>priorGames</code> = 12, <code>kTotal</code> = 0.85</td><td><strong>assumption</strong></td><td>shrinkage choices</td><td>Flagged</td></tr><tr><td><code>sdScore</code>, <code>rhoScore</code>, <code>paceSd</code></td><td><strong>assumption</strong></td><td>simulator calibration targets</td><td>Flagged</td></tr><tr><td>Pythagorean exponent 13.91</td><td><strong>published constant</strong></td><td>Morey / Basketball-Reference, not an NBA figure</td><td>Flagged</td></tr><tr><td>Emirates NBA Cup tiebreaker</td><td><strong>unverified</strong></td><td>not yet read from an official page (Q-06)</td><td>Flagged; S05 held at G2</td></tr><tr><td>Realised margin-vs-total correlation</td><td><strong>unknown</strong></td><td>needs box-score history (Q-07)</td><td>Flagged</td></tr><tr><td>Rest state for the nine 13 Nov games</td><td><strong>unknown</strong></td><td>12 Nov slate not collected (Q-08)</td><td>Flagged</td></tr><tr><td>Realised ROI of any strategy</td><td><strong>none exists</strong></td><td>no graded bet log (Q-03)</td><td>Leaderboard banner</td></tr></tbody></table></div>
+<h2>5. How to re-verify any figure yourself</h2>
+<ol>
+<li>Open the page showing the figure.</li>
+<li>Follow the source link in the row (or the page's source panel).</li>
+<li>For model output, open the formula in <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/research/04-line-origination.md">Line Origination</a> and re-run</li>
+<p>   <code>node engine/compute.js</code> — the simulator is seeded, so you will get the <strong>identical</strong> numbers.</p>
+</ol>
+<p>If a figure disagrees with its source, it is a bug. Please log it in <code>COORDINATION.md</code> §6.</p></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>

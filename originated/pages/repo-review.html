@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Repository Review · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="">Open Questions</a><a href="suggestions.html" class="">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="">Verification</a><a href="data-and-sources.html" class="">Data &amp; Sources</a><a href="repo-review.html" class="active">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Repository Review</h1>
+  <div class="md"><p><strong>Reviewed:</strong> 2026-11-13 · <strong>Reviewer session:</strong> <code>session-aaa8b341</code> · <strong>Branch:</strong> <code>arena/aaa8b341-nba2</code></p>
+<hr>
+<h2>1. Starting state</h2>
+<p>At the base commit <code>623b4c2</code> the repository contained one file:</p>
+<pre><code>
+README.md   6 bytes   &quot;# NBA2&quot;
+</code></pre>
+<p>By the time this session started, <code>main</code> had advanced to <code>7fa2a24</code> through two other agent sessions. Full history:</p>
+<div class="tablewrap"><table><thead><tr><th>Commit</th><th>What it did</th></tr></thead><tbody><tr><td><code>623b4c2</code></td><td>Initial commit (README only)</td></tr><tr><td><code>51e8d06</code></td><td><code>arena/36543e84-nba2</code> — coordination board</td></tr><tr><td><code>cdf911e</code></td><td><code>arena/36543e84-nba2</code> — dashboard + Pages workflow</td></tr><tr><td><code>84f9b94</code></td><td>merge PR #1</td></tr><tr><td><code>7662a6f</code></td><td>docs: merged PR + Pages deployment</td></tr><tr><td><code>c3a000b</code></td><td>merge PR #2</td></tr><tr><td><code>ce6e8aa</code></td><td><code>arena/23927d63-nba2</code> — multi-page dashboard</td></tr><tr><td><code>59a01c1</code></td><td>merge PR #3</td></tr><tr><td><code>7fa2a24</code></td><td>coordination board marked all tasks done</td></tr></tbody></table></div>
+<h2>2. What the prior sessions actually shipped</h2>
+<div class="tablewrap"><table><thead><tr><th>File</th><th>Verified content?</th><th>Notes</th></tr></thead><tbody><tr><td><code>index.html</code></td><td>no</td><td>dashboard shell; every numeric cell blank</td></tr><tr><td><code>flagged.html</code></td><td>n/a</td><td>container with no populated rows</td></tr><tr><td><code>styles.css</code>, <code>app.js</code></td><td>n/a</td><td>presentation only</td></tr><tr><td><code>pages/strategies.html</code></td><td>no</td><td>correlations described in their own board as "research estimates"</td></tr><tr><td><code>pages/picks.html</code></td><td>no</td><td>"No picks generated; lines blank"</td></tr><tr><td><code>pages/injuries.html</code></td><td><strong>partially wrong</strong></td><td>see §3</td></tr><tr><td><code>pages/game-flow.html</code></td><td>definitions only</td><td>classifications unverified</td></tr><tr><td><code>data/injuries.json</code></td><td><strong>contains errors</strong></td><td>see §3</td></tr><tr><td><code>.github/workflows/pages.yml</code>, <code>deploy.yml</code></td><td>yes</td><td>both upload the repo root to Pages; functionally duplicate</td></tr></tbody></table></div>
+<h2>3. Errors found in prior data (flagged, with the correcting official source)</h2>
+<p>All three are in <code>archive/prior-sessions/session-23927d63-data/injuries.json</code>.</p>
+<h3>I-01 — Wrong team</h3>
+<ul>
+<li><strong>Claimed:</strong> Ben Simmons — Golden State Warriors</li>
+<li><strong>Official report says:</strong> <code>Simmons, Ben — Sacramento Kings — Out — Injury/Illness - Right Achilles Tendon Repair / Surgery</code></li>
+<li><strong>Source:</strong> <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" target="_blank" rel="noopener">Official NBA Injury Report, 11/13/26 01:00 PM</a></li>
+</ul>
+<h3>I-02 — Wrong reason, taken from the wrong player</h3>
+<ul>
+<li><strong>Claimed:</strong> Jimmy Butler III — <em>Right Patella Subluxation</em></li>
+<li><strong>Official report says:</strong> <code>Butler III, Jimmy — Golden State Warriors — Out — Injury/Illness - Right ACL Repair / Surgery</code>.</li>
+<p>  "Right Patella Subluxation" is the reason listed for <strong>Maxime Raynaud (Sacramento Kings)</strong> on the   same page of the same report.</p>
+<li><strong>Source:</strong> same PDF</li>
+</ul>
+<h3>I-03 — Unsourced per-player estimates</h3>
+<ul>
+<li><strong>Claimed:</strong> minutes and production impacts such as <em>"Starter out — ~0 min (vs. ~34 MPG season avg)"</em></li>
+<p>  and <em>"-100% scoring/rebounding/playmaking output"</em>, each carrying <code>verified: false</code> and no source link.</p>
+<li><strong>Problem:</strong> there is no official per-player minutes feed reachable from this environment, so these</li>
+<p>  numbers cannot be checked. Under the project rule ("never infer or fill in values") they must not be   published.</p>
+<li><strong>Action:</strong> removed; the replacement player-level data on this site has those fields set to <code>null</code>.</li>
+</ul>
+<h3>I-04 — Tasks marked <code>done</code> with blank deliverables</h3>
+<p>Their coordination board marks the picks generator, the strategy research and the dashboard as <code>done</code> while simultaneously recording "No picks generated; lines blank" and "All numerical values unverified/blank". Flagged as a process irregularity, not a data one.</p>
+<h2>4. Environment irregularity discovered by this session</h2>
+<p>Outbound network from the build sandbox is restricted to <code>github.com</code>, <code>codeload.github.com</code>, <code>api.github.com</code>, <code>registry.npmjs.org</code>, <code>pypi.org</code>, <code>files.pythonhosted.org</code>.</p>
+<div class="tablewrap"><table><thead><tr><th>Host</th><th>Attempted</th><th>Result</th><th>Consequence</th></tr></thead><tbody><tr><td><code>stats.nba.com</code></td><td><code>/stats/leaguestandingsv3</code>, <code>/stats/scoreboardv3</code></td><td>connection refused</td><td><strong>no official per-player averages, no official pace/ORTG/DRTG</strong></td></tr><tr><td><code>cdn.nba.com</code></td><td><code>scheduleLeagueV2_1.json</code>, <code>todaysScoreboard_00.json</code></td><td>HTTP 500</td><td>used server-rendered <code>www.nba.com/schedule</code> instead</td></tr><tr><td><code>www.nba.com</code></td><td><code>/schedule</code>, <code>/game/...</code></td><td><strong>works</strong></td><td>T1 slate + all 30 team records</td></tr><tr><td><code>ak-static.cms.nba.com</code></td><td>injury report PDFs</td><td><strong>works</strong></td><td>T1 injury data</td></tr><tr><td><code>www.espn.com</code>, <code>site.api.espn.com</code></td><td>standings, scoreboard</td><td><strong>works</strong></td><td>T2 scoring splits</td></tr></tbody></table></div>
+<p>This is recorded as an irregularity because it changes which sources can be used, and it is the direct cause of blocker Q‑02.</p>
+<h2>5. Corrections applied by this session</h2>
+<ol>
+<li>Rewrote the data layer with a <code>src</code> field on every row and a tier registry in <code>data/sources.json</code>.</li>
+<li>Replaced the erroneous injury data with a full row-by-row transcription of the official PDF.</li>
+<li>Split the availability index into an <strong>injury</strong> index, a <strong>rotation</strong> index (excluding G League</li>
+<p>   rows) and a <strong>G League</strong> index, so G League assignments are no longer counted as rotation losses.</p>
+<li>Fixed a sign error in the points-expectation model (an opponent's strong defence was <em>raising</em> the</li>
+<p>   projected score rather than lowering it).</p>
+<li>Made the Monte-Carlo simulator anchor to the published line, so <code>P(home covers its own spread)</code></li>
+<p>   is 0.500 ± 0.006 instead of drifting by up to 0.45.</p>
+<li>Switched league averages to games-weighted means, so the accounting identity</li>
+<p>   <code>mean(PPG) == mean(OPP PPG)</code> now holds (it does not for an unweighted mean over teams).</p>
+<li>Replaced the flat −110 parlay pricing with an explicit overround model.</li>
+<li>Removed contradictory same-game-parlay leg pairs (e.g. <em>away moneyline</em> + <em>home covers</em>).</li>
+</ol>
+<h2>6. Files owned by this session</h2>
+<pre><code>
+COORDINATION.md          README.md            archive/prior-sessions/**
+data/sources.json        data/teams.json      data/slate.json
+data/injuries.json       data/derived.json
+engine/lib.js            engine/model.js      engine/strategies.js
+engine/compute.js        engine/build.js      engine/verify.js
+research/*.md            assets/**            index.html   pages/**
+</code></pre></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>

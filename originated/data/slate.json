@@ -1,0 +1,43 @@
+{
+  "season": "2026-27",
+  "generated": "2026-11-13",
+  "horizonDays": 3,
+  "note": "Every row is transcribed from the official NBA.com schedule page (S01). 'url' is that game's own official NBA.com page, which is also the T1 source for both teams' win-loss records (S02).",
+  "defaultSrc": "S01",
+  "games": [
+    { "id": "0022600034", "date": "2026-11-13", "timeEt": "7:00 PM ET", "etSort": 19.0, "away": "NYK", "home": "IND", "venue": "Gainbridge Fieldhouse", "city": "Indianapolis, IN", "broadcast": "Prime Video", "competition": "Emirates NBA Cup", "cupGroup": "East Group B", "url": "https://www.nba.com/game/nyk-vs-ind-0022600034" },
+    { "id": "0022600035", "date": "2026-11-13", "timeEt": "7:00 PM ET", "etSort": 19.0, "away": "MIL", "home": "ORL", "venue": "Kia Center", "city": "Orlando, FL", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "East Group A", "url": "https://www.nba.com/game/mil-vs-orl-0022600035" },
+    { "id": "0022600036", "date": "2026-11-13", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "CLE", "home": "MIA", "venue": "Kaseya Center", "city": "Miami, FL", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "East Group B", "url": "https://www.nba.com/game/cle-vs-mia-0022600036" },
+    { "id": "0022600037", "date": "2026-11-13", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "ATL", "home": "CHI", "venue": "United Center", "city": "Chicago, IL", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "East Group C", "url": "https://www.nba.com/game/atl-vs-chi-0022600037" },
+    { "id": "0022600038", "date": "2026-11-13", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "MEM", "home": "NOP", "venue": "Smoothie King Center", "city": "New Orleans, LA", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "West Group B", "url": "https://www.nba.com/game/mem-vs-nop-0022600038" },
+    { "id": "0022600039", "date": "2026-11-13", "timeEt": "8:30 PM ET", "etSort": 20.5, "away": "UTA", "home": "HOU", "venue": "Toyota Center", "city": "Houston, TX", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "West Group A", "url": "https://www.nba.com/game/uta-vs-hou-0022600039" },
+    { "id": "0022600040", "date": "2026-11-13", "timeEt": "9:30 PM ET", "etSort": 21.5, "away": "GSW", "home": "SAS", "venue": "Frost Bank Center", "city": "San Antonio, TX", "broadcast": "Prime Video", "competition": "Emirates NBA Cup", "cupGroup": "West Group C", "url": "https://www.nba.com/game/gsw-vs-sas-0022600040" },
+    { "id": "0022600041", "date": "2026-11-13", "timeEt": "10:00 PM ET", "etSort": 22.0, "away": "POR", "home": "SAC", "venue": "Golden 1 Center", "city": "Sacramento, CA", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "West Group C", "url": "https://www.nba.com/game/por-vs-sac-0022600041" },
+    { "id": "0022600042", "date": "2026-11-13", "timeEt": "10:30 PM ET", "etSort": 22.5, "away": "OKC", "home": "LAC", "venue": "Intuit Dome", "city": "Inglewood, CA", "broadcast": "League Pass", "competition": "Emirates NBA Cup", "cupGroup": "West Group B", "url": "https://www.nba.com/game/okc-vs-lac-0022600042" },
+
+    { "id": "0022600231", "date": "2026-11-14", "timeEt": "7:00 PM ET", "etSort": 19.0, "away": "DEN", "home": "NOP", "venue": "Smoothie King Center", "city": "New Orleans, LA", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/den-vs-nop-0022600231" },
+    { "id": "0022600232", "date": "2026-11-14", "timeEt": "7:30 PM ET", "etSort": 19.5, "away": "DAL", "home": "CLE", "venue": "Rocket Arena", "city": "Cleveland, OH", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/dal-vs-cle-0022600232" },
+    { "id": "0022600233", "date": "2026-11-14", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "DET", "home": "MIA", "venue": "Kaseya Center", "city": "Miami, FL", "broadcast": "NBA TV", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/det-vs-mia-0022600233" },
+    { "id": "0022600234", "date": "2026-11-14", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "BKN", "home": "MEM", "venue": "FedExForum", "city": "Memphis, TN", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/bkn-vs-mem-0022600234" },
+    { "id": "0022600235", "date": "2026-11-14", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "CHI", "home": "MIN", "venue": "Target Center", "city": "Minneapolis, MN", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/chi-vs-min-0022600235" },
+
+    { "id": "0022600236", "date": "2026-11-15", "timeEt": "1:00 PM ET", "etSort": 13.0, "away": "IND", "home": "PHI", "venue": "Xfinity Mobile Arena", "city": "Philadelphia, PA", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/ind-vs-phi-0022600236" },
+    { "id": "0022600237", "date": "2026-11-15", "timeEt": "4:00 PM ET", "etSort": 16.0, "away": "LAL", "home": "PHX", "venue": "Mortgage Matchup Center", "city": "Phoenix, AZ", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/lal-vs-phx-0022600237" },
+    { "id": "0022600238", "date": "2026-11-15", "timeEt": "4:30 PM ET", "etSort": 16.5, "away": "CHA", "home": "LAC", "venue": "Intuit Dome", "city": "Inglewood, CA", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/cha-vs-lac-0022600238" },
+    { "id": "0022600239", "date": "2026-11-15", "timeEt": "5:00 PM ET", "etSort": 17.0, "away": "SAS", "home": "UTA", "venue": "Delta Center", "city": "Salt Lake City, UT", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/sas-vs-uta-0022600239" },
+    { "id": "0022600240", "date": "2026-11-15", "timeEt": "6:00 PM ET", "etSort": 18.0, "away": "DAL", "home": "BOS", "venue": "TD Garden", "city": "Boston, MA", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/dal-vs-bos-0022600240" },
+    { "id": "0022600241", "date": "2026-11-15", "timeEt": "6:00 PM ET", "etSort": 18.0, "away": "NYK", "home": "TOR", "venue": "Scotiabank Arena", "city": "Toronto, ON", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/nyk-vs-tor-0022600241" },
+    { "id": "0022600242", "date": "2026-11-15", "timeEt": "7:00 PM ET", "etSort": 19.0, "away": "HOU", "home": "WSH", "venue": "Capital One Arena", "city": "Washington, DC", "broadcast": "MNMT / Monumental+", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/hou-vs-was-0022600242" },
+    { "id": "0022600243", "date": "2026-11-15", "timeEt": "8:00 PM ET", "etSort": 20.0, "away": "ATL", "home": "MIL", "venue": "Fiserv Forum", "city": "Milwaukee, WI", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/atl-vs-mil-0022600243" },
+    { "id": "0022600244", "date": "2026-11-15", "timeEt": "9:00 PM ET", "etSort": 21.0, "away": "OKC", "home": "SAC", "venue": "Golden 1 Center", "city": "Sacramento, CA", "broadcast": "League Pass", "competition": "Regular Season", "cupGroup": null, "url": "https://www.nba.com/game/okc-vs-sac-0022600244" }
+  ],
+  "cupRecords": {
+    "note": "Emirates NBA Cup group records, exactly as shown on the official NBA.com game rail on 2026-11-13 (S02). Only teams playing on Nov 13 have a Cup record at collection time.",
+    "src": "S02",
+    "records": {
+      "NYK": "0-1", "IND": "0-1", "MIL": "0-1", "ORL": "1-0", "CLE": "1-0", "MIA": "1-0",
+      "ATL": "1-0", "CHI": "0-1", "MEM": "0-1", "NOP": "0-1", "UTA": "0-1", "HOU": "0-1",
+      "GSW": "1-0", "SAS": "1-0", "POR": "0-1", "SAC": "0-1", "OKC": "1-0", "LAC": "0-1"
+    }
+  }
+}

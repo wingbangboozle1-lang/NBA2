@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive Summary · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="active">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="">Open Questions</a><a href="suggestions.html" class="">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="">Verification</a><a href="data-and-sources.html" class="">Data &amp; Sources</a><a href="repo-review.html" class="">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Executive Summary</h1>
+  <div class="md"><p><strong>Build date:</strong> 2026-11-13 · <strong>Season:</strong> 2026-27 · <strong>Window:</strong> Fri 13 Nov – Sun 15 Nov 2026 (23 games) · <strong>Session:</strong> <code>session-aaa8b341</code></p>
+<hr>
+<h2>1. What this system is</h2>
+<p>NBA2 originates its <strong>own</strong> NBA betting lines rather than consuming a sportsbook's. It reads official NBA data, turns it into team power ratings, projects a margin and a total for every game on the slate, and converts those into a fair spread, total and moneyline. On top of that fair line sits a catalog of <strong>strategies</strong>, each of which is allowed to claim an edge only if it uses information that is <strong>not</strong> already baked into the line.</p>
+<p>Slates are produced up to <strong>3 days ahead</strong>, which is the horizon the official NBA schedule and the official NBA injury report jointly support.</p>
+<h2>2. The three-day board</h2>
+<div class="tablewrap"><table><thead><tr><th>Date</th><th>Games</th><th>Competition</th><th>Injury report state</th></tr></thead><tbody><tr><td>Fri 2026-11-13</td><td>9</td><td>Emirates NBA Cup group play</td><td>filed (7 pages)</td></tr><tr><td>Sat 2026-11-14</td><td>5</td><td>Regular season</td><td><code>NOT YET SUBMITTED</code></td></tr><tr><td>Sun 2026-11-15</td><td>9</td><td>Regular season</td><td>not yet published</td></tr></tbody></table></div>
+<p>All 23 games, with tip times, venues, broadcasters and Cup groups, are transcribed from <a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com/schedule</a>.</p>
+<h2>3. What is verified vs. what is modelled</h2>
+<p>This is the single most important distinction on the site, and it is enforced in the data files.</p>
+<div class="tablewrap"><table><thead><tr><th>Category</th><th>Count</th><th>Source</th></tr></thead><tbody><tr><td>Verified rows (transcribed, official)</td><td>23 games · 91 injury rows · 30 team records</td><td><a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com</a>, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" target="_blank" rel="noopener">official injury report PDF</a></td></tr><tr><td>Verified against a <strong>non-official</strong> source, cross-checked against official</td><td>team scoring splits (PPG / OPP PPG / DIFF / splits / streaks)</td><td><a href="https://www.espn.com/nba/standings" target="_blank" rel="noopener">ESPN standings</a>, W‑L re-checked 30/30 against nba.com</td></tr><tr><td>Model output (ours, formula published)</td><td>originated spreads, totals, moneylines, correlations, strategy edges</td><td><code>engine/model.js</code></td></tr><tr><td><strong>Unverifiable — left blank</strong></td><td>every individual player prop threshold</td><td>no official per-player feed reachable</td></tr></tbody></table></div>
+<h2>4. Headline findings</h2>
+<ol>
+<li><strong>The league's home-court advantage this season is tiny.</strong> Derived from the home/away splits</li>
+<p>   across all 30 teams: <strong>89‑84 (.5145)</strong>, which implies only <strong>+0.53 points</strong> of home court.    The multi-season NBA norm is usually quoted far higher. With 173 split games the standard    error is about ±3.8 percentage points, so this estimate is <strong>unstable</strong>, and it is the single    largest source of error in the originated spreads. The sensitivity panel re-prices the whole    board at +0.5 / +1.5 / +2.5 points so the effect is visible rather than hidden.</p>
+</ol>
+<ol>
+<li><strong>Two teams are extreme outliers and dominate the board.</strong> Chicago (1‑9, −15.5 PPG) and</li>
+<p>   Milwaukee (1‑11, −14.5) are more than 8 points per game worse than the next-worst team.    Sacramento (1‑10, −12.7) and Utah (1‑11, −11.5) are close behind in the West. Four teams this    bad is unusual and it makes several originated spreads very large (largest on the board:    CHI @ MIN, MIN −16).</p>
+</ol>
+<ol>
+<li>**The official injury report is the richest verified signal on the board, but most of it is</li>
+<p>   noise for betting purposes.<strong> Of the 91 player rows, a large share are </strong>G League two-way<strong>    and </strong>G League assignment<strong> entries — players who were not in the NBA rotation anyway. The    index that actually carries information is the </strong>rotation-availability index**, which    excludes them. Counting G League rows as rotation losses (the obvious mistake, and one this    build initially made) changes the picture materially: for example it made Oklahoma City look    healthier than the Clippers when the reverse is true once G League rows are stripped out.</p>
+</ol>
+<ol>
+<li><strong>Same-game parlays on winner × total are priced essentially fairly by independence.</strong></li>
+<p>   Measured across 23 games with 200,000 simulations each, the largest binary correlation    (φ) between a moneyline leg and a totals leg is <strong>0.0136</strong>. The independence assumption a    book uses to price those parlays is off by well under a percentage point. The dangerous    correlation is the one books already restrict: <strong>moneyline × spread-cover, φ ≈ 0.80</strong>.</p>
+</ol>
+<ol>
+<li><strong>Parlays compound the vig, and that is arithmetic, not opinion.</strong> At the 4.77% overround</li>
+<p>   implied by a −110/−110 two-way market, a k‑leg parlay built from <em>fair</em> legs loses    <strong>4.55% (1 leg) → 8.90% (2) → 13.05% (3) → 17.00% (4)</strong>. A parlay is only rational if each    leg clears its own break-even by roughly the overround.</p>
+</ol>
+<ol>
+<li><strong>No strategy clears every validation gate.</strong> Eight of ten pass 6–7 of 8 gates. **Gate G6</li>
+<p>   (out-of-sample validation) fails for all ten<strong>, because this repository contains no graded    historical bet log. That is the honest state of the project, and it is the reason the    leaderboard is labelled </strong>model-expected, not realised**.</p>
+</ol>
+<h2>5. The two blockers</h2>
+<p>Everything else on this site is usable today. These two are not, and they are the highest-value things to unblock:</p>
+<ul>
+<li><strong>Q‑01 — no market price feed.</strong> We originate fair lines, but "edge" only exists relative to a</li>
+<p>  price someone will actually give you. Without a market feed the system cannot compute a   bettable edge, only a fair price. See Open Questions.</p>
+<li><strong>Q‑02 — no official per-player feed.</strong> <code>stats.nba.com</code> and <code>cdn.nba.com</code> are unreachable from</li>
+<p>  this build environment, so <strong>no player prop threshold is published anywhere on this site.</strong>   Every prop cell is deliberately blank and flagged, rather than filled with an estimate.</p>
+</ul>
+<h2>6. Irregularities carried over from previous sessions</h2>
+<p>Two earlier agent sessions published a version of this site and marked every task <code>done</code>. Their data contained factual errors, which are itemised on the <strong>Flagged for Review</strong> page with the correcting official source. Nothing they built was deleted — it was moved to <code>archive/prior-sessions/</code>.</p>
+<h2>7. What to read next</h2>
+<ul>
+<li><strong>Slates & Picks</strong> — the 23 originated lines and the signals attached to them.</li>
+<li><strong>Flagged for Review</strong> — every unverified cell and every assumption, in one place.</li>
+<li><strong>Open Questions</strong> — what we know, what we do not, and how to find out.</li>
+<li><strong>Suggestions</strong> — ranked improvements, each with a decision that needs making first.</li>
+</ul></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>

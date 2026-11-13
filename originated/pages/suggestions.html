@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suggestions &amp; Decision Register · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="">Open Questions</a><a href="suggestions.html" class="active">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="">Verification</a><a href="data-and-sources.html" class="">Data &amp; Sources</a><a href="repo-review.html" class="">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Suggestions &amp; Decision Register</h1>
+  <div class="md"><p>How to improve the site and the decision-making it supports.</p>
+<p><strong>This page is a decision queue, not a task list.</strong> Nothing here has been implemented. Each item states the problem, the realistic paths, what each path costs and buys, and — where a human judgement is genuinely required — the <strong>decision that must be made before any code is written</strong>. Items marked <em>no decision needed</em> are safe to pick up by any session once a higher-priority item unblocks them.</p>
+<hr>
+<h2>Priority 1 — unblocks the core product</h2>
+<h3 id="sg-01">SG-01 · Add a market price feed</h3>
+<ul>
+<li><strong>Problem:</strong> the system originates fair lines but cannot compute an edge, because edge needs a</li>
+<p>  price. Every EV figure today is computed against an assumed −110.</p>
+<li><strong>Path A — odds API (recommended).</strong> Paid key, per-call budget. Fastest, gives closing prices for</li>
+<p>  every game, and closing prices are exactly what a backtest needs. <em>Cost:</em> money. <em>Buys:</em> real   edges, CLV measurement, a runnable G6.</p>
+<li><strong>Path B — manual capture.</strong> Record the slate's prices by hand into <code>data/market/</code>. <em>Cost:</em> your</li>
+<p>  time, every day. <em>Buys:</em> real edges today, zero setup. Not sustainable past a few weeks.</p>
+<li><strong>Path C — scrape a sportsbook.</strong> <em>Cost:</em> legal and ToS risk, brittle. <strong>Not recommended.</strong></li>
+<li><strong>Decision needed:</strong> ✅ <strong>A, B or neither?</strong> And if A, what monthly budget?</li>
+<li><strong>Blocks:</strong> Q-01. <strong>Unblocks:</strong> G5, G6, the leaderboard's credibility, every EV number.</li>
+</ul>
+<h3 id="sg-02">SG-02 · Build the historical game log and start grading bets</h3>
+<ul>
+<li><strong>Problem:</strong> no box scores, no graded bets → G6 fails for all ten strategies and no parameter can</li>
+<p>  be calibrated.</p>
+<li><strong>Path A — backfill + daily grading (recommended).</strong> Pull 2–3 prior seasons from</li>
+<p>  <code>stats.nba.com/stats/leaguegamelog</code> (one request per season), then have the pipeline write every   signal it emits into a ledger with an empty result column that gets filled after each game.</p>
+<li><strong>Path B — backfill only.</strong> Enables calibration and G6, but no forward-looking record.</li>
+<li><strong>Path C — forward logging only.</strong> Simplest, but you wait a full season before G6 can run.</li>
+<li><strong>Decision needed:</strong> ✅ how many seasons, and who owns the daily grading step?</li>
+<li><strong>Blocks:</strong> Q-03. <strong>Unblocks:</strong> G6, <code>injuryK</code>, <code>restB2B</code>, <code>tzPerHour</code>, Q-04, Q-05, Q-07.</li>
+</ul>
+<h3 id="sg-03">SG-03 · Get an official per-player feed</h3>
+<ul>
+<li><strong>Problem:</strong> the entire player-prop module is empty because no official per-player source is</li>
+<p>  reachable.</p>
+<li><strong>Path A — restore <code>stats.nba.com</code> access (recommended).</strong> One network change; unlocks the whole</li>
+<p>  prop module and the injuries→production model.</p>
+<li><strong>Path B — official NBA Stats API key.</strong> Same result, may cost money, cleaner terms.</li>
+<li><strong>Path C — per-team official roster pages.</strong> 30 fetches, gives minutes only, no usage. Partial.</li>
+<li><strong>Decision needed:</strong> ✅ is a paid NBA data licence in scope?</li>
+<li><strong>Blocks:</strong> Q-02. <strong>Unblocks:</strong> Props page, S10, rotation-minutes tracking.</li>
+</ul>
+<hr>
+<h2>Priority 2 — makes the numbers trustworthy</h2>
+<h3 id="sg-04">SG-04 · Widen the schedule collection window to 10 days</h3>
+<ul>
+<li><strong>Problem:</strong> we cannot tell whether a 13 Nov team is on a back-to-back, because the 12 Nov slate</li>
+<p>  was never collected. Rest is silently set to zero for nine games.</p>
+<li><strong>Path A (recommended).</strong> Collect 10 days of schedule instead of 3. Costs one extra fetch, and</li>
+<p>  every game in the 3-day window then has proper rest context.</p>
+<li><strong>Path B.</strong> Keep 3 days and accept the gap, flagged.</li>
+<li><strong>Decision needed:</strong> none. <strong>Recommend A.</strong> <em>Blocks:</em> Q-08.</li>
+</ul>
+<h3 id="sg-05">SG-05 · Publish a sourced prior for home-court advantage, or commit to the season-derived value</h3>
+<ul>
+<li><strong>Problem:</strong> the derived HCA is <strong>+0.53 points</strong>, far below the multi-season norm, and it comes</li>
+<p>  from only 173 split games. It is the largest single source of spread error; two games flip   favourite across the plausible range.</p>
+<li><strong>Path A — publish the season-derived value (current behaviour).</strong> Fully data-faithful, honest,</li>
+<p>  unstable, and visibly flagged with a sensitivity panel.</p>
+<li><strong>Path B — blend with a multi-season prior.</strong> More accurate in expectation, but the prior must be</li>
+<p>  <strong>sourced</strong>, not recalled from memory, or it violates the project's own rule.</p>
+<li><strong>Path C — shrink toward the prior as the season progresses.</strong> Best of both, most work.</li>
+<li><strong>Decision needed:</strong> ✅ <strong>A, B or C?</strong> This is a real judgement call about how much to trust 12</li>
+<p>  games of data. <em>Blocks:</em> Q-09.</p>
+</ul>
+<h3 id="sg-06">SG-06 · Re-pull the injury report three times on slate days</h3>
+<ul>
+<li><strong>Problem:</strong> the report is a point-in-time snapshot. Teams commonly re-file at 05:00 PM and again</li>
+<p>  in the evening. The 14 Nov rows currently say <code>NOT YET SUBMITTED</code> and 15 Nov has nothing.</p>
+<li><strong>Path A (recommended).</strong> Scheduled pulls at 13:00, 17:00 and 20:00 ET on slate days, keeping each</li>
+<p>  edition so the site can show how a team's status changed.</p>
+<li><strong>Path B.</strong> Pull once, on demand.</li>
+<li><strong>Decision needed:</strong> none. <strong>Recommend A.</strong> <em>Blocks:</em> Q-10.</li>
+</ul>
+<h3 id="sg-07">SG-07 · Verify the Emirates NBA Cup tiebreaker — one page of reading</h3>
+<ul>
+<li><strong>Problem:</strong> strategy S05 assumes the Cup group tiebreaker is point differential. Unverified, so</li>
+<p>  S05 is held at G2 = FAIL.</p>
+<li><strong>Path A (recommended).</strong> Read and cite <a href="https://www.nba.com/nba-cup/2026" target="_blank" rel="noopener">nba.com/nba-cup/2026</a>,</li>
+<p>  then flip <code>rule_verified</code> to true in <code>engine/strategies.js</code>.</p>
+<li><strong>Decision needed:</strong> none — it is a verification task and it is the cheapest item on this page.</li>
+<p>  <em>Blocks:</em> Q-06.</p>
+</ul>
+<hr>
+<h2>Priority 3 — improves the site itself</h2>
+<h3 id="sg-08">SG-08 · Separate "verified" and "model output" visually, everywhere</h3>
+<ul>
+<li>The distinction already exists in the data. On the page it is currently a label and a tooltip.</li>
+<p>  <strong>Suggestion:</strong> a persistent colour-coded left border (green = official source linked, amber =   trusted-but-not-official, grey = our computation) and a site-wide toggle that <strong>hides all model   output</strong>, leaving only verified data. That toggle is the single clearest way to let you audit the   facts without the model's opinion in the way.</p>
+<li><strong>Decision needed:</strong> none. <em>Depends on:</em> nothing.</li>
+</ul>
+<h3 id="sg-09">SG-09 · Make every table exportable and every line copyable</h3>
+<ul>
+<li>CSV download on every table, and a "copy as text" button on each originated line so a number can</li>
+<p>  be pasted straight into a bet slip. Low effort, high daily utility.</p>
+<li><strong>Decision needed:</strong> none.</li>
+</ul>
+<h3 id="sg-10">SG-10 · Add a results ledger and a calibration chart</h3>
+<ul>
+<li>Once SG-02 lands: a page showing every signal ever emitted versus what happened, plus a</li>
+<p>  reliability diagram (predicted probability bucketed against observed frequency). A model that is   well calibrated is worth more than a model that is merely confident.</p>
+<li><strong>Decision needed:</strong> none, but it is <strong>blocked by SG-02</strong>.</li>
+</ul>
+<h3 id="sg-11">SG-11 · Show the movement of a line, not just its value</h3>
+<ul>
+<li>The site currently shows one line per game. Once SG-06 is pulling multiple injury editions and</li>
+<p>  SG-01 is capturing prices, the interesting view is <strong>how each number moved</strong> and why. Requires   storing a timestamped series rather than a single snapshot.</p>
+<li><strong>Decision needed:</strong> ✅ is line-movement history worth the storage?</li>
+</ul>
+<h3 id="sg-12">SG-12 · Add a stake-sizing panel</h3>
+<ul>
+<li>The system currently emits signals and probabilities but says nothing about <strong>how much</strong> to bet.</li>
+<p>  A Kelly / fractional-Kelly panel is a small amount of code once real prices exist.</p>
+<li><strong>Decision needed:</strong> ✅ full Kelly, fractional Kelly (recommended — full Kelly is brutally</li>
+<p>  volatile and assumes the probabilities are exactly right), or flat staking?</p>
+<li><strong>Blocked by:</strong> SG-01.</li>
+</ul>
+<hr>
+<h2>Priority 4 — hygiene</h2>
+<h3 id="sg-13">SG-13 · Deduplicate the two Pages workflows</h3>
+<ul>
+<li><code>.github/workflows/pages.yml</code> and <code>deploy.yml</code> both upload the repo root to GitHub Pages on a push</li>
+<p>  to <code>main</code>. They are redundant and they race each other. <strong>Recommendation:</strong> keep <code>pages.yml</code>   (it is the one using <code>actions/configure-pages</code> + <code>deploy-pages</code> correctly), delete <code>deploy.yml</code>.</p>
+<li><strong>Decision needed:</strong> ⚠️ must confirm neither workflow is being relied on by another session before</li>
+<p>  deleting.</p>
+</ul>
+<h3 id="sg-14">SG-14 · Do not publish the whole repository to Pages</h3>
+<ul>
+<li>The Pages artifact is currently the entire repo, so <code>archive/</code>, <code>engine/</code>, <code>research/</code> and the</li>
+<p>  data files are all served publicly. <strong>Recommendation:</strong> publish only a build output directory   (e.g. <code>docs/</code>) so internal workings are not on the public site.</p>
+<li><strong>Decision needed:</strong> ✅ do you want the engine and raw data publicly readable, or site-only?</li>
+<li><strong>Note:</strong> deliberately deferred for now — the current setup is simpler and the repo is public</li>
+<p>  anyway.</p>
+</ul>
+<h3 id="sg-15">SG-15 · Record model version and data timestamp on every page</h3>
+<ul>
+<li>Every page should carry the data timestamp and a build hash, so a screenshot can always be traced</li>
+<p>  back to the exact inputs that produced it. Partly done (footer); <strong>suggestion:</strong> promote it into   the page header.</p>
+<li><strong>Decision needed:</strong> none.</li>
+</ul>
+<hr>
+<h2>Decision summary — the five calls only you can make</h2>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Decision</th><th>Options</th><th>Blocks</th></tr></thead><tbody><tr><td>1</td><td>Market price feed</td><td>odds API / manual / none</td><td>Q-01, all EV numbers, G5, G6</td></tr><tr><td>2</td><td>History backfill + grading</td><td>2–3 seasons / forward-only / none</td><td>Q-03, G6, all calibration</td></tr><tr><td>3</td><td>Paid NBA player data?</td><td>yes / no</td><td>Q-02, entire props module</td></tr><tr><td>4</td><td>Home-court handling</td><td>season-derived / sourced prior / blended</td><td>Q-09, spread accuracy</td></tr><tr><td>5</td><td>Stake sizing</td><td>Kelly / fractional / flat</td><td>SG-12</td></tr></tbody></table></div>
+<p>Everything else on this page is a straight implementation task once one of the above unblocks it.</p></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>
