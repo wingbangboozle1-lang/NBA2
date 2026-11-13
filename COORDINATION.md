@@ -171,4 +171,8 @@ F-1 ratings source is trusted-secondary (sandbox blocks NBA stats APIs) · F-2 C
 |---|---|
 | Merge conflicts encountered | COORDINATION.md + README.md vs `main` (PRs #7–#9 by other sessions). Resolved append-only: their sections kept verbatim, this session's sections appended; `docs/` path collision avoided by moving **this session's** site to `dashboard/` before merge. Logged per protocol. |
 | PR | https://github.com/wingbangboozle1-lang/NBA2/pull/10 (`arena/10957a28-nba2` -> `main`) |
-| Merge result / Pages deploy | appended post-merge below |
+| Merge result | **MERGED** 2026-11-13 23:02:57 UTC (merge commit `ab8939270e558a523d7edbe1babedfab7069caf8`) |
+| GitHub Pages deploy | workflow `Publish GitHub Pages` run **43524115981** — conclusion: **success** (~20s) |
+| Live site verified | https://wingbangboozle1-lang.github.io/NBA2/ (root dashboard, intact), /NBA2/docs/ (35264d96 site, intact), **/NBA2/dashboard/ (this session's 12-page site)** fetched post-deploy — picks (NYK −11.0, ORL −4.0, HOU −23.0), luck ledger, nav confirmed live |
+| Post-merge verification | `scripts/check_site.py` PASS (524 source-linked rows); `tools/check_links_all.py` whole-repo PASS (52 HTML files, 824 internal links) |
+| Follow-up | this record committed via follow-up PR from `arena/10957a28-nba2`; rebase-vs-merge note: `git pull --rebase` flattens merge commits and was aborted safely (`git rebase --abort`) during integration — direct push used instead; no work discarded |
