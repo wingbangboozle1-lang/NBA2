@@ -31,7 +31,7 @@ queue items (see [suggestions.md](suggestions.md); license ask is with the owner
 | `scripts/model.py` | line origination engine | reviewed post-edit; signs re-checked against hand calculations (NYK@IND margin −9.69 → NYK −9.5 ✓) |
 | `analysis/strategy/*` | methodology docs | every quantitative claim carries its source link |
 | `analysis/executive-summary.md`, `game-flow.md`, `questions.md`, `suggestions.md` | narrative | claims trace to data rows or linked sources; analyst judgments labeled as such |
-| `docs/*` (site) | generated dashboard | built from the CSVs; link-check script verifies internal links + per-row sources |
+| `dashboard/*` (site) | generated dashboard | built from the CSVs; link-check script verifies internal links + per-row sources |
 
 ## Flagged irregularities (all published on the site's Flagged page)
 

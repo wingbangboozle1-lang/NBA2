@@ -94,4 +94,4 @@ unit definition. Blocks: payouts. Discovery: your sign-off (S-2).
 
 **Rule of this register:** when an answer becomes known, the row moves up to the
 verified table with its official link, and the corresponding flag comes off the
-[Flagged for Review](docs/flagged.html) page. Nothing is ever "assumed answered."
+[Flagged for Review](dashboard/flagged.html) page. Nothing is ever "assumed answered."

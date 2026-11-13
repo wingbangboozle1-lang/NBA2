@@ -34,7 +34,7 @@ Board created: 2026-11-13 (UTC)
 | 8 | Executive summary | done | arena-10957a28 | analysis/executive-summary.md | derived from verified tables | — |
 | 9 | Questions / missing-information register | done | arena-10957a28 | analysis/questions.md | gap analysis with discovery plans | — |
 | 10 | Suggestions + decision-review workflow | done | arena-10957a28 | analysis/suggestions.md | awaiting owner decisions (S-1..S-12, U-1..U-5) | — |
-| 11 | Site build (dashboard + subpages) | done | arena-10957a28 | docs/**, scripts/build_site.py, scripts/check_site.py | check_site.py PASS: 12 pages, 524 rows all source-linked | — |
+| 11 | Site build (dashboard + subpages) | done | arena-10957a28 | dashboard/**, scripts/build_site.py, scripts/check_site.py | check_site.py PASS: 12 pages, 524 rows all source-linked | — |
 | 12 | Line-by-line verification pass | done | arena-10957a28 | analysis/verification-log.md | automated + hand re-derivations + source cross-checks | see verification-log |
 | 13 | Leaderboard + reward framework | done | arena-10957a28 | analysis/strategy/leaderboard.md, data/leaderboard.csv | rules in strategy docs | reward sizing awaits S-2 |
 | 14 | Final integration: re-verify, build check, PR, merge, Pages deploy | done | arena-10957a28 | README.md, PR to main | check_site PASS; Pages deploy confirmed | PR link recorded below |

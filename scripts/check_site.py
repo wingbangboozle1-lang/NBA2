@@ -5,7 +5,7 @@
 import os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS = os.path.join(ROOT, "docs")
+DOCS = os.path.join(ROOT, "dashboard")
 errors, checked_rows = [], 0
 
 pages = [f for f in os.listdir(DOCS) if f.endswith(".html")]

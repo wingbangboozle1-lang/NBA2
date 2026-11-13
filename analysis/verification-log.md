@@ -8,7 +8,7 @@ leave blanks and flag otherwise.
 
 | Check | Scope | Result |
 |---|---|---|
-| Internal site links resolve | 12 pages, all `href` targets in docs/ | PASS |
+| Internal site links resolve | 12 pages, all `href` targets in dashboard/ | PASS |
 | Every data-table row carries a source link (or is styled blank+flagged) | 524 rows | PASS |
 | Nav + footer present on every page | 12 pages | PASS |
 | Standings records == ratings records for all 30 teams | 30 rows | PASS |

@@ -11,7 +11,7 @@ source link; unverified values are left blank and flagged — never inferred.
 
 | Path | What it is |
 |---|---|
-| [`docs/`](docs/) | the published dashboard (GitHub Pages source) |
+| [`dashboard/`](dashboard/) | the published dashboard (GitHub Pages source) |
 | [`data/`](data/) | verified datasets — games, standings, ratings, official injuries, player baselines, correlation matrix, our lines, picks, parlays, prop lines, luck ledger, leaderboard |
 | [`scripts/model.py`](scripts/model.py) | deterministic line-origination engine (v1.0) — re-run to refresh outputs |
 | [`scripts/build_site.py`](scripts/build_site.py) | generates the dashboard from the data |
@@ -34,7 +34,7 @@ source link; unverified values are left blank and flagged — never inferred.
 
 ```bash
 python3 scripts/model.py       # recompute lines, picks, parlays, props, luck ledger
-python3 scripts/build_site.py  # regenerate docs/ (the site)
+python3 scripts/build_site.py  # regenerate dashboard/ (the site)
 python3 scripts/check_site.py  # verify links + per-row sources
 ```
 

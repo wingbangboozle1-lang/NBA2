@@ -105,5 +105,5 @@ our prop line (points) = verified season PPG + 0.35 × (opponent DRtg/A − leag
 4. Injury tiers use only verified leader PPG; full rotation production data is Q-4.
 5. Nov 15–16 lines are pre-report and provisional by design.
 
-Every one of these is on the [Flagged for Review](../../docs/flagged.html) page and
+Every one of these is on the [Flagged for Review](../../dashboard/flagged.html) page and
 the [questions register](../questions.md).

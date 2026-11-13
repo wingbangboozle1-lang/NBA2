@@ -6,7 +6,7 @@ import csv, html, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
-OUT = os.path.join(ROOT, "docs")
+OUT = os.path.join(ROOT, "dashboard")
 
 NAV = [
     ("index.html", "Dashboard"), ("slates.html", "Slates & Picks"),
@@ -482,7 +482,7 @@ listed on the <a href="flagged.html">Flagged page</a> where used for core number
     # css
     with open(os.path.join(OUT, "styles.css"), "w", encoding="utf-8") as f:
         f.write(CSS)
-    print(f"built {len(NAV)} pages + styles.css into docs/")
+    print(f"built {len(NAV)} pages + styles.css into dashboard/")
 
 
 CSS = """
