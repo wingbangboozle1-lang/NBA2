@@ -21,72 +21,90 @@
   <main class="main">
     <section class="hero"><h2>Reconciliation</h2><p>Same official documents, two sessions, two answers. Every disagreement is listed rather than averaged.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="surfaces" data-rows="6">
+    <section class="card table-card" id="surfaces" data-rows="8">
 <h2>Everything published in this repository, and who made it</h2>
-<p class="blurb">Four independent site layers now exist in one repo because four sessions worked in parallel. This page is the honest map: it states which one is the canonical dashboard and where the others live, instead of pretending the repo has one generator.</p>
+<p class="blurb">Six independent site layers now exist in one repo because six sessions worked in parallel, three of them merged while this page was being written. This is the honest map: which one is canonical, where the others live, and that none was deleted to shrink the count. The durable fix is structural — own a directory and a data namespace, as `originated/**` did — not a stricter merge rule.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Everything published in this repository, and who made it</caption><thead><tr>
 <th scope="col">Surface</th>
 <th scope="col">Built by</th>
 <th scope="col">Publishes</th>
-<th scope="col">Reachable</th>
+<th scope="col">How to reach it</th>
 <th scope="col">What it contains</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
-<tr id="nba2/ (this session)">
-<td>nba2/ (this session)</td>
-<td>nba2/pipeline/build_site_data.py</td>
+<tr id="index.html + pages/**">
 <td>index.html + pages/**</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>Model, gates, provenance lint, sealed ledger; renders 26 tables</td>
+<td>nba2/pipeline/build_site_data.py + build_site.py (this session)</td>
+<td>this site (every table you see on these pages)</td>
+<td>canonical dashboard — the navigation you are using now</td>
+<td>Model, gates, provenance lint, sealed ledger, cross-session reconciliation.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
-<tr id="nba2/ (prior session)">
-<td>nba2/ (prior session)</td>
-<td>nba2/generate.py + build_site.py</td>
-<td>root *.html (picks, strategies, correlations, injuries, executive-summary, suggestions, questions, flagged)</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>Independent originated lines + its own verified data; preserved, superseded as the landing page</td>
+<tr id="root *.html">
+<td>root *.html</td>
+<td>nba2/generate.py + build_site.py (session arena-7b4973eb)</td>
+<td>picks.html, strategies.html, injuries.html, correlations.html, executive-summary.html, suggestions.html, questions.html, flagged.html, index.html (overwritten here)</td>
+<td>yes — direct URL from the repository root</td>
+<td>An independent originated-line set with its own verified data in nba2/data/. Preserved; superseded as the landing page by the merge, and reconciled against on this page.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
-<tr id="docs/ layer">
-<td>docs/ layer</td>
-<td>session arena-35264d96</td>
+<tr id="dashboard/**">
+<td>dashboard/**</td>
+<td>scripts/build_site.py (session arena-10957a28)</td>
+<td>12 pages, 524 rows, data/*.csv</td>
+<td>yes — /NBA2/dashboard/</td>
+<td>Third model with its own injury and rest conventions, its own CSV data layer and its own checker (scripts/check_site.py). Its injury-adjusted lines are compared with ours above.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="docs/**">
 <td>docs/**</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>13-page verification-first documentation site; left in place, not linked from here</td>
+<td>session arena-35264d96</td>
+<td>13 pages</td>
+<td>yes — /NBA2/docs/</td>
+<td>Verification-first documentation layer (method, gates G1–G13, correlation template, leaderboard design). Left untouched.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
-<tr id="verified/ + data/verified/">
-<td>verified/ + data/verified/</td>
-<td>sessions 23927d63 / 7b4973eb</td>
-<td>verified/**</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>Row-level verification records for schedule/injuries/gates</td>
+<tr id="verified/** + data/verified/**">
+<td>verified/** + data/verified/**</td>
+<td>sessions arena-23927d63 / arena-7b4973eb</td>
+<td>row-level verification records</td>
+<td>yes — /NBA2/verified/</td>
+<td>Includes the 17:15 ET injury revision ingest this session used as a tiebreaker for six contested statuses.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
-<tr id="tools/">
-<td>tools/</td>
+<tr id="originated/**">
+<td>originated/**</td>
+<td>session arena-aaa8b341 (engine, data, research, assets inside its own dir)</td>
+<td>15-page site + engine/</td>
+<td>yes — /NBA2/originated/</td>
+<td>Sixth surface, kept entirely inside its own directory — the pattern that prevents these conflicts. Its record includes a self-correction this session endorses: a board row had said &#x27;done&#x27; for artefacts that did not exist yet.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="tools/**, scripts/**">
+<td>tools/**, scripts/**</td>
 <td>prior sessions</td>
-<td>—</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>Standalone verification/build scripts; not part of this build path</td>
+<td>no pages</td>
+<td>no — run them: python3 tools/check_links_all.py &amp;&amp; python3 tools/verify_site.py &amp;&amp; python3 scripts/check_site.py</td>
+<td>Standalone verification and build scripts. Three of them gate other surfaces; none is part of this build path, and all three pass on the merged tree.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
-<tr id="archive/">
-<td>archive/</td>
-<td>integration</td>
+<tr id="archive/**">
 <td>archive/**</td>
-<td>yes — linked from this nav or a direct URL</td>
-<td>Byte-for-byte copies of pages replaced during this merge, plus their README</td>
+<td>integration (this session)</td>
+<td>.orig copies</td>
+<td>no navigation entry on purpose — audit trail only</td>
+<td>Byte-for-byte copies of the main-branch pages this merge replaced, suffixed .orig so link checkers do not treat a frozen snapshot as a live page. Nothing was deleted to make the count smaller.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">git tree at the merge commit</p>
+<p class="tablenote">generated from the working tree at build time; git tree at the merge commit</p>
 </section><section class="card table-card" id="xrecords" data-rows="30">
 <h2>Team records: 30/30 agree between the two sessions</h2>
 <p class="blurb">Win-loss is the only input both sessions derived independently from NBA.com, so this is the sharpest test of whether either retrieval is trustworthy. Point rates are shown side by side to expose the policy difference: they published blanks, we publish a flagged third-party number. Neither is official.</p>
