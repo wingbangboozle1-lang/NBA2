@@ -361,5 +361,63 @@ class TestReproducibility(unittest.TestCase):
         self.assertEqual(len(after["meta"]["input_digest"]), 64)
 
 
+# Columns that are blank in every published row. Each entry is `table.column` and each one is
+# blank *because the brief requires a blank over an estimate*: no official source exists for the
+# value. The list is exact — verified against data/site.json on 2026-11-13 — so a new
+# all-empty column (e.g. a field swallowed by a keyword clash) fails this test instead of
+# shipping an empty column nobody notices.
+EMPTY_OK = {
+    "luck.close_record", "luck.blowout_record",                       # split extraction unreliable
+    "injuries.minutes_impact", "injuries.production_impact",
+    "injuries.line_adjustment",                                        # report has no such fields
+    "leaders.impact",                                                  # same reason
+    "gameflow.rest_home", "gameflow.rest_away",                       # needs games before the window
+    "gameflow.pace", "gameflow.garbage", "gameflow.foul",
+    "gameflow.closing",                                                # needs play-by-play
+    "leaderboard.score", "leaderboard.bets", "leaderboard.reward",     # nothing has settled
+    "props.minutes_floor",                                             # no player-level feed
+}
+
+
+class TestColumnGuard(unittest.TestCase):
+    """Two real bugs came from a column header whose value was silently dropped (a keyword
+    argument swallowed by make_row, and a key stripped when building values), so the guard
+    that catches that class of mistake is itself tested."""
+
+    data = json.loads((ROOT / "data" / "site.json").read_text())
+
+    def test_declared_column_must_exist_on_every_row(self):
+        from nba2.provenance import table as mk_table
+        rows = [make_row("a", "nba_schedule", [], x=1), make_row("b", "nba_schedule", [], x=2)]
+        mk_table(rows, [("x", "X")], "ok table")
+        with self.assertRaises(ValueError) as cm:
+            mk_table(rows, [("x", "X"), ("y", "Y")], "broken table")
+        self.assertIn("absent from", str(cm.exception))
+
+    def test_reserved_names_survive_as_values(self):
+        r = make_row("k1", "nba_schedule", [], note="explains the blank", id="ROW-1")
+        self.assertEqual(r.values["note"], "explains the blank")
+        self.assertEqual(r.values["id"], "ROW-1")
+
+    def test_no_unintended_all_empty_columns(self):
+        empty = []
+        for key, tbl in self.data["sections"].items():
+            if not isinstance(tbl, dict) or "rows" not in tbl or not tbl["rows"]:
+                continue
+            for c in tbl["columns"]:
+                vals = [r["values"].get(c["key"]) for r in tbl["rows"]]
+                if all(v is None or v == "" for v in vals) and f"{key}.{c['key']}" not in EMPTY_OK:
+                    empty.append(f"{key}.{c['key']}")
+        self.assertEqual(empty, [], f"columns blank in every row and not justified: {empty}")
+        # and the allow-list must not rot: every entry must still be a real all-blank column
+        still = {f"{k}.{c['key']}" for k, tb in self.data["sections"].items()
+                 if isinstance(tb, dict) and "rows" in tb and tb["rows"]
+                 for c in tb["columns"]
+                 if all(r["values"].get(c["key"]) in (None, "") for r in tb["rows"])}
+        self.assertEqual(EMPTY_OK - still, set(),
+                         "these 'deliberately blank' columns now contain data — publish that fact "
+                         "instead of leaving them on the allow-list")
+
+
 if __name__ == "__main__":
     unittest.main()

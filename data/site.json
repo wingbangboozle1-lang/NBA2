@@ -1402,7 +1402,8 @@
       "z": "+0.62",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1411,7 +1412,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1427,7 +1428,8 @@
       "z": "+1.25",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1436,7 +1438,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1452,7 +1454,8 @@
       "z": "-0.10",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1461,7 +1464,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1477,7 +1480,8 @@
       "z": "+1.52",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1486,7 +1490,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1502,7 +1506,8 @@
       "z": "-0.30",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1511,7 +1516,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1527,7 +1532,8 @@
       "z": "-0.22",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1536,7 +1542,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1552,7 +1558,8 @@
       "z": "-0.12",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1561,7 +1568,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1577,7 +1584,8 @@
       "z": "-0.07",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1586,7 +1594,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1602,7 +1610,8 @@
       "z": "+0.80",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1611,7 +1620,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1627,7 +1636,8 @@
       "z": "-0.95",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1636,7 +1646,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1652,7 +1662,8 @@
       "z": "-0.70",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1661,7 +1672,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1677,7 +1688,8 @@
       "z": "-0.09",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1686,7 +1698,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1702,7 +1714,8 @@
       "z": "-1.34",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1711,7 +1724,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1727,7 +1740,8 @@
       "z": "+0.96",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1736,7 +1750,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1752,7 +1766,8 @@
       "z": "+0.03",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1761,7 +1776,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1777,7 +1792,8 @@
       "z": "+0.53",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1786,7 +1802,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1802,7 +1818,8 @@
       "z": "-0.79",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1811,7 +1828,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1827,7 +1844,8 @@
       "z": "-0.78",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1836,7 +1854,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1852,7 +1870,8 @@
       "z": "+0.38",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1861,7 +1880,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1877,7 +1896,8 @@
       "z": "-0.18",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1886,7 +1906,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1902,7 +1922,8 @@
       "z": "-0.45",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1911,7 +1932,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1927,7 +1948,8 @@
       "z": "+0.05",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1936,7 +1958,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1952,7 +1974,8 @@
       "z": "+2.25",
       "verdict": "outside 5% band — investigate",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1961,7 +1984,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -1977,7 +2000,8 @@
       "z": "-0.47",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -1986,7 +2010,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2002,7 +2026,8 @@
       "z": "-0.43",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2011,7 +2036,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2027,7 +2052,8 @@
       "z": "-1.16",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2036,7 +2062,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2052,7 +2078,8 @@
       "z": "+0.31",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2061,7 +2088,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2077,7 +2104,8 @@
       "z": "-0.58",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2086,7 +2114,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2102,7 +2130,8 @@
       "z": "-1.52",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2111,7 +2140,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -2127,7 +2156,8 @@
       "z": "+0.54",
       "verdict": "within noise (|z| < 1.96)",
       "close_record": null,
-      "blowout_record": null
+      "blowout_record": null,
+      "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)"
      },
      "source": {
       "name": "Derived: nba2.models.ratings",
@@ -2136,7 +2166,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Calibration + shrinkage computed from the verified snapshot at build time."
      },
-     "note": "close/blowout split columns are unusable this build (see FLAG-RAT-02)",
+     "note": "",
      "flags": [
       "FLAG-RAT-01"
      ],
@@ -12813,7 +12843,8 @@
       "rpg": "13.5",
       "apg": "3.5",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12822,7 +12853,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12838,7 +12869,8 @@
       "rpg": "6.9",
       "apg": "4.4",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12847,7 +12879,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12863,7 +12895,8 @@
       "rpg": "4.4",
       "apg": "4.5",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12872,7 +12905,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12888,7 +12921,8 @@
       "rpg": "6.5",
       "apg": "7.9",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12897,7 +12931,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12913,7 +12947,8 @@
       "rpg": "5.0",
       "apg": "5.5",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12922,7 +12957,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12938,7 +12973,8 @@
       "rpg": "12.6",
       "apg": "5.2",
       "report_status": "Available",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12947,7 +12983,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12963,7 +12999,8 @@
       "rpg": "8.6",
       "apg": "7.2",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12972,7 +13009,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -12988,7 +13025,8 @@
       "rpg": "6.2",
       "apg": "1.9",
       "report_status": "Out",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -12997,7 +13035,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -13013,7 +13051,8 @@
       "rpg": "3.5",
       "apg": "4.9",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -13022,7 +13061,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -13038,7 +13077,8 @@
       "rpg": "5.2",
       "apg": "2.6",
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -13047,7 +13087,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -13063,7 +13103,8 @@
       "rpg": null,
       "apg": null,
       "report_status": "NOT LISTED ON REPORT",
-      "impact": null
+      "impact": null,
+      "note": "No numeric impact: player-level production data unavailable."
      },
      "source": {
       "name": "NBA Official Injury Report 11/13 16:15 ET (official)",
@@ -13072,7 +13113,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
      },
-     "note": "No numeric impact: player-level production data unavailable.",
+     "note": "",
      "flags": [
       "FLAG-INJ-03",
       "FLAG-INJ-02"
@@ -13916,7 +13957,8 @@
       "price": "1.91",
       "break_even_p": "0.5238",
       "product_of_fair": "0.5240",
-      "edge_needed": "-0.03%"
+      "edge_needed": "-0.03%",
+      "note": "the price a book would quote if it simply multiplied our fair odds"
      },
      "source": {
       "name": "Derived: nba2.models.lines",
@@ -13925,7 +13967,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`."
      },
-     "note": "the price a book would quote if it simply multiplied our fair odds",
+     "note": "",
      "flags": [
       "FLAG-PRL-03"
      ],
@@ -13938,7 +13980,8 @@
       "price": "3.64",
       "break_even_p": "0.2744",
       "product_of_fair": "0.2746",
-      "edge_needed": "-0.06%"
+      "edge_needed": "-0.06%",
+      "note": "at a symmetric -110 reference price, a same-game 2-leg parlay must beat the product rule by 13–26% AND clear this hold"
      },
      "source": {
       "name": "Derived: nba2.models.lines",
@@ -13947,7 +13990,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`."
      },
-     "note": "at a symmetric -110 reference price, a same-game 2-leg parlay must beat the product rule by 13–26% AND clear this hold",
+     "note": "",
      "flags": [
       "FLAG-PRL-03"
      ],
@@ -13960,7 +14003,8 @@
       "price": "6.96",
       "break_even_p": "0.1437",
       "product_of_fair": "0.1439",
-      "edge_needed": "-0.09%"
+      "edge_needed": "-0.09%",
+      "note": "the price a book would quote if it simply multiplied our fair odds"
      },
      "source": {
       "name": "Derived: nba2.models.lines",
@@ -13969,7 +14013,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`."
      },
-     "note": "the price a book would quote if it simply multiplied our fair odds",
+     "note": "",
      "flags": [
       "FLAG-PRL-03"
      ],
@@ -13982,7 +14026,8 @@
       "price": "13.28",
       "break_even_p": "0.0753",
       "product_of_fair": "0.0754",
-      "edge_needed": "-0.13%"
+      "edge_needed": "-0.13%",
+      "note": "the price a book would quote if it simply multiplied our fair odds"
      },
      "source": {
       "name": "Derived: nba2.models.lines",
@@ -13991,7 +14036,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`."
      },
-     "note": "the price a book would quote if it simply multiplied our fair odds",
+     "note": "",
      "flags": [
       "FLAG-PRL-03"
      ],
@@ -14004,7 +14049,8 @@
       "price": "48.40",
       "break_even_p": "0.0207",
       "product_of_fair": "0.0207",
-      "edge_needed": "-0.19%"
+      "edge_needed": "-0.19%",
+      "note": "the price a book would quote if it simply multiplied our fair odds"
      },
      "source": {
       "name": "Derived: nba2.models.lines",
@@ -14013,7 +14059,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Lines are arithmetic on the calibrated ratings; reproduce with `python -m nba2.pipeline.build_site_data`."
      },
-     "note": "the price a book would quote if it simply multiplied our fair odds",
+     "note": "",
      "flags": [
       "FLAG-PRL-03"
      ],
@@ -18135,6 +18181,7 @@
     {
      "key": "RR-01",
      "values": {
+      "id": "RR-01",
       "area": "Starting state",
       "finding": "The repo began as a single 6-byte README.md containing '# NBA2'. There was no code, data, CI, licence or Pages configuration.",
       "evidence": "`git ls-tree -r --name-only 623b4c2` → README.md only; `git show 623b4c2:README.md` → '# NBA2'",
@@ -18156,6 +18203,7 @@
     {
      "key": "RR-02",
      "values": {
+      "id": "RR-02",
       "area": "Licence",
       "finding": "No LICENSE file at any commit.",
       "evidence": "`git ls-tree -r --name-only 7fa2a24` contains no LICENSE",
@@ -18177,6 +18225,7 @@
     {
      "key": "RR-03",
      "values": {
+      "id": "RR-03",
       "area": "Data integrity",
       "finding": "Prior `data/injuries.json` published numeric impacts ('Starter out — ~0 min (vs. ~34 MPG season avg)', '-100% scoring/rebounding/playmaking output') that appear in no source. The official report has no minutes or MPG column.",
       "evidence": "`git show 821c175:data/injuries.json` keys: player, team, status, injury, game, minutesImpact, productionImpact, verified — no source field; report columns are Game Date, Game Time, Matchup, Team, Player, Status, Reason",
@@ -18198,6 +18247,7 @@
     {
      "key": "RR-04",
      "values": {
+      "id": "RR-04",
       "area": "Sourcing",
       "finding": "Prior `data/strategies.json` attributed correlation coefficients (r ≈ 0.82, r ≈ 0.65) to https://www.nba.com/stats/help/faq, a help/FAQ page that contains no such values. The rows were labelled 'unverified' but still carried a source link that implies verification.",
       "evidence": "field `source` on those rows vs. the page's actual content",
@@ -18219,6 +18269,7 @@
     {
      "key": "RR-05",
      "values": {
+      "id": "RR-05",
       "area": "Identifiers",
       "finding": "Prior `data/picks.json` invented synthetic game IDs (GAME-20261113-001) for fixtures that have official IDs, and covered only 3 of the 9 games on 11/13.",
       "evidence": "`git show 821c175:data/picks.json` vs `https://www.nba.com/schedule`",
@@ -18240,6 +18291,7 @@
     {
      "key": "RR-06",
      "values": {
+      "id": "RR-06",
       "area": "Deployment",
       "finding": "Two GitHub Pages workflows deployed the same artifact: `.github/workflows/pages.yml` (cancel-in-progress: true) and `.github/workflows/deploy.yml` (cancel-in-progress: false), both `path: '.'`, both on push to main.",
       "evidence": "`git show 7fa2a24:.github/workflows/` lists both",
@@ -18261,6 +18313,7 @@
     {
      "key": "RR-07",
      "values": {
+      "id": "RR-07",
       "area": "Docs",
       "finding": "The commit that added a working Pages workflow also states in README.md that the repository has 'no … automated deployment'.",
       "evidence": "`git show 821c175:README.md` contains 'no model' sentence; same commit adds deploy.yml",
@@ -18282,6 +18335,7 @@
     {
      "key": "RR-08",
      "values": {
+      "id": "RR-08",
       "area": "Site structure",
       "finding": "Two parallel navigations existed: root `index.html` + `flagged.html` (session 1) and `pages/*.html` incl. `pages/flagged-review.html` (session 2), with different content on the same subject.",
       "evidence": "both files present in `main`; sidebar links to `pages/*` only",
@@ -18303,6 +18357,7 @@
     {
      "key": "RR-09",
      "values": {
+      "id": "RR-09",
       "area": "Schema",
       "finding": "Prior data files had no per-row source field, which is the specific thing the brief requires ('every table row must have a source link').",
       "evidence": "`git show 821c175:data/injuries.json | python -c ...keys` → no 'source' key",
@@ -18324,6 +18379,7 @@
     {
      "key": "RR-10",
      "values": {
+      "id": "RR-10",
       "area": "Correct data (credit)",
       "finding": "The prior injury page did cite real, correct official documents: Injury-Report_2026-11-13_01_00PM.pdf and _04_15PM.pdf exist at ak-static.cms.nba.com and their contents match what I independently retrieved.",
       "evidence": "both PDFs fetched; status/reason fields agree for the overlapping rows",
@@ -18345,6 +18401,7 @@
     {
      "key": "RR-11",
      "values": {
+      "id": "RR-11",
       "area": "Reproducibility",
       "finding": "No prior commit contained executable model code, so no published number could be reproduced by anyone.",
       "evidence": "file tree at 7fa2a24: html/css/js/json only",
@@ -18366,6 +18423,7 @@
     {
      "key": "RR-12",
      "values": {
+      "id": "RR-12",
       "area": "Claims audit",
       "finding": "Prior COORDINATION.md recorded tasks as 'done' for pages whose tables were empty; the entries were honest about the emptiness but the status column overstated completion.",
       "evidence": "task table rows: 'No picks generated; lines blank' with status done",
@@ -18387,6 +18445,7 @@
     {
      "key": "RR-13",
      "values": {
+      "id": "RR-13",
       "area": "Numeracy check",
       "finding": "The prior 'correlation' values were presented without n, method or confidence interval, so they could not be challenged or reused.",
       "evidence": "strings like 'r ≈ 0.65 (estimated)'",
@@ -18408,6 +18467,7 @@
     {
      "key": "RR-14",
      "values": {
+      "id": "RR-14",
       "area": "Security/privacy",
       "finding": "Site publishes from the repository root, so every committed file (including data snapshots) is publicly fetchable — including any file a future session commits by accident.",
       "evidence": "pages.yml `path: '.'`",
@@ -18429,6 +18489,7 @@
     {
      "key": "RR-15",
      "values": {
+      "id": "RR-15",
       "area": "Data window",
       "finding": "The Nov 13 slate is entirely Emirates NBA Cup group play, while Nov 14-16 are ordinary regular-season games. Treating them as one distribution is an unexamined assumption in the prior design.",
       "evidence": "group labels on the official game cards (East/West Group A-C) vs blank groups for Nov 14+",
@@ -18450,6 +18511,7 @@
     {
      "key": "RR-16",
      "values": {
+      "id": "RR-16",
       "area": "Tooling",
       "finding": "This sandbox has no outbound network except package/git hosts, so official data had to be brought in through the agent's fetch tools and committed as snapshots. That is a provenance property of the whole dataset, not a detail.",
       "evidence": "`curl https://www.nba.com` → 000; fetch tools return nba.com content",
@@ -18626,6 +18688,7 @@
     {
      "key": "R-001",
      "values": {
+      "id": "R-001",
       "category": "Brief",
       "requirement": "Collect, organise and analyse NBA data behind one full requirements list",
       "acceptance": "A register with IDs, acceptance criteria and status that a reviewer can tick line by line",
@@ -18650,6 +18713,7 @@
     {
      "key": "R-002",
      "values": {
+      "id": "R-002",
       "category": "Brief",
       "requirement": "Originate our own NBA lines rather than consuming a book's",
       "acceptance": "Spread and total for every game in the window produced by code from stored inputs",
@@ -18674,6 +18738,7 @@
     {
      "key": "R-003",
      "values": {
+      "id": "R-003",
       "category": "Brief",
       "requirement": "Research and develop strategies that generate useful signals",
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
@@ -18698,6 +18763,7 @@
     {
      "key": "R-004",
      "values": {
+      "id": "R-004",
       "category": "Brief",
       "requirement": "Treat it as a leaderboard competition rewarding top strategies",
       "acceptance": "Scoring, tiers, clustering and reward allocation implemented and refusing to pay unmeasured entries",
@@ -18722,6 +18788,7 @@
     {
      "key": "R-005",
      "values": {
+      "id": "R-005",
       "category": "Brief",
       "requirement": "Cover single bets",
       "acceptance": "Spread, total and moneyline priced per game with probabilities and fair odds",
@@ -18746,6 +18813,7 @@
     {
      "key": "R-006",
      "values": {
+      "id": "R-006",
       "category": "Brief",
       "requirement": "Cover parlays",
       "acceptance": "Joint pricing that is not the product of the legs, with a correlation sweep",
@@ -18770,6 +18838,7 @@
     {
      "key": "R-007",
      "values": {
+      "id": "R-007",
       "category": "Brief",
       "requirement": "Cover player prop bet combos",
       "acceptance": "Prop pricing math present and tested; combo legs priced with dependence",
@@ -18794,6 +18863,7 @@
     {
      "key": "R-008",
      "values": {
+      "id": "R-008",
       "category": "Brief",
       "requirement": "Every strategy must pass validation gates",
       "acceptance": "Gate engine where BLOCKED/AT-RISK are distinct from PASS and FAIL",
@@ -18818,6 +18888,7 @@
     {
      "key": "R-009",
      "values": {
+      "id": "R-009",
       "category": "Brief",
       "requirement": "Determine correlation values",
       "acceptance": "Correlations computed where data exists; band + sign-stability where it does not",
@@ -18842,6 +18913,7 @@
     {
      "key": "R-010",
      "values": {
+      "id": "R-010",
       "category": "Brief",
       "requirement": "Remove luck from the equation",
       "acceptance": "Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL",
@@ -18866,6 +18938,7 @@
     {
      "key": "R-011",
      "values": {
+      "id": "R-011",
       "category": "Brief",
       "requirement": "Build selectively skill-based strategies",
       "acceptance": "Promotion requires measured edge surviving the luck checks; abstention is a first-class output",
@@ -18890,6 +18963,7 @@
     {
      "key": "R-012",
      "values": {
+      "id": "R-012",
       "category": "Brief",
       "requirement": "Generate picks for every upcoming slate up to 3 days ahead",
       "acceptance": "100% of games in the T+0..T+3 window have a line and a pick record",
@@ -18914,6 +18988,7 @@
     {
      "key": "R-013",
      "values": {
+      "id": "R-013",
       "category": "Brief",
       "requirement": "Track how injuries affect rotation minutes and production",
       "acceptance": "Official statuses joined to per-team rotation depth, with minutes/production impact fields present",
@@ -18938,6 +19013,7 @@
     {
      "key": "R-014",
      "values": {
+      "id": "R-014",
       "category": "Brief",
       "requirement": "Provide game flow analysis",
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
@@ -18962,6 +19038,7 @@
     {
      "key": "R-015",
      "values": {
+      "id": "R-015",
       "category": "Brief",
       "requirement": "Executive summary of important details",
       "acceptance": "One page with KPIs, findings, blockers and the single decision needed next",
@@ -18986,6 +19063,7 @@
     {
      "key": "R-016",
      "values": {
+      "id": "R-016",
       "category": "Brief",
       "requirement": "Suggest how to improve the site's decision quality",
       "acceptance": "Each suggestion states problem, proposal, benefit, effort, risk, recommendation",
@@ -19010,6 +19088,7 @@
     {
      "key": "R-017",
      "values": {
+      "id": "R-017",
       "category": "Brief",
       "requirement": "Dedicated suggestions section, reviewed before anything is implemented",
       "acceptance": "Nothing in the queue is auto-applied; queue state records the decision",
@@ -19034,6 +19113,7 @@
     {
      "key": "R-018",
      "values": {
+      "id": "R-018",
       "category": "Brief",
       "requirement": "Clear list of questions/information/answers needed before decisions",
       "acceptance": "Each question states what we have, what we lack, how to find out and what it changes",
@@ -19058,6 +19138,7 @@
     {
      "key": "R-019",
      "values": {
+      "id": "R-019",
       "category": "Brief",
       "requirement": "Suggestions for discovering missing information",
       "acceptance": "Every open question carries a concrete retrieval route (endpoint, document or owner decision)",
@@ -19082,6 +19163,7 @@
     {
      "key": "R-020",
      "values": {
+      "id": "R-020",
       "category": "Brief",
       "requirement": "No manual input required from the owner",
       "acceptance": "One command rebuilds everything from snapshots; no spreadsheet or copy-paste step",
@@ -19106,6 +19188,7 @@
     {
      "key": "R-021",
      "values": {
+      "id": "R-021",
       "category": "Brief",
       "requirement": "Work line by line, verify against official trusted sources, no hallucinations",
       "acceptance": "Per-row source on every table; unverifiable values blank; enforced by a build-time lint that fails the build",
@@ -19130,6 +19213,7 @@
     {
      "key": "R-022",
      "values": {
+      "id": "R-022",
       "category": "Brief",
       "requirement": "Provide links for manual review",
       "acceptance": "Every row's source is a clickable URL to the document it came from",
@@ -19154,6 +19238,7 @@
     {
      "key": "R-023",
      "values": {
+      "id": "R-023",
       "category": "Brief",
       "requirement": "Flag irregularities for review",
       "acceptance": "Flag registry with severity + action, published on its own page",
@@ -19178,6 +19263,7 @@
     {
      "key": "R-024",
      "values": {
+      "id": "R-024",
       "category": "Brief",
       "requirement": "GitHub Pages live site with clean landing page and subpages by category",
       "acceptance": "Site builds, publishes, and every nav link resolves",
@@ -19202,6 +19288,7 @@
     {
      "key": "R-025",
      "values": {
+      "id": "R-025",
       "category": "Brief",
       "requirement": "Clean, user-friendly, simple dashboard UI with all entries in readable tables",
       "acceptance": "One table per topic, frozen headers, no data-less chrome",
@@ -19226,6 +19313,7 @@
     {
      "key": "R-026",
      "values": {
+      "id": "R-026",
       "category": "Brief",
       "requirement": "Every table row must have a source link to an official site",
       "acceptance": "Row without a source is impossible: constructor raises",
@@ -19250,6 +19338,7 @@
     {
      "key": "R-027",
      "values": {
+      "id": "R-027",
       "category": "Brief",
       "requirement": "If a value cannot be confirmed officially, leave it blank and flag it",
       "acceptance": "Blank cells are None in data and render as 'no official source'; never a dash pretending to be data",
@@ -19274,6 +19363,7 @@
     {
      "key": "R-028",
      "values": {
+      "id": "R-028",
       "category": "Brief",
       "requirement": "Never infer or fill in values",
       "acceptance": "No imputation anywhere in the pipeline; grep for fillna/backfill returns nothing",
@@ -19298,6 +19388,7 @@
     {
      "key": "R-029",
      "values": {
+      "id": "R-029",
       "category": "Brief",
       "requirement": "Parallel-session coordination via COORDINATION.md",
       "acceptance": "Board with claims, scopes, conflict log, handoff rule, takeover rule",
@@ -19322,6 +19413,7 @@
     {
      "key": "R-030",
      "values": {
+      "id": "R-030",
       "category": "Brief",
       "requirement": "PR to main, merge without waiting, confirm Pages deploy, record result",
       "acceptance": "PR opened, merged, deploy confirmed, all recorded on the board",
@@ -19346,6 +19438,7 @@
     {
      "key": "R-031",
      "values": {
+      "id": "R-031",
       "category": "Brief",
       "requirement": "Do not merge a broken site; publish flagged items instead of blocking",
       "acceptance": "Build gate + link check runs before merge; flags never block",
@@ -19370,6 +19463,7 @@
     {
      "key": "R-032",
      "values": {
+      "id": "R-032",
       "category": "Engine",
       "requirement": "Reproduce every published number from committed inputs",
       "acceptance": "Deterministic rebuild byte-compares except the generated timestamp",
@@ -19394,6 +19488,7 @@
     {
      "key": "R-033",
      "values": {
+      "id": "R-033",
       "category": "Engine",
       "requirement": "Home-court advantage and margin volatility must not be copied from folklore",
       "acceptance": "Both fitted from the snapshot; disagreement between fit and implied value disclosed",
@@ -19418,6 +19513,7 @@
     {
      "key": "R-034",
      "values": {
+      "id": "R-034",
       "category": "Engine",
       "requirement": "Small-sample ratings must be shrunk, not trusted",
       "acceptance": "Reliability weight derived from the table's own dispersion",
@@ -19442,6 +19538,7 @@
     {
      "key": "R-035",
      "values": {
+      "id": "R-035",
       "category": "Engine",
       "requirement": "A pick must not depend on where an unratified parameter sits",
       "acceptance": "Every line re-priced across the sensitivity box; side must hold on >=90% of the grid",
@@ -19466,6 +19563,7 @@
     {
      "key": "R-036",
      "values": {
+      "id": "R-036",
       "category": "Engine",
       "requirement": "No lookahead in evaluation",
       "acceptance": "Backtests rejected while inputs are not point-in-time",
@@ -19490,6 +19588,7 @@
     {
      "key": "R-037",
      "values": {
+      "id": "R-037",
       "category": "Engine",
       "requirement": "Pre-register predictions so the leaderboard cannot be re-fitted",
       "acceptance": "Sealed JSON + sha256 committed with the site",
@@ -19514,6 +19613,7 @@
     {
      "key": "R-038",
      "values": {
+      "id": "R-038",
       "category": "Engine",
       "requirement": "Settle predictions against official final scores",
       "acceptance": "Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed",
@@ -19538,6 +19638,7 @@
     {
      "key": "R-039",
      "values": {
+      "id": "R-039",
       "category": "Engine",
       "requirement": "Stake sizing must respect model uncertainty, not confidence",
       "acceptance": "Fractional Kelly with a hard cap, and zero stake while no price exists",
@@ -19562,6 +19663,7 @@
     {
      "key": "R-040",
      "values": {
+      "id": "R-040",
       "category": "Data",
       "requirement": "Slate ingest: date, time, teams, arena, broadcast, official game ID",
       "acceptance": "All 31 games with IDs read from the official page, none inferred",
@@ -19586,6 +19688,7 @@
     {
      "key": "R-041",
      "values": {
+      "id": "R-041",
       "category": "Data",
       "requirement": "Official injury report ingest with per-row attribution confidence",
       "acceptance": "Rows tagged explicit vs block-continuation; partial parse disclosed",
@@ -19610,6 +19713,7 @@
     {
      "key": "R-042",
      "values": {
+      "id": "R-042",
       "category": "Data",
       "requirement": "Team rating inputs with cross-check against an official source",
       "acceptance": "Two W-L columns printed; mismatch fails the build",
@@ -19634,6 +19738,7 @@
     {
      "key": "R-043",
      "values": {
+      "id": "R-043",
       "category": "Data",
       "requirement": "Market prices (spread/total/moneyline closing numbers)",
       "acceptance": ">=1 licensed book's opening and closing line per game",
@@ -19658,6 +19763,7 @@
     {
      "key": "R-044",
      "values": {
+      "id": "R-044",
       "category": "Data",
       "requirement": "Player-level minutes, usage and production",
       "acceptance": "Per-player per-game box score with minutes, plus on/off",
@@ -19682,6 +19788,7 @@
     {
      "key": "R-045",
      "values": {
+      "id": "R-045",
       "category": "Data",
       "requirement": "Game-level results history for calibration and backtests",
       "acceptance": ">=2 seasons of final scores with game IDs",
@@ -19706,6 +19813,7 @@
     {
      "key": "R-046",
      "values": {
+      "id": "R-046",
       "category": "Data",
       "requirement": "Lineup/rotation data before tip",
       "acceptance": "Projected or confirmed lineups from an official source",
@@ -19730,6 +19838,7 @@
     {
      "key": "R-047",
      "values": {
+      "id": "R-047",
       "category": "Data",
       "requirement": "Play-by-play for game flow",
       "acceptance": "Possession-level feed with timestamps",
@@ -19754,6 +19863,7 @@
     {
      "key": "R-048",
      "values": {
+      "id": "R-048",
       "category": "Governance",
       "requirement": "Owner ratifies all unratified thresholds before money is risked",
       "acceptance": "Sign-off recorded in COORDINATION.md; config status flipped to 'ratified'",
@@ -19778,6 +19888,7 @@
     {
      "key": "R-049",
      "values": {
+      "id": "R-049",
       "category": "Governance",
       "requirement": "Trial-count registry so multiple-testing correction is real",
       "acceptance": "Every evaluation attempt appended to a ledger and fed to G-06",
@@ -19802,6 +19913,7 @@
     {
      "key": "R-050",
      "values": {
+      "id": "R-050",
       "category": "Governance",
       "requirement": "No live-money automation",
       "acceptance": "Site publishes lines and triggers only; no bet placement, no account credentials",
@@ -19826,6 +19938,7 @@
     {
      "key": "R-051",
      "values": {
+      "id": "R-051",
       "category": "Quality",
       "requirement": "Tests for the statistical machinery",
       "acceptance": "pytest suite covering calibration, shrinkage, gates math, copula pricing, ledger seal",
@@ -19850,6 +19963,7 @@
     {
      "key": "R-052",
      "values": {
+      "id": "R-052",
       "category": "Quality",
       "requirement": "CI that fails on unsourceable rows, broken links or test failures",
       "acceptance": "Workflow runs lint + pytest on PR",
@@ -19874,6 +19988,7 @@
     {
      "key": "R-053",
      "values": {
+      "id": "R-053",
       "category": "Quality",
       "requirement": "Site must render with JavaScript disabled enough to read the flags",
       "acceptance": "static HTML contains headline numbers; tables hydrate from data/site.json",
@@ -19898,6 +20013,7 @@
     {
      "key": "R-054",
      "values": {
+      "id": "R-054",
       "category": "Quality",
       "requirement": "Timestamp and staleness visible everywhere",
       "acceptance": "as-of + generated-at + 'T-3 injury blind' notice on each data page",
@@ -19923,6 +20039,7 @@
     {
      "key": "R-055",
      "values": {
+      "id": "R-055",
       "category": "Quality",
       "requirement": "Responsible-gambling and eligibility notice on a betting-related public site",
       "acceptance": "Footer notice with jurisdiction/age warning, no guarantees implied",
@@ -19947,6 +20064,7 @@
     {
      "key": "R-056",
      "values": {
+      "id": "R-056",
       "category": "Ops",
       "requirement": "Daily rebuild cadence with game-day 13:00 ET injury refresh",
       "acceptance": "Scheduled workflow; build aborts if snapshot is stale",
@@ -19971,6 +20089,7 @@
     {
      "key": "R-057",
      "values": {
+      "id": "R-057",
       "category": "Ops",
       "requirement": "Snapshot retention so any published line can be re-derived",
       "acceptance": "dated files committed under data/raw/ + manifest",
@@ -19995,6 +20114,7 @@
     {
      "key": "R-058",
      "values": {
+      "id": "R-058",
       "category": "Ops",
       "requirement": "One Pages publishing path, no racing workflows",
       "acceptance": "exactly one workflow deploys",
@@ -20019,6 +20139,7 @@
     {
      "key": "R-059",
      "values": {
+      "id": "R-059",
       "category": "Analysis",
       "requirement": "State what the model cannot see (injuries, motivation, refs) inside the output, not in a footnote",
       "acceptance": "INJURY-BLIND column on every line row; Cup-game context column on the slate",
@@ -20043,6 +20164,7 @@
     {
      "key": "R-060",
      "values": {
+      "id": "R-060",
       "category": "Analysis",
       "requirement": "Distinguish verified from derived from third-party on every row",
       "acceptance": "source class badge per row",
@@ -20067,6 +20189,7 @@
     {
      "key": "R-101",
      "values": {
+      "id": "R-101",
       "category": "Data request",
       "requirement": "Licensed odds feed (opening + closing, spread/total/ML, and prop lines)",
       "acceptance": "vendor decision + API key + retention of closing prices per game",
@@ -20091,6 +20214,7 @@
     {
      "key": "R-102",
      "values": {
+      "id": "R-102",
       "category": "Data request",
       "requirement": "Official player-level game data (minutes, usage, on/off)",
       "acceptance": "stats.nba.com equivalent reachable from the build environment",
@@ -20115,6 +20239,7 @@
     {
      "key": "R-103",
      "values": {
+      "id": "R-103",
       "category": "Data request",
       "requirement": "Historical final scores (>= 2 seasons) with NBA game IDs",
       "acceptance": "committed CSV/JSON snapshot + licence note",
@@ -20139,6 +20264,7 @@
     {
      "key": "R-104",
      "values": {
+      "id": "R-104",
       "category": "Data request",
       "requirement": "Official standings/stats snapshot at a fixed daily time",
       "acceptance": "timestamped retrieval we can replay, replacing the third-party table",
@@ -20163,6 +20289,7 @@
     {
      "key": "R-105",
      "values": {
+      "id": "R-105",
       "category": "Data request",
       "requirement": "Bankroll and payout policy definition",
       "acceptance": "owner states bankroll units, max stake, and what the leaderboard pool pays on",
@@ -20187,6 +20314,7 @@
     {
      "key": "R-106",
      "values": {
+      "id": "R-106",
       "category": "Data request",
       "requirement": "Roster-mover and trade-context feed",
       "acceptance": "transactions with effective dates so ratings are re-based after a trade",
@@ -20712,6 +20840,7 @@
     {
      "key": "Q-01",
      "values": {
+      "id": "Q-01",
       "question": "Which odds source are we measuring against — and are we allowed to store its closing prices?",
       "have": "The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.",
       "missing": "Any licensed book price, opening or closing, for any sport.",
@@ -20735,6 +20864,7 @@
     {
      "key": "Q-02",
      "values": {
+      "id": "Q-02",
       "question": "Is the product a line-setting desk or a betting-picks desk?",
       "have": "Both capabilities sketched: pricing engine (works) and bet selection with triggers (needs prices).",
       "missing": "Owner decision on primary objective.",
@@ -20758,6 +20888,7 @@
     {
      "key": "Q-03",
      "values": {
+      "id": "Q-03",
       "question": "What is the bankroll unit and the maximum stake per bet?",
       "have": "A config default of 1% hard cap and quarter-Kelly.",
       "missing": "Whether that is your risk tolerance at all.",
@@ -20781,6 +20912,7 @@
     {
      "key": "Q-04",
      "values": {
+      "id": "Q-04",
       "question": "Do we accept that game-day injury data arrives too late for a T-3 publication?",
       "have": "The official report's structure and cadence, plus proof: in the 11/13 16:15 ET release, all ten Nov 14 teams were 'NOT YET SUBMITTED'.",
       "missing": "Whether you want T-3 lines (injury-blind) only, or a T-0 re-issue after the 13:00 ET report.",
@@ -20804,6 +20936,7 @@
     {
      "key": "Q-05",
      "values": {
+      "id": "Q-05",
       "question": "Can we get official player-level data (minutes, usage, on/off) from the build environment?",
       "have": "The knowledge that stats.nba.com endpoints are unreachable from here and nba.com/stats tables are client-rendered.",
       "missing": "An accessible official source or a licensed alternative.",
@@ -20827,6 +20960,7 @@
     {
      "key": "Q-06",
      "values": {
+      "id": "Q-06",
       "question": "Do Emirates NBA Cup group games belong in the same distribution as ordinary regular-season games?",
       "have": "The 11/13 slate is entirely Cup group play, and Cup games count for group standing with different incentives (winning by margin matters as a tiebreaker).",
       "missing": "Historical evidence on whether Cup games differ in pace, rotations or margin distribution.",
@@ -20850,6 +20984,7 @@
     {
      "key": "Q-07",
      "values": {
+      "id": "Q-07",
       "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?",
       "have": "Every one of them written down with its rationale and band on the Parameters page.",
       "missing": "A decision, because they currently control which games are actionable.",
@@ -20873,6 +21008,7 @@
     {
      "key": "Q-08",
      "values": {
+      "id": "Q-08",
       "question": "Is a 12-game sample enough to trade at all?",
       "have": "Reliability weights ~0.74-0.78 and a fitted RMSE of 1.31 wins vs 2.78 baseline.",
       "missing": "Your risk policy for early-season modelling.",
@@ -20896,6 +21032,7 @@
     {
      "key": "Q-09",
      "values": {
+      "id": "Q-09",
       "question": "What is the definition of 'removing luck' you will accept as a gate?",
       "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
       "missing": "Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.",
@@ -20919,6 +21056,7 @@
     {
      "key": "Q-10",
      "values": {
+      "id": "Q-10",
       "question": "How do you want the leaderboard to treat strategies that bet different numbers of games?",
       "have": "Score components are per-bet averages, so abstention is neither rewarded nor punished beyond sample-size gates.",
       "missing": "Whether volume should carry weight (e.g. minimum coverage per slate).",
@@ -20942,6 +21080,7 @@
     {
      "key": "Q-11",
      "values": {
+      "id": "Q-11",
       "question": "Do we price parlays off our own singles only, or off book parlay prices when available?",
       "have": "Correlation-swept joint pricing on our own numbers; the ratio (not the level) is publishable today.",
       "missing": "Book parlay prices to compare against.",
@@ -20965,6 +21104,7 @@
     {
      "key": "Q-12",
      "values": {
+      "id": "Q-12",
       "question": "What is the correct treatment of a two-way/G-League assignment listed on the injury report?",
       "have": "The report distinguishes 'G League - Two-Way', 'G League - On Assignment' and 'League Suspension' from injuries, and I count them as absent bodies.",
       "missing": "Whether those absences should affect a rotation-floor model identically to injury.",
@@ -20988,6 +21128,7 @@
     {
      "key": "Q-13",
      "values": {
+      "id": "Q-13",
       "question": "Should rewards be paid at all before a strategy is promoted?",
       "have": "Allocation logic that pays nothing when nothing is promoted (pool 100% unallocated).",
       "missing": "Confirmation that you do not want an activity-based payout.",
@@ -21011,6 +21152,7 @@
     {
      "key": "Q-14",
      "values": {
+      "id": "Q-14",
       "question": "How should the site behave when the snapshot is stale?",
       "have": "as-of and generated-at stamps on every page, and the build refuses to run on a future-dated slate.",
       "missing": "A maximum-age policy (e.g. refuse to publish lines older than 24h).",
@@ -21034,6 +21176,7 @@
     {
      "key": "Q-15",
      "values": {
+      "id": "Q-15",
       "question": "What is the procedure when a game is postponed or a star is ruled out at warmups?",
       "have": "Nothing — the model has no re-quote path.",
       "missing": "Trigger for re-pricing and a rule for voiding sealed predictions.",
@@ -21057,6 +21200,7 @@
     {
      "key": "Q-16",
      "values": {
+      "id": "Q-16",
       "question": "Which team is 'home' when the schedule says an arena hosts a neutral-site or international game?",
       "have": "None in this window; the schedule page marks neutralSite only in the JSON endpoints we cannot reach.",
       "missing": "A rule + a data field.",
@@ -21080,6 +21224,7 @@
     {
      "key": "Q-17",
      "values": {
+      "id": "Q-17",
       "question": "Do we keep publishing from the repository root, or move to /docs?",
       "have": "One workflow, root publish, working today.",
       "missing": "Preference.",
@@ -21103,6 +21248,7 @@
     {
      "key": "Q-18",
      "values": {
+      "id": "Q-18",
       "question": "Are we allowed to commit third-party ratings data (Basketball-Reference) into this public repo?",
       "have": "One small facts table, each value linked to its source page, and Sports Reference's site terms are not re-checked here.",
       "missing": "A licence/permission reading, or replacement with our own ingestion of official data.",
@@ -21126,6 +21272,7 @@
     {
      "key": "Q-19",
      "values": {
+      "id": "Q-19",
       "question": "How many strategies is it honest to evaluate at once?",
       "have": "9 registered; G-06 deflation grows with the trial count.",
       "missing": "A cap or a preregistration rule for new strategies.",
@@ -21149,6 +21296,7 @@
     {
      "key": "Q-20",
      "values": {
+      "id": "Q-20",
       "question": "Is the ledger's git-commit seal enough, or do you want an external timestamp?",
       "have": "sha256 of canonical JSON, committed with the site.",
       "missing": "Whether you need a trusted third-party timestamp (e.g. RFC3161) for the competition to be credible.",
@@ -21172,6 +21320,7 @@
     {
      "key": "Q-21",
      "values": {
+      "id": "Q-21",
       "question": "What exactly should the executive summary optimise for — opportunity, risk, or project state?",
       "have": "It currently reports project state and blockers first, because that is the truth today.",
       "missing": "Whether you want a picks-first summary as soon as prices exist.",
@@ -21195,6 +21344,7 @@
     {
      "key": "Q-22",
      "values": {
+      "id": "Q-22",
       "question": "Which numbers on this site would change your decision if they moved by 10%?",
       "have": "A sensitivity band for every structural parameter, and a stability fraction per line.",
       "missing": "Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.",
@@ -21419,6 +21569,7 @@
     {
      "key": "S-01",
      "values": {
+      "id": "S-01",
       "title": "Connect a licensed odds feed before anything else",
       "problem": "Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.",
       "proposal": "Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.",
@@ -21444,6 +21595,7 @@
     {
      "key": "S-02",
      "values": {
+      "id": "S-02",
       "title": "Ingest official game-level results daily",
       "problem": "σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
       "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.",
@@ -21469,6 +21621,7 @@
     {
      "key": "S-03",
      "values": {
+      "id": "S-03",
       "title": "Store point-in-time snapshots, not 'latest' tables",
       "problem": "An as-of standings table contains future information for games early in its window, which silently inflates any backtest (G-07 currently AT-RISK for exactly this).",
       "proposal": "Key every snapshot by (as_of_date, game_date) and make the model read only rows with as_of < tip-off.",
@@ -21494,6 +21647,7 @@
     {
      "key": "S-04",
      "values": {
+      "id": "S-04",
       "title": "Ratify thresholds in one sitting",
       "problem": "Eleven numbers decide which games are actionable and who wins the leaderboard, and all eleven are currently mine.",
       "proposal": "Owner reviews the Parameters page and signs off (or edits) in a single commit; status flips from 'unratified' to 'ratified' in config.",
@@ -21519,6 +21673,7 @@
     {
      "key": "S-05",
      "values": {
+      "id": "S-05",
       "title": "Preregister strategy trials with a counter",
       "problem": "G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.",
       "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
@@ -21544,6 +21699,7 @@
     {
      "key": "S-06",
      "values": {
+      "id": "S-06",
       "title": "Render 'why is this blank' on every empty cell",
       "problem": "A blank cell reads as 'no data' but not as 'which missing input, and what would fill it'.",
       "proposal": "The generator already attaches flag ids to blanks (see the strict rule in nba2/provenance.py::make_row): render the flag id as a tooltip on each blank cell, linking to its entry on the Flagged page.",
@@ -21569,6 +21725,7 @@
     {
      "key": "S-07",
      "values": {
+      "id": "S-07",
       "title": "Staleness banner with an explicit expiry",
       "problem": "Lines published from a 3-day-old snapshot look identical to fresh ones; nothing on the page says 'stop'.",
       "proposal": "Header banner computing age of snapshot vs a policy max age (e.g. 24h), turning red past expiry and disabling the picks tab.",
@@ -21594,6 +21751,7 @@
     {
      "key": "S-08",
      "values": {
+      "id": "S-08",
       "title": "Replace third-party ratings with an official snapshot",
       "problem": "Every line currently derives from Basketball-Reference values (PS/G, PA/G, SRS) because the official endpoint was unreachable here; that is flagged (FLAG-RAT-01) but it is the load-bearing wall.",
       "proposal": "When R-104 is possible, ingest official team stats at a fixed daily time and delete the third-party file; keep both during a parallel period to measure drift.",
@@ -21619,6 +21777,7 @@
     {
      "key": "S-09",
      "values": {
+      "id": "S-09",
       "title": "Structured injury-PDF parser instead of text extraction",
       "problem": "17 of 91 rows needed team attribution from block continuation because the PDF table breaks across pages (FLAG-INJ-01).",
       "proposal": "Parse the report with a table-aware reader keyed on the Game Date column, and store page/row coordinates for each record.",
@@ -21644,6 +21803,7 @@
     {
      "key": "S-10",
      "values": {
+      "id": "S-10",
       "title": "Add a game-day re-issue build (T-0) alongside the T-3 build",
       "problem": "Injury reports for future days are 'NOT YET SUBMITTED' — proven this session — so a 3-day-ahead line is structurally injury-blind.",
       "proposal": "Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.",
@@ -21669,6 +21829,7 @@
     {
      "key": "S-11",
      "values": {
+      "id": "S-11",
       "title": "Show per-line contribution of every input",
       "problem": "'San Antonio -4.5' is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.",
       "proposal": "Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.",
@@ -21694,6 +21855,7 @@
     {
      "key": "S-12",
      "values": {
+      "id": "S-12",
       "title": "Bankroll/staking page with the actual policy applied",
       "problem": "Stakes are pinned to 0% by rule until prices exist, which is correct but explains nothing to a reviewer.",
       "proposal": "A page showing the staking maths with the current caps and what a bet would look like at each available price once S-01 lands.",
@@ -21719,6 +21881,7 @@
     {
      "key": "S-13",
      "values": {
+      "id": "S-13",
       "title": "Per-game chart: rating gap vs line, with the disagreement band",
       "problem": "Tables answer 'what number' but not 'how near the decision boundary is this game'.",
       "proposal": "Small multiples drawn client-side from site.json; the band is the sensitivity box, so a narrow bar = fragile line.",
@@ -21744,6 +21907,7 @@
     {
      "key": "S-14",
      "values": {
+      "id": "S-14",
       "title": "Table ergonomics: sticky headers, density toggle, CSV export",
       "problem": "The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.",
       "proposal": "Sticky thead, a compact-density class, and a per-table 'download CSV' that includes the source column.",
@@ -21769,6 +21933,7 @@
     {
      "key": "S-15",
      "values": {
+      "id": "S-15",
       "title": "Accessibility and print path",
       "problem": "A dense analytical dashboard with no ARIA table semantics and no print stylesheet is hard to review with colleagues.",
       "proposal": "scope=headers, caption elements, focus styles, and a print stylesheet that keeps source URLs.",
@@ -21794,6 +21959,7 @@
     {
      "key": "S-16",
      "values": {
+      "id": "S-16",
       "title": "Scheduled rebuild with a freshness gate",
       "problem": "The site updates only when a session commits; the numbers are a frozen 2026-11-13 snapshot.",
       "proposal": "Daily Actions workflow that re-ingests, rebuilds, re-seals, and fails (not publishes) if any official source is unreachable.",
@@ -21819,6 +21985,7 @@
     {
      "key": "S-17",
      "values": {
+      "id": "S-17",
       "title": "Compliance framing on the front page",
       "problem": "A public page that prints spreads, parlays and staking language reads as betting advice; today the notice is a footer line.",
       "proposal": "Front-page notice: research tool, no guarantees, 21+/jurisdiction responsibility, links to problem-gambling help.",
@@ -21844,6 +22011,7 @@
     {
      "key": "S-18",
      "values": {
+      "id": "S-18",
       "title": "Keep the sealed ledger in git, not a database",
       "problem": "A leaderboard is only credible if predictions cannot be edited after the fact.",
       "proposal": "Keep the current design: canonical JSON + sha256, committed with the site build; never rewrite history.",
@@ -21869,6 +22037,7 @@
     {
      "key": "S-19",
      "values": {
+      "id": "S-19",
       "title": "Publish from a build directory instead of the repository root",
       "problem": "`path: '.'` makes every committed file public, including data snapshots and anything a future session commits by mistake.",
       "proposal": "Build to `site/` (HTML + assets + data/site.json) and publish that directory only.",
@@ -21894,6 +22063,7 @@
     {
      "key": "S-20",
      "values": {
+      "id": "S-20",
       "title": "Stop writing narrative into empty analysis columns",
       "problem": "The temptation this site is built to resist: a 'game flow' page with adjectives where pace numbers should be.",
       "proposal": "Keep policy as code (blank + flag is the only permitted empty state) and add a lint rule that fails any prose-only analysis column.",
@@ -22968,7 +23138,8 @@
       "our_record": "7-5",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "118.3"
+      "our_ppg": "118.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -22977,7 +23148,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -22990,7 +23161,8 @@
       "our_record": "3-8",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "110.2"
+      "our_ppg": "110.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -22999,7 +23171,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23012,7 +23184,8 @@
       "our_record": "10-2",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "114.3"
+      "our_ppg": "114.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23021,7 +23194,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23034,7 +23207,8 @@
       "our_record": "4-8",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "98.6"
+      "our_ppg": "98.6",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23043,7 +23217,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23056,7 +23230,8 @@
       "our_record": "1-9",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "113.3"
+      "our_ppg": "113.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23065,7 +23240,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23078,7 +23253,8 @@
       "our_record": "6-6",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "116.4"
+      "our_ppg": "116.4",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23087,7 +23263,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23100,7 +23276,8 @@
       "our_record": "7-5",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "113.2"
+      "our_ppg": "113.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23109,7 +23286,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23122,7 +23299,8 @@
       "our_record": "6-4",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "114.5"
+      "our_ppg": "114.5",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23131,7 +23309,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23144,7 +23322,8 @@
       "our_record": "8-3",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "115.5"
+      "our_ppg": "115.5",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23153,7 +23332,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23166,7 +23345,8 @@
       "our_record": "8-4",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "119.3"
+      "our_ppg": "119.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23175,7 +23355,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23188,7 +23368,8 @@
       "our_record": "9-3",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "115.4"
+      "our_ppg": "115.4",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23197,7 +23378,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23210,7 +23391,8 @@
       "our_record": "4-8",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "111.6"
+      "our_ppg": "111.6",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23219,7 +23401,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23232,7 +23414,8 @@
       "our_record": "2-8",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "112.2"
+      "our_ppg": "112.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23241,7 +23424,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23254,7 +23437,8 @@
       "our_record": "11-2",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "122.2"
+      "our_ppg": "122.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23263,7 +23447,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23276,7 +23460,8 @@
       "our_record": "7-4",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "117.9"
+      "our_ppg": "117.9",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23285,7 +23470,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23298,7 +23483,8 @@
       "our_record": "5-6",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "115.7"
+      "our_ppg": "115.7",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23307,7 +23493,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23320,7 +23506,8 @@
       "our_record": "1-11",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "106.8"
+      "our_ppg": "106.8",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23329,7 +23516,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23342,7 +23529,8 @@
       "our_record": "9-3",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "119.3"
+      "our_ppg": "119.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23351,7 +23539,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23364,7 +23552,8 @@
       "our_record": "4-8",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "116.9"
+      "our_ppg": "116.9",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23373,7 +23562,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23386,7 +23575,8 @@
       "our_record": "6-5",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "110.3"
+      "our_ppg": "110.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23395,7 +23585,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23408,7 +23598,8 @@
       "our_record": "8-4",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "111.1"
+      "our_ppg": "111.1",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23417,7 +23608,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23430,7 +23621,8 @@
       "our_record": "4-7",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "108.5"
+      "our_ppg": "108.5",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23439,7 +23631,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23452,7 +23644,8 @@
       "our_record": "10-3",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "111.2"
+      "our_ppg": "111.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23461,7 +23654,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23474,7 +23667,8 @@
       "our_record": "5-6",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "111.7"
+      "our_ppg": "111.7",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23483,7 +23677,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23496,7 +23690,8 @@
       "our_record": "8-3",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "119.5"
+      "our_ppg": "119.5",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23505,7 +23700,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23518,7 +23713,8 @@
       "our_record": "1-10",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "108.3"
+      "our_ppg": "108.3",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23527,7 +23723,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23540,7 +23736,8 @@
       "our_record": "10-2",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "119.2"
+      "our_ppg": "119.2",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23549,7 +23746,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23562,7 +23759,8 @@
       "our_record": "5-7",
       "match": "agree",
       "their_ppg": "114.3",
-      "our_ppg": "114.3"
+      "our_ppg": "114.3",
+      "note": "both filled"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23571,7 +23769,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "both filled",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23584,7 +23782,8 @@
       "our_record": "1-11",
       "match": "agree",
       "their_ppg": "blank",
-      "our_ppg": "106.6"
+      "our_ppg": "106.6",
+      "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23593,7 +23792,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "prior session left PS/G blank because no official endpoint publishes it; ours is third-party and flagged (FLAG-RAT-01)",
+     "note": "",
      "flags": [],
      "verified": false
     },
@@ -23606,7 +23805,8 @@
       "our_record": "4-9",
       "match": "agree",
       "their_ppg": "110.0",
-      "our_ppg": "110.0"
+      "our_ppg": "110.0",
+      "note": "both filled"
      },
      "source": {
       "name": "Prior session's committed dataset (this repo)",
@@ -23615,7 +23815,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "nba2/data/*.json produced by nba2/model.py + nba2/picks.py (session arena-7b4973eb) from NBA.com retrievals; compared here, not merged."
      },
-     "note": "both filled",
+     "note": "",
      "flags": [],
      "verified": false
     }
@@ -27253,6 +27453,7 @@
       "surface": "nba2/ (this session)",
       "generator": "nba2/pipeline/build_site_data.py",
       "outputs": "index.html + pages/**",
+      "note": "Model, gates, provenance lint, sealed ledger; renders 26 tables",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27262,7 +27463,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "Model, gates, provenance lint, sealed ledger; renders 26 tables",
+     "note": "",
      "flags": [],
      "verified": true
     },
@@ -27272,6 +27473,7 @@
       "surface": "nba2/ (prior session)",
       "generator": "nba2/generate.py + build_site.py",
       "outputs": "root *.html (picks, strategies, correlations, injuries, executive-summary, suggestions, questions, flagged)",
+      "note": "Independent originated lines + its own verified data; preserved, superseded as the landing page",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27281,7 +27483,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "Independent originated lines + its own verified data; preserved, superseded as the landing page",
+     "note": "",
      "flags": [],
      "verified": true
     },
@@ -27291,6 +27493,7 @@
       "surface": "docs/ layer",
       "generator": "session arena-35264d96",
       "outputs": "docs/**",
+      "note": "13-page verification-first documentation site; left in place, not linked from here",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27300,7 +27503,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "13-page verification-first documentation site; left in place, not linked from here",
+     "note": "",
      "flags": [],
      "verified": true
     },
@@ -27310,6 +27513,7 @@
       "surface": "verified/ + data/verified/",
       "generator": "sessions 23927d63 / 7b4973eb",
       "outputs": "verified/**",
+      "note": "Row-level verification records for schedule/injuries/gates",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27319,7 +27523,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "Row-level verification records for schedule/injuries/gates",
+     "note": "",
      "flags": [],
      "verified": true
     },
@@ -27329,6 +27533,7 @@
       "surface": "tools/",
       "generator": "prior sessions",
       "outputs": "—",
+      "note": "Standalone verification/build scripts; not part of this build path",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27338,7 +27543,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "Standalone verification/build scripts; not part of this build path",
+     "note": "",
      "flags": [],
      "verified": true
     },
@@ -27348,6 +27553,7 @@
       "surface": "archive/",
       "generator": "integration",
       "outputs": "archive/**",
+      "note": "Byte-for-byte copies of pages replaced during this merge, plus their README",
       "reachable": "yes — linked from this nav or a direct URL"
      },
      "source": {
@@ -27357,7 +27563,7 @@
       "class_label": "Official NBA.com / NBA CDN",
       "note": "Repo review facts: commit list, file tree."
      },
-     "note": "Byte-for-byte copies of pages replaced during this merge, plus their README",
+     "note": "",
      "flags": [],
      "verified": true
     }
@@ -27460,7 +27666,8 @@
       "session3": "+11.0 (inj +4.1/+0.0)",
       "session3_ex_injury": "+6.9",
       "gap_raw": "+6.0 pts",
-      "gap_after_stripping": "+1.9 pts"
+      "gap_after_stripping": "+1.9 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27469,7 +27676,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27485,7 +27692,8 @@
       "session3": "-4.0 (inj +6.4/+0.0)",
       "session3_ex_injury": "-10.4",
       "gap_raw": "+4.0 pts",
-      "gap_after_stripping": "-2.4 pts"
+      "gap_after_stripping": "-2.4 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27494,7 +27702,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27510,7 +27718,8 @@
       "session3": "+0.5 (inj +0.8/+3.6)",
       "session3_ex_injury": "+3.3",
       "gap_raw": "-2.5 pts",
-      "gap_after_stripping": "+0.3 pts"
+      "gap_after_stripping": "+0.3 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27519,7 +27728,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27535,7 +27744,8 @@
       "session3": "+12.5 (inj +3.6/+3.6)",
       "session3_ex_injury": "+12.5",
       "gap_raw": "+2.0 pts",
-      "gap_after_stripping": "+2.0 pts"
+      "gap_after_stripping": "+2.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27544,7 +27754,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27560,7 +27770,8 @@
       "session3": "+12.0 (inj +4.4/+3.2)",
       "session3_ex_injury": "+10.8",
       "gap_raw": "+3.5 pts",
-      "gap_after_stripping": "+2.3 pts"
+      "gap_after_stripping": "+2.3 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27569,7 +27780,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27585,7 +27796,8 @@
       "session3": "-23.0 (inj +2.4/+2.4)",
       "session3_ex_injury": "-23.0",
       "gap_raw": "-5.5 pts",
-      "gap_after_stripping": "-5.5 pts"
+      "gap_after_stripping": "-5.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27594,7 +27806,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27610,7 +27822,8 @@
       "session3": "-8.0 (inj +2.4/+7.3)",
       "session3_ex_injury": "-3.1",
       "gap_raw": "-5.0 pts",
-      "gap_after_stripping": "-0.1 pts"
+      "gap_after_stripping": "-0.1 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27619,7 +27832,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27635,7 +27848,8 @@
       "session3": "+16.0 (inj +2.4/+4.4)",
       "session3_ex_injury": "+18.0",
       "gap_raw": "+2.5 pts",
-      "gap_after_stripping": "+4.5 pts"
+      "gap_after_stripping": "+4.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27644,7 +27858,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27660,7 +27874,8 @@
       "session3": "+8.0 (inj +3.2/+4.4)",
       "session3_ex_injury": "+9.2",
       "gap_raw": "+1.5 pts",
-      "gap_after_stripping": "+2.7 pts"
+      "gap_after_stripping": "+2.7 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27669,7 +27884,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27685,7 +27900,8 @@
       "session3": "+10.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+10.0",
       "gap_raw": "+4.0 pts",
-      "gap_after_stripping": "+4.0 pts"
+      "gap_after_stripping": "+4.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27694,7 +27910,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27710,7 +27926,8 @@
       "session3": "-2.0 (inj +0.0/+2.9)",
       "session3_ex_injury": "+0.9",
       "gap_raw": "-1.0 pts",
-      "gap_after_stripping": "+1.9 pts"
+      "gap_after_stripping": "+1.9 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27719,7 +27936,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27735,7 +27952,8 @@
       "session3": "+4.0 (inj +0.0/+1.6)",
       "session3_ex_injury": "+5.6",
       "gap_raw": "-2.0 pts",
-      "gap_after_stripping": "-0.4 pts"
+      "gap_after_stripping": "-0.4 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27744,7 +27962,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27760,7 +27978,8 @@
       "session3": "-14.5 (inj +0.0/+0.5)",
       "session3_ex_injury": "-14.0",
       "gap_raw": "-4.0 pts",
-      "gap_after_stripping": "-3.5 pts"
+      "gap_after_stripping": "-3.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27769,7 +27988,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27785,7 +28004,8 @@
       "session3": "-25.0 (inj +4.8/+0.0)",
       "session3_ex_injury": "-29.8",
       "gap_raw": "-2.0 pts",
-      "gap_after_stripping": "-6.8 pts"
+      "gap_after_stripping": "-6.8 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27794,7 +28014,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27810,7 +28030,8 @@
       "session3": "-6.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "-6.0",
       "gap_raw": "-1.5 pts",
-      "gap_after_stripping": "-1.5 pts"
+      "gap_after_stripping": "-1.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27819,7 +28040,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27835,7 +28056,8 @@
       "session3": "+6.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+6.0",
       "gap_raw": "+0.0 pts",
-      "gap_after_stripping": "+0.0 pts"
+      "gap_after_stripping": "+0.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27844,7 +28066,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27860,7 +28082,8 @@
       "session3": "-12.5 (inj +0.0/+0.0)",
       "session3_ex_injury": "-12.5",
       "gap_raw": "-5.0 pts",
-      "gap_after_stripping": "-5.0 pts"
+      "gap_after_stripping": "-5.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27869,7 +28092,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27885,7 +28108,8 @@
       "session3": "+17.5 (inj +0.0/+0.0)",
       "session3_ex_injury": "+17.5",
       "gap_raw": "+3.0 pts",
-      "gap_after_stripping": "+3.0 pts"
+      "gap_after_stripping": "+3.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27894,7 +28118,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27910,7 +28134,8 @@
       "session3": "-5.5 (inj +0.0/+0.0)",
       "session3_ex_injury": "-5.5",
       "gap_raw": "+1.0 pts",
-      "gap_after_stripping": "+1.0 pts"
+      "gap_after_stripping": "+1.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27919,7 +28144,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27935,7 +28160,8 @@
       "session3": "+2.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+2.0",
       "gap_raw": "+0.5 pts",
-      "gap_after_stripping": "+0.5 pts"
+      "gap_after_stripping": "+0.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27944,7 +28170,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27960,7 +28186,8 @@
       "session3": "+21.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+21.0",
       "gap_raw": "+8.0 pts",
-      "gap_after_stripping": "+8.0 pts"
+      "gap_after_stripping": "+8.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27969,7 +28196,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -27985,7 +28212,8 @@
       "session3": "+11.5 (inj +0.0/+0.0)",
       "session3_ex_injury": "+11.5",
       "gap_raw": "+1.5 pts",
-      "gap_after_stripping": "+1.5 pts"
+      "gap_after_stripping": "+1.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -27994,7 +28222,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28010,7 +28238,8 @@
       "session3": "+15.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+15.0",
       "gap_raw": "+3.5 pts",
-      "gap_after_stripping": "+3.5 pts"
+      "gap_after_stripping": "+3.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28019,7 +28248,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28035,7 +28264,8 @@
       "session3": "-13.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "-13.0",
       "gap_raw": "-1.0 pts",
-      "gap_after_stripping": "-1.0 pts"
+      "gap_after_stripping": "-1.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28044,7 +28274,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28060,7 +28290,8 @@
       "session3": "-18.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "-18.0",
       "gap_raw": "-4.0 pts",
-      "gap_after_stripping": "-4.0 pts"
+      "gap_after_stripping": "-4.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28069,7 +28300,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28085,7 +28316,8 @@
       "session3": "+11.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+11.0",
       "gap_raw": "+2.5 pts",
-      "gap_after_stripping": "+2.5 pts"
+      "gap_after_stripping": "+2.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28094,7 +28326,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28110,7 +28342,8 @@
       "session3": "+4.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+4.0",
       "gap_raw": "+0.5 pts",
-      "gap_after_stripping": "+0.5 pts"
+      "gap_after_stripping": "+0.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28119,7 +28352,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28135,7 +28368,8 @@
       "session3": "+15.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+15.0",
       "gap_raw": "+5.0 pts",
-      "gap_after_stripping": "+5.0 pts"
+      "gap_after_stripping": "+5.0 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28144,7 +28378,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28160,7 +28394,8 @@
       "session3": "-4.5 (inj +0.0/+0.0)",
       "session3_ex_injury": "-4.5",
       "gap_raw": "+0.5 pts",
-      "gap_after_stripping": "+0.5 pts"
+      "gap_after_stripping": "+0.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28169,7 +28404,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28185,7 +28420,8 @@
       "session3": "+18.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "+18.0",
       "gap_raw": "+6.5 pts",
-      "gap_after_stripping": "+6.5 pts"
+      "gap_after_stripping": "+6.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28194,7 +28430,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
@@ -28210,7 +28446,8 @@
       "session3": "-5.0 (inj +0.0/+0.0)",
       "session3_ex_injury": "-5.0",
       "gap_raw": "-0.5 pts",
-      "gap_after_stripping": "-0.5 pts"
+      "gap_after_stripping": "-0.5 pts",
+      "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them"
      },
      "source": {
       "name": "Third session's originated lines (data/our-lines.csv)",
@@ -28219,7 +28456,7 @@
       "class_label": "Derived in-repo from a verified snapshot",
       "note": "Produced by scripts/model.py from basketball-reference ratings + its own injury/rest conventions; documented assumptions, per that session's own header comment."
      },
-     "note": "session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them",
+     "note": "",
      "flags": [
       "FLAG-XSESS-07"
      ],
