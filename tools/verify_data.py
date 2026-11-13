@@ -154,7 +154,8 @@ class LinkParser(html.parser.HTMLParser):
 
 def validate_html():
     pages = {}
-    for p in list(SITE.glob("*.html")) + [ROOT / "index.html", ROOT / "flagged.html"]:
+    site_pages = list(SITE.glob("*.html")) + list((ROOT / "pages").glob("*.html")) + list(ROOT.glob("*.html"))
+    for p in site_pages:
         if p.exists():
             parser = LinkParser()
             parser.feed(p.read_text(encoding="utf-8"))
@@ -190,7 +191,7 @@ def main():
     for f in flagged["rows"]:
         check(is_official(f["source_url"], extra={"kansspelautoriteit.nl", "gokstop.nl", "github.com"}), f"flagged {f['id']}: source not official")
         check(bool(f["status"]), f"flagged {f['id']}: missing status")
-    n_pages = validate_html() if SITE.exists() else 0
+    n_pages = validate_html()
     print(f"checks run: {checks}; html pages scanned: {n_pages}; errors: {len(errors)}")
     for e in errors:
         print("ERROR:", e)

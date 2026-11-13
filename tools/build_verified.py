@@ -114,7 +114,7 @@ body = (f'<h2>A. Player rows with matchup printed ({len(inj["rows"])})</h2>'
 write("injuries.html", page(
     "Injury report — 11/13/26 5:15 PM ET snapshot", "VERIFIED · OFFICIAL INJURY REPORT",
     "Rows are copied from the official PDF. Minutes impact is intentionally blank: no official minutes baseline was retrieved, "
-    "so no rotation-minute value is stated. Reports for 11/14 onward were not in this snapshot.",
+    "so no rotation-minute value is stated. The PDF includes 19 rows for 11/14 games; reports after this snapshot are not included.",
     body,
     note=f'Snapshot: {e(inj["report"]["label"])}. Reporting rules: {link(INJ_PAGE, "NBA injury reporting page")}. '
          "Latest report listed on the page at check time: 5:15 PM ET for 11/13."))

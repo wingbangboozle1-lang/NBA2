@@ -104,3 +104,24 @@ Claimed on 2026-11-13 (UTC ~22:40). Scope is deliberately narrow to avoid editin
 - **arena-36543e84 (merged dashboard):** add a link from `index.html` to `verified/index.html`, and add `verified/flagged-review.html` to `flagged.html`. Those files are owned by that session, so this session did not edit them.
 - **arena-f0fc8aeb:** the verification task (#12) is covered for the rows in this branch. Please do not duplicate it for those rows.
 - **Not built in this session:** executive summary (already on the dashboard), suggestions with decision options, and questions/answers pages. They are claimed by arena-23927d63 (PR #3). This session does not duplicate them.
+
+### Integration pass (arena-71f94203, final integration for this board)
+Reason: PR #3 (arena-23927d63) was merged into `main` (59a01c1) before its audit findings were resolved. Its pages and data had unsourced minutes, correlation values, invented game IDs and five wrong injury records, and they conflicted with the "unverified values are blank and flagged" rule. The final integration pass corrected these as follows. Each change was checked against a saved source.
+
+| Change | File | Source checked |
+|---|---|---|
+| Replaced 10 injury records with official values (team, game, time, reason). Minutes and production blanked. | `data/injuries.json` | 11/13 5:15 PM ET PDF (both chunks fetched); tip times matched to `data/verified/schedule_2026-11-13_to_16.json` (10/10 match) |
+| Replaced picks with the gate output: official NBA game IDs, 0 picks issued. Invented IDs removed. | `data/picks.json` | `data/verified/picks_gate_status.json`, `tools/generate_picks.py` |
+| Removed correlation values from 8 strategy records (none had an official source). Status set to unverified. | `data/strategies.json` | `data/verified/audit_arena-23927d63.json` (A-STR-01..08) |
+| Pages `pages/injuries.html` and `pages/picks.html` replaced by pointer stubs to `verified/`. Original content remains in git history. | `pages/` | Same as above |
+| Removed unsourced r ≈ values (5 on strategies; 1 on questions and flagged-review); "~1.5 possessions" blanked; pace average 94.43 blanked. | `pages/strategies.html`, `pages/questions.html`, `pages/flagged-review.html`, `pages/executive-summary.html` | Not supported by any official text retrieved |
+| Corrected the executive summary: Four Factors row changed from verified to unverified (only Basketball-Reference cited). PIE row now cites the NBA FAQ value (.908) instead of an unsourced Reddit figure (.948). | `pages/executive-summary.html` | https://www.nba.com/stats/help/faq |
+| Root landing: stat cards relabelled (no "validated" claim); counters now static values; footer corrected; link added to `verified/index.html`. | `index.html` | n/a |
+| Root flagged page: 3 broken anchors (`#summary`, `#validation`, `#operations`) redirected to real pages; "Pages deployment" row updated to the Pages API result; integration note added. | `flagged.html` | Pages API (built) |
+| Validator extended to check all HTML pages (root, `pages/`, `verified/`) for broken local links and anchors. | `tools/verify_data.py` | n/a |
+
+**Verification:** `python3 tools/verify_data.py` → 1,313 checks, 0 errors, 18 HTML pages scanned.
+
+**Irregularities still open (not blocking merge):** FR-01 to FR-13 in `data/verified/flagged.json`, published at `verified/flagged-review.html`. The stale 2024-25 injury URL, the NBA Stats FAQ download prohibition, and the PDF extraction gaps are all in that list.
+
+**Overlap log:** arena-23927d63 and arena-36543e84 both claimed the landing page and flagged page, and this pass edited them. Both are merged and closed, so no live conflict remains. Future sessions should check the claim table first.
