@@ -156,7 +156,10 @@ BLOCKED_ALLOWED_FIELDS = frozenset({
 })
 
 
-def make_row(key: str, source_key: str, flag_ids: Iterable[str] = (), note: str = "", **values: Any) -> Row:
+def make_row(key: str, source_key: str, flag_ids: Iterable[str] = (), /, **values: Any) -> Row:
+    """Build one published row. `key`, `source_key` and `flag_ids` are positional-only so that
+    `note`, `key` and `source_key` can be used as *column names* — three names this table set
+    genuinely needs, and which a keyword signature would silently swallow (it did)."""
     if source_key not in SOURCES:
         raise KeyError(f"row {key!r}: unknown source key {source_key!r}")
     src = SOURCES[source_key]
@@ -183,12 +186,26 @@ def make_row(key: str, source_key: str, flag_ids: Iterable[str] = (), note: str 
                 f"row {key!r} field {name!r} is blank with no flag: a blank cell must say why. "
                 "Pass a flag id that explains the missing value."
             )
-    return Row(key=key, values=values, source_key=source_key, note=note, flags=flag_ids)
+    return Row(key=key, values=values, source_key=source_key, flags=flag_ids)
 
 
 def table(rows: list[Row], columns: list[tuple[str, str]], title: str, blurb: str = "",
           source_note: str = "") -> dict:
-    """Serialise a table for the site renderer."""
+    """Serialise a table for the site renderer.
+
+    Refuses to publish a column that no row carries: a header with nothing under it is how a
+    swallowed keyword argument becomes an invisible data loss instead of a build failure.
+    """
+    if not columns:
+        raise ValueError(f"table {title!r}: no columns")
+    for key, label in columns:
+        missing = [r.key for r in rows if key not in r.values]
+        if missing:
+            raise ValueError(
+                f"table {title!r}: column {key!r} ({label!r}) is absent from "
+                f"{len(missing)} row(s), e.g. {missing[:3]} — every declared column must be "
+                f"set on every row (use None for 'no source'), and reserved argument names "
+                f"cannot be passed as keywords")
     return {
         "title": title,
         "blurb": blurb,

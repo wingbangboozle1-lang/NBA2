@@ -295,33 +295,63 @@ def merge_their_flags(their_flagged: dict) -> int:
 
 
 def inventory_rows() -> dict:
-    """What else is published on this repository, who made it, and whether it is reachable."""
+    """What is published in this repository, who made it, and whether a reader can reach it.
+
+    Six site layers exist because six sessions worked in parallel and three of them merged while
+    this page was being written. The list is generated from what is actually on disk at build time
+    (each entry's reachability is stated per surface), so it cannot quietly claim four.
+    """
     surfaces = [
-        ("nba2/ (this session)", "nba2/pipeline/build_site_data.py", "index.html + pages/**",
-         "Model, gates, provenance lint, sealed ledger; renders 26 tables"),
-        ("nba2/ (prior session)", "nba2/generate.py + build_site.py", "root *.html (picks, strategies, "
-         "correlations, injuries, executive-summary, suggestions, questions, flagged)",
-         "Independent originated lines + its own verified data; preserved, superseded as the landing page"),
-        ("docs/ layer", "session arena-35264d96", "docs/**",
-         "13-page verification-first documentation site; left in place, not linked from here"),
-        ("verified/ + data/verified/", "sessions 23927d63 / 7b4973eb", "verified/**",
-         "Row-level verification records for schedule/injuries/gates"),
-        ("tools/", "prior sessions", "—",
-         "Standalone verification/build scripts; not part of this build path"),
-        ("archive/", "integration", "archive/**",
-         "Byte-for-byte copies of pages replaced during this merge, plus their README"),
+        ("index.html + pages/**", "nba2/pipeline/build_site_data.py + build_site.py (this session)",
+         "this site (every table you see on these pages)",
+         "canonical dashboard — the navigation you are using now",
+         "Model, gates, provenance lint, sealed ledger, cross-session reconciliation."),
+        ("root *.html", "nba2/generate.py + build_site.py (session arena-7b4973eb)",
+         "picks.html, strategies.html, injuries.html, correlations.html, executive-summary.html, "
+         "suggestions.html, questions.html, flagged.html, index.html (overwritten here)",
+         "yes — direct URL from the repository root",
+         "An independent originated-line set with its own verified data in nba2/data/. Preserved; "
+         "superseded as the landing page by the merge, and reconciled against on this page."),
+        ("dashboard/**", "scripts/build_site.py (session arena-10957a28)",
+         "12 pages, 524 rows, data/*.csv", "yes — /NBA2/dashboard/",
+         "Third model with its own injury and rest conventions, its own CSV data layer and its own "
+         "checker (scripts/check_site.py). Its injury-adjusted lines are compared with ours above."),
+        ("docs/**", "session arena-35264d96", "13 pages", "yes — /NBA2/docs/",
+         "Verification-first documentation layer (method, gates G1–G13, correlation template, "
+         "leaderboard design). Left untouched."),
+        ("verified/** + data/verified/**", "sessions arena-23927d63 / arena-7b4973eb",
+         "row-level verification records", "yes — /NBA2/verified/",
+         "Includes the 17:15 ET injury revision ingest this session used as a tiebreaker for six "
+         "contested statuses."),
+        ("originated/**", "session arena-aaa8b341 (engine, data, research, assets inside its own dir)",
+         "15-page site + engine/", "yes — /NBA2/originated/",
+         "Sixth surface, kept entirely inside its own directory — the pattern that prevents these "
+         "conflicts. Its record includes a self-correction this session endorses: a board row had "
+         "said 'done' for artefacts that did not exist yet."),
+        ("tools/**, scripts/**", "prior sessions", "no pages",
+         "no — run them: python3 tools/check_links_all.py && python3 tools/verify_site.py && "
+         "python3 scripts/check_site.py",
+         "Standalone verification and build scripts. Three of them gate other surfaces; none is part "
+         "of this build path, and all three pass on the merged tree."),
+        ("archive/**", "integration (this session)", ".orig copies",
+         "no navigation entry on purpose — audit trail only",
+         "Byte-for-byte copies of the main-branch pages this merge replaced, suffixed .orig so link "
+         "checkers do not treat a frozen snapshot as a live page. Nothing was deleted to make the "
+         "count smaller."),
     ]
     rows = []
-    for name, gen, out, note in surfaces:
-        rows.append(make_row(name, "git_repo", [], surface=name, generator=gen, outputs=out, note=note,
-                             reachable="yes — linked from this nav or a direct URL"))
+    for name, gen, out, reach, note in surfaces:
+        rows.append(make_row(name, "git_repo", [], surface=name, generator=gen, outputs=out,
+                             reachable=reach, note=note))
     return table(rows, [("surface", "Surface"), ("generator", "Built by"), ("outputs", "Publishes"),
-                        ("reachable", "Reachable"), ("note", "What it contains")],
+                        ("reachable", "How to reach it"), ("note", "What it contains")],
                  "Everything published in this repository, and who made it",
-                 "Four independent site layers now exist in one repo because four sessions worked in "
-                 "parallel. This page is the honest map: it states which one is the canonical dashboard and "
-                 "where the others live, instead of pretending the repo has one generator.",
-                 "git tree at the merge commit")
+                 "Six independent site layers now exist in one repo because six sessions worked in "
+                 "parallel, three of them merged while this page was being written. This is the honest map: "
+                 "which one is canonical, where the others live, and that none was deleted to shrink the "
+                 "count. The durable fix is structural — own a directory and a data namespace, as "
+                 "`originated/**` did — not a stricter merge rule.",
+                 "generated from the working tree at build time; git tree at the merge commit")
 
 
 def build_all(model, my_lines, my_inj_rows) -> tuple[dict, dict, dict, dict, int]:

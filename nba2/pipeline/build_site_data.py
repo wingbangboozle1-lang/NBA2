@@ -725,6 +725,7 @@ def build_leader_rows(inj_rows: list[INJ.InjuryRow], leaders_path: Path) -> dict
 
 def build_repo_review_rows(review: list[dict]) -> dict:
     rows = [make_row(r["id"], r["source_key"], _flag_ids(*(r.get("flags") or ["FLAG-REPO-01"])),
+                     id=r["id"],
                      **{k: v for k, v in r.items() if k not in ("id", "source_key", "flags")})
             for r in review]
     return table(rows, [("id", "#"), ("area", "Area"), ("finding", "Finding (line-by-line)"),
@@ -737,6 +738,7 @@ def build_repo_review_rows(review: list[dict]) -> dict:
 def build_generic(name: str, items: list[dict], columns: list[tuple[str, str]],
                   source_key: str, flags: list[str], title: str, blurb: str, note: str) -> dict:
     rows = [make_row(str(it.get("id", i)), source_key, _flag_ids(*flags) if flags else (),
+                     id=it.get("id", i),
                      **{k: v for k, v in it.items() if k != "id"})
             for i, it in enumerate(items)]
     return table(rows, columns, title, blurb, note)

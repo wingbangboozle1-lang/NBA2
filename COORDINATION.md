@@ -368,6 +368,90 @@ F-1 ratings source is trusted-secondary (sandbox blocks NBA stats APIs) · F-2 C
 | Post-merge verification | `scripts/check_site.py` PASS (524 source-linked rows); `tools/check_links_all.py` whole-repo PASS (52 HTML files, 824 internal links) |
 | Follow-up | this record committed via follow-up [PR #11](https://github.com/wingbangboozle1-lang/NBA2/pull/11) from `arena/10957a28-nba2`; rebase-vs-merge note: `git pull --rebase` flattens merge commits and was aborted safely (`git rebase --abort`) during integration — direct push used instead; no work discarded |
 
+
+### Second merge + promotion record — arena/20c4f2f9, 2026-11-13 23:05–23:25 UTC
+
+**Main moved twice while this session worked.** Between the first rebase (7fa2a24) and the push,
+three more sessions merged: arena/7b4973eb (root dashboard + its own `nba2/` model),
+arena/35264d96 (`docs/**`, PRs #8–#9) and arena/10957a28 (`dashboard/**`, `scripts/model.py`,
+`data/*.csv`, PRs #10–#11). Both merges were done as **merges, not rebases**, because 85+ files of
+divergence cannot be replayed without rewriting another session's history.
+
+**PRs opened and merged by this session**
+| PR | Contents | CI | Result |
+|---|---|---|---|
+| #12 | engine + gated leaderboard + provenance-enforced site + cross-session reconciliation (2 merges of main included) | `verify` failed once (see below), then pass | merged 23:11:23Z as `3831ab5` |
+| #14 | fix for two swallowed-column bugs found by reading the deployed page | see below | opened 23:2x UTC |
+
+**CI failure, root cause, and the fix that mattered.** `verify` failed in 10s with
+`data/site.json differs from a rebuild of data/raw`. Cause was my own CI step
+*"Rebuild the sealed ledger"*: re-sealing stamps a fresh `sealed_at_utc`, which flows into
+`site.json`, so the parity check could never pass — and worse, a **verification job was
+regenerating the artefact the seal exists to protect**. Fixed by `seal_predictions --verify`
+(recompute the digest, assert the site prints the same one) plus a step that fails if anything
+under `data/raw/ledger` changes during verification. Not papered over with `|| true` or by
+dropping the check.
+
+**Deploy confirmation method.** Pages deploy run `43525214053` for merge `3831ab5` completed
+`success`; verified by fetching the live URL rather than trusting the green tick —
+`https://wingbangboozle1-lang.github.io/NBA2/pages/reconciliation.html` returned the new page
+(title "Reconciliation · NBA2", `sealed ledger: 22 predictions, sha256 cf7dedc689597cb8…`,
+"Team records: 30/30 agree"). Reading the deployed HTML is also what exposed the two
+swallowed-column bugs in #14: `note` was a keyword parameter of `make_row`, so every table using
+`note` as a column published blanks, and the `id` column was empty on 124 rows across four tables.
+Lesson recorded: a lint over the emitted artefacts catches data loss that a lint over the source
+cannot.
+
+**Data-integrity checks added as a result** (all in `nba2/tests`, 55 tests): `table()` refuses a
+declared column absent from any row; `test_no_unintended_all_empty_columns` pins the 16 columns
+that are blank *on purpose* and fails if the allow-list rots in either direction;
+`test_three_way_table_shows_stripped_gap` fails if the "convention, not data" claim on the
+reconciliation page stops being true; `test_adjudication` requires the third-revision tiebreaker
+to keep resolving ≥6 conflicts.
+
+**Byte-stability.** `meta.input_digest` (sha256 over every committed input) makes the build
+idempotent: while inputs are unchanged, `generated_at_utc` is reused instead of re-stamped, so
+"committed artefacts == rebuild" is a meaningful assertion. Committed Python bytecode was untracked
+and `.gitignore` extended, because a blanket `git add -A` in CI would otherwise stage machine-
+generated binaries.
+
+**Verification performed on the combined data (post-merge).**
+- Team records: 30/30 win-loss agree across three independent captures (ours, arena/7b4973eb,
+  arena/10957a28's standings CSV).
+- Slate: 14/14 matchups and 11/11 readable tip times corroborated by a second official document;
+  0 mismatches (FLAG-SLATE-04 downgraded to low for 11/13–14, still open for 11/15–16).
+- Injury statuses: 6 cross-session conflicts adjudicated against the 17:15 ET revision →
+  **6/6 match our 16:15 capture**; the other read was an earlier revision, so neither session
+  misread anything (FLAG-XSESS-04 marked RESOLVED with the row-level evidence).
+- Lines: three models price the same slate; mean |gap| is large but shrinks materially once
+  session 3's own published injury adjustment is stripped from its spread (NYK@IND +6.0 → +1.9;
+  CLE@MIA −2.5 → +0.3) → FLAG-XSESS-07: most apparent model disagreement is unratified convention.
+- Other sessions' checkers re-run on the merged tree, all pass: `tools/check_links_all.py`
+  (60 pages, 3146 internal links), `tools/verify_site.py` (docs, 249 rows), `scripts/check_site.py`
+  (dashboard, 524 rows).
+
+**Cross-session protocol notes.** CR-4 logged rather than fixed (their `dashboard/data.html` has
+one empty `<td>`; our lint flags it, their file and their checker are theirs). My structural rules
+are now explicitly scoped to files this pipeline emits, so the scoping is stated, not implicit.
+Both `COORDINATION.md` and `README.md` conflicts resolved append-only, with their text preserved
+verbatim under a labelled divider; overwritten page versions preserved in
+`archive/main-2026-11-13/` as `.orig` (documented, so no checker was edited or silenced).
+
+**Open for the owner.** Ratify the 11 unratified parameters (S-04); decide the odds-feed question
+(R-101/Q-01) — until then no gate beyond G-01/G-08/G-10 can pass, no stake is nonzero, and the
+leaderboard stays unallocated. Triage PR #13/#13-adjacent sessions: five site surfaces now exist
+(`index.html`+`pages/**`, root `*.html`, `dashboard/**`, `docs/**`, `verified/**`); the map is on
+the reconciliation page, but only the owner can say which one should be canonical.
+
+---
+
+<!-- Preserved verbatim from the incoming merge (session arena/aaa8b341's record, appended after
+     ours). Both blocks describe the same repo state from different sessions; neither was edited.
+     Note their self-correction, which this session endorses: a task board row marked `done` for
+     artefacts that do not exist yet is the exact failure mode the board exists to prevent. Our
+     rule from the start: 'done' requires the artefact to work, and 0 of 90 gate evaluations and
+     0 of 100 reward units are 'done' here for that reason. -->
+
 ---
 
 ## Session `session-aaa8b341` (branch `arena/aaa8b341-nba2`)
