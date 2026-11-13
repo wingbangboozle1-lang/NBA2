@@ -54,7 +54,15 @@ def w(name, rows, fields):
 ratings = {r["team"]: r for r in read("team-ratings-2026-11-13.csv")}
 games = read("games.csv")
 injuries = read("injury-report-2026-11-13.csv")
-baselines = {r["team"]: r for r in read("player-baselines-2026-11-13.csv") if r.get("ppg")}
+
+# baselines: ppg lookup by (team, player) for injury tiering + team leader for props
+ppg_of = {}
+leader = {}
+for r in read("player-baselines-2026-11-13.csv"):
+    if r.get("ppg"):
+        ppg_of[(r["team"], r["player"])] = float(r["ppg"])
+        if r["team"] not in leader or float(r["ppg"]) > float(leader[r["team"]]["ppg"]):
+            leader[r["team"]] = r
 recent = read("recent-games.csv")
 
 # ---- league averages (from the ratings table itself) -----------------------
@@ -114,8 +122,7 @@ def injury_impact(matchup, team_full):
             continue  # two-way / assignment absences: negligible NBA rotation impact
         # tier by verified PPG when possible
         abbr = TEAM_FULL_TO_ABBR.get(team_full, "")
-        b = baselines.get(abbr)
-        ppg = float(b["ppg"]) if b and b.get("player", "") == r["player"] and b.get("ppg") else None
+        ppg = ppg_of.get((abbr, r["player"]))
         if ppg is not None and ppg >= 24:
             wgt = STAR_OUT
         elif ppg is not None and ppg >= 15:
@@ -218,7 +225,7 @@ for g in games:
         })
     if 4.0 <= abs(margin_r) <= 10.0:
         fav = h if margin_r > 0 else a
-        fb = baselines.get(fav)
+        fb = leader.get(fav)
         fav_inj = injury_impact(f"{a}@{h}", ABBR_TO_FULL.get(fav, ""))[1]
         if fb and not any(fb["player"].split(",")[0] in n for n in fav_inj):
             proj = float(fb["ppg"])
@@ -235,7 +242,7 @@ props = []
 for g in games:
     gd = date.fromisoformat(g["date"])
     for team in (g["away"], g["home"]):
-        b = baselines.get(team)
+        b = leader.get(team)
         if not b or not b.get("ppg"):
             continue
         opp = g["home"] if team == g["away"] else g["away"]

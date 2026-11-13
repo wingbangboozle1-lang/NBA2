@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questions · NBA2</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header><div class="wrap"><h1>NBA2 <span class="sub">line origination &amp; strategy platform</span></h1>
+<p class="snap">Snapshot 2026-11-13 · official injury report 5:15 p.m. ET · model v1.0 · every row source-linked · unverified values blank + flagged</p>
+<nav><a href="index.html" class="">Dashboard</a><a href="slates.html" class="">Slates & Picks</a><a href="injuries.html" class="">Injuries & Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="strategies.html" class="">Strategies & Gates</a><a href="correlation.html" class="">Correlation</a><a href="leaderboard.html" class="">Leaderboard</a><a href="data.html" class="">Data Tables</a><a href="suggestions.html" class="">Suggestions</a><a href="questions.html" class="active">Questions</a><a href="flagged.html" class="">Flagged for Review</a><a href="sources.html" class="">Sources</a></nav></div></header>
+<main class="wrap">
+<h2>Questions &amp; missing-information register</h2>
+<p class="note">Decision rule: a decision may only rest on <b>known &amp; verified</b> facts.
+Unknowns below each carry a discovery plan. Full register:
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/questions.md">analysis/questions.md</a>.</p>
+<div class="tblwrap"><table>
+<thead><tr><th>ID</th><th>Question</th><th>Known today</th><th>Missing</th><th>Discovery plan</th><th>Blocks</th></tr></thead><tbody>
+<tr><td>Q-1</td><td>Market lines at pick time &amp; close?</td><td>NBA.com odds toggle exists but numbers are JS-hidden from our tools</td><td>any odds feed</td><td>connect odds API (S-1; needs your key decision) or manual capture</td><td>edge, CLV, S5, parlay pricing</td></tr>
+<tr><td>Q-2</td><td>Market player-prop lines?</td><td>our own prop projections exist from verified baselines</td><td>book prop boards</td><td>same feed as Q-1</td><td>S4 grading</td></tr>
+<tr><td>Q-3</td><td>Calibrated model parameters?</td><td>formula + assumed values documented</td><td>fitted values</td><td>backtest on historical logs (S-3)</td><td>line confidence</td></tr>
+<tr><td>Q-4</td><td>Full rotation production?</td><td>27 verified team leaders</td><td>every rotation player's production</td><td>NBA.com/stats pull or nba_api (S-4)</td><td>injury tiers (Edwards case), prop coverage</td></tr>
+<tr><td>Q-5</td><td>Player-specific correlations?</td><td>generic bands + empirical DFS-pair study</td><td>per-player correlations</td><td>play-by-play → rolling pairwise</td><td>prop-combo pricing</td></tr>
+<tr><td>Q-6</td><td>Minutes limits / returns?</td><td>official statuses only</td><td>minutes restrictions</td><td>team PR notes at report time (flagged secondary)</td><td>rotation precision</td></tr>
+<tr><td>Q-7</td><td>Team-specific HCA?</td><td>league HCA ≈ 2.0 (secondary)</td><td>per-team values</td><td>home/away splits from game logs (S-6)</td><td>close-game margins</td></tr>
+<tr><td>Q-8</td><td>Nov 15–16 injury reports?</td><td>through Nov 14 partial only</td><td>game-day reports</td><td>refresh from official index on game days (S-7)</td><td>final Sun/Mon lines (marked PENDING)</td></tr>
+<tr><td>Q-9</td><td>NBA Cup weighting policy?</td><td>tonight = 9 Cup games</td><td>your policy</td><td>decision via suggestions (S-5)</td><td>grading only</td></tr>
+<tr><td>Q-10</td><td>Bankroll &amp; reward sizing?</td><td>framework drafted</td><td>pool sizes, unit</td><td>your sign-off (S-2)</td><td>payouts</td></tr>
+</tbody></table></div>
+<h2>Known &amp; verified (foundation)</h2>
+<ul>
+<li>31-game slate Nov 13–16 with official game IDs —
+<a href="https://www.nba.com/games?date=2026-11-13" target="_blank" rel="noopener">nba.com/games</a> per day.</li>
+<li>All 30 records cross-checked (NBA.com pages vs
+<a href="https://www.basketball-reference.com/leagues/NBA_2027_ratings.html" target="_blank" rel="noopener">Basketball-Reference</a> — agree).</li>
+<li>Official injury statuses for all 9 tonight + partial Nov 14 —
+<a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf" target="_blank" rel="noopener">official PDF</a>.</li>
+<li>Smart suspension — <a href="https://official.nba.com/rockets-smart-suspended" target="_blank" rel="noopener">official release</a>.</li>
+<li>Empirical correlation study —
+<a href="https://kindoflost.com/2026/09/nba-dfs-correlation-measured/" target="_blank" rel="noopener">505,721 pairs</a>.</li>
+</ul>
+<h2>Standing unknowns (never silently filled)</h2>
+<ul><li>LAL / CHA / TOR season-leader baselines (blank + flagged in data).</li>
+<li>Preseason priors / futures market.</li>
+<li>Referee assignments.</li>
+<li>Historical closing lines (CLV backfill).</li></ul>
+</main>
+<footer class="wrap"><p>NBA2 · built 2026-11-13 by session arena-10957a28 · sources: official NBA (nba.com, official.nba.com, ak-static.cms.nba.com) + labeled trusted-secondary · <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a> · Unverified values are never inferred — see <a href="flagged.html">Flagged for Review</a>.</p></footer>
+</body></html>
