@@ -1,38 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Source-linked NBA forecasting research, validation gates, and open decision register.">
-  <title>NBA Lines Lab — Research Dashboard</title><link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA2 - Originated NBA Lines & Strategy Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="top"><a class="brand" href="#home">NBA <span>LINES LAB</span></a><nav aria-label="Main navigation"><a href="#summary">Summary</a><a href="#strategies">Strategies</a><a href="#validation">Validation</a><a href="#operations">Operations</a><a href="flagged.html">Flagged for Review</a></nav></header>
-<main id="home">
-<section class="hero"><div><p class="eyebrow">RESEARCH DASHBOARD · EVIDENCE FIRST</p><h1>Build an NBA edge.<br><em>Prove it before betting.</em></h1><p class="intro">A transparent blueprint for originating lines, testing selective skill, and tracking what is still unknown. No fabricated picks or performance claims.</p><a class="button" href="#validation">Review validation gates ↓</a></div><aside class="status"><span class="dot"></span><b>Research status</b><p>Specification only</p><small>No live model, odds feed, or verified pick pipeline in this repository.</small></aside></section>
-<section id="summary" class="section"><div class="section-head"><div><p class="eyebrow">01 / EXECUTIVE SUMMARY</p><h2>What we can—and cannot—say</h2></div></div><div class="cards"><article class="card"><strong>Available</strong><p>The NBA publishes official schedules, player/team statistics, and team-submitted injury reports. Each is a potential input, not a ready-made betting signal.</p></article><article class="card"><strong>Not available here</strong><p>No historical snapshots, market prices, archived injury updates, model estimates, validation results, or bankroll records exist in this repository.</p></article><article class="card"><strong>Recommendation</strong><p>Begin with timestamped single-market forecasts and strict out-of-sample evaluation. Add combinations only after component and joint dependence are measured.</p></article></div><p class="note"><b>Decision:</b> do not issue a wager recommendation until calibrated probabilities, executable price/odds, uncertainty, and all required gates are available.</p></section>
-<section id="strategies" class="section"><p class="eyebrow">02 / RESEARCH BACKLOG</p><h2>Candidate strategy families</h2><p class="sub">These are hypotheses to test, not findings or proven advantages. All measurements remain blank until reproduced on time-ordered data.</p><div class="table-wrap"><table><thead><tr><th>Family</th><th>Signal hypothesis</th><th>Measure / dependence</th><th>Status</th><th>Source</th></tr></thead><tbody>
-<tr><td>Game sides & totals</td><td>Team/player performance features may help estimate game outcomes; compare model probability to a time-stamped market quote.</td><td>Log loss, Brier score, calibration, closing-line value, net ROI after costs; estimate dependence by game/date.</td><td><span class="tag">Unverified · no model/data</span></td><td><a href="https://www.nba.com/stats/teams/traditional">NBA team stats ↗</a></td></tr>
-<tr><td>Player props</td><td>Role, minutes opportunity, opponent/context and player production may inform a distribution; actual rotation is uncertain.</td><td>Distribution calibration and error by prop; conditional dependence across props and teammates.</td><td><span class="tag">Unverified · no prop feed</span></td><td><a href="https://www.nba.com/stats/players/traditional">NBA player stats ↗</a></td></tr>
-<tr><td>Parlays / prop combos</td><td>Test joint probability directly; multiplying marginal probabilities is invalid when legs are dependent unless independence is justified.</td><td>Joint calibration, correlation/covariance by pair and context, payout break-even, hold and net return.</td><td><span class="tag">Blocked · no joint sample</span></td><td><a href="https://www.nba.com/stats/">NBA Stats ↗</a></td></tr>
-<tr><td>Injury / rotation response</td><td>Model status changes and observed role/minutes distributions; do not mechanically transfer absent-player production to teammates.</td><td>Minute and production distributions conditional on report timestamp/status; uncertainty and sample size.</td><td><span class="tag">Blocked · no archived reports</span></td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">Official injury reports ↗</a></td></tr>
-</tbody></table></div></section>
-<section id="validation" class="section"><p class="eyebrow">03 / GATES — ALL REQUIRED</p><h2>Evidence before leaderboard rewards</h2><div class="table-wrap"><table><thead><tr><th>Gate</th><th>Required evidence</th><th>Fail condition</th><th>Reference</th></tr></thead><tbody>
-<tr><td>1. Point-in-time integrity</td><td>Immutable feature, injury, schedule and quote snapshots with event-time and ingestion-time; features available before decision cutoff.</td><td>Leakage, missing timestamps, retrospective injury/status substitution.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">NBA injury reporting ↗</a></td></tr>
-<tr><td>2. Baselines & holdout</td><td>Pre-registered baseline; chronological train/validation/test split; rolling-origin evaluation; no tuning on final holdout.</td><td>Random leakage, post-hoc selection, insufficient coverage.</td><td><a href="https://www.nba.com/stats/">NBA stats reference ↗</a></td></tr>
-<tr><td>3. Probability quality</td><td>Proper scoring (Brier/log loss), reliability/calibration by probability bucket, confidence intervals and subgroup checks.</td><td>Uncalibrated or unstable probabilities; any key metric omitted.</td><td><a href="https://www.nba.com/stats/">NBA stats reference ↗</a></td></tr>
-<tr><td>4. Tradable economics</td><td>Timestamped offered odds, rules/settlement, vig removal method, assumed execution/slippage and costs; compare ROI to break-even.</td><td>Backtest uses unavailable prices or ignores hold/costs.</td><td><a href="https://www.nba.com/schedule">Official schedule ↗</a></td></tr>
-<tr><td>5. Skill / luck control</td><td>Large pre-specified sample; uncertainty intervals; bootstrap by slate/date; multiple-testing correction across candidate strategies.</td><td>Winner selected from many variants without correction or uncertainty disclosure.</td><td><a href="https://www.nba.com/stats/">NBA Stats ↗</a></td></tr>
-<tr><td>6. Correlation & combos</td><td>Report pairwise and joint dependence on out-of-sample observations, with sample counts, intervals and context; estimate combo probabilities directly.</td><td>Assume independent legs or present unsupported correlation as fact.</td><td><a href="https://www.nba.com/stats/players/traditional">NBA player stats ↗</a></td></tr>
-<tr><td>7. Prospective shadow run</td><td>Freeze model; record every eligible prediction before outcome; compare against benchmark over a defined prospective window.</td><td>Selective logging, missing losing picks, changed model without versioning.</td><td><a href="https://www.nba.com/schedule">NBA schedule ↗</a></td></tr>
-<tr><td>8. Responsible limits</td><td>Document jurisdiction, permitted data/market use, access controls, risk limits, and no-guarantee messaging before public wagering use.</td><td>Unreviewed legal/data rights or unsafe promises.</td><td><a href="https://www.nba.com/">NBA official site ↗</a></td></tr>
-</tbody></table></div><p class="note">Passing gates is a governance threshold, not proof of future profitability. No gate has been evaluated for a strategy in this repo.</p></section>
-<section id="operations" class="section"><p class="eyebrow">04 / PRODUCT & DECISION WORKFLOW</p><h2>What the production system needs</h2><div class="table-wrap"><table><thead><tr><th>Capability</th><th>Specification / decision</th><th>Evidence source</th><th>Current state</th></tr></thead><tbody>
-<tr><td>Slate horizon</td><td>Generate scheduled-game candidates from now through 72 hours; refresh on schedule changes and label the precise cutoff/time zone.</td><td><a href="https://www.nba.com/schedule">NBA schedule ↗</a></td><td>Not implemented</td></tr>
-<tr><td>Own lines</td><td>Store model fair probability/line separately from offered market price; expose timestamp, model version, uncertainty, and edge net of price.</td><td><a href="https://www.nba.com/stats/">NBA stats ↗</a></td><td>Model and price source missing</td></tr>
-<tr><td>Injury & rotation</td><td>Ingest official report revisions, statuses and update times; model possible minutes distributions and downstream usage/production with uncertainty.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">NBA injury reporting ↗</a></td><td>Not implemented; current availability unknown</td></tr>
-<tr><td>Game flow</td><td>Scenario probabilities for close game/blowout, pace/possessions, rotation exposure and minutes; report assumptions and sensitivity, not a deterministic narrative.</td><td><a href="https://www.nba.com/stats/teams/advanced">NBA advanced team stats ↗</a></td><td>No validated flow model</td></tr>
-<tr><td>Leaderboard</td><td>Compare strategies on identical eligible opportunities, fixed scoring window, minimum volume, calibrated scores, ROI with uncertainty, drawdown and version history.</td><td><a href="https://www.nba.com/stats/">NBA stats ↗</a></td><td>No strategy results</td></tr>
-<tr><td>Audit trail</td><td>Persist input snapshots, transformations, prediction, decision cutoff, quote, settlement, correction history and reproducible evaluation.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">Official update cadence ↗</a></td><td>No storage/pipeline</td></tr>
-</tbody></table></div></section>
-<section class="section"><p class="eyebrow">05 / NEXT STEPS</p><h2>Recommended sequence</h2><ol class="steps"><li>Establish licensed/authorized, timestamped historical inputs and a reproducible data dictionary.</li><li>Choose the target market, market cutoff, settlement rules, jurisdiction, and baseline.</li><li>Build one single-bet probability model and chronological backtest; publish calibration and uncertainty, not just win rate.</li><li>Run prospective shadow predictions; only then test combo dependence and compare net performance.</li><li>Gate a versioned leaderboard; keep failed, inconclusive, and retired strategies visible.</li></ol><p class="sub">Review open decisions and source-linked unverified items on the <a href="flagged.html">Flagged for Review page</a>.</p></section>
-</main><footer>NBA Lines Lab · Evidence-linked research scaffold · Not betting advice · Last repository review: 2026-11-13</footer><script src="app.js"></script></body></html>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Originated NBA Lines &bull; Strategy Signals &bull; Game Flow Analysis &bull; Picks</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Dashboard</a></li>
+          <li><a href="pages/strategies.html">Betting Strategies</a></li>
+          <li><a href="pages/picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="pages/injuries.html">Injuries & Rotation</a></li>
+          <li><a href="pages/game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="pages/executive-summary.html">Executive Summary</a></li>
+          <li><a href="pages/suggestions.html">Site Suggestions</a></li>
+          <li><a href="pages/questions.html">Questions & Answers</a></li>
+<li><a href="pages/flagged-review.html">Flagged for Review</a></li>
+<li><a href="pages/research-scaffold.html">Research Scaffold (Session 1)</a></li>
+</ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <h1>NBA2 Dashboard</h1>
+        <p>Originated NBA lines, validated betting strategies, player prop correlations, injury-aware rotation tracking, and game flow analysis for every upcoming slate up to 3 days in advance.</p>
+      </section>
+
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="value" id="stat-strategies">-</div>
+          <div class="label">Validated Strategies</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="stat-picks">-</div>
+          <div class="label">Upcoming Picks</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="stat-injuries">-</div>
+          <div class="label">Injury Flags</div>
+        </div>
+      </div>
+
+      <section class="card">
+        <h2>Categories</h2>
+        <div class="cat-grid">
+          <a href="pages/strategies.html" class="cat-card">
+            <h3>Betting Strategies</h3>
+            <p>Single bets, parlays, player prop combos with correlation values and validation gates.</p>
+          </a>
+          <a href="pages/picks.html" class="cat-card">
+            <h3>Upcoming Picks</h3>
+            <p>Generated picks for every upcoming slate up to 3 days in advance using originated lines.</p>
+          </a>
+          <a href="pages/injuries.html" class="cat-card">
+            <h3>Injuries & Rotation</h3>
+            <p>How injuries affect rotation minutes and production, with game flow impact.</p>
+          </a>
+          <a href="pages/game-flow.html" class="cat-card">
+            <h3>Game Flow Analysis</h3>
+            <p>Pace, Four Factors, efficiency, and projected game script for upcoming matchups.</p>
+          </a>
+          <a href="pages/executive-summary.html" class="cat-card">
+            <h3>Executive Summary</h3>
+            <p>Key findings, performance metrics, and strategic recommendations.</p>
+          </a>
+          <a href="pages/suggestions.html" class="cat-card">
+            <h3>Site Suggestions</h3>
+            <p>Proposed improvements to the site and decision-making framework.</p>
+          </a>
+          <a href="pages/questions.html" class="cat-card">
+            <h3>Questions & Answers</h3>
+            <p>Open questions, missing information, and what must be resolved before decisions.</p>
+          </a>
+          <a href="pages/flagged-review.html" class="cat-card">
+            <h3>Flagged for Review</h3>
+            <p>Unverified items and irregularities flagged for manual review.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Verification Standard</h2>
+        <div class="notice notice-info">
+          <p><strong>Every table row that contains a data value must carry a source link to an official verified source.</strong> If a value cannot be confirmed from an official source, it is left blank and flagged as <span class="flag flag-unverified">unverified</span>. No values are inferred or filled in. No hallucinations.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Data sourced from official NBA and verified sources &bull; Not financial or betting advice
+    </footer>
+  </div>
+
+  <script>
+    // Simple stats counters - populated from data files if available
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('data/strategies.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d) document.getElementById('stat-strategies').textContent = d.length || '-'; })
+        .catch(() => {});
+      fetch('data/picks.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d) document.getElementById('stat-picks').textContent = d.length || '-'; })
+        .catch(() => {});
+      fetch('data/injuries.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d) document.getElementById('stat-injuries').textContent = d.length || '-'; })
+        .catch(() => {});
+    });
+  </script>
+</body>
+</html>

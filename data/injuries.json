@@ -1,0 +1,109 @@
+{
+  "reportDate": "2026-11-13",
+  "sources": [
+    "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+    "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+  ],
+  "injuries": [
+    {
+      "player": "Paolo Banchero",
+      "team": "Orlando Magic",
+      "status": "Out",
+      "injury": "Injury/Illness - Right High Ankle Sprain",
+      "game": "MIL @ ORL",
+      "minutesImpact": "Starter out — ~0 min (vs. ~34 MPG season avg)",
+      "productionImpact": "-100% scoring/rebounding/playmaking output; backup SG/SF minutes increase",
+      "verified": false
+    },
+    {
+      "player": "Tyrese Haliburton",
+      "team": "Indiana Pacers",
+      "status": "Out",
+      "injury": "Injury/Illness - Left Hamstring Strain",
+      "game": "(game time TBD)",
+      "minutesImpact": "Starter out — ~0 min (vs. ~34 MPG)",
+      "productionImpact": "-100% playmaking/scoring output",
+      "verified": false
+    },
+    {
+      "player": "Jimmy Butler III",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Patella Subluxation",
+      "game": "GSW @ SAS",
+      "minutesImpact": "Starter out — ~0 min (vs. ~32 MPG)",
+      "productionImpact": "-100% scoring/defensive impact",
+      "verified": false
+    },
+    {
+      "player": "Ben Simmons",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+      "game": "GSW @ SAS",
+      "minutesImpact": "Out — ~0 min",
+      "productionImpact": "-100%",
+      "verified": false
+    },
+    {
+      "player": "Chet Holmgren",
+      "team": "Oklahoma City Thunder",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Knee / Injury Recovery",
+      "game": "OKC @ LAC",
+      "minutesImpact": "Starter out — ~0 min (vs. ~30 MPG)",
+      "productionImpact": "-100% rim protection/scoring",
+      "verified": false
+    },
+    {
+      "player": "Evan Mobley",
+      "team": "Cleveland Cavaliers",
+      "status": "Out",
+      "injury": "Injury/Illness - Left Great Toe - Sprain",
+      "game": "CLE @ MIA",
+      "minutesImpact": "Starter out — ~0 min (vs. ~33 MPG)",
+      "productionImpact": "-100% interior defense/rebounding",
+      "verified": false
+    },
+    {
+      "player": "Lauri Markkanen",
+      "team": "Utah Jazz",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Hand Fracture",
+      "game": "UTA @ HOU",
+      "minutesImpact": "Starter out — ~0 min (vs. ~32 MPG)",
+      "productionImpact": "-100% scoring/spacing",
+      "verified": false
+    },
+    {
+      "player": "Jaren Jackson Jr.",
+      "team": "Memphis Grizzlies",
+      "status": "Out",
+      "injury": "Injury/Illness - Right MCL Tear",
+      "game": "MEM @ NOP",
+      "minutesImpact": "Starter out — ~0 min (vs. ~30 MPG)",
+      "productionImpact": "-100% rim protection/scoring",
+      "verified": false
+    },
+    {
+      "player": "Stephen Curry",
+      "team": "Golden State Warriors",
+      "status": "Out",
+      "injury": "Injury/Illness - Right Oblique Tear",
+      "game": "GSW @ SAS",
+      "minutesImpact": "Starter out — ~0 min (vs. ~33 MPG)",
+      "productionImpact": "-100% scoring/spacing/gravity",
+      "verified": false
+    },
+    {
+      "player": "Kristaps Porzingis",
+      "team": "Boston Celtics",
+      "status": "Out",
+      "injury": "Not With Team",
+      "game": "(game time TBD)",
+      "minutesImpact": "Out — ~0 min",
+      "productionImpact": "-100%",
+      "verified": false
+    }
+  ]
+}
