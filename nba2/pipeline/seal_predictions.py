@@ -35,6 +35,32 @@ def pick_window(slate: dict) -> tuple[str, str]:
     return start, min(end, slate["window"]["last_game_date"])
 
 
+def verify_existing() -> int:
+    """Check the committed seal WITHOUT rewriting it. A verification job must never regenerate a
+    sealed artefact — that is the one thing a seal exists to prevent — and a fresh `sealed_at_utc`
+    would also make the published site differ from its own rebuild for no reason."""
+    slate = json.loads((ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE).read_text())
+    path = ROOT / config.DATA_DIR / "ledger" / f"sealed-{slate['as_of']}.json"
+    if not path.exists():
+        print(f"no sealed ledger at {path.relative_to(ROOT)}")
+        return 1
+    ok, stored, recomp = LD.verify(path)
+    doc = json.loads(path.read_text())
+    print(f"seal {str(stored)[:16]}… over {doc['header']['n_predictions']} predictions: "
+          f"{'VERIFIED' if ok else 'BROKEN'}")
+    if not ok:
+        print(f"  header says {stored}\n  file hashes to {recomp}")
+        return 1
+    site = ROOT / "data" / "site.json"
+    if site.exists():
+        published = json.loads(site.read_text())["meta"].get("seal") or {}
+        if published.get("sha256") != stored:
+            print(f"  site publishes a different digest ({published.get('sha256')}) than the ledger holds")
+            return 1
+        print(f"  site page prints the same digest the ledger recomputes")
+    return 0 if ok else 1
+
+
 def main() -> dict:
     model = RT.build(ROOT)
     games, slate = LN.load_slate(ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE)
@@ -60,4 +86,7 @@ def main() -> dict:
 
 
 if __name__ == "__main__":
+    import sys
+    if "--verify" in sys.argv:
+        raise SystemExit(verify_existing())
     main()

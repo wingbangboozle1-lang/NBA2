@@ -31,8 +31,8 @@ jobs:
       - name: Model + pipeline tests (stdlib unittest, no dependencies)
         run: python -m unittest discover -s nba2/tests -t . -v
 
-      - name: Rebuild the sealed ledger from the committed snapshots
-        run: python -m nba2.pipeline.seal_predictions
+      - name: Verify the sealed prediction ledger (never rewrite it)
+        run: python -m nba2.pipeline.seal_predictions --verify
 
       - name: Rebuild site data and HTML
         run: python -m nba2.pipeline.build_site_data && python -m nba2.pipeline.build_site
@@ -43,6 +43,9 @@ jobs:
       - name: Fail if the committed site does not match a rebuild of the committed data
         run: |
           git add -A
+          if ! git diff --cached --quiet -- data/raw/ledger; then
+            echo "::error::a sealed ledger changed during verification — the seal must be immutable"; exit 1
+          fi
           if ! git diff --cached --quiet -- data/site.json; then
             echo "::error::data/site.json differs from a rebuild of data/raw — commit the rebuild"; exit 1
           fi
