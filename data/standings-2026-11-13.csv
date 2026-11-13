@@ -1,0 +1,31 @@
+team,conf,wins,losses,as_of,source_url,source_type,verified
+BOS,E,10,2,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs NBA.com game pages
+PHI,E,10,3,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs NBA.com game pages
+DET,E,8,3,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs NBA.com game pages
+NYK,E,6,5,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+CLE,E,6,6,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+ATL,E,7,5,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+TOR,E,5,7,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs CBS Sports box score (5-7 after Nov 12 loss)
+ORL,E,4,7,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+IND,E,4,8,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+MIA,E,5,6,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+BKN,E,3,8,2026-11-12,https://www.nba.com/games?date=2026-11-14,official,confirmed
+MIL,E,1,11,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+WAS,E,4,9,2026-11-12,https://www.nba.com/games?date=2026-11-16,official,confirmed
+CHA,E,4,8,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs CBS Sports box score (4-8 after Nov 12 loss)
+CHI,E,1,9,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+LAL,W,11,2,2026-11-12,https://www.basketball-reference.com/leagues/NBA_2027_ratings.html,trusted secondary,confirmed vs nba-grid conference leaders (11-2)
+SAS,W,10,2,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+HOU,W,9,3,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+MIN,W,9,3,2026-11-12,https://www.nba.com/games?date=2026-11-14,official,confirmed
+PHX,W,5,6,2026-11-12,https://www.nba.com/games?date=2026-11-16,official,confirmed
+DEN,W,6,4,2026-11-12,https://www.nba.com/games?date=2026-11-14,official,confirmed
+GSW,W,8,4,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+OKC,W,8,4,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+POR,W,8,3,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+MEM,W,7,4,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+DAL,W,7,5,2026-11-12,https://www.nba.com/games?date=2026-11-14,official,confirmed
+LAC,W,2,8,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+NOP,W,4,8,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+UTA,W,1,11,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
+SAC,W,1,10,2026-11-12,https://www.nba.com/games?date=2026-11-13,official,confirmed
