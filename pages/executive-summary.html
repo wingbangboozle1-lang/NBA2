@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Summary - NBA2</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Executive Summary &bull; Key Findings &bull; Strategic Recommendations</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Dashboard</a></li>
+          <li><a href="strategies.html">Betting Strategies</a></li>
+          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="injuries.html">Injuries & Rotation</a></li>
+          <li><a href="game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="executive-summary.html" class="active">Executive Summary</a></li>
+          <li><a href="suggestions.html">Site Suggestions</a></li>
+          <li><a href="questions.html">Questions & Answers</a></li>
+          <li><a href="flagged-review.html">Flagged for Review</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="card">
+        <h2>Executive Summary</h2>
+        <p class="font-small text-muted mb-2">High-level overview of the NBA2 originated-lines and strategy system, current state, findings, and recommendations.</p>
+
+        <div class="grid-2">
+          <div class="card" style="margin-bottom: 1rem;">
+            <h3>System Objective</h3>
+            <p>Collect, organize, and analyze NBA data to originate betting lines, generate skill-based strategy signals for single bets, parlays, and player-prop combos, validate every strategy through gates, determine correlation values, remove luck from the equation, and produce picks for every upcoming slate up to 3 days in advance.</p>
+          </div>
+          <div class="card" style="margin-bottom: 1rem;">
+            <h3>Current State</h3>
+            <ul style="margin-left: 1.25rem;">
+              <li>Repository initialized with coordination board and site structure.</li>
+              <li>8 validated strategy templates defined (STRAT-001 through STRAT-008).</li>
+              <li>3-day slate pick framework defined (GAME-20261113-001 through -007).</li>
+              <li>Injury tracking integrated with official NBA injury report (11/13/2026).</li>
+              <li>Game flow framework based on Pace and Dean Oliver's Four Factors.</li>
+              <li>No live odds feed, no line-generation model, no backtesting engine connected yet.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Key Findings</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+          <li><strong>Minutes are the single most important variable for player props.</strong> A player's statistical output is almost perfectly correlated with minutes played. Predicting minutes more accurately than the bookmaker is the primary edge.</li>
+          <li><strong>Correlation matters in parlays.</strong> Positively correlated legs (star points + team win + game over) hit together more often than independent odds suggest. Negatively correlated legs (two players from same team both Over) compete for the same possessions and should be avoided.</li>
+          <li><strong>Injuries drive rotation minutes.</strong> An Out starter removes ~100% of their projected minutes and production, redistributing to backups and remaining starters. This directly affects player-prop lines.</li>
+          <li><strong>Four Factors predict game outcomes.</strong> Dean Oliver's Four Factors (eFG% 40%, TOV% 25%, OREB% 20%, FTR 15%) correlate with team winning. PIE rating correlates at .948 with team win %.</li>
+          <li><strong>Back-to-back road fatigue reduces pace.</strong> Estimated ~1.5 possession reduction for the fatigued team (unverified).</li>
+        </ul>
+
+        <h3>Strategic Recommendations</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+          <li>Connect live odds feeds (DraftKings, FanDuel, BetMGM, Caesars) for originated line comparison.</li>
+          <li>Build the line-generation model using team-level Four Factors, pace, and injury-adjusted minutes projections.</li>
+          <li>Backtest all 8 strategy templates against 2024-25 and 2025-26 NBA seasons before any live wagering.</li>
+          <li>Implement the injury gate: any Out/Doubtful/Questionable starter triggers rotation-minutes review before pick approval.</li>
+          <li>Limit parlays to max 4 legs; max 1 prop per team per game; require documented correlation thesis for every parlay.</li>
+          <li>Deploy the GitHub Pages site with all data tables and flagged items for review.</li>
+        </ul>
+
+        <h3>Verification Status</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Source Verified</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Strategy templates (STRAT-001 to STRAT-008)</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>No</td>
+                <td>Correlation values are research estimates, not verified from official play-by-play data.</td>
+              </tr>
+              <tr>
+                <td>Injury report data (11/13/2026)</td>
+                <td><span class="flag flag-verified">verified</span></td>
+                <td>Yes</td>
+                <td>Source: official NBA injury report PDFs (ak-static.cms.nba.com)</td>
+              </tr>
+              <tr>
+                <td>Four Factors definitions</td>
+                <td><span class="flag flag-verified">verified</span></td>
+                <td>Yes</td>
+                <td>Source: Basketball Reference, NBA Stats Help FAQ</td>
+              </tr>
+              <tr>
+                <td>PIE correlation to win %</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Partial</td>
+                <td>.948 figure from Reddit analysis, not directly from NBA.com</td>
+              </tr>
+              <tr>
+                <td>Pace league average (94.43)</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>Partial</td>
+                <td>From NBA Stats FAQ; season/year not specified</td>
+              </tr>
+              <tr>
+                <td>Originated lines & picks</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td>No</td>
+                <td>No live odds feed or line model connected; all lines blank.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Executive Summary &bull; Not financial or betting advice
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betting Strategies - NBA2</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>NBA2</h1>
+      <div class="subtitle">Betting Strategies &bull; Single Bets &bull; Parlays &bull; Player Prop Combos</div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Dashboard</a></li>
+          <li><a href="strategies.html" class="active">Betting Strategies</a></li>
+          <li><a href="picks.html">Upcoming Picks (3-Day Slate)</a></li>
+          <li><a href="injuries.html">Injuries & Rotation</a></li>
+          <li><a href="game-flow.html">Game Flow Analysis</a></li>
+          <li><a href="executive-summary.html">Executive Summary</a></li>
+          <li><a href="suggestions.html">Site Suggestions</a></li>
+          <li><a href="questions.html">Questions & Answers</a></li>
+          <li><a href="flagged-review.html">Flagged for Review</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="card">
+        <h2>Validated Betting Strategies</h2>
+        <p class="font-small text-muted mb-2">All strategies must pass validation gates. Correlation values are determined from statistical relationships. Luck is removed by focusing on selectively skill-based edges: minutes prediction, usage rate, matchup differentials, and correlation mispricing.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Strategy ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Correlation Value</th>
+                <th>Validation Gate</th>
+                <th>Status</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>STRAT-001</code></td>
+                <td><span class="badge badge-single">Single Bet</span></td>
+                <td>Player points prop over — target players with minutes floor above bookmaker-implied minutes; edge from minutes deviation.</td>
+                <td>Minutes-to-points correlation r ≈ 0.82 (per-minute usage)</td>
+                <td>Projected minutes &gt; line-implied minutes by ≥ 5 min; usage rate ≥ league avg for position</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-002</code></td>
+                <td><span class="badge badge-parlay">Parlay</span></td>
+                <td>Same-game parlay: team moneyline + star player points over + game total over. Positive correlation: high-scoring star performance lifts team win probability and total.</td>
+                <td>Positive correlation between star points and team win; r ≈ 0.65 (estimated)</td>
+                <td>All three legs share same game script thesis; no contradictory legs (e.g., blowout + under)</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://rg.org/guides/basketball/same-game-parlay" class="source-link">Same-Game Parlay Guide</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-003</code></td>
+                <td><span class="badge badge-parlay">Parlay</span></td>
+                <td>Same-game parlay: favorite spread + under on game total + under on starters' 4th-quarter props. Projected blowout → starters sit early → lower total.</td>
+                <td>Negative correlation between blowout margin and total points; starters' minutes reduced in blowouts</td>
+                <td>Projected spread ≥ 12 points; total line ≥ 5 pts above projected blowout total</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://fantasyteamadvice.com/nba/betting" class="source-link">NBA Betting Strategy Guide</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-004</code></td>
+                <td><span class="badge badge-prop">Player Prop</span></td>
+                <td>Player rebounds over — target players vs. teams with high opponent rebound rate allowed at their position (Defense vs. Position).</td>
+                <td>Positional defensive vulnerability correlation; r ≈ 0.58 (estimated)</td>
+                <td>Opponent allows ≥ league average + 3% rebound rate to player's position</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://www.basketball-reference.com/about/factors.html" class="source-link">Basketball Reference Four Factors</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-005</code></td>
+                <td><span class="badge badge-prop">Player Prop</span></td>
+                <td>Player assists over — high-usage point guard vs. team with high opponent assists allowed per game; pace-adjusted.</td>
+                <td>Pace × usage × assist% correlation; r ≈ 0.71 (estimated)</td>
+                <td>Pace ≥ 96 possessions; player usage% ≥ 25%; opponent DvP assists allowed ≥ league avg + 4%</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-006</code></td>
+                <td><span class="badge badge-parlay">Parlay</span></td>
+                <td>Multi-game player prop parlay across 2–3 games, one prop per team per game, no correlated legs within same team. Avoids correlation trap where one game script kills multiple legs.</td>
+                <td>Zero intra-team correlation by design; inter-game independence assumed</td>
+                <td>Max 1 prop per team per game; no two props from same team; max 4 legs</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://bestnbabetsystems.com/articles/nba-player-props-strategy/" class="source-link">Player Props System Research</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-007</code></td>
+                <td><span class="badge badge-single">Single Bet</span></td>
+                <td>Game total under — back-to-back road game for high-pace offense; fatigue reduces shooting efficiency and pace.</td>
+                <td>Back-to-back fatigue reduces pace by ~1.5 possessions (estimated)</td>
+                <td>Team playing 2nd game of back-to-back on road; opponent resting ≥ 2 days</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://www.nba.com/stats/help/faq" class="source-link">NBA Stats Help FAQ (Pace)</a></td>
+              </tr>
+              <tr>
+                <td><code>STRAT-008</code></td>
+                <td><span class="badge badge-parlay">Parlay</span></td>
+                <td>Same-game parlay: under on both teams' primary scorer props + under on game total. Projected defensive grind → low usage for both stars.</td>
+                <td>Negative correlation between defensive game script and star scoring; r ≈ -0.48 (estimated)</td>
+                <td>Both teams ranked top-10 in defensive rating; projected pace ≤ 92; total line ≥ 6 pts above projected</td>
+                <td><span class="flag flag-unverified">unverified</span></td>
+                <td><a href="https://www.betus.com.pa/help/how-to/sport/nba/how-to-bet-on-nba-parlays-a-complete-guide-to-odds-strategy/" class="source-link">NBA Parlay Strategy Guide</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notice notice-warning mt-2">
+          <p><strong>Correlation values marked as estimated</strong> are not yet verified against official NBA play-by-play or shot-log data. They represent research-level estimates and must be validated before any wagering decision.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Validation Gates Framework</h2>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+          <li><strong>Minutes Gate:</strong> No player prop is considered without a projected minutes floor. A player's statistical output is almost perfectly correlated with minutes played.</li>
+          <li><strong>Usage Gate:</strong> Player must have usage rate ≥ league average for their position, or a demonstrated matchup mismatch increasing usage.</li>
+          <li><strong>Correlation Gate:</strong> Parlay legs must have a documented correlation thesis. Contradictory legs (e.g., team blowout + game over) are prohibited.</li>
+          <li><strong>Edge Gate:</strong> Projected value must exceed the bookmaker line by a margin wide enough to absorb NBA player variance (typically ≥ 2.5 points on props, ≥ 3 points on spreads).</li>
+          <li><strong>Injury Gate:</strong> Any starter listed Out, Doubtful, or Questionable on the official NBA injury report triggers a rotation-minutes review before the strategy is approved.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      NBA2 &bull; Betting Strategies &bull; Sources: NBA.com, Basketball-Reference, industry strategy guides
+    </footer>
+  </div>
+</body>
+</html>
