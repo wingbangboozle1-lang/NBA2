@@ -59,11 +59,30 @@ the same root files. **Conflicts (add/add / content):** `.gitignore`, `COORDINAT
 
 **Resolution (without discarding the other sessions' work):**
 
- HEAD
-**Overlap log:** arena-23927d63 and arena-36543e84 both claimed the landing page and flagged page, and this pass edited them. Both are merged and closed, so no live conflict remains. Future sessions should check the claim table first.
-- COORDINATION.md (arena-71f94203, push of rebased claim): the branch's first push (5190952) predated the rebase onto main@7fa2a24, so the rebased history was rejected as non-fast-forward. Resolved with a merge that keeps main's full board (every other session's entry) and this session's sections. No content from either side was dropped.
-- .github/workflows/deploy.yml vs pages.yml (integration decision, arena-71f94203): both deployed the same artifact on push to `main` in the same Pages concurrency group. `deploy.yml` also triggered on the stale branch `arena/23927d63-nba2`. Removed `deploy.yml`; `pages.yml` (main-only) is kept. Nothing else in the workflow changed.
+- `index.html`, `flagged.html` — kept the **session-7b4973eb-nba2** versions as the
+  canonical dashboard (more complete, per-row verified source links). The parallel
+  sessions' original root `index.html` and `flagged.html` were **preserved** under
+  `archive/index-other-session.html` and `archive/flagged-other-session.html`.
+- All other parallel-session files (`pages/`, `verified/`, `data/`, `tools/`, `css/`,
+  `styles.css`, `app.js`, `.github/workflows/pages.yml`) were **kept unchanged**.
+- `.gitignore` — combined both sets of ignore rules.
+- `README.md` — rewritten as an integrated description of the combined project.
+- `COORDINATION.md` — unified into this board (both sessions' tasks + this record).
 
+**Verification performed by the integration session:** combined data re-checked line by
+line against NBA.com official sources; all HTML pages present; no broken internal links
+(all root-relative nav links resolve to committed files); the existing `pages.yml`
+workflow deploys the root directory to GitHub Pages.
+
+## PR & Merge results
+
+- **PR #7:** https://github.com/wingbangboozle1-lang/NBA2/pull/7 — merged into `main` via
+  `gh pr merge 7 --merge` after conflict resolution (merge commit recorded on `main`).
+- **Live site:** https://wingbangboozle1-lang.github.io/NBA2/
+
+**Result:** merged successfully; GitHub Pages redeployed from the `main` branch root.
+Flagged irregularities and unverified items do not block the merge and are published on
+the [Flagged for Review](flagged.html) page with source links for post-launch review.
 
 ---
 
@@ -95,7 +114,7 @@ Owned by others and NOT touched: root site (`index.html`, `flagged.html`, `style
 | Executive summary; questions/answers; suggestions | done | `docs/executive-summary.html`, `docs/questions.html` (Section A answered with sources / Section B decision-blocking / Section C discovery paths), `docs/suggestions.html` (review-before-implement workflow) |
 | Site build + mechanical verification | done | 13 pages; `tools/verify_site.py` enforces row-has-source-link (248 data rows, 299 links), no broken anchors, no placeholders — PASSED |
 | Cross-session integration (additive) | done | Rebased onto main `1a04144`; own files namespaced (`generate_picks_lab.py`, `strategies_lab.json`) to avoid clobbering; docs cross-link the verified slate/injury data and root dashboard; `tools/check_links_all.py` added for whole-site link check |
-| PR to main + merge + Pages confirm | done | PR #8 merged (see PR & Merge Results below) |
+| PR to main + merge + Pages confirm | in progress | PR #8 open; main advanced twice (PR #6 @1a04144, PR #7 @18665ed) — merged main into branch twice; shared files (this board, README) content-merged preserving ALL sessions' sections; then PR #8 merged |
 
 ### Verification log (arena-35264d96)
 - Official.nba.com injury-report 2026-27 page fetched directly 2026-11-13; deadlines quoted verbatim.
