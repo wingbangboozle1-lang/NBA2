@@ -313,8 +313,10 @@ def build() -> list[str]:
                           '<a href="pages/flagged-review.html">Flagged for Review</a> page '
                           "(duplicate review pages = finding I-06 in COORDINATION.md).</p></body></html>\n")
 
+    # stamped from the data's own build time, not the wall clock: the manifest must be a
+    # deterministic function of the inputs or it breaks the CI parity check it is meant to support
     (ROOT / "data" / "site-built.json").write_text(json.dumps(
-        {"built_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        {"built_from_data_generated_at": DATA["meta"]["generated_at_utc"],
          "pages": sorted(written)}, indent=2) + "\n")
     return sorted(written)
 
