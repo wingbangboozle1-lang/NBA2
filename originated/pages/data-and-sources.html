@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data &amp; Sources · NBA2</title>
+<meta name="description" content="NBA2 — originated NBA lines, strategy validation and slate analysis, with every data row linked to its source.">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><span>NBA2<small>Originated lines</small></span></div>
+  <nav class="navlinks"><a href="../index.html" class="">Dashboard</a><a href="executive-summary.html" class="">Executive Summary</a><a href="slates.html" class="">Slates &amp; Picks</a><a href="lines.html" class="">Originated Lines</a><a href="strategies.html" class="">Strategies</a><a href="correlations.html" class="">Correlations</a><a href="injuries.html" class="">Injuries &amp; Rotation</a><a href="game-flow.html" class="">Game Flow</a><a href="props.html" class="">Player Props</a><a href="open-questions.html" class="">Open Questions</a><a href="suggestions.html" class="">Suggestions</a><a href="flagged.html" class="">Flagged for Review</a><a href="verification.html" class="">Verification</a><a href="data-and-sources.html" class="active">Data &amp; Sources</a><a href="repo-review.html" class="">Repo Review</a></nav>
+</div></div>
+<main class="wrap">
+  <h1>Data &amp; Sources</h1>
+  <div class="md"><p>Every number published on this site traces to one of five sources. Sources carry a <strong>tier</strong>:</p>
+<div class="tablewrap"><table><thead><tr><th>Tier</th><th>Meaning</th><th>Hosts here</th></tr></thead><tbody><tr><td><strong>T1</strong></td><td>Official NBA property</td><td><code>nba.com</code>, <code>ak-static.cms.nba.com</code></td></tr><tr><td><strong>T2</strong></td><td>Trusted league partner / major rights holder</td><td><code>espn.com</code>, <code>site.api.espn.com</code></td></tr><tr><td><strong>T3</strong></td><td>Other aggregator</td><td><strong>never used for any published number</strong></td></tr></tbody></table></div>
+<p>A row's <code>src</code> field in <code>data/*.json</code> points at an entry in <a href="../data/sources.json"><code>data/sources.json</code></a>.</p>
+<hr>
+<h2>Source register</h2>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Tier</th><th>Source</th><th>URL</th><th>Used for</th></tr></thead><tbody><tr><td>S01</td><td>T1</td><td>NBA.com Schedule</td><td>https://www.nba.com/schedule</td><td>dates, tip times, venues, cities, broadcasters, Cup groups, games-per-day counts</td></tr><tr><td>S02</td><td>T1</td><td>NBA.com game page (schedule rail)</td><td>https://www.nba.com/game/nyk-vs-ind-0022600034</td><td>win-loss records for all 30 teams, Cup group records, Cup group assignment</td></tr><tr><td>S03</td><td>T1</td><td>Official NBA Injury Report 11/13/26 01:00 PM</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</td><td>player status, reason, game assignment, <code>NOT YET SUBMITTED</code></td></tr><tr><td>S04</td><td>T2</td><td>ESPN NBA Standings 2026-27</td><td>https://www.espn.com/nba/standings</td><td>PPG, OPP PPG, DIFF, home/away/div/conf splits, streak, last-10</td></tr><tr><td>S05</td><td>T2</td><td>ESPN NBA Scoreboard</td><td>https://www.espn.com/nba/scoreboard</td><td>independent re-read of the 18 teams playing 13 Nov</td></tr></tbody></table></div>
+<p>Every game also links its own official NBA.com game page, which is the T1 source for that game's existence and both teams' records.</p>
+<h2>Unreachable official endpoints</h2>
+<div class="tablewrap"><table><thead><tr><th>Host</th><th>Attempted</th><th>Result</th><th>Impact</th></tr></thead><tbody><tr><td><code>stats.nba.com</code></td><td><code>leaguestandingsv3</code>, <code>scoreboardv3</code></td><td>connection refused</td><td>no official per-player averages; no official pace / ORTG / DRTG</td></tr><tr><td><code>cdn.nba.com</code></td><td><code>scheduleLeagueV2_1.json</code>, <code>todaysScoreboard_00.json</code></td><td>HTTP 500</td><td>substituted the server-rendered <code>www.nba.com/schedule</code> page</td></tr></tbody></table></div>
+<h2>Cross-verification performed</h2>
+<div class="tablewrap"><table><thead><tr><th>Check</th><th>Method</th><th>Result</th></tr></thead><tbody><tr><td><strong>W‑L, all 30 teams</strong></td><td>T2 (ESPN standings) compared row-by-row with T1 (nba.com game rail covering 13–17 Nov, which includes every team)</td><td><strong>30 / 30 match</strong></td></tr><tr><td><strong>Points accounting identity</strong></td><td>games-weighted <code>mean(PPG)</code> must equal games-weighted <code>mean(OPP PPG)</code></td><td><strong>PASS</strong> — 113.43 vs 113.42 (difference is 1-decimal rounding in the source)</td></tr><tr><td><strong>Games-per-day counts</strong></td><td>row counts vs the "9 Games / 5 Games / 9 Games" headers on nba.com</td><td><strong>PASS</strong> — 9 / 5 / 9 = 23</td></tr><tr><td><strong>Fair-line self-consistency</strong></td><td>Monte-Carlo <code>P(home covers its own originated spread)</code> must be ≈ 0.500</td><td><strong>PASS</strong> — worst deviation 0.0055 across 23 games</td></tr><tr><td><strong>Simulator calibration</strong></td><td>realised margin SD ≈ 14.5, total SD ≈ 20.0, score correlation ≈ 0.31</td><td><strong>PASS</strong></td></tr></tbody></table></div>
+<h3>A note on the unweighted mean</h3>
+<p>Averaging PPG across the 30 teams <strong>without weighting by games played</strong> does not satisfy the accounting identity, because teams have played between 10 and 13 games. The unweighted means are 113.41 vs 113.54 — a 0.13 gap that looks like a data error but is an artefact. All league averages in this build are <strong>games-weighted</strong>.</p>
+<h2>Known gaps in the source data</h2>
+<div class="tablewrap"><table><thead><tr><th>Gap</th><th>Severity</th><th>Consequence</th></tr></thead><tbody><tr><td>No official per-player season feed</td><td><strong>high</strong></td><td>all player props blank (Q‑02)</td></tr><tr><td>No official pace / possessions data</td><td>medium</td><td>ratings are per-game, not per-100-possessions</td></tr><tr><td>No official schedule strength</td><td>medium</td><td>no opponent adjustment in the ratings; only mean-reversion shrinkage</td></tr><tr><td>No 12 Nov results collected</td><td>low</td><td>rest/back-to-back state is unknown for the 13 Nov games and is set to 0</td></tr><tr><td><code>stats.nba.com</code> unreachable</td><td>high</td><td>see Q‑02, Q‑05</td></tr><tr><td>Injury report is a point-in-time snapshot</td><td>medium</td><td>teams re-file later the same day; anything dated 13 Nov must be re-pulled</td></tr></tbody></table></div>
+<h2>Data files</h2>
+<div class="tablewrap"><table><thead><tr><th>File</th><th>Rows</th><th>Tier</th><th>Notes</th></tr></thead><tbody><tr><td><code>data/sources.json</code></td><td>5</td><td>—</td><td>the tier registry itself</td></tr><tr><td><code>data/teams.json</code></td><td>30</td><td>T1 (W‑L) + T2 (splits)</td><td>every field names its source</td></tr><tr><td><code>data/slate.json</code></td><td>23</td><td>T1</td><td>plus per-game official URL and Cup group records</td></tr><tr><td><code>data/injuries.json</code></td><td>91</td><td>T1</td><td>81 player rows + 10 <code>NOT YET SUBMITTED</code> team rows</td></tr><tr><td><code>data/derived.json</code></td><td>—</td><td>—</td><td><strong>all model output</strong>; regenerated by <code>node engine/compute.js</code></td></tr></tbody></table></div></div>
+</main>
+<footer>
+  <p><strong>NBA2</strong> — originated NBA lines, verified data, strategy validation.
+  Data as of <strong>2026-11-13</strong>. Build <code>2026-11-13T23:09:03.304Z</code>.</p>
+  <p>Every data row links to its source. Items we could not confirm from an official source are blank and listed on
+  <a href="flagged.html">Flagged for Review</a>.
+  Nothing on this site is wagering advice.</p>
+</footer>
+<script src="../assets/app.js"></script>
+</body></html>

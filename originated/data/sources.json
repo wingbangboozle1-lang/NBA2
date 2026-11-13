@@ -1,0 +1,65 @@
+{
+  "generated": "2026-11-13",
+  "note": "Every row in data/*.json references one of these ids in its 'src' field. Tier T1 = official NBA property; T2 = trusted league partner / major rights holder; T3 = aggregator (never used for a published number).",
+  "sources": [
+    {
+      "id": "S01",
+      "tier": "T1",
+      "name": "NBA.com — Schedule",
+      "url": "https://www.nba.com/schedule",
+      "retrieved": "2026-11-13",
+      "usedFor": ["slate dates", "tip-off times (ET)", "venues", "cities", "broadcasters", "Emirates NBA Cup group labels", "games-per-day counts"],
+      "notes": "Server-rendered HTML; 'Week 4 (Nov 9 - Nov 15)' section used."
+    },
+    {
+      "id": "S02",
+      "tier": "T1",
+      "name": "NBA.com — Knicks @ Pacers game page (schedule rail carries every team's record)",
+      "url": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+      "retrieved": "2026-11-13",
+      "usedFor": ["win-loss records for all 30 teams", "Emirates NBA Cup group records", "Cup group assignment per game"],
+      "notes": "The page's game rail lists Nov 13-17 games with both teams' records, which covers all 30 teams."
+    },
+    {
+      "id": "S03",
+      "tier": "T1",
+      "name": "Official NBA Injury Report — 11/13/26 01:00 PM (7 pages)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
+      "retrieved": "2026-11-13",
+      "usedFor": ["player status", "reason", "game assignment", "NOT YET SUBMITTED state for 11/14"],
+      "notes": "Published by NBA Referee Operations on ak-static.cms.nba.com."
+    },
+    {
+      "id": "S04",
+      "tier": "T2",
+      "name": "ESPN — NBA Standings 2026-27",
+      "url": "https://www.espn.com/nba/standings",
+      "retrieved": "2026-11-13",
+      "usedFor": ["PPG", "OPP PPG", "point differential", "home/away/div/conf splits", "streak", "last-10"],
+      "notes": "NOT an official NBA property. Used because stats.nba.com and cdn.nba.com returned HTTP errors from the build environment (see COORDINATION.md §7). Every W-L it reports was cross-checked against T1 source S02: 30/30 match."
+    },
+    {
+      "id": "S05",
+      "tier": "T2",
+      "name": "ESPN — NBA Scoreboard (Nov 13 2026)",
+      "url": "https://www.espn.com/nba/scoreboard",
+      "retrieved": "2026-11-13",
+      "usedFor": ["independent re-read of the 18 teams' records playing on Nov 13"],
+      "notes": "Used only as a second read; 18/18 records agreed with T1."
+    }
+  ],
+  "unreachable": [
+    {
+      "host": "stats.nba.com",
+      "attempted": "stats.nba.com/stats/leaguestandingsv3, stats.nba.com/stats/scoreboardv3",
+      "result": "connection refused / blocked from the build environment",
+      "impact": "no official per-team advanced stats (pace, ORtg, DRtg) and no official per-player season averages"
+    },
+    {
+      "host": "cdn.nba.com",
+      "attempted": "cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json, cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+      "result": "HTTP 500 from the build environment",
+      "impact": "used the server-rendered www.nba.com/schedule page instead (S01)"
+    }
+  ]
+}
