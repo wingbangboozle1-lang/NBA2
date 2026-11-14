@@ -2083,3 +2083,56 @@ Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 che
 0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
 verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
 byte-identical across rebuilds.
+
+## Session `arena/ac5fab5c-nba2` — CLAIM (2026-11-14, branch `arena/ac5fab5c-nba2`, base `d510313`)
+
+**Claim pushed before any file edit, per protocol.**
+
+**State read at claim time (verified, not assumed):**
+- `main` @ `d510313` (merge of PR #43, session `arena/ab8743d8-nba2`). All four workflows green on
+  that merge (CI verify ✔, backtest ✔, v2 ✔, publish-parity ✔, Publish GitHub Pages ✔).
+- Open PRs: **#21 only** (`arena/79e87c81-nba2`, opened 2026-11-14 00:52 UTC). It is stale and
+  superseded: PR #38 landed the same window roll-forward. Not touched by this session; left open
+  for its owner.
+- GitHub Pages API re-read this session: `build_type: **legacy**`, `source: main / /`, status
+  `built`. **The live site therefore serves the repo root (the v1 tree), not `site/` (v2)** — the
+  same mismatch session `arena/72f9da58` logged as an owner decision. This session resolves it
+  (see task P-01) because the brief requires one clean published site.
+- No other session has committed since `d510313`.
+
+**File scope claimed by this session (nothing outside it is edited):**
+- `COORDINATION.md` — append-only (this section + completion record).
+- `site/**` — the v2 published tree (landing + category subpages).
+- `data/v2/**`, `nba2/v2/**` — v2 model, official snapshot, site generator, content registers.
+- `audit/session-ac5fab5c/**` — **new** directory, new files only (no overlap with
+  `audit/2026-11-14/**` claimed by the closed session `arena/ab8743d8`).
+- `.github/workflows/pages.yml` — only to make the publish target unambiguous.
+
+**Explicitly NOT edited (owned elsewhere; a change request is logged here instead of an edit):**
+`index.html`, `pages/**`, `flagged.html`, `css/**`, `app.js`, `build_site.py`, `nba2/pipeline/**`,
+`data/site.json`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`data/raw/**` (read-only), `data/raw/ledger/**` (immutable sealed ledgers), `tools/**`,
+`requirements/**`, `suggestions/**`, `scripts/**`, `backtest/**` (I run its checkers, I do not
+rewrite it).
+
+**Rules this session holds itself to:** a value is published only if this session fetched it from
+an official source (nba.com / ak-static.cms.nba.com) or reproduced it from a committed snapshot by
+running the committed code; unconfirmed ⇒ blank + flagged, never inferred; the two sealed ledgers
+are never rewritten.
+
+### Task board — `arena/ac5fab5c-nba2` (P-01…P-12)
+
+| # | Task | Status | File scope |
+|---|---|---|---|
+| P-01 | Resolve the published-tree mismatch: make the live GitHub Pages site the single clean v2 tree, or document why not | claimed | `.github/workflows/pages.yml`, `COORDINATION.md` |
+| P-02 | Line-by-line repo review: run every committed checker/test/lint and paste real output | claimed | `audit/session-ac5fab5c/**` |
+| P-03 | Fresh official re-verification of the 2026-11-14→11-17 slate, standings/records, and the latest injury report | claimed | `audit/session-ac5fab5c/**`, `data/v2/**` |
+| P-04 | Build the strategy lab the brief asks for: single bets, parlays, player-prop combos, each with validation gates | claimed | `nba2/v2/**` (new modules) |
+| P-05 | Measure correlation values (team + prop) with CIs and sample sizes; flag what is not estimable | claimed | `nba2/v2/**` |
+| P-06 | Luck-vs-skill separation: binomial/permutation baseline, walk-forward, gate on out-performance | claimed | `nba2/v2/**` |
+| P-07 | Injury → rotation minutes → production tracking, and game-flow analysis | claimed | `nba2/v2/**` |
+| P-08 | Executive summary page reflecting the current state | claimed | `site/executive-summary.html` |
+| P-09 | Suggestions review section: decision-ready options with rationale/effort/impact, and an explicit review path | claimed | `nba2/v2/content.py`, `site/suggestions.html` |
+| P-10 | Questions register: what is answerable now, what is missing, and how to get it | claimed | `nba2/v2/content.py`, `site/questions.html` |
+| P-11 | Flagged-for-review page: every unverified/blocked value with its source or reason | claimed | `site/flagged.html` |
+| P-12 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` |
