@@ -2897,3 +2897,33 @@ The nightly-ingest failure (F-055) is not repaired here: `.github/workflows/**`,
 #57/#55/#50, and editing them would have caused the conflict this board exists to prevent. It is
 logged as S-48 with the evidence.
 
+## 2026-11-14 — session `arena/e17ff73a-nba2` — audit and correctness fixes
+
+**Scope:** `README.md`, `tools/crosscheck_site.py`, and this append-only record.
+
+**Findings and changes:**
+- Removed CC-BT-03's invalid requirement that ATS hit rate equal straight-up winner accuracy. These are different measures with different denominators: the report records ATS as 105/166 = 0.6325 and straight-up accuracy as 0.6287 over 167 graded games. CC-BT-03 continues to validate each rate against its own numerator/denominator; no performance value was changed.
+- Corrected the README's legacy v1 row count from 1,404 to 1,409 to match the current generated data, as detected by CC-DOC-01.
+
+**Verification:** `python tools/crosscheck_site.py` — 97 checks, 90 pass, 0 fail, 7 informational; `python tools/verify_site.py` — 13 pages/249 rows, source links present and no broken internal links; `python tools/check_links_all.py` — 4,914 internal links all OK; `python -m unittest discover -s nba2/tests -t .` — 64 passed; `python -m unittest discover -s backtest/tests -t .` — 49 passed; `python -m nba2.v2.check` — 0 structural / 0 semantic; `git diff --check` — clean.
+
+**Irregularities:** the crosscheck reports seven informational items, including known data coverage/reporting caveats. CC-HTML-03b notes one em-dash interpretation anomaly; it is not changed in this scoped audit. No external data values were introduced. The backtest report itself cautions that ATS is a self-consistency test against originated lines, not a market test; no odds feed means no ROI/CLV.
+
+---
+
+## 2026-11-14 — session `arena/55e1ea20-nba2` — IN PROGRESS
+
+Branch: `arena/55e1ea20-nba2`, based on `main` @ `b3ed44d8` (HEAD == main at session start).
+Session ID: `arena/55e1ea20-nba2`. This session re-runs an independent line-by-line verification of the
+committed v2 site against official NBA sources, investigates/flags the recorded `repo-wl` ERROR cross-check
+(`module 'nba2.v2.official' has no attribute 'STANDINGS'` in `data/v2/verification.json`), then performs the
+final integration: PR `arena/55e1ea20-nba2` → `main`, merge, confirm GitHub Pages deploy, and record PR link +
+merge result here.
+
+| Claimed task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|
+| P-13 Independent line-by-line re-verification vs official NBA sources (standings, schedule, injury report PDF; spot checks, no inferred values) | in progress | arena/55e1ea20-nba2 | `audit/2026-11-14-55e1ea20/` (new, append-only); read-only spot checks of `site/**`, `data/v2/**`, `nba2/v2/official.py` | nba.com/standings; nba.com/schedule; nba.com/games; ak-static.cms.nba.com injury PDF; official.nba.com injury index |
+| Investigate `repo-wl` ERROR cross-check; fix if a real bug, otherwise keep flagged with source | in progress | arena/55e1ea20-nba2 | `nba2/v2/official.py`, `nba2/v2/build.py`, `data/v2/verification.json`, `site/**` (regenerated only) | nba.com/standings |
+| P-12 Integration: PR → main, merge, confirm Pages deploy, record PR link + merge result here | unclaimed | arena/55e1ea20-nba2 | repo-wide via merge; `COORDINATION.md` (this section, final record) | GitHub PR + Pages deploy run |
+
+Working rule for this session: no committed data value is changed or inferred; anything that fails an official-source check is left blank and flagged on the Flagged for Review page instead. Claims are pushed before any other work.
