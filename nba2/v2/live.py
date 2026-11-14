@@ -377,8 +377,11 @@ def decision_queue() -> dict:
     track_of = {
         "S-21": "site", "S-22": "model", "S-23": "model", "S-24": "site",
         "S-25": "site", "S-26": "model", "S-27": "governance",
+        # session arena/ac5fab5c-nba2 (2026-11-14) — written after the results history was completed,
+        # so several earlier "blocked, no data" entries now have a cheaper answer.
+        "S-29": "data", "S-30": "data", "S-31": "governance", "S-32": "model", "S-33": "parlays",
     }
-    blocking = {"S-25", "S-26"}
+    blocking = {"S-25", "S-26", "S-29", "S-30", "S-31"}
     what_changes = {
         "S-21": "A new page exists, generated from dated official captures, and it fails the build if a capture is missing.",
         "S-22": "Every hit-rate table renders both 'signal rows' and 'distinct games'; a rate without its n is a lint error.",
@@ -387,6 +390,16 @@ def decision_queue() -> dict:
         "S-25": "The Pages workflow cannot publish a build whose newest capture is older than a per-table limit.",
         "S-26": "S2 selections name the side that takes the points, matching the file's own spread label.",
         "S-27": "The unreachable v1 tree moves under archive/ with dated notes; one generator remains.",
+        "S-29": "Each night's finals are appended automatically, and a mismatch against the standings-implied "
+                "game count fails the run instead of silently publishing a stale window.",
+        "S-30": "Player-level correlations become measurable, the props page can price, the injuries page can "
+                "fill minutes and production, and strategy S7 generates its first bet.",
+        "S-31": "One site is live and the other tree is archived with a dated note, so no reader can reach a "
+                "second set of numbers.",
+        "S-32": "Each strategy gets its own required sample, derived from its own variance instead of one round "
+                "number applied to all seven.",
+        "S-33": "Every parlay carries a price computed from the measured correlation, with the naive product and "
+                "the interval printed on the same row.",
     }
     evidence = {
         "S-21": "18 of 30 published team records no longer match today's official standings",
@@ -396,6 +409,16 @@ def decision_queue() -> dict:
         "S-25": "every page prints an as-of date and no build fails when it is old",
         "S-26": "picks.json prints 'POR +6.0' where its own label reads 'POR -6.0'",
         "S-27": "pages/*.html return 404 on the live site while site/data/teams.json returns 200 — one tree is served",
+        "S-29": "the standings were a pre-finals snapshot for a full day and nothing on the site could detect it; "
+                "the 183-game log was 28 games short and stayed that way for a day",
+        "S-30": "3 of 7 correlations on the lab page are BLOCKED and all three are player-level; S7 has 0 bets",
+        "S-31": "the Pages setting is 'legacy' (root of main) while pages.yml publishes site/ — the two trees "
+                "disagree and both are reachable",
+        "S-32": "G7 holds all seven strategies to the same 300 bets, but their per-bet variances differ sharply: "
+                "S1 has 167 settled bets and its interval already excludes chance, while S5 sits at 167 with an "
+                "interval that does not",
+        "S-33": "rho = +0.0393 with a 95% CI of -0.113 to +0.190; across that band a two-leg price moves by "
+                "several percent, which is the whole reason the price is withheld today",
     }
     items = []
     for r in reg:
@@ -410,7 +433,13 @@ def decision_queue() -> dict:
             "changes": what_changes.get(sid, r["proposal"]),
             "effort": r["effort"],
             "status": r["status"],
-            "source": CAPTURES["standings"] if sid != "S-27" else "https://github.com/wingbangboozle1-lang/NBA2",
+            "source": (
+                "https://github.com/wingbangboozle1-lang/NBA2"
+                if sid in ("S-27", "S-31") else
+                "https://www.nba.com/stats/players/traditional" if sid == "S-30" else
+                "https://www.nba.com/games?date=2026-11-13" if sid == "S-29" else
+                CAPTURES["standings"]
+            ),
             "evidence": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json",
             "blocking": sid in blocking,
         })
