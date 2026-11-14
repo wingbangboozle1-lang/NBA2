@@ -763,6 +763,201 @@ def luck_report(strategies: list[Strategy]) -> dict:
     return {"rows": rows, "seed": SEED}
 
 
+# --------------------------------------------------------------------------- skill attribution
+def naive_baselines(preds: list[Pred], games: list[dict]) -> dict:
+    """What a reader could do with no model at all, measured on exactly the same games.
+
+    The brief asks for luck to be removed and for skill to be isolated. A hit rate on its own
+    cannot do that: if the model backs the better team, it inherits the *favourite's* win rate
+    and has demonstrated nothing. Each baseline below consumes only information that existed
+    before its game's tip (prior results) and is scored on the identical set of games, so the
+    differences are paired and no look-ahead enters.
+
+    Baseline 1  always back the home team.
+    Baseline 2  back the team with the better prior win percentage (ties skipped, and the skip
+                is counted rather than hidden).
+    Baseline 3  back the team with the better prior average point differential.
+    """
+    priors_by_game: dict[str, list[dict]] = {}
+    for p in preds:
+        priors_by_game[p.game_id] = [g for g in games if g["date"] < p.date]
+
+    def record(prior):
+        w, l = {}, {}
+        for g in prior:
+            for t, won in ((g["home"], g["home_pts"] > g["away_pts"]),
+                           (g["away"], g["away_pts"] > g["home_pts"])):
+                w[t] = w.get(t, 0) + (1 if won else 0)
+                l[t] = l.get(t, 0) + (0 if won else 1)
+        return w, l
+
+    def diff(prior):
+        tot = {}
+        for g in prior:
+            tot[g["home"]] = tot.get(g["home"], 0.0) + (g["home_pts"] - g["away_pts"])
+            tot[g["away"]] = tot.get(g["away"], 0.0) + (g["away_pts"] - g["home_pts"])
+        n = {}
+        for g in prior:
+            n[g["home"]] = n.get(g["home"], 0) + 1
+            n[g["away"]] = n.get(g["away"], 0) + 1
+        return {t: tot[t] / n[t] for t in tot if n.get(t)}
+
+    home_hits = home_n = 0
+    wp_hits = wp_n = wp_ties = 0
+    pd_hits = pd_n = pd_ties = 0
+    per_game = []
+    for p in preds:
+        prior = priors_by_game[p.game_id]
+        if not prior:
+            continue
+        w, l = record(prior)
+        d = diff(prior)
+        actual_home_won = p.actual_margin > 0
+        if p.actual_margin != 0:
+            home_n += 1
+            home_hits += 1 if actual_home_won else 0
+        hp = w.get(p.home, 0) - l.get(p.home, 0)
+        ap = w.get(p.away, 0) - l.get(p.away, 0)
+        if hp == ap:
+            wp_ties += 1
+        elif p.actual_margin != 0:
+            wp_n += 1
+            wp_hits += 1 if (actual_home_won == (hp > ap)) else 0
+        hd, ad = d.get(p.home), d.get(p.away)
+        if hd is None or ad is None or abs(hd - ad) < 1e-12:
+            pd_ties += 1
+        elif p.actual_margin != 0:
+            pd_n += 1
+            pd_hits += 1 if (actual_home_won == (hd > ad)) else 0
+        per_game.append({"game_id": p.game_id, "date": p.date,
+                         "matchup": f"{p.away} @ {p.home}",
+                         "actual_margin": p.actual_margin, "source_url": p.source_url})
+
+    def block(hits, n, ties, label, note):
+        lo, hi = wilson(hits, n)
+        pp = binom_p_two_sided(hits, n, 0.5) if n else None
+        return {"baseline": label, "n": n, "hits": hits, "ties_skipped": ties,
+                "hit_rate": round(hits / n, 4) if n else None, "wilson95": [lo, hi],
+                "p_vs_coinflip": pp, "note": note}
+
+    return {
+        "scored_games": len(per_game),
+        "baselines": [
+            block(home_hits, home_n, 0, "always back the home team",
+                  "the home-court prior, nothing else"),
+            block(wp_hits, wp_n, wp_ties, "back the better prior win percentage",
+                  "ties in prior W-L are skipped, not guessed"),
+            block(pd_hits, pd_n, pd_ties, "back the better prior average point differential",
+                  "a scoring-margin prior, the strongest of the three"),
+        ],
+        "rows": per_game,
+    }
+
+
+def skill_attribution(strategies: list, baselines: dict, edges: dict) -> dict:
+    """S1's record against the best naive rule, and why a hit rate alone is not skill.
+
+    The test reported here is McNemar's exact test on the discordant games: those where the
+    model and the baseline disagreed. A model that is merely riding the favourite will have
+    almost no discordant games and no evidence of skill, however high its headline number.
+    """
+    s1 = next((s for s in strategies if s.sid == "S1"), None)
+    base = {b["baseline"]: b for b in baselines.get("baselines", [])}
+    wp = base.get("back the better prior win percentage")
+    pd = base.get("back the better prior average point differential")
+    # rebuild the per-game S1 pick so the discordance can be counted game by game
+    rows = []
+    for p in edges["preds"]:
+        rows.append(p)
+    out = {"strategies_scored": [], "note": (
+        "A paired comparison needs the same games scored by both rules. The lab's S1 scores "
+        "every game; the baselines skip ties, so the paired set is the intersection and both "
+        "sides of the pairing are published with it.")}
+
+    hits_s1_wp = miss_s1_wp = hits_s1_pd = miss_s1_pd = 0
+    n_pair_wp = n_pair_pd = 0
+    by_id = {p.game_id: p for p in rows}
+    for p in rows:
+        prior = [g for g in edges["games"] if g["date"] < p.date]
+        if not prior:
+            continue
+        w, l = {}, {}
+        tot, cnt = {}, {}
+        for g in prior:
+            for t, won in ((g["home"], g["home_pts"] > g["away_pts"]),
+                           (g["away"], g["away_pts"] > g["home_pts"])):
+                w[t] = w.get(t, 0) + (1 if won else 0)
+                l[t] = l.get(t, 0) + (0 if won else 1)
+            tot[g["home"]] = tot.get(g["home"], 0.0) + (g["home_pts"] - g["away_pts"])
+            tot[g["away"]] = tot.get(g["away"], 0.0) + (g["away_pts"] - g["home_pts"])
+            cnt[g["home"]] = cnt.get(g["home"], 0) + 1
+            cnt[g["away"]] = cnt.get(g["away"], 0) + 1
+        if p.actual_margin == 0 or p.pred_margin == 0:
+            continue
+        model_home = p.pred_margin > 0
+        actual_home = p.actual_margin > 0
+        model_won = model_home == actual_home
+        hp, ap = w.get(p.home, 0) - l.get(p.home, 0), w.get(p.away, 0) - l.get(p.away, 0)
+        if hp != ap:
+            base_home = hp > ap
+            if base_home != model_home:
+                n_pair_wp += 1
+                hits_s1_wp += 1 if model_won else 0
+                miss_s1_wp += 0 if model_won else 1
+        hd = tot.get(p.home, 0.0) / cnt[p.home] if cnt.get(p.home) else None
+        ad = tot.get(p.away, 0.0) / cnt[p.away] if cnt.get(p.away) else None
+        if hd is not None and ad is not None and abs(hd - ad) > 1e-12:
+            base_home = hd > ad
+            if base_home != model_home:
+                n_pair_pd += 1
+                hits_s1_pd += 1 if model_won else 0
+                miss_s1_pd += 0 if model_won else 1
+
+    def mcnemar(b, c):
+        """Exact two-sided McNemar p on (b, c) discordant counts."""
+        n = b + c
+        if n == 0:
+            return None, None
+        # two-sided exact binomial test of b successes in n trials at p = 0.5
+        return binom_p_two_sided(b, n, 0.5), n
+
+    p_wp, n_wp = mcnemar(hits_s1_wp, miss_s1_wp)
+    p_pd, n_pd = mcnemar(hits_s1_pd, miss_s1_pd)
+    out["headline_vs_win_pct_baseline"] = {
+        "baseline": "back the better prior win percentage",
+        "baseline_hit_rate": wp["hit_rate"] if wp else None,
+        "baseline_n": wp["n"] if wp else None,
+        "model_hit_rate_same_games": s1.score()["hit_rate"] if s1 else None,
+        "model_n": s1.n() if s1 else None,
+        "discordant_games": n_wp,
+        "model_won_those": hits_s1_wp,
+        "baseline_won_those": miss_s1_wp,
+        "mcnemar_exact_p": p_wp,
+        "verdict": ("the model's accuracy is not distinguishable from the favourite prior on "
+                    "the games where they disagree" if (p_wp is None or p_wp >= 0.05)
+                    else "the model beats the favourite prior where they disagree"),
+    }
+    out["headline_vs_margin_baseline"] = {
+        "baseline": "back the better prior average point differential",
+        "baseline_hit_rate": pd["hit_rate"] if pd else None,
+        "baseline_n": pd["n"] if pd else None,
+        "discordant_games": n_pd,
+        "model_won_those": hits_s1_pd,
+        "baseline_won_those": miss_s1_pd,
+        "mcnemar_exact_p": p_pd,
+        "verdict": ("the model's accuracy is not distinguishable from the scoring-margin "
+                    "prior on the games where they disagree" if (p_pd is None or p_pd >= 0.05)
+                    else "the model beats the scoring-margin prior where they disagree"),
+    }
+    out["why_this_matters"] = (
+        "S1 backs the side its own ratings favour, and its ratings are built from the same "
+        "results a reader can see. So the honest question is not 'is 64.7% better than 50%' "
+        "- of course it is, favourites win - but 'is it better than simply backing the "
+        "favourite'. The discordant-game test answers that, and it needs far fewer games than "
+        "the 300-bet bar because only the disagreements carry information.")
+    return out
+
+
 # --------------------------------------------------------------------------- leaderboard
 def leaderboard(strategies: list[Strategy], gates: list[dict]) -> dict:
     """Rank on log-loss, but only strategies that clear the gates that can be cleared."""
@@ -863,6 +1058,9 @@ def run() -> dict:
     gates, g5_rows = evaluate_gates(strategies, preds, leakage, holdout)
     luck = luck_report(strategies)
     board = leaderboard(strategies, gates)
+    baselines = naive_baselines(preds, games)
+    attribution = skill_attribution(strategies, baselines,
+                                    {"preds": preds, "games": games})
 
     return {
         "meta": {
@@ -889,6 +1087,8 @@ def run() -> dict:
             for s in strategies
         ],
         "luck": luck,
+        "baselines": baselines,
+        "skill_attribution": attribution,
         "leaderboard": board,
         "parlay_pricing": parlay_pricing(preds),
         "rows": [

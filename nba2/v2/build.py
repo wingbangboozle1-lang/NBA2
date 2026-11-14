@@ -32,6 +32,7 @@ NAV = [
     ("strategies.html", "Strategies &amp; leaderboard"),
     ("backtest.html", "Backtest &amp; skill"),
     ("strategy-lab.html", "Strategy lab"),
+    ("skill-attribution.html", "Skill vs luck"),
     ("correlations.html", "Correlations &amp; parlays"),
     ("props.html", "Player props"),
     ("injuries.html", "Injuries &amp; rotation"),
@@ -42,6 +43,7 @@ NAV = [
     ("questions.html", "Open questions"),
     ("suggestions.html", "Suggestions queue"),
     ("decision-queue.html", "Decision queue"),
+    ("decisions-needed.html", "Decisions needed"),
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
@@ -281,6 +283,27 @@ line and a lean; no game gets a stake, because no market price is connected to b
   <div class="kpi"><b>{blocked}</b><small>inputs blocked</small></div>
 </div>
 
+<div class="note bad"><b>2026-11-14, this session: the model's accuracy is not yet separable from
+"back the better team".</b> A paired test on the 33 games where our model and that naive rule disagreed found the
+naive rule right 20 times and the model 13 (exact p = 0.2962). The headline
+<a href="backtest.html">walk-forward accuracy</a> is high because favourites win, not because the model adds
+information. That is published as a finding, with its arithmetic, on
+<a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
+
+<div class="note ok"><b>Verified against the live official pages this session.</b> All 30 club records re-read from
+<a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30 identical. All 27
+window games re-checked field by field (date, tip time, away, home, game id, venue) against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a>: 27/27
+identical. Both checks are reproducible from <code>audit/2026-11-14-766d/</code>.</div>
+
+<div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
+The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
+later releases up to <b>01:30 PM ET</b>, and a player-by-player diff shows <b>4 status changes</b> and
+<b>24 additional rows</b> (Cleveland and Chicago filed after 04:30). None of it changes an originated line, because
+the model is availability-blind — but a reader must not treat the table as current.
+See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the raw capture in
+<code>audit/2026-11-14-766d/</code>.</div>
+
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
 lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
@@ -294,6 +317,8 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
   <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
+  <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
@@ -402,6 +427,29 @@ published, because no signal in the file carries a price.</div>
 ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
+<h2>0b. What this session (arena/766d0269-nba2) added, 2026-11-14 evening</h2>
+<div class="note ok"><b>Live re-verification passed on every row that was checked.</b> The 30 club records on this
+site were re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and matched exactly (30/30). The 27 window games were re-checked field by field against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a> — date,
+tip time, away, home, game id and venue — and matched on every field (27/27). The scripts and the raw captures are in
+<code>audit/2026-11-14-766d/</code> so the check can be repeated without trusting this page.</div>
+<div class="note bad"><b>A published number was wrong, and is now fixed with a test that fails if it returns.</b> The
+picks table priced a <em>spread</em> lean with the <em>moneyline</em> probability. Our spread is the median of our own
+distribution, so the probability of covering it is ~0.50 on every game, while the probability of winning the game
+ranges from 0.07 to 0.95. Pricing one with the other produced break-even triggers like −1246 — a price no sportsbook
+offers on a spread. Both probabilities and both triggers are now published side by side, and four regression tests
+pin the arithmetic.</div>
+<div class="note warn"><b>The skill claim does not survive its own test — and that is the most useful result here.</b>
+The model's 64.7% accuracy on 167 graded games is not distinguishable from the naive rule "back the team with the
+better record", which scored 70.3% on the same games. On the 33 games where they disagreed, the naive rule won 20 and
+the model 13 (exact McNemar p = 0.2962). Full arithmetic on
+<a href="skill-attribution.html">Skill vs luck</a>. The consequence for decisions is direct: any promotion rule that
+accepts accuracy alone would promote a strategy that has demonstrated nothing.</div>
+<div class="note"><b>Eight decisions are now listed in one place</b>, each with what we have, what is missing, how the
+gap could be closed and who must decide: <a href="decisions-needed.html">Decisions needed</a>. Three of them are
+blocked on data this repository does not hold, and the routes to obtain it are named.</div>
+
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
@@ -426,6 +474,10 @@ published on the Flagged page rather than fixed silently in someone else's file.
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Club records re-read live on 2026-11-14 19:40Z (this session)", "30 / 30 identical", "field-by-field comparison against nba.com/standings; script and capture committed", srclink("https://www.nba.com/standings")]},
+        {"cells": ["Window games re-checked live on 2026-11-14 19:45Z (this session)", "27 / 27 identical", "date, tip time, away, home, game id, venue; script and capture committed", srclink("https://www.nba.com/schedule?date=2026-11-14")]},
+        {"cells": ["Model accuracy vs the naive 'better record' rule", f"{100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['model_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}% vs {100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['baseline_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}%", f"on the {lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']} discordant games; exact McNemar p = {lab['skill_attribution']['headline_vs_win_pct_baseline']['mcnemar_exact_p']}", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Decisions that must be answered before further build", "8", "each with owner, evidence and discovery path — see Decisions needed", srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/DECISIONS.json")]},
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
@@ -465,6 +517,13 @@ that the edge is not a coin flip that happened to land, and this repository has 
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
 <em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
+<div class="note bad"><b>Two markets, two probabilities — read the right trigger.</b> The lean is a
+<em>spread</em> at our own number, so the probability that prices it is the probability of <em>covering</em> that
+number (<b>P(cover)</b>), not the probability of winning the game (<b>P(win)</b>). Our line is the median of our own
+distribution, so P(cover) is close to 0.50 on every game by construction while P(win) ranges widely. Pricing a
+spread bet off P(win) — as an earlier build of this page did — produces a trigger of, say, −1246 on a moneyline-shaped
+probability, which no sportsbook offers on a spread. Both numbers are now printed, each with its own break-even
+trigger, so the arithmetic can be checked against whichever market is actually being considered.</div>
 <div class="note bad"><b>0 of 27 games are staked.</b> Not because the model failed, but because gate G6 (no market
 price) and gate G7 (167 settled bets against a 300-bet bar) both fail. Publishing a stake anyway is the one thing this
 build refuses to do.</div>
@@ -475,17 +534,19 @@ build refuses to do.</div>
         rows.append({"id": r["src"] + r["matchup"], "cells": [
             esc(r["date"]), esc(r["time_et"]), esc(r["matchup"]),
             badge(r["grade"], {"A": "ok", "B": "warn", "C": "bad"}[r["grade"]]),
-            esc(r["our_spread"]), esc(r["our_total"]), esc(r["p_home"]),
-            "<b>" + esc(r["lean"]) + "</b>", esc(r["lean_prob"]),
+            esc(r["our_spread"]), esc(r["our_total"]),
+            "<b>" + esc(r["lean"]) + "</b>", esc(r["lean_prob_ml"]), esc(r["lean_prob_cover"]),
             esc(r["trigger_decimal"]), "<b>" + esc(r["trigger_american"]) + "</b>",
+            esc(r["trigger_ml_decimal"]), esc(r["trigger_ml_american"]),
             esc(r["stake"]), esc(r["gates_passed"]), esc(r["blocked_by"]),
             srclink(f"https://www.nba.com/game/{r['matchup'].split(' @ ')[0].lower()}"
                     f"-vs-{r['matchup'].split(' @ ')[1].lower()}-{r['date']}"),
         ]})
-    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total", "P(home)",
-                   "Lean", "P(lean)", "Trigger dec", "Trigger US", "Stake", "Gates", "Blocked by", "Game page"],
-                  rows, "All 27 games: originated line, lean, trigger price and gate status",
-                  num_cols=(4, 5, 6, 8, 9), idcol=None)
+    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total",
+                   "Lean", "P(lean) win", "P(lean) cover", "Spread trigger dec", "Spread trigger US",
+                   "ML trigger dec", "ML trigger US", "Stake", "Gates", "Blocked by", "Game page"],
+                  rows, "All 27 games: originated line, lean, both probabilities and both trigger prices, with gate status",
+                  num_cols=(4, 5, 7, 8, 9), idcol=None)
 
     body += """<h2>Why the stake is withheld</h2>
 <p class="lede">Each gate below is evaluated from data, not asserted. The verdict column is what the build
@@ -911,6 +972,176 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 """
     built["strategy-lab.html"] = page("strategy-lab.html", "Strategy lab", body, "strategy-lab.html")
 
+    # ------------------------------------------------------------------ skill vs luck
+    sb = lab["baselines"]
+    at = lab["skill_attribution"]
+    wp = at["headline_vs_win_pct_baseline"]
+    pd_ = at["headline_vs_margin_baseline"]
+    s1 = next((r for r in lab["strategies"] if r["sid"] == "S1"), {})
+    body = f"""<h1>Skill vs luck — is any of this better than backing the favourite?</h1>
+<p class="lede">Every accuracy figure elsewhere on this site answers the wrong question. "Our side hit
+{100 * s1.get('hit_rate', 0):.1f}% of {s1.get('n', 0)} games" sounds like skill until you ask whether the side we picked
+was simply the better team. This page answers the right question with a paired test on exactly the games
+where our model and the naive rule disagree — because those are the only games that carry any information
+about skill at all.</p>
+
+<div class="note bad"><b>The result, before the detail.</b> Backing the team with the better prior win record
+scored <b>{100 * (wp['baseline_hit_rate'] or 0):.1f}%</b> on {wp['baseline_n']} of the same
+{wp['model_n']} games. Our model scored <b>{100 * (wp['model_hit_rate_same_games'] or 0):.1f}%</b>.
+On the <b>{wp['discordant_games']}</b> games where the two disagreed, the naive rule was right
+<b>{wp['baseline_won_those']}</b> times and the model <b>{wp['model_won_those']}</b> times
+(exact McNemar p = <b>{wp['mcnemar_exact_p']}</b>). The model has therefore demonstrated <b>no skill that is
+separable from the favourite's win rate</b> at this sample size. That is a finding, not a bug, and it is exactly
+what the brief's "remove luck from the equation" step is for.</div>
+
+<h2>1. The naive baselines, measured on the same games</h2>
+<p class="lede">Each baseline consumes only information that existed before its game tipped — prior results, nothing
+else — and is scored on the identical set of regular-season games the walk-forward model scored. Ties are skipped and
+the skipped count is published rather than hidden.</p>
+"""
+    brows = []
+    for b in sb["baselines"]:
+        lo, hi = (b["wilson95"] + [None, None])[:2]
+        brows.append({"cells": [
+            esc(b["baseline"]), esc(b["n"]), esc(b["hits"]), esc(b["ties_skipped"]),
+            f"<b>{100 * b['hit_rate']:.1f}%</b>" if b["hit_rate"] else "—",
+            f"{100 * lo:.1f}% – {100 * hi:.1f}%" if lo is not None else "—",
+            esc(b["p_vs_coinflip"]), esc(b["note"]), srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["Baseline rule", "Games scored", "Correct", "Ties skipped", "Hit rate",
+                   "Wilson 95% CI", "p vs coin flip", "What it uses", "Source"],
+                  brows, "Naive baselines for winner selection, walk-forward, same games",
+                  num_cols=(1, 2, 3, 4, 6))
+
+    body += f"""<h2>2. The paired test — McNemar on the disagreements</h2>
+<p class="lede">A paired comparison does not need 300 games, because only the <em>discordant</em> games
+carry information: if our model and the naive rule pick the same side, that game tells us nothing about which is
+better. McNemar's exact test asks whether the split of the discordant games is consistent with a coin flip.</p>
+"""
+    prow = []
+    for h in (wp, pd_):
+        prow.append({"cells": [
+            esc(h["baseline"]),
+            f"{100 * h['baseline_hit_rate']:.1f}% ({h['baseline_n']})" if h["baseline_hit_rate"] else "—",
+            esc(h["discordant_games"]), esc(h["model_won_those"]), esc(h["baseline_won_those"]),
+            f"<b>{h['mcnemar_exact_p']}</b>",
+            badge("NO SEPARABLE SKILL" if (h["mcnemar_exact_p"] or 1) >= 0.05 else "SKILL DETECTED",
+                  "bad" if (h["mcnemar_exact_p"] or 1) >= 0.05 else "ok"),
+            esc(h["verdict"]), srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["Baseline", "Baseline rate (n)", "Discordant games", "Model right", "Baseline right",
+                   "Exact p", "Reading", "Verdict", "Source"],
+                  prow, "Paired comparison on the games where model and baseline disagree",
+                  num_cols=(2, 3, 4, 5))
+    body += f"""<div class="note"><b>{esc(at['why_this_matters'])}</b></div>
+
+<h2>3. Why the headline hit rate is high, and why that is not the same as skill</h2>
+<p>The model's side is the side its own ratings favour, and those ratings are built from the same box scores a
+reader can look at. Naturally it picks the better team most of the time, and naturally the better team wins more than
+half the time. The high hit rate is <em>inherited</em> from the favourite's base rate; the discordant test above
+subtracts that inheritance and finds nothing left over.</p>
+<p>This is why the site refuses to promote a strategy on accuracy alone. Two further measurements tell the same
+story:</p>
+<ul>
+  <li><b>Sample size.</b> The largest strategy has {s1.get('n', 0)} settled bets against a 300-bet promotion bar
+  (gate G7).</li>
+  <li><b>Confidence intervals.</b> Every rate on this site is published with a Wilson interval, and every interval
+  here is wide enough to contain the base rate. A wide interval is not a verdict; it is the honest absence of one.</li>
+</ul>
+
+<h2>4. What measurement would settle it</h2>
+<p class="lede">The route out is arithmetic, not opinion: more discordant games, and a market price to test against.</p>
+"""
+    roads = [
+        ("More graded games", "The discordant sample grows roughly linearly with graded games — about one discordant game in five. To take a 13-of-33 split to significance at 5% needs on the order of 100+ discordant games, i.e. roughly 500 graded games.",
+         "No new data source needed; the nightly settlement already grades every finished game.", O.SOURCES["games"][1]),
+        ("A market price", "Skill in betting is measured against the line, not against a naive rule. With a closing price, the question becomes the right one: does our number beat the market's?",
+         "Requires a licensed odds feed. Blocked; see the decision register.", O.BLOCKED["odds"][2]),
+        ("Player-level data", "Props, prop combos and per-player correlations cannot be measured at all without per-game player box scores.",
+         "Requires a per-game player feed. Blocked.", O.BLOCKED["player_box"][2]),
+    ]
+    rrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), esc(c), srclink(d)]} for (a, b, c, d) in roads]
+    body += table(["Path", "What it would take", "Status", "Source"], rrows,
+                  "What measurement would turn this from an open question into an answered one")
+    body += """
+<div class="note info"><b>What this page does not say.</b> It does not say the model is worse than a naive rule —
+the point estimate is that the naive rule is ahead on the disagreement set, with a p of 0.30 on 33 games, which is
+not evidence either way. It says the model has not yet <em>earned</em> the claim, and that publishing the claim without
+this test would be the hallucination the brief forbids.</div>
+"""
+    built["skill-attribution.html"] = page("skill-attribution.html", "Skill vs luck", body, "skill-attribution.html")
+
+    # ------------------------------------------------------------------ decisions needed
+    dec = json.loads((ROOT / "requirements" / "DECISIONS.json").read_text())
+    body = f"""<h1>Decisions needed before anything else is built</h1>
+<p class="lede">{esc(dec['source_note'])}</p>
+<div class="note"><b>How to use this page.</b> Read the <em>What we have</em> column first — it is the
+measurement, not an opinion. The <em>What is missing</em> column is the specific gap. The <em>How to close it</em>
+column is the route. A decision can be recorded against any row without touching code; until one is, the row stands
+as <b>OPEN</b> and no work depending on it should start.</div>
+"""
+    drows = []
+    for d in dec["decisions"]:
+        drows.append({"id": d["id"], "cells": [
+            esc(d["id"]),
+            badge(d["severity"], {"BLOCKING": "bad", "HIGH": "warn", "MEDIUM": "info"}.get(d["severity"], "info")),
+            esc(d["topic"]),
+            "<b>" + esc(d["question"]) + "</b>",
+            esc(d["have"]), esc(d["missing"]), esc(d["how_to_find_out"]),
+            esc(d["impact"]), esc(d["blocks"]), esc(d["who_decides"]),
+            badge("OPEN", "warn"),
+            srclink(d["source"]),
+        ]})
+    body += table(["ID", "Severity", "Topic", "Question", "What we have", "What is missing",
+                   "How to close it", "What it decides", "Blocks", "Who decides", "Status", "Source"],
+                  drows, "Decision register — what must be answered before the next build step",
+                  idcol="id")
+    body += """
+<h2>What is missing, and how to go and get it</h2>
+<p class="lede">Three of the eight decisions above are blocked on the same thing: data this repository does not
+hold. This is the shortest honest version of that list.</p>
+"""
+    missing = [
+        ("Licensed odds, opening and closing",
+         "Every edge, CLV and ROI figure on this site; gates G6 and G7",
+         "A vendor contract plus storage rights. Until it exists, no price is published and none is estimated.",
+         "D-01", O.BLOCKED["odds"][2]),
+        ("Per-game player box scores with minutes",
+         "Player props, prop combos, same-player correlations, the production half of injury impact",
+         "A per-game player feed. Until it exists, those tables stay blank — a blank is published, not a guess.",
+         "D-02", O.BLOCKED["player_box"][2]),
+        ("A pre-registered evidence rule",
+         "Any statement that a strategy has skill",
+         "Decide the test and the threshold BEFORE the next games are graded. The test is already written.",
+         "D-05", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py"),
+        ("Play-by-play",
+         "In-game flow analysis, if that is what the brief meant",
+         "A play-by-play feed, or a decision that schedule-spot analysis is the intended scope.",
+         "D-08", O.SOURCES["games"][1]),
+        ("A named reward and submission model",
+         "Whether the leaderboard needs real anti-gaming controls",
+         "An owner answer to three questions: who submits, is the reward money, in which jurisdiction.",
+         "D-04", O.SOURCES["games"][1]),
+    ]
+    mrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), esc(c), esc(d), srclink(e)]}
+             for (a, b, c, d, e) in missing]
+    body += table(["What is missing", "What it blocks", "How to obtain it", "Decision it closes", "Source"],
+                  mrows, "The gap list: what we do not have and what it would take to get it")
+    body += """
+<h2>What we already have, so nobody re-decides it</h2>
+<div class="cards">
+  <div class="card"><h4>The whole 3-day slate</h4><p>27 games, 2026-11-14 → 11-17, each verified field by field
+  against the official NBA.com schedule this session (27/27 identical).</p></div>
+  <div class="card"><h4>Official team records</h4><p>All 30 clubs re-read from the official standings this session
+  and matching the published table exactly (30/30).</p></div>
+  <div class="card"><h4>An originated line for every game</h4><p>Spread, total, win probability and both break-even
+  triggers, from two independent estimators, with their disagreement published beside every number.</p></div>
+  <div class="card"><h4>An honest skill measurement</h4><p>A paired test against naive rules, which found no
+  separable skill at 167 games. That is a result, and it is published rather than buried.</p></div>
+</div>
+"""
+    built["decisions-needed.html"] = page("decisions-needed.html", "Decisions needed", body, "decisions-needed.html")
+
     # ------------------------------------------------------------------ correlations
     body = """<h1>Correlations &amp; parlay pricing</h1>
 <p class="lede">The number that decides whether a parlay is priced correctly is the correlation between its legs.
@@ -994,6 +1225,19 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
     built["props.html"] = page("props.html", "Player props", body, "props.html")
 
     # ------------------------------------------------------------------ injuries
+    movement = [
+        ("Brown Jr., Mikel", "Brooklyn Nets", "Questionable", "Probable"),
+        ("Christie, Max", "Dallas Mavericks", "Questionable", "Doubtful"),
+        ("Harkless, Elijah", "Detroit Pistons", "Questionable", "Available"),
+        ("Jones, Isaac", "Detroit Pistons", "Questionable", "Available"),
+    ]
+    _mrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), badge(c, "warn"),
+                         badge(d, "ok" if d == "Available" else "bad"),
+                         srclink("https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf")]}
+              for (a, b, c, d) in movement]
+    movement_block = table(["Player", "Team", "04:30 AM ET (published here)",
+                            "01:30 PM ET (official, later)", "Source"], _mrows,
+                           "Every status that moved between the published release and the 01:30 PM ET release")
     inj_rows, counts = R.t_injuries(teams)
     body = f"""<h1>Injuries &amp; rotation</h1>
 <p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/14/26 04:30 AM ET report, plus the
@@ -1001,13 +1245,19 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> The 11/14 05:30 AM ET report returned
-AccessDenied at retrieval time, so the freshest reachable release is 04:30 AM ET. More importantly: a team files for a
-game by 5 p.m. local <em>the day before</em>, so for the 11/15, 11/16 and 11/17 games the deadline has not yet passed and
-no official row exists to read. Those cells are blank by policy, never estimated. Nothing was filled in from an
-unavailable or non-existent file.</div>
+<div class="note bad"><b>This table is six releases stale. A fresher official release is now published, and it
+moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
+<b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
+player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
+{movement_block}
+<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
+the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
+blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
+it, which is why 04:30 AM ET was that build's ceiling; the 01:30 PM release is reachable now, as the capture above
+shows.)</div>
+
+<h2>Per-team exposure</h2>
 """
-    body += "<h2>Per-team exposure</h2>"
     rows = []
     for r in R.t_rotation(counts):
         rows.append({"cells": [esc(r["team"]), esc(r["out"]), esc(r["doubtful"]), esc(r["questionable"]),
@@ -1331,6 +1581,42 @@ dependency. The three highest-ranked recommended items are all data connections,
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
 </ul>"""
+    # The register file (suggestions/SUGGESTIONS.json) is what an owner reviews and decides on;
+    # the page renders it so the decision can be made against the record rather than the prose.
+    reg = json.loads((ROOT / "suggestions" / "SUGGESTIONS.json").read_text())
+    from collections import Counter as _C
+    _states = _C(x.get("status", "?") for x in reg["suggestions"])
+    body += f"""<h2>Review register — 2026-11-14 ({len(reg['suggestions'])} items)</h2>
+<p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
+change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
+below has been applied on the owner's behalf. The machine-readable copy is
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json">suggestions/SUGGESTIONS.json</a>,
+which is what should be edited when a decision is recorded.</p>
+"""
+    body += table(["State", "Items", "Source"],
+                  [[esc(k), esc(v), srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json")]
+                   for k, v in sorted(_states.items())],
+                  "Decision-state totals for the review register")
+    rrows = []
+    for x in reg["suggestions"]:
+        st = x.get("status", "")
+        kind = "ok" if st.startswith("implemented") or st.startswith("applied") else "warn"
+        rrows.append({"id": x["id"], "cells": [
+            esc(x["id"]), "<b>" + esc(x["title"]) + "</b>", esc(x["problem"]), esc(x["proposal"]),
+            esc(x["benefit"]), esc(x["effort"]), esc(x["risk"]), esc(x["recommendation"]),
+            badge(st, kind),
+            srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json"),
+        ]})
+    body += table(["ID", "Suggestion", "Problem today (measured)", "What changes if accepted",
+                   "Benefit", "Effort", "Risk", "Recommendation", "State", "Source"],
+                  rrows, "Every proposal, with the evidence for it and the decision it needs",
+                  idcol="id")
+    body += """
+<div class="note"><b>How a decision is recorded.</b> Edit the item's <code>status</code> in
+<code>suggestions/SUGGESTIONS.json</code> to <code>accepted — OWNER, date</code> or
+<code>rejected — OWNER, date, reason</code>, commit, and the next build renders it. The build never writes
+<code>accepted</code> itself: a proposal and a decision must not look the same.</div>
+"""
     built["suggestions.html"] = page("suggestions.html", "Suggestions queue", body, "suggestions.html")
 
     # ------------------------------------------------------------------ decision queue

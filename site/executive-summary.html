@@ -20,6 +20,7 @@
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -30,6 +31,7 @@
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
 <a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -62,6 +64,29 @@ published, because no signal in the file carries a price.</div>
 ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
+<h2>0b. What this session (arena/766d0269-nba2) added, 2026-11-14 evening</h2>
+<div class="note ok"><b>Live re-verification passed on every row that was checked.</b> The 30 club records on this
+site were re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and matched exactly (30/30). The 27 window games were re-checked field by field against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a> — date,
+tip time, away, home, game id and venue — and matched on every field (27/27). The scripts and the raw captures are in
+<code>audit/2026-11-14-766d/</code> so the check can be repeated without trusting this page.</div>
+<div class="note bad"><b>A published number was wrong, and is now fixed with a test that fails if it returns.</b> The
+picks table priced a <em>spread</em> lean with the <em>moneyline</em> probability. Our spread is the median of our own
+distribution, so the probability of covering it is ~0.50 on every game, while the probability of winning the game
+ranges from 0.07 to 0.95. Pricing one with the other produced break-even triggers like −1246 — a price no sportsbook
+offers on a spread. Both probabilities and both triggers are now published side by side, and four regression tests
+pin the arithmetic.</div>
+<div class="note warn"><b>The skill claim does not survive its own test — and that is the most useful result here.</b>
+The model's 64.7% accuracy on 167 graded games is not distinguishable from the naive rule "back the team with the
+better record", which scored 70.3% on the same games. On the 33 games where they disagreed, the naive rule won 20 and
+the model 13 (exact McNemar p = 0.2962). Full arithmetic on
+<a href="skill-attribution.html">Skill vs luck</a>. The consequence for decisions is direct: any promotion rule that
+accepts accuracy alone would promote a strategy that has demonstrated nothing.</div>
+<div class="note"><b>Eight decisions are now listed in one place</b>, each with what we have, what is missing, how the
+gap could be closed and who must decide: <a href="decisions-needed.html">Decisions needed</a>. Three of them are
+blocked on data this repository does not hold, and the routes to obtain it are named.</div>
+
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 <div class="note"><b>What was built.</b> A v2 line-origination model over a 27-game, three-day window (2026-11-14 → 2026-11-17), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table. A strategy lab scores seven candidate strategies walk-forward, evaluates twelve validation gates from data, and separates luck from skill with binomial tests.</div><div class="note"><b>What is verified.</b> 27/27 games match the official schedule; all 30 team records match live nba.com/standings exactly AND rebuild exactly from the 183 committed official final scores, home and road splits included; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against 13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws puts P(MAE gain &gt; 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate (G9), not an opinion.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
 <h2>Numbers behind the summary</h2>
@@ -153,13 +178,13 @@ published on the Flagged page rather than fixed silently in someone else's file.
 </tr>
 <tr>
 <td>Suggestions in the register</td>
-<td>40</td>
+<td>46</td>
 <td>7 of them are the numbered decision queue — see the decision queue page</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
 <td>Flagged irregularities</td>
-<td>41</td>
+<td>49</td>
 <td>all on the Flagged for review page with a source to check</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -168,6 +193,30 @@ published on the Flagged page rather than fixed silently in someone else's file.
 <td>30 / 30</td>
 <td>the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Club records re-read live on 2026-11-14 19:40Z (this session)</td>
+<td>30 / 30 identical</td>
+<td>field-by-field comparison against nba.com/standings; script and capture committed</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Window games re-checked live on 2026-11-14 19:45Z (this session)</td>
+<td>27 / 27 identical</td>
+<td>date, tip time, away, home, game id, venue; script and capture committed</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr>
+<td>Model accuracy vs the naive 'better record' rule</td>
+<td>39% vs 61%</td>
+<td>on the 33 discordant games; exact McNemar p = 0.2962</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td>Decisions that must be answered before further build</td>
+<td>8</td>
+<td>each with owner, evidence and discovery path — see Decisions needed</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/DECISIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
 </tr>
 </tbody></table></div>
 <h2>Recommended sequence</h2>
@@ -192,7 +241,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
   you choose.</p></div>
   <div class="card"><h4><a href="live-verification.html">Check today's evidence</a></h4><p>The official pages read today,
   what each one contradicted, and the grading of the repository's first real forecast.</p></div>
-  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>41 irregularities, each with a
+  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>49 irregularities, each with a
   source to check. None block publication; all block a promotion.</p></div>
 </div>
 

@@ -20,6 +20,7 @@
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html" class="on">Injuries &amp; rotation</a>
@@ -30,6 +31,7 @@
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
 <a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -42,12 +44,56 @@
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> The 11/14 05:30 AM ET report returned
-AccessDenied at retrieval time, so the freshest reachable release is 04:30 AM ET. More importantly: a team files for a
-game by 5 p.m. local <em>the day before</em>, so for the 11/15, 11/16 and 11/17 games the deadline has not yet passed and
-no official row exists to read. Those cells are blank by policy, never estimated. Nothing was filled in from an
-unavailable or non-existent file.</div>
-<h2>Per-team exposure</h2><div class="scroll"><table>
+<div class="note bad"><b>This table is six releases stale. A fresher official release is now published, and it
+moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
+<b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
+player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
+<div class="scroll"><table>
+<caption>Every status that moved between the published release and the 01:30 PM ET release</caption>
+<thead><tr>
+<th scope="col">Player</th>
+<th scope="col">Team</th>
+<th scope="col">04:30 AM ET (published here)</th>
+<th scope="col">01:30 PM ET (official, later)</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>Brown Jr., Mikel</b></td>
+<td>Brooklyn Nets</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-bad">Probable</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Christie, Max</b></td>
+<td>Dallas Mavericks</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-bad">Doubtful</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Harkless, Elijah</b></td>
+<td>Detroit Pistons</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-ok">Available</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Jones, Isaac</b></td>
+<td>Detroit Pistons</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-ok">Available</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+</tbody></table></div>
+<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
+the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
+blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
+it, which is why 04:30 AM ET was that build's ceiling; the 01:30 PM release is reachable now, as the capture above
+shows.)</div>
+
+<h2>Per-team exposure</h2>
+<div class="scroll"><table>
 <caption>Per-team status counts from the official report</caption>
 <thead><tr>
 <th scope="col">Team</th>

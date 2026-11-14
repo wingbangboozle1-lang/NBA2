@@ -2755,6 +2755,148 @@ P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record
 20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
 every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
 
+---
+
+## Session `arena/766d0269-nba2` — CLAIM (2026-11-14 ~19:05 UTC, branch `arena/766d0269-nba2`, base `b3ed44d`)
+
+**State read at claim time (verified, not assumed).**
+- `gh pr list --state open` → **4 open PRs**, all from other sessions, none touching this
+  session's paths: #59 (`arena/6c5195d1-nba2`, board record only), #57 (`arena/3fbd894a-nba2`,
+  05:15 AM ET refresh wiring), #55 (`arena/03a581a0-nba2`, S2 spread-sign fix), #50
+  (`arena/9ee870ea-nba2`, one-published-tree). **Not touched by this session** — they belong to
+  their sessions.
+- `main` @ `b3ed44d` (PR #62 merged). `git rev-list --count HEAD..origin/main` = 0.
+- Baseline checks re-run **before any edit**, on this branch: `python -m unittest discover -s
+  nba2/tests -t .` → **64 OK**; `python -m nba2.v2.check` → **OK, 0 structural / 0 semantic**.
+- `gh run list --workflow=refresh.yml` → **one run, `failure`**, 2026-11-14T14:37Z. The job
+  failed at step 6 (`Fetch official finals for arrived window dates`, exit 3 = "every official
+  endpoint unreachable"). Steps 7–12 skipped. This is a **live defect on `main`**, and the
+  nightly settlement of the sealed ledger has not run.
+- Sandbox egress measured this session: `github.com` / `api.github.com` reachable;
+  `www.nba.com`, `ak-static.cms.nba.com`, `wingbangboozle1-lang.github.io` → **HTTP 000**
+  (blocked). The platform page-fetch tool reaches `www.nba.com` and the referee-ops PDFs (as
+  sessions `arena/3681def8` and `arena/6c5195d1` recorded), so official re-verification runs
+  through that tool and every capture records its method.
+
+**File scope claimed by this session:**
+- `COORDINATION.md` (append-only; no other session's text edited)
+- `audit/2026-11-14-766d/**` (new namespace: this session's captures + verifier scripts)
+- `analysis/session-766d0269-*.md` (this session's review + methodology notes)
+- `requirements/DECISION_BLOCKERS.json`, `suggestions/SUGGESTIONS.json` (append-only: new
+  entries only, **existing IDs never renumbered or edited**)
+- `nba2/v2/model.py`, `nba2/v2/report.py`, `nba2/v2/test_v2.py` (the coverage-probability defect
+  below is in the published tree and cannot be flagged-only without publishing a wrong number)
+- regenerated artefacts: `data/v2/*.json`, `site/**`
+
+**Not claimed / not edited:** every other active PR's scope (`nba2/pipeline/refresh.py`,
+`nba2/picks.py`, `nba2/data/picks.json`, `site/**` ownership is shared-and-regenerated only),
+`docs/**`, `dashboard/**`, `originated/**`, `backtest/**`, `verified/**`, `archive/**`,
+`data/raw/ledger/**` (sealed, read-only), `.github/workflows/**`.
+
+**Task board (this session).**
+
+| # | Task | Status | Files | Sources / verification |
+|---|---|---|---|---|
+| N-01 | Board claim + push before work | in progress | `COORDINATION.md` | this entry |
+| N-02 | Repo review line by line; every finding evidence-backed, nothing silently "fixed" | claimed | `analysis/session-766d0269-*`, `COORDINATION.md` | re-runs + code citations |
+| N-03 | Fix the published **cover-probability / trigger** defect (finding N-03) with regression tests | claimed | `nba2/v2/model.py`, `nba2/v2/report.py`, `nba2/v2/test_v2.py` | derivation + tests |
+| N-04 | Re-verify the published tree against live official NBA pages, line by line | claimed | `audit/2026-11-14-766d/**` | nba.com |
+| N-05 | Decision-blocker register: every question that must be answered before a decision, with the discovery path for what is missing | claimed | `requirements/DECISION_BLOCKERS.json`, site page | official + internal sources |
+| N-06 | Suggestions queue review workflow (owner can review → choose → implement) made real | claimed | `suggestions/SUGGESTIONS.json`, site page | n/a (process) |
+| N-07 | Executive summary refresh from measured state | claimed | `site/executive-summary.html` | every number traced |
+| N-08 | Full checker chain, PR → `main`, merge, confirm Pages deploy | claimed | repo-wide | runs + live fetch |
+
+**Rules this session holds itself to.** No row published without a source link; an unconfirmable
+value stays blank and is flagged; no value inferred; sealed ledgers never rewritten; nothing is
+called verified that was not fetched in this session.
+
+
+### Completion record — `arena/766d0269-nba2` (2026-11-14, N-01…N-08)
+
+**Headline.** Live re-verification passed on every row checked (30/30 club records, 27/27 games
+field by field); **two published defects were found and fixed** with regression tests; the brief's
+"remove luck from the equation" requirement was implemented as a paired test and **found no
+separable skill**; and two pre-existing checker failures were fixed at their source rather than
+described away.
+
+#### N-02/N-04 — live official re-verification (all fetched in this session)
+
+| Artefact | Official source | Fetched | Result |
+|---|---|---|---|
+| 30 club records | [nba.com/standings](https://www.nba.com/standings) | 19:40Z | **30/30 identical**, 0 unverified |
+| 27 window games × 6 fields | [nba.com/schedule?date=2026-11-14](https://www.nba.com/schedule?date=2026-11-14) | 19:45Z | **27/27 identical** |
+| Injury release | [Injury-Report_2026-11-14_01_30PM.pdf](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf) | 19:50Z | 50 rows / 9 clubs; **4 status changes, 24 additions, 0 withdrawals** vs the published 04:30 snapshot |
+| Injury index + filing rules | [official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/) | 19:50Z | rules quoted verbatim, unchanged |
+
+Scripts + captures: `audit/2026-11-14-766d/` (`capture_standings.py`, `verify_schedule.py`,
+`verify_injuries.py`), each re-runnable and non-zero on failure.
+
+#### N-03 — defects fixed
+
+| ID | Defect | Evidence | Fix |
+|---|---|---|---|
+| N-03 high | Picks table priced a **spread** lean with the **moneyline** probability; P(cover) is ≈0.50 by construction while P(win) ranged 0.074–0.952, producing triggers like **−1246** | independent recomputation of `Φ((margin+spread)/σ)` reproduces all 27 published `p_home_cover` values (0/27 disagreement), proving the model right and the reporting wrong | both probabilities and both triggers published per row; **4 regression tests** in `test_v2.py::TestPicksProbabilityIsTheRightMarket` |
+| N-04 high | S1's 64.7% was tested against a *coin flip*, not against the naive rule that explains it | added `naive_baselines()` + `skill_attribution()` (McNemar on discordant games); 13 v 20, **p = 0.2962**, and the naive win-% rule scored **70.3%** on the same games | published as **F-053** and the new **Skill vs luck** page; **5 tests** in `TestSkillAttribution` |
+| N-05 med | Injury page six releases stale and claimed the fresher one was unreachable | later release downloads without error; diff committed | staleness + diff published on injuries page and dashboard; refresh logged as **S-46/D-07** |
+
+Independently re-derived the N-04 numbers with a second implementation (different rating code, tie
+handling and accumulation): 108/167 = 0.6467, baseline 104/148 = 0.7027, 13 v 20, p ≈ 0.2962 —
+identical.
+
+#### N-05/N-06 — the registers the brief asks for
+
+- **New page `decisions-needed.html`** rendering `requirements/DECISIONS.json`: 8 decisions
+  (D-01…D-08), each with severity, what we **have**, what is **missing**, **how to close it**, what
+  it **blocks**, and **who decides**. Plus a gap table naming the five datasets we do not hold and
+  the route to each.
+- **Suggestions review path made real**: the suggestions page now renders the full register
+  (`suggestions/SUGGESTIONS.json`, 46 items) with problem → proposal → benefit → effort → risk →
+  recommendation → state, and the instruction for recording a decision. +6 items from this session
+  (S-45…S-50); **no existing ID was renumbered or edited**.
+- **New page `skill-attribution.html`**: the naive baselines, the paired test, why a high hit rate
+  is inherited from the favourite, and the three routes that would settle it.
+
+#### N-06 — pre-existing checker failures, fixed at the source
+
+| Check | Was | Cause | Now |
+|---|---|---|---|
+| CC-BT-03 | FAIL | ATS drops 1 pick'em game (166) while straight-up keeps it (167); 105/166 vs 105/167 published with no reconciliation | `ats_block()` publishes the exclusion, the reconciled straight-up totals and the reason; the check now fails unless they **reconcile exactly** and both blocks select the same winning games |
+| CC-DOC-01 | FAIL | README row count hand-copied as 1,404 | regenerated; corrected to 1,415 after the trees reached a fixed point |
+
+#### N-07 — executive summary
+
+New §0b records this session's three results in the same place as the earlier ones, and the summary
+table gained five sourced rows (live standings 30/30, live schedule 27/27, the discordant-game
+split, and the decision count).
+
+#### N-08 — verification at completion (every checker in the repository, executed)
+
+| Checker | Result |
+|---|---|
+| `nba2/tests` | **64 OK** |
+| `nba2/v2` tests | **89 OK** (was 80; +9 this session) |
+| `backtest/tests` | **49 OK** |
+| `python -m nba2.v2` + `nba2.v2.check` | 22 pages, **0 structural / 0 semantic** |
+| `nba2.pipeline.build_site_data/build_site/lint` | **1,415 rows / 50 tables**, every row sourced, every blank explained |
+| `tools/crosscheck_site.py` | **97 checks: 90 pass, 0 fail, 7 info** (was 88/2) |
+| `tools/check_links_all.py` | 112 files, **5,017 internal links, ALL OK** |
+| `tools/verify_site.py` | 13 pages / 249 rows PASS |
+| sealed ledgers | untouched (`git diff -- data/raw/ledger` empty) |
+
+#### Findings published rather than fixed (do not block the merge)
+
+F-051 (spread pricing, fixed) · F-052 (live re-verification) · F-053 (no separable skill) ·
+F-054 (injury staleness) · F-055 (**nightly ingest failing on `main`** — run 43605830665, outside
+this session's scope) · F-056 (retrieval claim corrected) · F-057 (self-correction, recorded) ·
+F-058 (hard-coded injury prose). All on the Flagged for review page with a source to check.
+
+#### Not done, and why
+
+The nightly-ingest failure (F-055) is not repaired here: `.github/workflows/**`,
+`nba2/pipeline/refresh.py`, `nba2/picks.py` and `nba2/data/picks.json` are claimed by open PRs
+#57/#55/#50, and editing them would have caused the conflict this board exists to prevent. It is
+logged as S-48 with the evidence.
+
 ## 2026-11-14 — session `arena/e17ff73a-nba2` — audit and correctness fixes
 
 **Scope:** `README.md`, `tools/crosscheck_site.py`, and this append-only record.

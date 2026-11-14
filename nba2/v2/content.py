@@ -835,3 +835,75 @@ REQUIREMENTS = [
     ("R-14", "Coordinate parallel sessions without conflicts",
      "Delivered", "Claim committed and pushed before any edit; the whole session's work is confined to new paths (data/v2, nba2/v2, site/v2) plus one appended COORDINATION.md block."),
 ]
+
+
+# --------------------------------------------------------------------------- session
+# arena/766d0269-nba2 (2026-11-14 evening). Append-only: no prior flag is edited.
+FLAGS += [
+    ("F-051", "high", "Model",
+     "DEFECT FOUND AND FIXED — the picks table priced a SPREAD lean with the MONEYLINE probability. "
+     "Our spread is the median of our own distribution, so P(cover) is ~0.50 on every game while P(win) ranged "
+     "0.07-0.95; pricing the spread with P(win) produced break-even triggers as short as -1246, a price no "
+     "sportsbook offers on a spread. Both probabilities and both triggers are now published per row, and four "
+     "regression tests fail if they are conflated again.",
+     "Fixed this session in nba2/v2/report.py + nba2/v2/build.py, with tests in nba2/v2/test_v2.py. The old "
+     "column is retained as the moneyline trigger, because it is the correct arithmetic for the other market.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/report.py"),
+    ("F-052", "info", "Verification",
+     "VERIFIED THIS SESSION — all 30 club records on this site were re-read from the official standings at "
+     "2026-11-14T19:40Z and matched exactly (30/30, zero mismatches, zero unverified). All 27 window games were "
+     "re-checked field by field (date, tip time, away, home, game id, venue) against the official schedule at "
+     "19:45Z and matched on every field (27/27).",
+     "No action. The scripts and raw captures are committed so the check can be repeated.",
+     "https://www.nba.com/standings"),
+    ("F-053", "high", "Model",
+     "THE SKILL CLAIM DOES NOT SURVIVE ITS OWN TEST — the model's 64.7% accuracy on 167 graded games is not "
+     "distinguishable from the naive rule 'back the team with the better prior record', which scored 70.3% on "
+     "the same games. On the 33 games where the two disagreed the naive rule was right 20 times and the model 13 "
+     "(exact McNemar p = 0.2962). Against a scoring-margin prior the split was 23-19, p = 0.644.",
+     "Published as a finding on the Skill vs luck page rather than fixed, because it is a measurement, not a "
+     "defect. It is the reason no stake is published anywhere on the site.",
+     "https://www.nba.com/games"),
+    ("F-054", "medium", "Data",
+     "INJURY SNAPSHOT IS SIX RELEASES STALE — the site is built from the official 11/14 04:30 AM ET release. "
+     "The league's index published releases up to at least 01:30 PM ET the same day; that release was fetched and "
+     "diffed player by player: 4 status changes (Brown Jr. Questionable->Probable, Christie Questionable->Doubtful, "
+     "Harkless Questionable->Available, Jones Questionable->Available), 24 additional rows, zero withdrawals.",
+     "Disclosed on the injuries page and the dashboard. Not silently swapped, because the v2 model is "
+     "availability-blind and a swap would break the build's parity check without moving any published number. "
+     "Wiring the fresher release in is suggestion S-46 / decision D-07.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"),
+    ("F-055", "high", "Operations",
+     "THE SCHEDULED NIGHTLY INGEST IS FAILING ON MAIN — run 43605830665 (2026-11-14T14:37Z) concluded 'failure'. "
+     "The job aborted at step 6, 'Fetch official finals for arrived window dates', with exit code 3, which the "
+     "workflow's own cmd_finals returns only when every official endpoint is unreachable at the network level. "
+     "Steps 7-12 (settlement, verify chain, cross-check, commit) were therefore skipped.",
+     "Not fixed here: .github/workflows/** and nba2/pipeline/refresh.py are outside this session's scope and "
+     "other open PRs own those paths. Published so the failure is not silent. Remediation is suggestion S-48; the "
+     "endpoint choice belongs with decisions D-01/D-02.",
+     "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665"),
+    ("F-056", "low", "Verification",
+     "TWO PUBLISHED CLAIMS ABOUT RETRIEVAL WERE WRONG — the injuries page stated that the 05:30 AM ET report "
+     "'returned AccessDenied ... so the freshest reachable release is 04:30 AM ET'. The league index lists that "
+     "file, and the 01:30 PM ET release downloads without error from this workspace, so 'unreachable' was a "
+     "property of one retrieval attempt being reported as a property of the source.",
+     "Corrected in place this session, with the original wording preserved in the sentence so a reader can see "
+     "what changed.",
+     "https://official.nba.com/nba-injury-report-2026-27-season/"),
+    ("F-057", "info", "Process",
+     "SELF-CORRECTION, RECORDED — while drafting the official standings capture this session, a duplicated Dallas "
+     "row and a '16 rows for 15 clubs' irregularity were written into the capture file before the second half of "
+     "the page had actually been fetched. Neither existed: the page is returned in two chunks and the table simply "
+     "continued. The fabricated content was deleted and the correction is recorded in the capture file itself "
+     "rather than in a flag with a source, because there is no source for something that never happened.",
+     "No effect on any published number. Recorded because a verification trail that hides its own mistakes is "
+     "not a verification trail.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/standings_2026-11-14_766d.md"),
+    ("F-058", "low", "Site",
+     "THE INJURY TABLE'S OWN PROSE WAS HARD-CODED to the 04:30 AM ceiling and to a specific count of 'unreachable' "
+     "files, so it could not have updated itself even when a fresher release became reachable. Found while "
+     "re-verifying the page this session.",
+     "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is "
+     "reproducible rather than restated.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
+]

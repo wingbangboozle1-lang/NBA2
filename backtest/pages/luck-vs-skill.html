@@ -33,6 +33,12 @@ paying for itself.</strong></div>
 <p class="blurb">All three rules are point-in-time: the differential rule uses only games before
 each tip-off. Comparing a model with a coin flip instead of with this rule is how sports models
 claim skill they do not have.</p></div>
+<div class="card"><h2>Control 1b — why the spread hit rate and the straight-up rate differ by 0.4 points</h2>
+<p class="blurb">The against-the-spread block excludes any game whose originated line is exactly a
+pick'em (1 game on this sample), so its denominator is smaller than the
+straight-up denominator. The two rates therefore differ by construction, and the arithmetic that
+reconciles them is published here so a reader never has to guess whether the gap is an error.</p>
+<div class="table-wrap"><table class="data"><caption>ATS / straight-up reconciliation</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead><tbody><tr><td>ATS games / hits</td><td>166 / 105</td><td>hit rate 63.2%</td></tr><tr><td>Pick'em games excluded from ATS</td><td>1</td><td>our line was exactly 0, so there is no side to cover</td></tr><tr><td>Straight-up games / hits</td><td>167 / 105</td><td>rate 62.9% — same winning picks, larger denominator</td></tr><tr><td>Reconciled?</td><td>YES</td><td>the ATS block drops any game whose originated line is exactly a pick'em, so its denominator is smaller than the straight-up denominator by that many games; the two rates are therefore expected to differ slightly and the difference is arithmetic, not an inconsistency</td></tr></tbody></table></div></div>
 <div class="card"><h2>Control 2 — is the improvement on the margin error real?</h2>
 <div class="table-wrap"><table class="data"><caption>Permutation test of the margin-error difference</caption><thead><tr><th scope="col">Test</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Model mean absolute margin error</td><td>12.21 pts</td></tr><tr><td>Baseline (constant 0-line) absolute error</td><td>13.36 pts</td></tr><tr><td>Observed difference</td><td>-1.15 pts (negative = model better)</td></tr><tr><td>Permutation p-value (10,000 draws, fixed seed)</td><td>0.292</td></tr><tr><td>Significant at 5%</td><td><strong>no</strong></td></tr></tbody></table></div>
 <p class="blurb">A 1.15-point improvement with p = 0.29 is

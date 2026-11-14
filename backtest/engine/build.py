@@ -125,7 +125,11 @@ def build() -> dict:
     d = [r.as_dict() for r in rows]
 
     acc = skill.accuracy_block(d)
-    ats = skill.ats_block(d)
+    # The straight-up hits are passed in so the ATS block can publish its own reconciliation:
+    # the two blocks can legitimately differ by one game when an originated line is a pick'em.
+    ats = skill.ats_block(d,
+                          straight_up_hits=round(acc.get("straight_up_accuracy", 0) * acc.get("n", 0)),
+                          straight_up_n=acc.get("n"))
     gap = skill.baseline_gap(d)
     naive = skill.naive_baselines(d, games)
     cal = skill.calibration_table(d)
@@ -187,6 +191,7 @@ def _kpi(label, value, sub="") -> str:
 
 def _write_pages(report: dict, meta: dict, integrity: dict) -> None:
     acc, gap, naive = report["accuracy"], report["baseline_gap"], report["naive_baselines"]
+    ats = report["ats"]
     corr = report["correlation"]
     gs = report["gates"]["summary"]
 
@@ -389,6 +394,20 @@ paying for itself.</strong></div>
 <p class="blurb">All three rules are point-in-time: the differential rule uses only games before
 each tip-off. Comparing a model with a coin flip instead of with this rule is how sports models
 claim skill they do not have.</p></div>
+<div class="card"><h2>Control 1b — why the spread hit rate and the straight-up rate differ by 0.4 points</h2>
+<p class="blurb">The against-the-spread block excludes any game whose originated line is exactly a
+pick'em ({ats['pickem_games_excluded']} game on this sample), so its denominator is smaller than the
+straight-up denominator. The two rates therefore differ by construction, and the arithmetic that
+reconciles them is published here so a reader never has to guess whether the gap is an error.</p>
+{table(["Quantity", "Value", "Note"], [
+    ["ATS games / hits", f"{ats['n']} / {ats['hits']}", f"hit rate {ats['hit_rate']:.1%}"],
+    ["Pick'em games excluded from ATS", esc(ats['pickem_games_excluded']),
+     "our line was exactly 0, so there is no side to cover"],
+    ["Straight-up games / hits", f"{ats['straight_up_for_comparison']['n']} / {ats['straight_up_for_comparison']['hits']}",
+     f"rate {ats['straight_up_for_comparison']['rate']:.1%} — same winning picks, larger denominator"],
+    ["Reconciled?", "YES" if ats['straight_up_for_comparison']['n'] - ats['pickem_games_excluded'] == ats['n'] else "NO",
+     ats['straight_up_for_comparison']['why']]],
+   "ATS / straight-up reconciliation")}</div>
 <div class="card"><h2>Control 2 — is the improvement on the margin error real?</h2>
 {table(["Test", "Value"], [
     ["Model mean absolute margin error", f"{gap['mean_abs_error_model']:.2f} pts"],

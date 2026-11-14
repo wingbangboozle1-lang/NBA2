@@ -280,7 +280,20 @@ def t_picks(lines):
             lean_team, p_lean = home, p_home
         else:
             lean_team, p_lean = away, 1.0 - p_home
-        breakeven = 1.0 / p_lean if p_lean > 0 else None
+        # The lean is published as a SPREAD at our own number, so the probability that prices
+        # it is the probability of COVERING that number - not the probability of winning the
+        # game. At our own number the cover probability is ~0.5 by construction (the line is
+        # the median of our own distribution), so the moneyline probability printed in the
+        # P(home) column would overstate it on every game and produce a trigger price (1/p)
+        # that no bookmaker would ever offer on the spread. Both numbers are now published
+        # and each trigger names the market it belongs to.
+        p_cover_home = d["p_home_cover"]
+        if p_home >= 0.5:
+            p_lean_cover = p_cover_home
+        else:
+            p_lean_cover = 1.0 - p_cover_home
+        breakeven = 1.0 / p_lean_cover if p_lean_cover > 0 else None
+        breakeven_ml = 1.0 / p_lean if p_lean > 0 else None
         gates = {
             "G1 official inputs": "PASS",
             "G2 inside 3-day window": "PASS" if "2026-11-14" <= d["date"] <= "2026-11-17" else "FAIL",
@@ -299,8 +312,14 @@ def t_picks(lines):
             "p_home": f"{p_home:.3f}",
             "lean": f"{lean_team} {d['spread'] * (-1 if lean_team == away else 1):+.1f}",
             "lean_prob": f"{p_lean:.3f}",
+            "lean_prob_ml": f"{p_lean:.3f}",
+            "lean_prob_cover": f"{p_lean_cover:.3f}",
             "trigger_decimal": f"{breakeven:.3f}" if breakeven else "—",
             "trigger_american": _american(breakeven) if breakeven else "—",
+            "trigger_ml_decimal": f"{breakeven_ml:.3f}" if breakeven_ml else "—",
+            "trigger_ml_american": _american(breakeven_ml) if breakeven_ml else "—",
+            "cover_note": ("break-even for the SPREAD at our own number, because the line is "
+                           "the median of our own distribution"),
             "our_total_fair": f"{d['total']:.1f}",
             "total_trigger": "needs a market total (G6)",
             "stake": "0.00 u",

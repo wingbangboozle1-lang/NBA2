@@ -20,6 +20,7 @@
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -30,6 +31,7 @@
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
 <a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -43,11 +45,18 @@ that the edge is not a coin flip that happened to land, and this repository has 
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
 <em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
+<div class="note bad"><b>Two markets, two probabilities — read the right trigger.</b> The lean is a
+<em>spread</em> at our own number, so the probability that prices it is the probability of <em>covering</em> that
+number (<b>P(cover)</b>), not the probability of winning the game (<b>P(win)</b>). Our line is the median of our own
+distribution, so P(cover) is close to 0.50 on every game by construction while P(win) ranges widely. Pricing a
+spread bet off P(win) — as an earlier build of this page did — produces a trigger of, say, −1246 on a moneyline-shaped
+probability, which no sportsbook offers on a spread. Both numbers are now printed, each with its own break-even
+trigger, so the arithmetic can be checked against whichever market is actually being considered.</div>
 <div class="note bad"><b>0 of 27 games are staked.</b> Not because the model failed, but because gate G6 (no market
 price) and gate G7 (167 settled bets against a 300-bet bar) both fail. Publishing a stake anyway is the one thing this
 build refuses to do.</div>
 <div class="scroll"><table>
-<caption>All 27 games: originated line, lean, trigger price and gate status</caption>
+<caption>All 27 games: originated line, lean, both probabilities and both trigger prices, with gate status</caption>
 <thead><tr>
 <th scope="col">Date</th>
 <th scope="col">ET</th>
@@ -55,11 +64,13 @@ build refuses to do.</div>
 <th scope="col">Grade</th>
 <th scope="col" class="n">Our spread</th>
 <th scope="col" class="n">Our total</th>
-<th scope="col" class="n">P(home)</th>
 <th scope="col">Lean</th>
-<th scope="col" class="n">P(lean)</th>
-<th scope="col" class="n">Trigger dec</th>
-<th scope="col">Trigger US</th>
+<th scope="col" class="n">P(lean) win</th>
+<th scope="col" class="n">P(lean) cover</th>
+<th scope="col" class="n">Spread trigger dec</th>
+<th scope="col">Spread trigger US</th>
+<th scope="col">ML trigger dec</th>
+<th scope="col">ML trigger US</th>
 <th scope="col">Stake</th>
 <th scope="col">Gates</th>
 <th scope="col">Blocked by</th>
@@ -72,11 +83,13 @@ build refuses to do.</div>
 <td><span class="badge b-bad">C</span></td>
 <td class="n">+7.0</td>
 <td class="n">234.9</td>
-<td class="n">0.289</td>
 <td><b>DEN -7.0</b></td>
 <td class="n">0.711</td>
-<td class="n">1.406</td>
-<td><b>-247</b></td>
+<td class="n">0.507</td>
+<td class="n">1.973</td>
+<td><b>-103</b></td>
+<td>1.406</td>
+<td>-247</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -89,11 +102,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-1.0</td>
 <td class="n">229.0</td>
-<td class="n">0.523</td>
 <td><b>CLE -1.0</b></td>
 <td class="n">0.523</td>
-<td class="n">1.910</td>
-<td><b>-110</b></td>
+<td class="n">0.493</td>
+<td class="n">2.030</td>
+<td><b>+103</b></td>
+<td>1.910</td>
+<td>-110</td>
 <td>0.00 u</td>
 <td>5/8</td>
 <td>G4, G6, G7</td>
@@ -106,11 +121,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-11.0</td>
 <td class="n">228.6</td>
-<td class="n">0.801</td>
 <td><b>MEM -11.0</b></td>
 <td class="n">0.801</td>
-<td class="n">1.248</td>
-<td><b>-403</b></td>
+<td class="n">0.498</td>
+<td class="n">2.006</td>
+<td><b>+101</b></td>
+<td>1.248</td>
+<td>-403</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -123,11 +140,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-21.5</td>
 <td class="n">233.7</td>
-<td class="n">0.952</td>
 <td><b>MIN -21.5</b></td>
 <td class="n">0.952</td>
-<td class="n">1.050</td>
-<td><b>-1992</b></td>
+<td class="n">0.503</td>
+<td class="n">1.989</td>
+<td><b>-101</b></td>
+<td>1.050</td>
+<td>-1992</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -140,11 +159,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+7.5</td>
 <td class="n">230.3</td>
-<td class="n">0.283</td>
 <td><b>DET -7.5</b></td>
 <td class="n">0.717</td>
-<td class="n">1.395</td>
-<td><b>-253</b></td>
+<td class="n">0.498</td>
+<td class="n">2.008</td>
+<td><b>+101</b></td>
+<td>1.395</td>
+<td>-253</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -157,11 +178,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-3.5</td>
 <td class="n">222.5</td>
-<td class="n">0.605</td>
 <td><b>PHI -3.5</b></td>
 <td class="n">0.605</td>
-<td class="n">1.654</td>
-<td><b>-153</b></td>
+<td class="n">0.498</td>
+<td class="n">2.008</td>
+<td><b>+101</b></td>
+<td>1.654</td>
+<td>-153</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -174,11 +197,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+9.0</td>
 <td class="n">232.1</td>
-<td class="n">0.248</td>
 <td><b>LAL -9.0</b></td>
 <td class="n">0.752</td>
-<td class="n">1.329</td>
-<td><b>-304</b></td>
+<td class="n">0.495</td>
+<td class="n">2.021</td>
+<td><b>+102</b></td>
+<td>1.329</td>
+<td>-304</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -191,11 +216,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-5.5</td>
 <td class="n">219.0</td>
-<td class="n">0.659</td>
 <td><b>LAC -5.5</b></td>
 <td class="n">0.659</td>
-<td class="n">1.517</td>
-<td><b>-194</b></td>
+<td class="n">0.494</td>
+<td class="n">2.023</td>
+<td><b>+102</b></td>
+<td>1.517</td>
+<td>-194</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -208,11 +235,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+18.5</td>
 <td class="n">225.9</td>
-<td class="n">0.074</td>
 <td><b>SAS -18.5</b></td>
 <td class="n">0.926</td>
-<td class="n">1.080</td>
-<td><b>-1246</b></td>
+<td class="n">0.506</td>
+<td class="n">1.974</td>
+<td><b>-103</b></td>
+<td>1.080</td>
+<td>-1246</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -225,11 +254,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-9.0</td>
 <td class="n">221.3</td>
-<td class="n">0.752</td>
 <td><b>BOS -9.0</b></td>
 <td class="n">0.752</td>
-<td class="n">1.330</td>
-<td><b>-303</b></td>
+<td class="n">0.494</td>
+<td class="n">2.024</td>
+<td><b>+102</b></td>
+<td>1.330</td>
+<td>-303</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -242,11 +273,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+2.5</td>
 <td class="n">220.2</td>
-<td class="n">0.418</td>
 <td><b>NYK -2.5</b></td>
 <td class="n">0.582</td>
-<td class="n">1.718</td>
-<td><b>-139</b></td>
+<td class="n">0.506</td>
+<td class="n">1.977</td>
+<td><b>-102</b></td>
+<td>1.718</td>
+<td>-139</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -259,11 +292,13 @@ build refuses to do.</div>
 <td><span class="badge b-ok">A</span></td>
 <td class="n">+11.0</td>
 <td class="n">224.7</td>
-<td class="n">0.201</td>
 <td><b>HOU -11.0</b></td>
 <td class="n">0.799</td>
-<td class="n">1.252</td>
-<td><b>-398</b></td>
+<td class="n">0.495</td>
+<td class="n">2.019</td>
+<td><b>+102</b></td>
+<td>1.252</td>
+<td>-398</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -276,11 +311,13 @@ build refuses to do.</div>
 <td><span class="badge b-ok">A</span></td>
 <td class="n">+11.5</td>
 <td class="n">230.7</td>
-<td class="n">0.183</td>
 <td><b>ATL -11.5</b></td>
 <td class="n">0.817</td>
-<td class="n">1.224</td>
-<td><b>-447</b></td>
+<td class="n">0.506</td>
+<td class="n">1.975</td>
+<td><b>-103</b></td>
+<td>1.224</td>
+<td>-447</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -293,11 +330,13 @@ build refuses to do.</div>
 <td><span class="badge b-ok">A</span></td>
 <td class="n">+12.0</td>
 <td class="n">223.9</td>
-<td class="n">0.175</td>
 <td><b>OKC -12.0</b></td>
 <td class="n">0.825</td>
-<td class="n">1.212</td>
-<td><b>-471</b></td>
+<td class="n">0.503</td>
+<td class="n">1.988</td>
+<td><b>-101</b></td>
+<td>1.212</td>
+<td>-471</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -310,11 +349,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-12.0</td>
 <td class="n">237.3</td>
-<td class="n">0.818</td>
 <td><b>CLE -12.0</b></td>
 <td class="n">0.818</td>
-<td class="n">1.222</td>
-<td><b>-450</b></td>
+<td class="n">0.493</td>
+<td class="n">2.030</td>
+<td><b>+103</b></td>
+<td>1.222</td>
+<td>-450</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -327,11 +368,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+10.0</td>
 <td class="n">228.8</td>
-<td class="n">0.218</td>
 <td><b>MEM -10.0</b></td>
 <td class="n">0.781</td>
-<td class="n">1.280</td>
-<td><b>-358</b></td>
+<td class="n">0.502</td>
+<td class="n">1.992</td>
+<td><b>-101</b></td>
+<td>1.280</td>
+<td>-358</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -344,11 +387,13 @@ build refuses to do.</div>
 <td><span class="badge b-ok">A</span></td>
 <td class="n">-12.5</td>
 <td class="n">219.2</td>
-<td class="n">0.837</td>
 <td><b>BOS -12.5</b></td>
 <td class="n">0.837</td>
-<td class="n">1.195</td>
-<td><b>-513</b></td>
+<td class="n">0.506</td>
+<td class="n">1.974</td>
+<td><b>-103</b></td>
+<td>1.195</td>
+<td>-513</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -361,11 +406,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+9.0</td>
 <td class="n">230.5</td>
-<td class="n">0.249</td>
 <td><b>HOU -9.0</b></td>
 <td class="n">0.751</td>
-<td class="n">1.332</td>
-<td><b>-301</b></td>
+<td class="n">0.493</td>
+<td class="n">2.028</td>
+<td><b>+103</b></td>
+<td>1.332</td>
+<td>-301</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -378,11 +425,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+4.5</td>
 <td class="n">223.1</td>
-<td class="n">0.362</td>
 <td><b>PHI -4.5</b></td>
 <td class="n">0.638</td>
-<td class="n">1.567</td>
-<td><b>-176</b></td>
+<td class="n">0.502</td>
+<td class="n">1.991</td>
+<td><b>-101</b></td>
+<td>1.567</td>
+<td>-176</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -395,11 +444,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+10.0</td>
 <td class="n">235.6</td>
-<td class="n">0.223</td>
 <td><b>GSW -10.0</b></td>
 <td class="n">0.777</td>
-<td class="n">1.287</td>
-<td><b>-348</b></td>
+<td class="n">0.496</td>
+<td class="n">2.017</td>
+<td><b>+102</b></td>
+<td>1.287</td>
+<td>-348</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -412,11 +463,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-5.0</td>
 <td class="n">228.3</td>
-<td class="n">0.656</td>
 <td><b>MIN -5.0</b></td>
 <td class="n">0.656</td>
-<td class="n">1.525</td>
-<td><b>-190</b></td>
+<td class="n">0.506</td>
+<td class="n">1.977</td>
+<td><b>-102</b></td>
+<td>1.525</td>
+<td>-190</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -429,11 +482,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-4.5</td>
 <td class="n">227.8</td>
-<td class="n">0.638</td>
 <td><b>DEN -4.5</b></td>
 <td class="n">0.638</td>
-<td class="n">1.568</td>
-<td><b>-176</b></td>
+<td class="n">0.502</td>
+<td class="n">1.993</td>
+<td><b>-101</b></td>
+<td>1.568</td>
+<td>-176</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -446,11 +501,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">+2.5</td>
 <td class="n">220.2</td>
-<td class="n">0.418</td>
 <td><b>NYK -2.5</b></td>
 <td class="n">0.582</td>
-<td class="n">1.718</td>
-<td><b>-139</b></td>
+<td class="n">0.506</td>
+<td class="n">1.977</td>
+<td><b>-102</b></td>
+<td>1.718</td>
+<td>-139</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -463,11 +520,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-5.5</td>
 <td class="n">224.5</td>
-<td class="n">0.663</td>
 <td><b>SAS -5.5</b></td>
 <td class="n">0.663</td>
-<td class="n">1.509</td>
-<td><b>-197</b></td>
+<td class="n">0.498</td>
+<td class="n">2.007</td>
+<td><b>+101</b></td>
+<td>1.509</td>
+<td>-197</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -480,11 +539,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-5.0</td>
 <td class="n">228.3</td>
-<td class="n">0.656</td>
 <td><b>MIN -5.0</b></td>
 <td class="n">0.656</td>
-<td class="n">1.525</td>
-<td><b>-190</b></td>
+<td class="n">0.506</td>
+<td class="n">1.977</td>
+<td><b>-102</b></td>
+<td>1.525</td>
+<td>-190</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -497,11 +558,13 @@ build refuses to do.</div>
 <td><span class="badge b-warn">B</span></td>
 <td class="n">-5.5</td>
 <td class="n">227.9</td>
-<td class="n">0.670</td>
 <td><b>LAC -5.5</b></td>
 <td class="n">0.670</td>
-<td class="n">1.492</td>
-<td><b>-203</b></td>
+<td class="n">0.506</td>
+<td class="n">1.976</td>
+<td><b>-103</b></td>
+<td>1.492</td>
+<td>-203</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>
@@ -514,11 +577,13 @@ build refuses to do.</div>
 <td><span class="badge b-ok">A</span></td>
 <td class="n">-15.5</td>
 <td class="n">222.3</td>
-<td class="n">0.887</td>
 <td><b>LAL -15.5</b></td>
 <td class="n">0.887</td>
-<td class="n">1.127</td>
-<td><b>-788</b></td>
+<td class="n">0.506</td>
+<td class="n">1.975</td>
+<td><b>-103</b></td>
+<td>1.127</td>
+<td>-788</td>
 <td>0.00 u</td>
 <td>6/8</td>
 <td>G6, G7</td>

@@ -1127,6 +1127,24 @@ def check_backtest_surface(r: Report, site: dict):
     if ats.get("n") and ats.get("hits") is not None:
         if abs(frac(ats["hits"], ats["n"]) - round(float(ats.get("hit_rate", 0)), 4)) > 0.0002:
             arith.append(f"ats.hit_rate {ats.get('hit_rate')} != {ats['hits']}/{ats['n']}")
+        # The ATS block legitimately drops games whose originated line is exactly a pick'em, so
+        # its denominator can be smaller than the straight-up denominator. Comparing the two
+        # rates without accounting for that produced a false positive on every build with a
+        # pick'em in the sample (filed and fixed 2026-11-14, session arena/766d0269-nba2).
+        # The check now requires the exclusion to be published and to reconcile exactly.
+        recon = ats.get("straight_up_for_comparison") or {}
+        drop = int(ats.get("pickem_games_excluded") or 0)
+        if drop:
+            if recon.get("n") is None or int(recon["n"]) - drop != int(ats["n"]):
+                arith.append(f"pick'em exclusion of {drop} does not reconcile "
+                             f"{recon.get('n')} -> {ats['n']}")
+            if recon.get("hits") != ats.get("hits"):
+                arith.append(f"the two blocks do not select the same winning games "
+                             f"({recon.get('hits')} vs {ats.get('hits')})")
+            if abs(float(recon.get("rate") or 0) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
+                arith.append("published straight-up reconciliation rate != accuracy.straight_up_accuracy")
+        elif abs(float(ats.get("hit_rate", 0)) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
+            arith.append("ats.hit_rate and accuracy.straight_up_accuracy disagree")
     for name in ("always_home", "better_net_rating", "originated_model"):
         blk = nb.get(name) or {}
         n = blk.get("n", nb.get("n_games"))
