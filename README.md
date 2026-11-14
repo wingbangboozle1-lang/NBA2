@@ -27,8 +27,9 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (17 pages, 31 tables, 870 rows) are rendered from
-[`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
+`index.html` + `pages/**` (18 HTML pages: 1 landing page + 17 subpages; 33 tables, 915 rows at
+this snapshot) are rendered from [`data/site.json`](data/site.json), which is itself generated
+only from committed snapshots:
 
 | Page | Contents |
 |---|---|
@@ -58,7 +59,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 49 standard-library tests: statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 55 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
@@ -97,12 +98,16 @@ package version nobody pinned.
 
 1. **Inputs** — committed snapshots: the official slate (31 games, 11/13–11/16, official game IDs,
    tip times cross-checked against a second official document), the official injury report
-   (95 rows, two revisions compared), and a team ratings table whose win-loss column is
-   cross-checked against NBA.com game cards (30/30 agree with the prior session's independent read).
+   (95 rows, two revisions compared), and a team ratings table whose records are cross-referenced
+   against NBA.com captures. **Cross-check coverage is unresolved in the published documentation:**
+   the raw snapshot metadata says 30/30 records match, while the emitted ratings rows say the NBA.com
+   game-card cross-check covers 28/30. Until row-level evidence identifies and resolves the difference,
+   do not describe all 30 records as independently NBA-verified.
 2. **Calibration** — margin volatility σ and home-court advantage are **fitted** by least squares to
-   the 30 verified win totals (σ ≈ 13.58 pts, HCA ≈ 1.53 pts; RMSE 1.31 wins vs 2.78 for a .500
-   baseline). Neither is copied from folklore; where two ways of estimating HCA disagree, the site
-   says so (`FLAG-PARAM-02`).
+   the committed win totals (σ ≈ 13.58 pts, HCA ≈ 1.53 pts; RMSE 1.31 wins vs 2.78 for a .500
+   baseline). These are fitted from the committed snapshot, not from a separately described
+   multi-season point-in-time history; do not interpret this as out-of-sample validation. Where two
+   ways of estimating HCA disagree, the site says so (`FLAG-PARAM-02`).
 3. **Shrinkage** — at ~12 games ratings are noise-heavy, so each is multiplied by a reliability
    weight λ = τ²/(τ²+se²) derived from the table's own dispersion.
 4. **Two views, one line** — schedule-adjusted SRS and raw scoring margin are carried separately; the
