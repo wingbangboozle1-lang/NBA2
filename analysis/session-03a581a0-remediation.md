@@ -28,7 +28,8 @@ A read-only regrade uses the original labels and the official final-score captur
 
 - `nba2/data/picks.json` has no diff; the historical generated timestamp remains intact.
 - `nba2` unit tests: 70 passed (64 baseline plus six new regression tests); backtest tests: 49 passed.
-- `nba2.pipeline.lint`: PASS, 1,150 rows / 40 tables on this branch's current v1 output.
-- The official-game links above identify the NBA games used for final-score checks. The regrade procedure and score inputs are also inspectable in the committed local audit capture; no outcome is inferred from an unverified source.
-- Existing remaining crosscheck findings `CC-SNAP-13` (snapshot's self-diagnosed ratings labels) and `CC-X-00` (Washington `WSH`/`WAS` key mismatch in the separate `originated/` surface) are not repaired here. They remain explicitly flagged rather than modifying another surface or a provenance snapshot.
-- `nba2/v2/live.py` and the built `site/` tree are outside this session's scope. Their published verdict still requires an owner-side correction: it presents the 4/4 result as if every graded pick won, while the historically stored side is inverted. The requested handoff is recorded in `COORDINATION.md`; no attempt is made to edit those files or regenerate the other session's tree.
+- `nba2.pipeline.lint`: PASS, 1,306 rows / 46 tables after the PR #54 integration rebase.
+- Current `tools/crosscheck_site.py`: 94 checks, 85 pass / 1 fail / 8 info. The sole failure is CC-DOC-01: README still says 64 v1 tests while this branch now runs 70 (the six new regression tests). The README is in the active PR #50 owner's scope; the count correction is requested in `COORDINATION.md` rather than competing with that edit.
+- The official-game links above identify the NBA games used for final-score checks. The regrade procedure and score inputs are also inspectable in the committed local audit capture; the four NBA.com game pages were fetched in this session, and no outcome is inferred from an unverified source.
+- CC-SNAP-13 and CC-X-00 are now resolved by the merged PR #54; they are not claimed as this session's fixes.
+- The canonical `site/live-verification.html` still says “every graded pick won.” `nba2/v2/live.py` and `site/**` remain outside this session's scope; correcting that verdict and publishing the corrected S-26 disclosure are requested from the active site integration owner in `COORDINATION.md`. The historical pick file remains unchanged.

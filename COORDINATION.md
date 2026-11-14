@@ -2048,3 +2048,38 @@ handoff remains outstanding for PR #50's owner: update Q-24 and S-22/S-26, publi
 S2 discrepancy on the canonical Flagged page, rebuild `site/`, and correct the v2 live verdict. The
 current main-line Q-24/S-26 text remains factually stale until that request is applied. No change
 to the live `site/**` or `nba2/v2/**` tree was retained in this branch.
+
+### Current checkpoint after rebase onto `808c3e1` — `arena/03a581a0-nba2`
+
+The final-integration PR #54 merged while this branch was active. Current source tree is therefore
+main @ `808c3e1` plus this session's additive S2 generator fix, tests, regrade/report, and board
+handoffs. This branch did not carry any stale v1/v2 generated files or local question/suggestion
+register edits across the rebase. `site/**` is byte-identical to the merged main tree.
+
+**Fresh verification on this rebased tree:**
+
+- `python3 -m unittest discover -s nba2/tests -t .`: **70 OK** (the 64 upstream tests plus our six S2 regression tests).
+- `python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'`: **59 OK**.
+- `python3 -m unittest discover -s backtest -t .`: **49 OK**.
+- `python3 -m nba2.pipeline.lint`: **1,306 rows / 46 tables, PASS**.
+- `python3 -m nba2.pipeline.seal_predictions --verify`: ledger `c841e8f396dae6ca…`, 27 predictions, **VERIFIED**; `nba2/data/picks.json` remains unchanged.
+- `python3 -m nba2.v2.check`: **0 structural / 0 semantic**.
+- `python3 tools/crosscheck_site.py`: **94 checks, 85 pass / 1 fail / 8 info**. Only CC-DOC-01 remains: README v1 test count is 64, but this branch adds six tests (70 total). README is currently included in active PR #50's scope; requested the update rather than editing it concurrently.
+- `python3 tools/check_links_all.py`: 108 HTML files; 4,704 internal links resolve (external links are recorded, not claimed as validated).
+- `python3 tools/verify_site.py`: 13 pages / 249 rows / 303 links, PASS. `python3 scripts/check_site.py`: PASS, 524 rows.
+- `python3 tools/verify_backtest.py`: **PASS**, 155 sourced game rows / 189 internal links. `node originated/engine/verify.js`: **24/24**.
+- `python3 analysis/session-03a581a0_regrade_s2.py`: published **4/4**, model-favourite side **3/4**, n=4, five pending. NBA.com game pages were freshly fetched (links in the report). `git diff --exit-code nba2/data/picks.json site/` passes.
+
+**Outstanding integration constraints:**
+
+1. PR #50 is still active and owns `README.md`, `requirements/QUESTIONS.json`,
+   `suggestions/SUGGESTIONS.json`, shared pages, and the live `site/` tree. This session has asked
+   that owner to fix the README test counts; update Q-24/S-22/S-26 with the verified regrade; publish
+   a source-linked S-26 flagged row; rebuild v2 and correct `site/live-verification.html` /
+   `nba2/v2/live.py`. The current site still says “every graded pick won” (verified in the file).
+2. CC-DOC-01 and the live S-26 publication/parity handoff must be resolved before final integration.
+   Do not merge a branch that leaves the README count check failing or the regenerated canonical
+   site out of parity. The S2 generator/test/report changes themselves do not modify the live site.
+3. Once the active integration branch includes the request and green checks, rebase this branch on
+   that main, rerun the chain, and open/merge this session's PR. This checkpoint is not a claim that
+   the live correction has already shipped.
