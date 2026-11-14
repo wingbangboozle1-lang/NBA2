@@ -492,13 +492,13 @@
 </tr>
 <tr id="S-40">
 <td>S-40</td>
-<td>Make the existing nightly ingest actually run, and extend it to the v2 results history</td>
-<td>A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo&#x27;s own freshness check (CC-FRESH-03) reports &#x27;the schedule is armed but nothing has run&#x27;. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either.</td>
-<td>Confirm the cron schedule is enabled on the default branch (a scheduled workflow only starts firing after it is merged to the default branch once), then extend the job to append each completed date to data/raw/history/ and assert the per-date game count against the nba.com day-strip calendar and the game count implied by the standings. Fail the run on any disagreement.</td>
-<td>Makes the window impossible to fall behind silently, and turns the standings into a permanent cross-check on the results log.</td>
-<td>S</td>
-<td>Low. The workflow is already written and fail-closed; only the extension to data/raw/history/ is new.</td>
-<td>Accept — the schedule is already armed, so the cheapest possible fix is confirming it fires.</td>
+<td>Extend the scheduled refresh to update the published v2 results history and model inputs</td>
+<td>An automated workflow is scheduled and has run, but its code covers official injury reports and finals/settlement for sealed v1 windows. It does not append each date to data/raw/history/ or refresh the schedule, standings, and team-stat inputs used by the published v2 model. Therefore a run (even a successful one) is not evidence that v2 lines use current inputs. The dashboard publishes the last recorded run with its status and step outcomes.</td>
+<td>After confirming a point-in-time official-source path, ingest complete official finals, schedule, standings, and team-stat snapshots needed by v2. Validate game IDs, per-date coverage, captured times, and source URLs; rebuild the published v2 outputs only after every source and freshness gate passes. Keep the last verified outputs when a fetch or schema check fails, and publish the run outcome.</td>
+<td>Makes the freshness gate measure the data actually used for originated lines, while preserving the last verified snapshot and making every failed or incomplete refresh visible.</td>
+<td>M — official-source adapters, coverage/freshness checks, and historical backfill</td>
+<td>Official endpoints can be unavailable or change schema. A run that updates only v1 settlement inputs must not be described as refreshing v2 lines; odds and player logs remain separate blockers.</td>
+<td>Accept the source-contract and runner-reachability work first. Do not promote v2 freshness until a complete successful run updates the exact published model inputs.</td>
 <td>awaiting owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>

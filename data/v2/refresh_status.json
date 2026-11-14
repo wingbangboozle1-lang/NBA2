@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "failure",
+  "run_id": "43605830665",
+  "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665",
+  "workflow_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml",
+  "recorded_at_utc": "2026-11-14T18:50:40Z",
+  "event": "schedule",
+  "ref": "refs/heads/main",
+  "head_sha": "b3ed44d839b77f071592cd10d3dc734bc7958b23",
+  "step_outcomes": {
+    "window_dates": "success",
+    "injury_archive": "success",
+    "finals_fetch": "failure",
+    "transcript_check": "skipped",
+    "ledger_guard": "skipped",
+    "settlement": "skipped",
+    "verify": "skipped",
+    "semantic_crosscheck": "skipped",
+    "commit_snapshots": "skipped"
+  },
+  "v2_model_inputs_refreshed": false,
+  "scope_note": "This workflow archives official injury reports and fetches/settles finals for the sealed v1 window. It does not refresh the published v2 team's schedule, standings, ratings, or player inputs, and it does not provide market prices. A successful run is not a v2 line-freshness or bet-eligibility approval.",
+  "run_created_at_utc": "2026-11-14T14:37:25Z",
+  "run_updated_at_utc": "2026-11-14T14:38:06Z",
+  "note": "One or more refresh/validation steps failed before status publication (finals_fetch). See the linked run for details; the exact source/API cause is not inferred."
+}

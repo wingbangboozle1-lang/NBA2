@@ -64,7 +64,7 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <th scope="col">Effort</th>
 <th scope="col">State</th>
 <th scope="col">Evidence</th>
-<th scope="col">Official source</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr id="S-21">
 <td>S-21</td>
@@ -146,13 +146,13 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <tr id="S-40">
 <td>S-40</td>
 <td><span class="badge b-off">data</span></td>
-<td>Make the existing nightly ingest actually run, and extend it to the v2 results history</td>
-<td>A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo&#x27;s own freshness check (CC-FRESH-03) reports &#x27;the schedule is armed but nothing has run&#x27;. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either. — evidence: a nightly ingest workflow is committed and scheduled but has never run (gh run list is empty), and the repo&#x27;s own freshness check CC-FRESH-03 reports exactly that: armed, zero runs</td>
-<td>The existing cron actually fires, and it appends to the v2 results history as well as the v1 pipeline; a mismatch against the standings-implied game count fails the run instead of silently publishing a stale window.</td>
-<td>S</td>
+<td>Extend the scheduled refresh to update the published v2 results history and model inputs</td>
+<td>An automated workflow is scheduled and has run, but its code covers official injury reports and finals/settlement for sealed v1 windows. It does not append each date to data/raw/history/ or refresh the schedule, standings, and team-stat inputs used by the published v2 model. Therefore a run (even a successful one) is not evidence that v2 lines use current inputs. The dashboard publishes the last recorded run with its status and step outcomes. — evidence: Last recorded run 43605830665 was FAILURE (created 2026-11-14T14:37:25Z); failed stage(s): finals_fetch; skipped downstream stage(s): transcript_check, ledger_guard, settlement, verify, semantic_crosscheck, commit_snapshots; the exact endpoint/error is unverified; inspect the linked run; status record captured at 2026-11-14T18:50:40Z; this run did not refresh the published v2 model inputs; the injury retrieval step passed, but the snapshot-commit step did not complete</td>
+<td>A successful, source-verified pipeline would append complete official results to the history and refresh the exact NBA inputs used by the published v2 model. It must enforce per-date coverage and freshness, retain the last verified snapshot on failure, and never treat a v1 settlement run as a v2 refresh.</td>
+<td>M — official-source adapters, coverage/freshness checks, and historical backfill</td>
 <td><span class="badge b-warn">awaiting owner decision</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">official</a></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">GitHub run</a></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml" rel="noopener" target="_blank">workflow</a></td>
 </tr>
 <tr id="S-41">
 <td>S-41</td>
