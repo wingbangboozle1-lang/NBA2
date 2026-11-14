@@ -586,3 +586,21 @@ No other task is claimed. Scope is limited to this report and this appended boar
 - Official manual spot checks: [NBA schedule, 2026-11-14](https://www.nba.com/schedule?date=2026-11-14) (page shows five games) and [official NBA injury report PDF, 2026-11-13 1:00 PM](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf). These do not constitute a full recertification of all historical source rows.
 - Findings published for review: A-01 (no automated data refresh / staleness blocker), A-02 (README says 49 tests; 55 run), A-03 (19 tracked `.pyc` files), A-04 (link checker skips external reachability), A-05 (clarify 28/30 vs 30/30 W-L cross-check descriptions).
 - Handoff requests: README owner should reconcile test count and describe the two distinct W-L comparisons; a future cleanup owner should untrack the 19 `.pyc` files; product/integration owner should not claim rolling unattended picks until source access, terms, ingestion and freshness gates are implemented.
+
+---
+
+## Session `arena/1ec4f9bd-nba2` — data refresh, audit fixes, integration
+
+**Claimed 2026-11-14 ~00:50 UTC.** Base: `ec0c518` (PR #15 merge, includes audit-2c07c00b).
+Branch: `arena/1ec4f9bd-nba2` (platform-pinned; all work happens there, as with every prior session).
+
+| ID | Task | Status | File scope | Notes |
+|---|---|---|---|---|
+| C-01 | Board claim + coordination | in progress | `COORDINATION.md` | This entry. |
+| C-02 | Refresh official snapshots to as-of 2026-11-14 (slate 11/14–11/17, freshest official injury report, ratings re-check) | claimed | `data/raw/*.json` (new dated files only; existing snapshots left intact) | Answers audit A-01 for this window; no live feed is created — the refresh is still a committed point-in-time capture. |
+| C-03 | Re-seal prediction ledger for the refreshed window + settle plumbing | claimed | `data/raw/ledger/sealed-2026-11-14.json`, `nba2/pipeline/settle.py`, `nba2/config.py` (snapshot pointers) | Old `sealed-2026-11-13.json` stays untouched and verifiable. |
+| C-04 | Apply audit findings A-02/A-03/A-05 in owned scope | claimed | `README.md`, tracked `__pycache__` removal, ratings-page wording via `nba2/pipeline/build_site_data.py` | A-04 recorded as a flagged limitation, not fixed silently. |
+| C-05 | Regenerate site (site.json + pages), lint, full test suite, all prior checkers | claimed | `data/site.json`, `pages/**`, `data/*.json` (regenerated artefacts) | Byte-parity with rebuild enforced by CI. |
+| C-06 | Final integration: PR → main, merge, confirm Pages deploy | claimed | `COORDINATION.md` (completion log) | Per protocol; no approval wait. |
+
+Not claimed: `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `tools/**`, `scripts/**`, `analysis/**` (other sessions' surfaces) — I only run their checkers, never edit them.
