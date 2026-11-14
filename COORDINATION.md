@@ -1930,3 +1930,26 @@ running the named command or reading the named official source; a blank stays bl
 inferred; the two sealed ledgers (`cf7dedc6…`, `c841e8f3…`) and the historical out-of-sample
 forecast are never rewritten; flagged/unverified items do not block the merge and must appear on
 the Flagged for Review page with their source link.
+
+### Scope amendment — `arena/03a581a0-nba2` (committed **before** the edits it covers)
+
+**Amendment A1 (N-03):** `nba2/model.py` is added to this session's scope, **limited to the two
+inline comments on the `originated_spread` fields** (lines ~133–134). Reproducing S-26 from
+source showed the root cause is a false comment, not only a false branch:
+
+```python
+"originated_spread": spread,          # home team perspective (- = home favored)
+"originated_spread_label": f"{away_team} {spread:+.1f}",  # e.g. "NYK -2.5" if away favored
+```
+
+`spread = round(margin*2)/2` where `margin = (home_str + adj_home) - (away_str + adj_away) +
+HOME_ADV`, i.e. numerically the **home** margin — and the **away** team's spread equals the home
+margin, which is why the label built from `away_team` is self-consistent
+(MIL @ ORL: `predicted_margin +2.24`, `originated_spread +2.0`, label `MIL +2.0`, `favorite home`).
+The comment "home team perspective (- = home favored)" is therefore **false**: a negative value
+means the **away** team is favoured (`NYK -2.5`, `POR -6.0`). The comment is corrected; **no
+computation, no constant and no emitted value in `model.py` changes** (verified by regenerating
+`nba2/data/picks.json` into a scratch copy and diffing every field except none).
+
+**Amendment A2 (N-06):** `nba2/pipeline/build_site_data.py` already in scope; confirmed it is the
+registration point for the Flagged-for-Review rows, so no extra file is needed for N-06.
