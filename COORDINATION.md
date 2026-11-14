@@ -1562,3 +1562,41 @@ Findings, with file/source links and action proposals in the report:
 Limit: NBA schedule was fetched but rendered with no game rows in this client; no new current slate/injury numeric field is asserted. See report for official source links, verification limits, and decision-ready next steps.
 
 **Concurrent-session integration note:** PR #44 (`arena/e77ce5ad-nba2`) merged into `main` while PR #45 was being prepared, adding an independent official spot-check section to this same append-only board. The first PR #45 merge attempt was correctly blocked as non-fast-forward/conflicting. Rebased onto updated `origin/main`, preserved the complete E77 section and EAE report/claim/result, re-ran no destructive operations, and will update PR #45 from the rebased head.
+
+---
+
+
+---
+
+## Session `arena/7f906d9d-nba2` — final integration: live GitHub Pages site + verification (claimed 2026-11-14)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/7f906d9d-nba2` (platform-pinned; all work happens there).
+
+**Why this session:** the repo is fully built and every committed checker passes (64 nba2 + 59 v2 unit tests,
+`nba2.v2.check` clean, lint 1139 rows / 39 tables all sourced, `check_links_all.py` 107 HTML files / 4342 internal
+links ALL OK, builds byte-identical to committed files). What remains from the brief is the final integration:
+
+1. **Live GitHub Pages site.** `pages.yml` builds the clean v2 `site/` dashboard (landing page + category
+   subpages, per-row sourced tables, suggestions queue, questions register, flagged-for-review page) and
+   publishes it via `actions/deploy-pages`, but the repository's Pages setting is `build_type: legacy` serving
+   `main /` (the v1 root tree). The two disagree about what a reader sees at
+   https://wingbangboozle1-lang.github.io/NBA2/. This session makes pages.yml the source of truth for what is
+   published by switching the repository Pages source to GitHub Actions (`build_type: workflow`), then confirms
+   a deploy succeeds and the live URL serves the v2 dashboard.
+2. **Record** this session's claims, verification, and the PR/merge result in COORDINATION.md.
+
+**File scope (claimed):** `COORDINATION.md` (this section, append-only). No committed data/model/site file is
+touched; nothing is regenerated or rewritten. The only repo-level change is the Pages source setting (via the
+GitHub API), recorded here and verified by a live re-fetch.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| I-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| I-02 | Final repo review + full verification chain | claimed | `nba2/`, `site/`, `data/`, `pages/`, workflows (read-only) | every checker green; build byte-identical to committed files |
+| I-03 | Live GitHub Pages site: make pages.yml publish the v2 `site/` dashboard | claimed | Pages repository source setting (`build_type: workflow` via API); `.github/workflows/pages.yml` read-only | live site serves `site/`: clean landing page, category subpages, sourced tables, suggestions, questions, flagged page |
+| I-04 | PR → main, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` (completion record) | PR merged; Pages build status `built`; live URL re-fetched and content confirmed |
+
+**Rules this session holds itself to:** a row is only "verified" if checked against an official source or already
+source-linked in committed data; a blank stays blank; nothing is inferred; sealed ledgers never rewritten;
+flagged/unverified items appear on the Flagged for Review page with source links and do not block the merge.
+
