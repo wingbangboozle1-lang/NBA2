@@ -568,3 +568,13 @@ step.
   — rebase onto `origin/main` instead.
 - 2026-11-13: `main` advanced again to `f73b8f1` (PRs #1–#11). Rather than overwrite the files other
   sessions now own, this session renamed its whole tree into `originated/`.
+
+---
+
+## Session `arena/2c07c00b-nba2` — independent post-integration audit
+
+| Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|
+| A-01 | in progress | `arena/2c07c00b-nba2` | `analysis/audit-2c07c00b.md`; append-only entry in `COORDINATION.md` | Independent clean-tree tests, reproducible builds, generated-site/link/provenance checks; official-source claims referenced by URLs and checked where reachable. |
+
+No other task is claimed. Scope is limited to this report and this appended board entry; existing site/data files remain owned by their prior sessions.
