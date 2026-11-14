@@ -295,8 +295,8 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
-  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} status rows from the earlier release plus the {len(O.INJURIES_LATEST)} rows of the newest one, with the release-to-release delta.</p></div>
+  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>{len(C.QUESTIONS)} questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
@@ -396,9 +396,17 @@ net-rating baseline and <em>worse</em> than always picking the home team
 ({gr_ex.get('side_accuracy',{}).get('always_home','—')}/{gr_ex.get('side_accuracy',{}).get('n','—')}). No profit is
 published, because no signal in the file carries a price.</div>
 <div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
-ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
+ledgers still start on 2026-11-14 and correctly remain unmeasured. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
+<div class="note"><b>And what a second re-check changed, later the same day.</b> The newest official injury release
+(2026-11-14 05:00 a.m ET) was fetched and compared row by row against the release this site had been publishing: 26
+player rows shared, all 26 with the same status and reason — and one row where the earlier transcript was simply
+<b>wrong</b>. Caleb Martin was filed under Cleveland; the official release prints him under <b>Dallas</b>, and Cleveland
+is listed as NOT YET SUBMITTED. The published window rows now come from the release that repeats the team on every row,
+so the mis-attribution cannot recur, and the release-to-release delta is published. The nine official finals for
+2026-11-13 were committed and are graded against this model's own lines. The pick window was also corrected: it
+reaches 2026-11-17, the build date plus three days, where the earlier build stopped on 11/16.</div>
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
@@ -407,10 +415,12 @@ published on the Flagged page rather than fixed silently in someone else's file.
 <h2>Numbers behind the summary</h2>
 """
     rows = [
-        {"cells": ["Games in window", f"{len(lines)}", "2026-11-13 → 2026-11-16", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games priced", f"{len(lines)}", f"{n_window} in the 11/14 → 11/17 pick window, {n_context} day-before context games", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Games verified against the official schedule", f"{n_lines} / {n_lines}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Injury rows verified against the official PDF", "85 / 85 (+10 not-yet-submitted)", "11/13/26 04:15 PM ET", srclink(O.INJURY_PDF_URL)]},
+        {"cells": ["Current official records published against the model's own inputs", "30 / 30", "the league's table read 2026-11-14 matches the published official W-L column on every row", srclink(O.STANDINGS_SOURCE)],},
+        {"cells": ["Injury rows verified against the official PDFs", f"{len(O.INJURIES)} / {len(O.INJURIES)}", "11/13/26 04:15 PM ET release; the newest 11/14 05:00 a.m ET release is published beside it", srclink(O.INJURY_PDF_URL)]},
+        {"cells": ["Rows in the newest official injury release", f"{len(O.INJURIES_LATEST)}", f"{sum(1 for r in O.INJURIES_LATEST if r[4])} player-status rows + {sum(1 for r in O.INJURIES_LATEST if not r[4])} team rows", srclink(O.INJURIES_LATEST_SOURCE)]},
+        {"cells": ["Official finals committed", f"{len(O.FINALS)}", "the nine 2026-11-13 games, graded against the model's own lines", srclink(O.FINALS_SOURCE)]},
         {"cells": ["Measured correlations", "6", "computed from the official team, opponent and advanced tables", srclink(O.SOURCES["team_adv"][1])]},
         {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["game_logs"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
@@ -1076,8 +1086,8 @@ with both values shown.</p>
     built["repo-review.html"] = page("repo-review.html", "Repo review", body, "repo-review.html")
 
     # ------------------------------------------------------------------ questions
-    body = """<h1>Open questions</h1>
-<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
+    body = f"""<h1>Open questions</h1>
+<p class="lede">{len(C.QUESTIONS)} questions that block a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 """
     rows = []

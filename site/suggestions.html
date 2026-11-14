@@ -36,10 +36,10 @@
 </aside>
 <main>
 <h1>Suggestions queue</h1>
-<p class="lede">24 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+<p class="lede">28 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
-<div class="note"><b>How to use it.</b> Read the state column. 10 items are already <code>IMPLEMENTED</code> and need no
+<div class="note"><b>How to use it.</b> Read the state column. 11 items are already <code>IMPLEMENTED</code> and need no
 decision; 6 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
 dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 <div class="scroll"><table>
@@ -292,6 +292,46 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>Low — decided: pages.yml publishes site/ (v2) only</td>
 <td>none — v1 trees stay in the repo for audit</td>
 <td><span class="badge b-ok">IMPLEMENTED — pages.yml publishes site/ only</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-25">
+<td>SG-25</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Re-read the three official team-stat pages (traditional, opponent, advanced) and re-cut the model inputs.</td>
+<td>The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the published lines therefore start from a slightly out-of-date level.</td>
+<td>Low — the three pages render for this client; the capture is a transcription plus a diff</td>
+<td>none — the pages are reachable through the platform page-reader; a runner can do it unattended (SG-1)</td>
+<td><span class="badge b-off">QUEUED — owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-26">
+<td>SG-26</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Make the nightly refresh rebuild the published v2 tree as well as the v1 tree, and diff both against the commit.</td>
+<td>refresh.yml fetches the newest official injury release and the finals, then rebuilds only the v1 tree. The tree a reader actually sees is the v2 one, so the data the refresh collects never reaches it.</td>
+<td>Low — the build commands already exist (python -m nba2.v2, python -m nba2.v2.check)</td>
+<td>none</td>
+<td><span class="badge b-off">QUEUED — owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-27">
+<td>SG-27</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Add a release-to-release injury diff to the build, and fail the build when a status changes.</td>
+<td>A report is re-issued several times a day. The 11/14 05:00 a.m ET release moved nothing relative to the 11/13 19:30 ET release on the 26 shared rows, but the next one might, and a changed status is a different bet.</td>
+<td>Low — the diff is computed in the build and published on the Injuries page today</td>
+<td>none</td>
+<td><span class="badge b-ok">IMPLEMENTED — published as a table on the Injuries page</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-28">
+<td>SG-28</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Move the five unpublished site trees under archive/ with dated notes, and delete nothing.</td>
+<td>Six trees still live at the repository root. Only the v2 tree is published, but a maintainer cloning the repo sees six dashboards and no marker saying which one is live. The published tree also needs a marker saying so.</td>
+<td>Low — a move plus one banner per tree</td>
+<td>none</td>
+<td><span class="badge b-off">QUEUED — owner decision</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>

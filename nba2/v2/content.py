@@ -237,6 +237,31 @@ SUGGESTIONS = [
      "Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.",
      "Low — both values exist in committed metadata", "SG-22 for the settlement half",
      "QUEUED"),
+    ("SG-25", "Data plumbing",
+     "Re-read the three official team-stat pages (traditional, opponent, advanced) and re-cut the model inputs.",
+     "The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 "
+     "games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the "
+     "published lines therefore start from a slightly out-of-date level.",
+     "Low — the three pages render for this client; the capture is a transcription plus a diff",
+     "none — the pages are reachable through the platform page-reader; a runner can do it unattended (SG-1)",
+     "QUEUED — owner decision"),
+    ("SG-26", "Data plumbing",
+     "Make the nightly refresh rebuild the published v2 tree as well as the v1 tree, and diff both against the commit.",
+     "refresh.yml fetches the newest official injury release and the finals, then rebuilds only the v1 tree. The tree a "
+     "reader actually sees is the v2 one, so the data the refresh collects never reaches it.",
+     "Low — the build commands already exist (python -m nba2.v2, python -m nba2.v2.check)",
+     "none", "QUEUED — owner decision"),
+    ("SG-27", "Verification",
+     "Add a release-to-release injury diff to the build, and fail the build when a status changes.",
+     "A report is re-issued several times a day. The 11/14 05:00 a.m ET release moved nothing relative to the 11/13 "
+     "19:30 ET release on the 26 shared rows, but the next one might, and a changed status is a different bet.",
+     "Low — the diff is computed in the build and published on the Injuries page today",
+     "none", "IMPLEMENTED — published as a table on the Injuries page"),
+    ("SG-28", "Verification",
+     "Move the five unpublished site trees under archive/ with dated notes, and delete nothing.",
+     "Six trees still live at the repository root. Only the v2 tree is published, but a maintainer cloning the repo sees "
+     "six dashboards and no marker saying which one is live. The published tree also needs a marker saying so.",
+     "Low — a move plus one banner per tree", "none", "QUEUED — owner decision"),
 ]
 
 # --------------------------------------------------------------------------- questions
@@ -313,6 +338,34 @@ QUESTIONS = [
      "Owner sign-off; whether rewards are cash, credit, or leaderboard status only.",
      "Owner decision. The proposal is published with its rationale so it can be accepted or rejected item by item.",
      "Blocks running the competition at all.", S["standings"][1]),
+    ("Q-15", "Do the scoring averages and advanced ratings this model runs on still describe the teams?",
+     "Partly answered: the records can be checked every day, and the league's current table is published beside the "
+     "model's inputs. The scoring averages and NetRtg were read on 2026-11-13, before the nine 2026-11-13 games, so "
+     "for the 18 clubs that played they are one game stale.",
+     "A current read of the three official team-stat pages (traditional, opponent, advanced), and the diff against what "
+     "the model used.",
+     "Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the "
+     "committed transcription, and publish the delta (suggestion SG-25).",
+     "Blocks claiming that the published lines start from current inputs; does not block publishing them.",
+     S["team_trad"][1]),
+    ("Q-16", "Does an official injury release change a designation between editions?",
+     "Answered for the pair this session compared: the 2026-11-14 05:00 a.m ET release and the 2026-11-13 19:30 ET "
+     "release share 26 player rows and every one of them has the same status and reason. The delta table is published "
+     "on the Injuries page.",
+     "Whether the pattern holds for every future pair, and how large the pre-tip churn is in practice.",
+     "Diff every new release against the previous one on the keys (date, matchup, player); count the status moves per "
+     "release and publish the rate.",
+     "Blocks any claim about how stable a designation is; the answer so far is published.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"),
+    ("Q-17", "Why does the third-party ratings snapshot's close/blowout split contradict the games played?",
+     "Answered in part: the league-wide sums balance (close 99 = 99, blowout 88 = 88) but the per-team bound "
+     "close+blowout <= games played does not hold for 18 of 30 clubs. The cause is the text extraction of the source "
+     "table, which has blank/merged cells - not the league's data.",
+     "The row-level truth for those 18 clubs.",
+     "Re-extract the close and blowout columns from the source table row by row and re-check the per-team bound; until "
+     "then the columns stay out of the luck table.",
+     "Blocks any per-team luck claim that uses the close/blowout split.",
+     "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"),
 ]
 
 # --------------------------------------------------------------------------- flags
@@ -570,10 +623,13 @@ REPO_FACTS = [
     ("Files tracked at base commit a09f48e",
      "245 files (excluding .git)", "counted with `find . -path ./.git -prune -o -type f -print | wc -l`",
      "https://github.com/wingbangboozle1-lang/NBA2/tree/main"),
-    ("Python unit tests", "55 pass in 0.589 s", "`python3 -m unittest discover -s nba2/tests -t .`",
+    ("Python unit tests", "64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)",
+     "`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p 'test_*.py'`; `... -s backtest/tests`",
      "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests"),
-    ("Provenance lint", "915 rows across 33 tables, every row sourced",
+    ("Provenance lint", "1,296 rows across 45 tables, every row sourced",
      "`python3 -m nba2.pipeline.lint`", "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline"),
+    ("Repository cross-checker", "94 checks: 86 pass, 0 fail, 8 informational",
+     "`python3 tools/crosscheck_site.py`", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py"),
     ("Sealed prediction ledger", "22 predictions, digest cf7dedc689597cb8… verified",
      "`python3 -m nba2.pipeline.seal_predictions --verify`",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json"),
@@ -582,8 +638,10 @@ REPO_FACTS = [
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py"),
     ("Internal links at base commit", "75 HTML files, 3,233 internal links, all resolve",
      "`python3 tools/check_links_all.py`", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py"),
-    ("Parallel site trees present", "6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)",
-     "directory listing", "https://github.com/wingbangboozle1-lang/NBA2"),
+    ("Parallel site trees present", "6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/) — "
+     "only this v2 tree is published; the other five are retained for history and are unreachable to a reader",
+     "directory listing + live probe (the /pages/ paths answer 404)",
+     "https://github.com/wingbangboozle1-lang/NBA2"),
     ("Tracked Python bytecode", "19 .pyc files tracked despite .gitignore",
      "`git ls-files '*.pyc' | wc -l`", "https://github.com/wingbangboozle1-lang/NBA2"),
     ("Internationalisation / accessibility", "No lang-specific copy; tables use <caption> in the prior build; no automated a11y check",

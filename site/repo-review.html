@@ -54,15 +54,21 @@ running its own checks rather than trusting its documentation.</p>
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>55 pass in 0.589 s</td>
-<td>`python3 -m unittest discover -s nba2/tests -t .`</td>
+<td>64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)</td>
+<td>`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p &#x27;test_*.py&#x27;`; `... -s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>915 rows across 33 tables, every row sourced</td>
+<td>1,296 rows across 45 tables, every row sourced</td>
 <td>`python3 -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Repository cross-checker</td>
+<td>94 checks: 86 pass, 0 fail, 8 informational</td>
+<td>`python3 tools/crosscheck_site.py`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>
 <td>Sealed prediction ledger</td>
@@ -84,8 +90,8 @@ running its own checks rather than trusting its documentation.</p>
 </tr>
 <tr>
 <td>Parallel site trees present</td>
-<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)</td>
-<td>directory listing</td>
+<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/) — only this v2 tree is published; the other five are retained for history and are unreachable to a reader</td>
+<td>directory listing + live probe (the /pages/ paths answer 404)</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr>

@@ -55,9 +55,17 @@ net-rating baseline and <em>worse</em> than always picking the home team
 (7/9). No profit is
 published, because no signal in the file carries a price.</div>
 <div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
-ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
+ledgers still start on 2026-11-14 and correctly remain unmeasured. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
+<div class="note"><b>And what a second re-check changed, later the same day.</b> The newest official injury release
+(2026-11-14 05:00 a.m ET) was fetched and compared row by row against the release this site had been publishing: 26
+player rows shared, all 26 with the same status and reason — and one row where the earlier transcript was simply
+<b>wrong</b>. Caleb Martin was filed under Cleveland; the official release prints him under <b>Dallas</b>, and Cleveland
+is listed as NOT YET SUBMITTED. The published window rows now come from the release that repeats the team on every row,
+so the mis-attribution cannot recur, and the release-to-release delta is published. The nine official finals for
+2026-11-13 were committed and are graded against this model's own lines. The pick window was also corrected: it
+reaches 2026-11-17, the build date plus three days, where the earlier build stopped on 11/16.</div>
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 <div class="note"><b>What was built.</b> A v2 line-origination model over a 31-game, three-day window (2026-11-13 → 2026-11-16), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table.</div><div class="note"><b>What is verified.</b> 31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), and the nine 2026-11-13 games in this window are now published with their official finals and graded against the model&#x27;s own lines. So the method CAN be backtested — and it has been. All 27 window picks remain withheld because a pick needs a price, not because the method is unknown.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
 <h2>Numbers behind the summary</h2>
@@ -70,9 +78,9 @@ published on the Flagged page rather than fixed silently in someone else's file.
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>Games in window</td>
+<td>Games priced</td>
 <td>36</td>
-<td>2026-11-13 → 2026-11-16</td>
+<td>27 in the 11/14 → 11/17 pick window, 9 day-before context games</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
 </tr>
 <tr>
@@ -82,16 +90,28 @@ published on the Flagged page rather than fixed silently in someone else's file.
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
 </tr>
 <tr>
-<td>Team records verified against nba.com/standings</td>
+<td>Current official records published against the model's own inputs</td>
 <td>30 / 30</td>
-<td>exact match</td>
+<td>the league's table read 2026-11-14 matches the published official W-L column on every row</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>Injury rows verified against the official PDF</td>
-<td>85 / 85 (+10 not-yet-submitted)</td>
-<td>11/13/26 04:15 PM ET</td>
+<td>Injury rows verified against the official PDFs</td>
+<td>85 / 85</td>
+<td>11/13/26 04:15 PM ET release; the newest 11/14 05:00 a.m ET release is published beside it</td>
 <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>Rows in the newest official injury release</td>
+<td>49</td>
+<td>26 player-status rows + 23 team rows</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>Official finals committed</td>
+<td>9</td>
+<td>the nine 2026-11-13 games, graded against the model's own lines</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
 </tr>
 <tr>
 <td>Measured correlations</td>
