@@ -289,10 +289,10 @@
 <tr id="Q-24">
 <td>Q-24</td>
 <td>Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?</td>
-<td>The pre-tip out-of-sample file nba2/data/picks.json contains 4 distinct settled games, with one S1 moneyline and one S2 spread signal on each. S1 moneyline was 4/4. S2 as published was 4/4, but all nine S2 strong-margin labels were sign-inverted: regrading the four settled signals on the model&#x27;s intended favourite side gives 3/4 (UTA @ HOU is the loss); five S2 signals remain pending. Do not count the two strategies&#x27; eight signal rows as eight independent games. The model called the winner in 5 of 9 games; always-home would have got 7.</td>
-<td>The promotion threshold. Existing gates require 30 settled bets, but the owner has not ratified whether 30 is sufficient or whether a 4-game sample should be displayed at all. Neither S2 rate (published 4/4 or corrected-side 3/4) meets the 30-settlement gate.</td>
-<td>Owner ratifies the minimum n (proposal: 100 settled, to have power to detect a 3-point edge) and whether sub-threshold rates may be displayed only with their denominator and a prominent &#x27;insufficient evidence&#x27; label. Historical S2 labels remain frozen; see the regrade report and per-game NBA.com links.</td>
-<td>A 4/4 headline would overstate evidence: the S2 result was graded on the wrong side, the corrected-side count is 3/4, and the sample is n=4. Publishing the denominator, per-market result, and pending count prevents a reader from mistaking an initial run for demonstrated skill.</td>
+<td>The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.</td>
+<td>The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.</td>
+<td>Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.</td>
+<td>4-0 is exactly the result that would get a bettor to increase stakes. Publishing it without the n=4 context would make the site a machine for manufacturing false confidence.</td>
 <td>HIGH</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>

@@ -2029,3 +2029,22 @@ claimed checks and the S2-specific regression are recorded in this session's com
 Official-result verification for the S2 regrade was performed by fetching the individual NBA.com
 pages linked in `analysis/session-03a581a0-remediation.md` on 2026-11-14. No unverified outcome was
 used as a confirmed result. Existing `CC-SNAP-13` and `CC-X-00` are disclosed, not silently altered.
+
+### Rebase checkpoint after PR #54 merged — `arena/03a581a0-nba2`
+
+`main` advanced to `808c3e1` (merge of PR #54) during the required rebase. Its integration
+already repairs CC-SNAP-13 and CC-X-00 and publishes a newer official capture/site. To preserve
+that work, this branch kept main's `README.md`, leaderboard, v1 build generator, crosscheck, and
+generated v1/v2 trees rather than replaying the now-superseded N-04/N-05 output changes. The
+current main-line crosscheck from PR #54 reports 94 checks, 86 pass, 0 fail, 8 info; this branch
+will rerun it with the S2 change before PR creation.
+
+PR #50 remains open and claims the shared question/suggestion registers, generated pages and
+published `site/` tree. Accordingly, this branch has **reverted its local Q-24/S-22/S-26 register
+and generated-page edits** after the rebase rather than competing with that active claim. The
+corrected S2 generator, six-test regression, immutable-file proof, official result regrade and
+report remain in this branch. The concrete correction and review-row request from the preceding
+handoff remains outstanding for PR #50's owner: update Q-24 and S-22/S-26, publish the corrected
+S2 discrepancy on the canonical Flagged page, rebuild `site/`, and correct the v2 live verdict. The
+current main-line Q-24/S-26 text remains factually stale until that request is applied. No change
+to the live `site/**` or `nba2/v2/**` tree was retained in this branch.

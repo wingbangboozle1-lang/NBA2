@@ -214,13 +214,13 @@
     {
       "id": "Q-24",
       "question": "Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?",
-      "have": "The pre-tip out-of-sample file nba2/data/picks.json contains 4 distinct settled games, with one S1 moneyline and one S2 spread signal on each. S1 moneyline was 4/4. S2 as published was 4/4, but all nine S2 strong-margin labels were sign-inverted: regrading the four settled signals on the model's intended favourite side gives 3/4 (UTA @ HOU is the loss); five S2 signals remain pending. Do not count the two strategies' eight signal rows as eight independent games. The model called the winner in 5 of 9 games; always-home would have got 7.",
-      "missing": "The promotion threshold. Existing gates require 30 settled bets, but the owner has not ratified whether 30 is sufficient or whether a 4-game sample should be displayed at all. Neither S2 rate (published 4/4 or corrected-side 3/4) meets the 30-settlement gate.",
-      "how": "Owner ratifies the minimum n (proposal: 100 settled, to have power to detect a 3-point edge) and whether sub-threshold rates may be displayed only with their denominator and a prominent 'insufficient evidence' label. Historical S2 labels remain frozen; see the regrade report and per-game NBA.com links.",
-      "impact": "A 4/4 headline would overstate evidence: the S2 result was graded on the wrong side, the corrected-side count is 3/4, and the sample is n=4. Publishing the denominator, per-market result, and pending count prevents a reader from mistaking an initial run for demonstrated skill.",
+      "have": "The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.",
+      "missing": "The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.",
+      "how": "Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.",
+      "impact": "4-0 is exactly the result that would get a bettor to increase stakes. Publishing it without the n=4 context would make the site a machine for manufacturing false confidence.",
       "severity": "HIGH",
       "source": "https://www.nba.com/games",
-      "evidence": "analysis/session-03a581a0-remediation.md; analysis/session-03a581a0_regrade_s2.py; official game pages: https://www.nba.com/game/cle-vs-mia-0022600036, https://www.nba.com/game/uta-vs-hou-0022600039, https://www.nba.com/game/gsw-vs-sas-0022600040, https://www.nba.com/game/por-vs-sac-0022600041"
+      "evidence": "nba2/v2/live.py::grade()"
     },
     {
       "id": "Q-25",
