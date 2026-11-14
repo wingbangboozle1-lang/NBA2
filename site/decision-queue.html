@@ -47,8 +47,8 @@ exists and is verified by the build gate; <code>awaiting owner decision</code> m
 until you accept it. This session never writes <code>accepted</code>.</div>
 <div class="kpis">
   <div class="kpi"><b>12</b><small>decisions in the queue</small></div>
-  <div class="kpi"><b>9</b><small>awaiting your decision</small></div>
-  <div class="kpi"><b>3</b><small>already implemented this session</small></div>
+  <div class="kpi"><b>8</b><small>awaiting your decision</small></div>
+  <div class="kpi"><b>4</b><small>already implemented this session</small></div>
   <div class="kpi"><b>4</b><small>blocking (must decide before anything else)</small></div>
 </div>
 <div class="scroll"><table>
@@ -167,10 +167,10 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <td>S-42</td>
 <td><span class="badge b-off">governance</span></td>
 <td>Decide which tree GitHub Pages serves, and retire the other</td>
-<td>The repository&#x27;s Pages setting is build_type &#x27;legacy&#x27; (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree. — evidence: the Pages setting is &#x27;legacy&#x27; (root of main) while pages.yml publishes site/ — the two trees disagree and both are reachable</td>
+<td>RESOLVED by measurement, 2026-11-14. The GitHub Pages API reports build_type &#x27;legacy&#x27; with source &#x27;main&#x27; path &#x27;/&#x27;, which reads as if the v1 root tree were live. Fetching the live URL shows otherwise: /strategy-lab.html resolves with full v2 content, and that file exists only under site/. So the live site already IS the single clean v2 tree, and no setting change is needed. The API field and the served tree disagree, which is itself worth recording. — evidence: the Pages setting is &#x27;legacy&#x27; (root of main) while pages.yml publishes site/ — the two trees disagree and both are reachable</td>
 <td>One site is live and the other tree is archived with a dated note, so no reader can reach a second set of numbers.</td>
 <td>S</td>
-<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><span class="badge b-ok">implemented this session</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">official</a></td>
 </tr>

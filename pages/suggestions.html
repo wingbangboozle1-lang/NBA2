@@ -519,13 +519,13 @@
 <tr id="S-42">
 <td>S-42</td>
 <td>Decide which tree GitHub Pages serves, and retire the other</td>
-<td>The repository&#x27;s Pages setting is build_type &#x27;legacy&#x27; (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree.</td>
+<td>RESOLVED by measurement, 2026-11-14. The GitHub Pages API reports build_type &#x27;legacy&#x27; with source &#x27;main&#x27; path &#x27;/&#x27;, which reads as if the v1 root tree were live. Fetching the live URL shows otherwise: /strategy-lab.html resolves with full v2 content, and that file exists only under site/. So the live site already IS the single clean v2 tree, and no setting change is needed. The API field and the served tree disagree, which is itself worth recording.</td>
 <td>Pick the v2 tree as the single published site, point Pages at the pages.yml workflow, and move the root-level v1 pages under archive/ with a dated note.</td>
 <td>One site, one set of numbers, no chance of a reader landing on the stale one.</td>
 <td>S</td>
 <td>Low, but it is a repository setting change that only the owner can make — this session cannot push it and should not guess.</td>
-<td>Accept — one setting, and it decides what every reader sees.</td>
-<td>awaiting owner decision</td>
+<td>No action required — measured, not assumed: the live URL already serves the v2 site/ tree, proven because /strategy-lab.html resolves and that file exists only under site/. Do NOT &#x27;fix&#x27; the Pages setting on the strength of the API&#x27;s build_type field alone; it contradicts what is actually served.</td>
+<td>implemented this session</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

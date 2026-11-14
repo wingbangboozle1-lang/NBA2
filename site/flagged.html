@@ -349,11 +349,11 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
 <tr id="F-039">
-<td><span class="badge b-off">F-039</span></td>
-<td><span class="badge b-off">low</span></td>
+<td><span class="badge b-info">F-039</span></td>
+<td><span class="badge b-info">info</span></td>
 <td>Site</td>
-<td>The GitHub Pages setting on this repository is still build_type &#x27;legacy&#x27; (deploy from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever one is live, the other is a fully-built tree sitting in the repository that a reader can reach by URL.</td>
-<td>Logged for the owner: this is a one-setting change either way, and it changes what every reader sees.</td>
+<td>RESOLVED by measurement — the GitHub Pages API still reports build_type &#x27;legacy&#x27; with source &#x27;main&#x27; path &#x27;/&#x27;, which would serve the v1 root tree, but fetching the live URL shows it actually serves the v2 site/ tree: /strategy-lab.html resolves with full v2 content, and that file exists ONLY under site/ and nowhere in the repository root. So the live site IS the clean v2 tree. The API field and the served tree disagree, which is worth knowing before anyone &#x27;fixes&#x27; the setting.</td>
+<td>Verified by fetching https://wingbangboozle1-lang.github.io/NBA2/strategy-lab.html after the merge; the setting was deliberately left alone rather than changed on the strength of an API field that contradicts what is actually served.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/settings/pages" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/settings/pages</a></td>
 </tr>
 <tr id="F-040">

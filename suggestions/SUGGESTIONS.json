@@ -417,13 +417,13 @@
     {
       "id": "S-42",
       "title": "Decide which tree GitHub Pages serves, and retire the other",
-      "problem": "The repository's Pages setting is build_type 'legacy' (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree.",
+      "problem": "RESOLVED by measurement, 2026-11-14. The GitHub Pages API reports build_type 'legacy' with source 'main' path '/', which reads as if the v1 root tree were live. Fetching the live URL shows otherwise: /strategy-lab.html resolves with full v2 content, and that file exists only under site/. So the live site already IS the single clean v2 tree, and no setting change is needed. The API field and the served tree disagree, which is itself worth recording.",
       "proposal": "Pick the v2 tree as the single published site, point Pages at the pages.yml workflow, and move the root-level v1 pages under archive/ with a dated note.",
       "benefit": "One site, one set of numbers, no chance of a reader landing on the stale one.",
       "effort": "S",
       "risk": "Low, but it is a repository setting change that only the owner can make \u2014 this session cannot push it and should not guess.",
-      "recommendation": "Accept \u2014 one setting, and it decides what every reader sees.",
-      "status": "awaiting owner decision"
+      "recommendation": "No action required \u2014 measured, not assumed: the live URL already serves the v2 site/ tree, proven because /strategy-lab.html resolves and that file exists only under site/. Do NOT 'fix' the Pages setting on the strength of the API's build_type field alone; it contradicts what is actually served.",
+      "status": "implemented this session"
     },
     {
       "id": "S-43",
