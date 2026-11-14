@@ -228,7 +228,8 @@ control and an explicit power calculation — so "not enough data" is a number, 
 <li><strong>Correlations measured, not assumed.</strong> The margin↔total premise behind the same-game
 parlay strategy is <strong>not supported</strong>: r = {corr['margin_total']['r']} (95% CI
 {corr['margin_total']['ci95'][0]} to {corr['margin_total']['ci95'][1]}).</li>
-<li><strong>Gates re-run on evidence.</strong> G-04 (accuracy vs baselines) <strong>FAILS</strong>;
+<li><strong>Gates re-run on evidence.</strong> G-04 (accuracy vs baselines) passes its
+registered wording only against an unshrunk strawman and is <strong>disputed</strong>;
 G-07 (walk-forward) now has real numbers and <strong>PASSES</strong>.</li>
 </ul></section>
 <section class="card"><h2>Sections</h2><div class="cat-grid">
@@ -414,7 +415,7 @@ changes that arithmetic.</p></div>
 <ul class="tight">
 <li><strong>Is any strategy profitable?</strong> Unknowable: no prices. ROI would be fiction.</li>
 <li><strong>Would this beat a market line?</strong> Unknowable for the same reason. Beating our own line measures self-consistency only.</li>
-<li><strong>Is the champion the best?</strong> No: the {meta['n_graded']}-game sample is below the G-01 floor of 300 settled bets.</li>
+<li><strong>Is the champion the best?</strong> No: the {meta['n_graded']}-game sample is below the G-01 floor of 300 settled bets) and only reliable passes count toward the score.</li>
 </ul></div>
 """
     body += source_line("https://www.nba.com/games",
@@ -494,8 +495,8 @@ qualitative claim on earlier pages ("back-to-backs depress production") is there
 <p>Ranked on a deflated z-score against a coin flip, with a search penalty, so a hot week
 cannot win. Rewards are gated, not given.</p></section>
 <div class="notice notice-warning"><strong>No reward is paid.</strong> Every strategy's reward is
-0 because at least one registered validation gate is FAILED and the sample is far below the
-G-01 floor of 300 settled bets. The pool stays unallocated by design.</div>
+0 because G-01 fails (the sample is far below the
+G-01 floor of 300 settled bets) and only reliable passes count toward the score. The pool stays unallocated by design.</div>
 <div class="card"><h2>Scoring rule</h2>
 <ol class="tight">
 <li><strong>z</strong> = (accuracy − 0.5) / √(0.25 / n). It measures how far above a coin flip a
@@ -545,9 +546,12 @@ session every gate read "blocked — no settled bets".</p></section>
        "Validation gates against measured evidence", cls="data compact")}</div>
 <div class="card"><h2>What the failures mean</h2>
 <ul class="tight">
-<li><strong>G-04 FAILS.</strong> The model's mean absolute margin error must beat the raw
-point-differential baseline by 0.30 points. It does not. The honest reading: shrinkage plus the
-home-court term are not yet outperforming the simplest available signal.</li>
+<li><strong>G-04 is DISPUTED.</strong> It passes its registered wording &mdash; the model's MAE beats
+an unshrunk raw point differential &mdash; but that baseline is a strawman: in week one an unshrunk
+differential reads anywhere from &minus;66 to +31 points and is wrong by construction. Against a
+<em>fair</em> baseline (the same shrinkage, no home-court term) the model is
+<strong>0.08 points worse</strong>. The honest reading: shrinkage does all the work, the home-court
+term adds nothing, and this gate is not evidence of skill.</li>
 <li><strong>G-01 FAILS.</strong> {meta['n_graded']} graded games versus a 300-game floor.</li>
 <li><strong>G-07 PASSES.</strong> It was previously "at risk by construction" because the only
 snapshot was an as-of table that leaks the future. A leakage-tested walk-forward now exists.</li>
@@ -661,7 +665,7 @@ be verified, and what would make it a bad idea. Pick one, reject one, or defer a
 <caption>Model improvement suggestions</caption>
 <thead><tr><th scope="col">ID</th><th scope="col">Suggestion</th><th scope="col">Why</th><th scope="col">Verification</th><th scope="col">Risk</th></tr></thead>
 <tbody>
-<tr><td>S-101</td><td>Test a rating that uses margin of victory with a cap, or a ridge regression on point differential, and require it to beat the raw differential by 0.30 MAE before it replaces anything.</td><td>The current model loses to the raw differential, so the shrinkage is not yet adding information.</td><td>Same walk-forward, same seed, G-04 evaluated on the challenger.</td><td>Adds a parameter that can be over-fitted to 139 games.</td></tr>
+<tr><td>S-101</td><td>Test a rating that uses margin of victory with a cap, or a ridge regression on point differential, and require it to beat the raw differential by 0.30 MAE before it replaces anything.</td><td>The model does not beat a shrunk differential that omits the home-court term, so the home-court estimate is not yet adding information (shrinkage is).</td><td>Same walk-forward, same seed, G-04 evaluated on the challenger.</td><td>Adds a parameter that can be over-fitted to 139 games.</td></tr>
 <tr><td>S-102</td><td>Replace the four-rate total with a pace-and-efficiency model, or publish no total at all.</td><td>Total MAE (15.78) is worse than a constant (15.43). A total that loses to a constant should not be published.</td><td>Total MAE and bias on the same games.</td><td>Removing the total removes the S-04 parlay test entirely.</td></tr>
 <tr><td>S-103</td><td>Add an explicit rest/fatigue term only if a larger sample makes it significant; store the test as a regression with rest days as a covariate.</td><td>The effect's sign is right but p = 0.38. Shipping it now would be curve-fitting.</td><td>Refit when the sample reaches ~500 team-games; require p &lt; 0.05 and a stable sign.</td><td>Adds a feature that may be pure noise.</td></tr>
 </tbody></table></div></section>
@@ -681,7 +685,7 @@ be verified, and what would make it a bad idea. Pick one, reject one, or defer a
 <thead><tr><th scope="col">ID</th><th scope="col">Suggestion</th><th scope="col">Why it improves decisions</th><th scope="col">Verification</th></tr></thead>
 <tbody>
 <tr><td>S-108</td><td>Collapse the repository's multiple site trees (<code>/</code>, <code>/docs</code>, <code>/dashboard</code>, <code>/originated</code>, <code>/backtest</code>) behind one navigation with a status badge per tree.</td><td>Five surfaces disagree; a reader cannot tell which number is canonical.</td><td>One link check over the merged site; a badge page listing each tree's last verified date.</td></tr>
-<tr><td>S-109</td><td>Put the failing gate at the top of the landing page, not in a subpage.</td><td>The most decision-relevant fact (the model loses to the naive rule) is currently three clicks deep.</td><td>A build check that the landing page contains the current G-04 status.</td></tr>
+<tr><td>S-109</td><td>Put the failing gate at the top of the landing page, not in a subpage.</td><td>The most decision-relevant fact (the model is not distinguishable from a one-line rule) is currently three clicks deep.</td><td>A build check that the landing page contains the current G-04 status.</td></tr>
 <tr><td>S-110</td><td>Publish a single "what would change my mind" line per strategy, with the sample size needed.</td><td>Converts an open-ended argument into a falsifiable test.</td><td>Each line must cite the power calculation.</td></tr>
 <tr><td>S-111</td><td>Freeze the leaderboard until G-01 passes, rather than ranking 4 strategies on ~35 games each.</td><td>A provisional ranking reads as a result no matter how many caveats surround it.</td><td>Leaderboard page renders only the gate status until n &ge; 300.</td></tr>
 </tbody></table></div></section>

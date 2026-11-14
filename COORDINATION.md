@@ -1088,3 +1088,35 @@ further `COORDINATION.md` end-of-file conflict, again resolved append-only with 
 5. `Q-25` (which surface is canonical) was updated with the measured fact: the count is now **six**,
    and a session that wants to publish measured results currently has no option except adding
    another tree — which is how F7 came to exist.
+
+
+### `arena/f7477d5e-nba2` — **post-merge correction: G-04 was a false positive**
+
+Found by re-reading the *live* pages rather than the local build, and worth recording because it
+invalidates a claim that is already on `main` as of PR #28.
+
+**The defect.** Gate G-04 compares the model's MAE against baseline (b) = a **raw, unshrunk** point
+differential. In week one that quantity reads anywhere from **−66 to +31 points**, so it is wrong by
+construction and any sane model beats it. G-04 therefore reported **PASS** (MAE 12.17 vs 15.19,
+gain +3.02). The page's own prose said G-04 *FAILED* while the computed summary said *PASS* — that
+contradiction is what surfaced it.
+
+**The fair comparison** (same shrinkage, **no** home-court term):
+
+| Component | MAE | Contribution |
+|---|---|---|
+| 0.0-spread baseline | 13.27 | — |
+| + shrinkage | **12.09** | **−1.17 (the entire gain)** |
+| + home-court term (the model) | 12.17 | **+0.08 (slightly worse)** |
+
+**Shrinkage does all the work. The home-court term contributes nothing on this sample.**
+
+**What changed (PR #31-era follow-up):** G-04 is now `PASS` *as registered* with `disputed: true`,
+appears in a new `summary.passed_disputed` bucket, is **excluded from the reward fraction** (falls
+2/6 → **1/6**), and the page states the strawman explicitly. Three new regression tests lock it in
+(49 total). `Q-7` and `Q-8` in `analysis/backtest-f7477d5e.md` ask the questions this raises.
+
+**Deliberately NOT done:** the registered gate wording was **not** edited. Changing a threshold after
+seeing the result is the exact failure mode the gate exists to prevent, and `nba2/config.py` is not
+this session's file. Proposing baseline (c) as a **new rule version, effective only on games after
+the amendment date**, is logged as decision D-01 for the integration/owner session.
