@@ -431,7 +431,7 @@ Every parameter is fitted (see the table below); nothing is hand-set.</div>
             f"{d['total_b']:.1f}", f"{d['total_gap']:+.1f}",
             f"{100*d['p_home']:.1f}%", f"{d['fair_home']:.3f}", f"{d['fair_away']:.3f}",
             f"{d['conviction']:.2f}σ", badge(d["grade"], {"A": "ok", "B": "warn", "C": "bad"}[d["grade"]]),
-            srclink(d["marketup"] if "marketup" in d else O.SOURCES["team_adv"][1]),
+            srclink(d["source_url"]) if d.get("source_url") else "—",
         ]})
     body += table(["Date", "Matchup", "Margin", "Spread", "Total", "Spread A", "Spread B", "Δ spread",
                    "Total B", "Δ total", "P(home)", "Fair home", "Fair away", "Conviction", "Grade", "Source"],

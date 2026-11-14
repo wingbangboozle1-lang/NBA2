@@ -2,24 +2,24 @@
  "as_of": "2026-11-14",
  "integrity": {
   "teams": 30,
-  "games_played_team_sum": 348,
-  "games": 174.0,
-  "wins": 174,
-  "losses": 174,
+  "games_played_team_sum": 366,
+  "games": 183.0,
+  "wins": 183,
+  "losses": 183,
   "wins_equals_losses": true,
-  "weighted_points_scored": 39473.4,
-  "weighted_points_allowed": 39471.5,
-  "weighted_points_diff": 1.9,
-  "rounding_bound": 34.8,
+  "weighted_points_scored": 41546.7,
+  "weighted_points_allowed": 41536.8,
+  "weighted_points_diff": 9.9,
+  "rounding_bound": 36.6,
   "points_identity_ok": true,
-  "home_w": 89,
-  "home_l": 84,
-  "road_w": 84,
-  "road_l": 89,
+  "home_w": 96,
+  "home_l": 86,
+  "road_w": 86,
+  "road_l": 96,
   "home_wins_equal_road_losses": true,
   "home_losses_equal_road_wins": true,
-  "home_win_rate": 0.5145,
-  "league_pts_per_team_game": 113.429
+  "home_win_rate": 0.5275,
+  "league_pts_per_team_game": 113.516
  },
  "cross_checks": {
   "checks": [
@@ -27,18 +27,18 @@
     "id": "repo-schedule",
     "what": "Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)",
     "repo_value": "31 games",
-    "live_value": "31 games",
-    "result": "MATCH",
-    "detail": "no differences found",
+    "live_value": "22 games",
+    "result": "MISMATCH",
+    "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039')] only-in-live=[]",
     "src": "https://www.nba.com/schedule"
    },
    {
     "id": "finals-reconstruction",
     "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
     "repo_value": "155 finals, 155 wins assigned",
-    "live_value": "174 official wins",
+    "live_value": "183 official wins",
     "result": "CONSISTENT",
-    "detail": "no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "detail": "no team exceeds its official record; the 28 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
     "src": "https://www.nba.com/games"
    },
    {
@@ -53,10 +53,10 @@
    {
     "id": "repo-wl",
     "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
-    "repo_value": "30/30 identical",
+    "repo_value": "12/30 identical",
     "live_value": "30 teams",
-    "result": "MATCH",
-    "detail": "no differences found",
+    "result": "MISMATCH",
+    "detail": "{'ATL': ('7-5', '7-6'), 'CHI': ('1-9', '2-9'), 'CLE': ('6-6', '6-7'), 'GSW': ('8-4', '8-5'), 'HOU': ('9-3', '10-3'), 'IND': ('4-8', '5-8'), 'LAC': ('2-8', '3-8'), 'MEM': ('7-4', '8-4'), 'MIA': ('5-6', '6-6'), 'MIL': ('1-11', '1-12'), 'NOP': ('4-8', '4-9'), 'NYK': ('6-5', '6-6'), 'OKC': ('8-4', '8-5'), 'ORL': ('4-7', '5-7'), 'POR': ('8-3', '9-3'), 'SAC': ('1-10', '1-11'), 'SAS': ('10-2', '11-2'), 'UTA': ('1-11', '1-12')}",
     "src": "https://www.nba.com/standings"
    }
   ],

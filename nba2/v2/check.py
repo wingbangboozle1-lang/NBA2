@@ -71,15 +71,40 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/slate_2026-11-13_to_11-16.json").read_text())
     from . import official as O
-    if len(O.SLATE) != 31:
-        problems.append(f"SLATE has {len(O.SLATE)} games, expected 31")
-    if len(raw["records"]) != 31:
-        problems.append("committed raw snapshot no longer has 31 games")
+    raw = json.loads((ROOT / "data/raw/official_slate_2026-11-14_to_11-17_verified.json").read_text())
+    # --- row-level agreement between the model's slate and the committed official snapshot
+    snap_rows = {(r["date"], r["time_et"], r["away"], r["home"], r["game_id"]) for r in raw["records"]}
+    model_rows = {(d, t, a, h, g) for (d, t, a, h, g, *_rest) in O.SLATE}
+    if snap_rows != model_rows:
+        problems.append(f"slate snapshot and model disagree: only-in-snapshot={sorted(snap_rows - model_rows)} "
+                        f"only-in-model={sorted(model_rows - snap_rows)}")
+    if len(O.SLATE) != len(raw["records"]):
+        problems.append(f"SLATE has {len(O.SLATE)} games, snapshot has {len(raw['records'])}")
+    # --- the 3-day rule is enforced, not merely documented
+    from datetime import date
+    build = date.fromisoformat(O.AS_OF)
+    for (d, *_rest) in O.SLATE:
+        if not 0 <= (date.fromisoformat(d) - build).days <= 3:
+            problems.append(f"{d} is outside the 3-day window from {O.AS_OF}")
+    # --- every priced game must carry a resolvable official source URL
+    for (d, t, a, h, g, *_rest) in O.SLATE:
+        want = f"https://www.nba.com/game/{a.lower()}-vs-{h.lower()}-{g}"
+        row = next((r for r in raw["records"] if r["game_id"] == g), None)
+        if row is None or row.get("source_url") != want:
+            problems.append(f"{g}: row source_url missing or wrong (want {want})")
     lines = json.loads((ROOT / "data/v2/lines.json").read_text())
-    if len(lines["lines"]) != 31:
-        problems.append("lines.json does not have 31 lines")
+    if len(lines["lines"]) != len(O.SLATE):
+        problems.append(f"lines.json has {len(lines['lines'])} lines, slate has {len(O.SLATE)}")
+    # --- no line may price a game whose final score is already known
+    history = set()
+    for f in sorted((ROOT / "data/raw/history").glob("games_*.json")):
+        for g in json.loads(f.read_text())["games"]:
+            if g.get("away_pts") is not None:
+                history.add(g["game_id"])
+    played = {ln["game_id"] for ln in lines["lines"]} & history
+    if played:
+        problems.append(f"lines.json prices games already played: {sorted(played)}")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]
@@ -95,6 +120,13 @@ def semantic() -> list[str]:
     l = sum(t["l"] for t in teams["teams"])
     if w != l:
         problems.append(f"published team table has wins {w} != losses {l}")
+    # every team's home+road+neutral games must equal its W+L
+    from . import official as O2
+    for t in teams["teams"]:
+        nw, nl = O2.NEUTRAL.get(t["tricode"], (0, 0))
+        split = sum(int(x) for x in t["home"].split("-")) + sum(int(x) for x in t["road"].split("-")) + nw + nl
+        if split != t["w"] + t["l"]:
+            problems.append(f"{t['tricode']}: home+road+neutral {split} != W+L {t['w'] + t['l']}")
     return problems
 
 

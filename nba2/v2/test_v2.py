@@ -17,6 +17,8 @@ from . import model as M
 from . import official as O
 from . import report as R
 
+HISTORY = Path(__file__).resolve().parents[2] / "data" / "raw" / "history"
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -42,17 +44,51 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_is_31_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 31)
+    def test_slate_covers_the_live_three_day_window(self):
+        """The window rolls with the clock: 2026-11-14 → 2026-11-17 (build date + 3 days).
+
+        It previously ran 11/13 → 11/16. That window had expired: every 11/13 game had gone
+        Final on the official schedule before the build read it, so the published slate was
+        pricing games whose results were already known.
+        """
+        self.assertEqual(len(O.SLATE), 27)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-13")
-        self.assertEqual(dates[-1], "2026-11-16")
+        self.assertEqual(dates[0], "2026-11-14")
+        self.assertEqual(dates[-1], "2026-11-17")
         self.assertEqual(len(dates), 4)
 
     def test_per_day_counts_match_official_grid(self):
+        """Counts are the official day headers: '5 Games', '9 Games', '8 Games', '5 Games'."""
         from collections import Counter
         c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8})
+        self.assertEqual(dict(c), {"2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5})
+
+    def test_no_priced_game_has_already_been_played(self):
+        """A priced slate must never contain a game whose final score the build already knows."""
+        history = set()
+        for f in sorted(HISTORY.glob("games_*.json")):
+            for g in json.loads(f.read_text())["games"]:
+                if g.get("away_pts") is not None:
+                    history.add(g["game_id"])
+        overlap = {g[4] for g in O.SLATE} & history
+        self.assertFalse(overlap, f"slate prices games already played: {sorted(overlap)}")
+
+    def test_three_day_window_edge_is_respected(self):
+        """Nothing outside build-date+3 may be priced; the day-after context list stays outside."""
+        from datetime import date
+        build = date.fromisoformat(O.AS_OF)
+        for g in O.SLATE:
+            delta = (date.fromisoformat(g[0]) - build).days
+            self.assertGreaterEqual(delta, 0, g)
+            self.assertLessEqual(delta, 3, f"{g[4]} is {delta} days out, beyond the 3-day maximum")
+        priced = {g[4] for g in O.SLATE}
+        self.assertFalse(priced & {g[4] for g in O.OUTSIDE_WINDOW})
+
+    def test_neutral_site_games_close_the_schedule_identity(self):
+        """home+road+neutral must equal W+L for every team (official /standings has a Neutral column)."""
+        for t, v in O.TEAMS.items():
+            nw, nl = O.NEUTRAL.get(t, (0, 0))
+            self.assertEqual(v[2] + v[3] + v[4] + v[5] + nw + nl, v[0] + v[1], t)
 
     def test_game_ids_unique(self):
         ids = [g[4] for g in O.SLATE]

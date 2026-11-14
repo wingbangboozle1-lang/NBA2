@@ -300,6 +300,7 @@ class Line:
     grade_reason: str = ""
     pick_status: str = "WITHHELD"
     flags: list = field(default_factory=list)
+    source_url: str = ""        # official nba.com game page for THIS row
 
     @property
     def matchup(self):
@@ -324,6 +325,7 @@ class Line:
             "est_a": round(self.est_a, 1), "est_b": round(self.est_b, 1),
             "agreement": round(self.agreement, 2),
             "grade": self.grade, "grade_reason": self.grade_reason,
+            "source_url": self.source_url,
             "pick_status": self.pick_status, "flags": self.flags,
         }
 
@@ -339,7 +341,8 @@ def originated_lines(teams, cal) -> list[Line]:
     for (date, time_et, away, home, gid, arena, city, tv, cup) in sorted(O.SLATE):
         a, h = teams[away], teams[home]
         ln = Line(date=date, time_et=time_et, game_id=gid, away=away, home=home,
-                  arena=arena, city=city, tv=tv, cup=cup)
+                  arena=arena, city=city, tv=tv, cup=cup,
+                  source_url=f"https://www.nba.com/game/{away.lower()}-vs-{home.lower()}-{gid}")
         # ---- estimator A: consensus of the two shrunk ratings
         ln.margin = (h.rating + cal.hca) - a.rating
         ln.spread = -_half(ln.margin)                       # home handicap

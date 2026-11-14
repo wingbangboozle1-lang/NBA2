@@ -184,18 +184,18 @@ against what the official page says without trusting either.</div>
 <td>repo-schedule</td>
 <td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
 <td>31 games</td>
-<td>31 games</td>
-<td><span class="badge b-ok">MATCH</span></td>
-<td>no differences found</td>
+<td>22 games</td>
+<td><span class="badge b-bad">MISMATCH</span></td>
+<td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;0022600037&#x27;), (&#x27;2026-11-13&#x27;, &#x27;CLE&#x27;, &#x27;MIA&#x27;, &#x27;0022600036&#x27;), (&#x27;2026-11-13&</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
 </tr>
 <tr>
 <td>finals-reconstruction</td>
 <td>Rebuild every team&#x27;s W-L from the 155 official final scores, then compare with the official card</td>
 <td>155 finals, 155 wins assigned</td>
-<td>174 official wins</td>
+<td>183 official wins</td>
 <td><span class="badge b-bad">CONSISTENT</span></td>
-<td>no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
+<td>no team exceeds its official record; the 28 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
@@ -210,10 +210,10 @@ against what the official page says without trusting either.</div>
 <tr>
 <td>repo-wl</td>
 <td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
-<td>30/30 identical</td>
+<td>12/30 identical</td>
 <td>30 teams</td>
-<td><span class="badge b-ok">MATCH</span></td>
-<td>no differences found</td>
+<td><span class="badge b-bad">MISMATCH</span></td>
+<td>{&#x27;ATL&#x27;: (&#x27;7-5&#x27;, &#x27;7-6&#x27;), &#x27;CHI&#x27;: (&#x27;1-9&#x27;, &#x27;2-9&#x27;), &#x27;CLE&#x27;: (&#x27;6-6&#x27;, &#x27;6-7&#x27;), &#x27;GSW&#x27;: (&#x27;8-4&#x27;, &#x27</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
