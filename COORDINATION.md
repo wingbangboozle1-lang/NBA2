@@ -1533,3 +1533,16 @@ official NBA pages in one place. This session does that, read-only.
 - **PR #44** (audit + board record): https://github.com/wingbangboozle1-lang/NBA2/pull/44 — merged with `gh pr merge 44 --merge` at merge commit `91aa68a`. Checks on the PR: `verify` pass, `backtest` pass, `parity` pass, `v2` pass.
 - **Pages:** run `43584944591` (`pages build and deployment`) **success** on `91aa68a`; Pages build API reports `built 91aa68a`.
 - **Live re-fetch:** https://wingbangboozle1-lang.github.io/NBA2/ serves the current build (as-of 2026-11-14, sealed ledger `c841e8f3…`). Note: the live landing page still shows `built 2026-11-14 01:05 UTC`, which is before the 05:15 AM ET injury release (I-01).
+## Session `arena/eae96d1e-nba2` — independent current-tree audit (claimed 2026-11-14 UTC)
+
+**Base:** `d5103130623b10a3367a398b375b0b606b08a4da` (`main`, PR #43 merged). **Scope:**
+`analysis/session-eae96d1e-audit.md` (new file only) and this append-only claim/result entry in
+`COORDINATION.md`. Existing model, generated site, source snapshots, and other task scopes are
+read-only. This session audits the current tree, runs the committed verification chain, and
+records actionable findings with source links; it will not rewrite data or alter the deployment
+configuration without an owner decision.
+
+| ID | Task | Status | Scope | Verification |
+|---|---|---|---|---|
+| EAE-01 | Current-tree independent audit and checker run | in progress | `analysis/session-eae96d1e-audit.md`, append-only `COORDINATION.md` | reproduce relevant tests/builds; identify any defect from current files; distinguish official facts from model-derived claims |
+
