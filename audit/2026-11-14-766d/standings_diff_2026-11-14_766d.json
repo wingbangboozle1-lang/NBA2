@@ -1,0 +1,314 @@
+{
+ "captured_utc": "2026-11-14T19:40:00Z",
+ "official_url": "https://www.nba.com/standings",
+ "method": "platform page-fetch tool (direct sandbox egress to nba.com = HTTP 000)",
+ "clubs_in_capture": 30,
+ "clubs_compared": 30,
+ "match": 30,
+ "mismatch": 0,
+ "unverified": 0,
+ "mismatches": [],
+ "unverified_tricodes": [],
+ "rows": [
+  {
+   "tricode": "ATL",
+   "team": "Atlanta Hawks",
+   "published_w": 7,
+   "published_l": 6,
+   "official_w": 7,
+   "official_l": 6,
+   "nba_team_id": "1610612737",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "BKN",
+   "team": "Brooklyn Nets",
+   "published_w": 3,
+   "published_l": 8,
+   "official_w": 3,
+   "official_l": 8,
+   "nba_team_id": "1610612751",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "BOS",
+   "team": "Boston Celtics",
+   "published_w": 10,
+   "published_l": 2,
+   "official_w": 10,
+   "official_l": 2,
+   "nba_team_id": "1610612738",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "CHA",
+   "team": "Charlotte Hornets",
+   "published_w": 4,
+   "published_l": 8,
+   "official_w": 4,
+   "official_l": 8,
+   "nba_team_id": "1610612766",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "CHI",
+   "team": "Chicago Bulls",
+   "published_w": 2,
+   "published_l": 9,
+   "official_w": 2,
+   "official_l": 9,
+   "nba_team_id": "1610612741",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "CLE",
+   "team": "Cleveland Cavaliers",
+   "published_w": 6,
+   "published_l": 7,
+   "official_w": 6,
+   "official_l": 7,
+   "nba_team_id": "1610612739",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "DAL",
+   "team": "Dallas Mavericks",
+   "published_w": 7,
+   "published_l": 5,
+   "official_w": 7,
+   "official_l": 5,
+   "nba_team_id": "1610612742",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "DEN",
+   "team": "Denver Nuggets",
+   "published_w": 6,
+   "published_l": 4,
+   "official_w": 6,
+   "official_l": 4,
+   "nba_team_id": "1610612743",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "DET",
+   "team": "Detroit Pistons",
+   "published_w": 8,
+   "published_l": 3,
+   "official_w": 8,
+   "official_l": 3,
+   "nba_team_id": "1610612765",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "GSW",
+   "team": "Golden State Warriors",
+   "published_w": 8,
+   "published_l": 5,
+   "official_w": 8,
+   "official_l": 5,
+   "nba_team_id": "1610612744",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "HOU",
+   "team": "Houston Rockets",
+   "published_w": 10,
+   "published_l": 3,
+   "official_w": 10,
+   "official_l": 3,
+   "nba_team_id": "1610612745",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "IND",
+   "team": "Indiana Pacers",
+   "published_w": 5,
+   "published_l": 8,
+   "official_w": 5,
+   "official_l": 8,
+   "nba_team_id": "1610612754",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "LAC",
+   "team": "LA Clippers",
+   "published_w": 3,
+   "published_l": 8,
+   "official_w": 3,
+   "official_l": 8,
+   "nba_team_id": "1610612746",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "LAL",
+   "team": "Los Angeles Lakers",
+   "published_w": 11,
+   "published_l": 2,
+   "official_w": 11,
+   "official_l": 2,
+   "nba_team_id": "1610612747",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "MEM",
+   "team": "Memphis Grizzlies",
+   "published_w": 8,
+   "published_l": 4,
+   "official_w": 8,
+   "official_l": 4,
+   "nba_team_id": "1610612763",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "MIA",
+   "team": "Miami Heat",
+   "published_w": 6,
+   "published_l": 6,
+   "official_w": 6,
+   "official_l": 6,
+   "nba_team_id": "1610612748",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "MIL",
+   "team": "Milwaukee Bucks",
+   "published_w": 1,
+   "published_l": 12,
+   "official_w": 1,
+   "official_l": 12,
+   "nba_team_id": "1610612749",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "MIN",
+   "team": "Minnesota Timberwolves",
+   "published_w": 9,
+   "published_l": 3,
+   "official_w": 9,
+   "official_l": 3,
+   "nba_team_id": "1610612750",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "NOP",
+   "team": "New Orleans Pelicans",
+   "published_w": 4,
+   "published_l": 9,
+   "official_w": 4,
+   "official_l": 9,
+   "nba_team_id": "1610612740",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "NYK",
+   "team": "New York Knicks",
+   "published_w": 6,
+   "published_l": 6,
+   "official_w": 6,
+   "official_l": 6,
+   "nba_team_id": "1610612752",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "OKC",
+   "team": "Oklahoma City Thunder",
+   "published_w": 8,
+   "published_l": 5,
+   "official_w": 8,
+   "official_l": 5,
+   "nba_team_id": "1610612760",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "ORL",
+   "team": "Orlando Magic",
+   "published_w": 5,
+   "published_l": 7,
+   "official_w": 5,
+   "official_l": 7,
+   "nba_team_id": "1610612753",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "PHI",
+   "team": "Philadelphia 76ers",
+   "published_w": 10,
+   "published_l": 3,
+   "official_w": 10,
+   "official_l": 3,
+   "nba_team_id": "1610612755",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "PHX",
+   "team": "Phoenix Suns",
+   "published_w": 5,
+   "published_l": 6,
+   "official_w": 5,
+   "official_l": 6,
+   "nba_team_id": "1610612756",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "POR",
+   "team": "Portland Trail Blazers",
+   "published_w": 9,
+   "published_l": 3,
+   "official_w": 9,
+   "official_l": 3,
+   "nba_team_id": "1610612757",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "SAC",
+   "team": "Sacramento Kings",
+   "published_w": 1,
+   "published_l": 11,
+   "official_w": 1,
+   "official_l": 11,
+   "nba_team_id": "1610612758",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "SAS",
+   "team": "San Antonio Spurs",
+   "published_w": 11,
+   "published_l": 2,
+   "official_w": 11,
+   "official_l": 2,
+   "nba_team_id": "1610612759",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "TOR",
+   "team": "Toronto Raptors",
+   "published_w": 5,
+   "published_l": 7,
+   "official_w": 5,
+   "official_l": 7,
+   "nba_team_id": "1610612761",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "UTA",
+   "team": "Utah Jazz",
+   "published_w": 1,
+   "published_l": 12,
+   "official_w": 1,
+   "official_l": 12,
+   "nba_team_id": "1610612762",
+   "verdict": "MATCH"
+  },
+  {
+   "tricode": "WAS",
+   "team": "Washington Wizards",
+   "published_w": 4,
+   "published_l": 9,
+   "official_w": 4,
+   "official_l": 9,
+   "nba_team_id": "1610612764",
+   "verdict": "MATCH"
+  }
+ ]
+}

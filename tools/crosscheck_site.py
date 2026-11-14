@@ -1127,27 +1127,24 @@ def check_backtest_surface(r: Report, site: dict):
     if ats.get("n") and ats.get("hits") is not None:
         if abs(frac(ats["hits"], ats["n"]) - round(float(ats.get("hit_rate", 0)), 4)) > 0.0002:
             arith.append(f"ats.hit_rate {ats.get('hit_rate')} != {ats['hits']}/{ats['n']}")
-        # ATS and straight-up are different EVENTS over different DENOMINATORS. A push is a
-        # no-decision for the spread and is excluded from ats.n, while it stays in the
-        # straight-up sample; in this report both count 105 hits, 105/166 vs 105/167. The
-        # previous predicate demanded the two rates be equal, so it failed a correct table
-        # (reproduced on main at 43c3cf1, see audit/2026-11-14-bc867bff/baseline.txt). What has
-        # to hold instead is the denominator identity, and that the rate gap is no bigger than
-        # the exclusion that produces it.
-        pushes = int(ats.get("pushes_reported", 0) or 0)
-        n_all = int(acc.get("n") or 0)
-        if n_all and ats["n"] + pushes != n_all:
-            arith.append(f"ats.n {ats['n']} + pushes {pushes} != graded sample {n_all}")
-        if n_all:
-            su_hits = round(float(acc.get("straight_up_accuracy", 0)) * n_all)
-            if su_hits != ats["hits"] and (su_hits - ats["hits"]) not in (-pushes, 0, pushes):
-                arith.append(f"ats.hits {ats['hits']} and the straight-up hit count {su_hits} "
-                             f"cannot be reconciled by {pushes} push(es)")
-            if su_hits == ats["hits"] and pushes:
-                gap = abs(float(ats.get("hit_rate", 0)) - float(acc.get("straight_up_accuracy", 0)))
-                if gap > pushes / min(ats["n"], n_all) + 1e-4:
-                    arith.append(f"the {gap:.4f} gap between the two rates is larger than "
-                                 f"{pushes} excluded push(es) can explain")
+        # The ATS block legitimately drops games whose originated line is exactly a pick'em, so
+        # its denominator can be smaller than the straight-up denominator. Comparing the two
+        # rates without accounting for that produced a false positive on every build with a
+        # pick'em in the sample (filed and fixed 2026-11-14, session arena/766d0269-nba2).
+        # The check now requires the exclusion to be published and to reconcile exactly.
+        recon = ats.get("straight_up_for_comparison") or {}
+        drop = int(ats.get("pickem_games_excluded") or 0)
+        if drop:
+            if recon.get("n") is None or int(recon["n"]) - drop != int(ats["n"]):
+                arith.append(f"pick'em exclusion of {drop} does not reconcile "
+                             f"{recon.get('n')} -> {ats['n']}")
+            if recon.get("hits") != ats.get("hits"):
+                arith.append(f"the two blocks do not select the same winning games "
+                             f"({recon.get('hits')} vs {ats.get('hits')})")
+            if abs(float(recon.get("rate") or 0) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
+                arith.append("published straight-up reconciliation rate != accuracy.straight_up_accuracy")
+        elif abs(float(ats.get("hit_rate", 0)) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
+            arith.append("ats.hit_rate and accuracy.straight_up_accuracy disagree")
     for name in ("always_home", "better_net_rating", "originated_model"):
         blk = nb.get(name) or {}
         n = blk.get("n", nb.get("n_games"))

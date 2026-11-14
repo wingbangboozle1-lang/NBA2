@@ -763,56 +763,59 @@ FLAGS += [
      "The collision itself is raised as SG-41 for owner sign-off, because re-prefixing a published anchor is a "
      "cross-tree change.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json"),
-    ('F-043',
+    ('F-059',
      'medium',
      'Verification',
      'A prior session recorded the official per-club player table as blocked and built the whole props page, the minutes column and three player-level correlations on that premise. It is reachable: nba.com/stats/players/traditional?TeamID=<id> renders server-side and was read for three clubs this session. The claim was probably true of the sandbox it was made in — direct TLS egress from this workspace to nba.com is blocked and everything here went through the platform page-reader — but "the endpoint refuses" and "this shell cannot reach it" were recorded as the same fact.',
      'The three clubs that were read are now published with their numbers. The other 27 are still blank, and the blank now says "not captured in this session" rather than "unavailable" (SG-37). No prior session\'s work was overwritten: official.py keeps its frozen 04:30 AM transcription and the new data lives in a superseding section.',
      'https://www.nba.com/stats/players/traditional?TeamID=1610612743'),
-    ('F-044',
+    ('F-060',
      'low',
      'Data',
      'The production-at-risk table shows Denver with 0 players sitting, 0 points at risk and 0.0% of club scoring — while the same official report lists four Denver designations. Nothing is missing from the report; the four names (Strawther, Holmes II, Nembhard, Whitmore) are outside the eight-row block captured for the club, so they have no season-average row to attach to.',
-     'A zero on this table is labelled "needs a wider capture (F-044)" instead of being read as "no injuries". Widening the block from top-8 to all rows is the next fetch, not a caveat to argue with.',
+     'A zero on this table is labelled "needs a wider capture (F-060)" instead of being read as "no injuries". Widening the block from top-8 to all rows is the next fetch, not a caveat to argue with.',
      'https://www.nba.com/stats/players/traditional?TeamID=1610612743'),
-    ('F-045',
+    ('F-061',
      'medium',
      'Props',
      'The props page still publishes no probability, and the reason changed. It is no longer "the player table is unreachable" — season averages are now captured for three clubs and printed. The remaining blocker is granularity: the official per-player game log at nba.com/stats/player/<id>/gamelog renders its header and then "No data available", so there is still no distribution, no median and no minutes floor.',
      'A naive baseline line (average to the nearest half point) is now published for every captured player, with P(over) blank and the reason named on the cell. A baseline is not a price and cannot be staked.',
      'https://www.nba.com/stats/player/1630162/gamelog'),
-    ('F-046',
+    ('F-062',
      'low',
      'Site',
      'The picks page carries no availability column, so the one action the site supports — read the lean, note the trigger price — is missing the input a reader can actually use while no market price exists.',
      'Recorded as SG-40 rather than shipped, because it changes a published table layout that another session owns.',
      'https://www.nba.com/stats/players/traditional?TeamID=1610612739'),
-    ('F-047',
+    ('F-063',
      'info',
      'Model',
      "RESOLVED this session, with the artefact left alone deliberately. Strategy S2 published nine strong-margin signals naming the model favourite with the underdog's number, so all four settled rows graded WIN on a selection the generator never intended. The generator is fixed and tested (nba2/picks.py spread_selection() + nba2/tests/test_picks_sign.py, 3 new tests, 70 pass in nba2/tests). Re-graded on the side the strategy names the record is 3-1, not 4-0.",
      'nba2/data/picks.json is committed byte-identical: its 2026-11-13T22:30:00Z stamp is 83 minutes before the earliest tip, and regenerating it would destroy the only out-of-sample provenance the repository has. The published live page now shows both gradings side by side and the verdict text no longer claims "every graded pick won" without qualification.',
      'https://github.com/wingbangboozle1-lang/NBA2/pull/55'),
-    ('F-048',
+    ('F-064',
      'info',
      'Site',
      'The two published tables disagree about the same player, and both are right: the official injury report labels Lonzo Ball "Chicago Bulls" and the official club table shows LaMelo Ball on Minnesota. Two Balls, two genuinely different inputs, one roster-move week.',
      'Nothing was reconciled or carried across. Rows are attributed to the document that printed them, and the capture notes say so, so a reader can see which source each line came from.',
      'https://www.nba.com/stats/players/traditional?TeamID=1610612750'),
-    ('F-049',
+    ('F-065',
      'info',
      'Data',
      'B-06 asked whether the published 3-day window still matches the league schedule, or whether it has to be '
      'rotated. Re-read live at 18:47 UTC on 2026-11-14: 20 of the 27 published games (all five 11/14 games, all nine '
      '11/15 games, six of eight 11/16 games) match on game id, matchup, date and tip time, and tonight\u2019s five '
      'games had not tipped when the strip was read \u2014 the scoreboard still printed pre-game W-L for all of them. '
-     'The window is therefore current and was NOT rotated.',
+     'The window is therefore current and was NOT rotated. Session arena/766d0269-nba2 independently re-read all 27 '
+     'games field by field and all 30 club records at ~19:50Z and found the same (F-052); this entry records a '
+     'second, differently-sourced pass (scoreboard strip and PDF headers rather than the standings page) plus the '
+     'seven games neither session could re-read.',
      'The seven games not re-read (two 11/16, all five 11/17) are listed by id in the capture verifier rather than '
      'assumed correct, and the 11/14\u201311/16 records are unchanged, so no line, pick or input moved. One '
      'consequence of the same read: Dallas appears on both 11/14 (at Cleveland) and 11/15 (at Boston), which the '
      'schedule confirms is a genuine back-to-back and not a duplicated capture (F-041 stands).',
      'https://www.nba.com/schedule?date=2026-11-14'),
-    ('F-050',
+    ('F-066',
      'medium',
      'Site',
      'The repository tells readers that its gates are enforced by CI. They are not, for the one checker that catches '
@@ -825,7 +828,7 @@ FLAGS += [
      'themselves (90/97 pass, 0 fail), and the wiring is raised as a change request on the board with the exact '
      'one-character edit. Until it lands, the honest statement is that the site is verified locally and not by CI.',
      'https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml'),
-    ('F-051',
+    ('F-067',
      'medium',
      'Model',
      'The published grader decided which market a row belonged to by looking for a plus sign in the '
@@ -983,4 +986,76 @@ REQUIREMENTS = [
      "Enforced in code", "The renderer refuses a row without `src`; blanks carry a `flag` or a `blocked` reason. Verified by a link check over the emitted site."),
     ("R-14", "Coordinate parallel sessions without conflicts",
      "Delivered", "Claim committed and pushed before any edit; the whole session's work is confined to new paths (data/v2, nba2/v2, site/v2) plus one appended COORDINATION.md block."),
+]
+
+
+# --------------------------------------------------------------------------- session
+# arena/766d0269-nba2 (2026-11-14 evening). Append-only: no prior flag is edited.
+FLAGS += [
+    ("F-051", "high", "Model",
+     "DEFECT FOUND AND FIXED — the picks table priced a SPREAD lean with the MONEYLINE probability. "
+     "Our spread is the median of our own distribution, so P(cover) is ~0.50 on every game while P(win) ranged "
+     "0.07-0.95; pricing the spread with P(win) produced break-even triggers as short as -1246, a price no "
+     "sportsbook offers on a spread. Both probabilities and both triggers are now published per row, and four "
+     "regression tests fail if they are conflated again.",
+     "Fixed this session in nba2/v2/report.py + nba2/v2/build.py, with tests in nba2/v2/test_v2.py. The old "
+     "column is retained as the moneyline trigger, because it is the correct arithmetic for the other market.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/report.py"),
+    ("F-052", "info", "Verification",
+     "VERIFIED THIS SESSION — all 30 club records on this site were re-read from the official standings at "
+     "2026-11-14T19:40Z and matched exactly (30/30, zero mismatches, zero unverified). All 27 window games were "
+     "re-checked field by field (date, tip time, away, home, game id, venue) against the official schedule at "
+     "19:45Z and matched on every field (27/27).",
+     "No action. The scripts and raw captures are committed so the check can be repeated.",
+     "https://www.nba.com/standings"),
+    ("F-053", "high", "Model",
+     "THE SKILL CLAIM DOES NOT SURVIVE ITS OWN TEST — the model's 64.7% accuracy on 167 graded games is not "
+     "distinguishable from the naive rule 'back the team with the better prior record', which scored 70.3% on "
+     "the same games. On the 33 games where the two disagreed the naive rule was right 20 times and the model 13 "
+     "(exact McNemar p = 0.2962). Against a scoring-margin prior the split was 23-19, p = 0.644.",
+     "Published as a finding on the Skill vs luck page rather than fixed, because it is a measurement, not a "
+     "defect. It is the reason no stake is published anywhere on the site.",
+     "https://www.nba.com/games"),
+    ("F-054", "medium", "Data",
+     "INJURY SNAPSHOT IS SIX RELEASES STALE — the site is built from the official 11/14 04:30 AM ET release. "
+     "The league's index published releases up to at least 01:30 PM ET the same day; that release was fetched and "
+     "diffed player by player: 4 status changes (Brown Jr. Questionable->Probable, Christie Questionable->Doubtful, "
+     "Harkless Questionable->Available, Jones Questionable->Available), 24 additional rows, zero withdrawals.",
+     "Disclosed on the injuries page and the dashboard. Not silently swapped, because the v2 model is "
+     "availability-blind and a swap would break the build's parity check without moving any published number. "
+     "Wiring the fresher release in is suggestion S-46 / decision D-07.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"),
+    ("F-055", "high", "Operations",
+     "THE SCHEDULED NIGHTLY INGEST IS FAILING ON MAIN — run 43605830665 (2026-11-14T14:37Z) concluded 'failure'. "
+     "The job aborted at step 6, 'Fetch official finals for arrived window dates', with exit code 3, which the "
+     "workflow's own cmd_finals returns only when every official endpoint is unreachable at the network level. "
+     "Steps 7-12 (settlement, verify chain, cross-check, commit) were therefore skipped.",
+     "Not fixed here: .github/workflows/** and nba2/pipeline/refresh.py are outside this session's scope and "
+     "other open PRs own those paths. Published so the failure is not silent. Remediation is suggestion S-48; the "
+     "endpoint choice belongs with decisions D-01/D-02.",
+     "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665"),
+    ("F-056", "low", "Verification",
+     "TWO PUBLISHED CLAIMS ABOUT RETRIEVAL WERE WRONG — the injuries page stated that the 05:30 AM ET report "
+     "'returned AccessDenied ... so the freshest reachable release is 04:30 AM ET'. The league index lists that "
+     "file, and the 01:30 PM ET release downloads without error from this workspace, so 'unreachable' was a "
+     "property of one retrieval attempt being reported as a property of the source.",
+     "Corrected in place this session, with the original wording preserved in the sentence so a reader can see "
+     "what changed.",
+     "https://official.nba.com/nba-injury-report-2026-27-season/"),
+    ("F-057", "info", "Process",
+     "SELF-CORRECTION, RECORDED — while drafting the official standings capture this session, a duplicated Dallas "
+     "row and a '16 rows for 15 clubs' irregularity were written into the capture file before the second half of "
+     "the page had actually been fetched. Neither existed: the page is returned in two chunks and the table simply "
+     "continued. The fabricated content was deleted and the correction is recorded in the capture file itself "
+     "rather than in a flag with a source, because there is no source for something that never happened.",
+     "No effect on any published number. Recorded because a verification trail that hides its own mistakes is "
+     "not a verification trail.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/standings_2026-11-14_766d.md"),
+    ("F-058", "low", "Site",
+     "THE INJURY TABLE'S OWN PROSE WAS HARD-CODED to the 04:30 AM ceiling and to a specific count of 'unreachable' "
+     "files, so it could not have updated itself even when a fresher release became reachable. Found while "
+     "re-verifying the page this session.",
+     "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is "
+     "reproducible rather than restated.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
 ]

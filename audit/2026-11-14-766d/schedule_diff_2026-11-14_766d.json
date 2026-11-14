@@ -1,0 +1,203 @@
+{
+ "captured_utc": "2026-11-14T19:45:00Z",
+ "official_url": "https://www.nba.com/schedule?date=2026-11-14",
+ "method": "platform page-fetch tool (direct sandbox egress to nba.com = HTTP 000)",
+ "games_published": 27,
+ "games_captured": 27,
+ "match": 27,
+ "mismatch": 0,
+ "unverified": 0,
+ "captured_but_not_published": [],
+ "differences": [],
+ "rows": [
+  {
+   "game_id": "0022600231",
+   "matchup": "DEN @ NOP",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/den-vs-nop-0022600231"
+  },
+  {
+   "game_id": "0022600232",
+   "matchup": "DAL @ CLE",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/dal-vs-cle-0022600232"
+  },
+  {
+   "game_id": "0022600233",
+   "matchup": "DET @ MIA",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/det-vs-mia-0022600233"
+  },
+  {
+   "game_id": "0022600234",
+   "matchup": "BKN @ MEM",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+  },
+  {
+   "game_id": "0022600235",
+   "matchup": "CHI @ MIN",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/chi-vs-min-0022600235"
+  },
+  {
+   "game_id": "0022600236",
+   "matchup": "IND @ PHI",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/ind-vs-phi-0022600236"
+  },
+  {
+   "game_id": "0022600237",
+   "matchup": "LAL @ PHX",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/lal-vs-phx-0022600237"
+  },
+  {
+   "game_id": "0022600238",
+   "matchup": "CHA @ LAC",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/cha-vs-lac-0022600238"
+  },
+  {
+   "game_id": "0022600239",
+   "matchup": "SAS @ UTA",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/sas-vs-uta-0022600239"
+  },
+  {
+   "game_id": "0022600240",
+   "matchup": "DAL @ BOS",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/dal-vs-bos-0022600240"
+  },
+  {
+   "game_id": "0022600241",
+   "matchup": "NYK @ TOR",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+  },
+  {
+   "game_id": "0022600242",
+   "matchup": "HOU @ WAS",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/hou-vs-was-0022600242"
+  },
+  {
+   "game_id": "0022600243",
+   "matchup": "ATL @ MIL",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/atl-vs-mil-0022600243"
+  },
+  {
+   "game_id": "0022600244",
+   "matchup": "OKC @ SAC",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/okc-vs-sac-0022600244"
+  },
+  {
+   "game_id": "0022600245",
+   "matchup": "ORL @ BOS",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
+  },
+  {
+   "game_id": "0022600246",
+   "matchup": "CHI @ CLE",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
+  },
+  {
+   "game_id": "0022600247",
+   "matchup": "MEM @ WAS",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/mem-vs-was-0022600247"
+  },
+  {
+   "game_id": "0022600248",
+   "matchup": "PHI @ BKN",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+  },
+  {
+   "game_id": "0022600249",
+   "matchup": "HOU @ MIA",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
+  },
+  {
+   "game_id": "0022600250",
+   "matchup": "POR @ MIN",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/por-vs-min-0022600250"
+  },
+  {
+   "game_id": "0022600251",
+   "matchup": "GSW @ NOP",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+  },
+  {
+   "game_id": "0022600252",
+   "matchup": "PHX @ DEN",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/phx-vs-den-0022600252"
+  },
+  {
+   "game_id": "0022600253",
+   "matchup": "NYK @ TOR",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+  },
+  {
+   "game_id": "0022600254",
+   "matchup": "POR @ MIN",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/por-vs-min-0022600254"
+  },
+  {
+   "game_id": "0022600255",
+   "matchup": "DET @ SAS",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/det-vs-sas-0022600255"
+  },
+  {
+   "game_id": "0022600257",
+   "matchup": "UTA @ LAC",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/uta-vs-lac-0022600257"
+  },
+  {
+   "game_id": "0022600256",
+   "matchup": "CHA @ LAL",
+   "verdict": "MATCH",
+   "detail": "all 6 fields identical",
+   "official_url": "https://www.nba.com/game/cha-vs-lal-0022600256"
+  }
+ ]
+}

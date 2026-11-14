@@ -46,5 +46,8 @@
 [PASS] V15    everything still missing is recorded with the URL that was tried and what it returned
         evidence: still_blocked entries
         observed: per-game player logs (minutes floor, prop medians, player-level correlation); market prices
+[PASS] V16    two sessions transcribed the same 1:30 PM PDF independently and agree row for row
+        evidence: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf  (their capture 2026-11-14T19:50Z, ours 2026-11-14T18:52:00Z)
+        observed: identical: 50 rows, the same status distribution, the same 24 added rows, the same 4 status moves, 0 dropped
 
-15 checks: 13 pass, 0 fail, 2 info
+16 checks: 14 pass, 0 fail, 2 info

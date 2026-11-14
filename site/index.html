@@ -20,6 +20,7 @@
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -30,6 +31,7 @@
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
 <a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -54,6 +56,27 @@ line and a lean; no game gets a stake, because no market price is connected to b
   <div class="kpi"><b>4</b><small>inputs blocked</small></div>
 </div>
 
+<div class="note bad"><b>2026-11-14, this session: the model's accuracy is not yet separable from
+"back the better team".</b> A paired test on the 33 games where our model and that naive rule disagreed found the
+naive rule right 20 times and the model 13 (exact p = 0.2962). The headline
+<a href="backtest.html">walk-forward accuracy</a> is high because favourites win, not because the model adds
+information. That is published as a finding, with its arithmetic, on
+<a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
+
+<div class="note ok"><b>Verified against the live official pages this session.</b> All 30 club records re-read from
+<a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30 identical. All 27
+window games re-checked field by field (date, tip time, away, home, game id, venue) against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a>: 27/27
+identical. Both checks are reproducible from <code>audit/2026-11-14-766d/</code>.</div>
+
+<div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
+The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
+later releases up to <b>01:30 PM ET</b>, and a player-by-player diff shows <b>4 status changes</b> and
+<b>24 additional rows</b> (Cleveland and Chicago filed after 04:30). None of it changes an originated line, because
+the model is availability-blind — but a reader must not treat the table as current.
+See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the raw capture in
+<code>audit/2026-11-14-766d/</code>.</div>
+
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
 lean and a trigger price for all 27 games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
@@ -67,13 +90,15 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
   <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
+  <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>26 rows from the 04:30 AM release, 50 from the 01:30 PM release, and the first production-at-risk numbers measured from official season averages.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>39 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
-  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>50 irregularities with sources, none of which block publication.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>58 irregularities with sources, none of which block publication.</p></div>
 </div>
 
 <div class="note"><b>Staleness: resolved, and the check that caught it is still running.</b>
@@ -177,11 +202,11 @@ official pages and shows where those rows now stand.</p>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>W-L cross-check</td>
-<td>n/a</td>
-<td>n/a</td>
-<td><span class="badge b-bad">ERROR</span></td>
-<td>module &#x27;nba2.v2.official&#x27; has no attribute &#x27;STANDINGS&#x27;</td>
+<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
+<td>30/30 identical</td>
+<td>30 teams, official table read 2026-11-14</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div>

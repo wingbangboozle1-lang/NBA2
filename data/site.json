@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "a74b0f534942cc81cb7a493b7465c1dd7198e76ec90633b18fcaceaf9c36f9e3",
+  "input_digest": "7285c367cb6a01369690c315208cbfdf21142b054c7c0511e8d13012f2c4a040",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -32192,6 +32192,162 @@
      "key": "S-45",
      "values": {
       "id": "S-45",
+      "title": "Publish the paired (discordant-game) test next to every accuracy figure",
+      "problem": "A headline accuracy number cannot distinguish skill from 'back the favourite'. This session measured the difference: on the 33 games where the model and the naive rule disagreed, the naive rule was right 20 times and the model 13 (p = 0.2962). Before this session the site had no such test, so a reader could only conclude the opposite.",
+      "proposal": "Make the McNemar discordant-game test (already implemented in nba2/v2/strategy_lab.py::skill_attribution) a required column on the leaderboard, the backtest page and the executive summary, and pre-register the threshold before more games are graded.",
+      "benefit": "Stops the site promoting luck. The test needs roughly an order of magnitude fewer games than the flat 300-bet bar to detect a real effect, so it also shortens the time to a defensible result.",
+      "effort": "S — the test exists and its output is published; this is wiring it into the three pages",
+      "risk": "None to accuracy; the risk of *not* doing it is publishing a false skill claim.",
+      "recommendation": "Accept. This is the brief's 'remove luck from the equation' requirement, measured rather than asserted.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-46",
+     "values": {
+      "id": "S-46",
+      "title": "Wire the official 01:30 PM ET injury release into the build instead of the 04:30 AM snapshot",
+      "problem": "The published injuries page is built from the 04:30 AM ET release while the league published hourly releases up to at least 01:30 PM ET. A player-by-player diff this session found 4 status changes and 24 additional rows. A reader of the page sees a six-release-stale picture.",
+      "proposal": "Make the injury snapshot a dated input the build refreshes from the league's index (the index URL and PDF pattern are already parsed by nba2/pipeline/refresh.py), and stamp every row with the release it came from. Where the build cannot refresh, publish the diff as this session did.",
+      "benefit": "Availability is the one input that changes within hours of tip-off; publishing it six releases stale is the single most user-visible staleness on the site.",
+      "effort": "M — the fetcher exists for the v1 pipeline; the v2 build needs a snapshot file and a provenance stamp",
+      "risk": "The parity check compares the committed site against a rebuild; a moving injury input makes that check time-dependent. Mitigation: key the snapshot by release timestamp and commit it, as the standings already are.",
+      "recommendation": "Accept after S-01/S-02; it is the highest-value item that needs no new vendor.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-47",
+     "values": {
+      "id": "S-47",
+      "title": "Split the picks table into two markets: the spread trigger and the moneyline trigger",
+      "problem": "The picks table published a spread lean priced with the moneyline probability, producing break-even triggers like -1246 that no sportsbook offers on a spread. Found and fixed this session.",
+      "proposal": "Publish P(win) and P(cover) as separate columns, each with its own break-even trigger, and label which market each trigger belongs to. Four regression tests now fail if the two are conflated again.",
+      "benefit": "The trigger is the only actionable number on the page for anyone with a price. A wrong trigger is worse than no trigger.",
+      "effort": "S — done this session",
+      "risk": "None identified.",
+      "recommendation": "Accept (already implemented); keep the regression tests.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-48",
+     "values": {
+      "id": "S-48",
+      "title": "Fix the nightly ingest, or stop publishing it as working",
+      "problem": "The scheduled 'Nightly ingest + settlement' workflow failed on 2026-11-14 at 14:37Z. It aborted at the 'Fetch official finals' step with exit 3 (every official endpoint unreachable), so settlement and the site rebuild were skipped; every later step was cancelled. The README describes this workflow as running at 09:05/13:35 ET.",
+      "proposal": "Either give the job a reachable official endpoint (the sandbox measurement in audit/2026-11-14-766d/README-like notes shows direct egress to nba.com and cdn.nba.com fails while the page-fetch path succeeds), or downgrade the workflow to a clearly-labelled 'manual capture + verify' job and remove the claim that settlement is automatic.",
+      "benefit": "A published automation that fails silently is worse than none: it means the sealed ledger stops being settled and nobody is told.",
+      "effort": "S for the disclosure, M for a working endpoint",
+      "risk": "Changing the workflow is a CI change and belongs to the session that owns .github/workflows/**; this item is a request, not an edit.",
+      "recommendation": "Accept the disclosure now; treat the endpoint as part of S-01/S-02.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-49",
+     "values": {
+      "id": "S-49",
+      "title": "Add a 'Decisions needed' register with an explicit discovery path per item",
+      "problem": "Questions were spread across three pages (open questions, decision queue, flagged) with no single place that says what must be answered before work continues, what is missing, and who decides.",
+      "proposal": "A single register (requirements/DECISIONS.json, rendered as the Decisions needed page) listing each decision with what we have, what is missing, how to close it, what it blocks, and who decides.",
+      "benefit": "Makes the brief's 'questions that must be addressed before a decision can be made' answerable in one screen, and makes missing information discoverable rather than implicit.",
+      "effort": "S — done this session",
+      "risk": "None; it adds no claim.",
+      "recommendation": "Accept (already implemented). Keep it as the single source of truth and add to it rather than to new pages.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-50",
+     "values": {
+      "id": "S-50",
+      "title": "Adopt a versioned 'verification ledger': one row per live check, with the script and the capture committed",
+      "problem": "Verification on this project has been described in prose on several pages. Prose cannot be re-run, and this session found two published claims that a re-run disproved (the trigger arithmetic; the injury release ceiling).",
+      "proposal": "Every live check ships as (script, raw capture, result JSON) under audit/<date>-<session>/ and the site renders the results from the JSON, never from hand-written text.",
+      "benefit": "A reviewer can re-run any claim in one command. It also makes 'flagged for review' self-updating rather than a manual list.",
+      "effort": "M — the pattern exists (audit/2026-11-14-766d is an example) but needs to be one convention with a renderer",
+      "risk": "Adds files to the repository; keep captures small and text-only.",
+      "recommendation": "Accept. This is the cheapest durable fix for hallucination risk.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-51",
+     "values": {
+      "id": "S-51",
       "title": "Capture the 30 per-club season tables now; chase game logs through box-score pages, not /gamelog",
       "problem": "S-41 and the props page both assume the official player domain is unreachable. It is not: nba.com/stats/players/traditional?TeamID=<id> rendered three clubs for this session in one fetch each. The genuinely blocked half is per-game granularity, and the route tried for it (/gamelog) prints 'No data available'.",
       "proposal": "One dated snapshot per club per day in data/raw/players_<date>.json, parsed from the same table this session captured by hand; game-level rows built from per-game box-score pages over the settled slate. The three captured clubs and the parser conventions are already written down in audit/2026-11-14-bc867bff/make_captures.py.",
@@ -32215,9 +32371,9 @@
      "verified": false
     },
     {
-     "key": "S-46",
+     "key": "S-52",
      "values": {
-      "id": "S-46",
+      "id": "S-52",
       "title": "Make 'what is the newest official release?' a build step, and print the age of the input on the page",
       "problem": "The build knows which PDF it read but not what the league has published since. The result measured: a 5.5-hour-stale injury table, 24 rows short, presented as the site's injury section on a game day.",
       "proposal": "At build time, read the injury index, take the newest timestamped release, diff it against the published rows, and print 'built from HH:MM release; newest available HH:MM; +N rows / M statuses' on the injuries page. Fail the build on a game day when the gap exceeds one hour and the fetch did not even try.",
@@ -32241,9 +32397,9 @@
      "verified": false
     },
     {
-     "key": "S-47",
+     "key": "S-53",
      "values": {
-      "id": "S-47",
+      "id": "S-53",
       "title": "Namespace the two question/suggestion registers before the next cross-reference breaks",
       "problem": "requirements/QUESTIONS.json runs Q-1…Q-38 and nba2/v2/content.py runs Q-1…Q-27; both render bare IDs. A v2 sentence cited 'Q-28', which exists only in the other register, and read as a dangling reference (logged as F-042). This very append creates more cross-namespace references.",
       "proposal": "Prefix the v2 IDs (Q2-nn / SG-nn stay as-is) or stamp every cross-reference with its file, e.g. 'Q-28 (requirements/QUESTIONS.json)'. Keep old IDs as anchors so existing flag chips resolve.",
@@ -32267,9 +32423,9 @@
      "verified": false
     },
     {
-     "key": "S-48",
+     "key": "S-54",
      "values": {
-      "id": "S-48",
+      "id": "S-54",
       "title": "Close or annotate the idle pull requests so the board stops describing work that has landed elsewhere",
       "problem": "Four PRs (#50, #55, #57, #59) sat open and idle for 6+ hours. Two carried work that has since landed by another route, one was a coordination record, and one (#55) carried the S-26 generator fix that this session verified line by line and then carried in, with the author's commit message and tests intact.",
       "proposal": "For each: a comment naming the commit that supersedes it or the decision that defers it, then close. Never silently.",
@@ -32294,6 +32450,48 @@
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

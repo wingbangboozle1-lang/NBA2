@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="44">
+    <section class="card table-card" id="suggestions" data-rows="50">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -557,6 +557,84 @@
 </tr>
 <tr id="S-45">
 <td>S-45</td>
+<td>Publish the paired (discordant-game) test next to every accuracy figure</td>
+<td>A headline accuracy number cannot distinguish skill from &#x27;back the favourite&#x27;. This session measured the difference: on the 33 games where the model and the naive rule disagreed, the naive rule was right 20 times and the model 13 (p = 0.2962). Before this session the site had no such test, so a reader could only conclude the opposite.</td>
+<td>Make the McNemar discordant-game test (already implemented in nba2/v2/strategy_lab.py::skill_attribution) a required column on the leaderboard, the backtest page and the executive summary, and pre-register the threshold before more games are graded.</td>
+<td>Stops the site promoting luck. The test needs roughly an order of magnitude fewer games than the flat 300-bet bar to detect a real effect, so it also shortens the time to a defensible result.</td>
+<td>S — the test exists and its output is published; this is wiring it into the three pages</td>
+<td>None to accuracy; the risk of *not* doing it is publishing a false skill claim.</td>
+<td>Accept. This is the brief&#x27;s &#x27;remove luck from the equation&#x27; requirement, measured rather than asserted.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-46">
+<td>S-46</td>
+<td>Wire the official 01:30 PM ET injury release into the build instead of the 04:30 AM snapshot</td>
+<td>The published injuries page is built from the 04:30 AM ET release while the league published hourly releases up to at least 01:30 PM ET. A player-by-player diff this session found 4 status changes and 24 additional rows. A reader of the page sees a six-release-stale picture.</td>
+<td>Make the injury snapshot a dated input the build refreshes from the league&#x27;s index (the index URL and PDF pattern are already parsed by nba2/pipeline/refresh.py), and stamp every row with the release it came from. Where the build cannot refresh, publish the diff as this session did.</td>
+<td>Availability is the one input that changes within hours of tip-off; publishing it six releases stale is the single most user-visible staleness on the site.</td>
+<td>M — the fetcher exists for the v1 pipeline; the v2 build needs a snapshot file and a provenance stamp</td>
+<td>The parity check compares the committed site against a rebuild; a moving injury input makes that check time-dependent. Mitigation: key the snapshot by release timestamp and commit it, as the standings already are.</td>
+<td>Accept after S-01/S-02; it is the highest-value item that needs no new vendor.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-47">
+<td>S-47</td>
+<td>Split the picks table into two markets: the spread trigger and the moneyline trigger</td>
+<td>The picks table published a spread lean priced with the moneyline probability, producing break-even triggers like -1246 that no sportsbook offers on a spread. Found and fixed this session.</td>
+<td>Publish P(win) and P(cover) as separate columns, each with its own break-even trigger, and label which market each trigger belongs to. Four regression tests now fail if the two are conflated again.</td>
+<td>The trigger is the only actionable number on the page for anyone with a price. A wrong trigger is worse than no trigger.</td>
+<td>S — done this session</td>
+<td>None identified.</td>
+<td>Accept (already implemented); keep the regression tests.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-48">
+<td>S-48</td>
+<td>Fix the nightly ingest, or stop publishing it as working</td>
+<td>The scheduled &#x27;Nightly ingest + settlement&#x27; workflow failed on 2026-11-14 at 14:37Z. It aborted at the &#x27;Fetch official finals&#x27; step with exit 3 (every official endpoint unreachable), so settlement and the site rebuild were skipped; every later step was cancelled. The README describes this workflow as running at 09:05/13:35 ET.</td>
+<td>Either give the job a reachable official endpoint (the sandbox measurement in audit/2026-11-14-766d/README-like notes shows direct egress to nba.com and cdn.nba.com fails while the page-fetch path succeeds), or downgrade the workflow to a clearly-labelled &#x27;manual capture + verify&#x27; job and remove the claim that settlement is automatic.</td>
+<td>A published automation that fails silently is worse than none: it means the sealed ledger stops being settled and nobody is told.</td>
+<td>S for the disclosure, M for a working endpoint</td>
+<td>Changing the workflow is a CI change and belongs to the session that owns .github/workflows/**; this item is a request, not an edit.</td>
+<td>Accept the disclosure now; treat the endpoint as part of S-01/S-02.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-49">
+<td>S-49</td>
+<td>Add a &#x27;Decisions needed&#x27; register with an explicit discovery path per item</td>
+<td>Questions were spread across three pages (open questions, decision queue, flagged) with no single place that says what must be answered before work continues, what is missing, and who decides.</td>
+<td>A single register (requirements/DECISIONS.json, rendered as the Decisions needed page) listing each decision with what we have, what is missing, how to close it, what it blocks, and who decides.</td>
+<td>Makes the brief&#x27;s &#x27;questions that must be addressed before a decision can be made&#x27; answerable in one screen, and makes missing information discoverable rather than implicit.</td>
+<td>S — done this session</td>
+<td>None; it adds no claim.</td>
+<td>Accept (already implemented). Keep it as the single source of truth and add to it rather than to new pages.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-50">
+<td>S-50</td>
+<td>Adopt a versioned &#x27;verification ledger&#x27;: one row per live check, with the script and the capture committed</td>
+<td>Verification on this project has been described in prose on several pages. Prose cannot be re-run, and this session found two published claims that a re-run disproved (the trigger arithmetic; the injury release ceiling).</td>
+<td>Every live check ships as (script, raw capture, result JSON) under audit/&lt;date&gt;-&lt;session&gt;/ and the site renders the results from the JSON, never from hand-written text.</td>
+<td>A reviewer can re-run any claim in one command. It also makes &#x27;flagged for review&#x27; self-updating rather than a manual list.</td>
+<td>M — the pattern exists (audit/2026-11-14-766d is an example) but needs to be one convention with a renderer</td>
+<td>Adds files to the repository; keep captures small and text-only.</td>
+<td>Accept. This is the cheapest durable fix for hallucination risk.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-51">
+<td>S-51</td>
 <td>Capture the 30 per-club season tables now; chase game logs through box-score pages, not /gamelog</td>
 <td>S-41 and the props page both assume the official player domain is unreachable. It is not: nba.com/stats/players/traditional?TeamID=&lt;id&gt; rendered three clubs for this session in one fetch each. The genuinely blocked half is per-game granularity, and the route tried for it (/gamelog) prints &#x27;No data available&#x27;.</td>
 <td>One dated snapshot per club per day in data/raw/players_&lt;date&gt;.json, parsed from the same table this session captured by hand; game-level rows built from per-game box-score pages over the settled slate. The three captured clubs and the parser conventions are already written down in audit/2026-11-14-bc867bff/make_captures.py.</td>
@@ -568,8 +646,8 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
-<tr id="S-46">
-<td>S-46</td>
+<tr id="S-52">
+<td>S-52</td>
 <td>Make &#x27;what is the newest official release?&#x27; a build step, and print the age of the input on the page</td>
 <td>The build knows which PDF it read but not what the league has published since. The result measured: a 5.5-hour-stale injury table, 24 rows short, presented as the site&#x27;s injury section on a game day.</td>
 <td>At build time, read the injury index, take the newest timestamped release, diff it against the published rows, and print &#x27;built from HH:MM release; newest available HH:MM; +N rows / M statuses&#x27; on the injuries page. Fail the build on a game day when the gap exceeds one hour and the fetch did not even try.</td>
@@ -581,8 +659,8 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
-<tr id="S-47">
-<td>S-47</td>
+<tr id="S-53">
+<td>S-53</td>
 <td>Namespace the two question/suggestion registers before the next cross-reference breaks</td>
 <td>requirements/QUESTIONS.json runs Q-1…Q-38 and nba2/v2/content.py runs Q-1…Q-27; both render bare IDs. A v2 sentence cited &#x27;Q-28&#x27;, which exists only in the other register, and read as a dangling reference (logged as F-042). This very append creates more cross-namespace references.</td>
 <td>Prefix the v2 IDs (Q2-nn / SG-nn stay as-is) or stamp every cross-reference with its file, e.g. &#x27;Q-28 (requirements/QUESTIONS.json)&#x27;. Keep old IDs as anchors so existing flag chips resolve.</td>
@@ -594,8 +672,8 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
-<tr id="S-48">
-<td>S-48</td>
+<tr id="S-54">
+<td>S-54</td>
 <td>Close or annotate the idle pull requests so the board stops describing work that has landed elsewhere</td>
 <td>Four PRs (#50, #55, #57, #59) sat open and idle for 6+ hours. Two carried work that has since landed by another route, one was a coordination record, and one (#55) carried the S-26 generator fix that this session verified line by line and then carried in, with the author&#x27;s commit message and tests intact.</td>
 <td>For each: a comment naming the commit that supersedes it or the decision that defers it, then close. Never silently.</td>

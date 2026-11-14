@@ -20,6 +20,7 @@
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -30,6 +31,7 @@
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
 <a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -244,12 +246,12 @@ against what the official page says without trusting either.</div>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>repo-wl</td>
-<td>W-L cross-check</td>
-<td>n/a</td>
-<td>n/a</td>
-<td><span class="badge b-bad">ERROR</span></td>
-<td>module &#x27;nba2.v2.official&#x27; has no attribute &#x27;STANDINGS&#x27;</td>
+<td>repo-wl-current</td>
+<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
+<td>30/30 identical</td>
+<td>30 teams, official table read 2026-11-14</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
@@ -904,7 +906,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">50 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">58 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>

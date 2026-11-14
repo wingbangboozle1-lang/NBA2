@@ -33,7 +33,7 @@ README = ROOT / "README.md"
 SUITES = {"nba2/tests": "v1", "nba2/v2": "v2", "backtest/tests": "backtest"}
 METHOD = re.compile(r"^\s+def (test_\w+)", re.M)
 COUNT = re.compile(r"(?<=#\s)(\d+)(?=\s+tests\b)|(?<=\()(\d+)(?=\s+tests\))")
-HISTORY = re.compile(r"\(was \d+\)|prior work|unchanged")
+HISTORY = re.compile(r"\(was \d+\)")   # only an explicit "was N" marks a dated changelog line
 
 
 def measure() -> dict[str, int]:

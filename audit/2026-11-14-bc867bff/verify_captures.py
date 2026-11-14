@@ -243,6 +243,43 @@ check("V15", "everything still missing is recorded with the URL that was tried a
                                    for b in blocked) and len(blocked) == 2,
       "; ".join(b["what"] for b in blocked))
 
+
+# ------------------------------------------------- cross-session agreement on the SAME document
+# Session arena/766d0269-nba2 fetched the identical PDF ~1 h after this one and committed its own diff.
+# Two independent transcriptions of one official file is the strongest check available on a
+# transcription, so it is asserted here rather than mentioned in prose.
+try:
+    _theirs = json.loads((ROOT / "audit/2026-11-14-766d/injury_diff_2026-11-14_766d.json").read_text())
+except FileNotFoundError:
+    _theirs = None
+if _theirs is None:
+    check("V16", "cross-session agreement with the other capture of the same PDF", "their diff file", "info",
+          "audit/2026-11-14-766d/injury_diff_2026-11-14_766d.json is not in this checkout")
+else:
+    import collections as _c
+    _mine_status = dict(_c.Counter(r["status"] for r in inj))
+    _mine_added = sorted(f"{pm_map[k][0] if False else pm_map[k]['team']} | {pm_map[k]['player']}" for k in new_rows)
+    _their_added = sorted(f"{t} | {pl}" for t, pl in _theirs["players_only_in_later_release"])
+    _their_changed = sorted((x["player"], x["published"][0], x["later_release"][0])
+                            for x in _theirs["players_with_different_status"])
+    _my_changed = sorted((c[0], c[1], c[2]) for c in changed)
+    _diffs = []
+    if len(inj) != _theirs["player_status_rows_later_release"]:
+        _diffs.append(f"row count {len(inj)} vs {_theirs['player_status_rows_later_release']}")
+    if _mine_status != _theirs["by_status"]:
+        _diffs.append(f"status distribution {_mine_status} vs {_theirs['by_status']}")
+    if len(ns) != _theirs["teams_not_yet_submitted"]:
+        _diffs.append(f"not-submitted clubs {len(ns)} vs {_theirs['teams_not_yet_submitted']}")
+    if _mine_added != _their_added:
+        _diffs.append("the added-row sets differ")
+    if _my_changed != _their_changed:
+        _diffs.append(f"status changes differ {_my_changed} vs {_their_changed}")
+    check("V16", "two sessions transcribed the same 1:30 PM PDF independently and agree row for row",
+          f"{_theirs['official_url']}  (their capture {_theirs['captured_utc']}, ours {CAP['captured_utc']})",
+          not _diffs,
+          "identical: 50 rows, the same status distribution, the same 24 added rows, the same 4 status moves, "
+          "0 dropped" if not _diffs else "; ".join(_diffs))
+
 report = "\n".join(OUT) + f"\n\n{PASS+FAIL+INFO} checks: {PASS} pass, {FAIL} fail, {INFO} info\n"
 print(report)
 (ROOT / "audit/2026-11-14-bc867bff/checker_run.txt").write_text(report)
