@@ -53,7 +53,7 @@
    "Backtest with settlement",
    "\u2265 300 settled bets of the strategy's own signals, settled from official box scores.",
    "PROPOSED \u2014 sample-size policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "300 bets is the point at which a 55% hit rate separates from 52.4% at 5% one-sided."
   ],
   [
@@ -61,7 +61,7 @@
    "Out-of-sample holdout",
    "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
    "PROPOSED \u2014 policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "Prevents publishing a curve fit."
   ],
   [
@@ -77,7 +77,7 @@
    "Correlation honesty",
    "No parlay priced by multiplying legs unless the leg correlation is measured or bounded.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/schedule",
+   "https://www.nba.com/schedule?date=2026-11-15",
    "Same-game legs are not independent; the error is one-sided and expensive."
   ],
   [
@@ -93,7 +93,7 @@
    "No look-ahead",
    "No input timestamped after the decision time may enter that decision.",
    "PROPOSED \u2014 policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "The single most common way a profitable backtest is fake."
   ]
  ],
@@ -129,7 +129,7 @@
    "gates_that_fail_today": "G6,G7",
    "status": "BLOCKED \u2014 legs have no price",
    "why": "Cross-game independence is a stated assumption, not a measurement; and the compounded hold makes it worse than two singles at equal edge.",
-   "src": "https://www.nba.com/schedule"
+   "src": "https://www.nba.com/schedule?date=2026-11-15"
   },
   {
    "id": "S4",
@@ -140,7 +140,7 @@
    "gates_that_fail_today": "G6,G7,G10",
    "status": "BLOCKED \u2014 correlation unmeasured",
    "why": "The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a \u00b126% price error was already demonstrated in the prior build.",
-   "src": "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "src": "https://www.nba.com/games?date=2026-11-13"
   },
   {
    "id": "S5",
@@ -173,7 +173,7 @@
    "gates_that_fail_today": "G2,G7,G9",
    "status": "BLOCKED \u2014 no on/off or usage data",
    "why": "Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.",
-   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   }
  ],
  "leaderboard": [
@@ -189,7 +189,7 @@
    "300 settled bets",
    "Below that the 95% interval on a 55% hit rate includes 50%.",
    "PROPOSED",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Trial accounting",
@@ -203,7 +203,7 @@
    "A pick must be published before tip and be sealed with a hash",
    "Prevents back-filling a winning pick after the result is known.",
    "PROPOSED",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Unit accounting",
@@ -224,7 +224,7 @@
    "Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins",
    "Removes the three ways a leaderboard is usually gamed.",
    "PROPOSED",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ]
  ],
  "suggestions": [
@@ -489,7 +489,7 @@
    "The covariance of (margin, total) over settled games.",
    "Pull per-game final scores (SG-2) and compute Pearson/Spearman on \u2265300 games, per team and league-wide.",
    "Blocks every same-game parlay (S4) and gate G10.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-2",
@@ -507,7 +507,7 @@
    "Whether shared slate conditions (travel, referee crews, league-wide pace nights) induce any correlation.",
    "Regression of leg A's result on leg B's across \u22651,000 parlays with no shared team.",
    "Blocks S3 pricing being more than an assumption.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-4",
@@ -516,7 +516,7 @@
    "The empirical play rate conditional on each status label, and whether it varies by team or by body part.",
    "Join report history to box scores: for each status label, count appearances (SG-11).",
    "Makes the current p(play) column unusable as evidence.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   ],
   [
    "Q-5",
@@ -552,7 +552,7 @@
    "Per-family hit rate, log-loss, and ROI at various thresholds.",
    "Backtest harness on settled results with pre-registered thresholds (SG-16).",
    "Blocks the leaderboard ranking entirely.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Q-9",
@@ -579,7 +579,7 @@
    "Archival storage of the exact page (a hash of the raw bytes), not just the transcription.",
    "Store the raw fetched HTML/PDF bytes as a content-addressed artefact in the pipeline (SG-1 + SG-17).",
    "Needed before any third party trusts a published record.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-12",
@@ -588,7 +588,7 @@
    "The true per-strategy variance, which depends on correlation between bets.",
    "Simulate the strategy's own bet stream once a backtest exists; recompute the required n.",
    "Blocks ranking and rewards.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Q-13",
@@ -597,7 +597,7 @@
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-14",
@@ -651,7 +651,7 @@
    "Data",
    "Per-game results now exist for 155 of 174 games (2026-10-20 \u2192 11-12), captured from nba.com by a parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain unreachable, so player-level settlement is still impossible.",
    "Gates G7, G8, G12 and the whole leaderboard are blocked.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "F-003",
@@ -707,7 +707,7 @@
    "Verification",
    "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
    "Marked 'continuation' in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   ],
   [
    "F-010",
@@ -723,7 +723,7 @@
    "Product",
    "The repository contains five earlier site trees (root, pages/, docs/, dashboard/, verified/, originated/) with different data.",
    "This build does not edit them; the new tree is self-contained under /site. A consolidation decision is logged on the Suggestions page.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "F-012",

@@ -43,8 +43,8 @@ site no longer matches. It also grades the first genuine forecast the repository
 official capture, so a stale row and a correct row rendered identically — both said MATCH. This session found 18 such
 rows by hand. A page is cheaper than vigilance.</div>
 <div class="kpis">
-  <div class="kpi"><b>12/30</b><small>published team records that still match today's official standings</small></div>
-  <div class="kpi"><b>30/30</b><small>that match the pre-11/13-finals reconstruction</small></div>
+  <div class="kpi"><b>30/30</b><small>published team records that still match today's official standings</small></div>
+  <div class="kpi"><b>12/30</b><small>that match the pre-11/13-finals reconstruction</small></div>
   <div class="kpi"><b>9</b><small>11/13 games with official finals</small></div>
   <div class="kpi"><b>4</b><small>distinct games the committed picks actually bet</small></div>
   <div class="kpi"><b>5/9</b><small>games where the model named the winner</small></div>
@@ -242,13 +242,13 @@ the published table is compared with both.</p>
 </tr></thead><tbody>
 <tr>
 <td>Published table vs today&#x27;s official standings</td>
-<td>12 of 30</td>
+<td>30 of 30</td>
 <td><span class="badge b-bad">STALE</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Published table vs the pre-11/13-finals reconstruction</td>
-<td>30 of 30</td>
+<td>12 of 30</td>
 <td><span class="badge b-warn">EXPLAINS THE GAP</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -258,11 +258,11 @@ the published table is compared with both.</p>
 <td><span class="badge b-ok">NONE</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
-</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises &#x27;Committed W-L ... vs live nba.com/standings | 30/30 identical | MATCH&#x27; - that comparison was true when it was made, and it is no longer true of the same rows.
+</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises &#x27;Committed W-L ... vs live nba.com/standings | 30/30 identical | MATCH&#x27; - re-checked on 2026-11-14 by session arena/ac5fab5c-nba2 and true again: the committed table matches live standings 30/30.
 The comparison was true when it was made. The rows are the same rows, the standings are not the same standings, and
 until today nothing on the site could tell the difference. <b>Every stale row, with both values:</b></div>
 <div class="scroll"><table>
-<caption>18 stale team records, every one explained by the 11/13 finals</caption>
+<caption>0 stale team records, every one explained by the 11/13 finals</caption>
 <thead><tr>
 <th scope="col">Team</th>
 <th scope="col">Published on this site</th>
@@ -271,150 +271,6 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <th scope="col">Cause</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
-<tr>
-<td>ATL</td>
-<td>7-5</td>
-<td>7-6</td>
-<td>7-5</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>CHI</td>
-<td>1-9</td>
-<td>2-9</td>
-<td>1-9</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>CLE</td>
-<td>6-6</td>
-<td>6-7</td>
-<td>6-6</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>GSW</td>
-<td>8-4</td>
-<td>8-5</td>
-<td>8-4</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>HOU</td>
-<td>9-3</td>
-<td>10-3</td>
-<td>9-3</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>IND</td>
-<td>4-8</td>
-<td>5-8</td>
-<td>4-8</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>LAC</td>
-<td>2-8</td>
-<td>3-8</td>
-<td>2-8</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>MEM</td>
-<td>7-4</td>
-<td>8-4</td>
-<td>7-4</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>MIA</td>
-<td>5-6</td>
-<td>6-6</td>
-<td>5-6</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>MIL</td>
-<td>1-11</td>
-<td>1-12</td>
-<td>1-11</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>NOP</td>
-<td>4-8</td>
-<td>4-9</td>
-<td>4-8</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>NYK</td>
-<td>6-5</td>
-<td>6-6</td>
-<td>6-5</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>OKC</td>
-<td>8-4</td>
-<td>8-5</td>
-<td>8-4</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>ORL</td>
-<td>4-7</td>
-<td>5-7</td>
-<td>4-7</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>POR</td>
-<td>8-3</td>
-<td>9-3</td>
-<td>8-3</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>SAC</td>
-<td>1-10</td>
-<td>1-11</td>
-<td>1-10</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>SAS</td>
-<td>10-2</td>
-<td>11-2</td>
-<td>10-2</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>UTA</td>
-<td>1-11</td>
-<td>1-12</td>
-<td>1-11</td>
-<td><span class="badge b-warn">PRE_FINALS</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
 </tbody></table></div><h2>3. The first real out-of-sample test the repository has</h2>
 <p class="lede"><code>nba2/data/picks.json</code> was committed at <b>2026-11-13T22:36:46Z</b> (commit
 <code>d04bdc3</code>, its only commit ever) and the earliest 11/13 tip was

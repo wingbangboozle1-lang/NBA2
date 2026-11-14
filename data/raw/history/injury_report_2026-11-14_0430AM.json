@@ -1,0 +1,370 @@
+{
+ "schema": "nba2.injury-report.v1",
+ "meta": {
+  "captured_utc": "2026-11-14T09:40:00Z",
+  "session": "arena/ac5fab5c-nba2",
+  "release": "11/14/26 04:30 AM ET",
+  "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf",
+  "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+  "n_player_rows": 26,
+  "retrieval_method": "platform page-fetch tool (PDF text layer)",
+  "later_releases_tried": {
+   "Injury-Report_2026-11-14_05_30AM.pdf": "AccessDenied"
+  },
+  "filing_policy": "Teams must file by 5 p.m. local the day before (1 p.m. local for the 2nd night of a back-to-back); a game-day report follows 11 a.m.-1 p.m. local.",
+  "window_note": "At capture time only 11/14 submissions were arriving. No 11/16 or 11/17 rows exist in any published report; those cells are blank by policy, not missing by accident."
+ },
+ "rows": [
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:00",
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Holmes II, DaRon",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:00",
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Nembhard, Ryan",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:00",
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Strawther, Julian",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Knee Sprain"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:00",
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Whitmore, Cam",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Biberovic, Tarik",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Heel Bursitis"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Christie, Max",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Left Ankle Sprain"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "de Larrea, Sergio",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Sprain"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Johnson Jr., Morez",
+   "status": "Probable",
+   "reason": "Injury/Illness - Left Shin / Tibia Contusion"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Lively II, Dereck",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Foot Surgery"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "07:30",
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Martin, Caleb",
+   "status": "Available",
+   "reason": "Injury/Illness - Right Thumb Splint"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Bilodeau, Tyler",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Brown Jr., Mikel",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Illness"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Jefferson, Joshua",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Nelson, Grant",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Saraf, Ben",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Traore, Nolan",
+   "status": "Probable",
+   "reason": "Injury/Illness - Right Calf Tightness / Soreness"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Beringer, Joan",
+   "status": "Available",
+   "reason": "Injury/Illness - Face Mask"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "DiVincenzo, Donte",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Edwards, Anthony",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Arthroscopy"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Duren, Jalen",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Hamstring Strain"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Harkless, Elijah",
+   "status": "Questionable",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Joe, Isaiah",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Hip Contusion"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Jones, Isaac",
+   "status": "Questionable",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Lanier, Chaz",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Okorie, Ebuka",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "game_date": "2026-11-14",
+   "game_time_et": "08:00",
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Onyenso, Ugonna",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  }
+ ],
+ "not_submitted": [
+  {
+   "game_date": "2026-11-14",
+   "matchup": "DEN@NOP",
+   "team": "New Orleans Pelicans"
+  },
+  {
+   "game_date": "2026-11-14",
+   "matchup": "DAL@CLE",
+   "team": "Cleveland Cavaliers"
+  },
+  {
+   "game_date": "2026-11-14",
+   "matchup": "BKN@MEM",
+   "team": "Memphis Grizzlies"
+  },
+  {
+   "game_date": "2026-11-14",
+   "matchup": "CHI@MIN",
+   "team": "Chicago Bulls"
+  },
+  {
+   "game_date": "2026-11-14",
+   "matchup": "DET@MIA",
+   "team": "Miami Heat"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Phoenix Suns"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "New York Knicks"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder"
+  },
+  {
+   "game_date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings"
+  }
+ ]
+}

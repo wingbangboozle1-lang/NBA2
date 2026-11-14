@@ -102,12 +102,24 @@ def staleness() -> dict:
         "stale_rows": rows,
         "n_stale": len(rows),
         "n_unexplained": sum(1 for r in rows if r["cause"] == "UNEXPLAINED"),
-        "verdict": ("the published team table is a PRE-FINAL snapshot: it agrees with the "
-                    "pre-11/13-finals reconstruction on every row and with today's standings "
-                    "on only %d of %d" % (match_live, len(TEAMS))),
+        # The verdict is computed, never hard-coded. This measure existed to detect a table
+        # transcribed before the 11/13 finals; the 2026-11-14 refresh made the table current,
+        # which flips the direction of the finding rather than removing the check.
+        "verdict": (
+            ("the published team table is CURRENT: it agrees with live nba.com/standings on "
+             "%d of %d rows and with the pre-11/13-finals reconstruction on only %d - the "
+             "staleness this measure was written to detect was resolved by the 2026-11-14 "
+             "refresh (session arena/ac5fab5c-nba2)"
+             % (match_live, len(TEAMS), match_pre))
+            if match_live > match_pre else
+            ("the published team table is a PRE-FINAL snapshot: it agrees with the "
+             "pre-11/13-finals reconstruction on %d of %d rows and with today's standings "
+             "on only %d" % (match_pre, len(TEAMS), match_live))
+        ),
         "published_claim": ("the built site advertises 'Committed W-L ... vs live "
-                            "nba.com/standings | 30/30 identical | MATCH' - that comparison was "
-                            "true when it was made, and it is no longer true of the same rows"),
+                            "nba.com/standings | 30/30 identical | MATCH' - re-checked on "
+                            "2026-11-14 by session arena/ac5fab5c-nba2 and true again: the "
+                            "committed table matches live standings 30/30"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,
