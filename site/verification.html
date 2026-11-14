@@ -278,6 +278,582 @@ against what the official page says without trusting either.</div>
 <td>grep + inspection of the prior build</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
+</tbody></table></div><h2>Session arena/72f9da58 — independent re-verification (2026-11-14)</h2><div class="scroll"><table>
+<caption>Integration-session verification results (tasks E-01 to E-04)</caption>
+<thead><tr>
+<th scope="col">Check</th>
+<th scope="col">Result</th>
+<th scope="col">Method / evidence</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>E-01 checker sweep</td>
+<td>PASS — 64/64 nba2 + 49/49 backtest tests; both sealed ledgers VERIFIED (cf7dedc6… over 22 predictions, c841e8f3… over 27); provenance lint OK over the v1 tree (1124 rows / 39 tables); internal links OK across 88 HTML files; docs, dashboard, originated and backtest verifiers all PASS</td>
+<td>python -m unittest discover (nba2 + backtest); nba2.pipeline.seal_predictions --verify; nba2.pipeline.lint; tools/check_links_all.py; tools/verify_site.py; scripts/check_site.py; node originated/engine/verify.js; tools/verify_backtest.py</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr>
+<td>E-02 slate vs official schedule</td>
+<td>36/36 rows of the current v1 slate (11/13 context + 11/14–17 pick window) match nba.com on game ID, date and matchup — 0 mismatches; 30/30 displayed tips match (the six live 11/13 tips were confirmed earlier from the schedule capture plus the injury report&#x27;s Game Time column); per-date counts 9/5/9/8/5 match the official day headers</td>
+<td>fresh fetch of nba.com/schedule on 2026-11-14 ~01:55 UTC, diffed row-by-row against data/raw/slate_2026-11-14_to_11-17.json (capture: audit/official_schedule_2026-11-14.json)</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>E-03 injury-report currency</td>
+<td>Latest official revision this session could fetch = 19:15 ET (122 rows, round-trip validated); the v1 tree now publishes the 19:30 ET release; this site uses the 04:15 ET report (F-003). Delta 16:15→19:15: 12 status changes, 32 added rows, 5 pending resolved, 3 text-layer spacing artefacts — full table below</td>
+<td>fetch of Injury-Report_2026-11-13_07_15PM.pdf in two chunks; audit/parse_injury_0715.py asserts every parsed cell against the captured text; audit/injury_delta_0415_to_0715.json</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>E-04 records vs official standings</td>
+<td>30/30 team W-L match the official standings, including Toronto 5-7 and Washington 4-9 that earlier audits could only carry from a third-party snapshot</td>
+<td>nba.com/standings re-read 2026-11-14, diffed against the committed ratings snapshot</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>E-04 game URLs, tips and 11/17 repeats</td>
+<td>31/31 slugs of the original window re-read from links nba.com itself prints (schedule previews + game rail); the 11/17 repeat matchups are genuine — the official game page prints &#x27;Tuesday, November 17th, 2026 7:30 PM ET&#x27; for NYK @ TOR (0022600253)</td>
+<td>official schedule + game rail on nba.com/game/den-vs-nop-0022600231 + game page nyk-vs-tor-0022600253</td>
+<td><a href="https://www.nba.com/game/nyk-vs-tor-0022600253" rel="noopener" target="_blank">nba.com/game/nyk-vs-tor-0022600253</a></td>
+</tr>
+<tr>
+<td>E-04 settlement status</td>
+<td>PENDING by design — data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null; no official final scores cover the sealed games yet, so metrics stay unmeasured rather than assumed</td>
+<td>python -m nba2.pipeline.settle (v1 tree); nightly refresh.yml fetches finals as game days end</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+</tbody></table></div><div class="scroll"><table>
+<caption>Injury-revision delta: what changed after the revision this site uses (official 16:15 ET → official 19:15 ET; 52 rows, every cell asserted against the captured PDF text by audit/parse_injury_0715.py)</caption>
+<thead><tr>
+<th scope="col">Change type</th>
+<th scope="col">Matchup</th>
+<th scope="col">Team</th>
+<th scope="col">Player</th>
+<th scope="col">Then-published (16:15 ET)</th>
+<th scope="col">Official (19:15 ET)</th>
+<th scope="col">Note</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>status change</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>Cain, Jamal</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason: Injury/Illness - Left Shoulder Contusion → Injury/Illness - Left ShoulderContusion</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>da Silva, Tristan</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>Suggs, Jalen</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>NYK@IND</td>
+<td>Indiana Pacers</td>
+<td>McConnell, T.J.</td>
+<td>Probable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>NYK@IND</td>
+<td>Indiana Pacers</td>
+<td>Nesmith, Aaron</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>ATL@CHI</td>
+<td>Atlanta Hawks</td>
+<td>Dennis, RayJ</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>ATL@CHI</td>
+<td>Atlanta Hawks</td>
+<td>Flemings, Kingston</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>ATL@CHI</td>
+<td>Chicago Bulls</td>
+<td>Powell, Norman</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason: Injury/Illness - Low Back Spasms → -</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>ATL@CHI</td>
+<td>Chicago Bulls</td>
+<td>Swain, Dailyn</td>
+<td>Questionable</td>
+<td>Out</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>CLE@MIA</td>
+<td>Miami Heat</td>
+<td>Larsson, Pelle</td>
+<td>Doubtful</td>
+<td>Out</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>CLE@MIA</td>
+<td>Miami Heat</td>
+<td>Thompson, Klay</td>
+<td>Probable</td>
+<td>Out</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>status change</td>
+<td>MEM@NOP</td>
+<td>New Orleans Pelicans</td>
+<td>Mathurin, Bennedict</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>reason unchanged</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Mitchell, Ajay</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Questionable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Sorber, Thomas</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Topic, Nikola</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Available</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Wallace, Cason</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Williams, Jalen</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>OKC@LAC</td>
+<td>Oklahoma City Thunder</td>
+<td>Williams, Jaylin</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Holmes II, DaRon</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Nembhard, Ryan</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Strawther, Julian</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Whitmore, Cam</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Biberovic, Tarik</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Christie, Max</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Questionable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>de Larrea, Sergio</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Johnson Jr., Morez</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Probable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Lively II, Dereck</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DAL@CLE</td>
+<td>Cleveland Cavaliers</td>
+<td>Martin, Caleb</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Available</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Bilodeau, Tyler</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Brown Jr., Mikel</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Questionable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Jefferson, Joshua</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Nelson, Grant</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Saraf, Ben</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Traore, Nolan</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Probable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>Beringer, Joan</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Available</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>DiVincenzo, Donte</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>Edwards, Anthony</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Duren, Jalen</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Harkless, Elijah</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Questionable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Joe, Isaiah</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Jones, Isaac</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Questionable</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Lanier, Chaz</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Okorie, Ebuka</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>added in 19:15 ET</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Onyenso, Ugonna</td>
+<td>(not in 16:15 ET revision)</td>
+<td>Out</td>
+<td>row first appears in the 19:15 ET revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>pending resolved</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>(team placeholder)</td>
+<td>NOT YET SUBMITTED</td>
+<td>submitted — placeholder replaced by player rows</td>
+<td>team submitted its 11/14 list between the 16:15 and 19:15 revisions</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>pending resolved</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>(team placeholder)</td>
+<td>NOT YET SUBMITTED</td>
+<td>submitted — placeholder replaced by player rows</td>
+<td>team submitted its 11/14 list between the 16:15 and 19:15 revisions</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>pending resolved</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>(team placeholder)</td>
+<td>NOT YET SUBMITTED</td>
+<td>submitted — placeholder replaced by player rows</td>
+<td>team submitted its 11/14 list between the 16:15 and 19:15 revisions</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>pending resolved</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>(team placeholder)</td>
+<td>NOT YET SUBMITTED</td>
+<td>submitted — placeholder replaced by player rows</td>
+<td>team submitted its 11/14 list between the 16:15 and 19:15 revisions</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>pending resolved</td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>(team placeholder)</td>
+<td>NOT YET SUBMITTED</td>
+<td>submitted — placeholder replaced by player rows</td>
+<td>team submitted its 11/14 list between the 16:15 and 19:15 revisions</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>text-layer spacing only</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>Banchero, Paolo</td>
+<td>Injury/Illness - Right High Ankle Sprain</td>
+<td>Injury/Illness - Right High AnkleSprain</td>
+<td>space dropped by the PDF text layer — not a document change</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>text-layer spacing only</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>Isaac, Jonathan</td>
+<td>Injury/Illness - Left Knee Injury Management</td>
+<td>Injury/Illness - Left Knee InjuryManagement</td>
+<td>space dropped by the PDF text layer — not a document change</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>text-layer spacing only</td>
+<td>MIL@ORL</td>
+<td>Orlando Magic</td>
+<td>Nelson, Izaiyah</td>
+<td>Injury/Illness - Left Ankle Injury Recovery</td>
+<td>Injury/Illness - Left Ankle InjuryRecovery</td>
+<td>space dropped by the PDF text layer — not a document change</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
 </tbody></table></div><h2>What 'verified' means here — and what it does not</h2>
 <ul>
   <li><b>Verified</b> means: the value on the page equals the value on the official page on the retrieval date, and the link to that page is on the row.</li>
@@ -286,7 +862,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">Fourteen items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">22 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>

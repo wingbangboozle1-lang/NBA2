@@ -193,13 +193,49 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Any table that presents a cover probability against our own line as an edge has misread the model. Only a third-party price can create an edge.</td>
 <td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
 </tr>
+<tr id="F-019">
+<td><span class="badge b-warn">F-019</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>Injury-report currency: the first published injury rows (official 16:15 ET / 04_15PM release — the revision this site uses, see F-003) were superseded three times the same evening — 17:15, 18:15 and 19:15 ET — by 12 status changes, 32 added rows and 5 pending placeholders resolved. The complete line-by-line delta is tabled on the Verification log page.</td>
+<td>Treat every injury-based read off a single revision as dated: the delta table is published with per-row official PDF links, and the repository&#x27;s nightly ingest (refresh.yml) archives later releases. Re-check designations against the newest revision before acting.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-020">
+<td><span class="badge b-off">F-020</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Verification</td>
+<td>In the 19:15 ET revision the team label for Martin, Caleb is dropped at a page break (his row sits between the Cleveland and Dallas blocks) and a contradictory &#x27;Cleveland Cavaliers — NOT YET SUBMITTED&#x27; placeholder prints in the same document. The 17:15, 18:15 and 19:30 ET releases all print &#x27;Cleveland Cavaliers&#x27; explicitly on his row.</td>
+<td>Cleveland is attributed only because three official revisions keep printing it; re-check on the next revision and flip the attribution if the label moves.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-021">
+<td><span class="badge b-off">F-021</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Product</td>
+<td>The v1 slate table&#x27;s &#x27;Official game page&#x27; column prints its verified URLs as plain text rather than clickable links (36 rows in that tree&#x27;s window), which slows the manual click-through review the brief asks for. No data is affected.</td>
+<td>Wrap the cell in an anchor at build time in nba2/pipeline/build_site.py; logged as suggestion SG-20 on the Suggestions page.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-022">
+<td><span class="badge b-info">F-022</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Data</td>
+<td>Settlement, reward allocation and leaderboard scores are PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet, so every score, bet count and reward cell is blank.</td>
+<td>Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends and re-runs settle; blanks stay until then.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.
       Open <a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">the official index</a>
       and look for a 11/14 entry.</li>
   <li><b>F-009:</b> eleven injury rows take their team from the PDF's previous page. Compare against the PDF pages 3–7.</li>
-  <li><b>F-011:</b> six site trees exist. Decide which is authoritative before the next session builds a seventh.</li>
+  <li><b>F-011:</b> several site trees exist; the decision is now made — <code>pages.yml</code> publishes <code>site/</code>
+      (v2) only, and the v1 trees stay in the repository for history (suggestion SG-23).</li>
+  <li><b>F-019 / F-020:</b> the injury-revision delta table on the <a href="verification.html">Verification log</a> shows every
+      change after the 16:15 ET revision this site uses. On the next official release, confirm Martin, Caleb's team label still
+      prints Cleveland.</li>
 </ul>
 <h2>Flag policy</h2>
 <p class="lede">A flag is raised when a value cannot be sourced, when two sources disagree, when a method depends on an

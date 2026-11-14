@@ -206,6 +206,37 @@ SUGGESTIONS = [
     ("SG-18", "Product", "Split the site into 'projection' (safe to publish now) and 'bet' (gated) surfaces, and never mix them.",
      "Right now the honest answer is that no bet is publishable. Separating the two stops a reader mistaking a projection for a tip.",
      "Low (implemented)", "none — no dependency", "IMPLEMENTED"),
+    # --- raised by integration session arena/72f9da58 (2026-11-14) ---
+    ("SG-19", "Data plumbing",
+     "Re-ingest the injury report at its newest official revision before every pick run, and keep the line-by-line delta between revisions published.",
+     "The first published rows (16:15 ET) were superseded three times the same evening — 12 status changes. Lines priced off a stale revision are priced off a superseded designation list.",
+     "Low (parser + delta already exist under audit/)", "nightly refresh.yml exists; the remaining gap is the game-day 13:00 ET report",
+     "IMPLEMENTED by refresh.yml (nightly); game-day cadence open"),
+    ("SG-20", "Product",
+     "Make the v1 slate table's verified game-page URLs clickable (<a href> at build time).",
+     "Reviewers must copy-paste URLs to open them, which slows the manual click-through that the provenance model depends on.",
+     "Very low (one renderer change in nba2/pipeline/build_site.py)", "none — URLs are already verified 36/36",
+     "QUEUED"),
+    ("SG-21", "Product",
+     "Show the injury-report revision time and retrieval time in the Injuries page banner.",
+     "A reader could not tell which official revision the rows came from without opening a flag; currency was invisible at a glance.",
+     "Low (both fields already in the snapshot)", "none",
+     "IMPLEMENTED by refresh.yml (stamps on the Injuries page)"),
+    ("SG-22", "Data plumbing",
+     "Settle the sealed ledger from official finals as soon as each game day ends, and keep the settlement stamp visible.",
+     "Leaderboard, gates and rewards stay blank until finals exist; the 'remove luck' step only becomes data when graded results land.",
+     "Low (settle.py runs today and records a pending state)", "official final-score snapshots — fetched nightly by refresh.yml",
+     "PARTIAL — settle runs, awaiting first official finals"),
+    ("SG-23", "Product",
+     "Keep exactly one published site tree; retain the others as history with a banner pointing at the canonical one.",
+     "Seven trees shipped from one repo at different times; a reviewer could find different numbers on different trees.",
+     "Low — decided: pages.yml publishes site/ (v2) only", "none — v1 trees stay in the repo for audit",
+     "IMPLEMENTED — pages.yml publishes site/ only"),
+    ("SG-24", "Product",
+     "Put data-currency and settlement KPIs on the landing page (e.g. 'injury revision: <stamp>', 'settlement: PENDING/last run').",
+     "Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.",
+     "Low — both values exist in committed metadata", "SG-22 for the settlement half",
+     "QUEUED"),
 ]
 
 # --------------------------------------------------------------------------- questions
@@ -344,6 +375,75 @@ FLAGS = [
      "A win probability is not a cover probability. Our own line already absorbs the model's view, so P(cover) at our own number is ~50% by construction (see F-014).",
      "Any table that presents a cover probability against our own line as an edge has misread the model. Only a third-party price can create an edge.",
      S["team_adv"][1]),
+    # --- raised by integration session arena/72f9da58 (2026-11-14 verification round) ---
+    ("F-019", "medium", "Verification",
+     "Injury-report currency: the first published injury rows (official 16:15 ET / 04_15PM release — the revision this site uses, see F-003) "
+     "were superseded three times the same evening — 17:15, 18:15 and 19:15 ET — by 12 status changes, 32 added rows and 5 pending placeholders "
+     "resolved. The complete line-by-line delta is tabled on the Verification log page.",
+     "Treat every injury-based read off a single revision as dated: the delta table is published with per-row official PDF links, and the "
+     "repository's nightly ingest (refresh.yml) archives later releases. Re-check designations against the newest revision before acting.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf"),
+    ("F-020", "low", "Verification",
+     "In the 19:15 ET revision the team label for Martin, Caleb is dropped at a page break (his row sits between the Cleveland and Dallas "
+     "blocks) and a contradictory 'Cleveland Cavaliers — NOT YET SUBMITTED' placeholder prints in the same document. The 17:15, 18:15 and "
+     "19:30 ET releases all print 'Cleveland Cavaliers' explicitly on his row.",
+     "Cleveland is attributed only because three official revisions keep printing it; re-check on the next revision and flip the attribution "
+     "if the label moves.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf"),
+    ("F-021", "low", "Product",
+     "The v1 slate table's 'Official game page' column prints its verified URLs as plain text rather than clickable links (36 rows in that "
+     "tree's window), which slows the manual click-through review the brief asks for. No data is affected.",
+     "Wrap the cell in an anchor at build time in nba2/pipeline/build_site.py; logged as suggestion SG-20 on the Suggestions page.",
+     "https://www.nba.com/schedule"),
+    ("F-022", "info", "Data",
+     "Settlement, reward allocation and leaderboard scores are PENDING by design: data/settlement.json records settled_at "
+     "2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet, so every "
+     "score, bet count and reward cell is blank.",
+     "Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends "
+     "and re-runs settle; blanks stay until then.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json"),
+]
+
+# --------------------------------------------------------------------------- integration session audit
+# Independent re-verification by session arena/72f9da58 on 2026-11-14 (the integration session).
+# Each: check, result, method, source URL. Raw artefacts live under audit/ in the repository.
+SESSION_AUDIT = [
+    ("E-01 checker sweep",
+     "PASS — 64/64 nba2 + 49/49 backtest tests; both sealed ledgers VERIFIED (cf7dedc6… over 22 predictions, c841e8f3… over 27); "
+     "provenance lint OK over the v1 tree (1124 rows / 39 tables); internal links OK across 88 HTML files; docs, dashboard, "
+     "originated and backtest verifiers all PASS",
+     "python -m unittest discover (nba2 + backtest); nba2.pipeline.seal_predictions --verify; nba2.pipeline.lint; "
+     "tools/check_links_all.py; tools/verify_site.py; scripts/check_site.py; node originated/engine/verify.js; tools/verify_backtest.py",
+     "https://github.com/wingbangboozle1-lang/NBA2"),
+    ("E-02 slate vs official schedule",
+     "36/36 rows of the current v1 slate (11/13 context + 11/14–17 pick window) match nba.com on game ID, date and matchup — "
+     "0 mismatches; 30/30 displayed tips match (the six live 11/13 tips were confirmed earlier from the schedule capture plus the "
+     "injury report's Game Time column); per-date counts 9/5/9/8/5 match the official day headers",
+     "fresh fetch of nba.com/schedule on 2026-11-14 ~01:55 UTC, diffed row-by-row against data/raw/slate_2026-11-14_to_11-17.json "
+     "(capture: audit/official_schedule_2026-11-14.json)",
+     "https://www.nba.com/schedule"),
+    ("E-03 injury-report currency",
+     "Latest official revision this session could fetch = 19:15 ET (122 rows, round-trip validated); the v1 tree now publishes the "
+     "19:30 ET release; this site uses the 04:15 ET report (F-003). Delta 16:15→19:15: 12 status changes, 32 added rows, "
+     "5 pending resolved, 3 text-layer spacing artefacts — full table below",
+     "fetch of Injury-Report_2026-11-13_07_15PM.pdf in two chunks; audit/parse_injury_0715.py asserts every parsed cell against the "
+     "captured text; audit/injury_delta_0415_to_0715.json",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf"),
+    ("E-04 records vs official standings",
+     "30/30 team W-L match the official standings, including Toronto 5-7 and Washington 4-9 that earlier audits could only carry "
+     "from a third-party snapshot",
+     "nba.com/standings re-read 2026-11-14, diffed against the committed ratings snapshot",
+     "https://www.nba.com/standings"),
+    ("E-04 game URLs, tips and 11/17 repeats",
+     "31/31 slugs of the original window re-read from links nba.com itself prints (schedule previews + game rail); the 11/17 repeat "
+     "matchups are genuine — the official game page prints 'Tuesday, November 17th, 2026 7:30 PM ET' for NYK @ TOR (0022600253)",
+     "official schedule + game rail on nba.com/game/den-vs-nop-0022600231 + game page nyk-vs-tor-0022600253",
+     "https://www.nba.com/game/nyk-vs-tor-0022600253"),
+    ("E-04 settlement status",
+     "PENDING by design — data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null; no official final "
+     "scores cover the sealed games yet, so metrics stay unmeasured rather than assumed",
+     "python -m nba2.pipeline.settle (v1 tree); nightly refresh.yml fetches finals as game days end",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json"),
 ]
 
 # --------------------------------------------------------------------------- executive summary bullets
