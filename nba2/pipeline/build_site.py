@@ -48,6 +48,7 @@ NAV = [
     ("pages/questions.html", "Open Questions"),
     ("pages/suggestions.html", "Suggestions Queue"),
     ("pages/reconciliation.html", "Cross-session Reconciliation"),
+    ("pages/session-audit.html", "Session Audit"),
     ("pages/flagged-review.html", "Flagged for Review"),
     ("pages/sources.html", "Sources & Verification"),
 ]
@@ -73,6 +74,12 @@ INTROS = {
     "pages/repo-review.html": "<p>Line-by-line review of the repository, including work already merged by other sessions.</p>",
     "pages/reconciliation.html": "<p>Same official documents, two sessions, two answers. Every disagreement "
                                  "is listed rather than averaged.</p>",
+    "pages/session-audit.html":
+        "<p>What the 2026-11-14 verification session re-checked and found: the whole "
+        "checker suite re-run end to end, the slate re-diffed against the official "
+        "schedule, team records re-read from the official standings, the injury-report "
+        "currency delta line by line, and six suggestions put up for review before "
+        "implementation. Nothing on this page is an implemented change.</p>",
     "pages/questions.html": "<p>What must be known before a reasonable decision can be made — and how to go find out.</p>",
     "pages/suggestions.html": "<p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p>",
     "pages/flagged-review.html": "<p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p>",
@@ -275,6 +282,9 @@ def _pages() -> dict[str, list[str]]:
                                         render_table(sec("x3way"), L), render_table(sec("xlines"), L),
                                         render_table(sec("xadjudicate"), L),
                                         render_table(sec("xinjuries"), L)],
+        "pages/session-audit.html": [render_table(sec("audit"), L),
+                                     render_table(sec("injury_delta"), L),
+                                     render_table(sec("audit_suggestions"), L)],
         "pages/flagged-review.html": [render_table(sec("flags"), L)],
         "pages/sources.html": [render_table(sec("sources"), L)],
     }

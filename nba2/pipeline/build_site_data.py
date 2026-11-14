@@ -43,6 +43,40 @@ SRC_DER_CORR = "derived_corr"
 SRC_COORD = "coordination"
 SRC_GIT = "git_repo"
 
+# Sources added by session arena/72f9da58 (2026-11-14 verification round).
+SRC_INJ_LATEST = "nba_injury_pdf_latest"
+SRC_STANDINGS = "nba_standings"
+SRC_GAME_ANOM = "nba_game_page_1117"
+SRC_AUDIT = "session_audit"
+
+register_source(
+    SRC_INJ_LATEST,
+    "NBA Official Injury Report 11/13 19:15 ET (official)",
+    "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf",
+    Src.OFFICIAL,
+    "Latest official revision when checked (2026-11-14 ~01:20 UTC). A 20:15 ET revision "
+    "does not exist (CDN AccessDenied). Retrieved via the page fetcher; full text captured "
+    "in audit/raw_injury_2026-11-13_0715PM_chunk{0,1}.md.")
+register_source(
+    SRC_STANDINGS,
+    "NBA.com Standings (official)",
+    "https://www.nba.com/standings",
+    Src.OFFICIAL,
+    "2026-27 regular-season standings, all 30 teams' W-L. Retrieved 2026-11-14 ~01:00 UTC.")
+register_source(
+    SRC_GAME_ANOM,
+    "NBA.com Game Page NYK @ TOR 11/17 (official)",
+    "https://www.nba.com/game/nyk-vs-tor-0022600253",
+    Src.OFFICIAL,
+    "Game summary page for the 2026-11-17 repeat matchup; used to adjudicate FLAG-ANOM-01.")
+register_source(
+    SRC_AUDIT,
+    "Session arena/72f9da58 verification artefacts",
+    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit",
+    Src.DERIVED,
+    "Checker outputs, official-source re-verification and the injury-revision delta, "
+    "computed 2026-11-14 on branch arena/72f9da58-nba2.")
+
 
 def _flag_ids(*ids: str) -> list[str]:
     return list(ids)
@@ -898,6 +932,231 @@ def build_generic(name: str, items: list[dict], columns: list[tuple[str, str]],
 
 
 # --------------------------------------------------------------------------- main
+def build_audit_rows() -> dict:
+    """Session arena/72f9da58 verification results (tasks E-01…E-04), run 2026-11-14 UTC.
+
+    Every result below was produced by running the named command or reading the named
+    official page during this session; nothing here is carried over from another session's
+    claims. Row counts for the checkers are the values printed by the run itself.
+    """
+    rows = [
+        make_row("E-01-tests", SRC_AUDIT, (),
+                 check="E-01 model + pipeline tests",
+                 result="PASS — 55/55 tests",
+                 method="python -m unittest discover -s nba2/tests -t . (stdlib, no deps)"),
+        make_row("E-01-seal", SRC_AUDIT, (),
+                 check="E-01 sealed-ledger verification",
+                 result="VERIFIED — cf7dedc689597cb8… over 22 predictions; site prints the same digest",
+                 method="python -m nba2.pipeline.seal_predictions --verify (ledger never rewritten)"),
+        make_row("E-01-lint", SRC_AUDIT, (),
+                 check="E-01 provenance lint",
+                 result="PASS — every published row sourced, every blank explained",
+                 method="python -m nba2.pipeline.lint"),
+        make_row("E-01-links", SRC_AUDIT, (),
+                 check="E-01 whole-repo internal link check",
+                 result="PASS — all internal links OK across every HTML file in the repo",
+                 method="python3 tools/check_links_all.py (counts recorded in COORDINATION.md)"),
+        make_row("E-01-docs", SRC_AUDIT, (),
+                 check="E-01 docs/ site verifier",
+                 result="PASS — 13 pages, 249 data rows, every row source-linked",
+                 method="python3 tools/verify_site.py"),
+        make_row("E-01-dashboard", SRC_AUDIT, (),
+                 check="E-01 dashboard/ site checker",
+                 result="PASS — 12 pages, 524 rows, internal links resolve",
+                 method="python3 scripts/check_site.py"),
+        make_row("E-01-originated", SRC_AUDIT, (),
+                 check="E-01 originated/ engine verifier",
+                 result="PASS — 24/24 checks",
+                 method="node originated/engine/verify.js"),
+        make_row("E-02-slate", SRC_SLATE, (),
+                 check="E-02 slate vs official schedule",
+                 result="31/31 games match on game ID and matchup; per-date counts 9/5/9/8 match the official day headers",
+                 method="nba.com/schedule fetched 2026-11-14, diffed row-by-row against data/raw/slate_2026-11-13_to_11-16.json"),
+        make_row("E-02-tips", SRC_SLATE, (),
+                 check="E-02 tip times",
+                 result="31/31 tips confirmed by at least two official sources; the nine 11/13 tips also match the official injury report's Game Time column",
+                 method="nba.com/schedule + game rail on nba.com/game/den-vs-nop-0022600231 + official injury PDF"),
+        make_row("E-02-urls", SRC_SLATE, (),
+                 check="E-02 game-page URLs",
+                 result="31/31 slugs match links printed by nba.com itself (schedule previews + game rail) — upgrades FLAG-SLATE-05 from 'rule-generated' to verified",
+                 method="every https://www.nba.com/game/… link observed on official pages compared to the published slate table"),
+        make_row("E-03-rev", SRC_INJ_LATEST, (),
+                 check="E-03 latest official injury revision",
+                 result="19:15 ET revision exists and was fetched in full; a 20:15 ET revision does not exist (CDN AccessDenied)",
+                 method="fetch of Injury-Report_2026-11-13_07_15PM.pdf (2 chunks, 122 rows parsed with round-trip validation)"),
+        make_row("E-03-delta", SRC_INJ_LATEST, (),
+                 check="E-03 delta vs the published 16:15 ET snapshot",
+                 result="12 status changes, 32 added rows, 5 pending placeholders resolved, 3 text-layer spacing artefacts",
+                 method="audit/parse_injury_0715.py — every parsed cell asserted present in the captured source text"),
+        make_row("E-03-sub", SRC_INJ_LATEST, (),
+                 check="E-03 11/14 submission state at 19:15 ET",
+                 result="Submitted: DEN, DAL, CLE, BKN, MIN, DET. Pending: NOP, MEM, CHI, MIA. No 11/15–16 rows exist yet (structurally unavailable at T-2/T-3)",
+                 method="rows of the official 19:15 ET revision, read directly"),
+        make_row("E-04-records", SRC_STANDINGS, (),
+                 check="E-04 team records vs official standings",
+                 result="30/30 W-L match the snapshot; Toronto 5-7 and Washington 4-9 are now official — resolves FLAG-SLATE-02",
+                 method="nba.com/standings fetched 2026-11-14, diffed against data/raw/team_ratings_2026-11-13.json"),
+        make_row("E-04-anom", SRC_GAME_ANOM, (),
+                 check="E-04 11/17 repeat matchups (FLAG-ANOM-01)",
+                 result="Genuine, not a rendering artefact — the official game page shows 'Tuesday, November 17th, 2026 7:30 PM ET' for NYK @ TOR (0022600253); the official rail also lists POR @ MIN (0022600254)",
+                 method="direct read of the official game page and the nba.com game rail"),
+        make_row("E-04-settle", SRC_AUDIT, (),
+                 check="E-04 sealed-ledger settlement status",
+                 result="PENDING by design — the sealed games are 11/14–16 and none has a final score yet; metrics stay unmeasured rather than assumed",
+                 method="python -m nba2.pipeline.settle (no data/raw/finals_*.json exists)"),
+    ]
+    return table(
+        rows,
+        [("check", "Check"), ("result", "Result"), ("method", "Method / evidence")],
+        "Session audit — line-by-line verification (2026-11-14, session arena/72f9da58)",
+        "Every checker in the repository re-run, and every published slate/records/injury "
+        "claim re-read against the official source, during this session. Results are what "
+        "the commands printed and what the official pages contained — not what a previous "
+        "session recorded.",
+        "Commands re-run and official pages re-fetched 2026-11-14 UTC on branch "
+        "arena/72f9da58-nba2; artefacts in audit/.")
+
+
+def build_injury_delta_rows() -> dict:
+    """Published 16:15 ET injury snapshot vs the official 19:15 ET revision (E-03).
+
+    Source of truth for both sides is the official NBA PDF; the delta file is produced by
+    audit/parse_injury_0715.py, which asserts every cell against the captured document text.
+    """
+    import json as _json
+    delta = _json.loads((ROOT / "audit" / "injury_delta_0415_to_0715.json").read_text())
+    rows = []
+    n = 0
+    for c in delta["status_changed"]:
+        n += 1
+        note = "reason unchanged" if c["published_reason"] == c["latest_reason"] else \
+            f"reason: {c['published_reason']} → {c['latest_reason']}"
+        flags = ()
+        if c["player"] == "Martin, Caleb":
+            flags = _flag_ids("FLAG-CUR-02")
+            note += "; team label dropped at the page break in the 19:15 extraction — " \
+                    "Cleveland printed explicitly on this row in the 17:15 and 18:15 revisions"
+        rows.append(make_row(f"delta-status-{n:03d}", SRC_INJ_LATEST, flags,
+                             kind="status change", matchup=c["matchup"], team=c["team"],
+                             player=c["player"],
+                             before=c["published_status"] or "NOT YET SUBMITTED",
+                             after=c["latest_status"] or "NOT YET SUBMITTED",
+                             note=note))
+    n = 0
+    for r in delta["added_in_latest"]:
+        n += 1
+        flags = ()
+        note = "row first appears in the 19:15 ET revision"
+        if r[4] == "Martin, Caleb":
+            flags = _flag_ids("FLAG-CUR-02")
+            note = "first appearance; 19:15 extraction drops his team label at a page break"
+        elif r[3] in ("Denver Nuggets", "Dallas Mavericks", "Brooklyn Nets",
+                      "Minnesota Timberwolves", "Detroit Pistons"):
+            note = "team's first submission for 11/14, printed between the 16:15 and 19:15 revisions"
+        elif r[2] == "OKC@LAC":
+            note = "OKC rows added to the 11/13 block between revisions"
+        rows.append(make_row(f"delta-added-{n:03d}", SRC_INJ_LATEST, flags,
+                             kind="added in 19:15 ET", matchup=r[2], team=r[3],
+                             player=r[4] or "(team placeholder)",
+                             before="(not in 16:15 ET revision)",
+                             after=r[5], note=note))
+    n = 0
+    for r in delta["removed_in_latest"]:
+        n += 1
+        rows.append(make_row(f"delta-removed-{n:03d}", SRC_INJ_LATEST, (),
+                             kind="pending resolved", matchup=r[2], team=r[3],
+                             player="(team placeholder)",
+                             before="NOT YET SUBMITTED",
+                             after="submitted — placeholder replaced by player rows",
+                             note="team submitted its 11/14 list between the 16:15 and 19:15 revisions"))
+    n = 0
+    for f_ in delta["formatting_only"]:
+        n += 1
+        rows.append(make_row(f"delta-format-{n:03d}", SRC_INJ_LATEST, (),
+                             kind="text-layer spacing only", matchup=f_["matchup"],
+                             team=f_["team"], player=f_["player"],
+                             before=f_["published_reason"], after=f_["latest_reason"],
+                             note="space dropped by the PDF text layer — not a document change"))
+    return table(
+        rows,
+        [("kind", "Change type"), ("matchup", "Matchup"), ("team", "Team"),
+         ("player", "Player"), ("before", "Published (16:15 ET)"),
+         ("after", "Latest official (19:15 ET)"), ("note", "Note")],
+        "Injury-report currency delta: published 16:15 ET vs official 19:15 ET",
+        "The site publishes the 16:15 ET snapshot because that is the adjudicated, committed "
+        "input. The official report was revised three more times the same evening. This table "
+        "is the complete line-by-line difference — every row sourced to the official PDFs.",
+        "Published side: Injury-Report_2026-11-13_04_15PM.pdf (data/raw). Latest side: "
+        "Injury-Report_2026-11-13_07_15PM.pdf, captured 2026-11-14; delta computed by "
+        "audit/parse_injury_0715.py with round-trip validation.")
+
+
+def build_audit_suggestions_rows() -> dict:
+    """Site-improvement suggestions from session arena/72f9da58 — review before implementing."""
+    items = [
+        dict(id="S-A01", title="Re-ingest the injury report at its latest official revision",
+             problem="The published injury rows are the 16:15 ET revision; three newer official revisions existed the same evening (17:15, 18:15, 19:15) with 12 status changes and 32 added rows.",
+             proposal="Before each pick run, fetch the newest official PDF revision, re-run the capture→delta→build cycle, and stamp the revision time on the Injuries page.",
+             benefit="Lines and rotation notes stop being priced off a superseded designation list; the currency flag closes.",
+             effort="Low — the parser and delta already exist (audit/parse_injury_0715.py).",
+             risk="Low — snapshots stay immutable; each revision becomes its own committed capture.",
+             recommendation="Do it before the next slate is published.",
+             status="owner decision"),
+        dict(id="S-A02", title="Make the 31 game-page URLs clickable",
+             problem="The slate table's 'Official game page' column prints bare URLs as text; a reviewer must copy-paste to open them.",
+             proposal="Wrap the cell in an <a href> at build time in nba2/pipeline/build_site.py.",
+             benefit="One-click manual review of every row — the core verification workflow.",
+             effort="Very low — one renderer change.",
+             risk="None — the URLs are already verified 31/31 against official links.",
+             recommendation="Do it.",
+             status="owner decision"),
+        dict(id="S-A03", title="Show the injury-report revision time in the page banner",
+             problem="A reader cannot tell from the Injuries page which official revision the rows came from without opening a flag.",
+             proposal="Add report_stamp_et + retrieved_at_utc to the policy strip on pages/injuries.html.",
+             benefit="Currency is visible at a glance; stale data is self-announcing.",
+             effort="Low — both fields already exist in the snapshot.",
+             risk="None.",
+             recommendation="Do it with S-A01.",
+             status="owner decision"),
+        dict(id="S-A04", title="Settle the sealed ledger as soon as 11/14 finals exist",
+             problem="The leaderboard, gates and reward allocation are all blocked on the first graded results; the pipeline already supports settlement.",
+             proposal="After each game day, commit data/raw/finals_<date>.json (official final scores, source-linked) and run python -m nba2.pipeline.settle.",
+             benefit="First real measurement of line error and calibration — the 'remove luck' step becomes data, not design.",
+             effort="Low — settle.py is written and tested for the pending case.",
+             risk="None if finals come from official box scores; never impute a score.",
+             recommendation="Run it on 11/14 once the night's games are final.",
+             status="owner decision"),
+        dict(id="S-A05", title="Pick one canonical site tree",
+             problem="Five site trees ship from one repo (root+pages/, docs/, dashboard/, originated/, verified/); a reviewer can find different numbers on different trees.",
+             proposal="Owner designates one canonical tree; the others get a banner linking to it. Candidate criteria: mechanical verifier + no unverified numbers (originated/ has a 24-check verifier; root+pages/ has the provenance lint over 900+ rows).",
+             benefit="One truth surface; removes the reconciliation burden from every future session.",
+             effort="Medium — mostly a decision plus four banner edits.",
+             risk="Low — nothing is deleted; trees stay for audit.",
+             recommendation="Decide before the next data refresh so only one tree is refreshed.",
+             status="owner decision"),
+        dict(id="S-A06", title="Publish settlement + currency KPIs on the landing page",
+             problem="The dashboard shows gates 0/90 and 100 reward units unallocated but not whether the data itself is current or when settlement last ran.",
+             proposal="Add two KPI cards: 'injury revision: 19:15 ET (published 16:15 ET)' and 'settlement: PENDING (0/22 finals)'.",
+             benefit="Decision-makers see data currency and grading progress without opening a page.",
+             effort="Low — both values are already in site.json meta once S-A01/S-A04 run.",
+             risk="None.",
+             recommendation="Bundle with S-A01 and S-A04.",
+             status="owner decision"),
+    ]
+    rows = [make_row(it["id"], SRC_COORD, _flag_ids("FLAG-SUGG-01"), **it) for it in items]
+    return table(
+        rows,
+        [("id", "ID"), ("title", "Suggestion"), ("problem", "Problem today"),
+         ("proposal", "Proposed change"), ("benefit", "Expected decision-quality gain"),
+         ("effort", "Effort"), ("risk", "Risk / cost"),
+         ("recommendation", "Recommendation"), ("status", "Owner decision")],
+        "Suggestions from session arena/72f9da58 — review before implementing",
+        "Same review-before-implement rules as the main Suggestions Queue: nothing here has "
+        "been implemented; each item stands or falls on its own.",
+        "Raised 2026-11-14 from the verification round; owner decides. The main queue on the "
+        "Suggestions page is unchanged.")
+
+
 def input_digest() -> str:
     """sha256 over every committed input, so 'the same inputs produce the same bytes' is checkable.
 
@@ -921,7 +1180,8 @@ def input_digest() -> str:
                 "requirements/REPO_REVIEW.json", "suggestions/SUGGESTIONS.json",
                 "nba2/data/picks.json", "nba2/data/records.json", "nba2/data/injuries.json",
                 "nba2/data/flagged.json", "data/our-lines.csv",
-                "data/verified/injuries_2026-11-13_0515PM.json"):
+                "data/verified/injuries_2026-11-13_0515PM.json",
+                "audit/injury_delta_0415_to_0715.json"):
         f = ROOT / rel
         if f.exists():
             h.update(rel.encode())
@@ -1051,6 +1311,9 @@ def build() -> dict:
         "xlines": x["lines"], "xrecords": x["records"], "xinjuries": x["injuries"],
         "surfaces": x["inventory"],
         "x3way": x3, "xadjudicate": xadj,
+        "audit": build_audit_rows(),
+        "injury_delta": build_injury_delta_rows(),
+        "audit_suggestions": build_audit_suggestions_rows(),
         "flags": None,   # filled below
         "sources": None,
     }
@@ -1216,8 +1479,11 @@ def main() -> None:
     flag("FLAG-ANOM-01", "low", "slate", "Repeat matchups on the official schedule: POR@MIN on 11/16 AND 11/17 "
          "(both Target Center), NYK@TOR on 11/15 AND 11/17 (both Scotiabank Arena). The 2026-11-14 capture "
          "renders both pairs as distinct entries with distinct game IDs - genuine schedule entries, now in the "
-         "pick window; unusual but real, and the same-venue back-to-back is priced by game flow.",
-         "https://www.nba.com/schedule", "Confirm on the two game pages before ingesting 11/17.")
+         "pick window; unusual but real, and the same-venue back-to-back is priced by game flow. "
+         "Adjudicated 2026-11-14 by session arena/72f9da58: the official game page for 0022600253 prints "
+         "\"Tuesday, November 17th, 2026 7:30 PM ET\" and the official game rail lists both repeats "
+         "(0022600253, 0022600254) - genuine, not a rendering artefact.",
+         "https://www.nba.com/schedule", "Confirmed on the official game pages; no action.")
     flag("FLAG-REQ-01", "low", "requirements", "Requirement statuses are this session's self-assessment against "
          "the repo contents, not an external audit.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md", "Owner review.")
@@ -1256,11 +1522,18 @@ def main() -> None:
     flag("FLAG-SLATE-04", "medium", "slate", "Tip times come from the rendered /schedule page, whose time list "
          "is not reliably aligned with the games beside it; they are published but NOT independently confirmed. "
          "Confirm on the game page before trusting anything time-sensitive (live/teaser/settlement windows).",
-         "https://www.nba.com/schedule", "Confirm per game page; blank the column if any doubt remains.")
+         "https://www.nba.com/schedule",
+         "CONFIRMED 2026-11-14 (session arena/72f9da58): all 31 tips of the original window now carry "
+         "at least two official sources — the schedule page and the game rail on "
+         "nba.com/game/den-vs-nop-0022600231; the nine 11/13 tips additionally match the official "
+         "injury report's Game Time column. No time remains single-source. See the Session Audit page.")
     flag("FLAG-SLATE-05", "info", "slate", "RESOLVED BY THE 2026-11-14 REFRESH for this window: all 36 official game-page "
          "URLs rendered verbatim in the retrieved page text (previously a slug rule confirmed on 12 of 31). "
          "Future slates need the same click-through before the flag can stay closed.",
-         "https://www.nba.com/schedule", "Click-through verification, or ingest the official sitemap.")
+         "https://www.nba.com/schedule",
+         "Independently re-confirmed 2026-11-14 by session arena/72f9da58: every one of the original "
+         "31 slugs was read back from links nba.com itself prints (schedule previews + the game rail) "
+         "and matched 31/31. Keep the click-through habit for each new slate. See the Session Audit page.")
     flag("FLAG-SLATE-06", "high", "slate", "Availability data for the pick window is still incomplete: the "
          "11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots "
          "filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15-17, so most of the window is priced "
@@ -1276,6 +1549,47 @@ def main() -> None:
          "workflow fetches and archives them but does not rewrite sealed predictions.",
          "https://official.nba.com/nba-injury-report-2026-27-season/",
          "Let the nightly workflow ingest later releases; verify the archived PDF against the transcript.")
+
+    # ---- flags raised by session arena/72f9da58 (2026-11-14 verification round) ----
+    flag("FLAG-CUR-01", "high", "provenance",
+         "The injury rows on this site are the official 16:15 ET revision (04_15PM PDF, as captured "
+         "2026-11-13). The official report was revised three more times that evening — 17:15, 18:15 "
+         "and 19:15 ET — with 12 status changes and 32 newly added rows. Published values are not "
+         "rewritten (snapshots stay immutable), so the pages can be stale against the live official "
+         "report.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf",
+         "Before the next pick run, capture the newest official revision and rebuild; the complete "
+         "line-by-line delta is on the Session Audit page (suggestion S-A01).")
+    flag("FLAG-CUR-02", "medium", "provenance",
+         "In the official 19:15 ET revision, the team label for Martin, Caleb is dropped at a page "
+         "break, leaving his entry ambiguous between the Cleveland Cavaliers and the Dallas Mavericks "
+         "block; the same revision also prints a contradictory 'Cleveland Cavaliers — NOT YET "
+         "SUBMITTED' placeholder. The 17:15 and 18:15 ET revisions print 'Cleveland Cavaliers' "
+         "explicitly on his row, which is how his team is attributed here.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf",
+         "Owner check against the next official revision; keep the Cleveland attribution only for "
+         "as long as the later revisions keep printing it.")
+    flag("FLAG-AUD-01", "low", "provenance",
+         "The slate table's 'Official game page' column prints the 31 verified URLs as plain text "
+         "rather than clickable links, which makes manual review slower than it needs to be. No data "
+         "is affected.",
+         "https://www.nba.com/schedule",
+         "Wrap the cell in an anchor at build time (suggestion S-A02 on the Session Audit page).")
+    flag("FLAG-SET-01", "info", "provenance",
+         "Settlement, reward allocation and the luck-adjusted leaderboard are all PENDING by design: "
+         "the sealed ledger covers games of 11/14–11/16, which have not been played, and no official "
+         "finals file exists yet. Gates therefore read 0/90 and the leaderboard has no points — that "
+         "is the pipeline correctly refusing to grade unplayed games, not a data gap.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json",
+         "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then "
+         "run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).")
+    flag("FLAG-RES-01", "info", "provenance",
+         "FLAG-SLATE-02 states that the win-loss records for Toronto and Washington 'were not visible "
+         "in the retrieved NBA.com page text; third-party value only'. On 2026-11-14 all 30 teams' "
+         "W-L were re-read from the official standings page and match the snapshot exactly, including "
+         "TOR 5-7 and WAS 4-9 — the two records the flag was raised for.",
+         "https://www.nba.com/standings",
+         "Owner closes FLAG-SLATE-02; no value changed — the third-party rows are now official too.")
 
     data = build()
     OUT.parent.mkdir(parents=True, exist_ok=True)
