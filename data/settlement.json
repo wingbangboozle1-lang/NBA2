@@ -1,6 +1,6 @@
 {
-  "settled_at_utc": "2026-11-14T00:58:54+00:00",
-  "finals_snapshot": null,
+  "settled_at_utc": "2026-11-14T10:40:17+00:00",
+  "finals_snapshot": "finals_2026-11-13.json",
   "ledgers": [
     {
       "ledger": "sealed-2026-11-13.json",
@@ -8,7 +8,7 @@
         "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
         "n_predictions": 22
       },
-      "status": "PENDING \u2014 no official final scores in the repository",
+      "status": "PARTIAL \u2014 22 game(s) have no official final score",
       "games_settled": 0,
       "games_expected": 22,
       "metrics": {},
@@ -20,7 +20,7 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PENDING \u2014 no official final scores in the repository",
+      "status": "PARTIAL \u2014 27 game(s) have no official final score",
       "games_settled": 0,
       "games_expected": 27,
       "metrics": {},

@@ -136,9 +136,9 @@
 </tr>
 <tr id="E-04-settle">
 <td>E-04 sealed-ledger settlement status</td>
-<td>PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed</td>
-<td>python -m nba2.pipeline.settle (no official finals snapshot covers the ledger&#x27;s games)</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
+<td>PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against a real official finals snapshot (data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the loader reports 0 of 22 and 0 of 27 games settled: the nine played games are day-before context that neither sealed ledger covers, so the sealed games of 11/14–17 still have no official final scores. Metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published</td>
+<td>python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>

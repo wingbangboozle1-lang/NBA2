@@ -1062,14 +1062,16 @@ def build_audit_rows() -> dict:
                  check="E-04 11/17 repeat matchups (FLAG-ANOM-01)",
                  result="Genuine, not a rendering artefact — the official game page shows 'Tuesday, November 17th, 2026 7:30 PM ET' for NYK @ TOR (0022600253); the official rail also lists POR @ MIN (0022600254)",
                  method="direct read of the official game page and the nba.com game rail"),
-        make_row("E-04-settle", SRC_AUDIT, (),
+        make_row("E-04-settle", SRC_FINALS,
                  check="E-04 sealed-ledger settlement status",
-                 result="PENDING by design — data/settlement.json carries settled_at "
-                        "2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 "
-                        "have no official final scores yet, so metrics stay unmeasured rather than "
-                        "assumed",
-                 method="python -m nba2.pipeline.settle (no official finals snapshot covers the "
-                        "ledger's games)"),
+                 result="PARTIAL, and that is the correct answer — the settlement path was exercised "
+                        "on 2026-11-14 against a real official finals snapshot "
+                        "(data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the "
+                        "loader reports 0 of 22 and 0 of 27 games settled: the nine played games are "
+                        "day-before context that neither sealed ledger covers, so the sealed games of "
+                        "11/14–17 still have no official final scores. Metrics stay unmeasured rather "
+                        "than assumed, and a partial settlement is refused rather than published",
+                 method="python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed"),
     ]
     return table(
         rows,
@@ -2084,11 +2086,13 @@ def main() -> None:
          "Confirm PS/G, PA/G and SRS once against the official standings page in a browser, or "
          "connect stats.nba.com from a runner (R-103).")
     flag("FLAG-SET-01", "info", "provenance",
-         "Settlement, reward allocation and the leaderboard scores are all PENDING by design: "
-         "data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no "
-         "official final-score snapshot covers the sealed games of 11/14–11/17 yet. Every leaderboard "
-         "score, bet count and reward cell is therefore blank, and the gates stay blocked or "
-         "unmeasured — the pipeline correctly refusing to grade unplayed games, not a data gap.",
+         "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of "
+         "2026-11-14 the settlement path has been exercised against a real official finals snapshot "
+         "(data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, "
+         "and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are "
+         "day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no "
+         "official final scores, so every leaderboard score, bet count and reward cell is blank and the "
+         "gates stay blocked or unmeasured. A partial settlement is refused, not published.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
          "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then "
          "re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).")

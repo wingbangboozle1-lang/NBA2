@@ -39543,19 +39543,19 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed",
-      "method": "python -m nba2.pipeline.settle (no official finals snapshot covers the ledger's games)"
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against a real official finals snapshot (data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the loader reports 0 of 22 and 0 of 27 games settled: the nine played games are day-before context that neither sealed ledger covers, so the sealed games of 11/14–17 still have no official final scores. Metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "method": "python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed"
      },
      "source": {
-      "name": "Session verification artefacts (arena/72f9da58, arena/fc58f84f)",
-      "url": "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit",
-      "class": "derived",
-      "class_label": "Derived in-repo from a verified snapshot",
-      "note": "Checker outputs, official-source re-verification and the injury-revision delta, computed 2026-11-14 on branches arena/72f9da58-nba2 and arena/fc58f84f-nba2."
+      "name": "NBA.com Schedule — 2026-11-13 final scores (official)",
+      "url": "https://www.nba.com/schedule?date=2026-11-14",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "The nine 2026-11-13 games read as Final / Final/OT on the official schedule page, 2026-11-14 10:25 UTC. These are day-before context games: they are in neither sealed ledger, so grading against them is a model check, never a settled registered forecast (FLAG-SET-02)."
      },
      "note": "",
      "flags": [],
-     "verified": false
+     "verified": true
     }
    ],
    "sources": [
@@ -39665,11 +39665,11 @@
      "note": "Game summary page for the 2026-11-17 repeat matchup; used to adjudicate FLAG-ANOM-01."
     },
     {
-     "name": "Session verification artefacts (arena/72f9da58, arena/fc58f84f)",
-     "url": "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit",
-     "class": "derived",
-     "class_label": "Derived in-repo from a verified snapshot",
-     "note": "Checker outputs, official-source re-verification and the injury-revision delta, computed 2026-11-14 on branches arena/72f9da58-nba2 and arena/fc58f84f-nba2."
+     "name": "NBA.com Schedule — 2026-11-13 final scores (official)",
+     "url": "https://www.nba.com/schedule?date=2026-11-14",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "The nine 2026-11-13 games read as Final / Final/OT on the official schedule page, 2026-11-14 10:25 UTC. These are day-before context games: they are in neither sealed ledger, so grading against them is a model check, never a settled registered forecast (FLAG-SET-02)."
     }
    ]
   },
@@ -43007,7 +43007,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet. Every leaderboard score, bet count and reward cell is therefore blank, and the gates stay blocked or unmeasured — the pipeline correctly refusing to grade unplayed games, not a data gap.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against a real official finals snapshot (data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page)."
      },

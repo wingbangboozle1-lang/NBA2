@@ -576,7 +576,7 @@
 <td>FLAG-SET-01</td>
 <td>info</td>
 <td>provenance</td>
-<td>Settlement, reward allocation and the leaderboard scores are all PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet. Every leaderboard score, bet count and reward cell is therefore blank, and the gates stay blocked or unmeasured — the pipeline correctly refusing to grade unplayed games, not a data gap.</td>
+<td>Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against a real official finals snapshot (data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.</td>
 <td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json</td>
 <td>Commit data/raw/finals_&lt;date&gt;.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
