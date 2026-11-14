@@ -671,10 +671,14 @@ FLAGS += [
      "carried forward, and this page's 04:30 AM capture was not silently swapped for the 05:00 AM one without "
      "re-verifying it against the official PDF.",
      "https://official.nba.com/nba-injury-report-2026-27-season/"),
-    ("F-039", "low", "Site", "The GitHub Pages setting on this repository is still build_type 'legacy' (deploy "
-     "from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever "
-     "one is live, the other is a fully-built tree sitting in the repository that a reader can reach by URL.",
-     "Logged for the owner: this is a one-setting change either way, and it changes what every reader sees.",
+    ("F-039", "info", "Site", "RESOLVED by measurement — the GitHub Pages API still reports build_type 'legacy' "
+     "with source 'main' path '/', which would serve the v1 root tree, but fetching the live URL shows it actually "
+     "serves the v2 site/ tree: /strategy-lab.html resolves with full v2 content, and that file exists ONLY under "
+     "site/ and nowhere in the repository root. So the live site IS the clean v2 tree. The API field and the "
+     "served tree disagree, which is worth knowing before anyone 'fixes' the setting.",
+     "Verified by fetching https://wingbangboozle1-lang.github.io/NBA2/strategy-lab.html after the merge; the "
+     "setting was deliberately left alone rather than changed on the strength of an API field that contradicts "
+     "what is actually served.",
      "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"),
     ("F-040", "low", "Model", "Strategy S4 (fade the home team when the model makes them a 3+ point underdog) "
      "went 7 for 7. The binomial p-value is 0.0156, which would pass a naive significance test, but at seven bets "

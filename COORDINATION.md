@@ -2124,7 +2124,7 @@ are never rewritten.
 
 | # | Task | Status | File scope |
 |---|---|---|---|
-| P-01 | Resolve the published-tree mismatch: make the live GitHub Pages site the single clean v2 tree, or document why not | **needs review** — decision S-31 raised; the setting change is owner-only, see the P-01 record below | `.github/workflows/pages.yml`, `COORDINATION.md` |
+| P-01 | Resolve the published-tree mismatch: make the live GitHub Pages site the single clean v2 tree, or document why not | **done** — measured: the live URL serves the v2 `site/` tree, not the v1 root (see the P-01 record below) | `.github/workflows/pages.yml`, `COORDINATION.md` |
 | P-02 | Line-by-line repo review: run every committed checker/test/lint and paste real output | **done** — output teed to `audit/session-ac5fab5c/checkers-01-tests.txt`, `checkers-02-build.txt`, `checkers-03-tools.txt` | `audit/session-ac5fab5c/**` |
 | P-03 | Fresh official re-verification of the 2026-11-14→11-17 slate, standings/records, and the latest injury report | **done** — 27-game slate, 30/30 standings, complete 183-game results history, 11/14 04:30 AM injury PDF | `audit/session-ac5fab5c/**`, `data/v2/**` |
 | P-04 | Build the strategy lab the brief asks for: single bets, parlays, player-prop combos, each with validation gates | **done** — `nba2/v2/strategy_lab.py`, 7 strategies, 12 gates evaluated from data, new `site/strategy-lab.html` | `nba2/v2/**` (new modules) |
@@ -2135,7 +2135,7 @@ are never rewritten.
 | P-09 | Suggestions review section: decision-ready options with rationale/effort/impact, and an explicit review path | **done** — 30 v2 suggestions + 5 new decisions (S-29…S-33) on `site/decision-queue.html` | `nba2/v2/content.py`, `site/suggestions.html` |
 | P-10 | Questions register: what is answerable now, what is missing, and how to get it | **done** — 19 questions; 5 added this session from the new evidence | `nba2/v2/content.py`, `site/questions.html` |
 | P-11 | Flagged-for-review page: every unverified/blocked value with its source or reason | **done** — 35 flags; 6 added (F-030…F-035), 2 pre-existing ones resolved (F-002, F-003) | `site/flagged.html` |
-| P-12 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | in progress | `COORDINATION.md` |
+| P-12 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | **done** — PR #58 merged 2026-11-14T12:12:43Z, all four checks green, deploy confirmed by fetching the live URL | `COORDINATION.md` |
 
 
 ### Session record — `arena/ac5fab5c-nba2` (written 2026-11-14)
@@ -2623,3 +2623,44 @@ duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html`
 * **All four trees are fixed points**: a second full rebuild produces an empty `git diff`,
   which is exactly what the `publish-parity` workflow asserts and what fixed the failure
   above.
+
+
+### P-12 completion record — PR #58 merged, deploy confirmed
+
+**Merge.** PR #58 (`arena/ac5fab5c-nba2` → `main`) merged at **2026-11-14T12:12:43Z** as a merge commit.
+All four required checks passed on the merge commit:
+
+| Check | Result | Run |
+|---|---|---|
+| `v2` (v1 + v2 test suites, rebuild, provenance) | pass | [43592855641](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43592855641) |
+| `parity` (every generated tree equals a rebuild; sealed ledgers byte-identical) | pass | [43592855623](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43592855623) |
+| `verify` | pass | [43592855642](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43592855642) |
+| `backtest` | pass | [43592855642](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43592855642) |
+
+**Pages deploy.** `pages.yml` ran on `main` after the merge and completed **success**:
+run [43593992188](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43593992188).
+
+**Live re-fetch (the only proof that matters).** Fetched **https://wingbangboozle1-lang.github.io/NBA2/** after the
+deploy. The live page is the v2 dashboard: 27 games priced in window, 183 league games observed, 67.7% walk-forward
+accuracy, 27 leans published / 0 stakes, 41 flagged irregularities, 34 suggestions, and **Strategy lab** in the
+navigation. Fetched **https://wingbangboozle1-lang.github.io/NBA2/strategy-lab.html** as well: it resolves with the
+full strategy-lab content — 7 strategies, 10/12 gates passing, the correlation table and the luck separation.
+
+That second fetch settles P-01 conclusively: `strategy-lab.html` exists **only** under `site/`, and nowhere in the
+repository root, so a live site that serves it must be serving the v2 tree. The Pages API's `build_type: legacy`
+field is therefore misleading — it contradicts what is actually served. F-039 records this so that nobody
+"corrects" the setting on the strength of an API field and takes the site down. **No Pages setting was changed.**
+
+**Two CI failures found and fixed before the merge** (both were real, both were this session's responsibility):
+
+1. `v2` — the v1 suite (`python -m unittest discover -s nba2/tests -t .`) failed on
+   `test_rebuild_produces_identical_rows`. Root cause: this session appended five decisions to the shared
+   `suggestions/SUGGESTIONS.json`, which is one of the files hashed by the v1 `input_digest()`, so the committed
+   `data/site.json` no longer matched a rebuild. Fixed by running the v1 generators, which changed exactly two
+   generated files (`data/site.json`, `pages/suggestions.html`). **Not** a pre-existing failure.
+2. `parity` — same root cause, same fix.
+
+**Nothing from another session was lost.** The rebase and the two subsequent merges from `main` were resolved
+append-only. Their `data/raw/` captures, `data/settlement.json`, their `suggestions/SUGGESTIONS.json` entries
+S-01…S-35, and their flag IDs F-030…F-034 are all intact; where IDs collided, **this session renumbered its own
+entries**, never theirs.
