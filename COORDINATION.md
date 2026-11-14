@@ -2083,3 +2083,43 @@ Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 che
 0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
 verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
 byte-identical across rebuilds.
+
+---
+
+## Session `arena/6c5195d1-nba2` — F-08 completion record: PR #49 merged, Pages deploy confirmed (2026-11-14)
+
+- **PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/49 — "Final integration: six
+  crosscheck defects resolved, live 11/13 finals + settlement chain, ledger-derived ingest
+  window, queue merge" (`arena/6c5195d1-nba2` → `main`).
+- **Merge result:** MERGED 2026-11-14 11:19:33 UTC, merge commit
+  `7be403dc9a32fc0348a3ad66d637830fed994db1` (merge commit method, no review wait, per the
+  integration brief).
+- **PR CI on the merged head `6e58fe4` (all green before merge):** "Verify data, model and site"
+  run `43588643260` success · "Verify v2 model and site" run `43588643262` success ·
+  "Verify the published tree (zero tolerance for drift)" run `43588643288` success.
+- **Post-merge checks on `main`:** "Verify v2 model and site" run `43589479958` success ·
+  "Verify the published tree" run `43589479721` success · "Verify data, model and site" run
+  `43589479749` · "Publish GitHub Pages" run `43589479805` · legacy "pages build and deployment"
+  run `43589479440` — deploy result and live-site probe recorded below.
+- **Merged content (3 merge commits on the PR, both sides kept in each):** the six crosscheck
+  defects resolved (CC-SNAP-13 via CR-3 + the 6650be4d refinement, CC-DER-05/CR-4, CC-GATE-02/CR-5,
+  CC-SEAL-04, CC-PUB-05, CC-X-00); the 2026-11-13 official finals captured twice independently
+  (9/9 scores agree) and the settlement chain exercised (both seals VERIFIED, 0/22 + 0/27 PARTIAL);
+  the ledger-derived ingest window + CR-7 crosscheck in the nightly refresh; the register merge
+  (39 suggestions / 34 questions with the ID reconciliation); the live-site correction
+  (FLAG-PAGES-01/S-A05 rewritten after probing: the v2 `site/` tree is what serves, root pages/
+  404s). CR-LIVE-01…03 remain open for the v2 tree's owners (see the two reconciliation logs above).
+- **Pages deploy result:** "Publish GitHub Pages" run `43589479805` — **success** (build 21s,
+  deploy 10s). Legacy "pages build and deployment" run `43589479440` also completed.
+- **Live-site probe after the deploy (2026-11-14, `fetch_page` on
+  https://wingbangboozle1-lang.github.io/NBA2/):** the deployed site is **live and current** —
+  "Dashboard · NBA2 Lines Lab v2" serving the refreshed v2 build: 27-game Nov 14 → Nov 17 pick
+  window + the nine Nov-13 games graded against the official finals, 174 league games observed,
+  30/30 official W-L cross-check MATCH against nba.com/standings read 2026-11-14, 17 questions /
+  28 proposals / 34 flagged irregularities. (CR-LIVE-01 — the stale Nov-13→16 window this
+  session flagged in the first reconciliation log — was resolved by `arena/6650be4d`'s v2
+  refresh, which this merge preserved; the live site no longer prices played games as future.)
+- **PR CI runs are the evidence chain:** every claim above is backed by a run ID, the merge
+  commit, or a live fetch recorded in this session's audit file
+  (`audit/session-6c5195d1-2026-11-14.md`). The two merge-reconciliation logs above record
+  exactly which session's work is in each merged file.
