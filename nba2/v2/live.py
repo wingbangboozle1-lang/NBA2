@@ -476,10 +476,10 @@ if __name__ == "__main__":
 
 
 def new_questions() -> dict:
-    """The questions this session added to the shared register, identified by ID range."""
+    """Supplemental snapshot questions selected for the v2 page; other legacy IDs need reconciliation."""
     path = ROOT / "requirements" / "QUESTIONS.json"
     if not path.exists():
         return {"items": []}
     qs = _load(path)["questions"]
-    mine = [q for q in qs if q["id"] in {"Q-23", "Q-24", "Q-25", "Q-26", "Q-27", "Q-28"}]
-    return {"items": mine}
+    selected = {"Q-23", "Q-24", "Q-25", "Q-26", "Q-27", "Q-28", "Q-36"}
+    return {"items": [q for q in qs if q["id"] in selected]}

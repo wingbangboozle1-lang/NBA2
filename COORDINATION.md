@@ -4,7 +4,7 @@
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
 |---|---|---|---|---|---|
-| V2 | Independent current-tree verification; final integration of audit-confirmed freshness and executive-summary fixes | in progress | `arena/954443e1-nba2` | `analysis/session-954443e1-audit.md`, `README.md`, `requirements/QUESTIONS.json`, `nba2/v2/content.py`, `nba2/v2/build.py`, `nba2/v2/live.py`, regenerated `data/v2/content.json`, `site/**`, append-only `COORDINATION.md` | Expanded scope before integration; no shared table data or navigation changes. |
+| V2 | Independent current-tree verification; final integration of audit-confirmed freshness and executive-summary fixes | needs review — F-043/F-044 are published | `arena/954443e1-nba2` | `analysis/session-954443e1-audit.md`, `README.md`, `requirements/QUESTIONS.json`, `nba2/v2/content.py`, `nba2/v2/build.py`, `nba2/v2/live.py`, regenerated `data/v2/content.json`, `site/**`, append-only `COORDINATION.md` | All local checks pass; findings are disclosed on the Flagged for Review page. |
 
 Shared task board for the NBA2 project. It lists every task, its status
 (`unclaimed`, `in progress`, `done`, `needs review`), the owning session ID, the files it
@@ -2948,3 +2948,20 @@ No committed data value was inferred or filled in.
 - Merged to main as commit 46bc33125fba5c775ac5ce3b49c1b47e74b7b4b3 at 2026-11-14T18:58:41Z via `gh pr merge 64 --merge` (no approval waited).
 - GitHub Pages: pages.yml run #58 triggered by the merge push (head 46bc331); Pages status `building` / run queued at record time — deploy confirmation pending the queued build; live re-fetch of the fixed verification.html (MATCH 30/30, no ERROR badge) follows once the build completes.
 
+Working rule for this session: no committed data value is changed or inferred; anything that fails an official-source check is left blank and flagged on the Flagged for Review page instead. Claims are pushed before any other work.
+
+---
+
+## Session `arena/954443e1-nba2` — completion record (2026-11-14)
+
+**Status:** needs review; the current-refresh failure (F-043) and split questions register (F-044) are published on the v2 Flagged for Review page. No NBA value was freshly re-fetched in this session; direct NBA host access is outside the sandbox allowlist.
+
+**Changes:** corrected the current executive summary and recommendations to distinguish the 183-game historical snapshot from live freshness; marked rolling-slate generation partial; added Q-36 on unattended rolling generation; updated the current suggestions and repo-review checks; removed the false-positive F-042 warning after confirming Q-28 is rendered; added F-043/F-044; corrected README and generated v1 row count to 1,416 after the intervening PR #65 additions. The v2 questions page now displays 27 unique IDs (no duplicate anchors); Q-29–Q-35 and other unmatched source-register entries are explicitly flagged for reconciliation.
+
+**Verification:** 64 v1 + 89 v2 + 49 backtest tests passed; provenance lint: 1,416 rows / 50 tables; v2 check: 0 structural / 0 semantic; crosscheck: 97 total, 90 pass / 0 fail / 7 info; backtest verifier: 183 game rows / 12 pages; internal-link checker: 112 files / 5,020 links, all resolve; committed JSON files parse; both sealed ledgers verified; builders are deterministic; `git diff --check` clean. Full details: [`analysis/session-954443e1-audit.md`](analysis/session-954443e1-audit.md).
+
+**Official-source review links:** [NBA schedule](https://www.nba.com/schedule), [standings](https://www.nba.com/standings), [team stats](https://www.nba.com/stats/teams/advanced), [player stats](https://www.nba.com/stats/players/traditional), [injury-report archive](https://official.nba.com/nba-injury-report-2026-27-season/), and the captured [2026-11-14 04:30 AM ET injury PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf). Latest refresh evidence: [failed ingest run](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665).
+
+**Deployment dependency:** PR #64's Pages run was canceled when PR #65 superseded it. The replacement main Pages run [43630310469](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630310469) remained queued at last check. This branch's output still needs its own PR checks and Pages deploy; no live-site re-fetch was performed in this audit.
+
+**Rebase coordination note:** `origin/main` advanced during this session through PRs #64–#66. The append-only board conflict was resolved by retaining both complete session blocks. This branch’s `nba2/v2/build.py` and generated `site/**` corrections were committed before that later claim; I am making no further edits to those owned paths. PRs #64–#66 have now landed. The latest main includes other integrations; this branch carries the independent freshness, questions-register and executive-summary updates on top, without changing their source-verified values.
