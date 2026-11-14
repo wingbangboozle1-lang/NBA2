@@ -1,7 +1,7 @@
 NBA2 gate run — session arena/bc867bff-nba2
-commit 72f36d4 on arena/bc867bff-nba2
-run at 2026-11-14T19:23:17Z
-tree dirty files at start: 8
+commit 1108ed0 on arena/bc867bff-nba2
+run at 2026-11-14T19:39:10Z
+tree dirty files at start: 1
 
 ===== v1 unit tests =====
 $ python3 -m unittest discover -s nba2/tests -t .
@@ -20,12 +20,7 @@ $ python3 -m unittest discover -s backtest/tests
 
 ===== capture verifier =====
 $ python3 audit/2026-11-14-bc867bff/verify_captures.py
-n
-        observed: 29 clubs compared, 0 mismatch(es) []
-[PASS] V5     league balance closes: 29 live clubs + the published GSW row equal the published league totals
-        evidence: site implies 183 wins / 183 losses = 91 games
-        observed: strip 175-178, GSW 8-5, totals 183/183; one missed transcription would break this identity
-[PASS] V6     every game re-read from the official schedule matches the published window (id, matchup, date, tip)
+cial schedule matches the published window (id, matchup, date, tip)
         evidence: https://www.nba.com/schedule?date=2026-11-14 vs data/v2/lines.json
         observed: 20 of 27 games re-read this session, 0 mismatch(es) []
 [INFO] V7     the games NOT re-read this session are declared, not quietly credited
@@ -58,8 +53,11 @@ n
 [PASS] V15    everything still missing is recorded with the URL that was tried and what it returned
         evidence: still_blocked entries
         observed: per-game player logs (minutes floor, prop medians, player-level correlation); market prices
+[PASS] V16    two sessions transcribed the same 1:30 PM PDF independently and agree row for row
+        evidence: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf  (their capture 2026-11-14T19:50Z, ours 2026-11-14T18:52:00Z)
+        observed: identical: 50 rows, the same status distribution, the same 24 added rows, the same 4 status moves, 0 dropped
 
-15 checks: 13 pass, 0 fail, 2 info
+16 checks: 14 pass, 0 fail, 2 info
 [exit 0]
 
 ===== v1 site data build =====
@@ -135,7 +133,7 @@ capture comparison covers, and the ones it does not
 [info] CC-DOC-06      the verification line quoted on the coordination board matches the current build
         observed: INFO when a refresh is in flight: the board is a historical record of the run that made it, and this session must not rewrite another session's log
 [info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
-        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest a74b0f534942cc81…
+        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest 7285c367cb6a0136…
         note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
 [ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
 [ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
@@ -153,13 +151,7 @@ capture comparison covers, and the ones it does not
 [exit 0]
 
 ===== generated artefacts are a pure function of the inputs =====
-changed by the rebuild (expected if this run follows an edit; must be empty on a re-run):
-M data/v2/content.json
-M site/data/content.json
-M site/executive-summary.html
-M site/flagged.html
-M site/index.html
-M site/verification.html
+clean — rebuilding produced no drift beyond what is committed
 
 ===== sealed artefacts untouched =====
 nba2/data/picks.json: UNTOUCHED (git reports 0 changes)
