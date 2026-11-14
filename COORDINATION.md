@@ -1644,7 +1644,6 @@ do not block the merge.
 - **GitHub Pages Actions deploy:** run [43585242749](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43585242749) completed successfully, including `actions/deploy-pages@v4`. Re-fetch of https://wingbangboozle1-lang.github.io/NBA2/ returned the v2 landing page.
 - **Caveat remains open:** GitHub Pages API still reports `build_type=legacy`, `source=main /`, and a legacy Pages build was still in progress at the last check. An attempt to change the setting was denied (HTTP 403). Thus the Actions artifact was live and verified at fetch time; an administrator should confirm the Pages source to ensure a subsequent legacy build cannot replace it.
 - Report addendum in `analysis/session-eae96d1e-audit.md`; session changes are audit/report-only. All conflict resolutions kept the concurrent E77 audit sections intact.
-
 ---
 
 ---
@@ -1688,3 +1687,66 @@ final-integration time, and only to publish this session's report.
 in this session and can quote it; a blank stays blank; sealed ledgers are never rewritten;
 flagged/unverified items do not block the merge but must appear on the Flagged for Review page with
 their source link.
+=======
+
+## =======
+
+## Session `arena/9ee870ea-nba2` — final integration: live official re-verification, ratings-staleness audit, publish-target reconciliation (claimed 2026-11-14 ~10:20 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/9ee870ea-nba2` (platform-fixed).
+**Claim pushed before any file edit**, per protocol.
+
+### State read at claim time (verified, not assumed)
+
+- `git log` shows a **single squashed commit** (`d510313`) locally; upstream `origin/main` carries 43 merged PRs.
+- Upstream Pages API (`gh api repos/wingbangboozle1-lang/NBA2/pages`):
+  `build_type: legacy`, `source: {branch: main, path: /}`, `status: built`.
+  ⇒ **The live tree is the root v1 tree** (`index.html` + `pages/**` + `backtest/` …), **not** `site/`.
+- `.github/workflows/pages.yml` (committed) publishes **`site/`** (the v2 tree).
+  ⇒ **The declared publish target and the published tree disagree.** This is the defect this session fixes.
+- Live fetch of `https://wingbangboozle1-lang.github.io/NBA2/` confirms the v1 landing page is what a reader gets
+  (36 games priced, 27 sealed predictions, 122 injury rows, 79 open flags).
+- Checker chain green at claim time: `nba2` tests 64/64 · `nba2.v2.check` 0 structural / 0 semantic ·
+  `nba2.pipeline.lint` 1139 rows / 39 tables all sourced · `tools/check_links_all.py` 107 files / 4342 internal links OK.
+
+### Environment re-probed this session
+
+- `curl` to `www.nba.com` and `ak-static.cms.nba.com` → `SSL_ERROR_SYSCALL` (egress blocked), as every prior session recorded.
+- The platform **page-fetch tool reaches `www.nba.com`** — re-confirmed this session by reading the live
+  `nba.com/schedule` and `nba.com/standings` tables. Every official fetch below records that method.
+
+### Two findings that make this session more than a republish
+
+1. **The committed ratings snapshot predates the 2026-11-13 finals.** `data/v2/teams.json` carries ATL `7-5`;
+   the **live official standings read in this session** carry ATL `7-6`. The snapshot was taken while the 11/13
+   slate was still in progress, so several teams' W-L are one game behind. The published lines are derived from
+   that snapshot, and the **sealed ledgers are immutable** — so the lines must NOT be silently re-derived.
+   This session quantifies the staleness, discloses the affected teams and the line impact, and leaves the
+   seal untouched. (Audit: N-03.)
+2. **The official schedule now carries 12 games on 2026-11-18** (fetched this session). 11/18 is **4 days** ahead of
+   the build date, i.e. **outside** the brief's 3-day maximum, so it is deliberately **not** added to the pick
+   window — but it is published so the omission is visible rather than silent. (Audit: N-02.)
+
+### Task board (this session)
+
+| # | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| N-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section, append-only) | pushed immediately |
+| N-02 | Live official re-verification **in this session**: `nba.com/schedule` (11/13→11/18: games, tip times, arenas, IDs, broadcast, cup group, status, 11/13 finals) and `nba.com/standings` (30 teams × W/L/%/GB/home/road) captured to a committed snapshot, then diffed field-by-field against the committed snapshots | claimed | `data/raw/official_capture_2026-11-14T1015Z.json`, `audit/2026-11-14-live/**` | every row: value + official URL + retrieval timestamp + method; unconfirmed ⇒ blank + flag |
+| N-03 | Ratings-staleness impact audit: live standings vs the committed ratings snapshot; which teams moved, how many of the 36 published lines would move and by how much, and the seal-preservation rule | claimed | `audit/2026-11-14-live/**`, `nba2/pipeline/build_site_data.py` (new published section) | derived numbers labelled `derived`; no sealed file touched |
+| N-04 | **Publish-target reconciliation** — one declared target, one published tree, one canonical landing page. Fix the `pages.yml` vs Pages-setting disagreement so the live site equals the committed tree | claimed | `.github/workflows/pages.yml`, `index.html` (generated), `README.md` | build the artifact, check every internal link, deploy, re-fetch live and compare |
+| N-05 | Publish the new evidence: a "Live verification (2026-11-14)" page and a "Ratings staleness & seal integrity" page, every row source-linked, plus the matching entries on the Flagged for Review page | claimed | `nba2/pipeline/build_site_data.py`, `nba2/pipeline/build_site.py`, regenerated `data/site.json`, `pages/**` | provenance lint + link check + rebuild byte-parity |
+| N-06 | Refresh the decision registers with what this session's evidence newly makes answerable: a suggestion to re-anchor ratings after each slate completes, and the matching open question | claimed | `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`, `nba2/pipeline/build_site_data.py` | no restating of an existing Q-xx / S-xx |
+| N-07 | Final integration: full checker chain, PR → `main`, merge, confirm the Pages deploy, re-fetch the live site, record run IDs + PR link here | claimed | repo-wide at integration time | no merge while a checker that passed at claim time fails |
+
+### Not claimed / not edited
+
+`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `site/**` (the v2 lab tree),
+`backtest/**`, `nba2/v2/**`, and the sealed ledgers `data/raw/ledger/**` (immutable by design and by
+`publish-parity.yml`). Those trees are read, checked and linked; none is rewritten by this session.
+
+### Rules this session holds itself to
+
+A row is only *verified* if this session fetched the official document and can quote it; a blank stays blank and is
+flagged; the sealed ledgers are never rewritten; flagged items never block the merge but must appear on the
+Flagged for Review page with their source link.
