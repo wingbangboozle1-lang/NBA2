@@ -50,44 +50,44 @@ running its own checks rather than trusting its documentation.</p>
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>Files tracked at base commit a09f48e</td>
-<td>245 files (excluding .git)</td>
-<td>counted with `find . -path ./.git -prune -o -type f -print | wc -l`</td>
+<td>Tracked files at audit start (2026-11-14)</td>
+<td>394 files, before this audit report is added</td>
+<td>`git ls-files | wc -l`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main</a></td>
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)</td>
-<td>`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p &#x27;test_*.py&#x27;`; `... -s backtest/tests`</td>
+<td>193 pass: 64 v1 + 80 v2 + 49 backtest</td>
+<td>`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p &#x27;test_*.py&#x27;`; `-s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>1,296 rows across 45 tables, every row sourced</td>
-<td>`python3 -m nba2.pipeline.lint`</td>
+<td>1,410 rows across 50 tables, every row sourced and every blank explained</td>
+<td>`python -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Repository cross-checker</td>
-<td>94 checks: 86 pass, 0 fail, 8 informational</td>
+<td>97 checks: 90 pass, 0 fail, 7 informational</td>
 <td>`python3 tools/crosscheck_site.py`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>
-<td>Sealed prediction ledger</td>
-<td>22 predictions, digest cf7dedc689597cb8… verified</td>
-<td>`python3 -m nba2.pipeline.seal_predictions --verify`</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+<td>Sealed prediction ledgers</td>
+<td>22-pick and 27-pick ledgers verified (cf7dedc689597cb8… / c841e8f396dae6ca…)</td>
+<td>`ledger.verify` run against both committed sealed JSON ledgers</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
 </tr>
 <tr>
 <td>Site rebuild determinism</td>
-<td>data/site.json is byte-identical after a rebuild</td>
-<td>`python3 -m nba2.pipeline.build_site_data` then `cmp` against the committed file</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+<td>v1, backtest and v2 builders produced deterministic trees on repeat runs</td>
+<td>Compared the tracked-change list before/after a second full rebuild; it was unchanged</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/publish-parity.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.git…</a></td>
 </tr>
 <tr>
-<td>Internal links at base commit</td>
-<td>75 HTML files, 3,233 internal links, all resolve</td>
+<td>Internal links</td>
+<td>110 HTML files and 4,917 internal links, all resolve</td>
 <td>`python3 tools/check_links_all.py`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
@@ -99,7 +99,7 @@ running its own checks rather than trusting its documentation.</p>
 </tr>
 <tr>
 <td>Tracked Python bytecode</td>
-<td>19 .pyc files tracked despite .gitignore</td>
+<td>0 tracked .pyc files</td>
 <td>`git ls-files &#x27;*.pyc&#x27; | wc -l`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -109,28 +109,27 @@ running its own checks rather than trusting its documentation.</p>
 <td>grep + inspection of the prior build</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-</tbody></table></div><h2>Findings</h2>
-<div class="note"><b>What is genuinely good.</b> The existing pipeline is unusually disciplined: 55 unit tests pass, a
-provenance lint proves all 915 published rows carry a source, the site is byte-for-byte reproducible from committed data,
-22 predictions are hash-sealed, and 3,233 internal links resolve. That is a better foundation than most projects start with.</div>
-<div class="note warn"><b>What is wrong.</b> Six parallel site trees publish different numbers (root HTML, <code>pages/</code>,
-<code>docs/</code>, <code>dashboard/</code>, <code>verified/</code>, <code>originated/</code>). A reader has no way to know
-which one is current. The root page says "as-of 2026-11-13" while its own ledger is sealed at 22:51 that day, and the site
-still shows a snapshot several hours old on the next day.</div>
-<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price and no player game logs.
-Per-game results are no longer missing — 183 official finals are committed and every one of the 30 standings records
-rebuilds from them exactly — so backtests, out-of-sample splits and settlement all run today. The two remaining
-absences are why every stake on this site is 0.00 units rather than a number that looks like a bet.</div>
-<h2>What this session changed, and what it deliberately did not</h2>
-<p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
-plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier
-published output was destroyed. Where this build disagrees with an earlier one, the disagreement is on the verification page
-with both values shown.</p>
-<h2>Cleanup suggestions that are not this session's call</h2>
+</tbody></table></div><h2>Current verification findings</h2>
+<div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
+1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
+and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
+<div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
+The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
+The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
+<div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
+Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
+also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>
+<h2>Historical repository review</h2>
+<p class="lede">Earlier review text in this repository described a smaller snapshot and multiple competing site trees. Those statements are historical,
+not current counts. The live deployment is the <code>site/</code> tree; current counts and repeatable checks are listed in the table above and on the
+<a href="verification.html">Verification log</a>. This audit did not live-fetch NBA pages: the sandbox egress allowlist excludes NBA domains.
+Source URLs and captured provenance remain available for manual review.</p>
+<h2>Next safe improvements</h2>
 <ul>
-  <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
-  <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
-  <li>Reconcile the README's claim of 49 tests with the 55 that actually run.</li>
+  <li>Investigate and alert on the failed official-results fetch before relying on scheduled freshness (F-043 / SG-31).</li>
+  <li>Implement a separate rolling slate build with official schedule/team inputs and fail-closed provenance and freshness gates.</li>
+  <li>Keep staking and rewards disabled until timestamped odds and the registered strategy gates are satisfied.</li>
+  <li>Acquire player-level game logs from a permitted, documented official source before filling props or injury impacts.</li>
 </ul>
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.

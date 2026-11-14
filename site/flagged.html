@@ -374,13 +374,21 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Verified genuine by reading the official schedule block, not a duplication error in the slate capture. Both games are priced separately.</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
-<tr id="F-042">
-<td><span class="badge b-off">F-042</span></td>
+<tr id="F-043">
+<td><span class="badge b-warn">F-043</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>The 2026-11-14 14:37 UTC scheduled ingest run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. The exact failure cause is unverified: the Actions run lists the failed step, but downloading its logs returned EOF during this audit.</td>
+<td>Do not claim the snapshot refreshed from this run. Retry after investigating the runner log, preserve the failure details, and alert on any unsuccessful fetch. The last known published snapshot remains explicitly dated; no value was inferred.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665/job/132480138083" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/actions/runs/4…</a></td>
+</tr>
+<tr id="F-044">
+<td><span class="badge b-off">F-044</span></td>
 <td><span class="badge b-off">low</span></td>
-<td>Site</td>
-<td>A published paragraph on the site cites an open question by the ID &#x27;Q-28&#x27;, but the question register only runs to Q-24, so the reference resolves to nothing. The cross-reference was inherited from the 2026-11-14 refresh on main and is not this session&#x27;s to edit silently.</td>
-<td>Logged, not edited: the sentence is left verbatim and this flag records the defect.</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+<td>Questions</td>
+<td>The v2 questions page combines a hard-coded core list with selected IDs from requirements/QUESTIONS.json. The shared register contains Q-01 through Q-36, but Q-18, Q-19 and Q-29 through Q-35 are omitted; overlapping IDs may also carry different wording or status between the two sources. Several omitted entries refer to earlier snapshots or a Pages configuration later checked by the live-site audit.</td>
+<td>Reconcile question IDs, wording and current status against the evidence; consolidate to one source of truth, and mark stale items resolved/archived before adding them to the live page. Q-36 (rolling-slate automation) is published as the current question.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
 </tr>
 <tr id="F-051">
 <td><span class="badge b-bad">F-051</span></td>
