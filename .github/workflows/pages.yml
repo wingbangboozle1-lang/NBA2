@@ -33,6 +33,10 @@ jobs:
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2
+          git diff --cached --stat -- site data/v2 || true
+          echo "--- files differing ---"
+          git diff --cached --name-status -- site data/v2 || true
+          echo "--- python ---"; python3 --version
           if ! git diff --cached --quiet -- site; then
             echo "::error::site/ differs from a rebuild of nba2/v2 — commit the rebuild"
             git diff --cached --stat -- site
