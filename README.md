@@ -79,7 +79,7 @@ honest map rather than a claim that there is one generator:
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (49 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (62 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -90,6 +90,20 @@ python3 nba2/generate.py && python3 build_site.py   # the prior session's root d
 python3 tools/verify_site.py                        # docs-layer source check
 python3 tools/check_links_all.py                    # whole-site link check
 ```
+
+## Nightly ingest (audit A-01 remediation, v1)
+
+`.github/workflows/refresh.yml` runs at 09:05/13:35 ET: it archives the newest official
+injury-report PDFs for the window dates under `data/raw/pdf/`, fetches official final scores for
+arrived window dates into `data/raw/finals_*.json`, merges them into the settlement input, settles
+the sealed ledger, and rebuilds the site — **only if** the full verify chain (unit tests, seal
+verification, provenance lint) passes and `data/raw/ledger/` is byte-identical. It is fail-closed
+(`nba2/pipeline/refresh.py`, 62 tests): an unreachable official endpoint or a schema drift aborts the
+job before anything is committed, and a missing future-date release or a not-yet-final scoreboard is
+reported as the expected pre-deadline state, not an error. What it never does: rewrite sealed
+predictions, originate picks, or size stakes — those stay gated behind owner decisions. Transcripts
+of injury PDFs remain human-verified inputs; the machine can only cross-check them.
+
 
 Python 3.11+, standard library only — no `pip install`, so no published number depends on a
 package version nobody pinned.
@@ -137,6 +151,10 @@ has settled. That is the design working, not a missing feature.
 `as_of 2026-11-13`. Slate `2026-11-13 → 2026-11-16` (31 games: 9 Emirates NBA Cup group games + 22
 regular-season). Sealed pick window = `2026-11-14 → 2026-11-16` (22 games); today's games stay on the
 site as the calibration set because their injury report was already hours old when this was built.
+Availability data refreshes around the frozen seal: the 11/13 19:30 ET official release
+([PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf)) carries the
+first day-before designations for the 11/14 slate (5 of 10 team-slots filed; 11/15–16 still NOT YET
+SUBMITTED) and is published on [the injuries page](pages/injuries.html) with per-date coverage.
 Snapshots are point-in-time captures, not live feeds — read `meta.as_of` before trusting any number,
 and see [the sources page](pages/sources.html) for retrieval timestamps.
 
