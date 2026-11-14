@@ -33,17 +33,18 @@ jobs:
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2
-          git diff --cached --stat -- site data/v2 || true
-          echo "--- files differing ---"
-          git diff --cached --name-status -- site data/v2 || true
-          echo "--- python ---"; python3 --version
-          if ! git diff --cached --quiet -- site; then
-            echo "::error::site/ differs from a rebuild of nba2/v2 — commit the rebuild"
-            git diff --cached --stat -- site
-            exit 1
+          if git diff --cached --quiet -- site; then
+            echo "published artefacts match the v2 model"
+            exit 0
           fi
-          echo "published artefacts match the v2 model"
-
+          echo "::error title=site differs::$(git diff --cached --name-only -- site | tr '\n' ' ')"
+          git diff --cached --stat -- site | tail -40
+          for f in $(git diff --cached --name-only -- site | head -3); do
+            echo "=== $f ==="
+            git diff --cached -- "$f" | head -40
+            echo "::error title=first-diff-in-${f}::$(git diff --cached -- "$f" | sed -n '5,9p' | tr '\n' '|')"
+          done
+          exit 1
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
