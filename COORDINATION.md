@@ -659,3 +659,13 @@ A second remote advance occurred before PR #16 was ready to merge: PR #18 from `
 - **GitHub Pages:** publish run [43535944656](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43535944656) completed successfully after the merge.
 - **Live content spot-check:** fetched https://wingbangboozle1-lang.github.io/NBA2/ successfully; it returned the NBA2 root landing page and links to the summary, picks, lines, strategies, correlations/parlays, props, injuries, game flow, questions, suggestions, and Flagged for Review. Its displayed snapshot remains as-of 2026-11-13; successful deployment does not mean fresh source ingestion.
 - **Follow-up:** this record and the post-merge comparison note are added in a follow-up coordination-only PR; the actual product/site/model outputs are unchanged by this metadata update.
+
+---
+
+## Session `arena/9707c113-nba2` — verification status audit (2026-11-14)
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| V1 | Re-run repo health checks; document current limitations without changing shared site/data | done | `arena/9707c113-nba2` | `analysis/session-9707-audit.md`, append-only `COORDINATION.md` | 55 tests; 915-row/33-table lint; all dashboard checkers pass; originated 24/24; source scope and limits recorded in report. |
+
+The claim was committed and pushed before starting. Verification results and limits are documented in `analysis/session-9707-audit.md`. Official-source pointers carried forward from prior source records: [NBA schedule](https://www.nba.com/schedule), [NBA injury report 2026-11-13 04:15 PM ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf). This session did not re-certify all underlying rows. Generated output and tracked bytecode changes from test commands were restored; product data/site files remain unchanged.
