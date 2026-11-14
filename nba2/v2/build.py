@@ -683,15 +683,63 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
     # ------------------------------------------------------------------ injuries
     inj_rows, counts = R.t_injuries(teams)
     body = f"""<h1>Injuries &amp; rotation</h1>
-<p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/13/26 04:15 PM ET report, plus the ten
-team-rows the league had not yet received. Every row links to the PDF it came from.</p>
+<p class="lede">Two official reports, both linked. The current one — <b>{O.INJURY_1411_TITLE}</b> — carries
+{len(O.INJURIES_1411)} rows covering the live window and is what per-team exposure below is computed from. The older
+11/13/26 04:15 PM ET report ({len(O.INJURIES)} rows, full detail with reasons) is kept underneath because it is the last
+release that describes a completed slate and is useful for auditing the previous build.</p>
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note warn"><b>Dated input.</b> The 11/14 01:00 PM ET report returned AccessDenied at retrieval time, so this page
-cannot show today's final statuses. Nothing was filled in from an unavailable file.</div>
+<div class="note warn"><b>Dated input, stated precisely.</b> The newest report this build could actually read is
+<b>11/14/26 04:15 AM ET</b>. Later revisions were listed by the league's archive page but the 01:30 PM ET file returned
+<code>AccessDenied</code>, so this page cannot show today's final game-day statuses. Nothing was filled in from an
+unavailable file, and a row that says <b>NOT YET SUBMITTED</b> means the league had received no filing — availability
+unknown, not "healthy".</div>
 """
-    body += "<h2>Per-team exposure</h2>"
+
+    # ---- current exposure, computed from the 11/14 04:15 AM report only
+    from collections import Counter as _C
+    _live = _C((r[1], r[3]) for r in O.INJURIES_1411)
+    _names: dict[str, str] = {}
+    for (mu, team, player, status, reason) in O.INJURIES_1411:
+        _names.setdefault(team, mu)
+    body += ("<h2>Exposure today, from the 11/14 04:15 AM ET report</h2>"
+             "<p class=\"lede\">One row per team that appears in the report. A team with no filing and a team "
+             "that was never listed are different things, and they are shown differently.</p>")
+    _slate_teams = sorted({t for (_d, _tm, a, h, _g, *_r) in O.SLATE for t in (a, h)})
+    _present = {r[1] for r in O.INJURIES_1411}
+    rows = []
+    for tri in _slate_teams:
+        nm = O.NAMES[tri]
+        if nm not in _present:
+            rows.append({"cells": [esc(nm), "0", "0", "0", "0", "0",
+                                   badge("no row in report", "bad"),
+                                   '<span class="blank">FLAG-INJ-1411-NO-ROW: team is not in the 04:15 AM report at all</span>',
+                                   srclink(O.INJURY_1411_PDF_URL)]})
+            continue
+        n_out = _live[(nm, "Out")]
+        n_q = _live[(nm, "Questionable")]
+        n_d = _live[(nm, "Doubtful")]
+        n_p = _live[(nm, "Probable")]
+        n_a = _live[(nm, "Available")]
+        n_ns = _live[(nm, "NOT YET SUBMITTED")]
+        risk = ("UNKNOWN (no filing)" if n_ns else
+                "SEVERE" if n_out >= 4 else "HIGH" if n_out >= 2 else
+                "MODERATE" if n_out or n_q or n_d else "LOW")
+        rows.append({"cells": [esc(nm), esc(n_out), esc(n_d), esc(n_q), esc(n_p), esc(n_a),
+                               badge(risk, "bad" if risk.startswith(("SEVERE", "UNKNOWN")) else "warn" if risk == "HIGH" else "ok"),
+                               '<span class="blank">needs per-player minutes</span>',
+                               srclink(O.INJURY_1411_PDF_URL)]})
+    body += table(["Team", "Out", "Doubtful", "Questionable", "Probable", "Available",
+                   "Rotation risk", "Minutes impact", "Source"],
+                  rows, "Official 11/14 04:15 AM ET exposure for every team on the priced slate",
+                  num_cols=(1, 2, 3, 4, 5))
+    body += ("<div class=\"note bad\"><b>Three teams on the slate have no row in the 04:15 AM report:</b> "
+             "Golden State Warriors, Orlando Magic, Portland Trail Blazers. Their most recent captured game is 11/13 "
+             "and they do not play again until 11/16-11/17, so no filing was required or none was published. "
+             "This is left blank and flagged rather than read as a clean bill of health.</div>")
+
+    body += "<h2>Per-team exposure — prior build's 11/13 16:15 ET snapshot</h2>"
     rows = []
     for r in R.t_rotation(counts):
         rows.append({"cells": [esc(r["team"]), esc(r["out"]), esc(r["doubtful"]), esc(r["questionable"]),
@@ -704,7 +752,18 @@ cannot show today's final statuses. Nothing was filled in from an unavailable fi
                    "Rotation risk", "Minutes impact", "Production impact", "Source"],
                   rows, "Per-team status counts from the official report", num_cols=(1, 2, 3, 4, 5, 6))
 
-    body += f"<h2>All {len(inj_rows)} status rows</h2>"
+    body += f"<h2>Current report — all {len(O.INJURIES_1411)} rows (11/14 04:15 AM ET)</h2>"
+    rows = []
+    for (mu, team, player, status, reason) in O.INJURIES_1411:
+        rows.append({"cells": [
+            esc(mu), esc(team), esc(player) if player else '<span class="blank">—</span>',
+            badge(status, "bad" if status == "Out" else
+                  "warn" if status in ("Questionable", "Doubtful", "NOT YET SUBMITTED") else "off"),
+            esc(reason) if reason else '<span class="blank">no filing received</span>',
+            srclink(O.INJURY_1411_PDF_URL)]})
+    body += table(["Matchup", "Team", "Player", "Status", "Reason", "Source"], rows,
+                  "Every row of the official 11/14 04:15 AM ET report, including no-filing rows")
+    body += f"<h2>Prior report — all {len(inj_rows)} status rows (11/13 16:15 ET)</h2>"
     rows = []
     for r in inj_rows:
         rows.append({"id": f"{r['matchup']}-{r['player']}".replace(" ", "-"),

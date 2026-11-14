@@ -102,6 +102,27 @@ class TestOfficialSnapshot(unittest.TestCase):
         # every team in the team table must appear
         self.assertEqual(set(O.SCHEDULE_DATES_ALL), set(O.TEAMS))
 
+    def test_current_injury_report_covers_the_priced_slate(self):
+        """Every priced matchup must appear in the current official report, and a team that filed
+        nothing must be an explicit NOT YET SUBMITTED row rather than an absence."""
+        # The 04:15 AM release covers the 11/14 and 11/15 games only; the league had not opened
+        # filings for 11/16-11/17 yet, so those matchups are expected to be absent.
+        covered_dates = {"2026-11-14", "2026-11-15"}
+        matchups = {f"{a}@{h}" for (d, _t, a, h, _g, *_r) in O.SLATE if d in covered_dates}
+        reported = {r[0] for r in O.INJURIES_1411}
+        self.assertEqual(matchups - reported, set(), "priced matchups missing from the report")
+        # NOP@? or NYK@TOR appear via a 11/15 game too, so the "should not be covered" check is done
+        # on matchups that NO covered date plays.
+        covered_matchups = {f"{a}@{h}" for (d, _t, a, h, _g, *_r) in O.SLATE if d in covered_dates}
+        later_only = {f"{a}@{h}" for (d, _t, a, h, _g, *_r) in O.SLATE if d not in covered_dates} - covered_matchups
+        self.assertEqual(later_only & reported, set(), "report covers a date it should not")
+        allowed = {"Out", "Doubtful", "Questionable", "Probable", "Available", "NOT YET SUBMITTED"}
+        for row in O.INJURIES_1411:
+            self.assertIn(row[3], allowed, row)
+            if row[3] == "NOT YET SUBMITTED":
+                self.assertEqual(row[2], "", "a no-filing row must not carry a player name")
+        self.assertEqual(O.INJURIES_1411[0][1], "Denver Nuggets")
+
     def test_team_source_links_use_real_nba_urls(self):
         """nba.com/stats/team/ATL is not a page; team URLs are keyed by the 10-digit team id."""
         for tri, url in O.TEAM_SOURCE.items():

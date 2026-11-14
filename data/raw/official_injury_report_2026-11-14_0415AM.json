@@ -1,0 +1,378 @@
+{
+ "dataset": "official_injury_report",
+ "release": "2026-11-14T04:15:00-05:00",
+ "release_label": "Official NBA injury report \u2014 11/14/26 04:15 AM ET",
+ "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf",
+ "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+ "retrieved_at_utc": "2026-11-14T00:00:00Z",
+ "retrieval_method": "markdown-rendering fetch client (sandbox has no direct HTTP egress to ak-static.cms.nba.com)",
+ "session": "arena/a7d4a562-nba2",
+ "later_revisions": {
+  "2026-11-14_01_30PM.pdf": "AccessDenied when fetched \u2014 not transcribed, nothing inferred from it"
+ },
+ "columns": [
+  "matchup",
+  "team",
+  "player",
+  "status",
+  "reason"
+ ],
+ "records": [
+  {
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Holmes II, DaRon",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Nembhard, Ryan",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Strawther, Julian",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Knee Sprain"
+  },
+  {
+   "matchup": "DEN@NOP",
+   "team": "Denver Nuggets",
+   "player": "Whitmore, Cam",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "DEN@NOP",
+   "team": "New Orleans Pelicans",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Biberovic, Tarik",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Heel Bursitis"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Christie, Max",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Left Ankle Sprain"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "de Larrea, Sergio",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Sprain"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Johnson Jr., Morez",
+   "status": "Probable",
+   "reason": "Injury/Illness - Left Shin / Tibia Contusion"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Lively II, Dereck",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Foot Surgery"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Dallas Mavericks",
+   "player": "Martin, Caleb",
+   "status": "Available",
+   "reason": "Injury/Illness - Right Thumb Splint"
+  },
+  {
+   "matchup": "DAL@CLE",
+   "team": "Cleveland Cavaliers",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Bilodeau, Tyler",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Brown Jr., Mikel",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Illness"
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Jefferson, Joshua",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Nelson, Grant",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Brooklyn Nets",
+   "player": "Saraf, Ben",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "matchup": "BKN@MEM",
+   "team": "Memphis Grizzlies",
+   "player": "Traore, Nolan",
+   "status": "Probable",
+   "reason": "Injury/Illness - Right Calf Tightness / Soreness"
+  },
+  {
+   "matchup": "CHI@MIN",
+   "team": "Chicago Bulls",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Beringer, Joan",
+   "status": "Available",
+   "reason": "Injury/Illness - Face Mask"
+  },
+  {
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "DiVincenzo, Donte",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+  },
+  {
+   "matchup": "CHI@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Edwards, Anthony",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Arthroscopy"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Duren, Jalen",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Hamstring Strain"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Harkless, Elijah",
+   "status": "Questionable",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Joe, Isaiah",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Hip Contusion"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Jones, Isaac",
+   "status": "Questionable",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Lanier, Chaz",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Okorie, Ebuka",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Detroit Pistons",
+   "player": "Onyenso, Ugonna",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "matchup": "DET@MIA",
+   "team": "Miami Heat",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "LAL@PHX",
+   "team": "Phoenix Suns",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "NYK@TOR",
+   "team": "New York Knicks",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  },
+  {
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "",
+   "status": "NOT YET SUBMITTED",
+   "reason": ""
+  }
+ ],
+ "n_records": 48,
+ "status_counts": {
+  "Available": 2,
+  "NOT YET SUBMITTED": 22,
+  "Out": 18,
+  "Probable": 2,
+  "Questionable": 4
+ },
+ "teams_on_priced_slate_with_no_row_in_report": [
+  "GSW",
+  "ORL",
+  "POR"
+ ],
+ "transcription_note": "Memphis's Traore row continues onto a page-2 fragment where the team cell is blank; it was attributed to Memphis by the 08:00 ET BKN@MEM block it follows. No second Memphis filing exists, so the continuation was not transcribed as a separate team block.",
+ "flags": [
+  "FLAG-INJ-1411-LATEST-UNAVAILABLE: the 01:30 PM ET revision of 2026-11-14 returned AccessDenied; 04:15 AM ET is the newest readable release, so game-day statuses are not final.",
+  "FLAG-INJ-1411-NO-ROW: GSW, ORL and POR appear nowhere in the report. Left blank rather than treated as healthy.",
+  "FLAG-INJ-1411-PAGEFRAG: one row crosses a PDF page boundary with a blank team cell (see transcription_note).",
+  "FLAG-INJ-1411-VERSION: the site publishes two different official reports (11/14 04:15 AM for exposure, 11/13 16:15 for full historical detail). The report each table comes from is printed on the table."
+ ]
+}
