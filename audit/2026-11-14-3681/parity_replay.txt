@@ -1,0 +1,27 @@
+=== PARITY REPLAY 2026-11-14T11:22:24Z ===
+wrote data/site.json — 50 tables, 1401 rows
+wrote pages/verification-report.html
+built report: {'n_games': 155, 'n_graded': 139, 'first_date': '2026-10-20', 'last_date': '2026-11-12', 'n_dates': 21, 'generated': '2026-11-14'}
+36 lines, 30 teams
+--- site/ drift ---
+ site/data/verification.json | 8 --------
+ site/index.html             | 8 --------
+ site/verification.html      | 8 --------
+ 3 files changed, 24 deletions(-)
+(empty = OK)
+--- v1 tree drift ---
+ site/index.html        | 8 --------
+ site/verification.html | 8 --------
+ 2 files changed, 16 deletions(-)
+(empty = OK)
+--- ledger drift ---
+(empty = OK)
+--- seals ---
+sealed  22 predictions  cf7dedc689597cb8  VERIFIED
+sealed  27 predictions  c841e8f396dae6ca  VERIFIED
+--- provenance ---
+OK — 0 structural, 0 semantic
+LINT OK — 1401 rows across 50 tables, every row sourced, every blank explained
+ALL INTERNAL LINKS OK
+--- live reproducible ---
+decisions: 7 queued, 4 awaiting owner, 3 implemented, 2 blocking
