@@ -105,6 +105,19 @@ def main() -> int:
     for h in hits[:5]:
         failures.append(f"      placeholder: {h}")
 
+    # ------------------------------------------------------- 3b. no leaked Python values
+    CELL = re.compile(r"<td[^>]*>(.*?)</td>", re.S)
+    TAG = re.compile(r"<[^>]+>")
+    leaks = []
+    for f in html_files:
+        for cell in CELL.findall(f.read_text()):
+            text = TAG.sub("", cell).strip()
+            if text in {"None", "nan", "NaN", "inf", "-inf", "Infinity", ""}:
+                leaks.append(f"{f.relative_to(ROOT)}: empty or null cell {text!r}")
+    check(not leaks, "no table cell renders a null/NaN value")
+    for l in leaks[:5]:
+        failures.append(f"      {l}")
+
     # ---------------------------------------------------------- 4. headline numbers sourced
     acc = report["accuracy"]
     check(acc.get("n", 0) > 0, f"accuracy block computed on {acc.get('n')} graded games")
