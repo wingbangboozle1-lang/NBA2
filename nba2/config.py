@@ -477,6 +477,10 @@ SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
 SNAPSHOT_INJURY = "injury_report_2026-11-13_1930ET.json"
 SNAPSHOT_TIMES = "official_game_times_2026-11-14.json"
 SNAPSHOT_TIMES_PRIOR = "official_game_times_2026-11-13.json"
+# Added by session arena/6650be4d-nba2 (2026-11-14 10:25 UTC re-verification round).
+SNAPSHOT_STANDINGS_OFFICIAL = "official_standings_2026-11-14.json"
+SNAPSHOT_INJURY_LATEST = "injury_report_2026-11-14_0500ET.json"
+SNAPSHOT_FINALS = "finals_2026-11-13.json"
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

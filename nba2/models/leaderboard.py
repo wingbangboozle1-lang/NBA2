@@ -146,11 +146,17 @@ def table_rows(entries: list[Entry]) -> list[dict]:
     for e in entries:
         passed = sum(1 for r in e.results if r.result == "PASS")
         failed = sum(1 for r in e.results if r.result == "FAIL")
-        blocked = sum(1 for r in e.results if r.result in ("BLOCKED", "AT-RISK"))
+        # AT-RISK is not BLOCKED: a gate that is blocked because the input does not exist and a
+        # gate that is at risk because the sample is short are different facts, and collapsing
+        # them (as this table did until 2026-11-14) makes a leaderboard row claim "10 blocked"
+        # when the gate matrix says "8 blocked + 2 at-risk".
+        blocked = sum(1 for r in e.results if r.result == "BLOCKED")
+        at_risk = sum(1 for r in e.results if r.result == "AT-RISK")
         rows.append({
             "strategy_id": e.strategy_id, "name": e.name, "family": e.family,
             "score": e.score, "tier": config.TIERS.get(e.tier, {}).get("label", e.tier),
             "gates_passed": passed, "gates_failed": failed, "gates_blocked": blocked,
+            "gates_at_risk": at_risk,
             "cluster": e.cluster, "n_bets": e.measurements.get("settled_bets"),
             "blocking": "; ".join(e.blocking_reasons[:2]) if e.blocking_reasons else "—",
         })

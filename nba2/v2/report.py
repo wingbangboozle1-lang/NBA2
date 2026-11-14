@@ -27,14 +27,14 @@ def repo_integrity() -> dict:
     res = {"checks": [], "notes": []}
     # ---- schedule
     try:
-        snap = json.loads((ROOT / "data/raw/slate_2026-11-13_to_11-16.json").read_text())
+        snap = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17.json").read_text())
         cols = snap["columns"]
         idx = {c: i for i, c in enumerate(cols)}
         snap_rows = {tuple(r[idx[c]] for c in ("date", "away", "home", "game_id")) for r in snap["records"]}
-        live_rows = {(d, a, h, g) for (d, t, a, h, g, *_) in O.SLATE if d <= "2026-11-16"}
+        live_rows = {(d, a, h, g) for (d, t, a, h, g, *_) in O.SLATE}
         res["checks"].append({
             "id": "repo-schedule",
-            "what": "Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)",
+            "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
             "repo_value": f"{len(snap_rows)} games",
             "live_value": f"{len(live_rows)} games",
             "result": "MATCH" if snap_rows == live_rows else "MISMATCH",
@@ -111,12 +111,28 @@ def repo_integrity() -> dict:
         same = sum(1 for t in O.TEAMS if repo_wl.get(t) == live_wl[t])
         res["checks"].append({
             "id": "repo-wl",
-            "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
+            "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
             "repo_value": f"{same}/30 identical",
             "live_value": "30 teams",
-            "result": "MATCH" if same == 30 else "MISMATCH",
-            "detail": "no differences found" if same == 30 else str({t: (repo_wl.get(t), live_wl[t]) for t in O.TEAMS if repo_wl.get(t) != live_wl[t]}),
+            "result": "MATCH" if same == 30 else "AGED",
+            "detail": ("no differences found" if same == 30 else
+                       f"{30 - same} clubs differ because the nine 2026-11-13 games were played in "
+                       f"between; the current official table is published on the Methodology page. "
+                       f"Differs for: {sorted(t for t in O.TEAMS if repo_wl.get(t) != live_wl[t])}"),
             "src": O.SOURCES["standings"][1],
+        })
+        # ---- the current official standings against the same page, read 2026-11-14
+        cur = {t: f"{d['w']}-{d['l']}" for t, d in O.STANDINGS.items()}
+        same_now = sum(1 for t in O.STANDINGS if repo_wl.get(t) == cur[t])
+        res["checks"].append({
+            "id": "repo-wl-current",
+            "what": "The published team's official W-L column vs nba.com/standings read 2026-11-14",
+            "repo_value": f"{same_now}/30 identical",
+            "live_value": f"{len(O.STANDINGS)} teams, official table read {O.STANDINGS_AS_OF}",
+            "result": "MATCH" if same_now == len(O.STANDINGS) else "MISMATCH",
+            "detail": ("no differences found" if same_now == len(O.STANDINGS) else
+                       str({t: (repo_wl.get(t), cur[t]) for t in O.STANDINGS if repo_wl.get(t) != cur[t]})),
+            "src": O.STANDINGS_SOURCE,
         })
     except Exception as exc:  # pragma: no cover
         res["checks"].append({"id": "repo-wl", "what": "W-L cross-check", "repo_value": "n/a",

@@ -184,9 +184,9 @@ against what the official page says without trusting either.</div>
 </tr></thead><tbody>
 <tr>
 <td>repo-schedule</td>
-<td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
-<td>31 games</td>
-<td>31 games</td>
+<td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
+<td>36 games</td>
+<td>36 games</td>
 <td><span class="badge b-ok">MATCH</span></td>
 <td>no differences found</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
@@ -211,9 +211,18 @@ against what the official page says without trusting either.</div>
 </tr>
 <tr>
 <td>repo-wl</td>
-<td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
-<td>30/30 identical</td>
+<td>The published team&#x27;s official W-L column vs this tree&#x27;s own 2026-11-13 transcription</td>
+<td>12/30 identical</td>
 <td>30 teams</td>
+<td><span class="badge b-bad">AGED</span></td>
+<td>18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;CLE&#x2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>repo-wl-current</td>
+<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
+<td>30/30 identical</td>
+<td>30 teams, official table read 2026-11-14</td>
 <td><span class="badge b-ok">MATCH</span></td>
 <td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
@@ -234,15 +243,21 @@ against what the official page says without trusting either.</div>
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>55 pass in 0.589 s</td>
-<td>`python3 -m unittest discover -s nba2/tests -t .`</td>
+<td>64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)</td>
+<td>`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p &#x27;test_*.py&#x27;`; `... -s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>915 rows across 33 tables, every row sourced</td>
+<td>1,296 rows across 45 tables, every row sourced</td>
 <td>`python3 -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Repository cross-checker</td>
+<td>94 checks: 86 pass, 0 fail, 8 informational</td>
+<td>`python3 tools/crosscheck_site.py`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>
 <td>Sealed prediction ledger</td>
@@ -264,8 +279,8 @@ against what the official page says without trusting either.</div>
 </tr>
 <tr>
 <td>Parallel site trees present</td>
-<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)</td>
-<td>directory listing</td>
+<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/) — only this v2 tree is published; the other five are retained for history and are unreachable to a reader</td>
+<td>directory listing + live probe (the /pages/ paths answer 404)</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr>
@@ -864,7 +879,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">29 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">34 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>

@@ -1,0 +1,1238 @@
+{
+  "session": "arena/6650be4d-nba2",
+  "captured_at_utc": "2026-11-14T10:25:00Z",
+  "method": "platform page-fetch tool (the build sandbox cannot open TLS to nba.com: curl returns HTTP 000)",
+  "sources": {
+    "schedule": "https://www.nba.com/schedule?date=2026-11-14",
+    "standings": "https://www.nba.com/standings",
+    "injury_report": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+    "injury_index": "https://official.nba.com/nba-injury-report-2026-27-season/"
+  },
+  "official_index_note": "https://official.nba.com/nba-injury-report-2026-27-season/ lists the 2026-11-14 releases from 12:00 a.m ET through 5:00 a.m ET. 05:00 a.m ET is the newest document that exists at capture time, so it supersedes the 11/13 19:30 ET release the site currently publishes.",
+  "slate": [
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "NYK",
+      "home": "IND",
+      "game_id": "0022600034",
+      "arena": "Gainbridge Fieldhouse",
+      "city": "Indianapolis",
+      "state": "IN",
+      "game_url": "https://www.nba.com/game/nyk-vs-ind-0022600034"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "MIL",
+      "home": "ORL",
+      "game_id": "0022600035",
+      "arena": "Kia Center",
+      "city": "Orlando",
+      "state": "FL",
+      "game_url": "https://www.nba.com/game/mil-vs-orl-0022600035"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "CLE",
+      "home": "MIA",
+      "game_id": "0022600036",
+      "arena": "Kaseya Center",
+      "city": "Miami",
+      "state": "FL",
+      "game_url": "https://www.nba.com/game/cle-vs-mia-0022600036"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "ATL",
+      "home": "CHI",
+      "game_id": "0022600037",
+      "arena": "United Center",
+      "city": "Chicago",
+      "state": "IL",
+      "game_url": "https://www.nba.com/game/atl-vs-chi-0022600037"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "MEM",
+      "home": "NOP",
+      "game_id": "0022600038",
+      "arena": "Smoothie King Center",
+      "city": "New Orleans",
+      "state": "LA",
+      "game_url": "https://www.nba.com/game/mem-vs-nop-0022600038"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "UTA",
+      "home": "HOU",
+      "game_id": "0022600039",
+      "arena": "Toyota Center",
+      "city": "Houston",
+      "state": "TX",
+      "game_url": "https://www.nba.com/game/uta-vs-hou-0022600039"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "GSW",
+      "home": "SAS",
+      "game_id": "0022600040",
+      "arena": "Frost Bank Center",
+      "city": "San Antonio",
+      "state": "TX",
+      "game_url": "https://www.nba.com/game/gsw-vs-sas-0022600040"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "POR",
+      "home": "SAC",
+      "game_id": "0022600041",
+      "arena": "Golden 1 Center",
+      "city": "Sacramento",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/por-vs-sac-0022600041"
+    },
+    {
+      "date": "2026-11-13",
+      "time_et": null,
+      "away": "OKC",
+      "home": "LAC",
+      "game_id": "0022600042",
+      "arena": "Intuit Dome",
+      "city": "Inglewood",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/okc-vs-lac-0022600042"
+    },
+    {
+      "date": "2026-11-14",
+      "time_et": "19:00",
+      "away": "DEN",
+      "home": "NOP",
+      "game_id": "0022600231",
+      "arena": "Smoothie King Center",
+      "city": "New Orleans",
+      "state": "LA",
+      "game_url": "https://www.nba.com/game/den-vs-nop-0022600231"
+    },
+    {
+      "date": "2026-11-14",
+      "time_et": "19:30",
+      "away": "DAL",
+      "home": "CLE",
+      "game_id": "0022600232",
+      "arena": "Rocket Arena",
+      "city": "Cleveland",
+      "state": "OH",
+      "game_url": "https://www.nba.com/game/dal-vs-cle-0022600232"
+    },
+    {
+      "date": "2026-11-14",
+      "time_et": "20:00",
+      "away": "DET",
+      "home": "MIA",
+      "game_id": "0022600233",
+      "arena": "Kaseya Center",
+      "city": "Miami",
+      "state": "FL",
+      "game_url": "https://www.nba.com/game/det-vs-mia-0022600233"
+    },
+    {
+      "date": "2026-11-14",
+      "time_et": "20:00",
+      "away": "BKN",
+      "home": "MEM",
+      "game_id": "0022600234",
+      "arena": "FedExForum",
+      "city": "Memphis",
+      "state": "TN",
+      "game_url": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+    },
+    {
+      "date": "2026-11-14",
+      "time_et": "20:00",
+      "away": "CHI",
+      "home": "MIN",
+      "game_id": "0022600235",
+      "arena": "Target Center",
+      "city": "Minneapolis",
+      "state": "MN",
+      "game_url": "https://www.nba.com/game/chi-vs-min-0022600235"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "13:00",
+      "away": "IND",
+      "home": "PHI",
+      "game_id": "0022600236",
+      "arena": "Xfinity Mobile Arena",
+      "city": "Philadelphia",
+      "state": "PA",
+      "game_url": "https://www.nba.com/game/ind-vs-phi-0022600236"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "16:00",
+      "away": "LAL",
+      "home": "PHX",
+      "game_id": "0022600237",
+      "arena": "Mortgage Matchup Center",
+      "city": "Phoenix",
+      "state": "AZ",
+      "game_url": "https://www.nba.com/game/lal-vs-phx-0022600237"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "16:30",
+      "away": "CHA",
+      "home": "LAC",
+      "game_id": "0022600238",
+      "arena": "Intuit Dome",
+      "city": "Inglewood",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/cha-vs-lac-0022600238"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "17:00",
+      "away": "SAS",
+      "home": "UTA",
+      "game_id": "0022600239",
+      "arena": "Delta Center",
+      "city": "Salt Lake City",
+      "state": "UT",
+      "game_url": "https://www.nba.com/game/sas-vs-uta-0022600239"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "18:00",
+      "away": "DAL",
+      "home": "BOS",
+      "game_id": "0022600240",
+      "arena": "TD Garden",
+      "city": "Boston",
+      "state": "MA",
+      "game_url": "https://www.nba.com/game/dal-vs-bos-0022600240"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "18:00",
+      "away": "NYK",
+      "home": "TOR",
+      "game_id": "0022600241",
+      "arena": "Scotiabank Arena",
+      "city": "Toronto",
+      "state": "ON",
+      "game_url": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "19:00",
+      "away": "HOU",
+      "home": "WAS",
+      "game_id": "0022600242",
+      "arena": "Capital One Arena",
+      "city": "Washington",
+      "state": "DC",
+      "game_url": "https://www.nba.com/game/hou-vs-was-0022600242"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "20:00",
+      "away": "ATL",
+      "home": "MIL",
+      "game_id": "0022600243",
+      "arena": "Fiserv Forum",
+      "city": "Milwaukee",
+      "state": "WI",
+      "game_url": "https://www.nba.com/game/atl-vs-mil-0022600243"
+    },
+    {
+      "date": "2026-11-15",
+      "time_et": "21:00",
+      "away": "OKC",
+      "home": "SAC",
+      "game_id": "0022600244",
+      "arena": "Golden 1 Center",
+      "city": "Sacramento",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/okc-vs-sac-0022600244"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "19:00",
+      "away": "ORL",
+      "home": "BOS",
+      "game_id": "0022600245",
+      "arena": "TD Garden",
+      "city": "Boston",
+      "state": "MA",
+      "game_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "19:00",
+      "away": "CHI",
+      "home": "CLE",
+      "game_id": "0022600246",
+      "arena": "Rocket Arena",
+      "city": "Cleveland",
+      "state": "OH",
+      "game_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "19:00",
+      "away": "MEM",
+      "home": "WAS",
+      "game_id": "0022600247",
+      "arena": "Capital One Arena",
+      "city": "Washington",
+      "state": "DC",
+      "game_url": "https://www.nba.com/game/mem-vs-was-0022600247"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "19:30",
+      "away": "PHI",
+      "home": "BKN",
+      "game_id": "0022600248",
+      "arena": "Barclays Center",
+      "city": "Brooklyn",
+      "state": "NY",
+      "game_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "19:30",
+      "away": "HOU",
+      "home": "MIA",
+      "game_id": "0022600249",
+      "arena": "Kaseya Center",
+      "city": "Miami",
+      "state": "FL",
+      "game_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "20:00",
+      "away": "POR",
+      "home": "MIN",
+      "game_id": "0022600250",
+      "arena": "Target Center",
+      "city": "Minneapolis",
+      "state": "MN",
+      "game_url": "https://www.nba.com/game/por-vs-min-0022600250"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "20:00",
+      "away": "GSW",
+      "home": "NOP",
+      "game_id": "0022600251",
+      "arena": "Smoothie King Center",
+      "city": "New Orleans",
+      "state": "LA",
+      "game_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+    },
+    {
+      "date": "2026-11-16",
+      "time_et": "21:00",
+      "away": "PHX",
+      "home": "DEN",
+      "game_id": "0022600252",
+      "arena": "Ball Arena",
+      "city": "Denver",
+      "state": "CO",
+      "game_url": "https://www.nba.com/game/phx-vs-den-0022600252"
+    },
+    {
+      "date": "2026-11-17",
+      "time_et": "19:30",
+      "away": "NYK",
+      "home": "TOR",
+      "game_id": "0022600253",
+      "arena": "Scotiabank Arena",
+      "city": "Toronto",
+      "state": "ON",
+      "game_url": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+    },
+    {
+      "date": "2026-11-17",
+      "time_et": "20:00",
+      "away": "POR",
+      "home": "MIN",
+      "game_id": "0022600254",
+      "arena": "Target Center",
+      "city": "Minneapolis",
+      "state": "MN",
+      "game_url": "https://www.nba.com/game/por-vs-min-0022600254"
+    },
+    {
+      "date": "2026-11-17",
+      "time_et": "20:00",
+      "away": "DET",
+      "home": "SAS",
+      "game_id": "0022600255",
+      "arena": "Frost Bank Center",
+      "city": "San Antonio",
+      "state": "TX",
+      "game_url": "https://www.nba.com/game/det-vs-sas-0022600255"
+    },
+    {
+      "date": "2026-11-17",
+      "time_et": "22:30",
+      "away": "UTA",
+      "home": "LAC",
+      "game_id": "0022600257",
+      "arena": "Intuit Dome",
+      "city": "Inglewood",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/uta-vs-lac-0022600257"
+    },
+    {
+      "date": "2026-11-17",
+      "time_et": "23:00",
+      "away": "CHA",
+      "home": "LAL",
+      "game_id": "0022600256",
+      "arena": "Crypto.com Arena",
+      "city": "Los Angeles",
+      "state": "CA",
+      "game_url": "https://www.nba.com/game/cha-vs-lal-0022600256"
+    }
+  ],
+  "finals_2026_11_13": [
+    {
+      "game_id": "0022600034",
+      "away": "NYK",
+      "home": "IND",
+      "away_pts": 104,
+      "home_pts": 106,
+      "overtime": false,
+      "source": "https://www.nba.com/game/nyk-vs-ind-0022600034"
+    },
+    {
+      "game_id": "0022600035",
+      "away": "MIL",
+      "home": "ORL",
+      "away_pts": 99,
+      "home_pts": 107,
+      "overtime": false,
+      "source": "https://www.nba.com/game/mil-vs-orl-0022600035"
+    },
+    {
+      "game_id": "0022600036",
+      "away": "CLE",
+      "home": "MIA",
+      "away_pts": 121,
+      "home_pts": 133,
+      "overtime": false,
+      "source": "https://www.nba.com/game/cle-vs-mia-0022600036"
+    },
+    {
+      "game_id": "0022600037",
+      "away": "ATL",
+      "home": "CHI",
+      "away_pts": 117,
+      "home_pts": 125,
+      "overtime": true,
+      "source": "https://www.nba.com/game/atl-vs-chi-0022600037"
+    },
+    {
+      "game_id": "0022600038",
+      "away": "MEM",
+      "home": "NOP",
+      "away_pts": 142,
+      "home_pts": 111,
+      "overtime": false,
+      "source": "https://www.nba.com/game/mem-vs-nop-0022600038"
+    },
+    {
+      "game_id": "0022600039",
+      "away": "UTA",
+      "home": "HOU",
+      "away_pts": 118,
+      "home_pts": 125,
+      "overtime": false,
+      "source": "https://www.nba.com/game/uta-vs-hou-0022600039"
+    },
+    {
+      "game_id": "0022600040",
+      "away": "GSW",
+      "home": "SAS",
+      "away_pts": 85,
+      "home_pts": 123,
+      "overtime": false,
+      "source": "https://www.nba.com/game/gsw-vs-sas-0022600040"
+    },
+    {
+      "game_id": "0022600041",
+      "away": "POR",
+      "home": "SAC",
+      "away_pts": 120,
+      "home_pts": 107,
+      "overtime": false,
+      "source": "https://www.nba.com/game/por-vs-sac-0022600041"
+    },
+    {
+      "game_id": "0022600042",
+      "away": "OKC",
+      "home": "LAC",
+      "away_pts": 112,
+      "home_pts": 113,
+      "overtime": false,
+      "source": "https://www.nba.com/game/okc-vs-lac-0022600042"
+    }
+  ],
+  "standings_2026_11_14": [
+    {
+      "tricode": "BOS",
+      "name": "Boston Celtics",
+      "w": 10,
+      "l": 2,
+      "home": "5-0",
+      "road": "5-2",
+      "conf": "10-1",
+      "div": "4-0"
+    },
+    {
+      "tricode": "PHI",
+      "name": "Philadelphia 76ers",
+      "w": 10,
+      "l": 3,
+      "home": "5-2",
+      "road": "5-1",
+      "conf": "10-3",
+      "div": "3-1"
+    },
+    {
+      "tricode": "DET",
+      "name": "Detroit Pistons",
+      "w": 8,
+      "l": 3,
+      "home": "3-2",
+      "road": "5-1",
+      "conf": "8-2",
+      "div": "0-0"
+    },
+    {
+      "tricode": "ATL",
+      "name": "Atlanta Hawks",
+      "w": 7,
+      "l": 6,
+      "home": "3-3",
+      "road": "4-3",
+      "conf": "7-2",
+      "div": "4-1"
+    },
+    {
+      "tricode": "MIA",
+      "name": "Miami Heat",
+      "w": 6,
+      "l": 6,
+      "home": "4-3",
+      "road": "2-3",
+      "conf": "2-2",
+      "div": "1-1"
+    },
+    {
+      "tricode": "NYK",
+      "name": "New York Knicks",
+      "w": 6,
+      "l": 6,
+      "home": "4-3",
+      "road": "2-3",
+      "conf": "6-6",
+      "div": "1-3"
+    },
+    {
+      "tricode": "CLE",
+      "name": "Cleveland Cavaliers",
+      "w": 6,
+      "l": 7,
+      "home": "4-2",
+      "road": "2-5",
+      "conf": "5-5",
+      "div": "1-0"
+    },
+    {
+      "tricode": "TOR",
+      "name": "Toronto Raptors",
+      "w": 5,
+      "l": 7,
+      "home": "2-3",
+      "road": "3-4",
+      "conf": "4-3",
+      "div": "0-2"
+    },
+    {
+      "tricode": "ORL",
+      "name": "Orlando Magic",
+      "w": 5,
+      "l": 7,
+      "home": "1-4",
+      "road": "4-3",
+      "conf": "3-4",
+      "div": "0-2"
+    },
+    {
+      "tricode": "IND",
+      "name": "Indiana Pacers",
+      "w": 5,
+      "l": 8,
+      "home": "2-4",
+      "road": "3-3",
+      "conf": "3-5",
+      "div": "0-1"
+    },
+    {
+      "tricode": "CHA",
+      "name": "Charlotte Hornets",
+      "w": 4,
+      "l": 8,
+      "home": "3-4",
+      "road": "1-4",
+      "conf": "4-7",
+      "div": "2-2"
+    },
+    {
+      "tricode": "WAS",
+      "name": "Washington Wizards",
+      "w": 4,
+      "l": 9,
+      "home": "2-3",
+      "road": "2-6",
+      "conf": "4-8",
+      "div": "2-3"
+    },
+    {
+      "tricode": "BKN",
+      "name": "Brooklyn Nets",
+      "w": 3,
+      "l": 8,
+      "home": "1-3",
+      "road": "2-5",
+      "conf": "2-7",
+      "div": "0-2"
+    },
+    {
+      "tricode": "CHI",
+      "name": "Chicago Bulls",
+      "w": 2,
+      "l": 9,
+      "home": "1-4",
+      "road": "1-5",
+      "conf": "2-8",
+      "div": "1-0"
+    },
+    {
+      "tricode": "MIL",
+      "name": "Milwaukee Bucks",
+      "w": 1,
+      "l": 12,
+      "home": "1-6",
+      "road": "0-6",
+      "conf": "1-9",
+      "div": "1-2"
+    },
+    {
+      "tricode": "SAS",
+      "name": "San Antonio Spurs",
+      "w": 11,
+      "l": 2,
+      "home": "5-2",
+      "road": "6-0",
+      "conf": "10-2",
+      "div": "2-1"
+    },
+    {
+      "tricode": "LAL",
+      "name": "Los Angeles Lakers",
+      "w": 11,
+      "l": 2,
+      "home": "5-1",
+      "road": "6-1",
+      "conf": "6-2",
+      "div": "4-1"
+    },
+    {
+      "tricode": "HOU",
+      "name": "Houston Rockets",
+      "w": 10,
+      "l": 3,
+      "home": "7-1",
+      "road": "3-2",
+      "conf": "6-3",
+      "div": "2-1"
+    },
+    {
+      "tricode": "POR",
+      "name": "Portland Trail Blazers",
+      "w": 9,
+      "l": 3,
+      "home": "5-2",
+      "road": "6-1",
+      "conf": "9-3",
+      "div": "4-0"
+    },
+    {
+      "tricode": "MIN",
+      "name": "Minnesota Timberwolves",
+      "w": 9,
+      "l": 3,
+      "home": "5-1",
+      "road": "4-2",
+      "conf": "5-2",
+      "div": "1-0"
+    },
+    {
+      "tricode": "MEM",
+      "name": "Memphis Grizzlies",
+      "w": 8,
+      "l": 4,
+      "home": "6-0",
+      "road": "2-4",
+      "conf": "7-3",
+      "div": "1-1"
+    },
+    {
+      "tricode": "GSW",
+      "name": "Golden State Warriors",
+      "w": 8,
+      "l": 5,
+      "home": "6-1",
+      "road": "2-4",
+      "conf": "6-5",
+      "div": "3-2"
+    },
+    {
+      "tricode": "OKC",
+      "name": "Oklahoma City Thunder",
+      "w": 8,
+      "l": 5,
+      "home": "5-0",
+      "road": "3-5",
+      "conf": "5-5",
+      "div": "1-2"
+    },
+    {
+      "tricode": "DEN",
+      "name": "Denver Nuggets",
+      "w": 6,
+      "l": 4,
+      "home": "4-4",
+      "road": "2-2",
+      "conf": "3-3",
+      "div": "2-2"
+    },
+    {
+      "tricode": "DAL",
+      "name": "Dallas Mavericks",
+      "w": 7,
+      "l": 5,
+      "home": "2-3",
+      "road": "5-2",
+      "conf": "3-5",
+      "div": "1-3"
+    },
+    {
+      "tricode": "PHX",
+      "name": "Phoenix Suns",
+      "w": 5,
+      "l": 6,
+      "home": "3-3",
+      "road": "2-3",
+      "conf": "3-6",
+      "div": "2-1"
+    },
+    {
+      "tricode": "NOP",
+      "name": "New Orleans Pelicans",
+      "w": 4,
+      "l": 9,
+      "home": "3-5",
+      "road": "1-4",
+      "conf": "3-7",
+      "div": "1-1"
+    },
+    {
+      "tricode": "LAC",
+      "name": "LA Clippers",
+      "w": 3,
+      "l": 8,
+      "home": "1-4",
+      "road": "3-3",
+      "conf": "3-6",
+      "div": "1-4"
+    },
+    {
+      "tricode": "SAC",
+      "name": "Sacramento Kings",
+      "w": 1,
+      "l": 11,
+      "home": "0-7",
+      "road": "1-4",
+      "conf": "1-9",
+      "div": "0-2"
+    },
+    {
+      "tricode": "UTA",
+      "name": "Utah Jazz",
+      "w": 1,
+      "l": 12,
+      "home": "1-6",
+      "road": "0-6",
+      "conf": "1-10",
+      "div": "0-2"
+    }
+  ],
+  "injury_report_2026_11_14_0500ET": [
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Holmes II, DaRon",
+      "status": "Out",
+      "reason": "G League - On Assignment"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Nembhard, Ryan",
+      "status": "Out",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Strawther, Julian",
+      "status": "Out",
+      "reason": "Injury/Illness - Left Knee Sprain"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Whitmore, Cam",
+      "status": "Out",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "New Orleans Pelicans",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Biberovic, Tarik",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Heel Bursitis"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Christie, Max",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Left Ankle Sprain"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "de Larrea, Sergio",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Sprain"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Johnson Jr., Morez",
+      "status": "Probable",
+      "reason": "Injury/Illness - Left Shin / Tibia Contusion"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Lively II, Dereck",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Foot Surgery"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Martin, Caleb",
+      "status": "Available",
+      "reason": "Injury/Illness - Right Thumb Splint"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Cleveland Cavaliers",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Bilodeau, Tyler",
+      "status": "Out",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Brown Jr., Mikel",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Illness"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Jefferson, Joshua",
+      "status": "Out",
+      "reason": "G League - On Assignment"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Nelson, Grant",
+      "status": "Out",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Saraf, Ben",
+      "status": "Out",
+      "reason": "G League - On Assignment"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Traore, Nolan",
+      "status": "Probable",
+      "reason": "Injury/Illness - Right Calf Tightness / Soreness"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Memphis Grizzlies",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Chicago Bulls",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Beringer, Joan",
+      "status": "Available",
+      "reason": "Injury/Illness - Face Mask"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "DiVincenzo, Donte",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Edwards, Anthony",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Arthroscopy"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Duren, Jalen",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hamstring Strain"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Harkless, Elijah",
+      "status": "Questionable",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Joe, Isaiah",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hip Contusion"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Jones, Isaac",
+      "status": "Questionable",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Lanier, Chaz",
+      "status": "Out",
+      "reason": "G League - On Assignment"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Okorie, Ebuka",
+      "status": "Out",
+      "reason": "G League - On Assignment"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Onyenso, Ugonna",
+      "status": "Out",
+      "reason": "G League - Two-Way"
+    },
+    {
+      "game_date": "11/14/2026",
+      "game_time": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Miami Heat",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "01:00",
+      "matchup": "IND@PHI",
+      "team": "Indiana Pacers",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "01:00",
+      "matchup": "IND@PHI",
+      "team": "Philadelphia 76ers",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "04:00",
+      "matchup": "LAL@PHX",
+      "team": "Los Angeles Lakers",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "04:00",
+      "matchup": "LAL@PHX",
+      "team": "Phoenix Suns",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "04:30",
+      "matchup": "CHA@LAC",
+      "team": "Charlotte Hornets",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "04:30",
+      "matchup": "CHA@LAC",
+      "team": "LA Clippers",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "05:00",
+      "matchup": "SAS@UTA",
+      "team": "San Antonio Spurs",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "05:00",
+      "matchup": "SAS@UTA",
+      "team": "Utah Jazz",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "06:00",
+      "matchup": "DAL@BOS",
+      "team": "Dallas Mavericks",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "06:00",
+      "matchup": "DAL@BOS",
+      "team": "Boston Celtics",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "06:00",
+      "matchup": "NYK@TOR",
+      "team": "New York Knicks",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "06:00",
+      "matchup": "NYK@TOR",
+      "team": "Toronto Raptors",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "07:00",
+      "matchup": "HOU@WAS",
+      "team": "Houston Rockets",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "07:00",
+      "matchup": "HOU@WAS",
+      "team": "Washington Wizards",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "08:00",
+      "matchup": "ATL@MIL",
+      "team": "Atlanta Hawks",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "08:00",
+      "matchup": "ATL@MIL",
+      "team": "Milwaukee Bucks",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "09:00",
+      "matchup": "OKC@SAC",
+      "team": "Oklahoma City Thunder",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    },
+    {
+      "game_date": "11/15/2026",
+      "game_time": "09:00",
+      "matchup": "OKC@SAC",
+      "team": "Sacramento Kings",
+      "player": null,
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+    }
+  ]
+}

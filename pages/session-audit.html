@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Session Audit</h2><p>What the 2026-11-14 verification session re-checked and found: the whole checker suite re-run end to end, the slate re-diffed against the official schedule, team records re-read from the official standings, the injury-report currency delta line by line, and six suggestions put up for review before implementation. Nothing on this page is an implemented change.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="audit" data-rows="16">
 <h2>Session audit — line-by-line verification (2026-11-14, session arena/72f9da58)</h2>
 <p class="blurb">Every checker in the repository re-run, and every published slate/records/injury claim re-read against the official source, during this session. Results are what the commands printed and what the official pages contained — not what a previous session recorded.</p>
@@ -136,9 +136,9 @@
 </tr>
 <tr id="E-04-settle">
 <td>E-04 sealed-ledger settlement status</td>
-<td>PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed</td>
-<td>python -m nba2.pipeline.settle (no official finals snapshot covers the ledger&#x27;s games)</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
+<td>PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against a real official finals snapshot (data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the loader reports 0 of 22 and 0 of 27 games settled: the nine played games are day-before context that neither sealed ledger covers, so the sealed games of 11/14–17 still have no official final scores. Metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published</td>
+<td>python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>
