@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive summary · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html" class="on">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Executive summary</h1>
+<p class="lede">Six things you need to know, in the order they affect a decision.</p>
+<div class="note"><b>What was built.</b> A v2 line-origination model over a 31-game, three-day window (2026-11-13 → 2026-11-16), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table.</div><div class="note"><b>What is verified.</b> 31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so no pick can be staked; no per-game results exist, so nothing can be backtested or scored. All 31 picks are therefore withheld and each names the gate that blocks it.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Not measurable: spread-vs-total, player points-vs-rebounds, and every same-game prop correlation — these are the values that decide whether a parlay is priced correctly, and they are blocked by the missing data.</div><div class="note"><b>The recommended path.</b> Three data connections (scheduled ingestion, per-game results, licensed odds) unblock 80% of the brief: backtest, ROI, leaderboard, and every correlation number. Until then the honest product is a projection desk that grades its own lines.</div>
+<h2>Numbers behind the summary</h2>
+<div class="scroll"><table>
+<caption>Summary figures</caption>
+<thead><tr>
+<th scope="col">Item</th>
+<th scope="col">Value</th>
+<th scope="col">Basis</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Games in window</td>
+<td>31</td>
+<td>2026-11-13 → 2026-11-16</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Games verified against the official schedule</td>
+<td>31 / 31</td>
+<td>date, tip time, arena, game id</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Team records verified against nba.com/standings</td>
+<td>30 / 30</td>
+<td>exact match</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Injury rows verified against the official PDF</td>
+<td>85 / 85 (+10 not-yet-submitted)</td>
+<td>11/13/26 04:15 PM ET</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>Measured correlations</td>
+<td>6</td>
+<td>computed from the official team, opponent and advanced tables</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>Correlations that cannot be measured</td>
+<td>6</td>
+<td>each names the missing dataset on the correlations page</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>Teams outside the luck noise band</td>
+<td>0 / 30</td>
+<td>|z| ≤ 1.96</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Picks published</td>
+<td>0 / 31</td>
+<td>every pick fails G6 (no market price exists to bet against)</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Strategies that may be ranked</td>
+<td>0 / 7</td>
+<td>all fail G6 (no price) and G7 (no settled results)</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>Open decision questions</td>
+<td>14</td>
+<td>each with a way to resolve it — see the questions page</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Suggestions awaiting a decision</td>
+<td>18</td>
+<td>3 recommended first — see the queue page</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+</tbody></table></div>
+<h2>Recommended sequence</h2>
+<ol>
+  <li><b>Connect the odds feed (SG-3).</b> Nothing that involves money moves without a price. All other model work is preparation until then.</li>
+  <li><b>Connect a per-game results feed (SG-2).</b> This turns the model into something testable and lets the leaderboard exist.</li>
+  <li><b>Schedule the ingestion (SG-1).</b> Freshness gate G11 can never pass while data arrives by hand.</li>
+  <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
+</ol>
+<p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
+
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

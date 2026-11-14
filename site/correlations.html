@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Correlations &amp;amp; parlays · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="correlations.html" class="on">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Correlations &amp; parlay pricing</h1>
+<p class="lede">The number that decides whether a parlay is priced correctly is the correlation between its legs.
+Six of them can be measured from what we have. Six cannot, and those are the ones that matter for same-game parlays and props.</p>
+<div class="scroll"><table>
+<caption>Measured correlations between official team metrics</caption>
+<thead><tr>
+<th scope="col">Pair (n = 30 teams)</th>
+<th scope="col" class="n">Pearson r</th>
+<th scope="col" class="n">Spearman ρ</th>
+<th scope="col" class="n">n</th>
+<th scope="col" class="n">t (df 28)</th>
+<th scope="col">Significant at 5%</th>
+<th scope="col">What it tells you</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Net pts/game vs win %</td>
+<td class="n">+0.934</td>
+<td class="n">+0.924</td>
+<td class="n">30</td>
+<td class="n">+13.88</td>
+<td><span class="badge b-ok">yes (|r| t-test, df=28, 5%)</span></td>
+<td>computed — measures how much of the season record the scoring margin already explains</td>
+<td><a href="https://www.nba.com/stats/teams/traditional + https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/stats/teams/traditional + https://www.nba.c…</a></td>
+</tr>
+<tr>
+<td>NetRtg vs win %</td>
+<td class="n">+0.931</td>
+<td class="n">+0.919</td>
+<td class="n">30</td>
+<td class="n">+13.48</td>
+<td><span class="badge b-ok">yes (|r| t-test, df=28, 5%)</span></td>
+<td>computed independently of the PF/PA columns</td>
+<td><a href="https://www.nba.com/stats/teams/advanced + https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/stats/teams/advanced + https://www.nba.com/…</a></td>
+</tr>
+<tr>
+<td>Net pts/game vs NetRtg</td>
+<td class="n">+0.999</td>
+<td class="n">+0.998</td>
+<td class="n">30</td>
+<td class="n">+143.45</td>
+<td><span class="badge b-ok">yes (|r| t-test, df=28, 5%)</span></td>
+<td>the two estimators used for every line; agreement here is why they can be averaged</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>PF vs PA</td>
+<td class="n">-0.118</td>
+<td class="n">-0.199</td>
+<td class="n">30</td>
+<td class="n">-0.63</td>
+<td><span class="badge b-off">no</span></td>
+<td>pace proxy: high-scoring teams are usually high-conceding teams</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr>
+<td>Pace vs NetRtg</td>
+<td class="n">-0.343</td>
+<td class="n">-0.351</td>
+<td class="n">30</td>
+<td class="n">-1.94</td>
+<td><span class="badge b-off">no</span></td>
+<td>style vs quality — tests whether pace is a quality proxy</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>PIE vs win %</td>
+<td class="n">+0.919</td>
+<td class="n">+0.915</td>
+<td class="n">30</td>
+<td class="n">+12.32</td>
+<td><span class="badge b-ok">yes (|r| t-test, df=28, 5%)</span></td>
+<td>official player-impact estimate as a sanity check on the ratings</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+</tbody></table></div><h2>The correlations that are still missing</h2>
+<p class="lede">These are the ones a parlay desk actually needs. Each is listed with the exact dataset that would unlock it —
+not left as a vague promise.</p>
+<div class="scroll"><table>
+<caption>Unmeasured correlations</caption>
+<thead><tr>
+<th scope="col">Leg pair</th>
+<th scope="col">Why it matters</th>
+<th scope="col">Status</th>
+<th scope="col">Explanation</th>
+<th scope="col">Source / would come from</th>
+</tr></thead><tbody>
+<tr>
+<td>spread vs total, same game</td>
+<td>drives every spread+total SGP</td>
+<td><span class="badge b-bad">BLOCKED</span></td>
+<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>team margin vs team total</td>
+<td>drives team-total SGPs</td>
+<td><span class="badge b-bad">BLOCKED</span></td>
+<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>player points vs rebounds, same player</td>
+<td>drives every prop combo</td>
+<td><span class="badge b-bad">BLOCKED</span></td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>player points vs assists / 3PM</td>
+<td>drives prop combos</td>
+<td><span class="badge b-bad">BLOCKED</span></td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>player (out) → teammate usage</td>
+<td>drives injury-replacement props</td>
+<td><span class="badge b-bad">BLOCKED</span></td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>cross-game legs (no shared team)</td>
+<td>assumption used in every cross-game parlay</td>
+<td><span class="badge b-warn">ASSUMPTION ≈0</span></td>
+<td>Independent games; testable only with a settled bet ledger. Not measured here, and not used to price anything in this build.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+</tbody></table></div><h2>Why you may not multiply the legs</h2>
+<p class="lede">A two-leg parlay's fair price is the <em>joint</em> probability, not the product. The arithmetic below is exact
+and needs no data — it is the part of parlay analysis that survives missing inputs.</p>
+<pre>two independent legs, p = 0.50 each      →  joint = 0.2500
+same two legs, correlation ρ = +0.40     →  joint = 0.3200   (a 28% higher price)
+same two legs, correlation ρ = −0.40     →  joint = 0.1800   (a 28% lower price)
+
+Under-independence error = p_ind × δ, where (1+δ) is the factor by which the true joint
+probability differs from the product. A parlay priced off the product is therefore mispriced
+by exactly the correlation it ignored.</pre>
+<div class="scroll"><table>
+<caption>What stacking legs costs at the standard -110 price</caption>
+<thead><tr>
+<th scope="col" class="n">Legs</th>
+<th scope="col" class="n">Parlay decimal</th>
+<th scope="col" class="n">Break-even prob</th>
+<th scope="col">Single-leg break-even</th>
+<th scope="col" class="n">Hold per leg</th>
+<th scope="col" class="n">Compounded hold</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td class="n">1</td>
+<td class="n">1.909</td>
+<td class="n">52.381%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">4.54%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td class="n">2</td>
+<td class="n">3.645</td>
+<td class="n">27.438%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">8.88%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td class="n">3</td>
+<td class="n">6.958</td>
+<td class="n">14.372%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">13.03%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td class="n">4</td>
+<td class="n">13.283</td>
+<td class="n">7.528%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">16.98%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td class="n">6</td>
+<td class="n">48.413</td>
+<td class="n">2.066%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">24.36%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td class="n">8</td>
+<td class="n">176.446</td>
+<td class="n">0.567%</td>
+<td>52.38%</td>
+<td class="n">4.54%</td>
+<td class="n">31.08%</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+</tbody></table></div><div class="note bad"><b>The consequence.</b> At -110 a single leg needs 52.38% to break even; two legs need
+27.44% jointly. If your legs are correlated you must know <em>how</em> correlated, because the same two 50% legs are worth
+25.0% or 32.0% depending only on that number. Every same-game parlay on this site is therefore withheld (gate G10).</div>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

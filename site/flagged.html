@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flagged for review · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html" class="on">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Flagged for review</h1>
+<p class="lede">Every irregularity found this session, with a severity and the source needed to check it. None of these block
+publication: the site publishes only what it can source, and flags the rest here.</p>
+<div class="note"><b>Resolved this session.</b> The previous build reported 28/30 team records matching NBA.com while its
+metadata claimed 30/30. This session re-read the live standings and found <b>30/30 exact matches</b>; the 28/30 note is
+superseded (see F-012). Records can still drift as games are played — the snapshot date is on every page.</div>
+<div class="scroll"><table>
+<caption>Flagged irregularities</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Severity</th>
+<th scope="col">Area</th>
+<th scope="col">Finding</th>
+<th scope="col">Disposition</th>
+<th scope="col">Source to check</th>
+</tr></thead><tbody>
+<tr id="F-001">
+<td><span class="badge b-bad">F-001</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Data</td>
+<td>No market price exists for any line or pick in this build, so no pick is stakable and no ROI can be computed.</td>
+<td>Every line is a projection; the picks page withholds all picks and names the failing gate.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-002">
+<td><span class="badge b-bad">F-002</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Data</td>
+<td>No per-game results or box scores are reachable, so nothing can be backtested, settled, or scored.</td>
+<td>Gates G7, G8, G12 and the whole leaderboard are blocked.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr id="F-003">
+<td><span class="badge b-warn">F-003</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today&#x27;s game statuses could not be re-filed.</td>
+<td>The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-004">
+<td><span class="badge b-warn">F-004</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>The official NBA site&#x27;s &#x27;Preview&#x27; pages could not be used for odds: prices are rendered client-side only.</td>
+<td>No workaround was attempted; a licensed feed is required (SG-3).</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-005">
+<td><span class="badge b-warn">F-005</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>Home-court advantage and margin volatility are only weakly identified from one season&#x27;s win totals.</td>
+<td>h is pinned to the measured home-win rate; the unconstrained fit is published next to it so the ambiguity is visible.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-006">
+<td><span class="badge b-warn">F-006</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>The 173-game home-win rate (51.45% ± 3.8 pts) does not statistically exclude 50%.</td>
+<td>Home-court advantage is therefore published as a small number with a wide interval, not a confident one.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-007">
+<td><span class="badge b-warn">F-007</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>Player-level production (minutes, usage, on/off) is unavailable, so no injury impact can be quantified.</td>
+<td>Impact columns are blank with a reason; no numeric effect is published.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="F-008">
+<td><span class="badge b-off">F-008</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Model</td>
+<td>The two total estimators (per-game averages vs per-100 × pace) disagree by up to 4.25 pts.</td>
+<td>Games with a gap over 4.0 pts are graded C automatically, and the gap is printed per row.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr id="F-009">
+<td><span class="badge b-off">F-009</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Verification</td>
+<td>Eleven injury rows carry their team from a previous page of the PDF, not from the same row.</td>
+<td>Marked &#x27;continuation&#x27; in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-010">
+<td><span class="badge b-off">F-010</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Verification</td>
+<td>Team scoring tables are read from a rendered page; a future page redesign would silently change field order.</td>
+<td>The transcription is committed as code with named fields, and arithmetic identities (points scored = points allowed; home wins = road losses) are asserted on every build.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr id="F-011">
+<td><span class="badge b-off">F-011</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Product</td>
+<td>The repository contains five earlier site trees (root, pages/, docs/, dashboard/, verified/, originated/) with different data.</td>
+<td>This build does not edit them; the new tree is self-contained under /site. A consolidation decision is logged on the Suggestions page.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-012">
+<td><span class="badge b-off">F-012</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Product</td>
+<td>The prior build&#x27;s own audit reported 28/30 W-L matches against NBA.com while its metadata said 30/30.</td>
+<td>Resolved this session: all 30 team records match live nba.com/standings exactly. The 28/30 note is superseded; see the Verification page.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-013">
+<td><span class="badge b-off">F-013</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Verification</td>
+<td>The prior build tracked Python bytecode files in git; two audits flagged it.</td>
+<td>Out of scope for this session&#x27;s file scope. Logged for the owner; .gitignore already excludes them going forward.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="F-014">
+<td><span class="badge b-info">F-014</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Model</td>
+<td>A team&#x27;s line and its cover probability are self-consistent by construction: our cover probability is ~50% at our own number.</td>
+<td>This is correct behaviour, not an error — it is why a market price is needed before any edge can exist.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+</tbody></table></div><h2>Items that need a human with the site open</h2>
+<ul>
+  <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.
+      Open <a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">the official index</a>
+      and look for a 11/14 entry.</li>
+  <li><b>F-009:</b> eleven injury rows take their team from the PDF's previous page. Compare against the PDF pages 3–7.</li>
+  <li><b>F-011:</b> six site trees exist. Decide which is authoritative before the next session builds a seventh.</li>
+</ul>
+<h2>Flag policy</h2>
+<p class="lede">A flag is raised when a value cannot be sourced, when two sources disagree, when a method depends on an
+assumption, or when the repository contradicts its own documentation. Flags are never closed by assertion — each one carries
+the page that would settle it.</p>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>
