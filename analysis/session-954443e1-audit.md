@@ -1,7 +1,7 @@
 # Independent current-tree verification and integration audit
 
 **Session:** `arena/954443e1-nba2`
-**Snapshot reviewed:** main at `de495fe` (PR #65, after PRs #63/#64) plus this branch's audit integration
+**Snapshot reviewed:** main at `d7c19ec` (PR #66, after PRs #63–#65) plus this branch's audit integration
 **Scope:** repeatable local checks, workflow status, current site copy, question-register coverage, and source/provenance limits. This audit does not claim a fresh NBA-site re-fetch.
 
 ## Executive finding
@@ -53,6 +53,6 @@ For implementation/source claims, the primary records are the repository's [`ref
 
 ## Deployment and next steps
 
-The PR #64 Pages run was canceled when a newer main update superseded it. PR #65's subsequent main runs were still queued when checked. This branch still requires its own PR checks and Pages deployment before these audit changes are live; do not infer a successful deploy from the earlier main build.
+PR #64 and PR #65 deployment runs were canceled as newer main changes superseded them. The latest PR #66 Pages run [43630672761](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630672761) was queued at last check. This branch still requires its own PR checks and Pages deployment before these audit changes are live; do not infer a successful deploy from earlier main builds.
 
 Recommended order: (1) investigate/alert on the failed official-finals fetch; (2) implement a separately gated rolling-slate job using timestamped official schedule and team inputs; (3) connect licensed odds before any edge/ROI/stake/reward claim; (4) acquire sourced player logs before populating props or injury-impact fields. Continue to leave unavailable values blank and flagged.
