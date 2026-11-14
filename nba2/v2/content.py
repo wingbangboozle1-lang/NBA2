@@ -289,7 +289,9 @@ FLAGS = [
     ("F-001", "high", "Data", "No market price exists for any line or pick in this build, so no pick is stakable and no ROI can be computed.",
      "Every line is a projection; the picks page withholds all picks and names the failing gate.",
      O.BLOCKED["odds"][2]),
-    ("F-002", "high", "Data", "No per-game results or box scores are reachable, so nothing can be backtested, settled, or scored.",
+    ("F-002", "high", "Data", "Per-game results now exist for 155 of 174 games (2026-10-20 → 11-12), captured from nba.com by a "
+    "parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain "
+    "unreachable, so player-level settlement is still impossible.",
      "Gates G7, G8, G12 and the whole leaderboard are blocked.", O.BLOCKED["game_logs"][2]),
     ("F-003", "medium", "Data", "The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today's game statuses could not be re-filed.",
      "The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.",
@@ -304,7 +306,8 @@ FLAGS = [
      S["standings"][1]),
     ("F-007", "medium", "Model", "Player-level production (minutes, usage, on/off) is unavailable, so no injury impact can be quantified.",
      "Impact columns are blank with a reason; no numeric effect is published.", O.BLOCKED["player_box"][2]),
-    ("F-008", "low", "Model", "The two total estimators (per-game averages vs per-100 × pace) disagree by up to 4.25 pts.",
+    ("F-008", "low", "Model", "The two total estimators (per-game averages vs per-100 × pace) disagree by up to 4.25 pts, and the "
+    "walk-forward backtest shows the model's margin estimates are compressed to 30% of true dispersion.",
      "Games with a gap over 4.0 pts are graded C automatically, and the gap is printed per row.",
      S["team_trad"][1]),
     ("F-009", "low", "Verification", "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
@@ -325,6 +328,22 @@ FLAGS = [
     ("F-014", "info", "Model", "A team's line and its cover probability are self-consistent by construction: our cover probability is ~50% at our own number.",
      "This is correct behaviour, not an error — it is why a market price is needed before any edge can exist.",
      S["team_adv"][1]),
+    ("F-015", "info", "Model",
+     "Walk-forward backtest on 139 official finals: 66.9% straight-up (95% CI 58.7–74.2%), margin MAE 11.91 vs 13.27 for a zero baseline, Brier 0.2184 vs 0.2500, AUROC 0.718.",
+     "The first honest skill measurement in the repository. It is accuracy, NOT profit: no price exists, so no ROI is claimed anywhere.",
+     "https://www.nba.com/games"),
+    ("F-016", "high", "Model",
+     "Margin estimates are compressed: predicted margin sd 4.98 pts against an actual 16.43 (ratio 0.30); r(predicted, actual) = +0.390, Spearman on |confidence| vs |win size| = +0.10.",
+     "A predicted margin is a RANKING signal, not an expected margin. It must never be read as 'this team wins by 8', and must never size a stake.",
+     "https://www.nba.com/games"),
+    ("F-017", "info", "Model",
+     "Spread↔total correlation is now measured, not assumed: r = +0.018 on 155 final scores, 95% CI [−0.149, +0.184], t = +0.21.",
+     "Every same-game parlay price depends on this value and it cannot be distinguished from zero at this sample size. Assuming independence is neither disproven nor confirmed: ~780 games would be needed to detect r = 0.10.",
+     "https://www.nba.com/games"),
+    ("F-018", "medium", "Model",
+     "A win probability is not a cover probability. Our own line already absorbs the model's view, so P(cover) at our own number is ~50% by construction (see F-014).",
+     "Any table that presents a cover probability against our own line as an edge has misread the model. Only a third-party price can create an edge.",
+     S["team_adv"][1]),
 ]
 
 # --------------------------------------------------------------------------- executive summary bullets
@@ -334,13 +353,17 @@ EXEC_BULLETS = [
     ("What is verified",
      "31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables."),
     ("What is not possible yet",
-     "No price exists, so no pick can be staked; no per-game results exist, so nothing can be backtested or scored. All 31 picks are therefore withheld and each names the gate that blocks it."),
+     "No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), so the method CAN be backtested — and it has been. All 31 picks remain withheld because a pick needs a price, not because the method is unknown."),
+    ("The skill finding",
+     "A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists."),
+    ("The compression finding",
+     "The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin."),
     ("The luck finding",
      "Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story."),
     ("The correlation finding",
-     "Measured: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Not measurable: spread-vs-total, player points-vs-rebounds, and every same-game prop correlation — these are the values that decide whether a parlay is priced correctly, and they are blocked by the missing data."),
+     "Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable."),
     ("The recommended path",
-     "Three data connections (scheduled ingestion, per-game results, licensed odds) unblock 80% of the brief: backtest, ROI, leaderboard, and every correlation number. Until then the honest product is a projection desk that grades its own lines."),
+     "Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines."),
 ]
 
 

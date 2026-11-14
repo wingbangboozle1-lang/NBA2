@@ -182,6 +182,59 @@ class TestReportAndContent(unittest.TestCase):
             self.assertTrue(row["url"].startswith("http"), row["key"])
 
 
+class TestBacktest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from . import backtest as BT
+        cls.bt = BT.run()
+
+    def test_no_same_day_leakage(self):
+        """Every scored date must have had at least one strictly earlier game."""
+        meta = self.bt["meta"]
+        self.assertEqual(meta["leakage_rule"],
+                         "ratings for a date use only games strictly before that date")
+        self.assertGreater(meta["n_games_scored"], 100)
+        self.assertGreater(meta["n_skipped_no_prior"], 0, "opening games must be skipped, not priced")
+
+    def test_accuracy_beats_coinflip_and_has_wide_interval(self):
+        h = self.bt["headline"]
+        self.assertGreater(h["straight_up_accuracy"], 0.55)
+        lo, hi = h["accuracy_ci95"]
+        self.assertLess(lo, h["straight_up_accuracy"])
+        self.assertGreater(hi, h["straight_up_accuracy"])
+
+    def test_model_beats_zero_margin_baseline(self):
+        h = self.bt["headline"]
+        self.assertLess(h["mae_margin"], h["mae_baseline_zero"])
+        self.assertLess(h["brier"], h["brier_baseline"])
+
+    def test_compression_finding_is_published_not_hidden(self):
+        cp = self.bt["compression"]
+        self.assertLess(cp["ratio"], 0.6, "if the model stopped being compressed, update the page text")
+        self.assertIn("must never", cp["read"])
+
+    def test_margin_total_correlation_is_honest_about_power(self):
+        mt = self.bt["margin_total"]
+        self.assertEqual(mt["n"], self.bt["meta"]["n_games_scored"])
+        self.assertIn("power", mt["power_note"])
+        lo, hi = mt["ci95"]
+        self.assertLess(lo, 0)
+        self.assertGreater(hi, 0)
+
+    def test_every_scored_row_carries_a_source_url(self):
+        for r in self.bt["rows"]:
+            self.assertTrue(r["source_url"].startswith("https://www.nba.com/game/"), r)
+
+    def test_backtest_does_not_claim_profit(self):
+        blob = json.dumps(self.bt).lower()
+        for bad in ("roi", "profit", "clv"):
+            self.assertNotIn(bad, blob, f"backtest must not make a {bad.upper()} claim")
+
+    def test_sensitivity_is_labelled_as_not_selection(self):
+        for r in self.bt["sensitivity"]:
+            self.assertIn("not used to pick", r["note"])
+
+
 class TestPublishedSite(unittest.TestCase):
     """The site is an artefact of this repository; these tests keep it honest."""
 
@@ -196,7 +249,7 @@ class TestPublishedSite(unittest.TestCase):
         from .build import NAV
         site = ROOT / "site"
         pages = sorted(site.glob("*.html"))
-        self.assertEqual(len(pages), 16)
+        self.assertEqual(len(pages), 17)
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

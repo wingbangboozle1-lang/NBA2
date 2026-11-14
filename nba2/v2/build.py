@@ -29,6 +29,7 @@ NAV = [
     ("picks.html", "Picks &amp; slate"),
     ("lines.html", "Originated lines"),
     ("strategies.html", "Strategies &amp; leaderboard"),
+    ("backtest.html", "Backtest &amp; skill"),
     ("correlations.html", "Correlations &amp; parlays"),
     ("props.html", "Player props"),
     ("injuries.html", "Injuries &amp; rotation"),
@@ -207,10 +208,15 @@ def validate(rows_by_table):
 
 
 # --------------------------------------------------------------------------- pages
-def build():
+def build(run_backtest: bool = True):
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
     (SITE / "assets" / "site.css").write_text(CSS)
+
+    if run_backtest:
+        (DATA).mkdir(parents=True, exist_ok=True)
+        from . import backtest as _bt
+        _bt.OUT.write_text(json.dumps(_bt.run(), indent=1))
 
     teams, cal = M.build_teams()
     lines = M.originated_lines(teams, cal)
@@ -249,6 +255,9 @@ def build():
     n_lines = len(lines)
     tiers = {g: sum(1 for l in lines if l.grade == g) for g in "ABC"}
     blocked = len([1 for v in O.BLOCKED.values()])
+    _acc = "—"
+    if (DATA / "backtest.json").exists():
+        _acc = f"{json.loads((DATA / 'backtest.json').read_text())['headline']['straight_up_accuracy']*100:.1f}%"
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
 <p class="lede">A 31-game window (Nov 13 → Nov 16) priced from official NBA data only.
@@ -259,6 +268,7 @@ Nothing here is a betting tip: no market price is connected, so every pick is wi
   <div class="kpi"><b>{len(lines)}</b><small>games priced in window</small></div>
   <div class="kpi"><b>{integ['games']:.0f}</b><small>league games observed (season to date)</small></div>
   <div class="kpi"><b>{tiers['A']}/{tiers['B']}/{tiers['C']}</b><small>A / B / C line grades</small></div>
+  <div class="kpi"><b>{_acc}</b><small>walk-forward accuracy (139 finals)</small></div>
   <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
   <div class="kpi"><b>{cal.margin_sd:.2f}</b><small>σ margin sd (fitted, pts)</small></div>
   <div class="kpi"><b>{cal.hca:+.2f}</b><small>home-court (fitted, pts)</small></div>
@@ -481,6 +491,112 @@ them is wrong in a direction that costs money.</p>
 per-game results there are zero settled bets, so the leaderboard currently has nothing to score. The design is published so it
 can be approved or amended before the data arrives, not after.</div>"""
     built["strategies.html"] = page("strategies.html", "Strategies &amp; leaderboard", body, "strategies.html")
+
+    # ------------------------------------------------------------------ backtest
+    btd = json.loads((DATA / "backtest.json").read_text()) if (DATA / "backtest.json").exists() else None
+    body = """<h1>Backtest &amp; measured skill</h1>
+<p class="lede">The one question every other page depends on: if this rating method had been run before each game, would it
+have been right? This is a walk-forward test on official finals only, with no leakage and no future information.</p>
+"""
+    if btd is None:
+        body += """<div class="note bad"><b>Not run yet.</b> <code>python3 -m nba2.v2.backtest</code> produces this page.</div>"""
+    else:
+        m, h, sg, cp = btd["meta"], btd["headline"], btd["significance"], btd["compression"]
+        body += f"""<div class="note"><b>How the test works.</b> {m['n_games_scored']} games
+({m['first_date']} → {m['last_date']}) are scored one at a time. For each game the ratings are rebuilt from
+<em>only</em> the games strictly before that date — no same-day leakage, no future leakage — with the same shrinkage the
+published model uses. {m['n_skipped_no_prior']} games are skipped because a team had never played. Sources:
+<a href="{O.SOURCES['schedule'][1]}">nba.com/schedule</a> for the slate and one
+<code>nba.com/game/&lt;slug&gt;-&lt;id&gt;</code> URL per final score.</div>"""
+
+        rows = [
+            {"cells": ["Straight-up accuracy", f"{h['straight_up_accuracy']*100:.2f}%",
+                       f"{h['hits']} of {m['n_games_scored']}", f"95% CI {h['accuracy_ci95'][0]*100:.1f}–{h['accuracy_ci95'][1]*100:.1f}%",
+                       srclink("https://www.nba.com/games")]},
+            {"cells": ["Margin MAE (points)", f"{h['mae_margin']:.2f}", f"zero-margin baseline {h['mae_baseline_zero']:.2f}",
+                       f"skill {h['skill_vs_baseline_pct']:+.1f}%", srclink("https://www.nba.com/games")]},
+            {"cells": ["Margin RMSE (points)", f"{h['rmse_margin']:.2f}", f"baseline {h['rmse_baseline_zero']:.2f}",
+                       "root mean squared error", srclink("https://www.nba.com/games")]},
+            {"cells": ["Brier score (probability)", f"{h['brier']:.4f}", f"0.5000 coin-flip baseline is {h['brier_baseline']:.4f}",
+                       f"skill {h['brier_skill_pct']:+.1f}%", srclink("https://www.nba.com/games")]},
+            {"cells": ["Log loss", f"{h['log_loss']:.4f}", f"0.6931 coin-flip baseline",
+                       "lower is better", srclink("https://www.nba.com/games")]},
+            {"cells": ["AUROC (winner ranking)", f"{h['auroc']:.4f}", "0.5 = no ranking information",
+                       "how often a winner is ranked above a loser", srclink("https://www.nba.com/games")]},
+            {"cells": ["Mean bias", f"{h['bias']:+.2f} pts", "predicted minus actual margin",
+                       "near zero means no systematic tilt", srclink("https://www.nba.com/games")]},
+            {"cells": ["Paired bootstrap on the MAE gain", f"{sg['observed_mae_gain']:+.2f} pts",
+                       f"P(gain &gt; 0) = {sg['p_gain_positive']:.3f} over {sg['draws']:,} draws (seed {sg['seed']})",
+                       "significant at 5%" if sg["significant_at_5pct"] else "not significant",
+                       srclink("https://www.nba.com/games")]},
+        ]
+        body += table(["Measure", "Value", "Comparison", "Read", "Source"], rows,
+                      "Walk-forward skill against honest baselines", num_cols=(1,))
+
+        body += f"""<h2>The uncomfortable part: the model is compressed</h2>
+<div class="note bad"><b>Do not read a predicted margin as an expected margin.</b> The model's predicted margins have a
+standard deviation of <b>{cp['predicted_margin_sd']:.2f} pts</b> against an actual <b>{cp['actual_margin_sd']:.2f} pts</b>
+— a ratio of <b>{cp['ratio']:.2f}</b>. Its correlation with the real margin is only <b>{cp['r_predicted_vs_actual']:+.3f}</b>,
+and a bigger predicted margin says almost nothing about how big the real win will be
+(Spearman {cp['spearman_confidence_vs_bigwin']:+.3f}). The ratings rank teams usefully; they do not forecast blowouts.
+Anything on this site that turned a predicted margin into a stake size would be misusing the model.</div>"""
+
+        body += f"""<h2>Calibration: are the probabilities right?</h2>
+<p class="lede">A model can rank well and still be badly calibrated. These bins compare predicted win probability with the
+observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
+"""
+        rows = []
+        for c in btd["calibration"]:
+            gap = (c["observed"] - c["mean_predicted"]) * 100
+            rows.append({"cells": [esc(c["bin"]), str(c["n"]), f"{c['mean_predicted']*100:.1f}%",
+                                   f"{c['observed']*100:.1f}%", f"n = {c['hits']} wins",
+                                   f"{c['ci95'][0]*100:.1f}–{c['ci95'][1]*100:.1f}%",
+                                   f"{gap:+.1f} pp", srclink("https://www.nba.com/games")]})
+        body += table(["Predicted probability bin", "Games", "Mean predicted", "Observed", "Wins", "95% CI", "Gap", "Source"],
+                      rows, "Reliability by probability bin", num_cols=(1, 2, 3, 6))
+        body += f"""<div class="note warn"><b>Calibration slope {h['calibration_slope']:.2f}.</b> A perfectly calibrated
+model has a slope of 1.00; below 1 means it is <em>over-confident</em> in the sense that its probabilities spread wider than
+reality, above 1 means under-confident. The slope here is pulled down by the compression above: the model's margins are too
+small-scaled, so its probabilities bunch near 50% and must be rescaled before they mean anything.
+<b>{h['games_to_prove_edge_vs_coinflip']}</b> more games at this accuracy would be needed to prove an edge over a 54.2% coin-flip.</div>"""
+
+        body += """<h2>Does the shrinkage setting change the answer?</h2>
+<p class="lede">Reported for transparency. The headline numbers above use the shipped configuration and were
+<b>not</b> chosen by reading these rows — that would be fitting to the test set.</p>
+"""
+        rows = []
+        for r in btd["sensitivity"]:
+            rows.append({"cells": [f"{r['shrink_pseudo_games']:.0f}", str(r["n"]), f"{r['accuracy']*100:.2f}%",
+                                   f"{r['mae']:.2f}", f"{r['pred_sd']:.2f}", esc(r["note"]),
+                                   srclink("https://www.nba.com/games")]})
+        body += table(["Shrink pseudo-games", "Games", "Accuracy", "Margin MAE", "Predicted margin sd", "Note", "Source"],
+                      rows, "Sensitivity of the result to the shrinkage prior", num_cols=(0, 1, 2, 3, 4))
+
+        body += f"""<h2>Does a bigger predicted margin mean a bigger real win?</h2>
+<p class="lede">Only weakly. Rank correlation between |predicted margin| and |actual margin| is
+<b>{cp['spearman_confidence_vs_bigwin']:+.3f}</b> — essentially no relationship. The model's confidence is a ranking device,
+not a magnitude forecast.</p>"""
+        body += f"""<div class="note"><b>Bottom line.</b> On {m['n_games_scored']} official finals this method is
+{h['straight_up_accuracy']*100:.1f}% accurate straight up (CI {h['accuracy_ci95'][0]*100:.1f}–{h['accuracy_ci95'][1]*100:.1f}%),
+beats a zero-margin baseline by {h['skill_vs_baseline_pct']:.1f}% on MAE, and its probabilities score a Brier of
+{h['brier']:.4f} against 0.2500 for a coin flip. That is real signal. It is <b>not</b> profit: there is no price to beat in
+this repository, so no ROI, no CLV, and no rank on the leaderboard can be produced from it. The leaderboard stays empty
+until an odds feed and 300 settled bets exist (G1, G6).</div>"""
+
+        body += """<h2>Every scored game</h2>
+<p class="lede">The full row-by-row output, so any single number above can be checked against its game.</p>
+"""
+        rows = []
+        for r in btd["rows"]:
+            rows.append({"cells": [esc(r["date"]), esc(r["matchup"]),
+                                   badge("neutral site", "off") if r["neutral"] else "—",
+                                   f"{r['pred_margin']:+.2f}", f"{r['actual_margin']:+.0f}",
+                                   f"{r['err']:+.2f}", f"{r['p_home']*100:.1f}%",
+                                   badge("correct", "ok") if r["correct"] else badge("wrong", "bad"),
+                                   srclink(r["source_url"])]})
+        body += table(["Date", "Matchup", "Venue", "Predicted margin", "Actual margin", "Error", "P(home win)", "Result", "Official final"],
+                      rows, "All walk-forward predictions against official finals", num_cols=(3, 4, 5, 6))
+    built["backtest.html"] = page("backtest.html", "Backtest &amp; skill", body, "backtest.html")
 
     # ------------------------------------------------------------------ correlations
     body = """<h1>Correlations &amp; parlay pricing</h1>
