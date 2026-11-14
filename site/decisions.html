@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decisions · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decisions.html" class="on">Decisions</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Decisions</h1>
+<p class="lede">The repository has accumulated 33 suggestions and 14 open questions across several sessions.
+That is more than one person can act on, and several of the items are not independent: one choice decides
+most of the rest. This page puts the real forks side by side, with what each one costs and what evidence
+already exists, so a path can be chosen before anything is built. <b>Nothing here is implemented by being
+listed.</b> A row becomes work only when its state changes to ACCEPTED.</p>
+
+<div class="note"><b>How to read this page.</b> Every option carries the evidence we already have and the
+evidence we would still need. Where an option is recommended, the recommendation is about <em>sequence</em>,
+not about ambition: the cheapest way to learn whether this model has an edge is to test it against a price,
+and that is not possible yet. The recommendation is therefore to buy the missing input before building more
+on top of a number nobody can trade.</div>
+
+<h2>Decision 1 — the fork everything else hangs on</h2>
+<p class="lede">No strategy on this site can pass G6, because no price exists to beat. Accuracy is measured
+and positive; profitability is unmeasurable by construction. Every other decision below changes once this
+one is made.</p>
+<div class="scroll"><table>
+<caption>Decision 1 options</caption>
+<thead><tr>
+<th scope="col">Option</th>
+<th scope="col">Path</th>
+<th scope="col">What it unlocks</th>
+<th scope="col">Cost / effort</th>
+<th scope="col">What we would still need</th>
+<th scope="col">Assessment</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>A</td>
+<td>Connect a market-price feed (book API or licensed aggregator)</td>
+<td>Every gate that needs a price becomes evaluable: G6, ROI, CLV, stake sizing, leaderboard ranking. Turns the measured 66.2% accuracy into a testable edge.</td>
+<td>Subscription cost plus a normaliser; the model does not change</td>
+<td>We already have: lines for 27 games, a measured accuracy, and a settlement pipeline. Missing: prices only.</td>
+<td><span class="badge b-ok">RECOMMENDED</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td>Publish as an accuracy-only research desk and never claim an edge</td>
+<td>Honest and free: the site keeps saying exactly what it says now, and the 66.2% walk-forward is the deliverable.</td>
+<td>Zero cost; the leaderboard and rewards stay permanently unrankable</td>
+<td>Someone else's price still has to be looked up by hand to act; nothing is measured against it.</td>
+<td><span class="badge b-warn">VIABLE</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td>Close the project's betting claims and keep only the data/verification layer</td>
+<td>Removes every unprovable number at once. The verified snapshot and provenance machinery remain useful.</td>
+<td>Low, but it discards the line-origination work the brief asked for</td>
+<td>Nothing; the accuracy finding is already published</td>
+<td><span class="badge b-warn">VIABLE</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>Why A is recommended rather than C.</b> The expensive part of this
+repository is already done and measured: a leakage-tested walk-forward on 148
+official finals, with the over-confidence published rather than hidden. Option C throws that away to avoid a
+purchase. Option A tests it. If the price test fails, C becomes correct — but it should be chosen on evidence
+from A, not instead of it.</div><h2>Decision 2 — freshness: how much staleness is acceptable?</h2>
+<p class="lede">The live site's team table and schedule are from 2026-11-14. The current injury report is
+04:15 AM ET the same day, because the 01:30 PM ET file is unreachable from this build sandbox. Final game-day
+statuses are exactly the input that decides a same-day bet.</p><div class="scroll"><table>
+<caption>Decision 2 options</caption>
+<thead><tr>
+<th scope="col">Option</th>
+<th scope="col">Path</th>
+<th scope="col">What it unlocks</th>
+<th scope="col">Cost / effort</th>
+<th scope="col">What we would still need</th>
+<th scope="col">Assessment</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>A</td>
+<td>Scheduled GitHub Action with normal internet, hourly, fail-loud</td>
+<td>Fixes the root cause for schedule, standings and injury PDFs in one move; a missed run becomes an error rather than a stale page.</td>
+<td>Medium: one workflow, one parser, one freshness assertion</td>
+<td>Nothing this build already has; Actions are already used for CI and Pages</td>
+<td><span class="badge b-ok">RECOMMENDED</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td>Keep hand transcription and stamp every value with its capture time</td>
+<td>Honest and requires no infrastructure: the page already tells the reader what it does not know.</td>
+<td>Low, but the staleness never improves</td>
+<td>A human to re-read the pages; the 04:15 AM cut-off stays</td>
+<td><span class="badge b-warn">HOLDING PATTERN</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td>Publish only what is final and drop same-day availability</td>
+<td>Nothing published can be stale, because nothing same-day is published.</td>
+<td>Low</td>
+<td>It removes the injury exposure table, which is the part a same-day reader most needs</td>
+<td><span class="badge b-bad">NOT ADVISED</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+</tbody></table></div><h2>Decision 3 — what counts as proof of skill?</h2>
+<p class="lede">The brief asks to remove luck and reward top strategies. Those two goals pull in opposite
+directions on small samples: a leaderboard published early rewards luck, because early leaders are mostly
+variance.</p><div class="scroll"><table>
+<caption>Decision 3 options</caption>
+<thead><tr>
+<th scope="col">Option</th>
+<th scope="col">Path</th>
+<th scope="col">What it unlocks</th>
+<th scope="col">Cost / effort</th>
+<th scope="col">What we would still need</th>
+<th scope="col">Assessment</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>A</td>
+<td>300 settled bets per strategy before any ranking (current G7)</td>
+<td>A 55% hit rate separates from 52.4% at 5% one-sided; rewards become meaningful.</td>
+<td>Slow: at a realistic volume this is most of a season</td>
+<td>Prices and settlement (Decision 1)</td>
+<td><span class="badge b-ok">RECOMMENDED</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td>Publish a provisional leaderboard with a visible uncertainty band</td>
+<td>Faster feedback and more engagement, with the luck problem stated on every row.</td>
+<td>Low to build, but it invites reading a noisy rank as a result</td>
+<td>An explicit rule that no reward is paid on a provisional rank</td>
+<td><span class="badge b-warn">VIABLE WITH RULE</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td>Rank on the walk-forward backtest alone, no live bets</td>
+<td>Measured today, on 148 official finals, with no settlement needed.</td>
+<td>Low, using what already exists</td>
+<td>It ranks the model, not strategies, and it cannot see prices</td>
+<td><span class="badge b-warn">VIABLE FOR MODEL</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>Decision 4 — how should the site present numbers it cannot stand behind?</h2>
+<p class="lede">This session found three cases where a page implied more than the data supported: an expired
+window presented as upcoming, a shared parameter page presented as a per-row source, and a rest table that
+could not see a back-to-back. All three are fixed. The question is what rule prevents the fourth.</p><div class="scroll"><table>
+<caption>Decision 4 options</caption>
+<thead><tr>
+<th scope="col">Option</th>
+<th scope="col">Path</th>
+<th scope="col">What it unlocks</th>
+<th scope="col">Cost / effort</th>
+<th scope="col">What we would still need</th>
+<th scope="col">Assessment</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>A</td>
+<td>Blank plus a flag id on every unverifiable cell, enforced in CI</td>
+<td>The reader can see exactly what is unknown and why; a guess cannot reach the page unnoticed.</td>
+<td>Already in place: the provenance lint and the row-level checker</td>
+<td>Nothing</td>
+<td><span class="badge b-ok">RECOMMENDED - keep</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td>Add an external-URL status sweep to CI</td>
+<td>Would have caught the 30 dead team links this session found, which passed every existing test.</td>
+<td>Low: a cached link checker</td>
+<td>Nothing</td>
+<td><span class="badge b-ok">RECOMMENDED - add</span></td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td>Publish a plausible estimate with an explicit confidence label</td>
+<td>Fills the page and looks complete.</td>
+<td>Low, and the most attractive option on this list</td>
+<td>It is the exact failure mode the brief rules out: an invented value that reads as fact</td>
+<td><span class="badge b-bad">REJECTED</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>The questions that must be answered before any of the above can be chosen</h2>
+<p class="lede">These are the blockers, stated as questions with the evidence attached. The full list, with
+discovery paths, is on the <a href="questions.html">Open questions</a> page.</p><div class="scroll"><table>
+<caption>Blocking questions with the evidence attached</caption>
+<thead><tr>
+<th scope="col">Question</th>
+<th scope="col">Answer we have</th>
+<th scope="col">Why it blocks a decision</th>
+<th scope="col">Who / what answers it</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Is a market-price feed going to be licensed?</td>
+<td>Yes / no</td>
+<td>Decides Decision 1 and therefore Decisions 3 and 5</td>
+<td>Owner</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>What stake unit and bankroll does a 'reward' represent?</td>
+<td>Unstated</td>
+<td>Reward allocation cannot be sized without it</td>
+<td>Owner</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Which injury revision is authoritative for a closing line?</td>
+<td>04:15 AM ET is the newest readable here</td>
+<td>Decides whether hairlines are settled on stale availability</td>
+<td>SG-26 (automated ingest)</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr>
+<td>Is 66.2% walk-forward accuracy economically meaningful at typical prices?</td>
+<td>Unmeasured</td>
+<td>A 66% straight-up rate is not automatically profitable at -110</td>
+<td>Decision 1</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>How are player props to be graded with no player box scores?</td>
+<td>Impossible today</td>
+<td>Blocks the prop-combo strategy family entirely</td>
+<td>A player-level data source</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>Who approves a promotion from 'measured' to 'rewarded'?</td>
+<td>Unstated</td>
+<td>The competition has no authority model yet</td>
+<td>Owner</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><h2>What to do first, in order</h2>
+<ol>
+<li><b>Decide Decision 1.</b> Everything else is cheaper once it is settled, and two of the four decisions
+    below cannot be evaluated without it.</li>
+<li><b>Approve SG-26 (scheduled ingestion).</b> It is the only item that fixes freshness for all inputs at once,
+    and it needs no further design.</li>
+<li><b>Approve SG-32 (external-URL sweep).</b> Lowest-cost guard against the class of defect this session found:
+    links that exist but do not resolve.</li>
+<li><b>Hold SG-29 (bet log) and SG-33 (injury deltas)</b> until 1 and 2 are through. Both are high value and both
+    are blocked on inputs that do not exist yet.</li>
+<li><b>Do not promote any strategy</b> until 300 bets have settled. The calibration slope of 0.27 says the
+    probabilities are over-confident, so an early leader would be measuring luck.</li>
+</ol>
+<p class="lede">Each suggestion above has a state on the <a href="suggestions.html">Suggestions queue</a>.
+Changing a state there is the only way an item becomes work; this page is the reasoning behind the order.</p>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -443,6 +443,87 @@
    "Low \u2014 both values exist in committed metadata",
    "SG-22 for the settlement half",
    "QUEUED"
+  ],
+  [
+   "SG-25",
+   "Decisions",
+   "Choose the single decision that unblocks everything: connect an odds feed, or stop calling any number an edge.",
+   "Every strategy on this site fails G6 for one reason - there is no price to beat. Until a price exists, the leaderboard cannot rank, ROI cannot exist, and 'skill' can only mean accuracy. This is the highest-leverage open question in the repository and it is an owner choice, not a data problem.",
+   "Low to decide, high to act (a feed subscription plus a parser)",
+   "Owner sign-off on which feed. Nothing in the code blocks it.",
+   "RECOMMENDED - decide first"
+  ],
+  [
+   "SG-26",
+   "Process",
+   "Move ingestion to a scheduled runner with normal internet, and make a missed refresh fail loudly.",
+   "The build sandbox cannot reach nba.com directly (curl returns 000), so every snapshot is a hand transcription with an unavoidable staleness window - today's injuries stop at 04:15 AM ET because the 01:30 PM file returns AccessDenied. A GitHub Actions runner has normal internet, so the same fetch that fails here would succeed there on a cron.",
+   "Medium (one scheduled workflow plus a parser and a freshness assertion)",
+   "SG-1 (already recommended); GitHub Actions is already used for CI and Pages",
+   "RECOMMENDED - unblocks freshness"
+  ],
+  [
+   "SG-27",
+   "Verification",
+   "Store every official document a row came from, not just its URL, so a row can be re-checked after the league rotates the file.",
+   "The injury PDFs are versioned by timestamp and old revisions disappear from the archive index. A URL alone is therefore not durable evidence: the 16:15 ET release this site once published is no longer the current file. Committed bytes make a row auditable forever, and they are what turned this session's transcription checks into arithmetic proofs.",
+   "Low to medium (store the markdown extract alongside the JSON snapshot)",
+   "nothing",
+   "RECOMMENDED - cheap insurance"
+  ],
+  [
+   "SG-28",
+   "Data quality",
+   "Publish a per-row 'as of' stamp, not just a site-wide one.",
+   "The site mixes sources captured at different times: team records and the schedule are from 2026-11-14, the current injury report is 04:15 AM ET the same day, and the historical detail report is from 11/13 16:15 ET. A single site-wide date implies uniform freshness, which is the exact assumption that let a stale team table survive a previous review.",
+   "Low (a field on each row plus a column in the table renderer)",
+   "nothing",
+   "RECOMMENDED - prevents a repeat of F-025"
+  ],
+  [
+   "SG-29",
+   "Analysis",
+   "Add a per-strategy bet log with a real settlement source before any leaderboard is published as a competition.",
+   "The brief asks for a leaderboard that rewards top strategies. Scoring an empty log rewards nothing and, worse, cannot distinguish skill from luck: the walk-forward test shows the probabilities are over-confident (calibration slope 0.27), so an early leader would almost certainly be a lucky one. A 300-settled-bet minimum (G7) is the smallest sample this build can defend.",
+   "High (needs prices, settlement, and a season of data)",
+   "SG-25 (a price) and SG-1 (automated results)",
+   "QUEUED - blocked on SG-25"
+  ],
+  [
+   "SG-30",
+   "Interface",
+   "Show the trigger price next to every line, and label it as a threshold rather than a pick.",
+   "A reader cannot act on 'our number is 5.5' without knowing the price at which acting would be rational. Printing 'act only if the market gives you X or better' turns a projection into a testable statement, and keeps the site honest that it is not advising a bet. It also creates the data needed to grade the model against a market once a feed exists.",
+   "Low (a column, computed from the same normal)",
+   "None; a real price feed (SG-25) upgrades it from hypothetical to live",
+   "RECOMMENDED - improves decisions now"
+  ],
+  [
+   "SG-31",
+   "Interface",
+   "Put a one-line status banner on every page stating what is withheld and why.",
+   "The picks page withholds all 27 games; the props page is blank by policy; the leaderboard cannot rank. A first-time reader meets these as absences. A banner that says '0 of 27 picks published - no market price exists' on each page makes the withholding look like the design it is, and removes the incentive to fill blanks with guesses.",
+   "Low",
+   "nothing",
+   "RECOMMENDED"
+  ],
+  [
+   "SG-32",
+   "Verification",
+   "Add a CI check that every external source URL in the published site returns 200, and fail on a dead link.",
+   "This session found 30 dead team source links (stats/team/<TRICODE>) that passed every existing test, because the checker only verified that a link existed, not that it resolved. A status-code sweep would have caught it the day it was introduced.",
+   "Low (a retrying link checker in CI, cached)",
+   "nothing",
+   "RECOMMENDED - would have caught F-026"
+  ],
+  [
+   "SG-33",
+   "Data quality",
+   "Keep a running delta between consecutive injury revisions instead of overwriting.",
+   "Late scratches are the highest-information event in a slate, and they are only visible as the difference between filings. Overwriting each release destroys exactly the signal that matters most for a same-day decision.",
+   "Medium (store each release, diff on ingest)",
+   "SG-26 (automated ingestion)",
+   "QUEUED - depends on SG-26"
   ]
  ],
  "questions": [
@@ -749,6 +830,94 @@
    "Settlement, reward allocation and leaderboard scores are PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null \u2014 no official final-score snapshot covers the sealed games of 11/14\u201311/17 yet, so every score, bet count and reward cell is blank.",
    "Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends and re-runs settle; blanks stay until then.",
    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json"
+  ],
+  [
+   "F-023",
+   "high",
+   "Line provenance",
+   "The published window had expired. data/v2/lines.json was as_of 2026-11-14 with window 2026-11-13 -> 2026-11-16, but by the time the site went live all nine 11/13 games had gone Final on the official schedule. The site presented as upcoming a slate whose results were already known, and it stopped one day short of the brief's three-day maximum.",
+   "FIXED this session. Window rolled to 2026-11-14 -> 2026-11-17 (27 games, matching the official day headers 5/9/8/5). A test fails if any priced game appears in the committed finals history, and the checker enforces the <=3-day rule instead of only documenting it.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-024",
+   "high",
+   "Line provenance",
+   "The claim 'a source link on every row' was false in substance on the lines page: all 27 rows linked to the same parameter page (nba.com/stats/teams/advanced), not to the game each line prices, so a reader could not check a single line against the game it refers to. The build's own checker passed because it only required some outbound link in a row.",
+   "FIXED this session. Each Line carries its own official URL (nba.com/game/<away>-vs-<home>-<id>), rendered per row; a test asserts the exact URL.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-025",
+   "high",
+   "Data freshness",
+   "The 30-team record table was stale: it was captured before the 11/13 slate was played, so it carried records the league no longer showed (SAS 10-2 against an official 11-2, MIA 5-6 against 6-6, ATL 7-5 against 7-6). Every rating, line and total downstream of it was computed from pre-slate records.",
+   "FIXED this session. All 30 rows re-read from nba.com/standings and cross-checked against nba.com/stats/teams/traditional, /opponent and /advanced. 36 independent PF/PA deltas match the nine official 11/13 finals; league wins=losses (183=183) and home wins=road losses (96=96). Two one-game discrepancies closed as neutral-site games (DEN 1-0, IND 0-1).",
+   "https://www.nba.com/standings"
+  ],
+  [
+   "F-026",
+   "medium",
+   "Line provenance",
+   "Every team row's source link pointed at https://www.nba.com/stats/team/<TRICODE>, which is not a page \u2014 NBA team URLs are keyed by a 10-digit team id \u2014 so all 30 team 'source' links were dead.",
+   "FIXED this session. TEAM_ID added from the ids nba.com prints in its own links; a test asserts every team URL matches the documented pattern.",
+   "https://www.nba.com/stats/teams/traditional"
+  ],
+  [
+   "F-027",
+   "medium",
+   "Analysis correctness",
+   "The game-flow rest table was computed from the priced window alone, so every team's first priced game rendered as 'first in window / rested' and genuine back-to-backs were invisible. It also labelled a rest day of 0 as 'rested'.",
+   "FIXED this session. Rest and density are computed from the full captured stretch of the official schedule; the table surfaces MEM and CHI entering on the second of a back-to-back on 11/14, and POR and MIN on 11/17. Teams whose previous game is outside the captured span say 'no prior game in captured span' instead of guessing.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-028",
+   "medium",
+   "Data freshness",
+   "The injuries page was built from the 11/13 16:15 ET release and had no exposure table for the live window, so a reader deciding anything about 11/14-11/17 had no current availability data.",
+   "PARTIALLY FIXED. The 11/14 04:15 AM ET official report is transcribed and published with a per-team exposure table. It is still not the game-day revision \u2014 the 01:30 PM ET file returns AccessDenied \u2014 so final statuses remain outside this build (F-029).",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf"
+  ],
+  [
+   "F-029",
+   "high",
+   "Data freshness",
+   "The official injury archive lists 11/14 revisions through 04:15 AM ET in the form this sandbox can read, but the 01:30 PM ET revision returned AccessDenied. Availability that decides a game is normally known only in the final game-day filing, so the site's injury picture is structurally hours stale on the day that matters most.",
+   "OPEN - not fixable from this environment. Published as a dated limitation on the injuries page. The fix is a scheduled runner with normal internet (SG-1), the same dependency that blocks every freshness gate.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-030",
+   "medium",
+   "Data quality",
+   "22 of the 48 rows in the 11/14 04:15 AM report are 'NOT YET SUBMITTED', and three teams on the priced slate (GSW, ORL, POR) appear nowhere in it. Read carelessly, absence looks like a clean bill of health.",
+   "MITIGATED. No-filing rows are published as rows, and the three absent teams render as 'no row in report' with FLAG-INJ-1411-NO-ROW rather than as healthy. Nothing is inferred.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf"
+  ],
+  [
+   "F-031",
+   "low",
+   "Data quality",
+   "One injury row crosses a PDF page boundary with a blank team cell (Memphis's Traore), and the official schedule prints 11/17 CHA@LAL (11:00 PM ET) after UTA@LAC (10:30 PM ET). Both are transcription hazards rather than errors.",
+   "DOCUMENTED, not silently repaired. Traore is attributed to Memphis by the block it follows; the 11/17 ordering is transcribed as printed with FLAG-SLATE-ORDER-01.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-032",
+   "info",
+   "Verification method",
+   "This build's sandbox has no direct HTTP egress: curl to nba.com, stats.nba.com, cdn.nba.com and basketball-reference.com returns HTTP 000. Official pages were read through a markdown-rendering fetch client and transcribed by hand, then machine-checked. A reader is entitled to know that 'fetched live' here means transcribed-from-a-fetch, not machine-ingested.",
+   "DISCLOSED in the snapshot provenance blocks and here. The arithmetic identities used as transcription defences (wins=losses, home=road, PF/PA deltas vs the nine finals, schedule split identity) are published so the check can be re-run.",
+   "https://www.nba.com/standings"
+  ],
+  [
+   "F-033",
+   "info",
+   "Skills vs luck",
+   "The walk-forward edge is real but thin: 66.22% straight-up on 148 games (95% CI 58.3-73.3%) against a 53.38% always-home baseline, a calibration slope of 0.27 (probabilities are over-confident) and predicted margins compressed to ~30% of true dispersion. Adding the nine newly verified 11/13 finals did not remove the edge, but the interval is wide enough that no stake should ever be sized from it.",
+   "PUBLISHED as the skill finding rather than as a selling point. It is accuracy, not profit: with no price there is no ROI, and G7 stays unevaluable until bets settle.",
+   "https://www.nba.com/games"
   ]
  ],
  "requirements": [

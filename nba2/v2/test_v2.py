@@ -341,7 +341,7 @@ class TestPublishedSite(unittest.TestCase):
         from .build import NAV
         site = ROOT / "site"
         pages = sorted(site.glob("*.html"))
-        self.assertEqual(len(pages), 17)
+        self.assertEqual(len(pages), 18)  # one assertion per published page: add a page, bump this
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

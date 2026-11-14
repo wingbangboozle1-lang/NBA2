@@ -38,6 +38,7 @@ NAV = [
     ("repo-review.html", "Repo review"),
     ("questions.html", "Open questions"),
     ("suggestions.html", "Suggestions queue"),
+    ("decisions.html", "Decisions"),
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
@@ -1188,6 +1189,153 @@ That means no team's record in this window is distinguishable from its underlyin
 python3 -m nba2.v2.check       # every row sourced, every blank explained
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests</pre>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
+
+    # ------------------------------------------------------------------ decisions
+    body = f"""<h1>Decisions</h1>
+<p class="lede">The repository has accumulated 33 suggestions and 14 open questions across several sessions.
+That is more than one person can act on, and several of the items are not independent: one choice decides
+most of the rest. This page puts the real forks side by side, with what each one costs and what evidence
+already exists, so a path can be chosen before anything is built. <b>Nothing here is implemented by being
+listed.</b> A row becomes work only when its state changes to ACCEPTED.</p>
+
+<div class="note"><b>How to read this page.</b> Every option carries the evidence we already have and the
+evidence we would still need. Where an option is recommended, the recommendation is about <em>sequence</em>,
+not about ambition: the cheapest way to learn whether this model has an edge is to test it against a price,
+and that is not possible yet. The recommendation is therefore to buy the missing input before building more
+on top of a number nobody can trade.</div>
+
+<h2>Decision 1 — the fork everything else hangs on</h2>
+<p class="lede">No strategy on this site can pass G6, because no price exists to beat. Accuracy is measured
+and positive; profitability is unmeasurable by construction. Every other decision below changes once this
+one is made.</p>
+"""
+
+    d1 = [
+        {"cells": ["A", "Connect a market-price feed (book API or licensed aggregator)",
+                   "Every gate that needs a price becomes evaluable: G6, ROI, CLV, stake sizing, leaderboard ranking. Turns the measured 66.2% accuracy into a testable edge.",
+                   "Subscription cost plus a normaliser; the model does not change",
+                   "We already have: lines for 27 games, a measured accuracy, and a settlement pipeline. Missing: prices only.",
+                   badge("RECOMMENDED", "ok"), srclink("https://www.nba.com/games")]},
+        {"cells": ["B", "Publish as an accuracy-only research desk and never claim an edge",
+                   "Honest and free: the site keeps saying exactly what it says now, and the 66.2% walk-forward is the deliverable.",
+                   "Zero cost; the leaderboard and rewards stay permanently unrankable",
+                   "Someone else's price still has to be looked up by hand to act; nothing is measured against it.",
+                   badge("VIABLE", "warn"), srclink("https://www.nba.com/schedule")]},
+        {"cells": ["C", "Close the project's betting claims and keep only the data/verification layer",
+                   "Removes every unprovable number at once. The verified snapshot and provenance machinery remain useful.",
+                   "Low, but it discards the line-origination work the brief asked for",
+                   "Nothing; the accuracy finding is already published",
+                   badge("VIABLE", "warn"), srclink("https://www.nba.com/standings")]},
+    ]
+    body += table(["Option", "Path", "What it unlocks", "Cost / effort", "What we would still need",
+                   "Assessment", "Source"], d1, "Decision 1 options")
+    body += f"""<div class="note warn"><b>Why A is recommended rather than C.</b> The expensive part of this
+repository is already done and measured: a leakage-tested walk-forward on {json.loads((DATA / 'backtest.json').read_text())['meta']['n_games_scored']}
+official finals, with the over-confidence published rather than hidden. Option C throws that away to avoid a
+purchase. Option A tests it. If the price test fails, C becomes correct — but it should be chosen on evidence
+from A, not instead of it.</div>"""
+
+    body += """<h2>Decision 2 — freshness: how much staleness is acceptable?</h2>
+<p class="lede">The live site's team table and schedule are from 2026-11-14. The current injury report is
+04:15 AM ET the same day, because the 01:30 PM ET file is unreachable from this build sandbox. Final game-day
+statuses are exactly the input that decides a same-day bet.</p>"""
+    d2 = [
+        {"cells": ["A", "Scheduled GitHub Action with normal internet, hourly, fail-loud",
+                   "Fixes the root cause for schedule, standings and injury PDFs in one move; a missed run becomes an error rather than a stale page.",
+                   "Medium: one workflow, one parser, one freshness assertion",
+                   "Nothing this build already has; Actions are already used for CI and Pages",
+                   badge("RECOMMENDED", "ok"), srclink("https://official.nba.com/nba-injury-report-2026-27-season/")]},
+        {"cells": ["B", "Keep hand transcription and stamp every value with its capture time",
+                   "Honest and requires no infrastructure: the page already tells the reader what it does not know.",
+                   "Low, but the staleness never improves",
+                   "A human to re-read the pages; the 04:15 AM cut-off stays",
+                   badge("HOLDING PATTERN", "warn"), srclink("https://www.nba.com/schedule")]},
+        {"cells": ["C", "Publish only what is final and drop same-day availability",
+                   "Nothing published can be stale, because nothing same-day is published.",
+                   "Low",
+                   "It removes the injury exposure table, which is the part a same-day reader most needs",
+                   badge("NOT ADVISED", "bad"), srclink("https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf")]},
+    ]
+    body += table(["Option", "Path", "What it unlocks", "Cost / effort", "What we would still need",
+                   "Assessment", "Source"], d2, "Decision 2 options")
+
+    body += """<h2>Decision 3 — what counts as proof of skill?</h2>
+<p class="lede">The brief asks to remove luck and reward top strategies. Those two goals pull in opposite
+directions on small samples: a leaderboard published early rewards luck, because early leaders are mostly
+variance.</p>"""
+    d3 = [
+        {"cells": ["A", "300 settled bets per strategy before any ranking (current G7)",
+                   "A 55% hit rate separates from 52.4% at 5% one-sided; rewards become meaningful.",
+                   "Slow: at a realistic volume this is most of a season",
+                   "Prices and settlement (Decision 1)",
+                   badge("RECOMMENDED", "ok"), srclink("https://www.nba.com/games")]},
+        {"cells": ["B", "Publish a provisional leaderboard with a visible uncertainty band",
+                   "Faster feedback and more engagement, with the luck problem stated on every row.",
+                   "Low to build, but it invites reading a noisy rank as a result",
+                   "An explicit rule that no reward is paid on a provisional rank",
+                   badge("VIABLE WITH RULE", "warn"), srclink("https://www.nba.com/games")]},
+        {"cells": ["C", "Rank on the walk-forward backtest alone, no live bets",
+                   "Measured today, on 148 official finals, with no settlement needed.",
+                   "Low, using what already exists",
+                   "It ranks the model, not strategies, and it cannot see prices",
+                   badge("VIABLE FOR MODEL", "warn"), srclink("https://www.nba.com/games")]},
+    ]
+    body += table(["Option", "Path", "What it unlocks", "Cost / effort", "What we would still need",
+                   "Assessment", "Source"], d3, "Decision 3 options")
+
+    body += """<h2>Decision 4 — how should the site present numbers it cannot stand behind?</h2>
+<p class="lede">This session found three cases where a page implied more than the data supported: an expired
+window presented as upcoming, a shared parameter page presented as a per-row source, and a rest table that
+could not see a back-to-back. All three are fixed. The question is what rule prevents the fourth.</p>"""
+    d4 = [
+        {"cells": ["A", "Blank plus a flag id on every unverifiable cell, enforced in CI",
+                   "The reader can see exactly what is unknown and why; a guess cannot reach the page unnoticed.",
+                   "Already in place: the provenance lint and the row-level checker",
+                   "Nothing",
+                   badge("RECOMMENDED - keep", "ok"), srclink("https://www.nba.com/standings")]},
+        {"cells": ["B", "Add an external-URL status sweep to CI",
+                   "Would have caught the 30 dead team links this session found, which passed every existing test.",
+                   "Low: a cached link checker",
+                   "Nothing",
+                   badge("RECOMMENDED - add", "ok"), srclink("https://www.nba.com/stats/teams/traditional")]},
+        {"cells": ["C", "Publish a plausible estimate with an explicit confidence label",
+                   "Fills the page and looks complete.",
+                   "Low, and the most attractive option on this list",
+                   "It is the exact failure mode the brief rules out: an invented value that reads as fact",
+                   badge("REJECTED", "bad"), srclink("https://www.nba.com/games")]},
+    ]
+    body += table(["Option", "Path", "What it unlocks", "Cost / effort", "What we would still need",
+                   "Assessment", "Source"], d4, "Decision 4 options")
+
+    body += f"""<h2>The questions that must be answered before any of the above can be chosen</h2>
+<p class="lede">These are the blockers, stated as questions with the evidence attached. The full list, with
+discovery paths, is on the <a href="questions.html">Open questions</a> page.</p>"""
+    dq = [
+        {"cells": ["Is a market-price feed going to be licensed?", "Yes / no", "Decides Decision 1 and therefore Decisions 3 and 5", "Owner", srclink("https://www.nba.com/games")]},
+        {"cells": ["What stake unit and bankroll does a 'reward' represent?", "Unstated", "Reward allocation cannot be sized without it", "Owner", srclink("https://www.nba.com/games")]},
+        {"cells": ["Which injury revision is authoritative for a closing line?", "04:15 AM ET is the newest readable here", "Decides whether hairlines are settled on stale availability", "SG-26 (automated ingest)", srclink("https://official.nba.com/nba-injury-report-2026-27-season/")]},
+        {"cells": ["Is 66.2% walk-forward accuracy economically meaningful at typical prices?", "Unmeasured", "A 66% straight-up rate is not automatically profitable at -110", "Decision 1", srclink("https://www.nba.com/games")]},
+        {"cells": ["How are player props to be graded with no player box scores?", "Impossible today", "Blocks the prop-combo strategy family entirely", "A player-level data source", srclink("https://www.nba.com/stats/players/traditional")]},
+        {"cells": ["Who approves a promotion from 'measured' to 'rewarded'?", "Unstated", "The competition has no authority model yet", "Owner", srclink("https://www.nba.com/standings")]},
+    ]
+    body += table(["Question", "Answer we have", "Why it blocks a decision", "Who / what answers it", "Source"],
+                  dq, "Blocking questions with the evidence attached")
+    body += """<h2>What to do first, in order</h2>
+<ol>
+<li><b>Decide Decision 1.</b> Everything else is cheaper once it is settled, and two of the four decisions
+    below cannot be evaluated without it.</li>
+<li><b>Approve SG-26 (scheduled ingestion).</b> It is the only item that fixes freshness for all inputs at once,
+    and it needs no further design.</li>
+<li><b>Approve SG-32 (external-URL sweep).</b> Lowest-cost guard against the class of defect this session found:
+    links that exist but do not resolve.</li>
+<li><b>Hold SG-29 (bet log) and SG-33 (injury deltas)</b> until 1 and 2 are through. Both are high value and both
+    are blocked on inputs that do not exist yet.</li>
+<li><b>Do not promote any strategy</b> until 300 bets have settled. The calibration slope of 0.27 says the
+    probabilities are over-confident, so an early leader would be measuring luck.</li>
+</ol>
+<p class="lede">Each suggestion above has a state on the <a href="suggestions.html">Suggestions queue</a>.
+Changing a state there is the only way an item becomes work; this page is the reasoning behind the order.</p>"""
+    built["decisions.html"] = page("decisions.html", "Decisions", body, "decisions.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.
     # This MUST run last: backtest.json and the other JSON files are written earlier in this

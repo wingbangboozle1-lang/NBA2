@@ -27,6 +27,7 @@
 <a href="repo-review.html">Repo review</a>
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
+<a href="decisions.html">Decisions</a>
 <a href="flagged.html" class="on">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -224,6 +225,94 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Settlement, reward allocation and leaderboard scores are PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet, so every score, bet count and reward cell is blank.</td>
 <td>Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends and re-runs settle; blanks stay until then.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+<tr id="F-023">
+<td><span class="badge b-bad">F-023</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Line provenance</td>
+<td>The published window had expired. data/v2/lines.json was as_of 2026-11-14 with window 2026-11-13 -&gt; 2026-11-16, but by the time the site went live all nine 11/13 games had gone Final on the official schedule. The site presented as upcoming a slate whose results were already known, and it stopped one day short of the brief&#x27;s three-day maximum.</td>
+<td>FIXED this session. Window rolled to 2026-11-14 -&gt; 2026-11-17 (27 games, matching the official day headers 5/9/8/5). A test fails if any priced game appears in the committed finals history, and the checker enforces the &lt;=3-day rule instead of only documenting it.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-024">
+<td><span class="badge b-bad">F-024</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Line provenance</td>
+<td>The claim &#x27;a source link on every row&#x27; was false in substance on the lines page: all 27 rows linked to the same parameter page (nba.com/stats/teams/advanced), not to the game each line prices, so a reader could not check a single line against the game it refers to. The build&#x27;s own checker passed because it only required some outbound link in a row.</td>
+<td>FIXED this session. Each Line carries its own official URL (nba.com/game/&lt;away&gt;-vs-&lt;home&gt;-&lt;id&gt;), rendered per row; a test asserts the exact URL.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-025">
+<td><span class="badge b-bad">F-025</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Data freshness</td>
+<td>The 30-team record table was stale: it was captured before the 11/13 slate was played, so it carried records the league no longer showed (SAS 10-2 against an official 11-2, MIA 5-6 against 6-6, ATL 7-5 against 7-6). Every rating, line and total downstream of it was computed from pre-slate records.</td>
+<td>FIXED this session. All 30 rows re-read from nba.com/standings and cross-checked against nba.com/stats/teams/traditional, /opponent and /advanced. 36 independent PF/PA deltas match the nine official 11/13 finals; league wins=losses (183=183) and home wins=road losses (96=96). Two one-game discrepancies closed as neutral-site games (DEN 1-0, IND 0-1).</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-026">
+<td><span class="badge b-warn">F-026</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Line provenance</td>
+<td>Every team row&#x27;s source link pointed at https://www.nba.com/stats/team/&lt;TRICODE&gt;, which is not a page — NBA team URLs are keyed by a 10-digit team id — so all 30 team &#x27;source&#x27; links were dead.</td>
+<td>FIXED this session. TEAM_ID added from the ids nba.com prints in its own links; a test asserts every team URL matches the documented pattern.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr id="F-027">
+<td><span class="badge b-warn">F-027</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Analysis correctness</td>
+<td>The game-flow rest table was computed from the priced window alone, so every team&#x27;s first priced game rendered as &#x27;first in window / rested&#x27; and genuine back-to-backs were invisible. It also labelled a rest day of 0 as &#x27;rested&#x27;.</td>
+<td>FIXED this session. Rest and density are computed from the full captured stretch of the official schedule; the table surfaces MEM and CHI entering on the second of a back-to-back on 11/14, and POR and MIN on 11/17. Teams whose previous game is outside the captured span say &#x27;no prior game in captured span&#x27; instead of guessing.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-028">
+<td><span class="badge b-warn">F-028</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data freshness</td>
+<td>The injuries page was built from the 11/13 16:15 ET release and had no exposure table for the live window, so a reader deciding anything about 11/14-11/17 had no current availability data.</td>
+<td>PARTIALLY FIXED. The 11/14 04:15 AM ET official report is transcribed and published with a per-team exposure table. It is still not the game-day revision — the 01:30 PM ET file returns AccessDenied — so final statuses remain outside this build (F-029).</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-029">
+<td><span class="badge b-bad">F-029</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Data freshness</td>
+<td>The official injury archive lists 11/14 revisions through 04:15 AM ET in the form this sandbox can read, but the 01:30 PM ET revision returned AccessDenied. Availability that decides a game is normally known only in the final game-day filing, so the site&#x27;s injury picture is structurally hours stale on the day that matters most.</td>
+<td>OPEN - not fixable from this environment. Published as a dated limitation on the injuries page. The fix is a scheduled runner with normal internet (SG-1), the same dependency that blocks every freshness gate.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="F-030">
+<td><span class="badge b-warn">F-030</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data quality</td>
+<td>22 of the 48 rows in the 11/14 04:15 AM report are &#x27;NOT YET SUBMITTED&#x27;, and three teams on the priced slate (GSW, ORL, POR) appear nowhere in it. Read carelessly, absence looks like a clean bill of health.</td>
+<td>MITIGATED. No-filing rows are published as rows, and the three absent teams render as &#x27;no row in report&#x27; with FLAG-INJ-1411-NO-ROW rather than as healthy. Nothing is inferred.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-031">
+<td><span class="badge b-off">F-031</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data quality</td>
+<td>One injury row crosses a PDF page boundary with a blank team cell (Memphis&#x27;s Traore), and the official schedule prints 11/17 CHA@LAL (11:00 PM ET) after UTA@LAC (10:30 PM ET). Both are transcription hazards rather than errors.</td>
+<td>DOCUMENTED, not silently repaired. Traore is attributed to Memphis by the block it follows; the 11/17 ordering is transcribed as printed with FLAG-SLATE-ORDER-01.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-032">
+<td><span class="badge b-info">F-032</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Verification method</td>
+<td>This build&#x27;s sandbox has no direct HTTP egress: curl to nba.com, stats.nba.com, cdn.nba.com and basketball-reference.com returns HTTP 000. Official pages were read through a markdown-rendering fetch client and transcribed by hand, then machine-checked. A reader is entitled to know that &#x27;fetched live&#x27; here means transcribed-from-a-fetch, not machine-ingested.</td>
+<td>DISCLOSED in the snapshot provenance blocks and here. The arithmetic identities used as transcription defences (wins=losses, home=road, PF/PA deltas vs the nine finals, schedule split identity) are published so the check can be re-run.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-033">
+<td><span class="badge b-info">F-033</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Skills vs luck</td>
+<td>The walk-forward edge is real but thin: 66.22% straight-up on 148 games (95% CI 58.3-73.3%) against a 53.38% always-home baseline, a calibration slope of 0.27 (probabilities are over-confident) and predicted margins compressed to ~30% of true dispersion. Adding the nine newly verified 11/13 finals did not remove the edge, but the interval is wide enough that no stake should ever be sized from it.</td>
+<td>PUBLISHED as the skill finding rather than as a selling point. It is accuracy, not profit: with no price there is no ROI, and G7 stays unevaluable until bets settle.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>

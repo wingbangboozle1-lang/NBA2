@@ -27,6 +27,7 @@
 <a href="repo-review.html">Repo review</a>
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html" class="on">Suggestions queue</a>
+<a href="decisions.html">Decisions</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -34,11 +35,11 @@
 </aside>
 <main>
 <h1>Suggestions queue</h1>
-<p class="lede">24 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+<p class="lede">33 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. 10 items are already <code>IMPLEMENTED</code> and need no
-decision; 6 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+decision; 13 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
 dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
@@ -109,6 +110,16 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.</td>
 <td>Low</td>
 <td>Needs SG-1.</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-31">
+<td>SG-31</td>
+<td><span class="badge b-off">Interface</span></td>
+<td>Put a one-line status banner on every page stating what is withheld and why.</td>
+<td>The picks page withholds all 27 games; the props page is blank by policy; the leaderboard cannot rank. A first-time reader meets these as absences. A banner that says &#x27;0 of 27 picks published - no market price exists&#x27; on each page makes the withholding look like the design it is, and removes the incentive to fill blanks with guesses.</td>
+<td>Low</td>
+<td>nothing</td>
 <td><span class="badge b-warn">RECOMMENDED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -290,6 +301,86 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>Low — decided: pages.yml publishes site/ (v2) only</td>
 <td>none — v1 trees stay in the repo for audit</td>
 <td><span class="badge b-ok">IMPLEMENTED — pages.yml publishes site/ only</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-25">
+<td>SG-25</td>
+<td><span class="badge b-off">Decisions</span></td>
+<td>Choose the single decision that unblocks everything: connect an odds feed, or stop calling any number an edge.</td>
+<td>Every strategy on this site fails G6 for one reason - there is no price to beat. Until a price exists, the leaderboard cannot rank, ROI cannot exist, and &#x27;skill&#x27; can only mean accuracy. This is the highest-leverage open question in the repository and it is an owner choice, not a data problem.</td>
+<td>Low to decide, high to act (a feed subscription plus a parser)</td>
+<td>Owner sign-off on which feed. Nothing in the code blocks it.</td>
+<td><span class="badge b-warn">RECOMMENDED - decide first</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-26">
+<td>SG-26</td>
+<td><span class="badge b-off">Process</span></td>
+<td>Move ingestion to a scheduled runner with normal internet, and make a missed refresh fail loudly.</td>
+<td>The build sandbox cannot reach nba.com directly (curl returns 000), so every snapshot is a hand transcription with an unavoidable staleness window - today&#x27;s injuries stop at 04:15 AM ET because the 01:30 PM file returns AccessDenied. A GitHub Actions runner has normal internet, so the same fetch that fails here would succeed there on a cron.</td>
+<td>Medium (one scheduled workflow plus a parser and a freshness assertion)</td>
+<td>SG-1 (already recommended); GitHub Actions is already used for CI and Pages</td>
+<td><span class="badge b-warn">RECOMMENDED - unblocks freshness</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-27">
+<td>SG-27</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Store every official document a row came from, not just its URL, so a row can be re-checked after the league rotates the file.</td>
+<td>The injury PDFs are versioned by timestamp and old revisions disappear from the archive index. A URL alone is therefore not durable evidence: the 16:15 ET release this site once published is no longer the current file. Committed bytes make a row auditable forever, and they are what turned this session&#x27;s transcription checks into arithmetic proofs.</td>
+<td>Low to medium (store the markdown extract alongside the JSON snapshot)</td>
+<td>nothing</td>
+<td><span class="badge b-warn">RECOMMENDED - cheap insurance</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-28">
+<td>SG-28</td>
+<td><span class="badge b-off">Data quality</span></td>
+<td>Publish a per-row &#x27;as of&#x27; stamp, not just a site-wide one.</td>
+<td>The site mixes sources captured at different times: team records and the schedule are from 2026-11-14, the current injury report is 04:15 AM ET the same day, and the historical detail report is from 11/13 16:15 ET. A single site-wide date implies uniform freshness, which is the exact assumption that let a stale team table survive a previous review.</td>
+<td>Low (a field on each row plus a column in the table renderer)</td>
+<td>nothing</td>
+<td><span class="badge b-warn">RECOMMENDED - prevents a repeat of F-025</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-29">
+<td>SG-29</td>
+<td><span class="badge b-off">Analysis</span></td>
+<td>Add a per-strategy bet log with a real settlement source before any leaderboard is published as a competition.</td>
+<td>The brief asks for a leaderboard that rewards top strategies. Scoring an empty log rewards nothing and, worse, cannot distinguish skill from luck: the walk-forward test shows the probabilities are over-confident (calibration slope 0.27), so an early leader would almost certainly be a lucky one. A 300-settled-bet minimum (G7) is the smallest sample this build can defend.</td>
+<td>High (needs prices, settlement, and a season of data)</td>
+<td>SG-25 (a price) and SG-1 (automated results)</td>
+<td><span class="badge b-off">QUEUED - blocked on SG-25</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-30">
+<td>SG-30</td>
+<td><span class="badge b-off">Interface</span></td>
+<td>Show the trigger price next to every line, and label it as a threshold rather than a pick.</td>
+<td>A reader cannot act on &#x27;our number is 5.5&#x27; without knowing the price at which acting would be rational. Printing &#x27;act only if the market gives you X or better&#x27; turns a projection into a testable statement, and keeps the site honest that it is not advising a bet. It also creates the data needed to grade the model against a market once a feed exists.</td>
+<td>Low (a column, computed from the same normal)</td>
+<td>None; a real price feed (SG-25) upgrades it from hypothetical to live</td>
+<td><span class="badge b-warn">RECOMMENDED - improves decisions now</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-32">
+<td>SG-32</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Add a CI check that every external source URL in the published site returns 200, and fail on a dead link.</td>
+<td>This session found 30 dead team source links (stats/team/&lt;TRICODE&gt;) that passed every existing test, because the checker only verified that a link existed, not that it resolved. A status-code sweep would have caught it the day it was introduced.</td>
+<td>Low (a retrying link checker in CI, cached)</td>
+<td>nothing</td>
+<td><span class="badge b-warn">RECOMMENDED - would have caught F-026</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-33">
+<td>SG-33</td>
+<td><span class="badge b-off">Data quality</span></td>
+<td>Keep a running delta between consecutive injury revisions instead of overwriting.</td>
+<td>Late scratches are the highest-information event in a slate, and they are only visible as the difference between filings. Overwriting each release destroys exactly the signal that matters most for a same-day decision.</td>
+<td>Medium (store each release, diff on ingest)</td>
+<td>SG-26 (automated ingestion)</td>
+<td><span class="badge b-off">QUEUED - depends on SG-26</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>
