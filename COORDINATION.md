@@ -604,3 +604,53 @@ Branch: `arena/1ec4f9bd-nba2` (platform-pinned; all work happens there, as with 
 | C-06 | Final integration: PR → main, merge, confirm Pages deploy | claimed | `COORDINATION.md` (completion log) | Per protocol; no approval wait. |
 
 Not claimed: `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `tools/**`, `scripts/**`, `analysis/**` (other sessions' surfaces) — I only run their checkers, never edit them.
+
+---
+
+## Session `arena/1ec4f9bd-nba2` — completion log (2026-11-14)
+
+**Delivered (tasks C-01…C-06, all done).** The data window rolled forward one day so the published
+picks again cover every upcoming slate inside the brief's 3-day maximum — the gap the independent
+audit (`analysis/audit-2c07c00b.md`, finding A-01) identified as the product's material limitation.
+This is still a committed point-in-time capture, not a live feed; what changed is that the capture,
+its seal, and its published tables are current as of the build, and the refresh procedure is
+reproducible (`scripts/build_refresh_2026-11-14.py` documents every captured field and the 0-mismatch
+diff against the prior official capture).
+
+| Step | Result |
+|---|---|
+| Slate snapshot | `data/raw/slate_2026-11-14_to_11-17.json`: 36 games (11/13 day-before context + pick window 11/14–11/17) from <https://www.nba.com/schedule?date=2026-11-14> retrieved ~01:05 UTC; all 31 carried-forward games re-checked field-by-field against the 2026-11-13 capture — **0 mismatches**; per-date counts (9/5/9/8/5) match the official day headers; all 36 game-page URLs rendered verbatim in the page text (resolves FLAG-SLATE-05) |
+| Injury snapshot | `data/raw/injury_report_2026-11-13_1930ET.json`: 122 rows transcribed from the freshest release at build time, <https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf>; covers 11/13 games + the first real 11/14 statuses (5 of 10 teams still NOT YET SUBMITTED — flagged FLAG-INJ-04). Cross-checked row-by-row against the independent 16:15 capture: all 85 prior 11/13 player rows present (0 missing), **12 status revisions** (all listed in `revision_note`), 1 reason revision, 6 OKC rows the prior capture had missed (its own FLAG-INJ-03 documented partial parsing). 27 continuation-attributed rows; one (DAL@CLE Martin, Caleb) attributed via cross-release evidence documented in `attribution_key` |
+| Ratings | NOT rewritten. Re-read from <https://www.basketball-reference.com/leagues/NBA_2027_standings.html> on 2026-11-14: **30/30 W-L identical** to the committed snapshot (`data/raw/ratings_recheck_2026-11-14.json`); resolves audit A-05 by publishing the three corroboration levels separately (28/30 row-level vs NBA.com in the original capture; 30/30 cross-session; 30/30 fresh re-read) |
+| Sealed ledger | `sealed-2026-11-14.json`: **27 predictions for 11/14–11/17**, sha256 `c841e8f396dae6ca…`; `pick_window` now starts at the snapshot's as-of date (every game in the sealed set tips ≥19h after the newest input) and **refuses to seal** any game within 6h of tip (recap can never enter the ledger). The 2026-11-13 ledger (22 predictions, `cf7dedc689597cb8…`) is untouched and still verifies |
+| Settlement | `nba2/pipeline.settle` generalized to settle every ledger; both report PENDING against no finals snapshot (11/13 games were live at build time) — correct fail-closed behaviour |
+| Irregularity I-07 (new, found by line-by-line review) | `nba2/models/gameflow.py` flagged the **first** night of a consecutive pair as a back-to-back (substring match against `"d1+d2"`), over-counting B2Bs (e.g. DAL on 11/14 with no 11/13 game). Fixed to anchor on the completing night; regression tests added (`TestGameFlowB2B`); FLAG-FLOW-03 published. Also corrected on the site: audit A-02 (test count 49→55), A-03 (19 tracked `.pyc` untracked), A-05 (corroboration levels separated) |
+| Site | Rebuilt: 17 pages, 33 tables, 992 rows; Picks page = 27 rows exactly covering 11/14→11/17; corroboration table now 14 games confirmed by a second official document (was 11); game-flow B2Bs for the 11/14 slate are the real ones (NOP/CLE/MIA/MEM home B2B, CHI away B2B) |
+
+**Verification performed (this session).** 57/57 unit tests; `nba2.pipeline.lint` PASS (992 rows, every
+row sourced, every blank explained); `seal_predictions --verify` PASS (site prints the ledger digest);
+committed artefacts byte-identical to a rebuild (convergence checked); `tools/verify_site.py` PASS
+(13 pages/249 rows); `tools/check_links_all.py` PASS (75 HTML files, 3,424 internal links);
+`scripts/check_site.py` PASS (524 rows); tip times cross-checked twice (schedule vs the injury
+report's own time column — 14/14 agree, 0 conflicts); injury transcription diffed against the prior
+session's independent capture (0 missing rows, all diffs = documented revisions).
+
+**Sources used.** Official: `nba.com/schedule?date=2026-11-14` (slate, ~01:05 UTC),
+`ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf` (injury statuses, freshest
+listed release), `official.nba.com/nba-injury-report-2026-27-season/` (filing deadlines re-verified
+verbatim: 5 p.m. local day before; 1 p.m. local game-day for B2B second games; game-day report 11
+a.m.–1 p.m. local; "Reports are updated on a continual basis throughout the day"). Third-party:
+`basketball-reference.com/leagues/NBA_2027_standings.html` (re-read; W-L only — still the only
+reachable ratings source, still flagged). Blocked (unchanged): `stats.nba.com`, `cdn.nba.com`
+scoreboard JSON, any odds feed.
+
+**Still open for the owner (unchanged in substance).** No odds feed (R-101/Q-01) → no CLV/ROI, stake
+0%, leaderboard unallocated; no player-level feed (R-102) → injury impact/props blank; no settled
+games yet → gates stay BLOCKED; the refresh itself was a manual agent session, not an unattended job
+(A-01's structural gap narrows but the scheduler/ingestion decision still belongs to the owner).
+
+## PR & Merge Results — arena/1ec4f9bd-nba2
+
+| PR | Head → base | Result | Notes |
+|---|---|---|---|
+| (this row is completed in the merge record below) | `arena/1ec4f9bd-nba2` → `main` | — | created 2026-11-14 |
