@@ -1,0 +1,15 @@
+### 2026-11-14T10:22:04Z
+=== v2 build + check ===
+built 19 pages: index.html, executive-summary.html, picks.html, lines.html, strategies.html, backtest.html, correlations.html, props.html, injuries.html, gameflow.html, verification.html, repo-review.html, questions.html, suggestions.html, decision-queue.html, live-verification.html, flagged.html, sources.html, methodology.html
+31 lines, 30 teams
+OK — 0 structural, 0 semantic
+
+=== v1 rebuild parity ===
+wrote data/site.json — 39 tables, 1139 rows
+wrote pages/sources.html
+wrote pages/strategies.html
+wrote pages/suggestions.html
+LINT OK — 1139 rows across 39 tables, every row sourced, every blank explained
+
+=== git drift after rebuilds ===
+?? audit/session-ac5fab5c/
