@@ -1636,3 +1636,11 @@ verified dashboard, so publication is not blocked.
 **Irregularities:** none new; flagged/unverified items remain on the Flagged for Review page with source links and
 do not block the merge.
 
+
+### EAE-01 final integration result (PR #45)
+
+- **PR #45:** https://github.com/wingbangboozle1-lang/NBA2/pull/45 — merged at 2026-11-14 10:25:49 UTC; merge commit `4c381c07cb3ab1b895c7210c8f7d6d8272ea7c62`.
+- Final-head CI checks: `verify`, `backtest`, `parity`, `v2` — **all pass**.
+- **GitHub Pages Actions deploy:** run [43585242749](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43585242749) completed successfully, including `actions/deploy-pages@v4`. Re-fetch of https://wingbangboozle1-lang.github.io/NBA2/ returned the v2 landing page.
+- **Caveat remains open:** GitHub Pages API still reports `build_type=legacy`, `source=main /`, and a legacy Pages build was still in progress at the last check. An attempt to change the setting was denied (HTTP 403). Thus the Actions artifact was live and verified at fetch time; an administrator should confirm the Pages source to ensure a subsequent legacy build cannot replace it.
+- Report addendum in `analysis/session-eae96d1e-audit.md`; session changes are audit/report-only. All conflict resolutions kept the concurrent E77 audit sections intact.
