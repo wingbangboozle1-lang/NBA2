@@ -600,3 +600,5 @@ No other task is claimed. Scope is limited to this report and this appended boar
 | C1 | Audit current repository claims, test/build health, and stale documentation without editing another session's site/data outputs | in progress | `arena/3b88f22e-nba2` | `COORDINATION.md`, `analysis/current-state-audit-2026-11-14.md` | Automated local tests, builders and link/source validators; external claims linked in audit only when official-source snapshots exist |
 
 Claim made before work. Scope is non-overlapping with previous task outputs. Current working branch is platform-pinned to `arena/3b88f22e-nba2`; no branch switch or new worktree will be used.
+
+**Scope amendment (before editing):** C1 now also includes `README.md`, limited to correcting two stale generated-site/test counts and clarifying the root page count. The counts were independently reproduced from `data/site.json`, `nba2/tests`, and `nba2/pipeline/lint.py`; this is documentation-only and does not alter shared model/site data. No other session owns an active task on this path in the current board.
