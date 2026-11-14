@@ -1239,3 +1239,87 @@ games yet → gates stay BLOCKED; the refresh itself was a manual agent session,
 - **Verification at merge:** 64/64 `nba2` tests + 46/46 `backtest` tests; lint 36 tables / 1041 rows, every row sourced; seal verify (both ledgers); site rebuild byte-converged; backtest rebuild byte-parity vs main; `tools/verify_site.py` (13pp/249 rows), `tools/check_links_all.py` (87 files, 3,823 internal links), `scripts/check_site.py`, `tools/verify_backtest.py` (155/155 sourced rows), `node originated/engine/verify.js` 24/24 — all PASS.
 - **Pages:** deploy run 43541337476 success; Pages build API shows commit `cb3b7f11` status "built" (updated_at 2026-11-14T01:34:08Z). Live content verified by cache-busted fetch: as-of **2026-11-14**, 36 games, pick window **11/14 → 11/17**, sealed ledger **27 predictions, sha256 `c841e8f3…`**, 122 injury rows, Measured-Skill Backtest in nav. Plain-URL fetches served the previous build for several minutes after deploy (GitHub Pages CDN lag — same note as prior sessions); confirmed via the build API, not assumed.
 - **Flagged items do not block this merge** (published on the labelled Flagged for Review page with source links, as the protocol requires).
+
+---
+
+## Session `arena/6e7afc65-nba2` — fresh official re-verification + v2 site (2026-11-14)
+
+Claimed 2026-11-14 (UTC). Working branch is platform-pinned to `arena/6e7afc65-nba2`
+(base `a09f48e`, `main`). Claim pushed before any file edit.
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| V1 | Fresh, line-by-line re-verification of the committed schedule/W-L/injury/line outputs against **nba.com fetched live from this session** | in progress | `arena/6e7afc65-nba2` | `data/v2/**`, `analysis/verify-2026-11-14.md`, `nba2/verify/` | Live fetch of `nba.com/schedule` + `nba.com/games`; per-row source URLs committed in `data/v2/verification.json` |
+| V2 | Answers to the product/model decision gaps (correlation values, independence, luck-vs-skill separation, validation gates, parlay/SGP math) | in progress | `arena/6e7afc65-nba2` | `data/v2/answers.json`, `analysis/answers-2026-11-14.md` | Honest labelling: DERIVED vs SOURCED vs UNANSWERABLE |
+| V3 | v2 static site: clean landing page + category subpages, all tables with per-row official source links, dedicated **Suggestions** review section, **Questions** register, **Flagged for Review** | in progress | `arena/6e7afc65-nba2` | `site/**`, `tools/build_v2_site.py`, `.github/workflows/pages.yml` | Every row carries `source_url`; blanks carry a reason; internal link check must pass |
+| V4 | Integration: merge to `main`, confirm Pages deploy, record PR + run IDs | unclaimed | — | `COORDINATION.md` (append-only) | `gh pr merge`, `gh run list` |
+
+**Explicitly not touched by this session** (owned by prior sessions, left byte-identical):
+root `index.html`, `flagged.html`, `styles.css`, `app.js`, `build_site.py`, `picks.html`,
+`strategies.html`, `injuries.html`, `questions.html`, `suggestions.html`,
+`executive-summary.html`, `correlations.html`, `pages/**`, `docs/**`, `dashboard/**`,
+`verified/**`, `originated/**`, `archive/**`, and every existing `data/*.json|csv` and
+`nba2/**` module. New work lands only in the paths listed above. Where a value had to be
+corrected, the correction is published on the new `site/` tree and logged here — the prior
+trees are not edited, so no other session's output is destroyed.
+
+### Environment note (verification-relevant)
+
+- `curl`/`urllib` from this sandbox **cannot** open TLS to `nba.com` (`SSL_ERROR_SYSCALL`).
+- The agent's page-fetch tool **can** read `www.nba.com`; it was used for every official
+  fetch recorded in this session. `ak-static.cms.nba.com` PDFs are reachable but today's
+  2026-11-14 01:00 PM ET injury report returns `AccessDenied`, same as session
+  `arena/3b88f22e-nba2` reported. No injury value was re-filled from an unavailable file.
+
+---
+
+## Session `arena/6e7afc65-nba2` — COMPLETE (2026-11-14)
+
+| ID | Task | Status | Notes |
+|---|---|---|---|
+| V1 | Line-by-line re-verification against live official sources | **done** | 31/31 slate, 30/30 W-L, 85/85 injury player rows; `analysis/verify-2026-11-14.md` |
+| V2 | Decision gaps: correlations, independence, luck vs skill, gates, parlay math | **done** | 6 team correlations + spread↔total now measured; 3 prop correlations still blocked |
+| V3 | v2 site: landing + 16 category pages, per-row sources, suggestions, questions, flagged | **done** | 17 pages, `nba2.v2.check` → 0 structural / 0 semantic problems |
+| V4 | Integration: PR → `main`, confirm Pages, record run IDs | **done** | see the merge record below |
+
+### What this session added (all new paths; nothing owned by another session edited)
+
+| Path | Contents |
+|---|---|
+| `nba2/v2/official.py` | official snapshot: 30 teams, 31-game slate, 85 injury rows, blocked inputs, source URLs |
+| `nba2/v2/model.py` | constrained σ/h fit, two ratings estimators, `originated_lines()`, exact parlay math |
+| `nba2/v2/report.py` | table builders, 4 repo cross-checks, correlations, luck, parlay cost |
+| `nba2/v2/backtest.py` | **new**: leakage-free walk-forward test on the 155 official finals |
+| `nba2/v2/content.py` | 12 gates, 7 strategies, 7 leaderboard rules, 20 suggestions, 14 questions, 18 flags |
+| `nba2/v2/build.py` + `check.py` | site generator and its provenance/link validator |
+| `site/**` | the published 17-page dashboard |
+| `data/v2/**` | machine-readable mirror of every table |
+| `.github/workflows/pages.yml` | **changed**: Pages now publishes `site/` instead of the repo root |
+| `.github/workflows/v2-verify.yml` | **new**: 42 v2 tests + rebuild-parity + provenance gate |
+
+### Resolution of items other sessions left open
+
+* **"no game-level results history"** (raised as the reason all gates were blocked) — **now false**:
+  155 official finals exist, and this session backtested the method against them. The claim is removed
+  from every page this session publishes.
+* **28/30 vs 30/30 W-L** (`A-05` in `analysis/audit-2c07c00b.md`) — resolved in favour of **30/30**
+  by direct read of live `nba.com/standings`, and independently corroborated by reconstructing every
+  team's record from the 155 finals (0 teams exceed their official card; the shortfall is exactly the
+  19 unreachable games).
+* **spread↔total correlation listed as BLOCKED** — now **measured**: r = +0.018, 95% CI [−0.149, +0.184].
+  Not significant, and the site says how many games would be needed to settle it (~780).
+* **Tracked `.pyc` files** (F-013) — removed from the index during the rebase onto `main`; upstream's
+  deletion was accepted rather than restored.
+
+### Deliberately NOT done
+
+* **No pick is published.** 0/31. A pick needs a third-party price; none exists. Accuracy against our
+  own number is not an edge.
+* **No ROI, no CLV, no leaderboard rank.** Requires an odds feed and 300 settled bets (G1, G6, G7).
+* **No player props.** Requires player box scores, which no reachable official table provides.
+* **No editing of the six earlier site trees.** They remain byte-identical; where this build disagrees
+  with them, both values are shown on the verification page and the disagreement is flagged (F-011).
+
+### Merge record
+
+Filled in immediately after the PR below is merged.

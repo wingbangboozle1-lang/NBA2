@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open questions · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html" class="on">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Open questions</h1>
+<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
+answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
+<div class="scroll"><table>
+<caption>Decision-blocking questions</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Question</th>
+<th scope="col">What is known</th>
+<th scope="col">What is not known</th>
+<th scope="col">How to find out</th>
+<th scope="col">Impact</th>
+<th scope="col">Blocks</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="Q-1">
+<td>Q-1</td>
+<td>What is the actual per-game correlation between a team&#x27;s spread result and the game total?</td>
+<td>Nothing measured. Our totals and spreads are computed; their joint behaviour is not.</td>
+<td>The covariance of (margin, total) over settled games.</td>
+<td>Pull per-game final scores (SG-2) and compute Pearson/Spearman on ≥300 games, per team and league-wide.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks every same-game parlay (S4) and gate G10.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="Q-2">
+<td>Q-2</td>
+<td>What is the correlation between a player&#x27;s points and his rebounds in the same game?</td>
+<td>Not measured; no player box scores available.</td>
+<td>The joint distribution; likely positive for bigs, near zero or negative for guards.</td>
+<td>Box-score feed per player-game (≥200 games per player). Then copula or bivariate-normal fit with a published residual check.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks prop combos (S6).</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="Q-3">
+<td>Q-3</td>
+<td>Do cross-game legs behave like independent events?</td>
+<td>Assumed independent. Nothing measured.</td>
+<td>Whether shared slate conditions (travel, referee crews, league-wide pace nights) induce any correlation.</td>
+<td>Regression of leg A&#x27;s result on leg B&#x27;s across ≥1,000 parlays with no shared team.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks S3 pricing being more than an assumption.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="Q-4">
+<td>Q-4</td>
+<td>What share of players listed &#x27;Questionable&#x27; actually play?</td>
+<td>We hold one report (11/13 04:15 PM) with 24 Questionable rows; the outcome of each is unknown.</td>
+<td>The empirical play rate conditional on each status label, and whether it varies by team or by body part.</td>
+<td>Join report history to box scores: for each status label, count appearances (SG-11).</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Makes the current p(play) column unusable as evidence.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="Q-5">
+<td>Q-5</td>
+<td>How many minutes, and how much production, does a team lose when a listed starter is Out?</td>
+<td>Status is official. The size of the effect is not available in this build.</td>
+<td>Per-team on/off splits and replacement minutes.</td>
+<td>Per-player game logs → on/off per 100, then a shrinkage model like the team ratings here.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks S7 entirely.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="Q-6">
+<td>Q-6</td>
+<td>Is a 173-game home-win rate of 51.45% different from 50%?</td>
+<td>Measured: 89 home wins, 84 home losses, so 51.45% ± 3.8 percentage points (1 s.e.).</td>
+<td>Whether the true rate this season differs from 50%; the observed interval easily contains 50%.</td>
+<td>More games, or a multi-season prior. Until then h = 0.37 pts is an estimate with wide uncertainty.</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Caps the confidence on every home-side line.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="Q-7">
+<td>Q-7</td>
+<td>Does the model beat the closing line?</td>
+<td>Unanswerable: no price data.</td>
+<td>Closing-line value, which is the best single predictor of long-run profit.</td>
+<td>Store the closing line for every game (SG-3), then regress model-minus-close on result.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks every &#x27;value&#x27; claim and the leaderboard.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="Q-8">
+<td>Q-8</td>
+<td>Which strategy family has the best hit rate at a fixed price after the hold is paid?</td>
+<td>Unanswerable without a backtest.</td>
+<td>Per-family hit rate, log-loss, and ROI at various thresholds.</td>
+<td>Backtest harness on settled results with pre-registered thresholds (SG-16).</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks the leaderboard ranking entirely.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr id="Q-9">
+<td>Q-9</td>
+<td>Are the two ratings estimators really independent, or is one a restatement of the other?</td>
+<td>Measured: r = +0.999, max spread disagreement 0.99 pts across 31 lines.</td>
+<td>Whether they share an input that makes agreement uninformative. NetRtg is per-possession and PF−PA is per-game, so they are computed from different numerators.</td>
+<td>Decompose: regress NetRtg on PF−PA and check whether pace explains the residual. If it does, they are the same number in two units.</td>
+<td><span class="badge b-warn">open</span></td>
+<td>If they are not independent, gate G4 is weaker than advertised.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="Q-10">
+<td>Q-10</td>
+<td>What is the correct price of a line that is inside model noise?</td>
+<td>Measured: our own cover probability is 49.3%–50.7% at our own number — i.e. no edge against our own line.</td>
+<td>How much of the remaining uncertainty is model error rather than game variance.</td>
+<td>Compare model lines with closing lines over ≥500 games; the residual spread is model error.</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Without it, conviction (|margin|/σ) is the only confidence measure available.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="Q-11">
+<td>Q-11</td>
+<td>How do you certify that a data snapshot is what the official page said, later?</td>
+<td>Partly answered: this build logs the URL and date per row; the prior build seals a digest of 22 predictions.</td>
+<td>Archival storage of the exact page (a hash of the raw bytes), not just the transcription.</td>
+<td>Store the raw fetched HTML/PDF bytes as a content-addressed artefact in the pipeline (SG-1 + SG-17).</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Needed before any third party trusts a published record.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="Q-12">
+<td>Q-12</td>
+<td>What is the required sample before a strategy can be called skilful?</td>
+<td>Policy set at 300 settled bets (G7), chosen so a 55% hit rate separates from 52.4% at 5% one-sided.</td>
+<td>The true per-strategy variance, which depends on correlation between bets.</td>
+<td>Simulate the strategy&#x27;s own bet stream once a backtest exists; recompute the required n.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks ranking and rewards.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr id="Q-13">
+<td>Q-13</td>
+<td>Is the schedule data used here complete for the window?</td>
+<td>Yes for 11/13–11/16: 31 games, matching the official schedule&#x27;s per-day counts (9/5/9/8), and identical to the committed snapshot.</td>
+<td>Whether any game is postponed or moved after retrieval.</td>
+<td>Re-fetch the schedule before each slate and diff (SG-1).</td>
+<td><span class="badge b-warn">open</span></td>
+<td>A moved game would silently invalidate a line.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="Q-14">
+<td>Q-14</td>
+<td>What is the actual reward structure and who approves it?</td>
+<td>Proposed: 100 units, 50/30/20 split, log-loss scored, 300-bet minimum.</td>
+<td>Owner sign-off; whether rewards are cash, credit, or leaderboard status only.</td>
+<td>Owner decision. The proposal is published with its rationale so it can be accepted or rejected item by item.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Blocks running the competition at all.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><h2>Questions about the project itself, not the model</h2>
+<div class="cards">
+  <div class="card"><h4>Which site is authoritative?</h4><p>Six trees exist. Until the owner picks one, every published
+  number is ambiguous. Proposed answer: this tree, with the others archived.</p></div>
+  <div class="card"><h4>Is the reward pool real money?</h4><p>The brief says rewards for top strategies. The size, funding
+  and legal basis are unknown and change what the leaderboard must be built to prevent.</p></div>
+  <div class="card"><h4>Who may submit a strategy?</h4><p>Public submissions turn anti-gaming rules from nice-to-have into
+  load-bearing. One submitter only changes the design substantially.</p></div>
+  <div class="card"><h4>What counts as a 'pick'?</h4><p>A projection, a graded bet, or a staked bet? This determines whether
+  anything on this site qualifies today. Current answer: nothing does.</p></div>
+</div>
+<h2>Information we do not have, that someone must go and get</h2>
+<ul>
+  <li>Licensed odds history (opening and closing lines) — the only way to measure edge.</li>
+  <li>Per-game box scores — the only way to settle, backtest or score.</li>
+  <li>Player game logs with minutes — the only way to price props or quantify injuries.</li>
+  <li>Play-by-play — the only way to analyse game flow rather than schedule density.</li>
+  <li>An explicit statement of what the reward is, so the leaderboard can be designed against it.</li>
+</ul>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

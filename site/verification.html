@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verification log · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html" class="on">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Verification log</h1>
+<p class="lede">Every number on this site was read from an official NBA page on 2026-11-14. This page records exactly which
+pages were reachable, what each one supplied, and what could not be reached — so a reviewer can repeat it.</p>
+<div class="note"><b>How to re-check any row.</b> Every table row carries a source link to the official page. The same data
+is also published machine-readably in <code>data/v2/*.json</code> in the repository, so a reviewer can diff what the site says
+against what the official page says without trusting either.</div>
+<div class="scroll"><table>
+<caption>Every source attempted, with the outcome</caption>
+<thead><tr>
+<th scope="col">Key</th>
+<th scope="col">Source</th>
+<th scope="col">Class</th>
+<th scope="col">Retrieval result</th>
+<th scope="col">What it supplied</th>
+<th scope="col">URL</th>
+</tr></thead><tbody>
+<tr>
+<td>standings</td>
+<td>NBA.com Standings (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>W, L, WIN%, home/road splits, conference and division records.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>team_trad</td>
+<td>NBA.com Stats — Teams Traditional (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>GP, MIN, PTS (points per game), +/- , per-team shooting splits.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr>
+<td>team_opp</td>
+<td>NBA.com Stats — Teams Opponent (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Opponent PTS per game (points allowed), opponent shooting splits.</td>
+<td><a href="https://www.nba.com/stats/teams/opponent" rel="noopener" target="_blank">nba.com/stats/teams/opponent</a></td>
+</tr>
+<tr>
+<td>team_adv</td>
+<td>NBA.com Stats — Teams Advanced (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>OffRtg, DefRtg, NetRtg, PACE, PIE — all per-100-possession.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>schedule</td>
+<td>NBA.com Schedule (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>injury_pdf</td>
+<td>NBA Official Injury Report 11/13/26 04:15 PM ET (official PDF)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>injury_policy</td>
+<td>NBA Official — Injury Report policy and report archive (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Filing deadlines: 5 p.m. local the day before; game day 11 a.m.–1 p.m.; 1 p.m. local for the second of a back-to-back.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr>
+<td>players</td>
+<td>NBA.com Stats — Players Traditional (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Per-player GP, MIN, PTS, REB, AST for the rows used on this site.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>injury_1114</td>
+<td>NBA Injury Report 11/14/26 01:00 PM ET</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">AccessDenied — not published/fetchable at retr</span></td>
+<td>would update today&#x27;s game statuses</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>stats_json</td>
+<td>stats.nba.com JSON endpoints (leaguedashstats, boxscore)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">TLS blocked from this environment</span></td>
+<td>automation feed</td>
+<td><a href="https://stats.nba.com/stats/leaguedashplayerstats" rel="noopener" target="_blank">stats.nba.com/stats/leaguedashplayerstats</a></td>
+</tr>
+<tr>
+<td>cdn_json</td>
+<td>cdn.nba.com static JSON (scheduleLeagueV2, boxscore_…)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">TLS blocked / HTTP 500</span></td>
+<td>automation feed</td>
+<td><a href="https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json" rel="noopener" target="_blank">cdn.nba.com/static/json/staticData/scheduleLeagueV2…</a></td>
+</tr>
+<tr>
+<td>blocked_game_logs</td>
+<td>Per-game margins and totals</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
+<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: mea</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>blocked_player_box</td>
+<td>Per-player game logs (minutes, usage, on/off)</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>blocked_odds</td>
+<td>Market prices (spread, total, moneyline, prop lines)</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
+<td>No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>odds</td>
+<td>Licensed odds feed</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">not connected — nba.com/games renders prices c</span></td>
+<td>prices for any edge claim</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>Cross-checks against the committed dataset</h2><div class="scroll"><table>
+<caption>Repository data re-verified against live official pages</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Check</th>
+<th scope="col">In repo</th>
+<th scope="col">Live official</th>
+<th scope="col">Result</th>
+<th scope="col">Detail</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>repo-schedule</td>
+<td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
+<td>31 games</td>
+<td>31 games</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>finals-reconstruction</td>
+<td>Rebuild every team&#x27;s W-L from the 155 official final scores, then compare with the official card</td>
+<td>155 finals, 155 wins assigned</td>
+<td>174 official wins</td>
+<td><span class="badge b-bad">CONSISTENT</span></td>
+<td>no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>repo-injury</td>
+<td>Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF</td>
+<td>85 player rows</td>
+<td>85 player rows</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found in (date, matchup, player, status)</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>repo-wl</td>
+<td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
+<td>30/30 identical</td>
+<td>30 teams</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
+<caption>Repository health checks</caption>
+<thead><tr>
+<th scope="col">Property</th>
+<th scope="col">Observed</th>
+<th scope="col">How it was checked</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Files tracked at base commit a09f48e</td>
+<td>245 files (excluding .git)</td>
+<td>counted with `find . -path ./.git -prune -o -type f -print | wc -l`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main</a></td>
+</tr>
+<tr>
+<td>Python unit tests</td>
+<td>55 pass in 0.589 s</td>
+<td>`python3 -m unittest discover -s nba2/tests -t .`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Provenance lint</td>
+<td>915 rows across 33 tables, every row sourced</td>
+<td>`python3 -m nba2.pipeline.lint`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Sealed prediction ledger</td>
+<td>22 predictions, digest cf7dedc689597cb8… verified</td>
+<td>`python3 -m nba2.pipeline.seal_predictions --verify`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+<tr>
+<td>Site rebuild determinism</td>
+<td>data/site.json is byte-identical after a rebuild</td>
+<td>`python3 -m nba2.pipeline.build_site_data` then `cmp` against the committed file</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Internal links at base commit</td>
+<td>75 HTML files, 3,233 internal links, all resolve</td>
+<td>`python3 tools/check_links_all.py`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
+</tr>
+<tr>
+<td>Parallel site trees present</td>
+<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)</td>
+<td>directory listing</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr>
+<td>Tracked Python bytecode</td>
+<td>19 .pyc files tracked despite .gitignore</td>
+<td>`git ls-files &#x27;*.pyc&#x27; | wc -l`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr>
+<td>Internationalisation / accessibility</td>
+<td>No lang-specific copy; tables use &lt;caption&gt; in the prior build; no automated a11y check</td>
+<td>grep + inspection of the prior build</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+</tbody></table></div><h2>What 'verified' means here — and what it does not</h2>
+<ul>
+  <li><b>Verified</b> means: the value on the page equals the value on the official page on the retrieval date, and the link to that page is on the row.</li>
+  <li><b>Verified does not mean correct today.</b> Every dataset on this site is a snapshot. Scores, records and statuses change hourly; the snapshot date is printed on every page.</li>
+  <li><b>Derived values are not source-verified.</b> A fitted σ, a shrunk rating or a line is computed by us from verified inputs. Its formula and parameters are published so it can be re-derived, and it is badged "derived" rather than "official".</li>
+  <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
+</ul>
+<h2>Known irregularities</h2>
+<p class="lede">Fourteen items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
+stale retrieval date on the published snapshot.</p>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

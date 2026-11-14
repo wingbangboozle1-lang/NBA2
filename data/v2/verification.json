@@ -1,0 +1,116 @@
+{
+ "as_of": "2026-11-14",
+ "integrity": {
+  "teams": 30,
+  "games_played_team_sum": 348,
+  "games": 174.0,
+  "wins": 174,
+  "losses": 174,
+  "wins_equals_losses": true,
+  "weighted_points_scored": 39473.4,
+  "weighted_points_allowed": 39471.5,
+  "weighted_points_diff": 1.9,
+  "rounding_bound": 34.8,
+  "points_identity_ok": true,
+  "home_w": 89,
+  "home_l": 84,
+  "road_w": 84,
+  "road_l": 89,
+  "home_wins_equal_road_losses": true,
+  "home_losses_equal_road_wins": true,
+  "home_win_rate": 0.5145,
+  "league_pts_per_team_game": 113.429
+ },
+ "cross_checks": {
+  "checks": [
+   {
+    "id": "repo-schedule",
+    "what": "Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)",
+    "repo_value": "31 games",
+    "live_value": "31 games",
+    "result": "MATCH",
+    "detail": "no differences found",
+    "src": "https://www.nba.com/schedule"
+   },
+   {
+    "id": "finals-reconstruction",
+    "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
+    "repo_value": "155 finals, 155 wins assigned",
+    "live_value": "174 official wins",
+    "result": "CONSISTENT",
+    "detail": "no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "src": "https://www.nba.com/games"
+   },
+   {
+    "id": "repo-injury",
+    "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
+    "repo_value": "85 player rows",
+    "live_value": "85 player rows",
+    "result": "MATCH",
+    "detail": "no differences found in (date, matchup, player, status)",
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   },
+   {
+    "id": "repo-wl",
+    "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
+    "repo_value": "30/30 identical",
+    "live_value": "30 teams",
+    "result": "MATCH",
+    "detail": "no differences found",
+    "src": "https://www.nba.com/standings"
+   }
+  ],
+  "notes": []
+ },
+ "retrieved": {
+  "standings": {
+   "url": "https://www.nba.com/standings",
+   "fields": "W, L, WIN%, home/road splits, conference and division records."
+  },
+  "team_trad": {
+   "url": "https://www.nba.com/stats/teams/traditional",
+   "fields": "GP, MIN, PTS (points per game), +/- , per-team shooting splits."
+  },
+  "team_opp": {
+   "url": "https://www.nba.com/stats/teams/opponent",
+   "fields": "Opponent PTS per game (points allowed), opponent shooting splits."
+  },
+  "team_adv": {
+   "url": "https://www.nba.com/stats/teams/advanced",
+   "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE \u2014 all per-100-possession."
+  },
+  "schedule": {
+   "url": "https://www.nba.com/schedule",
+   "fields": "Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group."
+  },
+  "injury_pdf": {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
+   "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason."
+  },
+  "injury_policy": {
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "fields": "Filing deadlines: 5 p.m. local the day before; game day 11 a.m.\u20131 p.m.; 1 p.m. local for the second of a back-to-back."
+  },
+  "players": {
+   "url": "https://www.nba.com/stats/players/traditional",
+   "fields": "Per-player GP, MIN, PTS, REB, AST for the rows used on this site."
+  }
+ },
+ "blocked": {
+  "game_logs": {
+   "what": "Per-game margins and totals",
+   "why": "No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.",
+   "url": "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+  },
+  "player_box": {
+   "what": "Per-player game logs (minutes, usage, on/off)",
+   "why": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.",
+   "url": "https://www.nba.com/stats/players/traditional"
+  },
+  "odds": {
+   "what": "Market prices (spread, total, moneyline, prop lines)",
+   "why": "No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
+   "url": "https://www.nba.com/games"
+  }
+ }
+}

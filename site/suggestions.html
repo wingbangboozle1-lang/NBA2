@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suggestions queue · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html" class="on">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Suggestions queue</h1>
+<p class="lede">Eighteen proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
+<code>ACCEPTED</code>.</p>
+<div class="note"><b>How to use it.</b> Read the state column. Eight items are already <code>IMPLEMENTED</code> and need no
+decision; three are <code>RECOMMENDED</code> and unblock the rest; the remainder are <code>QUEUED</code> behind a data
+dependency. The three recommended items are all data connections, and in this order: odds, results, scheduled ingestion.</div>
+<div class="scroll"><table>
+<caption>Suggestion queue with decision states</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Area</th>
+<th scope="col">Suggestion</th>
+<th scope="col">Why it improves decision-making</th>
+<th scope="col">Effort</th>
+<th scope="col">Depends on</th>
+<th scope="col">Decision state</th>
+<th scope="col">Reference</th>
+</tr></thead><tbody>
+<tr id="SG-1">
+<td>SG-1</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Move ingestion off the agent and onto a scheduled job that pulls the official schedule, standings and injury PDF once per hour, writing a dated snapshot.</td>
+<td>Right now every dataset on the site is a hand-made snapshot. Freshness (gate G11) can never pass without automation, so no strategy can ever be ranked.</td>
+<td>Medium (one GitHub Action + a parser)</td>
+<td>Sandbox TLS to nba.com is blocked; a GitHub Action runner has normal internet and can fetch it.</td>
+<td><span class="badge b-warn">RECOMMENDED — highest leverage</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-2">
+<td>SG-2</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Obtain a per-game result feed (official box score or licensed API) and store one row per game: date, teams, final score, quarter scores.</td>
+<td>Unlocks backtests (G7), out-of-sample splits (G8), settlement, ROI, the leaderboard, and every correlation value in the brief.</td>
+<td>Medium</td>
+<td>stats.nba.com and cdn.nba.com are unreachable here; a licensed feed or an Action-run scrape is needed.</td>
+<td><span class="badge b-warn">RECOMMENDED — unblocks the most</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-3">
+<td>SG-3</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Connect a licensed odds feed with timestamps (opening and closing lines) for spread, total, moneyline and props.</td>
+<td>Without a price there is no edge, no stake, no ROI, no luck-adjusted P&amp;L. Every &#x27;pick&#x27; on this site is currently withheld for that reason.</td>
+<td>Vendor + contract</td>
+<td>No odds source is connected; NBA.com does not expose prices server-side.</td>
+<td><span class="badge b-warn">RECOMMENDED — required for any betting claim</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-10">
+<td>SG-10</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Store every injury PDF with its timestamp and diff consecutive reports to detect status changes.</td>
+<td>A status change between the 1 p.m. and 4:15 p.m. reports is the highest-information event in an NBA day. Right now only one report is stored.</td>
+<td>Low</td>
+<td>Needs SG-1 (scheduled fetch).</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-16">
+<td>SG-16</td>
+<td><span class="badge b-off">Governance</span></td>
+<td>Freeze a pre-registration file per strategy before its first bet: signal, thresholds, universe, and the exact settlement rule.</td>
+<td>Pre-registration is what separates a tested strategy from a story told afterwards. It also makes the trial-accounting rule enforceable.</td>
+<td>Low</td>
+<td>Needs SG-3 to have anything to bet on.</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-17">
+<td>SG-17</td>
+<td><span class="badge b-off">Governance</span></td>
+<td>Add a tamper-evident ledger: hash each published pick, publish the hash before tip, and verify after settlement.</td>
+<td>The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.</td>
+<td>Low</td>
+<td>Needs SG-1.</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-14">
+<td>SG-14</td>
+<td><span class="badge b-off">Site</span></td>
+<td>Publish a per-row verification badge with the exact URL and retrieval timestamp, and a machine-readable JSON alongside every table.</td>
+<td>A reviewer can then re-check any single number without trusting the page. Implemented here: every table row carries `src`, and data/v2/*.json ships with the site.</td>
+<td>Low (implemented)</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-15">
+<td>SG-15</td>
+<td><span class="badge b-off">Site</span></td>
+<td>Make the Suggestions page a decision queue with an explicit state per item and an owner field.</td>
+<td>The brief asks for a place to review suggestions and choose a path before anything is implemented. A state machine (proposed → accepted → implemented / rejected) is the minimum for that.</td>
+<td>Low (implemented)</td>
+<td>none — states are editable in this file.</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-18">
+<td>SG-18</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Split the site into &#x27;projection&#x27; (safe to publish now) and &#x27;bet&#x27; (gated) surfaces, and never mix them.</td>
+<td>Right now the honest answer is that no bet is publishable. Separating the two stops a reader mistaking a projection for a tip.</td>
+<td>Low (implemented)</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-4">
+<td>SG-4</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Keep two independent estimators and publish their disagreement as the primary confidence signal, rather than a single blended rating.</td>
+<td>This build shows a 0.999 correlation between the two, and a max 1.0-pt disagreement — which is itself evidence the model is stable. If the two ever diverge, that divergence is the signal.</td>
+<td>Low (already implemented)</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-5">
+<td>SG-5</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Pin home-court advantage to the measured home-win rate instead of fitting it freely.</td>
+<td>Unconstrained, σ and h trade off almost perfectly (σ 9→13 with h +7.9→0 fits equally well). Pinning h uses a quantity actually measured over 173 games and leaves one free parameter.</td>
+<td>Low (implemented)</td>
+<td>Needs a larger home-game sample to shrink the ±0.076 interval.</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-6">
+<td>SG-6</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Report luck as a z-score per team and refuse to publish a strategy that leans on a team outside the noise band.</td>
+<td>This build: 0 of 30 teams are outside |z| ≤ 1.96. So no signal may currently claim a team is &#x27;overperforming its underlying level&#x27; — the data does not support it.</td>
+<td>Low (implemented)</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-9">
+<td>SG-9</td>
+<td><span class="badge b-off">Parlays</span></td>
+<td>Never multiply legs. Publish a correlation bound and a worst-case price, or refuse the parlay.</td>
+<td>At 0.50/0.50 legs a 0.40 correlation moves the joint from 25.0% to 32.0% (+28%). Two books can differ by more than the edge.</td>
+<td>Low (implemented as a rule)</td>
+<td>The bound is currently a sensitivity band, not a measurement — needs SG-2.</td>
+<td><span class="badge b-bad">IMPLEMENTED (bound) / BLOCKED (measurement)</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-13">
+<td>SG-13</td>
+<td><span class="badge b-off">Game flow</span></td>
+<td>Compute rest, back-to-back and 3-in-4 from the official schedule (already possible) and add travel distance from a sourced arena-coordinate table.</td>
+<td>Schedule density is measurable today and 3-in-4 is a real rotation risk; distance needs a source so it is left out for now.</td>
+<td>Low</td>
+<td>Arena coordinates need a citable source.</td>
+<td><span class="badge b-warn">PARTIAL — density implemented</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-11">
+<td>SG-11</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Replace the flat p(play) by status with an empirical table: for each status label, the historical share that actually played.</td>
+<td>The current 0.00/0.55 etc. are unratified placeholders. A measured table would be a real edge input and is cheap to build from report history.</td>
+<td>Medium</td>
+<td>Needs a season of paired report/box-score data (SG-2).</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-12">
+<td>SG-12</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Model minutes redistribution explicitly: for each team, the top-8 minutes shares and the replacement shares when a player is out.</td>
+<td>This is the only way to turn an injury into a line move. Without it, injury analysis stays qualitative.</td>
+<td>High</td>
+<td>Needs per-player game logs (blocked).</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-7">
+<td>SG-7</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Add a market-anchored prior: blend the model line with the closing line, weight by measured out-of-sample log-loss.</td>
+<td>A pure model line is usually worse than the market. Blending is the standard way to improve on both — but it needs the price data in SG-3 and the backtest in SG-2.</td>
+<td>Medium</td>
+<td>Depends on SG-3 + SG-2</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-8">
+<td>SG-8</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Model the total as possessions × points-per-possession, not as an average of team scoring averages.</td>
+<td>The two total estimators in this build disagree by up to 4.25 pts, mostly on pace outliers. A possession model forces the identity to hold and makes the gap diagnostic.</td>
+<td>Medium</td>
+<td>Needs play-by-play or possession-level data (blocked).</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+</tbody></table></div><h2>If you only do three things</h2>
+<ol>
+  <li><b>Connect a licensed odds feed</b> (SG-3). Everything about edge, stake and ROI depends on it. Today the site
+      correctly publishes zero picks because it has no price — that is a data gap, not a modelling gap.</li>
+  <li><b>Get per-game results</b> (SG-2). It turns every projection into something scoreable and lets the leaderboard exist.</li>
+  <li><b>Schedule the ingestion</b> (SG-1). Hand-made snapshots cannot satisfy a freshness gate, so no strategy can ever be
+      ranked on fresher-than-today data.</li>
+</ol>
+<h2>Suggestions about this site's own design</h2>
+<div class="cards">
+  <div class="card"><h4>Split projection from bet</h4><p>Done on this site: the lines page publishes projections, the picks
+  page publishes nothing because gate G6 fails. Mixing them is how a research desk becomes an unreliable tipster.</p></div>
+  <div class="card"><h4>Put the source on every row</h4><p>Done: the builder refuses to emit a row without a URL, so the
+  compliance is structural rather than a promise.</p></div>
+  <div class="card"><h4>Make uncertainty visible</h4><p>Done: σ, the reliability weight, the two estimators and their
+  disagreement are printed per game instead of a single confident-looking number.</p></div>
+  <div class="card"><h4>Give every blank a reason</h4><p>Done: an empty cell is always accompanied by the missing input's
+  name, so absence is information rather than an oversight.</p></div>
+</div>
+<h2>What I would not do</h2>
+<ul>
+  <li><b>Do not add a 'confidence score'</b> built from conviction alone. It is |margin|/σ, which grows for lopsided games,
+      not for well-understood ones. The estimator-disagreement column is the honest analogue.</li>
+  <li><b>Do not publish props before minutes data exists.</b> A season average is not a distribution, and a prop mispriced
+      by a distributional assumption is indistinguishable from a bad pick.</li>
+  <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
+      the cheapest defence.</li>
+</ul>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

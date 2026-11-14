@@ -1,0 +1,1830 @@
+{
+ "meta": {
+  "n_games_scored": 139,
+  "n_skipped_no_prior": 16,
+  "first_date": "2026-10-23",
+  "last_date": "2026-11-12",
+  "n_dates": 18,
+  "generated": "2026-11-14",
+  "shrink_pseudo_games": 8.0,
+  "home_court_pts": 2.0,
+  "sigma_pts": 12.75,
+  "source": "data/raw/history/*.json \u2014 155 official finals, one nba.com/game URL per row",
+  "leakage_rule": "ratings for a date use only games strictly before that date"
+ },
+ "headline": {
+  "straight_up_accuracy": 0.6691,
+  "hits": 93,
+  "mae_margin": 11.912,
+  "rmse_margin": 15.15,
+  "mae_baseline_zero": 13.266,
+  "rmse_baseline_zero": 16.467,
+  "skill_vs_baseline_pct": 10.21,
+  "bias": 0.263,
+  "brier": 0.2184,
+  "brier_baseline": 0.25,
+  "brier_skill_pct": 12.64,
+  "auroc": 0.7177,
+  "accuracy_ci95": [
+   0.5872,
+   0.7418
+  ],
+  "log_loss": 0.6275,
+  "log_loss_baseline": 0.6931,
+  "calibration_slope": 0.29,
+  "calibration_intercept": 0.443,
+  "calibration_read": "over-confident",
+  "games_to_prove_edge_vs_coinflip": 117
+ },
+ "significance": {
+  "observed_mae_gain": 1.354,
+  "draws": 4000,
+  "seed": 20261114,
+  "p_gain_positive": 0.9988,
+  "significant_at_5pct": true
+ },
+ "calibration": [
+  {
+   "bin": "0%-45%",
+   "n": 38,
+   "hits": 12,
+   "mean_predicted": 0.3818,
+   "observed": 0.3158,
+   "ci95": [
+    0.1908,
+    0.4746
+   ]
+  },
+  {
+   "bin": "45%-50%",
+   "n": 15,
+   "hits": 4,
+   "mean_predicted": 0.4729,
+   "observed": 0.2667,
+   "ci95": [
+    0.109,
+    0.5195
+   ]
+  },
+  {
+   "bin": "50%-55%",
+   "n": 13,
+   "hits": 7,
+   "mean_predicted": 0.5253,
+   "observed": 0.5385,
+   "ci95": [
+    0.2914,
+    0.7679
+   ]
+  },
+  {
+   "bin": "55%-65%",
+   "n": 32,
+   "hits": 16,
+   "mean_predicted": 0.5968,
+   "observed": 0.5,
+   "ci95": [
+    0.3363,
+    0.6637
+   ]
+  },
+  {
+   "bin": "65%-100%",
+   "n": 41,
+   "hits": 33,
+   "mean_predicted": 0.7311,
+   "observed": 0.8049,
+   "ci95": [
+    0.6599,
+    0.8977
+   ]
+  }
+ ],
+ "volatility": {
+  "margin_sd_actual": 16.434,
+  "total_sd_actual": 19.548,
+  "sigma_published": 12.75,
+  "note": "The published sigma (12.75) is a *win-total* scale parameter, not the game-margin sd measured here. They are different quantities and must not be compared directly."
+ },
+ "margin_total": {
+  "n": 139,
+  "r": 0.0182,
+  "ci95": [
+   -0.1488,
+   0.1841
+  ],
+  "t": 0.213,
+  "significant_at_5pct": false,
+  "verdict": "no detectable relationship at this sample size",
+  "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 155"
+ },
+ "compression": {
+  "predicted_margin_sd": 4.98,
+  "actual_margin_sd": 16.43,
+  "ratio": 0.303,
+  "r_predicted_vs_actual": 0.3897,
+  "spearman_confidence_vs_bigwin": 0.1025,
+  "read": "The model ranks games well but its margin estimates are compressed to about a third of true dispersion, so a predicted margin must not be read as an expected margin \u2014 and must never be used to size a stake."
+ },
+ "sensitivity": [
+  {
+   "shrink_pseudo_games": 0.0,
+   "n": 139,
+   "accuracy": 0.6331,
+   "mae": 14.909,
+   "pred_sd": 15.84,
+   "note": "in-sample sensitivity; not used to pick the headline configuration"
+  },
+  {
+   "shrink_pseudo_games": 2.0,
+   "n": 139,
+   "accuracy": 0.6547,
+   "mae": 12.204,
+   "pred_sd": 9.33,
+   "note": "in-sample sensitivity; not used to pick the headline configuration"
+  },
+  {
+   "shrink_pseudo_games": 4.0,
+   "n": 139,
+   "accuracy": 0.6547,
+   "mae": 11.795,
+   "pred_sd": 7.13,
+   "note": "in-sample sensitivity; not used to pick the headline configuration"
+  },
+  {
+   "shrink_pseudo_games": 8.0,
+   "n": 139,
+   "accuracy": 0.6691,
+   "mae": 11.912,
+   "pred_sd": 4.98,
+   "note": "in-sample sensitivity; not used to pick the headline configuration"
+  },
+  {
+   "shrink_pseudo_games": 16.0,
+   "n": 139,
+   "accuracy": 0.6331,
+   "mae": 12.244,
+   "pred_sd": 3.15,
+   "note": "in-sample sensitivity; not used to pick the headline configuration"
+  }
+ ],
+ "per_date": [
+  {
+   "date": "2026-10-23",
+   "n": 12,
+   "hits": 9,
+   "accuracy": 0.75,
+   "mae": 11.769
+  },
+  {
+   "date": "2026-10-24",
+   "n": 8,
+   "hits": 5,
+   "accuracy": 0.625,
+   "mae": 7.3
+  },
+  {
+   "date": "2026-10-25",
+   "n": 7,
+   "hits": 4,
+   "accuracy": 0.5714,
+   "mae": 13.753
+  },
+  {
+   "date": "2026-10-26",
+   "n": 9,
+   "hits": 5,
+   "accuracy": 0.5556,
+   "mae": 10.788
+  },
+  {
+   "date": "2026-10-27",
+   "n": 4,
+   "hits": 2,
+   "accuracy": 0.5,
+   "mae": 13.275
+  },
+  {
+   "date": "2026-10-28",
+   "n": 12,
+   "hits": 6,
+   "accuracy": 0.5,
+   "mae": 14.028
+  },
+  {
+   "date": "2026-10-29",
+   "n": 3,
+   "hits": 2,
+   "accuracy": 0.6667,
+   "mae": 10.366
+  },
+  {
+   "date": "2026-10-30",
+   "n": 10,
+   "hits": 6,
+   "accuracy": 0.6,
+   "mae": 12.039
+  },
+  {
+   "date": "2026-10-31",
+   "n": 7,
+   "hits": 5,
+   "accuracy": 0.7143,
+   "mae": 15.799
+  },
+  {
+   "date": "2026-11-01",
+   "n": 4,
+   "hits": 3,
+   "accuracy": 0.75,
+   "mae": 7.964
+  },
+  {
+   "date": "2026-11-02",
+   "n": 15,
+   "hits": 12,
+   "accuracy": 0.8,
+   "mae": 10.138
+  },
+  {
+   "date": "2026-11-04",
+   "n": 14,
+   "hits": 8,
+   "accuracy": 0.5714,
+   "mae": 9.544
+  },
+  {
+   "date": "2026-11-05",
+   "n": 2,
+   "hits": 2,
+   "accuracy": 1.0,
+   "mae": 12.82
+  },
+  {
+   "date": "2026-11-07",
+   "n": 7,
+   "hits": 4,
+   "accuracy": 0.5714,
+   "mae": 14.281
+  },
+  {
+   "date": "2026-11-08",
+   "n": 7,
+   "hits": 5,
+   "accuracy": 0.7143,
+   "mae": 11.533
+  },
+  {
+   "date": "2026-11-09",
+   "n": 8,
+   "hits": 7,
+   "accuracy": 0.875,
+   "mae": 14.537
+  },
+  {
+   "date": "2026-11-10",
+   "n": 6,
+   "hits": 4,
+   "accuracy": 0.6667,
+   "mae": 15.954
+  },
+  {
+   "date": "2026-11-12",
+   "n": 4,
+   "hits": 4,
+   "accuracy": 1.0,
+   "mae": 10.834
+  }
+ ],
+ "rows": [
+  {
+   "date": "2026-10-23",
+   "matchup": "NYK @ BOS",
+   "neutral": false,
+   "pred_margin": 1.78,
+   "actual_margin": 4,
+   "err": -2.22,
+   "p_home": 0.5554,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nyk-vs-bos-0022600008"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "HOU @ SAS",
+   "neutral": false,
+   "pred_margin": -1.33,
+   "actual_margin": -4,
+   "err": 2.67,
+   "p_home": 0.4584,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/hou-vs-sas-0022600009"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "ATL @ CHA",
+   "neutral": false,
+   "pred_margin": 2.0,
+   "actual_margin": -47,
+   "err": 49.0,
+   "p_home": 0.5623,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/atl-vs-cha-0022600094"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "DAL @ IND",
+   "neutral": false,
+   "pred_margin": 4.33,
+   "actual_margin": -16,
+   "err": 20.33,
+   "p_home": 0.633,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/dal-vs-ind-0022600095"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "MIN @ ORL",
+   "neutral": false,
+   "pred_margin": -1.56,
+   "actual_margin": -22,
+   "err": 20.44,
+   "p_home": 0.4514,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/min-vs-orl-0022600096"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "TOR @ WAS",
+   "neutral": false,
+   "pred_margin": -1.44,
+   "actual_margin": -10,
+   "err": 8.56,
+   "p_home": 0.4549,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/tor-vs-was-0022600097"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "DET @ MIA",
+   "neutral": false,
+   "pred_margin": -1.67,
+   "actual_margin": -17,
+   "err": 15.33,
+   "p_home": 0.448,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600098"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "CHI @ MIL",
+   "neutral": false,
+   "pred_margin": 5.44,
+   "actual_margin": -7,
+   "err": 12.44,
+   "p_home": 0.6653,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/chi-vs-mil-0022600099"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "NOP @ UTA",
+   "neutral": false,
+   "pred_margin": 0.11,
+   "actual_margin": 1,
+   "err": -0.89,
+   "p_home": 0.5035,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nop-vs-uta-0022600100"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "MEM @ GSW",
+   "neutral": false,
+   "pred_margin": -2.67,
+   "actual_margin": -3,
+   "err": 0.33,
+   "p_home": 0.4172,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mem-vs-gsw-0022600101"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "LAC @ LAL",
+   "neutral": false,
+   "pred_margin": 1.67,
+   "actual_margin": 8,
+   "err": -6.33,
+   "p_home": 0.552,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lac-vs-lal-0022600102"
+  },
+  {
+   "date": "2026-10-23",
+   "matchup": "POR @ SAC",
+   "neutral": false,
+   "pred_margin": -5.33,
+   "actual_margin": -8,
+   "err": 2.67,
+   "p_home": 0.3379,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/por-vs-sac-0022600103"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "MIA @ CHA",
+   "neutral": false,
+   "pred_margin": 2.2,
+   "actual_margin": 5,
+   "err": -2.8,
+   "p_home": 0.5685,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mia-vs-cha-0022600104"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "BKN @ CLE",
+   "neutral": false,
+   "pred_margin": 1.89,
+   "actual_margin": 4,
+   "err": -2.11,
+   "p_home": 0.5589,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-cle-0022600105"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "MIL @ PHI",
+   "neutral": false,
+   "pred_margin": 5.3,
+   "actual_margin": 11,
+   "err": -5.7,
+   "p_home": 0.6612,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mil-vs-phi-0022600106"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "HOU @ ATL",
+   "neutral": false,
+   "pred_margin": 5.2,
+   "actual_margin": -7,
+   "err": 12.2,
+   "p_home": 0.6583,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/hou-vs-atl-0022600107"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "WAS @ CHI",
+   "neutral": false,
+   "pred_margin": -1.8,
+   "actual_margin": -4,
+   "err": 2.2,
+   "p_home": 0.4439,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/was-vs-chi-0022600108"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "SAS @ DAL",
+   "neutral": false,
+   "pred_margin": 3.4,
+   "actual_margin": -16,
+   "err": 19.4,
+   "p_home": 0.6051,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/sas-vs-dal-0022600109"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "NOP @ DEN",
+   "neutral": false,
+   "pred_margin": 1.07,
+   "actual_margin": 6,
+   "err": -4.93,
+   "p_home": 0.5333,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nop-vs-den-0022600110"
+  },
+  {
+   "date": "2026-10-24",
+   "matchup": "GSW @ PHX",
+   "neutral": false,
+   "pred_margin": -0.06,
+   "actual_margin": 9,
+   "err": -9.06,
+   "p_home": 0.4983,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/gsw-vs-phx-0022600111"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "LAL @ UTA",
+   "neutral": false,
+   "pred_margin": -2.9,
+   "actual_margin": -9,
+   "err": 6.1,
+   "p_home": 0.41,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lal-vs-uta-0022600112"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "IND @ BKN",
+   "neutral": false,
+   "pred_margin": 2.2,
+   "actual_margin": -27,
+   "err": 29.2,
+   "p_home": 0.5685,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/ind-vs-bkn-0022600113"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "ORL @ NYK",
+   "neutral": false,
+   "pred_margin": 3.9,
+   "actual_margin": -9,
+   "err": 12.9,
+   "p_home": 0.6202,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/orl-vs-nyk-0022600114"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "TOR @ MIN",
+   "neutral": false,
+   "pred_margin": 1.4,
+   "actual_margin": 23,
+   "err": -21.6,
+   "p_home": 0.5437,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/tor-vs-min-0022600115"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "LAC @ OKC",
+   "neutral": false,
+   "pred_margin": 2.7,
+   "actual_margin": 7,
+   "err": -4.3,
+   "p_home": 0.5839,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lac-vs-okc-0022600116"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "DET @ PHI",
+   "neutral": false,
+   "pred_margin": 1.77,
+   "actual_margin": -13,
+   "err": 14.77,
+   "p_home": 0.5553,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/det-vs-phi-0022600117"
+  },
+  {
+   "date": "2026-10-25",
+   "matchup": "MEM @ SAC",
+   "neutral": false,
+   "pred_margin": -3.6,
+   "actual_margin": -11,
+   "err": 7.4,
+   "p_home": 0.3888,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mem-vs-sac-0022600118"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "WAS @ CHA",
+   "neutral": false,
+   "pred_margin": -1.73,
+   "actual_margin": 7,
+   "err": -8.73,
+   "p_home": 0.4461,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/was-vs-cha-0022600119"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "MIN @ CLE",
+   "neutral": false,
+   "pred_margin": -4.76,
+   "actual_margin": 2,
+   "err": -6.76,
+   "p_home": 0.3543,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/min-vs-cle-0022600120"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "CHI @ BOS",
+   "neutral": false,
+   "pred_margin": 5.24,
+   "actual_margin": 35,
+   "err": -29.76,
+   "p_home": 0.6594,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/chi-vs-bos-0022600121"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "DAL @ MIA",
+   "neutral": false,
+   "pred_margin": -0.64,
+   "actual_margin": -4,
+   "err": 3.36,
+   "p_home": 0.4801,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/dal-vs-mia-0022600122"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "IND @ MIL",
+   "neutral": false,
+   "pred_margin": -2.0,
+   "actual_margin": 8,
+   "err": -10.0,
+   "p_home": 0.4377,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/ind-vs-mil-0022600123"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "PHX @ OKC",
+   "neutral": false,
+   "pred_margin": 8.02,
+   "actual_margin": 11,
+   "err": -2.98,
+   "p_home": 0.7353,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/phx-vs-okc-0022600124"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "ATL @ HOU",
+   "neutral": false,
+   "pred_margin": 0.36,
+   "actual_margin": 10,
+   "err": -9.64,
+   "p_home": 0.5114,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/atl-vs-hou-0022600125"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "MEM @ UTA",
+   "neutral": false,
+   "pred_margin": -3.64,
+   "actual_margin": -5,
+   "err": 1.36,
+   "p_home": 0.3877,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mem-vs-uta-0022600126"
+  },
+  {
+   "date": "2026-10-26",
+   "matchup": "GSW @ DEN",
+   "neutral": false,
+   "pred_margin": 4.49,
+   "actual_margin": -20,
+   "err": 24.49,
+   "p_home": 0.6377,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/gsw-vs-den-0022600127"
+  },
+  {
+   "date": "2026-10-27",
+   "matchup": "BKN @ BOS",
+   "neutral": false,
+   "pred_margin": 8.27,
+   "actual_margin": 1,
+   "err": 7.27,
+   "p_home": 0.7418,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-bos-0022600128"
+  },
+  {
+   "date": "2026-10-27",
+   "matchup": "DET @ NYK",
+   "neutral": false,
+   "pred_margin": -3.18,
+   "actual_margin": 14,
+   "err": -17.18,
+   "p_home": 0.4015,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/det-vs-nyk-0022600129"
+  },
+  {
+   "date": "2026-10-27",
+   "matchup": "SAC @ SAS",
+   "neutral": false,
+   "pred_margin": 6.0,
+   "actual_margin": 27,
+   "err": -21.0,
+   "p_home": 0.681,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/sac-vs-sas-0022600130"
+  },
+  {
+   "date": "2026-10-27",
+   "matchup": "POR @ LAL",
+   "neutral": false,
+   "pred_margin": 0.65,
+   "actual_margin": -7,
+   "err": 7.65,
+   "p_home": 0.5202,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/por-vs-lal-0022600131"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "MIA @ ATL",
+   "neutral": false,
+   "pred_margin": 9.33,
+   "actual_margin": -12,
+   "err": 21.33,
+   "p_home": 0.7679,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/mia-vs-atl-0022600132"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "WAS @ CLE",
+   "neutral": false,
+   "pred_margin": 1.9,
+   "actual_margin": 10,
+   "err": -8.1,
+   "p_home": 0.5593,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/was-vs-cle-0022600133"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "CHA @ DET",
+   "neutral": false,
+   "pred_margin": 6.33,
+   "actual_margin": 8,
+   "err": -1.67,
+   "p_home": 0.6903,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cha-vs-det-0022600134"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "PHI @ IND",
+   "neutral": false,
+   "pred_margin": 1.5,
+   "actual_margin": -5,
+   "err": 6.5,
+   "p_home": 0.5468,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/phi-vs-ind-0022600135"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "ORL @ TOR",
+   "neutral": false,
+   "pred_margin": 6.55,
+   "actual_margin": 30,
+   "err": -23.45,
+   "p_home": 0.6962,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/orl-vs-tor-0022600136"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "NYK @ CHI",
+   "neutral": false,
+   "pred_margin": -3.83,
+   "actual_margin": -6,
+   "err": 2.17,
+   "p_home": 0.3818,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nyk-vs-chi-0022600137"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "HOU @ MIL",
+   "neutral": false,
+   "pred_margin": -3.08,
+   "actual_margin": -32,
+   "err": 28.92,
+   "p_home": 0.4045,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/hou-vs-mil-0022600138"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "GSW @ MIN",
+   "neutral": false,
+   "pred_margin": 8.83,
+   "actual_margin": -5,
+   "err": 13.83,
+   "p_home": 0.7558,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/gsw-vs-min-0022600139"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "DEN @ NOP",
+   "neutral": false,
+   "pred_margin": 3.45,
+   "actual_margin": -13,
+   "err": 16.45,
+   "p_home": 0.6068,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600140"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "SAS @ UTA",
+   "neutral": false,
+   "pred_margin": -3.0,
+   "actual_margin": -6,
+   "err": 3.0,
+   "p_home": 0.407,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/sas-vs-uta-0022600141"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "OKC @ DAL",
+   "neutral": false,
+   "pred_margin": -2.67,
+   "actual_margin": 24,
+   "err": -26.67,
+   "p_home": 0.4172,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/okc-vs-dal-0022600142"
+  },
+  {
+   "date": "2026-10-28",
+   "matchup": "LAL @ LAC",
+   "neutral": false,
+   "pred_margin": 0.24,
+   "actual_margin": -16,
+   "err": 16.24,
+   "p_home": 0.5076,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/lal-vs-lac-0022600143"
+  },
+  {
+   "date": "2026-10-29",
+   "matchup": "CLE @ ATL",
+   "neutral": false,
+   "pred_margin": 3.26,
+   "actual_margin": 3,
+   "err": 0.26,
+   "p_home": 0.6008,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cle-vs-atl-0022600144"
+  },
+  {
+   "date": "2026-10-29",
+   "matchup": "SAC @ NOP",
+   "neutral": false,
+   "pred_margin": 6.0,
+   "actual_margin": 12,
+   "err": -6.0,
+   "p_home": 0.681,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/sac-vs-nop-0022600145"
+  },
+  {
+   "date": "2026-10-29",
+   "matchup": "MEM @ POR",
+   "neutral": false,
+   "pred_margin": 3.84,
+   "actual_margin": -21,
+   "err": 24.84,
+   "p_home": 0.6184,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/mem-vs-por-0022600146"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "CHA @ WAS",
+   "neutral": false,
+   "pred_margin": 3.92,
+   "actual_margin": 16,
+   "err": -12.08,
+   "p_home": 0.6208,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cha-vs-was-0022600015"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "CHI @ BOS",
+   "neutral": false,
+   "pred_margin": 10.9,
+   "actual_margin": 14,
+   "err": -3.1,
+   "p_home": 0.8036,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/chi-vs-bos-0022600016"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "DET @ BKN",
+   "neutral": false,
+   "pred_margin": -3.71,
+   "actual_margin": -16,
+   "err": 12.29,
+   "p_home": 0.3855,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/det-vs-bkn-0022600017"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "NYK @ PHI",
+   "neutral": false,
+   "pred_margin": 3.23,
+   "actual_margin": 5,
+   "err": -1.77,
+   "p_home": 0.6,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nyk-vs-phi-0022600018"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "ORL @ TOR",
+   "neutral": false,
+   "pred_margin": 11.17,
+   "actual_margin": -7,
+   "err": 18.17,
+   "p_home": 0.8094,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/orl-vs-tor-0022600019"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "IND @ MIA",
+   "neutral": false,
+   "pred_margin": -1.08,
+   "actual_margin": 20,
+   "err": -21.08,
+   "p_home": 0.4663,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/ind-vs-mia-0022600020"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "HOU @ DAL",
+   "neutral": false,
+   "pred_margin": -2.69,
+   "actual_margin": 5,
+   "err": -7.69,
+   "p_home": 0.4164,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/hou-vs-dal-0022600021"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "LAC @ MIN",
+   "neutral": false,
+   "pred_margin": 7.35,
+   "actual_margin": 26,
+   "err": -18.65,
+   "p_home": 0.7177,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lac-vs-min-0022600022"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "LAL @ GSW",
+   "neutral": false,
+   "pred_margin": -2.38,
+   "actual_margin": 17,
+   "err": -19.38,
+   "p_home": 0.4258,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/lal-vs-gsw-0022600023"
+  },
+  {
+   "date": "2026-10-30",
+   "matchup": "DEN @ PHX",
+   "neutral": false,
+   "pred_margin": -0.83,
+   "actual_margin": -7,
+   "err": 6.17,
+   "p_home": 0.4742,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/den-vs-phx-0022600024"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "POR @ UTA",
+   "neutral": false,
+   "pred_margin": -3.92,
+   "actual_margin": -22,
+   "err": 18.08,
+   "p_home": 0.3793,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/por-vs-uta-0022600147"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "PHI @ CHA",
+   "neutral": false,
+   "pred_margin": -3.29,
+   "actual_margin": -5,
+   "err": 1.71,
+   "p_home": 0.3983,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/phi-vs-cha-0022600148"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "ATL @ NOP",
+   "neutral": false,
+   "pred_margin": -0.85,
+   "actual_margin": 22,
+   "err": -22.85,
+   "p_home": 0.4735,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/atl-vs-nop-0022600149"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "SAC @ MEM",
+   "neutral": false,
+   "pred_margin": 13.0,
+   "actual_margin": 31,
+   "err": -18.0,
+   "p_home": 0.846,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/sac-vs-mem-0022600150"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "CLE @ MIL",
+   "neutral": false,
+   "pred_margin": -2.54,
+   "actual_margin": -25,
+   "err": 22.46,
+   "p_home": 0.4211,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cle-vs-mil-0022600151"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "MIN @ SAS",
+   "neutral": false,
+   "pred_margin": -1.82,
+   "actual_margin": 10,
+   "err": -11.82,
+   "p_home": 0.4433,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/min-vs-sas-0022600152"
+  },
+  {
+   "date": "2026-10-31",
+   "matchup": "OKC @ HOU",
+   "neutral": false,
+   "pred_margin": 5.33,
+   "actual_margin": 21,
+   "err": -15.67,
+   "p_home": 0.662,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/okc-vs-hou-0022600153"
+  },
+  {
+   "date": "2026-11-01",
+   "matchup": "BOS @ ORL",
+   "neutral": false,
+   "pred_margin": -4.85,
+   "actual_margin": -11,
+   "err": 6.15,
+   "p_home": 0.3519,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bos-vs-orl-0022600154"
+  },
+  {
+   "date": "2026-11-01",
+   "matchup": "BKN @ IND",
+   "neutral": false,
+   "pred_margin": 4.87,
+   "actual_margin": -8,
+   "err": 12.87,
+   "p_home": 0.6489,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/bkn-vs-ind-0022600155"
+  },
+  {
+   "date": "2026-11-01",
+   "matchup": "LAC @ GSW",
+   "neutral": false,
+   "pred_margin": 5.03,
+   "actual_margin": 12,
+   "err": -6.97,
+   "p_home": 0.6535,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lac-vs-gsw-0022600156"
+  },
+  {
+   "date": "2026-11-01",
+   "matchup": "TOR @ LAL",
+   "neutral": false,
+   "pred_margin": 0.14,
+   "actual_margin": 6,
+   "err": -5.86,
+   "p_home": 0.5043,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/tor-vs-lal-0022600157"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "OKC @ CLE",
+   "neutral": false,
+   "pred_margin": 4.36,
+   "actual_margin": -5,
+   "err": 9.36,
+   "p_home": 0.6337,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/okc-vs-cle-0022600158"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "DET @ CHA",
+   "neutral": false,
+   "pred_margin": -5.23,
+   "actual_margin": -33,
+   "err": 27.77,
+   "p_home": 0.3409,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/det-vs-cha-0022600159"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "ATL @ IND",
+   "neutral": false,
+   "pred_margin": -0.2,
+   "actual_margin": -4,
+   "err": 3.8,
+   "p_home": 0.4937,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/atl-vs-ind-0022600160"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "BKN @ NYK",
+   "neutral": false,
+   "pred_margin": 5.07,
+   "actual_margin": 13,
+   "err": -7.93,
+   "p_home": 0.6546,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-nyk-0022600161"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "WAS @ ORL",
+   "neutral": false,
+   "pred_margin": -2.21,
+   "actual_margin": -9,
+   "err": 6.79,
+   "p_home": 0.4311,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/was-vs-orl-0022600162"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "CHI @ PHI",
+   "neutral": false,
+   "pred_margin": 10.59,
+   "actual_margin": 19,
+   "err": -8.41,
+   "p_home": 0.7968,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/chi-vs-phi-0022600163"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "SAC @ DAL",
+   "neutral": false,
+   "pred_margin": 11.21,
+   "actual_margin": -15,
+   "err": 26.21,
+   "p_home": 0.8104,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/sac-vs-dal-0022600164"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "NOP @ MEM",
+   "neutral": false,
+   "pred_margin": 7.71,
+   "actual_margin": -1,
+   "err": 8.71,
+   "p_home": 0.7274,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/nop-vs-mem-0022600165"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "MIL @ MIN",
+   "neutral": false,
+   "pred_margin": 12.91,
+   "actual_margin": 12,
+   "err": 0.91,
+   "p_home": 0.8444,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mil-vs-min-0022600166"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "BOS @ HOU",
+   "neutral": false,
+   "pred_margin": 3.73,
+   "actual_margin": 16,
+   "err": -12.27,
+   "p_home": 0.615,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bos-vs-hou-0022600167"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "UTA @ SAS",
+   "neutral": false,
+   "pred_margin": 9.43,
+   "actual_margin": 22,
+   "err": -12.57,
+   "p_home": 0.7702,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/uta-vs-sas-0022600168"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "POR @ DEN",
+   "neutral": false,
+   "pred_margin": -2.85,
+   "actual_margin": -8,
+   "err": 5.15,
+   "p_home": 0.4117,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/por-vs-den-0022600169"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "PHX @ GSW",
+   "neutral": false,
+   "pred_margin": 7.5,
+   "actual_margin": 3,
+   "err": 4.5,
+   "p_home": 0.7218,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/phx-vs-gsw-0022600170"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "TOR @ LAC",
+   "neutral": false,
+   "pred_margin": -4.5,
+   "actual_margin": -7,
+   "err": 2.5,
+   "p_home": 0.3621,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/tor-vs-lac-0022600171"
+  },
+  {
+   "date": "2026-11-02",
+   "matchup": "MIA @ LAL",
+   "neutral": false,
+   "pred_margin": 5.82,
+   "actual_margin": 21,
+   "err": -15.18,
+   "p_home": 0.6761,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mia-vs-lal-0022600172"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "PHI @ DET",
+   "neutral": false,
+   "pred_margin": 4.53,
+   "actual_margin": -6,
+   "err": 10.53,
+   "p_home": 0.6387,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/phi-vs-det-0022600173"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "ATL @ WAS",
+   "neutral": false,
+   "pred_margin": 2.31,
+   "actual_margin": -15,
+   "err": 17.31,
+   "p_home": 0.5718,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/atl-vs-was-0022600174"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "MIL @ BOS",
+   "neutral": false,
+   "pred_margin": 10.8,
+   "actual_margin": 7,
+   "err": 3.8,
+   "p_home": 0.8015,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mil-vs-bos-0022600175"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "CHA @ BKN",
+   "neutral": false,
+   "pred_margin": 3.62,
+   "actual_margin": 10,
+   "err": -6.38,
+   "p_home": 0.6119,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cha-vs-bkn-0022600176"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "CHI @ NYK",
+   "neutral": false,
+   "pred_margin": 10.2,
+   "actual_margin": 30,
+   "err": -19.8,
+   "p_home": 0.7881,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/chi-vs-nyk-0022600177"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "IND @ MEM",
+   "neutral": false,
+   "pred_margin": 9.94,
+   "actual_margin": -4,
+   "err": 13.94,
+   "p_home": 0.7821,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/ind-vs-mem-0022600178"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "UTA @ NOP",
+   "neutral": false,
+   "pred_margin": 8.33,
+   "actual_margin": 7,
+   "err": 1.33,
+   "p_home": 0.7433,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/uta-vs-nop-0022600179"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "CLE @ OKC",
+   "neutral": false,
+   "pred_margin": 0.47,
+   "actual_margin": 8,
+   "err": -7.53,
+   "p_home": 0.5146,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cle-vs-okc-0022600180"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "MIN @ HOU",
+   "neutral": false,
+   "pred_margin": 2.75,
+   "actual_margin": -10,
+   "err": 12.75,
+   "p_home": 0.5854,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/min-vs-hou-0022600181"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "TOR @ DEN",
+   "neutral": false,
+   "pred_margin": -2.6,
+   "actual_margin": 19,
+   "err": -21.6,
+   "p_home": 0.4192,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/tor-vs-den-0022600182"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "POR @ PHX",
+   "neutral": false,
+   "pred_margin": -6.72,
+   "actual_margin": -13,
+   "err": 6.28,
+   "p_home": 0.2991,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/por-vs-phx-0022600183"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "DAL @ SAS",
+   "neutral": false,
+   "pred_margin": 6.33,
+   "actual_margin": 1,
+   "err": 5.33,
+   "p_home": 0.6903,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/dal-vs-sas-0022600184"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "LAL @ SAC",
+   "neutral": false,
+   "pred_margin": -8.22,
+   "actual_margin": -13,
+   "err": 4.78,
+   "p_home": 0.2594,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lal-vs-sac-0022600185"
+  },
+  {
+   "date": "2026-11-04",
+   "matchup": "MIA @ LAC",
+   "neutral": false,
+   "pred_margin": 1.27,
+   "actual_margin": -1,
+   "err": 2.27,
+   "p_home": 0.5396,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/mia-vs-lac-0022600186"
+  },
+  {
+   "date": "2026-11-05",
+   "matchup": "ORL @ PHX",
+   "neutral": false,
+   "pred_margin": 1.49,
+   "actual_margin": 13,
+   "err": -11.51,
+   "p_home": 0.5464,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/orl-vs-phx-0022600187"
+  },
+  {
+   "date": "2026-11-05",
+   "matchup": "MIA @ GSW",
+   "neutral": false,
+   "pred_margin": 5.88,
+   "actual_margin": 20,
+   "err": -14.12,
+   "p_home": 0.6775,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mia-vs-gsw-0022600188"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "DEN @ IND",
+   "neutral": true,
+   "pred_margin": -1.92,
+   "actual_margin": -12,
+   "err": 10.08,
+   "p_home": 0.4401,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/den-vs-ind-0022600189"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "BKN @ ATL",
+   "neutral": false,
+   "pred_margin": 6.6,
+   "actual_margin": 3,
+   "err": 3.6,
+   "p_home": 0.6975,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-atl-0022600190"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "NYK @ CLE",
+   "neutral": false,
+   "pred_margin": 0.62,
+   "actual_margin": -12,
+   "err": 12.62,
+   "p_home": 0.5195,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/nyk-vs-cle-0022600191"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "WAS @ OKC",
+   "neutral": false,
+   "pred_margin": 2.69,
+   "actual_margin": 39,
+   "err": -36.31,
+   "p_home": 0.5835,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/was-vs-okc-0022600192"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "ORL @ GSW",
+   "neutral": false,
+   "pred_margin": 9.28,
+   "actual_margin": 7,
+   "err": 2.28,
+   "p_home": 0.7666,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/orl-vs-gsw-0022600193"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "HOU @ PHX",
+   "neutral": false,
+   "pred_margin": -7.0,
+   "actual_margin": 3,
+   "err": -10.0,
+   "p_home": 0.2914,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/hou-vs-phx-0022600194"
+  },
+  {
+   "date": "2026-11-07",
+   "matchup": "SAS @ POR",
+   "neutral": false,
+   "pred_margin": 3.08,
+   "actual_margin": -22,
+   "err": 25.08,
+   "p_home": 0.5953,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/sas-vs-por-0022600195"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "PHI @ CHI",
+   "neutral": false,
+   "pred_margin": -10.06,
+   "actual_margin": -6,
+   "err": -4.06,
+   "p_home": 0.2151,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/phi-vs-chi-0022600196"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "LAL @ DET",
+   "neutral": false,
+   "pred_margin": 2.51,
+   "actual_margin": -5,
+   "err": 7.51,
+   "p_home": 0.5781,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/lal-vs-det-0022600197"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "UTA @ MIN",
+   "neutral": false,
+   "pred_margin": 13.57,
+   "actual_margin": 15,
+   "err": -1.43,
+   "p_home": 0.8563,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/uta-vs-min-0022600198"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "BKN @ DAL",
+   "neutral": false,
+   "pred_margin": 5.06,
+   "actual_margin": 37,
+   "err": -31.94,
+   "p_home": 0.6541,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-dal-0022600199"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "BOS @ MIL",
+   "neutral": false,
+   "pred_margin": -7.12,
+   "actual_margin": -20,
+   "err": 12.88,
+   "p_home": 0.2881,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bos-vs-mil-0022600200"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "NOP @ LAC",
+   "neutral": false,
+   "pred_margin": -2.44,
+   "actual_margin": 16,
+   "err": -18.44,
+   "p_home": 0.4242,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/nop-vs-lac-0022600201"
+  },
+  {
+   "date": "2026-11-08",
+   "matchup": "MIA @ SAC",
+   "neutral": false,
+   "pred_margin": -1.53,
+   "actual_margin": -6,
+   "err": 4.47,
+   "p_home": 0.4523,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mia-vs-sac-0022600202"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "LAL @ ATL",
+   "neutral": false,
+   "pred_margin": -0.67,
+   "actual_margin": -10,
+   "err": 9.33,
+   "p_home": 0.4791,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/lal-vs-atl-0022600203"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "CLE @ CHA",
+   "neutral": false,
+   "pred_margin": -4.18,
+   "actual_margin": 12,
+   "err": -16.18,
+   "p_home": 0.3716,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/cle-vs-cha-0022600204"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "WAS @ DET",
+   "neutral": false,
+   "pred_margin": 8.47,
+   "actual_margin": 11,
+   "err": -2.53,
+   "p_home": 0.7468,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/was-vs-det-0022600205"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "MEM @ TOR",
+   "neutral": false,
+   "pred_margin": -1.19,
+   "actual_margin": -16,
+   "err": 14.81,
+   "p_home": 0.4629,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mem-vs-tor-0022600206"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "IND @ DAL",
+   "neutral": false,
+   "pred_margin": 6.28,
+   "actual_margin": 3,
+   "err": 3.28,
+   "p_home": 0.689,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/ind-vs-dal-0022600207"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "DEN @ HOU",
+   "neutral": false,
+   "pred_margin": 5.94,
+   "actual_margin": 10,
+   "err": -4.06,
+   "p_home": 0.6793,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/den-vs-hou-0022600208"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "SAS @ PHX",
+   "neutral": false,
+   "pred_margin": -6.3,
+   "actual_margin": -26,
+   "err": 19.7,
+   "p_home": 0.3106,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/sas-vs-phx-0022600209"
+  },
+  {
+   "date": "2026-11-09",
+   "matchup": "NOP @ GSW",
+   "neutral": false,
+   "pred_margin": 4.6,
+   "actual_margin": 51,
+   "err": -46.4,
+   "p_home": 0.6409,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/nop-vs-gsw-0022600210"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "MIL @ NYK",
+   "neutral": false,
+   "pred_margin": 11.94,
+   "actual_margin": 32,
+   "err": -20.06,
+   "p_home": 0.8255,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mil-vs-nyk-0022600211"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "BOS @ PHI",
+   "neutral": false,
+   "pred_margin": 1.22,
+   "actual_margin": -22,
+   "err": 23.22,
+   "p_home": 0.5382,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/bos-vs-phi-0022600212"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "LAC @ PHX",
+   "neutral": false,
+   "pred_margin": -0.35,
+   "actual_margin": 23,
+   "err": -23.35,
+   "p_home": 0.489,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/lac-vs-phx-0022600213"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "MIA @ UTA",
+   "neutral": false,
+   "pred_margin": -1.23,
+   "actual_margin": -6,
+   "err": 4.77,
+   "p_home": 0.4615,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mia-vs-uta-0022600214"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "ORL @ SAC",
+   "neutral": false,
+   "pred_margin": -0.06,
+   "actual_margin": -7,
+   "err": 6.94,
+   "p_home": 0.4982,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/orl-vs-sac-0022600215"
+  },
+  {
+   "date": "2026-11-10",
+   "matchup": "OKC @ POR",
+   "neutral": false,
+   "pred_margin": 2.62,
+   "actual_margin": 20,
+   "err": -17.38,
+   "p_home": 0.5813,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/okc-vs-por-0022600216"
+  },
+  {
+   "date": "2026-11-12",
+   "matchup": "TOR @ PHI",
+   "neutral": false,
+   "pred_margin": 2.78,
+   "actual_margin": 11,
+   "err": -8.22,
+   "p_home": 0.5862,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/tor-vs-phi-0022600227"
+  },
+  {
+   "date": "2026-11-12",
+   "matchup": "DET @ WAS",
+   "neutral": false,
+   "pred_margin": -5.33,
+   "actual_margin": -4,
+   "err": -1.33,
+   "p_home": 0.3379,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/det-vs-was-0022600228"
+  },
+  {
+   "date": "2026-11-12",
+   "matchup": "DAL @ MIN",
+   "neutral": false,
+   "pred_margin": 6.28,
+   "actual_margin": 39,
+   "err": -32.72,
+   "p_home": 0.6888,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/dal-vs-min-0022600229"
+  },
+  {
+   "date": "2026-11-12",
+   "matchup": "CHA @ PHX",
+   "neutral": false,
+   "pred_margin": 3.94,
+   "actual_margin": 5,
+   "err": -1.06,
+   "p_home": 0.6215,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/cha-vs-phx-0022600230"
+  }
+ ]
+}

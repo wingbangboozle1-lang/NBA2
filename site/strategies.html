@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strategies &amp;amp; leaderboard · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html" class="on">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Strategies, gates and the leaderboard</h1>
+<p class="lede">Seven strategy families, specified to the point where they could be implemented — and a status that says
+whether they are allowed to produce anything today.</p>
+<div class="scroll"><table>
+<caption>Seven strategies against the twelve gates</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Strategy</th>
+<th scope="col">Type</th>
+<th scope="col">Signal</th>
+<th scope="col">Status today</th>
+<th scope="col">Gates that can pass</th>
+<th scope="col">Gates that fail</th>
+<th scope="col">Why</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="S1">
+<td>S1</td>
+<td>Consensus-rating side</td>
+<td><span class="badge b-off">single bet</span></td>
+<td>Bet the side implied by the average of two shrunk ratings when both estimators agree ≤1.0 pt.</td>
+<td><span class="badge b-warn">PUBLISHABLE AS A PROJECTION ONLY</span></td>
+<td>G1,G2,G3,G4,G9</td>
+<td>G6,G7,G8,G11,G12</td>
+<td>The line itself is derivable from official data; the bet cannot be, because there is no price and no backtest.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="S2">
+<td>S2</td>
+<td>Total mean-reversion</td>
+<td><span class="badge b-off">single bet</span></td>
+<td>Compare our total against the market total; act only on a ≥3.0 pt gap.</td>
+<td><span class="badge b-bad">BLOCKED — no market total</span></td>
+<td>G1,G2,G3,G5,G9</td>
+<td>G6,G7,G8</td>
+<td>Our total exists (two estimators, ≤4.25 pt gap observed). The half of the comparison that is a price does not.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr id="S3">
+<td>S3</td>
+<td>Two-leg cross-game parlay</td>
+<td><span class="badge b-off">parlay</span></td>
+<td>Two independent games, each leg passing S1, both legs at the same price level.</td>
+<td><span class="badge b-bad">BLOCKED — legs have no price</span></td>
+<td>G1,G2,G3,G4,G10(cross-game part)</td>
+<td>G6,G7</td>
+<td>Cross-game independence is a stated assumption, not a measurement; and the compounded hold makes it worse than two singles at equal edge.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="S4">
+<td>S4</td>
+<td>Same-game spread+total</td>
+<td><span class="badge b-off">parlay</span></td>
+<td>Home cover and over in the same game, priced with a measured joint distribution.</td>
+<td><span class="badge b-bad">BLOCKED — correlation unmeasured</span></td>
+<td>G1,G2,G3</td>
+<td>G6,G7,G10</td>
+<td>The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a ±26% price error was already demonstrated in the prior build.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr id="S5">
+<td>S5</td>
+<td>Player prop (points/rebounds/assists)</td>
+<td><span class="badge b-off">player prop</span></td>
+<td>Player season rate × expected minutes, compared with a posted line.</td>
+<td><span class="badge b-bad">BLOCKED — no minutes or game-log data</span></td>
+<td>G1(season rates only)</td>
+<td>G2,G6,G7,G10</td>
+<td>Season PPG exists officially; a per-game distribution and a minutes floor do not. Without them there is no probability, only an average.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="S6">
+<td>S6</td>
+<td>Prop combo (points+rebounds)</td>
+<td><span class="badge b-off">player prop combo</span></td>
+<td>Same-player correlation measured, then joint probability computed.</td>
+<td><span class="badge b-bad">BLOCKED — same-player correlation requires box scores</span></td>
+<td>—</td>
+<td>G2,G6,G7,G10</td>
+<td>This is the product the brief asks for most directly, and it is the one most dependent on the missing data.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="S7">
+<td>S7</td>
+<td>Injury-availability fade</td>
+<td><span class="badge b-off">single bet</span></td>
+<td>When a listed starter is Out, re-price with a measured replacement effect.</td>
+<td><span class="badge b-bad">BLOCKED — no on/off or usage data</span></td>
+<td>G1,G11,G12</td>
+<td>G2,G7,G9</td>
+<td>Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+</tbody></table></div><h2>Why a strategy cannot simply be declared 'profitable'</h2>
+<p class="lede">A line that agrees with the market is not an edge; a line that disagrees is either an edge or an error, and
+only a settled backtest can tell you which. Both parlays types add a second problem: the legs are correlated, and multiplying
+them is wrong in a direction that costs money.</p>
+<h2>Leaderboard rules and reward proposal</h2><div class="scroll"><table>
+<caption>Leaderboard competition design — needs owner sign-off</caption>
+<thead><tr>
+<th scope="col">Rule</th>
+<th scope="col">Proposal</th>
+<th scope="col">Why it matters</th>
+<th scope="col">Status</th>
+<th scope="col">Basis</th>
+</tr></thead><tbody>
+<tr>
+<td>Scoring metric</td>
+<td>Log-loss on settled bets, not win rate</td>
+<td>Win rate rewards luck on small samples; log-loss is a proper scoring rule, so honest probabilities beat lucky ones.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Minimum sample to rank</td>
+<td>300 settled bets</td>
+<td>Below that the 95% interval on a 55% hit rate includes 50%.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>Trial accounting</td>
+<td>Every submitted strategy counts, including discarded ones</td>
+<td>Otherwise a submitter re-rolls variants until one looks good; the family-wise error rate explodes.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Closure/verification</td>
+<td>A pick must be published before tip and be sealed with a hash</td>
+<td>Prevents back-filling a winning pick after the result is known.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Unit accounting</td>
+<td>Stake in units of bankroll, capped at 1% per bet</td>
+<td>Keeps the leaderboard a skill measure rather than a leverage measure.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Reward split</td>
+<td>100 units: 50 to the top log-loss score over a full season, 30 split across the next three, 20 held in escrow for out-of-sample validation</td>
+<td>Pays for demonstrated calibration, not a hot streak.</td>
+<td><span class="badge b-warn">PROPOSED — needs owner sign-off</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Disqualifiers</td>
+<td>Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins</td>
+<td>Removes the three ways a leaderboard is usually gamed.</td>
+<td><span class="badge b-warn">PROPOSED</span></td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>Nothing here can run yet.</b> All seven rules assume settled bets. With no price and no
+per-game results there are zero settled bets, so the leaderboard currently has nothing to score. The design is published so it
+can be approved or amended before the data arrives, not after.</div>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

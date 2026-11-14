@@ -16,3 +16,6 @@ venv/
 # otherwise be committed by a blanket `git add -A` (which this repo's CI parity step uses).
 __pycache__/
 *.py[cod]
+
+# v2 site is generated from nba2/v2 — but it IS committed on purpose, because GitHub Pages
+# publishes the repository files directly. CI fails if site/ differs from a rebuild.

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sources · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html" class="on">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Sources</h1>
+<p class="lede">Every official page used, what it supplied, and what was attempted and failed. This is the complete list —
+if a number on this site is not traceable to a row here, that is a bug.</p>
+<div class="scroll"><table>
+<caption>All sources</caption>
+<thead><tr>
+<th scope="col">Source</th>
+<th scope="col">Class</th>
+<th scope="col">Retrieval</th>
+<th scope="col">Fields supplied</th>
+<th scope="col">URL</th>
+</tr></thead><tbody>
+<tr>
+<td>NBA.com Standings (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>W, L, WIN%, home/road splits, conference and division records.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NBA.com Stats — Teams Traditional (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>GP, MIN, PTS (points per game), +/- , per-team shooting splits.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
+</tr>
+<tr>
+<td>NBA.com Stats — Teams Opponent (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>Opponent PTS per game (points allowed), opponent shooting splits.</td>
+<td><a href="https://www.nba.com/stats/teams/opponent" rel="noopener" target="_blank">nba.com/stats/teams/opponent</a></td>
+</tr>
+<tr>
+<td>NBA.com Stats — Teams Advanced (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>OffRtg, DefRtg, NetRtg, PACE, PIE — all per-100-possession.</td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>NBA.com Schedule (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>NBA Official Injury Report 11/13/26 04:15 PM ET (official PDF)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>NBA Official — Injury Report policy and report archive (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>Filing deadlines: 5 p.m. local the day before; game day 11 a.m.–1 p.m.; 1 p.m. local for the second of a back-to-back.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr>
+<td>NBA.com Stats — Players Traditional (official)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">reachable</span></td>
+<td>Per-player GP, MIN, PTS, REB, AST for the rows used on this site.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>NBA Injury Report 11/14/26 01:00 PM ET</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>would update today&#x27;s game statuses</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>stats.nba.com JSON endpoints (leaguedashstats, boxscore)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>automation feed</td>
+<td><a href="https://stats.nba.com/stats/leaguedashplayerstats" rel="noopener" target="_blank">stats.nba.com/stats/leaguedashplayerstats</a></td>
+</tr>
+<tr>
+<td>cdn.nba.com static JSON (scheduleLeagueV2, boxscore_…)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>automation feed</td>
+<td><a href="https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json" rel="noopener" target="_blank">cdn.nba.com/static/json/staticData/scheduleLeagueV2…</a></td>
+</tr>
+<tr>
+<td>Per-game margins and totals</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>Per-player game logs (minutes, usage, on/off)</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>Market prices (spread, total, moneyline, prop lines)</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Licensed odds feed</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no data</span></td>
+<td>prices for any edge claim</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>Official pages used, by category</h2>
+<div class="cards">
+  <div class="card"><h4>Schedule</h4><p><a href="https://www.nba.com/schedule" target="_blank" rel="noopener">nba.com/schedule</a> —
+  game ids, tip times, arenas, broadcast, Emirates NBA Cup group.</p></div>
+  <div class="card"><h4>Records</h4><p><a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a> —
+  W-L, home/road splits, conference and division records.</p></div>
+  <div class="card"><h4>Team stats</h4><p><a href="https://www.nba.com/stats/teams/traditional" target="_blank" rel="noopener">traditional</a> ·
+  <a href="https://www.nba.com/stats/teams/opponent" target="_blank" rel="noopener">opponent</a> ·
+  <a href="https://www.nba.com/stats/teams/advanced" target="_blank" rel="noopener">advanced</a>.</p></div>
+  <div class="card"><h4>Player stats</h4><p><a href="https://www.nba.com/stats/players/traditional" target="_blank" rel="noopener">nba.com/stats/players/traditional</a> —
+  season averages per player.</p></div>
+  <div class="card"><h4>Injuries</h4><p><a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com index</a> and
+  <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" target="_blank" rel="noopener">the 11/13 04:15 PM PDF</a>.</p></div>
+  <div class="card"><h4>Game pages</h4><p><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a> —
+  used to confirm matchups and season-leader values per game card.</p></div>
+</div>
+<h2>Notes on method for a reviewer</h2>
+<ul>
+  <li>Pages were read on <b>2026-11-14</b> through the agent's page-fetch tool; direct TLS from the sandbox to nba.com fails, which is recorded as F-004's neighbour on the verification page.</li>
+  <li>Tables were transcribed into code (<code>nba2/v2/official.py</code>) with one named field per column, so a transcription error is a visible diff rather than a hidden one.</li>
+  <li>Arithmetic identities (points scored = points allowed, home wins = road losses) are asserted on every build; they caught nothing this time, which is the point of running them.</li>
+</ul>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

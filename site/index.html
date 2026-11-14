@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html" class="on">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+
+<h1>Originated lines, sourced row by row</h1>
+<p class="lede">A 31-game window (Nov 13 → Nov 16) priced from official NBA data only.
+Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
+Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
+
+<div class="kpis">
+  <div class="kpi"><b>31</b><small>games priced in window</small></div>
+  <div class="kpi"><b>174</b><small>league games observed (season to date)</small></div>
+  <div class="kpi"><b>9/19/3</b><small>A / B / C line grades</small></div>
+  <div class="kpi"><b>66.9%</b><small>walk-forward accuracy (139 finals)</small></div>
+  <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
+  <div class="kpi"><b>12.75</b><small>σ margin sd (fitted, pts)</small></div>
+  <div class="kpi"><b>+0.37</b><small>home-court (fitted, pts)</small></div>
+  <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
+  <div class="kpi"><b>3</b><small>inputs blocked</small></div>
+</div>
+
+<div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
+A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
+31 games and prints the failing gate next to each. What is genuinely new is verification: every number
+on this site was re-read from an official NBA page on 2026-11-14, and the identical claims from the previous
+build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
+
+<h2>Start here</h2>
+<div class="cards">
+  <div class="card"><h4><a href="executive-summary.html">Executive summary</a></h4><p>What was built, what is verified, what is impossible yet, and the recommended path.</p></div>
+  <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 31 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
+  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
+  <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
+  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
+  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
+  <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>Eighteen proposals with a decision state, so a path can be chosen before anything is built.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>Fourteen irregularities with sources, none of which block publication.</p></div>
+</div>
+
+<h2>Integrity checks that passed on this build</h2>
+<p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
+<div class="scroll"><table>
+<caption>Arithmetic identities verified on the official team tables</caption>
+<thead><tr>
+<th scope="col">Identity</th>
+<th scope="col">Observed</th>
+<th scope="col">Result</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>League wins = league losses</td>
+<td>174 = 174</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Points scored = points allowed (games-weighted)</td>
+<td>39473.4 vs 39471.5 (diff +1.9, rounding bound ±34.8)</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Home wins = road losses</td>
+<td>89 = 89</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Home losses = road wins</td>
+<td>84 = 84</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Games played sums to whole games</td>
+<td>348 team-games = 174 league games (season to date, not the slate)</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div>
+<h2>Cross-checks against the previous build</h2>
+<p class="lede">The repository already published a dataset. This session re-read the same pages live and compared, so a reader can see exactly where the earlier work was right and where it was not.</p>
+<div class="scroll"><table>
+<caption>Repository dataset vs live official pages</caption>
+<thead><tr>
+<th scope="col">Check</th>
+<th scope="col">Committed in repo</th>
+<th scope="col">Live official</th>
+<th scope="col">Result</th>
+<th scope="col">Detail</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
+<td>31 games</td>
+<td>31 games</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Rebuild every team&#x27;s W-L from the 155 official final scores, then compare with the official card</td>
+<td>155 finals, 155 wins assigned</td>
+<td>174 official wins</td>
+<td><span class="badge b-bad">CONSISTENT</span></td>
+<td>no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF</td>
+<td>85 player rows</td>
+<td>85 player rows</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found in (date, matchup, player, status)</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
+<td>30/30 identical</td>
+<td>30 teams</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div>
+<h2>What this build cannot do — and why that is stated rather than hidden</h2>
+<div class="scroll"><table>
+<caption>Blocked inputs</caption>
+<thead><tr>
+<th scope="col">Missing input</th>
+<th scope="col">What it blocks</th>
+<th scope="col">Where it would come from</th>
+</tr></thead><tbody>
+<tr>
+<td>Per-game margins and totals</td>
+<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
+<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+</tr>
+<tr>
+<td>Per-player game logs (minutes, usage, on/off)</td>
+<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>Market prices (spread, total, moneyline, prop lines)</td>
+<td>No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div>
+<h2>Machine-readable copy</h2>
+<p class="lede">Every table on this site is also published as JSON so a reviewer can diff it against the
+official pages without trusting the rendering: <a href="data/teams.json">teams.json</a> ·
+<a href="data/lines.json">lines.json</a> · <a href="data/verification.json">verification.json</a> ·
+<a href="data/content.json">content.json</a>.</p>
+
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

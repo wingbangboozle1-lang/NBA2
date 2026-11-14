@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game flow · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html" class="on">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Game flow</h1>
+<p class="lede">What the schedule alone can tell you about how a game is likely to unfold, and what needs play-by-play.</p>
+<div class="scroll"><table>
+<caption>Schedule-derived rest and density — fully official</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col" class="n">Rest (away, days)</th>
+<th scope="col" class="n">Rest (home, days)</th>
+<th scope="col" class="n">Games in window (away)</th>
+<th scope="col" class="n">Games in window (home)</th>
+<th scope="col">Away density</th>
+<th scope="col">Home density</th>
+<th scope="col">Pace / garbage / foul flow</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-13" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-13</a></td>
+</tr>
+<tr id="0022600231">
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="0022600232">
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="0022600234">
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="0022600235">
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td class="n">0</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="0022600233">
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="0022600236">
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td class="n">1</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600237">
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600238">
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600239">
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600240">
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td class="n">0</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600241">
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td class="n">1</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600242">
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td class="n">1</td>
+<td class="n"><span class="blank">first in window</span></td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600243">
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600244">
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+</tr>
+<tr id="0022600246">
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td class="n">1</td>
+<td class="n">1</td>
+<td class="n">3</td>
+<td class="n">3</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600247">
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td class="n">1</td>
+<td class="n">0</td>
+<td class="n">3</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600245">
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td class="n">2</td>
+<td class="n">0</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600249">
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">3</td>
+<td class="n">3</td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600248">
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600251">
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">3</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600250">
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+<tr id="0022600252">
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td class="n">0</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td class="n">2</td>
+<td><span class="badge b-warn">B2B</span></td>
+<td><span class="badge b-off">rested</span></td>
+<td><span class="blank">needs play-by-play</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
+</tr>
+</tbody></table></div><h2>Three flow effects that are real, and what each needs</h2>
+<div class="cards">
+  <div class="card"><h4>Rest and density <span class="badge b-ok">measurable now</span></h4>
+    <p>Rest days and games-in-window come straight from the official schedule and are printed above. The
+    effect of a back-to-back on scoring and pace still needs settled results to quantify.</p></div>
+  <div class="card"><h4>Garbage time <span class="badge b-bad">needs play-by-play</span></h4>
+    <p>Late-game minutes in a decided game suppress stars' counting stats and inflate bench usage. Requires
+    per-possession data with score margin and clock.</p></div>
+  <div class="card"><h4>Foul trouble <span class="badge b-bad">needs play-by-play</span></h4>
+    <p>A star's minutes are truncated by two early fouls in a way no season average shows. Requires foul timestamps.</p></div>
+</div>
+<h2>Why flow analysis is not in the line yet</h2>
+<p class="lede">Including a variable you cannot measure is worse than omitting it: it makes the line look more informed
+than it is. The line on the previous page uses only inputs whose official source is on that page. Flow effects are listed
+here as known-missing so they can be added with evidence, not assumed away.</p>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>
