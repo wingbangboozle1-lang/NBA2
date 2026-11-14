@@ -15,6 +15,7 @@
   "status_changes_1113": [
    "ORL Cain, Jamal: Questionable -> Available",
    "ORL da Silva, Tristan: Questionable -> Available",
+   "ORL Suggs, Jalen: Questionable -> Available",
    "IND McConnell, T.J.: Probable -> Available",
    "IND Nesmith, Aaron: Questionable -> Available",
    "ATL Dennis, RayJ: Questionable -> Available",
@@ -25,7 +26,7 @@
    "MIA Thompson, Klay: Probable -> Out",
    "NOP Mathurin, Bennedict: Questionable -> Available"
   ],
-  "row_growth": "95 rows (16:15) -> 122 rows (19:30). The growth is the 2026-11-14 section: 10 NOT-YET-SUBMITTED placeholders at 16:15 became 5 placeholders plus 26 player rows (21 explicit + 5 continuation-attributed team groups)."
+  "row_growth": "95 rows (16:15) -> 122 rows (19:30): the 2026-11-14 section grew from 10 NOT-YET-SUBMITTED placeholders to 5 placeholders plus 26 player rows, and six OKC players (Mitchell, Sorber, Topic, Wallace, J.Williams, Jay.Williams) appear that the 16:15 capture had no rows for at all - that capture's own FLAG-INJ-03 documented partial PDF parsing. Cross-check vs the 16:15 capture: all 85 prior 11/13 player rows present, 0 missing; 12 status revisions listed above; 1 reason revision (Powell)."
  },
  "attribution_key": {
   "E": "Team cell printed explicitly on the same row as the player.",
