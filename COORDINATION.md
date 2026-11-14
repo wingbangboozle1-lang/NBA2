@@ -1644,3 +1644,47 @@ do not block the merge.
 - **GitHub Pages Actions deploy:** run [43585242749](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43585242749) completed successfully, including `actions/deploy-pages@v4`. Re-fetch of https://wingbangboozle1-lang.github.io/NBA2/ returned the v2 landing page.
 - **Caveat remains open:** GitHub Pages API still reports `build_type=legacy`, `source=main /`, and a legacy Pages build was still in progress at the last check. An attempt to change the setting was denied (HTTP 403). Thus the Actions artifact was live and verified at fetch time; an administrator should confirm the Pages source to ensure a subsequent legacy build cannot replace it.
 - Report addendum in `analysis/session-eae96d1e-audit.md`; session changes are audit/report-only. All conflict resolutions kept the concurrent E77 audit sections intact.
+
+---
+
+---
+
+
+---
+
+## Session `arena/fc58f84f-nba2` — independent end-to-end verification pass + integration (claimed 2026-11-14)
+
+**Base:** `main` @ `d510313` (PR #43 merged; branch tip == `origin/main`). **Branch:**
+`arena/fc58f84f-nba2` (platform-fixed; all work happens here). Working tree clean at claim.
+
+**Why this session exists:** every prior task is merged and the site is live, so this session's job
+is an **independent** line-by-line verification pass — re-running the whole checker chain from
+scratch, re-fetching the live published site (not the local build), attempting fresh official-source
+checks against live NBA.com, and publishing this session's own evidence. It does not trust prior
+sessions' verdicts; it re-derives them. Anything it cannot confirm from an official source is left
+blank and flagged, never inferred.
+
+**Task board (this session):**
+
+| # | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| F-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section, append-only) | pushed immediately (this commit) |
+| F-02 | Full checker sweep from a clean state; record raw output | claimed | `audit/2026-11-14-fc58f84f/checker-run.txt` | paste actual command output; classify any fail as new vs pre-existing-and-logged |
+| F-03 | Independent live-site verification: fetch every published page, confirm it serves, confirm per-row source links resolve | claimed | `audit/2026-11-14-fc58f84f/live-site/**` | each page: HTTP-served content captured; internal links checked; source links left as-is (external) |
+| F-04 | Fresh official-source re-check of the current window (standings, schedule, a game page, injury PDF) | claimed | `audit/2026-11-14-fc58f84f/official/**` | value + official URL + retrieval timestamp; unreachable ⇒ recorded as blocked, no value invented |
+| F-05 | Spot-check published table rows against committed snapshots + fresh official reads; reconcile any drift | claimed | `audit/2026-11-14-fc58f84f/` | every numeric claim traceable to a committed snapshot or a fresh official read |
+| F-06 | Publish this session's independent verification report (audit artifacts + a dedicated report page) | claimed | `audit/2026-11-14-fc58f84f/**`, shared generators only at integration | no hallucinated values; blanks flagged |
+| F-07 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` | no merge while a checker that passed at claim time fails |
+
+**Not claimed / not edited (owned by prior sessions, left byte-identical):** root `index.html`,
+`flagged.html`, `styles.css`, `app.js`, `build_site.py`, `pages/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `archive/**`, `site/**` (v2 tree), `data/raw/**` snapshots (read-only),
+the sealed ledgers `data/raw/ledger/**` (immutable), and every existing `tools/**` / `scripts/**`
+checker (I run them, I do not rewrite them). New scripts/artifacts of mine live under
+`audit/2026-11-14-fc58f84f/` so no scope overlaps. Shared generators are touched **only** at
+final-integration time, and only to publish this session's report.
+
+**Rules this session holds itself to:** a row is only "verified" if I fetched the official document
+in this session and can quote it; a blank stays blank; sealed ledgers are never rewritten;
+flagged/unverified items do not block the merge but must appear on the Flagged for Review page with
+their source link.

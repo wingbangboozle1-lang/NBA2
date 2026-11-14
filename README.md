@@ -27,7 +27,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (19 pages, 39 tables, 1124 rows) are rendered from
+`index.html` + `pages/**` (20 pages, 40 tables, 1149 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -257,7 +257,7 @@ python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, inc
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
-python3 -m unittest discover -s nba2/tests -t .                # 62 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
