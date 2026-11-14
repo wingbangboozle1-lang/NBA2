@@ -1,0 +1,90 @@
+{
+ "dataset": "official_injury_report_2026-11-14_daybefore",
+ "report_stamp_et": "2026-11-13 19:30",
+ "retrieved_at_utc": "2026-11-14T00:47:00Z",
+ "retrieval_method": "PDF fetched and read in two chunks via the session's page-fetch tool; the 2026-11-14 rows were transcribed by hand against that text. The 2026-11-13 rows in the same release were NOT transcribed: those games had already tipped, and the 11/13 slate is covered by injury_report_2026-11-13.json (04:15 PM ET release).",
+ "provenance": {
+  "publisher": "NBA Referee Operations (official NBA injury report, published on the NBA's own CDN)",
+  "official_nba_source": true,
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+  "document_title": "Injury Report: 11/13/26 07:30 PM",
+  "cadence_note": "Per official.nba.com/nba-injury-report-2026-27-season/: day-before designations are due by 5 p.m. local time the day before a game (second day of a back-to-back: 1 p.m. local on game day); game-day reports are submitted between 11 a.m. and 1 p.m. local time (8-10 a.m. for tip-offs 5 p.m. or earlier); reports are updated on a continual basis throughout the day. This 19:30 ET release therefore carries the first official participation designations for the 2026-11-14 slate (five teams had filed; five had not)."
+ },
+ "attribution_key": {
+  "E": "Game date / tip time / matchup / team cells printed explicitly on the same row as the player in the source document.",
+  "C": "Row appears in the text extraction without its game/team cells (PDF table continuation across a page break); game date, tip time, matchup and team are taken from the game block the row sits in. Flagged for one-time manual confirmation against the PDF image."
+ },
+ "flags": [
+  {
+   "id": "FLAG-INJ-05",
+   "severity": "medium",
+   "field": "attribution=C rows (10 of 31)",
+   "issue": "Ten rows (4 Dallas Mavericks, 6 Detroit Pistons) carry no team/game cells in the text extraction because the PDF table breaks across pages. Their team attribution comes from document order (the last team label printed in that game block before the row), matching the convention of injury_report_2026-11-13.json.",
+   "action_required": "Confirm the 10 attribution=C rows against the PDF image at the source URL."
+  },
+  {
+   "id": "FLAG-INJ-06",
+   "severity": "medium",
+   "field": "time_et blank on the DET@MIA block (7 rows)",
+   "issue": "The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block (the Detroit player rows and the Miami placeholder row carry no time). Left blank rather than inferred. The tip time for DET@MIA is published elsewhere on this site from the official schedule snapshot.",
+   "action_required": "Confirm against the PDF image, or leave blank; do not copy a time from another release."
+  },
+  {
+   "id": "FLAG-INJ-07",
+   "severity": "high",
+   "field": "day-before designations are partial",
+   "issue": "At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).",
+   "action_required": "Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this."
+  },
+  {
+   "id": "FLAG-INJ-02",
+   "severity": "high",
+   "field": "rotation_minutes_impact,production_impact,line_adjustment_pts",
+   "issue": "No numeric injury impact can be produced from this document either: the official report contains no minutes, usage or production data. Impact columns are blank by design, not omitted.",
+   "action_required": "Official player-level box score / minute data (requirements R-102) before any injury adjustment is applied to lines."
+  }
+ ],
+ "columns": ["game_date", "time_et", "matchup", "team", "player", "status", "reason", "attribution"],
+ "records": [
+  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Holmes II, DaRon", "Out", "G League - On Assignment", "E"],
+  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Nembhard, Ryan", "Out", "G League - Two-Way", "E"],
+  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Strawther, Julian", "Out", "Injury/Illness - Left Knee Sprain", "E"],
+  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Whitmore, Cam", "Out", "G League - Two-Way", "E"],
+  ["2026-11-14", "07:00", "DEN@NOP", "New Orleans Pelicans", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Biberovic, Tarik", "Out", "Injury/Illness - Right Heel Bursitis", "E"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Christie, Max", "Questionable", "Injury/Illness - Left Ankle Sprain", "E"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "de Larrea, Sergio", "Out", "Injury/Illness - Right Knee Sprain", "C"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Johnson Jr., Morez", "Probable", "Injury/Illness - Left Shin / Tibia Contusion", "C"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Lively II, Dereck", "Out", "Injury/Illness - Right Foot Surgery", "C"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Martin, Caleb", "Available", "Injury/Illness - Right Thumb Splint", "C"],
+  ["2026-11-14", "07:30", "DAL@CLE", "Cleveland Cavaliers", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Bilodeau, Tyler", "Out", "G League - Two-Way", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Brown Jr., Mikel", "Questionable", "Injury/Illness - Illness", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Jefferson, Joshua", "Out", "G League - On Assignment", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Nelson, Grant", "Out", "G League - Two-Way", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Saraf, Ben", "Out", "G League - On Assignment", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Traore, Nolan", "Probable", "Injury/Illness - Right Calf Tightness / Soreness", "E"],
+  ["2026-11-14", "08:00", "BKN@MEM", "Memphis Grizzlies", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
+  ["2026-11-14", "08:00", "CHI@MIN", "Chicago Bulls", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
+  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Beringer, Joan", "Available", "Injury/Illness - Face Mask", "E"],
+  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "DiVincenzo, Donte", "Out", "Injury/Illness - Right Achilles Tendon Repair / Surgery", "E"],
+  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Edwards, Anthony", "Out", "Injury/Illness - Right Knee Arthroscopy", "E"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Duren, Jalen", "Out", "Injury/Illness - Right Hamstring Strain", "E"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Harkless, Elijah", "Questionable", "G League - Two-Way", "C"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Joe, Isaiah", "Out", "Injury/Illness - Right Hip Contusion", "C"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Jones, Isaac", "Questionable", "G League - Two-Way", "C"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Lanier, Chaz", "Out", "G League - On Assignment", "C"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Okorie, Ebuka", "Out", "G League - On Assignment", "C"],
+  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Onyenso, Ugonna", "Out", "G League - Two-Way", "C"],
+  ["2026-11-14", "", "DET@MIA", "Miami Heat", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"]
+ ],
+ "record_counts": {
+  "total_rows": 31,
+  "rows_with_status": 26,
+  "not_yet_submitted_placeholders": 5,
+  "attribution_explicit": 21,
+  "attribution_continuation": 10,
+  "games_covered": 5,
+  "games_covered_note": "DEN@NOP 07:00, DAL@CLE 07:30, BKN@MEM 08:00, CHI@MIN 08:00, DET@MIA (tip time cell lost in extraction; official schedule snapshot carries it). Counts computed from the records array at write time."
+ }
+}
