@@ -7,7 +7,6 @@ name: Publish GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
@@ -33,18 +32,13 @@ jobs:
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2
-          if git diff --cached --quiet -- site; then
-            echo "published artefacts match the v2 model"
-            exit 0
+          if ! git diff --cached --quiet -- site; then
+            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
+            git diff --cached --stat -- site | tail -40
+            exit 1
           fi
-          echo "::error title=site differs::$(git diff --cached --name-only -- site | tr '\n' ' ')"
-          git diff --cached --stat -- site | tail -40
-          for f in $(git diff --cached --name-only -- site | head -3); do
-            echo "=== $f ==="
-            git diff --cached -- "$f" | head -40
-            echo "::error title=first-diff-in-${f}::$(git diff --cached -- "$f" | sed -n '5,9p' | tr '\n' '|')"
-          done
-          exit 1
+          echo "published artefacts match the v2 model"
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
