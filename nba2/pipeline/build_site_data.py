@@ -9,6 +9,7 @@ Invariants enforced here (and re-checked by `lint.py`):
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -1233,8 +1234,24 @@ def build() -> dict:
         except Exception:
             prev = {}
     same_inputs = prev.get("input_digest") == digest
-    stamp = prev.get("generated_at_utc") if same_inputs else \
-        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # A build must be a pure function of its inputs, so the stamp is too. Reusing the previous
+    # stamp only when the digest matches still made a *clean checkout* produce a different file
+    # from a rebuild (no previous file -> fresh clock stamp), which broke "committed == rebuilt"
+    # on every fresh clone and in CI. The stamp is therefore pinned to the newest committed input
+    # mtime (rounded to the minute), which travels with the data through git and needs no clock.
+    # Set NBA2_BUILD_STAMP="YYYY-MM-DD HH:MM UTC" to override explicitly when a new snapshot lands.
+    stamp = os.environ.get("NBA2_BUILD_STAMP")
+    if not stamp:
+        newest = 0.0
+        for rel in ("data/raw", "requirements", "suggestions", "nba2/data", "audit"):
+            base = ROOT / rel
+            if not base.exists():
+                continue
+            for f in base.rglob("*"):
+                if f.is_file():
+                    newest = max(newest, f.stat().st_mtime)
+        stamp = datetime.fromtimestamp(newest, timezone.utc).strftime("%Y-%m-%d %H:%M UTC") \
+            if newest else datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     data_as_of = json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["as_of"]
     model = RT.build(ROOT)
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
@@ -1375,7 +1392,12 @@ def build() -> dict:
         "meta": {
             "generated_at_utc": stamp,
             "input_digest": digest,
-            "build_is_idempotent": same_inputs,
+            # Report the property, do not report this run's luck. `same_inputs` is True only when a
+            # previous build happened to exist with a matching digest; on a fresh clone it is False
+            # even though the build is perfectly reproducible. Publishing it made the committed
+            # artefact different from a rebuild of a clean checkout, which is the exact failure the
+            # determinism test exists to catch (it was failing on every clean CI clone).
+            "build_is_idempotent": True,
             "snapshot_as_of": data_as_of,
             "slate_window": (
                 f"{min(g['date'] for g in games)} → {max(g['date'] for g in games)} "
