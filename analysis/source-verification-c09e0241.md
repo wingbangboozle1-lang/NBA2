@@ -67,6 +67,20 @@ Only the 10 rows above plus the header, columns and document tail were re-read l
 | V-02 | Reconfirms I-02: `nba.com/stats/help/faq` carries no `r ≈ 0.82` / `r ≈ 0.65` | full page read (source #5) | Prior correction stands; no action. |
 | V-03 | Cosmetic: `pages/repo-review.html` renders markdown backticks literally inside one evidence cell (`data/site.json` → `repo_review` row 4 stores `` `git show …` vs `https://www.nba.com/schedule` ``) | `data/site.json` line-level read; rendered cell in `pages/repo-review.html` | Cosmetic only — the row's source column is separate and valid. Logged; file is owned by the pipeline/session arena-20c4f2f9, not edited here. |
 | V-04 | `data/site.json` anomalies table cites `https://www.nba.com/games?dates=MM/DD/YYYY` as a literal pattern inside prose | cell text (observation about the URL pattern, not a source link) | Not a broken link (plain text in an observation cell). No action. |
+| V-05 | `dashboard/data.html` Source cells for all 11 non-official baseline rows were labelled `nba.com player page` while their `href` is basketball-reference.com (10 rows) or espn.com (1 row) — e.g. LAL Doncic, CLE Mobley, TOR Barnes | generator line in `scripts/build_site.py`; rendered cells in `dashboard/data.html` | **Fixed this session** (D3 scope amendment logged before editing): non-official rows now display the real host; official rows keep their exact label. Regenerated `dashboard/data.html` only. |
+| V-06 | `scripts/build_site.py` module docstring says it builds "into docs/" but `OUT` is `dashboard/` | file header vs line 11 (`OUT = … "dashboard"`) | Cosmetic/stale docstring. **Not edited** (outside this session's amended scope); logged for the file's owner or a later cleanup session. |
+
+### CR-4 resolution (D3)
+
+`dashboard/data.html` had five unstyled empty `<td></td>` cells (the CHA baseline row).
+Fixed at the source: `scripts/build_site.py` now renders every blank value cell as
+`<span class="flag">—</span>` (the dashboard's `.flag` marker) via a `cell()` helper, and the
+page was regenerated. Verified after the edit:
+
+- `python3 scripts/build_site.py` → 12 pages rebuilt; **only `dashboard/data.html` changed**.
+- `python3 scripts/check_site.py` → PASS (12 pages / 524 rows).
+- Regex sweep of all 12 dashboard pages: **0** empty or whitespace-only `<td>`.
+- Re-running the generator is byte-stable (no further diff).
 
 ## 5. Limitations
 
