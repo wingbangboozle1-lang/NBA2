@@ -1406,7 +1406,7 @@ instead of editing it.
 
 - **PR #40** — *Session audit: official-source re-verification, findings publication, integration
   fixes (E-01…E-07)*: https://github.com/wingbangboozle1-lang/NBA2/pull/40 — merged with merge
-  commit `faf5775afae6444b6a926f226c173b0dae562744` at 2026-01…2026-11-14 02:28:22 UTC, no
+  commit `faf5775afae6444b6a926f226c173b0dae562744` at 2026-11-14 02:28:22 UTC, no
   approval wait per brief. CI on the merge: verify ✔, backtest ✔, v2 ✔.
 - **PR #41** — *fix(pages): deterministic league_offset serialisation*:
   https://github.com/wingbangboozle1-lang/NBA2/pull/41 — merged `83a34a0ff26a10044cda60703db68b29d0da592f`
