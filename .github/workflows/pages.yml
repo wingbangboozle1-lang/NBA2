@@ -17,9 +17,12 @@ name: Publish GitHub Pages
 # link-checked in one place, and the other trees stay in the repository as history, linked as
 # source.
 #
-# The Pages setting for this repository is `build_type: workflow`, so this workflow is the only
-# thing that publishes. `nba2/pipeline/build_public.py` fails the job if any internal link in
-# the published tree does not resolve.
+# `nba2/pipeline/build_public.py` fails the job if any internal link in the published tree does
+# not resolve. NOTE: the repository's Pages *setting* is still `build_type: legacy` (deploy from
+# the branch root) and cannot be changed from a token — the API answers 403. In practice this
+# workflow wins the race: the classic build is cancelled once a newer deployment is created.
+# The one-click fix (Settings -> Pages -> Source -> GitHub Actions) is recorded as S-32 /
+# FLAG-LIVE-08; nothing about the published tree changes if it is not done.
 # ---------------------------------------------------------------------------------------------
 
 on:

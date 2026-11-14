@@ -3,9 +3,10 @@ name: Verify the published tree (zero tolerance for drift)
 # ---------------------------------------------------------------------------------------------
 # WHY THIS WORKFLOW EXISTS  (added by session arena/ab8743d8-nba2, 2026-11-14)
 #
-# The site a reader actually gets is the `site/` artefact that pages.yml uploads. Before this
-# workflow, no automated job ever compared the committed `site/` tree against a rebuild of the
-# committed inputs:
+# The site a reader actually gets is the tree pages.yml uploads (the canonical v1 dashboard —
+# see `nba2/pipeline/build_public.py`; the `site/` artefact is the historical v2 build that the
+# reconciliation made non-canonical on 2026-11-14). Before this workflow, no automated job ever
+# compared the committed trees against a rebuild of the committed inputs:
 #
 #   * ci.yml rebuilt the v1 tree (data/site.json + root *.html) and asserted parity — good, but
 #     that is not the published tree;
@@ -48,7 +49,7 @@ jobs:
           python -m backtest.engine.build
           python -m nba2.v2
 
-      - name: The published tree (site/) must equal a rebuild
+      - name: The historical v2 tree (site/) must equal a rebuild
         run: |
           git add -A -- site data/v2
           if ! git diff --cached --quiet -- site; then
