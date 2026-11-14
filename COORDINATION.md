@@ -2623,3 +2623,63 @@ duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html`
 * **All four trees are fixed points**: a second full rebuild produces an empty `git diff`,
   which is exactly what the `publish-parity` workflow asserts and what fixed the failure
   above.
+
+---
+
+## 2026-11-14 — session `arena/3681def8-nba2` — MERGED (PR #56)
+
+**PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/56
+**Merge commit on `main`:** `6736f4bd9a4456c6efc567e7fb084c5131ec15ee` (merged
+2026-11-14T11:51:43Z, merge commit, `--merge`).
+**Branch:** `arena/3681def8-nba2`, head `63bfbf9`, based on `main` @ `7be403d`.
+
+### All four pull-request checks passed
+
+| check | workflow | result |
+|---|---|---|
+| verify | Verify data, model and site | pass (8s) |
+| parity | Verify the published tree (zero tolerance for drift) | pass (29s) |
+| v2 | Verify v2 model and site | pass (1m1s) |
+| backtest | Verify data, model and site | pass (10s) |
+
+`parity` is the one that mattered: it had **failed** on the first run of this PR, and that
+failure is what exposed the conflict-marker-corrupted `data/v2/verification.json`
+described above. It passes now because all four generated trees are fixed points.
+
+### All four post-merge workflows on `main` also passed
+
+`Verify v2 model and site`, `Verify the published tree`, `Verify data, model and site`,
+`Publish GitHub Pages` — all `success` on the push to `main` (run 43592017903 / 43592017933
+/ 43592017980 / 43592017922).
+
+### GitHub Pages deploy confirmed
+
+* Pages status: **`built`**, build 2026-11-14T11:51:45Z, no error.
+* Site: **https://wingbangboozle1-lang.github.io/NBA2/**
+* Confirmed present in the deployed tree: `pages/graded.html`,
+  `pages/verification-report.html`, `data/graded_2026-11-13.json`.
+
+### What this branch contributed to `main`
+
+The first graded card (2026-11-13, nine games, official finals), the 2026-11-14 live
+official capture with its line-by-line verifier, generators for the README counts, the
+CC-DER-05 / CC-DER-12 / CC-PUB-05 fixes, repo-review findings RR-19…RR-28, and the
+reconciliation of this session's work with both `arena/6650be4d-nba2` (PR #54) and
+`arena/6c5195d1-nba2` (PR #49).
+
+### Standing items this session did **not** fix (out of scope, still open on `main`)
+
+* **CC-X-00** — `WSH` vs `WAS` inconsistency in `originated/data/teams.json`.
+* **CC-SEAL-04** — false positive; the checker compares calendar dates and not timestamps.
+  Its owner needs to change that comparison; the evidence is in RR-19 and FLAG-SEAL-05.
+* **CC-SNAP-13**, **CC-GATE-02** — resolved by main's other integrations or now passing;
+  re-run `tools/crosscheck_site.py` on `main` before acting on them.
+* **PR #21** — open ~10 h, superseded by #38. Belongs to another session (RR-26).
+* **No licensed odds feed exists** (R-101), so no ROI / CLV / stake can be published. This
+  is the single largest gap between the site as built and the brief's competition framing.
+
+### Final state of the published tree
+
+50 tables / 1404 rows, every row sourced and every blank explained; 97 crosschecks
+89 pass / 0 fail / 8 info; 172 unit tests green; both sealed ledgers verified and
+unrewritten (`cf7dedc689597cb8…` 22 predictions, `c841e8f396dae6ca…` 27).
