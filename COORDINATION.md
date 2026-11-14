@@ -784,3 +784,27 @@ the CR-4 fix; D3 scope is amended to include source-label rendering for non-offi
 that table (official rows keep their exact current label). Evidence recorded as V-05 in this
 session's verification report.
 
+
+### Completion record — `arena/c09e0241-nba2` (2026-11-14, all tasks D1–D5 done)
+
+| ID | Task | Status | Verification / sources |
+|---|---|---|---|
+| D1 | Claim + file scope | done | Claim pushed before work (commit `7dee949`); two scope amendments (`3c24726`, `da2d02d`) committed **before** each edit they covered. |
+| D2 | External official-source verification pass (A-04) | done | `analysis/source-verification-c09e0241.md`: 6 official URLs fetched live 2026-11-14 ~01:00–01:20 UTC — [schedule?date=2026-11-14](https://www.nba.com/schedule?date=2026-11-14) (5/9/8/5 counts, all 27 game IDs), [official injury index](https://official.nba.com/nba-injury-report-2026-27-season/) (deadlines verbatim; no 11/14 section yet), [04:15 PM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf) (header/columns + **10/10 spot-check rows match the snapshot**, tail's 10 NOT YET SUBMITTED rows match), 11/14 01:00 PM PDF = AccessDenied **because unpublished** (V-01, now explained by the official index), [stats FAQ](https://www.nba.com/stats/help/faq) reconfirms I-02, [game page 0022600034](https://www.nba.com/game/nyk-vs-ind-0022600034) matches. V-01…V-06 logged. |
+| D3 | CR-4 handoff fix + V-05 | done | `scripts/build_site.py` `cell()`/`src_label()` + regenerated `dashboard/data.html` only; **0 empty `<td>`** in all 12 dashboard pages; `scripts/check_site.py` PASS (12 pages/524 rows); generator byte-stable on re-run; V-06 (stale docstring) logged, not edited. |
+| D4 | README residual (A-02 handoff) | done | Stale `(49 tests)` → `(55 tests)` at the time; after merging main's 62-test refresh the line now reads `(62 tests)` (main's value won the conflict — correct supersession). |
+| D5 | Final integration | done | Merged `origin/main` (5a5fa7c4 refresh) with append-only COORDINATION resolution (both sessions' blocks preserved verbatim; README conflict resolved to main's 62). Full suite re-run on the combined tree — see below. PR + Pages result recorded in the follow-up entry after merge. |
+
+**D5 verification log (combined tree, 2026-11-14 ~01:15 UTC):**
+- `python3 -m unittest discover -s nba2/tests -t .` → **62/62 OK**
+- `python3 -m nba2.pipeline.seal_predictions --verify` → seal `cf7dedc689597cb8…` over 22 predictions **VERIFIED**
+- `build_site_data` → 36 tables/964 rows; `build_site` → 18 pages; `lint` → **LINT OK (964 rows/36 tables)**; **rebuild parity exact** (post-rebuild `git status` empty)
+- `python3 tools/check_links_all.py` → 75 HTML files, **3,423 internal links ALL OK**
+- `python3 tools/verify_site.py` → 13 pages/249 rows PASS; `python3 scripts/check_site.py` → 12 pages/524 rows PASS (CR-4 fix intact post-merge)
+- `node originated/engine/{compute,build,verify}.js` → **24/24 PASS**; build-timestamp-only diffs restored, tree clean
+- 0 tracked `.pyc` (A-03 holds); `git diff --check` clean
+
+**Irregularities this session added:** V-01 (11/14 01:00 PM PDF AccessDenied = unpublished, not blocked), V-02 (I-02 reconfirmed), V-03 (backticks in one repo-review evidence cell, cosmetic), V-04 (URL-pattern prose, not a link), V-05 (11 dashboard source cells mislabelled `nba.com player page` — **fixed**), V-06 (`scripts/build_site.py` docstring says `docs/`, output is `dashboard/` — logged). None block merge; all are or will be published with links.
+
+**Handoffs out:** V-06 to the `scripts/**` owner (or any cleanup session); the three PRs open at my integration time (#21 `arena/79e87c81`, #26 `arena/1ec4f9bd`, #28 `arena/f7477d5e`) belong to their sessions — not merged or edited here.
+
