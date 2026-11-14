@@ -13,15 +13,15 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html" class="active">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html" class="active">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Repo Review</h2><p>Line-by-line review of the repository, including work already merged by other sessions.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-14 01:07 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="repo_review" data-rows="16">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="repo_review" data-rows="18">
 <h2>Repository review</h2>
 <p class="blurb">Reviewed from the git history and the working tree, not from a summary of it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Repository review</caption><thead><tr>
@@ -172,6 +172,24 @@
 <td>This sandbox has no outbound network except package/git hosts, so official data had to be brought in through the agent&#x27;s fetch tools and committed as snapshots. That is a provenance property of the whole dataset, not a detail.</td>
 <td>`curl https://www.nba.com` → 000; fetch tools return nba.com content</td>
 <td>Snapshot files carry retrieved_at + URL + extraction notes; CI cannot re-fetch from here, hence R-104.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-17">
+<td>RR-17</td>
+<td>Game-flow model (line-by-line review, session arena/1ec4f9bd-nba2)</td>
+<td>I-07: home/away back-to-back and 3-in-4 flags substring-matched the game date against the whole pair/sequence string (&#x27;d1+d2&#x27;, &#x27;d1-&gt;d2-&gt;d3&#x27;), so the FIRST night of a consecutive pair was also flagged as a B2B (e.g. DAL on 11/14 ahead of its 11/15 game; POR on 11/16 ahead of 11/17). Published values were over-counted, not fabricated.</td>
+<td>nba2/models/gameflow.py::game_flow_inputs before the 2026-11-14 fix; reproduced in the refreshed build&#x27;s 11/14 rows (DAL away_b2b=YES with no 11/13 game).</td>
+<td>Detection anchored on the second night of a pair and the third game of a 3-in-4 sequence; regression tests added (TestGameFlowB2B); FLAG-FLOW-03 discloses that pre-refresh rows carried inflated values.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-18">
+<td>RR-18</td>
+<td>Data window (2026-11-14 refresh)</td>
+<td>The published slate had rolled past its snapshot window (audit A-01): picks were sealed for 11/14-16 while the freshest injury rows said NOT YET SUBMITTED for every 11/14 team.</td>
+<td>audit-2c07c00b.md; data/raw/slate_2026-11-13_to_11-16.json as_of 2026-11-13.</td>
+<td>Refreshed in this session: new official slate capture (36 games, 11/13 context + 11/14-17), freshest injury release (11/13 19:30 ET, 122 rows incl. first 11/14 statuses), ratings re-check (30/30 identical), new sealed ledger of 27 picks for 11/14-17 with a refuse-to-seal guard under 6h to tip. Still a point-in-time capture, not a live feed.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
 </tr>

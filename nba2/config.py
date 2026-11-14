@@ -146,8 +146,9 @@ PARAMS: dict[str, Parameter] = {
         source="proposed by nba2.models.lines — no external source",
         sensitivity=(0.10, 0.35),
     ),
-    # SD of the game total. No game-level totals exist in this repo, so this is NOT fitted;
-    # it is used only inside the parlay sensitivity band and never quoted as a price.
+    # SD of the game total. Set before any game-level totals existed in this repo, so this is
+    # NOT fitted; official finals history now lives in the backtest tree, but a re-fit is an
+    # owner decision (S-04). It is used only inside the parlay sensitivity band, never as a price.
     "total_sd": Parameter(
         key="total_sd",
         value=20.0,
@@ -203,7 +204,7 @@ GATES: list[dict[str, Any]] = [
         ),
         "source": "derived from the binomial standard error at p=0.55 — see research/05-skill-vs-luck.md",
         "status": "blocked",
-        "blocking_reason": "No settled bets yet. Ledger opens with the 2026-11-13 slate.",
+        "blocking_reason": "No settled bets yet. The ledger opened with the 2026-11-13 slate and was re-sealed for 2026-11-14..17.",
     },
     {
         "id": "G-02",
@@ -235,8 +236,13 @@ GATES: list[dict[str, Any]] = [
         "unit": "points MAE",
         "why": "A line that only reproduces the standings' scoring margin adds no work; if shrinkage and schedule adjustment do not reduce error, delete the model.",
         "source": "derived from the snapshot baselines in nba2.models.gates",
-        "status": "blocked",
-        "blocking_reason": "Needs settled games with official final scores.",
+        "status": "evaluated — measured FAIL",
+        "blocking_reason": (
+            "Measured evidence now exists (backtest tree, 139 official finals 2026-10-20 to 11-12, "
+            "leakage-asserted walk-forward): margin MAE 12.17 vs the 0.0-spread baseline 13.27 — better, "
+            "p=0.35; straight-up 62.6% vs point-differential baseline 64.0% — NOT better. The 0.30-pt bar "
+            "is not cleared: G-04 FAILS on measured data. See backtest/pages/validation-gates.html."
+        ),
     },
     {
         "id": "G-05",
@@ -268,11 +274,13 @@ GATES: list[dict[str, Any]] = [
         "unit": "relative degradation",
         "why": "Ratings built from a standings snapshot include future games for the teams that played earlier; that leak is silent and fatal.",
         "source": "derived from our own ingest design (see research/01-line-origination.md 'point-in-time')",
-        "status": "at risk",
+        "status": "evaluable — measured PASS (backtest tree); root fit still snapshot-based",
         "blocking_reason": (
-            "The current snapshot is a single as-of standings table, which is NOT point-in-time "
-            "for games inside the week it covers. Backtests from this table would leak; only the "
-            "forward ledger is clean."
+            "The current snapshot is a single as-of standings table, which is NOT point-in-time for games "
+            "inside the week it covers — that caveat still applies to the root ratings fit. The dedicated "
+            "walk-forward re-implementation (backtest/engine/walkforward.py, leakage asserted by test) "
+            "MEASURED PASS on 139 official finals: test MAE does not exceed full-window MAE by more than "
+            "the 25% threshold. See backtest/pages/walk-forward.html."
         ),
     },
     {
@@ -457,11 +465,18 @@ REWARD_WEIGHTS = {
 }
 
 DATA_DIR = "data/raw"
-SNAPSHOT_SLATE = "slate_2026-11-13_to_11-16.json"
+# 2026-11-14 refresh (session arena/1ec4f9bd-nba2): the slate window moved to
+# 2026-11-13 (context) .. 2026-11-17, the injury snapshot to the freshest official
+# release at build time (11/13 19:30 ET), and the ratings snapshot was re-checked
+# (30/30 identical) rather than rewritten. The 2026-11-13 snapshots stay committed
+# as the audit trail.
+SNAPSHOT_SLATE = "slate_2026-11-14_to_11-17.json"
 SNAPSHOT_CONTEXT = "slate_context_2026-11-17.json"
 SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
-SNAPSHOT_INJURY = "injury_report_2026-11-13.json"
+SNAPSHOT_INJURY = "injury_report_2026-11-13_1930ET.json"
+SNAPSHOT_TIMES = "official_game_times_2026-11-14.json"
+SNAPSHOT_TIMES_PRIOR = "official_game_times_2026-11-13.json"
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

@@ -36,6 +36,7 @@ NAV = [
     ("pages/picks.html", "Picks (3-day slate)"),
     ("pages/lines.html", "Originated Lines"),
     ("pages/strategies.html", "Strategy Leaderboard"),
+    ("backtest/index.html", "Measured-Skill Backtest"),
     ("pages/parlays.html", "Correlation & Parlays"),
     ("pages/props.html", "Player Props & Combos"),
     ("pages/injuries.html", "Injuries & Rotation"),

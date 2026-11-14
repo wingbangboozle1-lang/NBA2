@@ -1,23 +1,162 @@
 {
-  "title": "NBA2 repository review — line by line",
-  "source_note": "Every finding below was produced by reading the working tree or `git` history at commit 7fa2a24 (main) on 2026-11-13, not by reading a prior session's summary of itself. Findings are ordered by cost-if-ignored.",
-  "reviewed_commits": ["623b4c2 (initial)", "cdf911e", "84f9b94 (PR #1 merge)", "51e8d06", "7662a6f", "c3a000b (PR #2 merge)", "ce6e8aa", "821c175", "59a01c1 (PR #3 merge)", "7fa2a24"],
-  "requirements": [
-    {"id": "RR-01", "source_key": "git_repo", "area": "Starting state", "finding": "The repo began as a single 6-byte README.md containing '# NBA2'. There was no code, data, CI, licence or Pages configuration.", "evidence": "`git ls-tree -r --name-only 623b4c2` → README.md only; `git show 623b4c2:README.md` → '# NBA2'", "action": "Nothing to inherit; everything below is net-new. Documented so no later session claims prior work existed."},
-    {"id": "RR-02", "source_key": "git_repo", "area": "Licence", "finding": "No LICENSE file at any commit.", "evidence": "`git ls-tree -r --name-only 7fa2a24` contains no LICENSE", "action": "FLAGGED, not fixed: adding a licence is an owner decision, especially while third-party data is embedded (see Q-18)."},
-    {"id": "RR-03", "source_key": "git_repo", "area": "Data integrity", "finding": "Prior `data/injuries.json` published numeric impacts ('Starter out — ~0 min (vs. ~34 MPG season avg)', '-100% scoring/rebounding/playmaking output') that appear in no source. The official report has no minutes or MPG column.", "evidence": "`git show 821c175:data/injuries.json` keys: player, team, status, injury, game, minutesImpact, productionImpact, verified — no source field; report columns are Game Date, Game Time, Matchup, Team, Player, Status, Reason", "action": "Impact columns replaced with explicit blanks + FLAG-INJ-02. Rows kept and re-sourced to the official PDF."},
-    {"id": "RR-04", "source_key": "git_repo", "area": "Sourcing", "finding": "Prior `data/strategies.json` attributed correlation coefficients (r ≈ 0.82, r ≈ 0.65) to https://www.nba.com/stats/help/faq, a help/FAQ page that contains no such values. The rows were labelled 'unverified' but still carried a source link that implies verification.", "evidence": "field `source` on those rows vs. the page's actual content", "action": "Removed. Correlations are now computed where possible (r(SRS, margin/G)) and blank elsewhere; a misattributed source is worse than no source."},
-    {"id": "RR-05", "source_key": "git_repo", "area": "Identifiers", "finding": "Prior `data/picks.json` invented synthetic game IDs (GAME-20261113-001) for fixtures that have official IDs, and covered only 3 of the 9 games on 11/13.", "evidence": "`git show 821c175:data/picks.json` vs `https://www.nba.com/schedule`", "action": "Replaced with official IDs; slate now 31/31 games for the window."},
-    {"id": "RR-06", "source_key": "git_repo", "area": "Deployment", "finding": "Two GitHub Pages workflows deployed the same artifact: `.github/workflows/pages.yml` (cancel-in-progress: true) and `.github/workflows/deploy.yml` (cancel-in-progress: false), both `path: '.'`, both on push to main.", "evidence": "`git show 7fa2a24:.github/workflows/` lists both", "action": "Consolidated to one workflow so a run cannot be cancelled mid-deploy by its twin (T-14)."},
-    {"id": "RR-07", "source_key": "git_repo", "area": "Docs", "finding": "The commit that added a working Pages workflow also states in README.md that the repository has 'no … automated deployment'.", "evidence": "`git show 821c175:README.md` contains 'no model' sentence; same commit adds deploy.yml", "action": "README rewritten to describe what exists and what does not."},
-    {"id": "RR-08", "source_key": "git_repo", "area": "Site structure", "finding": "Two parallel navigations existed: root `index.html` + `flagged.html` (session 1) and `pages/*.html` incl. `pages/flagged-review.html` (session 2), with different content on the same subject.", "evidence": "both files present in `main`; sidebar links to `pages/*` only", "action": "One nav, one Flagged page; root `flagged.html` converted to a redirect so old URLs do not rot."},
-    {"id": "RR-09", "source_key": "git_repo", "area": "Schema", "finding": "Prior data files had no per-row source field, which is the specific thing the brief requires ('every table row must have a source link').", "evidence": "`git show 821c175:data/injuries.json | python -c ...keys` → no 'source' key", "action": "`make_row()` in nba2/provenance.py cannot produce a row without a source; lint re-checks the emitted JSON so the rule cannot be bypassed by editing site.json."},
-    {"id": "RR-10", "source_key": "git_repo", "area": "Correct data (credit)", "finding": "The prior injury page did cite real, correct official documents: Injury-Report_2026-11-13_01_00PM.pdf and _04_15PM.pdf exist at ak-static.cms.nba.com and their contents match what I independently retrieved.", "evidence": "both PDFs fetched; status/reason fields agree for the overlapping rows", "action": "Kept as the citation; only the invented numeric impacts were removed."},
-    {"id": "RR-11", "source_key": "git_repo", "area": "Reproducibility", "finding": "No prior commit contained executable model code, so no published number could be reproduced by anyone.", "evidence": "file tree at 7fa2a24: html/css/js/json only", "action": "Engine + deterministic rebuild (`python -m nba2.pipeline.build_site_data`) + reproducibility test."},
-    {"id": "RR-12", "source_key": "git_repo", "area": "Claims audit", "finding": "Prior COORDINATION.md recorded tasks as 'done' for pages whose tables were empty; the entries were honest about the emptiness but the status column overstated completion.", "evidence": "task table rows: 'No picks generated; lines blank' with status done", "action": "Board now distinguishes met / partial / blocked, and 'done' requires the artefact to work, not to exist."},
-    {"id": "RR-13", "source_key": "git_repo", "area": "Numeracy check", "finding": "The prior 'correlation' values were presented without n, method or confidence interval, so they could not be challenged or reused.", "evidence": "strings like 'r ≈ 0.65 (estimated)'", "action": "Every correlation on this site now reports n and method, or is blank."},
-    {"id": "RR-14", "source_key": "git_repo", "area": "Security/privacy", "finding": "Site publishes from the repository root, so every committed file (including data snapshots) is publicly fetchable — including any file a future session commits by accident.", "evidence": "pages.yml `path: '.'`", "action": "Recommended only, not implemented: publish from a built directory (S-19). No secret is committed today (checked: no .env, no tokens in tree)."},
-    {"id": "RR-15", "source_key": "git_repo", "area": "Data window", "finding": "The Nov 13 slate is entirely Emirates NBA Cup group play, while Nov 14-16 are ordinary regular-season games. Treating them as one distribution is an unexamined assumption in the prior design.", "evidence": "group labels on the official game cards (East/West Group A-C) vs blank groups for Nov 14+", "action": "Recorded as Q-06 with a Cup-group column on the slate page; model behaviour unchanged and disclosed."},
-    {"id": "RR-16", "source_key": "git_repo", "area": "Tooling", "finding": "This sandbox has no outbound network except package/git hosts, so official data had to be brought in through the agent's fetch tools and committed as snapshots. That is a provenance property of the whole dataset, not a detail.", "evidence": "`curl https://www.nba.com` → 000; fetch tools return nba.com content", "action": "Snapshot files carry retrieved_at + URL + extraction notes; CI cannot re-fetch from here, hence R-104."}
-  ]
+ "title": "NBA2 repository review \u2014 line by line",
+ "source_note": "Every finding below was produced by reading the working tree or `git` history at commit 7fa2a24 (main) on 2026-11-13, not by reading a prior session's summary of itself. Findings are ordered by cost-if-ignored. RR-17/RR-18 added by session arena/1ec4f9bd-nba2 (2026-11-14).",
+ "reviewed_commits": [
+  "623b4c2 (initial)",
+  "cdf911e",
+  "84f9b94 (PR #1 merge)",
+  "51e8d06",
+  "7662a6f",
+  "c3a000b (PR #2 merge)",
+  "ce6e8aa",
+  "821c175",
+  "59a01c1 (PR #3 merge)",
+  "7fa2a24"
+ ],
+ "requirements": [
+  {
+   "id": "RR-01",
+   "source_key": "git_repo",
+   "area": "Starting state",
+   "finding": "The repo began as a single 6-byte README.md containing '# NBA2'. There was no code, data, CI, licence or Pages configuration.",
+   "evidence": "`git ls-tree -r --name-only 623b4c2` \u2192 README.md only; `git show 623b4c2:README.md` \u2192 '# NBA2'",
+   "action": "Nothing to inherit; everything below is net-new. Documented so no later session claims prior work existed."
+  },
+  {
+   "id": "RR-02",
+   "source_key": "git_repo",
+   "area": "Licence",
+   "finding": "No LICENSE file at any commit.",
+   "evidence": "`git ls-tree -r --name-only 7fa2a24` contains no LICENSE",
+   "action": "FLAGGED, not fixed: adding a licence is an owner decision, especially while third-party data is embedded (see Q-18)."
+  },
+  {
+   "id": "RR-03",
+   "source_key": "git_repo",
+   "area": "Data integrity",
+   "finding": "Prior `data/injuries.json` published numeric impacts ('Starter out \u2014 ~0 min (vs. ~34 MPG season avg)', '-100% scoring/rebounding/playmaking output') that appear in no source. The official report has no minutes or MPG column.",
+   "evidence": "`git show 821c175:data/injuries.json` keys: player, team, status, injury, game, minutesImpact, productionImpact, verified \u2014 no source field; report columns are Game Date, Game Time, Matchup, Team, Player, Status, Reason",
+   "action": "Impact columns replaced with explicit blanks + FLAG-INJ-02. Rows kept and re-sourced to the official PDF."
+  },
+  {
+   "id": "RR-04",
+   "source_key": "git_repo",
+   "area": "Sourcing",
+   "finding": "Prior `data/strategies.json` attributed correlation coefficients (r \u2248 0.82, r \u2248 0.65) to https://www.nba.com/stats/help/faq, a help/FAQ page that contains no such values. The rows were labelled 'unverified' but still carried a source link that implies verification.",
+   "evidence": "field `source` on those rows vs. the page's actual content",
+   "action": "Removed. Correlations are now computed where possible (r(SRS, margin/G)) and blank elsewhere; a misattributed source is worse than no source."
+  },
+  {
+   "id": "RR-05",
+   "source_key": "git_repo",
+   "area": "Identifiers",
+   "finding": "Prior `data/picks.json` invented synthetic game IDs (GAME-20261113-001) for fixtures that have official IDs, and covered only 3 of the 9 games on 11/13.",
+   "evidence": "`git show 821c175:data/picks.json` vs `https://www.nba.com/schedule`",
+   "action": "Replaced with official IDs; slate now 31/31 games for the window."
+  },
+  {
+   "id": "RR-06",
+   "source_key": "git_repo",
+   "area": "Deployment",
+   "finding": "Two GitHub Pages workflows deployed the same artifact: `.github/workflows/pages.yml` (cancel-in-progress: true) and `.github/workflows/deploy.yml` (cancel-in-progress: false), both `path: '.'`, both on push to main.",
+   "evidence": "`git show 7fa2a24:.github/workflows/` lists both",
+   "action": "Consolidated to one workflow so a run cannot be cancelled mid-deploy by its twin (T-14)."
+  },
+  {
+   "id": "RR-07",
+   "source_key": "git_repo",
+   "area": "Docs",
+   "finding": "The commit that added a working Pages workflow also states in README.md that the repository has 'no \u2026 automated deployment'.",
+   "evidence": "`git show 821c175:README.md` contains 'no model' sentence; same commit adds deploy.yml",
+   "action": "README rewritten to describe what exists and what does not."
+  },
+  {
+   "id": "RR-08",
+   "source_key": "git_repo",
+   "area": "Site structure",
+   "finding": "Two parallel navigations existed: root `index.html` + `flagged.html` (session 1) and `pages/*.html` incl. `pages/flagged-review.html` (session 2), with different content on the same subject.",
+   "evidence": "both files present in `main`; sidebar links to `pages/*` only",
+   "action": "One nav, one Flagged page; root `flagged.html` converted to a redirect so old URLs do not rot."
+  },
+  {
+   "id": "RR-09",
+   "source_key": "git_repo",
+   "area": "Schema",
+   "finding": "Prior data files had no per-row source field, which is the specific thing the brief requires ('every table row must have a source link').",
+   "evidence": "`git show 821c175:data/injuries.json | python -c ...keys` \u2192 no 'source' key",
+   "action": "`make_row()` in nba2/provenance.py cannot produce a row without a source; lint re-checks the emitted JSON so the rule cannot be bypassed by editing site.json."
+  },
+  {
+   "id": "RR-10",
+   "source_key": "git_repo",
+   "area": "Correct data (credit)",
+   "finding": "The prior injury page did cite real, correct official documents: Injury-Report_2026-11-13_01_00PM.pdf and _04_15PM.pdf exist at ak-static.cms.nba.com and their contents match what I independently retrieved.",
+   "evidence": "both PDFs fetched; status/reason fields agree for the overlapping rows",
+   "action": "Kept as the citation; only the invented numeric impacts were removed."
+  },
+  {
+   "id": "RR-11",
+   "source_key": "git_repo",
+   "area": "Reproducibility",
+   "finding": "No prior commit contained executable model code, so no published number could be reproduced by anyone.",
+   "evidence": "file tree at 7fa2a24: html/css/js/json only",
+   "action": "Engine + deterministic rebuild (`python -m nba2.pipeline.build_site_data`) + reproducibility test."
+  },
+  {
+   "id": "RR-12",
+   "source_key": "git_repo",
+   "area": "Claims audit",
+   "finding": "Prior COORDINATION.md recorded tasks as 'done' for pages whose tables were empty; the entries were honest about the emptiness but the status column overstated completion.",
+   "evidence": "task table rows: 'No picks generated; lines blank' with status done",
+   "action": "Board now distinguishes met / partial / blocked, and 'done' requires the artefact to work, not to exist."
+  },
+  {
+   "id": "RR-13",
+   "source_key": "git_repo",
+   "area": "Numeracy check",
+   "finding": "The prior 'correlation' values were presented without n, method or confidence interval, so they could not be challenged or reused.",
+   "evidence": "strings like 'r \u2248 0.65 (estimated)'",
+   "action": "Every correlation on this site now reports n and method, or is blank."
+  },
+  {
+   "id": "RR-14",
+   "source_key": "git_repo",
+   "area": "Security/privacy",
+   "finding": "Site publishes from the repository root, so every committed file (including data snapshots) is publicly fetchable \u2014 including any file a future session commits by accident.",
+   "evidence": "pages.yml `path: '.'`",
+   "action": "Recommended only, not implemented: publish from a built directory (S-19). No secret is committed today (checked: no .env, no tokens in tree)."
+  },
+  {
+   "id": "RR-15",
+   "source_key": "git_repo",
+   "area": "Data window",
+   "finding": "The Nov 13 slate is entirely Emirates NBA Cup group play, while Nov 14-16 are ordinary regular-season games. Treating them as one distribution is an unexamined assumption in the prior design.",
+   "evidence": "group labels on the official game cards (East/West Group A-C) vs blank groups for Nov 14+",
+   "action": "Recorded as Q-06 with a Cup-group column on the slate page; model behaviour unchanged and disclosed."
+  },
+  {
+   "id": "RR-16",
+   "source_key": "git_repo",
+   "area": "Tooling",
+   "finding": "This sandbox has no outbound network except package/git hosts, so official data had to be brought in through the agent's fetch tools and committed as snapshots. That is a provenance property of the whole dataset, not a detail.",
+   "evidence": "`curl https://www.nba.com` \u2192 000; fetch tools return nba.com content",
+   "action": "Snapshot files carry retrieved_at + URL + extraction notes; CI cannot re-fetch from here, hence R-104."
+  },
+  {
+   "id": "RR-17",
+   "source_key": "git_repo",
+   "area": "Game-flow model (line-by-line review, session arena/1ec4f9bd-nba2)",
+   "finding": "I-07: home/away back-to-back and 3-in-4 flags substring-matched the game date against the whole pair/sequence string ('d1+d2', 'd1->d2->d3'), so the FIRST night of a consecutive pair was also flagged as a B2B (e.g. DAL on 11/14 ahead of its 11/15 game; POR on 11/16 ahead of 11/17). Published values were over-counted, not fabricated.",
+   "evidence": "nba2/models/gameflow.py::game_flow_inputs before the 2026-11-14 fix; reproduced in the refreshed build's 11/14 rows (DAL away_b2b=YES with no 11/13 game).",
+   "action": "Detection anchored on the second night of a pair and the third game of a 3-in-4 sequence; regression tests added (TestGameFlowB2B); FLAG-FLOW-03 discloses that pre-refresh rows carried inflated values."
+  },
+  {
+   "id": "RR-18",
+   "source_key": "git_repo",
+   "area": "Data window (2026-11-14 refresh)",
+   "finding": "The published slate had rolled past its snapshot window (audit A-01): picks were sealed for 11/14-16 while the freshest injury rows said NOT YET SUBMITTED for every 11/14 team.",
+   "evidence": "audit-2c07c00b.md; data/raw/slate_2026-11-13_to_11-16.json as_of 2026-11-13.",
+   "action": "Refreshed in this session: new official slate capture (36 games, 11/13 context + 11/14-17), freshest injury release (11/13 19:30 ET, 122 rows incl. first 11/14 statuses), ratings re-check (30/30 identical), new sealed ledger of 27 picks for 11/14-17 with a refuse-to-seal guard under 6h to tip. Still a point-in-time capture, not a live feed."
+  }
+ ]
 }

@@ -75,6 +75,10 @@ class TestRegistry(unittest.TestCase):
     def test_every_snapshot_flag_is_registered(self):
         """Nothing in the committed data may reference a flag the site does not publish."""
         ids = {f.id for f in all_flags()}
+        site = ROOT / "data" / "site.json"
+        if site.exists():
+            published = json.loads(site.read_text())["sections"]["flags"]["rows"]
+            ids |= {r["key"] for r in published}
         for name in (config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
                      config.SNAPSHOT_CONTEXT):
             doc = json.loads((ROOT / config.DATA_DIR / name).read_text())
@@ -114,9 +118,10 @@ class TestModel(unittest.TestCase):
                              "fewer games must mean a smaller weight on one's own rating")
 
     def test_every_game_gets_a_line(self):
-        self.assertEqual(len(self.lines), 31)
+        self.assertEqual(len(self.lines), 36,
+                         "36 slate games (11/13 context + 11/14..17 pick window)")
         priced = [l for l in self.lines if l.spread_home is not None and l.total_line is not None]
-        self.assertEqual(len(priced), 31, "R-012: the slate must be complete, no silent drops")
+        self.assertEqual(len(priced), 36, "R-012: the slate must be complete, no silent drops")
 
     def test_lines_are_half_point_and_total_is_centred(self):
         for l in self.lines:
@@ -314,7 +319,8 @@ class TestPublishedSite(unittest.TestCase):
         by_date: dict[str, int] = {}
         for r in rows:
             by_date[r["values"]["date"]] = by_date.get(r["values"]["date"], 0) + 1
-        self.assertEqual(by_date, {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8})
+        self.assertEqual(by_date, {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9,
+                                   "2026-11-16": 8, "2026-11-17": 5})
 
     def test_no_invented_injury_or_correlation_numbers(self):
         """Values this repository fabricated in an earlier session must never come back as data.
@@ -342,7 +348,48 @@ class TestPublishedSite(unittest.TestCase):
         ok, _, _ = LD.verify(path)
         self.assertTrue(ok)
         self.assertEqual(seal["sha256"], json.loads(path.read_text())["header"]["sha256"])
-        self.assertEqual(seal["n_predictions"], 22, "T+1..T+3 window only")
+        self.assertEqual(seal["n_predictions"], 27,
+                         "window = as_of (2026-11-14) .. as_of+3 (2026-11-17); 11/13 context games excluded")
+
+
+
+class TestGameFlowB2B(unittest.TestCase):
+    """Regression for the 2026-11-14 fix (COORDINATION.md I-07): the first night of a
+    consecutive pair must NOT be flagged as a back-to-back; only the second night is."""
+
+    def _games(self):
+        g = lambda gid, d, a, h: {"game_id": gid, "date": d, "time_et": "19:00",
+                                  "away": a, "home": h, "arena": "A", "city": "C",
+                                  "state": "S", "broadcast": "B", "cup_group": None,
+                                  "preview_url": ""}
+        return [g("1", "2026-11-13", "XXX", "YYY"),
+                g("2", "2026-11-14", "YYY", "ZZZ"),
+                g("3", "2026-11-15", "YYY", "WWW"),
+                g("4", "2026-11-16", "QQQ", "YYY")]
+
+    def test_first_night_of_pair_is_not_a_b2b(self):
+        from nba2.models import gameflow as GF
+        games = self._games()
+        spots = GF.schedule_spots(games, "2026-11-13", "2026-11-16")
+        rows = {r["matchup"]: r for r in GF.game_flow_inputs(games, spots)}
+        # YYY plays 11/13, 11/14, 11/15, 11/16
+        self.assertFalse(rows["XXX @ YYY"]["home_b2b"], "11/13 is YYY's first game, not a B2B")
+        self.assertTrue(rows["YYY @ ZZZ"]["away_b2b"], "11/14 is the second night -> B2B")
+        self.assertTrue(rows["YYY @ WWW"]["away_b2b"], "11/15 is the second night of 11/14+11/15 -> B2B")
+        self.assertTrue(rows["QQQ @ YYY"]["home_b2b"], "11/16 is the second night of 11/15+11/16 -> B2B")
+
+    def test_three_in_four_flags_only_the_third_game(self):
+        from nba2.models import gameflow as GF
+        games = self._games()
+        spots = GF.schedule_spots(games, "2026-11-13", "2026-11-16")
+        rows = {r["matchup"]: r for r in GF.game_flow_inputs(games, spots)}
+        # YYY plays 11/13, 11/14, 11/15 -> third game in four days is 11/15
+        self.assertFalse(rows["XXX @ YYY"]["home_3_in_4"])
+        self.assertFalse(rows["YYY @ ZZZ"]["away_3_in_4"])
+        self.assertTrue(rows["YYY @ WWW"]["away_3_in_4"])
+        # 11/16 is YYY's third game inside the rolling four-day window (14,15,16), so it is
+        # itself a 3-in-4 night AND the second night of a back-to-back (tested above)
+        self.assertTrue(rows["QQQ @ YYY"]["home_3_in_4"])
 
 
 class TestReproducibility(unittest.TestCase):

@@ -22,17 +22,43 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def pick_window(slate: dict) -> tuple[str, str]:
-    """Games strictly after the snapshot date, through as_of + days_in_advance.
+    """Games from the snapshot's as-of date through as_of + days_in_advance.
 
-    Today's games are excluded from the sealed set: their injury report is already hours old, so
-    a line published for them now is not a forecast, it is a recap. They stay on the site as the
-    calibration slate.
+    The 2026-11-14 refresh moved this window's start forward by one day relative to the
+    original rule ('strictly after the snapshot date'). Rationale, in plain terms: the
+    original rule assumed the build ran on game day with an hours-old injury report, so
+    publishing that day's games would be recap, not forecast. This build runs the evening
+    before the first pick-window game tips (freshest input = the 5 p.m. ET day-before
+    filing; first sealed tip is 19:00 ET the next day), so every game from the as-of date
+    forward is a genuine forecast and every upcoming slate inside the 3-day cap gets picks.
+
+    The guard below is the safety net: if the seal is ever re-run when a sealed game is
+    closer than 6 hours to tip (or already started), it refuses. A recap must never enter
+    the pre-registration ledger.
     """
     as_of = slate["as_of"]
     days = slate["window"].get("days_in_advance", 3)
-    start = (datetime.strptime(as_of, "%Y-%m-%d").date() + timedelta(days=1)).isoformat()
+    start = as_of
     end = (datetime.strptime(as_of, "%Y-%m-%d").date() + timedelta(days=days)).isoformat()
     return start, min(end, slate["window"]["last_game_date"])
+
+
+MIN_HOURS_TO_TIP = 6.0
+
+
+def assert_games_in_future(window: list[dict], now_utc: datetime) -> None:
+    """Refuse to seal any game whose ET tip is closer than MIN_HOURS_TO_TIP."""
+    problems = []
+    for g in window:
+        tip = datetime.strptime(f"{g['date']} {g['time_et']}", "%Y-%m-%d %H:%M")
+        tip_utc = tip.replace(tzinfo=timezone(timedelta(hours=-5)))  # EST = UTC-5 (November)
+        hours = (tip_utc - now_utc).total_seconds() / 3600.0
+        if hours < MIN_HOURS_TO_TIP:
+            problems.append(f"{g['game_id']} tips {hours:.1f}h from now (< {MIN_HOURS_TO_TIP}h)")
+    if problems:
+        raise SystemExit(
+            "refusing to seal: " + "; ".join(problems) +
+            " — a prediction sealed this close to tip is a recap, not a forecast.")
 
 
 def verify_existing() -> int:
@@ -66,6 +92,7 @@ def main() -> dict:
     games, slate = LN.load_slate(ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE)
     start, end = pick_window(slate)
     window = [g for g in games if start <= g["date"] <= end]
+    assert_games_in_future(window, datetime.now(timezone.utc))
     preds = LD.predictions_from_lines(LN.price_slate(model, window, {}), model)
     path = ROOT / config.DATA_DIR / "ledger" / f"sealed-{slate['as_of']}.json"
     hdr = LD.seal(preds, path, note=(

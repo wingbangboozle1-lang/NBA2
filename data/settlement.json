@@ -1,16 +1,31 @@
 {
-  "settled_at_utc": "2026-11-13T22:56:25+00:00",
-  "seal": {
-    "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
-    "n_predictions": 22
-  },
-  "result": {
-    "games_expected": 22,
-    "games_settled": 0,
-    "metrics": {},
-    "per_game": [],
-    "status": "PENDING \u2014 no official final scores in the repository"
-  },
-  "gate_measurements": {},
-  "note": "PENDING: no official final-score snapshot in data/raw/. Metrics stay unmeasured rather than assumed."
+  "settled_at_utc": "2026-11-14T00:58:54+00:00",
+  "finals_snapshot": null,
+  "ledgers": [
+    {
+      "ledger": "sealed-2026-11-13.json",
+      "seal": {
+        "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
+        "n_predictions": 22
+      },
+      "status": "PENDING \u2014 no official final scores in the repository",
+      "games_settled": 0,
+      "games_expected": 22,
+      "metrics": {},
+      "gate_measurements": {}
+    },
+    {
+      "ledger": "sealed-2026-11-14.json",
+      "seal": {
+        "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
+        "n_predictions": 27
+      },
+      "status": "PENDING \u2014 no official final scores in the repository",
+      "games_settled": 0,
+      "games_expected": 27,
+      "metrics": {},
+      "gate_measurements": {}
+    }
+  ],
+  "note": "PENDING where no official final-score snapshot covers the ledger's games. Metrics stay unmeasured rather than assumed."
 }

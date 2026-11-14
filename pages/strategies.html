@@ -13,14 +13,14 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html" class="active">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html" class="active">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Strategies</h2><p>Hypotheses, gates and scores. Empty scores are the honest state of a project that has settled nothing.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-14 01:07 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="leaderboard" data-rows="9">
 <h2>Strategy leaderboard</h2>
 <p class="blurb">Nothing is ranked, because nothing has been measured yet — and an early-season leaderboard built on 12 games of standings is a noise leaderboard by construction. Every row is scored the moment its gates have data; until then the honest entry is blank.</p>
@@ -166,7 +166,7 @@
 <p class="tablenote">nba2/models/leaderboard.py; weights in nba2/config.py::REWARD_WEIGHTS</p>
 </section><section class="card table-card" id="gates" data-rows="10">
 <h2>Validation gates — specification</h2>
-<p class="blurb">A strategy must clear all ten to be promoted and to receive rewards. Nine of the ten are currently blocked by missing data, which is the real status of this project and the reason the leaderboard is empty.</p>
+<p class="blurb">A strategy must clear all ten to be promoted and to receive rewards. Most are still blocked by missing data; G-04 now has measured evidence and FAILS it, G-07 is measured PASS in the backtest tree — which is the real status of this project and the reason the leaderboard pays nothing.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Validation gates — specification</caption><thead><tr>
 <th scope="col">Gate</th>
 <th scope="col">Name</th>
@@ -185,7 +185,7 @@
 <td>At -110 a 55% bettor needs roughly 300 bets before the standard error (sqrt(p(1-p)/n) ~ 2.9%) stops swamping a 5-point edge. Below this the leaderboard is ranking noise.</td>
 <td>derived from the binomial standard error at p=0.55 — see research/05-skill-vs-luck.md</td>
 <td>blocked</td>
-<td>No settled bets yet. Ledger opens with the 2026-11-13 slate.</td>
+<td>No settled bets yet. The ledger opened with the 2026-11-13 slate and was re-sealed for 2026-11-14..17.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
 </tr>
@@ -220,8 +220,8 @@
 <td>0.3 points MAE</td>
 <td>A line that only reproduces the standings&#x27; scoring margin adds no work; if shrinkage and schedule adjustment do not reduce error, delete the model.</td>
 <td>derived from the snapshot baselines in nba2.models.gates</td>
-<td>blocked</td>
-<td>Needs settled games with official final scores.</td>
+<td>evaluated — measured FAIL</td>
+<td>Measured evidence now exists (backtest tree, 139 official finals 2026-10-20 to 11-12, leakage-asserted walk-forward): margin MAE 12.17 vs the 0.0-spread baseline 13.27 — better, p=0.35; straight-up 62.6% vs point-differential baseline 64.0% — NOT better. The 0.30-pt bar is not cleared: G-04 FAILS on measured data. See backtest/pages/validation-gates.html.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
 </tr>
@@ -256,8 +256,8 @@
 <td>0.25 relative degradation</td>
 <td>Ratings built from a standings snapshot include future games for the teams that played earlier; that leak is silent and fatal.</td>
 <td>derived from our own ingest design (see research/01-line-origination.md &#x27;point-in-time&#x27;)</td>
-<td>at risk</td>
-<td>The current snapshot is a single as-of standings table, which is NOT point-in-time for games inside the week it covers. Backtests from this table would leak; only the forward ledger is clean.</td>
+<td>evaluable — measured PASS (backtest tree); root fit still snapshot-based</td>
+<td>The current snapshot is a single as-of standings table, which is NOT point-in-time for games inside the week it covers — that caveat still applies to the root ratings fit. The dedicated walk-forward re-implementation (backtest/engine/walkforward.py, leakage asserted by test) MEASURED PASS on 139 official finals: test MAE does not exceed full-window MAE by more than the 25% threshold. See backtest/pages/walk-forward.html.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
 </tr>
@@ -301,7 +301,7 @@
 <p class="tablenote">nba2/config.py::GATES</p>
 </section><section class="card table-card" id="gate_matrix" data-rows="90">
 <h2>Gate-by-gate results (9 strategies × 10 gates)</h2>
-<p class="blurb">PASS requires a measurement. BLOCKED means the input does not exist; AT-RISK means the input exists but is contaminated for this use. Neither is a 0 and neither is a pass.</p>
+<p class="blurb">PASS requires a measurement. BLOCKED means the input does not exist; AT-RISK means the input exists but is contaminated for this use. Neither is a 0 and neither is a pass. The measured-skill backtest tree (backtest/) now grades G-04 (measured FAIL) and G-07 (measured PASS) on 139 official finals.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Gate-by-gate results (9 strategies × 10 gates)</caption><thead><tr>
 <th scope="col">Strategy</th>
 <th scope="col">Gate</th>

@@ -27,20 +27,19 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (18 HTML pages: 1 landing page + 17 subpages; 33 tables, 915 rows at
-this snapshot) are rendered from [`data/site.json`](data/site.json), which is itself generated
-only from committed snapshots:
+`index.html` + `pages/**` (17 pages, 33 tables, 992 rows) are rendered from
+[`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
 |---|---|
 | Dashboard | KPIs, slate, slate irregularities |
 | Executive Summary | one screen: what exists, what is proven, what blocks it |
-| Picks (3-day slate) | lean + trigger + 0% stake per game, for 2026-11-14 → 11-16 |
+| Picks (3-day slate) | lean + trigger + 0% stake per game, for 2026-11-14 → 11-17 |
 | Originated Lines | every game: both base ratings, consensus margin, spread, total, P(win), fair odds, sensitivity stability, tier — plus the cross-document corroboration table |
 | Strategy Leaderboard | 9 strategies × 10 gates, tiers, reward allocation |
 | Correlation & Parlays | correlation register; same-game parlays priced over a swept ρ band; cost-of-stacking arithmetic |
 | Player Props & Combos | pricing model present, inputs absent — every row blank by policy |
-| Injuries & Rotation | 95 official report rows, rotation-body arithmetic, leader cross-check |
+| Injuries & Rotation | 122 official report rows (11/13 19:30 ET release, incl. first 11/14 statuses), rotation-body arithmetic, leader cross-check |
 | Game Flow | schedule-spot load from official dates; in-game columns blank |
 | Methodology & Parameters | fitted σ/HCA, every tunable number with its status and band, ratings, skill/luck |
 | Requirements · Repo Review · Open Questions · Suggestions Queue | the registers, kept as JSON in the repo |
@@ -59,7 +58,7 @@ only from committed snapshots:
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 55 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 62 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
@@ -110,13 +109,15 @@ package version nobody pinned.
 
 ## How a line is made
 
-1. **Inputs** — committed snapshots: the official slate (31 games, 11/13–11/16, official game IDs,
-   tip times cross-checked against a second official document), the official injury report
-   (95 rows, two revisions compared), and a team ratings table whose records are cross-referenced
-   against NBA.com captures. **Cross-check coverage is unresolved in the published documentation:**
-   the raw snapshot metadata says 30/30 records match, while the emitted ratings rows say the NBA.com
-   game-card cross-check covers 28/30. Until row-level evidence identifies and resolves the difference,
-   do not describe all 30 records as independently NBA-verified.
+1. **Inputs** — committed snapshots (refreshed 2026-11-14 by session `arena/1ec4f9bd-nba2`): the
+   official slate (36 games, 11/13 context + pick window 11/14–11/17, official game IDs; every field of
+   the 31 carried-forward games re-checked against a fresh retrieval, 0 mismatches), the official
+   injury report (122 rows from the freshest release at build time, 11/13 19:30 ET, which now carries
+   the first real 11/14 statuses; three revisions of 11/13 releases compared across sessions), and a
+   team ratings table whose win-loss column is cross-checked three ways: against NBA.com game cards
+   (28/30 visible in that capture — TOR/WAS flagged FLAG-SLATE-02), against the prior session's
+   independent read (30/30), and re-read from the upstream standings page on 2026-11-14 (30/30 identical,
+   `data/raw/ratings_recheck_2026-11-14.json`).
 2. **Calibration** — margin volatility σ and home-court advantage are **fitted** by least squares to
    the committed win totals (σ ≈ 13.58 pts, HCA ≈ 1.53 pts; RMSE 1.31 wins vs 2.78 for a .500
    baseline). These are fitted from the committed snapshot, not from a separately described
@@ -138,7 +139,7 @@ package version nobody pinned.
 |---|---|
 | No odds feed | no CLV, no ROI, no stake sizing (0% stake is policy, not a placeholder); gates G-02/G-05/G-09 unevaluable |
 | No player-level data (`stats.nba.com` unreachable here) | injury **impact**, props, prop combos, same-player correlation: blank |
-| No game-level results history | σ/HCA/correlations cannot be re-fit point-in-time; gate G-07 is AT-RISK by construction |
+| Game-level results history — **resolved in the backtest tree** (2026-11-14) | 155 official final scores (2026-10-20 → 11-12) now back a leakage-tested walk-forward ([backtest/](backtest/)); G-04 measured FAIL, G-07 measured PASS; the root site's σ/HCA/correlations are still snapshot-fitted pending owner ratification (S-04) |
 | Injury reports are same-day | a T-3 line is structurally availability-blind, so Tier A is suppressed for the whole slate |
 | Two models, one slate | 21 of 23 matched games disagree by >1.5 pts (3 favour opposite sides) — published, not averaged |
 | Owner decisions pending | 11 thresholds unratified; the reward pool is 100% unallocated until gates pass |
@@ -148,15 +149,18 @@ has settled. That is the design working, not a missing feature.
 
 ## Data window
 
-`as_of 2026-11-13`. Slate `2026-11-13 → 2026-11-16` (31 games: 9 Emirates NBA Cup group games + 22
-regular-season). Sealed pick window = `2026-11-14 → 2026-11-16` (22 games); today's games stay on the
-site as the calibration set because their injury report was already hours old when this was built.
-Availability data refreshes around the frozen seal: the 11/13 19:30 ET official release
-([PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf)) carries the
-first day-before designations for the 11/14 slate (5 of 10 team-slots filed; 11/15–16 still NOT YET
-SUBMITTED) and is published on [the injuries page](pages/injuries.html) with per-date coverage.
-Snapshots are point-in-time captures, not live feeds — read `meta.as_of` before trusting any number,
-and see [the sources page](pages/sources.html) for retrieval timestamps.
+`as_of 2026-11-14` (build ran the evening of 2026-11-13 ET, ~01:05 UTC). Slate
+`2026-11-13 → 2026-11-17` (36 games: the 9 Emirates NBA Cup group games on 11/13 are day-before
+context — already live or completed at retrieval — plus 27 pick-window games). Sealed pick window =
+`2026-11-14 → 2026-11-17` (27 games): every upcoming slate within the brief's 3-day maximum gets a
+pick. The seal refuses to run if any sealed game is within 6 hours of tip, so a recap can never enter
+the pre-registration ledger. Availability data refreshes around the frozen seal: the 11/13 19:30 ET
+official release ([PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf))
+carries the first day-before designations for the 11/14 slate (5 of 10 team-slots filed; 11/15-17 still
+NOT YET SUBMITTED) and is published on [the injuries page](pages/injuries.html) with per-date coverage;
+the nightly ingest workflow archives later releases without touching the sealed ledger.
+Snapshots are point-in-time captures, not live feeds — read `meta.as_of`
+before trusting any number, and see [the sources page](pages/sources.html) for retrieval timestamps.
 
 ## Repo conventions
 

@@ -13,14 +13,14 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html" class="active">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html" class="active">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Sources</h2><p>What we read, when, and what we could not read at all.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-14 01:07 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="sources" data-rows="17">
 <h2>Source register + verification log</h2>
 <p class="blurb">Retrieval times are UTC. Anything marked &#x27;no — blocked&#x27; contributed no value to any table on this site.</p>
@@ -38,7 +38,7 @@
 <td>https://www.nba.com/schedule</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC.</td>
+<td>Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. 2026-11-13 capture 22:33 UTC; re-verified 2026-11-14 ~01:05 UTC with 0 field mismatches across the 31 carried-forward games.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -64,11 +64,11 @@
 </tr>
 <tr id="nba_injury_pdf">
 <td>nba_injury_pdf</td>
-<td>NBA Official Injury Report 11/13 16:15 ET (official)</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
+<td>NBA Official Injury Report 11/13 19:30 ET (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason.</td>
+<td>Freshest release at build time (supersedes the 16:15 capture, which stays committed). Columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. 122 rows transcribed (session arena/1ec4f9bd-nba2, retrieved ~01:05 UTC).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -78,7 +78,7 @@
 <td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json.</td>
+<td>Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC (session arena/5a5fa7c4-nba2); transcript at data/raw/injury_report_2026-11-14_daybefore.json. Same document as nba_injury_pdf; two independent transcriptions exist and are cross-checked.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -88,7 +88,7 @@
 <td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
 <td>Third-party (not NBA-official)</td>
 <td>yes</td>
-<td>Conference + Expanded standings. W-L cross-checks against NBA.com for 28/30 teams.</td>
+<td>Conference + Expanded standings. W-L cross-checked against NBA.com for 28/30 teams in the original capture (TOR/WAS not visible there); re-read 2026-11-14: all 30 W-L identical (ratings_recheck_2026-11-14.json).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
 </tr>
@@ -203,7 +203,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">retrieved 2026-11-13 22:25–22:40 UTC</p>
+<p class="tablenote">retrieved 2026-11-13 22:25–22:40 UTC (prior sessions) and 2026-11-14 ~01:05 UTC (this refresh)</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

@@ -1,0 +1,115 @@
+{
+ "dataset": "official_game_times_and_matchups_from_injury_report",
+ "purpose": "Second-official-document corroboration of the slate: the referee-operations injury report prints Game Date / Game Time / Matchup on every row, independently confirming which games exist and their ET tip times.",
+ "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+ "retrieved_at_utc": "2026-11-14T01:05:00Z",
+ "why_this_matters": "FLAG-SLATE-04 exists because www.nba.com/schedule prints tip times as a loose list. This document attaches the time to the matchup in the same table row, so agreement between the two documents upgrades the tip time to a two-source value.",
+ "reading_rules": [
+  "A time is recorded only when the printed row for that matchup carries the time cell itself.",
+  "All 14 games in this release carry an explicit time cell, so all 14 times are captured.",
+  "Cross-check: all 14 times equal the schedule capture; zero conflicts."
+ ],
+ "time_convention": "Stored in 24h ET, converted from the printed '(ET)' label: 07:00 (ET) -> 19:00, 10:30 (ET) -> 22:30. The document prints evening times on a 12-hour clock with an explicit (ET) suffix.",
+ "coverage": {
+  "games_confirmed_in_document": 14,
+  "times_confirmed": 14,
+  "matchups_confirmed_time_lost_to_page_break": 0,
+  "dates_covered": [
+   "2026-11-13",
+   "2026-11-14"
+  ],
+  "not_covered": "2026-11-15..17 games are absent from the 11/13 evening release; they appear in the reports for their own game day, which had not been published at build time."
+ },
+ "columns": [
+  "date",
+  "matchup",
+  "time_et",
+  "time_captured"
+ ],
+ "records": [
+  [
+   "2026-11-13",
+   "MIL@ORL",
+   "19:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "NYK@IND",
+   "19:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "ATL@CHI",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "CLE@MIA",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "MEM@NOP",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "UTA@HOU",
+   "20:30",
+   true
+  ],
+  [
+   "2026-11-13",
+   "GSW@SAS",
+   "21:30",
+   true
+  ],
+  [
+   "2026-11-13",
+   "POR@SAC",
+   "22:00",
+   true
+  ],
+  [
+   "2026-11-13",
+   "OKC@LAC",
+   "22:30",
+   true
+  ],
+  [
+   "2026-11-14",
+   "DEN@NOP",
+   "19:00",
+   true
+  ],
+  [
+   "2026-11-14",
+   "DAL@CLE",
+   "19:30",
+   true
+  ],
+  [
+   "2026-11-14",
+   "BKN@MEM",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-14",
+   "CHI@MIN",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-14",
+   "DET@MIA",
+   "20:00",
+   true
+  ]
+ ]
+}
