@@ -112,7 +112,15 @@ class Calibration:
     search_grid: str
 
     def as_dict(self):
-        return self.__dict__.copy()
+        d = self.__dict__.copy()
+        # Published to 6 dp for byte-stable serialisation: mu comes from a 200-step bisection
+        # over math.erf, whose last ulp differs across libm builds (arena sandbox vs GitHub
+        # runners), and the resulting 17-digit repr made the Pages parity check fail on every
+        # environment change (Publish runs for PRs #34/#39/#40). The computation keeps full
+        # precision — this rounding touches only the published artefact, and 6 dp is far below
+        # the 2 dp at which any downstream value is displayed or compared.
+        d["league_offset"] = round(d["league_offset"], 6)
+        return d
 
 
 def _fit_sigma_hca(ratings: dict, gp: dict, wins: dict):
