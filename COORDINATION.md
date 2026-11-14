@@ -1773,3 +1773,92 @@ logged as a change request instead of being edited.
 fetched in this session and can be quoted; a blank stays blank and is flagged; the sealed
 ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged and unverified items do not
 block the merge but are published on the Flagged for Review page with their source link.
+
+---
+
+## Session `arena/6650be4d-nba2` — final integration: live re-verification, defect repair, site consolidation (result)
+
+**Base:** `main` @ `d510313`, rebased onto `main` @ `d6c5bdf` (PR #48 merged while this session worked).
+**Branch:** `arena/6650be4d-nba2` (platform-fixed; no branch switch, no worktree).
+
+### Scope amendment (recorded before it was acted on)
+
+The claim above was written when the publication topology was "the v1 root tree is the Pages root".
+While this session worked, `arena/7f906d9d-nba2` (PR #48) switched the repository's Pages source to
+GitHub Actions, so **the v2 `site/` tree is now what a reader receives at
+`https://wingbangboozle1-lang.github.io/NBA2/`** — confirmed by probe, not assumed
+(`/NBA2/data/teams.json` → 200 with v2 content; `/NBA2/pages/session-audit.html` → 404).
+
+That session's scope was `COORDINATION.md` + the Pages repository setting; it did not touch
+`nba2/v2/**` or `site/**`. The consolidation task (I-04/I-05) therefore cannot be completed without
+editing the tree that is actually published. This session therefore **extends its own scope** to
+`nba2/v2/**` and `site/**` (regenerated artefacts), and records that here first. Nothing owned by
+another session was edited: `site/` is generated output, `nba2/v2/` had no live owner, and the v1
+tree (`index.html`, `pages/**`, `data/site.json`) remains this session's original scope.
+
+### Task board — final state
+
+| ID | Task | Status | Verification |
+|---|---|---|---|
+| I-01 | Claim + push before work | done | this board is append-only |
+| I-02 | Re-verify the published slate / records / injuries against **live** official sources | done | `audit/2026-11-14-final/` — capture script, raw capture JSON, verification report |
+| I-03 | Repair the 7 inherited crosscheck FAILs, or prove each is a false alarm | done | `tools/crosscheck_site.py`: **94 checks, 86 pass, 0 FAIL, 8 info** (was 91 / 7 FAIL) |
+| I-04 | Canonical published surface + explicit map of every tree | done | `site/` is the only published tree; the map is in `README.md` and on the published repo-review page |
+| I-05 | The Pages workflow publishes what is actually published | done | `pages.yml` publishes `site/`; the live root was re-fetched after the deploy |
+| I-06 | Suggestions review path on the canonical site | done | `suggestions.html` + `decision-queue.html` (accept / reject / defer per item); nothing implemented on the owner's behalf |
+| I-07 | Questions register: only what this session's evidence newly makes answerable | done | Q-15…Q-17 added; Q-01…Q-14 untouched |
+| I-08 | Executive summary refreshed to the verified current state | done | every figure on it is computed at build time |
+| I-09 | PR → `main`, merge, confirm Pages deploy, re-fetch the live site | done | recorded in the completion block below |
+| I-10 | Handoff of PR #21 | done | PR #21 is stale and superseded in substance by merged PR #38; it is closed by this merge, not merged |
+
+### The seven inherited crosscheck FAILs — how each was resolved
+
+| ID | Adjudication | Fix |
+|---|---|---|
+| CC-SNAP-13 | **real, and worse than described** | the snapshot's four self-check labels were wrong in both directions. The league-wide sums DO balance (close 99=99, blowout 88=88) although the label said FAIL; the per-team bound close+blowout ≤ games played does NOT hold — 18 of 30 clubs violate it — although the label said PASS. The snapshot now carries a correction block with the original text verbatim, and the checker matches each label to its own recomputation |
+| CC-PUB-05 | **the checker's rule was too narrow** | the corroboration verdict is now phrased so the table's own rows and its title agree, and the "not covered" wording names the release that does cover |
+| CC-DER-05 | **real** | the ratings table now has two *independent* W-L columns: the 11/13 third-party snapshot the model runs on, and the league's own 11/14 table. They differ for 18 clubs because nine games were played in between — an aged snapshot, not a transcription error — and the guard can now actually fire |
+| CC-GATE-02 | **real** | the leaderboard reports AT-RISK separately from BLOCKED (8 blocked + 2 at-risk is no longer printed as 10 blocked) |
+| CC-SEAL-04 | **the checker's rule was wrong** | a game dated *on* the snapshot date is legal — the slate is taken on the morning of that date. Only a game dated *before* it is impossible to have sealed. The rule and its reason are recorded in the checker |
+| CC-X-00 | **real** | the Washington key is now `WAS` everywhere, including the `originated/` tree's data and its rendered pages |
+| CC-DOC-01 | **real** | README counts are regenerated from the artefacts (19 pages / 45 tables / 1,296 rows) |
+
+### What this session fetched and committed
+
+| Artefact | What it is | Official source |
+|---|---|---|
+| `data/raw/official_standings_2026-11-14.json` | all 30 clubs' W-L + HOME/ROAD/CONF/DIV, read after the nine 11/13 games | https://www.nba.com/standings |
+| `data/raw/injury_report_2026-11-14_0500ET.json` | 49 rows — 26 player-status rows + 23 team rows the league had not received; team printed on every row | https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf |
+| `data/raw/finals_2026-11-13.json` | the nine official final scores for 2026-11-13 | https://www.nba.com/schedule?date=2026-11-14 |
+| `audit/2026-11-14-final/capture_official.py` | the reproducible capture + comparison utility | — |
+| `audit/2026-11-14-final/official_capture_2026-11-14.json` | 36 slate games, 30 standings rows, nine finals, 49 injury rows | — |
+| `audit/2026-11-14-final/verification_report.md` | the field-by-field comparison report | — |
+| `audit/2026-11-14-final/promote_snapshots.py` | the deterministic snapshot-promotion utility | — |
+
+### Findings that are published rather than silently fixed
+
+| Finding | Where it is published |
+|---|---|
+| Caleb Martin was filed under Cleveland in the 11/13 19:30 ET transcript; the official 11/14 05:00 a.m ET release prints him under Dallas, and Cleveland is NOT YET SUBMITTED | F-030 on the Flagged page, and the release-to-release delta on the Injuries page |
+| The ratings snapshot's own consistency labels were wrong (both directions) | F-031, the snapshot's own correction block, and the published self-check table on the Methodology page |
+| The official /schedule card and the game page disagree on the HOU @ MIA tip time (8:00 PM vs 7:30 PM) | F-032 — the game's own page is followed |
+| The model's team inputs are dated 2026-11-13 and are one game stale for the 18 clubs that played | F-033, and the current official table is published beside them |
+| The published pick window stopped on 11/16 and included an already-played date | F-034 — the window is now read from the committed snapshot and reaches 11/17 |
+
+### Verification run at the end of this session
+
+* `python -m unittest discover -s nba2/tests -t .` — **64 pass**
+* `python -m unittest discover -s nba2/v2 -t . -p 'test_*.py'` — **59 pass**
+* `python -m unittest discover -s backtest/tests -t .` — **49 pass**
+* `python -m nba2.pipeline.lint` — **1,296 rows across 45 tables**, every row sourced, every blank explained
+* `python -m nba2.v2.check` — **0 structural, 0 semantic**
+* `python3 tools/crosscheck_site.py` — **94 checks: 86 pass, 0 FAIL, 8 info**
+* `python3 tools/check_links_all.py` — **107 HTML files, 4,658 internal links, all resolve**
+* rebuild parity: `data/site.json`, `index.html`, `pages/**`, `site/**`, `data/v2/**`, `backtest/**` are byte-identical to a rebuild of the committed inputs
+
+### Rules this session held itself to
+
+a row is only "verified" if the official document was fetched in this session and can be quoted; a
+blank stays blank and is flagged; the sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten;
+flagged and unverified items do not block the merge but are published on the Flagged for Review page
+with their source link.
