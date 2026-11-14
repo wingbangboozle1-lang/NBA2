@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 """Fail-closed ingestion of the official NBA inputs this repository is built from.
 
+Position in the repo, stated plainly so nobody duplicates it: nightly ingest and settlement
+belong to `nba2/pipeline/refresh.py` and its `refresh.yml` workflow (session
+`arena/5a5fa7c4-nba2`, PRs #24/#25). This file exists because two things that pipeline does not
+cover were still unanswered:
+
+1. **the measurement** — every audit here says "unreachable from the build environment", and the
+   build environment has only ever been this sandbox. `--probe` asks the same four endpoints from
+   wherever it is run, in one shot, and records status/bytes/hash so the claim becomes dated
+   evidence instead of folklore;
+2. **the forward slate** — `refresh.py` archives injury PDFs and fetches *final* scores; nothing
+   in the repo fetches the *upcoming* games into the slate shape the pipeline reads. `--capture`
+   does that, fail-closed.
+
+There is deliberately no workflow here that schedules this tool: two nightly jobs racing over the
+same endpoints is how you get two "official" snapshots that disagree by 30 seconds.
+
 Two modes, deliberately separated:
 
     --probe      Ask each official endpoint whether it answers at all, and record the answer:

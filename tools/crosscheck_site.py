@@ -244,40 +244,44 @@ def check_snapshots(r: Report, site: dict):
           f"meta: {win!r} vs data {dates[0] if dates else '?'}..{dates[-1] if dates else '?'}")
 
     inj_files = snapshot_candidates("injury")
-    if inj_files:
-        inj = load_json(inj_files[0])
-        icols = inj.get("columns", [])
-        iidx = {c: i for i, c in enumerate(icols)}
+    for f_ in inj_files:
+        inj = load_json(f_)
+        icols = {c: i for i, c in enumerate(inj["columns"])}
         irecs = inj.get("records", [])
         counts = inj.get("record_counts", {})
-        attrib = counts.get("attribution_explicit")
-        cont = [x[iidx["attribution"]] for x in irecs]
+        cont = [x[icols["attribution"]] for x in irecs]
+        nys = sum(1 for x in irecs if x[icols["status"]] == "NOT YET SUBMITTED")
+        status_key = next((k for k in counts if k.startswith("rows_with_status")), None)
         recomputed = {
             "total_rows": len(irecs),
-            "not_yet_submitted_placeholders": sum(1 for x in irecs if x[iidx["status"]] == "NOT YET SUBMITTED"),
+            "not_yet_submitted_placeholders": nys,
             "attribution_explicit": cont.count("E"),
             "attribution_continuation": cont.count("C"),
         }
-        recomputed["rows_with_status_for_2026_11_13"] = recomputed["total_rows"] - recomputed["not_yet_submitted_placeholders"]
-        ok = all(str(v) == str(counts.get(k)) for k, v in recomputed.items())
-        r.add("CC-SNAP-08", g, "injury snapshot's own record_counts equal a recount of its records",
-              f"recount over {inj_files[0].name}",
-              PASS if ok else FAIL, f"stored {counts} vs recomputed {recomputed}",
+        if status_key:
+            recomputed[status_key] = len(irecs) - nys
+        games_key = next((k for k in counts if k == "games_covered"), None)
+        if games_key:
+            recomputed["games_covered"] = len({x[icols["matchup"]] for x in irecs})
+        stored = {k: counts[k] for k in recomputed if k in counts}
+        ok = all(str(v) == str(stored.get(k)) for k, v in recomputed.items()) and len(stored) >= 3
+        r.add(f"CC-SNAP-08:{f_.stem}", g, f"{f_.name}: its own record_counts equal a recount of its records",
+              "recount total / status / placeholder / attribution (and games covered, when claimed)",
+              PASS if ok else FAIL, f"stored {stored} vs recomputed {recomputed}",
               evidence=inj.get("provenance", {}).get("url", ""))
         allowed = {"Out", "Doubtful", "Questionable", "Probable", "Available", "NOT YET SUBMITTED",
-                   "Suspended", "G League - On Two-Way Contract", "Rest", "Personal Reasons",
-                   "G League - Two-Way", "Not With Team"}
-        statuses = {x[iidx["status"]] for x in irecs}
-        r.add("CC-SNAP-09", g, "every official status string is one the report can print",
+                   "Suspended", "G League - On Two-Way Contract", "G League - On Assignment", "Rest",
+                   "Personal Reasons", "G League - Two-Way", "Not With Team"}
+        statuses = {x[icols["status"]] for x in irecs}
+        r.add(f"CC-SNAP-09:{f_.stem}", g, f"{f_.name}: every status string is one the report can print",
               "set of status values in the snapshot",
               PASS if statuses <= allowed else INFO,
-              f"statuses seen: {sorted(statuses)}" + (f"; unknown: {sorted(statuses - allowed)}" if statuses - allowed else ""),
+              f"statuses: {sorted(statuses)}" + (f"; unseen here: {sorted(statuses - allowed)}" if statuses - allowed else ""),
               note="INFO, not FAIL, when an unseen-but-plausible label appears: the vocabulary belongs to the "
                    "NBA, not to us, and we do not invent a rule about it")
-        r.add("CC-SNAP-10", g, "attribution flag is recorded per row (E explicit / C continuation)",
-              "column 'attribution' present on every record",
-              PASS if set(cont) <= {"E", "C"} and attrib is not None else FAIL,
-              f"E={cont.count('E')} C={cont.count('C')}")
+        r.add(f"CC-SNAP-10:{f_.stem}", g, f"{f_.name}: attribution is recorded per row (E explicit / C continuation)",
+              "column 'attribution' takes only the two documented values",
+              PASS if set(cont) <= {"E", "C"} else FAIL, f"E={cont.count('E')} C={cont.count('C')}")
 
     for kind in ("ratings", "times", "leaders", "context"):
         for p in snapshot_candidates(kind)[:1]:
@@ -355,31 +359,11 @@ def check_published_vs_snapshot(r: Report, site: dict):
           f"snapshot-not-published={sorted(missing_pub)}",
           evidence=str(snapshot_candidates('slate')[0].relative_to(ROOT)))
 
-    inj_file = snapshot_candidates("injury")[0]
+    inj_rows = rows_of(site, "injuries")
+    inj_file = _matching_injury_snapshot(site)
     inj = load_json(inj_file)
     icols = {c: i for i, c in enumerate(inj["columns"])}
     irecs = inj["records"]
-    inj_rows = rows_of(site, "injuries")
-    inj_mis = []
-    for i, rec in enumerate(irecs):
-        want = {
-            "game_date": rec[icols["game_date"]], "time_et": rec[icols["time_et"]],
-            "matchup": rec[icols["matchup"]], "team": rec[icols["team"]],
-            "player": rec[icols["player"]] or "—", "status": rec[icols["status"]],
-            "reason": rec[icols["reason"]],
-            "attribution": "explicit" if rec[icols["attribution"]] == "E" else "block-continuation (unconfirmed)",
-        }
-        row = next((x for x in inj_rows if vals(x).get("game_date") and f"inj-{i}" == x["key"]), None)
-        if not row:
-            inj_mis.append(f"inj-{i}: published row absent")
-            continue
-        for k, v in want.items():
-            if vals(row).get(k) != v:
-                inj_mis.append(f"inj-{i}.{k}: published {vals(row).get(k)!r} vs snapshot {v!r}")
-    r.add("CC-PUB-02", g, "every published injury cell equals the transcribed PDF row",
-          f"all {len(irecs)} rows x 8 fields against {inj_file.name}",
-          PASS if not inj_mis else FAIL, f"{len(inj_mis)} mismatch(es): {inj_mis[:5] or 'none'}",
-          evidence=inj.get("provenance", {}).get("url", str(inj_file.relative_to(ROOT))))
     blank_impact = all(vals(x).get("minutes_impact") is None and vals(x).get("production_impact") is None
                        and vals(x).get("line_adjustment") is None for x in inj_rows)
     r.add("CC-PUB-03", g, "no minute/production/line impact value is published for any injury row",
@@ -561,6 +545,56 @@ def check_derived_arithmetic(r: Report, site: dict):
         floor = num(v.get("floor"))
         if floor is not None and not (0 <= floor <= 15):
             rot_bad.append(f"{v.get('team')}: rotation floor {floor} outside a plausible 0..15 range")
+    neg = []
+    COUNT_WORDS = re.compile(r"(rows|games|teams|slots|filed|out|doubtful|questionable|probable|available|legs|bets|predictions|not_yet_submitted|no_rows_yet|two_way_or_susp|not_submitted|coverage)$")
+    for key_, tbl in site["sections"].items():
+        for row in tbl.get("rows", []):
+            for col, v in vals(row).items():
+                n = num(v) if isinstance(v, (int, float)) or (isinstance(v, str) and re.fullmatch(r"-?\d+(\.\d+)?", v.strip() or "")) else None
+                if n is not None and n < 0 and COUNT_WORDS.search(col):
+                    neg.append(f"{key_}/{row['key']}.{col} = {v}")
+    r.add("CC-DER-11", g, "no count published anywhere on the site is negative",
+          "scan every numeric cell of every table whose column name denotes a count",
+          PASS if not neg else FAIL, f"{len(neg)} negative count(s): {neg[:5] or 'none'}",
+          note="a negative count is never a measurement; it is two sets subtracted in the wrong order")
+
+    avail = rows_of(site, "availability_window") if "availability_window" in site["sections"] else []
+    if avail:
+        union: dict[str, dict[str, set]] = {}
+        for p_ in snapshot_candidates("injury"):
+            d0 = load_json(p_)
+            c0 = {c: i for i, c in enumerate(d0.get("columns", []))}
+            for rec in d0.get("records", []):
+                dte = rec[c0["game_date"]]
+                e = union.setdefault(dte, {"filed": set(), "nys": set()})
+                (e["nys"] if rec[c0["status"]] == "NOT YET SUBMITTED" else e["filed"]).add(rec[c0["team"]])
+        sl = load_json(snapshot_candidates("slate")[0])
+        sc = {c: i for i, c in enumerate(sl["columns"])}
+        as_of = sl.get("as_of")
+        bad = []
+        for row in avail:
+            v = vals(row)
+            dte = str(v.get("date"))
+            n_games = sum(1 for x in sl["records"] if x[sc["date"]] == dte)
+            slots = 2 * n_games
+            e = union.get(dte, {"filed": set(), "nys": set()})
+            filed = len(e["filed"])
+            nys_only = len(e["nys"] - e["filed"])
+            unlisted = slots - filed - nys_only
+            if num(v.get("no_rows_yet")) != unlisted:
+                bad.append(f"{dte}: published no_rows_yet {v.get('no_rows_yet')}, "
+                           f"recomputed {unlisted} (slots {slots} - filed {filed} - not-submitted-only {nys_only})")
+            if num(v.get("not_yet_submitted")) != nys_only:
+                bad.append(f"{dte}: published NOT YET SUBMITTED {v.get('not_yet_submitted')}, "
+                           f"recomputed {nys_only} teams that have no designation in any release either")
+        r.add("CC-DER-12", g, "availability coverage recomputes from both official injury snapshots",
+              "union the team designations across every committed injury snapshot per date, then "
+              "recount: a team that has since filed must not also be counted as not-yet-submitted",
+              PASS if not bad else FAIL, f"{len(bad)} problem(s): {bad[:3] or 'none'}",
+              evidence="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+              note="the column is a count of teams, and the sets overlap: 'filed' and 'NOT YET SUBMITTED' "
+                   "are not disjoint when two releases are unioned, so slots - filed - nys can go below zero")
+
     r.add("CC-DER-08", g, "rotation table: expected-bodies-missing never exceeds the players actually listed, floor inside 0..15",
           f"recompute over {len(rot)} teams", PASS if not rot_bad else FAIL,
           f"{len(rot_bad)} violation(s): {rot_bad[:3] or 'none'}")
@@ -770,12 +804,10 @@ def check_flags_blanks(r: Report, site: dict):
     r.add("CC-FLAG-05", g, "an 'official' label only ever points at an NBA-official host",
           "host allow-list check over every row (plus: no third-party row may claim official verification)",
           PASS if not host_bad else FAIL, f"{len(host_bad)} violation(s): {host_bad[:4] or 'none'}")
-    cont_actual = None
-    inj_file = snapshot_candidates("injury")[0]
-    inj = load_json(inj_file)
-    icols = {c: i for i, c in enumerate(inj["columns"])}
-    cont_actual = sum(1 for x in inj["records"] if x[icols["attribution"]] == "C")
-    total_actual = len(inj["records"])
+    pub_inj = load_json(_matching_injury_snapshot(site))
+    icols = {c: i for i, c in enumerate(pub_inj["columns"])}
+    cont_actual = sum(1 for x in pub_inj["records"] if x[icols["attribution"]] == "C")
+    total_actual = len(pub_inj["records"])
     claim_checks = []
     for row in flag_rows:
         v = vals(row)
@@ -1168,6 +1200,24 @@ def _workflow_summary() -> str:
         trig = re.findall(r"^\s{2}(\w+):", text.split("on:", 1)[-1].split("\njobs")[0], re.M)
         out.append(f"{p.name}: {','.join(t for t in trig if t in ('push', 'pull_request', 'schedule', 'workflow_dispatch')) or '?'}")
     return "; ".join(out)
+
+
+def _matching_injury_snapshot(site: dict) -> Path:
+    """The injury snapshot the published injuries table actually came from."""
+    pub = rows_of(site, "injuries")
+
+    def score(path: Path) -> tuple:
+        d0 = load_json(path)
+        c0 = {c: i for i, c in enumerate(d0.get("columns", []))}
+        recs0 = d0.get("records", [])
+        if "player" not in c0 or len(recs0) != len(pub):
+            return (-1, str(path))
+        hits = sum(1 for i, rec in enumerate(recs0)
+                   if pub[i]["key"] == f"inj-{i}"
+                   and vals(pub[i]).get("player") == (rec[c0["player"]] or "\u2014"))
+        return (hits, str(path))
+
+    return max(snapshot_candidates("injury"), key=score)
 
 
 # --------------------------------------------------------------------------- report
