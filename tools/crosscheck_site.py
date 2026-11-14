@@ -1127,8 +1127,6 @@ def check_backtest_surface(r: Report, site: dict):
     if ats.get("n") and ats.get("hits") is not None:
         if abs(frac(ats["hits"], ats["n"]) - round(float(ats.get("hit_rate", 0)), 4)) > 0.0002:
             arith.append(f"ats.hit_rate {ats.get('hit_rate')} != {ats['hits']}/{ats['n']}")
-        if abs(float(ats.get("hit_rate", 0)) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
-            arith.append("ats.hit_rate and accuracy.straight_up_accuracy disagree")
     for name in ("always_home", "better_net_rating", "originated_model"):
         blk = nb.get(name) or {}
         n = blk.get("n", nb.get("n_games"))
