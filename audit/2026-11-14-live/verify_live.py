@@ -448,6 +448,39 @@ report["flags_raised"].append({
     "source": "https://www.nba.com/schedule",
 })
 
+_cup_gaps = [m["game_id"] for m in report["slate_diff"]["mismatches"] if m["field"] == "cup_group"]
+if _cup_gaps:
+    report["flags_raised"].append({
+        "id": "FLAG-LIVE-06",
+        "severity": "medium",
+        "field": "slate.cup_group",
+        "issue": (f"The committed 2026-11-13 capture left the Emirates NBA Cup group empty for all nine "
+                  f"2026-11-13 group games ({', '.join(_cup_gaps)}). The official schedule page renders the "
+                  f"group label for every one of them, and this capture read all nine. The published slate "
+                  f"table therefore shows an empty Cup cell for nine games that do have a group."),
+        "action_required": ("Carry the officially-read group labels into the published slate table, or leave "
+                            "the cells blank and say why. The published table currently shows the empty cell "
+                            "without an explanation."),
+        "source": "https://www.nba.com/schedule",
+    })
+
+_bcast = [m for m in report["slate_diff"]["mismatches"] if m["field"] == "broadcast"]
+if _bcast:
+    _detail = "; ".join(
+        f"{m['game_id']} committed {m['only_in_committed'] or '(none extra)'} / "
+        f"page renders {m['only_in_live'] or '(none extra)'}" for m in _bcast)
+    report["flags_raised"].append({
+        "id": "FLAG-LIVE-07",
+        "severity": "low",
+        "field": "slate.broadcast",
+        "issue": (f"The broadcaster label stored in the committed capture does not match the marks the "
+                  f"official page renders, for {len(_bcast)} games: {_detail}. One committed label names a "
+                  f"feed the page does not render; one committed label omits a feed the page does render. "
+                  f"Broadcast is a display field and feeds no line."),
+        "action_required": "Store the broadcaster marks the page renders, as a list, rather than a prose label.",
+        "source": "https://www.nba.com/schedule",
+    })
+
 out_json = HERE / "report.json"
 out_json.write_text(json.dumps(report, indent=2, sort_keys=False) + "\n")
 

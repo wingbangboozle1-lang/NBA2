@@ -94,6 +94,11 @@ jobs:
           python -m nba2.pipeline.lint
           python3 tools/check_links_all.py
 
+      - name: The published tree must stage cleanly, with no broken internal link
+        run: |
+          python -m nba2.pipeline.build_public --out _site
+          echo "the published tree stages and every internal link in it resolves"
+
       - name: Live verification is reproducible
         run: |
           python -m nba2.v2.live

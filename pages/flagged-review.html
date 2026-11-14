@@ -13,15 +13,15 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="live-verification.html">Live Verification</a></li><li><a href="ratings-staleness.html">Ratings Staleness</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="79">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="86">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -271,6 +271,76 @@
 <td>Optimise on settled data, not intuition.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
+</tr>
+<tr id="FLAG-LIVE-01">
+<td>FLAG-LIVE-01</td>
+<td>high</td>
+<td>team records (W-L, home/road splits)</td>
+<td>The committed ratings snapshot (data/raw/team_ratings_2026-11-13.json, retrieved 2026-11-13 22:35 UTC while the 2026-11-13 slate was still in progress) is one slate behind the live official standings read on 2026-11-14 10:15 UTC. 19 of 30 teams moved: ATL, CHI, CLE, DEN, GSW, HOU, IND, LAC, MEM, MIA, MIL, NOP, NYK, OKC, ORL, POR, SAC, SAS, UTA.</td>
+<td>https://www.nba.com/standings</td>
+<td>Re-anchor the ratings snapshot to a post-slate standings read before the next window is sealed. The current window&#x27;s lines and sealed ledgers stay as they are — the seal is immutable — and the measured impact is published on the Ratings Staleness page.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="FLAG-LIVE-02">
+<td>FLAG-LIVE-02</td>
+<td>medium</td>
+<td>game_id ordering</td>
+<td>Within 2026-11-17 the official game IDs are not monotonic with tip time: 0022600257 (UTA @ LAC, 10:30 PM ET) is listed before 0022600256 (CHA @ LAL, 11:00 PM ET). A pipeline that orders games by game ID will order those two wrongly.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Order by (date, tip time), never by game ID.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-02">FLAG-LIVE-02</a></td>
+</tr>
+<tr id="FLAG-LIVE-03">
+<td>FLAG-LIVE-03</td>
+<td>low</td>
+<td>standings LAST10</td>
+<td>Two reads of the same official standings page in the same session disagreed on the LAST10 column for GSW, DAL, PHX and SAC. Those four cells are left blank rather than guessed. LAST10 is not a model input.</td>
+<td>https://www.nba.com/standings</td>
+<td>Re-read LAST10 in a later capture; it feeds no line.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-03">FLAG-LIVE-03</a></td>
+</tr>
+<tr id="FLAG-LIVE-04">
+<td>FLAG-LIVE-04</td>
+<td>info</td>
+<td>pick window</td>
+<td>The official schedule publishes 12 games on 2026-11-18 and 4 more on 2026-11-19. The brief&#x27;s maximum is 3 days ahead of the build date (2026-11-14), so 11-18 and 11-19 are deliberately outside the pick window; they are listed so the omission is visible rather than silent.</td>
+<td>https://www.nba.com/schedule</td>
+<td>None. Revisit when the build date advances.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-04">FLAG-LIVE-04</a></td>
+</tr>
+<tr id="FLAG-LIVE-05">
+<td>FLAG-LIVE-05</td>
+<td>info</td>
+<td>tip times for completed games</td>
+<td>For the nine completed 2026-11-13 games the official schedule page renders the score and the venue but not the tip time, so those times are carried from the committed capture and are not re-verified by this capture. All 27 pick-window games were re-verified with tip time.</td>
+<td>https://www.nba.com/schedule</td>
+<td>None for the pick window; the 11-13 times are context only.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="FLAG-LIVE-06">
+<td>FLAG-LIVE-06</td>
+<td>medium</td>
+<td>slate.cup_group</td>
+<td>The committed 2026-11-13 capture left the Emirates NBA Cup group empty for all nine 2026-11-13 group games (0022600034, 0022600035, 0022600036, 0022600037, 0022600038, 0022600039, 0022600040, 0022600041, 0022600042). The official schedule page renders the group label for every one of them, and this capture read all nine. The published slate table therefore shows an empty Cup cell for nine games that do have a group.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Carry the officially-read group labels into the published slate table, or leave the cells blank and say why. The published table currently shows the empty cell without an explanation.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="FLAG-LIVE-07">
+<td>FLAG-LIVE-07</td>
+<td>low</td>
+<td>slate.broadcast</td>
+<td>The broadcaster label stored in the committed capture does not match the marks the official page renders, for 2 games: 0022600233 committed [&#x27;LEAGUE PASS&#x27;] / page renders (none extra); 0022600256 committed (none extra) / page renders [&#x27;NBC&#x27;]. One committed label names a feed the page does not render; one committed label omits a feed the page does render. Broadcast is a display field and feeds no line.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Store the broadcaster marks the page renders, as a list, rather than a prose label.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-07">FLAG-LIVE-07</a></td>
 </tr>
 <tr id="FLAG-PARAM-01">
 <td>FLAG-PARAM-01</td>

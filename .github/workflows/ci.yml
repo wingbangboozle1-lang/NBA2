@@ -43,6 +43,9 @@ jobs:
       - name: Provenance gate (every row sourced, every blank flagged, no broken links)
         run: python -m nba2.pipeline.lint
 
+      - name: Stage the published tree (fails on any broken internal link)
+        run: python -m nba2.pipeline.build_public --out _site
+
       - name: Fail if the committed site does not match a rebuild of the committed data
         run: |
           git add -A

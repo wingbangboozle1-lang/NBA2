@@ -15,6 +15,7 @@ from pathlib import Path
 
 from .. import config
 from . import adjudicate as ADJ
+from . import live_verification as LIVE
 from . import reconcile as XSESS
 from ..models import correlation as corr
 from ..models import gates as G
@@ -1305,7 +1306,9 @@ def input_digest() -> str:
                 "data/verified/injuries_2026-11-13_0515PM.json",
                 "audit/injury_delta_0415_to_0715.json",
                 "audit/official_schedule_2026-11-14.json",
-                "audit/injury_report_2026-11-13_0715PM.json"):
+                "audit/injury_report_2026-11-13_0715PM.json",
+                "audit/2026-11-14-live/report.json",
+                "data/raw/official_capture_2026-11-14T1015Z.json"):
         f = ROOT / rel
         if f.exists():
             h.update(rel.encode())
@@ -1323,7 +1326,7 @@ def _content_stamp() -> str:
             continue
         if not isinstance(d, dict):
             continue
-        for k in ("retrieved_at_utc", "as_of", "retrieved_utc"):
+        for k in ("retrieved_at_utc", "as_of", "retrieved_utc", "captured_at_utc"):
             v = d.get(k)
             if isinstance(v, str) and v > newest:
                 newest = v
@@ -1476,6 +1479,15 @@ def build() -> dict:
         "flags": None,   # filled below
         "sources": None,
     }
+    # Live official re-verification (session arena/9ee870ea-nba2, 2026-11-14 10:15 UTC).
+    sections.update(LIVE.build_all())
+
+    # The flags raised by that verification are registered from the audit report itself, so the
+    # Flagged page can never drift from the evidence that produced it.
+    _live_report = json.loads((ROOT / "audit" / "2026-11-14-live" / "report.json").read_text())
+    for f in _live_report.get("flags_raised", []):
+        flag(f["id"], f.get("severity", "medium"), f.get("field", "verification"), f["issue"],
+             f["source"], f.get("action_required", ""))
 
     flag_rows = [make_row(
         f.id, SRC_COORD, _flag_ids(f.id),
