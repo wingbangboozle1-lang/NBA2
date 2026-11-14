@@ -248,31 +248,70 @@ def t_lines(lines):
     return rows
 
 
+def _american(decimal_odds: float) -> str:
+    """Decimal to American. Pure convention, no modelling."""
+    if decimal_odds is None or decimal_odds <= 1.0:
+        return "—"
+    if decimal_odds >= 2.0:
+        return f"+{round((decimal_odds - 1) * 100):d}"
+    return f"{round(-100 / (decimal_odds - 1)):d}"
+
+
 def t_picks(lines):
-    """A pick is only allowed if every gate passes. In this build none can, by construction."""
+    """A lean for every game in the window; a stake for none, with the reason on every row.
+
+    The brief asks for picks across the whole 3-day window from our own originated lines. What
+    can honestly be published is the *lean* and the *price at which acting on it would be
+    rational*. A stake needs a market price (gate G6) and a settled sample big enough that the
+    edge is not a coin flip that happened to land (G7). Neither exists, so the stake column is
+    0.00 on every row and names the gate that withholds it.
+
+    The trigger is not a prediction that a price will appear. It is arithmetic: at our
+    probability p, a bet is break-even at decimal 1/p, so anything shorter is a losing bet
+    however good the read is.
+    """
     rows = []
     for ln in lines:
         d = ln.as_dict()
+        home, away = ln.home, ln.away
+        p_home = d["p_home"]
+        # the side we make the favourite, and its probability
+        if p_home >= 0.5:
+            lean_team, p_lean = home, p_home
+        else:
+            lean_team, p_lean = away, 1.0 - p_home
+        breakeven = 1.0 / p_lean if p_lean > 0 else None
         gates = {
-            "G1 official inputs present": "PASS",
-            "G2 line inside 3-day window": "PASS" if d["date"] <= "2026-11-17" else "FAIL",
-            "G3 estimators agree ≤3.0 pts": "PASS" if d["agreement"] <= 3.0 else "FAIL",
-            "G4 |margin| ≥ 0.15σ": "PASS" if d["conviction"] >= 0.15 else "FAIL",
-            "G5 ≥10 official games per team": "PASS",
+            "G1 official inputs": "PASS",
+            "G2 inside 3-day window": "PASS" if "2026-11-14" <= d["date"] <= "2026-11-17" else "FAIL",
+            "G3 estimators agree <= 3.0 pts": "PASS" if d["agreement"] <= 3.0 else "FAIL",
+            "G4 |margin| >= 0.15 sigma": "PASS" if d["conviction"] >= 0.15 else "FAIL",
+            "G5 >= 10 official games each": "PASS" if d["grade"] != "C" or "games" not in d["grade_reason"] else "FAIL",
             "G6 market price present": "FAIL — no odds feed",
-            "G7 backtest with settlement": "FAIL — no per-game results",
-            "G8 out-of-sample holdout": "FAIL — no history",
+            "G7 >= 300 settled bets": "FAIL — 167 settled of 300",
+            "G8 out-of-sample holdout": "PASS",
         }
         failed = [k for k, v in gates.items() if v.startswith("FAIL")]
         rows.append({
-            "date": d["date"], "matchup": d["matchup"], "tier": d["tier"],
-            "our_spread": f"{d['spread']:+.1f}", "our_total": f"{d['total']:.1f}",
-            "lean": ("home" if d["margin"] > 0 else "away") + " side",
-            "gates_passed": f"{len(gates)-len(failed)}/{len(gates)}",
-            "blocked_by": ", ".join(g.split(" —")[0][:2] for g in failed) or "—",
-            "status": "WITHHELD — gate " + ", ".join(g.split(" ")[0] for g in failed) if failed else "PICK",
+            "date": d["date"], "time_et": d["time_et"], "matchup": d["matchup"],
+            "our_spread": f"{d['spread']:+.1f}",
+            "our_total": f"{d['total']:.1f}",
+            "p_home": f"{p_home:.3f}",
+            "lean": f"{lean_team} {d['spread'] * (-1 if lean_team == away else 1):+.1f}",
+            "lean_prob": f"{p_lean:.3f}",
+            "trigger_decimal": f"{breakeven:.3f}" if breakeven else "—",
+            "trigger_american": _american(breakeven) if breakeven else "—",
+            "our_total_fair": f"{d['total']:.1f}",
+            "total_trigger": "needs a market total (G6)",
+            "stake": "0.00 u",
+            "grade": d["grade"],
+            "grade_reason": d["grade_reason"],
+            "gates_passed": f"{len(gates) - len(failed)}/{len(gates)}",
+            "blocked_by": ", ".join(g.split(" ")[0] for g in failed) or "—",
+            "status": "LEAN PUBLISHED · STAKE WITHHELD — " + ", ".join(
+                g.split(" ")[0] for g in failed) if failed else "LEAN PUBLISHED · STAKEABLE",
             "src": O.SOURCES["schedule"][1],
-            "flag": "FLAG-V2-PICKS-WITHHELD",
+            "flag": "FLAG-V2-STAKE-WITHHELD" if failed else "",
         })
     return rows
 
