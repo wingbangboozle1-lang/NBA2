@@ -24,9 +24,11 @@
 <a href="injuries.html">Injuries &amp; rotation</a>
 <a href="gameflow.html">Game flow</a>
 <a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
 <a href="repo-review.html">Repo review</a>
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
 <a href="flagged.html" class="on">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -224,6 +226,54 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Settlement, reward allocation and leaderboard scores are PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet, so every score, bet count and reward cell is blank.</td>
 <td>Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends and re-runs settle; blanks stay until then.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+<tr id="F-023">
+<td><span class="badge b-bad">F-023</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Verification</td>
+<td>The 30 team records published on this site agree with the PRE-11/13-finals state on 30/30 rows and with today&#x27;s official standings on only 12/30. The nine 2026-11-13 games became official after the table was transcribed, and nothing on the site compared a published row against a fresher capture.</td>
+<td>Every stale row is listed with both values on the Live verification page. The fix is a staleness gate (DG-02 / Q-23), not a silent re-transcription: re-transcribing without a gate reproduces the same failure on the next slate.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-024">
+<td><span class="badge b-bad">F-024</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Model</td>
+<td>The first genuine out-of-sample forecast in the repository (nba2/data/picks.json, committed 2026-11-13 22:36:46Z, 83 minutes before the earliest tip) went 4-0 on the four distinct games it bet, but recorded 8 wins because S1 and S2 both fired on the same four games. The model named the winner in 5 of 9 graded games, exactly matching a naive net-rating baseline and below &#x27;always pick home&#x27; (7/9).</td>
+<td>Hit rates are published with both counts. No strategy is ranked, promoted or rewarded on n=4. The 4-0 is reported as the false-confidence trap it is.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-025">
+<td><span class="badge b-warn">F-025</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>S2_SpreadValue selections invert the favourite&#x27;s sign: nba2/picks.py emits &#x27;POR +6.0&#x27; for a game whose own spread label in the same file reads &#x27;POR -6.0&#x27;, with POR a 6.07-point favourite. A reader following the selection takes the wrong side of the model&#x27;s own number.</td>
+<td>Reported, not silently edited (the generator belongs to another session). Assigned as DG-03 / S-26. The grading on the Live verification page reproduces the committed selection verbatim so the measurement describes what was published, not what was intended.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/picks.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-026">
+<td><span class="badge b-warn">F-026</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>No signal in nba2/data/picks.json carries a price: `american_odds` is absent from all 21 signals. Win/loss is therefore measurable and profit is not, and any PnL on this site would be an assumed -110 rather than a measurement.</td>
+<td>PnL is null on every row and the reason is printed beside it. Q-28 asks the owner to choose between a licensed feed, manual entry, or a permanent no-PnL policy.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-027">
+<td><span class="badge b-off">F-027</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Product</td>
+<td>The published site is the v2 tree (live index fetched 2026-11-14 is the v2 dashboard and its pages.yml run succeeded), while the GitHub Pages API reports source = main /, which serves the repository root. Both trees contain a full dashboard with different numbers.</td>
+<td>Published, not resolved: switching the Pages source changes every page a reader sees, which is an owner decision (Q-27 / DG-01). Recorded here so no future session assumes one tree is authoritative.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="F-028">
+<td><span class="badge b-info">F-028</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Verification</td>
+<td>The &#x27;30/30 identical&#x27; W-L cross-check on the dashboard and verification pages was true when it was made on 2026-11-14 and is no longer true of the same rows (see F-023).</td>
+<td>The column is relabelled &#x27;as transcribed 2026-11-14&#x27; and the caption now says to read it as a date. The live state moved to the Live verification page, which is regenerated from dated captures.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>

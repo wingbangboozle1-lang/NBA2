@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision queue · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html" class="on">Decision queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Decision queue — review, then choose</h1>
+<p class="lede">This is the section for reviewing suggestions and choosing the best path <em>before</em> anything is
+implemented. Each row is one decision, with the evidence that motivates it (always a live official source or a
+committed artefact), the exact change it would make, its effort, and the three actions open to you:
+<b>accept</b>, <b>reject</b>, <b>defer</b>.</p>
+<div class="note"><b>The rule.</b> Nothing in this queue has been implemented on your behalf. A suggestion is a
+proposal, not a change. Two states are pre-filled honestly: <code>implemented this session</code> means the code now
+exists and is verified by the build gate; <code>awaiting owner decision</code> means it does not exist and will not
+until you accept it. This session never writes <code>accepted</code>.</div>
+<div class="kpis">
+  <div class="kpi"><b>7</b><small>decisions in the queue</small></div>
+  <div class="kpi"><b>4</b><small>awaiting your decision</small></div>
+  <div class="kpi"><b>3</b><small>already implemented this session</small></div>
+  <div class="kpi"><b>3</b><small>blocking (must decide before anything else)</small></div>
+</div>
+<div class="scroll"><table>
+<caption>Decision queue — choose a path before implementation</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Track</th>
+<th scope="col">Suggestion</th>
+<th scope="col">Problem today (evidence)</th>
+<th scope="col">What changes if accepted</th>
+<th scope="col">Effort</th>
+<th scope="col">State</th>
+<th scope="col">Evidence</th>
+<th scope="col">Official source</th>
+</tr></thead><tbody>
+<tr id="S-21">
+<td>S-21</td>
+<td><span class="badge b-off">site</span></td>
+<td>Ship a &#x27;Live verification&#x27; page that re-grades the site against today&#x27;s official pages</td>
+<td>The site could only claim freshness by asserting it. Nothing on it re-reads an official page at render time, so a stale record and a correct record looked identical (proof: 18 of 30 team records are stale right now while the page still shows MATCH). — evidence: 18 of 30 published team records no longer match today&#x27;s official standings</td>
+<td>A new page exists, generated from dated official captures, and it fails the build if a capture is missing.</td>
+<td>M (already built this session: nba2/v2/live.py)</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-22">
+<td>S-22</td>
+<td><span class="badge b-off">model</span></td>
+<td>Publish the true sample size next to every hit rate, never the inflated one</td>
+<td>The graded picks read as 8-0. They are 4-0: four games were each bet by two strategies, so a reader scanning the strategy tables sees double the evidence that exists. — evidence: 8 graded signal wins are 4 distinct games (S1 and S2 fired on the same four games)</td>
+<td>Every hit-rate table renders both &#x27;signal rows&#x27; and &#x27;distinct games&#x27;; a rate without its n is a lint error.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-23">
+<td>S-23</td>
+<td><span class="badge b-off">model</span></td>
+<td>Score the model against named naive baselines before it scores itself</td>
+<td>The site reports model accuracy without the baselines that would beat it. On the nine graded games the model&#x27;s winner accuracy (5/9) equals a net-rating baseline (5/9) and loses to &#x27;always pick home&#x27; (7/9). — evidence: model 5/9 on winners vs 5/9 naive net rating vs 7/9 always-home</td>
+<td>Three named baselines render beside every accuracy number; ranking above a baseline you lose to becomes impossible.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-24">
+<td>S-24</td>
+<td><span class="badge b-off">site</span></td>
+<td>Make the suggestions page an explicit decision queue with owner actions</td>
+<td>Suggestions were a list of proposals with a status string. A reviewer could not accept, reject or defer one in a way that changed anything, so the queue&#x27;s state was decorative. — evidence: suggestions were a list of status strings with no action a reviewer could take</td>
+<td>The suggestions page becomes this queue, with an explicit owner action on every row.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-25">
+<td>S-25</td>
+<td><span class="badge b-off">site</span></td>
+<td>Add a staleness gate to the build, not just a timestamp to the page</td>
+<td>Every page prints an as-of date, but no build fails when the date is old. The stamp is honest and inert. — evidence: every page prints an as-of date and no build fails when it is old</td>
+<td>The Pages workflow cannot publish a build whose newest capture is older than a per-table limit.</td>
+<td>M</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-26">
+<td>S-26</td>
+<td><span class="badge b-off">model</span></td>
+<td>Fix the spread-sign inversion in the S2 selections before any of it is graded by a human</td>
+<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number. — evidence: picks.json prints &#x27;POR +6.0&#x27; where its own label reads &#x27;POR -6.0&#x27;</td>
+<td>S2 selections name the side that takes the points, matching the file&#x27;s own spread label.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-27">
+<td>S-27</td>
+<td><span class="badge b-off">governance</span></td>
+<td>Collapse the six dashboards to one before adding a seventh</td>
+<td>The repository contains root v1 pages, docs/, dashboard/, verified/, originated/, site/ (v2) and backtest/. Each has different numbers from a different snapshot. Every integration session has logged this and none has closed it. — evidence: the live index is the v2 tree while the Pages API reports source = main /</td>
+<td>One dashboard is served; the other five move under archive/ behind dated redirects.</td>
+<td>M</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">official</a></td>
+</tr>
+</tbody></table></div><h2>How to answer</h2>
+<p class="lede">Reply with the IDs you accept. Three answers are useful and one is not:</p>
+<div class="cards">
+  <div class="card"><h4>Accept</h4><p>Named IDs become authorised work. The build gate then verifies the change
+  actually happened, because each accepted item maps to a check in <code>nba2/v2/check.py</code> or a test.</p></div>
+  <div class="card"><h4>Reject</h4><p>A rejected item is removed from the queue and the reason recorded, so it does not
+  quietly return in a later session wearing a new number.</p></div>
+  <div class="card"><h4>Defer</h4><p>Keep it, with the condition that would change your mind. A deferral without a
+  condition is a rejection nobody had the nerve to write down.</p></div>
+  <div class="card"><h4>Silence</h4><p>Not an answer. An unanswered item stays <code>awaiting owner decision</code> and
+  nothing is built from it.</p></div>
+</div>
+<h2>The one decision that unblocks the others</h2>
+<p>Rank by cost of being wrong, not by effort. <b>DG-01</b> (declare one canonical site) is first because while two
+dashboards publish different records, no other verification on either site can be treated as authoritative. <b>DG-02</b>
+(staleness gate) is second because it is the failure this session actually caught a live instance of. The odds feed is
+third — expensive, but it unblocks the entire profit question, which nothing else does.</p>
+
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

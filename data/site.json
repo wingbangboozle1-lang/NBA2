@@ -1,8 +1,8 @@
 {
  "meta": {
-  "generated_at_utc": "2026-11-14 02:00 UTC",
-  "input_digest": "b423952d618280b7a5aeeb0ad96914de56c9ecf03c52356924cbecae5fcf862b",
-  "build_is_idempotent": true,
+  "generated_at_utc": "2026-11-14 09:49 UTC",
+  "input_digest": "dc47a610f55f353db9d3e10a01049c42efe1dfd6c65eb734aaa7804ecc4f8897",
+  "build_is_idempotent": false,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
   "games": 36,
@@ -24727,9 +24727,207 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-23",
+     "values": {
+      "id": "Q-23",
+      "question": "When a published snapshot goes stale, should the site keep showing it (labelled) or withhold the page entirely?",
+      "have": "Proof of the failure mode, measured today: the v2 team table matches the pre-11/13-finals state 30/30 and current official standings only 12/30, while the page still advertises a 30/30 live match. The nine 11/13 finals were played while the table was frozen.",
+      "missing": "A rule. Nothing in the build currently compares a published row against a fresher official capture, so staleness can only be caught by a human reading two pages.",
+      "how": "Set a maximum snapshot age per table (records: 1 day; prices: 15 minutes; injuries: to the next official filing). Add a staleness gate to nba2/v2/check.py that fails when a row is older than its limit, and render stale rows with an explicit 'as of' badge instead of a MATCH badge.",
+      "impact": "Without it the site can show a table it calls verified that is provably wrong the next morning. This is the single highest-cost defect found this session because it is silent.",
+      "severity": "BLOCKING",
+      "source": "https://www.nba.com/standings",
+      "evidence": "nba2/v2/live.py::staleness()"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-24",
+     "values": {
+      "id": "Q-24",
+      "question": "Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?",
+      "have": "The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.",
+      "missing": "The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.",
+      "how": "Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.",
+      "impact": "4-0 is exactly the result that would get a bettor to increase stakes. Publishing it without the n=4 context would make the site a machine for manufacturing false confidence.",
+      "severity": "HIGH",
+      "source": "https://www.nba.com/games",
+      "evidence": "nba2/v2/live.py::grade()"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-25",
+     "values": {
+      "id": "Q-25",
+      "question": "Should a per-strategy win rate be allowed to count the same game twice when two strategies fire on it?",
+      "have": "The measured overlap: of 4 graded games, all 4 were bet by both S1_MarginFavorite and S2_SpreadValue. Per-strategy hit rates stay valid; any portfolio or leaderboard return that sums them double-counts the games.",
+      "missing": "A portfolio accounting rule: whether the leaderboard scores strategies independently (as now) or scores the union of positions actually held.",
+      "how": "Owner decision. Independent scoring is simpler and correct for ranking hypotheses; union scoring is correct for describing what a bankroll would have done. They answer different questions and the site currently only implements one.",
+      "impact": "If rewards are paid on summed per-strategy results, two correlated strategies split one result twice and the reward pool systematically overpays correlation, which is the thing the project exists to price.",
+      "severity": "HIGH",
+      "source": "https://www.nba.com/games",
+      "evidence": "nba2/v2/live.py::grade()['duplicate_accounting']"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-26",
+     "values": {
+      "id": "Q-26",
+      "question": "Does a team rating that is computed from a frozen standings table need to be re-fitted per slate, or is a same-day snapshot accurate enough?",
+      "have": "A measured comparison on 9 graded games: the model's margin MAE was 11.46 against 13.33 for predicting a tie, but its winner accuracy (5/9) was no better than a naive net-rating baseline computed from the same frozen table (5/9).",
+      "missing": "A rebuilt rating on post-11/13 data. That requires re-running the whole pipeline against today's official standings, which is a data refresh, not a code change.",
+      "how": "Refresh data/raw with the 30 current records captured today (already in audit/2026-11-14/official_inputs_2026-11-14.json), rebuild, re-seal a new ledger, and compare. Until then no claim about which estimator is better is supported.",
+      "impact": "Decides whether the daily cadence is a real requirement or a nicety: if a one-day-old table costs accuracy, the nightly job is load-bearing.",
+      "severity": "HIGH",
+      "source": "https://www.nba.com/standings",
+      "evidence": "nba2/v2/live.py::grade()['side_accuracy']"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-27",
+     "values": {
+      "id": "Q-27",
+      "question": "Which tree is the canonical site, and who is allowed to change the Pages setting?",
+      "have": "Evidence of two answers in the repository at once: .github/workflows/pages.yml says it publishes site/ (v2) and its last run succeeded; the live index page served on 2026-11-14 is the v2 dashboard, while the GitHub Pages API reports source = main /, which publishes the repository root (the v1 tree). The root tree still contains its own index.html and pages/.",
+      "missing": "One recorded decision. The repository root and site/ currently both contain a full dashboard with different numbers from different snapshots.",
+      "how": "Owner (or the integration session) sets Pages to 'GitHub Actions' to publish the site/ artifact, and the root HTML is either deleted or moves under archive/ with a redirect. Then exactly one build can reach a reader.",
+      "impact": "Every published number's credibility depends on which of the two trees the reader happens to land on. Two dashboards with different records is the failure the last three integration sessions each logged and none closed.",
+      "severity": "BLOCKING",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2",
+      "evidence": "COORDINATION.md E-07 owner decision; gh api repos/.../pages -> build_type legacy"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-28",
+     "values": {
+      "id": "Q-28",
+      "question": "How is a pick's price recorded if no odds feed will ever be licensed?",
+      "have": "Every graded signal in nba2/data/picks.json lacks a price field entirely, so win/loss is measurable and profit is not. Reported -110 would make every number in this project an assumption about a book.",
+      "missing": "Either a licensed feed, or a decision to accept manual price entry, or a decision that the project only ever publishes winners and never PnL.",
+      "how": "Owner picks one of three. Option three is viable and cheap: publish hit rates and CLV-free triggers, and never claim a return.",
+      "impact": "Decides whether the leaderboard competition can ever have a cash-relevant reward, or is permanently an accuracy contest.",
+      "severity": "BLOCKING",
+      "source": "https://www.nba.com/games",
+      "evidence": "nba2/data/picks.json: no american_odds field on any of 21 signals"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -25448,9 +25646,240 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-21",
+     "values": {
+      "id": "S-21",
+      "title": "Ship a 'Live verification' page that re-grades the site against today's official pages",
+      "problem": "The site could only claim freshness by asserting it. Nothing on it re-reads an official page at render time, so a stale record and a correct record looked identical (proof: 18 of 30 team records are stale right now while the page still shows MATCH).",
+      "proposal": "A dedicated page, generated from audit/<date>/ captures, that lists each official page read today, what it proved or contradicted, and every published row that no longer matches. Each row links the official URL it was checked against.",
+      "benefit": "Turns 'verified' from a claim into an artefact a reader can audit in ten seconds, and makes staleness visible instead of silent.",
+      "effort": "M (already built this session: nba2/v2/live.py)",
+      "risk": "Needs a disciplined capture ritual; a page built from an old capture is worse than none, so the page prints the fetch timestamp on every row.",
+      "recommendation": "Accept. This is the highest decision-quality gain per unit of effort on the site.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-22",
+     "values": {
+      "id": "S-22",
+      "title": "Publish the true sample size next to every hit rate, never the inflated one",
+      "problem": "The graded picks read as 8-0. They are 4-0: four games were each bet by two strategies, so a reader scanning the strategy tables sees double the evidence that exists.",
+      "proposal": "Every hit-rate table carries both numbers - 'signal rows graded' and 'distinct games' - and any strategy with fewer than the ratified minimum shows 'insufficient evidence' in place of a ranking.",
+      "benefit": "Removes the single most common way a small sample is made to look like skill.",
+      "effort": "S (implemented in nba2/v2/live.py)",
+      "risk": "None; it can only reduce claims.",
+      "recommendation": "Accept and make it a lint rule: a hit rate without its n cannot render.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-23",
+     "values": {
+      "id": "S-23",
+      "title": "Score the model against named naive baselines before it scores itself",
+      "problem": "The site reports model accuracy without the baselines that would beat it. On the nine graded games the model's winner accuracy (5/9) equals a net-rating baseline (5/9) and loses to 'always pick home' (7/9).",
+      "proposal": "Every accuracy number renders beside three free baselines computed from the same frozen inputs: home always, higher net rating, higher SRS. A strategy cannot be ranked above the best baseline it fails to beat.",
+      "benefit": "Kills the 'my model is 56%' claim that a coin plus home-court advantage already produces.",
+      "effort": "S (implemented in nba2/v2/live.py)",
+      "risk": "On small n the baseline will sometimes win by luck - which is the point, and the page says so.",
+      "recommendation": "Accept; make 'beats the best baseline at p<0.05' a gate condition rather than a comment.",
+      "status": "implemented this session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-24",
+     "values": {
+      "id": "S-24",
+      "title": "Make the suggestions page an explicit decision queue with owner actions",
+      "problem": "Suggestions were a list of proposals with a status string. A reviewer could not accept, reject or defer one in a way that changed anything, so the queue's state was decorative.",
+      "proposal": "Each suggestion renders with four fields: evidence (a live source link), what changes if accepted, effort, and an owner action of accept / reject / defer. The page states plainly that nothing has been implemented on the owner's behalf and that accept is the only state that authorises work.",
+      "benefit": "The owner can choose a path before any of it is built, which is exactly what the brief asks for.",
+      "effort": "S",
+      "risk": "None; it is a presentation contract.",
+      "recommendation": "Accept.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-25",
+     "values": {
+      "id": "S-25",
+      "title": "Add a staleness gate to the build, not just a timestamp to the page",
+      "problem": "Every page prints an as-of date, but no build fails when the date is old. The stamp is honest and inert.",
+      "proposal": "nba2/v2/check.py fails when a table's newest capture is older than a per-table limit (records 24h, injuries to the next filing, prices 15m), and the Pages workflow cannot publish a build that fails it.",
+      "benefit": "Makes 'up to date' enforceable, which is the only way it survives contact with a busy week.",
+      "effort": "M",
+      "risk": "A stale official source would block deploys; mitigated by letting the gate downgrade to a loud banner after N hours rather than a hard fail on the whole site.",
+      "recommendation": "Accept, after Q-23 is answered (the limits are the owner's risk appetite, not mine).",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-26",
+     "values": {
+      "id": "S-26",
+      "title": "Fix the spread-sign inversion in the S2 selections before any of it is graded by a human",
+      "problem": "S2_SpreadValue emits 'POR +6.0' for a game where the same file's label says 'POR -6.0' and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model's own number.",
+      "proposal": "Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).",
+      "benefit": "Removes a defect that silently inverts a published recommendation.",
+      "effort": "S",
+      "risk": "picks.json is another session's artefact; the change is logged here for its owner rather than made unilaterally.",
+      "recommendation": "Accept and assign to the owner of nba2/picks.py.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-27",
+     "values": {
+      "id": "S-27",
+      "title": "Collapse the six dashboards to one before adding a seventh",
+      "problem": "The repository contains root v1 pages, docs/, dashboard/, verified/, originated/, site/ (v2) and backtest/. Each has different numbers from a different snapshot. Every integration session has logged this and none has closed it.",
+      "proposal": "Pick site/ as canonical, move the others under archive/ with a redirect page that names the date each was frozen, and delete nothing.",
+      "benefit": "One number per question is the precondition for every other claim on the site.",
+      "effort": "M",
+      "risk": "Breaks inbound links to the old trees; the redirect pages fix that.",
+      "recommendation": "Accept, as the first integration action (this is Q-27).",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

@@ -402,6 +402,54 @@ FLAGS = [
      "Correct behaviour: the pipeline refuses to grade unplayed games. The nightly workflow fetches official finals as each game day ends "
      "and re-runs settle; blanks stay until then.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json"),
+    # ---- session arena/ab8743d8-nba2, live re-verification 2026-11-14 -------------------
+    ("F-023", "high", "Verification",
+     "The 30 team records published on this site agree with the PRE-11/13-finals state on 30/30 rows "
+     "and with today's official standings on only 12/30. The nine 2026-11-13 games became official "
+     "after the table was transcribed, and nothing on the site compared a published row against a "
+     "fresher capture.",
+     "Every stale row is listed with both values on the Live verification page. The fix is a staleness "
+     "gate (DG-02 / Q-23), not a silent re-transcription: re-transcribing without a gate reproduces the "
+     "same failure on the next slate.",
+     S["standings"][1]),
+    ("F-024", "high", "Model",
+     "The first genuine out-of-sample forecast in the repository (nba2/data/picks.json, committed "
+     "2026-11-13 22:36:46Z, 83 minutes before the earliest tip) went 4-0 on the four distinct games it "
+     "bet, but recorded 8 wins because S1 and S2 both fired on the same four games. The model named the "
+     "winner in 5 of 9 graded games, exactly matching a naive net-rating baseline and below 'always pick "
+     "home' (7/9).",
+     "Hit rates are published with both counts. No strategy is ranked, promoted or rewarded on n=4. The "
+     "4-0 is reported as the false-confidence trap it is.",
+     "https://www.nba.com/games"),
+    ("F-025", "medium", "Model",
+     "S2_SpreadValue selections invert the favourite's sign: nba2/picks.py emits 'POR +6.0' for a game "
+     "whose own spread label in the same file reads 'POR -6.0', with POR a 6.07-point favourite. A reader "
+     "following the selection takes the wrong side of the model's own number.",
+     "Reported, not silently edited (the generator belongs to another session). Assigned as DG-03 / "
+     "S-26. The grading on the Live verification page reproduces the committed selection verbatim so the "
+     "measurement describes what was published, not what was intended.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/picks.py"),
+    ("F-026", "medium", "Verification",
+     "No signal in nba2/data/picks.json carries a price: `american_odds` is absent from all 21 signals. "
+     "Win/loss is therefore measurable and profit is not, and any PnL on this site would be an assumed "
+     "-110 rather than a measurement.",
+     "PnL is null on every row and the reason is printed beside it. Q-28 asks the owner to choose between "
+     "a licensed feed, manual entry, or a permanent no-PnL policy.",
+     "https://www.nba.com/games"),
+    ("F-027", "low", "Product",
+     "The published site is the v2 tree (live index fetched 2026-11-14 is the v2 dashboard and its "
+     "pages.yml run succeeded), while the GitHub Pages API reports source = main /, which serves the "
+     "repository root. Both trees contain a full dashboard with different numbers.",
+     "Published, not resolved: switching the Pages source changes every page a reader sees, which is an "
+     "owner decision (Q-27 / DG-01). Recorded here so no future session assumes one tree is authoritative.",
+     "https://github.com/wingbangboozle1-lang/NBA2"),
+    ("F-028", "info", "Verification",
+     "The '30/30 identical' W-L cross-check on the dashboard and verification pages was true when it was "
+     "made on 2026-11-14 and is no longer true of the same rows (see F-023).",
+     "The column is relabelled 'as transcribed 2026-11-14' and the caption now says to read it as a date. "
+     "The live state moved to the Live verification page, which is regenerated from dated captures.",
+     S["standings"][1]),
+
 ]
 
 # --------------------------------------------------------------------------- integration session audit

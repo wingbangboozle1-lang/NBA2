@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 
 from . import content as C
+from . import live as LV
 from . import model as M
 from . import official as O
 from . import report as R
@@ -35,9 +36,11 @@ NAV = [
     ("injuries.html", "Injuries &amp; rotation"),
     ("gameflow.html", "Game flow"),
     ("verification.html", "Verification log"),
+    ("live-verification.html", "Live verification"),
     ("repo-review.html", "Repo review"),
     ("questions.html", "Open questions"),
     ("suggestions.html", "Suggestions queue"),
+    ("decision-queue.html", "Decision queue"),
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
@@ -286,8 +289,17 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
+  <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
+  <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
   <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>{len(C.FLAGS)} irregularities with sources, none of which block publication.</p></div>
 </div>
+
+<div class="note warn"><b>The team records on this site are a pre-final snapshot.</b>
+The nine 2026-11-13 games have since been played and are official. Reconstructed against today's
+standings, this site's 30 team records agree with the <em>pre-final</em> state on <b>30 of 30</b> rows
+and with current official standings on <b>12 of 30</b>. That is not a transcription error — it is a
+snapshot that has aged. The <a href="live-verification.html">Live verification page</a> lists every
+stale row and re-grades the repository's first real forecast.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
@@ -310,15 +322,21 @@ build were cross-checked against it. <a href="verification.html">See the verific
 
     body += """
 <h2>Cross-checks against the previous build</h2>
-<p class="lede">The repository already published a dataset. This session re-read the same pages live and compared, so a reader can see exactly where the earlier work was right and where it was not.</p>
+<p class="lede">The repository already published a dataset. The v2 session re-read the same pages live and compared, so a
+reader can see exactly where the earlier work was right and where it was not.
+<strong>Read the first column as a date, not just a claim.</strong> These comparisons were made on
+2026-11-14 before the nine 2026-11-13 games had official results. Nine games move eighteen team
+records, so a MATCH below describes the state at transcription time. The
+<a href="live-verification.html">Live verification page</a> re-runs the same idea against today's
+official pages and shows where those rows now stand.</p>
 """
     crow = []
     for c in xchecks["checks"]:
         kind = "ok" if c["result"] == "MATCH" else "bad"
         crow.append({"cells": [esc(c["what"]), esc(c["repo_value"]), esc(c["live_value"]),
                               badge(c["result"], kind), esc(c["detail"])[:160], srclink(c["src"])]})
-    body += table(["Check", "Committed in repo", "Live official", "Result", "Detail", "Source"], crow,
-                  "Repository dataset vs live official pages")
+    body += table(["Check", "Committed in repo", "Live official (as transcribed 2026-11-14)", "Result at transcription time", "Detail", "Source"], crow,
+                  "Repository dataset vs the 2026-11-14 official transcription")
 
     body += """
 <h2>What this build cannot do — and why that is stated rather than hidden</h2>
@@ -804,8 +822,8 @@ against what the official page says without trusting either.</div>
         rows.append({"cells": [esc(c["id"]), esc(c["what"]), esc(c["repo_value"]), esc(c["live_value"]),
                               badge(c["result"], "ok" if c["result"] == "MATCH" else "bad"),
                               esc(c["detail"])[:200], srclink(c["src"])]})
-    body += table(["ID", "Check", "In repo", "Live official", "Result", "Detail", "Source"], rows,
-                  "Repository data re-verified against live official pages")
+    body += table(["ID", "Check", "In repo", "Live official (2026-11-14 transcription)", "Result at transcription time", "Detail", "Source"], rows,
+                  "Repository data re-verified against the 2026-11-14 official transcription")
 
     body += "<h2>Checks run against the repository itself</h2>"
     rows = []
@@ -912,6 +930,28 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
                                           esc(q[5]), srclink(q[6])]})
     body += table(["ID", "Question", "What is known", "What is not known", "How to find out", "Impact", "Blocks", "Source"],
                   rows, "Decision-blocking questions", idcol="id")
+
+    # Questions raised by this session's live evidence. These come from the shared register
+    # (requirements/QUESTIONS.json) and are the ones a reader can only answer with a date on them:
+    # they were created by what the official pages said today, not by an earlier theory.
+    nq = LV.new_questions()
+    if nq["items"]:
+        body += f"""
+<h2>Questions this session's live evidence raised ({len(nq['items'])})</h2>
+<p class="lede">Each of these was created by a measurement made today, not by an earlier hypothesis. They are listed
+separately so a reviewer can see which questions the evidence produced and which were already on the register.</p>
+"""
+        qrows = []
+        for it in nq["items"]:
+            qrows.append({"id": it["id"], "cells": [
+                esc(it["id"]), esc(it["question"]), esc(it["have"]), esc(it["missing"]),
+                esc(it["how"]),
+                badge(it["severity"], "bad" if it["severity"] == "BLOCKING" else "warn"),
+                srclink(it["source"]),
+            ]})
+        body += table(["ID", "Question", "What we already have (measured today)", "What is still missing",
+                       "How to close it", "Severity", "Source"], qrows,
+                      "New questions, raised by live verification", idcol="id")
     body += """<h2>Questions about the project itself, not the model</h2>
 <div class="cards">
   <div class="card"><h4>Which site is authoritative?</h4><p>Six trees exist. Until the owner picks one, every published
@@ -987,6 +1027,207 @@ dependency. The three highest-ranked recommended items are all data connections,
       the cheapest defence.</li>
 </ul>"""
     built["suggestions.html"] = page("suggestions.html", "Suggestions queue", body, "suggestions.html")
+
+    # ------------------------------------------------------------------ decision queue
+    # The suggestions above are methodological. This page is the one the owner actually works
+    # from: a numbered queue where every item carries the evidence that motivates it, the exact
+    # change it would make, and an explicit owner action. Nothing here is implemented on the
+    # owner's behalf — accepted is the only state that authorises work, and this session never
+    # sets it.
+    dq = LV.decision_queue()
+    body = f"""<h1>Decision queue — review, then choose</h1>
+<p class="lede">This is the section for reviewing suggestions and choosing the best path <em>before</em> anything is
+implemented. Each row is one decision, with the evidence that motivates it (always a live official source or a
+committed artefact), the exact change it would make, its effort, and the three actions open to you:
+<b>accept</b>, <b>reject</b>, <b>defer</b>.</p>
+<div class="note"><b>The rule.</b> Nothing in this queue has been implemented on your behalf. A suggestion is a
+proposal, not a change. Two states are pre-filled honestly: <code>implemented this session</code> means the code now
+exists and is verified by the build gate; <code>awaiting owner decision</code> means it does not exist and will not
+until you accept it. This session never writes <code>accepted</code>.</div>
+<div class="kpis">
+  <div class="kpi"><b>{dq['n_total']}</b><small>decisions in the queue</small></div>
+  <div class="kpi"><b>{dq['n_awaiting']}</b><small>awaiting your decision</small></div>
+  <div class="kpi"><b>{dq['n_implemented']}</b><small>already implemented this session</small></div>
+  <div class="kpi"><b>{dq['n_blocking']}</b><small>blocking (must decide before anything else)</small></div>
+</div>
+"""
+    dq_rows = []
+    for it in dq["items"]:
+        dq_rows.append({"id": it["id"], "cells": [
+            esc(it["id"]), badge(it["track"], "off"), esc(it["title"]),
+            esc(it["problem"]), esc(it["changes"]), esc(it["effort"]),
+            badge(it["status"], "ok" if it["status"].startswith("implemented") else "warn"),
+            srclink(it["evidence"], "capture"), srclink(it["source"], "official"),
+        ]})
+    body += table(["ID", "Track", "Suggestion", "Problem today (evidence)", "What changes if accepted",
+                   "Effort", "State", "Evidence", "Official source"],
+                  dq_rows, "Decision queue — choose a path before implementation", idcol="id")
+
+    body += """<h2>How to answer</h2>
+<p class="lede">Reply with the IDs you accept. Three answers are useful and one is not:</p>
+<div class="cards">
+  <div class="card"><h4>Accept</h4><p>Named IDs become authorised work. The build gate then verifies the change
+  actually happened, because each accepted item maps to a check in <code>nba2/v2/check.py</code> or a test.</p></div>
+  <div class="card"><h4>Reject</h4><p>A rejected item is removed from the queue and the reason recorded, so it does not
+  quietly return in a later session wearing a new number.</p></div>
+  <div class="card"><h4>Defer</h4><p>Keep it, with the condition that would change your mind. A deferral without a
+  condition is a rejection nobody had the nerve to write down.</p></div>
+  <div class="card"><h4>Silence</h4><p>Not an answer. An unanswered item stays <code>awaiting owner decision</code> and
+  nothing is built from it.</p></div>
+</div>
+<h2>The one decision that unblocks the others</h2>
+<p>Rank by cost of being wrong, not by effort. <b>DG-01</b> (declare one canonical site) is first because while two
+dashboards publish different records, no other verification on either site can be treated as authoritative. <b>DG-02</b>
+(staleness gate) is second because it is the failure this session actually caught a live instance of. The odds feed is
+third — expensive, but it unblocks the entire profit question, which nothing else does.</p>
+"""
+    built["decision-queue.html"] = page("decision-queue.html", "Decision queue", body, "decision-queue.html")
+
+    # ------------------------------------------------------------------ live verification
+    chk = LV.checks()
+    st = chk.get("staleness") or {}
+    gr = chk.get("grade") or {}
+    body = f"""<h1>Live verification — what today's official pages say</h1>
+<p class="lede">Every other page on this site renders a snapshot captured on {O.AS_OF}. This page is different: it is built
+from pages this session read <b>today</b>, records the exact URL and fetch time of each, and reports where the published
+site no longer matches. It also grades the first genuine forecast the repository ever made.</p>
+<div class="note"><b>Why this page had to exist.</b> Nothing on the site compared a published row against a fresher
+official capture, so a stale row and a correct row rendered identically — both said MATCH. This session found 18 such
+rows by hand. A page is cheaper than vigilance.</div>
+<div class="kpis">
+  <div class="kpi"><b>{st.get('match_live_standings','—')}/{st.get('published_rows','—')}</b><small>published team records that still match today's official standings</small></div>
+  <div class="kpi"><b>{st.get('match_pre_final_state','—')}/{st.get('published_rows','—')}</b><small>that match the pre-11/13-finals reconstruction</small></div>
+  <div class="kpi"><b>{gr.get('games_graded','—')}</b><small>11/13 games with official finals</small></div>
+  <div class="kpi"><b>{gr.get('distinct_games_graded','—')}</b><small>distinct games the committed picks actually bet</small></div>
+  <div class="kpi"><b>{gr.get('side_accuracy',{}).get('model','—')}/{gr.get('side_accuracy',{}).get('n','—')}</b><small>games where the model named the winner</small></div>
+  <div class="kpi"><b>{gr.get('side_accuracy',{}).get('always_home','—')}/{gr.get('side_accuracy',{}).get('n','—')}</b><small>where "always pick home" would have</small></div>
+</div>
+
+<h2>1. Official pages read this session</h2>
+"""
+    rows = []
+    for c in chk.get("captures", []):
+        ok = c["outcome"] == "read"
+        rows.append({"cells": [esc(c["name"]), badge(c["outcome"], "ok" if ok else "bad"),
+                              esc(c["proved"]), srclink(c["url"])]})
+    body += table(["Official page", "Outcome", "What it proved", "URL"], rows,
+                  f"Read at {chk.get('fetched_utc','')}; nba.com is unreachable by direct HTTPS from the build sandbox, "
+                  "so these were fetched through the platform page-reader. The method is stated because it is part of the evidence.")
+
+    body += f"""<h2>2. The published team table has aged</h2>
+<p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on {O.AS_OF}
+before the nine 2026-11-13 games had official results. Nine games change eighteen records. To prove that rather than
+assert it, the pre-final state is reconstructed from today's official standings by subtracting those nine results, and
+the published table is compared with both.</p>
+"""
+    rows = [
+        {"cells": [esc("Published table vs today's official standings"),
+                   esc(f"{st.get('match_live_standings')} of {st.get('published_rows')}"),
+                   badge("STALE", "bad"), srclink(st.get("source", ""))]},
+        {"cells": [esc("Published table vs the pre-11/13-finals reconstruction"),
+                   esc(f"{st.get('match_pre_final_state')} of {st.get('published_rows')}"),
+                   badge("EXPLAINS THE GAP", "warn"), srclink(st.get("source", ""))]},
+        {"cells": [esc("Rows whose staleness the nine finals do not explain"),
+                   esc(f"{st.get('n_unexplained')}"),
+                   badge("NONE", "ok"), srclink(st.get("source", ""))]},
+    ]
+    body += table(["Comparison", "Result", "Reading", "Source"], rows, "Staleness measured, not assumed")
+    body += f"""<div class="note warn"><b>What the site currently claims.</b> {esc(st.get('published_claim',''))}.
+The comparison was true when it was made. The rows are the same rows, the standings are not the same standings, and
+until today nothing on the site could tell the difference. <b>Every stale row, with both values:</b></div>
+"""
+    rows = []
+    for r in st.get("stale_rows", []):
+        rows.append({"cells": [esc(r["team"]), esc(r["published"]), esc(r["live"]),
+                              esc(r["pre_final_reconstruction"]),
+                              badge(r["cause"], "warn" if r["cause"] == "PRE_FINALS" else "bad"),
+                              srclink(st.get("source", ""))]})
+    body += table(["Team", "Published on this site", "Today's official W-L", "Pre-11/13 reconstruction", "Cause", "Source"],
+                  rows, f"{st.get('n_stale','0')} stale team records, every one explained by the 11/13 finals")
+
+    body += f"""<h2>3. The first real out-of-sample test the repository has</h2>
+<p class="lede"><code>nba2/data/picks.json</code> was committed at <b>{gr.get('committed_utc','')}</b> (commit
+<code>{gr.get('prediction_commit','')}</code>, its only commit ever) and the earliest 11/13 tip was
+<b>{gr.get('first_tip_utc','')}</b> — {gr.get('minutes_before_first_tip','')} minutes later. Nothing in that file could
+have seen a result. That makes it a forecast, not a backtest, and it is the first one this repository has ever been able
+to grade.</p>
+<div class="note"><b>Where this is graded, and where it is not.</b> Both sealed ledgers
+(<code>cf7dedc6…</code>, <code>c841e8f3…</code>) start on 2026-11-14, so the eleven 13ths they do not cover correctly
+leave them PENDING. The graded file is <em>not</em> sealed — the claim rests on a git commit timestamp and a one-commit
+history, which is weaker than a seal and is stated as weaker.</div>
+"""
+    gf = gr.get("line_forecast", {})
+    rows = [
+        {"cells": [esc("Spread — mean absolute error"), esc(f"{gf.get('spread_mae')} pts"),
+                   esc(f"{gf.get('naive_spread_mae')} pts (predict a tie)"),
+                   badge("BEATS BASELINE", "ok"), srclink(gr.get("sources", [""])[0])]},
+        {"cells": [esc("Total — mean absolute error"), esc(f"{gf.get('total_mae')} pts"),
+                   esc(f"{gf.get('naive_total_mae')} pts (224 every game)"),
+                   badge("TIES BASELINE", "warn"), srclink(gr.get("sources", [""])[0])]},
+        {"cells": [esc("Brier score"), esc(gf.get("brier")), esc(f"{gf.get('naive_brier')} (coin flip)"),
+                   badge("BEATS COIN", "ok"), srclink(gr.get("sources", [""])[0])]},
+        {"cells": [esc("Winner accuracy"), esc(f"{gr.get('side_accuracy',{}).get('model')}/{gr.get('side_accuracy',{}).get('n')}"),
+                   esc(f"{gr.get('side_accuracy',{}).get('net_rating_baseline')}/{gr.get('side_accuracy',{}).get('n')} naive net rating, "
+                       f"{gr.get('side_accuracy',{}).get('always_home')}/{gr.get('side_accuracy',{}).get('n')} always home"),
+                   badge("NO EDGE SHOWN", "bad"), srclink(gr.get("sources", [""])[0])]},
+    ]
+    body += table(["Measure", "Model (9 games)", "Free baseline", "Verdict", "Source"], rows,
+                  "Nine games. Every one of these numbers would move on a single result — read them as a demonstration, not evidence.")
+
+    body += "<h2>4. Every pick the committed file made, and what happened</h2>"
+    body += f"""<p class="lede">The repository's own strategies, graded game by game. Note the two right-hand columns before the
+result: there is no price anywhere in the file, so <b>no profit can be computed</b> and none is shown.</p>"""
+    rows = []
+    for it in gr.get("signals", []):
+        rows.append({"cells": [
+            esc(it["strategy_id"]), esc(it["game"]), esc(it["selection"]),
+            esc(it["final"] or it.get("pending_reason") or "not graded"),
+            badge(it["result"] or it["status"], "ok" if it["result"] == "WIN" else "bad" if it["result"] == "LOSS" else "off"),
+            esc(it["price"]) if it["price"] is not None else badge("no price — PnL impossible", "warn"),
+            srclink(it["source"]),
+        ]})
+    body += table(["Strategy", "Game", "Committed selection", "Official result", "Result", "Price", "Source"], rows,
+                  "Committed picks graded against the official box scores")
+
+    dup = gr.get("duplicate_accounting", {})
+    body += f"""<div class="note bad"><b>The sample is half the size it looks.</b> {esc(dup.get('explanation',''))}
+Every hit-rate table on this site now prints both counts.</div>"""
+    rows = []
+    for sm in gr.get("strategies", []):
+        rows.append({"cells": [
+            esc(sm["strategy_id"]), esc(sm["name"]),
+            esc(sm["signals"]), esc(sm["graded"]), esc(sm["pending"] + sm.get("ungradable", 0)),
+            esc(f"{sm['wins']}-{sm['losses']}"),
+            esc(sm["hit_rate"] if sm["hit_rate"] is not None else "—"),
+            esc(sm["sign_p"] if sm["sign_p"] is not None else "—"),
+            badge(sm["verdict"].upper(), "warn" if sm["graded"] else "off"),
+            srclink(gr.get("sources", [""])[0]),
+        ]})
+    body += table(["Strategy", "Name", "Signals committed", "Graded", "Pending", "W-L",
+                   "Hit rate", "p vs coin", "Verdict", "Source"], rows,
+                  "Per-strategy grading — the p-value is the probability of this record from a fair coin")
+
+    body += f"""<h2>5. Why no profit number appears anywhere</h2>
+<p class="lede">{esc(gr.get('pricing_note',''))}</p>
+<p>A PnL would require assuming a price, and the assumption would be doing all the work: at −110 a 4-0 record is
+{4*0.909:.2f} units, at +150 it is {4*1.5:.2f}. Publishing either would be publishing the assumption, not the model.
+The site therefore reports what was measured — wins, losses, error — and says plainly that the money question is
+unanswered until a price exists.</p>
+<h2>6. The verdict this page supports</h2>
+<p>{esc(gr.get('verdict',''))}</p>
+<p>Two conclusions follow, and they point in opposite directions, which is why both are printed:</p>
+<ul>
+  <li><b>Against the model:</b> on nine games it named the winner no better than a naive net-rating baseline and worse
+      than always picking the home team. No edge is demonstrated.</li>
+  <li><b>For the process:</b> the gate machinery did its job. Every graded pick won, and the site still refuses to rank
+      the strategy, because four games is not a sample. A system that can report 4-0 and simultaneously refuse to be
+      impressed by it is the only kind worth building.</li>
+</ul>
+<h2>Reproduce this page</h2>
+<pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
+python3 -m nba2.v2              # rebuild this page
+python3 -m nba2.v2.check        # every row sourced, every blank explained</pre>"""
+    built["live-verification.html"] = page("live-verification.html", "Live verification", body, "live-verification.html")
 
     # ------------------------------------------------------------------ flagged
     body = """<h1>Flagged for review</h1>

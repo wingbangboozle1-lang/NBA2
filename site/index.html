@@ -24,9 +24,11 @@
 <a href="injuries.html">Injuries &amp; rotation</a>
 <a href="gameflow.html">Game flow</a>
 <a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
 <a href="repo-review.html">Repo review</a>
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -67,8 +69,17 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>24 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
-  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>22 irregularities with sources, none of which block publication.</p></div>
+  <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
+  <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>28 irregularities with sources, none of which block publication.</p></div>
 </div>
+
+<div class="note warn"><b>The team records on this site are a pre-final snapshot.</b>
+The nine 2026-11-13 games have since been played and are official. Reconstructed against today's
+standings, this site's 30 team records agree with the <em>pre-final</em> state on <b>30 of 30</b> rows
+and with current official standings on <b>12 of 30</b>. That is not a transcription error — it is a
+snapshot that has aged. The <a href="live-verification.html">Live verification page</a> lists every
+stale row and re-grades the repository's first real forecast.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
@@ -112,14 +123,20 @@ build were cross-checked against it. <a href="verification.html">See the verific
 </tr>
 </tbody></table></div>
 <h2>Cross-checks against the previous build</h2>
-<p class="lede">The repository already published a dataset. This session re-read the same pages live and compared, so a reader can see exactly where the earlier work was right and where it was not.</p>
+<p class="lede">The repository already published a dataset. The v2 session re-read the same pages live and compared, so a
+reader can see exactly where the earlier work was right and where it was not.
+<strong>Read the first column as a date, not just a claim.</strong> These comparisons were made on
+2026-11-14 before the nine 2026-11-13 games had official results. Nine games move eighteen team
+records, so a MATCH below describes the state at transcription time. The
+<a href="live-verification.html">Live verification page</a> re-runs the same idea against today's
+official pages and shows where those rows now stand.</p>
 <div class="scroll"><table>
-<caption>Repository dataset vs live official pages</caption>
+<caption>Repository dataset vs the 2026-11-14 official transcription</caption>
 <thead><tr>
 <th scope="col">Check</th>
 <th scope="col">Committed in repo</th>
-<th scope="col">Live official</th>
-<th scope="col">Result</th>
+<th scope="col">Live official (as transcribed 2026-11-14)</th>
+<th scope="col">Result at transcription time</th>
 <th scope="col">Detail</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
