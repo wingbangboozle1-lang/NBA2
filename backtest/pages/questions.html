@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Questions · NBA2 measured skill</title>
+<meta name="description" content="Walk-forward backtest of the NBA2 originated lines against official NBA.com final scores.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+</header>
+<aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html" class="active">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
+  <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
+</aside>
+<main class="main">
+
+<section class="hero"><h2>Open questions that block a decision</h2>
+<p>Grouped by what would answer them. A question is only listed as answered if an official source
+was read and the answer is reproducible from this repository.</p></section>
+<section class="card"><h2>A. Answerable now, from this session's work</h2>
+<div class="table-wrap"><table class="data">
+<caption>Questions answered on this page's evidence</caption>
+<thead><tr><th scope="col">#</th><th scope="col">Question</th><th scope="col">Answer</th><th scope="col">Evidence</th></tr></thead>
+<tbody>
+<tr><td>Q1</td><td>Does the originated model beat a coin flip?</td><td>Yes, in the point estimate (62.6% straight-up, AUROC 0.70), but the interval is wide and prices are unavailable, so this is not a bettable edge.</td><td><a href="luck-vs-skill.html">Luck vs Skill</a></td></tr>
+<tr><td>Q2</td><td>Does it beat the obvious rule?</td><td><strong>No.</strong> 62.6% versus 64.0% for "take the better point differential" (p = 0.90).</td><td><a href="luck-vs-skill.html">Luck vs Skill</a></td></tr>
+<tr><td>Q3</td><td>Does it beat a constant line?</td><td>Yes on margin error (12.17 vs 13.27 pts MAE) but <strong>not significantly</strong> (p = 0.35).</td><td><a href="luck-vs-skill.html">Luck vs Skill</a></td></tr>
+<tr><td>Q4</td><td>Is the model's total any good?</td><td><strong>No.</strong> Total MAE 15.78 versus 15.43 for simply predicting the league-average total. The total component is currently worse than a constant.</td><td><a href="walk-forward.html">Walk-Forward</a></td></tr>
+<tr><td>Q5</td><td>Are same-game legs correlated?</td><td>Not detectably: r(margin, total) = -0.009 (95% CI -0.17 to 0.15). The same-game parlay premise is unsupported.</td><td><a href="correlation.html">Correlation</a></td></tr>
+<tr><td>Q6</td><td>Do back-to-backs hurt?</td><td>Directionally yes (-1.54 vs +1.27 pts) but not significantly (p = 0.38).</td><td><a href="correlation.html">Correlation</a></td></tr>
+<tr><td>Q7</td><td>Are the tiers informative?</td><td>Partly: Tier A 75.4% vs Tier C 46.2% straight-up. Tier C's interval includes a coin flip, which is what a noise tier should look like.</td><td><a href="walk-forward.html">Walk-Forward</a></td></tr>
+<tr><td>Q8</td><td>How much data is needed before a leaderboard means anything?</td><td>Roughly 300 settled bets to see a 3-point edge; about 4,551 to see a 1-point edge at 80% power.</td><td><a href="luck-vs-skill.html">Luck vs Skill</a></td></tr>
+</tbody></table></div></section>
+<section class="card"><h2>B. Blocked, and what would unblock each one</h2>
+<div class="table-wrap"><table class="data">
+<caption>Questions that cannot be answered from available data</caption>
+<thead><tr><th scope="col">#</th><th scope="col">Question</th><th scope="col">Why it is blocked</th><th scope="col">What would answer it</th></tr></thead>
+<tbody>
+<tr><td>Q9</td><td>Is any strategy profitable after vig?</td><td>No odds feed; no price means no edge, no ROI, no stake.</td><td>A licensed historical odds feed (opening, closing, and the price actually available).</td></tr>
+<tr><td>Q10</td><td>Would these lines have beaten a market line?</td><td>Same: no market numbers captured.</td><td>The same feed, joined by game id and timestamp.</td></tr>
+<tr><td>Q11</td><td>How much does a specific injury move a line?</td><td>No player-level data; the results snapshot has no minutes or box scores.</td><td>Official box scores for every game plus the injury report at tip-off time.</td></tr>
+<tr><td>Q12</td><td>Do player props and prop combos have an edge?</td><td>No prop prices and no player baselines from an official source.</td><td>Official player game logs and a prop-line feed.</td></tr>
+<tr><td>Q13</td><td>Does travel or altitude matter?</td><td>Venues are known but itineraries and geocodes are not in the snapshot.</td><td>A geocoded arena list and per-team travel schedules.</td></tr>
+<tr><td>Q14</td><td>What is the correlation between two legs of a specific same-player combo?</td><td>Needs per-player box scores for both markets.</td><td>Official player game logs, at least a full season.</td></tr>
+<tr><td>Q15</td><td>Is the ex-ante line the same as the ex-post line for the same game?</td><td>The two excluded dates (11/06, 11/11) rendered without scores, so 19 games are missing from the middle of the sample.</td><td>Box scores or a per-game fetch for those dates from a source that serves them.</td></tr>
+</tbody></table></div></section>
+<section class="card"><h2>C. Owner decisions that no amount of data will settle</h2>
+<div class="table-wrap"><table class="data">
+<caption>Decisions requiring the owner</caption>
+<thead><tr><th scope="col">#</th><th scope="col">Decision</th><th scope="col">Default if unanswered</th></tr></thead>
+<tbody>
+<tr><td>D1</td><td>Is a 0.30-point MAE improvement over the naive baseline the right promotion bar (G-04)?</td><td>It stays as registered and the model stays unpromoted.</td></tr>
+<tr><td>D2</td><td>What is the reward pool, and is it units or currency?</td><td>100 units stay unallocated.</td></tr>
+<tr><td>D3</td><td>Is the target competition houses' prices or our own line accuracy?</td><td>Only line accuracy is measured; nothing is claimed about markets.</td></tr>
+<tr><td>D4</td><td>Which jurisdiction's rules govern any future odds ingestion?</td><td>No odds are ingested.</td></tr>
+</tbody></table></div></section>
+<div class="card"><h2>Official source for this page</h2><p class="blurb"><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com</a> — answers cite the measured results in this report</p></div>
+<footer class="footer">
+  <p>Every row links its own source. Nothing here is betting advice, and no bet is placed by this repository.
+  No odds feed is connected, so no ROI, edge or stake is published anywhere on this site.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>

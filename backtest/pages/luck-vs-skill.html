@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luck vs Skill · NBA2 measured skill</title>
+<meta name="description" content="Walk-forward backtest of the NBA2 originated lines against official NBA.com final scores.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+</header>
+<aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html" class="active">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
+  <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
+</aside>
+<main class="main">
+
+<section class="hero"><h2>Luck versus skill</h2>
+<p>A hit rate is not evidence. These are the controls that turn it into one — and the controls
+that show where this sample still cannot answer the question.</p></section>
+<div class="notice notice-warning"><strong>Finding: the model does not beat the obvious rule.</strong>
+On the same 139 games, "always take the team with the better point differential"
+scores 64.0% and the originated model scores
+62.6%. The difference is
+-1.44% (permutation p =
+0.90). <strong>The model's complexity is not yet
+paying for itself.</strong></div>
+<div class="card"><h2>Control 1 — naive rules on identical games</h2>
+<div class="table-wrap"><table class="data"><caption>Straight-up accuracy on identical games</caption><thead><tr><th scope="col">Rule</th><th scope="col">Games</th><th scope="col">Hit rate</th><th scope="col">95% CI</th><th scope="col">Verdict</th></tr></thead><tbody><tr><td>Always pick the home team</td><td>72 / 139</td><td>51.8%</td><td>43.6%–59.9%</td><td>the baseline any model must clear</td></tr><tr><td>Better pre-game point differential</td><td>89 / 139</td><td>64.0%</td><td>55.8%–71.5%</td><td>the honest yardstick</td></tr><tr><td>Originated model</td><td>87 / 139</td><td>62.6%</td><td>54.3%–70.2%</td><td>not distinguishable from the row above</td></tr></tbody></table></div>
+<p class="blurb">All three rules are point-in-time: the differential rule uses only games before
+each tip-off. Comparing a model with a coin flip instead of with this rule is how sports models
+claim skill they do not have.</p></div>
+<div class="card"><h2>Control 2 — is the improvement on the margin error real?</h2>
+<div class="table-wrap"><table class="data"><caption>Permutation test of the margin-error difference</caption><thead><tr><th scope="col">Test</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Model mean absolute margin error</td><td>12.17 pts</td></tr><tr><td>Baseline (constant 0-line) absolute error</td><td>13.27 pts</td></tr><tr><td>Observed difference</td><td>-1.09 pts (negative = model better)</td></tr><tr><td>Permutation p-value (10,000 draws, fixed seed)</td><td>0.348</td></tr><tr><td>Significant at 5%</td><td><strong>no</strong></td></tr></tbody></table></div>
+<p class="blurb">A 1.09-point improvement with p = 0.35 is
+consistent with luck. It is reported as an improvement in the point estimate and <em>not</em> as a
+demonstrated edge.</p></div>
+<div class="card"><h2>Control 3 — calibration: when we said 60%, did it happen?</h2>
+<div class="table-wrap"><table class="data"><caption>Reliability table</caption><thead><tr><th scope="col">Predicted band</th><th scope="col">Games</th><th scope="col">Mean predicted</th><th scope="col">Observed home wins</th><th scope="col">95% CI</th><th scope="col">Gap (pp)</th></tr></thead><tbody><tr><td>30%-40%</td><td>8</td><td>36.0%</td><td>25.0%</td><td>7.1%–59.1%</td><td>-11.0</td></tr><tr><td>40%-50%</td><td>47</td><td>45.1%</td><td>38.3%</td><td>25.8%–52.6%</td><td>-6.8</td></tr><tr><td>50%-60%</td><td>57</td><td>54.8%</td><td>54.4%</td><td>41.6%–66.6%</td><td>-0.4</td></tr><tr><td>60%-70%</td><td>23</td><td>64.6%</td><td>73.9%</td><td>53.5%–87.5%</td><td>+9.3</td></tr><tr><td>70%-80%</td><td>4</td><td>72.5%</td><td>100.0%</td><td>51.0%–100.0%</td><td>+27.5</td></tr></tbody></table></div>
+<p class="blurb">A probability that is not monotone in its outcome cannot be used for staking.
+The table is shown in full rather than summarised, because the small bins are where a model's
+over-confidence hides.</p></div>
+<div class="card"><h2>Control 4 — how much data would it take?</h2>
+<div class="table-wrap"><table class="data"><caption>Games required to detect a genuine edge at 5% significance, 80% power</caption><thead><tr><th scope="col">Real edge (points)</th><th scope="col">Implied hit rate</th><th scope="col">Games needed for 80% power</th></tr></thead><tbody><tr><td>0.5</td><td>51.5%</td><td>18,193</td></tr><tr><td>1.0</td><td>52.9%</td><td>4,551</td></tr><tr><td>1.5</td><td>54.4%</td><td>2,025</td></tr><tr><td>2.0</td><td>55.9%</td><td>1,140</td></tr><tr><td>3.0</td><td>58.7%</td><td>509</td></tr></tbody></table></div>
+<p class="blurb">A 1-point edge needs roughly 4,500 settled games to detect. The
+139 games graded here cannot rank strategies, and no amount of presentation
+changes that arithmetic.</p></div>
+<div class="card"><h2>What is still impossible to answer</h2>
+<ul class="tight">
+<li><strong>Is any strategy profitable?</strong> Unknowable: no prices. ROI would be fiction.</li>
+<li><strong>Would this beat a market line?</strong> Unknowable for the same reason. Beating our own line measures self-consistency only.</li>
+<li><strong>Is the champion the best?</strong> No: the 139-game sample is below the G-01 floor of 300 settled bets.</li>
+</ul></div>
+<div class="card"><h2>Official source for this page</h2><p class="blurb"><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com</a> — outcomes are official final scores; methods are cited on the Sources page</p></div>
+<footer class="footer">
+  <p>Every row links its own source. Nothing here is betting advice, and no bet is placed by this repository.
+  No odds feed is connected, so no ROI, edge or stake is published anywhere on this site.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>
