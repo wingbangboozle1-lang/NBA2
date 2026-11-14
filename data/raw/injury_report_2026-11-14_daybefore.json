@@ -35,13 +35,6 @@
    "field": "day-before designations are partial",
    "issue": "At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).",
    "action_required": "Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this."
-  },
-  {
-   "id": "FLAG-INJ-02",
-   "severity": "high",
-   "field": "rotation_minutes_impact,production_impact,line_adjustment_pts",
-   "issue": "No numeric injury impact can be produced from this document either: the official report contains no minutes, usage or production data. Impact columns are blank by design, not omitted.",
-   "action_required": "Official player-level box score / minute data (requirements R-102) before any injury adjustment is applied to lines."
   }
  ],
  "columns": ["game_date", "time_et", "matchup", "team", "player", "status", "reason", "attribution"],
