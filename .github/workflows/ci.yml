@@ -79,4 +79,11 @@ jobs:
           echo "published artefacts match the pipeline"
 
       - name: Sealed predictions digest
-        run: python -c "import json,pathlib; d=json.loads(pathlib.Path('data/raw/ledger/sealed-2026-11-13.json').read_text()); print('sealed', d['header']['n_predictions'], d['header']['sha256'])"
+        run: |
+          for f in data/raw/ledger/sealed-*.json; do
+            python - "$f" <<'PYEOF'
+          import json, pathlib, sys
+          d = json.loads(pathlib.Path(sys.argv[1]).read_text())
+          print("sealed", d["header"]["n_predictions"], d["header"]["sha256"], sys.argv[1])
+          PYEOF
+          done
