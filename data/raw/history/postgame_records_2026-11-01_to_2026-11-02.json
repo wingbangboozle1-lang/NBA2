@@ -1,0 +1,390 @@
+{
+ "schema": "nba2.postgame-records.v1",
+ "meta": {
+  "captured_utc": "2026-11-14",
+  "meaning": "Official team W-L printed on the nba.com game card immediately after that game. Used to CHECK a reconstruction of records from final scores; never used as a model input.",
+  "n_rows": 38
+ },
+ "rows": [
+  {
+   "game_id": "0022600154",
+   "date": "2026-11-01",
+   "team": "BOS",
+   "side": "away",
+   "wins": 5,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/bos-vs-orl-0022600154",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600154",
+   "date": "2026-11-01",
+   "team": "ORL",
+   "side": "home",
+   "wins": 2,
+   "losses": 4,
+   "source_url": "https://www.nba.com/game/bos-vs-orl-0022600154",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600155",
+   "date": "2026-11-01",
+   "team": "BKN",
+   "side": "away",
+   "wins": 1,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/bkn-vs-ind-0022600155",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600155",
+   "date": "2026-11-01",
+   "team": "IND",
+   "side": "home",
+   "wins": 2,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/bkn-vs-ind-0022600155",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600156",
+   "date": "2026-11-01",
+   "team": "LAC",
+   "side": "away",
+   "wins": 1,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/lac-vs-gsw-0022600156",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600156",
+   "date": "2026-11-01",
+   "team": "GSW",
+   "side": "home",
+   "wins": 4,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/lac-vs-gsw-0022600156",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600157",
+   "date": "2026-11-01",
+   "team": "TOR",
+   "side": "away",
+   "wins": 3,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/tor-vs-lal-0022600157",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600157",
+   "date": "2026-11-01",
+   "team": "LAL",
+   "side": "home",
+   "wins": 5,
+   "losses": 2,
+   "source_url": "https://www.nba.com/game/tor-vs-lal-0022600157",
+   "list_url": "https://www.nba.com/games?date=2026-11-01"
+  },
+  {
+   "game_id": "0022600158",
+   "date": "2026-11-02",
+   "team": "OKC",
+   "side": "away",
+   "wins": 5,
+   "losses": 2,
+   "source_url": "https://www.nba.com/game/okc-vs-cle-0022600158",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600158",
+   "date": "2026-11-02",
+   "team": "CLE",
+   "side": "home",
+   "wins": 4,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/okc-vs-cle-0022600158",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600163",
+   "date": "2026-11-02",
+   "team": "CHI",
+   "side": "away",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/chi-vs-phi-0022600163",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600163",
+   "date": "2026-11-02",
+   "team": "PHI",
+   "side": "home",
+   "wins": 7,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/chi-vs-phi-0022600163",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600160",
+   "date": "2026-11-02",
+   "team": "ATL",
+   "side": "away",
+   "wins": 4,
+   "losses": 4,
+   "source_url": "https://www.nba.com/game/atl-vs-ind-0022600160",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600160",
+   "date": "2026-11-02",
+   "team": "IND",
+   "side": "home",
+   "wins": 2,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/atl-vs-ind-0022600160",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600161",
+   "date": "2026-11-02",
+   "team": "BKN",
+   "side": "away",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/bkn-vs-nyk-0022600161",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600161",
+   "date": "2026-11-02",
+   "team": "NYK",
+   "side": "home",
+   "wins": 3,
+   "losses": 4,
+   "source_url": "https://www.nba.com/game/bkn-vs-nyk-0022600161",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600162",
+   "date": "2026-11-02",
+   "team": "WAS",
+   "side": "away",
+   "wins": 4,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/was-vs-orl-0022600162",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600162",
+   "date": "2026-11-02",
+   "team": "ORL",
+   "side": "home",
+   "wins": 2,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/was-vs-orl-0022600162",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600159",
+   "date": "2026-11-02",
+   "team": "DAL",
+   "side": "away",
+   "wins": 6,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/dal-vs-cha-0022600159",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600159",
+   "date": "2026-11-02",
+   "team": "CHA",
+   "side": "home",
+   "wins": 3,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/dal-vs-cha-0022600159",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600164",
+   "date": "2026-11-02",
+   "team": "SAC",
+   "side": "away",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/sac-vs-dal-0022600164",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600164",
+   "date": "2026-11-02",
+   "team": "DAL",
+   "side": "home",
+   "wins": 4,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/sac-vs-dal-0022600164",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600166",
+   "date": "2026-11-02",
+   "team": "MIL",
+   "side": "away",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/mil-vs-min-0022600166",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600166",
+   "date": "2026-11-02",
+   "team": "MIN",
+   "side": "home",
+   "wins": 5,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/mil-vs-min-0022600166",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600165",
+   "date": "2026-11-02",
+   "team": "NOP",
+   "side": "away",
+   "wins": 3,
+   "losses": 4,
+   "source_url": "https://www.nba.com/game/nop-vs-mem-0022600165",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600165",
+   "date": "2026-11-02",
+   "team": "MEM",
+   "side": "home",
+   "wins": 6,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/nop-vs-mem-0022600165",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600167",
+   "date": "2026-11-02",
+   "team": "BOS",
+   "side": "away",
+   "wins": 5,
+   "losses": 2,
+   "source_url": "https://www.nba.com/game/bos-vs-hou-0022600167",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600167",
+   "date": "2026-11-02",
+   "team": "HOU",
+   "side": "home",
+   "wins": 7,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/bos-vs-hou-0022600167",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600168",
+   "date": "2026-11-02",
+   "team": "UTA",
+   "side": "away",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/uta-vs-sas-0022600168",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600168",
+   "date": "2026-11-02",
+   "team": "SAS",
+   "side": "home",
+   "wins": 5,
+   "losses": 2,
+   "source_url": "https://www.nba.com/game/uta-vs-sas-0022600168",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600169",
+   "date": "2026-11-02",
+   "team": "POR",
+   "side": "away",
+   "wins": 5,
+   "losses": 1,
+   "source_url": "https://www.nba.com/game/por-vs-den-0022600169",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600169",
+   "date": "2026-11-02",
+   "team": "DEN",
+   "side": "home",
+   "wins": 3,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/por-vs-den-0022600169",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600171",
+   "date": "2026-11-02",
+   "team": "TOR",
+   "side": "away",
+   "wins": 4,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/tor-vs-lac-0022600171",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600171",
+   "date": "2026-11-02",
+   "team": "LAC",
+   "side": "home",
+   "wins": 1,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/tor-vs-lac-0022600171",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600170",
+   "date": "2026-11-02",
+   "team": "PHX",
+   "side": "away",
+   "wins": 1,
+   "losses": 4,
+   "source_url": "https://www.nba.com/game/phx-vs-gsw-0022600170",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600170",
+   "date": "2026-11-02",
+   "team": "GSW",
+   "side": "home",
+   "wins": 5,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/phx-vs-gsw-0022600170",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600172",
+   "date": "2026-11-02",
+   "team": "MIA",
+   "side": "away",
+   "wins": 2,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/mia-vs-lal-0022600172",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  },
+  {
+   "game_id": "0022600172",
+   "date": "2026-11-02",
+   "team": "LAL",
+   "side": "home",
+   "wins": 6,
+   "losses": 2,
+   "source_url": "https://www.nba.com/game/mia-vs-lal-0022600172",
+   "list_url": "https://www.nba.com/games?date=2026-11-02"
+  }
+ ]
+}
