@@ -1,6 +1,6 @@
 {
   "title": "NBA2 site-improvement queue",
-  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
+  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision \u2014 not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
   "status_key": {
     "awaiting owner decision": "no action taken",
     "applied in this PR": "already built as part of the integration work",
@@ -13,7 +13,7 @@
       "problem": "Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.",
       "proposal": "Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.",
       "benefit": "Unblocks gates G-02, G-05 on real PnL, G-09, and converts every table from 'projection' to 'decision'.",
-      "effort": "M — ingest + storage + retention policy",
+      "effort": "M \u2014 ingest + storage + retention policy",
       "risk": "Vendor cost; storing closing lines needs storage rights (Q-18 style check).",
       "recommendation": "Accept first; nothing else on this list pays as well.",
       "status": "awaiting owner decision"
@@ -21,8 +21,8 @@
     {
       "id": "S-02",
       "title": "Ingest official game-level results daily",
-      "problem": "σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
-      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.",
+      "problem": "\u03c3, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
+      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to \u22652 seasons for fitting.",
       "benefit": "Turns the two fitted constants into measured ones and kills the circularity in G-04.",
       "effort": "M",
       "risk": "Needs network access from a runner (unavailable in this sandbox).",
@@ -48,7 +48,7 @@
       "benefit": "Makes accountability real instead of implied; a one-hour task that removes a whole class of silent bias.",
       "effort": "S",
       "risk": "None.",
-      "recommendation": "Accept now — it blocks 'is this site trustworthy' more than any data purchase.",
+      "recommendation": "Accept now \u2014 it blocks 'is this site trustworthy' more than any data purchase.",
       "status": "awaiting owner decision"
     },
     {
@@ -58,7 +58,7 @@
       "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
       "benefit": "Makes the leaderboard a science instead of a search result; costs ~20 lines.",
       "effort": "S",
-      "risk": "Requires discipline to log failed attempts too — that is the point.",
+      "risk": "Requires discipline to log failed attempts too \u2014 that is the point.",
       "recommendation": "Accept; pair with a rule 'no evaluation without registration'.",
       "status": "awaiting owner decision"
     },
@@ -70,7 +70,7 @@
       "benefit": "Turns every gap into a one-click work item for the reviewer instead of a mystery.",
       "effort": "S",
       "risk": "Adds ~40 lines of build logic; must stay in sync with the flag registry.",
-      "recommendation": "Accept — cheap and it is what the Flagged page exists for.",
+      "recommendation": "Accept \u2014 cheap and it is what the Flagged page exists for.",
       "status": "awaiting owner decision"
     },
     {
@@ -109,19 +109,19 @@
     {
       "id": "S-10",
       "title": "Add a game-day re-issue build (T-0) alongside the T-3 build",
-      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' — proven this session — so a 3-day-ahead line is structurally injury-blind.",
+      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' \u2014 proven this session \u2014 so a 3-day-ahead line is structurally injury-blind.",
       "proposal": "Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.",
       "benefit": "Converts a weakness into a measurable quantity: how much our line moves on availability news, which is a strategy family of its own.",
       "effort": "M",
       "risk": "Doubles storage of sealed ledgers (small).",
-      "recommendation": "Accept — the best idea on this list for model quality per unit of data.",
+      "recommendation": "Accept \u2014 the best idea on this list for model quality per unit of data.",
       "status": "awaiting owner decision"
     },
     {
       "id": "S-11",
       "title": "Show per-line contribution of every input",
       "problem": "'San Antonio -4.5' is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.",
-      "proposal": "Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.",
+      "proposal": "Add a decomposition column (SRS gap \u00d7\u03bb, raw-margin gap \u00d7\u03bb, HCA, injury adj) per line, computed not asserted.",
       "benefit": "Reviewers can disagree with a component instead of the whole number; that is how a model gets better.",
       "effort": "S",
       "risk": "Wider tables on mobile.",
@@ -155,7 +155,7 @@
       "title": "Table ergonomics: sticky headers, density toggle, CSV export",
       "problem": "The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.",
       "proposal": "Sticky thead, a compact-density class, and a per-table 'download CSV' that includes the source column.",
-      "benefit": "Reviewers can work offline without losing provenance — export keeps the source link per row.",
+      "benefit": "Reviewers can work offline without losing provenance \u2014 export keeps the source link per row.",
       "effort": "S",
       "risk": "None material.",
       "recommendation": "Accept.",
@@ -213,7 +213,7 @@
       "benefit": "Reduces accidental disclosure; keeps the public surface explicit.",
       "effort": "M (changes every relative link + breaks current live URLs unless redirected)",
       "risk": "URL churn; needs a redirect plan for the already-live root pages.",
-      "recommendation": "Defer — real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
+      "recommendation": "Defer \u2014 real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
       "status": "awaiting owner decision"
     },
     {
@@ -296,7 +296,7 @@
     {
       "id": "S-27",
       "title": "Retire the unreachable v1 tree instead of maintaining two generators",
-      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
+      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page \u2014 pages/session-audit.html and pages/executive-summary.html were both checked \u2014 yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
       "proposal": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.",
       "benefit": "One number per question is the precondition for every other claim on the site.",
       "effort": "M",
@@ -312,7 +312,7 @@
       "benefit": "Turns a class of silent, self-erasing test passes into a failure at PR time.",
       "effort": "S",
       "risk": "Adds ~30s of CI; no production risk.",
-      "recommendation": "Accept — this is the check that found F-029.",
+      "recommendation": "Accept \u2014 this is the check that found F-029.",
       "status": "awaiting owner decision"
     },
     {
@@ -321,9 +321,9 @@
       "problem": "The landing page opened with model parameters (sigma, HCA) and tier counts, which are the least decision-relevant numbers on the site. The one measurement against real outcomes was buried.",
       "proposal": "Render a 'Graded against official results' block at the top of the dashboard with the four numbers that matter (margin MAE, total MAE, winner calls, games needed for power) and a link to the full card.",
       "benefit": "A reader learns in five seconds what the model has been proven to do, and what the sample can support, before meeting any parameter.",
-      "effort": "S — one build-time section",
+      "effort": "S \u2014 one build-time section",
       "risk": "None; the block is generated from the same graded JSON.",
-      "recommendation": "Accept — implemented this session (session arena/3681def8-nba2).",
+      "recommendation": "Accept \u2014 implemented this session (session arena/3681def8-nba2).",
       "status": "implemented 2026-11-14 by arena/3681def8-nba2"
     },
     {
@@ -332,9 +332,9 @@
       "problem": "The slate table's official-game-page column and the graded card's source column printed verified URLs as plain text, so a reviewer had to copy-paste them. Raised earlier as FLAG-AUD-01 and left open.",
       "proposal": "In the table renderer, detect a cell whose entire value is an http(s) URL and emit an anchor. The value, the provenance badge and the row's own source column are unchanged.",
       "benefit": "Manual verification becomes one click. 89 cells across the slate and graded tables become clickable without touching a single value.",
-      "effort": "S — one helper in build_site.py",
+      "effort": "S \u2014 one helper in build_site.py",
       "risk": "None to data; external links already open with rel=noopener.",
-      "recommendation": "Accept — implemented this session; FLAG-AUD-01 can now be closed.",
+      "recommendation": "Accept \u2014 implemented this session; FLAG-AUD-01 can now be closed.",
       "status": "implemented 2026-11-14 by arena/3681def8-nba2"
     },
     {
@@ -343,9 +343,9 @@
       "problem": "Nothing was sealed for 2026-11-13, the only slate with official results, so the first graded card is a backtest and can never become a forward test (FLAG-GRADE-01, Q-31).",
       "proposal": "Add a seal step to .github/workflows/refresh.yml that commits a ledger for the next slate, and make seal_predictions assert that the seal timestamp strictly precedes the earliest tip in the set.",
       "benefit": "Every future result becomes pre-registered evidence instead of a story that can be revised after the fact. This is the cheapest real improvement available.",
-      "effort": "M — workflow step + assertion",
+      "effort": "M \u2014 workflow step + assertion",
       "risk": "Low; fails closed (no seal, no published picks) which is the correct behaviour.",
-      "recommendation": "Accept first among the open items — it is the only one that makes future evidence trustworthy.",
+      "recommendation": "Accept first among the open items \u2014 it is the only one that makes future evidence trustworthy.",
       "status": "awaiting owner decision"
     },
     {
@@ -354,9 +354,9 @@
       "problem": "Six trees (root/pages, site/, docs/, dashboard/, originated/, backtest/) publish from one origin with overlapping and sometimes conflicting numbers. A reviewer cannot tell which is current (Q-34).",
       "proposal": "Keep the root v1 tree, move the others under a single /archive/ path with an index that states each tree's as-of date and why it was kept, and link them from one place on the dashboard.",
       "benefit": "One current answer per question, with the history one click away instead of mixed into the navigation.",
-      "effort": "M — moves plus an index page",
+      "effort": "M \u2014 moves plus an index page",
       "risk": "Breaks inbound links to the moved trees; needs redirects or a clear index.",
-      "recommendation": "Accept, but as an owner decision — it changes what every visitor sees.",
+      "recommendation": "Accept, but as an owner decision \u2014 it changes what every visitor sees.",
       "status": "awaiting owner decision"
     },
     {
@@ -365,7 +365,7 @@
       "problem": "GSW@SAS (predicted SAS +3.2, actual +38) and MEM@NOP (predicted MEM by 8.3, actual by 31) contributed 57 of the 117 total margin error on nine games.",
       "proposal": "Re-run the 2026-11-13 card with the shrinkage weight swept across a grid and publish the resulting MAE curve, so the choice is measured rather than assumed.",
       "benefit": "Either confirms the current weight or finds a cheap accuracy gain; either way it retires one of the unratified parameters.",
-      "effort": "S — the grading script already exists; add a sweep",
+      "effort": "S \u2014 the grading script already exists; add a sweep",
       "risk": "Fitting shrinkage on the same nine games would be overfitting; report the curve, do not pick the minimum from it.",
       "recommendation": "Accept, with the explicit rule that no parameter is chosen from these nine games.",
       "status": "awaiting owner decision"
@@ -376,7 +376,7 @@
       "problem": "The refresh workflow fetches the slate and injury report but not the official standings or completed-game scores, so ratings and settlement stay manual.",
       "proposal": "Add two steps: nba.com/standings -> data/raw/standings_<date>_official.json, and nba.com/schedule finals -> data/raw/finals_<date>.json, then run settle.",
       "benefit": "Closes the loop unattended: official records in, graded cards out, every morning.",
-      "effort": "M — two ingest functions plus the settle step",
+      "effort": "M \u2014 two ingest functions plus the settle step",
       "risk": "The page fetcher is the only working retrieval path in this environment; the workflow runner may reach the same hosts directly, which should be probed first.",
       "recommendation": "Accept after the reachability probe in CC-FRESH-03 confirms the runner can reach nba.com.",
       "status": "awaiting owner decision"
@@ -387,10 +387,65 @@
       "problem": "Twenty flat sidebar links in file order gave no signal about what to read first.",
       "proposal": "Group into Decide / Measure / Inputs / Governance / Project, with a one-line description per category, and mirror the grouping on the dashboard.",
       "benefit": "The site reads as a dashboard with an order of operations rather than a listing.",
-      "effort": "S — data structure in the builder plus CSS",
+      "effort": "S \u2014 data structure in the builder plus CSS",
       "risk": "None; every existing page keeps its URL.",
-      "recommendation": "Accept — implemented this session.",
+      "recommendation": "Accept \u2014 implemented this session.",
       "status": "implemented 2026-11-14 by arena/3681def8-nba2"
+    },
+    {
+      "id": "S-40",
+      "title": "Make the existing nightly ingest actually run, and extend it to the v2 results history",
+      "problem": "A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed \u2014 gh run list for it is empty, which is why the repo's own freshness check (CC-FRESH-03) reports 'the schedule is armed but nothing has run'. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either.",
+      "proposal": "Confirm the cron schedule is enabled on the default branch (a scheduled workflow only starts firing after it is merged to the default branch once), then extend the job to append each completed date to data/raw/history/ and assert the per-date game count against the nba.com day-strip calendar and the game count implied by the standings. Fail the run on any disagreement.",
+      "benefit": "Makes the window impossible to fall behind silently, and turns the standings into a permanent cross-check on the results log.",
+      "effort": "S",
+      "risk": "Low. The workflow is already written and fail-closed; only the extension to data/raw/history/ is new.",
+      "recommendation": "Accept \u2014 the schedule is already armed, so the cheapest possible fix is confirming it fires.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-41",
+      "title": "Capture per-player game logs so the last hard blocker can close",
+      "problem": "Every player-level correlation on the site is BLOCKED, the player-props page cannot price anything, the minutes-and-production half of the injuries page cannot be filled, and strategy S7 has never generated a bet. All four fail for the same missing input.",
+      "proposal": "Ingest per-player game logs (minutes, points, rebounds, assists, opponent) for at least the players who appear on an injury report. Start with the injury-report population to bound the cost.",
+      "benefit": "Unblocks the last data dependency in the brief. Everything else on the site can be built, measured and settled with what is already committed.",
+      "effort": "M",
+      "risk": "Needs a licensed feed or a scheduled scrape; player-level data is rate-limited more aggressively.",
+      "recommendation": "Accept \u2014 it is the only remaining hard blocker (mirrors v2 suggestion SG-30).",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-42",
+      "title": "Decide which tree GitHub Pages serves, and retire the other",
+      "problem": "The repository's Pages setting is build_type 'legacy' (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree.",
+      "proposal": "Pick the v2 tree as the single published site, point Pages at the pages.yml workflow, and move the root-level v1 pages under archive/ with a dated note.",
+      "benefit": "One site, one set of numbers, no chance of a reader landing on the stale one.",
+      "effort": "S",
+      "risk": "Low, but it is a repository setting change that only the owner can make \u2014 this session cannot push it and should not guess.",
+      "recommendation": "Accept \u2014 one setting, and it decides what every reader sees.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-43",
+      "title": "Replace the flat 300-bet gate with a power calculation per strategy",
+      "problem": "Gate G7 applies one round number to all seven strategies. But the parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval \u2014 the bar is not equally strict across types, and 300 was chosen before any data existed to check it.",
+      "proposal": "Simulate each strategy's own settled bet stream to get its bet-to-bet correlation, then set the required n per strategy. The lab already computes every Wilson interval and distance to base rate needed to do this.",
+      "benefit": "Makes the gate a measurement instead of a round number, and tells each strategy how far it has to go.",
+      "effort": "S",
+      "risk": "Low. Changes when strategies become rank-eligible, so it should be published with its derivation.",
+      "recommendation": "Accept (mirrors v2 suggestion SG-26).",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-44",
+      "title": "Publish the parlay price with its measured correlation, and print the naive product beside it",
+      "problem": "The same-game correlation is now measured (+0.0393, 95% CI -0.113 to +0.190, n=167), but the site still withholds a parlay price entirely. The honest position is no longer 'we do not know the correlation' but 'we do not know it precisely' \u2014 and withholding the price hides the error bar rather than showing it.",
+      "proposal": "Price every parlay with the measured rho using the bivariate-normal pricer already implemented and tested in nba2/v2/strategy_lab.py, and print the naive product on the same row with the interval between them.",
+      "benefit": "Turns an unpriced section into a priced one, with the uncertainty visible instead of implied.",
+      "effort": "S",
+      "risk": "The interval is wide, so the price must ship with the interval on the same row or it will be read as more precise than it is.",
+      "recommendation": "Defer until S-29 has grown the sample past ~500 games, then accept (mirrors SG-28).",
+      "status": "awaiting owner decision"
     }
   ]
 }

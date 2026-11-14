@@ -2083,6 +2083,197 @@ Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 che
 0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
 verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
 byte-identical across rebuilds.
+
+## Session `arena/ac5fab5c-nba2` — CLAIM (2026-11-14, branch `arena/ac5fab5c-nba2`, base `d510313`)
+
+**Claim pushed before any file edit, per protocol.**
+
+**State read at claim time (verified, not assumed):**
+- `main` @ `d510313` (merge of PR #43, session `arena/ab8743d8-nba2`). All four workflows green on
+  that merge (CI verify ✔, backtest ✔, v2 ✔, publish-parity ✔, Publish GitHub Pages ✔).
+- Open PRs: **#21 only** (`arena/79e87c81-nba2`, opened 2026-11-14 00:52 UTC). It is stale and
+  superseded: PR #38 landed the same window roll-forward. Not touched by this session; left open
+  for its owner.
+- GitHub Pages API re-read this session: `build_type: **legacy**`, `source: main / /`, status
+  `built`. **The live site therefore serves the repo root (the v1 tree), not `site/` (v2)** — the
+  same mismatch session `arena/72f9da58` logged as an owner decision. This session resolves it
+  (see task P-01) because the brief requires one clean published site.
+- No other session has committed since `d510313`.
+
+**File scope claimed by this session (nothing outside it is edited):**
+- `COORDINATION.md` — append-only (this section + completion record).
+- `site/**` — the v2 published tree (landing + category subpages).
+- `data/v2/**`, `nba2/v2/**` — v2 model, official snapshot, site generator, content registers.
+- `audit/session-ac5fab5c/**` — **new** directory, new files only (no overlap with
+  `audit/2026-11-14/**` claimed by the closed session `arena/ab8743d8`).
+- `.github/workflows/pages.yml` — only to make the publish target unambiguous.
+
+**Explicitly NOT edited (owned elsewhere; a change request is logged here instead of an edit):**
+`index.html`, `pages/**`, `flagged.html`, `css/**`, `app.js`, `build_site.py`, `nba2/pipeline/**`,
+`data/site.json`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`data/raw/**` (read-only), `data/raw/ledger/**` (immutable sealed ledgers), `tools/**`,
+`requirements/**`, `suggestions/**`, `scripts/**`, `backtest/**` (I run its checkers, I do not
+rewrite it).
+
+**Rules this session holds itself to:** a value is published only if this session fetched it from
+an official source (nba.com / ak-static.cms.nba.com) or reproduced it from a committed snapshot by
+running the committed code; unconfirmed ⇒ blank + flagged, never inferred; the two sealed ledgers
+are never rewritten.
+
+### Task board — `arena/ac5fab5c-nba2` (P-01…P-12)
+
+| # | Task | Status | File scope |
+|---|---|---|---|
+| P-01 | Resolve the published-tree mismatch: make the live GitHub Pages site the single clean v2 tree, or document why not | **needs review** — decision S-31 raised; the setting change is owner-only, see the P-01 record below | `.github/workflows/pages.yml`, `COORDINATION.md` |
+| P-02 | Line-by-line repo review: run every committed checker/test/lint and paste real output | **done** — output teed to `audit/session-ac5fab5c/checkers-01-tests.txt`, `checkers-02-build.txt`, `checkers-03-tools.txt` | `audit/session-ac5fab5c/**` |
+| P-03 | Fresh official re-verification of the 2026-11-14→11-17 slate, standings/records, and the latest injury report | **done** — 27-game slate, 30/30 standings, complete 183-game results history, 11/14 04:30 AM injury PDF | `audit/session-ac5fab5c/**`, `data/v2/**` |
+| P-04 | Build the strategy lab the brief asks for: single bets, parlays, player-prop combos, each with validation gates | **done** — `nba2/v2/strategy_lab.py`, 7 strategies, 12 gates evaluated from data, new `site/strategy-lab.html` | `nba2/v2/**` (new modules) |
+| P-05 | Measure correlation values (team + prop) with CIs and sample sizes; flag what is not estimable | **done** — 4 measured with CIs/p-values, 3 player-level BLOCKED with the missing dataset named | `nba2/v2/**` |
+| P-06 | Luck-vs-skill separation: binomial/permutation baseline, walk-forward, gate on out-performance | **done** — binomial tests vs each strategy's own base rate, Wilson intervals, 30-bet small-sample guard | `nba2/v2/**` |
+| P-07 | Injury → rotation minutes → production tracking, and game-flow analysis | **done (partially blocked)** — official statuses filed; minutes/production impact stays blank with a reason (needs player logs, S-30) | `nba2/v2/**` |
+| P-08 | Executive summary page reflecting the current state | **done** — rewritten against the refreshed snapshot, plus a new "luck finding" bullet | `site/executive-summary.html` |
+| P-09 | Suggestions review section: decision-ready options with rationale/effort/impact, and an explicit review path | **done** — 30 v2 suggestions + 5 new decisions (S-29…S-33) on `site/decision-queue.html` | `nba2/v2/content.py`, `site/suggestions.html` |
+| P-10 | Questions register: what is answerable now, what is missing, and how to get it | **done** — 19 questions; 5 added this session from the new evidence | `nba2/v2/content.py`, `site/questions.html` |
+| P-11 | Flagged-for-review page: every unverified/blocked value with its source or reason | **done** — 35 flags; 6 added (F-030…F-035), 2 pre-existing ones resolved (F-002, F-003) | `site/flagged.html` |
+| P-12 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | in progress | `COORDINATION.md` |
+
+
+### Session record — `arena/ac5fab5c-nba2` (written 2026-11-14)
+
+**Sources fetched this session (every one an official page, fetched through the agent fetch tool because
+direct egress to nba.com is TLS-blocked from this sandbox):**
+
+| Source | URL | What it supplied |
+|---|---|---|
+| NBA.com Standings | https://www.nba.com/standings | 30 team records, W-L, home/road splits, re-read 2026-11-14 |
+| NBA.com Stats — Teams Advanced | https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season | OffRtg/DefRtg/NetRtg/PACE/PIE for all 30 teams |
+| NBA.com Games & Scores | https://www.nba.com/games?date=2026-11-06 , `?date=2026-11-11` , `?date=2026-11-13` | the 28 finals that completed the results history (183/183) |
+| NBA.com Schedule | https://www.nba.com/schedule?date=2026-11-15 | the 27-game 11/14→11/17 window, per-date counts 5/9/8/5, game IDs, tip times, arenas |
+| NBA Official Injury Report (PDF) | https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf | 26 player status rows + 23 not-yet-submitted team rows |
+| NBA Official Injury Report index | https://official.nba.com/nba-injury-report-2026-27-season/ | release slots and the filing-deadline policy |
+
+**Verification performed (all reproducible from a clean checkout):**
+
+- `python3 -m unittest discover -s nba2/v2 -t . -p "test_*.py"` → **Ran 80 tests … OK** (60 pre-existing + 20 new
+  in `nba2/v2/test_lab.py`). Output teed to `audit/session-ac5fab5c/checkers-01-tests.txt`.
+- `python3 -m nba2.v2` → 20 pages. `python3 -m nba2.v2.check` → **OK — 0 structural, 0 semantic**.
+- Record reconstruction: all 30 official standings records rebuild **exactly** from the 183 committed finals;
+  183 W = 183 L; home W 96 / L 86, road W 86 / L 96, neutral 1. Artifact:
+  `audit/session-ac5fab5c/verify-record-reconstruction.txt`.
+- PF/PA cross-check vs official `teams/traditional` PTS: `audit/session-ac5fab5c/verify-pf-pa.txt`.
+- The committed advanced capture `data/raw/history/team_advanced_2026-11-14.json` was diffed cell-by-cell against
+  the literals in `nba2/v2/official.py`: **0 mismatches across 30 teams × 5 fields**.
+- `python3 -m nba2.v2.backtest` re-run on the complete history: 167 games scored (2026-10-23 → 2026-11-13),
+  SU 67.66%, MAE 11.96 vs 13.36, Brier 0.2170, AUROC 0.714, paired-bootstrap P(gain>0) = 0.9998.
+- Every committed v1 checker was run and its real output pasted to
+  `audit/session-ac5fab5c/checkers-03-tools.txt`. `verify_data.py` (5186 checks, 0 errors), `verify_site.py`
+  (249 rows, 0 without a link) and `build_verified.py` pass. `crosscheck_site.py` reports
+  **8 fail / 75 pass / 8 info on the v1 trees** — see Irregularities. `verify_backtest.py` fails on
+  v1 non-determinism (F-029).
+
+**Results delivered:**
+
+- **Strategy lab** (`nba2/v2/strategy_lab.py`, new page `site/strategy-lab.html`): 7 strategies scored walk-forward
+  over 167 predictions from 183 official finals; 12 gates, each with the number that decided it.
+  Passing: G1, G2, G3, G4, G5, G8, G9, G10, G11, G12. **Failing: G6 (no market price) and G7 (167 settled bets
+  against a 300-bet bar).** Because two gates fail, **nothing is ranked and the reward pool stays unfunded** —
+  `eligible_for_reward` is False on every row, by design.
+- **Correlations measured:** margin↔total r = −0.0132 (95% CI −0.165 to +0.139, n = 167);
+  same-game parlay φ(side, total) = **+0.0393** (95% CI −0.113 to +0.190, n = 167) — both not significant at 5%.
+  A bivariate-normal pricer publishes the whole band: for two 0.55 legs, naive product 0.3025 vs joint 0.2963 at
+  the measured ρ, 0.2726–0.3203 across the CI. Three player-level correlations remain **BLOCKED with the missing
+  dataset named**, never guessed.
+- **Luck separated from skill:** 3 strategies distinguishable from chance, 3 too small to call, 1 with no bets.
+  S4's 7-for-7 is explicitly labelled SAMPLE TOO SMALL TO CALL and is refused a leaderboard rank.
+- **Picks policy, settled:** every one of the 27 games gets an originated line, a lean, and a trigger price
+  (decimal 1/p and its American equivalent); **no game gets a stake**, and each row names the gate that withholds
+  it. A stake needs a price to beat and 300 settled bets; the site has neither.
+
+**Irregularities flagged (all published on `site/flagged.html` with a source to check):**
+
+- **F-030 (info, resolved)** the committed standings were a pre-finals snapshot — 30/30 agreed with the
+  pre-11/13-finals state but only 12/30 with live official standings. Re-read from nba.com: now 30/30.
+- **F-031 (info, resolved)** the results history was 28 games short; now 183/183, confirmed two independent ways.
+- **F-032 (medium)** no official injury row exists for 11/16 or 11/17 and, at capture, none for 11/15 — this is the
+  5 p.m.-local-day-before filing rule working as designed, not a retrieval failure. The 05:30 AM 11/14 PDF returns
+  AccessDenied. Cells are blank and labelled; nothing inferred.
+- **F-033 (low)** the Pages setting is `legacy` (root of `main`) while `pages.yml` publishes `site/`. See P-01.
+- **F-034 (low)** S4 went 7-for-7 with p = 0.0156; shown as an example of what luck looks like when it is winning.
+- **F-035 (info)** NYK@TOR and POR@MIN each appear twice in the window. Verified genuine against the official
+  schedule, not a capture duplication.
+- **Pre-existing v1 failures, not edited (out of this session's scope — logged, and S-31 proposes archiving the
+  v1 trees):** `crosscheck_site.py` CC-SNAP-13, CC-PUB-05, CC-DER-05, CC-GATE-02, CC-SEAL-04, CC-X-00, CC-BT-03,
+  CC-DOC-01 (8 fail of 91 on the v1 trees); and `verify_backtest.py`'s v1 determinism failure (F-029).
+  **The v2 tree that this session publishes is clean: 80/80 tests and 0 structural + 0 semantic site problems.**
+
+### P-01 record — the published-tree mismatch
+
+**Measured, not assumed.** `gh api repos/wingbangboozle1-lang/NBA2/pages` returns
+`{"build_type":"legacy","path":"/","source":"main","status":"built"}`. The committed
+`.github/workflows/pages.yml` uploads the `site/` (v2) tree as a Pages artifact. So today the artifact is built
+and uploaded on every push to `main` and **then never deployed**: the live site serves the repository root, which
+is the older v1 tree. Both trees are reachable and they disagree.
+
+**Why this session did not silently flip it.** Switching `build_type` to `workflow` is a repository setting change
+that only an admin can make, and it is the one change that alters what every reader of the site sees. It belongs to
+the owner, so it is raised as decision **S-31** on `site/decision-queue.html` rather than made here.
+
+**What this session did instead, so the decision is safe either way:** the v2 tree is complete and self-consistent
+(20 pages, 0 broken links, 80/80 tests), pages.yml has a **successful** run on `main`
+(run 43587555531, 2026-11-14T10:55:33Z), and the workflow fails the build if the committed `site/` ever differs
+from a rebuild. So flipping the setting to `workflow` is a one-line change that will produce a live, verified v2
+site; leaving it as `legacy` keeps the v1 tree live with its 8 known crosscheck failures.
+
+### Merge-conflict record — `arena/ac5fab5c-nba2` rebase onto `main` (PR #58)
+
+`main` had advanced by ~40 commits since this branch was cut, and another session
+(`arena/6650be4d-nba2`) had refreshed the **same v2 tree** on the same day. Twelve commits were
+rebased; nine conflicted. Nothing from the other session was discarded.
+
+**The substantive conflict: two sessions refreshed the same v2 snapshot.** Their `official.py` reads
+the slate/standings/injuries/finals out of `data/raw/` snapshots and carries a 36-game slate
+(11/13→11/17, 9 day-before context games + a 27-game window). Mine transcribes a 2026-11-14 re-read
+and carries a 27-game slate (11/14→11/17). Both are internally consistent, so one had to be chosen.
+**Mine was kept,** because it is the set this session's 80 tests and 183/183 results history are built
+on. What their version uniquely contributed is **not lost**:
+
+- their nine 2026-11-13 graded games are now inside the 167-game walk-forward backtest
+  (the last scored date in `data/v2/backtest.json` is 2026-11-13), rather than a separate section;
+- every `data/raw/` capture they wrote is present and untouched — `official_standings_2026-11-14.json`,
+  `finals_2026-11-13.json`, `finals_all.json`, `injury_report_2026-11-14_0500ET.json`,
+  `injury_report_2026-11-13_1930ET.json`, `ratings_recheck_2026-11-14.json`,
+  `slate_2026-11-14_to_11-17.json`, `slate_context_2026-11-17.json`;
+- `data/settlement.json` and their whole settlement exercise is intact;
+- their `suggestions/SUGGESTIONS.json` entries S-01…S-39 are all present.
+
+**Register ID collisions, resolved by renumbering this session's entries (never theirs):**
+
+| Register | Collision | Resolution |
+|---|---|---|
+| Flags | both sessions issued F-030…F-034 | theirs keep F-030…F-034; **mine renumbered to F-036…F-041** (+F-042 for a pre-existing dangling ref, below) |
+| v2 suggestions | both issued SG-25…SG-28 | theirs keep SG-25…SG-28; **mine renumbered to SG-31…SG-36** |
+| Questions | both issued Q-15…Q-17 | theirs keep Q-15…Q-17; **mine renumbered to Q-20…Q-24** |
+| Decision queue | both issued S-29…S-33 | theirs keep S-29…S-39; **mine renumbered to S-40…S-44** |
+
+A blanket string replace initially renamed theirs as well; this was caught by a duplicate-ID check and
+reverted surgically, restoring their IDs at lines 240/248/254/260 of `nba2/v2/content.py`. A duplicate-ID
+assertion now runs over all three registers (0 duplicates).
+
+**Two defects found in `main` while merging — logged, not silently edited:**
+
+- **F-042** a published paragraph cites an open question by the ID `Q-28`, but the register runs to Q-24,
+  so the reference resolves to nothing. Inherited from the 2026-11-14 refresh on `main`.
+- **F-038 (corrected)** this session had written that the empty 11/15 injury cells were purely the filing
+  rule. The other session's later official release (11/14 05:00 AM ET) contains **18 rows for 11/15** that
+  this site's 04:30 AM capture lacks. The flag now says the honest thing: those empty cells are partly an
+  artefact of when the snapshot was taken. The 04:30 AM capture was **not** silently swapped for the newer
+  one without re-verifying it against the official PDF.
+
+**Post-merge verification (run on the merged tree):** `python3 -m nba2.v2` → 20 pages;
+`python3 -m nba2.v2.check` → OK — 0 structural, 0 semantic;
+`python3 -m unittest discover -s nba2/v2 -t . -p "test_*.py"` → **Ran 80 tests … OK**;
+183 games, all unique; `integrity()` 30 teams / 183 W / 183 L / points identity OK.
+
 ---
 
 

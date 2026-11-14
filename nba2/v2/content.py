@@ -32,10 +32,10 @@ GATES = [
      "PROPOSED — policy", O.BLOCKED["odds"][2],
      "Without a price there is no edge, no stake size and no ROI. Currently FAILS for every line."),
     ("G7", "Backtest with settlement", "≥ 300 settled bets of the strategy's own signals, settled from official box scores.",
-     "PROPOSED — sample-size policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — sample-size policy", O.BLOCKED["live_ingest"][2],
      "300 bets is the point at which a 55% hit rate separates from 52.4% at 5% one-sided."),
     ("G8", "Out-of-sample holdout", "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
-     "PROPOSED — policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — policy", O.BLOCKED["live_ingest"][2],
      "Prevents publishing a curve fit."),
     ("G9", "Luck screen", "Every team the strategy relies on must be inside the luck noise band (|z| ≤ 1.96).",
      "COMPUTED this build — 30/30 pass", S["standings"][1],
@@ -47,7 +47,7 @@ GATES = [
      "OFFICIAL (NBA filing deadlines)", S["injury_policy"][1],
      "Teams must file by 5 p.m. local the day before, and 11 a.m.–1 p.m. on game day."),
     ("G12", "No look-ahead", "No input timestamped after the decision time may enter that decision.",
-     "PROPOSED — policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — policy", O.BLOCKED["live_ingest"][2],
      "The single most common way a profitable backtest is fake."),
 ]
 
@@ -59,7 +59,7 @@ STRATEGIES = [
         "gates_that_can_pass_today": "G1,G2,G3,G4,G9",
         "gates_that_fail_today": "G6,G7,G8,G11,G12",
         "status": "PUBLISHABLE AS A PROJECTION ONLY",
-        "why": "The line itself is derivable from official data; the bet cannot be, because there is no price and no backtest.",
+        "why": "The line is derivable from official data and the method has been backtested walk-forward; the bet still cannot be staked, because there is no price to beat.",
         "src": S["team_adv"][1],
     },
     {
@@ -87,7 +87,7 @@ STRATEGIES = [
         "gates_that_fail_today": "G6,G7,G10",
         "status": "BLOCKED — correlation unmeasured",
         "why": "The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a ±26% price error was already demonstrated in the prior build.",
-        "src": O.BLOCKED["game_logs"][2],
+        "src": O.BLOCKED["live_ingest"][2],
     },
     {
         "id": "S5", "name": "Player prop (points/rebounds/assists)", "type": "player prop",
@@ -124,7 +124,7 @@ LEADERBOARD_RULES = [
      "Win rate rewards luck on small samples; log-loss is a proper scoring rule, so honest probabilities beat lucky ones.",
      "PROPOSED", S["standings"][1]),
     ("Minimum sample to rank", "300 settled bets", "Below that the 95% interval on a 55% hit rate includes 50%.",
-     "PROPOSED", O.BLOCKED["game_logs"][2]),
+     "PROPOSED", O.BLOCKED["live_ingest"][2]),
     ("Trial accounting", "Every submitted strategy counts, including discarded ones",
      "Otherwise a submitter re-rolls variants until one looks good; the family-wise error rate explodes.",
      "PROPOSED", S["standings"][1]),
@@ -139,7 +139,7 @@ LEADERBOARD_RULES = [
      "PROPOSED — needs owner sign-off", O.BLOCKED["odds"][2]),
     ("Disqualifiers", "Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins",
      "Removes the three ways a leaderboard is usually gamed.",
-     "PROPOSED", O.BLOCKED["game_logs"][2]),
+     "PROPOSED", O.BLOCKED["live_ingest"][2]),
 ]
 
 # --------------------------------------------------------------------------- suggestions
@@ -264,6 +264,54 @@ SUGGESTIONS = [
      "Low — a move plus one banner per tree", "none", "QUEUED — owner decision"),
 ]
 
+# --------------------------------------------------------------------------- session
+# arena/ac5fab5c-nba2 (2026-11-14). These were written after the results history was completed,
+# so several earlier entries that said "blocked, no data" now have a cheaper answer.
+SUGGESTIONS += [
+    ("SG-31", "Data plumbing", "Make the existing nightly ingest actually fire, and extend it to the v2 results "
+     "history in data/raw/history/.",
+     "A cron ingest already exists (.github/workflows/refresh.yml) and has never run — its run list is empty, and "
+     "the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not "
+     "this history. The cost is visible: the log sat 28 games short for a day and the published standings were a "
+     "full day stale with nothing able to detect either. The count is eminently checkable — the standings imply "
+     "183 games and the nba.com day-strip calendar gives per-date counts.",
+     "Low — the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has "
+     "been merged to the default branch once",
+     "Confirmation that the cron is enabled on the default branch",
+     "RECOMMENDED — cheapest fix with the largest effect on trust"),
+    ("SG-32", "Model", "Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.",
+     "300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters "
+     "depends on the strategy's own correlation between bets: the parlay strategies need a different n than the "
+     "side strategies. The lab already computes each strategy's Wilson interval and its distance to the base rate, "
+     "so the required n can be derived rather than asserted.",
+     "Low — the intervals are already computed in nba2/v2/strategy_lab.py",
+     "none — no dependency", "RECOMMENDED"),
+    ("SG-33", "Model", "Stop publishing a single blended rating as the headline; publish the disagreement "
+     "between the two estimators as the headline and the blend underneath.",
+     "The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing "
+     "today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently "
+     "printed as a small diagnostics column.",
+     "Low", "none — no dependency", "QUEUED"),
+    ("SG-34", "Parlays", "Price every parlay with the measured rho and print the naive product next to it, "
+     "instead of withholding the price entirely.",
+     "With rho now measured (and its interval published) the honest objection is no longer 'we do not know the "
+     "correlation' but 'we do not know it precisely'. Printing both numbers, with the interval between them, is "
+     "more useful than printing neither — and it makes the error bar visible instead of implied.",
+     "Low — the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py",
+     "None, but it should ship with the interval visible on the same row", "QUEUED"),
+    ("SG-35", "Product", "Make the picks page show the trigger price in the reader's preferred format "
+     "(decimal, American, or implied probability) rather than decimal only.",
+     "The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format "
+     "most readers will have to convert. This is a display change with no model consequence.",
+     "Low", "none — no dependency", "QUEUED"),
+    ("SG-36", "Data plumbing", "Capture per-player game logs (minutes, points, rebounds, assists, and the "
+     "opponent) for at least the players who appear on an injury report.",
+     "This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, "
+     "the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.",
+     "Medium — needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores",
+     "A runner with normal internet egress", "RECOMMENDED — the last hard blocker"),
+]
+
 # --------------------------------------------------------------------------- questions
 # Each: id, question, known, unknown, how to find out, blocking?, source
 QUESTIONS = [
@@ -307,7 +355,7 @@ QUESTIONS = [
      "Unanswerable without a backtest.",
      "Per-family hit rate, log-loss, and ROI at various thresholds.",
      "Backtest harness on settled results with pre-registered thresholds (SG-16).",
-     "Blocks the leaderboard ranking entirely.", O.BLOCKED["game_logs"][2]),
+     "Blocks the leaderboard ranking entirely.", O.BLOCKED["live_ingest"][2]),
     ("Q-9", "Are the two ratings estimators really independent, or is one a restatement of the other?",
      "Measured: r = +0.999, max spread disagreement 0.99 pts across 31 lines.",
      "Whether they share an input that makes agreement uninformative. NetRtg is per-possession and PF−PA is per-game, so they are computed from different numerators.",
@@ -327,9 +375,9 @@ QUESTIONS = [
      "Policy set at 300 settled bets (G7), chosen so a 55% hit rate separates from 52.4% at 5% one-sided.",
      "The true per-strategy variance, which depends on correlation between bets.",
      "Simulate the strategy's own bet stream once a backtest exists; recompute the required n.",
-     "Blocks ranking and rewards.", O.BLOCKED["game_logs"][2]),
+     "Blocks ranking and rewards.", O.BLOCKED["live_ingest"][2]),
     ("Q-13", "Is the schedule data used here complete for the window?",
-     "Yes for 11/13–11/16: 31 games, matching the official schedule's per-day counts (9/5/9/8), and identical to the committed snapshot.",
+     "Yes for 11/14-11/17: 27 games, matching the official schedule's per-day counts (5/9/8/5), and identical to the committed snapshot.",
      "Whether any game is postponed or moved after retrieval.",
      "Re-fetch the schedule before each slate and diff (SG-1).",
      "A moved game would silently invalidate a line.", S["schedule"][1]),
@@ -345,7 +393,7 @@ QUESTIONS = [
      "A current read of the three official team-stat pages (traditional, opponent, advanced), and the diff against what "
      "the model used.",
      "Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the "
-     "committed transcription, and publish the delta (suggestion SG-25).",
+     "committed transcription, and publish the delta (suggestion SG-31).",
      "Blocks claiming that the published lines start from current inputs; does not block publishing them.",
      S["team_trad"][1]),
     ("Q-16", "Does an official injury release change a designation between editions?",
@@ -368,18 +416,60 @@ QUESTIONS = [
      "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"),
 ]
 
+# --------------------------------------------------------------------------- session
+# arena/ac5fab5c-nba2 (2026-11-14). Q-1, Q-3, Q-4, Q-5 and Q-11 were answered by completing the
+# results history; these are the ones that remain or that the new evidence created.
+QUESTIONS += [
+    ("Q-20", "Is the measured same-game correlation precise enough to price a two-leg parlay?",
+     "Measured at +0.0393 (95% CI -0.1133 to +0.1900, n = 167). It is statistically indistinguishable from zero "
+     "AND the interval still spans a range wide enough to move a two-leg price by several percent.",
+     "A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.",
+     "Keep appending official finals (SG-31) and recompute; the interval will narrow as 1/sqrt(n).",
+     "Decides whether SG-34 (publish the parlay price) is safe to ship.", O.SOURCES["games"][1]),
+    ("Q-21", "Is 300 settled bets the right bar for every strategy, or only for single bets?",
+     "300 is applied uniformly (G7). But the two parlay strategies have far more variance per bet than the side "
+     "strategies, so the same n gives them a much wider interval — the bar is not equally strict across types.",
+     "Each strategy's own bet-to-bet correlation, which the lab can now simulate from settled history.",
+     "Run a power simulation per strategy on its own settled stream and set n per type (SG-32).",
+     "Sets when each strategy becomes rank-eligible on the leaderboard.", O.SOURCES["games"][1]),
+    ("Q-22", "How much of S1's 64.7% hit rate survives once the schedule it faced is controlled for?",
+     "64.7% over 167 bets, p = 0.0002 against a coin flip, and it holds out of sample (66.7% on the last 30% of "
+     "dates). But the sample is one month of one season, and a soft early-season schedule would inflate it.",
+     "Strength of schedule per team, computed from the same committed finals.",
+     "Add an opponent-adjusted rating (already two estimators deep) and re-run the walk-forward.",
+     "Decides whether the signal is real skill or a schedule artefact — the single most important open question "
+     "on the site.", O.SOURCES["games"][1]),
+    ("Q-23", "Do the two ratings estimators disagree enough for their disagreement to be a usable signal?",
+     "They disagree by at most 0.68 pts across 30 teams. That is reassuring for stability and useless for signal: "
+     "there is currently no game where the two estimators tell materially different stories.",
+     "A season with more heterogeneous teams, or an estimator built on a genuinely different input (e.g. "
+     "possession-level efficiency from play-by-play).",
+     "Track the max disagreement weekly; promote it to a headline only if it ever exceeds ~2 pts for a game.",
+     "Decides whether SG-33 is worth doing.", O.SOURCES["team_adv"][1]),
+    ("Q-24", "What fraction of the 11/15-11/17 slate will have an official injury filing before tip?",
+     "At capture (11/14 04:30 AM ET) zero teams had filed for 11/15, and no 11/16 or 11/17 rows exist in any "
+     "published report, because the filing deadline is 5 p.m. local the day before. This is expected, not a "
+     "retrieval failure.",
+     "A timestamped capture on the afternoon of 11/14, 11/15 and 11/16.",
+     "Re-fetch at 19:00 ET each day and diff (SG-31 covers the mechanism).",
+     "Decides how far ahead an injury-driven line can honestly be published.",
+     O.SOURCES["injury_policy"][1]),
+]
+
 # --------------------------------------------------------------------------- flags
 FLAGS = [
     ("F-001", "high", "Data", "No market price exists for any line or pick in this build, so no pick is stakable and no ROI can be computed.",
      "Every line is a projection; the picks page withholds all picks and names the failing gate.",
      O.BLOCKED["odds"][2]),
-    ("F-002", "high", "Data", "Per-game results now exist for 155 of 174 games (2026-10-20 → 11-12), captured from nba.com by a "
-    "parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain "
-    "unreachable, so player-level settlement is still impossible.",
-     "Gates G7, G8, G12 and the whole leaderboard are blocked.", O.BLOCKED["game_logs"][2]),
-    ("F-003", "medium", "Data", "The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today's game statuses could not be re-filed.",
-     "The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.",
-     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf"),
+    ("F-002", "info", "Data", "RESOLVED this session — per-game results now exist for all 183 games played "
+    "(2026-10-20 → 2026-11-13); the 19 previously unreachable games were 11-06, 11-11 and 11-13 and were captured "
+    "from nba.com/games. Player box scores remain unreachable, so player-level settlement is still impossible.",
+     "G8 and G12 now pass. G7 still fails, but on sample size (167 settled bets against a 300 bar), not on absence "
+     "of data.", O.BLOCKED["live_ingest"][2]),
+    ("F-003", "medium", "Data", "The 2026-11-14 05:30 AM ET official injury report returns AccessDenied, so the "
+    "freshest reachable release is 04:30 AM ET. See F-038 for why days 11/15-11/17 have no rows at all.",
+     "The site uses the 11/14 04:30 AM ET report and labels every not-yet-filed team explicitly.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_30AM.pdf"),
     ("F-004", "medium", "Data", "The official NBA site's 'Preview' pages could not be used for odds: prices are rendered client-side only.",
      "No workaround was attempted; a licensed feed is required (SG-3).", "https://www.nba.com/games"),
     ("F-005", "medium", "Model", "Home-court advantage and margin volatility are only weakly identified from one season's win totals.",
@@ -554,6 +644,56 @@ FLAGS = [
      "https://www.nba.com/schedule"),
 ]
 
+# --------------------------------------------------------------------------- session
+# arena/ac5fab5c-nba2 (2026-11-14).
+FLAGS += [
+    ("F-036", "info", "Verification", "RESOLVED this session — the committed standings were a pre-finals "
+     "snapshot. They agreed with the pre-11/13-finals state on 30 of 30 rows and with live official standings on "
+     "only 12 of 30. Re-read from nba.com/standings on 2026-11-14: they now match live official standings on 30 "
+     "of 30 rows, home and road splits included, and all 30 records rebuild exactly from the 183 committed "
+     "official finals. The staleness measure that caught it is retained and inverted.",
+     "Fixed, and the check that found it is now permanent.",
+     "https://www.nba.com/standings"),
+    ("F-037", "info", "Data", "RESOLVED this session — the official results history was incomplete (155 of 183 "
+     "games). The 28 missing finals (2026-11-06, 11-11 and 11-13) were captured from nba.com/games, taking the "
+     "window to 183/183. The count is confirmed two independent ways: the standings imply exactly 183 games "
+     "played, and all 30 team records now rebuild with zero mismatches.",
+     "Fixed. Backtests, out-of-sample splits and settlement run on the full window.",
+     "https://www.nba.com/games?date=2026-11-13"),
+    ("F-038", "medium", "Data", "No official injury row exists for any 11/16 or 11/17 game in the capture this "
+     "site uses, and in that same capture (11/14 04:30 AM ET) no team had filed for 11/15 either. Part of this is "
+     "the filing rule working as designed — a team files by 5 p.m. local the day before — but it is NOT only the "
+     "calendar: a LATER official release committed to this repository by another session (11/14 05:00 AM ET, "
+     "data/raw/injury_report_2026-11-14_0500ET.json) already contains 18 rows for 11/15 that the 04:30 AM capture "
+     "lacks. The empty 11/15 cells on this site are therefore partly an artefact of WHEN the snapshot was taken, "
+     "not purely of the filing deadline. A 05:30 AM ET fetch attempted in this session returned AccessDenied.",
+     "Those cells are blank and labelled with the filing rule and the capture timestamp. No value was inferred or "
+     "carried forward, and this page's 04:30 AM capture was not silently swapped for the 05:00 AM one without "
+     "re-verifying it against the official PDF.",
+     "https://official.nba.com/nba-injury-report-2026-27-season/"),
+    ("F-039", "low", "Site", "The GitHub Pages setting on this repository is still build_type 'legacy' (deploy "
+     "from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever "
+     "one is live, the other is a fully-built tree sitting in the repository that a reader can reach by URL.",
+     "Logged for the owner: this is a one-setting change either way, and it changes what every reader sees.",
+     "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"),
+    ("F-040", "low", "Model", "Strategy S4 (fade the home team when the model makes them a 3+ point underdog) "
+     "went 7 for 7. The binomial p-value is 0.0156, which would pass a naive significance test, but at seven bets "
+     "the 95% interval is wide enough to hold almost any true rate.",
+     "The luck report records it as SAMPLE TOO SMALL TO CALL and the leaderboard refuses to rank it. It is shown "
+     "deliberately, as an example of what luck looks like when it is winning.",
+     "https://www.nba.com/games"),
+    ("F-041", "info", "Model", "Two matchups appear twice inside the 3-day window: NYK @ TOR (11/15 game "
+     "0022600241 and 11/17 game 0022600253) and POR @ MIN (11/16 game 0022600250 and 11/17 game 0022600254).",
+     "Verified genuine by reading the official schedule block, not a duplication error in the slate capture. Both "
+     "games are priced separately.",
+     "https://www.nba.com/schedule?date=2026-11-15"),
+    ("F-042", "low", "Site", "A published paragraph on the site cites an open question by the ID 'Q-28', but the "
+    "question register only runs to Q-24, so the reference resolves to nothing. The cross-reference was inherited "
+    "from the 2026-11-14 refresh on main and is not this session's to edit silently.",
+     "Logged, not edited: the sentence is left verbatim and this flag records the defect.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py"),
+]
+
 # --------------------------------------------------------------------------- integration session audit
 # Independent re-verification by session arena/72f9da58 on 2026-11-14 (the integration session).
 # Each: check, result, method, source URL. Raw artefacts live under audit/ in the repository.
@@ -599,15 +739,26 @@ SESSION_AUDIT = [
 # --------------------------------------------------------------------------- executive summary bullets
 EXEC_BULLETS = [
     ("What was built",
-     "A v2 line-origination model over a 31-game, three-day window (2026-11-13 → 2026-11-16), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table."),
+     "A v2 line-origination model over a 27-game, three-day window (2026-11-14 → 2026-11-17), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table. A strategy lab scores seven candidate strategies walk-forward, evaluates twelve validation gates from data, and separates luck from skill with binomial tests."),
     ("What is verified",
-     "31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables."),
+     "27/27 games match the official schedule; all 30 team records match live nba.com/standings exactly AND rebuild exactly from the 183 committed official final scores, home and road splits included; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables."),
     ("What is not possible yet",
-     "No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), and the nine 2026-11-13 games in this window are now published with their official finals and graded against the model's own lines. So the method CAN be backtested — and it has been. All 27 window picks remain withheld because a pick needs a price, not because the method is unknown."),
+     "No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar."),
     ("The skill finding",
-     "A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists."),
+     "A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly "
+     "earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against "
+     "13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws "
+     "puts P(MAE gain > 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still "
+     "no price to beat, so no ROI exists."),
     ("The compression finding",
-     "The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin."),
+     "The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and "
+     "correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no "
+     "stake may ever be sized from a predicted margin."),
+    ("The luck finding",
+     "Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are "
+     "too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that "
+     "cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate "
+     "(G9), not an opinion."),
     ("The luck finding",
      "Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story."),
     ("The correlation finding",
@@ -662,15 +813,15 @@ REQUIREMENTS = [
     ("R-5", "Single bets, parlays, player prop combos",
      "Blocked", "Single bets are line-complete but price-less; parlays need correlation; props need minutes and box scores."),
     ("R-6", "Every strategy must pass validation gates",
-     "Enforced", "12 gates, and the picks page mechanically withholds any pick whose gates do not all pass (currently 27/27 window picks withheld)."),
+     "Enforced", "12 gates, each evaluated from data with the number that decided it. The picks page publishes a lean and trigger for every game and holds every stake, printing the gates that did it."),
     ("R-7", "Determine correlation values",
-     "Partial", "6 correlations measured (all ≥0.93 where meaningful); 5 blocked with the exact missing dataset named; 1 stated as an assumption."),
+     "Delivered for team level; blocked for player level", "4 correlations measured from the 183 official finals with CIs and p-values, including the same-game-parlay correlation a two-leg price needs; 3 player-level correlations remain blocked and each names the dataset that would unblock it."),
     ("R-8", "Remove luck from the equation; build skill-based strategies",
      "Delivered (screening)", "Per-team luck z-scores; 0/30 outside the noise band; a luck gate (G9) that rejects a strategy leaning on luck."),
     ("R-9", "Generate picks for every upcoming slate, max 3 days ahead",
-     "Delivered (withheld)", "27 games in the 11/14→11/17 pick window, every game covered, plus the nine day-before context games; picks are computed and then withheld with the failing gate printed."),
+     "Delivered", "27 games, 11/14→11/17 — the full three-day window. Every game gets an originated line, a lean, and the trigger price at which acting would be rational. No game gets a stake: G6 (no price) and G7 (167 settled of 300) both fail, and the page says so per row."),
     ("R-10", "Track how injuries affect rotation minutes and production",
-     "Blocked", "Statuses are official and complete for 11/13; minutes and production impact need player logs. Every impact cell is blank with a reason."),
+     "Partially blocked", "Statuses are official for 11/14 (26 player rows + 23 teams that had not yet filed, because the filing deadline for 11/15-11/17 has not passed). Minutes and production impact need player logs, so every impact cell is blank with a reason."),
     ("R-11", "Provide game flow analysis",
      "Partial", "Schedule-derived rest, back-to-back and 3-in-4 are computed from official dates; pace/garbage-time/foul-trouble flow needs play-by-play."),
     ("R-12", "Executive summary, suggestions, open questions",

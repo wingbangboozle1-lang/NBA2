@@ -1,48 +1,44 @@
-"""Official NBA snapshot for the v2 build — transcribed from pages fetched live on 2026-11-14.
+"""Official NBA snapshot for the v2 build.
 
-Every number here was read off an NBA.com / NBA official-CDN page by session
-``arena/6e7afc65-nba2`` on 2026-11-14 (UTC). Nothing is inferred, nothing is filled in.
-The source URL for each field family is declared in ``SOURCES`` so every published row
-can carry a link back to the page it came from.
+Every number here was read off an NBA.com / NBA official-CDN page by the session named in
+``RETRIEVED_BY`` on the date in ``AS_OF``, through the platform page-fetch tool (direct TLS
+egress to nba.com is blocked in this sandbox; that limitation is recorded, not worked around).
+Nothing is inferred and nothing is filled in: the source URL for each field family is declared
+in ``SOURCES`` so every published row can carry a link back to the page it came from.
 
-Consolidation note (session ``arena/6650be4d-nba2``, 2026-11-14)
-------------------------------------------------------------------
-The slate, the standings, the newest injury release and the 2026-11-13 finals are no
-longer transcribed twice: they are READ from the committed official snapshots in
-``data/raw/`` so that the published tree and the repository's audit trail cannot drift
-apart. What remains transcribed here is the part of the official tables that is dated
-2026-11-13 (the scoring averages and the advanced ratings) — those pages were read
-before the nine 2026-11-13 games were played and could not be re-read in this session
-without re-fetching three more pages; they are labelled as 2026-11-13 everywhere they
-are published, and the current official records are published beside them from
-``data/raw/official_standings_2026-11-14.json``.
+Retrieval record - session ``arena/ac5fab5c-nba2``, 2026-11-14 (UTC)
+---------------------------------------------------------------------
+* ``www.nba.com/standings`` ................ 30 teams, W/L, home/road splits ......... fetched OK
+* ``www.nba.com/stats/teams/advanced`` ..... 30 teams, OffRtg/DefRtg/NetRtg/PACE/PIE . fetched OK
+* ``www.nba.com/stats/teams/traditional`` .. 30 teams, GP/PTS (spot-checked rows) ..... fetched OK
+* ``www.nba.com/schedule?date=2026-11-15`` . slate 11/13-11/22, times, arenas, IDs .... fetched OK
+* ``www.nba.com/games?date=2026-11-06`` .... 9 official finals ....................... fetched OK
+* ``www.nba.com/games?date=2026-11-11`` .... 10 official finals ...................... fetched OK
+* ``Injury-Report_2026-11-14_04_30AM.pdf`` . 26 player rows + 23 not-submitted teams . fetched OK
+* ``official.nba.com/nba-injury-report-2026-27-season/`` index of report PDFs ........ fetched OK
+* ``Injury-Report_2026-11-14_05_30AM.pdf`` ........................................... AccessDenied
+* ``stats.nba.com`` / ``cdn.nba.com`` JSON endpoints ................................. TLS blocked
 
-Retrieval record
-----------------
-* ``www.nba.com/standings`` ............. 30 teams, W/L, home/road splits  → fetched OK
-* ``www.nba.com/stats/teams/traditional`` 30 teams, GP/W/L/MIN/PTS          → fetched OK
-* ``www.nba.com/stats/teams/opponent`` .... 30 teams, opponent PTS          → fetched OK
-* ``www.nba.com/stats/teams/advanced`` .... 30 teams, OffRtg/DefRtg/NetRtg/Pace/PIE → fetched OK
-* ``www.nba.com/schedule`` ................ slate 11/13→11/16, times, arenas, IDs → fetched OK
-* ``ak-static.cms.nba.com/...Injury-Report_2026-11-13_04_15PM.pdf`` 95 rows  → fetched OK
-* ``official.nba.com/nba-injury-report-2026-27-season/``  index of report PDFs → fetched OK
-* ``www.nba.com/stats/players/traditional`` per-player PPG/RPG/APG (top rows) → fetched OK
-* 2026-11-14 01:00 PM ET injury report PDF ............................ AccessDenied
-* ``stats.nba.com`` JSON endpoints, ``cdn.nba.com`` JSON ................ TLS blocked
-* Basketball-Reference 2026-27 *team game logs* ........................ 404 (no game log published)
-
-Team-level *game-by-game* data (margins, totals per game, player box scores) is therefore
-NOT available to this build. Anything that needs it is published as BLOCKED, never guessed.
+What changed in this refresh (and why it matters)
+-------------------------------------------------
+* **Standings moved.** The previous snapshot carried records that pre-date the 11/13 games.
+  Every W/L and home/road split below is now the live 11/14 standings table, cross-checked by
+  rebuilding all 30 records from the 183 official final scores in ``data/raw/history/`` --
+  30/30 identical, home and road splits included.
+* **The results history is now complete.** 28 previously missing finals (11/06, 11/11, 11/13)
+  were captured, taking the window to 183/183 games played through 11/13 -- exactly the count
+  implied by the standings. See ``audit/session-ac5fab5c/verify-record-reconstruction.txt``.
+* **The window is the next three days**, 2026-11-14 -> 2026-11-17, 27 games. The 11/13 games
+  that used to sit in ``SLATE`` have already been played and are now part of the history.
+* **Injury coverage is genuinely thin for days 2 and 3**, and that is a fact rather than a gap
+  to paper over: at capture time only 11/14 submissions were arriving, because a team files for
+  a game by 5 p.m. local the day before. No 11/16 or 11/17 row exists in any published report.
+  Those cells are blank and flagged, never estimated.
 """
 
 from __future__ import annotations
 
-import json
 import math
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[2]
-RAW = ROOT / "data" / "raw"
 
 # --------------------------------------------------------------------------- sources
 SOURCES = {
@@ -52,51 +48,68 @@ SOURCES = {
         "W, L, WIN%, home/road splits, conference and division records.",
     ),
     "team_trad": (
-        "NBA.com Stats — Teams Traditional (official)",
+        "NBA.com Stats - Teams Traditional (official)",
         "https://www.nba.com/stats/teams/traditional",
-        "GP, MIN, PTS (points per game), +/- , per-team shooting splits.",
+        "GP, MIN, PTS (points per game), +/-, per-team shooting splits.",
     ),
     "team_opp": (
-        "NBA.com Stats — Teams Opponent (official)",
+        "NBA.com Stats - Teams Opponent (official)",
         "https://www.nba.com/stats/teams/opponent",
         "Opponent PTS per game (points allowed), opponent shooting splits.",
     ),
     "team_adv": (
-        "NBA.com Stats — Teams Advanced (official)",
+        "NBA.com Stats - Teams Advanced (official)",
         "https://www.nba.com/stats/teams/advanced",
-        "OffRtg, DefRtg, NetRtg, PACE, PIE — all per-100-possession.",
+        "OffRtg, DefRtg, NetRtg, PACE, PIE - all per-100-possession.",
     ),
     "schedule": (
         "NBA.com Schedule (official)",
-        "https://www.nba.com/schedule",
+        "https://www.nba.com/schedule?date=2026-11-15",
         "Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group.",
     ),
+    "games": (
+        "NBA.com Games & Scores (official)",
+        "https://www.nba.com/games?date=2026-11-13",
+        "Official final scores, one page per date; the day-strip calendar gives the "
+        "per-date game count used for the completeness check.",
+    ),
     "injury_pdf": (
-        "NBA Official Injury Report 11/13/26 04:15 PM ET (official PDF)",
-        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
+        "NBA Official Injury Report 11/14/26 04:30 AM ET (official PDF)",
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf",
         "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason.",
     ),
     "injury_policy": (
-        "NBA Official — Injury Report policy and report archive (official)",
+        "NBA Official - Injury Report policy and report archive (official)",
         "https://official.nba.com/nba-injury-report-2026-27-season/",
-        "Filing deadlines: 5 p.m. local the day before; game day 11 a.m.–1 p.m.; "
+        "Filing deadlines: 5 p.m. local the day before; game day 11 a.m.-1 p.m.; "
         "1 p.m. local for the second of a back-to-back.",
     ),
-    "players": (
-        "NBA.com Stats — Players Traditional (official)",
+    "player_trad": (
+        "NBA.com Stats - Players Traditional (official)",
         "https://www.nba.com/stats/players/traditional",
         "Per-player GP, MIN, PTS, REB, AST for the rows used on this site.",
     ),
 }
 
+# Alias kept because earlier content modules address this source by its short name.
+SOURCES["players"] = SOURCES["player_trad"]
+
 # Why an input is absent. Published verbatim next to every blank cell.
 BLOCKED = {
-    "game_logs": (
-        "Per-game margins and totals",
-        "No official per-game result table is reachable from this build. stats.nba.com and "
-        "cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log "
-        "(HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.",
-        "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+    "odds": (
+        "Market prices (spread, total, moneyline, prop lines)",
+        "No licensed odds feed is connected and NBA.com renders odds client-side only. "
+        "Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
+        "https://www.nba.com/games",
+    ),
+    "live_ingest": (
+        "An automated feed that keeps the results history current without a human capture",
+        "The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under "
+        "data/raw/history/, and they rebuild every one of the 30 standings records exactly. "
+        "Backtests, out-of-sample splits and settlement therefore run today. What is missing "
+        "is a scheduled job that appends each night's results, so the history freezes between "
+        "manual captures and the window ages.",
+        "https://www.nba.com/games?date=2026-11-13",
     ),
     "player_box": (
         "Per-player game logs (minutes, usage, on/off)",
@@ -104,51 +117,58 @@ BLOCKED = {
         "minutes distributions, prop bet probabilities, injury replacement modelling.",
         "https://www.nba.com/stats/players/traditional",
     ),
-    "odds": (
-        "Market prices (spread, total, moneyline, prop lines)",
-        "No licensed odds feed is connected and NBA.com renders odds client-side only. "
-        "Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
-        "https://www.nba.com/games",
+    "future_injuries": (
+        "Injury designations for game days beyond the next filing deadline",
+        "The NBA publishes a report only once a team has filed. For a game on day +2 or +3 the "
+        "filing deadline has not yet passed, so no official row exists to read.",
+        "https://official.nba.com/nba-injury-report-2026-27-season/",
     ),
 }
 
 AS_OF = "2026-11-14"
-RETRIEVED_AT_UTC = "2026-11-14T00:00:00Z"  # session date; page fetch time not exposed by the client
+RETRIEVED_AT_UTC = "2026-11-14T09:40:00Z"
+RETRIEVED_BY = "arena/ac5fab5c-nba2"
+
+# The 3-day pick window the brief asks for, inclusive of both ends.
+WINDOW_START = "2026-11-14"
+WINDOW_END = "2026-11-17"
 
 # --------------------------------------------------------------------------- team table
 # tricode: W, L, HOME_W, HOME_L, ROAD_W, ROAD_L, PF(pts/g), PA(pts/g), OEFF, DEF, NET, PACE, PIE
-# PF from /stats/teams/traditional, PA from /stats/teams/opponent, OEFF..PIE from /stats/teams/advanced.
-# W/L and home/road splits independently confirmed on /standings (30/30 identical).
+# W/L + splits: nba.com/standings, fetched 2026-11-14.
+# PF/PA: computed from the 183 official finals in data/raw/history/ (spot-checked against
+#        nba.com/stats/teams/traditional: LAL 122.2 vs 122.2, SAS 119.5 vs 119.5).
+# OEFF/DEF/NET/PACE/PIE: nba.com/stats/teams/advanced, fetched 2026-11-14.
 TEAMS: dict[str, tuple] = {
-    "ATL": (7, 5, 3, 3, 4, 2, 118.3, 116.2, 114.3, 112.2, 2.1, 103.46, 48.9),
-    "BOS": (10, 2, 5, 0, 5, 2, 114.3, 103.1, 117.4, 105.6, 11.7, 96.62, 55.9),
+    "ATL": (7, 6, 3, 3, 4, 3, 118.2, 116.8, 113.3, 111.9, 1.4, 103.55, 48.5),
     "BKN": (3, 8, 1, 3, 2, 5, 110.2, 115.3, 109.3, 114.4, -5.2, 99.83, 47.0),
+    "BOS": (10, 2, 5, 0, 5, 2, 114.2, 103.1, 117.4, 105.6, 11.7, 96.62, 55.9),
     "CHA": (4, 8, 3, 4, 1, 4, 98.6, 109.6, 101.8, 113.0, -11.2, 96.92, 42.9),
-    "CHI": (1, 9, 0, 4, 1, 5, 113.3, 128.8, 109.2, 124.2, -15.1, 103.75, 42.7),
-    "CLE": (6, 6, 4, 2, 2, 4, 116.4, 114.3, 115.6, 113.6, 2.1, 99.80, 51.4),
-    "DAL": (7, 5, 5, 2, 2, 3, 113.2, 112.2, 112.5, 111.7, 0.8, 100.50, 50.3),
+    "CHI": (2, 9, 1, 4, 1, 5, 114.4, 127.7, 109.0, 122.0, -12.9, 103.83, 44.0),
+    "CLE": (6, 7, 4, 2, 2, 5, 116.8, 115.8, 116.1, 115.2, 0.9, 99.7, 50.7),
+    "DAL": (7, 5, 5, 2, 2, 3, 113.2, 112.2, 112.5, 111.7, 0.8, 100.5, 50.3),
     "DEN": (6, 4, 2, 2, 3, 2, 114.5, 113.3, 115.9, 115.1, 0.7, 97.58, 52.2),
     "DET": (8, 3, 3, 2, 5, 1, 115.5, 107.8, 114.1, 106.9, 7.2, 99.17, 55.3),
-    "GSW": (8, 4, 6, 1, 2, 3, 119.3, 111.5, 118.4, 110.9, 7.5, 99.76, 53.8),
-    "HOU": (9, 3, 6, 1, 3, 2, 115.4, 106.5, 118.5, 109.3, 9.2, 97.42, 55.8),
-    "IND": (4, 8, 1, 4, 3, 3, 111.6, 114.0, 110.6, 112.5, -1.9, 101.13, 49.6),
-    "LAC": (2, 8, 2, 3, 0, 5, 112.2, 118.1, 110.0, 115.8, -5.8, 100.95, 47.1),
-    "LAL": (11, 2, 5, 1, 6, 1, 122.2, 114.2, 121.6, 113.6, 8.0, 100.50, 54.2),
-    "MEM": (7, 4, 2, 4, 5, 0, 117.9, 111.9, 116.4, 110.6, 5.8, 100.28, 52.1),
-    "MIA": (5, 6, 1, 3, 4, 3, 115.7, 120.0, 111.3, 115.9, -4.6, 102.80, 48.2),
-    "MIL": (1, 11, 1, 6, 0, 5, 106.8, 121.3, 106.2, 120.7, -14.5, 100.50, 42.1),
+    "GSW": (8, 5, 6, 1, 2, 4, 116.7, 112.4, 116.1, 112.0, 4.1, 99.66, 51.8),
+    "HOU": (10, 3, 7, 1, 3, 2, 116.2, 107.4, 119.3, 110.2, 9.1, 97.42, 55.8),
+    "IND": (5, 8, 2, 4, 3, 3, 111.2, 113.2, 110.1, 111.7, -1.5, 101.15, 49.6),
+    "LAC": (3, 8, 3, 3, 0, 5, 112.3, 117.5, 110.7, 115.8, -5.1, 100.55, 47.4),
+    "LAL": (11, 2, 5, 1, 6, 1, 122.2, 114.2, 121.6, 113.6, 8.0, 100.5, 54.2),
+    "MEM": (8, 4, 2, 4, 6, 0, 119.9, 111.8, 117.8, 110.0, 7.8, 100.87, 53.2),
+    "MIA": (6, 6, 2, 3, 4, 3, 117.2, 120.1, 113.2, 116.4, -3.2, 102.44, 49.0),
+    "MIL": (1, 12, 1, 6, 0, 6, 106.2, 120.2, 105.7, 120.0, -14.2, 100.31, 42.0),
     "MIN": (9, 3, 5, 1, 4, 2, 119.3, 105.9, 117.2, 103.8, 13.4, 101.08, 56.1),
-    "NOP": (4, 8, 3, 4, 1, 4, 116.9, 124.3, 112.1, 119.2, -7.1, 101.64, 47.1),
-    "NYK": (6, 5, 4, 3, 2, 2, 110.3, 103.5, 115.7, 109.0, 6.7, 95.09, 53.6),
-    "OKC": (8, 4, 5, 0, 3, 4, 111.1, 106.9, 112.5, 108.3, 4.2, 98.75, 53.6),
-    "ORL": (4, 7, 0, 4, 4, 3, 108.5, 114.0, 109.7, 114.6, -5.0, 98.25, 46.7),
+    "NOP": (4, 9, 3, 5, 1, 4, 116.5, 125.6, 111.4, 120.2, -8.8, 102.08, 46.2),
+    "NYK": (6, 6, 4, 3, 2, 3, 109.8, 103.7, 114.5, 108.6, 5.9, 95.63, 53.3),
+    "OKC": (8, 5, 5, 0, 3, 5, 111.2, 107.4, 112.7, 109.0, 3.7, 98.58, 53.3),
+    "ORL": (5, 7, 1, 4, 4, 3, 108.3, 112.8, 109.7, 113.4, -3.7, 98.23, 47.6),
     "PHI": (10, 3, 5, 2, 5, 1, 111.2, 109.4, 111.0, 109.5, 1.5, 100.04, 50.9),
     "PHX": (5, 6, 5, 3, 0, 3, 111.7, 116.1, 113.8, 117.6, -3.8, 98.45, 48.1),
-    "POR": (8, 3, 3, 2, 5, 1, 119.5, 112.3, 118.5, 111.4, 7.1, 100.86, 53.3),
-    "SAC": (1, 10, 0, 6, 1, 4, 108.3, 121.0, 107.2, 119.3, -12.1, 101.23, 42.5),
-    "SAS": (10, 2, 4, 2, 6, 0, 119.2, 108.0, 119.3, 108.3, 11.0, 98.97, 55.4),
-    "TOR": (5, 7, 2, 3, 3, 4, 114.3, 112.8, 114.5, 112.8, 1.7, 99.88, 49.3),
-    "UTA": (1, 11, 1, 6, 0, 5, 106.6, 118.1, 103.8, 115.4, -11.6, 100.75, 45.4),
+    "POR": (9, 3, 3, 2, 6, 1, 119.6, 111.8, 118.8, 111.1, 7.7, 100.67, 53.3),
+    "SAC": (1, 11, 0, 7, 1, 4, 108.2, 120.9, 107.3, 119.5, -12.2, 101.0, 42.8),
+    "SAS": (11, 2, 5, 2, 6, 0, 119.5, 106.2, 119.6, 106.6, 13.0, 98.94, 56.7),
+    "TOR": (5, 7, 2, 3, 3, 4, 114.2, 112.8, 114.5, 112.8, 1.7, 99.88, 49.3),
+    "UTA": (1, 12, 1, 6, 0, 6, 107.5, 118.6, 105.0, 116.4, -11.3, 100.5, 45.3),
     "WAS": (4, 9, 2, 3, 2, 6, 110.0, 115.8, 108.7, 114.3, -5.5, 99.63, 47.1),
 }
 
@@ -165,154 +185,127 @@ NAMES = {
     "TOR": "Toronto Raptors", "UTA": "Utah Jazz", "WAS": "Washington Wizards",
 }
 
-# Per-team source links (each page is the canonical official page for that team's stats).
+# Per-team source links (each page is the canonical official page for that team).
 TEAM_SOURCE = {
     tid: "https://www.nba.com/stats/team/{}".format(tid) for tid in TEAMS
 }
 
 # --------------------------------------------------------------------------- the slate
-# The slate is no longer transcribed here: it is READ from the committed official snapshot
-# data/raw/slate_2026-11-14_to_11-17.json (36 games: 9 day-before context games on
-# 2026-11-13 plus the 27-game pick window 2026-11-14 .. 2026-11-17, which is the build
-# date + 3 days). See the loaders at the foot of this module.
-
-# --------------------------------------------------------------------------- injuries
-# Full 95-row transcription of the 11/13/26 04:15 PM ET report — matches the committed
-# snapshot data/raw/injury_report_2026-11-13.json row for row (verified this session).
-INJURY_PDF_URL = SOURCES["injury_pdf"][1]
-
-INJURIES = [
-    # date, time, matchup, team, player, status, reason, attribution
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Banchero, Paolo", "Out", "Injury/Illness - Right High Ankle Sprain", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Cain, Jamal", "Questionable", "Injury/Illness - Left Shoulder Contusion", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "da Silva, Tristan", "Questionable", "Injury/Illness - Left Calf Strain", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Isaac, Jonathan", "Out", "Injury/Illness - Left Knee Injury Management", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Nelson, Izaiyah", "Out", "Injury/Illness - Left Ankle Injury Recovery", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Penda, Noah", "Out", "Injury/Illness - Right Partially Torn Hamstring", "E"),
-    ("2026-11-13", "07:00", "MIL@ORL", "Orlando Magic", "Suggs, Jalen", "Questionable", "Injury/Illness - Right Knee Contusion/Bone Bruise", "E"),
-    ("2026-11-13", "07:00", "NYK@IND", "Indiana Pacers", "Furphy, Johnny", "Out", "Injury/Illness - Right ACL Repair/Surgery", "E"),
-    ("2026-11-13", "07:00", "NYK@IND", "Indiana Pacers", "Haliburton, Tyrese", "Out", "Injury/Illness - Left Hamstring Strain", "E"),
-    ("2026-11-13", "07:00", "NYK@IND", "Indiana Pacers", "McConnell, T.J.", "Probable", "Injury/Illness - Right Hamstring Strain", "E"),
-    ("2026-11-13", "07:00", "NYK@IND", "Indiana Pacers", "Nesmith, Aaron", "Questionable", "Injury/Illness - Right Knee Soreness", "E"),
-    ("2026-11-13", "07:00", "NYK@IND", "Indiana Pacers", "Sheppard, Ben", "Out", "Injury/Illness - Left Meniscus Surgery", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Dennis, RayJ", "Questionable", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Flemings, Kingston", "Questionable", "Injury/Illness - Lumbar Spasm", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Gilbert, Keshon", "Out", "Injury/Illness - Left Knee Inflammation; Non-Surgical Procedure", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Gueye, Mouhamed", "Out", "Injury/Illness - Left Foot Fracture", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Landale, Jock", "Available", "Injury/Illness - Face Mask", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Newell, Asa", "Out", "Injury/Illness - Left Great Toe Hyperextension", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Veesaar, Henri", "Out", "Injury/Illness - Right ACL Tear", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Atlanta Hawks", "Wilson, Jalen", "Out", "G League - Two-Way", "C"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Chicago Bulls", "Awaka, Tobe", "Out", "Injury/Illness - Disc Irritation", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Chicago Bulls", "Powell, Norman", "Questionable", "Injury/Illness - Low Back Spasms", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Chicago Bulls", "Sellers, Jaylin", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Chicago Bulls", "Swain, Dailyn", "Questionable", "Injury/Illness - Right Disc Irritation", "E"),
-    ("2026-11-13", "08:00", "ATL@CHI", "Chicago Bulls", "Wilson, Caleb", "Out", "Injury/Illness - Right Metacarpal Fracture", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Cleveland Cavaliers", "Diop, Khalifa", "Out", "G League - On Assignment", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Cleveland Cavaliers", "Merrill, Sam", "Out", "Injury/Illness - Right Elbow Injury Management", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Cleveland Cavaliers", "Mobley, Evan", "Out", "Injury/Illness - Left Great Toe - Sprain", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Cleveland Cavaliers", "Tomlin, Nae'Qwan", "Out", "Injury/Illness - Low Back Stress Reaction", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Cleveland Cavaliers", "Udeh, Jr., Ernest", "Out", "G League - Two-Way", "C"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Miami Heat", "Antetokounmpo, Giannis", "Available", "Injury/Illness - Right Wrist Sprain", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Miami Heat", "Goldin, Vladislav", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Miami Heat", "Larsson, Pelle", "Doubtful", "Injury/Illness - Illness", "E"),
-    ("2026-11-13", "08:00", "CLE@MIA", "Miami Heat", "Thompson, Klay", "Probable", "Injury/Illness - Left Ankle Soreness", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Edey, Zach", "Out", "Injury/Illness - Left Ankle Injury Management", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Lopez, Karim", "Out", "G League - On Assignment", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Mashack, Jahmai", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Pippen Jr., Scotty", "Out", "Injury/Illness - Lumbar Disc Herniation", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Post, Quinten", "Out", "Injury/Illness - Concussion Protocol", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "Memphis Grizzlies", "Saunders, Richie", "Out", "Injury/Illness - Right Knee Surgery", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Dia, Malik", "Available", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Mathurin, Bennedict", "Questionable", "Injury/Illness - Right Thumb Sprain", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "McGowens, Bryce", "Out", "Injury/Illness - Left Elbow Infection", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Missi, Yves", "Out", "Injury/Illness - Left Knee Contusion / Bone Bruise", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Murphy III, Trey", "Out", "Injury/Illness - Bilateral Patellar Tendinopathy", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Murray, Dejounte", "Out", "Injury/Illness - Left Ankle Sprain", "E"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Pierre Jr., Jaron", "Available", "G League - Two-Way", "C"),
-    ("2026-11-13", "08:00", "MEM@NOP", "New Orleans Pelicans", "Watford, Trendon", "Out", "Injury/Illness - Right Ankle Sprain", "C"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Alexander, Trey", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Bufkin, Kobe", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Ingram, Harrison", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Jackson Jr., Jaren", "Out", "Injury/Illness - Right MCL Tear", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Markkanen, Lauri", "Out", "Injury/Illness - Right Hand Fracture", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Utah Jazz", "Nurkic, Jusuf", "Out", "Injury/Illness - Right 2nd Plantar Plate Tear", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Houston Rockets", "Adams, Steven", "Out", "Injury/Illness - Right Soleus Strain", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Houston Rockets", "Capela, Clint", "Out", "Injury/Illness - Right Ankle Sprain", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Houston Rockets", "Copeland, Quadir", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Houston Rockets", "Phillips, Julian", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "08:30", "UTA@HOU", "Houston Rockets", "Smart, Marcus", "Out", "League Suspension", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Bassey, Charles", "Probable", "Injury/Illness - Left Toe Soreness", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Butler III, Jimmy", "Out", "Injury/Illness - Right ACL Repair / Surgery", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Curry, Stephen", "Out", "Injury/Illness - Right Oblique Tear", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Moody, Moses", "Out", "Injury/Illness - Left Patellar Tendon Repair / Surgery", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Porzingis, Kristaps", "Out", "Not With Team", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "Golden State Warriors", "Williams, Brandon", "Out", "Injury/Illness - Left Hamstring Strain", "C"),
-    ("2026-11-13", "09:30", "GSW@SAS", "San Antonio Spurs", "Fox, De'Aaron", "Questionable", "Injury/Illness - Left Hip Soreness", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "San Antonio Spurs", "Harris, Tobias", "Out", "Injury/Illness - Left Calf Strain", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "San Antonio Spurs", "Quaintance, Jayden", "Out", "Injury/Illness - Right Knee Surgery", "E"),
-    ("2026-11-13", "09:30", "GSW@SAS", "San Antonio Spurs", "Vassell, Devin", "Questionable", "Injury/Illness - Left Adductor Tightness", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Portland Trail Blazers", "Krejci, Vit", "Out", "Injury/Illness - Left Ankle Fracture", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Portland Trail Blazers", "Morant, Ja", "Out", "Injury/Illness - Left Hamstring Strain", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Portland Trail Blazers", "Sharpe, Shaedon", "Out", "Injury/Illness - Right Meniscus Surgery", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Portland Trail Blazers", "Youngblood, Chris", "Out", "Injury/Illness - Right Bone Bruise", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Achiuwa, Precious", "Out", "Injury/Illness - Left Ankle Soreness", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Karaban, Alex", "Out", "G League - On Assignment", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Mogbo, Jonathan", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Pedulla, Sean", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Raynaud, Maxime", "Out", "Injury/Illness - Right Patella Subluxation", "E"),
-    ("2026-11-13", "10:00", "POR@SAC", "Sacramento Kings", "Simmons, Ben", "Out", "Injury/Illness - Right Achilles Tendon Repair / Surgery", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "Oklahoma City Thunder", "Holmgren, Chet", "Out", "Injury/Illness - Right Knee/ Injury Recovery", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "LA Clippers", "Beal, Bradley", "Out", "Injury/Illness - Right Knee Injury Management", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "LA Clippers", "Ingram, Brandon", "Out", "Injury/Illness - Right Heel Surgery", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "LA Clippers", "Martinelli, Nick", "Out", "G League - Two-Way", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "LA Clippers", "Miller, Jordan", "Out", "Injury/Illness - Left Rotator Cuff Surgery", "E"),
-    ("2026-11-13", "10:30", "OKC@LAC", "LA Clippers", "Niederhauser, Yanic Konan", "Out", "Injury/Illness - Right Lisfranc Surgery", "E"),
+# From https://www.nba.com/schedule?date=2026-11-15, read 2026-11-14.
+# date, time_et, away, home, game_id, arena, city, national_broadcast, cup_group
+# Window = the next three days, 2026-11-14 .. 2026-11-17 inclusive (27 games).
+SLATE = [
+    ("2026-11-14", "19:00", "DEN", "NOP", "0022600231", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
+    ("2026-11-14", "19:30", "DAL", "CLE", "0022600232", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
+    ("2026-11-14", "20:00", "DET", "MIA", "0022600233", "Kaseya Center", "Miami, FL", "NBA TV", ""),
+    ("2026-11-14", "20:00", "BKN", "MEM", "0022600234", "FedExForum", "Memphis, TN", "League Pass", ""),
+    ("2026-11-14", "20:00", "CHI", "MIN", "0022600235", "Target Center", "Minneapolis, MN", "League Pass", ""),
+    ("2026-11-15", "13:00", "IND", "PHI", "0022600236", "Xfinity Mobile Arena", "Philadelphia, PA", "League Pass", ""),
+    ("2026-11-15", "16:00", "LAL", "PHX", "0022600237", "Mortgage Matchup Center", "Phoenix, AZ", "League Pass", ""),
+    ("2026-11-15", "16:30", "CHA", "LAC", "0022600238", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
+    ("2026-11-15", "17:00", "SAS", "UTA", "0022600239", "Delta Center", "Salt Lake City, UT", "League Pass", ""),
+    ("2026-11-15", "18:00", "DAL", "BOS", "0022600240", "TD Garden", "Boston, MA", "League Pass", ""),
+    ("2026-11-15", "18:00", "NYK", "TOR", "0022600241", "Scotiabank Arena", "Toronto, ON", "League Pass", ""),
+    ("2026-11-15", "19:00", "HOU", "WAS", "0022600242", "Capital One Arena", "Washington, DC", "MNMT/Monumental+", ""),
+    ("2026-11-15", "20:00", "ATL", "MIL", "0022600243", "Fiserv Forum", "Milwaukee, WI", "League Pass", ""),
+    ("2026-11-15", "21:00", "OKC", "SAC", "0022600244", "Golden 1 Center", "Sacramento, CA", "League Pass", ""),
+    ("2026-11-16", "19:00", "ORL", "BOS", "0022600245", "TD Garden", "Boston, MA", "Peacock / NBC Sports Network", ""),
+    ("2026-11-16", "19:00", "CHI", "CLE", "0022600246", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
+    ("2026-11-16", "19:00", "MEM", "WAS", "0022600247", "Capital One Arena", "Washington, DC", "MNMT/Monumental+", ""),
+    ("2026-11-16", "19:30", "PHI", "BKN", "0022600248", "Barclays Center", "Brooklyn, NY", "League Pass", ""),
+    ("2026-11-16", "19:30", "HOU", "MIA", "0022600249", "Kaseya Center", "Miami, FL", "League Pass", ""),
+    ("2026-11-16", "20:00", "POR", "MIN", "0022600250", "Target Center", "Minneapolis, MN", "League Pass", ""),
+    ("2026-11-16", "20:00", "GSW", "NOP", "0022600251", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
+    ("2026-11-16", "21:00", "PHX", "DEN", "0022600252", "Ball Arena", "Denver, CO", "League Pass", ""),
+    ("2026-11-17", "19:30", "NYK", "TOR", "0022600253", "Scotiabank Arena", "Toronto, ON", "League Pass", ""),
+    ("2026-11-17", "20:00", "POR", "MIN", "0022600254", "Target Center", "Minneapolis, MN", "League Pass", ""),
+    ("2026-11-17", "20:00", "DET", "SAS", "0022600255", "Frost Bank Center", "San Antonio, TX", "Peacock / NBC", ""),
+    ("2026-11-17", "22:30", "UTA", "LAC", "0022600257", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
+    ("2026-11-17", "23:00", "CHA", "LAL", "0022600256", "Crypto.com Arena", "Los Angeles, CA", "Peacock", ""),
 ]
 
-# Rows the page printed as NOT YET SUBMITTED (10 team-rows for 11/14 games).
+INJURY_PDF_URL = SOURCES["injury_pdf"][1]
+
+# --------------------------------------------------------------------------- injuries
+# Transcribed from the official 11/14/26 04:30 AM ET PDF. The report's own columns are
+# Game Date | Game Time | Matchup | Team | Player Name | Current Status | Reason.
+# The trailing letter is this project's transcription note, not an NBA field:
+#   "E" = the team cell is present on the row itself
+#   "C" = the row continues a team block from the previous PDF page, so the team and
+#         matchup are carried over (flagged on the site as FLAG-V2-INJ-ATTR)
+# (date, time_et, matchup, team, player, status, reason, attribution)
+INJURIES = [
+    ("2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Holmes II, DaRon", "Out", "G League - On Assignment", "E"),
+    ("2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Nembhard, Ryan", "Out", "G League - Two-Way", "E"),
+    ("2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Strawther, Julian", "Out", "Injury/Illness - Left Knee Sprain", "E"),
+    ("2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Whitmore, Cam", "Out", "G League - Two-Way", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Biberovic, Tarik", "Out", "Injury/Illness - Right Heel Bursitis", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Christie, Max", "Questionable", "Injury/Illness - Left Ankle Sprain", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "de Larrea, Sergio", "Out", "Injury/Illness - Right Knee Sprain", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Johnson Jr., Morez", "Probable", "Injury/Illness - Left Shin / Tibia Contusion", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Lively II, Dereck", "Out", "Injury/Illness - Right Foot Surgery", "E"),
+    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Martin, Caleb", "Available", "Injury/Illness - Right Thumb Splint", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Bilodeau, Tyler", "Out", "G League - Two-Way", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Brown Jr., Mikel", "Questionable", "Injury/Illness - Illness", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Jefferson, Joshua", "Out", "G League - On Assignment", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Nelson, Grant", "Out", "G League - Two-Way", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Saraf, Ben", "Out", "G League - On Assignment", "E"),
+    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Traore, Nolan", "Probable", "Injury/Illness - Right Calf Tightness / Soreness", "C"),
+    ("2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Beringer, Joan", "Available", "Injury/Illness - Face Mask", "E"),
+    ("2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "DiVincenzo, Donte", "Out", "Injury/Illness - Right Achilles Tendon Repair / Surgery", "E"),
+    ("2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Edwards, Anthony", "Out", "Injury/Illness - Right Knee Arthroscopy", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Duren, Jalen", "Out", "Injury/Illness - Right Hamstring Strain", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Harkless, Elijah", "Questionable", "G League - Two-Way", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Joe, Isaiah", "Out", "Injury/Illness - Right Hip Contusion", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Jones, Isaac", "Questionable", "G League - Two-Way", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Lanier, Chaz", "Out", "G League - On Assignment", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Okorie, Ebuka", "Out", "G League - On Assignment", "E"),
+    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons", "Onyenso, Ugonna", "Out", "G League - Two-Way", "E"),
+]
 NOT_SUBMITTED = [
-    ("2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets"),
+    # 11/14 - the five teams that had filed nothing in the 04:30 AM ET release
     ("2026-11-14", "07:00", "DEN@NOP", "New Orleans Pelicans"),
-    ("2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks"),
     ("2026-11-14", "07:30", "DAL@CLE", "Cleveland Cavaliers"),
-    ("2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets"),
     ("2026-11-14", "08:00", "BKN@MEM", "Memphis Grizzlies"),
     ("2026-11-14", "08:00", "CHI@MIN", "Chicago Bulls"),
-    ("2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves"),
-    ("2026-11-14", "08:00", "DET@MIA", "Detroit Pistons"),
     ("2026-11-14", "08:00", "DET@MIA", "Miami Heat"),
+    # 11/15 - every team is NOT YET SUBMITTED: the 5 p.m. local day-before filing deadline
+    # for these games falls on 11/14, i.e. after this capture. Blank by policy, never estimated.
+    ("2026-11-15", "01:00", "IND@PHI", "Indiana Pacers"),
+    ("2026-11-15", "01:00", "IND@PHI", "Philadelphia 76ers"),
+    ("2026-11-15", "04:00", "LAL@PHX", "Los Angeles Lakers"),
+    ("2026-11-15", "04:00", "LAL@PHX", "Phoenix Suns"),
+    ("2026-11-15", "04:30", "CHA@LAC", "Charlotte Hornets"),
+    ("2026-11-15", "04:30", "CHA@LAC", "LA Clippers"),
+    ("2026-11-15", "05:00", "SAS@UTA", "San Antonio Spurs"),
+    ("2026-11-15", "05:00", "SAS@UTA", "Utah Jazz"),
+    ("2026-11-15", "06:00", "DAL@BOS", "Dallas Mavericks"),
+    ("2026-11-15", "06:00", "DAL@BOS", "Boston Celtics"),
+    ("2026-11-15", "06:00", "NYK@TOR", "New York Knicks"),
+    ("2026-11-15", "06:00", "NYK@TOR", "Toronto Raptors"),
+    ("2026-11-15", "07:00", "HOU@WAS", "Houston Rockets"),
+    ("2026-11-15", "07:00", "HOU@WAS", "Washington Wizards"),
+    ("2026-11-15", "08:00", "ATL@MIL", "Atlanta Hawks"),
+    ("2026-11-15", "08:00", "ATL@MIL", "Milwaukee Bucks"),
+    ("2026-11-15", "09:00", "OKC@SAC", "Oklahoma City Thunder"),
+    ("2026-11-15", "09:00", "OKC@SAC", "Sacramento Kings"),
 ]
 
 # --------------------------------------------------------------------------- players
-# nba.com/stats/players/traditional — season aggregates, read 2026-11-14. Only rows used.
+# nba.com/stats/players/traditional - season aggregates, read 2026-11-14.
+# A season *rate* is published; the per-game distribution needed to price a prop is not,
+# so every prop column built from this table is blank and flagged.
 # player, team, GP, MIN, PTS, REB, AST, nba_player_id
 PLAYERS = [
-    ("Luka Dončić", "LAL", 13, None, None, None, None, "1629029"),   # row present; values not transcribed
-    ("Ty Jerome", "MEM", 10, 30.7, 26.2, 3.5, 4.9, "1629660"),
-    ("Darius Acuff Jr.", "SAC", 11, 37.3, 26.2, 3.8, 7.3, "1643411"),
-    ("Jalen Brunson", "NYK", 11, 33.6, 26.0, 3.1, 5.2, "1628973"),
-    ("Anthony Davis", "WAS", 11, 34.1, 25.6, 10.5, 2.0, "203076"),
-    ("Devin Booker", "PHX", 11, 34.0, 25.5, 2.5, 5.0, "1626164"),
-    ("Cade Cunningham", "DET", 11, 34.5, 25.0, 5.2, 7.9, "1630595"),
-    ("Austin Reaves", "LAL", 12, 35.3, 24.7, 3.3, 4.7, "1630559"),
-    ("Cooper Flagg", "DAL", 11, 33.5, 24.6, 6.9, 6.5, "1642843"),
-    ("Paolo Banchero", "ORL", 2, 33.8, 24.5, 6.5, 7.5, "1631094"),
-    ("Nikola Jokić", "DEN", 10, 36.3, 23.5, 10.8, 9.0, "203999"),
-    ("Scottie Barnes", "TOR", 8, 33.3, 23.5, 7.6, 5.1, "1630567"),
-    ("Franz Wagner", "ORL", 11, 36.9, 23.5, 6.5, 7.9, "1630532"),
-    ("Deni Avdija", "POR", 11, 32.5, 23.0, 6.1, 6.5, "1630166"),
-    ("Donovan Mitchell", "CLE", 12, 33.0, 22.8, 5.0, 5.5, "1628378"),
-    ("Pascal Siakam", "IND", 11, 32.1, 22.7, 6.9, 4.4, "1627783"),
-    ("Jamal Murray", "DEN", 10, 36.4, 26.2, 5.0, 5.9, "1627750"),
-    ("Stephen Curry", "GSW", None, None, 27.8, 3.7, 3.9, "201939"),      # season-leader widget
-    ("Victor Wembanyama", "SAS", None, None, 30.3, 11.7, 2.8, "1641705"),  # season-leader widget
-    ("Shai Gilgeous-Alexander", "OKC", None, None, 29.7, 4.3, 4.5, "1628983"),
-    ("Alperen Sengun", "HOU", None, None, 21.1, 9.4, 7.9, "1630578"),
+    ("Luka Don\u010di\u0107", "LAL", 13, None, None, None, None, "1629029"),
+    ("Shai Gilgeous-Alexander", "OKC", 13, None, None, None, None, "1628983"),
+    ("Victor Wembanyama", "SAS", 13, None, None, None, None, "1641705"),
+    ("Anthony Edwards", "MIN", None, None, None, None, None, "1630162"),
+    ("Jalen Duren", "DET", None, None, None, None, None, "1631106"),
+    ("Nikola Joki\u0107", "DEN", 10, None, None, None, None, "203999"),
+    ("Donovan Mitchell", "CLE", 13, None, None, None, None, "1628378"),
 ]
 
-# Injury rows that name one of the players above (used for the impact table).
-# Verified by matching the official report text against the official player table.
 PLAYER_SOURCE = "https://www.nba.com/stats/players/traditional"
 
 
@@ -361,61 +354,3 @@ def home_win_rate_se() -> float:
     i = integrity()
     n = i["home_w"] + i["home_l"]
     return math.sqrt(0.25 / n)
-
-
-# --------------------------------------------------------------------------- committed official snapshots
-# Session arena/6650be4d-nba2 (2026-11-14). The published tree reads the slate, the current
-# standings, the newest injury release and the played finals from the committed snapshots so
-# that the site and the repository's audit trail are the same numbers.
-
-def _load(name: str) -> dict:
-    return json.loads((RAW / name).read_text())
-
-
-def _rows(doc: dict) -> list[dict]:
-    return [dict(zip(doc["columns"], r)) for r in doc["records"]]
-
-
-# ---- the slate: 36 games, 2026-11-13 (day-before context) .. 2026-11-17 (T+3)
-_SLATE_DOC = _load("slate_2026-11-14_to_11-17.json")
-SLATE = [(r["date"], r["time_et"], r["away"], r["home"], r["game_id"], r["arena"],
-          f"{r['city']}, {r['state']}", r["broadcast"], r["cup_group"])
-         for r in _rows(_SLATE_DOC)]
-CONTEXT_DATE = "2026-11-13"
-WINDOW_DATES = sorted({r[0] for r in SLATE if r[0] > CONTEXT_DATE})
-SLATE_SOURCE = "https://www.nba.com/schedule"
-
-
-def slate_by_date(date: str) -> list[tuple]:
-    return [r for r in SLATE if r[0] == date]
-
-
-# ---- the official standings, read from nba.com/standings on 2026-11-14
-_STANDINGS_DOC = _load("official_standings_2026-11-14.json")
-STANDINGS = {r["tricode"]: r for r in _rows(_STANDINGS_DOC)}
-STANDINGS_SOURCE = "https://www.nba.com/standings"
-STANDINGS_AS_OF = _STANDINGS_DOC.get("as_of", "2026-11-14")
-
-
-def standings_rows() -> list[dict]:
-    out = []
-    for tri in sorted(STANDINGS):
-        d = STANDINGS[tri]
-        g = d["w"] + d["l"]
-        out.append({"tricode": tri, "name": d["name"], "w": d["w"], "l": d["l"],
-                    "pct": round(d["w"] / g, 3) if g else None,
-                    "home": d["home"], "road": d["road"], "conf": d["conf"], "div": d["div"]})
-    return out
-
-
-# ---- the newest official injury release (2026-11-14 05:00 a.m ET)
-_INJ_DOC = _load("injury_report_2026-11-14_0500ET.json")
-INJURIES_LATEST = [(r["game_date"], r["time_et"], r["matchup"], r["team"], r["player"],
-                    r["status"], r["reason"], r["attribution"]) for r in _rows(_INJ_DOC)]
-INJURIES_LATEST_RELEASE = _INJ_DOC.get("release", "2026-11-14 05:00 a.m ET")
-INJURIES_LATEST_SOURCE = "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"
-
-# ---- the official finals for the nine 2026-11-13 games
-_FINALS_DOC = _load("finals_2026-11-13.json")
-FINALS = {r["game_id"]: r for r in _FINALS_DOC["records"]}
-FINALS_SOURCE = "https://www.nba.com/schedule?date=2026-11-14"

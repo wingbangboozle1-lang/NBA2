@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -45,10 +46,10 @@ proposal, not a change. Two states are pre-filled honestly: <code>implemented th
 exists and is verified by the build gate; <code>awaiting owner decision</code> means it does not exist and will not
 until you accept it. This session never writes <code>accepted</code>.</div>
 <div class="kpis">
-  <div class="kpi"><b>7</b><small>decisions in the queue</small></div>
-  <div class="kpi"><b>4</b><small>awaiting your decision</small></div>
+  <div class="kpi"><b>12</b><small>decisions in the queue</small></div>
+  <div class="kpi"><b>9</b><small>awaiting your decision</small></div>
   <div class="kpi"><b>3</b><small>already implemented this session</small></div>
-  <div class="kpi"><b>2</b><small>blocking (must decide before anything else)</small></div>
+  <div class="kpi"><b>4</b><small>blocking (must decide before anything else)</small></div>
 </div>
 <div class="scroll"><table>
 <caption>Decision queue — choose a path before implementation</caption>
@@ -139,6 +140,61 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <td><span class="badge b-warn">awaiting owner decision</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-40">
+<td>S-40</td>
+<td><span class="badge b-off">data</span></td>
+<td>Make the existing nightly ingest actually run, and extend it to the v2 results history</td>
+<td>A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo&#x27;s own freshness check (CC-FRESH-03) reports &#x27;the schedule is armed but nothing has run&#x27;. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either. — evidence: a nightly ingest workflow is committed and scheduled but has never run (gh run list is empty), and the repo&#x27;s own freshness check CC-FRESH-03 reports exactly that: armed, zero runs</td>
+<td>The existing cron actually fires, and it appends to the v2 results history as well as the v1 pipeline; a mismatch against the standings-implied game count fails the run instead of silently publishing a stale window.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-41">
+<td>S-41</td>
+<td><span class="badge b-off">data</span></td>
+<td>Capture per-player game logs so the last hard blocker can close</td>
+<td>Every player-level correlation on the site is BLOCKED, the player-props page cannot price anything, the minutes-and-production half of the injuries page cannot be filled, and strategy S7 has never generated a bet. All four fail for the same missing input. — evidence: 3 of 7 correlations on the lab page are BLOCKED and all three are player-level; S7 has 0 bets</td>
+<td>Player-level correlations become measurable, the props page can price, the injuries page can fill minutes and production, and strategy S7 generates its first bet.</td>
+<td>M</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-42">
+<td>S-42</td>
+<td><span class="badge b-off">governance</span></td>
+<td>Decide which tree GitHub Pages serves, and retire the other</td>
+<td>The repository&#x27;s Pages setting is build_type &#x27;legacy&#x27; (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree. — evidence: the Pages setting is &#x27;legacy&#x27; (root of main) while pages.yml publishes site/ — the two trees disagree and both are reachable</td>
+<td>One site is live and the other tree is archived with a dated note, so no reader can reach a second set of numbers.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-43">
+<td>S-43</td>
+<td><span class="badge b-off">model</span></td>
+<td>Replace the flat 300-bet gate with a power calculation per strategy</td>
+<td>Gate G7 applies one round number to all seven strategies. But the parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval — the bar is not equally strict across types, and 300 was chosen before any data existed to check it. — evidence: G7 holds all seven strategies to the same 300 bets, but their per-bet variances differ sharply: S1 has 167 settled bets and its interval already excludes chance, while S5 sits at 167 with an interval that does not</td>
+<td>Each strategy gets its own required sample, derived from its own variance instead of one round number applied to all seven.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
+</tr>
+<tr id="S-44">
+<td>S-44</td>
+<td><span class="badge b-off">parlays</span></td>
+<td>Publish the parlay price with its measured correlation, and print the naive product beside it</td>
+<td>The same-game correlation is now measured (+0.0393, 95% CI -0.113 to +0.190, n=167), but the site still withholds a parlay price entirely. The honest position is no longer &#x27;we do not know the correlation&#x27; but &#x27;we do not know it precisely&#x27; — and withholding the price hides the error bar rather than showing it. — evidence: rho = +0.0393 with a 95% CI of -0.113 to +0.190; across that band a two-leg price moves by several percent, which is the whole reason the price is withheld today</td>
+<td>Every parlay carries a price computed from the measured correlation, with the naive product and the interval printed on the same row.</td>
+<td>S</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
 </tr>
 </tbody></table></div><h2>How to answer</h2>
 <p class="lede">Reply with the IDs you accept. Three answers are useful and one is not:</p>

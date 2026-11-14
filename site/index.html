@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -37,53 +38,52 @@
 <main>
 
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only, plus the nine
-Nov 13 games that have since been played and are graded against the official finals.
-Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
-Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
+<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
+ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
+line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
 <div class="kpis">
-  <div class="kpi"><b>27</b><small>games in the T+3 window</small></div>
-  <div class="kpi"><b>9</b><small>day-before games graded</small></div>
-  <div class="kpi"><b>174</b><small>league games observed (season to date)</small></div>
-  <div class="kpi"><b>10/23/3</b><small>A / B / C line grades</small></div>
-  <div class="kpi"><b>66.9%</b><small>walk-forward accuracy (139 finals)</small></div>
-  <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
-  <div class="kpi"><b>12.75</b><small>σ margin sd (fitted, pts)</small></div>
-  <div class="kpi"><b>+0.37</b><small>home-court (fitted, pts)</small></div>
+  <div class="kpi"><b>27</b><small>games priced in window</small></div>
+  <div class="kpi"><b>183</b><small>league games observed (season to date)</small></div>
+  <div class="kpi"><b>5/21/1</b><small>A / B / C line grades</small></div>
+  <div class="kpi"><b>67.7%</b><small>walk-forward accuracy (167 finals)</small></div>
+  <div class="kpi"><b>27</b><small>leans published / stakes 0</small></div>
+  <div class="kpi"><b>12.95</b><small>σ margin sd (fitted, pts)</small></div>
+  <div class="kpi"><b>+0.71</b><small>home-court (fitted, pts)</small></div>
   <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
-  <div class="kpi"><b>3</b><small>inputs blocked</small></div>
+  <div class="kpi"><b>4</b><small>inputs blocked</small></div>
 </div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
-A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-36 games and prints the failing gate next to each. What is genuinely new is verification: every number
+A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
+lean and a trigger price for all 27 games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
 on this site was re-read from an official NBA page on 2026-11-14, and the identical claims from the previous
 build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
 
 <h2>Start here</h2>
 <div class="cards">
   <div class="card"><h4><a href="executive-summary.html">Executive summary</a></h4><p>What was built, what is verified, what is impossible yet, and the recommended path.</p></div>
-  <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 36 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
-  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
+  <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 27 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
+  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
-  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 status rows from the earlier release plus the 49 rows of the newest one, with the release-to-release delta.</p></div>
-  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>17 questions that block decisions, each with how to find the answer.</p></div>
-  <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>28 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
+  <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>26 official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
+  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
+  <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>34 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
-  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>34 irregularities with sources, none of which block publication.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>41 irregularities with sources, none of which block publication.</p></div>
 </div>
 
-<div class="note warn"><b>The team records this model runs on are a pre-final snapshot; the league's
-current records are published beside them.</b> The nine 2026-11-13 games have since been played and are
-official. This site's model inputs were read on 2026-11-13 <em>before</em> those games, so they agree with
-the <em>pre-final</em> state on 30 of 30 rows and with the current official standings on
-<em>12</em> of 30. That is an aged snapshot, not a transcription error. The current official records —
-read from NBA.com on 2026-11-14 — are published in full on the
-<a href="methodology.html">Methodology page</a>, and the nine official finals are graded on the
-<a href="live-verification.html">Live verification page</a>.</div>
+<div class="note"><b>Staleness: resolved, and the check that caught it is still running.</b>
+The standings this build published had been transcribed before the 2026-11-13 finals, so they agreed
+with the pre-final state on 30 of 30 rows and with live standings on 12 of 30. On 2026-11-14 the
+table was re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and it now matches live official standings on <b>30 of 30</b> rows, home and road splits included.
+The proof is stronger than a re-read: all 30 records were rebuilt independently from the 183 official
+final scores in <code>data/raw/history/</code> and agree exactly. The measure that found the drift is
+kept, inverted, on the <a href="live-verification.html">Live verification page</a>.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
@@ -97,31 +97,31 @@ read from NBA.com on 2026-11-14 — are published in full on the
 </tr></thead><tbody>
 <tr>
 <td>League wins = league losses</td>
-<td>174 = 174</td>
+<td>183 = 183</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Points scored = points allowed (games-weighted)</td>
-<td>39473.4 vs 39471.5 (diff +1.9, rounding bound ±34.8)</td>
+<td>41544.3 vs 41536.8 (diff +7.5, rounding bound ±36.6)</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Home wins = road losses</td>
-<td>89 = 89</td>
+<td>96 = 96</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Home losses = road wins</td>
-<td>84 = 84</td>
+<td>86 = 86</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Games played sums to whole games</td>
-<td>348 team-games = 174 league games (season to date, not the slate)</td>
+<td>366 team-games = 183 league games (season to date, not the slate)</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -147,41 +147,41 @@ official pages and shows where those rows now stand.</p>
 <tr>
 <td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
 <td>36 games</td>
-<td>36 games</td>
-<td><span class="badge b-ok">MATCH</span></td>
-<td>no differences found</td>
-<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+<td>27 games</td>
+<td><span class="badge b-bad">MISMATCH</span></td>
+<td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;0022600037&#x27;), (&#x27;2026-11-13&#x27;, &#x27;CLE&#x27;, &#x27;MIA&#x27;, &#x</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
 <td>Rebuild every team&#x27;s W-L from the 155 official final scores, then compare with the official card</td>
-<td>155 finals, 155 wins assigned</td>
-<td>174 official wins</td>
+<td>183 finals, 183 wins assigned</td>
+<td>183 official wins</td>
 <td><span class="badge b-bad">CONSISTENT</span></td>
-<td>no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
+<td>no team exceeds its official record; the 0 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF</td>
 <td>85 player rows</td>
-<td>85 player rows</td>
-<td><span class="badge b-ok">MATCH</span></td>
-<td>no differences found in (date, matchup, player, status)</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>26 player rows</td>
+<td><span class="badge b-bad">MISMATCH</span></td>
+<td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Awaka, Tobe&#x27;, &#x27;Out&#x27;), (&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Denni</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 <tr>
 <td>The published team&#x27;s official W-L column vs this tree&#x27;s own 2026-11-13 transcription</td>
-<td>12/30 identical</td>
+<td>30/30 identical</td>
 <td>30 teams</td>
-<td><span class="badge b-bad">AGED</span></td>
-<td>18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;A</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
-<td>30/30 identical</td>
-<td>30 teams, official table read 2026-11-14</td>
-<td><span class="badge b-ok">MATCH</span></td>
-<td>no differences found</td>
+<td>W-L cross-check</td>
+<td>n/a</td>
+<td>n/a</td>
+<td><span class="badge b-bad">ERROR</span></td>
+<td>module &#x27;nba2.v2.official&#x27; has no attribute &#x27;STANDINGS&#x27;</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div>
@@ -194,9 +194,14 @@ official pages and shows where those rows now stand.</p>
 <th scope="col">Where it would come from</th>
 </tr></thead><tbody>
 <tr>
-<td>Per-game margins and totals</td>
-<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
-<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+<td>Market prices (spread, total, moneyline, prop lines)</td>
+<td>No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>An automated feed that keeps the results history current without a human capture</td>
+<td>The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night&#x27;s results, so the history freezes between manual captures and the window ages.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Per-player game logs (minutes, usage, on/off)</td>
@@ -204,9 +209,9 @@ official pages and shows where those rows now stand.</p>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
-<td>Market prices (spread, total, moneyline, prop lines)</td>
-<td>No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.</td>
-<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+<td>Injury designations for game days beyond the next filing deadline</td>
+<td>The NBA publishes a report only once a team has filed. For a game on day +2 or +3 the filing deadline has not yet passed, so no official row exists to read.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
 </tbody></table></div>
 <h2>Machine-readable copy</h2>

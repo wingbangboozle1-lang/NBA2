@@ -42,21 +42,25 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_is_36_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 36)
+    def test_slate_is_27_games_and_window_is_three_days(self):
+        self.assertEqual(len(O.SLATE), 27)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-13")
+        self.assertEqual(dates[0], "2026-11-14")
         self.assertEqual(dates[-1], "2026-11-17")
-        self.assertEqual(len(dates), 5)
-        # the pick window is the build date plus three days, context games excluded
-        window = [g for g in O.SLATE if g[0] > O.CONTEXT_DATE]
-        self.assertEqual(len(window), 27)
+        self.assertEqual(len(dates), 4)
 
     def test_per_day_counts_match_official_grid(self):
+        # counts read off the official day-strip calendar on nba.com/games
         from collections import Counter
         c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9,
-                                   "2026-11-16": 8, "2026-11-17": 5})
+        self.assertEqual(dict(c), {"2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5})
+
+    def test_window_is_exactly_three_days_ahead(self):
+        import datetime as _dt
+        start = _dt.date.fromisoformat(O.WINDOW_START)
+        end = _dt.date.fromisoformat(O.WINDOW_END)
+        self.assertEqual((end - start).days, 3)
+        self.assertGreaterEqual(start, _dt.date.fromisoformat(O.AS_OF))
 
     def test_game_ids_unique(self):
         ids = [g[4] for g in O.SLATE]
@@ -254,8 +258,9 @@ class TestPublishedSite(unittest.TestCase):
         site = ROOT / "site"
         pages = sorted(site.glob("*.html"))
         # 17 pages at the 2026-11-14 build; session arena/ab8743d8 added live-verification.html
-        # (live official re-verification) and decision-queue.html (suggestions review path).
-        self.assertEqual(len(pages), 19)
+        # (live official re-verification) and decision-queue.html (suggestions review path);
+        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation).
+        self.assertEqual(len(pages), 20)
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

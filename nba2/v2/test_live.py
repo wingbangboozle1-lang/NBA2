@@ -38,9 +38,14 @@ class TestStaleness(unittest.TestCase):
     def test_stale_count_equals_row_difference(self):
         self.assertEqual(self.st["n_stale"], self.st["published_rows"] - self.st["match_live_standings"])
 
-    def test_matches_pre_final_state_more_than_live(self):
-        # The direction of the finding: this table is a pre-final snapshot.
-        self.assertGreater(self.st["match_pre_final_state"], self.st["match_live_standings"])
+    def test_published_table_matches_live_standings(self):
+        # Direction of the finding AFTER the 2026-11-14 refresh (session arena/ac5fab5c-nba2):
+        # the committed table was re-transcribed from live nba.com/standings, so the staleness
+        # this module was written to detect (a pre-finals snapshot) is resolved. The check is
+        # kept, inverted: the table must now agree with live standings on every row.
+        self.assertEqual(self.st["match_live_standings"], 30)
+        self.assertEqual(self.st["n_stale"], 0)
+        self.assertGreater(self.st["match_live_standings"], self.st["match_pre_final_state"])
 
 
 class TestGrading(unittest.TestCase):

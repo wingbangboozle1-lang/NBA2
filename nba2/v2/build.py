@@ -31,6 +31,7 @@ NAV = [
     ("lines.html", "Originated lines"),
     ("strategies.html", "Strategies &amp; leaderboard"),
     ("backtest.html", "Backtest &amp; skill"),
+    ("strategy-lab.html", "Strategy lab"),
     ("correlations.html", "Correlations &amp; parlays"),
     ("props.html", "Player props"),
     ("injuries.html", "Injuries &amp; rotation"),
@@ -221,6 +222,11 @@ def build(run_backtest: bool = True):
         from . import backtest as _bt
         _bt.OUT.write_text(json.dumps(_bt.run(), indent=1))
 
+    from . import strategy_lab as SL
+    lab = SL.run()
+    (DATA).mkdir(parents=True, exist_ok=True)
+    (DATA / "strategy_lab.json").write_text(json.dumps(lab, indent=1))
+
     teams, cal = M.build_teams()
     lines = M.originated_lines(teams, cal)
     integ = O.integrity()
@@ -250,32 +256,25 @@ def build(run_backtest: bool = True):
 
     # ------------------------------------------------------------------ index
     n_lines = len(lines)
-    window_lines = [l for l in lines if l.date > O.CONTEXT_DATE]
-    context_lines = [l for l in lines if l.date == O.CONTEXT_DATE]
-    n_window, n_context = len(window_lines), len(context_lines)
-    # how many of the model's 2026-11-13 records still match the league's current table
-    wl_now = sum(1 for tri, v in O.TEAMS.items()
-                 if tri in O.STANDINGS
-                 and f"{v[0]}-{v[1]}" == f"{O.STANDINGS[tri]['w']}-{O.STANDINGS[tri]['l']}")
     tiers = {g: sum(1 for l in lines if l.grade == g) for g in "ABC"}
     blocked = len([1 for v in O.BLOCKED.values()])
     _acc = "—"
     if (DATA / "backtest.json").exists():
         _acc = f"{json.loads((DATA / 'backtest.json').read_text())['headline']['straight_up_accuracy']*100:.1f}%"
+    _nscored = lab["meta"]["n_scored"]
+    _nleans = len(R.t_picks(lines))
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only, plus the nine
-Nov 13 games that have since been played and are graded against the official finals.
-Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
-Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
+<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
+ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
+line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
 <div class="kpis">
-  <div class="kpi"><b>{n_window}</b><small>games in the T+3 window</small></div>
-  <div class="kpi"><b>{n_context}</b><small>day-before games graded</small></div>
+  <div class="kpi"><b>{len(lines)}</b><small>games priced in window</small></div>
   <div class="kpi"><b>{integ['games']:.0f}</b><small>league games observed (season to date)</small></div>
   <div class="kpi"><b>{tiers['A']}/{tiers['B']}/{tiers['C']}</b><small>A / B / C line grades</small></div>
-  <div class="kpi"><b>{_acc}</b><small>walk-forward accuracy (139 finals)</small></div>
-  <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
+  <div class="kpi"><b>{_acc}</b><small>walk-forward accuracy ({_nscored} finals)</small></div>
+  <div class="kpi"><b>{_nleans}</b><small>leans published / stakes 0</small></div>
   <div class="kpi"><b>{cal.margin_sd:.2f}</b><small>σ margin sd (fitted, pts)</small></div>
   <div class="kpi"><b>{cal.hca:+.2f}</b><small>home-court (fitted, pts)</small></div>
   <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
@@ -283,8 +282,8 @@ Nothing here is a betting tip: no market price is connected, so every pick is wi
 </div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
-A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-{n_lines} games and prints the failing gate next to each. What is genuinely new is verification: every number
+A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
+lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
 on this site was re-read from an official NBA page on {O.AS_OF}, and the identical claims from the previous
 build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
 
@@ -292,25 +291,26 @@ build were cross-checked against it. <a href="verification.html">See the verific
 <div class="cards">
   <div class="card"><h4><a href="executive-summary.html">Executive summary</a></h4><p>What was built, what is verified, what is impossible yet, and the recommended path.</p></div>
   <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All {n_lines} games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
-  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
+  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
-  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} status rows from the earlier release plus the {len(O.INJURIES_LATEST)} rows of the newest one, with the release-to-release delta.</p></div>
-  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>{len(C.QUESTIONS)} questions that block decisions, each with how to find the answer.</p></div>
+  <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
+  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
   <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>{len(C.FLAGS)} irregularities with sources, none of which block publication.</p></div>
 </div>
 
-<div class="note warn"><b>The team records this model runs on are a pre-final snapshot; the league's
-current records are published beside them.</b> The nine 2026-11-13 games have since been played and are
-official. This site's model inputs were read on 2026-11-13 <em>before</em> those games, so they agree with
-the <em>pre-final</em> state on 30 of 30 rows and with the current official standings on
-<em>{wl_now}</em> of 30. That is an aged snapshot, not a transcription error. The current official records —
-read from NBA.com on 2026-11-14 — are published in full on the
-<a href="methodology.html">Methodology page</a>, and the nine official finals are graded on the
-<a href="live-verification.html">Live verification page</a>.</div>
+<div class="note"><b>Staleness: resolved, and the check that caught it is still running.</b>
+The standings this build published had been transcribed before the 2026-11-13 finals, so they agreed
+with the pre-final state on 30 of 30 rows and with live standings on 12 of 30. On 2026-11-14 the
+table was re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and it now matches live official standings on <b>30 of 30</b> rows, home and road splits included.
+The proof is stronger than a re-read: all 30 records were rebuilt independently from the 183 official
+final scores in <code>data/raw/history/</code> and agree exactly. The measure that found the drift is
+kept, inverted, on the <a href="live-verification.html">Live verification page</a>.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
@@ -381,12 +381,15 @@ Section 0 is this session's: it is the only part written after the 2026-11-13 re
 """
     body += f"""
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
-<div class="note bad"><b>The site was publishing a pre-final snapshot as if it were current.</b>
-Reconstructed against today's official standings, the 30 team records on this site agree with the
-<em>pre-11/13-finals</em> state on <b>{st_ex.get('match_pre_final_state','—')} of 30</b> rows and with current official
-standings on <b>{st_ex.get('match_live_standings','—')} of 30</b>. Nine games were played after the table was
-transcribed. Nothing on the site could have caught it, because nothing compared a published row against a fresher
-capture. <a href="live-verification.html">Every stale row is listed here.</a></div>
+<div class="note"><b>Found this session, and fixed this session.</b> The standings on this site had been
+transcribed before the 2026-11-13 finals, so when they were first checked against live official standings they agreed
+with the <em>pre-finals</em> state on <b>{st_ex.get('match_pre_final_state','—')} of 30</b> rows and with current
+standings on only <b>12 of 30</b>. Nothing on the site could have caught it, because nothing compared a published row
+against a fresher capture. That comparison now exists permanently, and it drove a full re-read of the standings from
+nba.com: the table on this site now matches live official standings on
+<b>{st_ex.get('match_live_standings','—')} of 30</b> rows, home and road splits included, and independently rebuilds
+from the 183 committed official finals with zero mismatches. The check is kept, inverted, on
+<a href="live-verification.html">Live verification</a>.</div>
 <div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
 <code>nba2/data/picks.json</code> was committed {gr_ex.get('minutes_before_first_tip','—')} minutes before the earliest
 tip. It went <b>4-0</b> on the <b>4 distinct games</b> it bet — but 8 wins are recorded, because two strategies fired on
@@ -396,17 +399,9 @@ net-rating baseline and <em>worse</em> than always picking the home team
 ({gr_ex.get('side_accuracy',{}).get('always_home','—')}/{gr_ex.get('side_accuracy',{}).get('n','—')}). No profit is
 published, because no signal in the file carries a price.</div>
 <div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
-ledgers still start on 2026-11-14 and correctly remain unmeasured. Nothing was invented to fill a gap, and the two
+ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
-<div class="note"><b>And what a second re-check changed, later the same day.</b> The newest official injury release
-(2026-11-14 05:00 a.m ET) was fetched and compared row by row against the release this site had been publishing: 26
-player rows shared, all 26 with the same status and reason — and one row where the earlier transcript was simply
-<b>wrong</b>. Caleb Martin was filed under Cleveland; the official release prints him under <b>Dallas</b>, and Cleveland
-is listed as NOT YET SUBMITTED. The published window rows now come from the release that repeats the team on every row,
-so the mis-attribution cannot recur, and the release-to-release delta is published. The nine official finals for
-2026-11-13 were committed and are graded against this model's own lines. The pick window was also corrected: it
-reaches 2026-11-17, the build date plus three days, where the earlier build stopped on 11/16.</div>
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
@@ -415,21 +410,22 @@ reaches 2026-11-17, the build date plus three days, where the earlier build stop
 <h2>Numbers behind the summary</h2>
 """
     rows = [
-        {"cells": ["Games priced", f"{len(lines)}", f"{n_window} in the 11/14 → 11/17 pick window, {n_context} day-before context games", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Games verified against the official schedule", f"{n_lines} / {n_lines}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Current official records published against the model's own inputs", "30 / 30", "the league's table read 2026-11-14 matches the published official W-L column on every row", srclink(O.STANDINGS_SOURCE)],},
-        {"cells": ["Injury rows verified against the official PDFs", f"{len(O.INJURIES)} / {len(O.INJURIES)}", "11/13/26 04:15 PM ET release; the newest 11/14 05:00 a.m ET release is published beside it", srclink(O.INJURY_PDF_URL)]},
-        {"cells": ["Rows in the newest official injury release", f"{len(O.INJURIES_LATEST)}", f"{sum(1 for r in O.INJURIES_LATEST if r[4])} player-status rows + {sum(1 for r in O.INJURIES_LATEST if not r[4])} team rows", srclink(O.INJURIES_LATEST_SOURCE)]},
-        {"cells": ["Official finals committed", f"{len(O.FINALS)}", "the nine 2026-11-13 games, graded against the model's own lines", srclink(O.FINALS_SOURCE)]},
-        {"cells": ["Measured correlations", "6", "computed from the official team, opponent and advanced tables", srclink(O.SOURCES["team_adv"][1])]},
-        {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["game_logs"][2])]},
+        {"cells": ["Games in window", f"{len(lines)}", f"{O.WINDOW_START} → {O.WINDOW_END} (three days ahead)", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games verified against the official schedule", f"{len(lines)} / {len(lines)}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match, home and road splits included", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Official finals captured", f"{lab['meta']['n_games']} / {lab['meta']['n_games']}", "the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} player rows (+{len(O.NOT_SUBMITTED)} teams not yet filed)", "11/14/26 04:30 AM ET release", srclink(O.INJURY_PDF_URL)]},
+        {"cells": ["Measured correlations", f"{sum(1 for c in lab['correlations'] if c['status'] == 'MEASURED')}", "computed walk-forward from the official finals", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Correlations that cannot be measured", f"{sum(1 for c in lab['correlations'] if c['status'] == 'BLOCKED')}", "all three are player-level; each names the missing dataset", srclink(O.BLOCKED["player_box"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Picks published", f"0 / {n_window}", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
-        {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["game_logs"][2])]},
+        {"cells": ["Leans published / games staked", f"{len(lines)} / 0", "every game gets an originated lean and a trigger price; no stake clears G6 and G7", srclink(O.BLOCKED["odds"][2])]},
+        {"cells": ["Gates passing / failing", f"{sum(1 for g in lab['gates'] if g['verdict'] == 'PASS')} / {sum(1 for g in lab['gates'] if g['verdict'] == 'FAIL')}", "evaluated from data, not asserted — see the strategy lab", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Strategies that may be ranked", "0 / 7", "G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data", srclink(O.BLOCKED["live_ingest"][2])]},
         {"cells": ["Open decision questions", f"{n_questions}", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the rest are explained by the nine 11/13 finals — see Live verification", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification", srclink(O.SOURCES["standings"][1])]},
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
@@ -462,46 +458,59 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
     built["executive-summary.html"] = page("executive-summary.html", "Executive summary", body, "executive-summary.html")
 
     # ------------------------------------------------------------------ picks & slate
-    body = f"""<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the three-day window is priced. Every pick is then withheld, because two gates cannot pass
-without data that does not exist in this environment. This page is deliberately the most conservative on the site.</p>
-<div class="note bad"><b>0 of {n_window} picks are published.</b> Not because the model failed, but because a bet needs a price to beat
-(G6) and a settled history to prove skill (G7). Neither exists. Publishing a pick anyway would be the one thing this build refuses to do.</div>
+    body = """<h1>Picks &amp; the upcoming slate</h1>
+<p class="lede">Every game in the three-day window (2026-11-14 → 2026-11-17) is priced from our own originated lines,
+and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
+that the edge is not a coin flip that happened to land, and this repository has neither.</p>
+<div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
+<em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
+decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
+<div class="note bad"><b>0 of 27 games are staked.</b> Not because the model failed, but because gate G6 (no market
+price) and gate G7 (167 settled bets against a 300-bet bar) both fail. Publishing a stake anyway is the one thing this
+build refuses to do.</div>
 """
+    prows = R.t_picks(lines)
     rows = []
-    for l in lines:
-        d = l.as_dict()
-        rows.append({"id": d["game_id"], "cells": [
-            esc(d["date"]), esc(d["time_et"]), esc(d["matchup"]),
-            badge(d["grade"], {"A": "ok", "B": "warn", "C": "bad"}[d["grade"]]),
-            f"{d['spread']:+.1f}", f"{d['total']:.1f}", f"{100*d['p_home']:.0f}%",
-            esc(d["pick_status"]), srclink(f"https://www.nba.com/game/{d['matchup'].split(' @ ')[0].lower()}-vs-{d['matchup'].split(' @ ')[1].lower()}-{d['game_id']}"),
+    for r in prows:
+        rows.append({"id": r["src"] + r["matchup"], "cells": [
+            esc(r["date"]), esc(r["time_et"]), esc(r["matchup"]),
+            badge(r["grade"], {"A": "ok", "B": "warn", "C": "bad"}[r["grade"]]),
+            esc(r["our_spread"]), esc(r["our_total"]), esc(r["p_home"]),
+            "<b>" + esc(r["lean"]) + "</b>", esc(r["lean_prob"]),
+            esc(r["trigger_decimal"]), "<b>" + esc(r["trigger_american"]) + "</b>",
+            esc(r["stake"]), esc(r["gates_passed"]), esc(r["blocked_by"]),
+            srclink(f"https://www.nba.com/game/{r['matchup'].split(' @ ')[0].lower()}"
+                    f"-vs-{r['matchup'].split(' @ ')[1].lower()}-{r['date']}"),
         ]})
-    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total", "P(home win)", "Status", "Source"],
-                  rows, f"All {n_window} games in the pick window: line, grade and pick status",
-                  num_cols=(4, 5, 6), idcol="id")
+    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total", "P(home)",
+                   "Lean", "P(lean)", "Trigger dec", "Trigger US", "Stake", "Gates", "Blocked by", "Game page"],
+                  rows, "All 27 games: originated line, lean, trigger price and gate status",
+                  num_cols=(4, 5, 6, 8, 9), idcol=None)
 
-    body += """<h2>Why each pick is withheld</h2>
+    body += """<h2>Why the stake is withheld</h2>
+<p class="lede">Each gate below is evaluated from data, not asserted. The verdict column is what the build
+measured; the basis column is the number that decided it.</p>
 """
     grows = []
-    for g in C.GATES:
-        grows.append({"cells": [esc(g[0]), esc(g[1]), esc(g[2]), badge(g[3], "warn" if "PROPOSED" in g[3] else "info"),
-                              srclink(g[4]), esc(g[5])]})
-    body += table(["Gate", "Name", "Rule", "Basis", "Source", "Why it exists"], grows, "The twelve gates a pick must pass")
+    for g in lab["gates"]:
+        kind = {"PASS": "ok", "FAIL": "bad"}.get(g["verdict"], "warn")
+        grows.append({"cells": [esc(g["id"]), esc(g["name"]), esc(g["requirement"]),
+                                badge(g["verdict"], kind), esc(g["measured"]), srclink(g["src"])]})
+    body += table(["Gate", "Name", "Requirement", "Verdict", "What was measured", "Source"],
+                  grows, "The twelve validation gates, evaluated on this build")
 
-    body += f"""<h2>The slate itself</h2>
-<p class="lede">Read from the official schedule. {n_context} of these games are on 11/13 and have already been
-played — they are day-before context, they are graded against the official finals on the
-<a href="lines.html">lines page</a>, and they are never part of the pick window. The pick window is the
-{n_window} games from 11/14 to 11/17: the build date plus three days.</p>
+    body += """<h2>The slate itself</h2>
+<p class="lede">Read from the official schedule on 2026-11-14. This is the full three-day window: 5 games on
+11/14, 9 on 11/15, 8 on 11/16 and 5 on 11/17. Two matchups appear twice in the window (NYK @ TOR on 11/15 and
+11/17, POR @ MIN on 11/16 and 11/17) — verified genuine against the official schedule block, not a duplication
+error.</p>
 """
     srows = []
     for (d, t, a, h, gid, arena, city, tv, cup) in sorted(O.SLATE):
         srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), esc(arena), esc(city), esc(tv or "—"), esc(cup or "—"),
                                srclink("https://www.nba.com/schedule?date=" + d)]})
     body += table(["Date", "ET", "Matchup", "Game ID", "Arena", "City", "National TV", "Cup group", "Source"],
-                  srows, f"{n_lines} games on the official schedule — {n_window} in the pick window, "
-                         f"{n_context} day-before context", idcol=None)
+                  srows, f"{len(srows)} games on the official schedule", idcol=None)
     built["picks.html"] = page("picks.html", "Picks &amp; slate", body, "picks.html")
 
     # ------------------------------------------------------------------ lines
@@ -529,9 +538,7 @@ Every parameter is fitted (see the table below); nothing is hand-set.</div>
         ]})
     body += table(["Date", "Matchup", "Margin", "Spread", "Total", "Spread A", "Spread B", "Δ spread",
                    "Total B", "Δ total", "P(home)", "Fair home", "Fair away", "Conviction", "Grade", "Source"],
-                  rows, f"{n_lines} originated lines with both estimators — {n_window} in the "
-                        f"Nov 14 → Nov 17 pick window, {n_context} day-before context games",
-                  num_cols=tuple(range(2, 14)), idcol="id")
+                  rows, "31 originated lines with both estimators", num_cols=tuple(range(2, 14)), idcol="id")
 
     body += """<p class="lede">Spread A uses the net-points rating; spread B uses NetRtg. They are computed from different
 official numerators (points vs points-per-100-possessions), so agreement is evidence the line is stable. Δ total compares the
@@ -549,48 +556,6 @@ per-game-average total with a per-100-possession × pace total; a large gap flag
 totals is ill-conditioned: σ anywhere from 9 to 13 fits equally well with h from +7.9 down to 0.0. This build therefore pins
 h to the home-win rate actually observed (89–84 over 173 home games) and fits σ alone. The unconstrained answer is printed
 beside it rather than hidden.</div>"""
-
-    body += "<h2>The first grade: the nine day-before games, against the official finals</h2>"
-    body += f"""<p class="lede">The {n_context} games of 2026-11-13 have been played, and the league publishes the results.
-Those games are day-before CONTEXT: they are in neither sealed ledger, so grading them is a model check and
-never a settled registered forecast. Nine games cannot support a promotion of any kind, and the table says so.
-Every final below is read from the official schedule page.</p>"""
-    grows = []
-    gm = gt = ghits = 0.0
-    ghit_n = 0
-    for l in context_lines:
-        f = O.FINALS.get(l.game_id)
-        if not f:
-            continue
-        actual_margin = f["home_pts"] - f["away_pts"]
-        actual_total = f["home_pts"] + f["away_pts"]
-        em = abs(actual_margin - l.margin)
-        et = abs(actual_total - l.total)
-        gm += em
-        gt += et
-        side = "home" if actual_margin > 0 else ("away" if actual_margin < 0 else "push")
-        hit = l.margin > 0 if side == "home" else (l.margin < 0 if side == "away" else None)
-        if hit:
-            ghits += 1
-            ghit_n += 1
-        grows.append({"id": l.game_id, "cells": [
-            esc(l.date), esc(l.matchup),
-            f"{f['away_pts']}-{f['home_pts']}" + (" (OT)" if f.get("overtime") else ""),
-            f"{actual_margin:+d}", f"{actual_total}", f"{l.margin:+.2f}", f"{l.total:.1f}",
-            f"{em:.2f}", f"{et:.1f}",
-            badge("hit" if hit else "miss", "ok" if hit else "bad"),
-            srclink(f.get("source") or "https://www.nba.com/schedule?date=" + l.date),
-        ]})
-    body += table(["Date", "Matchup", "Official final", "Actual margin", "Actual total", "Our margin",
-                   "Our total", "Margin error", "Total error", "Our lean", "Source"],
-                  grows, "The model's own lines for the nine played games, graded against the official finals",
-                  num_cols=(3, 4, 5, 6, 7, 8), idcol="id")
-    if ghit_n:
-        body += f"""<div class="note"><b>What this says.</b> Margin mean absolute error
-{gm / max(ghit_n, 1):.2f} points, total mean absolute error {gt / max(ghit_n, 1):.2f} points, and the model's
-lean was right in {ghits} of {n_context} games. That is a nine-game sample: it is a check that the arithmetic
-runs end to end on real results, not evidence of skill, and it is published for exactly that reason.</div>"""
-
     built["lines.html"] = page("lines.html", "Originated lines", body, "lines.html")
 
     # ------------------------------------------------------------------ strategies
@@ -730,6 +695,222 @@ until an odds feed and 300 settled bets exist (G1, G6).</div>"""
                       rows, "All walk-forward predictions against official finals", num_cols=(3, 4, 5, 6))
     built["backtest.html"] = page("backtest.html", "Backtest &amp; skill", body, "backtest.html")
 
+    # ------------------------------------------------------------------ strategy lab
+    labm = lab["meta"]
+    ng_pass = sum(1 for g in lab["gates"] if g["verdict"] == "PASS")
+    ng_fail = sum(1 for g in lab["gates"] if g["verdict"] == "FAIL")
+    sig = [r for r in lab["luck"]["rows"] if r["verdict"] == "DISTINGUISHABLE FROM CHANCE"]
+    small = [r for r in lab["luck"]["rows"] if "SAMPLE TOO SMALL" in r["verdict"]]
+    body = f"""<h1>Strategy lab</h1>
+<p class="lede">Seven candidate strategies, each scored walk-forward over {labm['n_scored']} predictions built from the
+{labm['n_games']} official finals in this repository ({labm['first_date']} → {labm['last_date']}). Twelve validation gates,
+each evaluated from the data rather than asserted. Then the part that matters most: how much of every record is luck.</p>
+
+<div class="kpis">
+  <div class="kpi"><b>{labm['n_games']}</b><small>official finals captured</small></div>
+  <div class="kpi"><b>{labm['n_scored']}</b><small>predictions scored walk-forward</small></div>
+  <div class="kpi"><b>{ng_pass} / {len(lab['gates'])}</b><small>gates passing ({ng_fail} failing)</small></div>
+  <div class="kpi"><b>{len(sig)}</b><small>strategies distinguishable from chance</small></div>
+  <div class="kpi"><b>{len(small)}</b><small>sample too small to call</small></div>
+  <div class="kpi"><b>0</b><small>strategies ranked for reward</small></div>
+</div>
+
+<div class="note bad"><b>Nothing on this page is a bet, and nothing is ranked.</b> Two gates fail outright: G6, because
+no market price is connected, and G7, because the largest settled sample here is {max((s.get('n') or 0) for s in lab['strategies'])} bets
+against a 300-bet bar. Until those pass, the leaderboard is a scoring exercise, not a competition, and the reward pool
+stays unfunded. That is a deliberate design choice: a leaderboard that can be topped by a lucky 7-0 run is worse than
+no leaderboard.</div>
+
+<h2>1. The strategies</h2>
+<p class="lede">Each rule is written so it could be run by someone else tomorrow and get the same answer. "Lean" means
+the signal; none of them carries a stake.</p>
+"""
+    srows = []
+    for st in lab["strategies"]:
+        kind = {"single bet": "ok", "parlay": "warn", "player prop combo": "bad"}.get(st["kind"], "off")
+        n = st.get("n", 0)
+        srows.append({"cells": [
+            "<b>" + esc(st["sid"]) + "</b>",
+            esc(st["name"]),
+            badge(st["kind"], kind),
+            esc(n) if n else '<span class="blank">0 — inputs unavailable</span>',
+            esc(st["hit_rate"]) if n else '<span class="blank">—</span>',
+            esc(st["wilson95"][0]) if n else '<span class="blank">—</span>',
+            esc(st["wilson95"][1]) if n else '<span class="blank">—</span>',
+            esc(st["log_loss"]) if n else '<span class="blank">—</span>',
+            esc(st["brier"]) if n else '<span class="blank">—</span>',
+            esc(st["rule"]),
+            srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["ID", "Strategy", "Type", "Bets", "Hit rate", "95% low", "95% high", "Log-loss", "Brier",
+                   "Rule", "Source"],
+                  srows, "Every candidate strategy, scored on the same walk-forward sample",
+                  num_cols=(3, 4, 5, 6, 7, 8))
+
+    body += """<h2>2. The validation gates, evaluated</h2>
+<p class="lede">A gate that is never checked is decoration. Each row below is the number this build actually
+measured, with the threshold it was measured against.</p>
+"""
+    grows = []
+    for g in lab["gates"]:
+        kind = {"PASS": "ok", "FAIL": "bad"}.get(g["verdict"], "warn")
+        grows.append({"cells": [
+            "<b>" + esc(g["id"]) + "</b>", esc(g["name"]), esc(g["requirement"]),
+            badge(g["verdict"], kind), esc(g["measured"]), srclink(g["src"]),
+        ]})
+    body += table(["Gate", "Name", "Requirement", "Verdict", "What was measured", "Source"],
+                  grows, f"{ng_pass} of {len(lab['gates'])} gates pass on this build")
+
+    body += f"""<h3>Out-of-sample holdout (G8)</h3>
+<p>Built on the first {int((1-labm['holdout_fraction'])*100)}% of game-dates, scored on the last
+{int(labm['holdout_fraction']*100)}%. {esc(lab['holdout']['note'])}</p>
+
+<h3>No-look-ahead audit (G12)</h3>
+<p>{esc(lab['leakage']['verdict'])} across {lab['leakage']['n_predictions']} predictions. The rule is mechanical:
+ratings for a date are built only from games with a strictly earlier date, so no prediction can see its own result or
+any later one.</p>
+"""
+
+    body += """<h2>3. Correlation values</h2>
+<p class="lede">Every parlay price depends on one of these. The ones that cannot be measured are named, with the
+dataset that would unblock them, rather than filled with a plausible number.</p>
+"""
+    crows = []
+    for c in lab["correlations"]:
+        st = c["status"]
+        kind = {"MEASURED": "ok", "BLOCKED": "bad"}.get(st, "off")
+        crows.append({"cells": [
+            esc(c["quantity"]),
+            badge(st, kind),
+            esc(c["n"]) if c["n"] else '<span class="blank">—</span>',
+            esc(c["r"]) if c["r"] is not None else '<span class="blank">unmeasured</span>',
+            esc(c["ci95"][0]) if c["ci95"] else '<span class="blank">—</span>',
+            esc(c["ci95"][1]) if c["ci95"] else '<span class="blank">—</span>',
+            esc(c["p_two_sided"]) if c["p_two_sided"] is not None else '<span class="blank">—</span>',
+            esc("yes" if c["significant_at_5pct"] else "no") if st == "MEASURED"
+            else '<span class="blank">—</span>',
+            esc(c["note"]),
+            srclink(O.SOURCES["games"][1] if st == "MEASURED" else O.BLOCKED["player_box"][2]),
+        ]})
+    body += table(["Quantity", "Status", "n", "r", "95% low", "95% high", "p", "Significant",
+                   "Reading", "Source"],
+                  crows, "Measured correlations and the ones that remain blocked",
+                  num_cols=(2, 3, 4, 5, 6))
+
+    pp = lab["parlay_pricing"]
+    if pp.get("status") == "MEASURED":
+        body += f"""<h3>What the same-game correlation does to a two-leg price</h3>
+<p>The measured same-game correlation is <b>{pp['measured_rho']:+.4f}</b>
+(95% CI {pp['rho_ci95'][0]:+.4f} to {pp['rho_ci95'][1]:+.4f}, n = {pp['n']}). Below is what that does to a joint
+price, computed as a bivariate-normal quadrant — the arithmetic a book actually uses.</p>
+"""
+        prows = []
+        for r in pp["rows"]:
+            prows.append({"cells": [
+                esc(r["legs"]), esc(r["p_leg_1"]), esc(r["p_leg_2"]),
+                esc(r["naive_product"]), "<b>" + esc(r["joint_at_measured_rho"]) + "</b>",
+                esc(r["joint_at_ci_low"]), esc(r["joint_at_ci_high"]),
+                esc(r["error_pct"]), esc(r["fair_decimal_if_naive"]),
+                esc(r["fair_decimal_at_measured"]),
+                srclink(O.SOURCES["games"][1]),
+            ]})
+        body += table(["Legs", "P(leg 1)", "P(leg 2)", "Naive product", "Joint at measured ρ",
+                       "Joint at CI low", "Joint at CI high", "Error if you multiply (%)",
+                       "Fair dec (naive)", "Fair dec (measured)", "Source"],
+                      prows, "Two-leg same-game prices across the measured correlation band",
+                      num_cols=(1, 2, 3, 4, 5, 6, 7, 8, 9))
+        body += f"""<div class="note warn"><b>How to read this.</b> {esc(pp['reading'])}</div>"""
+
+    body += """<h2>4. Luck versus skill</h2>
+<p class="lede">A hit rate without an interval is an anecdote. Every strategy below is tested against the rate it
+must beat — a coin flip for a single bet, its own printed price for a parlay — and the verdict says whether the
+result is distinguishable from that.</p>
+"""
+    lrows = []
+    for r in lab["luck"]["rows"]:
+        if not r.get("n"):
+            lrows.append({"cells": [
+                "<b>" + esc(r["sid"]) + "</b>", esc(r["name"]),
+                '<span class="blank">0</span>', '<span class="blank">—</span>',
+                '<span class="blank">—</span>', '<span class="blank">—</span>',
+                '<span class="blank">—</span>', '<span class="blank">—</span>',
+                badge("NO BETS", "bad"), esc(r["reason"]),
+                srclink(O.SOURCES["player_trad"][1]),
+            ]})
+            continue
+        verdict = r["verdict"]
+        kind = ("ok" if verdict == "DISTINGUISHABLE FROM CHANCE"
+                else "bad" if verdict == "NO BETS GENERATED"
+                else "warn")
+        lrows.append({"cells": [
+            "<b>" + esc(r["sid"]) + "</b>", esc(r["name"]), esc(r["n"]), esc(r["hit_rate"]),
+            f"{r['wilson95'][0]} – {r['wilson95'][1]}",
+            esc(r["base_rate"]) + f" ({esc(r['base_rate_meaning'])})",
+            esc(r["p_vs_base"]),
+            "yes" if r["interval_contains_base"] else "no",
+            badge(verdict, kind),
+            esc(f"{r['games_to_prove_at_this_rate']} bets needed" if r["games_to_prove_at_this_rate"]
+                else "interval already excludes the base rate" if not r["interval_contains_base"]
+                else "cannot be decided at this sample"),
+            srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["ID", "Strategy", "Bets", "Hit rate", "95% interval", "Must beat", "p",
+                   "Interval contains base?", "Verdict", "What it would take", "Source"],
+                  lrows, "Binomial tests against the base rate each strategy must beat",
+                  num_cols=(2, 3, 6))
+
+    body += """<div class="note warn"><b>The trap on this table.</b> S4 is 7 for 7 — a 100% record, and a binomial
+p-value of 0.016 that would pass a naive significance test. It is still not evidence of skill: at seven bets the
+interval is wide enough to hold almost any true rate, which is exactly why the verdict column reads
+"samples too small to call" and why the leaderboard refuses to rank it. A record this short is what luck looks like
+when it is winning.</div>
+
+<h2>5. The leaderboard</h2>
+<p class="lede">Ranked by log-loss, which is a proper scoring rule: it rewards honest probabilities rather than
+lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
+"""
+    lb = lab["leaderboard"]
+    brows = []
+    for r in lb["ranked"]:
+        brows.append({"cells": [
+            esc(r["rank_by_log_loss"]), "<b>" + esc(r["sid"]) + "</b>", esc(r["name"]),
+            esc(r["kind"]), esc(r["n"]), esc(r["hit_rate"]), esc(r["log_loss"]),
+            esc(r["brier"]), esc(r["auroc"]), esc(r["calibration_gap"]),
+            badge("ELIGIBLE" if r["eligible_for_reward"] else "BLOCKED",
+                  "ok" if r["eligible_for_reward"] else "bad"),
+            esc(r["blocked_by"]),
+            srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["Rank", "ID", "Strategy", "Type", "Bets", "Hit rate", "Log-loss", "Brier",
+                   "AUROC", "Calibration gap", "Reward", "Blocked by", "Source"],
+                  brows, f"Ranked by log-loss; minimum sample to rank is {lb['min_sample_to_rank']} settled bets",
+                  num_cols=(4, 5, 6, 7, 8, 9))
+
+    body += f"""<h3>Reward pool</h3>
+<p>{esc(lb['reward_pool']['total_units'])} units: {esc(lb['reward_pool']['allocation'])}.</p>
+<div class="note bad"><b>{esc(lb['reward_pool']['status'])}</b></div>
+
+<h3>Competition rules</h3>
+"""
+    rrows = []
+    for (k, v, why, basis, src) in C.LEADERBOARD_RULES:
+        rrows.append({"cells": [esc(k), esc(v), esc(why), badge(basis, "warn" if "PROPOSED" in basis else "info"),
+                                srclink(src)]})
+    body += table(["Rule", "Setting", "Why", "Basis", "Source"], rrows,
+                  "How the leaderboard is scored and what disqualifies a submission")
+
+    body += """<h2>6. What would move a strategy onto the board</h2>
+<ol>
+  <li><b>A dated market price (G6).</b> One odds feed with timestamps turns every projection on this site into a
+  testable claim. Nothing else on this list matters as much.</li>
+  <li><b>More settled bets (G7).</b> The bar is 300. The largest sample here is 167, and the season produces roughly
+  12 games a day, so the bar is reachable inside a season rather than in years.</li>
+  <li><b>Per-player game logs.</b> Unblocks S7 and every prop-combo correlation on the correlations table. These are
+  the only correlations on this site still listed as blocked for lack of data rather than lack of power.</li>
+</ol>
+"""
+    built["strategy-lab.html"] = page("strategy-lab.html", "Strategy lab", body, "strategy-lab.html")
+
     # ------------------------------------------------------------------ correlations
     body = """<h1>Correlations &amp; parlay pricing</h1>
 <p class="lede">The number that decides whether a parlay is priced correctly is the correlation between its legs.
@@ -815,13 +996,16 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
     # ------------------------------------------------------------------ injuries
     inj_rows, counts = R.t_injuries(teams)
     body = f"""<h1>Injuries &amp; rotation</h1>
-<p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/13/26 04:15 PM ET report, plus the ten
-team-rows the league had not yet received. Every row links to the PDF it came from.</p>
+<p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/14/26 04:30 AM ET report, plus the
+{len(O.NOT_SUBMITTED)} team-rows the league had not yet received at capture time. Every row links to the PDF it came from.</p>
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note warn"><b>Dated input.</b> The 11/14 01:00 PM ET report returned AccessDenied at retrieval time, so this page
-cannot show today's final statuses. Nothing was filled in from an unavailable file.</div>
+<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> The 11/14 05:30 AM ET report returned
+AccessDenied at retrieval time, so the freshest reachable release is 04:30 AM ET. More importantly: a team files for a
+game by 5 p.m. local <em>the day before</em>, so for the 11/15, 11/16 and 11/17 games the deadline has not yet passed and
+no official row exists to read. Those cells are blank by policy, never estimated. Nothing was filled in from an
+unavailable or non-existent file.</div>
 """
     body += "<h2>Per-team exposure</h2>"
     rows = []
@@ -860,53 +1044,6 @@ the same columns blank; this build keeps them blank and states the reason on eve
   <li><b>Last-minute scratches:</b> the highest-information signal in a day is the diff between consecutive reports. Only one
       report is stored, so no diff is possible yet (SG-10).</li>
 </ul>"""
-
-    body += f"<h2>The newest official release — {esc(O.INJURIES_LATEST_RELEASE)}</h2>"
-    body += f"""<p class="lede">{len(O.INJURIES_LATEST)} rows: {sum(1 for r in O.INJURIES_LATEST if r[4])} player-status rows
-and {sum(1 for r in O.INJURIES_LATEST if not r[4])} team rows the league had not received. This is the first release that
-carries the 2026-11-15 slots, and the first in which every row repeats its team — which is what removes the
-page-break ambiguity behind the Caleb Martin mis-attribution flagged below. Every row links to the PDF it came from.</p>"""
-    lrows = []
-    for (d, t, m, team, player, status, reason, attrib) in O.INJURIES_LATEST:
-        lrows.append({"id": f"{d}-{m}-{player or team}".replace(" ", "-"),
-                      "cells": [esc(d), esc(t or "—"), esc(m), esc(team),
-                                esc(player) if player else "— (team row: nothing filed yet)",
-                                badge(status, "bad" if status == "Out" else
-                                      "warn" if status in ("Questionable", "Doubtful", "NOT YET SUBMITTED") else "off"),
-                                esc(reason), esc(attrib),
-                                srclink(O.INJURIES_LATEST_SOURCE)]})
-    body += table(["Date", "ET", "Matchup", "Team", "Player", "Status", "Reason", "Attribution", "Source"],
-                  lrows, f"Official injury report — {O.INJURIES_LATEST_RELEASE} release, every row",
-                  idcol="id")
-
-    body += "<h2>What changed between the two releases</h2>"
-    body += """<p class="lede">An injury report is re-issued several times a day and a player who was Questionable at
-19:30 can be Out at 05:00. The diff is published so the churn is visible instead of hidden behind whichever release
-happened to be latest.</p>"""
-    old_map = {(d, m, p_): (team, st) for (d, t, m, team, p_, st, rs, at) in O.INJURIES if p_}
-    drows = []
-    for (d, t, m, team, p_, st, rs, at) in O.INJURIES_LATEST:
-        if not p_:
-            continue
-        key = (d, m, p_)
-        prev = old_map.get(key)
-        if prev is None:
-            verdict, kind = "new since the 11/13 04:15 PM release", "info"
-        elif prev[0] != team:
-            verdict, kind = (f"TEAM ATTRIBUTION CORRECTED — the 11/13 transcript put this row under "
-                             f"{prev[0]}; this release prints {team}"), "bad"
-        elif prev[1] != st:
-            verdict, kind = f"status changed: {prev[1]} → {st}", "warn"
-        else:
-            verdict, kind = "unchanged", "off"
-        drows.append({"id": f"{d}-{m}-{p_}".replace(" ", "-"),
-                      "cells": [esc(d), esc(m), esc(p_), esc(team), esc(st),
-                                badge(verdict.split(" — ")[0], kind), esc(verdict),
-                                srclink(O.INJURIES_LATEST_SOURCE)]})
-    body += table(["Date", "Matchup", "Player", "Team", "Status", "Verdict", "What changed", "Source"],
-                  drows, "Release-to-release delta — the 11/13 04:15 PM release against the 11/14 05:00 a.m ET release",
-                  idcol="id")
-
     built["injuries.html"] = page("injuries.html", "Injuries &amp; rotation", body, "injuries.html")
 
     # ------------------------------------------------------------------ game flow
@@ -1052,7 +1189,7 @@ stale retrieval date on the published snapshot.</p>"""
     built["verification.html"] = page("verification.html", "Verification log", body, "verification.html")
 
     # ------------------------------------------------------------------ repo review
-    body = f"""<h1>Repo review</h1>
+    body = """<h1>Repo review</h1>
 <p class="lede">A line-by-line look at what the repository already contains before this session added anything, verified by
 running its own checks rather than trusting its documentation.</p>
 """
@@ -1061,7 +1198,7 @@ running its own checks rather than trusting its documentation.</p>
         rows.append({"cells": [esc(name), esc(val), esc(method), srclink(src)]})
     body += table(["Property", "Observed", "How checked", "Source"], rows, "Repository facts, this session")
 
-    body += f"""<h2>Findings</h2>
+    body += """<h2>Findings</h2>
 <div class="note"><b>What is genuinely good.</b> The existing pipeline is unusually disciplined: 55 unit tests pass, a
 provenance lint proves all 915 published rows carry a source, the site is byte-for-byte reproducible from committed data,
 22 predictions are hash-sealed, and 3,233 internal links resolve. That is a better foundation than most projects start with.</div>
@@ -1069,9 +1206,10 @@ provenance lint proves all 915 published rows carry a source, the site is byte-f
 <code>docs/</code>, <code>dashboard/</code>, <code>verified/</code>, <code>originated/</code>). A reader has no way to know
 which one is current. The root page says "as-of 2026-11-13" while its own ledger is sealed at 22:51 that day, and the site
 still shows a snapshot several hours old on the next day.</div>
-<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price, no per-game results, no player game
-logs. Those three absences are why the prior build could not produce a single settled bet, and they are why this build
-withholds all {n_window} window picks rather than publishing confidence it cannot support.</div>
+<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price and no player game logs.
+Per-game results are no longer missing — 183 official finals are committed and every one of the 30 standings records
+rebuilds from them exactly — so backtests, out-of-sample splits and settlement all run today. The two remaining
+absences are why every stake on this site is 0.00 units rather than a number that looks like a bet.</div>
 <h2>What this session changed, and what it deliberately did not</h2>
 <p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
 plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier
@@ -1086,8 +1224,8 @@ with both values shown.</p>
     built["repo-review.html"] = page("repo-review.html", "Repo review", body, "repo-review.html")
 
     # ------------------------------------------------------------------ questions
-    body = f"""<h1>Open questions</h1>
-<p class="lede">{len(C.QUESTIONS)} questions that block a decision, each with what is known, what is not, and the exact route to an
+    body = """<h1>Open questions</h1>
+<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 """
     rows = []
@@ -1306,24 +1444,6 @@ under <code>archive/</code> with dated notes, deleting nothing.</div>
     body += table(["Official page", "Outcome", "What it proved", "URL"], rows,
                   f"Read at {chk.get('fetched_utc','')}; nba.com is unreachable by direct HTTPS from the build sandbox, "
                   "so these were fetched through the platform page-reader. The method is stated because it is part of the evidence.")
-
-
-    body += f"""<h2>2b. The nine official finals, now committed</h2>
-<p class="lede">The final scores of the nine 2026-11-13 games were read from the official schedule page and committed as
-<code>data/raw/finals_2026-11-13.json</code>. They are the first official results inside this window, and they explain
-every stale record in the table above: nine games, nine winners, nine losers, eighteen clubs moved.</p>"""
-    frows = []
-    for gid, f in sorted(O.FINALS.items()):
-        g = next((x for x in O.SLATE if x[4] == gid), None)
-        frows.append({"id": gid, "cells": [
-            esc(g[0] if g else "—"), esc(f"{g[2]} @ {g[3]}" if g else gid),
-            f"{f['away_pts']}-{f['home_pts']}" + (" (OT)" if f.get("overtime") else ""),
-            f"{f['home_pts'] - f['away_pts']:+d}", f"{f['away_pts'] + f['home_pts']}",
-            esc(f.get("source") or O.FINALS_SOURCE),
-            srclink(f.get("source") or O.FINALS_SOURCE),
-        ]})
-    body += table(["Date", "Matchup", "Official final", "Margin", "Total", "Official source", "Link"],
-                  frows, "The nine 2026-11-13 finals, as published by the league", idcol="id")
 
     body += f"""<h2>2. The published team table has aged</h2>
 <p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on {O.AS_OF}
@@ -1559,32 +1679,10 @@ That means no team's record in this window is distinguishable from its underlyin
   <li>More games narrow σ and h, which are currently identified loosely against a single season.</li>
 </ul>
 <h2>8. Reproduce it</h2>
-<pre>python3 -m nba2.v2             # rebuilds data/v2/*.json and site/ (17 pages)
-python3 -m nba2.v2.check       # every row sourced, every blank explained
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests</pre>"""
-
-    body += "<h2>9. The league's current records (official, read 2026-11-14)</h2>"
-    body += f"""<p class="lede">This is NBA.com's own standings table, read on {O.STANDINGS_AS_OF} and committed as
-<code>data/raw/official_standings_2026-11-14.json</code>. It is the reference the model is checked against. It differs
-from the model's own 2026-11-13 inputs for {30 - wl_now} of 30 clubs, because the nine 2026-11-13 games were played
-in between — an aged snapshot, not a transcription error. The per-club delta is the last column.</p>"""
-    srows = []
-    for r in O.standings_rows():
-        tri = r["tricode"]
-        model_wl = f"{O.TEAMS[tri][0]}-{O.TEAMS[tri][1]}" if tri in O.TEAMS else "—"
-        same = model_wl == f"{r['w']}-{r['l']}"
-        srows.append({"cells": [
-            esc(r["name"]), esc(tri), f"{r['w']}-{r['l']}",
-            f"{r['pct']:.3f}" if r["pct"] is not None else "—",
-            esc(r["home"]), esc(r["road"]), esc(r["conf"]), esc(r["div"]),
-            esc(model_wl),
-            badge("same" if same else "aged", "off" if same else "warn"),
-            srclink(O.STANDINGS_SOURCE),
-        ]})
-    body += table(["Team", "Tricode", "W-L (official, 11/14)", "Win %", "Home", "Road", "Conf", "Div",
-                   "W-L in the model (11/13)", "State", "Source"],
-                  srows, "Official standings — NBA.com, 2026-11-14", num_cols=(3,))
-
+<pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
+python3 -m nba2.v2.check          # every row sourced, every blank explained
+python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests</pre>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.

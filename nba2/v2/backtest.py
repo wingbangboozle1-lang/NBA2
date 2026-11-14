@@ -302,7 +302,7 @@ def run() -> dict:
             "n_dates": len(per_date), "generated": "2026-11-14",
             "shrink_pseudo_games": K_SHRINK, "home_court_pts": 2.0,
             "sigma_pts": 12.75,
-            "source": "data/raw/history/*.json — 155 official finals, one nba.com/game URL per row",
+            "source": f"data/raw/history/*.json — {len(games)} official finals, one nba.com/game URL per row",
             "leakage_rule": "ratings for a date use only games strictly before that date",
         },
         "headline": {
@@ -348,7 +348,7 @@ def run() -> dict:
             "verdict": ("no detectable relationship at this sample size" if abs(t_stat) <= 1.972
                         else "relationship detected"),
             "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; "
-                          "this sample has 155",
+                          f"this sample has {n}",
         },
         "compression": {
             "predicted_margin_sd": round(pred_sd, 2),

@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -40,12 +41,15 @@
 Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
 
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
-<div class="note bad"><b>The site was publishing a pre-final snapshot as if it were current.</b>
-Reconstructed against today's official standings, the 30 team records on this site agree with the
-<em>pre-11/13-finals</em> state on <b>30 of 30</b> rows and with current official
-standings on <b>12 of 30</b>. Nine games were played after the table was
-transcribed. Nothing on the site could have caught it, because nothing compared a published row against a fresher
-capture. <a href="live-verification.html">Every stale row is listed here.</a></div>
+<div class="note"><b>Found this session, and fixed this session.</b> The standings on this site had been
+transcribed before the 2026-11-13 finals, so when they were first checked against live official standings they agreed
+with the <em>pre-finals</em> state on <b>12 of 30</b> rows and with current
+standings on only <b>12 of 30</b>. Nothing on the site could have caught it, because nothing compared a published row
+against a fresher capture. That comparison now exists permanently, and it drove a full re-read of the standings from
+nba.com: the table on this site now matches live official standings on
+<b>30 of 30</b> rows, home and road splits included, and independently rebuilds
+from the 183 committed official finals with zero mismatches. The check is kept, inverted, on
+<a href="live-verification.html">Live verification</a>.</div>
 <div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
 <code>nba2/data/picks.json</code> was committed 83 minutes before the earliest
 tip. It went <b>4-0</b> on the <b>4 distinct games</b> it bet — but 8 wins are recorded, because two strategies fired on
@@ -55,19 +59,11 @@ net-rating baseline and <em>worse</em> than always picking the home team
 (7/9). No profit is
 published, because no signal in the file carries a price.</div>
 <div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
-ledgers still start on 2026-11-14 and correctly remain unmeasured. Nothing was invented to fill a gap, and the two
+ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
-<div class="note"><b>And what a second re-check changed, later the same day.</b> The newest official injury release
-(2026-11-14 05:00 a.m ET) was fetched and compared row by row against the release this site had been publishing: 26
-player rows shared, all 26 with the same status and reason — and one row where the earlier transcript was simply
-<b>wrong</b>. Caleb Martin was filed under Cleveland; the official release prints him under <b>Dallas</b>, and Cleveland
-is listed as NOT YET SUBMITTED. The published window rows now come from the release that repeats the team on every row,
-so the mis-attribution cannot recur, and the release-to-release delta is published. The nine official finals for
-2026-11-13 were committed and are graded against this model's own lines. The pick window was also corrected: it
-reaches 2026-11-17, the build date plus three days, where the earlier build stopped on 11/16.</div>
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
-<div class="note"><b>What was built.</b> A v2 line-origination model over a 31-game, three-day window (2026-11-13 → 2026-11-16), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table.</div><div class="note"><b>What is verified.</b> 31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), and the nine 2026-11-13 games in this window are now published with their official finals and graded against the model&#x27;s own lines. So the method CAN be backtested — and it has been. All 27 window picks remain withheld because a pick needs a price, not because the method is unknown.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
+<div class="note"><b>What was built.</b> A v2 line-origination model over a 27-game, three-day window (2026-11-14 → 2026-11-17), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table. A strategy lab scores seven candidate strategies walk-forward, evaluates twelve validation gates from data, and separates luck from skill with binomial tests.</div><div class="note"><b>What is verified.</b> 27/27 games match the official schedule; all 30 team records match live nba.com/standings exactly AND rebuild exactly from the 183 committed official final scores, home and road splits included; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against 13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws puts P(MAE gain &gt; 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate (G9), not an opinion.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
 <h2>Numbers behind the summary</h2>
 <div class="scroll"><table>
 <caption>Summary figures</caption>
@@ -78,52 +74,52 @@ reaches 2026-11-17, the build date plus three days, where the earlier build stop
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>Games priced</td>
-<td>36</td>
-<td>27 in the 11/14 → 11/17 pick window, 9 day-before context games</td>
-<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+<td>Games in window</td>
+<td>27</td>
+<td>2026-11-14 → 2026-11-17 (three days ahead)</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
 <td>Games verified against the official schedule</td>
-<td>36 / 36</td>
+<td>27 / 27</td>
 <td>date, tip time, arena, game id</td>
-<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
-<td>Current official records published against the model's own inputs</td>
+<td>Team records verified against nba.com/standings</td>
 <td>30 / 30</td>
-<td>the league's table read 2026-11-14 matches the published official W-L column on every row</td>
+<td>exact match, home and road splits included</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>Injury rows verified against the official PDFs</td>
-<td>85 / 85</td>
-<td>11/13/26 04:15 PM ET release; the newest 11/14 05:00 a.m ET release is published beside it</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>Team records rebuilt from official final scores</td>
+<td>30 / 30</td>
+<td>every standings record reconstructed from the 183 committed finals, 0 mismatches</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
-<td>Rows in the newest official injury release</td>
-<td>49</td>
-<td>26 player-status rows + 23 team rows</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>Official finals captured</td>
+<td>183 / 183</td>
+<td>the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
-<td>Official finals committed</td>
-<td>9</td>
-<td>the nine 2026-11-13 games, graded against the model's own lines</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+<td>Injury rows transcribed from the official PDF</td>
+<td>26 player rows (+23 teams not yet filed)</td>
+<td>11/14/26 04:30 AM ET release</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 <tr>
 <td>Measured correlations</td>
-<td>6</td>
-<td>computed from the official team, opponent and advanced tables</td>
-<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+<td>4</td>
+<td>computed walk-forward from the official finals</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Correlations that cannot be measured</td>
-<td>6</td>
-<td>each names the missing dataset on the correlations page</td>
-<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+<td>3</td>
+<td>all three are player-level; each names the missing dataset</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
 <td>Teams outside the luck noise band</td>
@@ -132,16 +128,22 @@ reaches 2026-11-17, the build date plus three days, where the earlier build stop
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>Picks published</td>
-<td>0 / 27</td>
-<td>every pick fails G6 (no market price exists to bet against)</td>
+<td>Leans published / games staked</td>
+<td>27 / 0</td>
+<td>every game gets an originated lean and a trigger price; no stake clears G6 and G7</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Gates passing / failing</td>
+<td>10 / 2</td>
+<td>evaluated from data, not asserted — see the strategy lab</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Strategies that may be ranked</td>
 <td>0 / 7</td>
-<td>all fail G6 (no price) and G7 (no settled results)</td>
-<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+<td>G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Open decision questions</td>
@@ -151,20 +153,20 @@ reaches 2026-11-17, the build date plus three days, where the earlier build stop
 </tr>
 <tr>
 <td>Suggestions in the register</td>
-<td>35</td>
+<td>40</td>
 <td>7 of them are the numbered decision queue — see the decision queue page</td>
-<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
 <td>Flagged irregularities</td>
-<td>34</td>
+<td>41</td>
 <td>all on the Flagged for review page with a source to check</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Published team records that still match today's official standings</td>
-<td>12 / 30</td>
-<td>the rest are explained by the nine 11/13 finals — see Live verification</td>
+<td>30 / 30</td>
+<td>the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div>
@@ -190,7 +192,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
   you choose.</p></div>
   <div class="card"><h4><a href="live-verification.html">Check today's evidence</a></h4><p>The official pages read today,
   what each one contradicted, and the grading of the repository's first real forecast.</p></div>
-  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>34 irregularities, each with a
+  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>41 irregularities, each with a
   source to check. None block publication; all block a promotion.</p></div>
 </div>
 

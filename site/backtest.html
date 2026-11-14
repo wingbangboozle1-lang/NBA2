@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html" class="on">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -38,11 +39,11 @@
 <h1>Backtest &amp; measured skill</h1>
 <p class="lede">The one question every other page depends on: if this rating method had been run before each game, would it
 have been right? This is a walk-forward test on official finals only, with no leakage and no future information.</p>
-<div class="note"><b>How the test works.</b> 139 games
-(2026-10-23 → 2026-11-12) are scored one at a time. For each game the ratings are rebuilt from
+<div class="note"><b>How the test works.</b> 167 games
+(2026-10-23 → 2026-11-13) are scored one at a time. For each game the ratings are rebuilt from
 <em>only</em> the games strictly before that date — no same-day leakage, no future leakage — with the same shrinkage the
 published model uses. 16 games are skipped because a team had never played. Sources:
-<a href="https://www.nba.com/schedule">nba.com/schedule</a> for the slate and one
+<a href="https://www.nba.com/schedule?date=2026-11-15">nba.com/schedule</a> for the slate and one
 <code>nba.com/game/&lt;slug&gt;-&lt;id&gt;</code> URL per final score.</div><div class="scroll"><table>
 <caption>Walk-forward skill against honest baselines</caption>
 <thead><tr>
@@ -54,66 +55,66 @@ published model uses. 16 games are skipped because a team had never played. Sour
 </tr></thead><tbody>
 <tr>
 <td>Straight-up accuracy</td>
-<td class="n">66.91%</td>
-<td>93 of 139</td>
-<td>95% CI 58.7–74.2%</td>
+<td class="n">67.66%</td>
+<td>113 of 167</td>
+<td>95% CI 60.2–74.3%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Margin MAE (points)</td>
-<td class="n">11.91</td>
-<td>zero-margin baseline 13.27</td>
-<td>skill +10.2%</td>
+<td class="n">11.96</td>
+<td>zero-margin baseline 13.36</td>
+<td>skill +10.5%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Margin RMSE (points)</td>
-<td class="n">15.15</td>
-<td>baseline 16.47</td>
+<td class="n">15.38</td>
+<td>baseline 16.65</td>
 <td>root mean squared error</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Brier score (probability)</td>
-<td class="n">0.2184</td>
+<td class="n">0.2170</td>
 <td>0.5000 coin-flip baseline is 0.2500</td>
-<td>skill +12.6%</td>
+<td>skill +13.2%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Log loss</td>
-<td class="n">0.6275</td>
+<td class="n">0.6234</td>
 <td>0.6931 coin-flip baseline</td>
 <td>lower is better</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>AUROC (winner ranking)</td>
-<td class="n">0.7177</td>
+<td class="n">0.7140</td>
 <td>0.5 = no ranking information</td>
 <td>how often a winner is ranked above a loser</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Mean bias</td>
-<td class="n">+0.26 pts</td>
+<td class="n">+0.55 pts</td>
 <td>predicted minus actual margin</td>
 <td>near zero means no systematic tilt</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Paired bootstrap on the MAE gain</td>
-<td class="n">+1.35 pts</td>
-<td>P(gain &gt; 0) = 0.999 over 4,000 draws (seed 20261114)</td>
+<td class="n">+1.40 pts</td>
+<td>P(gain &gt; 0) = 1.000 over 4,000 draws (seed 20261114)</td>
 <td>significant at 5%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>The uncomfortable part: the model is compressed</h2>
 <div class="note bad"><b>Do not read a predicted margin as an expected margin.</b> The model's predicted margins have a
-standard deviation of <b>4.98 pts</b> against an actual <b>16.43 pts</b>
-— a ratio of <b>0.30</b>. Its correlation with the real margin is only <b>+0.390</b>,
+standard deviation of <b>5.44 pts</b> against an actual <b>16.67 pts</b>
+— a ratio of <b>0.33</b>. Its correlation with the real margin is only <b>+0.386</b>,
 and a bigger predicted margin says almost nothing about how big the real win will be
-(Spearman +0.102). The ratings rank teams usefully; they do not forecast blowouts.
+(Spearman +0.090). The ratings rank teams usefully; they do not forecast blowouts.
 Anything on this site that turned a predicted margin into a stake size would be misusing the model.</div><h2>Calibration: are the probabilities right?</h2>
 <p class="lede">A model can rank well and still be badly calibrated. These bins compare predicted win probability with the
 observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
@@ -131,59 +132,59 @@ observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
 </tr></thead><tbody>
 <tr>
 <td>0%-45%</td>
-<td class="n">38</td>
-<td class="n">38.2%</td>
-<td class="n">31.6%</td>
-<td>n = 12 wins</td>
-<td>19.1–47.5%</td>
-<td class="n">-6.6 pp</td>
+<td class="n">53</td>
+<td class="n">36.4%</td>
+<td class="n">30.2%</td>
+<td>n = 16 wins</td>
+<td>19.5–43.5%</td>
+<td class="n">-6.2 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>45%-50%</td>
-<td class="n">15</td>
-<td class="n">47.3%</td>
-<td class="n">26.7%</td>
+<td class="n">14</td>
+<td class="n">47.5%</td>
+<td class="n">28.6%</td>
 <td>n = 4 wins</td>
-<td>10.9–51.9%</td>
-<td class="n">-20.6 pp</td>
+<td>11.7–54.6%</td>
+<td class="n">-18.9 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>50%-55%</td>
-<td class="n">13</td>
-<td class="n">52.5%</td>
-<td class="n">53.8%</td>
-<td>n = 7 wins</td>
-<td>29.1–76.8%</td>
-<td class="n">+1.3 pp</td>
+<td class="n">15</td>
+<td class="n">52.3%</td>
+<td class="n">73.3%</td>
+<td>n = 11 wins</td>
+<td>48.0–89.1%</td>
+<td class="n">+21.0 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>55%-65%</td>
-<td class="n">32</td>
-<td class="n">59.7%</td>
-<td class="n">50.0%</td>
-<td>n = 16 wins</td>
-<td>33.6–66.4%</td>
-<td class="n">-9.7 pp</td>
+<td class="n">36</td>
+<td class="n">59.4%</td>
+<td class="n">47.2%</td>
+<td>n = 17 wins</td>
+<td>32.0–63.0%</td>
+<td class="n">-12.2 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>65%-100%</td>
-<td class="n">41</td>
-<td class="n">73.1%</td>
-<td class="n">80.5%</td>
-<td>n = 33 wins</td>
-<td>66.0–89.8%</td>
-<td class="n">+7.4 pp</td>
+<td class="n">49</td>
+<td class="n">72.9%</td>
+<td class="n">77.5%</td>
+<td>n = 38 wins</td>
+<td>64.1–87.0%</td>
+<td class="n">+4.7 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
-</tbody></table></div><div class="note warn"><b>Calibration slope 0.29.</b> A perfectly calibrated
+</tbody></table></div><div class="note warn"><b>Calibration slope 0.27.</b> A perfectly calibrated
 model has a slope of 1.00; below 1 means it is <em>over-confident</em> in the sense that its probabilities spread wider than
 reality, above 1 means under-confident. The slope here is pulled down by the compression above: the model's margins are too
 small-scaled, so its probabilities bunch near 50% and must be rescaled before they mean anything.
-<b>117</b> more games at this accuracy would be needed to prove an edge over a 54.2% coin-flip.</div><h2>Does the shrinkage setting change the answer?</h2>
+<b>104</b> more games at this accuracy would be needed to prove an edge over a 54.2% coin-flip.</div><h2>Does the shrinkage setting change the answer?</h2>
 <p class="lede">Reported for transparency. The headline numbers above use the shipped configuration and were
 <b>not</b> chosen by reading these rows — that would be fitting to the test set.</p>
 <div class="scroll"><table>
@@ -199,56 +200,56 @@ small-scaled, so its probabilities bunch near 50% and must be rescaled before th
 </tr></thead><tbody>
 <tr>
 <td class="n">0</td>
-<td class="n">139</td>
-<td class="n">63.31%</td>
-<td class="n">14.91</td>
-<td class="n">15.84</td>
+<td class="n">167</td>
+<td class="n">62.28%</td>
+<td class="n">14.71</td>
+<td class="n">15.33</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">2</td>
-<td class="n">139</td>
-<td class="n">65.47%</td>
-<td class="n">12.20</td>
-<td class="n">9.33</td>
+<td class="n">167</td>
+<td class="n">64.07%</td>
+<td class="n">12.30</td>
+<td class="n">9.58</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">4</td>
-<td class="n">139</td>
-<td class="n">65.47%</td>
-<td class="n">11.79</td>
-<td class="n">7.13</td>
+<td class="n">167</td>
+<td class="n">65.87%</td>
+<td class="n">11.89</td>
+<td class="n">7.54</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">8</td>
-<td class="n">139</td>
-<td class="n">66.91%</td>
-<td class="n">11.91</td>
-<td class="n">4.98</td>
+<td class="n">167</td>
+<td class="n">67.66%</td>
+<td class="n">11.96</td>
+<td class="n">5.44</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">16</td>
-<td class="n">139</td>
-<td class="n">63.31%</td>
-<td class="n">12.24</td>
-<td class="n">3.15</td>
+<td class="n">167</td>
+<td class="n">64.07%</td>
+<td class="n">12.27</td>
+<td class="n">3.56</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>Does a bigger predicted margin mean a bigger real win?</h2>
 <p class="lede">Only weakly. Rank correlation between |predicted margin| and |actual margin| is
-<b>+0.102</b> — essentially no relationship. The model's confidence is a ranking device,
-not a magnitude forecast.</p><div class="note"><b>Bottom line.</b> On 139 official finals this method is
-66.9% accurate straight up (CI 58.7–74.2%),
-beats a zero-margin baseline by 10.2% on MAE, and its probabilities score a Brier of
-0.2184 against 0.2500 for a coin flip. That is real signal. It is <b>not</b> profit: there is no price to beat in
+<b>+0.090</b> — essentially no relationship. The model's confidence is a ranking device,
+not a magnitude forecast.</p><div class="note"><b>Bottom line.</b> On 167 official finals this method is
+67.7% accurate straight up (CI 60.2–74.3%),
+beats a zero-margin baseline by 10.5% on MAE, and its probabilities score a Brier of
+0.2170 against 0.2500 for a coin flip. That is real signal. It is <b>not</b> profit: there is no price to beat in
 this repository, so no ROI, no CLV, and no rank on the leaderboard can be produced from it. The leaderboard stays empty
 until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored game</h2>
 <p class="lede">The full row-by-row output, so any single number above can be checked against its game.</p>
@@ -1443,6 +1444,105 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td><a href="https://www.nba.com/game/mia-vs-gsw-0022600188" rel="noopener" target="_blank">nba.com/game/mia-vs-gsw-0022600188</a></td>
 </tr>
 <tr>
+<td>2026-11-06</td>
+<td>WAS @ ATL</td>
+<td>—</td>
+<td class="n">+3.53</td>
+<td class="n">+7</td>
+<td class="n">-3.47</td>
+<td class="n">60.9%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/was-vs-atl-0022600025" rel="noopener" target="_blank">nba.com/game/was-vs-atl-0022600025</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>BOS @ CHA</td>
+<td>—</td>
+<td class="n">-6.88</td>
+<td class="n">-39</td>
+<td class="n">+32.12</td>
+<td class="n">29.5%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/bos-vs-cha-0022600026" rel="noopener" target="_blank">nba.com/game/bos-vs-cha-0022600026</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>PHI @ CLE</td>
+<td>—</td>
+<td class="n">+0.00</td>
+<td class="n">+24</td>
+<td class="n">-24.00</td>
+<td class="n">50.0%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/phi-vs-cle-0022600027" rel="noopener" target="_blank">nba.com/game/phi-vs-cle-0022600027</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>UTA @ DAL</td>
+<td>—</td>
+<td class="n">+7.56</td>
+<td class="n">+12</td>
+<td class="n">-4.44</td>
+<td class="n">72.4%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-dal-0022600028" rel="noopener" target="_blank">nba.com/game/uta-vs-dal-0022600028</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>OKC @ MEM</td>
+<td>—</td>
+<td class="n">+6.75</td>
+<td class="n">-31</td>
+<td class="n">+37.75</td>
+<td class="n">70.2%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/okc-vs-mem-0022600029" rel="noopener" target="_blank">nba.com/game/okc-vs-mem-0022600029</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>TOR @ MIL</td>
+<td>—</td>
+<td class="n">-6.31</td>
+<td class="n">-14</td>
+<td class="n">+7.69</td>
+<td class="n">31.0%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/tor-vs-mil-0022600030" rel="noopener" target="_blank">nba.com/game/tor-vs-mil-0022600030</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>MIN @ NOP</td>
+<td>—</td>
+<td class="n">-2.75</td>
+<td class="n">-6</td>
+<td class="n">+3.25</td>
+<td class="n">41.4%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/min-vs-nop-0022600031" rel="noopener" target="_blank">nba.com/game/min-vs-nop-0022600031</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>POR @ LAL</td>
+<td>—</td>
+<td class="n">+0.98</td>
+<td class="n">+6</td>
+<td class="n">-5.02</td>
+<td class="n">53.0%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/por-vs-lal-0022600032" rel="noopener" target="_blank">nba.com/game/por-vs-lal-0022600032</a></td>
+</tr>
+<tr>
+<td>2026-11-06</td>
+<td>SAS @ SAC</td>
+<td>—</td>
+<td class="n">-9.12</td>
+<td class="n">-15</td>
+<td class="n">+5.88</td>
+<td class="n">23.7%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/sas-vs-sac-0022600033" rel="noopener" target="_blank">nba.com/game/sas-vs-sac-0022600033</a></td>
+</tr>
+<tr>
 <td>2026-11-07</td>
 <td>DEN @ IND</td>
 <td><span class="badge b-off">neutral site</span></td>
@@ -1457,10 +1557,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-07</td>
 <td>BKN @ ATL</td>
 <td>—</td>
-<td class="n">+6.60</td>
+<td class="n">+6.90</td>
 <td class="n">+3</td>
-<td class="n">+3.60</td>
-<td class="n">69.8%</td>
+<td class="n">+3.90</td>
+<td class="n">70.6%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/bkn-vs-atl-0022600190" rel="noopener" target="_blank">nba.com/game/bkn-vs-atl-0022600190</a></td>
 </tr>
@@ -1468,10 +1568,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-07</td>
 <td>NYK @ CLE</td>
 <td>—</td>
-<td class="n">+0.62</td>
+<td class="n">+1.97</td>
 <td class="n">-12</td>
-<td class="n">+12.62</td>
-<td class="n">51.9%</td>
+<td class="n">+13.97</td>
+<td class="n">56.1%</td>
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/nyk-vs-cle-0022600191" rel="noopener" target="_blank">nba.com/game/nyk-vs-cle-0022600191</a></td>
 </tr>
@@ -1479,10 +1579,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-07</td>
 <td>WAS @ OKC</td>
 <td>—</td>
-<td class="n">+2.69</td>
+<td class="n">+4.88</td>
 <td class="n">+39</td>
-<td class="n">-36.31</td>
-<td class="n">58.4%</td>
+<td class="n">-34.12</td>
+<td class="n">64.9%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/was-vs-okc-0022600192" rel="noopener" target="_blank">nba.com/game/was-vs-okc-0022600192</a></td>
 </tr>
@@ -1512,10 +1612,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-07</td>
 <td>SAS @ POR</td>
 <td>—</td>
-<td class="n">+3.08</td>
+<td class="n">+1.74</td>
 <td class="n">-22</td>
-<td class="n">+25.08</td>
-<td class="n">59.5%</td>
+<td class="n">+23.74</td>
+<td class="n">55.4%</td>
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/sas-vs-por-0022600195" rel="noopener" target="_blank">nba.com/game/sas-vs-por-0022600195</a></td>
 </tr>
@@ -1523,10 +1623,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>PHI @ CHI</td>
 <td>—</td>
-<td class="n">-10.06</td>
+<td class="n">-8.56</td>
 <td class="n">-6</td>
-<td class="n">-4.06</td>
-<td class="n">21.5%</td>
+<td class="n">-2.56</td>
+<td class="n">25.1%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/phi-vs-chi-0022600196" rel="noopener" target="_blank">nba.com/game/phi-vs-chi-0022600196</a></td>
 </tr>
@@ -1534,10 +1634,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>LAL @ DET</td>
 <td>—</td>
-<td class="n">+2.51</td>
+<td class="n">+2.41</td>
 <td class="n">-5</td>
-<td class="n">+7.51</td>
-<td class="n">57.8%</td>
+<td class="n">+7.41</td>
+<td class="n">57.5%</td>
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/lal-vs-det-0022600197" rel="noopener" target="_blank">nba.com/game/lal-vs-det-0022600197</a></td>
 </tr>
@@ -1545,10 +1645,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>UTA @ MIN</td>
 <td>—</td>
-<td class="n">+13.57</td>
+<td class="n">+13.94</td>
 <td class="n">+15</td>
-<td class="n">-1.43</td>
-<td class="n">85.6%</td>
+<td class="n">-1.06</td>
+<td class="n">86.3%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/uta-vs-min-0022600198" rel="noopener" target="_blank">nba.com/game/uta-vs-min-0022600198</a></td>
 </tr>
@@ -1556,10 +1656,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>BKN @ DAL</td>
 <td>—</td>
-<td class="n">+5.06</td>
+<td class="n">+5.76</td>
 <td class="n">+37</td>
-<td class="n">-31.94</td>
-<td class="n">65.4%</td>
+<td class="n">-31.24</td>
+<td class="n">67.4%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/bkn-vs-dal-0022600199" rel="noopener" target="_blank">nba.com/game/bkn-vs-dal-0022600199</a></td>
 </tr>
@@ -1567,10 +1667,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>BOS @ MIL</td>
 <td>—</td>
-<td class="n">-7.12</td>
+<td class="n">-9.71</td>
 <td class="n">-20</td>
-<td class="n">+12.88</td>
-<td class="n">28.8%</td>
+<td class="n">+10.29</td>
+<td class="n">22.3%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/bos-vs-mil-0022600200" rel="noopener" target="_blank">nba.com/game/bos-vs-mil-0022600200</a></td>
 </tr>
@@ -1578,10 +1678,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>NOP @ LAC</td>
 <td>—</td>
-<td class="n">-2.44</td>
+<td class="n">-2.01</td>
 <td class="n">+16</td>
-<td class="n">-18.44</td>
-<td class="n">42.4%</td>
+<td class="n">-18.01</td>
+<td class="n">43.7%</td>
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/nop-vs-lac-0022600201" rel="noopener" target="_blank">nba.com/game/nop-vs-lac-0022600201</a></td>
 </tr>
@@ -1589,10 +1689,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-08</td>
 <td>MIA @ SAC</td>
 <td>—</td>
-<td class="n">-1.53</td>
+<td class="n">-2.00</td>
 <td class="n">-6</td>
-<td class="n">+4.47</td>
-<td class="n">45.2%</td>
+<td class="n">+4.00</td>
+<td class="n">43.8%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/mia-vs-sac-0022600202" rel="noopener" target="_blank">nba.com/game/mia-vs-sac-0022600202</a></td>
 </tr>
@@ -1600,10 +1700,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>LAL @ ATL</td>
 <td>—</td>
-<td class="n">-0.67</td>
+<td class="n">-0.47</td>
 <td class="n">-10</td>
-<td class="n">+9.33</td>
-<td class="n">47.9%</td>
+<td class="n">+9.53</td>
+<td class="n">48.5%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/lal-vs-atl-0022600203" rel="noopener" target="_blank">nba.com/game/lal-vs-atl-0022600203</a></td>
 </tr>
@@ -1611,10 +1711,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>CLE @ CHA</td>
 <td>—</td>
-<td class="n">-4.18</td>
+<td class="n">-7.33</td>
 <td class="n">+12</td>
-<td class="n">-16.18</td>
-<td class="n">37.2%</td>
+<td class="n">-19.33</td>
+<td class="n">28.3%</td>
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/cle-vs-cha-0022600204" rel="noopener" target="_blank">nba.com/game/cle-vs-cha-0022600204</a></td>
 </tr>
@@ -1622,10 +1722,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>WAS @ DET</td>
 <td>—</td>
-<td class="n">+8.47</td>
+<td class="n">+8.73</td>
 <td class="n">+11</td>
-<td class="n">-2.53</td>
-<td class="n">74.7%</td>
+<td class="n">-2.27</td>
+<td class="n">75.3%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/was-vs-det-0022600205" rel="noopener" target="_blank">nba.com/game/was-vs-det-0022600205</a></td>
 </tr>
@@ -1633,21 +1733,21 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>MEM @ TOR</td>
 <td>—</td>
-<td class="n">-1.19</td>
+<td class="n">+1.65</td>
 <td class="n">-16</td>
-<td class="n">+14.81</td>
-<td class="n">46.3%</td>
-<td><span class="badge b-ok">correct</span></td>
+<td class="n">+17.65</td>
+<td class="n">55.1%</td>
+<td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/mem-vs-tor-0022600206" rel="noopener" target="_blank">nba.com/game/mem-vs-tor-0022600206</a></td>
 </tr>
 <tr>
 <td>2026-11-09</td>
 <td>IND @ DAL</td>
 <td>—</td>
-<td class="n">+6.28</td>
+<td class="n">+6.83</td>
 <td class="n">+3</td>
-<td class="n">+3.28</td>
-<td class="n">68.9%</td>
+<td class="n">+3.83</td>
+<td class="n">70.4%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/ind-vs-dal-0022600207" rel="noopener" target="_blank">nba.com/game/ind-vs-dal-0022600207</a></td>
 </tr>
@@ -1666,10 +1766,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>SAS @ PHX</td>
 <td>—</td>
-<td class="n">-6.30</td>
+<td class="n">-6.85</td>
 <td class="n">-26</td>
-<td class="n">+19.70</td>
-<td class="n">31.1%</td>
+<td class="n">+19.15</td>
+<td class="n">29.6%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/sas-vs-phx-0022600209" rel="noopener" target="_blank">nba.com/game/sas-vs-phx-0022600209</a></td>
 </tr>
@@ -1677,10 +1777,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-09</td>
 <td>NOP @ GSW</td>
 <td>—</td>
-<td class="n">+4.60</td>
+<td class="n">+4.94</td>
 <td class="n">+51</td>
-<td class="n">-46.40</td>
-<td class="n">64.1%</td>
+<td class="n">-46.06</td>
+<td class="n">65.1%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/nop-vs-gsw-0022600210" rel="noopener" target="_blank">nba.com/game/nop-vs-gsw-0022600210</a></td>
 </tr>
@@ -1688,10 +1788,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-10</td>
 <td>MIL @ NYK</td>
 <td>—</td>
-<td class="n">+11.94</td>
+<td class="n">+12.33</td>
 <td class="n">+32</td>
-<td class="n">-20.06</td>
-<td class="n">82.5%</td>
+<td class="n">-19.67</td>
+<td class="n">83.3%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/mil-vs-nyk-0022600211" rel="noopener" target="_blank">nba.com/game/mil-vs-nyk-0022600211</a></td>
 </tr>
@@ -1699,11 +1799,11 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-10</td>
 <td>BOS @ PHI</td>
 <td>—</td>
-<td class="n">+1.22</td>
+<td class="n">-2.15</td>
 <td class="n">-22</td>
-<td class="n">+23.22</td>
-<td class="n">53.8%</td>
-<td><span class="badge b-bad">wrong</span></td>
+<td class="n">+19.85</td>
+<td class="n">43.3%</td>
+<td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/bos-vs-phi-0022600212" rel="noopener" target="_blank">nba.com/game/bos-vs-phi-0022600212</a></td>
 </tr>
 <tr>
@@ -1721,10 +1821,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-10</td>
 <td>MIA @ UTA</td>
 <td>—</td>
-<td class="n">-1.23</td>
+<td class="n">-1.56</td>
 <td class="n">-6</td>
-<td class="n">+4.77</td>
-<td class="n">46.2%</td>
+<td class="n">+4.44</td>
+<td class="n">45.1%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/mia-vs-uta-0022600214" rel="noopener" target="_blank">nba.com/game/mia-vs-uta-0022600214</a></td>
 </tr>
@@ -1732,10 +1832,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-10</td>
 <td>ORL @ SAC</td>
 <td>—</td>
-<td class="n">-0.06</td>
+<td class="n">-0.51</td>
 <td class="n">-7</td>
-<td class="n">+6.94</td>
-<td class="n">49.8%</td>
+<td class="n">+6.49</td>
+<td class="n">48.4%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/orl-vs-sac-0022600215" rel="noopener" target="_blank">nba.com/game/orl-vs-sac-0022600215</a></td>
 </tr>
@@ -1743,21 +1843,131 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-10</td>
 <td>OKC @ POR</td>
 <td>—</td>
-<td class="n">+2.62</td>
+<td class="n">+0.50</td>
 <td class="n">+20</td>
-<td class="n">-17.38</td>
-<td class="n">58.1%</td>
+<td class="n">-19.50</td>
+<td class="n">51.5%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/okc-vs-por-0022600216" rel="noopener" target="_blank">nba.com/game/okc-vs-por-0022600216</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>WAS @ IND</td>
+<td>—</td>
+<td class="n">+2.84</td>
+<td class="n">+13</td>
+<td class="n">-10.16</td>
+<td class="n">58.8%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/was-vs-ind-0022600217" rel="noopener" target="_blank">nba.com/game/was-vs-ind-0022600217</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>CLE @ NYK</td>
+<td>—</td>
+<td class="n">+5.72</td>
+<td class="n">-8</td>
+<td class="n">+13.72</td>
+<td class="n">67.3%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/cle-vs-nyk-0022600218" rel="noopener" target="_blank">nba.com/game/cle-vs-nyk-0022600218</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>BOS @ TOR</td>
+<td>—</td>
+<td class="n">-2.96</td>
+<td class="n">-5</td>
+<td class="n">+2.04</td>
+<td class="n">40.8%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/bos-vs-tor-0022600219" rel="noopener" target="_blank">nba.com/game/bos-vs-tor-0022600219</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>SAS @ CHI</td>
+<td>—</td>
+<td class="n">-13.61</td>
+<td class="n">-5</td>
+<td class="n">-8.61</td>
+<td class="n">14.3%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/sas-vs-chi-0022600220" rel="noopener" target="_blank">nba.com/game/sas-vs-chi-0022600220</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>DEN @ MEM</td>
+<td>—</td>
+<td class="n">+5.53</td>
+<td class="n">-5</td>
+<td class="n">+10.53</td>
+<td class="n">66.8%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/den-vs-mem-0022600221" rel="noopener" target="_blank">nba.com/game/den-vs-mem-0022600221</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>LAL @ MIL</td>
+<td>—</td>
+<td class="n">-11.23</td>
+<td class="n">-11</td>
+<td class="n">-0.23</td>
+<td class="n">18.9%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/lal-vs-mil-0022600222" rel="noopener" target="_blank">nba.com/game/lal-vs-mil-0022600222</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>BKN @ NOP</td>
+<td>—</td>
+<td class="n">+4.16</td>
+<td class="n">-34</td>
+<td class="n">+38.16</td>
+<td class="n">62.8%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/bkn-vs-nop-0022600223" rel="noopener" target="_blank">nba.com/game/bkn-vs-nop-0022600223</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>ORL @ UTA</td>
+<td>—</td>
+<td class="n">-0.25</td>
+<td class="n">-15</td>
+<td class="n">+14.75</td>
+<td class="n">49.2%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/orl-vs-uta-0022600224" rel="noopener" target="_blank">nba.com/game/orl-vs-uta-0022600224</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>GSW @ HOU</td>
+<td>—</td>
+<td class="n">+1.95</td>
+<td class="n">+7</td>
+<td class="n">-5.05</td>
+<td class="n">56.1%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-hou-0022600225" rel="noopener" target="_blank">nba.com/game/gsw-vs-hou-0022600225</a></td>
+</tr>
+<tr>
+<td>2026-11-11</td>
+<td>OKC @ POR</td>
+<td>—</td>
+<td class="n">+2.73</td>
+<td class="n">+10</td>
+<td class="n">-7.27</td>
+<td class="n">58.5%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/okc-vs-por-0022600226" rel="noopener" target="_blank">nba.com/game/okc-vs-por-0022600226</a></td>
 </tr>
 <tr>
 <td>2026-11-12</td>
 <td>TOR @ PHI</td>
 <td>—</td>
-<td class="n">+2.78</td>
+<td class="n">+1.13</td>
 <td class="n">+11</td>
-<td class="n">-8.22</td>
-<td class="n">58.6%</td>
+<td class="n">-9.87</td>
+<td class="n">53.5%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/tor-vs-phi-0022600227" rel="noopener" target="_blank">nba.com/game/tor-vs-phi-0022600227</a></td>
 </tr>
@@ -1765,10 +1975,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-12</td>
 <td>DET @ WAS</td>
 <td>—</td>
-<td class="n">-5.33</td>
+<td class="n">-6.05</td>
 <td class="n">-4</td>
-<td class="n">-1.33</td>
-<td class="n">33.8%</td>
+<td class="n">-2.05</td>
+<td class="n">31.8%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/det-vs-was-0022600228" rel="noopener" target="_blank">nba.com/game/det-vs-was-0022600228</a></td>
 </tr>
@@ -1776,10 +1986,10 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-12</td>
 <td>DAL @ MIN</td>
 <td>—</td>
-<td class="n">+6.28</td>
+<td class="n">+5.74</td>
 <td class="n">+39</td>
-<td class="n">-32.72</td>
-<td class="n">68.9%</td>
+<td class="n">-33.26</td>
+<td class="n">67.4%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/dal-vs-min-0022600229" rel="noopener" target="_blank">nba.com/game/dal-vs-min-0022600229</a></td>
 </tr>
@@ -1787,12 +1997,111 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td>2026-11-12</td>
 <td>CHA @ PHX</td>
 <td>—</td>
-<td class="n">+3.94</td>
+<td class="n">+5.74</td>
 <td class="n">+5</td>
-<td class="n">-1.06</td>
-<td class="n">62.2%</td>
+<td class="n">+0.74</td>
+<td class="n">67.4%</td>
 <td><span class="badge b-ok">correct</span></td>
 <td><a href="https://www.nba.com/game/cha-vs-phx-0022600230" rel="noopener" target="_blank">nba.com/game/cha-vs-phx-0022600230</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>—</td>
+<td class="n">-3.40</td>
+<td class="n">+2</td>
+<td class="n">-5.40</td>
+<td class="n">39.5%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/nyk-vs-ind-0022600034" rel="noopener" target="_blank">nba.com/game/nyk-vs-ind-0022600034</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>—</td>
+<td class="n">+7.54</td>
+<td class="n">+8</td>
+<td class="n">-0.46</td>
+<td class="n">72.3%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/mil-vs-orl-0022600035" rel="noopener" target="_blank">nba.com/game/mil-vs-orl-0022600035</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>—</td>
+<td class="n">-1.72</td>
+<td class="n">+12</td>
+<td class="n">-13.72</td>
+<td class="n">44.6%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/cle-vs-mia-0022600036" rel="noopener" target="_blank">nba.com/game/cle-vs-mia-0022600036</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>—</td>
+<td class="n">-7.86</td>
+<td class="n">+8</td>
+<td class="n">-15.86</td>
+<td class="n">26.9%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/atl-vs-chi-0022600037" rel="noopener" target="_blank">nba.com/game/atl-vs-chi-0022600037</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>—</td>
+<td class="n">-5.87</td>
+<td class="n">-31</td>
+<td class="n">+25.13</td>
+<td class="n">32.2%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/mem-vs-nop-0022600038" rel="noopener" target="_blank">nba.com/game/mem-vs-nop-0022600038</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>—</td>
+<td class="n">+14.25</td>
+<td class="n">+7</td>
+<td class="n">+7.25</td>
+<td class="n">86.8%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039" rel="noopener" target="_blank">nba.com/game/uta-vs-hou-0022600039</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>—</td>
+<td class="n">+4.00</td>
+<td class="n">+38</td>
+<td class="n">-34.00</td>
+<td class="n">62.3%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-sas-0022600040" rel="noopener" target="_blank">nba.com/game/gsw-vs-sas-0022600040</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>—</td>
+<td class="n">-9.58</td>
+<td class="n">-13</td>
+<td class="n">+3.42</td>
+<td class="n">22.6%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/por-vs-sac-0022600041" rel="noopener" target="_blank">nba.com/game/por-vs-sac-0022600041</a></td>
+</tr>
+<tr>
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>—</td>
+<td class="n">-3.78</td>
+<td class="n">+1</td>
+<td class="n">-4.78</td>
+<td class="n">38.4%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/okc-vs-lac-0022600042" rel="noopener" target="_blank">nba.com/game/okc-vs-lac-0022600042</a></td>
 </tr>
 </tbody></table></div>
 <footer>

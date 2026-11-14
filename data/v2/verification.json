@@ -2,24 +2,24 @@
  "as_of": "2026-11-14",
  "integrity": {
   "teams": 30,
-  "games_played_team_sum": 348,
-  "games": 174.0,
-  "wins": 174,
-  "losses": 174,
+  "games_played_team_sum": 366,
+  "games": 183.0,
+  "wins": 183,
+  "losses": 183,
   "wins_equals_losses": true,
-  "weighted_points_scored": 39473.4,
-  "weighted_points_allowed": 39471.5,
-  "weighted_points_diff": 1.9,
-  "rounding_bound": 34.8,
+  "weighted_points_scored": 41544.3,
+  "weighted_points_allowed": 41536.8,
+  "weighted_points_diff": 7.5,
+  "rounding_bound": 36.6,
   "points_identity_ok": true,
-  "home_w": 89,
-  "home_l": 84,
-  "road_w": 84,
-  "road_l": 89,
+  "home_w": 96,
+  "home_l": 86,
+  "road_w": 86,
+  "road_l": 96,
   "home_wins_equal_road_losses": true,
   "home_losses_equal_road_wins": true,
-  "home_win_rate": 0.5145,
-  "league_pts_per_team_game": 113.429
+  "home_win_rate": 0.5275,
+  "league_pts_per_team_game": 113.509
  },
  "cross_checks": {
   "checks": [
@@ -27,45 +27,45 @@
     "id": "repo-schedule",
     "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
     "repo_value": "36 games",
-    "live_value": "36 games",
-    "result": "MATCH",
-    "detail": "no differences found",
-    "src": "https://www.nba.com/schedule"
+    "live_value": "27 games",
+    "result": "MISMATCH",
+    "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039')] only-in-live=[]",
+    "src": "https://www.nba.com/schedule?date=2026-11-15"
    },
    {
     "id": "finals-reconstruction",
     "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
-    "repo_value": "155 finals, 155 wins assigned",
-    "live_value": "174 official wins",
+    "repo_value": "183 finals, 183 wins assigned",
+    "live_value": "183 official wins",
     "result": "CONSISTENT",
-    "detail": "no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "detail": "no team exceeds its official record; the 0 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
     "src": "https://www.nba.com/games"
    },
    {
     "id": "repo-injury",
     "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
     "repo_value": "85 player rows",
-    "live_value": "85 player rows",
-    "result": "MATCH",
-    "detail": "no differences found in (date, matchup, player, status)",
-    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+    "live_value": "26 player rows",
+    "result": "MISMATCH",
+    "detail": "only-in-repo=[('2026-11-13', 'ATL@CHI', 'Awaka, Tobe', 'Out'), ('2026-11-13', 'ATL@CHI', 'Dennis, RayJ', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Flemings, Kingston', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Gilbert, Keshon', 'Out'), ('2026-11-13', 'ATL@CHI', 'Gueye, Mouhamed', 'Out')] only-in-live=[('2026-11-14', 'BKN@MEM', 'Bilodeau, Tyler', 'Out'), ('2026-11-14', 'BKN@MEM', 'Brown Jr., Mikel', 'Questionable'), ('2026-11-14', 'BKN@MEM', 'Jefferson, Joshua', 'Out'), ('2026-11-14', 'BKN@MEM', 'Nelson, Grant', 'Out'), ('2026-11-14', 'BKN@MEM', 'Saraf, Ben', 'Out')]",
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
    },
    {
     "id": "repo-wl",
     "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
-    "repo_value": "12/30 identical",
+    "repo_value": "30/30 identical",
     "live_value": "30 teams",
-    "result": "AGED",
-    "detail": "18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: ['ATL', 'CHI', 'CLE', 'GSW', 'HOU', 'IND', 'LAC', 'MEM', 'MIA', 'MIL', 'NOP', 'NYK', 'OKC', 'ORL', 'POR', 'SAC', 'SAS', 'UTA']",
+    "result": "MATCH",
+    "detail": "no differences found",
     "src": "https://www.nba.com/standings"
    },
    {
-    "id": "repo-wl-current",
-    "what": "The published team's official W-L column vs nba.com/standings read 2026-11-14",
-    "repo_value": "30/30 identical",
-    "live_value": "30 teams, official table read 2026-11-14",
-    "result": "MATCH",
-    "detail": "no differences found",
+    "id": "repo-wl",
+    "what": "W-L cross-check",
+    "repo_value": "n/a",
+    "live_value": "n/a",
+    "result": "ERROR",
+    "detail": "module 'nba2.v2.official' has no attribute 'STANDINGS'",
     "src": "https://www.nba.com/standings"
    }
   ],
@@ -78,7 +78,7 @@
   },
   "team_trad": {
    "url": "https://www.nba.com/stats/teams/traditional",
-   "fields": "GP, MIN, PTS (points per game), +/- , per-team shooting splits."
+   "fields": "GP, MIN, PTS (points per game), +/-, per-team shooting splits."
   },
   "team_opp": {
    "url": "https://www.nba.com/stats/teams/opponent",
@@ -86,19 +86,27 @@
   },
   "team_adv": {
    "url": "https://www.nba.com/stats/teams/advanced",
-   "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE \u2014 all per-100-possession."
+   "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE - all per-100-possession."
   },
   "schedule": {
-   "url": "https://www.nba.com/schedule",
+   "url": "https://www.nba.com/schedule?date=2026-11-15",
    "fields": "Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group."
   },
+  "games": {
+   "url": "https://www.nba.com/games?date=2026-11-13",
+   "fields": "Official final scores, one page per date; the day-strip calendar gives the per-date game count used for the completeness check."
+  },
   "injury_pdf": {
-   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf",
    "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason."
   },
   "injury_policy": {
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "fields": "Filing deadlines: 5 p.m. local the day before; game day 11 a.m.\u20131 p.m.; 1 p.m. local for the second of a back-to-back."
+   "fields": "Filing deadlines: 5 p.m. local the day before; game day 11 a.m.-1 p.m.; 1 p.m. local for the second of a back-to-back."
+  },
+  "player_trad": {
+   "url": "https://www.nba.com/stats/players/traditional",
+   "fields": "Per-player GP, MIN, PTS, REB, AST for the rows used on this site."
   },
   "players": {
    "url": "https://www.nba.com/stats/players/traditional",
@@ -106,20 +114,25 @@
   }
  },
  "blocked": {
-  "game_logs": {
-   "what": "Per-game margins and totals",
-   "why": "No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.",
-   "url": "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+  "odds": {
+   "what": "Market prices (spread, total, moneyline, prop lines)",
+   "why": "No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
+   "url": "https://www.nba.com/games"
+  },
+  "live_ingest": {
+   "what": "An automated feed that keeps the results history current without a human capture",
+   "why": "The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night's results, so the history freezes between manual captures and the window ages.",
+   "url": "https://www.nba.com/games?date=2026-11-13"
   },
   "player_box": {
    "what": "Per-player game logs (minutes, usage, on/off)",
    "why": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.",
    "url": "https://www.nba.com/stats/players/traditional"
   },
-  "odds": {
-   "what": "Market prices (spread, total, moneyline, prop lines)",
-   "why": "No licensed odds feed is connected and NBA.com renders odds client-side only. Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
-   "url": "https://www.nba.com/games"
+  "future_injuries": {
+   "what": "Injury designations for game days beyond the next filing deadline",
+   "why": "The NBA publishes a report only once a team has filed. For a game on day +2 or +3 the filing deadline has not yet passed, so no official row exists to read.",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/"
   }
  }
 }

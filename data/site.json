@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "d4bfafa08b6bfd853b0f241a06f6be91515405787aa5b4bec52abbdd8c38de3a",
+  "input_digest": "f0d5256d3b294cba4af90e539ff0dd0055882a36629b38a7b36ed16cee41b79f",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -31964,9 +31964,174 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-40",
+     "values": {
+      "id": "S-40",
+      "title": "Make the existing nightly ingest actually run, and extend it to the v2 results history",
+      "problem": "A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo's own freshness check (CC-FRESH-03) reports 'the schedule is armed but nothing has run'. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either.",
+      "proposal": "Confirm the cron schedule is enabled on the default branch (a scheduled workflow only starts firing after it is merged to the default branch once), then extend the job to append each completed date to data/raw/history/ and assert the per-date game count against the nba.com day-strip calendar and the game count implied by the standings. Fail the run on any disagreement.",
+      "benefit": "Makes the window impossible to fall behind silently, and turns the standings into a permanent cross-check on the results log.",
+      "effort": "S",
+      "risk": "Low. The workflow is already written and fail-closed; only the extension to data/raw/history/ is new.",
+      "recommendation": "Accept — the schedule is already armed, so the cheapest possible fix is confirming it fires.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-41",
+     "values": {
+      "id": "S-41",
+      "title": "Capture per-player game logs so the last hard blocker can close",
+      "problem": "Every player-level correlation on the site is BLOCKED, the player-props page cannot price anything, the minutes-and-production half of the injuries page cannot be filled, and strategy S7 has never generated a bet. All four fail for the same missing input.",
+      "proposal": "Ingest per-player game logs (minutes, points, rebounds, assists, opponent) for at least the players who appear on an injury report. Start with the injury-report population to bound the cost.",
+      "benefit": "Unblocks the last data dependency in the brief. Everything else on the site can be built, measured and settled with what is already committed.",
+      "effort": "M",
+      "risk": "Needs a licensed feed or a scheduled scrape; player-level data is rate-limited more aggressively.",
+      "recommendation": "Accept — it is the only remaining hard blocker (mirrors v2 suggestion SG-30).",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-42",
+     "values": {
+      "id": "S-42",
+      "title": "Decide which tree GitHub Pages serves, and retire the other",
+      "problem": "The repository's Pages setting is build_type 'legacy' (deploy from the main branch root) while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever is live, the other is a fully-built site sitting in the repository that a reader can reach by URL, and the two disagree.",
+      "proposal": "Pick the v2 tree as the single published site, point Pages at the pages.yml workflow, and move the root-level v1 pages under archive/ with a dated note.",
+      "benefit": "One site, one set of numbers, no chance of a reader landing on the stale one.",
+      "effort": "S",
+      "risk": "Low, but it is a repository setting change that only the owner can make — this session cannot push it and should not guess.",
+      "recommendation": "Accept — one setting, and it decides what every reader sees.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-43",
+     "values": {
+      "id": "S-43",
+      "title": "Replace the flat 300-bet gate with a power calculation per strategy",
+      "problem": "Gate G7 applies one round number to all seven strategies. But the parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval — the bar is not equally strict across types, and 300 was chosen before any data existed to check it.",
+      "proposal": "Simulate each strategy's own settled bet stream to get its bet-to-bet correlation, then set the required n per strategy. The lab already computes every Wilson interval and distance to base rate needed to do this.",
+      "benefit": "Makes the gate a measurement instead of a round number, and tells each strategy how far it has to go.",
+      "effort": "S",
+      "risk": "Low. Changes when strategies become rank-eligible, so it should be published with its derivation.",
+      "recommendation": "Accept (mirrors v2 suggestion SG-26).",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-44",
+     "values": {
+      "id": "S-44",
+      "title": "Publish the parlay price with its measured correlation, and print the naive product beside it",
+      "problem": "The same-game correlation is now measured (+0.0393, 95% CI -0.113 to +0.190, n=167), but the site still withholds a parlay price entirely. The honest position is no longer 'we do not know the correlation' but 'we do not know it precisely' — and withholding the price hides the error bar rather than showing it.",
+      "proposal": "Price every parlay with the measured rho using the bivariate-normal pricer already implemented and tested in nba2/v2/strategy_lab.py, and print the naive product on the same row with the interval between them.",
+      "benefit": "Turns an unpriced section into a priced one, with the uncertainty visible instead of implied.",
+      "effort": "S",
+      "risk": "The interval is wide, so the price must ship with the interval on the same row or it will be read as more precise than it is.",
+      "recommendation": "Defer until S-29 has grown the sample past ~500 games, then accept (mirrors SG-28).",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

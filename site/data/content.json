@@ -53,7 +53,7 @@
    "Backtest with settlement",
    "\u2265 300 settled bets of the strategy's own signals, settled from official box scores.",
    "PROPOSED \u2014 sample-size policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "300 bets is the point at which a 55% hit rate separates from 52.4% at 5% one-sided."
   ],
   [
@@ -61,7 +61,7 @@
    "Out-of-sample holdout",
    "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
    "PROPOSED \u2014 policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "Prevents publishing a curve fit."
   ],
   [
@@ -77,7 +77,7 @@
    "Correlation honesty",
    "No parlay priced by multiplying legs unless the leg correlation is measured or bounded.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/schedule",
+   "https://www.nba.com/schedule?date=2026-11-15",
    "Same-game legs are not independent; the error is one-sided and expensive."
   ],
   [
@@ -93,7 +93,7 @@
    "No look-ahead",
    "No input timestamped after the decision time may enter that decision.",
    "PROPOSED \u2014 policy",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html",
+   "https://www.nba.com/games?date=2026-11-13",
    "The single most common way a profitable backtest is fake."
   ]
  ],
@@ -106,7 +106,7 @@
    "gates_that_can_pass_today": "G1,G2,G3,G4,G9",
    "gates_that_fail_today": "G6,G7,G8,G11,G12",
    "status": "PUBLISHABLE AS A PROJECTION ONLY",
-   "why": "The line itself is derivable from official data; the bet cannot be, because there is no price and no backtest.",
+   "why": "The line is derivable from official data and the method has been backtested walk-forward; the bet still cannot be staked, because there is no price to beat.",
    "src": "https://www.nba.com/stats/teams/advanced"
   },
   {
@@ -129,7 +129,7 @@
    "gates_that_fail_today": "G6,G7",
    "status": "BLOCKED \u2014 legs have no price",
    "why": "Cross-game independence is a stated assumption, not a measurement; and the compounded hold makes it worse than two singles at equal edge.",
-   "src": "https://www.nba.com/schedule"
+   "src": "https://www.nba.com/schedule?date=2026-11-15"
   },
   {
    "id": "S4",
@@ -140,7 +140,7 @@
    "gates_that_fail_today": "G6,G7,G10",
    "status": "BLOCKED \u2014 correlation unmeasured",
    "why": "The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a \u00b126% price error was already demonstrated in the prior build.",
-   "src": "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "src": "https://www.nba.com/games?date=2026-11-13"
   },
   {
    "id": "S5",
@@ -173,7 +173,7 @@
    "gates_that_fail_today": "G2,G7,G9",
    "status": "BLOCKED \u2014 no on/off or usage data",
    "why": "Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.",
-   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   }
  ],
  "leaderboard": [
@@ -189,7 +189,7 @@
    "300 settled bets",
    "Below that the 95% interval on a 55% hit rate includes 50%.",
    "PROPOSED",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Trial accounting",
@@ -203,7 +203,7 @@
    "A pick must be published before tip and be sealed with a hash",
    "Prevents back-filling a winning pick after the result is known.",
    "PROPOSED",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Unit accounting",
@@ -224,7 +224,7 @@
    "Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins",
    "Removes the three ways a leaderboard is usually gamed.",
    "PROPOSED",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ]
  ],
  "suggestions": [
@@ -479,6 +479,60 @@
    "Low \u2014 a move plus one banner per tree",
    "none",
    "QUEUED \u2014 owner decision"
+  ],
+  [
+   "SG-31",
+   "Data plumbing",
+   "Make the existing nightly ingest actually fire, and extend it to the v2 results history in data/raw/history/.",
+   "A cron ingest already exists (.github/workflows/refresh.yml) and has never run \u2014 its run list is empty, and the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not this history. The cost is visible: the log sat 28 games short for a day and the published standings were a full day stale with nothing able to detect either. The count is eminently checkable \u2014 the standings imply 183 games and the nba.com day-strip calendar gives per-date counts.",
+   "Low \u2014 the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has been merged to the default branch once",
+   "Confirmation that the cron is enabled on the default branch",
+   "RECOMMENDED \u2014 cheapest fix with the largest effect on trust"
+  ],
+  [
+   "SG-32",
+   "Model",
+   "Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.",
+   "300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters depends on the strategy's own correlation between bets: the parlay strategies need a different n than the side strategies. The lab already computes each strategy's Wilson interval and its distance to the base rate, so the required n can be derived rather than asserted.",
+   "Low \u2014 the intervals are already computed in nba2/v2/strategy_lab.py",
+   "none \u2014 no dependency",
+   "RECOMMENDED"
+  ],
+  [
+   "SG-33",
+   "Model",
+   "Stop publishing a single blended rating as the headline; publish the disagreement between the two estimators as the headline and the blend underneath.",
+   "The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently printed as a small diagnostics column.",
+   "Low",
+   "none \u2014 no dependency",
+   "QUEUED"
+  ],
+  [
+   "SG-34",
+   "Parlays",
+   "Price every parlay with the measured rho and print the naive product next to it, instead of withholding the price entirely.",
+   "With rho now measured (and its interval published) the honest objection is no longer 'we do not know the correlation' but 'we do not know it precisely'. Printing both numbers, with the interval between them, is more useful than printing neither \u2014 and it makes the error bar visible instead of implied.",
+   "Low \u2014 the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py",
+   "None, but it should ship with the interval visible on the same row",
+   "QUEUED"
+  ],
+  [
+   "SG-35",
+   "Product",
+   "Make the picks page show the trigger price in the reader's preferred format (decimal, American, or implied probability) rather than decimal only.",
+   "The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format most readers will have to convert. This is a display change with no model consequence.",
+   "Low",
+   "none \u2014 no dependency",
+   "QUEUED"
+  ],
+  [
+   "SG-36",
+   "Data plumbing",
+   "Capture per-player game logs (minutes, points, rebounds, assists, and the opponent) for at least the players who appear on an injury report.",
+   "This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.",
+   "Medium \u2014 needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores",
+   "A runner with normal internet egress",
+   "RECOMMENDED \u2014 the last hard blocker"
   ]
  ],
  "questions": [
@@ -489,7 +543,7 @@
    "The covariance of (margin, total) over settled games.",
    "Pull per-game final scores (SG-2) and compute Pearson/Spearman on \u2265300 games, per team and league-wide.",
    "Blocks every same-game parlay (S4) and gate G10.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-2",
@@ -507,7 +561,7 @@
    "Whether shared slate conditions (travel, referee crews, league-wide pace nights) induce any correlation.",
    "Regression of leg A's result on leg B's across \u22651,000 parlays with no shared team.",
    "Blocks S3 pricing being more than an assumption.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-4",
@@ -516,7 +570,7 @@
    "The empirical play rate conditional on each status label, and whether it varies by team or by body part.",
    "Join report history to box scores: for each status label, count appearances (SG-11).",
    "Makes the current p(play) column unusable as evidence.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   ],
   [
    "Q-5",
@@ -552,7 +606,7 @@
    "Per-family hit rate, log-loss, and ROI at various thresholds.",
    "Backtest harness on settled results with pre-registered thresholds (SG-16).",
    "Blocks the leaderboard ranking entirely.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Q-9",
@@ -579,7 +633,7 @@
    "Archival storage of the exact page (a hash of the raw bytes), not just the transcription.",
    "Store the raw fetched HTML/PDF bytes as a content-addressed artefact in the pipeline (SG-1 + SG-17).",
    "Needed before any third party trusts a published record.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-12",
@@ -588,16 +642,16 @@
    "The true per-strategy variance, which depends on correlation between bets.",
    "Simulate the strategy's own bet stream once a backtest exists; recompute the required n.",
    "Blocks ranking and rewards.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "Q-13",
    "Is the schedule data used here complete for the window?",
-   "Yes for 11/13\u201311/16: 31 games, matching the official schedule's per-day counts (9/5/9/8), and identical to the committed snapshot.",
+   "Yes for 11/14-11/17: 27 games, matching the official schedule's per-day counts (5/9/8/5), and identical to the committed snapshot.",
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "Q-14",
@@ -613,7 +667,7 @@
    "Do the scoring averages and advanced ratings this model runs on still describe the teams?",
    "Partly answered: the records can be checked every day, and the league's current table is published beside the model's inputs. The scoring averages and NetRtg were read on 2026-11-13, before the nine 2026-11-13 games, so for the 18 clubs that played they are one game stale.",
    "A current read of the three official team-stat pages (traditional, opponent, advanced), and the diff against what the model used.",
-   "Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the committed transcription, and publish the delta (suggestion SG-25).",
+   "Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the committed transcription, and publish the delta (suggestion SG-31).",
    "Blocks claiming that the published lines start from current inputs; does not block publishing them.",
    "https://www.nba.com/stats/teams/traditional"
   ],
@@ -634,6 +688,51 @@
    "Re-extract the close and blowout columns from the source table row by row and re-check the per-team bound; until then the columns stay out of the luck table.",
    "Blocks any per-team luck claim that uses the close/blowout split.",
    "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"
+  ],
+  [
+   "Q-20",
+   "Is the measured same-game correlation precise enough to price a two-leg parlay?",
+   "Measured at +0.0393 (95% CI -0.1133 to +0.1900, n = 167). It is statistically indistinguishable from zero AND the interval still spans a range wide enough to move a two-leg price by several percent.",
+   "A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.",
+   "Keep appending official finals (SG-31) and recompute; the interval will narrow as 1/sqrt(n).",
+   "Decides whether SG-34 (publish the parlay price) is safe to ship.",
+   "https://www.nba.com/games?date=2026-11-13"
+  ],
+  [
+   "Q-21",
+   "Is 300 settled bets the right bar for every strategy, or only for single bets?",
+   "300 is applied uniformly (G7). But the two parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval \u2014 the bar is not equally strict across types.",
+   "Each strategy's own bet-to-bet correlation, which the lab can now simulate from settled history.",
+   "Run a power simulation per strategy on its own settled stream and set n per type (SG-32).",
+   "Sets when each strategy becomes rank-eligible on the leaderboard.",
+   "https://www.nba.com/games?date=2026-11-13"
+  ],
+  [
+   "Q-22",
+   "How much of S1's 64.7% hit rate survives once the schedule it faced is controlled for?",
+   "64.7% over 167 bets, p = 0.0002 against a coin flip, and it holds out of sample (66.7% on the last 30% of dates). But the sample is one month of one season, and a soft early-season schedule would inflate it.",
+   "Strength of schedule per team, computed from the same committed finals.",
+   "Add an opponent-adjusted rating (already two estimators deep) and re-run the walk-forward.",
+   "Decides whether the signal is real skill or a schedule artefact \u2014 the single most important open question on the site.",
+   "https://www.nba.com/games?date=2026-11-13"
+  ],
+  [
+   "Q-23",
+   "Do the two ratings estimators disagree enough for their disagreement to be a usable signal?",
+   "They disagree by at most 0.68 pts across 30 teams. That is reassuring for stability and useless for signal: there is currently no game where the two estimators tell materially different stories.",
+   "A season with more heterogeneous teams, or an estimator built on a genuinely different input (e.g. possession-level efficiency from play-by-play).",
+   "Track the max disagreement weekly; promote it to a headline only if it ever exceeds ~2 pts for a game.",
+   "Decides whether SG-33 is worth doing.",
+   "https://www.nba.com/stats/teams/advanced"
+  ],
+  [
+   "Q-24",
+   "What fraction of the 11/15-11/17 slate will have an official injury filing before tip?",
+   "At capture (11/14 04:30 AM ET) zero teams had filed for 11/15, and no 11/16 or 11/17 rows exist in any published report, because the filing deadline is 5 p.m. local the day before. This is expected, not a retrieval failure.",
+   "A timestamped capture on the afternoon of 11/14, 11/15 and 11/16.",
+   "Re-fetch at 19:00 ET each day and diff (SG-31 covers the mechanism).",
+   "Decides how far ahead an injury-driven line can honestly be published.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
   ]
  ],
  "flags": [
@@ -647,19 +746,19 @@
   ],
   [
    "F-002",
-   "high",
+   "info",
    "Data",
-   "Per-game results now exist for 155 of 174 games (2026-10-20 \u2192 11-12), captured from nba.com by a parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain unreachable, so player-level settlement is still impossible.",
-   "Gates G7, G8, G12 and the whole leaderboard are blocked.",
-   "https://www.basketball-reference.com/teams/LAL/2027_gamelog.html"
+   "RESOLVED this session \u2014 per-game results now exist for all 183 games played (2026-10-20 \u2192 2026-11-13); the 19 previously unreachable games were 11-06, 11-11 and 11-13 and were captured from nba.com/games. Player box scores remain unreachable, so player-level settlement is still impossible.",
+   "G8 and G12 now pass. G7 still fails, but on sample size (167 settled bets against a 300 bar), not on absence of data.",
+   "https://www.nba.com/games?date=2026-11-13"
   ],
   [
    "F-003",
    "medium",
    "Data",
-   "The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today's game statuses could not be re-filed.",
-   "The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf"
+   "The 2026-11-14 05:30 AM ET official injury report returns AccessDenied, so the freshest reachable release is 04:30 AM ET. See F-038 for why days 11/15-11/17 have no rows at all.",
+   "The site uses the 11/14 04:30 AM ET report and labels every not-yet-filed team explicitly.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_30AM.pdf"
   ],
   [
    "F-004",
@@ -707,7 +806,7 @@
    "Verification",
    "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
    "Marked 'continuation' in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
   ],
   [
    "F-010",
@@ -723,7 +822,7 @@
    "Product",
    "The repository contains five earlier site trees (root, pages/, docs/, dashboard/, verified/, originated/) with different data.",
    "This build does not edit them; the new tree is self-contained under /site. A consolidation decision is logged on the Suggestions page.",
-   "https://www.nba.com/schedule"
+   "https://www.nba.com/schedule?date=2026-11-15"
   ],
   [
    "F-012",
@@ -908,6 +1007,62 @@
    "The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. The nine 2026-11-13 games are kept as day-before context and graded against the official finals.",
    "The window is read from the committed slate snapshot, so it cannot drift from the brief's three-day limit.",
    "https://www.nba.com/schedule"
+  ],
+  [
+   "F-036",
+   "info",
+   "Verification",
+   "RESOLVED this session \u2014 the committed standings were a pre-finals snapshot. They agreed with the pre-11/13-finals state on 30 of 30 rows and with live official standings on only 12 of 30. Re-read from nba.com/standings on 2026-11-14: they now match live official standings on 30 of 30 rows, home and road splits included, and all 30 records rebuild exactly from the 183 committed official finals. The staleness measure that caught it is retained and inverted.",
+   "Fixed, and the check that found it is now permanent.",
+   "https://www.nba.com/standings"
+  ],
+  [
+   "F-037",
+   "info",
+   "Data",
+   "RESOLVED this session \u2014 the official results history was incomplete (155 of 183 games). The 28 missing finals (2026-11-06, 11-11 and 11-13) were captured from nba.com/games, taking the window to 183/183. The count is confirmed two independent ways: the standings imply exactly 183 games played, and all 30 team records now rebuild with zero mismatches.",
+   "Fixed. Backtests, out-of-sample splits and settlement run on the full window.",
+   "https://www.nba.com/games?date=2026-11-13"
+  ],
+  [
+   "F-038",
+   "medium",
+   "Data",
+   "No official injury row exists for any 11/16 or 11/17 game in the capture this site uses, and in that same capture (11/14 04:30 AM ET) no team had filed for 11/15 either. Part of this is the filing rule working as designed \u2014 a team files by 5 p.m. local the day before \u2014 but it is NOT only the calendar: a LATER official release committed to this repository by another session (11/14 05:00 AM ET, data/raw/injury_report_2026-11-14_0500ET.json) already contains 18 rows for 11/15 that the 04:30 AM capture lacks. The empty 11/15 cells on this site are therefore partly an artefact of WHEN the snapshot was taken, not purely of the filing deadline. A 05:30 AM ET fetch attempted in this session returned AccessDenied.",
+   "Those cells are blank and labelled with the filing rule and the capture timestamp. No value was inferred or carried forward, and this page's 04:30 AM capture was not silently swapped for the 05:00 AM one without re-verifying it against the official PDF.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-039",
+   "low",
+   "Site",
+   "The GitHub Pages setting on this repository is still build_type 'legacy' (deploy from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever one is live, the other is a fully-built tree sitting in the repository that a reader can reach by URL.",
+   "Logged for the owner: this is a one-setting change either way, and it changes what every reader sees.",
+   "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"
+  ],
+  [
+   "F-040",
+   "low",
+   "Model",
+   "Strategy S4 (fade the home team when the model makes them a 3+ point underdog) went 7 for 7. The binomial p-value is 0.0156, which would pass a naive significance test, but at seven bets the 95% interval is wide enough to hold almost any true rate.",
+   "The luck report records it as SAMPLE TOO SMALL TO CALL and the leaderboard refuses to rank it. It is shown deliberately, as an example of what luck looks like when it is winning.",
+   "https://www.nba.com/games"
+  ],
+  [
+   "F-041",
+   "info",
+   "Model",
+   "Two matchups appear twice inside the 3-day window: NYK @ TOR (11/15 game 0022600241 and 11/17 game 0022600253) and POR @ MIN (11/16 game 0022600250 and 11/17 game 0022600254).",
+   "Verified genuine by reading the official schedule block, not a duplication error in the slate capture. Both games are priced separately.",
+   "https://www.nba.com/schedule?date=2026-11-15"
+  ],
+  [
+   "F-042",
+   "low",
+   "Site",
+   "A published paragraph on the site cites an open question by the ID 'Q-28', but the question register only runs to Q-24, so the reference resolves to nothing. The cross-reference was inherited from the 2026-11-14 refresh on main and is not this session's to edit silently.",
+   "Logged, not edited: the sentence is left verbatim and this flag records the defect.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py"
   ]
  ],
  "requirements": [
@@ -945,13 +1100,13 @@
    "R-6",
    "Every strategy must pass validation gates",
    "Enforced",
-   "12 gates, and the picks page mechanically withholds any pick whose gates do not all pass (currently 27/27 window picks withheld)."
+   "12 gates, each evaluated from data with the number that decided it. The picks page publishes a lean and trigger for every game and holds every stake, printing the gates that did it."
   ],
   [
    "R-7",
    "Determine correlation values",
-   "Partial",
-   "6 correlations measured (all \u22650.93 where meaningful); 5 blocked with the exact missing dataset named; 1 stated as an assumption."
+   "Delivered for team level; blocked for player level",
+   "4 correlations measured from the 183 official finals with CIs and p-values, including the same-game-parlay correlation a two-leg price needs; 3 player-level correlations remain blocked and each names the dataset that would unblock it."
   ],
   [
    "R-8",
@@ -962,14 +1117,14 @@
   [
    "R-9",
    "Generate picks for every upcoming slate, max 3 days ahead",
-   "Delivered (withheld)",
-   "27 games in the 11/14\u219211/17 pick window, every game covered, plus the nine day-before context games; picks are computed and then withheld with the failing gate printed."
+   "Delivered",
+   "27 games, 11/14\u219211/17 \u2014 the full three-day window. Every game gets an originated line, a lean, and the trigger price at which acting would be rational. No game gets a stake: G6 (no price) and G7 (167 settled of 300) both fail, and the page says so per row."
   ],
   [
    "R-10",
    "Track how injuries affect rotation minutes and production",
-   "Blocked",
-   "Statuses are official and complete for 11/13; minutes and production impact need player logs. Every impact cell is blank with a reason."
+   "Partially blocked",
+   "Statuses are official for 11/14 (26 player rows + 23 teams that had not yet filed, because the filing deadline for 11/15-11/17 has not passed). Minutes and production impact need player logs, so every impact cell is blank with a reason."
   ],
   [
    "R-11",
