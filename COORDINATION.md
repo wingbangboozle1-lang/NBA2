@@ -572,6 +572,7 @@ step.
   sessions now own, this session renamed its whole tree into `originated/`.
 
 
+
 ## Session `arena/26bb7240-nba2` — status: done
 
 Registry row: `arena/26bb7240-nba2` — full repo review, verification of the generated dashboard, and integration/PR/Pages-deploy confirmation. Branching note: Arena pinned this session to `arena/26bb7240-nba2`; work happens on this branch.
@@ -662,6 +663,7 @@ A second remote advance occurred before PR #16 was ready to merge: PR #18 from `
 
 ---
 
+
 ## Session `arena/9707c113-nba2` — verification status audit (2026-11-14)
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
@@ -714,3 +716,65 @@ here as a change request, not silently edited.
 | R-4 | Nightly ingest + settlement workflow with fail-closed gates (A-01 remediation v1); settlement consumes official finals snapshots only | pending | `arena/5a5fa7c4-nba2` | `nba2/pipeline/refresh.py`, `.github/workflows/refresh.yml`, `README.md` | must never publish a value that could not be fetched and schema-checked |
 | R-5 | Audit A-03 cleanup: untrack 19 `.pyc` files | pending | `arena/5a5fa7c4-nba2` | `.gitignore`, git index | no file content changes |
 | R-6 | Verify (tests + lint + seal `--verify` + whole-repo link check), PR → main, merge, confirm Pages deploy, record results here | pending | `arena/5a5fa7c4-nba2` | repo-wide (integration of own scope) | follow the PR & Merge protocol |
+
+## Session `arena/79e87c81-nba2` — player-level data unlock, window roll-forward, line-by-line verification
+
+Claimed 2026-11-14 (UTC ~00:50). Branch `arena/79e87c81-nba2` (platform-pinned), based on `main` @ `60399a6`.
+Claim committed and pushed **before** any file in the scope below was edited.
+
+### Why this session exists
+
+Two gaps in the current published site are the exact gaps the brief asks to close, and both are
+closable from official NBA sources that earlier sessions could not reach:
+
+| Gap on the live site | Status on `main` | What this session does |
+|---|---|---|
+| "Player Props & Combos" page | every row blank by policy ("inputs absent") | captures official NBA.com **box scores** (player MIN/PTS/REB/AST/…) and originates player prop lines from them |
+| "Injuries & Rotation" rotation-body arithmetic | impact columns blank (no minutes per player) | computes rotation-minutes redistribution and production impact from the same official minutes |
+| Prop / same-player correlations | structural placeholders only | derives them from the official box-score sample |
+| Slate window | `2026-11-13 → 2026-11-16` (31 games); 11/13 games are now underway | rolls the pick window forward to `2026-11-14 → 2026-11-17` and adds the 5 new official games |
+| Verification | row-has-source lint exists | adds a **line-by-line published-row verification report** + a live official-URL checker that runs in CI (CI has internet; this sandbox does not) |
+
+**Verified reachability, 2026-11-14 (this session):** `https://www.nba.com/schedule`,
+`https://www.nba.com/games`, `https://www.nba.com/game/{id}/box-score` and
+`https://ak-static.cms.nba.com/referee/injury/Injury-Report_*.pdf` all return content through the
+session's fetch tool. Direct `curl` from this sandbox to those hosts fails (TLS blocked), so the
+capture tool is the only network path here; the CI job is the only path that can re-check URLs from
+a machine with open egress.
+
+### Scope claimed by this session (files this session may edit)
+
+- `nba2/models/props.py`, `nba2/models/injuries.py`, `nba2/models/correlation.py` — extension only
+- `nba2/pipeline/build_site_data.py`, `nba2/pipeline/build_site.py` — new sections/pages
+- `nba2/tests/**` — new tests
+- `data/raw/player_rotation_*.json`, `data/raw/slate_2026-11-14_to_11-17.json` — **new** snapshot files only
+- `data/raw/ledger/**` — never edited (sealed ledgers are immutable)
+- `requirements/*.json`, `suggestions/SUGGESTIONS.json` — append-only entries
+- `analysis/verification-79e87c81.md` — this session's own report
+- `tools/verify_published_rows.py`, `tools/check_official_links.py` — new tools
+- `.github/workflows/ci.yml` — one added job (live official-link check)
+- `pages/**`, `index.html`, `css/style.css` — regenerated outputs of the above
+- `COORDINATION.md` — append-only (shared board)
+- `README.md` — **not** claimed: session `arena/3b88f22e-nba2` holds a live claim on it
+
+### Scope explicitly NOT touched (owned by other sessions)
+
+`analysis/current-state-audit-2026-11-14.md`, `analysis/audit-2c07c00b.md`, `README.md`,
+`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, root `*.html` (the 7b4973eb surface),
+`scripts/**`, `analysis/**` other than this session's own file.
+
+### Tasks
+
+| ID | Task | Status | Verification |
+|----|------|--------|--------------|
+| V-01 | Claim, scope, push | done | this section, committed before any scope edit |
+| V-02 | Official player rotation/production snapshot from NBA.com box scores | in progress | each row carries its own box-score URL |
+| V-03 | Official slate roll-forward to 11/14 → 11/17 | pending | nba.com/schedule, per-day counts cross-checked against nba.com/games calendar |
+| V-04 | Originated player prop lines + prop combos | pending | unit-tested pricing; every input row source-linked |
+| V-05 | Rotation-minutes redistribution & production impact from injuries | pending | arithmetic shown in-cell; inputs official |
+| V-06 | Prop-level correlations | pending | derived from the official sample; method published |
+| V-07 | Line-by-line verification of every published row | pending | `tools/verify_published_rows.py` |
+| V-08 | Live official-URL check in CI | pending | `tools/check_official_links.py` |
+| V-09 | Site: landing page + category subpages incl. new pages | pending | lint + link check |
+| V-10 | Suggestions + questions registers updated | pending | append-only, no duplicates |
+| V-11 | Final integration: rebuild, test, PR, merge, Pages deploy | pending | per protocol |
