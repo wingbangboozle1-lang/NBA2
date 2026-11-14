@@ -1226,4 +1226,16 @@ games yet → gates stay BLOCKED; the refresh itself was a manual agent session,
 
 | PR | Head → base | Result | Notes |
 |---|---|---|---|
-| (this row is completed in the merge record below) | `arena/1ec4f9bd-nba2` → `main` | — | created 2026-11-14 |
+| #26 | `arena/1ec4f9bd-nba2` → `main` | **MERGED** 2026-11-14 01:33:49 UTC | merge commit `cb3b7f113ca7477cb8d1b0fd2e6f60b28e3dba4c`; created 2026-11-14; merged without review per protocol |
+
+### Merge record — PR #26 (2026-11-14)
+
+- **PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/26 — merged at 2026-11-14 01:33:49 UTC with merge commit `cb3b7f1`.
+- **CI:** the first push run (43538934236 on `d68ad27`) failed on a workflow-file bug — the multi-line `python -c` bodies of the seal-verification loop broke the YAML block scalar; fixed in `a8723fe` by inlining the loop one-liners (both ledgers verify locally and in CI). After the fix, `pull_request` run 43541220277 on head `8783ef6` reports **verify: pass, backtest: pass**. Post-merge push runs on main: "Verify data, model and site" 43541337517 **success**, "Publish GitHub Pages" 43541337476 **success**.
+- **Integration performed during the merge (not silent, both sides preserved):**
+  - Merged main twice en route (PRs #16–#28 at `5e5d23f`, then #29–#37 at `90f435c`; 33 + 41 commits). Both COORDINATION.md conflicts resolved as append-only unions (theirs first, ours after a divider) — every session's completion record preserved verbatim.
+  - Both independent transcriptions of the same 11/13 19:30 ET injury release are kept and published (122-row full transcript + day-before window transcript); both sealed ledgers verify.
+  - The four integration requests of `arena/f7477d5e-nba2` (measured skill) were implemented by this session: `backtest/` linked from the root nav; gate G-04 reconciled to its measured FAIL and G-07 to its measured PASS (config + gate-spec blurbs); the margin-vs-total correlation row now carries the measured r = −0.009 (95% CI −0.17 to 0.15, n = 139); the standing "no game-level results history" claim was corrected in README, config comments, FLAG-PARAM-04/FLAG-CORR-02, and requirements R-045 (marked **partial** with the 155-finals evidence). The leaderboard's provisional ordering was NOT headlined (request 4).
+- **Verification at merge:** 64/64 `nba2` tests + 46/46 `backtest` tests; lint 36 tables / 1041 rows, every row sourced; seal verify (both ledgers); site rebuild byte-converged; backtest rebuild byte-parity vs main; `tools/verify_site.py` (13pp/249 rows), `tools/check_links_all.py` (87 files, 3,823 internal links), `scripts/check_site.py`, `tools/verify_backtest.py` (155/155 sourced rows), `node originated/engine/verify.js` 24/24 — all PASS.
+- **Pages:** deploy run 43541337476 success; Pages build API shows commit `cb3b7f11` status "built" (updated_at 2026-11-14T01:34:08Z). Live content verified by cache-busted fetch: as-of **2026-11-14**, 36 games, pick window **11/14 → 11/17**, sealed ledger **27 predictions, sha256 `c841e8f3…`**, 122 injury rows, Measured-Skill Backtest in nav. Plain-URL fetches served the previous build for several minutes after deploy (GitHub Pages CDN lag — same note as prior sessions); confirmed via the build API, not assumed.
+- **Flagged items do not block this merge** (published on the labelled Flagged for Review page with source links, as the protocol requires).
