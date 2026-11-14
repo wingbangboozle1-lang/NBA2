@@ -696,3 +696,12 @@ regenerated `dashboard/data.html`. No other dashboard page and no CSV data chang
 dashboard generator was last touched by finished session `arena-10957a28`; taken over under
 the >60-min/finished-owner handoff rule, as logged in the D3 row above.
 
+
+**Scope amendment (V-05, before editing):** line-by-line reading of the same baselines table
+rendering found that every non-official row's Source cell is labelled `nba.com player page`
+while its `href` is basketball-reference.com / espn.com (e.g. LAL Doncic, CLE Mobley, TOR
+Barnes — 11 rows). Fixing the label is the same function/line of `scripts/build_site.py` as
+the CR-4 fix; D3 scope is amended to include source-label rendering for non-official rows in
+that table (official rows keep their exact current label). Evidence recorded as V-05 in this
+session's verification report.
+
