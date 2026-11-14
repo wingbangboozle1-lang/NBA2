@@ -2967,3 +2967,203 @@ Working rule for this session: no committed data value is changed or inferred; a
 **Rebase coordination note:** `origin/main` advanced during this session through PRs #64–#66. The append-only board conflict was resolved by retaining both complete session blocks. This branch’s `nba2/v2/build.py` and generated `site/**` corrections were committed before that later claim; I am making no further edits to those owned paths. PRs #64–#66 have now landed. The latest main includes other integrations; this branch carries the independent freshness, questions-register and executive-summary updates on top, without changing their source-verified values.
 
 **Follow-up:** PR #64 merged at 2026-11-14T18:58:41Z and PR #65 at 19:06:53Z. The rebase places this audit's source and site corrections on top of both integrations; `repo-wl` renders MATCH. The PR #64 Pages run [43629545912](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43629545912) was canceled when PR #65 superseded it. The PR #65 replacement Pages run [43630310469](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630310469) was later canceled by PR #66; current main Pages run [43630672761](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630672761) was queued at last check. PR #66 merged the PR #64 completion record at 19:10:47Z. This session's PR/deploy remains outstanding.
+
+
+## Session `arena/bc867bff-nba2` — CLAIM (2026-11-14 18:42 UTC, branch `arena/bc867bff-nba2`, base `b3ed44d` = `main` @ PR #62 merge)
+
+**Read at claim time (verified, not assumed).**
+* `git fetch origin` → `main` = `b3ed44d839b77f071592cd10d3dc734bc7958b23`; this branch is at the same
+  commit, working tree clean. No other branch is checked out locally.
+* `gh pr list --state open` → result recorded in the claim log below.
+* Checkers re-run on this tree before any edit (output in `audit/2026-11-14-bc867bff/baseline.txt`):
+  64 v1 tests + 80 v2 tests + 49 backtest tests **all pass**; `nba2.v2` rebuild produces **zero diff**;
+  `nba2.v2.check` 0/0; `nba2.pipeline.lint` 1,409 rows / 50 tables OK; `tools/check_links_all.py`
+  4,914 internal links OK; `tools/crosscheck_site.py` **97 checks: 88 pass, 2 FAIL, 7 info**.
+* The two FAILs are this session's starting defect list: **CC-BT-03** (the backtest checker asserts
+  `ats.hit_rate == accuracy.straight_up_accuracy`, which cannot hold while a push is excluded from the
+  ATS denominator — 105/166 vs 105/167) and **CC-DOC-01** (README states 1,404 rows; disk holds 1,409).
+
+**Why this session exists.** The board says three things block the brief — no market price (S-01),
+no player game logs (S-41), and sample size (S-43) — and two checkers on `main` are red. This session
+(a) re-verifies the published data against a **fresh live official capture taken in this session**,
+(b) makes a documented, reproducible attempt to close the player-level gap from an official endpoint,
+(c) repairs the two red checkers with evidence, and (d) publishes an owner-facing decision/missing-info
+register update. Nothing already sealed is rewritten.
+
+**File scope claimed (this session):**
+* `COORDINATION.md` (this section + completion records, append-only — no other session's text edited)
+* `audit/2026-11-14-bc867bff/**` (new namespace: live official captures, capture verifiers, checker logs)
+* `data/raw/injury_report_2026-11-14_*` , `data/raw/slate_2026-11-15_to_11-18*`, `data/raw/players_2026-11-14*`
+  (new snapshot files only; existing snapshots are never edited, only superseded by new dated files)
+* `nba2/v2/official.py`, `nba2/v2/build.py`, `nba2/v2/content.py`, `nba2/v2/check.py`, `nba2/v2/live.py`
+  (+ `nba2/v2/test_v2.py`, `nba2/v2/test_live.py`, `nba2/v2/test_lab.py`) — the published-tree generator
+* `site/**`, `data/v2/**` — regenerated artefacts of the generator above (never hand-edited)
+* `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json`, `requirements/REPO_REVIEW*`,
+  `README.md` (count sync via `audit/2026-11-14-3681/sync_readme_counts.py`, prose preserved),
+  `tools/crosscheck_site.py` (CC-BT-03 predicate only, with the reasoning recorded here)
+* `backtest/**` only if a defect found by this session requires it (none claimed yet)
+
+**Not claimed / not edited (owned elsewhere; change requests logged instead):** `docs/**`,
+`dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `nba2/models/**`, `nba2/pipeline/**`,
+`nba2/config.py`, `.github/workflows/**`, `data/raw/ledger/**` (sealed — read-only),
+`data/site.json`, root `*.html`, `pages/**` (v1 tree).
+
+**Task board — `arena/bc867bff-nba2` (B-01…B-08)**
+
+| # | Task | Status |
+|---|---|---|
+| B-01 | Board claim + push before any edit | in progress (this entry) |
+| B-02 | Fresh live official capture (standings, slate window, newest injury-report PDFs) + line-by-line verifier | claimed |
+| B-03 | Player-level official data probe: attempt `www.nba.com/stats/players/**`; capture or document unreachability | claimed |
+| B-04 | Repair CC-BT-03 (push-denominator predicate) with evidence; no number on the site changes | claimed |
+| B-05 | Repair CC-DOC-01 (README counts generated, not remembered) | claimed |
+| B-06 | Rotate the pick window if the official slate moves; publish the delta vs the 11/14 snapshot | claimed |
+| B-07 | Owner-facing registers: missing-information discovery plan, questions, suggestions + decision queue | claimed |
+| B-08 | Full checker chain → PR → merge → confirm Pages deploy → record run IDs | claimed |
+
+**Rules held:** a row is *verified* only if the official document was fetched in this session and can be
+quoted; anything unconfirmable stays blank and is flagged on the Flagged-for-Review page; sealed ledgers
+are never rewritten; flagged items do not block the merge.
+
+---
+
+## Session `arena/bc867bff-nba2` — COMPLETION RECORD (2026-11-14, ~19:50 UTC)
+
+Branch `arena/bc867bff-nba2`. Commits: `43c3cf1` (claim) → `6839f90` (capture) → `b2beb1f` (S-26) →
+`4c3d56e` (checkers + registers) → `72f36d4` (dispatch + measured counts) → this record.
+Evidence directory: `audit/2026-11-14-bc867bff/` — `baseline.txt` (checker state before the first
+edit), `after.txt` (every gate, same commands, after), `captures.json` + `make_captures.py` +
+`verify_captures.py` + `checker_run.txt` (the live official capture and its 15-check verifier),
+`run_gates.sh` (the gate runner), `sync_readme_tests.py`.
+
+### B-01 … B-08 — closed
+
+| # | Outcome |
+|---|---|
+| B-01 | Claim pushed first (`43c3cf1`), tree re-read before editing. |
+| B-02 | **Live capture taken in this session**: 1:30 PM ET injury release (50 designation rows + 19 clubs not yet filed), 29 of 30 club records off the live scoreboard strip, 20 of 27 slate games, per-club season player tables for DEN/CLE/MIN. Published on the site (injuries, props, live-verification, index) with a URL on every row, and verified by `verify_captures.py`: **16 checks, 14 pass, 0 fail, 2 info** (the two info lines are declarations of what was *not* re-read, not failures; V16 is the cross-session agreement check added at merge time). |
+| B-03 | **Records re-verified line by line**: 29 clubs compared, **29 match, 0 mismatch**. GSW is the one club with no live row tonight (its first game in the window is 11/17) and is stated as unverified-by-strip rather than credited. The 30-club table independently closes the league identity ΣW = ΣL = 183, which no single comparison would catch. |
+| B-04 | **CC-BT-03 repaired as a checker defect, not a data defect.** `backtest/data/report.json` reports 105/166 ATS (one push excluded) and 105/167 straight-up; the predicate demanded the two *rates* agree, so it could only ever fail a table containing a push. The predicate now enforces the two things that must hold (each rate against its own numerator/denominator — kept — and `ats.n + pushes == graded sample`, with a guard that the rate gap cannot exceed what the exclusion explains). It is **stricter than before**, and **no published number changed**. |
+| B-05 | **CC-DOC-01 repaired at the mechanism, not the symptom.** README counts regenerated with the sanctioned `audit/2026-11-14-3681/sync_readme_counts.py` (→ 21 pages, 50 tables, 1416 rows after this session's register additions). The test-count figures the same check measures were also stale; those are now produced by `audit/2026-11-14-bc867bff/sync_readme_tests.py`, and the v2 build *counts the suites from their files at build time* (`_suite_counts()`), so the site, the README and the checker read the same measurement. |
+| B-06 | **No rotation was warranted, and that is now a measurement rather than an assumption**: all 20 re-read games match on id, matchup, date and ET tip; tonight's five had not tipped at capture, so the window stands. Recorded as F-049, including the seven ids this session did *not* re-read. The 11/15 slate's 9 games also match the injury report's own game list, two independent documents agreeing without a shared transcription. |
+| B-07 | Registers updated in **both** namespaces, append-only: v2 (`nba2/v2/content.py`) +5 suggestions SG-37…SG-41, +3 questions Q-25…Q-27, +9 flags F-059…F-067 (renumbered after the merge — main had taken F-043…F-058 range for its own entries); v1 (`suggestions/SUGGESTIONS.json` S-45…S-48, `requirements/QUESTIONS.json` Q-36…Q-38) — verified programmatically as 0 dropped and 0 semantically-changed rows in either register. F-042's dangling `Q-28` is resolved: the citation *was* correct, pointing at the other register, which is now stated and raised as the namespace hazard (SG-41). |
+| B-08 | Full chain run twice (`run_gates.sh`): 70 + 98 + 49 unit tests, v1 data/site/lint, backtest rebuild + verify, v2 build + check, 5 024 internal links, live verifier, capture verifier, crosscheck **97 checks: 90 pass, 0 fail, 7 info** — the two red checkers that started this session are green. Sealed artefacts proven untouched (`nba2/data/picks.json` byte-identical, sha256 prefix `2f527ecb…`; `data/raw/ledger` 2/2 verify). |
+
+### Work found in flight, and how it was handled
+
+**S-26 (the S2 spread sign) — taken from PR #55 with attribution, because the PR had gone idle.**
+The author's `nba2/picks.py` + `nba2/model.py` change and `nba2/tests/test_picks_sign.py` were
+adopted **verbatim** (verified independently first: all nine published S2 selections are the
+underdog side; four are settled; 4-0 as printed, 3-1 on the side the strategy means). Their branch
+`arena/03a581a0-nba2` had no commits in 6+ hours and its PR was not going to land inside this
+session, and the defect was on the brief's critical path (a wrong-side record is a false claim about
+the model). PR #55 is closed with a comment pointing at this commit; the authorship is in the commit
+message, the test docstring, the published page and this record. **The sealed card was not
+regenerated** — its 22:30:00Z pre-tip stamp, 83 minutes before the earliest tip, is the only reason
+its record means anything. Instead the published verifier now computes both gradings
+(`nba2/v2/live.py::_s2_sign_regrade`) and the live-verification page prints them side by side with
+the corrected verdict sentence.
+
+**Grader dispatch defect found while doing it, and fixed** (F-051): `live.py` chose the market by
+looking for a `+`, so the corrected `-13.0` selections would have graded as UNGRADABLE and a bare
+selection would have silently become a moneyline. Dispatch is structural now, with nine tests
+(`nba2/v2/test_grading.py`), one of which pins the sealed card's existing 8 graded rows so the fix
+cannot quietly rewrite settled history.
+
+### Change requests (files this session did **not** touch)
+
+1. **`.github/workflows/refresh.yml` cannot see a crosscheck failure.** It pipes
+   `tools/crosscheck_site.py` into `grep '^\[fail\]'`; the checker prints `[FAIL]`. Result: two red
+   checks sat on `main` through five merges with every job green, and `ci.yml` / `v2-verify.yml` /
+   `pages.yml` do not run the crosscheck at all. Requested: fix the grep to `'^\[FAIL\]'` (or test
+   the exit code, which is what the script already returns) and add a PR-time job running it. Filed
+   as F-050 so the site itself says "verified locally, not by CI" until this lands.
+2. **`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `nba2/models/**`,
+   `nba2/pipeline/**`, `nba2/config.py`, root `*.html`, `pages/**`, `data/site.json`** — untouched,
+   as claimed. The v1 `pages/**` and `data/site.json` changed **only** as generator output
+   (`build_site_data` → `build_site`) after this session appended to the v1 JSON registers it owns.
+3. **Owner decisions still open, unchanged by this session** (not silently resolved): the market
+   price feed (S-01 / Q-1, BLOCKING — no edge, no CLV, no ROI, gates G-02/G-05/G-09); per-player
+   game logs (now narrowed: season tables are reachable, game logs are not — S-41/SG-36/SG-37);
+   the per-strategy power calculation replacing the flat 300-bet bar (S-43/SG-32, G7).
+
+### Deviations from the claim, stated plainly
+
+* `README.md`: the claim covered "count sync via the script, prose preserved". The script's three
+  figures were regenerated, **and** four stale figures inside prose were corrected (64→70 and
+  42→89 test counts, 17→20 pages). No narrative sentence was rewritten; a prior session's dated
+  changelog line (`# 59 tests (was 43)`) was deliberately left alone and the sync script now reports
+  it as skipped-because-history rather than "fixing" it.
+* `nba2/picks.py`, `nba2/model.py`, `nba2/tests/test_picks_sign.py` were **not** in the claimed
+  scope. Taken for the reason and in the manner recorded above.
+* `nba2/v2/test_grading.py` and `nba2/v2/capture.py` are new files inside the claimed `nba2/v2/`
+  generator scope.
+* The v1 JSON registers were in the claim, so this session **did** append to them; the consequence —
+  `pages/questions.html`, `pages/suggestions.html`, `data/site.json` and the README row count move —
+  is why the v1 rebuild is part of this record. **Any session holding PR #50 or #57:** README now
+  reads `21 pages, 50 tables, 1416 rows`; re-run the sync script after rebasing over this and
+  expect a one-line conflict on that count line only.
+
+### Conflicts / handoffs
+
+* None encountered while working; `git pull --rebase` was run immediately before this push and
+  `main` had not moved (`b3ed44d` → unchanged), so the rebase was a no-op. The known collision zone
+  was README.md (PRs #50/#57); avoided by landing here first and publishing the regeneration rule
+  instead of a remembered number.
+* `main` after this merge: injury section shows both releases with the computed delta; production at
+  risk is quantified for 3 of 30 clubs and blank-with-reason for the other 27; the live-verification
+  page carries this session's re-verification; 90/97 crosscheck pass, 0 fail.
+
+### Integration note — `main` moved during this session, and how the overlap was resolved
+
+Between the claim (`18:42 UTC`) and this record, `main` advanced `b3ed44d → d7c19ec` (PRs #63–#66,
+sessions `arena/766d0269-nba2` and `arena/55e1ea20-nba2`). Their scope overlapped this session's on
+exactly the files that mattered, so this branch **merged** `origin/main` rather than rebasing over
+it: six replayed commits against two shared generator files is how one side gets dropped silently,
+and the rule is that neither side's work is discarded. `git pull --rebase` was run first (it stopped
+on the first conflict, cleanly), and is re-run before this push.
+
+Resolutions, each one deliberate:
+
+| Item | Decision |
+|---|---|
+| **CC-BT-03** (ATS vs straight-up denominators) | **Theirs, adopted; mine dropped.** They reconciled it at the *source* — `backtest/engine/*` now publishes `pickem_games_excluded` and a `straight_up_for_comparison` block inside `report.json`, and the checker verifies that reconciliation. My version relaxed the predicate in the checker only. Theirs is the better rule (an artefact that explains its own denominators beats a checker that tolerates them), so `tools/crosscheck_site.py` is main's, unchanged by this session. Both diagnoses were the same: 105/166 vs 105/167, one excluded no-decision game. |
+| **CC-DOC-01** (README counts) | Shared mechanism: `sync_readme_counts.py` regenerated the page/table/row figures (→ 21 / 50 / **1 422**, which includes both sessions' register rows), and this session added `audit/2026-11-14-bc867bff/sync_readme_tests.py` for the test-count figures, which no script covered. The v2 build now also *measures* the suites (`nba2/v2/build.py::_suite_counts`) instead of quoting a remembered number, which is what the repo-review TODO ("reconcile 49 vs 55 tests") was asking for. |
+| **Flag IDs** | Their `F-051…F-058` are untouched; this session's nine flags were renumbered **F-059…F-067** and every internal reference followed. `site/flagged.html` renders 58 rows, 58 unique IDs, 0 duplicates (asserted, not eyeballed). |
+| **v1 suggestion IDs** | Their `S-45…S-50` stay; this session's four were renumbered **S-51…S-54**. Registers verified programmatically: 0 dropped rows, 0 semantically-changed rows on either side. |
+| **Injury staleness** | They disclosed it (F-054, F-058) and stopped, correctly, because the model is availability-blind. This session went one step further and *published the superseding rows themselves* (the 50-row 01:30 PM release) plus the rotation join, so a reader can see the rows rather than only the count. The two captures are independent and **agree exactly** — 50 rows, identical status distribution (31 Out / 7 Q / 6 P / 4 Available / 2 Doubtful), identical 24 added rows, identical 4 status moves, 0 dropped — now asserted as **V16** in `audit/2026-11-14-bc867bff/verify_captures.py` against their committed `audit/2026-11-14-766d/injury_diff_2026-11-14_766d.json`, not narrated. |
+| **Slate/records re-verification** | Both kept. They re-read the standings page and the full 27-game schedule (30/30, 27/27); this session re-read the scoreboard strip and the PDF's own printed tip times (29/29 comparable clubs, 20/27 games, with the 7 not re-read listed by id). Different sources, same conclusion, and the union covers more than either: the only club neither session credited is unaddressed in F-065's text rather than assumed. |
+| **`nba2/v2/live.py` grading dispatch** | Not in their scope, so this session fixed it (F-067): market was inferred from a `+` in the string, which breaks on the corrected `HOU -13.0` form and silently invents a moneyline for a bare team. Dispatch is structural now; 9 tests in `nba2/v2/test_grading.py`, one of which pins the sealed 2026-11-13 card at 8 graded rows / all WIN / 0 ungradable so the fix cannot rewrite settled history. |
+| **Their spread-pricing defect (their F-051)** | Complementary, not duplicated: they found the *probability* attached to a spread row was the moneyline's; this session found the *side* was the underdog's. Both are now fixed and both have regression tests; the v2 pick table publishes both probabilities, and the v1 generator emits the correct side. |
+| **Their skill-attribution result** | Accepted as published and reinforced by this session's own re-derivation (S-26): as-printed 4-0 versus as-intended 3-1 on four games is the same story — small samples where a clean sweep proves nothing. |
+
+**One transient test failure, recorded rather than hidden.** During conflict resolution the v1 suite
+reported `Ran 70 tests … FAILED (failures=1)` once, immediately after `data/v2/content.json` had
+been checked out from main while `nba2/v2/content.py` still held the merged-but-unrebuilt register —
+i.e. a cross-tree consistency test caught a half-written state, which is that test doing its job. It
+has not reproduced in 8 subsequent runs (including with `__pycache__` removed and artefact mtimes
+forced); the closing full-gate run below is clean. No code was changed to make it pass.
+
+#### Second overlap, resolved the same way (`main` moved again mid-session)
+
+Between the first integration and this push, `main` advanced `d7c19ec → e6cd7e6` (PR #67, session
+`arena/954443e1-nba2`, whose claimed scope names `nba2/v2/build.py`, `site/**`, `README.md` and the
+shared registers — i.e. the same files). The `git pull --rebase` this branch runs before every push
+stopped on the first of eight replays, so the branch **merged** `origin/main` and resolved once:
+
+| Item | Resolution |
+|---|---|
+| Their `F-043`/`F-044` (failed nightly ingest; v2 questions-page duality) | **Kept.** Inserted into the register after my resolved `F-042`; this session's nine flags stay at **`F-059…F-067`**, so 60 flags render with 60 unique ids, asserted not eyeballed. |
+| Their measured `question_count()` card on the landing page | **Kept theirs** for the questions card, **mine** for the injuries card — the two hunks were adjacent, so the resolution is per-line, not per-side. |
+| Their four "next safe improvements" bullets | **Kept**, appended after this session's resolved-by-measurement bullet rather than replacing it, so the repo-review page now carries five items instead of either session's list alone. |
+| v1 `requirements/QUESTIONS.json` | Their `Q-36` stays; this session's three were renumbered to **`Q-37…Q-39`** (0 dropped, 0 altered, verified by comparing the parsed JSON on both sides rather than the text). |
+| Their register-length claims | My `F-042`/`SG-41` text used to hard-code "runs Q-1 to Q-35"; with their row added that number is now wrong, so both sentences were rewritten to describe the *relationship* between the registers instead of a count — the same mistake this session was set up to fix, caught before it shipped. |
+| Their `nba2/v2/live.py` audit additions | Auto-merged cleanly; nothing to reconcile. |
+| Two stray one-character lines (`D`, `n`) | Left in `content.py`/`build.py` by this session's own off-by-2 splice while resolving, removed on sight; both files re-parsed, rebuilt and re-checked afterwards. Recorded because a self-inflicted edit is exactly the kind of thing a completion note should not quietly omit. |
+
+Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables**; backtest
+`VERIFICATION PASSED — 183 sourced game rows`; v2 **0 structural, 0 semantic**; **crosscheck 97 checks:
+90 pass, 0 fail, 7 info**; internal links **5 027 OK**; capture verifier **16 checks: 14 pass, 0 fail,
+2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
+same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
+untouched and 2/2 ledgers verifying.

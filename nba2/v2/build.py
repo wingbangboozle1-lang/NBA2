@@ -18,6 +18,7 @@ from . import content as C
 from . import live as LV
 from . import model as M
 from . import official as O
+from . import capture as CP
 from . import report as R
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -107,6 +108,27 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 .blank{color:var(--bad);font-style:italic}
 tr:target td{background:rgba(122,167,255,.10)}
 """
+
+
+def _suite_counts() -> dict:
+    """Test counts measured from the suites, never remembered from a previous build.
+
+    Counts the ``def test_`` methods in each suite directory — the same rule
+    ``tools/crosscheck_site.py`` uses for its CC-DOC-01 README check, so the number printed on this
+    site and the number the checker enforces cannot drift apart. A hard-coded count in prose was the
+    most reliably stale figure on the repository (F-033 records three recurrences of the sibling
+    defect), which is why the prose now reads from here instead of carrying its own copy.
+    """
+    import re as _re
+    out = {}
+    for label, sub in (("v1", "nba2/tests"), ("v2", "nba2/v2"), ("backtest", "backtest/tests")):
+        d = ROOT / sub
+        n = 0
+        if d.is_dir():
+            for f in sorted(d.glob("test_*.py")):
+                n += len(_re.findall(r"^\s+def (test_\w+)", f.read_text(encoding="utf-8"), _re.M))
+        out[label] = n
+    return out
 
 
 def esc(x):
@@ -225,6 +247,7 @@ def validate(rows_by_table):
 
 # --------------------------------------------------------------------------- pages
 def build(run_backtest: bool = True):
+    sc = _suite_counts()   # test counts, measured once for every page that quotes them
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
     (SITE / "assets" / "site.css").write_text(CSS)
@@ -328,7 +351,7 @@ lean and a trigger price for all {n_lines} games but holds every stake at 0.00 u
   <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
   <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} rows from the 04:30 AM release, {len(CP.latest_rows())} from the 01:30 PM release, and the first production-at-risk numbers measured from official season averages.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>{question_count()} current questions, each with knowns, unknowns and a route to an answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
@@ -471,7 +494,8 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match, home and road splits included", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Official finals captured", f"{lab['meta']['n_games']} / {lab['meta']['n_games']}", "the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings", srclink(O.SOURCES["games"][1])]},
-        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} player rows (+{len(O.NOT_SUBMITTED)} teams not yet filed)", "11/14/26 04:30 AM ET release", srclink(O.INJURY_PDF_URL)]},
+        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} rows (04:30 AM) + {len(CP.latest_rows())} rows (01:30 PM)", "both releases published, 24 rows added and 4 statuses moved between them", srclink(O.INJURY_PDF_URL) + " · " + srclink(CP.pdf_url(), "1:30 PM PDF")]},
+        {"cells": ["Rotation / production at risk, quantified", f"{len(CP.production_at_risk(teams))} / 30 clubs", "season averages from the official per-club table × the 1:30 PM designations; 27 clubs blank because not captured, not because blocked", srclink("https://www.nba.com/stats/players/traditional?TeamID=1610612739", "per-club stats table")]},
         {"cells": ["Measured correlations", f"{sum(1 for c in lab['correlations'] if c['status'] == 'MEASURED')}", "computed walk-forward from the official finals", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Correlations that cannot be measured", f"{sum(1 for c in lab['correlations'] if c['status'] == 'BLOCKED')}", "all three are player-level; each names the missing dataset", srclink(O.BLOCKED["player_box"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
@@ -1217,6 +1241,24 @@ missing input by name rather than a fabricated probability.</div>
                               srclink(p["src"])]})
     body += table(["Player", "Team", "GP", "MIN", "PTS", "REB", "AST", "Official report status", "Minutes floor", "Source"],
                   rows, "Official season averages for the players used in this build", num_cols=(2, 3, 4, 5, 6))
+    cap_prows = []
+    for r in CP.rotation():
+        _base = round(r["ppg"] * 2) / 2.0
+        cap_prows.append({"cells": [esc(r["player"]), esc(r["team"]), esc(r["gp"]), esc(r["mpg"]), esc(r["ppg"]),
+                                esc(f"{_base:.1f}"),
+                                '<span class="blank">needs per-game distribution (F-061)</span>',
+                                '<span class="blank">needs market line (G6)</span>',
+                                badge("NOT PRICEABLE", "bad"), srclink(r["source_url"], "club stats table")]})
+    body += "<h2>Captured season averages, and the naive baseline line they imply</h2>" + table(
+        ["Player", "Club", "GP", "MPG", "PPG", "Our baseline line (PPG to the nearest 0.5)",
+         "P(over) — why it is blank", "Market line — why it is blank", "Status", "Source"], cap_prows,
+        "The line column is arithmetic on the official average (round to half a point). It is a baseline, not a price: "
+        "without per-game logs there is no median, no variance and therefore no probability, so no prop is actionable.",
+        num_cols=(2, 3, 4, 5))
+    body += """<div class="note"><b>What changed on this page.</b> The player table used to be blank because the endpoint was
+recorded as unreachable; it is reachable and was read on 2026-11-14 (verification V10–V12). The block that remains is not
+access, it is <em>granularity</em>: a season mean cannot price an over/under. Closing it needs the per-game log, and the
+one route that would give one without a licensed feed is the official box-score page per game (SG-35).</div>"""
     body += """<p class="lede">Season averages are a mean, not a distribution. To price "over 24.5 points" you need the spread
 of game-by-game scoring around that mean and the chance the player is on the floor at all — which is why the minutes-floor
 column is blank rather than guessed.</p>
@@ -1289,10 +1331,90 @@ shows.)</div>
                               srclink(r["src"])]})
     body += table(["Date", "ET", "Matchup", "Team", "Player", "Status", "Reason", "Attribution", "Source"],
                   rows, "Official injury report — every row", idcol="id")
-    body += """<h2>What an injury actually does to a line — and why it is blank</h2>
-<p class="lede">Turning "Out" into points requires three things: the player's share of minutes, the team's performance with
-and without him, and who replaces him. None of the three is in the data reachable here. The previous build correctly left
-the same columns blank; this build keeps them blank and states the reason on every row instead of printing a placeholder.</p>
+    # ---- the fresher official release read in this session (2026-11-14, 18:41-18:52 UTC) ----
+    cap_latest = CP.latest_rows()
+    cap_ns = CP.latest_not_submitted()
+    cap_delta = CP.delta_vs_morning(O.INJURIES)
+    cap_prod = CP.production_at_risk(teams)
+    cap_rot = CP.rotation()
+    cap_mean_total = sum(l.total for l in lines) / len(lines) if lines else 0.0
+    body += f"""<h2>The release the site had not read: 11/14/26 01:30 PM ET</h2>
+<p class="lede">{len(cap_latest)} designation rows and {len(cap_ns)} clubs the league had not received, transcribed from the
+official game-day release read at {esc(CP.meta()['captured_utc'])} — {len(cap_delta['added'])} rows more than the 04:30 AM release
+above, with {len(cap_delta['changed'])} statuses moved. The morning release is kept, not overwritten: this is a superseding
+section, and both are on disk with their own URLs.</p>"""
+    rows = []
+    for r in cap_latest:
+        _chg = next((c for c in cap_delta["changed"] if c["player"].lower() == r["player"].lower()), None)
+        rows.append({"id": f"pm-{r['matchup']}-{r['player']}".replace(" ", "-"), "cells": [
+            esc(r["game_date"]), esc(r["game_time_et"]), esc(r["matchup"]), esc(r["team"]), esc(r["player"]),
+            badge(r["status"], "bad" if r["status"] == "Out" else "warn" if r["status"] in ("Questionable", "Doubtful") else "off"),
+            esc(r["reason"]),
+            (badge(f"moved from {_chg['was']}", "warn") if _chg else "unchanged from 04:30 AM"),
+            srclink(r["source_url"])]})
+    body += table(["Date", "ET", "Matchup", "Team", "Player", "Status", "Reason", "Change vs 04:30 AM release", "Source"],
+                  rows, "Official injury report — 11/14/26 01:30 PM ET, every row", idcol="id")
+    body += f"""<div class="note"><b>What this release changes for the slate.</b> Cleveland's four game-status players
+(Mitchell, Harden, Allen, Watson) and Minnesota's leading scorer were not on the morning report at all. Four clubs
+(New Orleans, Cleveland, Chicago, Miami) had filed nothing by 04:30 AM and everything by 01:30 PM; Memphis still had
+not filed, which is <em>not</em> a missed deadline — its game-day window (11 a.m.–1 p.m. Central) was still open when the
+report was published. No 11/15 club had filed at capture time; the day-before deadline is 5 p.m. local, i.e. 21:00–23:00
+UTC tonight (F-065).</div>"""
+    body += "<h2>Rotation and production at risk — measured for the clubs we could read</h2>"
+    rows = []
+    for r in cap_prod:
+        _shift = CP.total_line_shift(r["pct_of_club_ppg"], cap_mean_total)
+        rows.append({"cells": [esc(r["club"]),
+                              esc(r["n_out_doubtful"]), esc(r["n_game_status"]),
+                              esc(r["names_sitting"]) if r["names_sitting"] else '<span class="blank">none inside the captured block (F-060)</span>',
+                              esc(r["names_game_time"]) if r["names_game_time"] else '<span class="blank">none on the report (F-060)</span>',
+                              esc(r["mpg_vacated"]), esc(f'{r["share_of_captured_minutes"]}%'),
+                              esc(r["ppg_at_risk"]),
+                              esc(f'{r["pct_of_club_ppg"]}%') if r["pct_of_club_ppg"] is not None else '<span class="blank">no Out/Doubtful row (F-060)</span>',
+                              esc(r["ppg_game_time_bucket"]),
+                              esc(f'{r["pct_game_time_of_club_ppg"]}%') if r["pct_game_time_of_club_ppg"] is not None else '<span class="blank">no game-status row (F-060)</span>',
+                              esc(r["next_man_up"]),
+                              esc(f'±{_shift} pts') if _shift is not None else '<span class="blank">needs a pct first (F-060)</span>',
+                              srclink(r["src"], "injury PDF"), " · ", srclink(r["src_stats"], "club stats") if False else srclink(r["src_stats"], "club stats")]})
+    body += table(["Club", "Out/Doubtful in rotation", "Game-status", "Sitting (names)", "Game-time decision (names)",
+                   "MPG vacated", "% of captured rotation minutes", "PPG at risk", "% of club PF/G",
+                   "PPG in the game-time bucket", "% of club PF/G if all sit", "Next man up (by MPG)",
+                   "Reading aid on the total", "Sources"],
+                  rows, "Season averages (official per-club table) × game-day designations (official PDF). "
+                        "An addition and a ratio — no on/off model, no assumed replacement value.", num_cols=(1, 2, 5, 7, 8, 9, 10))
+    body += f"""<div class="note warn"><b>Coverage, stated plainly.</b> The per-club averages are captured for {len(cap_prod)} of 30
+clubs ({", ".join(r["tricode"] for r in cap_prod)}); the other 27 clubs are blank on this table because their page was not
+fetched in this session, not because the endpoint refuses. A "0" above means <em>nothing ruled out inside the eight rows
+captured for that club</em> — Denver has four designations, all outside the captured block (F-060). The minutes share is a
+share of the captured block, not of the club's full roster. The "reading aid" column is
+<code>mean window total × pct ÷ 200</code> = the midpoint of a one-club scoring deficit landing in a two-club total; it is
+arithmetic on a season average and must not be used as a projection of one game's pace or to size a stake.</div>"""
+    rows = []
+    for r in cap_rot:
+        rows.append({"cells": [esc(r["team"]), esc(r["min_rank_club"]),
+                              f'<a href="https://www.nba.com/stats/player/{r["player_id"]}/" rel="noopener" target="_blank">{esc(r["player"])}</a>',
+                              esc(r["gp"]), esc(r["mpg"]), esc(r["ppg"]), esc(f'{r["min_share"]}%'),
+                              (badge(r["status"], "bad" if r["status"] in CP.SIT_OUT else "warn" if r["status"] in CP.SIT_GAME else "off")
+                               if r["status"] else badge("not on the report", "off")),
+                              esc(r["reason"]) if r["reason"] else '<span class="blank">not on the report — no designation filed for this player</span>',
+                              srclink(r["source_url"], "club stats table")]})
+    body += "<h2>The captured rotation blocks, ordered by minutes</h2>" + table(
+        ["Club", "Rank by MPG", "Player", "GP", "MPG", "PPG", "% of captured block minutes", "1:30 PM status",
+         "Reason on the report", "Source"], rows,
+        "The official per-club table returns rows sorted by points; this table re-orders the same rows by minutes, "
+        "which is the ordering a rotation question needs (V12 in the capture verifier)")
+    body += """<h2>What an injury actually does to a line — and what still cannot be said</h2>
+<p class="lede">Three things are needed to turn "Out" into points: the player's share of minutes, who replaces him, and how
+the team has actually performed with and without him. The first two are now measured above for three clubs from official
+inputs. The third — on/off, plus any per-game distribution — still needs the game log, and the game-log tab returns
+"No data available" server-side (verified at https://www.nba.com/stats/player/1630162/gamelog on 2026-11-14), so nothing
+below this point prints a projected line move.</p>"""
+    body += """<div class="note"><b>Why the earlier build was right to leave these columns blank.</b> At that build the
+player table was believed unreachable, so any production number would have been invented. The endpoint is reachable, so
+the numbers above are published from it — and everything the endpoint does <em>not</em> give (distributions, on/off,
+minutes floors) is still blank, still flagged, and still named in (F-061).</div>"""
+    body += """
+
 <h2>Game-flow risk created by availability</h2>
 <ul>
   <li><b>Blowout risk:</b> a team missing four or more rotation players is more likely to be on the wrong end of a
@@ -1470,6 +1592,15 @@ not current counts. The live deployment is the <code>site/</code> tree; current 
 Source URLs and captured provenance remain available for manual review.</p>
 <h2>Next safe improvements</h2>
 <ul>
+  <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
+  <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
+  <li><s>Reconcile the README&rsquo;s claim of 49 tests with the 55 that actually run.</s> Resolved by
+      measurement, not by picking a number: this build counts the three suites from their own files and prints
+      them in the Methodology page&rsquo;s reproduce block, and two scripts regenerate the prose figures —
+      <code>audit/2026-11-14-3681/sync_readme_counts.py</code> for pages/tables/rows and
+      <code>audit/2026-11-14-bc867bff/sync_readme_tests.py</code> for the test counts (both refuse to guess when
+      their pattern stops matching). No count on either tree is a memory any more, so the discrepancy cannot
+      recur silently.</li>
   <li>Investigate and alert on the failed official-results fetch before relying on scheduled freshness (F-043 / SG-31).</li>
   <li>Implement a separate rolling slate build with official schedule/team inputs and fail-closed provenance and freshness gates.</li>
   <li>Keep staking and rewards disabled until timestamped odds and the registered strategy gates are satisfied.</li>
@@ -1825,6 +1956,24 @@ Every hit-rate table on this site now prints both counts.</div>"""
                    "Hit rate", "p vs coin", "Verdict", "Source"], rows,
                   "Per-strategy grading — the p-value is the probability of this record from a fair coin")
 
+    _rg = gr.get("s2_sign_regrade", {}) or {}
+    rg_sweep = (f"{_rg.get('as_published_wins', 0)} of {_rg.get('n_graded', 0)} S2 rows, and the same count for the "
+                f"moneyline rows — {gr.get('recorded_signals_graded', 0)} rows in all"
+                if _rg else "nothing settled yet")
+    rg_intended = (f"{_rg.get('as_intended_wins', 0)}-{_rg.get('n_graded', 0) - _rg.get('as_intended_wins', 0)}"
+                   if _rg else "n/a")
+    def _rb(res):
+        return badge(res, "ok" if res == "WIN" else "bad" if res == "LOSS" else "warn")
+
+    _s2rows = [{"cells": [esc(r["game"]), f"<code>{esc(r['as_published'])}</code>", _rb(r["as_published_result"]),
+                          f"<code>{esc(r['as_intended'])}</code>", _rb(r["as_intended_result"]),
+                          esc(r["final"]), srclink(r["source"], "official final")]}
+               for r in _rg.get("rows", [])]
+    rows_s2 = (table(["Game", "Published selection (the favourite, given the dog's number)", "Result as published",
+                      "Selection the strategy means", "Result as intended", "Official final", "Source"],
+                     _s2rows, "Strategy S2 re-graded both ways — computed by nba2/v2/live.py from the committed "
+                              "official finals, never typed in")
+               if _s2rows else '<p class="lede">nothing graded yet (F-062)</p>')
     body += f"""<h2>5. Why no profit number appears anywhere</h2>
 <p class="lede">{esc(gr.get('pricing_note',''))}</p>
 <p>A PnL would require assuming a price, and the assumption would be doing all the work: at −110 a 4-0 record is
@@ -1837,14 +1986,55 @@ unanswered until a price exists.</p>
 <ul>
   <li><b>Against the model:</b> on nine games it named the winner no better than a naive net-rating baseline and worse
       than always picking the home team. No edge is demonstrated.</li>
-  <li><b>For the process:</b> the gate machinery did its job. Every graded pick won, and the site still refuses to rank
-      the strategy, because four games is not a sample. A system that can report 4-0 and simultaneously refuse to be
-      impressed by it is the only kind worth building.</li>
+  <li><b>For the process:</b> the gate machinery did its job — {rg_sweep} rows graded WIN as published, and the site
+      still refuses to rank the strategy, because four games is not a sample. A system that can report a clean sweep and
+      simultaneously refuse to be impressed by it is the only kind worth building.</li>
+  <li><b>And the correction that came with re-checking it:</b> the four spread rows won on the <em>wrong side of the
+      line</em> — the v1 generator attached the underdog's number to the favourite's name (S-26). The generator is
+      fixed and regression-tested; the historical file is left byte-identical, because its pre-tip provenance is worth
+      more than a tidy restatement. Re-graded on the side the strategy names, the record is {rg_intended}.</li>
 </ul>
-<h2>Reproduce this page</h2>
+<h2>3b. The same four games, graded twice</h2>
+<p class="lede">{esc(gr.get('s2_sign_regrade',{}).get('reading',''))}</p>
+{rows_s2}
+<p class="lede">Both columns are the same official final score. The difference is which side of the line the row
+claims, and only one of them is what the strategy says it bets.</p><h2>Reproduce this page</h2>
 <pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
 python3 -m nba2.v2              # rebuild this page
 python3 -m nba2.v2.check        # every row sourced, every blank explained</pre>"""
+    body += f"""<h2>Second-opinion re-verification, 2026-11-14 18:41–18:52 UTC</h2>
+<p class="lede">A later session ({esc(CP.meta()["session"])}) re-read four official documents against the published tree and
+published its own verifier. Its tally, read from its own output file: <b>{esc(CP.checks_summary())}</b>. Nothing it found
+changed a line, a pick or a model input; everything it found about <em>coverage</em> is in the flags below.</p>"""
+    cap_recs = CP.club_records()
+    cap_bad = [t for t, (w, l) in cap_recs.items() if (teams[t].w, teams[t].l) != (w, l)]
+    body += table(["Check", "What was compared", "Result", "Evidence"],
+                  [{"cells": ["Club records", f"{len(cap_recs)} of 30 clubs, live W-L on the game-page scoreboard strip vs the published team table",
+                              badge("0 mismatch" if not cap_bad else f"{len(cap_bad)} mismatch", "ok" if not cap_bad else "bad"),
+                              srclink(CP.club_records_url(), "nba.com/game/okc-vs-lac-0022600042/box-score")]},
+                   {"cells": ["League balance", f"the {len(cap_recs)} live clubs plus the published GSW row must equal the league's own totals",
+                              badge("closes exactly", "ok"),
+                              f"site implies 183 wins / 183 losses; one mis-transcription would break it. "
+                              f"{srclink('https://www.nba.com/standings', 'nba.com/standings')}"]},
+                   {"cells": ["Slate", f"{len(CP.slate_reread())} of {len(lines)} games in the published window re-read (all 11/14, all 11/15, six 11/16)",
+                              badge("ids, dates, matchup and ET tips all match", "ok"), srclink(CP.slate_url(), "nba.com/schedule?date=2026-11-14")]},
+                   {"cells": ["Games NOT re-read", "the 11/16 tail and all five 11/17 games",
+                              badge("declared, not credited", "warn"),
+                              f"the verifier lists the seven ids rather than assuming they are right. "
+                              f"{srclink(CP.slate_url(), 'nba.com/schedule?date=2026-11-14')}"]},
+                   {"cells": ["Injury release", "01:30 PM ET release vs the 04:30 AM release the site was built from",
+                              badge(f"+{len(cap_delta['added'])} rows, {len(cap_delta['changed'])} statuses moved, 0 dropped", "warn"),
+                              srclink(CP.pdf_url(), "Injury-Report_2026-11-14_01_30PM.pdf")]},
+                   {"cells": ["Player table", "official per-club season averages reached for the first time; page order checked against its own claim",
+                              badge("reachable — the site's 'blocked' label was wrong", "warn"),
+                              srclink("https://www.nba.com/stats/players/traditional?TeamID=1610612739", "nba.com/stats/players/traditional")]},
+                   ], "What the second session verified against the published tree", flags=None)
+    body += f"""<div class="note warn"><b>Two findings worth acting on.</b> (1) The injury section of this site was built
+from the 04:30 AM release because a later file returned AccessDenied at the time; at 18:52 UTC the 01:30 PM release
+answers and it carries {len(cap_delta['added'])} rows the published section does not have. The site now publishes both.
+(2) The per-club player table — named as the blocker for props, minutes and player correlations in every prior session —
+is reachable. That converts S-41 from "unavailable" to "not yet captured for 27 of 30 clubs", which is a work item, not a
+wall. See the decision queue (S-41) and SG-35/SG-36.</div>"""
     built["live-verification.html"] = page("live-verification.html", "Live verification", body, "live-verification.html")
 
     # ------------------------------------------------------------------ flagged
@@ -1969,7 +2159,11 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests</pre>"""
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # {sc["v2"]} tests, counted from the files
+python3 -m unittest discover -s nba2/tests -t .                # {sc["v1"]} tests
+python3 -m unittest discover -s backtest/tests                 # {sc["backtest"]} tests</pre>
+<p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
+message — a remembered count is the most reliably stale number on the site (F-033).</p>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.

@@ -59,7 +59,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-`index.html` + `pages/**` (21 pages, 50 tables, 1416 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 50 tables, 1423 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -110,7 +110,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (64 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (70 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -291,8 +291,8 @@ decision logged on the new site's Flagged page (F-011).
 python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
-python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 98 tests
+python3 -m unittest discover -s nba2/tests -t .                # 70 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

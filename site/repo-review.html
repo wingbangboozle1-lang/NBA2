@@ -126,6 +126,15 @@ not current counts. The live deployment is the <code>site/</code> tree; current 
 Source URLs and captured provenance remain available for manual review.</p>
 <h2>Next safe improvements</h2>
 <ul>
+  <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
+  <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
+  <li><s>Reconcile the README&rsquo;s claim of 49 tests with the 55 that actually run.</s> Resolved by
+      measurement, not by picking a number: this build counts the three suites from their own files and prints
+      them in the Methodology page&rsquo;s reproduce block, and two scripts regenerate the prose figures —
+      <code>audit/2026-11-14-3681/sync_readme_counts.py</code> for pages/tables/rows and
+      <code>audit/2026-11-14-bc867bff/sync_readme_tests.py</code> for the test counts (both refuse to guess when
+      their pattern stops matching). No count on either tree is a memory any more, so the discrepancy cannot
+      recur silently.</li>
   <li>Investigate and alert on the failed official-results fetch before relying on scheduled freshness (F-043 / SG-31).</li>
   <li>Implement a separate rolling slate build with official schedule/team inputs and fail-closed provenance and freshness gates.</li>
   <li>Keep staking and rewards disabled until timestamped odds and the registered strategy gates are satisfied.</li>

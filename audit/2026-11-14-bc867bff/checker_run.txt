@@ -1,0 +1,53 @@
+[PASS] V1     every captured designation row carries a valid status and an official PDF source
+        evidence: 50 rows, allowed = ['Available', 'Doubtful', 'Out', 'Probable', 'Questionable']
+        observed: 0 bad row(s)
+[PASS] V2     the morning release this capture supersedes is present in the repository, read from disk
+        evidence: injury_report_2026-11-14_0430AM.json
+        observed: 26 player rows in the committed 04:30 AM snapshot
+[INFO] V3     delta against the 04:30 AM release: rows added and statuses moved, computed not asserted
+        evidence: both releases re-read from Injury-Report_2026-11-14_01_30PM.pdf / injury_report_2026-11-14_0430AM.json
+        observed: new rows 24; status changes 4 [('Christie, Max', 'Questionable', 'Doubtful'), ('Brown Jr., Mikel', 'Questionable', 'Probable'), ('Harkless, Elijah', 'Questionable', 'Available'), ('Jones, Isaac', 'Questionable', 'Available')]; rows present only in the AM release 0
+[PASS] V4     every club record read live at 18:45 UTC equals the record the site publishes
+        evidence: https://www.nba.com/game/okc-vs-lac-0022600042/box-score (scoreboard strip) vs data/v2/teams.json
+        observed: 29 clubs compared, 0 mismatch(es) []
+[PASS] V5     league balance closes: 29 live clubs + the published GSW row equal the published league totals
+        evidence: site implies 183 wins / 183 losses = 91 games
+        observed: strip 175-178, GSW 8-5, totals 183/183; one missed transcription would break this identity
+[PASS] V6     every game re-read from the official schedule matches the published window (id, matchup, date, tip)
+        evidence: https://www.nba.com/schedule?date=2026-11-14 vs data/v2/lines.json
+        observed: 20 of 27 games re-read this session, 0 mismatch(es) []
+[INFO] V7     the games NOT re-read this session are declared, not quietly credited
+        evidence: difference of the two id sets
+        observed: 7 published games (11/16 tail + all 11/17) were not independently re-read in this session: ['0022600251', '0022600252', '0022600253', '0022600254', '0022600255', '0022600256', '0022600257']
+[PASS] V8     the 11/15 games on the injury report are exactly the 11/15 games on the schedule
+        evidence: two independent official documents, no shared transcription
+        observed: report ['ATL@MIL', 'CHA@LAC', 'DAL@BOS', 'HOU@WAS', 'IND@PHI', 'LAL@PHX', 'NYK@TOR', 'OKC@SAC', 'SAS@UTA'] | schedule ['ATL@MIL', 'CHA@LAC', 'DAL@BOS', 'HOU@WAS', 'IND@PHI', 'LAL@PHX', 'NYK@TOR', 'OKC@SAC', 'SAS@UTA']
+[PASS] V9     the injury report's own ET tip times agree with the schedule's tips for every 11/14 game
+        evidence: PDF 'Game Time (ET)' column (12-hour dial) vs the schedule's ET tips (24-hour), offset by 12 h
+        observed: 5 games cross-checked, 0 disagreement(s) []
+[PASS] V10    each player row is internally consistent: the club's W-L in the games he played equals GP
+        evidence: official per-club traditional table, columns age/gp/w/l/min/pts
+        observed: 24 rows checked, 0 inconsistent []
+[PASS] V11    the most-used player on each club carries exactly the club's own record - the two tables agree
+        evidence: nba.com/stats/players/traditional?TeamID=... vs nba.com/standings as published in data/v2/teams.json
+        observed: 3 clubs, 0 disagreement(s) []
+[PASS] V12    the page's own rank column is a points sort, not a minutes sort - so the site must re-order
+        evidence: rank column vs PTS column and vs Min column in each captured block
+        observed: PTS monotone in rank for all 3 clubs; minutes NOT monotone for 3 (['Denver Nuggets', 'Cleveland Cavaliers', 'Minnesota Timberwolves']) - the capture claims the sort is by points and re-orders by minutes
+[PASS] V13    injury status joins to the rotation by name for the three captured clubs
+        evidence: 24 rotation rows x 50 designation rows, matched on (team, player)
+        observed: 2 ruled-out rotation players, 4 game-status players
+        impact: {"club": "Cleveland Cavaliers", "n_missing_from_rotation": 1, "ppg_at_risk": 16.9, "pct_of_team_ppg": 14.5, "mpg_vacated": 32.0, "next_man_up": "Meleek Thomas 22.5 mpg"}
+        impact: {"club": "Denver Nuggets", "n_missing_from_rotation": 0, "ppg_at_risk": 0, "pct_of_team_ppg": 0.0, "mpg_vacated": 0, "next_man_up": "Jamal Murray 36.4 mpg"}
+        impact: {"club": "Minnesota Timberwolves", "n_missing_from_rotation": 1, "ppg_at_risk": 33.3, "pct_of_team_ppg": 27.9, "mpg_vacated": 33.7, "next_man_up": "Jaden McDaniels 33.1 mpg"}
+[PASS] V14    production-at-risk is computable from the join for the captured clubs, and only for them
+        evidence: sum of official PPG of Out/Doubtful rotation players over the club's official PF/G from the standings table
+        observed: 3 clubs quantified; 27 clubs stay blank + flagged because their per-club table was not captured in this session
+[PASS] V15    everything still missing is recorded with the URL that was tried and what it returned
+        evidence: still_blocked entries
+        observed: per-game player logs (minutes floor, prop medians, player-level correlation); market prices
+[PASS] V16    two sessions transcribed the same 1:30 PM PDF independently and agree row for row
+        evidence: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf  (their capture 2026-11-14T19:50Z, ours 2026-11-14T18:52:00Z)
+        observed: identical: 50 rows, the same status distribution, the same 24 added rows, the same 4 status moves, 0 dropped
+
+16 checks: 14 pass, 0 fail, 2 info

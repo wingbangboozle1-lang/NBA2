@@ -273,8 +273,38 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
 <td>Decides how far ahead an injury-driven line can honestly be published.</td>
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
+<tr id="Q-25">
+<td>Q-25</td>
+<td>How much of the 3-day injury picture is a filing calendar and how much is a stale capture?</td>
+<td>Measured this session, not assumed: at 04:30 AM ET zero clubs had filed for 11/14 beyond the standing list, and the 01:30 PM release carried 50 rows for 11/14 including 24 the site had never published and 4 statuses that moved (Mobley to Out, Christie to Doubtful, two Nets/Guest-list moves to Available). For 11/15, all 18 clubs were still NOT YET SUBMITTED at 01:30 PM, which IS the calendar: the day-before deadline is 5 p.m. local, 21:00-23:00 UTC tonight.</td>
+<td>A capture after 23:00 UTC tonight for 11/15, and the same at 18:00 UTC on 11/15 for 11/16.</td>
+<td>Fetch the index, take the newest release, diff it against the published rows (SG-38 makes this a build step instead of a favour).</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Decides whether days 2 and 3 of the slate can ever carry an injury row, or only day 1.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="Q-26">
+<td>Q-26</td>
+<td>Is the per-club season table enough to price anything, or only to size a risk?</td>
+<td>It is enough to say Minnesota is missing 27.9% of its scoring rate and 33.7 vacated minutes with one player out, and Cleveland has 53.8% of its scoring rate in the game-time bucket. It is NOT enough to turn either into a number on a line: a season mean carries no distribution, no opponent adjustment and no on/off split, and the game-log route that would supply the first two prints &quot;No data available&quot;.</td>
+<td>Per-game logs (minutes, points, opponent), or 500+ settled games with player-level data attached.</td>
+<td>Scrape the box-score page of each settled game (SG-37), which is where the per-game rows do exist, and check whether a play-by-play or on/off endpoint is reachable before assuming it is not.</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Decides whether the injuries page stays an exposure report or becomes a pricing input.</td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">nba.com/stats/players/traditional?TeamID=1610612750</a></td>
+</tr>
+<tr id="Q-27">
+<td>Q-27</td>
+<td>Which published number is the site most likely to get wrong tomorrow?</td>
+<td>The injury section, and the reason is now measurable rather than felt: the release the site was built from was 5.5 hours older than the newest one on the league index at the moment of the last build, and 24 rows appeared in between. Records and lines are stable overnight; designations are not. A live club record read at 18:45 UTC matched the published table on 29 of 29 clubs, so the risk is concentrated in exactly one table.</td>
+<td>Nothing more to resolve this week — the fix is procedural and is SG-38.</td>
+<td>Print the release timestamp of the newest report on the index next to the one actually used, and fail the build when the gap exceeds one hour on a game day.</td>
+<td><span class="badge b-warn">open</span></td>
+<td>Decides whether the injury page can be trusted by a reader who is 6 hours late to the build.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
 </tbody></table></div>
-<h2>Supplemental questions from the shared register (5)</h2>
+<h2>Supplemental questions from the shared register (2)</h2>
 <p class="lede">These entries are maintained in <code>requirements/QUESTIONS.json</code> and are deduplicated against the core register above.
 Entries outside the explicitly selected set remain flagged for reconciliation rather than being presented as current answers.</p>
 <div class="scroll"><table>
@@ -288,33 +318,6 @@ Entries outside the explicitly selected set remain flagged for reconciliation ra
 <th scope="col">Severity</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
-<tr id="Q-25">
-<td>Q-25</td>
-<td>Should a per-strategy win rate be allowed to count the same game twice when two strategies fire on it?</td>
-<td>The measured overlap: of 4 graded games, all 4 were bet by both S1_MarginFavorite and S2_SpreadValue. Per-strategy hit rates stay valid; any portfolio or leaderboard return that sums them double-counts the games.</td>
-<td>A portfolio accounting rule: whether the leaderboard scores strategies independently (as now) or scores the union of positions actually held.</td>
-<td>Owner decision. Independent scoring is simpler and correct for ranking hypotheses; union scoring is correct for describing what a bankroll would have done. They answer different questions and the site currently only implements one.</td>
-<td><span class="badge b-warn">HIGH</span></td>
-<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
-</tr>
-<tr id="Q-26">
-<td>Q-26</td>
-<td>Does a team rating that is computed from a frozen standings table need to be re-fitted per slate, or is a same-day snapshot accurate enough?</td>
-<td>A measured comparison on 9 graded games: the model&#x27;s margin MAE was 11.46 against 13.33 for predicting a tie, but its winner accuracy (5/9) was no better than a naive net-rating baseline computed from the same frozen table (5/9).</td>
-<td>A rebuilt rating on post-11/13 data. That requires re-running the whole pipeline against today&#x27;s official standings, which is a data refresh, not a code change.</td>
-<td>Refresh data/raw with the 30 current records captured today (already in audit/2026-11-14/official_inputs_2026-11-14.json), rebuild, re-seal a new ledger, and compare. Until then no claim about which estimator is better is supported.</td>
-<td><span class="badge b-warn">HIGH</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr id="Q-27">
-<td>Q-27</td>
-<td>Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?</td>
-<td>A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.</td>
-<td>Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.</td>
-<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml&#x27;s parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.</td>
-<td><span class="badge b-warn">MEDIUM</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
 <tr id="Q-28">
 <td>Q-28</td>
 <td>How is a pick&#x27;s price recorded if no odds feed will ever be licensed?</td>

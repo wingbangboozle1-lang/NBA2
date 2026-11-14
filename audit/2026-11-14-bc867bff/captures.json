@@ -1,0 +1,1320 @@
+{
+ "schema": "nba2.capture-session.v1",
+ "session": "arena/bc867bff-nba2",
+ "captured_utc": "2026-11-14T18:52:00Z",
+ "method": "platform page-fetch tool (fetch_page). Direct TLS egress from this workspace to every nba.com host is blocked; the tool reaches the same URLs, which is recorded rather than worked around.",
+ "documents": {
+  "injury_report": {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf",
+   "header_verbatim": "Injury Report: 11/14/26 01:30 PM",
+   "index_page": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "rows": [
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "Denver Nuggets",
+     "player": "Holmes II, DaRon",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "Denver Nuggets",
+     "player": "Nembhard, Ryan",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "Denver Nuggets",
+     "player": "Strawther, Julian",
+     "status": "Out",
+     "reason": "Injury/Illness - Left Knee Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "Denver Nuggets",
+     "player": "Whitmore, Cam",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "New Orleans Pelicans",
+     "player": "McGowens, Bryce",
+     "status": "Out",
+     "reason": "Injury/Illness - Left Elbow Infection",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "New Orleans Pelicans",
+     "player": "Missi, Yves",
+     "status": "Probable",
+     "reason": "Injury/Illness - Left Knee Contusion / Bone Bruise",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "New Orleans Pelicans",
+     "player": "Murphy III, Trey",
+     "status": "Out",
+     "reason": "Injury/Illness - Bilateral Patellar Tendinopathy",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "New Orleans Pelicans",
+     "player": "Murray, Dejounte",
+     "status": "Out",
+     "reason": "Injury/Illness - Left Ankle Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:00",
+     "matchup": "DEN@NOP",
+     "team": "New Orleans Pelicans",
+     "player": "Watford, Trendon",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Ankle Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "Biberovic, Tarik",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Heel Bursitis",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "Christie, Max",
+     "status": "Doubtful",
+     "reason": "Injury/Illness - Left Ankle Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "de Larrea, Sergio",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Knee Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "Johnson Jr., Morez",
+     "status": "Probable",
+     "reason": "Injury/Illness - Left Shin / Tibia Contusion",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "Lively II, Dereck",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Foot Surgery",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Dallas Mavericks",
+     "player": "Martin, Caleb",
+     "status": "Available",
+     "reason": "Injury/Illness - Right Thumb Splint",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Allen, Jarrett",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Right Knee Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Harden, James",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Left Lower Leg/Calf Tightness",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Merrill, Sam",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Elbow Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Mitchell, Donovan",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Left Knee Contusion/Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Mobley, Evan",
+     "status": "Out",
+     "reason": "Injury/Illness - Left Great Toe Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Tomlin, Nae'Qwan",
+     "status": "Out",
+     "reason": "Injury/Illness - Low Back Stress Reaction",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Udeh, Jr., Ernest",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "07:30",
+     "matchup": "DAL@CLE",
+     "team": "Cleveland Cavaliers",
+     "player": "Watson, Peyton",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Right Hamstring Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Bilodeau, Tyler",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Brown Jr., Mikel",
+     "status": "Probable",
+     "reason": "Injury/Illness - Illness",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Jefferson, Joshua",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Nelson, Grant",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Saraf, Ben",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Brooklyn Nets",
+     "player": "Traore, Nolan",
+     "status": "Probable",
+     "reason": "Injury/Illness - Right Calf Tightness / Soreness",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Awaka, Tobe",
+     "status": "Out",
+     "reason": "Injury/Illness - Disc Irritation",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Claxton, Nic",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Left Hamstring Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Powell, Norman",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Low Back Injury Management",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Sellers, Jaylin",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Smith, Jalen",
+     "status": "Questionable",
+     "reason": "Injury/Illness - Left Finger Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Swain, Dailyn",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Chicago Bulls",
+     "player": "Wilson, Caleb",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Metacarpal Fracture",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Minnesota Timberwolves",
+     "player": "Beringer, Joan",
+     "status": "Available",
+     "reason": "Injury/Illness - Face Mask",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Minnesota Timberwolves",
+     "player": "DiVincenzo, Donte",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "CHI@MIN",
+     "team": "Minnesota Timberwolves",
+     "player": "Edwards, Anthony",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Knee Arthroscopy",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Duren, Jalen",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Hamstring Strain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Harkless, Elijah",
+     "status": "Available",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Joe, Isaiah",
+     "status": "Out",
+     "reason": "Injury/Illness - Right Hip Contusion",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Jones, Isaac",
+     "status": "Available",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Lanier, Chaz",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Okorie, Ebuka",
+     "status": "Out",
+     "reason": "G League - On Assignment",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Detroit Pistons",
+     "player": "Onyenso, Ugonna",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Miami Heat",
+     "player": "Antetokounmpo, Giannis",
+     "status": "Probable",
+     "reason": "Injury/Illness - Right Wrist Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Miami Heat",
+     "player": "Goldin, Vladislav",
+     "status": "Out",
+     "reason": "G League - Two-Way",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Miami Heat",
+     "player": "Larsson, Pelle",
+     "status": "Doubtful",
+     "reason": "Injury/Illness - Illness",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "DET@MIA",
+     "team": "Miami Heat",
+     "player": "Thompson, Klay",
+     "status": "Probable",
+     "reason": "Injury/Illness - Left Ankle Sprain",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    }
+   ],
+   "not_yet_submitted": [
+    {
+     "game_date": "2026-11-14",
+     "game_time_et": "08:00",
+     "matchup": "BKN@MEM",
+     "team": "Memphis Grizzlies",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "01:00",
+     "matchup": "IND@PHI",
+     "team": "Indiana Pacers",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "01:00",
+     "matchup": "IND@PHI",
+     "team": "Philadelphia 76ers",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "04:00",
+     "matchup": "LAL@PHX",
+     "team": "Los Angeles Lakers",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "04:00",
+     "matchup": "LAL@PHX",
+     "team": "Phoenix Suns",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "04:30",
+     "matchup": "CHA@LAC",
+     "team": "Charlotte Hornets",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "04:30",
+     "matchup": "CHA@LAC",
+     "team": "LA Clippers",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "05:00",
+     "matchup": "SAS@UTA",
+     "team": "San Antonio Spurs",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "05:00",
+     "matchup": "SAS@UTA",
+     "team": "Utah Jazz",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "06:00",
+     "matchup": "DAL@BOS",
+     "team": "Dallas Mavericks",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "06:00",
+     "matchup": "DAL@BOS",
+     "team": "Boston Celtics",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "06:00",
+     "matchup": "NYK@TOR",
+     "team": "New York Knicks",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "06:00",
+     "matchup": "NYK@TOR",
+     "team": "Toronto Raptors",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "07:00",
+     "matchup": "HOU@WAS",
+     "team": "Houston Rockets",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "07:00",
+     "matchup": "HOU@WAS",
+     "team": "Washington Wizards",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "08:00",
+     "matchup": "ATL@MIL",
+     "team": "Atlanta Hawks",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "08:00",
+     "matchup": "ATL@MIL",
+     "team": "Milwaukee Bucks",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "09:00",
+     "matchup": "OKC@SAC",
+     "team": "Oklahoma City Thunder",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    },
+    {
+     "game_date": "2026-11-15",
+     "game_time_et": "09:00",
+     "matchup": "OKC@SAC",
+     "team": "Sacramento Kings",
+     "reason": "NOT YET SUBMITTED",
+     "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf"
+    }
+   ],
+   "transcription_notes": [
+    "This is the freshest published release at capture time: the official index lists quarter-hourly releases for 11/14 and the last one present is the 1:30 p.m. ET report.",
+    "Jarrett Allen's Reason cell wraps across the PDF page break - 'Right Knee Injury' ends page 1 and 'Management' heads page 2. The two fragments are joined into one value here and nowhere split.",
+    "The continuation pages drop the Game Date / Time / Matchup / Team cells. Club attribution is read from the alphabetical run of each club's block ('Last, First'), which is unambiguous per game.",
+    "No 11/15 club had filed as of this capture. The day-before deadline is 5 p.m. local on 11/14, i.e. 21:00-23:00 UTC tonight - after this capture, so those cells are blank by rule, not by omission.",
+    "Memphis is recorded NOT YET SUBMITTED for its own 8:00 p.m. ET game. At 1:30 p.m. ET the local game-day window (11 a.m.-1 p.m. Central) is still open, so this is not a missed deadline."
+   ]
+  },
+  "records_strip": {
+   "url": "https://www.nba.com/game/okc-vs-lac-0022600042/box-score",
+   "what": "The scoreboard strip on the game pages renders each club's live W-L. 29 of 30 clubs appear on the 11/14-11/16 dates shown; GSW's first game in the window is 11/17 so it is absent from the strip and is not claimed here.",
+   "records": {
+    "DEN": [
+     6,
+     4
+    ],
+    "NOP": [
+     4,
+     9
+    ],
+    "DAL": [
+     7,
+     5
+    ],
+    "CLE": [
+     6,
+     7
+    ],
+    "BKN": [
+     3,
+     8
+    ],
+    "MEM": [
+     8,
+     4
+    ],
+    "DET": [
+     8,
+     3
+    ],
+    "MIA": [
+     6,
+     6
+    ],
+    "CHI": [
+     2,
+     9
+    ],
+    "MIN": [
+     9,
+     3
+    ],
+    "IND": [
+     5,
+     8
+    ],
+    "PHI": [
+     10,
+     3
+    ],
+    "LAL": [
+     11,
+     2
+    ],
+    "PHX": [
+     5,
+     6
+    ],
+    "CHA": [
+     4,
+     8
+    ],
+    "LAC": [
+     3,
+     8
+    ],
+    "SAS": [
+     11,
+     2
+    ],
+    "UTA": [
+     1,
+     12
+    ],
+    "BOS": [
+     10,
+     2
+    ],
+    "NYK": [
+     6,
+     6
+    ],
+    "TOR": [
+     5,
+     7
+    ],
+    "HOU": [
+     10,
+     3
+    ],
+    "WAS": [
+     4,
+     9
+    ],
+    "ATL": [
+     7,
+     6
+    ],
+    "MIL": [
+     1,
+     12
+    ],
+    "OKC": [
+     8,
+     5
+    ],
+    "SAC": [
+     1,
+     11
+    ],
+    "ORL": [
+     5,
+     7
+    ],
+    "POR": [
+     9,
+     3
+    ]
+   },
+   "n_clubs": 29
+  },
+  "slate_reread": {
+   "url": "https://www.nba.com/schedule?date=2026-11-14",
+   "what": "20 of the 27 games in the published window re-read from the official schedule: all five 11/14 games with times, arenas and ids; all nine 11/15 games; six of eight 11/16 games before the render truncated. 11/17 was not re-read in this session and is not claimed.",
+   "times_note": "Times are Eastern on a 24-hour clock, the convention the published window uses (the page prints '7:00 PM ET' -> 19:00). The official injury report prints the same tips as '07:00 (ET)' on a 12-hour dial without a meridiem; V9 reconciles the two printings.",
+   "games": [
+    [
+     "2026-11-14",
+     "19:00",
+     "DEN",
+     "NOP",
+     "0022600231",
+     "Smoothie King Center",
+     "New Orleans, LA"
+    ],
+    [
+     "2026-11-14",
+     "19:30",
+     "DAL",
+     "CLE",
+     "0022600232",
+     "Rocket Arena",
+     "Cleveland, OH"
+    ],
+    [
+     "2026-11-14",
+     "20:00",
+     "DET",
+     "MIA",
+     "0022600233",
+     "Kaseya Center",
+     "Miami, FL"
+    ],
+    [
+     "2026-11-14",
+     "20:00",
+     "BKN",
+     "MEM",
+     "0022600234",
+     "FedExForum",
+     "Memphis, TN"
+    ],
+    [
+     "2026-11-14",
+     "20:00",
+     "CHI",
+     "MIN",
+     "0022600235",
+     "Target Center",
+     "Minneapolis, MN"
+    ],
+    [
+     "2026-11-15",
+     "13:00",
+     "IND",
+     "PHI",
+     "0022600236",
+     "Xfinity Mobile Arena",
+     "Philadelphia, PA"
+    ],
+    [
+     "2026-11-15",
+     "16:00",
+     "LAL",
+     "PHX",
+     "0022600237",
+     "Mortgage Matchup Center",
+     "Phoenix, AZ"
+    ],
+    [
+     "2026-11-15",
+     "16:30",
+     "CHA",
+     "LAC",
+     "0022600238",
+     "Intuit Dome",
+     "Inglewood, CA"
+    ],
+    [
+     "2026-11-15",
+     "17:00",
+     "SAS",
+     "UTA",
+     "0022600239",
+     "Delta Center",
+     "Salt Lake City, UT"
+    ],
+    [
+     "2026-11-15",
+     "18:00",
+     "DAL",
+     "BOS",
+     "0022600240",
+     "TD Garden",
+     "Boston, MA"
+    ],
+    [
+     "2026-11-15",
+     "18:00",
+     "NYK",
+     "TOR",
+     "0022600241",
+     "Scotiabank Arena",
+     "Toronto, ON"
+    ],
+    [
+     "2026-11-15",
+     "19:00",
+     "HOU",
+     "WAS",
+     "0022600242",
+     "",
+     ""
+    ],
+    [
+     "2026-11-15",
+     "20:00",
+     "ATL",
+     "MIL",
+     "0022600243",
+     "",
+     ""
+    ],
+    [
+     "2026-11-15",
+     "21:00",
+     "OKC",
+     "SAC",
+     "0022600244",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "19:00",
+     "ORL",
+     "BOS",
+     "0022600245",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "19:00",
+     "CHI",
+     "CLE",
+     "0022600246",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "19:00",
+     "MEM",
+     "WAS",
+     "0022600247",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "19:30",
+     "PHI",
+     "BKN",
+     "0022600248",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "19:30",
+     "HOU",
+     "MIA",
+     "0022600249",
+     "",
+     ""
+    ],
+    [
+     "2026-11-16",
+     "20:00",
+     "POR",
+     "MIN",
+     "0022600250",
+     "",
+     ""
+    ]
+   ]
+  },
+  "player_rotation": {
+   "url": "https://www.nba.com/stats/players/traditional?TeamID=<club id>",
+   "what": "Season traditional averages per club, from the official stats table, in the page's own order - which is PER-GAME POINTS descending, not minutes (found by re-deriving the sort from the captured values: PTS is monotone in rank, MIN is not). The site's rotation table therefore re-orders by minutes and says so. This endpoint was recorded as unreachable by earlier sessions; it is reachable and renders server-side, which is what unblocks the production-impact numbers on the site.",
+   "columns": "age, gp, wins, losses (in those games), MIN, PTS - all per game except age/gp/wins/losses",
+   "row_count_claim_on_page": "Denver's page header prints '16 Rows' for the club.",
+   "rows": [
+    {
+     "rank": 1,
+     "player": "Jamal Murray",
+     "player_id": "1627750",
+     "team": "Denver Nuggets",
+     "age": 29,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 36.4,
+     "ppg": 26.2,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 2,
+     "player": "Nikola Jokic",
+     "player_id": "203999",
+     "team": "Denver Nuggets",
+     "age": 31,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 36.3,
+     "ppg": 23.5,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 3,
+     "player": "Christian Braun",
+     "player_id": "1631128",
+     "team": "Denver Nuggets",
+     "age": 25,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 34.4,
+     "ppg": 12.4,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 4,
+     "player": "Cameron Johnson",
+     "player_id": "1629661",
+     "team": "Denver Nuggets",
+     "age": 30,
+     "gp": 7,
+     "team_w": 4,
+     "team_l": 3,
+     "mpg": 28.2,
+     "ppg": 12.1,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 5,
+     "player": "Aaron Gordon",
+     "player_id": "203932",
+     "team": "Denver Nuggets",
+     "age": 31,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 29.1,
+     "ppg": 11.0,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 6,
+     "player": "DeMar DeRozan",
+     "player_id": "201942",
+     "team": "Denver Nuggets",
+     "age": 37,
+     "gp": 9,
+     "team_w": 5,
+     "team_l": 4,
+     "mpg": 23.5,
+     "ppg": 10.0,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 7,
+     "player": "Trevon Brazile",
+     "player_id": "1642350",
+     "team": "Denver Nuggets",
+     "age": 23,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 19.5,
+     "ppg": 7.1,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 8,
+     "player": "Marvin Bagley III",
+     "player_id": "1628963",
+     "team": "Denver Nuggets",
+     "age": 27,
+     "gp": 10,
+     "team_w": 6,
+     "team_l": 4,
+     "mpg": 12.3,
+     "ppg": 5.8,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612743"
+    },
+    {
+     "rank": 1,
+     "player": "Donovan Mitchell",
+     "player_id": "1628378",
+     "team": "Cleveland Cavaliers",
+     "age": 30,
+     "gp": 13,
+     "team_w": 6,
+     "team_l": 7,
+     "mpg": 33.0,
+     "ppg": 23.0,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 2,
+     "player": "James Harden",
+     "player_id": "201935",
+     "team": "Cleveland Cavaliers",
+     "age": 37,
+     "gp": 13,
+     "team_w": 6,
+     "team_l": 7,
+     "mpg": 32.8,
+     "ppg": 16.9,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 3,
+     "player": "Evan Mobley",
+     "player_id": "1630596",
+     "team": "Cleveland Cavaliers",
+     "age": 25,
+     "gp": 12,
+     "team_w": 6,
+     "team_l": 6,
+     "mpg": 32.0,
+     "ppg": 16.9,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 4,
+     "player": "Meleek Thomas",
+     "player_id": "1643509",
+     "team": "Cleveland Cavaliers",
+     "age": 20,
+     "gp": 10,
+     "team_w": 5,
+     "team_l": 5,
+     "mpg": 22.5,
+     "ppg": 13.0,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 5,
+     "player": "Jarrett Allen",
+     "player_id": "1628386",
+     "team": "Cleveland Cavaliers",
+     "age": 28,
+     "gp": 11,
+     "team_w": 5,
+     "team_l": 6,
+     "mpg": 26.0,
+     "ppg": 12.5,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 6,
+     "player": "Peyton Watson",
+     "player_id": "1631212",
+     "team": "Cleveland Cavaliers",
+     "age": 24,
+     "gp": 11,
+     "team_w": 6,
+     "team_l": 5,
+     "mpg": 28.2,
+     "ppg": 10.4,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 7,
+     "player": "Thomas Bryant",
+     "player_id": "1628418",
+     "team": "Cleveland Cavaliers",
+     "age": 29,
+     "gp": 7,
+     "team_w": 2,
+     "team_l": 5,
+     "mpg": 13.0,
+     "ppg": 8.7,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 8,
+     "player": "Jaylon Tyson",
+     "player_id": "1642281",
+     "team": "Cleveland Cavaliers",
+     "age": 23,
+     "gp": 7,
+     "team_w": 4,
+     "team_l": 3,
+     "mpg": 22.4,
+     "ppg": 8.3,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612739"
+    },
+    {
+     "rank": 1,
+     "player": "Anthony Edwards",
+     "player_id": "1630162",
+     "team": "Minnesota Timberwolves",
+     "age": 25,
+     "gp": 4,
+     "team_w": 3,
+     "team_l": 1,
+     "mpg": 33.7,
+     "ppg": 33.3,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 2,
+     "player": "LaMelo Ball",
+     "player_id": "1630163",
+     "team": "Minnesota Timberwolves",
+     "age": 25,
+     "gp": 12,
+     "team_w": 9,
+     "team_l": 3,
+     "mpg": 27.5,
+     "ppg": 18.6,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 3,
+     "player": "Ayo Dosunmu",
+     "player_id": "1630245",
+     "team": "Minnesota Timberwolves",
+     "age": 26,
+     "gp": 12,
+     "team_w": 9,
+     "team_l": 3,
+     "mpg": 31.0,
+     "ppg": 18.1,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 4,
+     "player": "Jaden McDaniels",
+     "player_id": "1630183",
+     "team": "Minnesota Timberwolves",
+     "age": 26,
+     "gp": 12,
+     "team_w": 9,
+     "team_l": 3,
+     "mpg": 33.1,
+     "ppg": 16.9,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 5,
+     "player": "Jonathan Kuminga",
+     "player_id": "1630228",
+     "team": "Minnesota Timberwolves",
+     "age": 24,
+     "gp": 12,
+     "team_w": 9,
+     "team_l": 3,
+     "mpg": 30.2,
+     "ppg": 12.4,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 6,
+     "player": "Terrence Shannon Jr",
+     "player_id": "1630545",
+     "team": "Minnesota Timberwolves",
+     "age": 26,
+     "gp": 9,
+     "team_w": 6,
+     "team_l": 3,
+     "mpg": 21.5,
+     "ppg": 10.6,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 7,
+     "player": "Bones Hyland",
+     "player_id": "1630538",
+     "team": "Minnesota Timberwolves",
+     "age": 26,
+     "gp": 12,
+     "team_w": 9,
+     "team_l": 3,
+     "mpg": 13.1,
+     "ppg": 9.8,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    },
+    {
+     "rank": 8,
+     "player": "Rudy Gobert",
+     "player_id": "203497",
+     "team": "Minnesota Timberwolves",
+     "age": 34,
+     "gp": 11,
+     "team_w": 9,
+     "team_l": 2,
+     "mpg": 29.3,
+     "ppg": 7.9,
+     "source_url": "https://www.nba.com/stats/players/traditional?TeamID=1610612750"
+    }
+   ]
+  },
+  "still_blocked": [
+   {
+    "what": "per-game player logs (minutes floor, prop medians, player-level correlation)",
+    "attempted": "https://www.nba.com/stats/player/1630162/gamelog",
+    "result": "the page answers but prints 'No data available' - the game-log tab is rendered client-side, so no per-game rows are obtainable from it in this environment",
+    "consequence": "minutes FLOOR and prop MEDIAN stay blank by policy; season averages are now available and are used for what they can support"
+   },
+   {
+    "what": "market prices",
+    "attempted": "no licensed odds feed is connected to this repository",
+    "result": "unchanged",
+    "consequence": "no ROI, no CLV, no stake; gate G6 stays open"
+   }
+  ]
+ }
+}
