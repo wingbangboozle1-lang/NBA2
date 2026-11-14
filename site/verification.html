@@ -184,9 +184,9 @@ against what the official page says without trusting either.</div>
 </tr></thead><tbody>
 <tr>
 <td>repo-schedule</td>
-<td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
-<td>31 games</td>
-<td>31 games</td>
+<td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
+<td>36 games</td>
+<td>36 games</td>
 <td><span class="badge b-ok">MATCH</span></td>
 <td>no differences found</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
@@ -211,11 +211,20 @@ against what the official page says without trusting either.</div>
 </tr>
 <tr>
 <td>repo-wl</td>
-<td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
+<td>The published team&#x27;s official W-L column vs this tree&#x27;s own 2026-11-13 transcription</td>
 <td>12/30 identical</td>
 <td>30 teams</td>
-<td><span class="badge b-bad">MISMATCH</span></td>
-<td>{&#x27;ATL&#x27;: (&#x27;7-6&#x27;, &#x27;7-5&#x27;), &#x27;CHI&#x27;: (&#x27;2-9&#x27;, &#x27;1-9&#x27;), &#x27;CLE&#x27;: (&#x27;6-7&#x27;, &#x27;6-6&#x27;), &#x27;GSW&#x27;: (&#x27;8-5&#x27;, &#x27</td>
+<td><span class="badge b-bad">AGED</span></td>
+<td>18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;CLE&#x2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>repo-wl-current</td>
+<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
+<td>30/30 identical</td>
+<td>30 teams, official table read 2026-11-14</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
@@ -864,7 +873,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">29 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">34 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>

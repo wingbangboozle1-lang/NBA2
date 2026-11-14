@@ -463,7 +463,42 @@ FLAGS = [
      "the committed bytes rather than of mtime or the clock. Verified by cloning the branch fresh "
      "(as CI does), running the suite, and confirming all four rebuilds are byte-identical.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py"),
-
+    ("F-030", "high", "Verification",
+     "CORRECTION (2026-11-14, session arena/6650be4d-nba2): the 11/13 19:30 ET official injury release was "
+     "transcribed with Caleb Martin under the CLEVELAND Cavaliers. The PDF breaks across pages with the Team "
+     "column blank on the continuation rows, and Martin's row falls in that gap, immediately before the "
+     "'Cleveland Cavaliers | NOT YET SUBMITTED' line - so the team was inferred from the wrong side of the break. "
+     "The 11/14 05:00 a.m ET release repeats the team on every row and prints Martin under the DALLAS Mavericks.",
+     "The published window rows now come from the 05:00 a.m ET release, so the corrected attribution is what the "
+     "site shows, and the release-to-release delta on the Injuries page prints every row that changed.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"),
+    ("F-031", "medium", "Verification",
+     "The 2026-11-13 third-party ratings snapshot carries its own internal-consistency labels, and two of them were "
+     "wrong. The league-wide close and blowout sums DO balance (close 99 = 99, blowout 88 = 88) although the label "
+     "said FAIL, and the per-team bound close+blowout <= games played does NOT hold although the label said PASS: "
+     "18 of the 30 clubs show more close and blowout games than they played (ATL 13 in a 12-game record, MEM 12 in 11).",
+     "The snapshot's correction block records the original text verbatim; the close/blowout columns are excluded from "
+     "the luck table, and the per-team check is now part of the repository's own checker.",
+     "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"),
+    ("F-032", "low", "Verification",
+     "Two official pages disagree on the tip time of one game in the window: the /schedule card for 0022600249 "
+     "(HOU @ MIA, 2026-11-16) renders '8:00 PM ET', while the game's own page renders '7:30 PM ET' in both its game "
+     "rail and its header line. The other 35 games were re-read in this session and match the committed snapshot exactly.",
+     "The published value follows the game's own page. Treat that page as authoritative for its tip time.",
+     "https://www.nba.com/game/hou-vs-mia-0022600249"),
+    ("F-033", "medium", "Model",
+     "The model's team inputs (records, scoring averages, advanced ratings) were read from the official NBA pages on "
+     "2026-11-13, before the nine 2026-11-13 games were played, and could not be re-read in this session. They "
+     "therefore disagree with the league's current table for 18 of the 30 clubs.",
+     "The current official records are published beside them on the Methodology page, and every published page says "
+     "which date its numbers carry. Nothing is silently refreshed.",
+     S["standings"][1]),
+    ("F-034", "info", "Verification",
+     "The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build "
+     "covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. "
+     "The nine 2026-11-13 games are kept as day-before context and graded against the official finals.",
+     "The window is read from the committed slate snapshot, so it cannot drift from the brief's three-day limit.",
+     "https://www.nba.com/schedule"),
 ]
 
 # --------------------------------------------------------------------------- integration session audit
@@ -515,7 +550,7 @@ EXEC_BULLETS = [
     ("What is verified",
      "31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables."),
     ("What is not possible yet",
-     "No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), so the method CAN be backtested — and it has been. All 31 picks remain withheld because a pick needs a price, not because the method is unknown."),
+     "No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), and the nine 2026-11-13 games in this window are now published with their official finals and graded against the model's own lines. So the method CAN be backtested — and it has been. All 27 window picks remain withheld because a pick needs a price, not because the method is unknown."),
     ("The skill finding",
      "A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists."),
     ("The compression finding",
@@ -561,7 +596,7 @@ REQUIREMENTS = [
     ("R-1", "Collect, organise and analyse against a full requirements register",
      "Mapped", "12 requirement rows above and 14 open questions are published with status; each carries the source that advances it."),
     ("R-2", "Originate own NBA lines",
-     "Delivered (projection)", "31 lines with spread, total, moneyline fair odds, per game, with the formula and every input sourced."),
+     "Delivered (projection)", "36 lines with spread, total, moneyline fair odds, per game, with the formula and every input sourced."),
     ("R-3", "Research and develop strategies that generate useful signals",
      "Partial", "7 strategies specified with signal, gates and status; none may be ranked until G6/G7 pass."),
     ("R-4", "Leaderboard competition with rewards for top strategies",
@@ -569,13 +604,13 @@ REQUIREMENTS = [
     ("R-5", "Single bets, parlays, player prop combos",
      "Blocked", "Single bets are line-complete but price-less; parlays need correlation; props need minutes and box scores."),
     ("R-6", "Every strategy must pass validation gates",
-     "Enforced", "12 gates, and the picks page mechanically withholds any pick whose gates do not all pass (currently 31/31 withheld)."),
+     "Enforced", "12 gates, and the picks page mechanically withholds any pick whose gates do not all pass (currently 27/27 window picks withheld)."),
     ("R-7", "Determine correlation values",
      "Partial", "6 correlations measured (all ≥0.93 where meaningful); 5 blocked with the exact missing dataset named; 1 stated as an assumption."),
     ("R-8", "Remove luck from the equation; build skill-based strategies",
      "Delivered (screening)", "Per-team luck z-scores; 0/30 outside the noise band; a luck gate (G9) that rejects a strategy leaning on luck."),
     ("R-9", "Generate picks for every upcoming slate, max 3 days ahead",
-     "Delivered (withheld)", "31 games, 11/13→11/16, every game covered; picks are computed and then withheld with the failing gate printed."),
+     "Delivered (withheld)", "27 games in the 11/14→11/17 pick window, every game covered, plus the nine day-before context games; picks are computed and then withheld with the failing gate printed."),
     ("R-10", "Track how injuries affect rotation minutes and production",
      "Blocked", "Statuses are official and complete for 11/13; minutes and production impact need player logs. Every impact cell is blank with a reason."),
     ("R-11", "Provide game flow analysis",

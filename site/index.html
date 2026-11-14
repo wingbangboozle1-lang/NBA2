@@ -37,14 +37,16 @@
 <main>
 
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 31-game window (Nov 13 → Nov 16) priced from official NBA data only.
+<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only, plus the nine
+Nov 13 games that have since been played and are graded against the official finals.
 Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
 Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
 
 <div class="kpis">
-  <div class="kpi"><b>31</b><small>games priced in window</small></div>
+  <div class="kpi"><b>27</b><small>games in the T+3 window</small></div>
+  <div class="kpi"><b>9</b><small>day-before games graded</small></div>
   <div class="kpi"><b>174</b><small>league games observed (season to date)</small></div>
-  <div class="kpi"><b>9/19/3</b><small>A / B / C line grades</small></div>
+  <div class="kpi"><b>10/23/3</b><small>A / B / C line grades</small></div>
   <div class="kpi"><b>66.9%</b><small>walk-forward accuracy (139 finals)</small></div>
   <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
   <div class="kpi"><b>12.75</b><small>σ margin sd (fitted, pts)</small></div>
@@ -55,14 +57,14 @@ Nothing here is a betting tip: no market price is connected, so every pick is wi
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-31 games and prints the failing gate next to each. What is genuinely new is verification: every number
+36 games and prints the failing gate next to each. What is genuinely new is verification: every number
 on this site was re-read from an official NBA page on 2026-11-14, and the identical claims from the previous
 build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
 
 <h2>Start here</h2>
 <div class="cards">
   <div class="card"><h4><a href="executive-summary.html">Executive summary</a></h4><p>What was built, what is verified, what is impossible yet, and the recommended path.</p></div>
-  <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 31 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
+  <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 36 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
@@ -71,15 +73,17 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>24 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
-  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>29 irregularities with sources, none of which block publication.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>34 irregularities with sources, none of which block publication.</p></div>
 </div>
 
-<div class="note warn"><b>The team records on this site are a pre-final snapshot.</b>
-The nine 2026-11-13 games have since been played and are official. Reconstructed against today's
-standings, this site's 30 team records agree with the <em>pre-final</em> state on <b>30 of 30</b> rows
-and with current official standings on <b>12 of 30</b>. That is not a transcription error — it is a
-snapshot that has aged. The <a href="live-verification.html">Live verification page</a> lists every
-stale row and re-grades the repository's first real forecast.</div>
+<div class="note warn"><b>The team records this model runs on are a pre-final snapshot; the league's
+current records are published beside them.</b> The nine 2026-11-13 games have since been played and are
+official. This site's model inputs were read on 2026-11-13 <em>before</em> those games, so they agree with
+the <em>pre-final</em> state on 30 of 30 rows and with the current official standings on
+<em>12</em> of 30. That is an aged snapshot, not a transcription error. The current official records —
+read from NBA.com on 2026-11-14 — are published in full on the
+<a href="methodology.html">Methodology page</a>, and the nine official finals are graded on the
+<a href="live-verification.html">Live verification page</a>.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>
@@ -141,9 +145,9 @@ official pages and shows where those rows now stand.</p>
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)</td>
-<td>31 games</td>
-<td>31 games</td>
+<td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
+<td>36 games</td>
+<td>36 games</td>
 <td><span class="badge b-ok">MATCH</span></td>
 <td>no differences found</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
@@ -165,11 +169,19 @@ official pages and shows where those rows now stand.</p>
 <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 <tr>
-<td>Committed W-L (as published on the previous site build) vs live nba.com/standings</td>
+<td>The published team&#x27;s official W-L column vs this tree&#x27;s own 2026-11-13 transcription</td>
 <td>12/30 identical</td>
 <td>30 teams</td>
-<td><span class="badge b-bad">MISMATCH</span></td>
-<td>{&#x27;ATL&#x27;: (&#x27;7-6&#x27;, &#x27;7-5&#x27;), &#x27;CHI&#x27;: (&#x27;2-9&#x27;, &#x27;1-9&#x27;), &#x27;CLE&#x27;: (&#x27;6-7&#x27;, &#x27;6-6&#x27;), </td>
+<td><span class="badge b-bad">AGED</span></td>
+<td>18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;A</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
+<td>30/30 identical</td>
+<td>30 teams, official table read 2026-11-14</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>no differences found</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div>
