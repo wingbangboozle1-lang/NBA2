@@ -444,6 +444,14 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Not fixed here because .github/workflows/** is another session’s scope and a workflow change alters what every future push does. The reasoning behind both halves is now published: this session repaired the two checkers themselves (90/97 pass, 0 fail), and the wiring is raised as a change request on the board with the exact one-character edit. Until it lands, the honest statement is that the site is verified locally and not by CI.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.git…</a></td>
 </tr>
+<tr id="F-051">
+<td><span class="badge b-warn">F-051</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>The published grader decided which market a row belonged to by looking for a plus sign in the selection string: ``&quot;+&quot; in sel and not sel.endswith(&quot;ML&quot;)``. That is a coincidence, not a rule. It worked for the one card it has graded, whose spread rows all quoted the underdog with a plus; it fails on both sides for the card the fixed generator now writes. Measured against the functions themselves: ``HOU -13.0`` (the corrected form of a row in the committed card) went to the moneyline grader, found no team match, and returned None — the row would have reported UNGRADABLE and a spread strategy would have stopped being gradable at all; and a bare, market-less ``HOU`` returned a moneyline WIN, i.e. an unmarked selection silently acquired a market.</td>
+<td>Fixed in this tree: grading dispatch is now structural (``nba2/v2/live.py::grade_selection`` — a trailing signed number is a spread, an ``ML`` marker is a moneyline, an explicit ``kind=`` from the caller wins over shape, and an unrecognised shape returns None so the row says UNGRADABLE with a reason instead of guessing). Parlay legs use the same dispatcher, so a spread leg inside a parlay is no longer forced through the moneyline grader. Nine tests in ``nba2/v2/test_grading.py`` pin it, including the pair that demonstrates the old rule on the same input, and one that asserts the sealed 2026-11-13 card grades identically (8 graded rows, all WIN, 0 ungradable) so the fix cannot quietly re-write settled history.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/test_grading.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

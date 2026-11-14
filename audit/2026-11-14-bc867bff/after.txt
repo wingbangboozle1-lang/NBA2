@@ -1,7 +1,7 @@
 NBA2 gate run — session arena/bc867bff-nba2
-commit b2beb1f on arena/bc867bff-nba2
-run at 2026-11-14T19:12:11Z
-tree dirty files at start: 14
+commit 72f36d4 on arena/bc867bff-nba2
+run at 2026-11-14T19:23:17Z
+tree dirty files at start: 8
 
 ===== v1 unit tests =====
 $ python3 -m unittest discover -s nba2/tests -t .
@@ -135,7 +135,7 @@ capture comparison covers, and the ones it does not
 [info] CC-DOC-06      the verification line quoted on the coordination board matches the current build
         observed: INFO when a refresh is in flight: the board is a historical record of the run that made it, and this session must not rewrite another session's log
 [info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
-        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest 2bb76cc571986fe8…
+        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest a74b0f534942cc81…
         note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
 [ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
 [ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
@@ -159,8 +159,6 @@ M site/data/content.json
 M site/executive-summary.html
 M site/flagged.html
 M site/index.html
-M site/questions.html
-M site/suggestions.html
 M site/verification.html
 
 ===== sealed artefacts untouched =====

@@ -825,6 +825,26 @@ FLAGS += [
      'themselves (90/97 pass, 0 fail), and the wiring is raised as a change request on the board with the exact '
      'one-character edit. Until it lands, the honest statement is that the site is verified locally and not by CI.',
      'https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml'),
+    ('F-051',
+     'medium',
+     'Model',
+     'The published grader decided which market a row belonged to by looking for a plus sign in the '
+     'selection string: ``"+" in sel and not sel.endswith("ML")``. That is a coincidence, not a rule. It '
+     'worked for the one card it has graded, whose spread rows all quoted the underdog with a plus; it '
+     'fails on both sides for the card the fixed generator now writes. Measured against the functions '
+     'themselves: ``HOU -13.0`` (the corrected form of a row in the committed card) went to the moneyline '
+     'grader, found no team match, and returned None \u2014 the row would have reported UNGRADABLE and a '
+     'spread strategy would have stopped being gradable at all; and a bare, market-less ``HOU`` returned '
+     'a moneyline WIN, i.e. an unmarked selection silently acquired a market.',
+     'Fixed in this tree: grading dispatch is now structural (``nba2/v2/live.py::grade_selection`` \u2014 a '
+     'trailing signed number is a spread, an ``ML`` marker is a moneyline, an explicit ``kind=`` from the '
+     'caller wins over shape, and an unrecognised shape returns None so the row says UNGRADABLE with a '
+     'reason instead of guessing). Parlay legs use the same dispatcher, so a spread leg inside a parlay is '
+     'no longer forced through the moneyline grader. Nine tests in ``nba2/v2/test_grading.py`` pin it, '
+     'including the pair that demonstrates the old rule on the same input, and one that asserts the sealed '
+     '2026-11-13 card grades identically (8 graded rows, all WIN, 0 ungradable) so the fix cannot quietly '
+     're-write settled history.',
+     'https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/test_grading.py'),
 ]
 
 # --------------------------------------------------------------------------- integration session audit
