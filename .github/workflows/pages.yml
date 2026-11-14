@@ -51,9 +51,9 @@ jobs:
       - name: Fail if the committed tree differs from a rebuild
         run: |
           git add -A
-          if ! git diff --cached --quiet -- data/site.json '*.html' pages backtest; then
-            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- data/site.json '*.html' pages backtest | tr '\n' ' ')"
-            git diff --cached --stat -- data/site.json '*.html' pages backtest | tail -40
+          if ! git diff --cached --quiet -- data/site.json data/site-built.json '*.html' pages backtest; then
+            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- data/site.json data/site-built.json '*.html' pages backtest | tr '\n' ' ')"
+            git diff --cached --stat -- data/site.json data/site-built.json '*.html' pages backtest | tail -40
             exit 1
           fi
           echo "published artefacts match the pipeline"

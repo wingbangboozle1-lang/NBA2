@@ -52,7 +52,7 @@ jobs:
           if ! git diff --cached --quiet -- data/raw/ledger; then
             echo "::error::a sealed ledger changed during verification — the seal must be immutable"; exit 1
           fi
-          if ! git diff --cached --quiet -- data/site.json; then
+          if ! git diff --cached --quiet -- data/site.json data/site-built.json; then
             echo "::error::data/site.json differs from a rebuild of data/raw — commit the rebuild"; exit 1
           fi
           if ! git diff --cached --quiet -- '*.html'; then
