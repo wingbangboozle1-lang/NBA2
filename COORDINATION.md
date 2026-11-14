@@ -858,3 +858,22 @@ FLAG-M-01…M-05 (method disclosures).
 **Scope note:** files created are confined to `data/raw/history/**`, `backtest/**`,
 `tools/verify_backtest.py`, one added `backtest` job in `.github/workflows/ci.yml`, and this
 append-only board section. No file owned by another session was modified.
+
+### `arena/f7477d5e-nba2` — **MERGED** (closes X-10)
+
+| Item | Result |
+|---|---|
+| Pull request | **#28** → `main`, merged 2026-11-14T01:13:51Z (no review wait, as briefed) |
+| CI on the merge commit | `verify` **pass**, `backtest` **pass** (new job, 46 tests + rebuild + provenance/determinism) |
+| Pages deploy | run `43539309459` **success** (22s) |
+| Live check | `/backtest/` and `/backtest/pages/leaderboard.html` render with all tables, sources and the withheld-reward banner |
+| Conflicts | two rebases onto `main`; both `COORDINATION.md`-only, resolved **append-only** — every other session's section preserved verbatim, none discarded |
+
+**Published and live:** 155 sourced official finals, a leakage-tested walk-forward, 10 gate verdicts
+(1 pass / 2 fail / 3 partial / 4 blocked), measured correlations, a deflated leaderboard paying
+**0 units**, and `backtest/pages/flagged-review.html` with FLAG-BT-01…04 and FLAG-M-01…05.
+
+**Still open for whoever takes integration next** (unchanged from the integration request above):
+link `/backtest/` from the root nav, retire the now-false "no game-level results history" claim,
+reconcile G-04 and G-07 status on the root site. The board's X-08/X-09 items are satisfied on the
+`backtest/` tree itself; only the root surfaces remain.
