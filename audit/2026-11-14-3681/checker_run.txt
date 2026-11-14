@@ -1,32 +1,21 @@
-=== FINAL SWEEP 2026-11-14T11:07:54Z ===
-wrote data/site.json — 50 tables, 1401 rows
-wrote pages/verification-report.html
-LINT OK — 1401 rows across 50 tables, every row sourced, every blank explained
---- seals ---
-sealed-2026-11-14.json: seal verified c841e8f396dae6ca… (27 predictions)
-  status: PARTIAL — 27 game(s) have no official final score  (0/27 games)
-  nothing to score yet; gates stay BLOCKED — that is the correct answer
-wrote data/settlement.json
+=== FINAL SWEEP 2 2026-11-14T11:23:25Z ===
+--- crosscheck ---
+97 checks: 89 pass, 0 fail, 8 info, 0 n/a
 --- unit ---
 
 OK
 
 OK
---- site verify ---
-SUMMARY: 13 pages | 249 data rows | 303 links
+--- v2 self-tests ---
+
+FAILED (errors=2)
+--- verify_site ---
 VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
+--- links ---
 ALL INTERNAL LINKS OK
---- backtest/originated/v2 ---
-
-VERIFICATION PASSED — 12 pages, 155 sourced game rows, 189 internal links
-All checks passed.
-
-OK — 0 structural, 0 semantic
---- crosscheck ---
+--- lint ---
+LINT OK — 1401 rows across 50 tables, every row sourced, every blank explained
+--- README counts ---
+README counts already current (21/50/1401); nothing to do
+--- crosscheck after README ---
 97 checks: 89 pass, 0 fail, 8 info, 0 n/a
---- graded page sections ---
-<h2>Graded
-<h2>Graded card — 2026-11-13: our line vs the official final score
-<h2>What the graded card does and does not establish
-<h2>Official standings — NBA.com, read live 2026-11-14
-<h2>Filing state at the 11/14 05:00 AM ET release
