@@ -47,19 +47,26 @@ jobs:
           echo "exit=${PIPESTATUS[0]}" >> data/raw/player_stats_fetch_log.txt
           exit 0
       - name: Publish the snapshot to a review branch
+        # Always publishes at least the fetch log, so a failed fetch is visible as a
+        # failure rather than as silence. `git add` is given one pathspec at a time on
+        # purpose: a single non-matching glob makes the whole `git add` fail, which
+        # silently produced an empty commit the first time this ran.
         run: |
           set -e
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           BR="ci-data/official-snapshots"
           git checkout -B "$BR"
-          git add -f data/raw/player_stats_*.json data/raw/player_stats_fetch_log.txt || true
+          for f in data/raw/player_stats_fetch_log.txt data/raw/player_stats_*.json; do
+            if [ -f "$f" ]; then git add -f "$f"; fi
+          done
           if git diff --cached --quiet; then
-            echo "nothing was fetched; nothing to publish"
-            exit 0
+            echo "::error::no fetch log was produced at all"
+            exit 1
           fi
           git commit -m "ci: official player-statistics snapshot fetched $(date -u +%FT%TZ)"
           git push --force origin "$BR"
+          echo "published to $BR"
 
   verify:
     runs-on: ubuntu-latest
