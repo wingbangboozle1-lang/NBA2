@@ -1323,3 +1323,81 @@ trees are not edited, so no other session's output is destroyed.
 ### Merge record
 
 Filled in immediately after the PR below is merged.
+---
+
+## Session `arena/72f9da58-nba2` — task claim (2026-11-14 UTC)
+
+Registry row: `arena/72f9da58-nba2` — line-by-line repo review + official-source
+re-verification, checker sweep, findings publication, final integration (PR → main → merge →
+Pages confirm). Branching note: Arena pinned this session to `arena/72f9da58-nba2`; all work
+happens there. Claim pushed **before** work started, per protocol.
+
+### File scope (this session)
+
+- `COORDINATION.md` — append-only (this board).
+- `audit/**` — new: line-by-line verification report, source log, checker-run logs.
+- `nba2/pipeline/build_site_data.py` — only if new flags/rows must be registered for
+  publication on the Flagged for Review page (the site is generated; flags live here).
+- Shared integration outputs (only at final-integration time, per protocol): root
+  `index.html`, regenerated `pages/*.html`, `data/site.json`, `flagged.html`, `README.md`.
+- Regenerated outputs of any checker/generator this session runs (byte-parity enforced by CI).
+
+Owned by others and NOT touched unless a change request is logged first: `originated/**`,
+`dashboard/**`, `docs/**`, `verified/**`, `pages/` content owned by other generators
+(`tools/`, `scripts/`), `data/raw/**` snapshots (read-only), sealed ledger
+`data/raw/ledger/**` (immutable by design), `.github/workflows/**`.
+
+### Task board — arena/72f9da58 (E-01…E-07)
+
+| ID | Task | Status | File scope | Notes |
+|---|---|---|---|---|
+| E-01 | Line-by-line repo review: run every committed checker/test/lint and record results | **done 2026-11-14** | `audit/**` | Final sweep after PR #38 rebase: 64/64 nba2 + 49/49 backtest tests; both seals VERIFIED (`cf7dedc6…` 22 preds, `c841e8f3…` 27 preds); lint OK (1124 rows / 39 tables); check_links_all 88 files / 3887 internal links ALL OK; verify_site 13p/249r PASS; check_site 12p/524r PASS; verify.js 24/24; verify_backtest 12p/155r PASS; crosscheck_site 77 pass / 6 fail (all 6 pre-existing on main — see reconciliation note below) |
+| E-02 | Re-verify the 3-day slate row by row against NBA.com official schedule | **done 2026-11-14** | `audit/**` | nba.com/schedule fetched (chunks 0–2): **31/31 rows match** on game ID + matchup, 0 mismatches; day counts 9/5/9/8 match official day headers; 11/17+ repeats (FLAG-ANOM-01) and late CHA@LAL (FLAG-SLATE-03) reconfirmed as genuine |
+| E-03 | Official injury-report currency check (latest revision + 11/14 submission state) | **done 2026-11-14** | `audit/**` | Latest official revision = 19:15 ET (`_07_15PM.pdf`, fetched in full; `_08_15PM` AccessDenied); 122 rows parsed with round-trip validation → `audit/injury_delta_0415_to_0715.json`: 12 status changes, 32 added, 5 pending resolved, 3 text-layer spacing artefacts; 11/14 submitted DEN/DAL/CLE/BKN/MIN/DET, pending NOP/MEM/CHI/MIA; no 11/15–16 rows exist (leave blank, FLAG-SLATE-06); Martin, Caleb attributed Cleveland on 17:15+18:15 evidence (FLAG-CUR-02) |
+| E-04 | Spot-verification of published table rows vs official sources | **done 2026-11-14** | `audit/**` | Records: **30/30 W-L match** official standings (TOR 5-7, WAS 4-9 now official → resolves FLAG-SLATE-02, logged as FLAG-RES-01); tips: **31/31 confirmed** by ≥2 official sources (rail + schedule; 11/13 nine also match injury-report Game Time) → FLAG-SLATE-04 confirmed; URLs: **31/31 slugs match** links nba.com itself prints → FLAG-SLATE-05 resolved; FLAG-ANOM-01 adjudicated genuine via official game page `nyk-vs-tor-0022600253` (Tue Nov 17 7:30 PM ET) |
+| E-05 | Publish findings: new flags on the canonical Flagged for Review page + audit tables on the site | **done 2026-11-14** | `nba2/pipeline/build_site_data.py`, `build_site.py`, regenerated site | New flags: **FLAG-CUR-01** (high — injury rows are 16:15 ET vs official 19:15 ET), **FLAG-CUR-02** (medium — Martin page-break label drop + contradictory Cleveland pending row), **FLAG-AUD-01** (low — 31 game URLs printed as plain text), **FLAG-SET-01** (info — settlement pending by design), **FLAG-RES-01** (info — FLAG-SLATE-02 evidence now official); FLAG-SLATE-04/05/ANOM-01 statements amended in place with confirmation evidence; new page **`pages/session-audit.html`** (Session Audit nav entry) carrying tables: verification results (16 rows), injury revision delta (52 rows), suggestions for review S-A01…S-A06 (6 rows, owner decision); `audit/injury_delta_0415_to_0715.json` added to `input_digest` |
+| E-06 | Site integrity: full internal-link check, build parity, landing-page/nav verification | **done 2026-11-14** | regenerated `index.html`, `pages/**` | check_links_all ALL OK after rebuild; `build_site_data` byte-parity confirmed (rebuild == committed); 55/55 tests incl. determinism test; new page reachable from landing cat-grid + every page's nav; lint OK |
+| E-07 | Final integration: PR → main, merge, confirm GitHub Pages deploy, record here | claimed (this session) | `COORDINATION.md` | protocol: no waiting for owner approval; next step after E-01…E-06 push |
+
+**E-01…E-06 verification summary (2026-11-14, session arena/72f9da58):** every number above
+was produced this session by running the named command or reading the named official page —
+sources: nba.com/schedule, nba.com/standings, nba.com game pages (den-vs-nop-0022600231,
+nyk-vs-tor-0022600253), official injury PDFs `_04_15PM` (published snapshot) and `_07_15PM`
+(later same evening), captured verbatim under `audit/`. No published snapshot value was
+rewritten; both sealed ledgers remain untouched (`cf7dedc6…` 22 preds, `c841e8f3…` 27 preds,
+PENDING settlement).
+
+### Post-rebase reconciliation (2026-11-14, after merging PR #38 from `arena/1ec4f9bd-nba2`)
+
+PR #38 landed a full refresh (new window 11/14→11/17, 36-game slate, injury 19:30 ET ingest,
+backtest tree, nightly refresh workflow) while E-01…E-05 were in flight. This session rebased
+onto it and reconciled — both sessions' work kept, nothing discarded:
+
+- **Re-verified the current slate against the official schedule** (fresh fetch ~01:55 UTC,
+  capture `audit/official_schedule_2026-11-14.json`): **36/36 rows match, 0 mismatches**
+  (30/30 displayed tips; the six live 11/13 tips already multi-source confirmed earlier).
+- **Flags reconciled with the refreshed state:** FLAG-CUR-01 reframed (site now publishes the
+  official 19:30 ET release — the flag keeps the 16:15→19:15 supersession history + delta
+  pointer); FLAG-CUR-02 adds the 19:30 Cleveland evidence; FLAG-AUD-01 counts the current 36
+  rows (URLs still plain text); FLAG-SET-01 now cites `data/settlement.json`
+  (`finals_snapshot: null`); FLAG-ANOM-01 merged (their in-window statement + this session's
+  game-page adjudication); FLAG-SLATE-04/05 merged (their refresh resolution + this session's
+  31/31 slug re-read); FLAG-SLATE-06 kept theirs (19:30-based).
+- **Session Audit tables updated to post-refresh reality:** E-01 counts (64/49 tests, both
+  seals, 88-file link check), E-02 (36/36), E-03 (19:15 fetched here; 19:30 now published),
+  E-04-settle (`settlement.json` pending), injury-delta labels (then-published vs official),
+  suggestions S-A01/S-A03 marked implemented by the refresh, S-A04 partial, S-A05 six trees.
+- **Integration fixes made here (both were failing crosscheck on main):** rendered the two
+  orphan sections `parlays_xg` + `parlay_costs` on the Parlays page (CC-HTML-03) and refreshed
+  README's stale artefact counts (CC-DOC-01: 19 pages / 39 tables / 1124 rows / 64 tests).
+- **Pre-existing crosscheck fails NOT introduced here and left logged for their owners**
+  (identical 6 on a clean `origin/main` worktree): CC-SNAP-13 (ratings snapshot labels),
+  CC-PUB-05 (corroboration verdict wording), CC-DER-05 (dual W-L columns share a source — CR
+  already logged), CC-GATE-02 (leaderboard tally vs matrix), CC-SEAL-04 (same-day seal date
+  heuristic), CC-X-00 (`WSH` vs `WAS` in `originated/data/teams.json` — other tree, request
+  logged here rather than edited).
+
+**Rule for this session:** every row I publish carries an official source link; anything I
+cannot confirm from an official source is left blank and flagged. The sealed ledger is never
+rewritten. If a parallel session claims any file in my scope first, I log the request here
+instead of editing it.

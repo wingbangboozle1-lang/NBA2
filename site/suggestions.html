@@ -34,12 +34,12 @@
 </aside>
 <main>
 <h1>Suggestions queue</h1>
-<p class="lede">Eighteen proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+<p class="lede">24 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
-<div class="note"><b>How to use it.</b> Read the state column. Eight items are already <code>IMPLEMENTED</code> and need no
-decision; three are <code>RECOMMENDED</code> and unblock the rest; the remainder are <code>QUEUED</code> behind a data
-dependency. The three recommended items are all data connections, and in this order: odds, results, scheduled ingestion.</div>
+<div class="note"><b>How to use it.</b> Read the state column. 10 items are already <code>IMPLEMENTED</code> and need no
+decision; 6 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
 <thead><tr>
@@ -212,6 +212,26 @@ dependency. The three recommended items are all data connections, and in this or
 <td><span class="badge b-off">QUEUED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
+<tr id="SG-20">
+<td>SG-20</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Make the v1 slate table&#x27;s verified game-page URLs clickable (&lt;a href&gt; at build time).</td>
+<td>Reviewers must copy-paste URLs to open them, which slows the manual click-through that the provenance model depends on.</td>
+<td>Very low (one renderer change in nba2/pipeline/build_site.py)</td>
+<td>none — URLs are already verified 36/36</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-24">
+<td>SG-24</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Put data-currency and settlement KPIs on the landing page (e.g. &#x27;injury revision: &lt;stamp&gt;&#x27;, &#x27;settlement: PENDING/last run&#x27;).</td>
+<td>Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.</td>
+<td>Low — both values exist in committed metadata</td>
+<td>SG-22 for the settlement half</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
 <tr id="SG-7">
 <td>SG-7</td>
 <td><span class="badge b-off">Model</span></td>
@@ -230,6 +250,46 @@ dependency. The three recommended items are all data connections, and in this or
 <td>Medium</td>
 <td>Needs play-by-play or possession-level data (blocked).</td>
 <td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-19">
+<td>SG-19</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Re-ingest the injury report at its newest official revision before every pick run, and keep the line-by-line delta between revisions published.</td>
+<td>The first published rows (16:15 ET) were superseded three times the same evening — 12 status changes. Lines priced off a stale revision are priced off a superseded designation list.</td>
+<td>Low (parser + delta already exist under audit/)</td>
+<td>nightly refresh.yml exists; the remaining gap is the game-day 13:00 ET report</td>
+<td><span class="badge b-ok">IMPLEMENTED by refresh.yml (nightly); game-day cadence open</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-21">
+<td>SG-21</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Show the injury-report revision time and retrieval time in the Injuries page banner.</td>
+<td>A reader could not tell which official revision the rows came from without opening a flag; currency was invisible at a glance.</td>
+<td>Low (both fields already in the snapshot)</td>
+<td>none</td>
+<td><span class="badge b-ok">IMPLEMENTED by refresh.yml (stamps on the Injuries page)</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-22">
+<td>SG-22</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Settle the sealed ledger from official finals as soon as each game day ends, and keep the settlement stamp visible.</td>
+<td>Leaderboard, gates and rewards stay blank until finals exist; the &#x27;remove luck&#x27; step only becomes data when graded results land.</td>
+<td>Low (settle.py runs today and records a pending state)</td>
+<td>official final-score snapshots — fetched nightly by refresh.yml</td>
+<td><span class="badge b-warn">PARTIAL — settle runs, awaiting first official finals</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-23">
+<td>SG-23</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Keep exactly one published site tree; retain the others as history with a banner pointing at the canonical one.</td>
+<td>Seven trees shipped from one repo at different times; a reviewer could find different numbers on different trees.</td>
+<td>Low — decided: pages.yml publishes site/ (v2) only</td>
+<td>none — v1 trees stay in the repo for audit</td>
+<td><span class="badge b-ok">IMPLEMENTED — pages.yml publishes site/ only</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>

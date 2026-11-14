@@ -27,7 +27,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (17 pages, 33 tables, 992 rows) are rendered from
+`index.html` + `pages/**` (19 pages, 39 tables, 1124 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -78,7 +78,7 @@ honest map rather than a claim that there is one generator:
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (62 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (64 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -97,11 +97,12 @@ injury-report PDFs for the window dates under `data/raw/pdf/`, fetches official 
 arrived window dates into `data/raw/finals_*.json`, merges them into the settlement input, settles
 the sealed ledger, and rebuilds the site — **only if** the full verify chain (unit tests, seal
 verification, provenance lint) passes and `data/raw/ledger/` is byte-identical. It is fail-closed
-(`nba2/pipeline/refresh.py`, 62 tests): an unreachable official endpoint or a schema drift aborts the
+(`nba2/pipeline/refresh.py`, covered by the 64-test suite): an unreachable official endpoint or a
+schema drift aborts the
 job before anything is committed, and a missing future-date release or a not-yet-final scoreboard is
 reported as the expected pre-deadline state, not an error. What it never does: rewrite sealed
-predictions, originate picks, or size stakes — those stay gated behind owner decisions. Transcripts
-of injury PDFs remain human-verified inputs; the machine can only cross-check them.
+predictions, originate picks, or size stakes — those stay gated behind owner decisions.
+Transcripts of injury PDFs remain human-verified inputs; the machine can only cross-check them.
 
 
 Python 3.11+, standard library only — no `pip install`, so no published number depends on a

@@ -285,8 +285,8 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
-  <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>Eighteen proposals with a decision state, so a path can be chosen before anything is built.</p></div>
-  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>Fourteen irregularities with sources, none of which block publication.</p></div>
+  <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
+  <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>{len(C.FLAGS)} irregularities with sources, none of which block publication.</p></div>
 </div>
 
 <h2>Integrity checks that passed on this build</h2>
@@ -813,7 +813,47 @@ against what the official page says without trusting either.</div>
         rows.append({"cells": [esc(name), esc(val), esc(method), srclink(src)]})
     body += table(["Property", "Observed", "How it was checked", "Source"], rows, "Repository health checks")
 
-    body += """<h2>What 'verified' means here — and what it does not</h2>
+    body += "<h2>Session arena/72f9da58 — independent re-verification (2026-11-14)</h2>"
+    rows = [{"cells": [esc(a), esc(b), esc(c), srclink(u)]} for a, b, c, u in C.SESSION_AUDIT]
+    body += table(["Check", "Result", "Method / evidence", "Source"], rows,
+                  "Integration-session verification results (tasks E-01 to E-04)")
+
+    delta_path = ROOT / "audit" / "injury_delta_0415_to_0715.json"
+    if delta_path.exists():
+        delta = json.loads(delta_path.read_text())
+        pdf = "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf"
+        drows = []
+
+        def _d(kind, matchup, team, player, before, after, note):
+            drows.append({"cells": [esc(kind), esc(matchup), esc(team), esc(player),
+                                    esc(before), esc(after), esc(note), srclink(pdf)]})
+
+        for c_ in delta["status_changed"]:
+            note = ("reason unchanged" if c_["published_reason"] == c_["latest_reason"]
+                    else f"reason: {c_['published_reason']} → {c_['latest_reason']}")
+            if c_["player"] == "Martin, Caleb":
+                note += "; team label dropped at the 19:15 page break — Cleveland printed explicitly in 17:15/18:15/19:30 (F-020)"
+            _d("status change", c_["matchup"], c_["team"], c_["player"],
+               c_["published_status"] or "NOT YET SUBMITTED",
+               c_["latest_status"] or "NOT YET SUBMITTED", note)
+        for r_ in delta["added_in_latest"]:
+            _d("added in 19:15 ET", r_[2], r_[3], r_[4] or "(team placeholder)",
+               "(not in 16:15 ET revision)", r_[5], "row first appears in the 19:15 ET revision")
+        for r_ in delta["removed_in_latest"]:
+            _d("pending resolved", r_[2], r_[3], "(team placeholder)", "NOT YET SUBMITTED",
+               "submitted — placeholder replaced by player rows",
+               "team submitted its 11/14 list between the 16:15 and 19:15 revisions")
+        for f_ in delta["formatting_only"]:
+            _d("text-layer spacing only", f_["matchup"], f_["team"], f_["player"],
+               f_["published_reason"], f_["latest_reason"],
+               "space dropped by the PDF text layer — not a document change")
+        body += table(["Change type", "Matchup", "Team", "Player", "Then-published (16:15 ET)",
+                       "Official (19:15 ET)", "Note", "Source"], rows=drows,
+                      caption="Injury-revision delta: what changed after the revision this site uses "
+                              "(official 16:15 ET → official 19:15 ET; 52 rows, every cell asserted "
+                              "against the captured PDF text by audit/parse_injury_0715.py)")
+
+    body += f"""<h2>What 'verified' means here — and what it does not</h2>
 <ul>
   <li><b>Verified</b> means: the value on the page equals the value on the official page on the retrieval date, and the link to that page is on the row.</li>
   <li><b>Verified does not mean correct today.</b> Every dataset on this site is a snapshot. Scores, records and statuses change hourly; the snapshot date is printed on every page.</li>
@@ -821,7 +861,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">Fourteen items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">{len(C.FLAGS)} items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>"""
     built["verification.html"] = page("verification.html", "Verification log", body, "verification.html")
@@ -894,13 +934,15 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
     built["questions.html"] = page("questions.html", "Open questions", body, "questions.html")
 
     # ------------------------------------------------------------------ suggestions
-    body = """<h1>Suggestions queue</h1>
-<p class="lede">Eighteen proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+    _impl = sum(1 for s in C.SUGGESTIONS if s[6].startswith("IMPLEMENTED"))
+    _rec = sum(1 for s in C.SUGGESTIONS if "RECOMMENDED" in s[6])
+    body = f"""<h1>Suggestions queue</h1>
+<p class="lede">{len(C.SUGGESTIONS)} proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
-<div class="note"><b>How to use it.</b> Read the state column. Eight items are already <code>IMPLEMENTED</code> and need no
-decision; three are <code>RECOMMENDED</code> and unblock the rest; the remainder are <code>QUEUED</code> behind a data
-dependency. The three recommended items are all data connections, and in this order: odds, results, scheduled ingestion.</div>
+<div class="note"><b>How to use it.</b> Read the state column. {_impl} items are already <code>IMPLEMENTED</code> and need no
+decision; {_rec} are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 """
     order = {"RECOMMENDED — highest leverage": 0, "RECOMMENDED — unblocks the most": 1,
              "RECOMMENDED — required for any betting claim": 2, "RECOMMENDED": 3,
@@ -966,7 +1008,11 @@ superseded (see F-012). Records can still drift as games are played — the snap
       Open <a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">the official index</a>
       and look for a 11/14 entry.</li>
   <li><b>F-009:</b> eleven injury rows take their team from the PDF's previous page. Compare against the PDF pages 3–7.</li>
-  <li><b>F-011:</b> six site trees exist. Decide which is authoritative before the next session builds a seventh.</li>
+  <li><b>F-011:</b> several site trees exist; the decision is now made — <code>pages.yml</code> publishes <code>site/</code>
+      (v2) only, and the v1 trees stay in the repository for history (suggestion SG-23).</li>
+  <li><b>F-019 / F-020:</b> the injury-revision delta table on the <a href="verification.html">Verification log</a> shows every
+      change after the 16:15 ET revision this site uses. On the next official release, confirm Martin, Caleb's team label still
+      prints Cleveland.</li>
 </ul>
 <h2>Flag policy</h2>
 <p class="lede">A flag is raised when a value cannot be sourced, when two sources disagree, when a method depends on an
