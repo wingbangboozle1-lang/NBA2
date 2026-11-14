@@ -1,28 +1,249 @@
 {
-  "title": "NBA2 — questions that must be answered before a decision is reasonable",
-  "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.",
-  "questions": [
-    {"id": "Q-01", "question": "Which odds source are we measuring against — and are we allowed to store its closing prices?", "have": "The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.", "missing": "Any licensed book price, opening or closing, for any sport.", "how": "Owner picks a vendor (theScore Sportsdata/Odds API, Sportradar, or a sportsbook affiliate feed) and confirms storage rights; then add an ingest to data/raw.", "impact": "Everything. Without it there is no 'edge', no CLV, no gate G-02, no stake sizing, and no reason to prefer our number over a coin flip.", "severity": "BLOCKING"},
-    {"id": "Q-02", "question": "Is the product a line-setting desk or a betting-picks desk?", "have": "Both capabilities sketched: pricing engine (works) and bet selection with triggers (needs prices).", "missing": "Owner decision on primary objective.", "how": "Answer in one sentence; it changes which gate blocks promotion.", "impact": "A line-setting desk is graded on MAE/calibration and is buildable today with zero market data. A picks desk is not buildable until Q-01 is resolved.", "severity": "BLOCKING"},
-    {"id": "Q-03", "question": "What is the bankroll unit and the maximum stake per bet?", "have": "A config default of 1% hard cap and quarter-Kelly.", "missing": "Whether that is your risk tolerance at all.", "how": "Owner states units (e.g. 1 unit = 0.25% of bankroll).", "impact": "Kelly fraction, promotion criteria (G-09) and the reward pool's meaning.", "severity": "BLOCKING"},
-    {"id": "Q-04", "question": "Do we accept that game-day injury data arrives too late for a T-3 publication?", "have": "The official report's structure and cadence, plus proof: in the 11/13 16:15 ET release, all ten Nov 14 teams were 'NOT YET SUBMITTED'.", "missing": "Whether you want T-3 lines (injury-blind) only, or a T-0 re-issue after the 13:00 ET report.", "how": "Owner decision; implement as a second daily build at 13:30 ET.", "impact": "Determines whether '3 days in advance' is a feature or a self-inflicted handicap. Our lines currently apply no injury adjustment at all.", "severity": "HIGH"},
-    {"id": "Q-05", "question": "Can we get official player-level data (minutes, usage, on/off) from the build environment?", "have": "The knowledge that stats.nba.com endpoints are unreachable from here and nba.com/stats tables are client-rendered.", "missing": "An accessible official source or a licensed alternative.", "how": "Test from the CI runner (different network than this sandbox); if still blocked, evaluate a commercial feed.", "impact": "Props, prop combos, injury impact, and the margin/total correlation all sit behind this one answer.", "severity": "BLOCKING"},
-    {"id": "Q-06", "question": "Do Emirates NBA Cup group games belong in the same distribution as ordinary regular-season games?", "have": "The 11/13 slate is entirely Cup group play, and Cup games count for group standing with different incentives (winning by margin matters as a tiebreaker).", "missing": "Historical evidence on whether Cup games differ in pace, rotations or margin distribution.", "how": "Split the results snapshot by game_type once R-103 lands and test pace/margin differences.", "impact": "If Cup games differ, today's entire slate is mis-calibrated and the model needs a game-type effect or an exclusion rule.", "severity": "HIGH"},
-    {"id": "Q-07", "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?", "have": "Every one of them written down with its rationale and band on the Parameters page.", "missing": "A decision, because they currently control which games are actionable.", "how": "Owner reviews the Parameters page and either accepts or edits config.py.", "impact": "Gate G-08 and Tier assignment are meaningless while thresholds are 'mine' rather than 'ours'.", "severity": "BLOCKING"},
-    {"id": "Q-08", "question": "Is a 12-game sample enough to trade at all?", "have": "Reliability weights ~0.74-0.78 and a fitted RMSE of 1.31 wins vs 2.78 baseline.", "missing": "Your risk policy for early-season modelling.", "how": "Owner decision; a hard rule could be 'no Tier A before 25 games'.", "impact": "Decides whether this slate should have produced zero picks rather than 31 lines.", "severity": "HIGH"},
-    {"id": "Q-09", "question": "What is the definition of 'removing luck' you will accept as a gate?", "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.", "missing": "Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.", "how": "Owner picks; add to gates.", "impact": "Changes which strategies can win the leaderboard, and therefore what gets built next.", "severity": "HIGH"},
-    {"id": "Q-10", "question": "How do you want the leaderboard to treat strategies that bet different numbers of games?", "have": "Score components are per-bet averages, so abstention is neither rewarded nor punished beyond sample-size gates.", "missing": "Whether volume should carry weight (e.g. minimum coverage per slate).", "how": "Owner decision.", "impact": "A 'bet three games a season' strategy can look elite without a volume term.", "severity": "MEDIUM"},
-    {"id": "Q-11", "question": "Do we price parlays off our own singles only, or off book parlay prices when available?", "have": "Correlation-swept joint pricing on our own numbers; the ratio (not the level) is publishable today.", "missing": "Book parlay prices to compare against.", "how": "Comes free with Q-01.", "impact": "Determines whether S-04 is a strategy or an illustration.", "severity": "MEDIUM"},
-    {"id": "Q-12", "question": "What is the correct treatment of a two-way/G-League assignment listed on the injury report?", "have": "The report distinguishes 'G League - Two-Way', 'G League - On Assignment' and 'League Suspension' from injuries, and I count them as absent bodies.", "missing": "Whether those absences should affect a rotation-floor model identically to injury.", "how": "Owner decision; implement as a reason-class weighting in injuries.py.", "impact": "Our rotation index currently treats a suspended starter and a assigned two-way as similar 'missing bodies' at different weights.", "severity": "MEDIUM"},
-    {"id": "Q-13", "question": "Should rewards be paid at all before a strategy is promoted?", "have": "Allocation logic that pays nothing when nothing is promoted (pool 100% unallocated).", "missing": "Confirmation that you do not want an activity-based payout.", "how": "Owner decision.", "impact": "Paying for participation re-creates the exact incentive this project exists to remove.", "severity": "MEDIUM"},
-    {"id": "Q-14", "question": "How should the site behave when the snapshot is stale?", "have": "as-of and generated-at stamps on every page, and the build refuses to run on a future-dated slate.", "missing": "A maximum-age policy (e.g. refuse to publish lines older than 24h).", "how": "Add to lint + a scheduled build.", "impact": "A 3-day-old line published as 'picks' is worse than no page.", "severity": "HIGH"},
-    {"id": "Q-15", "question": "What is the procedure when a game is postponed or a star is ruled out at warmups?", "have": "Nothing — the model has no re-quote path.", "missing": "Trigger for re-pricing and a rule for voiding sealed predictions.", "how": "Design a re-seal event in the ledger (new seal with reason, original kept).", "impact": "Settling against a cancelled game would corrupt the leaderboard.", "severity": "MEDIUM"},
-    {"id": "Q-16", "question": "Which team is 'home' when the schedule says an arena hosts a neutral-site or international game?", "have": "None in this window; the schedule page marks neutralSite only in the JSON endpoints we cannot reach.", "missing": "A rule + a data field.", "how": "Add a `neutral` flag to the slate ingest, sourced from the game page.", "impact": "HCA would be wrongly applied and every line for that game shifts ~1.5-3 points.", "severity": "LOW"},
-    {"id": "Q-17", "question": "Do we keep publishing from the repository root, or move to /docs?", "have": "One workflow, root publish, working today.", "missing": "Preference.", "how": "Owner picks; /docs is a one-line workflow change.", "impact": "Affects every relative link and the existing live URLs.", "severity": "LOW"},
-    {"id": "Q-18", "question": "Are we allowed to commit third-party ratings data (Basketball-Reference) into this public repo?", "have": "One small facts table, each value linked to its source page, and Sports Reference's site terms are not re-checked here.", "missing": "A licence/permission reading, or replacement with our own ingestion of official data.", "how": "Owner/legal reads the source's terms of use; or implement R-104 and delete the file.", "impact": "It is the only input to every line on the site today; if it must go, the model goes blind until R-104 lands.", "severity": "HIGH"},
-    {"id": "Q-19", "question": "How many strategies is it honest to evaluate at once?", "have": "9 registered; G-06 deflation grows with the trial count.", "missing": "A cap or a preregistration rule for new strategies.", "how": "Add a trial registry (S-11) and require preregistration before evaluation.", "impact": "With unlimited tries someone always wins the leaderboard by noise.", "severity": "MEDIUM"},
-    {"id": "Q-20", "question": "Is the ledger's git-commit seal enough, or do you want an external timestamp?", "have": "sha256 of canonical JSON, committed with the site.", "missing": "Whether you need a trusted third-party timestamp (e.g. RFC3161) for the competition to be credible.", "how": "Owner decides; if yes, add a timestamping step to the build.", "impact": "Determines whether another session could dispute a seal after a bad run.", "severity": "LOW"},
-    {"id": "Q-21", "question": "What exactly should the executive summary optimise for — opportunity, risk, or project state?", "have": "It currently reports project state and blockers first, because that is the truth today.", "missing": "Whether you want a picks-first summary as soon as prices exist.", "how": "Owner decision; the summary is generated, so it is a template change.", "impact": "Avoids a summary that reads like a status report when you wanted a betting card.", "severity": "LOW"},
-    {"id": "Q-22", "question": "Which numbers on this site would change your decision if they moved by 10%?", "have": "A sensitivity band for every structural parameter, and a stability fraction per line.", "missing": "Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.", "how": "Owner states a threshold; encode in G-08.", "impact": "This is the difference between a research dashboard and a betting system.", "severity": "MEDIUM"}
-  ]
+ "title": "NBA2 — questions that must be answered before a decision is reasonable",
+ "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. 2026-11-14 (arena/6c5195d1-nba2): Q-23…Q-27 from the cross-check queue fragment analysis/queue-additions-5b80b88a.json are merged in (severity labels normalised to this register's vocabulary).",
+ "questions": [
+  {
+   "id": "Q-01",
+   "question": "Which odds source are we measuring against — and are we allowed to store its closing prices?",
+   "have": "The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.",
+   "missing": "Any licensed book price, opening or closing, for any sport.",
+   "how": "Owner picks a vendor (theScore Sportsdata/Odds API, Sportradar, or a sportsbook affiliate feed) and confirms storage rights; then add an ingest to data/raw.",
+   "impact": "Everything. Without it there is no 'edge', no CLV, no gate G-02, no stake sizing, and no reason to prefer our number over a coin flip.",
+   "severity": "BLOCKING"
+  },
+  {
+   "id": "Q-02",
+   "question": "Is the product a line-setting desk or a betting-picks desk?",
+   "have": "Both capabilities sketched: pricing engine (works) and bet selection with triggers (needs prices).",
+   "missing": "Owner decision on primary objective.",
+   "how": "Answer in one sentence; it changes which gate blocks promotion.",
+   "impact": "A line-setting desk is graded on MAE/calibration and is buildable today with zero market data. A picks desk is not buildable until Q-01 is resolved.",
+   "severity": "BLOCKING"
+  },
+  {
+   "id": "Q-03",
+   "question": "What is the bankroll unit and the maximum stake per bet?",
+   "have": "A config default of 1% hard cap and quarter-Kelly.",
+   "missing": "Whether that is your risk tolerance at all.",
+   "how": "Owner states units (e.g. 1 unit = 0.25% of bankroll).",
+   "impact": "Kelly fraction, promotion criteria (G-09) and the reward pool's meaning.",
+   "severity": "BLOCKING"
+  },
+  {
+   "id": "Q-04",
+   "question": "Do we accept that game-day injury data arrives too late for a T-3 publication?",
+   "have": "The official report's structure and cadence, plus proof: in the 11/13 16:15 ET release, all ten Nov 14 teams were 'NOT YET SUBMITTED'.",
+   "missing": "Whether you want T-3 lines (injury-blind) only, or a T-0 re-issue after the 13:00 ET report.",
+   "how": "Owner decision; implement as a second daily build at 13:30 ET.",
+   "impact": "Determines whether '3 days in advance' is a feature or a self-inflicted handicap. Our lines currently apply no injury adjustment at all.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-05",
+   "question": "Can we get official player-level data (minutes, usage, on/off) from the build environment?",
+   "have": "The knowledge that stats.nba.com endpoints are unreachable from here and nba.com/stats tables are client-rendered.",
+   "missing": "An accessible official source or a licensed alternative.",
+   "how": "Test from the CI runner (different network than this sandbox); if still blocked, evaluate a commercial feed.",
+   "impact": "Props, prop combos, injury impact, and the margin/total correlation all sit behind this one answer.",
+   "severity": "BLOCKING"
+  },
+  {
+   "id": "Q-06",
+   "question": "Do Emirates NBA Cup group games belong in the same distribution as ordinary regular-season games?",
+   "have": "The 11/13 slate is entirely Cup group play, and Cup games count for group standing with different incentives (winning by margin matters as a tiebreaker).",
+   "missing": "Historical evidence on whether Cup games differ in pace, rotations or margin distribution.",
+   "how": "Split the results snapshot by game_type once R-103 lands and test pace/margin differences.",
+   "impact": "If Cup games differ, today's entire slate is mis-calibrated and the model needs a game-type effect or an exclusion rule.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-07",
+   "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?",
+   "have": "Every one of them written down with its rationale and band on the Parameters page.",
+   "missing": "A decision, because they currently control which games are actionable.",
+   "how": "Owner reviews the Parameters page and either accepts or edits config.py.",
+   "impact": "Gate G-08 and Tier assignment are meaningless while thresholds are 'mine' rather than 'ours'.",
+   "severity": "BLOCKING"
+  },
+  {
+   "id": "Q-08",
+   "question": "Is a 12-game sample enough to trade at all?",
+   "have": "Reliability weights ~0.74-0.78 and a fitted RMSE of 1.31 wins vs 2.78 baseline.",
+   "missing": "Your risk policy for early-season modelling.",
+   "how": "Owner decision; a hard rule could be 'no Tier A before 25 games'.",
+   "impact": "Decides whether this slate should have produced zero picks rather than 31 lines.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-09",
+   "question": "What is the definition of 'removing luck' you will accept as a gate?",
+   "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
+   "missing": "Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.",
+   "how": "Owner picks; add to gates.",
+   "impact": "Changes which strategies can win the leaderboard, and therefore what gets built next.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-10",
+   "question": "How do you want the leaderboard to treat strategies that bet different numbers of games?",
+   "have": "Score components are per-bet averages, so abstention is neither rewarded nor punished beyond sample-size gates.",
+   "missing": "Whether volume should carry weight (e.g. minimum coverage per slate).",
+   "how": "Owner decision.",
+   "impact": "A 'bet three games a season' strategy can look elite without a volume term.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-11",
+   "question": "Do we price parlays off our own singles only, or off book parlay prices when available?",
+   "have": "Correlation-swept joint pricing on our own numbers; the ratio (not the level) is publishable today.",
+   "missing": "Book parlay prices to compare against.",
+   "how": "Comes free with Q-01.",
+   "impact": "Determines whether S-04 is a strategy or an illustration.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-12",
+   "question": "What is the correct treatment of a two-way/G-League assignment listed on the injury report?",
+   "have": "The report distinguishes 'G League - Two-Way', 'G League - On Assignment' and 'League Suspension' from injuries, and I count them as absent bodies.",
+   "missing": "Whether those absences should affect a rotation-floor model identically to injury.",
+   "how": "Owner decision; implement as a reason-class weighting in injuries.py.",
+   "impact": "Our rotation index currently treats a suspended starter and a assigned two-way as similar 'missing bodies' at different weights.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-13",
+   "question": "Should rewards be paid at all before a strategy is promoted?",
+   "have": "Allocation logic that pays nothing when nothing is promoted (pool 100% unallocated).",
+   "missing": "Confirmation that you do not want an activity-based payout.",
+   "how": "Owner decision.",
+   "impact": "Paying for participation re-creates the exact incentive this project exists to remove.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-14",
+   "question": "How should the site behave when the snapshot is stale?",
+   "have": "as-of and generated-at stamps on every page, and the build refuses to run on a future-dated slate.",
+   "missing": "A maximum-age policy (e.g. refuse to publish lines older than 24h).",
+   "how": "Add to lint + a scheduled build.",
+   "impact": "A 3-day-old line published as 'picks' is worse than no page.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-15",
+   "question": "What is the procedure when a game is postponed or a star is ruled out at warmups?",
+   "have": "Nothing — the model has no re-quote path.",
+   "missing": "Trigger for re-pricing and a rule for voiding sealed predictions.",
+   "how": "Design a re-seal event in the ledger (new seal with reason, original kept).",
+   "impact": "Settling against a cancelled game would corrupt the leaderboard.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-16",
+   "question": "Which team is 'home' when the schedule says an arena hosts a neutral-site or international game?",
+   "have": "None in this window; the schedule page marks neutralSite only in the JSON endpoints we cannot reach.",
+   "missing": "A rule + a data field.",
+   "how": "Add a `neutral` flag to the slate ingest, sourced from the game page.",
+   "impact": "HCA would be wrongly applied and every line for that game shifts ~1.5-3 points.",
+   "severity": "LOW"
+  },
+  {
+   "id": "Q-17",
+   "question": "Do we keep publishing from the repository root, or move to /docs?",
+   "have": "One workflow, root publish, working today.",
+   "missing": "Preference.",
+   "how": "Owner picks; /docs is a one-line workflow change.",
+   "impact": "Affects every relative link and the existing live URLs.",
+   "severity": "LOW"
+  },
+  {
+   "id": "Q-18",
+   "question": "Are we allowed to commit third-party ratings data (Basketball-Reference) into this public repo?",
+   "have": "One small facts table, each value linked to its source page, and Sports Reference's site terms are not re-checked here.",
+   "missing": "A licence/permission reading, or replacement with our own ingestion of official data.",
+   "how": "Owner/legal reads the source's terms of use; or implement R-104 and delete the file.",
+   "impact": "It is the only input to every line on the site today; if it must go, the model goes blind until R-104 lands.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-19",
+   "question": "How many strategies is it honest to evaluate at once?",
+   "have": "9 registered; G-06 deflation grows with the trial count.",
+   "missing": "A cap or a preregistration rule for new strategies.",
+   "how": "Add a trial registry (S-11) and require preregistration before evaluation.",
+   "impact": "With unlimited tries someone always wins the leaderboard by noise.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-20",
+   "question": "Is the ledger's git-commit seal enough, or do you want an external timestamp?",
+   "have": "sha256 of canonical JSON, committed with the site.",
+   "missing": "Whether you need a trusted third-party timestamp (e.g. RFC3161) for the competition to be credible.",
+   "how": "Owner decides; if yes, add a timestamping step to the build.",
+   "impact": "Determines whether another session could dispute a seal after a bad run.",
+   "severity": "LOW"
+  },
+  {
+   "id": "Q-21",
+   "question": "What exactly should the executive summary optimise for — opportunity, risk, or project state?",
+   "have": "It currently reports project state and blockers first, because that is the truth today.",
+   "missing": "Whether you want a picks-first summary as soon as prices exist.",
+   "how": "Owner decision; the summary is generated, so it is a template change.",
+   "impact": "Avoids a summary that reads like a status report when you wanted a betting card.",
+   "severity": "LOW"
+  },
+  {
+   "id": "Q-22",
+   "question": "Which numbers on this site would change your decision if they moved by 10%?",
+   "have": "A sensitivity band for every structural parameter, and a stability fraction per line.",
+   "missing": "Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.",
+   "how": "Owner states a threshold; encode in G-08.",
+   "impact": "This is the difference between a research dashboard and a betting system.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-23",
+   "question": "Which execution environment can reach the official NBA endpoints, and under what policy?",
+   "have": "A dated, reproducible measurement from the sandbox: four endpoints, none answering at TLS. Plus the same result from three prior sessions. The `nba-ingest.yml` probe measures it from a GitHub-hosted runner and prints the table.",
+   "missing": "The runner's answer (recorded by the probe run), and the owner's decision about whether automated fetching of nba.com properties is in policy for this project at any cadence.",
+   "how": "Dispatch the probe from main; read the run summary; if reachable, confirm terms of use before enabling a schedule; if unreachable, mark ingestion 'blocked by source policy' in the requirements register instead of 'not started'.",
+   "impact": "Decides whether the daily-refresh requirement is an engineering task, a licensing task, or a manual one. Nothing downstream (CLV, settled ledger, promoted strategies) can start without it.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-24",
+   "question": "Is the 13:00 ET referee PDF the authority for availability, and do we keep the bytes?",
+   "have": "Three different stamps of the same day's report are cited across surfaces (01:00 PM, 04:15 PM, 05:15 PM ET) and the reconciliation table already adjudicates 10 status changes between them. The capture tool archives the PDF with a sha256 of the response body.",
+   "missing": "A policy: which stamp is canonical for a published line, and whether archived PDFs (or only their hashes) are kept in-repo.",
+   "how": "Owner picks 'latest release before tip, with the previous two retained'; then the ingest stores the PDF, its hash, and its stamp with every snapshot.",
+   "impact": "Without a canonical stamp, two honest sessions will keep disagreeing about who is Out, and the disagreement will look like a model difference.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-25",
+   "question": "Which surface is canonical, and what happens to the other four?",
+   "have": "Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.",
+   "missing": "An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.",
+   "how": "Pick one; move the others to `archive/` with a redirect note on each landing, or keep them and put the surface inventory (already a published table) at the top of the landing page.",
+   "impact": "Five surfaces means five answers to 'what is our line for DEN@NOP', all defensible, none canonical. That is the failure mode a leaderboard project cannot afford.",
+   "severity": "MEDIUM"
+  },
+  {
+   "id": "Q-26",
+   "question": "What does a strategy have to survive before it can be paid?",
+   "have": "Nine gates per strategy defined and applied to 9 strategies (90 gate results, all BLOCKED/AT-RISK); a pre-registered sealed ledger (22 predictions, digest on every page); a tier ladder with reward weights; and a stated minimum sample of 300 settled bets.",
+   "missing": "Owner sign-off on the promotion rule as a *policy*, not a design: minimum sample, holdout window, vig treatment, drawdown cap, multiple-comparison correction across nine strategies, and what happens to the seal when the window rolls forward daily.",
+   "how": "Write it into the requirements register as acceptance criteria, then let the gate code enforce it; anything not enforced is a poster.",
+   "impact": "Until this exists, 'top performing strategies' has no definition, so the competition cannot start — and the honest answer today is that the leaderboard is empty by design.",
+   "severity": "HIGH"
+  },
+  {
+   "id": "Q-27",
+   "question": "Who reviews a commit that the nightly ingest pushes to `main`?",
+   "have": "`refresh.yml` runs with `contents: write`, rebuilds the site, and pushes `HEAD:${GITHUB_REF_NAME}` directly, gated by its own verify chain (unit tests, seal verification, provenance lint) and an explicit guard that the sealed ledger is untouched. That is a sound fail-closed design for a bot.",
+   "missing": "A stated policy on what a bot commit may change on `main` without a human: the pipeline today also carries F1's negative-count bug, which such a commit would happily re-publish with a green tick.",
+   "how": "Add the cross-check to the ingest verify chain (S-21/S-30) so a bot cannot push a build that fails semantic review, and record the bot's allowed paths in the requirements register.",
+   "impact": "Determines whether automated refresh is trustworthy end-to-end. Right now it can only fail loudly, not fail subtly — which is good — but 'loudly' is scoped to what CI checks today.",
+   "severity": "MEDIUM"
+  }
+ ]
 }

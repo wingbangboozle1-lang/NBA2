@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at_utc": "2026-11-14 02:00 UTC",
-  "input_digest": "b423952d618280b7a5aeeb0ad96914de56c9ecf03c52356924cbecae5fcf862b",
+  "generated_at_utc": "2026-11-14 10:16 UTC",
+  "input_digest": "c4bb9d31c937434e3b6c2fc4968c2cad64118b58a4dab9e491ac9bec2febf31f",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -50,8 +50,8 @@
  "sections": {
   "ratings": {
    "title": "Team ratings table (the model's only inputs)",
-   "blurb": "W-L is confirmed against NBA.com for 28 of 30 clubs; TOR and WAS were not visible in the retrieved official page text and are flagged. PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single biggest data gap on this site.",
-   "source_note": "Both W-L columns are printed on purpose: if they ever disagree, the table is wrong.",
+   "blurb": "W-L (official NBA.com) is read from the official capture nba2/data/records.json (30/30 clubs, retrieved 2026-11-13 from nba.com/schedule; TOR and WAS via their official NBA.com team pages — the visibility gap that FLAG-SLATE-02 was raised for is recorded as resolved by FLAG-RES-01). W-L (ratings source) is the Basketball-Reference snapshot data/raw/team_ratings_2026-11-13.json. PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single biggest data gap on this site.",
+   "source_note": "Both W-L columns are printed on purpose and come from independent captures — the official NBA.com records and the third-party ratings snapshot: if they ever disagree, one capture is stale and the table is wrong.",
    "columns": [
     {
      "key": "team",
@@ -875,7 +875,8 @@
      },
      "note": "",
      "flags": [
-      "FLAG-RAT-01"
+      "FLAG-RAT-01",
+      "FLAG-SLATE-02"
      ],
      "verified": false
     },
@@ -931,7 +932,8 @@
      },
      "note": "",
      "flags": [
-      "FLAG-RAT-01"
+      "FLAG-RAT-01",
+      "FLAG-SLATE-02"
      ],
      "verified": false
     }
@@ -17464,7 +17466,7 @@
       "family": "single",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-01",
       "reward": null,
@@ -17491,7 +17493,7 @@
       "family": "single",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-02",
       "reward": null,
@@ -17518,7 +17520,7 @@
       "family": "single",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-03",
       "reward": null,
@@ -17545,7 +17547,7 @@
       "family": "parlay",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-04",
       "reward": null,
@@ -17572,7 +17574,7 @@
       "family": "parlay",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-05",
       "reward": null,
@@ -17599,7 +17601,7 @@
       "family": "single",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-06",
       "reward": null,
@@ -17626,7 +17628,7 @@
       "family": "single",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-07",
       "reward": null,
@@ -17653,7 +17655,7 @@
       "family": "prop",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-08",
       "reward": null,
@@ -17680,7 +17682,7 @@
       "family": "meta",
       "score": null,
       "tier": "Blocked",
-      "gates": "0 pass / 0 fail / 10 blocked",
+      "gates": "0 pass / 0 fail / 8 blocked / 2 at-risk",
       "bets": null,
       "cluster": "S-09",
       "reward": null,
@@ -24168,7 +24170,7 @@
   "questions": {
    "title": "Open questions — the decision list",
    "blurb": "Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.",
-   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.",
+   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. 2026-11-14 (arena/6c5195d1-nba2): Q-23…Q-27 from the cross-check queue fragment analysis/queue-additions-5b80b88a.json are merged in (severity labels normalised to this register's vocabulary).",
    "columns": [
     {
      "key": "id",
@@ -24727,9 +24729,164 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-23",
+     "values": {
+      "id": "Q-23",
+      "question": "Which execution environment can reach the official NBA endpoints, and under what policy?",
+      "have": "A dated, reproducible measurement from the sandbox: four endpoints, none answering at TLS. Plus the same result from three prior sessions. The `nba-ingest.yml` probe measures it from a GitHub-hosted runner and prints the table.",
+      "missing": "The runner's answer (recorded by the probe run), and the owner's decision about whether automated fetching of nba.com properties is in policy for this project at any cadence.",
+      "how": "Dispatch the probe from main; read the run summary; if reachable, confirm terms of use before enabling a schedule; if unreachable, mark ingestion 'blocked by source policy' in the requirements register instead of 'not started'.",
+      "impact": "Decides whether the daily-refresh requirement is an engineering task, a licensing task, or a manual one. Nothing downstream (CLV, settled ledger, promoted strategies) can start without it.",
+      "severity": "HIGH"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-24",
+     "values": {
+      "id": "Q-24",
+      "question": "Is the 13:00 ET referee PDF the authority for availability, and do we keep the bytes?",
+      "have": "Three different stamps of the same day's report are cited across surfaces (01:00 PM, 04:15 PM, 05:15 PM ET) and the reconciliation table already adjudicates 10 status changes between them. The capture tool archives the PDF with a sha256 of the response body.",
+      "missing": "A policy: which stamp is canonical for a published line, and whether archived PDFs (or only their hashes) are kept in-repo.",
+      "how": "Owner picks 'latest release before tip, with the previous two retained'; then the ingest stores the PDF, its hash, and its stamp with every snapshot.",
+      "impact": "Without a canonical stamp, two honest sessions will keep disagreeing about who is Out, and the disagreement will look like a model difference.",
+      "severity": "MEDIUM"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-25",
+     "values": {
+      "id": "Q-25",
+      "question": "Which surface is canonical, and what happens to the other four?",
+      "have": "Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.",
+      "missing": "An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.",
+      "how": "Pick one; move the others to `archive/` with a redirect note on each landing, or keep them and put the surface inventory (already a published table) at the top of the landing page.",
+      "impact": "Five surfaces means five answers to 'what is our line for DEN@NOP', all defensible, none canonical. That is the failure mode a leaderboard project cannot afford.",
+      "severity": "MEDIUM"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-26",
+     "values": {
+      "id": "Q-26",
+      "question": "What does a strategy have to survive before it can be paid?",
+      "have": "Nine gates per strategy defined and applied to 9 strategies (90 gate results, all BLOCKED/AT-RISK); a pre-registered sealed ledger (22 predictions, digest on every page); a tier ladder with reward weights; and a stated minimum sample of 300 settled bets.",
+      "missing": "Owner sign-off on the promotion rule as a *policy*, not a design: minimum sample, holdout window, vig treatment, drawdown cap, multiple-comparison correction across nine strategies, and what happens to the seal when the window rolls forward daily.",
+      "how": "Write it into the requirements register as acceptance criteria, then let the gate code enforce it; anything not enforced is a poster.",
+      "impact": "Until this exists, 'top performing strategies' has no definition, so the competition cannot start — and the honest answer today is that the leaderboard is empty by design.",
+      "severity": "HIGH"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-27",
+     "values": {
+      "id": "Q-27",
+      "question": "Who reviews a commit that the nightly ingest pushes to `main`?",
+      "have": "`refresh.yml` runs with `contents: write`, rebuilds the site, and pushes `HEAD:${GITHUB_REF_NAME}` directly, gated by its own verify chain (unit tests, seal verification, provenance lint) and an explicit guard that the sealed ledger is untouched. That is a sound fail-closed design for a bot.",
+      "missing": "A stated policy on what a bot commit may change on `main` without a human: the pipeline today also carries F1's negative-count bug, which such a commit would happily re-publish with a green tick.",
+      "how": "Add the cross-check to the ingest verify chain (S-21/S-30) so a bot cannot push a build that fails semantic review, and record the bot's allowed paths in the requirements register.",
+      "impact": "Determines whether automated refresh is trustworthy end-to-end. Right now it can only fail loudly, not fail subtly — which is good — but 'loudly' is scoped to what CI checks today.",
+      "severity": "MEDIUM"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -24888,8 +25045,8 @@
   },
   "suggestions": {
    "title": "Site-improvement suggestions — review queue",
-   "blurb": "Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue's state is the record of that decision.",
-   "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
+   "blurb": "Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.",
+   "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort. 2026-11-14 (arena/6c5195d1-nba2): the cross-check queue fragment analysis/queue-additions-5b80b88a.json (S-21…S-31) is merged into this register with a truthful status per item — the merge is bookkeeping, not an approval; each item still stands or falls on its own.",
    "columns": [
     {
      "key": "id",
@@ -25448,9 +25605,372 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-30",
+     "values": {
+      "id": "S-30",
+      "title": "Fix the negative availability count (live on the site now)",
+      "problem": "`availability_window` publishes `no_rows_yet = -5` for 2026-11-14 and `not_yet_submitted = 10` where the true figure is 5. `build_site_data.py:487-491` builds `filed` and `nys` as sets of team names across two injury releases and then computes `slots - filed - nys`; the sets are not disjoint, because a team that filed in the 19:30 ET release still has its NOT YET SUBMITTED placeholder from the 16:15 ET release. Three team-slots of double-counting on a ten-slot slate is what makes the result negative. The provenance lint cannot see it: the cell is a number with a source.",
+      "proposal": "Recompute both columns from the union: `nys_only = len(nys - filed)`, `no_rows_yet = slots - filed - nys_only`, and publish `not_yet_submitted = nys_only`. Then add the two assertions to CI so the class cannot return: 'no count is negative' and 'availability columns reconcile with a recount of the two snapshots' (tools/crosscheck_site.py already implements both as CC-DER-11 and CC-DER-12).",
+      "benefit": "The one number that tells a reader how availability-blind a sealed window is becomes true, and a stale undercount of 'blind' teams stops making the slate look better covered than it is.",
+      "effort": "trivial (three lines + rebuild; the rebuild is what session arena/79e87c81-nba2 and PRs #21/#26 are racing on, which is why this session filed it instead of forcing a fifth concurrent edit of site.json)",
+      "risk": "Low. It changes two derived counts, no model input, no sealed prediction, and the coverage percentage is unaffected.",
+      "recommendation": "Accept before any further injury snapshot is unioned into this table — the bug grows with every release added. (2026-11-14: done by the 2026-11-14 refresh sessions — the availability columns recompute from disjoint sets; CC-DER-11 and CC-DER-12 pass.)",
+      "status": "applied in an earlier session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-21",
+     "values": {
+      "id": "S-21",
+      "title": "Run the cross-check in CI, next to the lint",
+      "problem": "The provenance lint proves rows are labelled; the CI parity step proves the HTML equals a rebuild of site.json. Neither can prove a label matches what it points at, because the same code produced both. Three audits said the same thing: nobody had re-run a semantic pass over the published values. tools/crosscheck_site.py now does that, and it found six real defects on its first run.",
+      "proposal": "Add one CI step: `python3 tools/crosscheck_site.py --json crosscheck.json`, failing only on the checks the owner has accepted as binding (the tool exits non-zero on any FAIL, so start it as `continue-on-error: true` and promote it once the six findings are resolved). Start with the two assertions that found real bugs on their first run: 'no published count is negative' (CC-DER-11) and 'every row in the data file is rendered on some page' (CC-HTML-03).",
+      "benefit": "The class of defect that has recurred here — a count in prose drifting from the data underneath it — becomes impossible to ship silently.",
+      "effort": "low",
+      "risk": "Fails the build on cosmetic prose drift until the allow-list is set; that is the point, but it will annoy whoever merges at 23:00.",
+      "recommendation": "Accept after the six current findings are fixed, so it starts green. (2026-11-14 arena/6c5195d1: implemented as CR-7 — tools/crosscheck_site.py now runs in the nightly ingest verify chain and blocks the commit on any FAIL except CC-FRESH-01, whose snapshot-age verdict the bot cannot fix and which would otherwise freeze settlement whenever the third-party ratings capture ages.)",
+      "status": "applied in this PR"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-22",
+     "values": {
+      "id": "S-22",
+      "title": "Render the two parlay sections that are built but never published",
+      "problem": "`build_site_data.py:852-853` produces `parlays_xg` (cross-game parlays, 2 rows) and `parlay_costs` (stacking cost arithmetic, 5 rows). `build_site.py:260` puts only `correlation` and `parlays` on pages/parlays.html. The rows count toward the lint, the row totals, and CI parity, but appear on no page — 7 published rows nobody can review, including the cross-game and cost analysis the brief explicitly asks for.",
+      "proposal": "Append `render_table(sec(\"parlays_xg\"), L), render_table(sec(\"parlay_costs\"), L)` to the pages/parlays.html list and rebuild. Note the deliberate `legs = (1,2,3,4,6)` skip in `build_cost_rows` is intentional, not a dropped row — checked, not assumed.",
+      "benefit": "Two analysis tables become visible; the row-count claim on the landing page stops being larger than what a reader can actually open.",
+      "effort": "trivial",
+      "risk": "None. The data is already linted and parity-checked; only its rendering is missing.",
+      "recommendation": "Accept. (2026-11-14: done by session arena/72f9da58 in PR #40 — parlays_xg and parlay_costs are rendered on the Parlays page; CC-HTML-03 now passes.)",
+      "status": "applied in an earlier session"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-23",
+     "values": {
+      "id": "S-23",
+      "title": "Make the 'W-L (official NBA.com)' column an actual official measurement",
+      "problem": "`build_ratings_rows` (build_site_data.py:111) fills both `wl` and `wl_official` from the same model object, which is loaded from the Basketball-Reference snapshot. The table's own note says 'Both W-L columns are printed on purpose: if they ever disagree, the table is wrong' — a guard that cannot fire, because the two columns are the same number by construction. Meanwhile the real official capture (`nba2/data/records.json`, read from nba.com) is not compared in the row at all, and the coverage caveat ('28 of 30 clubs visible in the retrieved page text, TOR and WAS not') lives only in the table caption, never per row.",
+      "proposal": "Populate `wl_official` from `nba2/data/records.json` keyed by the normalised tricode, flag the two rows whose official confirmation came from a *different* official page (TOR/WAS via their team pages), and keep the caption as the summary it is.",
+      "benefit": "The column earns its label; the disagreement guard becomes real; a reviewer sees per club which official document covered it, which is exactly what the 28/30-vs-30/30 confusion was missing.",
+      "effort": "low",
+      "risk": "If a row then disagrees, the table shows a FAIL for that club — which is the desired behaviour, not a regression.",
+      "recommendation": "Accept. (2026-11-14 arena/6c5195d1: implemented as CR-4 — the column is populated from nba2/data/records.json (the official NBA.com capture) and CC-DER-05 now diffs each W-L column against its own source file.)",
+      "status": "applied in this PR"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-24",
+     "values": {
+      "id": "S-24",
+      "title": "Stop reporting AT-RISK gates as 'blocked' on the leaderboard",
+      "problem": "`leaderboard.py:149` computes `blocked = sum(result in ('BLOCKED','AT-RISK'))`, so all nine strategies publish '0 pass / 0 fail / 10 blocked' while the gate matrix underneath them says 8 BLOCKED + 2 AT-RISK. The gates page defines the two states differently ('BLOCKED means the input does not exist; AT-RISK means the input exists but the measurement is at risk'), and the distinction is the roadmap: AT-RISK gates are the ones a single data change can move.",
+      "proposal": "Add `gates_at_risk` to the tally and publish '0 pass / 0 fail / 8 blocked / 2 at-risk', or split the column in two.",
+      "benefit": "The leaderboard tells you which gate is closest to passing instead of flattening two very different states into one word.",
+      "effort": "low",
+      "risk": "Changes one rendered string and its test expectations.",
+      "recommendation": "Accept. (2026-11-14 arena/6c5195d1: implemented as CR-5 — the leaderboard tally itemises blocked and at-risk separately and CC-GATE-02 verifies all four counts.)",
+      "status": "applied in this PR"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-25",
+     "values": {
+      "id": "S-25",
+      "title": "Normalise team keys at ingest, before any automation is written",
+      "problem": "`originated/data/teams.json` keys Washington as `WSH`; every other committed capture uses `WAS`. A join on tricode does not fail — it silently drops the club, which is precisely how a coverage figure like '28 of 30' can be read as a data defect when it is a keying artefact. The cross-check only found it because it counted coverage separately from agreement.",
+      "proposal": "One canonical alias table (`TRICODE_ALIAS`) in `nba2/provenance.py` applied to every ingest path and every cross-surface comparison, plus a test that fails if any committed surface introduces a key outside the canonical 30.",
+      "benefit": "Every future cross-source comparison — odds, injuries, player feeds — stops losing rows invisibly.",
+      "effort": "low",
+      "risk": "Renames nothing; only comparisons change. Legacy surfaces keep their own keys.",
+      "recommendation": "Accept, and do it before the ingestion workflow is promoted from probe to publish. (2026-11-14 arena/6c5195d1: the WSH/WAS symptom is fixed — originated/data/{teams,slate}.json now use WAS and CC-X-00 passes — but the ingest-time normalisation this item asks for is still open.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-26",
+     "values": {
+      "id": "S-26",
+      "title": "Retire or re-earn FLAG-RAT-02",
+      "problem": "The ratings snapshot's `internal_consistency_checks` publishes two FAILs: 'sum(close_w) == sum(close_l) (FAIL)' and the same for blowout games, and FLAG-RAT-02 repeats it on the site as an extraction defect, which is why those four columns are excluded from every model input. Recomputing the sums from the same file's own 30 records gives 99 = 99 and 88 = 88 — balanced. The flag describes a defect the committed data does not contain.",
+      "proposal": "Either re-read the source page and show where the imbalance lives (the snapshot as committed is then not the file that was checked, which is its own problem), or update the labels to PASS, retire FLAG-RAT-02 and un-exclude the close/blowout columns for the luck and fatigue factors that want them.",
+      "benefit": "A false alarm stops costing two usable columns, and the site stops publishing a self-accusation it cannot substantiate.",
+      "effort": "low (documentation) / medium (if the columns come back into the model)",
+      "risk": "Un-excluding columns changes model inputs, so it must ride with a re-seal of the ledger, not a quiet rebuild.",
+      "recommendation": "Decide the label first, the inputs second. (2026-11-14 arena/6c5195d1: CR-3 applied — the FAIL labels were wrong (sums balance 99=99 and 88=88) and are corrected with an in-file correction record; the balancing objection is withdrawn. The re-admit-or-keep-excluded decision for the close/blowout splits remains with the owner because it changes model inputs under a seal.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-27",
+     "values": {
+      "id": "S-27",
+      "title": "Stop hand-copying counts into prose",
+      "problem": "README publishes hand-copied counts that drift with every build: it says 33 tables / 915 rows while the build after PR #24/#25 emits 36 / 964, and it carried two different test counts (49 vs 55) until the refresh PR changed the number to 62 by hand. Every earlier session tripped on some variant of this.",
+      "proposal": "Generate the README's count block from the same measurement the cross-check uses (`CC-DOC-01` measures all four), or replace the inline numbers with a pointer to the sources page and its retrieval stamps.",
+      "benefit": "Removes the single most repeated documentation defect in this repository, permanently.",
+      "effort": "low",
+      "risk": "None. It is prose.",
+      "recommendation": "Accept. (2026-11-14: counts are still hand-copied, but CC-DOC-01 in tools/crosscheck_site.py now fails the build when they drift from the artefacts on disk — generation is the remaining half.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-28",
+     "values": {
+      "id": "S-28",
+      "title": "Show staleness as a state, not a footnote",
+      "problem": "The site prints its snapshot date honestly, and every audit has had to say the same sentence in different words: the deployment succeeding does not mean the data is fresh. A reader skimming the picks page sees a line for a game that may already have tipped. Nothing on the page changes colour when the snapshot ages.",
+      "proposal": "Client-side only (so CI parity is untouched): `app.js` reads the published `snapshot_as_of`, compares with the browser date, and prints a banner — 'snapshot N days old; games on these dates have already tipped; nothing here is a live price' — with the freshness rule quoted from the sources page. Suppress the banner inside the repo's own checks by keying it to the data attribute rather than a build timestamp.",
+      "benefit": "The one mistake this prototype can cause in the real world — someone betting off a stale page — gets a stop sign at the top of every page.",
+      "effort": "low",
+      "risk": "Must not read the clock at build time or the byte-stability guarantee breaks.",
+      "recommendation": "Accept; it is the cheapest decision-safety change available. (2026-11-14: partial — every page prints its as-of date and CC-FRESH-01/02 report freshness, but there is still no single staleness state on the landing page.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-29",
+     "values": {
+      "id": "S-29",
+      "title": "Read the first scheduled ingest run before trusting the freshness story",
+      "problem": "The repo now ships a nightly ingest (refresh.py + refresh.yml, active, zero runs recorded). Whether the official endpoints answer from a GitHub-hosted runner is still unmeasured: from the sandbox that built this data all four fail at TLS, and this session could not dispatch a workflow to test the runner (the credential set returns HTTP 403 for workflow_dispatch). `CC-FRESH-03` therefore reports INFO, not PASS, for a schedule that has never produced an artefact.",
+      "proposal": "After the first 14:05 or 18:35 UTC run, record the run id and its outcome on the sources page, and change the landing-page state line to 'last successful ingest: <stamp>'. If the run failed on unreachable endpoints, mark ingestion 'blocked by source access' in the requirements register instead of leaving it to be rediscovered by the next audit.",
+      "benefit": "Turns the project's biggest open assumption into a dated, citable measurement.",
+      "effort": "low",
+      "risk": "A nightly job that always fails is noise; that is why the schedule stays off until the probe result is known.",
+      "recommendation": "Accept; it is one line of prose per run and it is the difference between 'stale' and 'known stale'. (2026-11-14 arena/6c5195d1: the first scheduled runs of refresh.yml are tonight (14:05 and 18:35 UTC); read their logs before any freshness claim is trusted — CC-FRESH-03 stays INFO until then.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-31",
+     "values": {
+      "id": "S-31",
+      "title": "Make 'beats the naive baseline' a gate, and publish the baseline column on the site",
+      "problem": "The measured backtest already shows the problem: on 139 graded games the originated model hits 62.59% straight-up while 'pick the club with the better net rating' hits 64.03%, and the margin-error advantage (12.173 vs 13.266 MAE) is not significant (p = 0.348). Nothing in the gate set fails a strategy for losing to a naive rule, so a leaderboard could in principle promote a model that a one-line lookup matches. The result is also only visible on backtest/**, not on the canonical site.",
+      "proposal": "Add G-11 'must beat the best naive baseline on the same games, with a paired test excluding 0' to the gate set, and put the baseline column beside every score on pages/strategies.html. The numbers already exist in backtest/data/report.json (naive_baselines), and tools/crosscheck_site.py recomputes them, so this is wiring, not research.",
+      "benefit": "The competition measures skill instead of activity: a strategy earns a reward only by beating what a fan could do with a standings table, which is the actual standard the brief asks for ('selectively skill based').",
+      "effort": "medium (one gate definition + a rendered column; no new data needed)",
+      "risk": "Every current strategy would fail G-11, which is the truthful result, not a bug.",
+      "recommendation": "Accept. This is the most useful single change available to the leaderboard design. (2026-11-14: half-done — the backtest publishes measured baseline comparisons (G-04 FAILS on them), but the baseline column is not on the canonical gate page.)",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -33629,8 +34149,8 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed",
-      "method": "python -m nba2.pipeline.settle (no official finals snapshot covers the ledger's games)"
+      "result": "PENDING by design — data/settlement.json records settled_at 2026-11-14T09:59:34+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score); the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed (updated 2026-11-14 by arena/6c5195d1 when the finals ingest chain was brought up: finals_all.json now carries the nine official 11/13 finals)",
+      "method": "python -m nba2.pipeline.settle (no official final scores yet for the ledger's games; the nightly ingest job fetches and settles them per game day)"
      },
      "source": {
       "name": "Session arena/72f9da58 verification artefacts",
@@ -35434,13 +35954,13 @@
      "values": {
       "id": "S-A04",
       "title": "Settle the sealed ledger as soon as finals exist",
-      "problem": "Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.",
+      "problem": "At proposal time settlement had run but measured nothing: data/settlement.json carried settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell was blank and the gates stayed blocked — correctly, because the sealed games of 11/14–17 had not finished.",
       "proposal": "After each game day, commit data/raw/finals_<date>.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.",
       "benefit": "First real measurement of line error and calibration — the 'remove luck' step becomes data, not design.",
       "effort": "Low — settle.py is written, tested, and already produces the pending record.",
       "risk": "None if finals come from official box scores; never impute a score.",
       "recommendation": "Run it after 11/14's games are final, then after each subsequent game day.",
-      "status": "partially done — settle runs; awaiting official finals"
+      "status": "partially done — the finals ingest chain is live and verified (finals_all.json carries the nine official 11/13 finals; 0 of 49 sealed games have been played as of 2026-11-14); the nightly ingest job now fetches, merges and settles each game day automatically"
      },
      "source": {
       "name": "COORDINATION.md",
@@ -35466,7 +35986,7 @@
       "effort": "Medium — mostly a decision plus five banner edits.",
       "risk": "Low — nothing is deleted; trees stay for audit.",
       "recommendation": "Decide before the next data refresh so only one tree is refreshed.",
-      "status": "owner decision"
+      "status": "DECIDED 2026-11-14 by the final-integration session under the brief's delegated authority ('work fully on your own from start to finish'): root+pages/ stays the canonical live tree — it is what GitHub Pages serves today, it is the only tree that publishes picks for the sealed slate as the brief requires, and it carries the provenance lint (every row sourced) and the session audit. The other trees stay as linked evidence (backtest/ is in the root nav). Flipping the live tree to the verified v2 site/ artifact remains a one-setting change (Pages source: 'GitHub Actions') if the owner prefers it — recorded on Flagged for Review."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -36137,6 +36657,52 @@
      "verified": false
     },
     {
+     "key": "FLAG-ORIG-01",
+     "values": {
+      "id": "FLAG-ORIG-01",
+      "severity": "low",
+      "area": "provenance",
+      "statement": "In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON keys: each team object has both \"conf\": \"East|West\" and \"conf\": \"<conference record>\". A JSON parser silently keeps the last, so the conference name is unreachable and originated/engine/model.js publishes the conference record in its place. Not fixed here (the WSH→WAS team-key fix was this session's scope; the schema repair is the tree owner's call) — flagged for review 2026-11-14 by arena/6c5195d1.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json",
+      "action": "Owner renames one of the two keys (e.g. conf_record) and regenerates originated/ (the 24-check verifier must stay green)."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-ORIG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-PAGES-01",
+     "values": {
+      "id": "FLAG-PAGES-01",
+      "severity": "info",
+      "area": "provenance",
+      "statement": "Two verified site trees ship from this repository: the canonical root tree (root *.html + pages/ — served live by GitHub Pages, build_type legacy = branch main /) and the v2 artifact under site/ (built and provenance-checked by .github/workflows/pages.yml). Both are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The final-integration session kept the root tree canonical (S-A05, 2026-11-14) because it publishes picks for the sealed slate as the brief requires; switching the live tree to site/ is one Pages setting ('GitHub Actions') and remains the owner's call.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml",
+      "action": "Owner chooses which tree readers see; nothing is broken either way."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-PAGES-01"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-PARAM-01",
      "values": {
       "id": "FLAG-PARAM-01",
@@ -36648,9 +37214,9 @@
       "id": "FLAG-RAT-02",
       "severity": "low",
       "area": "ratings",
-      "statement": "Close-game and blowout-game split columns do not balance league-wide (wins total must equal losses total). The discrepancy arises from the text extraction of the source table (some rows have blank/merged cells), not necessarily from the source itself. These columns are therefore NOT used for any model parameter.",
+      "statement": "CORRECTED 2026-11-14 (CR-3): the original claim that the close/blowout split columns 'do not balance league-wide' was wrong — recomputation over this file's own records shows sum(close_w)=sum(close_l)=99 and sum(blowout_w)=sum(blowout_l)=88, and the two internal_consistency_checks labels are corrected to PASS (see provenance.correction). The columns remain NOT used for any model parameter, because the model inputs and the sealed prediction ledger were fixed before this correction and must not move under a seal; re-admitting the splits is a model change, tracked as suggestion S-26.",
       "source": "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
-      "action": "Re-read the source table directly before using close/blowout splits for luck diagnostics."
+      "action": "Owner decides S-26: re-admit close/blowout splits as model inputs (new seal for future slates) or keep them as published luck-diagnostics only. The balancing objection is withdrawn."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -36763,9 +37329,9 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all PENDING by design: data/settlement.json records settled_at 2026-11-14T00:58Z with finals_snapshot null — no official final-score snapshot covers the sealed games of 11/14–11/17 yet. Every leaderboard score, bet count and reward cell is therefore blank, and the gates stay blocked or unmeasured — the pipeline correctly refusing to grade unplayed games, not a data gap.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all PENDING by design: data/settlement.json records settled_at 2026-11-14T09:59:34+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) Every leaderboard score, bet count and reward cell is therefore blank, and the gates stay blocked or unmeasured — the pipeline correctly refusing to grade unplayed games, not a data gap.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
-      "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page)."
+      "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -36800,6 +37366,29 @@
      "note": "",
      "flags": [
       "FLAG-SLATE-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-SLATE-02",
+     "values": {
+      "id": "FLAG-SLATE-02",
+      "severity": "info",
+      "area": "provenance",
+      "statement": "Historical flag (raised 2026-11-13, kept registered so the ratings table's TOR/WAS rows can link the coverage history they carry per CR-4): the win-loss records for Toronto and Washington 'were not visible in the retrieved NBA.com page text; third-party value only' in the capture that raised it. RESOLVED — see FLAG-RES-01: on 2026-11-14 all 30 teams' W-L were re-read from the official standings page (TOR 5-7, WAS 4-9) and match, and nba2/data/records.json verifies TOR/WAS via their official NBA.com team pages.",
+      "source": "https://www.nba.com/standings",
+      "action": "None — recorded history. FLAG-RES-01 carries the resolution evidence."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SLATE-02"
      ],
      "verified": false
     },
@@ -37403,6 +37992,27 @@
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="22">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:16 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="questions" data-rows="27">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -275,8 +275,63 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
+<tr id="Q-23">
+<td>Q-23</td>
+<td>Which execution environment can reach the official NBA endpoints, and under what policy?</td>
+<td>A dated, reproducible measurement from the sandbox: four endpoints, none answering at TLS. Plus the same result from three prior sessions. The `nba-ingest.yml` probe measures it from a GitHub-hosted runner and prints the table.</td>
+<td>The runner&#x27;s answer (recorded by the probe run), and the owner&#x27;s decision about whether automated fetching of nba.com properties is in policy for this project at any cadence.</td>
+<td>Dispatch the probe from main; read the run summary; if reachable, confirm terms of use before enabling a schedule; if unreachable, mark ingestion &#x27;blocked by source policy&#x27; in the requirements register instead of &#x27;not started&#x27;.</td>
+<td>Decides whether the daily-refresh requirement is an engineering task, a licensing task, or a manual one. Nothing downstream (CLV, settled ledger, promoted strategies) can start without it.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-24">
+<td>Q-24</td>
+<td>Is the 13:00 ET referee PDF the authority for availability, and do we keep the bytes?</td>
+<td>Three different stamps of the same day&#x27;s report are cited across surfaces (01:00 PM, 04:15 PM, 05:15 PM ET) and the reconciliation table already adjudicates 10 status changes between them. The capture tool archives the PDF with a sha256 of the response body.</td>
+<td>A policy: which stamp is canonical for a published line, and whether archived PDFs (or only their hashes) are kept in-repo.</td>
+<td>Owner picks &#x27;latest release before tip, with the previous two retained&#x27;; then the ingest stores the PDF, its hash, and its stamp with every snapshot.</td>
+<td>Without a canonical stamp, two honest sessions will keep disagreeing about who is Out, and the disagreement will look like a model difference.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-25">
+<td>Q-25</td>
+<td>Which surface is canonical, and what happens to the other four?</td>
+<td>Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.</td>
+<td>An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.</td>
+<td>Pick one; move the others to `archive/` with a redirect note on each landing, or keep them and put the surface inventory (already a published table) at the top of the landing page.</td>
+<td>Five surfaces means five answers to &#x27;what is our line for DEN@NOP&#x27;, all defensible, none canonical. That is the failure mode a leaderboard project cannot afford.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-26">
+<td>Q-26</td>
+<td>What does a strategy have to survive before it can be paid?</td>
+<td>Nine gates per strategy defined and applied to 9 strategies (90 gate results, all BLOCKED/AT-RISK); a pre-registered sealed ledger (22 predictions, digest on every page); a tier ladder with reward weights; and a stated minimum sample of 300 settled bets.</td>
+<td>Owner sign-off on the promotion rule as a *policy*, not a design: minimum sample, holdout window, vig treatment, drawdown cap, multiple-comparison correction across nine strategies, and what happens to the seal when the window rolls forward daily.</td>
+<td>Write it into the requirements register as acceptance criteria, then let the gate code enforce it; anything not enforced is a poster.</td>
+<td>Until this exists, &#x27;top performing strategies&#x27; has no definition, so the competition cannot start — and the honest answer today is that the leaderboard is empty by design.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-27">
+<td>Q-27</td>
+<td>Who reviews a commit that the nightly ingest pushes to `main`?</td>
+<td>`refresh.yml` runs with `contents: write`, rebuilds the site, and pushes `HEAD:${GITHUB_REF_NAME}` directly, gated by its own verify chain (unit tests, seal verification, provenance lint) and an explicit guard that the sealed ledger is untouched. That is a sound fail-closed design for a bot.</td>
+<td>A stated policy on what a bot commit may change on `main` without a human: the pipeline today also carries F1&#x27;s negative-count bug, which such a commit would happily re-publish with a green tick.</td>
+<td>Add the cross-check to the ingest verify chain (S-21/S-30) so a bot cannot push a build that fails semantic review, and record the bot&#x27;s allowed paths in the requirements register.</td>
+<td>Determines whether automated refresh is trustworthy end-to-end. Right now it can only fail loudly, not fail subtly — which is good — but &#x27;loudly&#x27; is scoped to what CI checks today.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
 </tbody></table></div>
-<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.</p>
+<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. 2026-11-14 (arena/6c5195d1-nba2): Q-23…Q-27 from the cross-check queue fragment analysis/queue-additions-5b80b88a.json are merged in (severity labels normalised to this register&#x27;s vocabulary).</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

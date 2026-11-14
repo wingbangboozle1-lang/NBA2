@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Methodology</h2><p>How a line gets made here, which parameters are fitted, and which are still someone's opinion.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:16 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="calibration" data-rows="6">
 <h2>Model parameters — derived, not assumed</h2>
 <p class="blurb">These are the only two structural numbers the whole site depends on. Both are fitted against the verified standings snapshot; where the fit is weak we say so instead of quietly picking a convention.</p>
@@ -202,7 +202,7 @@
 <p class="tablenote">nba2/config.py::PARAMS</p>
 </section><section class="card table-card" id="ratings" data-rows="30">
 <h2>Team ratings table (the model&#x27;s only inputs)</h2>
-<p class="blurb">W-L is confirmed against NBA.com for 28 of 30 clubs; TOR and WAS were not visible in the retrieved official page text and are flagged. PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single biggest data gap on this site.</p>
+<p class="blurb">W-L (official NBA.com) is read from the official capture nba2/data/records.json (30/30 clubs, retrieved 2026-11-13 from nba.com/schedule; TOR and WAS via their official NBA.com team pages — the visibility gap that FLAG-SLATE-02 was raised for is recorded as resolved by FLAG-RES-01). W-L (ratings source) is the Basketball-Reference snapshot data/raw/team_ratings_2026-11-13.json. PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single biggest data gap on this site.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Team ratings table (the model&#x27;s only inputs)</caption><thead><tr>
 <th scope="col">Team</th>
 <th scope="col">W-L (official NBA.com)</th>
@@ -605,7 +605,7 @@
 <td>0.770</td>
 <td>+0.02</td>
 <td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-02">FLAG-SLATE-02</a></td>
 </tr>
 <tr id="UTA">
 <td>Utah Jazz</td>
@@ -633,10 +633,10 @@
 <td>0.784</td>
 <td>-7.45</td>
 <td class="srccell"><span class="badge badge-third">third party</span><a class="source-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">Basketball-Reference 2026-27 Standings</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-02">FLAG-SLATE-02</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">Both W-L columns are printed on purpose: if they ever disagree, the table is wrong.</p>
+<p class="tablenote">Both W-L columns are printed on purpose and come from independent captures — the official NBA.com records and the third-party ratings snapshot: if they ever disagree, one capture is stale and the table is wrong.</p>
 </section><section class="card table-card" id="luck" data-rows="30">
 <h2>Skill / luck decomposition</h2>
 <p class="blurb">Luck here means: wins beyond what a normal-margin model fitted to this same table implies, scaled by the binomial noise of that team&#x27;s schedule size. The two right-hand columns are deliberately blank — the close/blowout split we fetched does not balance league-wide, so we refuse to use it for a luck claim.</p>

@@ -1,0 +1,16 @@
+{
+  "source": "https://www.nba.com/games?date=2026-11-13",
+  "captured_utc": "2026-11-14T09:45:00Z",
+  "captured_by": "arena/6c5195d1-nba2 (live fetch of the official NBA.com games page; 9 of 9 finals recorded)",
+  "records": [
+    {"game_id": "0022600034", "home_pts": 106, "away_pts": 104, "source": "https://www.nba.com/game/nyk-vs-ind-0022600034"},
+    {"game_id": "0022600035", "home_pts": 107, "away_pts": 99, "source": "https://www.nba.com/game/mil-vs-orl-0022600035"},
+    {"game_id": "0022600036", "home_pts": 133, "away_pts": 121, "source": "https://www.nba.com/game/cle-vs-mia-0022600036"},
+    {"game_id": "0022600037", "home_pts": 125, "away_pts": 117, "source": "https://www.nba.com/game/atl-vs-chi-0022600037"},
+    {"game_id": "0022600038", "home_pts": 111, "away_pts": 142, "source": "https://www.nba.com/game/mem-vs-nop-0022600038"},
+    {"game_id": "0022600039", "home_pts": 125, "away_pts": 118, "source": "https://www.nba.com/game/uta-vs-hou-0022600039"},
+    {"game_id": "0022600040", "home_pts": 123, "away_pts": 85, "source": "https://www.nba.com/game/gsw-vs-sas-0022600040"},
+    {"game_id": "0022600041", "home_pts": 107, "away_pts": 120, "source": "https://www.nba.com/game/por-vs-sac-0022600041"},
+    {"game_id": "0022600042", "home_pts": 113, "away_pts": 112, "source": "https://www.nba.com/game/okc-vs-lac-0022600042"}
+  ]
+}

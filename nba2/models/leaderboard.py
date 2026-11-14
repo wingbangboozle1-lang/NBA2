@@ -146,11 +146,13 @@ def table_rows(entries: list[Entry]) -> list[dict]:
     for e in entries:
         passed = sum(1 for r in e.results if r.result == "PASS")
         failed = sum(1 for r in e.results if r.result == "FAIL")
-        blocked = sum(1 for r in e.results if r.result in ("BLOCKED", "AT-RISK"))
+        blocked = sum(1 for r in e.results if r.result == "BLOCKED")
+        at_risk = sum(1 for r in e.results if r.result == "AT-RISK")
         rows.append({
             "strategy_id": e.strategy_id, "name": e.name, "family": e.family,
             "score": e.score, "tier": config.TIERS.get(e.tier, {}).get("label", e.tier),
             "gates_passed": passed, "gates_failed": failed, "gates_blocked": blocked,
+            "gates_at_risk": at_risk,
             "cluster": e.cluster, "n_bets": e.measurements.get("settled_bets"),
             "blocking": "; ".join(e.blocking_reasons[:2]) if e.blocking_reasons else "—",
         })

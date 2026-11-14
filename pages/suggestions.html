@@ -20,10 +20,10 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="20">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:16 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="suggestions" data-rows="31">
 <h2>Site-improvement suggestions — review queue</h2>
-<p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
+<p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
 <th scope="col">ID</th>
 <th scope="col">Suggestion</th>
@@ -295,8 +295,151 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
+<tr id="S-30">
+<td>S-30</td>
+<td>Fix the negative availability count (live on the site now)</td>
+<td>`availability_window` publishes `no_rows_yet = -5` for 2026-11-14 and `not_yet_submitted = 10` where the true figure is 5. `build_site_data.py:487-491` builds `filed` and `nys` as sets of team names across two injury releases and then computes `slots - filed - nys`; the sets are not disjoint, because a team that filed in the 19:30 ET release still has its NOT YET SUBMITTED placeholder from the 16:15 ET release. Three team-slots of double-counting on a ten-slot slate is what makes the result negative. The provenance lint cannot see it: the cell is a number with a source.</td>
+<td>Recompute both columns from the union: `nys_only = len(nys - filed)`, `no_rows_yet = slots - filed - nys_only`, and publish `not_yet_submitted = nys_only`. Then add the two assertions to CI so the class cannot return: &#x27;no count is negative&#x27; and &#x27;availability columns reconcile with a recount of the two snapshots&#x27; (tools/crosscheck_site.py already implements both as CC-DER-11 and CC-DER-12).</td>
+<td>The one number that tells a reader how availability-blind a sealed window is becomes true, and a stale undercount of &#x27;blind&#x27; teams stops making the slate look better covered than it is.</td>
+<td>trivial (three lines + rebuild; the rebuild is what session arena/79e87c81-nba2 and PRs #21/#26 are racing on, which is why this session filed it instead of forcing a fifth concurrent edit of site.json)</td>
+<td>Low. It changes two derived counts, no model input, no sealed prediction, and the coverage percentage is unaffected.</td>
+<td>Accept before any further injury snapshot is unioned into this table — the bug grows with every release added. (2026-11-14: done by the 2026-11-14 refresh sessions — the availability columns recompute from disjoint sets; CC-DER-11 and CC-DER-12 pass.)</td>
+<td>applied in an earlier session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-21">
+<td>S-21</td>
+<td>Run the cross-check in CI, next to the lint</td>
+<td>The provenance lint proves rows are labelled; the CI parity step proves the HTML equals a rebuild of site.json. Neither can prove a label matches what it points at, because the same code produced both. Three audits said the same thing: nobody had re-run a semantic pass over the published values. tools/crosscheck_site.py now does that, and it found six real defects on its first run.</td>
+<td>Add one CI step: `python3 tools/crosscheck_site.py --json crosscheck.json`, failing only on the checks the owner has accepted as binding (the tool exits non-zero on any FAIL, so start it as `continue-on-error: true` and promote it once the six findings are resolved). Start with the two assertions that found real bugs on their first run: &#x27;no published count is negative&#x27; (CC-DER-11) and &#x27;every row in the data file is rendered on some page&#x27; (CC-HTML-03).</td>
+<td>The class of defect that has recurred here — a count in prose drifting from the data underneath it — becomes impossible to ship silently.</td>
+<td>low</td>
+<td>Fails the build on cosmetic prose drift until the allow-list is set; that is the point, but it will annoy whoever merges at 23:00.</td>
+<td>Accept after the six current findings are fixed, so it starts green. (2026-11-14 arena/6c5195d1: implemented as CR-7 — tools/crosscheck_site.py now runs in the nightly ingest verify chain and blocks the commit on any FAIL except CC-FRESH-01, whose snapshot-age verdict the bot cannot fix and which would otherwise freeze settlement whenever the third-party ratings capture ages.)</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-22">
+<td>S-22</td>
+<td>Render the two parlay sections that are built but never published</td>
+<td>`build_site_data.py:852-853` produces `parlays_xg` (cross-game parlays, 2 rows) and `parlay_costs` (stacking cost arithmetic, 5 rows). `build_site.py:260` puts only `correlation` and `parlays` on pages/parlays.html. The rows count toward the lint, the row totals, and CI parity, but appear on no page — 7 published rows nobody can review, including the cross-game and cost analysis the brief explicitly asks for.</td>
+<td>Append `render_table(sec(&quot;parlays_xg&quot;), L), render_table(sec(&quot;parlay_costs&quot;), L)` to the pages/parlays.html list and rebuild. Note the deliberate `legs = (1,2,3,4,6)` skip in `build_cost_rows` is intentional, not a dropped row — checked, not assumed.</td>
+<td>Two analysis tables become visible; the row-count claim on the landing page stops being larger than what a reader can actually open.</td>
+<td>trivial</td>
+<td>None. The data is already linted and parity-checked; only its rendering is missing.</td>
+<td>Accept. (2026-11-14: done by session arena/72f9da58 in PR #40 — parlays_xg and parlay_costs are rendered on the Parlays page; CC-HTML-03 now passes.)</td>
+<td>applied in an earlier session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-23">
+<td>S-23</td>
+<td>Make the &#x27;W-L (official NBA.com)&#x27; column an actual official measurement</td>
+<td>`build_ratings_rows` (build_site_data.py:111) fills both `wl` and `wl_official` from the same model object, which is loaded from the Basketball-Reference snapshot. The table&#x27;s own note says &#x27;Both W-L columns are printed on purpose: if they ever disagree, the table is wrong&#x27; — a guard that cannot fire, because the two columns are the same number by construction. Meanwhile the real official capture (`nba2/data/records.json`, read from nba.com) is not compared in the row at all, and the coverage caveat (&#x27;28 of 30 clubs visible in the retrieved page text, TOR and WAS not&#x27;) lives only in the table caption, never per row.</td>
+<td>Populate `wl_official` from `nba2/data/records.json` keyed by the normalised tricode, flag the two rows whose official confirmation came from a *different* official page (TOR/WAS via their team pages), and keep the caption as the summary it is.</td>
+<td>The column earns its label; the disagreement guard becomes real; a reviewer sees per club which official document covered it, which is exactly what the 28/30-vs-30/30 confusion was missing.</td>
+<td>low</td>
+<td>If a row then disagrees, the table shows a FAIL for that club — which is the desired behaviour, not a regression.</td>
+<td>Accept. (2026-11-14 arena/6c5195d1: implemented as CR-4 — the column is populated from nba2/data/records.json (the official NBA.com capture) and CC-DER-05 now diffs each W-L column against its own source file.)</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-24">
+<td>S-24</td>
+<td>Stop reporting AT-RISK gates as &#x27;blocked&#x27; on the leaderboard</td>
+<td>`leaderboard.py:149` computes `blocked = sum(result in (&#x27;BLOCKED&#x27;,&#x27;AT-RISK&#x27;))`, so all nine strategies publish &#x27;0 pass / 0 fail / 10 blocked&#x27; while the gate matrix underneath them says 8 BLOCKED + 2 AT-RISK. The gates page defines the two states differently (&#x27;BLOCKED means the input does not exist; AT-RISK means the input exists but the measurement is at risk&#x27;), and the distinction is the roadmap: AT-RISK gates are the ones a single data change can move.</td>
+<td>Add `gates_at_risk` to the tally and publish &#x27;0 pass / 0 fail / 8 blocked / 2 at-risk&#x27;, or split the column in two.</td>
+<td>The leaderboard tells you which gate is closest to passing instead of flattening two very different states into one word.</td>
+<td>low</td>
+<td>Changes one rendered string and its test expectations.</td>
+<td>Accept. (2026-11-14 arena/6c5195d1: implemented as CR-5 — the leaderboard tally itemises blocked and at-risk separately and CC-GATE-02 verifies all four counts.)</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-25">
+<td>S-25</td>
+<td>Normalise team keys at ingest, before any automation is written</td>
+<td>`originated/data/teams.json` keys Washington as `WSH`; every other committed capture uses `WAS`. A join on tricode does not fail — it silently drops the club, which is precisely how a coverage figure like &#x27;28 of 30&#x27; can be read as a data defect when it is a keying artefact. The cross-check only found it because it counted coverage separately from agreement.</td>
+<td>One canonical alias table (`TRICODE_ALIAS`) in `nba2/provenance.py` applied to every ingest path and every cross-surface comparison, plus a test that fails if any committed surface introduces a key outside the canonical 30.</td>
+<td>Every future cross-source comparison — odds, injuries, player feeds — stops losing rows invisibly.</td>
+<td>low</td>
+<td>Renames nothing; only comparisons change. Legacy surfaces keep their own keys.</td>
+<td>Accept, and do it before the ingestion workflow is promoted from probe to publish. (2026-11-14 arena/6c5195d1: the WSH/WAS symptom is fixed — originated/data/{teams,slate}.json now use WAS and CC-X-00 passes — but the ingest-time normalisation this item asks for is still open.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-26">
+<td>S-26</td>
+<td>Retire or re-earn FLAG-RAT-02</td>
+<td>The ratings snapshot&#x27;s `internal_consistency_checks` publishes two FAILs: &#x27;sum(close_w) == sum(close_l) (FAIL)&#x27; and the same for blowout games, and FLAG-RAT-02 repeats it on the site as an extraction defect, which is why those four columns are excluded from every model input. Recomputing the sums from the same file&#x27;s own 30 records gives 99 = 99 and 88 = 88 — balanced. The flag describes a defect the committed data does not contain.</td>
+<td>Either re-read the source page and show where the imbalance lives (the snapshot as committed is then not the file that was checked, which is its own problem), or update the labels to PASS, retire FLAG-RAT-02 and un-exclude the close/blowout columns for the luck and fatigue factors that want them.</td>
+<td>A false alarm stops costing two usable columns, and the site stops publishing a self-accusation it cannot substantiate.</td>
+<td>low (documentation) / medium (if the columns come back into the model)</td>
+<td>Un-excluding columns changes model inputs, so it must ride with a re-seal of the ledger, not a quiet rebuild.</td>
+<td>Decide the label first, the inputs second. (2026-11-14 arena/6c5195d1: CR-3 applied — the FAIL labels were wrong (sums balance 99=99 and 88=88) and are corrected with an in-file correction record; the balancing objection is withdrawn. The re-admit-or-keep-excluded decision for the close/blowout splits remains with the owner because it changes model inputs under a seal.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-27">
+<td>S-27</td>
+<td>Stop hand-copying counts into prose</td>
+<td>README publishes hand-copied counts that drift with every build: it says 33 tables / 915 rows while the build after PR #24/#25 emits 36 / 964, and it carried two different test counts (49 vs 55) until the refresh PR changed the number to 62 by hand. Every earlier session tripped on some variant of this.</td>
+<td>Generate the README&#x27;s count block from the same measurement the cross-check uses (`CC-DOC-01` measures all four), or replace the inline numbers with a pointer to the sources page and its retrieval stamps.</td>
+<td>Removes the single most repeated documentation defect in this repository, permanently.</td>
+<td>low</td>
+<td>None. It is prose.</td>
+<td>Accept. (2026-11-14: counts are still hand-copied, but CC-DOC-01 in tools/crosscheck_site.py now fails the build when they drift from the artefacts on disk — generation is the remaining half.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-28">
+<td>S-28</td>
+<td>Show staleness as a state, not a footnote</td>
+<td>The site prints its snapshot date honestly, and every audit has had to say the same sentence in different words: the deployment succeeding does not mean the data is fresh. A reader skimming the picks page sees a line for a game that may already have tipped. Nothing on the page changes colour when the snapshot ages.</td>
+<td>Client-side only (so CI parity is untouched): `app.js` reads the published `snapshot_as_of`, compares with the browser date, and prints a banner — &#x27;snapshot N days old; games on these dates have already tipped; nothing here is a live price&#x27; — with the freshness rule quoted from the sources page. Suppress the banner inside the repo&#x27;s own checks by keying it to the data attribute rather than a build timestamp.</td>
+<td>The one mistake this prototype can cause in the real world — someone betting off a stale page — gets a stop sign at the top of every page.</td>
+<td>low</td>
+<td>Must not read the clock at build time or the byte-stability guarantee breaks.</td>
+<td>Accept; it is the cheapest decision-safety change available. (2026-11-14: partial — every page prints its as-of date and CC-FRESH-01/02 report freshness, but there is still no single staleness state on the landing page.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-29">
+<td>S-29</td>
+<td>Read the first scheduled ingest run before trusting the freshness story</td>
+<td>The repo now ships a nightly ingest (refresh.py + refresh.yml, active, zero runs recorded). Whether the official endpoints answer from a GitHub-hosted runner is still unmeasured: from the sandbox that built this data all four fail at TLS, and this session could not dispatch a workflow to test the runner (the credential set returns HTTP 403 for workflow_dispatch). `CC-FRESH-03` therefore reports INFO, not PASS, for a schedule that has never produced an artefact.</td>
+<td>After the first 14:05 or 18:35 UTC run, record the run id and its outcome on the sources page, and change the landing-page state line to &#x27;last successful ingest: &lt;stamp&gt;&#x27;. If the run failed on unreachable endpoints, mark ingestion &#x27;blocked by source access&#x27; in the requirements register instead of leaving it to be rediscovered by the next audit.</td>
+<td>Turns the project&#x27;s biggest open assumption into a dated, citable measurement.</td>
+<td>low</td>
+<td>A nightly job that always fails is noise; that is why the schedule stays off until the probe result is known.</td>
+<td>Accept; it is one line of prose per run and it is the difference between &#x27;stale&#x27; and &#x27;known stale&#x27;. (2026-11-14 arena/6c5195d1: the first scheduled runs of refresh.yml are tonight (14:05 and 18:35 UTC); read their logs before any freshness claim is trusted — CC-FRESH-03 stays INFO until then.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-31">
+<td>S-31</td>
+<td>Make &#x27;beats the naive baseline&#x27; a gate, and publish the baseline column on the site</td>
+<td>The measured backtest already shows the problem: on 139 graded games the originated model hits 62.59% straight-up while &#x27;pick the club with the better net rating&#x27; hits 64.03%, and the margin-error advantage (12.173 vs 13.266 MAE) is not significant (p = 0.348). Nothing in the gate set fails a strategy for losing to a naive rule, so a leaderboard could in principle promote a model that a one-line lookup matches. The result is also only visible on backtest/**, not on the canonical site.</td>
+<td>Add G-11 &#x27;must beat the best naive baseline on the same games, with a paired test excluding 0&#x27; to the gate set, and put the baseline column beside every score on pages/strategies.html. The numbers already exist in backtest/data/report.json (naive_baselines), and tools/crosscheck_site.py recomputes them, so this is wiring, not research.</td>
+<td>The competition measures skill instead of activity: a strategy earns a reward only by beating what a fan could do with a standings table, which is the actual standard the brief asks for (&#x27;selectively skill based&#x27;).</td>
+<td>medium (one gate definition + a rendered column; no new data needed)</td>
+<td>Every current strategy would fail G-11, which is the truthful result, not a bug.</td>
+<td>Accept. This is the most useful single change available to the leaderboard design. (2026-11-14: half-done — the backtest publishes measured baseline comparisons (G-04 FAILS on them), but the baseline column is not on the canonical gate page.)</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
 </tbody></table></div>
-<p class="tablenote">Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session&#x27;s opinion. Ordered by decision-quality gain per unit of effort.</p>
+<p class="tablenote">Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session&#x27;s opinion. Ordered by decision-quality gain per unit of effort. 2026-11-14 (arena/6c5195d1-nba2): the cross-check queue fragment analysis/queue-additions-5b80b88a.json (S-21…S-31) is merged into this register with a truthful status per item — the merge is bookkeeping, not an approval; each item still stands or falls on its own.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

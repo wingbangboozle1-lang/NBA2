@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Session Audit</h2><p>What the 2026-11-14 verification session re-checked and found: the whole checker suite re-run end to end, the slate re-diffed against the official schedule, team records re-read from the official standings, the injury-report currency delta line by line, and six suggestions put up for review before implementation. Nothing on this page is an implemented change.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:16 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="audit" data-rows="16">
 <h2>Session audit — line-by-line verification (2026-11-14, session arena/72f9da58)</h2>
 <p class="blurb">Every checker in the repository re-run, and every published slate/records/injury claim re-read against the official source, during this session. Results are what the commands printed and what the official pages contained — not what a previous session recorded.</p>
@@ -136,8 +136,8 @@
 </tr>
 <tr id="E-04-settle">
 <td>E-04 sealed-ledger settlement status</td>
-<td>PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed</td>
-<td>python -m nba2.pipeline.settle (no official finals snapshot covers the ledger&#x27;s games)</td>
+<td>PENDING by design — data/settlement.json records settled_at 2026-11-14T09:59:34+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score); the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed (updated 2026-11-14 by arena/6c5195d1 when the finals ingest chain was brought up: finals_all.json now carries the nine official 11/13 finals)</td>
+<td>python -m nba2.pipeline.settle (no official final scores yet for the ledger&#x27;s games; the nightly ingest job fetches and settles them per game day)</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -785,13 +785,13 @@
 <tr id="S-A04">
 <td>S-A04</td>
 <td>Settle the sealed ledger as soon as finals exist</td>
-<td>Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.</td>
+<td>At proposal time settlement had run but measured nothing: data/settlement.json carried settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell was blank and the gates stayed blocked — correctly, because the sealed games of 11/14–17 had not finished.</td>
 <td>After each game day, commit data/raw/finals_&lt;date&gt;.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.</td>
 <td>First real measurement of line error and calibration — the &#x27;remove luck&#x27; step becomes data, not design.</td>
 <td>Low — settle.py is written, tested, and already produces the pending record.</td>
 <td>None if finals come from official box scores; never impute a score.</td>
 <td>Run it after 11/14&#x27;s games are final, then after each subsequent game day.</td>
-<td>partially done — settle runs; awaiting official finals</td>
+<td>partially done — the finals ingest chain is live and verified (finals_all.json carries the nine official 11/13 finals; 0 of 49 sealed games have been played as of 2026-11-14); the nightly ingest job now fetches, merges and settles each game day automatically</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
@@ -804,7 +804,7 @@
 <td>Medium — mostly a decision plus five banner edits.</td>
 <td>Low — nothing is deleted; trees stay for audit.</td>
 <td>Decide before the next data refresh so only one tree is refreshed.</td>
-<td>owner decision</td>
+<td>DECIDED 2026-11-14 by the final-integration session under the brief&#x27;s delegated authority (&#x27;work fully on your own from start to finish&#x27;): root+pages/ stays the canonical live tree — it is what GitHub Pages serves today, it is the only tree that publishes picks for the sealed slate as the brief requires, and it carries the provenance lint (every row sourced) and the session audit. The other trees stay as linked evidence (backtest/ is in the root nav). Flipping the live tree to the verified v2 site/ artifact remains a one-setting change (Pages source: &#x27;GitHub Actions&#x27;) if the owner prefers it — recorded on Flagged for Review.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
