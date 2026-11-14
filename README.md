@@ -25,9 +25,25 @@ Source classes: `official` (nba.com / ak-static.cms.nba.com / cdn.nba.com), `thi
 every such row is flagged), `derived` (computed in-repo from a committed snapshot), `blocked`
 (we know we need it; we do not have it).
 
-## The dashboard this session generates
+## Which tree is published
 
-`index.html` + `pages/**` (20 pages, 40 tables, 1149 rows) are rendered from
+**One tree reaches a reader: [`site/`](site/), published at the repository root by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
+site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
+returns 404. The repository still holds the earlier trees — they are kept for history and for
+review, and they are **not** published. Nothing was deleted to get here; moving the rest under
+`archive/` is suggestion SG-28, waiting on an owner decision.
+
+| Tree | Published | Built by | What it is |
+|---|---|---|---|
+| `site/` | **yes** — the Pages root | `python -m nba2.v2` | the canonical dashboard: landing page, category subpages, per-row sourced tables, the questions register, the suggestions queue, the Flagged-for-review page and the live-verification log |
+| `index.html`, `pages/**` | no | `nba2/pipeline/build_site_data` → `build_site` | the earlier (v1) dashboard; still built and linted by CI, still the home of the sealed-ledger machinery, the reconciliation page and the provenance-linted table set |
+| `backtest/**` | no | `backtest/engine/build.py` | the walk-forward measured-skill report over official history |
+| `docs/**`, `verified/**`, `dashboard/**`, `originated/**`, `archive/**` | no | earlier sessions | history and review material |
+
+## The v1 dashboard tree (retained, not published)
+
+`index.html` + `pages/**` (20 pages, 46 tables, 1306 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |

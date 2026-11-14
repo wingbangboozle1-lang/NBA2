@@ -419,6 +419,8 @@ EMPTY_OK = {
     "injuries.line_adjustment",                                        # report has no such fields
     "injuries_window.minutes_impact", "injuries_window.production_impact",
     "injuries_window.line_adjustment",                                 # same reason: no such fields in the official report
+    "injuries_latest.minutes_impact", "injuries_latest.production_impact",
+    "injuries_latest.line_adjustment",                                 # same reason, newest release
     "leaders.impact",                                                  # same reason
     "gameflow.rest_home", "gameflow.rest_away",                       # needs games before the window
     "gameflow.pace", "gameflow.garbage", "gameflow.foul",

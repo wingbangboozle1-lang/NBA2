@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="79">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="84">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -231,6 +231,26 @@
 <td>Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="FLAG-INJ-08">
+<td>FLAG-INJ-08</td>
+<td>medium</td>
+<td>injuries</td>
+<td>CORRECTION (2026-11-14, session arena/6650be4d-nba2): the 11/13 19:30 ET release was transcribed with Caleb Martin under the CLEVELAND Cavaliers. The PDF breaks across pages with the Team column blank on the continuation rows, and Martin&#x27;s row falls in that gap, immediately before the &#x27;Cleveland Cavaliers | NOT YET SUBMITTED&#x27; line - so the team was inferred from the wrong side of the break. The 11/14 05:00 a.m ET release repeats the team on every row and prints Martin under the DALLAS Mavericks. The published window rows now come from that release, so the corrected attribution is what the site shows; the row-level diff is published on the Injuries page.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</td>
+<td>Re-read every continuation row of any future release against a rendering that repeats the team, or wait for the next same-day revision.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-08">FLAG-INJ-08</a></td>
+</tr>
+<tr id="FLAG-INJ-09">
+<td>FLAG-INJ-09</td>
+<td>low</td>
+<td>injuries</td>
+<td>An injury report is re-issued repeatedly and a status can move between releases. The delta between the two releases this session compared is published on the Injuries page; as of the 05:00 a.m ET release none of the 26 rows shared with the 19:30 ET release had changed status or reason.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</td>
+<td>Re-run the delta on every new release; a status change is a different bet.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-09">FLAG-INJ-09</a></td>
 </tr>
 <tr id="FLAG-LB-01">
 <td>FLAG-LB-01</td>
@@ -496,11 +516,21 @@
 <td>FLAG-RAT-02</td>
 <td>low</td>
 <td>ratings</td>
-<td>Close-game and blowout-game split columns do not balance league-wide (wins total must equal losses total). The discrepancy arises from the text extraction of the source table (some rows have blank/merged cells), not necessarily from the source itself. These columns are therefore NOT used for any model parameter.</td>
+<td>The close-game and blowout-game split columns are internally inconsistent AT THE TEAM LEVEL: for 18 of the 30 clubs the close and blowout rows together account for more games than the club has played (ATL shows 13 close+blowout games in a 12-game record, MEM 12 in 11, DET 12 in 11). The league-wide sums DO balance (close 99=99, blowout 88=88), so a league-level check alone would have passed - the check has to be per team. These columns are therefore NOT used for any model parameter and are left blank in the luck table: a split that contradicts the games played cannot support a per-team luck claim. The cause is the text extraction of the source table (blank/merged cells), not necessarily the source itself.</td>
 <td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
-<td>Re-read the source table directly before using close/blowout splits for luck diagnostics.</td>
+<td>Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout &lt;= games played.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
+</tr>
+<tr id="FLAG-RAT-03">
+<td>FLAG-RAT-03</td>
+<td>low</td>
+<td>ratings</td>
+<td>The official standings table (nba.com/standings) now supplies every club&#x27;s W-L plus HOME/ROAD/CONF/DIV splits and is published on the Methodology page — but its &#x27;Margins &amp; Stats&#x27; section does NOT render PS/G, PA/G or SRS for a non-browser client, so those three model inputs are still third-party (FLAG-RAT-01). The official game pages do carry the win-loss records on their cards, which is a second independent official read.</td>
+<td>https://www.nba.com/standings</td>
+<td>Confirm PS/G, PA/G and SRS once against the official standings page in a browser, or connect stats.nba.com from a runner (R-103).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-03">FLAG-RAT-03</a></td>
 </tr>
 <tr id="FLAG-REFRESH-01">
 <td>FLAG-REFRESH-01</td>
@@ -551,6 +581,16 @@
 <td>Commit data/raw/finals_&lt;date&gt;.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-01">FLAG-SET-01</a></td>
+</tr>
+<tr id="FLAG-SET-02">
+<td>FLAG-SET-02</td>
+<td>info</td>
+<td>provenance</td>
+<td>Official final scores for the nine 2026-11-13 games are now committed (data/raw/finals_2026-11-13.json, read from the official schedule page). Those nine games are day-before CONTEXT: neither sealed ledger covers them, so the published grade is a model check and NOT a settled registered forecast. Settlement of the sealed windows (11/14-11/17) stays PENDING because those games have not been played.</td>
+<td>https://www.nba.com/schedule?date=2026-11-14</td>
+<td>Keep re-running python -m nba2.pipeline.settle after each game day; never publish a settlement number that the sealed ledger does not cover.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
 </tr>
 <tr id="FLAG-SLATE-01">
 <td>FLAG-SLATE-01</td>
@@ -611,6 +651,16 @@
 <td>None - context rows only, never sealed or staked.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-07">FLAG-SLATE-07</a></td>
+</tr>
+<tr id="FLAG-SLATE-09">
+<td>FLAG-SLATE-09</td>
+<td>low</td>
+<td>slate</td>
+<td>Two official pages disagree on the tip time of one game in the window: the /schedule card for 0022600249 (HOU @ MIA, 2026-11-16) rendered &#x27;8:00 PM ET&#x27;, while the game&#x27;s own page (https://www.nba.com/game/hou-vs-mia-0022600249) renders &#x27;7:30 PM ET&#x27; in both its game rail and its header line &#x27;Monday, November 16th, 2026 7:30 PM ET&#x27;. The published value follows the game&#x27;s own page. The other 35 games in the window were re-read in this session and match the committed snapshot exactly.</td>
+<td>https://www.nba.com/game/hou-vs-mia-0022600249</td>
+<td>Treat the game&#x27;s own page as authoritative for its tip time; re-check this game before anything time-sensitive (live betting window, settlement) is built on it.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-09">FLAG-SLATE-09</a></td>
 </tr>
 <tr id="FLAG-SRC-01">
 <td>FLAG-SRC-01</td>

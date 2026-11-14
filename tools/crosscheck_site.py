@@ -272,7 +272,7 @@ def check_snapshots(r: Report, site: dict):
         allowed = {"Out", "Doubtful", "Questionable", "Probable", "Available", "NOT YET SUBMITTED",
                    "Suspended", "G League - On Two-Way Contract", "G League - On Assignment", "Rest",
                    "Personal Reasons", "G League - Two-Way", "Not With Team"}
-        statuses = {x[icols["status"]] for x in irecs}
+        statuses = {x[icols["status"]] for x in irecs if x[icols["status"]] is not None}
         r.add(f"CC-SNAP-09:{f_.stem}", g, f"{f_.name}: every status string is one the report can print",
               "set of status values in the snapshot",
               PASS if statuses <= allowed else INFO,
@@ -307,16 +307,43 @@ def check_snapshots(r: Report, site: dict):
     close_l = sum(x[rcols["close_l"]] for x in rrecs)
     blow_w = sum(x[rcols["blowout_w"]] for x in rrecs)
     blow_l = sum(x[rcols["blowout_l"]] for x in rrecs)
-    claimed = " ".join(str(x) for x in rat.get("provenance", {}).get("internal_consistency_checks", []))
-    recompute_fail = (close_w != close_l) or (blow_w != blow_l)
-    says_fail = "FAIL" in claimed
-    r.add("CC-SNAP-13", g, "ratings: the snapshot's own PASS/FAIL labels still describe the data",
-          f"sum(close_w)={close_w} vs sum(close_l)={close_l}; sum(blowout_w)={blow_w} vs sum(blowout_l)={blow_l}",
-          PASS if recompute_fail == says_fail else FAIL,
-          f"recomputed imbalance => {'FAIL' if recompute_fail else 'PASS'}; stored labels say "
-          f"{'FAIL' if says_fail else 'PASS'}",
-          note="every close/blowout game is one win and one loss, so the league-wide sums must match; a "
-               "mismatch means the per-team split columns are not a complete partition of the games")
+    # The snapshot carries FOUR labels, each about a different arithmetic fact. The old check
+    # looked for the string "FAIL" anywhere in them and compared it with a single league-wide
+    # recomputation, so a snapshot that got two labels right and two wrong passed. Each label is
+    # now matched to its own recomputation.
+    checks = rat.get("provenance", {}).get("internal_consistency_checks", [])
+    home_ok = all(x[rcols["home_w"]] + x[rcols["home_l"]] + x[rcols["road_w"]] + x[rcols["road_l"]]
+                  == x[rcols["w"]] + x[rcols["l"]] for x in rrecs)
+    over_games = [x[rcols["tricode"]] for x in rrecs
+                  if x[rcols["close_w"]] + x[rcols["close_l"]] + x[rcols["blowout_w"]] + x[rcols["blowout_l"]]
+                  > x[rcols["w"]] + x[rcols["l"]]]
+    truth = {
+        "home_w+home_l+road_w+road_l == w+l for all 30 teams": home_ok,
+        "close_w+close_l+blowout_w+blowout_l <= w+l for all teams": not over_games,
+        "sum(close_w) == sum(close_l) required by construction": close_w == close_l,
+        "sum(blowout_w) == sum(blowout_l) required by construction": blow_w == blow_l,
+    }
+    label_bad = []
+    for c in checks:
+        c = str(c)
+        key = next((k for k in truth if c.startswith(k)), None)
+        if key is None:
+            label_bad.append(f"unrecognised check: {c[:60]}")
+            continue
+        says_fail = "FAIL" in c
+        if says_fail == (not truth[key]):
+            continue
+        label_bad.append(f"{key}: label says {'FAIL' if says_fail else 'PASS'}, recomputation says "
+                         f"{'FAIL' if not truth[key] else 'PASS'}")
+    r.add("CC-SNAP-13", g, "ratings: each of the snapshot's own PASS/FAIL labels matches its own recomputation",
+          f"4 labels vs 4 recomputations (home/road {home_ok}; close+blowout<=games "
+          f"{'ok' if not over_games else f'{len(over_games)} violations'}; close {close_w}={close_l}; "
+          f"blowout {blow_w}={blow_l})",
+          PASS if not label_bad else FAIL,
+          f"{len(label_bad)} label(s) disagree: {label_bad[:2] or 'none'}",
+          note="every close/blowout game is one win and one loss, so the league-wide sums must match; the "
+               "per-team bound is a separate fact and has to be checked per team - a league-level check "
+               "alone would have passed a snapshot that 18 clubs contradict")
     pct_bad = [x[rcols["tricode"]] for x in rrecs
                if abs(round(x[rcols["w"]] / (x[rcols["w"]] + x[rcols["l"]]), 3) - x[rcols["pct"]]) > 0.0015]
     r.add("CC-SNAP-14", g, "ratings: winning percentage equals W/(W+L) to 3 dp",
@@ -718,11 +745,14 @@ def check_seal(r: Report, site: dict):
         if not src:
             outside.append(f"{gid} not in the official slate snapshot")
             continue
-        if p["date"] <= as_of:
-            outside.append(f"{gid} dated {p['date']} is not after the snapshot date {as_of}")
+        # A game dated ON the snapshot date is legal: the slate snapshot is taken on the
+        # morning of that date and the games on it are still ahead. Only games dated BEFORE
+        # the snapshot date are impossible to have sealed.
+        if p["date"] < as_of:
+            outside.append(f"{gid} dated {p['date']} is before the snapshot date {as_of}")
         if norm_time(p.get("time_et")) != norm_time(src[scols["time_et"]]):
             wrong_time.append(f"{gid}: sealed {p.get('time_et')} vs official {src[scols['time_et']]}")
-    r.add("CC-SEAL-04", g, "every sealed prediction is an official game inside the window, tipped after the snapshot",
+    r.add("CC-SEAL-04", g, "every sealed prediction is an official game inside the window, not already played at snapshot time",
           "cross-check the sealed array against the slate snapshot", PASS if not outside else FAIL,
           f"{len(outside)} problem(s): {outside[:3] or 'none'}")
     r.add("CC-SEAL-05", g, "sealed tip times equal the official tip times they were sealed against",

@@ -26,10 +26,31 @@
       "result": "All 30 win-loss records match the primary source exactly on 2026-11-13."
     },
     "internal_consistency_checks": [
-      "home_w+home_l+road_w+road_l == w+l for all 30 teams (PASS)",
-      "close_w+close_l+blowout_w+blowout_l <= w+l for all teams (PASS; middle-margin games account for the remainder)",
-      "sum(close_w) == sum(close_l) required by construction (each close game is one win + one loss) (FAIL - see flags)",
-      "sum(blowout_w) == sum(blowout_l) required by construction (FAIL - see flags)"
+      "home_w+home_l+road_w+road_l == w+l for all 30 teams (PASS - recomputed 2026-11-14)",
+      "close_w+close_l+blowout_w+blowout_l <= w+l for all teams (FAIL - recomputed 2026-11-14: 18 of 30 teams violate it: ATL, CHA, CHI, DAL, DEN, DET, HOU, LAC, MEM, MIA, MIL, MIN, OKC, POR, SAC, SAS, TOR, WAS - a team shows more close+blowout games than it played)",
+      "sum(close_w) == sum(close_l) required by construction (each close game is one win + one loss) (PASS - recomputed 2026-11-14: 99 == 99)",
+      "sum(blowout_w) == sum(blowout_l) required by construction (PASS - recomputed 2026-11-14: 88 == 88)"
+    ],
+    "corrections": [
+      {
+        "corrected_at_utc": "2026-11-14T10:40:00Z",
+        "by_session": "arena/6650be4d-nba2",
+        "what_changed": "The four internal_consistency_checks strings and the FLAG-RAT-02 issue text were recomputed and were WRONG as written.",
+        "original_internal_consistency_checks": [
+          "home_w+home_l+road_w+road_l == w+l for all 30 teams (PASS)",
+          "close_w+close_l+blowout_w+blowout_l <= w+l for all teams (PASS; middle-margin games account for the remainder)",
+          "sum(close_w) == sum(close_l) required by construction (each close game is one win + one loss) (FAIL - see flags)",
+          "sum(blowout_w) == sum(blowout_l) required by construction (FAIL - see flags)"
+        ],
+        "original_flag_rat_02_issue": "Close-game and blowout-game split columns do not balance league-wide (wins total must equal losses total). The discrepancy arises from the text extraction of the source table (some rows have blank/merged cells), not necessarily from the source itself. These columns are therefore NOT used for any model parameter.",
+        "recomputation": {
+          "sum_close_w": 99, "sum_close_l": 99, "sum_blowout_w": 88, "sum_blowout_l": 88,
+          "teams_violating_close_plus_blowout_le_games": ["ATL","CHA","CHI","DAL","DEN","DET","HOU","LAC","MEM","MIA","MIL","MIN","OKC","POR","SAC","SAS","TOR","WAS"],
+          "n_violating": 18
+        },
+        "why_it_matters": "The original text claimed the split columns did not balance league-wide, which would have excluded them for the wrong reason, and it claimed a per-team bound holds that 18 clubs violate. The corrected statement gives the true reason: the per-team split contradicts the games played.",
+        "evidence": "audit/2026-11-14-final/verification_report.md; tools/crosscheck_site.py check CC-SNAP-13"
+      }
     ]
   },
   "flags": [
@@ -44,8 +65,8 @@
       "id": "FLAG-RAT-02",
       "severity": "low",
       "field": "close_w,close_l,blowout_w,blowout_l",
-      "issue": "Close-game and blowout-game split columns do not balance league-wide (wins total must equal losses total). The discrepancy arises from the text extraction of the source table (some rows have blank/merged cells), not necessarily from the source itself. These columns are therefore NOT used for any model parameter.",
-      "action_required": "Re-read the source table directly before using close/blowout splits for luck diagnostics."
+      "issue": "The close-game and blowout-game split columns are internally inconsistent AT THE TEAM LEVEL: for 18 of the 30 clubs the close and blowout rows together account for more games than the club has played (ATL shows 13 close+blowout games in a 12-game record, MEM 12 in 11, DET 12 in 11). The league-wide sums DO balance (close 99=99, blowout 88=88), so a league-level check alone would have passed - the check has to be per team. These columns are therefore NOT used for any model parameter and are left blank in the luck table: a split that contradicts the games played cannot support a per-team luck claim. The cause is the text extraction of the source table (blank/merged cells), not necessarily the source itself.",
+      "action_required": "Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout <= games played."
     }
   ],
   "records": [
