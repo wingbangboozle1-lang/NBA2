@@ -1527,3 +1527,9 @@ official NBA pages in one place. This session does that, read-only.
 **Open for the owner:** ingest the 05:15 AM release (I-01); fix DET@MIA attribution (I-02); add an explicit AM/PM rule (I-03) before 11/15 ingestion; cite `games?date=` pages (I-05).
 
 **PR & merge:** see below.
+
+### PR & merge result — `arena/e77ce5ad-nba2`
+
+- **PR #44** (audit + board record): https://github.com/wingbangboozle1-lang/NBA2/pull/44 — merged with `gh pr merge 44 --merge` at merge commit `91aa68a`. Checks on the PR: `verify` pass, `backtest` pass, `parity` pass, `v2` pass.
+- **Pages:** run `43584944591` (`pages build and deployment`) **success** on `91aa68a`; Pages build API reports `built 91aa68a`.
+- **Live re-fetch:** https://wingbangboozle1-lang.github.io/NBA2/ serves the current build (as-of 2026-11-14, sealed ledger `c841e8f3…`). Note: the live landing page still shows `built 2026-11-14 01:05 UTC`, which is before the 05:15 AM ET injury release (I-01).
