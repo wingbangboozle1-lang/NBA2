@@ -2724,3 +2724,33 @@ reconciliation of this session's work with both `arena/6650be4d-nba2` (PR #54) a
 50 tables / 1404 rows, every row sourced and every blank explained; 97 crosschecks
 89 pass / 0 fail / 8 info; 172 unit tests green; both sealed ledgers verified and
 unrewritten (`cf7dedc689597cb8…` 22 predictions, `c841e8f396dae6ca…` 27).
+
+### Final record — PR #61, and the state of the board
+
+**PR #61** (`arena/ac5fab5c-nba2` → `main`) merged at **2026-11-14T12:30:27Z**, all four checks green
+(`v2`, `parity`, `verify`, `backtest`). `pages.yml` ran on `main` and completed **success**:
+run [43595166156](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43595166156).
+
+**Live re-fetch after PR #61** — `https://wingbangboozle1-lang.github.io/NBA2/picks.html` serves the new picks
+page: all 27 games of the 2026-11-14 → 2026-11-17 window, each with an originated spread and total, a **lean**, a
+**trigger price** in both decimal and American format, **stake 0.00 u**, the per-row gate tally (6/8) and the
+blocking gates named (`G6, G7`; `G4, G6, G7` for DAL @ CLE). Every row links to its official
+`nba.com/game/...` page.
+
+**Board state.** P-01…P-12 are all **done**. P-02 (checker sweep), P-03 (official re-verification),
+P-04 (strategy lab), P-05 (correlations), P-06 (luck separation), P-07 (injuries/game flow, partially blocked on
+player logs), P-08 (executive summary), P-09 (suggestions + decision queue), P-10 (questions register),
+P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record above.
+
+**What still blocks the brief, and nothing else:**
+
+1. **No market price** (G6). Everything else on the site is complete and measured; a price feed is the single
+   change that would turn a published lean into a settled bet. Decision S-01 on the queue.
+2. **Player game logs** (blocks S7, the props page, the minutes/production half of injuries, and the three
+   player-level correlations). Decision S-41.
+3. **Sample size** — G7 needs 300 settled bets; the largest strategy has 167. Decision S-43 would replace the
+   flat bar with a per-strategy power calculation.
+
+**Verification totals on the merged `main`:** 64 v1 tests + 80 v2 tests = **144 tests, all passing**;
+20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
+every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
