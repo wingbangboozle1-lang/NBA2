@@ -1440,3 +1440,69 @@ instead of editing it.
   owners; v1 + v2 rebuild byte-parity OK.
 - **Flagged items do not block this merge** — they are published on both Flagged for Review
   pages with source links, as the protocol requires.
+
+---
+
+## Session `arena/a7d4a562-nba2` — task claim (2026-11-14 UTC)
+
+Registry row: `arena/a7d4a562-nba2` — **daily slate refresh + line-by-line official
+re-verification + published-line provenance + final integration**. Arena pinned this session to
+`arena/a7d4a562-nba2` (base `1bfb44dc`, = `origin/main` at claim time); all work happens there.
+Claim pushed **before** work started, per protocol.
+
+### What the repo looks like at claim time (measured, not assumed)
+
+Verified before claiming anything:
+
+| Check | Command | Result |
+|---|---|---|
+| All committed tests | `unittest discover` × 3 trees | **64 nba2 + 43 v2 + 49 backtest = 156/156 OK** |
+| v2 rebuild parity | `python -m nba2.v2` then `git status` | **byte-identical, no diff** |
+| v2 structural+semantic gate | `python -m nba2.v2.check` | **OK — 0 structural, 0 semantic** |
+| Live published tree | `gh api .../pages` + fetch of live URL | `build_type: legacy`, source `main:/`, **serves `site/`** (title `NBA2 Lines Lab v2`) |
+| Sandbox egress | `curl` to nba.com / stats.nba.com / bref | **blocked (HTTP 000)** — official reads must go through the page-fetch tool, and any ingested snapshot must record how it was obtained |
+
+### The two defects this session exists to fix (found at claim time)
+
+**GAP-1 — the published window has expired.** `data/v2/lines.json` is `as_of 2026-11-14` with
+window `2026-11-13 → 2026-11-16` (9/5/9/8 games). The brief requires picks for **every upcoming
+slate up to 3 days out**. Today is 2026-11-14, so the live site's window already contains a
+**fully completed 11/13 slate presented as upcoming** (all 9 games Final on the official
+schedule), and it stops at 11/16, missing 11/17. The 3-day window must roll to
+`2026-11-14 → 2026-11-17`.
+
+**GAP-2 — the published lines have no per-row official provenance link.** The v2 landing page
+claims "a source link on every row", but the line rows in `data/v2/lines.json` carry
+`game_id` only — no `source`/`url` field, so `site/lines.html` and `site/picks.html` rows cannot
+link to nba.com. The brief requires a source link on **every** table row. `nba2/v2/check.py`
+passes because it validates page-level source blocks, not row-level links on those two pages.
+
+### File scope (this session)
+
+- `COORDINATION.md` — append-only (this board).
+- `nba2/v2/**` — the v2 generator/model/checker (the published tree's only source).
+- `data/v2/**`, `site/**` — regenerated outputs; byte-parity must hold.
+- `data/raw/slate_*.json`, `data/raw/official_*.json` — **new** official snapshots fetched this
+  session, each with a provenance block stating the exact URL, retrieval time and method.
+- `audit/**` — new: this session's verification record.
+
+Owned by others and **NOT** touched: `originated/**`, `dashboard/**`, `docs/**`, `verified/**`,
+root v1 `*.html` generators (`build_site.py`, `nba2/generate.py`), `backtest/**`, `tools/**`,
+`scripts/**`, sealed ledgers under `data/raw/ledger/**` (immutable by design),
+`.github/workflows/**` except where a change request is logged here first.
+
+### Task board — arena/a7d4a562 (G-01…G-07)
+
+| ID | Task | Status | File scope | Notes |
+|---|---|---|---|---|
+| G-01 | Roll the published window to the live 3-day slate and re-verify every row against nba.com/schedule | in progress | `nba2/v2/**`, `data/raw/**`, `data/v2/**` | |
+| G-02 | Add per-row official source URLs to every published line, prop-adjacent and slate table | in progress | `nba2/v2/**`, `site/**` | |
+| G-03 | Extend the checker so a row without a source link fails the build (not just a page) | in progress | `nba2/v2/check.py` | |
+| G-04 | Re-measure the strategies/leaderboard/gates against the refreshed window; keep unmeasured items explicitly unmeasured | in progress | `nba2/v2/**` | |
+| G-05 | Injuries/rotation + game-flow refresh against the newest official release | in progress | `nba2/v2/**`, `data/raw/**` | |
+| G-06 | Suggestions/decisions section: add a reviewable decision path (choice + cost + evidence) | in progress | `nba2/v2/content.py`, `site/**` | |
+| G-07 | Final integration: rebuild, full checker sweep, PR → main → merge → confirm Pages deploy | in progress | repo-wide | |
+
+**Rule for this session:** every row I publish carries an official source link; anything I cannot
+confirm from an official source is left blank and flagged. The sealed ledger is never rewritten.
+If a parallel session claims any file in my scope first, I log the request here instead of editing it.
