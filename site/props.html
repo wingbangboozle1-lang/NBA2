@@ -139,7 +139,312 @@ missing input by name rather than a fabricated probability.</div>
 <td><span class="blank">minutes floor needs game logs</span></td>
 <td><a href="https://www.nba.com/stats/player/1628378/" rel="noopener" target="_blank">nba.com/stats/player/1628378/</a></td>
 </tr>
-</tbody></table></div><p class="lede">Season averages are a mean, not a distribution. To price "over 24.5 points" you need the spread
+</tbody></table></div><h2>Captured season averages, and the naive baseline line they imply</h2><div class="scroll"><table>
+<caption>The line column is arithmetic on the official average (round to half a point). It is a baseline, not a price: without per-game logs there is no median, no variance and therefore no probability, so no prop is actionable.</caption>
+<thead><tr>
+<th scope="col">Player</th>
+<th scope="col">Club</th>
+<th scope="col" class="n">GP</th>
+<th scope="col" class="n">MPG</th>
+<th scope="col" class="n">PPG</th>
+<th scope="col" class="n">Our baseline line (PPG to the nearest 0.5)</th>
+<th scope="col">P(over) — why it is blank</th>
+<th scope="col">Market line — why it is blank</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Donovan Mitchell</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">13</td>
+<td class="n">33.0</td>
+<td class="n">23.0</td>
+<td class="n">23.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>James Harden</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">13</td>
+<td class="n">32.8</td>
+<td class="n">16.9</td>
+<td class="n">17.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Evan Mobley</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">12</td>
+<td class="n">32.0</td>
+<td class="n">16.9</td>
+<td class="n">17.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Peyton Watson</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">11</td>
+<td class="n">28.2</td>
+<td class="n">10.4</td>
+<td class="n">10.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Jarrett Allen</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">11</td>
+<td class="n">26.0</td>
+<td class="n">12.5</td>
+<td class="n">12.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Meleek Thomas</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">10</td>
+<td class="n">22.5</td>
+<td class="n">13.0</td>
+<td class="n">13.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Jaylon Tyson</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">7</td>
+<td class="n">22.4</td>
+<td class="n">8.3</td>
+<td class="n">8.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Thomas Bryant</td>
+<td>Cleveland Cavaliers</td>
+<td class="n">7</td>
+<td class="n">13.0</td>
+<td class="n">8.7</td>
+<td class="n">8.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Jamal Murray</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">36.4</td>
+<td class="n">26.2</td>
+<td class="n">26.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Nikola Jokic</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">36.3</td>
+<td class="n">23.5</td>
+<td class="n">23.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Christian Braun</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">34.4</td>
+<td class="n">12.4</td>
+<td class="n">12.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Aaron Gordon</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">29.1</td>
+<td class="n">11.0</td>
+<td class="n">11.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Cameron Johnson</td>
+<td>Denver Nuggets</td>
+<td class="n">7</td>
+<td class="n">28.2</td>
+<td class="n">12.1</td>
+<td class="n">12.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>DeMar DeRozan</td>
+<td>Denver Nuggets</td>
+<td class="n">9</td>
+<td class="n">23.5</td>
+<td class="n">10.0</td>
+<td class="n">10.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Trevon Brazile</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">19.5</td>
+<td class="n">7.1</td>
+<td class="n">7.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Marvin Bagley III</td>
+<td>Denver Nuggets</td>
+<td class="n">10</td>
+<td class="n">12.3</td>
+<td class="n">5.8</td>
+<td class="n">6.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Anthony Edwards</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">4</td>
+<td class="n">33.7</td>
+<td class="n">33.3</td>
+<td class="n">33.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Jaden McDaniels</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">12</td>
+<td class="n">33.1</td>
+<td class="n">16.9</td>
+<td class="n">17.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Ayo Dosunmu</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">12</td>
+<td class="n">31.0</td>
+<td class="n">18.1</td>
+<td class="n">18.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Jonathan Kuminga</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">12</td>
+<td class="n">30.2</td>
+<td class="n">12.4</td>
+<td class="n">12.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Rudy Gobert</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">11</td>
+<td class="n">29.3</td>
+<td class="n">7.9</td>
+<td class="n">8.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>LaMelo Ball</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">12</td>
+<td class="n">27.5</td>
+<td class="n">18.6</td>
+<td class="n">18.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Terrence Shannon Jr</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">9</td>
+<td class="n">21.5</td>
+<td class="n">10.6</td>
+<td class="n">10.5</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+<tr>
+<td>Bones Hyland</td>
+<td>Minnesota Timberwolves</td>
+<td class="n">12</td>
+<td class="n">13.1</td>
+<td class="n">9.8</td>
+<td class="n">10.0</td>
+<td><span class="blank">needs per-game distribution (F-045)</span></td>
+<td><span class="blank">needs market line (G6)</span></td>
+<td><span class="badge b-bad">NOT PRICEABLE</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">club stats table</a></td>
+</tr>
+</tbody></table></div><div class="note"><b>What changed on this page.</b> The player table used to be blank because the endpoint was
+recorded as unreachable; it is reachable and was read on 2026-11-14 (verification V10–V12). The block that remains is not
+access, it is <em>granularity</em>: a season mean cannot price an over/under. Closing it needs the per-game log, and the
+one route that would give one without a licensed feed is the official box-score page per game (SG-35).</div><p class="lede">Season averages are a mean, not a distribution. To price "over 24.5 points" you need the spread
 of game-by-game scoring around that mean and the chance the player is on the floor at all — which is why the minutes-floor
 column is blank rather than guessed.</p>
 <h2>Prop combos: the same correlation problem, per player</h2>

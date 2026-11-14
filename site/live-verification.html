@@ -519,7 +519,59 @@ unanswered until a price exists.</p>
 <h2>Reproduce this page</h2>
 <pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
 python3 -m nba2.v2              # rebuild this page
-python3 -m nba2.v2.check        # every row sourced, every blank explained</pre>
+python3 -m nba2.v2.check        # every row sourced, every blank explained</pre><h2>Second-opinion re-verification, 2026-11-14 18:41–18:52 UTC</h2>
+<p class="lede">A later session (arena/bc867bff-nba2) re-read four official documents against the published tree and
+published its own verifier. Its tally, read from its own output file: <b>15 checks: 13 pass, 0 fail, 2 info</b>. Nothing it found
+changed a line, a pick or a model input; everything it found about <em>coverage</em> is in the flags below.</p><div class="scroll"><table>
+<caption>What the second session verified against the published tree</caption>
+<thead><tr>
+<th scope="col">Check</th>
+<th scope="col">What was compared</th>
+<th scope="col">Result</th>
+<th scope="col">Evidence</th>
+</tr></thead><tbody>
+<tr>
+<td>Club records</td>
+<td>29 of 30 clubs, live W-L on the game-page scoreboard strip vs the published team table</td>
+<td><span class="badge b-ok">0 mismatch</span></td>
+<td><a href="https://www.nba.com/game/okc-vs-lac-0022600042/box-score" rel="noopener" target="_blank">nba.com/game/okc-vs-lac-0022600042/box-score</a></td>
+</tr>
+<tr>
+<td>League balance</td>
+<td>the 29 live clubs plus the published GSW row must equal the league's own totals</td>
+<td><span class="badge b-ok">closes exactly</span></td>
+<td>site implies 183 wins / 183 losses; one mis-transcription would break it. <a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Slate</td>
+<td>20 of 27 games in the published window re-read (all 11/14, all 11/15, six 11/16)</td>
+<td><span class="badge b-ok">ids, dates, matchup and ET tips all match</span></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr>
+<td>Games NOT re-read</td>
+<td>the 11/16 tail and all five 11/17 games</td>
+<td><span class="badge b-warn">declared, not credited</span></td>
+<td>the verifier lists the seven ids rather than assuming they are right. <a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr>
+<td>Injury release</td>
+<td>01:30 PM ET release vs the 04:30 AM release the site was built from</td>
+<td><span class="badge b-warn">+24 rows, 4 statuses moved, 0 dropped</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-14_01_30PM.pdf</a></td>
+</tr>
+<tr>
+<td>Player table</td>
+<td>official per-club season averages reached for the first time; page order checked against its own claim</td>
+<td><span class="badge b-warn">reachable — the site&#x27;s &#x27;blocked&#x27; label was wrong</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>Two findings worth acting on.</b> (1) The injury section of this site was built
+from the 04:30 AM release because a later file returned AccessDenied at the time; at 18:52 UTC the 01:30 PM release
+answers and it carries 24 rows the published section does not have. The site now publishes both.
+(2) The per-club player table — named as the blocker for props, minutes and player correlations in every prior session —
+is reachable. That converts S-41 from "unavailable" to "not yet captured for 27 of 30 clubs", which is a work item, not a
+wall. See the decision queue (S-41) and SG-35/SG-36.</div>
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
