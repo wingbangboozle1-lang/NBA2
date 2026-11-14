@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="69">
+    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-14 01:07 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="73">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -161,6 +161,36 @@
 <td>Re-run at game-day 13:00 ET.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+<tr id="FLAG-INJ-05">
+<td>FLAG-INJ-05</td>
+<td>medium</td>
+<td>injuries</td>
+<td>Ten rows (4 Dallas Mavericks, 6 Detroit Pistons) carry no team/game cells in the text extraction because the PDF table breaks across pages. Their team attribution comes from document order (the last team label printed in that game block before the row), matching the convention of injury_report_2026-11-13.json.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Confirm the 10 attribution=C rows against the PDF image at the source URL.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
+</tr>
+<tr id="FLAG-INJ-06">
+<td>FLAG-INJ-06</td>
+<td>medium</td>
+<td>injuries</td>
+<td>The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block (the Detroit player rows and the Miami placeholder row carry no time). Left blank rather than inferred. The tip time for DET@MIA is published elsewhere on this site from the official schedule snapshot.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Confirm against the PDF image, or leave blank; do not copy a time from another release.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="FLAG-INJ-07">
+<td>FLAG-INJ-07</td>
+<td>high</td>
+<td>injuries</td>
+<td>At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
 </tr>
 <tr id="FLAG-LB-01">
 <td>FLAG-LB-01</td>
@@ -432,6 +462,16 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
 </tr>
+<tr id="FLAG-REFRESH-01">
+<td>FLAG-REFRESH-01</td>
+<td>low</td>
+<td>injuries</td>
+<td>The 2026-11-14 availability refresh is a point-in-time capture (11/13 19:30 ET official release, retrieved 2026-11-14 00:47 UTC). Later releases on 11/14 (continual updates, game-day reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest workflow fetches and archives them but does not rewrite sealed predictions.</td>
+<td>https://official.nba.com/nba-injury-report-2026-27-season/</td>
+<td>Let the nightly workflow ingest later releases; verify the archived PDF against the transcript.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REFRESH-01">FLAG-REFRESH-01</a></td>
+</tr>
 <tr id="FLAG-REPO-01">
 <td>FLAG-REPO-01</td>
 <td>low</td>
@@ -506,9 +546,9 @@
 <td>FLAG-SLATE-06</td>
 <td>high</td>
 <td>slate</td>
-<td>No injury report exists yet for 2026-11-14/15/16, so the entire pick window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item; the 11/13 16:15 ET release lists all ten Nov-14 teams as NOT YET SUBMITTED.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
-<td>Re-issue lines after each game-day 13:00 ET report (suggestion S-10).</td>
+<td>Availability data for the pick window is still incomplete: the 11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15–16, so most of the window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-issue availability after each later release (the nightly ingest workflow now does this; see FLAG-REFRESH-01).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
 </tr>

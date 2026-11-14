@@ -65,6 +65,11 @@ register_source("nba_game_card", "NBA.com Game Preview (official)", "https://www
 register_source("nba_injury_pdf", "NBA Official Injury Report 11/13 16:15 ET (official)",
                 "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", Src.OFFICIAL,
                 "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason.")
+register_source("nba_injury_pdf_1114", "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", Src.OFFICIAL,
+                "Later release of the same referee-operations series: first document carrying 2026-11-14 participation "
+                "designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at "
+                "data/raw/injury_report_2026-11-14_daybefore.json.")
 register_source("bref_standings", "Basketball-Reference 2026-27 Standings", "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
                 Src.THIRD_PARTY, "Conference + Expanded standings. W-L cross-checks against NBA.com for 28/30 teams.")
 register_source("nba_stats_blocked", "stats.nba.com JSON endpoints", "https://stats.nba.com/stats/leaguestandingsv3",

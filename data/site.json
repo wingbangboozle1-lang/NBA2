@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at_utc": "2026-11-13 23:08 UTC",
-  "input_digest": "02c363614c051f06343277eb2d0ff8e954c88b902b9610510f70af744c3978a9",
+  "generated_at_utc": "2026-11-14 01:07 UTC",
+  "input_digest": "244017e3d8ee1314662efac4d71af87baa416df1637ef004eacea122a2a9f959",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-13",
   "slate_window": "2026-11-13 → 2026-11-16 (today + 3 days)",
@@ -11,6 +11,9 @@
   "injury_status_rows": 85,
   "injury_placeholder_rows": 10,
   "injury_attribution_continuation": 11,
+  "injury_window_rows": 31,
+  "injury_window_status_rows": 26,
+  "injury_window_placeholder_rows": 5,
   "tiers": {
    "A": 0,
    "B": 15,
@@ -10418,6 +10421,1789 @@
      "class": "official",
      "class_label": "Official NBA.com / NBA CDN",
      "note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason."
+    }
+   ]
+  },
+  "injuries_window": {
+   "title": "Official NBA injury report — 2026-11-14 day-before designations (11/13/26 19:30 ET release)",
+   "blurb": "First official designations for the 2026-11-14 slate: five teams had filed by the 5 p.m. ET day-before deadline, five had not (NOT YET SUBMITTED). Game-day reports on 11/14 (11 a.m.-1 p.m. local) can still change these statuses. The three impact columns are blank by policy — the report contains no minutes or production data, so any number there would be invented. P(plays) is our modelling convention for counting bodies, not a league probability.",
+   "source_note": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+   "columns": [
+    {
+     "key": "game_date",
+     "label": "Game date"
+    },
+    {
+     "key": "time_et",
+     "label": "Tip (ET)"
+    },
+    {
+     "key": "matchup",
+     "label": "Matchup"
+    },
+    {
+     "key": "team",
+     "label": "Team"
+    },
+    {
+     "key": "player",
+     "label": "Player"
+    },
+    {
+     "key": "status",
+     "label": "Official status"
+    },
+    {
+     "key": "reason",
+     "label": "Reason"
+    },
+    {
+     "key": "p_play",
+     "label": "Our P(plays)"
+    },
+    {
+     "key": "minutes_impact",
+     "label": "Minutes impact"
+    },
+    {
+     "key": "production_impact",
+     "label": "Production impact"
+    },
+    {
+     "key": "line_adjustment",
+     "label": "Line adjustment"
+    },
+    {
+     "key": "attribution",
+     "label": "Row attribution"
+    }
+   ],
+   "rows": [
+    {
+     "key": "injw-0",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Holmes II, DaRon",
+      "status": "Out",
+      "reason": "G League - On Assignment",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-1",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Nembhard, Ryan",
+      "status": "Out",
+      "reason": "G League - Two-Way",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-2",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Strawther, Julian",
+      "status": "Out",
+      "reason": "Injury/Illness - Left Knee Sprain",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-3",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Whitmore, Cam",
+      "status": "Out",
+      "reason": "G League - Two-Way",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-4",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "New Orleans Pelicans",
+      "player": "—",
+      "status": "NOT YET SUBMITTED",
+      "reason": "Team submission outstanding at report time",
+      "p_play": null,
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-5",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Biberovic, Tarik",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Heel Bursitis",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-6",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Christie, Max",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Left Ankle Sprain",
+      "p_play": "0.55",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-7",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "de Larrea, Sergio",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Sprain",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-8",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Johnson Jr., Morez",
+      "status": "Probable",
+      "reason": "Injury/Illness - Left Shin / Tibia Contusion",
+      "p_play": "0.85",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-9",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Lively II, Dereck",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Foot Surgery",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-10",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Martin, Caleb",
+      "status": "Available",
+      "reason": "Injury/Illness - Right Thumb Splint",
+      "p_play": "1.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-11",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Cleveland Cavaliers",
+      "player": "—",
+      "status": "NOT YET SUBMITTED",
+      "reason": "Team submission outstanding at report time",
+      "p_play": null,
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-12",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Bilodeau, Tyler",
+      "status": "Out",
+      "reason": "G League - Two-Way",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-13",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Brown Jr., Mikel",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Illness",
+      "p_play": "0.55",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-14",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Jefferson, Joshua",
+      "status": "Out",
+      "reason": "G League - On Assignment",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-15",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Nelson, Grant",
+      "status": "Out",
+      "reason": "G League - Two-Way",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-16",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Saraf, Ben",
+      "status": "Out",
+      "reason": "G League - On Assignment",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-17",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Traore, Nolan",
+      "status": "Probable",
+      "reason": "Injury/Illness - Right Calf Tightness / Soreness",
+      "p_play": "0.85",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-18",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Memphis Grizzlies",
+      "player": "—",
+      "status": "NOT YET SUBMITTED",
+      "reason": "Team submission outstanding at report time",
+      "p_play": null,
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-19",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Chicago Bulls",
+      "player": "—",
+      "status": "NOT YET SUBMITTED",
+      "reason": "Team submission outstanding at report time",
+      "p_play": null,
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-20",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Beringer, Joan",
+      "status": "Available",
+      "reason": "Injury/Illness - Face Mask",
+      "p_play": "1.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-21",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "DiVincenzo, Donte",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-22",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Edwards, Anthony",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Arthroscopy",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-23",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Duren, Jalen",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hamstring Strain",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-24",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Harkless, Elijah",
+      "status": "Questionable",
+      "reason": "G League - Two-Way",
+      "p_play": "0.55",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-25",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Joe, Isaiah",
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hip Contusion",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-26",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Jones, Isaac",
+      "status": "Questionable",
+      "reason": "G League - Two-Way",
+      "p_play": "0.55",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-27",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Lanier, Chaz",
+      "status": "Out",
+      "reason": "G League - On Assignment",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-28",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Okorie, Ebuka",
+      "status": "Out",
+      "reason": "G League - On Assignment",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-29",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Onyenso, Ugonna",
+      "status": "Out",
+      "reason": "G League - Two-Way",
+      "p_play": "0.00",
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "block-continuation (unconfirmed)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-05",
+      "FLAG-INJ-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "injw-30",
+     "values": {
+      "game_date": "2026-11-14",
+      "time_et": null,
+      "matchup": "DET@MIA",
+      "team": "Miami Heat",
+      "player": "—",
+      "status": "NOT YET SUBMITTED",
+      "reason": "Team submission outstanding at report time",
+      "p_play": null,
+      "minutes_impact": null,
+      "production_impact": null,
+      "line_adjustment": null,
+      "attribution": "explicit"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-06",
+      "FLAG-INJ-04"
+     ],
+     "verified": true
+    }
+   ],
+   "sources": [
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    }
+   ]
+  },
+  "rotation_window": {
+   "title": "Rotation-body impact — 2026-11-14 slate (day-before designations)",
+   "blurb": "Same body-counting arithmetic as the 16:15 table, applied to the day-before designations. A team whose report row is NOT YET SUBMITTED contributes a placeholder, not a body count: their designations simply have not been filed yet (FLAG-INJ-07).",
+   "source_note": "Derived in nba2/models/injuries.py from the 11/13 19:30 ET official release.",
+   "columns": [
+    {
+     "key": "team",
+     "label": "Team"
+    },
+    {
+     "key": "out",
+     "label": "Out"
+    },
+    {
+     "key": "doubtful",
+     "label": "Doubtful"
+    },
+    {
+     "key": "questionable",
+     "label": "Questionable"
+    },
+    {
+     "key": "probable",
+     "label": "Probable"
+    },
+    {
+     "key": "available",
+     "label": "Available"
+    },
+    {
+     "key": "two_way_or_susp",
+     "label": "G-League/suspension"
+    },
+    {
+     "key": "not_submitted",
+     "label": "Not yet submitted"
+    },
+    {
+     "key": "exp_missing",
+     "label": "Expected bodies missing"
+    },
+    {
+     "key": "sd",
+     "label": "Band"
+    },
+    {
+     "key": "floor",
+     "label": "Rotation floor"
+    },
+    {
+     "key": "risk",
+     "label": "Risk tier"
+    },
+    {
+     "key": "games",
+     "label": "Games affected"
+    }
+   ],
+   "rows": [
+    {
+     "key": "rotw-BKN",
+     "values": {
+      "team": "Brooklyn Nets",
+      "out": 4,
+      "doubtful": 0,
+      "questionable": 1,
+      "probable": 1,
+      "available": 0,
+      "two_way_or_susp": 4,
+      "not_submitted": 0,
+      "exp_missing": "4.60",
+      "sd": "±0.61",
+      "floor": 6,
+      "risk": "SEVERE",
+      "games": "2026-11-14 BKN@MEM"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-CHI",
+     "values": {
+      "team": "Chicago Bulls",
+      "out": 0,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 0,
+      "not_submitted": 1,
+      "exp_missing": "0.00",
+      "sd": "±0.00",
+      "floor": 10,
+      "risk": "MINOR",
+      "games": "2026-11-14 CHI@MIN"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-CLE",
+     "values": {
+      "team": "Cleveland Cavaliers",
+      "out": 0,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 0,
+      "not_submitted": 1,
+      "exp_missing": "0.00",
+      "sd": "±0.00",
+      "floor": 10,
+      "risk": "MINOR",
+      "games": "2026-11-14 DAL@CLE"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-DAL",
+     "values": {
+      "team": "Dallas Mavericks",
+      "out": 3,
+      "doubtful": 0,
+      "questionable": 1,
+      "probable": 1,
+      "available": 1,
+      "two_way_or_susp": 0,
+      "not_submitted": 0,
+      "exp_missing": "3.60",
+      "sd": "±0.61",
+      "floor": 6,
+      "risk": "SEVERE",
+      "games": "2026-11-14 DAL@CLE"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-DEN",
+     "values": {
+      "team": "Denver Nuggets",
+      "out": 4,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 3,
+      "not_submitted": 0,
+      "exp_missing": "4.00",
+      "sd": "±0.00",
+      "floor": 6,
+      "risk": "SEVERE",
+      "games": "2026-11-14 DEN@NOP"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-DET",
+     "values": {
+      "team": "Detroit Pistons",
+      "out": 5,
+      "doubtful": 0,
+      "questionable": 2,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 5,
+      "not_submitted": 0,
+      "exp_missing": "5.90",
+      "sd": "±0.70",
+      "floor": 6,
+      "risk": "SEVERE",
+      "games": "2026-11-14 DET@MIA"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-MEM",
+     "values": {
+      "team": "Memphis Grizzlies",
+      "out": 0,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 0,
+      "not_submitted": 1,
+      "exp_missing": "0.00",
+      "sd": "±0.00",
+      "floor": 10,
+      "risk": "MINOR",
+      "games": "2026-11-14 BKN@MEM"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-MIA",
+     "values": {
+      "team": "Miami Heat",
+      "out": 0,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 0,
+      "not_submitted": 1,
+      "exp_missing": "0.00",
+      "sd": "±0.00",
+      "floor": 10,
+      "risk": "MINOR",
+      "games": "2026-11-14 DET@MIA"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-MIN",
+     "values": {
+      "team": "Minnesota Timberwolves",
+      "out": 2,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 1,
+      "two_way_or_susp": 0,
+      "not_submitted": 0,
+      "exp_missing": "2.00",
+      "sd": "±0.00",
+      "floor": 8,
+      "risk": "MATERIAL",
+      "games": "2026-11-14 CHI@MIN"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    },
+    {
+     "key": "rotw-NOP",
+     "values": {
+      "team": "New Orleans Pelicans",
+      "out": 0,
+      "doubtful": 0,
+      "questionable": 0,
+      "probable": 0,
+      "available": 0,
+      "two_way_or_susp": 0,
+      "not_submitted": 1,
+      "exp_missing": "0.00",
+      "sd": "±0.00",
+      "floor": 10,
+      "risk": "MINOR",
+      "games": "2026-11-14 DEN@NOP"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-02",
+      "FLAG-INJ-07"
+     ],
+     "verified": true
+    }
+   ],
+   "sources": [
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    }
+   ]
+  },
+  "availability_window": {
+   "title": "Availability coverage of the sealed pick window (2026-11-14 → 11-16)",
+   "blurb": "Computed from both official injury snapshots, never inferred. 'Coverage' is the share of team-slots carrying any official participation designation at capture time; it rises as later releases are ingested. The lines for this window were originated from the 2026-11-13 snapshot and sealed; availability data refreshes around them.",
+   "source_note": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+   "columns": [
+    {
+     "key": "date",
+     "label": "Window date"
+    },
+    {
+     "key": "games",
+     "label": "Games"
+    },
+    {
+     "key": "slots",
+     "label": "Team-slots"
+    },
+    {
+     "key": "filed",
+     "label": "Team-slots with a designation"
+    },
+    {
+     "key": "not_yet_submitted",
+     "label": "NOT YET SUBMITTED"
+    },
+    {
+     "key": "no_rows_yet",
+     "label": "No row in any release yet"
+    },
+    {
+     "key": "coverage",
+     "label": "Designation coverage"
+    },
+    {
+     "key": "note",
+     "label": "Note"
+    }
+   ],
+   "rows": [
+    {
+     "key": "avail-2026-11-14",
+     "values": {
+      "date": "2026-11-14",
+      "games": 5,
+      "slots": 10,
+      "filed": 5,
+      "not_yet_submitted": 10,
+      "no_rows_yet": -5,
+      "coverage": "50%",
+      "note": "day-before designations captured (11/13 19:30 ET release)"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-07",
+      "FLAG-SLATE-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "avail-2026-11-15",
+     "values": {
+      "date": "2026-11-15",
+      "games": 9,
+      "slots": 18,
+      "filed": 0,
+      "not_yet_submitted": 0,
+      "no_rows_yet": 18,
+      "coverage": "0%",
+      "note": "no designations in either 11/13 release yet"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-07",
+      "FLAG-SLATE-06"
+     ],
+     "verified": true
+    },
+    {
+     "key": "avail-2026-11-16",
+     "values": {
+      "date": "2026-11-16",
+      "games": 8,
+      "slots": 16,
+      "filed": 0,
+      "not_yet_submitted": 0,
+      "no_rows_yet": 16,
+      "coverage": "0%",
+      "note": "no designations in either 11/13 release yet"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-07",
+      "FLAG-SLATE-06"
+     ],
+     "verified": true
+    }
+   ],
+   "sources": [
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
+    },
+    {
+     "name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json."
     }
    ]
   },
@@ -29303,6 +31089,75 @@
      "verified": false
     },
     {
+     "key": "FLAG-INJ-05",
+     "values": {
+      "id": "FLAG-INJ-05",
+      "severity": "medium",
+      "area": "injuries",
+      "statement": "Ten rows (4 Dallas Mavericks, 6 Detroit Pistons) carry no team/game cells in the text extraction because the PDF table breaks across pages. Their team attribution comes from document order (the last team label printed in that game block before the row), matching the convention of injury_report_2026-11-13.json.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "Confirm the 10 attribution=C rows against the PDF image at the source URL."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-05"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-INJ-06",
+     "values": {
+      "id": "FLAG-INJ-06",
+      "severity": "medium",
+      "area": "injuries",
+      "statement": "The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block (the Detroit player rows and the Miami placeholder row carry no time). Left blank rather than inferred. The tip time for DET@MIA is published elsewhere on this site from the official schedule snapshot.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "Confirm against the PDF image, or leave blank; do not copy a time from another release."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-06"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-INJ-07",
+     "values": {
+      "id": "FLAG-INJ-07",
+      "severity": "high",
+      "area": "injuries",
+      "statement": "At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-INJ-07"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-LB-01",
      "values": {
       "id": "FLAG-LB-01",
@@ -29924,6 +31779,29 @@
      "verified": false
     },
     {
+     "key": "FLAG-REFRESH-01",
+     "values": {
+      "id": "FLAG-REFRESH-01",
+      "severity": "low",
+      "area": "injuries",
+      "statement": "The 2026-11-14 availability refresh is a point-in-time capture (11/13 19:30 ET official release, retrieved 2026-11-14 00:47 UTC). Later releases on 11/14 (continual updates, game-day reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest workflow fetches and archives them but does not rewrite sealed predictions.",
+      "source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "action": "Let the nightly workflow ingest later releases; verify the archived PDF against the transcript."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REFRESH-01"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-REPO-01",
      "values": {
       "id": "FLAG-REPO-01",
@@ -30090,9 +31968,9 @@
       "id": "FLAG-SLATE-06",
       "severity": "high",
       "area": "slate",
-      "statement": "No injury report exists yet for 2026-11-14/15/16, so the entire pick window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item; the 11/13 16:15 ET release lists all ten Nov-14 teams as NOT YET SUBMITTED.",
-      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
-      "action": "Re-issue lines after each game-day 13:00 ET report (suggestion S-10)."
+      "statement": "Availability data for the pick window is still incomplete: the 11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15–16, so most of the window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "Re-issue availability after each later release (the nightly ingest workflow now does this; see FLAG-REFRESH-01)."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -31074,6 +32952,34 @@
      "class": "derived",
      "class_label": "Derived in-repo from a verified snapshot",
      "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
     }
    ]
   },
@@ -31179,6 +33085,27 @@
       "src_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf",
       "src_class": "Official NBA.com / NBA CDN",
       "src_note": "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason.",
+      "usable": "yes"
+     },
+     "source": {
+      "name": "nba2/provenance.py SOURCES registry",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+     },
+     "note": "",
+     "flags": [],
+     "verified": false
+    },
+    {
+     "key": "nba_injury_pdf_1114",
+     "values": {
+      "src_id": "nba_injury_pdf_1114",
+      "src_name": "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+      "src_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "src_class": "Official NBA.com / NBA CDN",
+      "src_note": "Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json.",
       "usable": "yes"
      },
      "source": {
@@ -31468,6 +33395,13 @@
     }
    ],
    "sources": [
+    {
+     "name": "nba2/provenance.py SOURCES registry",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Meta-table: which sources were used, and which were attempted and unreachable."
+    },
     {
      "name": "nba2/provenance.py SOURCES registry",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py",

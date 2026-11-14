@@ -1,0 +1,134 @@
+# Nightly ingest + settlement (audit finding A-01 remediation, v1).
+#
+# What this job does — and deliberately does not do:
+# * ARCHIVES the newest official injury-report PDFs for the sealed-window game dates
+#   (data/raw/pdf/**) and cross-checks any committed human transcript against the
+#   machine extraction (recall tripwire; a mismatch fails the job).
+# * FETCHES official final scores for arrived window dates from NBA endpoints and
+#   writes data/raw/finals_*.json snapshots in the exact shape nba2.pipeline.settle
+#   expects. A date with no reachable endpoint FAILS the job — nothing is invented.
+# * SETTLES the sealed ledger against those finals (data/settlement.json).
+# * REBUILDS the site from the refreshed snapshots only after the full verify chain
+#   (unit tests, seal verification, provenance lint) passes.
+#
+# What it never does:
+# * never writes data/raw/ledger/** — the sealed predictions are frozen (verified
+#   explicitly before any commit);
+# * never creates picks, lines or stakes — promotion still requires the owner;
+# * never publishes on a failed gate (fail-closed: any subcommand error aborts before
+#   the commit step).
+#
+# Scheduled times (UTC): 14:05 ≈ 09:05 ET (overnight finals), 18:35 ≈ 13:35 ET (after
+# the 11 a.m.-1 p.m. local game-day injury-report window). Manual dispatch allowed.
+
+name: Nightly ingest + settlement
+
+on:
+  schedule:
+    - cron: '5 14 * * *'
+    - cron: '35 18 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: nightly-ingest
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Window dates from the committed slate snapshot
+        id: dates
+        run: |
+          python3 - <<'PY'
+          import json, datetime as dt
+          s = json.load(open('data/raw/slate_2026-11-13_to_11-16.json'))
+          a = dt.date.fromisoformat(s['as_of'])
+          w = int(s['window'].get('days_in_advance', 3))
+          print(f"dates={(a + dt.timedelta(days=1)).isoformat()}..{(a + dt.timedelta(days=w)).isoformat()}")
+          print(f"asof={s['as_of']}")
+          PY
+
+      - name: Archive newest official injury reports for window dates
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime as dt, json, sys
+          from nba2.pipeline import refresh as RF
+          s = json.load(open('data/raw/slate_2026-11-13_to_11-16.json'))
+          a = dt.date.fromisoformat(s['as_of'])
+          w = int(s['window'].get('days_in_advance', 3))
+          for i in range(1, w + 1):
+              rc = RF.cmd_injuries((a + dt.timedelta(days=i)).isoformat(), RF.RAW / 'pdf')
+              if rc not in (0,):
+                  print(f"ingest gate failed for {(a + dt.timedelta(days=i)).isoformat()} (exit {rc})")
+                  sys.exit(rc)
+          PY
+
+      - name: Fetch official finals for arrived window dates
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from nba2.pipeline import refresh as RF
+          for date, gids in sorted(RF.window_game_ids_by_date().items()):
+              rc = RF.cmd_finals(date, gids, Path(f'data/raw/finals_{date}.json'))
+              if rc != 0:
+                  raise SystemExit(rc)
+          rc = RF.cmd_merge_finals()
+          if rc != 0:
+              raise SystemExit(rc)
+          PY
+
+      - name: Cross-check committed transcripts against archived PDFs
+        run: |
+          set -euo pipefail
+          for f in data/raw/injury_report_*.json; do
+            python3 -m nba2.pipeline.refresh --verify-transcript "$f"
+          done
+
+      - name: Guard — the sealed ledger must be untouched
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- data/raw/ledger || {
+            echo "SEALED LEDGER CHANGED during ingest — aborting, committing nothing."
+            exit 1
+          }
+          git diff --cached --exit-code -- data/raw/ledger
+
+      - name: Settle sealed predictions (PENDING until official finals exist)
+        run: python3 -m nba2.pipeline.settle
+
+      - name: Verify (unit tests + seal + provenance lint)
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s nba2/tests -t .
+          python3 -m nba2.pipeline.seal_predictions --verify
+          python3 -m nba2.pipeline.build_site_data
+          python3 -m nba2.pipeline.build_site
+          python3 -m nba2.pipeline.lint
+
+      - name: Commit refreshed snapshots (only when something changed)
+        run: |
+          set -euo pipefail
+          git config user.name "nba2-ingest-bot"
+          git config user.email "nba2-ingest-bot@users.noreply.github.com"
+          git add data/raw data/settlement.json data/site.json index.html pages 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nothing new from the official sources — no commit."
+            exit 0
+          fi
+          git commit -m "ingest(bot): nightly refresh — official injury releases archived, finals fetched; sealed ledger untouched (verify chain passed)"
+          git push origin HEAD:${GITHUB_REF_NAME}
