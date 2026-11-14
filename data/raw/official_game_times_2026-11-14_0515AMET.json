@@ -1,0 +1,386 @@
+{
+ "dataset": "official_game_times_and_matchups_from_injury_report",
+ "purpose": "Second-official-document corroboration of the slate: the referee-operations injury report prints Game Date / Game Time / Matchup on every row, independently confirming which games exist and their ET tip times. The game-page recheck block corroborates every pick-window row directly against nba.com/games?date= pages.",
+ "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf",
+ "retrieved_at_utc": "2026-11-14T10:45:00Z",
+ "why_this_matters": "FLAG-SLATE-04 exists because www.nba.com/schedule prints tip times as a loose list and is a JavaScript shell (I-05). This document attaches the time to the matchup in the same table row, and the games?date= pages print the tip on the game card - agreement among them upgrades each tip time beyond a single-source claim.",
+ "reading_rules": [
+  "A time is recorded as captured only when a printed row of the PDF carries the time cell.",
+  "Where the extraction lost the cell (CHI@MIN, DET@MIA blocks of this release), time_captured is false and the value is filled from the official games-page recheck below - never inferred.",
+  "Supersedes data/raw/official_game_times_2026-11-14.json for the 2026-11-14 keys: that file recorded DET@MIA as time_captured=true although its own sibling capture (injury_report_2026-11-14_daybefore.json, record_counts.note + FLAG-INJ-06) documents the cell as lost - irregularity I-02. This file corrects the record; the old file stays committed as history."
+ ],
+ "time_convention": {
+  "stored_as": "24h ET",
+  "rule": "printed cells are a 12-hour clock with '(ET)' and no meridiem: hour 1-11 -> add 12 (PM); 12:xx -> noon",
+  "worked_examples": "07:00 (ET) -> 19:00; 01:00 (ET) -> 13:00; 04:30 (ET) -> 16:30; 09:00 (ET) -> 21:00; 12:00 (ET) -> 12:00",
+  "verified_this_session": "every 11/15 printed cell re-read against https://www.nba.com/games?date=2026-11-15 (1:00 PM ET, 4:00 PM ET, 4:30 PM ET, 5:00 PM ET, 6:00 PM ET x2, 7:00 PM ET, 8:00 PM ET, 9:00 PM ET)"
+ },
+ "coverage": {
+  "games_confirmed_in_document": 14,
+  "times_confirmed_with_printed_cell": 12,
+  "times_confirmed_via_games_page_only": 2,
+  "matchups_confirmed_time_lost_to_page_break": 2,
+  "dates_covered": [
+   "2026-11-14",
+   "2026-11-15"
+  ],
+  "not_covered": "2026-11-16..17 games are absent from every release published so far; their tips are re-verified row-by-row in game_page_recheck below and remain FLAG-SLATE-04 until an injury-report release lists them."
+ },
+ "columns": [
+  "date",
+  "matchup",
+  "time_et",
+  "time_captured"
+ ],
+ "records": [
+  [
+   "2026-11-14",
+   "BKN@MEM",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-14",
+   "CHI@MIN",
+   "20:00",
+   false
+  ],
+  [
+   "2026-11-14",
+   "DAL@CLE",
+   "19:30",
+   true
+  ],
+  [
+   "2026-11-14",
+   "DEN@NOP",
+   "19:00",
+   true
+  ],
+  [
+   "2026-11-14",
+   "DET@MIA",
+   "20:00",
+   false
+  ],
+  [
+   "2026-11-15",
+   "ATL@MIL",
+   "20:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "CHA@LAC",
+   "16:30",
+   true
+  ],
+  [
+   "2026-11-15",
+   "DAL@BOS",
+   "18:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "HOU@WAS",
+   "19:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "IND@PHI",
+   "13:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "LAL@PHX",
+   "16:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "NYK@TOR",
+   "18:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "OKC@SAC",
+   "21:00",
+   true
+  ],
+  [
+   "2026-11-15",
+   "SAS@UTA",
+   "17:00",
+   true
+  ]
+ ],
+ "corrections": [
+  {
+   "date": "2026-11-14",
+   "matchup": "CHI@MIN",
+   "field": "time_et",
+   "resolution": "value taken from the official games page recheck (time_captured stays false)",
+   "evidence": "https://www.nba.com/game/chi-vs-min-0022600235"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "DET@MIA",
+   "field": "time_et",
+   "resolution": "value taken from the official games page recheck (time_captured stays false)",
+   "evidence": "https://www.nba.com/game/det-vs-mia-0022600233"
+  }
+ ],
+ "game_page_recheck": {
+  "source_note": "Every pick-window row (2026-11-14..2026-11-17) re-read from the official nba.com/games?date= pages on 2026-11-14 (~10:35-10:55 UTC) via the platform page-fetch tool; full transcript in audit/3fbd894a/games_pages_2026-11-14_to_11-17.md. The bare www.nba.com/schedule URL is a JavaScript shell and is never used alone as a source (I-05).",
+  "rows": [
+   {
+    "date": "2026-11-14",
+    "matchup": "DEN@NOP",
+    "game_id": "0022600231",
+    "printed_tip": "7:00 pm ET",
+    "time_et": "19:00",
+    "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-14",
+    "matchup": "DAL@CLE",
+    "game_id": "0022600232",
+    "printed_tip": "7:30 pm ET",
+    "time_et": "19:30",
+    "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-14",
+    "matchup": "BKN@MEM",
+    "game_id": "0022600234",
+    "printed_tip": "8:00 pm ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-14",
+    "matchup": "DET@MIA",
+    "game_id": "0022600233",
+    "printed_tip": "8:00 pm ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-14",
+    "matchup": "CHI@MIN",
+    "game_id": "0022600235",
+    "printed_tip": "8:00 pm ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "IND@PHI",
+    "game_id": "0022600236",
+    "printed_tip": "1:00 PM ET",
+    "time_et": "13:00",
+    "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "LAL@PHX",
+    "game_id": "0022600237",
+    "printed_tip": "4:00 PM ET",
+    "time_et": "16:00",
+    "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "CHA@LAC",
+    "game_id": "0022600238",
+    "printed_tip": "4:30 PM ET",
+    "time_et": "16:30",
+    "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "SAS@UTA",
+    "game_id": "0022600239",
+    "printed_tip": "5:00 PM ET",
+    "time_et": "17:00",
+    "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "DAL@BOS",
+    "game_id": "0022600240",
+    "printed_tip": "6:00 PM ET",
+    "time_et": "18:00",
+    "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "NYK@TOR",
+    "game_id": "0022600241",
+    "printed_tip": "6:00 PM ET",
+    "time_et": "18:00",
+    "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "HOU@WAS",
+    "game_id": "0022600242",
+    "printed_tip": "7:00 PM ET",
+    "time_et": "19:00",
+    "source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "ATL@MIL",
+    "game_id": "0022600243",
+    "printed_tip": "8:00 PM ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-15",
+    "matchup": "OKC@SAC",
+    "game_id": "0022600244",
+    "printed_tip": "9:00 PM ET",
+    "time_et": "21:00",
+    "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "ORL@BOS",
+    "game_id": "0022600245",
+    "printed_tip": "7:00 PM ET",
+    "time_et": "19:00",
+    "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "MEM@WAS",
+    "game_id": "0022600247",
+    "printed_tip": "7:00 PM ET",
+    "time_et": "19:00",
+    "source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "CHI@CLE",
+    "game_id": "0022600246",
+    "printed_tip": "7:00 PM ET",
+    "time_et": "19:00",
+    "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "HOU@MIA",
+    "game_id": "0022600249",
+    "printed_tip": "7:30 PM ET",
+    "time_et": "19:30",
+    "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "PHI@BKN",
+    "game_id": "0022600248",
+    "printed_tip": "7:30 PM ET",
+    "time_et": "19:30",
+    "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "GSW@NOP",
+    "game_id": "0022600251",
+    "printed_tip": "8:00 PM ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "POR@MIN",
+    "game_id": "0022600250",
+    "printed_tip": "8:00 PM ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/por-vs-min-0022600250",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-16",
+    "matchup": "PHX@DEN",
+    "game_id": "0022600252",
+    "printed_tip": "9:00 PM ET",
+    "time_et": "21:00",
+    "source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-17",
+    "matchup": "NYK@TOR",
+    "game_id": "0022600253",
+    "printed_tip": "7:30 PM ET",
+    "time_et": "19:30",
+    "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-17",
+    "matchup": "DET@SAS",
+    "game_id": "0022600255",
+    "printed_tip": "8:00 PM ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-17",
+    "matchup": "POR@MIN",
+    "game_id": "0022600254",
+    "printed_tip": "8:00 PM ET",
+    "time_et": "20:00",
+    "source_url": "https://www.nba.com/game/por-vs-min-0022600254",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-17",
+    "matchup": "UTA@LAC",
+    "game_id": "0022600257",
+    "printed_tip": "10:30 PM ET",
+    "time_et": "22:30",
+    "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   },
+   {
+    "date": "2026-11-17",
+    "matchup": "CHA@LAL",
+    "game_id": "0022600256",
+    "printed_tip": "11:00 PM ET",
+    "time_et": "23:00",
+    "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+    "verdict": "MATCH — tip time agrees with data/raw/slate_2026-11-14_to_11-17.json"
+   }
+  ],
+  "result": "27/27 pick-window rows match the committed slate on matchup, game ID and tip time; 0 mismatches."
+ }
+}
