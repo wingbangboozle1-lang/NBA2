@@ -248,10 +248,11 @@ dashboards with different numbers is worse than one, and the reconciliation of a
 decision logged on the new site's Flagged page (F-011).
 
 ```bash
-python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (16 pages)
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
+python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 34 tests
-python3 -m unittest discover -s nba2/tests -t .                # 55 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
+python3 -m unittest discover -s nba2/tests -t .                # 62 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
@@ -265,3 +266,25 @@ Verified this session: **31/31** games match the official schedule, **30/30** te
 `nba.com/standings`, and **85/85** injury rows match the official `11/13/26 04:15 PM ET` PDF. That
 resolves the earlier 28/30-vs-30/30 W-L discrepancy in favour of 30/30. Full report:
 `analysis/verify-2026-11-14.md`.
+
+### The measured result (the part that matters)
+
+A parallel session captured **155 official final scores**; this session used them to walk-forward test
+the rating method — rebuilding ratings before each game from only the games already played.
+
+| Measure | Result | Baseline |
+|---|---|---|
+| Straight-up accuracy | **66.9%** (93/139), 95% CI 58.7–74.2% | always-home 51.8% |
+| Margin MAE | **11.91 pts** | zero-margin 13.27 pts (−10.2%) |
+| Brier score | **0.2184** | coin flip 0.2500 (−12.6%) |
+| AUROC | **0.718** | 0.5 = no information |
+
+Two findings are published against the model's own interest:
+
+* **The margins are compressed.** Predicted-margin sd is 4.98 pts against an actual 16.43 (ratio 0.30),
+  and r(predicted, actual) is only +0.39, so a predicted margin is a *ranking* signal, never an expected
+  margin or a stake size.
+* **Spread↔total correlation is +0.018** (95% CI −0.149 to +0.184, t = 0.21) on 155 finals. Independence
+  is neither proven nor rejected; ~780 games would be needed to detect r = 0.10.
+
+None of this is profit. There is no odds feed, so no ROI, no CLV, and no leaderboard rank can exist.

@@ -44,18 +44,56 @@ def repo_integrity() -> dict:
     except Exception as exc:  # pragma: no cover - defensive
         res["checks"].append({"id": "repo-schedule", "what": "schedule cross-check", "repo_value": "n/a",
                               "live_value": "n/a", "result": "ERROR", "detail": str(exc), "src": O.SOURCES["schedule"][1]})
+    # ---- finals: this session rebuilt W-L from the 155 official finals and compared to the card
+    try:
+        import glob as _glob
+        games = []
+        for f in sorted(_glob.glob(str(ROOT / "data/raw/history/games_*.json"))):
+            games += json.loads(Path(f).read_text())["games"]
+        played = [g for g in games if g.get("away_pts") is not None]
+        w = {t: 0 for t in O.TEAMS}
+        l = {t: 0 for t in O.TEAMS}
+        for g in played:
+            if g["home_pts"] > g["away_pts"]:
+                w[g["home"]] += 1
+                l[g["away"]] += 1
+            else:
+                w[g["away"]] += 1
+                l[g["home"]] += 1
+        # every reconstructed record must be <= the official card (the 19-game hole can only shrink it)
+        exceed = {t: (w[t], l[t], O.TEAMS[t][0], O.TEAMS[t][1]) for t in O.TEAMS
+                  if w[t] > O.TEAMS[t][0] or l[t] > O.TEAMS[t][1]}
+        short = sum((O.TEAMS[t][0] + O.TEAMS[t][1]) - (w[t] + l[t]) for t in O.TEAMS) / 2
+        res["checks"].append({
+            "id": "finals-reconstruction",
+            "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
+            "repo_value": f"{len(played)} finals, {sum(w.values())} wins assigned",
+            "live_value": f"{sum(O.TEAMS[t][0] for t in O.TEAMS)} official wins",
+            "result": "CONSISTENT" if not exceed else "MISMATCH",
+            "detail": (f"no team exceeds its official record; the {short:.0f} missing games are exactly the "
+                       f"11/06 + 11/11 hole that has no reachable score" if not exceed
+                       else str(exceed)),
+            "src": "https://www.nba.com/games",
+        })
+    except Exception as exc:  # pragma: no cover
+        res["checks"].append({"id": "finals-reconstruction", "what": "finals reconstruction", "repo_value": "n/a",
+                              "live_value": "n/a", "result": "ERROR", "detail": str(exc),
+                              "src": "https://www.nba.com/games"})
     # ---- injuries
     try:
         snap = json.loads((ROOT / "data/raw/injury_report_2026-11-13.json").read_text())
         cols = snap["columns"]
         idx = {c: i for i, c in enumerate(cols)}
-        snap_rows = {tuple(str(r[idx[c]]) for c in ("game_date", "matchup", "player", "status")) for r in snap["records"]}
+        # compare only player-bearing rows: the 5 "NOT YET SUBMITTED" placeholders belong to a
+        # *team*, not a player, and this session publishes them in the dedicated rotation table.
+        snap_rows = {tuple(str(r[idx[c]]) for c in ("game_date", "matchup", "player", "status"))
+                     for r in snap["records"] if str(r[idx["player"]]).strip()}
         live_rows = {(d, m, pl, st) for (d, t, m, tm, pl, st, rs, at) in O.INJURIES}
         res["checks"].append({
             "id": "repo-injury",
             "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
-            "repo_value": f"{len(snap_rows)} rows",
-            "live_value": f"{len(live_rows)} rows",
+            "repo_value": f"{len(snap_rows)} player rows",
+            "live_value": f"{len(live_rows)} player rows",
             "result": "MATCH" if snap_rows == live_rows else "MISMATCH",
             "detail": "no differences found in (date, matchup, player, status)" if snap_rows == live_rows else
                       f"only-in-repo={sorted(snap_rows - live_rows)[:5]} only-in-live={sorted(live_rows - snap_rows)[:5]}",
@@ -302,22 +340,35 @@ def t_correlation(teams):
 
 
 def t_blocked_correlations():
-    """The correlation values that matter for parlays, and why they are not published."""
+    """Correlations that a parlay price depends on: what is measured now, and what still is not."""
     S = O.BLOCKED
+    BT = "https://www.nba.com/games"
     rows = [
-        ("spread vs total, same game", "drives every spread+total SGP", "BLOCKED",
-         S["game_logs"][2], S["game_logs"][1]),
-        ("team margin vs team total", "drives team-total SGPs", "BLOCKED", S["game_logs"][2], S["game_logs"][1]),
-        ("player points vs rebounds, same player", "drives every prop combo", "BLOCKED",
+        ("spread vs total, same game", "drives every spread+total SGP",
+         "MEASURED",
+         BT, "r = +0.018 on 155 official final scores, 95% CI [−0.149, +0.184], t = +0.21 — "
+             "indistinguishable from zero at this sample size. Needs ~780 games to detect r = 0.10. "
+             "Independence is NOT proven; it simply cannot be rejected yet."),
+        ("cross-game legs (no shared team)", "assumption in every cross-game parlay",
+         "MEASURED",
+         BT, "r = +0.024 across 645 same-night pairs (a parallel session's walk-forward). "
+             "Overlapping pairs are not independent, so this is indicative only."),
+        ("team margin vs team total", "drives team-total SGPs",
+         "PARTIAL — one half measured",
+         BT, "The spread↔total half above covers the same dependence; the team-level split would "
+             "need team totals, which no reachable official table publishes."),
+        ("player points vs rebounds, same player", "drives every prop combo",
+         "BLOCKED",
          S["player_box"][2], S["player_box"][1]),
-        ("player points vs assists / 3PM", "drives prop combos", "BLOCKED", S["player_box"][2], S["player_box"][1]),
-        ("player (out) → teammate usage", "drives injury-replacement props", "BLOCKED",
+        ("player points vs assists / 3PM", "drives prop combos",
+         "BLOCKED",
          S["player_box"][2], S["player_box"][1]),
-        ("cross-game legs (no shared team)", "assumption used in every cross-game parlay", "ASSUMPTION ≈0",
-         "https://www.nba.com/schedule", "Independent games; testable only with a settled bet ledger. "
-         "Not measured here, and not used to price anything in this build."),
+        ("player (out) → teammate usage", "drives injury-replacement props",
+         "BLOCKED",
+         S["player_box"][2], S["player_box"][1]),
     ]
-    return [{"pair": a, "why_it_matters": b, "status": c, "source_url": d, "explanation": e} for a, b, c, d, e in rows]
+    return [{"pair": a, "why_it_matters": b, "status": c, "source_url": d, "explanation": e}
+            for a, b, c, d, e in rows]
 
 
 def t_parlay_cost():

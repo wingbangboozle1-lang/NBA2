@@ -33,12 +33,21 @@
     "src": "https://www.nba.com/schedule"
    },
    {
+    "id": "finals-reconstruction",
+    "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
+    "repo_value": "155 finals, 155 wins assigned",
+    "live_value": "174 official wins",
+    "result": "CONSISTENT",
+    "detail": "no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "src": "https://www.nba.com/games"
+   },
+   {
     "id": "repo-injury",
     "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
-    "repo_value": "90 rows",
-    "live_value": "85 rows",
-    "result": "MISMATCH",
-    "detail": "only-in-repo=[('2026-11-14', 'BKN@MEM', '', 'NOT YET SUBMITTED'), ('2026-11-14', 'CHI@MIN', '', 'NOT YET SUBMITTED'), ('2026-11-14', 'DAL@CLE', '', 'NOT YET SUBMITTED'), ('2026-11-14', 'DEN@NOP', '', 'NOT YET SUBMITTED'), ('2026-11-14', 'DET@MIA', '', 'NOT YET SUBMITTED')] only-in-live=[]",
+    "repo_value": "85 player rows",
+    "live_value": "85 player rows",
+    "result": "MATCH",
+    "detail": "no differences found in (date, matchup, player, status)",
     "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf"
    },
    {

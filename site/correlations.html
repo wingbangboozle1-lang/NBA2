@@ -18,6 +18,7 @@
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
 <a href="correlations.html" class="on">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -122,16 +123,23 @@ not left as a vague promise.</p>
 <tr>
 <td>spread vs total, same game</td>
 <td>drives every spread+total SGP</td>
-<td><span class="badge b-bad">BLOCKED</span></td>
-<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
-<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+<td><span class="badge b-warn">MEASURED</span></td>
+<td>r = +0.018 on 155 official final scores, 95% CI [−0.149, +0.184], t = +0.21 — indistinguishable from zero at this sample size. Needs ~780 games to detect r = 0.10. Independence is NOT proven; it simply cannot be rejected yet.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>cross-game legs (no shared team)</td>
+<td>assumption in every cross-game parlay</td>
+<td><span class="badge b-warn">MEASURED</span></td>
+<td>r = +0.024 across 645 same-night pairs (a parallel session&#x27;s walk-forward). Overlapping pairs are not independent, so this is indicative only.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>team margin vs team total</td>
 <td>drives team-total SGPs</td>
-<td><span class="badge b-bad">BLOCKED</span></td>
-<td>No official per-game result table is reachable from this build. stats.nba.com and cdn.nba.com return TLS errors and Basketball-Reference has no 2026-27 game log (HTTP 404). Required for: measured spread/total correlation, backtests, settling bets.</td>
-<td><a href="https://www.basketball-reference.com/teams/LAL/2027_gamelog.html" rel="noopener" target="_blank">basketball-reference.com/teams/LAL/2027_gamelog.html</a></td>
+<td><span class="badge b-warn">PARTIAL — one half measured</span></td>
+<td>The spread↔total half above covers the same dependence; the team-level split would need team totals, which no reachable official table publishes.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>player points vs rebounds, same player</td>
@@ -153,13 +161,6 @@ not left as a vague promise.</p>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
-</tr>
-<tr>
-<td>cross-game legs (no shared team)</td>
-<td>assumption used in every cross-game parlay</td>
-<td><span class="badge b-warn">ASSUMPTION ≈0</span></td>
-<td>Independent games; testable only with a settled bet ledger. Not measured here, and not used to price anything in this build.</td>
-<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
 </tr>
 </tbody></table></div><h2>Why you may not multiply the legs</h2>
 <p class="lede">A two-leg parlay's fair price is the <em>joint</em> probability, not the product. The arithmetic below is exact
