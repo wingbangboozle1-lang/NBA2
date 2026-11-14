@@ -88,7 +88,7 @@ gap could be closed and who must decide: <a href="decisions-needed.html">Decisio
 blocked on data this repository does not hold, and the routes to obtain it are named.</div>
 
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
-<div class="note"><b>What was built.</b> A v2 line-origination model over a 27-game, three-day window (2026-11-14 → 2026-11-17), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table. A strategy lab scores seven candidate strategies walk-forward, evaluates twelve validation gates from data, and separates luck from skill with binomial tests.</div><div class="note"><b>What is verified.</b> 27/27 games match the official schedule; all 30 team records match live nba.com/standings exactly AND rebuild exactly from the 183 committed official final scores, home and road splits included; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against 13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws puts P(MAE gain &gt; 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate (G9), not an opinion.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
+<div class="note"><b>What was built.</b> A v2 line-origination model over a 27-game snapshot from 2026-11-14 through 2026-11-17 (ending three days after the snapshot date), with two ratings estimators, a fitted market-agnostic total model, published formulas, and source-linked tables. A strategy lab evaluates seven candidate strategies and twelve validation gates, and separates observed results from luck with statistical tests.</div><div class="note"><b>What is verified.</b> In the dated 2026-11-14 snapshot, 27/27 games match the official schedule; 30 team records match the standings capture and rebuild from the 183 committed official final scores; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF. Team scoring, opponent scoring and advanced ratings are attributed to NBA.com Stats. These are point-in-time captures, not a claim of current live freshness.</div><div class="note"><b>What is not possible yet.</b> No market price exists, so nothing can be staked and no ROI or CLV can be measured. The committed history contains 183 official finals through 2026-11-13, which supports historical backtests; it does not itself guarantee ongoing updates. The latest scheduled ingest run failed at the final-scores fetch before settlement or rebuild (F-043), so freshness is not assured. The strategy lab has 167 graded games against a 300-sample gate.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against 13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws puts P(MAE gain &gt; 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate (G9), not an opinion.</div><div class="note"><b>Team-level luck.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> First investigate the failed scheduled ingest (F-043), then automate the next rolling slate from timestamped official schedule and team inputs. Historical results exist, but freshness is not assured and the current job does not originate a future window. A licensed odds feed is still required for edge, ROI, CLV or stakes; player game logs are required for props and quantified injury impacts. Keep the leaderboard unrewarded until these inputs and the strategy-specific validation gates pass.</div>
 <h2>Numbers behind the summary</h2>
 <div class="scroll"><table>
 <caption>Summary figures</caption>
@@ -101,7 +101,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <tr>
 <td>Games in window</td>
 <td>27</td>
-<td>2026-11-14 → 2026-11-17 (three days ahead)</td>
+<td>2026-11-14 → 2026-11-17 (ends +3 days from snapshot; inclusive dates)</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
@@ -177,10 +177,10 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
-<td>Open decision questions</td>
-<td>38</td>
-<td>each with a way to resolve it — see the questions page</td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+<td>Current questions shown</td>
+<td>27</td>
+<td>22 core + 5 supplemental; other shared-register entries are flagged for reconciliation (F-044)</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
 </tr>
 <tr>
 <td>Suggestions in the register</td>
@@ -190,7 +190,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Flagged irregularities</td>
-<td>58</td>
+<td>60</td>
 <td>all on the Flagged for review page with a source to check</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -227,12 +227,12 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tbody></table></div>
 <h2>Recommended sequence</h2>
 <ol>
-  <li><b>Connect the odds feed (SG-3).</b> Nothing that involves money moves without a price. All other model work is preparation until then.</li>
-  <li><b>Connect a per-game results feed (SG-2).</b> This turns the model into something testable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion (SG-1).</b> Freshness gate G11 can never pass while data arrives by hand.</li>
-  <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
+  <li><b>Stabilize official ingestion (SG-1 / SG-31).</b> Diagnose the 2026-11-14 final-scores fetch failure, retain runner logs and alert on failures. Do not claim fresh data until a run succeeds end to end.</li>
+  <li><b>Automate the rolling slate.</b> Add a separate scheduled job to refresh official schedule and team inputs, generate the next window through no more than three days ahead, run provenance/freshness gates, then publish. The current workflow only refreshes dates already in sealed ledgers.</li>
+  <li><b>Connect licensed odds (SG-3) before any bet, ROI, CLV or reward claim.</b> Keep every stake at zero until a timestamped price exists and all validation gates pass.</li>
+  <li><b>Acquire player game logs (SG-36), then</b> measure player-level correlations, minute redistribution and prop probabilities. Keep these fields blank until sourced data is available.</li>
 </ol>
-<p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
+<p class="lede">Historical results support backtesting, but unattended freshness and next-slate origination are not yet verified. Existing gates, suggestions and questions remain the review path; no model output is promoted automatically.</p>
 <h2>The single next decision</h2>
 <p><b>Retire the tree nobody can reach, then decide what a pick is worth.</b> Probing the live site settles which tree is
 published: <code>/NBA2/pages/session-audit.html</code> and <code>/NBA2/pages/executive-summary.html</code> both return
@@ -247,7 +247,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
   you choose.</p></div>
   <div class="card"><h4><a href="live-verification.html">Check today's evidence</a></h4><p>The official pages read today,
   what each one contradicted, and the grading of the repository's first real forecast.</p></div>
-  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>58 irregularities, each with a
+  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>60 irregularities, each with a
   source to check. None block publication; all block a promotion.</p></div>
 </div>
 

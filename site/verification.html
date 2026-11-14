@@ -39,11 +39,8 @@
 </aside>
 <main>
 <h1>Verification log</h1>
-<p class="lede">Every number on this site was read from an official NBA page on 2026-11-14. This page records exactly which
-pages were reachable, what each one supplied, and what could not be reached — so a reviewer can repeat it.</p>
-<div class="note"><b>How to re-check any row.</b> Every table row carries a source link to the official page. The same data
-is also published machine-readably in <code>data/v2/*.json</code> in the repository, so a reviewer can diff what the site says
-against what the official page says without trusting either.</div>
+<p class="lede">The site inputs are dated 2026-11-14. This page records which NBA source pages were reachable, what each supplied, and what could not be reached. Model estimates are derived from the committed inputs, not values copied from an official page.</p>
+<div class="note"><b>How to re-check any row.</b> Every table row carries a source link and its data class. Official input facts link to NBA sources; derived values link to their input/method evidence; unavailable values stay blank with a reason. The same data is published machine-readably in <code>data/v2/*.json</code> so a reviewer can trace it without trusting the page.</div>
 <div class="scroll"><table>
 <caption>Every source attempted, with the outcome</caption>
 <thead><tr>
@@ -263,44 +260,44 @@ against what the official page says without trusting either.</div>
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>Files tracked at base commit a09f48e</td>
-<td>245 files (excluding .git)</td>
-<td>counted with `find . -path ./.git -prune -o -type f -print | wc -l`</td>
+<td>Tracked files at audit start (2026-11-14)</td>
+<td>394 files, before this audit report is added</td>
+<td>`git ls-files | wc -l`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main</a></td>
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)</td>
-<td>`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p &#x27;test_*.py&#x27;`; `... -s backtest/tests`</td>
+<td>193 pass: 64 v1 + 80 v2 + 49 backtest</td>
+<td>`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p &#x27;test_*.py&#x27;`; `-s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>1,296 rows across 45 tables, every row sourced</td>
-<td>`python3 -m nba2.pipeline.lint`</td>
+<td>1,410 rows across 50 tables, every row sourced and every blank explained</td>
+<td>`python -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Repository cross-checker</td>
-<td>94 checks: 86 pass, 0 fail, 8 informational</td>
+<td>97 checks: 90 pass, 0 fail, 7 informational</td>
 <td>`python3 tools/crosscheck_site.py`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>
-<td>Sealed prediction ledger</td>
-<td>22 predictions, digest cf7dedc689597cb8… verified</td>
-<td>`python3 -m nba2.pipeline.seal_predictions --verify`</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+<td>Sealed prediction ledgers</td>
+<td>22-pick and 27-pick ledgers verified (cf7dedc689597cb8… / c841e8f396dae6ca…)</td>
+<td>`ledger.verify` run against both committed sealed JSON ledgers</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
 </tr>
 <tr>
 <td>Site rebuild determinism</td>
-<td>data/site.json is byte-identical after a rebuild</td>
-<td>`python3 -m nba2.pipeline.build_site_data` then `cmp` against the committed file</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+<td>v1, backtest and v2 builders produced deterministic trees on repeat runs</td>
+<td>Compared the tracked-change list before/after a second full rebuild; it was unchanged</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/publish-parity.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.git…</a></td>
 </tr>
 <tr>
-<td>Internal links at base commit</td>
-<td>75 HTML files, 3,233 internal links, all resolve</td>
+<td>Internal links</td>
+<td>110 HTML files and 4,917 internal links, all resolve</td>
 <td>`python3 tools/check_links_all.py`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
@@ -312,7 +309,7 @@ against what the official page says without trusting either.</div>
 </tr>
 <tr>
 <td>Tracked Python bytecode</td>
-<td>19 .pyc files tracked despite .gitignore</td>
+<td>0 tracked .pyc files</td>
 <td>`git ls-files &#x27;*.pyc&#x27; | wc -l`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -906,7 +903,7 @@ against what the official page says without trusting either.</div>
   <li><b>Nothing is filled in.</b> If a value had no source, the cell is blank and carries the name of the missing input.</li>
 </ul>
 <h2>Known irregularities</h2>
-<p class="lede">58 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
+<p class="lede">60 items are on the <a href="flagged.html">Flagged for review</a> page with sources, including two that
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>

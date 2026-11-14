@@ -1,5 +1,11 @@
 # COORDINATION.md — NBA2 Shared Task Board
 
+## Session `arena/954443e1-nba2` — claim (2026-11-14 UTC)
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| V2 | Independent current-tree verification; final integration of audit-confirmed freshness and executive-summary fixes | needs review — F-043/F-044 are published | `arena/954443e1-nba2` | `analysis/session-954443e1-audit.md`, `README.md`, `requirements/QUESTIONS.json`, `nba2/v2/content.py`, `nba2/v2/build.py`, `nba2/v2/live.py`, regenerated `data/v2/content.json`, `site/**`, append-only `COORDINATION.md` | All local checks pass; findings are disclosed on the Flagged for Review page. |
+
 Shared task board for the NBA2 project. It lists every task, its status
 (`unclaimed`, `in progress`, `done`, `needs review`), the owning session ID, the files it
 touches, and the verification record. **Read this before starting any task.**
@@ -2942,6 +2948,26 @@ No committed data value was inferred or filled in.
 - Merged to main as commit 46bc33125fba5c775ac5ce3b49c1b47e74b7b4b3 at 2026-11-14T18:58:41Z via `gh pr merge 64 --merge` (no approval waited).
 - GitHub Pages: pages.yml run #58 triggered by the merge push (head 46bc331); Pages status `building` / run queued at record time — deploy confirmation pending the queued build; live re-fetch of the fixed verification.html (MATCH 30/30, no ERROR badge) follows once the build completes.
 
+Working rule for this session: no committed data value is changed or inferred; anything that fails an official-source check is left blank and flagged on the Flagged for Review page instead. Claims are pushed before any other work.
+
+---
+
+## Session `arena/954443e1-nba2` — completion record (2026-11-14)
+
+**Status:** needs review; the current-refresh failure (F-043) and split questions register (F-044) are published on the v2 Flagged for Review page. No NBA value was freshly re-fetched in this session; direct NBA host access is outside the sandbox allowlist.
+
+**Changes:** corrected the current executive summary and recommendations to distinguish the 183-game historical snapshot from live freshness; marked rolling-slate generation partial; added Q-36 on unattended rolling generation; updated the current suggestions and repo-review checks; removed the false-positive F-042 warning after confirming Q-28 is rendered; added F-043/F-044; corrected README and generated v1 row count to 1,416 after the intervening PR #65 additions. The v2 questions page now displays 27 unique IDs (no duplicate anchors); Q-29–Q-35 and other unmatched source-register entries are explicitly flagged for reconciliation.
+
+**Verification:** 64 v1 + 89 v2 + 49 backtest tests passed; provenance lint: 1,416 rows / 50 tables; v2 check: 0 structural / 0 semantic; crosscheck: 97 total, 90 pass / 0 fail / 7 info; backtest verifier: 183 game rows / 12 pages; internal-link checker: 112 files / 5,020 links, all resolve; committed JSON files parse; both sealed ledgers verified; builders are deterministic; `git diff --check` clean. Full details: [`analysis/session-954443e1-audit.md`](analysis/session-954443e1-audit.md).
+
+**Official-source review links:** [NBA schedule](https://www.nba.com/schedule), [standings](https://www.nba.com/standings), [team stats](https://www.nba.com/stats/teams/advanced), [player stats](https://www.nba.com/stats/players/traditional), [injury-report archive](https://official.nba.com/nba-injury-report-2026-27-season/), and the captured [2026-11-14 04:30 AM ET injury PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf). Latest refresh evidence: [failed ingest run](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665).
+
+**Deployment dependency:** PR #64's Pages run was canceled when PR #65 superseded it. The replacement main Pages run [43630672761](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630672761), triggered after PR #66, remained queued at last check. This branch's output still needs its own PR checks and Pages deploy; no live-site re-fetch was performed in this audit.
+
+**Rebase coordination note:** `origin/main` advanced during this session through PRs #64–#66. The append-only board conflict was resolved by retaining both complete session blocks. This branch’s `nba2/v2/build.py` and generated `site/**` corrections were committed before that later claim; I am making no further edits to those owned paths. PRs #64–#66 have now landed. The latest main includes other integrations; this branch carries the independent freshness, questions-register and executive-summary updates on top, without changing their source-verified values.
+
+**Follow-up:** PR #64 merged at 2026-11-14T18:58:41Z and PR #65 at 19:06:53Z. The rebase places this audit's source and site corrections on top of both integrations; `repo-wl` renders MATCH. The PR #64 Pages run [43629545912](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43629545912) was canceled when PR #65 superseded it. The PR #65 replacement Pages run [43630310469](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630310469) was later canceled by PR #66; current main Pages run [43630672761](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630672761) was queued at last check. PR #66 merged the PR #64 completion record at 19:10:47Z. This session's PR/deploy remains outstanding.
+
 
 ## Session `arena/bc867bff-nba2` — CLAIM (2026-11-14 18:42 UTC, branch `arena/bc867bff-nba2`, base `b3ed44d` = `main` @ PR #62 merge)
 
@@ -3117,3 +3143,27 @@ been checked out from main while `nba2/v2/content.py` still held the merged-but-
 i.e. a cross-tree consistency test caught a half-written state, which is that test doing its job. It
 has not reproduced in 8 subsequent runs (including with `__pycache__` removed and artefact mtimes
 forced); the closing full-gate run below is clean. No code was changed to make it pass.
+
+#### Second overlap, resolved the same way (`main` moved again mid-session)
+
+Between the first integration and this push, `main` advanced `d7c19ec → e6cd7e6` (PR #67, session
+`arena/954443e1-nba2`, whose claimed scope names `nba2/v2/build.py`, `site/**`, `README.md` and the
+shared registers — i.e. the same files). The `git pull --rebase` this branch runs before every push
+stopped on the first of eight replays, so the branch **merged** `origin/main` and resolved once:
+
+| Item | Resolution |
+|---|---|
+| Their `F-043`/`F-044` (failed nightly ingest; v2 questions-page duality) | **Kept.** Inserted into the register after my resolved `F-042`; this session's nine flags stay at **`F-059…F-067`**, so 60 flags render with 60 unique ids, asserted not eyeballed. |
+| Their measured `question_count()` card on the landing page | **Kept theirs** for the questions card, **mine** for the injuries card — the two hunks were adjacent, so the resolution is per-line, not per-side. |
+| Their four "next safe improvements" bullets | **Kept**, appended after this session's resolved-by-measurement bullet rather than replacing it, so the repo-review page now carries five items instead of either session's list alone. |
+| v1 `requirements/QUESTIONS.json` | Their `Q-36` stays; this session's three were renumbered to **`Q-37…Q-39`** (0 dropped, 0 altered, verified by comparing the parsed JSON on both sides rather than the text). |
+| Their register-length claims | My `F-042`/`SG-41` text used to hard-code "runs Q-1 to Q-35"; with their row added that number is now wrong, so both sentences were rewritten to describe the *relationship* between the registers instead of a count — the same mistake this session was set up to fix, caught before it shipped. |
+| Their `nba2/v2/live.py` audit additions | Auto-merged cleanly; nothing to reconcile. |
+| Two stray one-character lines (`D`, `n`) | Left in `content.py`/`build.py` by this session's own off-by-2 splice while resolving, removed on sight; both files re-parsed, rebuilt and re-checked afterwards. Recorded because a self-inflicted edit is exactly the kind of thing a completion note should not quietly omit. |
+
+Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables**; backtest
+`VERIFICATION PASSED — 183 sourced game rows`; v2 **0 structural, 0 semantic**; **crosscheck 97 checks:
+90 pass, 0 fail, 7 info**; internal links **5 027 OK**; capture verifier **16 checks: 14 pass, 0 fail,
+2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
+same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
+untouched and 2/2 ledgers verifying.

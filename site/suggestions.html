@@ -44,7 +44,7 @@ so a path can be chosen before anything is implemented — nothing in the queue 
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. 11 items are already <code>IMPLEMENTED</code> and need no
 decision; 13 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
-dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
+dependency. The highest-priority recommendations are to diagnose the failed ingest and automate the rolling slate (SG-1/SG-31), connect timestamped odds (SG-3), and acquire player game logs (SG-36).</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
 <thead><tr>
@@ -60,20 +60,20 @@ dependency. The three highest-ranked recommended items are all data connections,
 <tr id="SG-1">
 <td>SG-1</td>
 <td><span class="badge b-off">Data plumbing</span></td>
-<td>Move ingestion off the agent and onto a scheduled job that pulls the official schedule, standings and injury PDF once per hour, writing a dated snapshot.</td>
-<td>Right now every dataset on the site is a hand-made snapshot. Freshness (gate G11) can never pass without automation, so no strategy can ever be ranked.</td>
-<td>Medium (one GitHub Action + a parser)</td>
-<td>Sandbox TLS to nba.com is blocked; a GitHub Action runner has normal internet and can fetch it.</td>
+<td>Extend the scheduled job to refresh the official schedule, standings, team statistics and injury report for each rolling slate, then rebuild only after freshness and provenance gates pass.</td>
+<td>A scheduled workflow exists, but the current job operates on already-sealed game dates and does not generate the next rolling slate. Its latest observed run failed while fetching official finals; freshness therefore cannot be presumed.</td>
+<td>Medium (GitHub Actions + source-specific parsers and monitoring)</td>
+<td>The runner must archive the exact official response, surface failures and remain fail-closed; no external NBA endpoint was reached during this audit.</td>
 <td><span class="badge b-warn">RECOMMENDED — highest leverage</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-2">
 <td>SG-2</td>
 <td><span class="badge b-off">Data plumbing</span></td>
-<td>Obtain a per-game result feed (official box score or licensed API) and store one row per game: date, teams, final score, quarter scores.</td>
-<td>Unlocks backtests (G7), out-of-sample splits (G8), settlement, ROI, the leaderboard, and every correlation value in the brief.</td>
+<td>Keep an official per-game result feed current and settle only after final scores are verified; store one row per game: date, teams, final score, quarter scores.</td>
+<td>Historical results are committed for 183 games, but a scheduled refresh must succeed consistently to keep backtests and settlement current. The latest observed ingest failed before settlement.</td>
 <td>Medium</td>
-<td>stats.nba.com and cdn.nba.com are unreachable here; a licensed feed or an Action-run scrape is needed.</td>
+<td>Investigate the failed Actions fetch and add a success/failure alert; do not replace official results with an unverified feed.</td>
 <td><span class="badge b-warn">RECOMMENDED — unblocks the most</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -151,7 +151,7 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>SG-41</td>
 <td><span class="badge b-off">Process</span></td>
 <td>Namespace the two question registers so ‘Q-28’ cannot mean two documents.</td>
-<td>requirements/QUESTIONS.json runs Q-1 to Q-35 and nba2/v2/content.py runs Q-1 to Q-27, both rendered as bare ‘Q-nn’ chips — one register on the v1 tree, one on the v2 tree. A sentence in v2 content already cited a v1 ID and looked broken (F-042); the next such citation will be silently wrong rather than visibly dangling.</td>
+<td>requirements/QUESTIONS.json and nba2/v2/content.py each run from Q-1 upward in their own register, rendered as bare ‘Q-nn’ chips — one register on the v1 tree, one on the v2 tree. A sentence in v2 content already cited a v1 ID and looked broken (F-042); the next such citation will be silently wrong rather than visibly dangling.</td>
 <td>Low — prefix one register (v2 becomes ‘Q2-nn’) in the data and its prose references, keeping the old IDs as aliases so existing flag chips still resolve</td>
 <td>owner sign-off, because it changes published anchors</td>
 <td><span class="badge b-warn">RECOMMENDED</span></td>
@@ -420,11 +420,11 @@ dependency. The three highest-ranked recommended items are all data connections,
 <tr id="SG-31">
 <td>SG-31</td>
 <td><span class="badge b-off">Data plumbing</span></td>
-<td>Make the existing nightly ingest actually fire, and extend it to the v2 results history in data/raw/history/.</td>
-<td>A cron ingest already exists (.github/workflows/refresh.yml) and has never run — its run list is empty, and the repo&#x27;s own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not this history. The cost is visible: the log sat 28 games short for a day and the published standings were a full day stale with nothing able to detect either. The count is eminently checkable — the standings imply 183 games and the nba.com day-strip calendar gives per-date counts.</td>
-<td>Low — the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has been merged to the default branch once</td>
-<td>Confirmation that the cron is enabled on the default branch</td>
-<td><span class="badge b-warn">RECOMMENDED — cheapest fix with the largest effect on trust</span></td>
+<td>Make the scheduled ingest reliable, observable, and complete for the v2 inputs and rolling slate.</td>
+<td>The workflow now runs on the default branch. The 2026-11-14 run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. It targets the v1 pipeline and sealed-ledger dates; it does not produce the next rolling slate.</td>
+<td>Medium — diagnose the failed fetch from runner logs, add actionable failure alerts, and extend only after source and freshness gates are proven</td>
+<td>The failure cause is unverified; the GitHub Actions log download returned EOF in this audit. See F-043.</td>
+<td><span class="badge b-warn">RECOMMENDED — reliability and monitoring before adding more feeds</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-36">
@@ -449,11 +449,9 @@ dependency. The three highest-ranked recommended items are all data connections,
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>
 <ol>
-  <li><b>Connect a licensed odds feed</b> (SG-3). Everything about edge, stake and ROI depends on it. Today the site
-      correctly publishes zero picks because it has no price — that is a data gap, not a modelling gap.</li>
-  <li><b>Get per-game results</b> (SG-2). It turns every projection into something scoreable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion</b> (SG-1). Hand-made snapshots cannot satisfy a freshness gate, so no strategy can ever be
-      ranked on fresher-than-today data.</li>
+  <li><b>Diagnose and monitor the official ingest</b> (SG-1 / SG-31). The latest run failed before settlement or rebuild; preserve the failure logs and do not treat a scheduled job as proof of fresh data.</li>
+  <li><b>Automate the next rolling slate</b> from official schedule and team inputs, with provenance/freshness gates and fail-closed publishing. The current job only processes already-sealed dates.</li>
+  <li><b>Connect timestamped licensed odds</b> (SG-3) before ROI, CLV, stake sizing or rewards; acquire player logs (SG-36) before publishing props or injury impacts.</li>
 </ol>
 <h2>Suggestions about this site's own design</h2>
 <div class="cards">

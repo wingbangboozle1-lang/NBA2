@@ -333,6 +333,17 @@
     },
     {
       "id": "Q-36",
+      "question": "Will automated refresh produce and publish the next rolling three-day slate without human action?",
+      "have": "The scheduled refresh workflow runs against dates already present in sealed ledgers and refreshes injury reports/finals; it does not ingest a new schedule and team inputs or originate the next rolling slate. Run 43605830665 on 2026-11-14 failed at the official-finals fetch before settlement, rebuild or commit.",
+      "missing": "A reliable, monitored end-to-end run that discovers the next official schedule, refreshes inputs, generates lines, applies provenance/freshness gates and publishes only after success.",
+      "how": "First diagnose the runner failure using retained Action logs. Then add a separate scheduled rolling-slate pipeline with timestamped official captures, deterministic model build, fail-closed gates and actionable alerts. Keep stakes at zero unless timestamped odds are available.",
+      "impact": "Blocks the no-manual-input and automatic future-slate requirements. The current dated slate remains a static snapshot, not an unattended service.",
+      "severity": "BLOCKING",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml",
+      "evidence": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665/job/132480138083"
+    },
+    {
+      "id": "Q-37",
       "question": "Does the injury table on the published site reflect the newest official release, and how would anyone know?",
       "have": "Measured on 2026-11-14 rather than assumed: the site's injury section was built from the 11/14 04:30 AM ET PDF because the 05:30 AM file returned AccessDenied at that moment. The official index publishes a release every 15 minutes; the 01:30 PM release read at 18:41 UTC carries 50 designation rows — 24 more than the site published — and moves 4 statuses (Mobley to Out, Christie Questionable→Doubtful, two to Available). Both releases are now on the v2 site in a superseding section, and the capture with its verifier lives in audit/2026-11-14-bc867bff/. Source: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf and https://official.nba.com/nba-injury-report-2026-27-season/",
       "missing": "A build-time rule, not a dataset: the build stamps which release it used but never asks the index what the newest release is, so a 5.5-hour gap is invisible on the page.",
@@ -341,7 +352,7 @@
       "severity": "MEDIUM"
     },
     {
-      "id": "Q-37",
+      "id": "Q-38",
       "question": "Is the official per-club season table enough to make player props actionable, or only to size a risk?",
       "have": "The per-club traditional table at nba.com/stats/players/traditional?TeamID=<id> is reachable and renders server-side — the opposite of what earlier sessions recorded. Three clubs were captured (Denver, Cleveland, Minnesota): 24 player rows with GP, MPG, PPG, each with its own source link. That is enough to publish production-at-risk: Minnesota loses 33.3 PPG and 33.7 minutes with Edwards out, which is 27.9% of its season scoring rate; Cleveland has 53.8% of its scoring rate in the game-time bucket. It is also enough to show the page sorts by points, not minutes (rank order re-derived: V12).",
       "missing": "Anything distribution-shaped. The per-player game log prints 'No data available' at https://www.nba.com/stats/player/1630162/gamelog (verified 2026-11-14), so there is still no median, no variance, no minutes floor; and with no market line (Q-1 / S-01) there is nothing to compare a projection to. On/off splits are likewise not published anywhere reachable.",
@@ -350,7 +361,7 @@
       "severity": "HIGH"
     },
     {
-      "id": "Q-38",
+      "id": "Q-39",
       "question": "Which side of the line did strategy S2 actually bet, and does its settled record change?",
       "have": "Both, published side by side. The v1 generator attached the away-side spread number to whichever team its branch had picked, so all nine strong-margin signals named the model favourite and quoted the underdog's price (first row: 'MIA +6.5' on CLE @ MIA, a game the same file labels 'CLE +6.5'). The generator is fixed and pinned by nba2/tests/test_picks_sign.py (6 tests; suite 64→70). Re-graded on the side the strategy means, the four settled rows read 3-1, not 4-0 — computed by nba2/v2/live.py::_s2_sign_regrade from the committed official finals, and printed on the v2 live verification page.",
       "missing": "Only an owner acknowledgement that settled history is not restated: nba2/data/picks.json is committed byte-identical (sha256 2f527ecbe60a0e25…), stamped 2026-11-13T22:30:00Z — 83 minutes before the earliest tip. Regenerating it would 'fix' the labels by destroying the pre-tip provenance that is the only reason its record means anything.",

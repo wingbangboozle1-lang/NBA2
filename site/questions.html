@@ -39,7 +39,7 @@
 </aside>
 <main>
 <h1>Open questions</h1>
-<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
+<p class="lede">27 current, distinct questions that block or qualify a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 <div class="scroll"><table>
 <caption>Decision-blocking questions</caption>
@@ -304,9 +304,9 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
 </tbody></table></div>
-<h2>Questions this session's live evidence raised (6)</h2>
-<p class="lede">Each of these was created by a measurement made today, not by an earlier hypothesis. They are listed
-separately so a reviewer can see which questions the evidence produced and which were already on the register.</p>
+<h2>Supplemental questions from the shared register (2)</h2>
+<p class="lede">These entries are maintained in <code>requirements/QUESTIONS.json</code> and are deduplicated against the core register above.
+Entries outside the explicitly selected set remain flagged for reconciliation rather than being presented as current answers.</p>
 <div class="scroll"><table>
 <caption>New questions, raised by live verification</caption>
 <thead><tr>
@@ -318,51 +318,6 @@ separately so a reviewer can see which questions the evidence produced and which
 <th scope="col">Severity</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
-<tr id="Q-23">
-<td>Q-23</td>
-<td>When a published snapshot goes stale, should the site keep showing it (labelled) or withhold the page entirely?</td>
-<td>Proof of the failure mode, measured today: the v2 team table matches the pre-11/13-finals state 30/30 and current official standings only 12/30, while the page still advertises a 30/30 live match. The nine 11/13 finals were played while the table was frozen.</td>
-<td>A rule. Nothing in the build currently compares a published row against a fresher official capture, so staleness can only be caught by a human reading two pages.</td>
-<td>Set a maximum snapshot age per table (records: 1 day; prices: 15 minutes; injuries: to the next official filing). Add a staleness gate to nba2/v2/check.py that fails when a row is older than its limit, and render stale rows with an explicit &#x27;as of&#x27; badge instead of a MATCH badge.</td>
-<td><span class="badge b-bad">BLOCKING</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr id="Q-24">
-<td>Q-24</td>
-<td>Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?</td>
-<td>The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.</td>
-<td>The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.</td>
-<td>Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.</td>
-<td><span class="badge b-warn">HIGH</span></td>
-<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
-</tr>
-<tr id="Q-25">
-<td>Q-25</td>
-<td>Should a per-strategy win rate be allowed to count the same game twice when two strategies fire on it?</td>
-<td>The measured overlap: of 4 graded games, all 4 were bet by both S1_MarginFavorite and S2_SpreadValue. Per-strategy hit rates stay valid; any portfolio or leaderboard return that sums them double-counts the games.</td>
-<td>A portfolio accounting rule: whether the leaderboard scores strategies independently (as now) or scores the union of positions actually held.</td>
-<td>Owner decision. Independent scoring is simpler and correct for ranking hypotheses; union scoring is correct for describing what a bankroll would have done. They answer different questions and the site currently only implements one.</td>
-<td><span class="badge b-warn">HIGH</span></td>
-<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
-</tr>
-<tr id="Q-26">
-<td>Q-26</td>
-<td>Does a team rating that is computed from a frozen standings table need to be re-fitted per slate, or is a same-day snapshot accurate enough?</td>
-<td>A measured comparison on 9 graded games: the model&#x27;s margin MAE was 11.46 against 13.33 for predicting a tie, but its winner accuracy (5/9) was no better than a naive net-rating baseline computed from the same frozen table (5/9).</td>
-<td>A rebuilt rating on post-11/13 data. That requires re-running the whole pipeline against today&#x27;s official standings, which is a data refresh, not a code change.</td>
-<td>Refresh data/raw with the 30 current records captured today (already in audit/2026-11-14/official_inputs_2026-11-14.json), rebuild, re-seal a new ledger, and compare. Until then no claim about which estimator is better is supported.</td>
-<td><span class="badge b-warn">HIGH</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr id="Q-27">
-<td>Q-27</td>
-<td>Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?</td>
-<td>A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.</td>
-<td>Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.</td>
-<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml&#x27;s parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.</td>
-<td><span class="badge b-warn">MEDIUM</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
 <tr id="Q-28">
 <td>Q-28</td>
 <td>How is a pick&#x27;s price recorded if no odds feed will ever be licensed?</td>
@@ -372,24 +327,32 @@ separately so a reviewer can see which questions the evidence produced and which
 <td><span class="badge b-bad">BLOCKING</span></td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
+<tr id="Q-36">
+<td>Q-36</td>
+<td>Will automated refresh produce and publish the next rolling three-day slate without human action?</td>
+<td>The scheduled refresh workflow runs against dates already present in sealed ledgers and refreshes injury reports/finals; it does not ingest a new schedule and team inputs or originate the next rolling slate. Run 43605830665 on 2026-11-14 failed at the official-finals fetch before settlement, rebuild or commit.</td>
+<td>A reliable, monitored end-to-end run that discovers the next official schedule, refreshes inputs, generates lines, applies provenance/freshness gates and publishes only after success.</td>
+<td>First diagnose the runner failure using retained Action logs. Then add a separate scheduled rolling-slate pipeline with timestamped official captures, deterministic model build, fail-closed gates and actionable alerts. Keep stakes at zero unless timestamped odds are available.</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.git…</a></td>
+</tr>
 </tbody></table></div><h2>Questions about the project itself, not the model</h2>
 <div class="cards">
-  <div class="card"><h4>Which site is authoritative?</h4><p>Six trees exist. Until the owner picks one, every published
-  number is ambiguous. Proposed answer: this tree, with the others archived.</p></div>
+  <div class="card"><h4>Which site is authoritative?</h4><p>The live GitHub Pages workflow publishes <code>site/</code>. Earlier trees remain in the repository but are not the canonical deployed dashboard; archiving them is a separate cleanup decision.</p></div>
   <div class="card"><h4>Is the reward pool real money?</h4><p>The brief says rewards for top strategies. The size, funding
   and legal basis are unknown and change what the leaderboard must be built to prevent.</p></div>
   <div class="card"><h4>Who may submit a strategy?</h4><p>Public submissions turn anti-gaming rules from nice-to-have into
   load-bearing. One submitter only changes the design substantially.</p></div>
-  <div class="card"><h4>What counts as a 'pick'?</h4><p>A projection, a graded bet, or a staked bet? This determines whether
-  anything on this site qualifies today. Current answer: nothing does.</p></div>
+  <div class="card"><h4>What counts as a 'pick'?</h4><p>This site publishes projections and leans for a dated slate. A staked bet requires a timestamped market price and all validation gates; no current row is stakable. Competition scoring and bankroll rules still need approval.</p></div>
 </div>
-<h2>Information we do not have, that someone must go and get</h2>
+<h2>Information that is missing or not reliably automated</h2>
 <ul>
-  <li>Licensed odds history (opening and closing lines) — the only way to measure edge.</li>
-  <li>Per-game box scores — the only way to settle, backtest or score.</li>
-  <li>Player game logs with minutes — the only way to price props or quantify injuries.</li>
-  <li>Play-by-play — the only way to analyse game flow rather than schedule density.</li>
-  <li>An explicit statement of what the reward is, so the leaderboard can be designed against it.</li>
+  <li>Licensed odds history (opening/closing spread, total, moneyline and prop prices) — required to measure edge, CLV, ROI or stake sizing.</li>
+  <li>A reliable scheduled official-results refresh. A 183-game historical capture exists, but the latest scheduled fetch failed before settlement.</li>
+  <li>A rolling official schedule and team-stat refresh that generates the next slate through no more than three days ahead.</li>
+  <li>Player game logs with minutes, usage and box scores — required for prop combos, player correlations and injury-driven production estimates.</li>
+  <li>Play-by-play — needed for pace/garbage-time/foul-flow analysis beyond schedule density.</li>
+  <li>An explicit reward definition, submitter/eligibility rules and owner approval for the leaderboard.</li>
 </ul>
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.

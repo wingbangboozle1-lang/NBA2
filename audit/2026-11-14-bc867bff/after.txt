@@ -1,7 +1,7 @@
 NBA2 gate run — session arena/bc867bff-nba2
-commit 1108ed0 on arena/bc867bff-nba2
-run at 2026-11-14T19:39:10Z
-tree dirty files at start: 1
+commit 35e71f5 on arena/bc867bff-nba2
+run at 2026-11-14T19:44:19Z
+tree dirty files at start: 20
 
 ===== v1 unit tests =====
 $ python3 -m unittest discover -s nba2/tests -t .
@@ -133,7 +133,7 @@ capture comparison covers, and the ones it does not
 [info] CC-DOC-06      the verification line quoted on the coordination board matches the current build
         observed: INFO when a refresh is in flight: the board is a historical record of the run that made it, and this session must not rewrite another session's log
 [info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
-        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest 7285c367cb6a0136…
+        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest 7033b7111f5557ec…
         note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
 [ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
 [ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
@@ -151,7 +151,19 @@ capture comparison covers, and the ones it does not
 [exit 0]
 
 ===== generated artefacts are a pure function of the inputs =====
-clean — rebuilding produced no drift beyond what is committed
+changed by the rebuild (expected if this run follows an edit; must be empty on a re-run):
+MM data/site.json
+MM data/v2/content.json
+MM pages/questions.html
+MM site/data/content.json
+MM site/executive-summary.html
+MM site/flagged.html
+MM site/index.html
+M  site/picks.html
+MM site/questions.html
+MM site/repo-review.html
+MM site/suggestions.html
+MM site/verification.html
 
 ===== sealed artefacts untouched =====
 nba2/data/picks.json: UNTOUCHED (git reports 0 changes)

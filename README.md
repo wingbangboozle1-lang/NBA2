@@ -59,7 +59,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-`index.html` + `pages/**` (21 pages, 50 tables, 1422 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 50 tables, 1423 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -292,7 +292,7 @@ python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, inc
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 98 tests
-python3 -m unittest discover -s nba2/tests -t .                # 70 tests (was 64; +6 from the S-26 sign regression tests)
+python3 -m unittest discover -s nba2/tests -t .                # 70 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

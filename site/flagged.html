@@ -378,8 +378,24 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><span class="badge b-info">F-042</span></td>
 <td><span class="badge b-info">info</span></td>
 <td>Site</td>
-<td>RESOLVED, and not for the reason first logged. The v2 register never contained a Q-28 — but the repository has TWO question registers, and Q-28 is real in the other one (requirements/QUESTIONS.json, 35 questions, rendered at pages/questions.html#Q-28). The sentence was pointing at a live question through an ID namespace this page does not own: dangling on the page, correct in the repo. The registers colliding on a bare &#x27;Q-nn&#x27; is the actual hazard, and naming the file is what fixes it.</td>
+<td>RESOLVED, and not for the reason first logged. The v2 register never contained a Q-28 — but the repository has TWO question registers, and Q-28 is real in the other one (requirements/QUESTIONS.json, whose own register is longer than this page’s, rendered at pages/questions.html#Q-28). The sentence was pointing at a live question through an ID namespace this page does not own: dangling on the page, correct in the repo. The registers colliding on a bare &#x27;Q-nn&#x27; is the actual hazard, and naming the file is what fixes it.</td>
 <td>The citation was rewritten to name the register it means — no v1 page edited, no published ID renumbered. The collision itself is raised as SG-41 for owner sign-off, because re-prefixing a published anchor is a cross-tree change.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
+</tr>
+<tr id="F-043">
+<td><span class="badge b-warn">F-043</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>The 2026-11-14 14:37 UTC scheduled ingest run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. The exact failure cause is unverified: the Actions run lists the failed step, but downloading its logs returned EOF during this audit.</td>
+<td>Do not claim the snapshot refreshed from this run. Retry after investigating the runner log, preserve the failure details, and alert on any unsuccessful fetch. The last known published snapshot remains explicitly dated; no value was inferred.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665/job/132480138083" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/actions/runs/4…</a></td>
+</tr>
+<tr id="F-044">
+<td><span class="badge b-off">F-044</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Questions</td>
+<td>The v2 questions page combines a hard-coded core list with selected IDs from requirements/QUESTIONS.json. The shared register contains Q-01 through Q-36, but Q-18, Q-19 and Q-29 through Q-35 are omitted; overlapping IDs may also carry different wording or status between the two sources. Several omitted entries refer to earlier snapshots or a Pages configuration later checked by the live-site audit.</td>
+<td>Reconcile question IDs, wording and current status against the evidence; consolidate to one source of truth, and mark stale items resolved/archived before adding them to the live page. Q-36 (rolling-slate automation) is published as the current question.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
 </tr>
 <tr id="F-059">

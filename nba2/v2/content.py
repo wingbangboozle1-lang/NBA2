@@ -145,13 +145,13 @@ LEADERBOARD_RULES = [
 # --------------------------------------------------------------------------- suggestions
 # id, area, suggestion, why it improves decisions, effort, blocking dependency, decision state
 SUGGESTIONS = [
-    ("SG-1", "Data plumbing", "Move ingestion off the agent and onto a scheduled job that pulls the official schedule, standings and injury PDF once per hour, writing a dated snapshot.",
-     "Right now every dataset on the site is a hand-made snapshot. Freshness (gate G11) can never pass without automation, so no strategy can ever be ranked.",
-     "Medium (one GitHub Action + a parser)", "Sandbox TLS to nba.com is blocked; a GitHub Action runner has normal internet and can fetch it.",
+    ("SG-1", "Data plumbing", "Extend the scheduled job to refresh the official schedule, standings, team statistics and injury report for each rolling slate, then rebuild only after freshness and provenance gates pass.",
+     "A scheduled workflow exists, but the current job operates on already-sealed game dates and does not generate the next rolling slate. Its latest observed run failed while fetching official finals; freshness therefore cannot be presumed.",
+     "Medium (GitHub Actions + source-specific parsers and monitoring)", "The runner must archive the exact official response, surface failures and remain fail-closed; no external NBA endpoint was reached during this audit.",
      "RECOMMENDED — highest leverage"),
-    ("SG-2", "Data plumbing", "Obtain a per-game result feed (official box score or licensed API) and store one row per game: date, teams, final score, quarter scores.",
-     "Unlocks backtests (G7), out-of-sample splits (G8), settlement, ROI, the leaderboard, and every correlation value in the brief.",
-     "Medium", "stats.nba.com and cdn.nba.com are unreachable here; a licensed feed or an Action-run scrape is needed.",
+    ("SG-2", "Data plumbing", "Keep an official per-game result feed current and settle only after final scores are verified; store one row per game: date, teams, final score, quarter scores.",
+     "Historical results are committed for 183 games, but a scheduled refresh must succeed consistently to keep backtests and settlement current. The latest observed ingest failed before settlement.",
+     "Medium", "Investigate the failed Actions fetch and add a success/failure alert; do not replace official results with an unverified feed.",
      "RECOMMENDED — unblocks the most"),
     ("SG-3", "Data plumbing", "Connect a licensed odds feed with timestamps (opening and closing lines) for spread, total, moneyline and props.",
      "Without a price there is no edge, no stake, no ROI, no luck-adjusted P&L. Every 'pick' on this site is currently withheld for that reason.",
@@ -265,20 +265,14 @@ SUGGESTIONS = [
 ]
 
 # --------------------------------------------------------------------------- session
-# arena/ac5fab5c-nba2 (2026-11-14). These were written after the results history was completed,
-# so several earlier entries that said "blocked, no data" now have a cheaper answer.
+# arena/ac5fab5c-nba2 (2026-11-14). Historical results were captured, but scheduled refresh
+# reliability and automatic rolling-slate generation remain open.
 SUGGESTIONS += [
-    ("SG-31", "Data plumbing", "Make the existing nightly ingest actually fire, and extend it to the v2 results "
-     "history in data/raw/history/.",
-     "A cron ingest already exists (.github/workflows/refresh.yml) and has never run — its run list is empty, and "
-     "the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not "
-     "this history. The cost is visible: the log sat 28 games short for a day and the published standings were a "
-     "full day stale with nothing able to detect either. The count is eminently checkable — the standings imply "
-     "183 games and the nba.com day-strip calendar gives per-date counts.",
-     "Low — the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has "
-     "been merged to the default branch once",
-     "Confirmation that the cron is enabled on the default branch",
-     "RECOMMENDED — cheapest fix with the largest effect on trust"),
+    ("SG-31", "Data plumbing", "Make the scheduled ingest reliable, observable, and complete for the v2 inputs and rolling slate.",
+     "The workflow now runs on the default branch. The 2026-11-14 run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. It targets the v1 pipeline and sealed-ledger dates; it does not produce the next rolling slate.",
+     "Medium — diagnose the failed fetch from runner logs, add actionable failure alerts, and extend only after source and freshness gates are proven",
+     "The failure cause is unverified; the GitHub Actions log download returned EOF in this audit. See F-043.",
+     "RECOMMENDED — reliability and monitoring before adding more feeds"),
     ("SG-32", "Model", "Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.",
      "300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters "
      "depends on the strategy's own correlation between bets: the parlay strategies need a different n than the "
@@ -342,7 +336,7 @@ SUGGESTIONS += [
     ('SG-41',
      'Process',
      'Namespace the two question registers so \u2018Q-28\u2019 cannot mean two documents.',
-     'requirements/QUESTIONS.json runs Q-1 to Q-35 and nba2/v2/content.py runs Q-1 to Q-27, both rendered as bare '
+     'requirements/QUESTIONS.json and nba2/v2/content.py each run from Q-1 upward in their own register, rendered as bare '
      '\u2018Q-nn\u2019 chips \u2014 one register on the v1 tree, one on the v2 tree. A sentence in v2 content already cited a '
      'v1 ID and looked broken (F-042); the next such citation will be silently wrong rather than visibly dangling.',
      'Low \u2014 prefix one register (v2 becomes \u2018Q2-nn\u2019) in the data and its prose references, keeping the old IDs '
@@ -756,12 +750,19 @@ FLAGS += [
      "https://www.nba.com/schedule?date=2026-11-15"),
     ("F-042", "info", "Site", "RESOLVED, and not for the reason first logged. The v2 register never contained a "
      "Q-28 — but the repository has TWO question registers, and Q-28 is real in the other one "
-     "(requirements/QUESTIONS.json, 35 questions, rendered at pages/questions.html#Q-28). The sentence was pointing "
+     "(requirements/QUESTIONS.json, whose own register is longer than this page\u2019s, rendered at "
+     "pages/questions.html#Q-28). The sentence was pointing "
      "at a live question through an ID namespace this page does not own: dangling on the page, correct in the repo. "
      "The registers colliding on a bare 'Q-nn' is the actual hazard, and naming the file is what fixes it.",
      "The citation was rewritten to name the register it means — no v1 page edited, no published ID renumbered. "
      "The collision itself is raised as SG-41 for owner sign-off, because re-prefixing a published anchor is a "
      "cross-tree change.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json"),
+    ("F-043", "medium", "Data", "The 2026-11-14 14:37 UTC scheduled ingest run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. The exact failure cause is unverified: the Actions run lists the failed step, but downloading its logs returned EOF during this audit.",
+     "Do not claim the snapshot refreshed from this run. Retry after investigating the runner log, preserve the failure details, and alert on any unsuccessful fetch. The last known published snapshot remains explicitly dated; no value was inferred.",
+     "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665/job/132480138083"),
+    ("F-044", "low", "Questions", "The v2 questions page combines a hard-coded core list with selected IDs from requirements/QUESTIONS.json. The shared register contains Q-01 through Q-36, but Q-18, Q-19 and Q-29 through Q-35 are omitted; overlapping IDs may also carry different wording or status between the two sources. Several omitted entries refer to earlier snapshots or a Pages configuration later checked by the live-site audit.",
+     "Reconcile question IDs, wording and current status against the evidence; consolidate to one source of truth, and mark stale items resolved/archived before adding them to the live page. Q-36 (rolling-slate automation) is published as the current question.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json"),
     ('F-059',
      'medium',
@@ -895,11 +896,11 @@ SESSION_AUDIT = [
 # --------------------------------------------------------------------------- executive summary bullets
 EXEC_BULLETS = [
     ("What was built",
-     "A v2 line-origination model over a 27-game, three-day window (2026-11-14 → 2026-11-17), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table. A strategy lab scores seven candidate strategies walk-forward, evaluates twelve validation gates from data, and separates luck from skill with binomial tests."),
+     "A v2 line-origination model over a 27-game snapshot from 2026-11-14 through 2026-11-17 (ending three days after the snapshot date), with two ratings estimators, a fitted market-agnostic total model, published formulas, and source-linked tables. A strategy lab evaluates seven candidate strategies and twelve validation gates, and separates observed results from luck with statistical tests."),
     ("What is verified",
-     "27/27 games match the official schedule; all 30 team records match live nba.com/standings exactly AND rebuild exactly from the 183 committed official final scores, home and road splits included; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables."),
+     "In the dated 2026-11-14 snapshot, 27/27 games match the official schedule; 30 team records match the standings capture and rebuild from the 183 committed official final scores; 26 injury rows are transcribed from the official 11/14 04:30 AM ET PDF. Team scoring, opponent scoring and advanced ratings are attributed to NBA.com Stats. These are point-in-time captures, not a claim of current live freshness."),
     ("What is not possible yet",
-     "No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar."),
+     "No market price exists, so nothing can be staked and no ROI or CLV can be measured. The committed history contains 183 official finals through 2026-11-13, which supports historical backtests; it does not itself guarantee ongoing updates. The latest scheduled ingest run failed at the final-scores fetch before settlement or rebuild (F-043), so freshness is not assured. The strategy lab has 167 graded games against a 300-sample gate."),
     ("The skill finding",
      "A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly "
      "earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against "
@@ -915,41 +916,42 @@ EXEC_BULLETS = [
      "too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that "
      "cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate "
      "(G9), not an opinion."),
-    ("The luck finding",
+    ("Team-level luck",
      "Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story."),
     ("The correlation finding",
      "Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable."),
     ("The recommended path",
-     "Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines."),
+     "First investigate the failed scheduled ingest (F-043), then automate the next rolling slate from timestamped official schedule and team inputs. Historical results exist, but freshness is not assured and the current job does not originate a future window. A licensed odds feed is still required for edge, ROI, CLV or stakes; player game logs are required for props and quantified injury impacts. Keep the leaderboard unrewarded until these inputs and the strategy-specific validation gates pass."),
 ]
 
 
 # --------------------------------------------------------------------------- repo review
 # Verified facts about the repository itself, gathered this session.
 REPO_FACTS = [
-    ("Files tracked at base commit a09f48e",
-     "245 files (excluding .git)", "counted with `find . -path ./.git -prune -o -type f -print | wc -l`",
+    ("Tracked files at audit start (2026-11-14)",
+     "394 files, before this audit report is added",
+     "`git ls-files | wc -l`",
      "https://github.com/wingbangboozle1-lang/NBA2/tree/main"),
-    ("Python unit tests", "64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)",
-     "`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p 'test_*.py'`; `... -s backtest/tests`",
+    ("Python unit tests", "193 pass: 64 v1 + 80 v2 + 49 backtest",
+     "`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p 'test_*.py'`; `-s backtest/tests`",
      "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests"),
-    ("Provenance lint", "1,296 rows across 45 tables, every row sourced",
-     "`python3 -m nba2.pipeline.lint`", "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline"),
-    ("Repository cross-checker", "94 checks: 86 pass, 0 fail, 8 informational",
+    ("Provenance lint", "1,410 rows across 50 tables, every row sourced and every blank explained",
+     "`python -m nba2.pipeline.lint`", "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline"),
+    ("Repository cross-checker", "97 checks: 90 pass, 0 fail, 7 informational",
      "`python3 tools/crosscheck_site.py`", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py"),
-    ("Sealed prediction ledger", "22 predictions, digest cf7dedc689597cb8… verified",
-     "`python3 -m nba2.pipeline.seal_predictions --verify`",
-     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json"),
-    ("Site rebuild determinism", "data/site.json is byte-identical after a rebuild",
-     "`python3 -m nba2.pipeline.build_site_data` then `cmp` against the committed file",
-     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py"),
-    ("Internal links at base commit", "75 HTML files, 3,233 internal links, all resolve",
+    ("Sealed prediction ledgers", "22-pick and 27-pick ledgers verified (cf7dedc689597cb8… / c841e8f396dae6ca…)",
+     "`ledger.verify` run against both committed sealed JSON ledgers",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json"),
+    ("Site rebuild determinism", "v1, backtest and v2 builders produced deterministic trees on repeat runs",
+     "Compared the tracked-change list before/after a second full rebuild; it was unchanged",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/publish-parity.yml"),
+    ("Internal links", "110 HTML files and 4,917 internal links, all resolve",
      "`python3 tools/check_links_all.py`", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py"),
     ("Parallel site trees present", "6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/) — "
      "only this v2 tree is published; the other five are retained for history and are unreachable to a reader",
      "directory listing + live probe (the /pages/ paths answer 404)",
      "https://github.com/wingbangboozle1-lang/NBA2"),
-    ("Tracked Python bytecode", "19 .pyc files tracked despite .gitignore",
+    ("Tracked Python bytecode", "0 tracked .pyc files",
      "`git ls-files '*.pyc' | wc -l`", "https://github.com/wingbangboozle1-lang/NBA2"),
     ("Internationalisation / accessibility", "No lang-specific copy; tables use <caption> in the prior build; no automated a11y check",
      "grep + inspection of the prior build", "https://github.com/wingbangboozle1-lang/NBA2"),
@@ -959,9 +961,9 @@ REPO_FACTS = [
 # --------------------------------------------------------------------------- requirements coverage
 REQUIREMENTS = [
     ("R-1", "Collect, organise and analyse against a full requirements register",
-     "Mapped", "12 requirement rows above and 14 open questions are published with status; each carries the source that advances it."),
+     "Mapped", "14 requirement rows; 27 distinct questions are shown on the canonical page (22 core + 5 supplemental). The split source register has omitted or divergent entries and is flagged for reconciliation (F-044)."),
     ("R-2", "Originate own NBA lines",
-     "Delivered (projection)", "36 lines with spread, total, moneyline fair odds, per game, with the formula and every input sourced."),
+     "Delivered (dated projection snapshot)", "27 games in the 2026-11-14 → 2026-11-17 snapshot have originated spread, total and fair prices; rolling future-slate generation remains unautomated."),
     ("R-3", "Research and develop strategies that generate useful signals",
      "Partial", "7 strategies specified with signal, gates and status; none may be ranked until G6/G7 pass."),
     ("R-4", "Leaderboard competition with rewards for top strategies",
@@ -975,7 +977,7 @@ REQUIREMENTS = [
     ("R-8", "Remove luck from the equation; build skill-based strategies",
      "Delivered (screening)", "Per-team luck z-scores; 0/30 outside the noise band; a luck gate (G9) that rejects a strategy leaning on luck."),
     ("R-9", "Generate picks for every upcoming slate, max 3 days ahead",
-     "Delivered", "27 games, 11/14→11/17 — the full three-day window. Every game gets an originated line, a lean, and the trigger price at which acting would be rational. No game gets a stake: G6 (no price) and G7 (167 settled of 300) both fail, and the page says so per row."),
+     "Partial — dated window delivered; automatic rolling generation open", "27 games in the committed 2026-11-14 → 2026-11-17 snapshot (as of +3 days) each have an originated line, lean and trigger price. The scheduled refresh does not discover and generate the next window; its latest observed run failed before settlement/rebuild (F-043). No stake is published without a market price, and the 167-game sample remains below the 300-sample gate."),
     ("R-10", "Track how injuries affect rotation minutes and production",
      "Partially blocked", "Statuses are official for 11/14 (26 player rows + 23 teams that had not yet filed, because the filing deadline for 11/15-11/17 has not passed). Minutes and production impact need player logs, so every impact cell is blank with a reason."),
     ("R-11", "Provide game flow analysis",

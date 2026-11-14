@@ -170,6 +170,16 @@ def table(headers, rows, caption, num_cols=(), flags=None, idcol=None):
     return "\n".join(out)
 
 
+def extra_questions():
+    """Return supplemental register entries not already present in the core question list."""
+    known = {str(q[0]) for q in C.QUESTIONS}
+    return [q for q in LV.new_questions().get("items", []) if str(q.get("id")) not in known]
+
+
+def question_count():
+    return len({str(q[0]) for q in C.QUESTIONS} | {str(q["id"]) for q in extra_questions()})
+
+
 def srclink(url, label=None):
     if not url:
         return '<span class="blank">no source</span>'
@@ -329,9 +339,7 @@ See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the ra
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
-lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
-on this site was re-read from an official NBA page on {O.AS_OF}, and the identical claims from the previous
-build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
+lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. Official input facts are captured with dated NBA source links; model outputs are derived from those inputs and labeled accordingly. The snapshot is not a live refresh, and the latest scheduled ingest failed before rebuilding. <a href="verification.html">See the verification log</a> and <a href="flagged.html">Flagged for review</a>.</div>
 
 <h2>Start here</h2>
 <div class="cards">
@@ -344,7 +352,7 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} rows from the 04:30 AM release, {len(CP.latest_rows())} from the 01:30 PM release, and the first production-at-risk numbers measured from official season averages.</p></div>
-  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
+  <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>{question_count()} current questions, each with knowns, unknowns and a route to an answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
   <div class="card"><h4><a href="decision-queue.html">Decision queue</a></h4><p>Every suggestion with its evidence and an accept / reject / defer action — review, then choose a path.</p></div>
@@ -417,7 +425,7 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
     # Refresh the counts that move every time a register changes, so this page cannot state a
     # number the registers contradict (it did: '14 questions' / '18 suggestions' while the files
     # held 22 / 20).
-    n_questions = len(json.loads((ROOT / "requirements" / "QUESTIONS.json").read_text())["questions"])
+    n_questions = question_count()
     n_suggestions = len(json.loads((ROOT / "suggestions" / "SUGGESTIONS.json").read_text())["suggestions"])
     n_flags = len(C.FLAGS)
     chk = LV.checks()
@@ -481,7 +489,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <h2>Numbers behind the summary</h2>
 """
     rows = [
-        {"cells": ["Games in window", f"{len(lines)}", f"{O.WINDOW_START} → {O.WINDOW_END} (three days ahead)", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games in window", f"{len(lines)}", f"{O.WINDOW_START} → {O.WINDOW_END} (ends +3 days from snapshot; inclusive dates)", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Games verified against the official schedule", f"{len(lines)} / {len(lines)}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match, home and road splits included", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
@@ -494,7 +502,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Leans published / games staked", f"{len(lines)} / 0", "every game gets an originated lean and a trigger price; no stake clears G6 and G7", srclink(O.BLOCKED["odds"][2])]},
         {"cells": ["Gates passing / failing", f"{sum(1 for g in lab['gates'] if g['verdict'] == 'PASS')} / {sum(1 for g in lab['gates'] if g['verdict'] == 'FAIL')}", "evaluated from data, not asserted — see the strategy lab", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Strategies that may be ranked", "0 / 7", "G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data", srclink(O.BLOCKED["live_ingest"][2])]},
-        {"cells": ["Open decision questions", f"{n_questions}", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Current questions shown", f"{n_questions}", "22 core + 5 supplemental; other shared-register entries are flagged for reconciliation (F-044)", srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json")]},
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification", srclink(O.SOURCES["standings"][1])]},
@@ -507,12 +515,12 @@ blocked on data this repository does not hold, and the routes to obtain it are n
     body += f"""
 <h2>Recommended sequence</h2>
 <ol>
-  <li><b>Connect the odds feed (SG-3).</b> Nothing that involves money moves without a price. All other model work is preparation until then.</li>
-  <li><b>Connect a per-game results feed (SG-2).</b> This turns the model into something testable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion (SG-1).</b> Freshness gate G11 can never pass while data arrives by hand.</li>
-  <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
+  <li><b>Stabilize official ingestion (SG-1 / SG-31).</b> Diagnose the 2026-11-14 final-scores fetch failure, retain runner logs and alert on failures. Do not claim fresh data until a run succeeds end to end.</li>
+  <li><b>Automate the rolling slate.</b> Add a separate scheduled job to refresh official schedule and team inputs, generate the next window through no more than three days ahead, run provenance/freshness gates, then publish. The current workflow only refreshes dates already in sealed ledgers.</li>
+  <li><b>Connect licensed odds (SG-3) before any bet, ROI, CLV or reward claim.</b> Keep every stake at zero until a timestamped price exists and all validation gates pass.</li>
+  <li><b>Acquire player game logs (SG-36), then</b> measure player-level correlations, minute redistribution and prop probabilities. Keep these fields blank until sourced data is available.</li>
 </ol>
-<p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
+<p class="lede">Historical results support backtesting, but unattended freshness and next-slate origination are not yet verified. Existing gates, suggestions and questions remain the review path; no model output is promoted automatically.</p>
 <h2>The single next decision</h2>
 <p><b>Retire the tree nobody can reach, then decide what a pick is worth.</b> Probing the live site settles which tree is
 published: <code>/NBA2/pages/session-audit.html</code> and <code>/NBA2/pages/executive-summary.html</code> both return
@@ -535,7 +543,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 
     # ------------------------------------------------------------------ picks & slate
     body = """<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the three-day window (2026-11-14 → 2026-11-17) is priced from our own originated lines,
+<p class="lede">Every game in the dated window through three days after the snapshot (2026-11-14 → 2026-11-17) is priced from our own originated lines,
 and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
 that the edge is not a coin flip that happened to land, and this repository has neither.</p>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
@@ -585,7 +593,7 @@ measured; the basis column is the number that decided it.</p>
                   grows, "The twelve validation gates, evaluated on this build")
 
     body += """<h2>The slate itself</h2>
-<p class="lede">Read from the official schedule on 2026-11-14. This is the full three-day window: 5 games on
+<p class="lede">Read from the official schedule on 2026-11-14. This window extends through the date three days later (inclusive): 5 games on
 11/14, 9 on 11/15, 8 on 11/16 and 5 on 11/17. Two matchups appear twice in the window (NYK @ TOR on 11/15 and
 11/17, POR @ MIN on 11/16 and 11/17) — verified genuine against the official schedule block, not a duplication
 error.</p>
@@ -1476,11 +1484,8 @@ here as known-missing so they can be added with evidence, not assumed away.</p>"
 
     # ------------------------------------------------------------------ verification
     body = f"""<h1>Verification log</h1>
-<p class="lede">Every number on this site was read from an official NBA page on {O.AS_OF}. This page records exactly which
-pages were reachable, what each one supplied, and what could not be reached — so a reviewer can repeat it.</p>
-<div class="note"><b>How to re-check any row.</b> Every table row carries a source link to the official page. The same data
-is also published machine-readably in <code>data/v2/*.json</code> in the repository, so a reviewer can diff what the site says
-against what the official page says without trusting either.</div>
+<p class="lede">The site inputs are dated {O.AS_OF}. This page records which NBA source pages were reachable, what each supplied, and what could not be reached. Model estimates are derived from the committed inputs, not values copied from an official page.</p>
+<div class="note"><b>How to re-check any row.</b> Every table row carries a source link and its data class. Official input facts link to NBA sources; derived values link to their input/method evidence; unavailable values stay blank with a reason. The same data is published machine-readably in <code>data/v2/*.json</code> so a reviewer can trace it without trusting the page.</div>
 """
     rows = []
     for s in R.t_sources():
@@ -1570,24 +1575,22 @@ running its own checks rather than trusting its documentation.</p>
         rows.append({"cells": [esc(name), esc(val), esc(method), srclink(src)]})
     body += table(["Property", "Observed", "How checked", "Source"], rows, "Repository facts, this session")
 
-    body += """<h2>Findings</h2>
-<div class="note"><b>What is genuinely good.</b> The existing pipeline is unusually disciplined: 55 unit tests pass, a
-provenance lint proves all 915 published rows carry a source, the site is byte-for-byte reproducible from committed data,
-22 predictions are hash-sealed, and 3,233 internal links resolve. That is a better foundation than most projects start with.</div>
-<div class="note warn"><b>What is wrong.</b> Six parallel site trees publish different numbers (root HTML, <code>pages/</code>,
-<code>docs/</code>, <code>dashboard/</code>, <code>verified/</code>, <code>originated/</code>). A reader has no way to know
-which one is current. The root page says "as-of 2026-11-13" while its own ledger is sealed at 22:51 that day, and the site
-still shows a snapshot several hours old on the next day.</div>
-<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price and no player game logs.
-Per-game results are no longer missing — 183 official finals are committed and every one of the 30 standings records
-rebuilds from them exactly — so backtests, out-of-sample splits and settlement all run today. The two remaining
-absences are why every stake on this site is 0.00 units rather than a number that looks like a bet.</div>
-<h2>What this session changed, and what it deliberately did not</h2>
-<p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
-plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier
-published output was destroyed. Where this build disagrees with an earlier one, the disagreement is on the verification page
-with both values shown.</p>
-<h2>Cleanup suggestions that are not this session's call</h2>
+    body += """<h2>Current verification findings</h2>
+<div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
+1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
+and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
+<div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
+The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
+The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
+<div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
+Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
+also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>
+<h2>Historical repository review</h2>
+<p class="lede">Earlier review text in this repository described a smaller snapshot and multiple competing site trees. Those statements are historical,
+not current counts. The live deployment is the <code>site/</code> tree; current counts and repeatable checks are listed in the table above and on the
+<a href="verification.html">Verification log</a>. This audit did not live-fetch NBA pages: the sandbox egress allowlist excludes NBA domains.
+Source URLs and captured provenance remain available for manual review.</p>
+<h2>Next safe improvements</h2>
 <ul>
   <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
   <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
@@ -1598,12 +1601,16 @@ with both values shown.</p>
       <code>audit/2026-11-14-bc867bff/sync_readme_tests.py</code> for the test counts (both refuse to guess when
       their pattern stops matching). No count on either tree is a memory any more, so the discrepancy cannot
       recur silently.</li>
+  <li>Investigate and alert on the failed official-results fetch before relying on scheduled freshness (F-043 / SG-31).</li>
+  <li>Implement a separate rolling slate build with official schedule/team inputs and fail-closed provenance and freshness gates.</li>
+  <li>Keep staking and rewards disabled until timestamped odds and the registered strategy gates are satisfied.</li>
+  <li>Acquire player-level game logs from a permitted, documented official source before filling props or injury impacts.</li>
 </ul>"""
     built["repo-review.html"] = page("repo-review.html", "Repo review", body, "repo-review.html")
 
     # ------------------------------------------------------------------ questions
-    body = """<h1>Open questions</h1>
-<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
+    body = f"""<h1>Open questions</h1>
+<p class="lede">{question_count()} current, distinct questions that block or qualify a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 """
     rows = []
@@ -1617,15 +1624,15 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
     # Questions raised by this session's live evidence. These come from the shared register
     # (requirements/QUESTIONS.json) and are the ones a reader can only answer with a date on them:
     # they were created by what the official pages said today, not by an earlier theory.
-    nq = LV.new_questions()
-    if nq["items"]:
+    nq_items = extra_questions()
+    if nq_items:
         body += f"""
-<h2>Questions this session's live evidence raised ({len(nq['items'])})</h2>
-<p class="lede">Each of these was created by a measurement made today, not by an earlier hypothesis. They are listed
-separately so a reviewer can see which questions the evidence produced and which were already on the register.</p>
+<h2>Supplemental questions from the shared register ({len(nq_items)})</h2>
+<p class="lede">These entries are maintained in <code>requirements/QUESTIONS.json</code> and are deduplicated against the core register above.
+Entries outside the explicitly selected set remain flagged for reconciliation rather than being presented as current answers.</p>
 """
         qrows = []
-        for it in nq["items"]:
+        for it in nq_items:
             qrows.append({"id": it["id"], "cells": [
                 esc(it["id"]), esc(it["question"]), esc(it["have"]), esc(it["missing"]),
                 esc(it["how"]),
@@ -1637,22 +1644,21 @@ separately so a reviewer can see which questions the evidence produced and which
                       "New questions, raised by live verification", idcol="id")
     body += """<h2>Questions about the project itself, not the model</h2>
 <div class="cards">
-  <div class="card"><h4>Which site is authoritative?</h4><p>Six trees exist. Until the owner picks one, every published
-  number is ambiguous. Proposed answer: this tree, with the others archived.</p></div>
+  <div class="card"><h4>Which site is authoritative?</h4><p>The live GitHub Pages workflow publishes <code>site/</code>. Earlier trees remain in the repository but are not the canonical deployed dashboard; archiving them is a separate cleanup decision.</p></div>
   <div class="card"><h4>Is the reward pool real money?</h4><p>The brief says rewards for top strategies. The size, funding
   and legal basis are unknown and change what the leaderboard must be built to prevent.</p></div>
   <div class="card"><h4>Who may submit a strategy?</h4><p>Public submissions turn anti-gaming rules from nice-to-have into
   load-bearing. One submitter only changes the design substantially.</p></div>
-  <div class="card"><h4>What counts as a 'pick'?</h4><p>A projection, a graded bet, or a staked bet? This determines whether
-  anything on this site qualifies today. Current answer: nothing does.</p></div>
+  <div class="card"><h4>What counts as a 'pick'?</h4><p>This site publishes projections and leans for a dated slate. A staked bet requires a timestamped market price and all validation gates; no current row is stakable. Competition scoring and bankroll rules still need approval.</p></div>
 </div>
-<h2>Information we do not have, that someone must go and get</h2>
+<h2>Information that is missing or not reliably automated</h2>
 <ul>
-  <li>Licensed odds history (opening and closing lines) — the only way to measure edge.</li>
-  <li>Per-game box scores — the only way to settle, backtest or score.</li>
-  <li>Player game logs with minutes — the only way to price props or quantify injuries.</li>
-  <li>Play-by-play — the only way to analyse game flow rather than schedule density.</li>
-  <li>An explicit statement of what the reward is, so the leaderboard can be designed against it.</li>
+  <li>Licensed odds history (opening/closing spread, total, moneyline and prop prices) — required to measure edge, CLV, ROI or stake sizing.</li>
+  <li>A reliable scheduled official-results refresh. A 183-game historical capture exists, but the latest scheduled fetch failed before settlement.</li>
+  <li>A rolling official schedule and team-stat refresh that generates the next slate through no more than three days ahead.</li>
+  <li>Player game logs with minutes, usage and box scores — required for prop combos, player correlations and injury-driven production estimates.</li>
+  <li>Play-by-play — needed for pace/garbage-time/foul-flow analysis beyond schedule density.</li>
+  <li>An explicit reward definition, submitter/eligibility rules and owner approval for the leaderboard.</li>
 </ul>"""
     built["questions.html"] = page("questions.html", "Open questions", body, "questions.html")
 
@@ -1665,7 +1671,7 @@ so a path can be chosen before anything is implemented — nothing in the queue 
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. {_impl} items are already <code>IMPLEMENTED</code> and need no
 decision; {_rec} are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
-dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
+dependency. The highest-priority recommendations are to diagnose the failed ingest and automate the rolling slate (SG-1/SG-31), connect timestamped odds (SG-3), and acquire player game logs (SG-36).</div>
 """
     order = {"RECOMMENDED — highest leverage": 0, "RECOMMENDED — unblocks the most": 1,
              "RECOMMENDED — required for any betting claim": 2, "RECOMMENDED": 3,
@@ -1683,11 +1689,9 @@ dependency. The three highest-ranked recommended items are all data connections,
                   rows, "Suggestion queue with decision states", idcol="id")
     body += """<h2>If you only do three things</h2>
 <ol>
-  <li><b>Connect a licensed odds feed</b> (SG-3). Everything about edge, stake and ROI depends on it. Today the site
-      correctly publishes zero picks because it has no price — that is a data gap, not a modelling gap.</li>
-  <li><b>Get per-game results</b> (SG-2). It turns every projection into something scoreable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion</b> (SG-1). Hand-made snapshots cannot satisfy a freshness gate, so no strategy can ever be
-      ranked on fresher-than-today data.</li>
+  <li><b>Diagnose and monitor the official ingest</b> (SG-1 / SG-31). The latest run failed before settlement or rebuild; preserve the failure logs and do not treat a scheduled job as proof of fresh data.</li>
+  <li><b>Automate the next rolling slate</b> from official schedule and team inputs, with provenance/freshness gates and fail-closed publishing. The current job only processes already-sealed dates.</li>
+  <li><b>Connect timestamped licensed odds</b> (SG-3) before ROI, CLV, stake sizing or rewards; acquire player logs (SG-36) before publishing props or injury impacts.</li>
 </ol>
 <h2>Suggestions about this site's own design</h2>
 <div class="cards">
