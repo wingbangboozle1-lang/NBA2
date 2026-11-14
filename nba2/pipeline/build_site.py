@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -117,10 +118,25 @@ INTROS = {
 }
 
 
+_URL_RE = re.compile(r"^https?://\S+$")
+
+
 def esc(v) -> str:
+    """Escape a cell value.
+
+    A cell whose entire value is an http(s) URL is rendered as a link. Several tables
+    (the slate's official game page, the graded card's per-game source) hold a verified
+    URL as data; printing it as text forces a reviewer to copy-paste it, which is exactly
+    the friction FLAG-AUD-01 was raised for. Linking the cell does not change the value,
+    the provenance badge, or the row's own source column.
+    """
     if v is None:
         return '<span class="blank">—</span>'
-    return html.escape(str(v))
+    s = str(v)
+    if _URL_RE.match(s):
+        return (f'<a class="cell-link" href="{html.escape(s, quote=True)}" target="_blank" '
+                f'rel="noopener">{html.escape(s)}</a>')
+    return html.escape(s)
 
 
 def _href(target: str, sub: bool) -> str:
@@ -331,12 +347,14 @@ def _pages() -> dict[str, list[str]]:
                           "title": "The five things a reviewer must know first",
                           "rows": sec("flags")["rows"][:5],
                           "anchor": "summary-flags"}, L),
-        ],        "pages/graded.html": [render_table(sec("graded"), L),
+        ],
+        "pages/graded.html": [render_table(sec("graded"), L),
                               render_table(sec("graded_summary"), L),
                               render_table(sec("standings_live"), L),
                               render_table(sec("injury_1114"), L)],
         "pages/picks.html": [render_table(sec("picks"), L),
-                             render_table(sec("finals_grade"), L)],        "pages/lines.html": [render_table(sec("lines"), L), render_table(sec("slate"), L),
+                             render_table(sec("finals_grade"), L)],
+        "pages/lines.html": [render_table(sec("lines"), L), render_table(sec("slate"), L),
                              render_table(sec("corroboration"), L)],
         "pages/strategies.html": [render_table(sec("leaderboard"), L), render_table(sec("gates"), L),
                                   render_table(sec("gate_matrix"), L)],

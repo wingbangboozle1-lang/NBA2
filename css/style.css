@@ -365,3 +365,4 @@ table.data tr.is-target { background: #fff7db !important; outline: 2px solid #e0
 .cat-desc { margin: 0 0 .6rem; font-size: .84rem; color: var(--text-muted, #5b6472); }
 .cat-card h4 { margin: 0; font-size: .86rem; color: var(--primary, #1d4ed8); }
 .kpi-n { margin-top: .35rem; font-size: .68rem; line-height: 1.35; color: var(--text-muted, #5b6472); }
+.cell-link { font-size: .8rem; word-break: break-all; }

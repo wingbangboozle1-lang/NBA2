@@ -145,10 +145,45 @@ def check_injury() -> None:
                          f"live 11/14 05:00 AM carries "
                          f"{len(LC.INJURY_2026_11_14_0500AM)} 11/14 rows + "
                          f"{len(LC.INJURY_2026_11_15_NOT_SUBMITTED)} 11/15 not-submitted rows")
-    live_players = {p for _d, _t, _m, _tm, p, _s, _r in LC.INJURY_2026_11_14_0500AM if p}
+    live_players = {r[4] for r in LC.INJURY_2026_11_14_0500AM if r[4]}
     record("C3-B", None, f"{len(live_players)} named player designations for the 11/14 slate; "
                          f"clubs still NOT YET SUBMITTED: " +
-           ", ".join(sorted({tm for _d, _t, _m, tm, p, _s, _r in LC.INJURY_2026_11_14_0500AM if not p})))
+           ", ".join(sorted({r[3] for r in LC.INJURY_2026_11_14_0500AM if not r[4]})))
+
+    # Two independent transcriptions of the same 11/14 designations, ~9 h apart: the
+    # day-before capture (transcribed from the 11/13 07:30 PM release) and this one
+    # (05:00 AM on 11/14). Any difference is either a status revision or a transcription
+    # error, and both matter, so list every one.
+    # The Reason cell of a not-yet-submitted row reads "NOT YET SUBMITTED" in the PDF; the
+    # day-before capture recorded it as a descriptive sentence. Both describe the same cell,
+    # so the two spellings are normalised before comparing — otherwise a wording choice is
+    # reported as a data conflict.
+    NYS_CANON = "<not submitted>"
+    def norm(status: str, reason: str) -> tuple[str, str]:
+        if status == "NOT YET SUBMITTED" or reason == "NOT YET SUBMITTED":
+            return ("NOT YET SUBMITTED", NYS_CANON)
+        return (status, reason)
+
+    prev_c = {c: i for i, c in enumerate(prev["columns"])}
+    theirs = {}
+    for r in prev["records"]:
+        theirs[(r[prev_c["team"]], r[prev_c["player"]])] = norm(r[prev_c["status"]],
+                                                               r[prev_c["reason"]])
+    mine = {}
+    for r in LC.INJURY_2026_11_14_0500AM:
+        mine[(r[3], r[4] or "")] = norm(r[5] or "NOT YET SUBMITTED", r[6])
+    only_theirs = sorted(set(theirs) - set(mine))
+    only_mine = sorted(set(mine) - set(theirs))
+    diffs = [f"{k[0]}/{k[1] or '(club)'}: theirs={theirs[k]} mine={mine[k]}"
+             for k in sorted(set(theirs) & set(mine)) if theirs[k] != mine[k]]
+    record("C3-C", not only_theirs and not only_mine and not diffs,
+           f"11/14 designations: {len(theirs)} rows in the day-before capture vs "
+           f"{len(mine)} here — rows only in theirs={len(only_theirs)}, only in "
+           f"mine={len(only_mine)}, value differences={len(diffs)}"
+           + ("" if not (only_theirs or only_mine or diffs)
+              else " -> " + "; ".join((only_theirs and [f"only-theirs {only_theirs[:3]}"] or [])
+                                      + (only_mine and [f"only-mine {only_mine[:3]}"] or [])
+                                      + diffs[:4])))
 
 
 # --------------------------------------------------------------------------
@@ -222,19 +257,28 @@ def emit() -> None:
     NEW_FILES.append(str(p.relative_to(ROOT)))
     record("E2", True, f"wrote {p.relative_to(ROOT)} ({len(standings['records'])} clubs)")
 
-    rows = []
-    for date, time_et, matchup, team, player, status, reason in LC.INJURY_2026_11_14_0500AM:
-        rows.append({"game_date": date, "game_time_et": time_et, "matchup": matchup,
-                     "team": team, "player": player, "current_status": status,
-                     "reason": reason,
-                     "not_yet_submitted": reason == "NOT YET SUBMITTED"})
-    for date, time_et, matchup, team in LC.INJURY_2026_11_15_NOT_SUBMITTED:
-        rows.append({"game_date": date, "game_time_et": time_et, "matchup": matchup,
-                     "team": team, "player": None, "current_status": None,
-                     "reason": "NOT YET SUBMITTED", "not_yet_submitted": True})
+    # Written in the repository's existing injury-snapshot schema (columns + list records +
+    # record_counts + attribution), the same shape as injury_report_2026-11-13_1930ET.json and
+    # injury_report_2026-11-14_daybefore.json. That is not cosmetic: tools/crosscheck_site.py
+    # globs data/raw/injury_report_*.json and recounts every file it finds, so a snapshot with
+    # a private schema crashes it (found and fixed in this session).
+    NYS = "NOT YET SUBMITTED"
+    # attribution: 'E' = the PDF printed this row's Game Date cell; 'C' = the date and time
+    # cells were blank on a continuation page and were carried down from the row above.
+    rows: list[list] = []
+    for date, time_et, matchup, team, player, status, reason, attr in LC.INJURY_2026_11_14_0500AM:  # noqa: B007
+        rows.append([date, time_et, matchup, team, player or "", status or NYS,
+                     reason, attr])
+    for date, time_et, matchup, team, attr in LC.INJURY_2026_11_15_NOT_SUBMITTED:
+        rows.append([date, time_et, matchup, team, "", NYS,
+                     "Team submission outstanding at report time", attr])
+
+    n14 = sum(1 for r in rows if r[0] == "2026-11-14")
+    n15 = sum(1 for r in rows if r[0] == "2026-11-15")
+    nys = sum(1 for r in rows if r[5] == NYS)
     injury = {
-        "schema": "nba2.injury-report.v1",
-        "release": "2026-11-14 05:00 AM ET",
+        "dataset": "nba_official_injury_report",
+        "report_stamp_et": "2026-11-14 05:00 AM",
         "retrieved_at_utc": LC.RETRIEVED_UTC,
         "retrieval_method": LC.METHOD,
         "provenance": {
@@ -245,23 +289,37 @@ def emit() -> None:
             "document_header": "Injury Report: 11/14/26 05:00 AM",
             "note": ("Transcribed row by row from the official PDF. The PDF's Game Time column "
                      "is a 12-hour ET clock printed without a meridiem: DEN@NOP '07:00 (ET)' is "
-                     "the 7:00 PM ET tip shown on the schedule.'NOT YET SUBMITTED' is the "
-                     "official state of a club that has filed nothing for that game."),
+                     "the 7:00 PM ET tip shown on the schedule. 'NOT YET SUBMITTED' is the "
+                     "official state of a club that has filed nothing for that game; the player "
+                     "cell is left empty, as the document leaves it."),
+        },
+        "attribution_key": {
+            "E": "the PDF printed this row's Game Date cell (or the block's first date)",
+            "C": "date and time cells were blank on a continuation page; carried down from above",
+        },
+        "columns": ["game_date", "time_et", "matchup", "team", "player", "status", "reason",
+                    "attribution"],
+        "record_counts": {
+            "total_rows": len(rows),
+            "rows_2026_11_14": n14,
+            "rows_2026_11_15": n15,
+            "rows_with_status": len(rows) - nys,
+            "not_yet_submitted_placeholders": nys,
+            "attribution_explicit": sum(1 for r in rows if r[7] == "E"),
+            "attribution_continuation": sum(1 for r in rows if r[7] == "C"),
+            "games_covered": len({r[2] for r in rows}),
+            "note": "counts computed from the records array at write time",
         },
         "filing_rules_verbatim": LC.FILING_RULES_VERBATIM,
-        "counts_check": {
-            "n_rows": len(rows),
-            "n_named_designations": sum(1 for r in rows if r["player"]),
-            "n_not_yet_submitted": sum(1 for r in rows if r["not_yet_submitted"]),
-        },
         "records": rows,
     }
     p = RAW / "injury_report_2026-11-14_0500AM.json"
     p.write_text(json.dumps(injury, indent=2) + "\n")
     NEW_FILES.append(str(p.relative_to(ROOT)))
     record("E3", True, f"wrote {p.relative_to(ROOT)} "
-                       f"({injury['counts_check']['n_named_designations']} designations, "
-                       f"{injury['counts_check']['n_not_yet_submitted']} not-yet-submitted)")
+                       f"({injury['record_counts']['rows_with_status']} designations, "
+                       f"{injury['record_counts']['not_yet_submitted_placeholders']} "
+                       f"not-yet-submitted, schema matches the existing snapshots)")
 
     slate_live = {
         "schema": "nba2.slate-live-verify.v1",

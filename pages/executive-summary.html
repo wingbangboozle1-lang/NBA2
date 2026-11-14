@@ -211,7 +211,7 @@
 <td>low</td>
 <td>slate</td>
 <td>The official schedule lists POR @ MIN on 2026-11-16 AND 2026-11-17 (0022600250, 0022600254, both Target Center), and NYK @ TOR on 2026-11-15 AND 2026-11-17 (0022600241, 0022600253, both Scotiabank Arena). The 2026-11-14 capture renders both pairs as distinct official game entries with distinct game IDs, resolving the earlier &#x27;duplicate card?&#x27; question: these are genuine schedule entries. Unusual, but real.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Game flow already prices the POR@MIN pair as a same-venue back-to-back; no model change needed. Keep monitoring for postponements.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
@@ -221,7 +221,7 @@
 <td>low</td>
 <td>provenance</td>
 <td>The slate table&#x27;s &#x27;Official game page&#x27; column prints the verified URLs as plain text rather than clickable links — 36 rows in the current window — which makes manual review slower than it needs to be. No data is affected.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Wrap the cell in an anchor at build time (suggestion S-A02 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-AUD-01">FLAG-AUD-01</a></td>
@@ -231,7 +231,7 @@
 <td>low</td>
 <td>correlation</td>
 <td>r(SRS, margin/G) is computed on 30 team-season points from one snapshot; it is a descriptive statistic, not a stable parameter.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Recompute each week; store the series.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-01">FLAG-CORR-01</a></td>
@@ -241,7 +241,7 @@
 <td>high</td>
 <td>correlation</td>
 <td>The margin/total correlation that drives same-game parlays is now measured in the backtest tree (139 official finals, point-in-time): r = -0.009 (95% CI -0.17 to 0.15) — the S-04 same-game parlay premise is unsupported by the data so far. Root-site parlay figures remain a band, not a price.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</a></td>
 <td>Ingest game-level results (R-103).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-02">FLAG-CORR-02</a></td>
@@ -251,7 +251,7 @@
 <td>high</td>
 <td>correlation</td>
 <td>Same-player prop correlations are unmeasured; prop combos cannot be priced honestly today.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</a></td>
 <td>Ingest player box scores.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-03">FLAG-CORR-03</a></td>
