@@ -2754,3 +2754,18 @@ P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record
 **Verification totals on the merged `main`:** 64 v1 tests + 80 v2 tests = **144 tests, all passing**;
 20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
 every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
+
+---
+
+## Session `arena/182d6c73-nba2` — irregularity sweep of `main` @ `b3ed44d` (claimed 2026-11-14 UTC)
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| Z-01 | Claim + push before work | in progress | `arena/182d6c73-nba2` | `COORDINATION.md` (this section, append-only) | pushed immediately |
+| Z-02 | Re-check CC-X-00 (`WSH` vs `WAS`) across every committed surface; the board records conflict (line ~1825 "WAS everywhere" vs ~2713 "still open") | unclaimed→claimed | `arena/182d6c73-nba2` | `analysis/irregularity-sweep-182d6c73.md` (new) | `grep` evidence per file |
+| Z-03 | Confirm the official NBA team tricode for Washington from an official NBA source | unclaimed→claimed | `arena/182d6c73-nba2` | analysis file | fetched URL recorded |
+| Z-04 | Run the repo's own checkers on `main` and record output (no shared outputs changed) | unclaimed→claimed | `arena/182d6c73-nba2` | analysis file | command output recorded |
+
+**Scope rule for this session:** does NOT edit `data/**`, `pages/**`, `site/**`, `index.html`, `nba2/pipeline/**`,
+`tools/crosscheck_site.py`, `originated/**` or any open PR's branch. Any fix to those is logged as a request below
+for the integration owner. Open PRs #59, #57, #55, #50 belong to other sessions and are left untouched.
