@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggestions · NBA2 measured skill</title>
+<meta name="description" content="Walk-forward backtest of the NBA2 originated lines against official NBA.com final scores.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+</header>
+<aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html" class="active">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
+  <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
+</aside>
+<main class="main">
+
+<section class="hero"><h2>Suggestions — a review queue, not a to-do list</h2>
+<p>Nothing here is implemented. Each item states what it would change, what it costs, how it would
+be verified, and what would make it a bad idea. Pick one, reject one, or defer all of them.</p></section>
+<section class="card"><h2>Priority 1 — the model is not earning its complexity</h2>
+<div class="table-wrap"><table class="data">
+<caption>Model improvement suggestions</caption>
+<thead><tr><th scope="col">ID</th><th scope="col">Suggestion</th><th scope="col">Why</th><th scope="col">Verification</th><th scope="col">Risk</th></tr></thead>
+<tbody>
+<tr><td>S-101</td><td>Test a rating that uses margin of victory with a cap, or a ridge regression on point differential, and require it to beat the raw differential by 0.30 MAE before it replaces anything.</td><td>The current model loses to the raw differential, so the shrinkage is not yet adding information.</td><td>Same walk-forward, same seed, G-04 evaluated on the challenger.</td><td>Adds a parameter that can be over-fitted to 139 games.</td></tr>
+<tr><td>S-102</td><td>Replace the four-rate total with a pace-and-efficiency model, or publish no total at all.</td><td>Total MAE (15.78) is worse than a constant (15.43). A total that loses to a constant should not be published.</td><td>Total MAE and bias on the same games.</td><td>Removing the total removes the S-04 parlay test entirely.</td></tr>
+<tr><td>S-103</td><td>Add an explicit rest/fatigue term only if a larger sample makes it significant; store the test as a regression with rest days as a covariate.</td><td>The effect's sign is right but p = 0.38. Shipping it now would be curve-fitting.</td><td>Refit when the sample reaches ~500 team-games; require p &lt; 0.05 and a stable sign.</td><td>Adds a feature that may be pure noise.</td></tr>
+</tbody></table></div></section>
+<section class="card"><h2>Priority 2 — data that unblocks whole categories</h2>
+<div class="table-wrap"><table class="data">
+<caption>Data suggestions</caption>
+<thead><tr><th scope="col">ID</th><th scope="col">Suggestion</th><th scope="col">Unblocks</th><th scope="col">Verification</th><th scope="col">Risk</th></tr></thead>
+<tbody>
+<tr><td>S-104</td><td>Capture the 11/06 and 11/11 slates from a source that serves scores for those dates.</td><td>Removes the 19-game hole; makes the standings reconstruction exact rather than bounded.</td><td>Reconstructed records must equal the snapshot exactly for all 30 teams.</td><td>Mixing sources can import a different definition of a team or a game.</td></tr>
+<tr><td>S-105</td><td>Capture the remaining season dates through the current day, then ingest nightly.</td><td>Statistical power: 300+ graded games, which is the G-01 floor.</td><td>Check 1 (records vs cards) must stay at 100% after each ingest.</td><td>Automated ingestion without a verification step is how bad data gets in.</td></tr>
+<tr><td>S-106</td><td>Add a licensed odds feed with opening and closing prices.</td><td>G-02, G-05, G-06, G-09 and every ROI statement.</td><td>CLV t-test and bootstrap CI on settled bets.</td><td>Cost, licensing, and jurisdiction — this is the owner's decision, not a code change.</td></tr>
+<tr><td>S-107</td><td>Add official player box scores.</td><td>Injury impact, props, prop combos, same-player correlation.</td><td>Per-player minutes must reconcile to team totals.</td><td>Large data volume; needs a snapshot strategy.</td></tr>
+</tbody></table></div></section>
+<section class="card"><h2>Priority 3 — decision-making on the site itself</h2>
+<div class="table-wrap"><table class="data">
+<caption>Presentation and process suggestions</caption>
+<thead><tr><th scope="col">ID</th><th scope="col">Suggestion</th><th scope="col">Why it improves decisions</th><th scope="col">Verification</th></tr></thead>
+<tbody>
+<tr><td>S-108</td><td>Collapse the repository's multiple site trees (<code>/</code>, <code>/docs</code>, <code>/dashboard</code>, <code>/originated</code>, <code>/backtest</code>) behind one navigation with a status badge per tree.</td><td>Five surfaces disagree; a reader cannot tell which number is canonical.</td><td>One link check over the merged site; a badge page listing each tree's last verified date.</td></tr>
+<tr><td>S-109</td><td>Put the failing gate at the top of the landing page, not in a subpage.</td><td>The most decision-relevant fact (the model loses to the naive rule) is currently three clicks deep.</td><td>A build check that the landing page contains the current G-04 status.</td></tr>
+<tr><td>S-110</td><td>Publish a single "what would change my mind" line per strategy, with the sample size needed.</td><td>Converts an open-ended argument into a falsifiable test.</td><td>Each line must cite the power calculation.</td></tr>
+<tr><td>S-111</td><td>Freeze the leaderboard until G-01 passes, rather than ranking 4 strategies on ~35 games each.</td><td>A provisional ranking reads as a result no matter how many caveats surround it.</td><td>Leaderboard page renders only the gate status until n &ge; 300.</td></tr>
+</tbody></table></div></section>
+<div class="card"><h2>Official source for this page</h2><p class="blurb"><a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com</a> — every suggestion is grounded in a measured result in this report</p></div>
+<footer class="footer">
+  <p>Every row links its own source. Nothing here is betting advice, and no bet is placed by this repository.
+  No odds feed is connected, so no ROI, edge or stake is published anywhere on this site.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>

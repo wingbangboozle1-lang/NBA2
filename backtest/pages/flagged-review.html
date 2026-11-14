@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flagged for Review · NBA2 measured skill</title>
+<meta name="description" content="Walk-forward backtest of the NBA2 originated lines against official NBA.com final scores.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+</header>
+<aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html" class="active">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
+  <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
+</aside>
+<main class="main">
+
+<section class="hero"><h2>Flagged for review</h2>
+<p>Open irregularities from this session, with the source needed to check each one. Nothing here
+blocks a merge; each item blocks a <em>promotion</em> until it is resolved.</p></section>
+<section class="card"><h2>Data irregularities</h2>
+<div class="table-wrap"><table class="data">
+<caption>Data flags</caption>
+<thead><tr><th scope="col">ID</th><th scope="col">What</th><th scope="col">Impact</th><th scope="col">Status</th><th scope="col">Source to check</th></tr></thead>
+<tbody>
+<tr><td>FLAG-BT-01</td><td>The official pages for 2026-11-06 (9 games) and 2026-11-11 (10 games) rendered with empty score elements.</td><td>19 games missing from the middle of the sample. Records can only be checked as a bound, not exactly.</td><td>Open — excluded, not guessed</td><td><a href="https://www.nba.com/games?date=2026-11-06" target="_blank" rel="noopener">nba.com/games 2026-11-06</a></td></tr>
+<tr><td>FLAG-BT-02</td><td>Game 0022600159 was first transcribed as DAL@CHA; the official card is DET@CHA.</td><td>Was caught by the record reconstruction and fixed in the snapshot with a recorded correction.</td><td>Resolved in-session</td><td><a href="https://www.nba.com/game/det-vs-cha-0022600159" target="_blank" rel="noopener">nba.com/game/det-vs-cha-0022600159</a></td></tr>
+<tr><td>FLAG-BT-03</td><td>Game 0022600189 (DEN@IND, 2026-11-07) is played at a neutral site (Mexico City), so the home-court term does not apply to it.</td><td>One game in 155 carries an inapplicable home-court term. It is flagged in the snapshot, not corrected, because the model has no neutral-site branch.</td><td>Open</td><td><a href="https://www.nba.com/game/den-vs-ind-0022600189" target="_blank" rel="noopener">nba.com/game/den-vs-ind-0022600189</a></td></tr>
+<tr><td>FLAG-BT-04</td><td>The committed standings snapshot is as-of 2026-11-12 but is sourced from a third-party ratings page, and the repo's own audit notes a 28/30 vs 30/30 cross-check discrepancy.</td><td>This session does not use that snapshot as a model input; it uses only final scores. It is used once, as an independent check, and only as a bound.</td><td>Open (pre-existing)</td><td><a href="../pages/flagged-review.html">Root site flag register</a></td></tr>
+</tbody></table></div></section>
+<section class="card"><h2>Method flags</h2>
+<div class="table-wrap"><table class="data">
+<caption>Methodological flags</caption>
+<thead><tr><th scope="col">ID</th><th scope="col">What</th><th scope="col">Impact</th><th scope="col">Status</th></tr></thead>
+<tbody>
+<tr><td>FLAG-M-01</td><td>The model is assessed on its own originated line. "Covering" that line measures self-consistency, not market skill.</td><td>Every ATS-style number on this site is labelled self-consistency only. No ROI is published.</td><td>Disclosed</td></tr>
+<tr><td>FLAG-M-02</td><td>Home-court advantage is estimated from completed games with a shrinkage floor. In the first weeks this is close to zero, so early-season predictions are near-neutral.</td><td>Early games in the sample are systematically less informed; the bias column shows the residual.</td><td>Disclosed</td></tr>
+<tr><td>FLAG-M-03</td><td>The total model is a four-rate average with no pace term, and it loses to a constant on this sample.</td><td>Published as measured, with a suggestion to replace or retire it (S-102).</td><td>Open</td></tr>
+<tr><td>FLAG-M-04</td><td>The permutation test on paired hit rates treats pairs as independent, which they are not.</td><td>The p-values for model-vs-baseline comparisons are indicative rather than exact.</td><td>Disclosed</td></tr>
+<tr><td>FLAG-M-05</td><td>Two of the repo's registered gates (G-08 side-stability, G-10 availability) cannot be scored on a results-only dataset.</td><td>Marked PARTIAL and BLOCKED respectively; not passed by proxy.</td><td>Open</td></tr>
+</tbody></table></div></section>
+
+<footer class="footer">
+  <p>Every row links its own source. Nothing here is betting advice, and no bet is placed by this repository.
+  No odds feed is connected, so no ROI, edge or stake is published anywhere on this site.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>
