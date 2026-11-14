@@ -303,6 +303,17 @@
       "risk": "Breaks inbound links to the old trees; the redirect pages fix that.",
       "recommendation": "Accept, as the first integration action (this is Q-27).",
       "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-28",
+      "title": "Run the test suite against a fresh clone before trusting 'committed == rebuilt'",
+      "problem": "The v1 determinism test passed on every working copy and failed on every clean clone, because two published values depended on the presence of a previous build. Local runs rewrote the artefact and then compared it with itself.",
+      "proposal": "Add a CI job that clones the repository into a temp directory, runs the suite there, then rebuilds and asserts a clean git status. The publish-parity workflow now does the rebuild half; the clone half is the part that caught this.",
+      "benefit": "Turns a class of silent, self-erasing test passes into a failure at PR time.",
+      "effort": "S",
+      "risk": "Adds ~30s of CI; no production risk.",
+      "recommendation": "Accept \u2014 this is the check that found F-029.",
+      "status": "awaiting owner decision"
     }
   ]
 }

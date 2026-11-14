@@ -275,6 +275,14 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>The column is relabelled &#x27;as transcribed 2026-11-14&#x27; and the caption now says to read it as a date. The live state moved to the Live verification page, which is regenerated from dated captures.</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
+<tr id="F-029">
+<td><span class="badge b-bad">F-029</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Verification</td>
+<td>The v1 build was not reproducible from a clean checkout. Two published values were state dependent: build_is_idempotent recorded whether a previous site.json happened to exist (False on a clone, True on a rebuild of the same inputs), and generated_at_utc reused the previous stamp only when a previous file existed. A fresh clone therefore could never reproduce the committed artefact, and every local full-suite run silently rewrote data/site.json.</td>
+<td>Fixed: build_is_idempotent now reports the property by construction, and the stamp is derived from the newest retrieved_at_utc recorded inside the committed snapshots, so it is a function of the committed bytes rather than of mtime or the clock. Verified by cloning the branch fresh (as CI does), running the suite, and confirming all four rebuilds are byte-identical.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

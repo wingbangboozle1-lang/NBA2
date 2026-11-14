@@ -265,6 +265,17 @@
       "severity": "BLOCKING",
       "source": "https://www.nba.com/games",
       "evidence": "nba2/data/picks.json: no american_odds field on any of 21 signals"
+    },
+    {
+      "id": "Q-29",
+      "question": "Who is allowed to move the build stamp, and how should a refresh be recorded?",
+      "have": "The stamp is now derived from the newest retrieved_at_utc inside the committed snapshots (2026-11-14 01:05 UTC as of this build), so it cannot drift on a rebuild. An explicit NBA2_BUILD_STAMP override exists but nothing in CI sets it.",
+      "missing": "A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.",
+      "how": "Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.",
+      "impact": "Without it 'as of' is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.",
+      "severity": "MEDIUM",
+      "source": "https://www.nba.com/schedule",
+      "evidence": "nba2/pipeline/build_site_data.py::_content_stamp"
     }
   ]
 }

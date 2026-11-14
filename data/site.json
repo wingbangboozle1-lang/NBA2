@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 01:05 UTC",
-  "input_digest": "6507791db056e53145882d85053713bf92c4ff66c2751d2df56a287c7f4d6bb5",
+  "input_digest": "52f4d4eadb00cda88efb230c5653d878c16c8b59dfccb6f1fe005d98f364356e",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -24883,9 +24883,42 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-29",
+     "values": {
+      "id": "Q-29",
+      "question": "Who is allowed to move the build stamp, and how should a refresh be recorded?",
+      "have": "The stamp is now derived from the newest retrieved_at_utc inside the committed snapshots (2026-11-14 01:05 UTC as of this build), so it cannot drift on a rebuild. An explicit NBA2_BUILD_STAMP override exists but nothing in CI sets it.",
+      "missing": "A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.",
+      "how": "Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.",
+      "impact": "Without it 'as of' is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.",
+      "severity": "MEDIUM",
+      "source": "https://www.nba.com/schedule",
+      "evidence": "nba2/pipeline/build_site_data.py::_content_stamp"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -25828,9 +25861,42 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-28",
+     "values": {
+      "id": "S-28",
+      "title": "Run the test suite against a fresh clone before trusting 'committed == rebuilt'",
+      "problem": "The v1 determinism test passed on every working copy and failed on every clean clone, because two published values depended on the presence of a previous build. Local runs rewrote the artefact and then compared it with itself.",
+      "proposal": "Add a CI job that clones the repository into a temp directory, runs the suite there, then rebuilds and asserts a clean git status. The publish-parity workflow now does the rebuild half; the clone half is the part that caught this.",
+      "benefit": "Turns a class of silent, self-erasing test passes into a failure at PR time.",
+      "effort": "S",
+      "risk": "Adds ~30s of CI; no production risk.",
+      "recommendation": "Accept — this is the check that found F-029.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
