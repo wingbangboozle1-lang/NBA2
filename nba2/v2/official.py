@@ -5,6 +5,18 @@ Every number here was read off an NBA.com / NBA official-CDN page by session
 The source URL for each field family is declared in ``SOURCES`` so every published row
 can carry a link back to the page it came from.
 
+Consolidation note (session ``arena/6650be4d-nba2``, 2026-11-14)
+------------------------------------------------------------------
+The slate, the standings, the newest injury release and the 2026-11-13 finals are no
+longer transcribed twice: they are READ from the committed official snapshots in
+``data/raw/`` so that the published tree and the repository's audit trail cannot drift
+apart. What remains transcribed here is the part of the official tables that is dated
+2026-11-13 (the scoring averages and the advanced ratings) — those pages were read
+before the nine 2026-11-13 games were played and could not be re-read in this session
+without re-fetching three more pages; they are labelled as 2026-11-13 everywhere they
+are published, and the current official records are published beside them from
+``data/raw/official_standings_2026-11-14.json``.
+
 Retrieval record
 ----------------
 * ``www.nba.com/standings`` ............. 30 teams, W/L, home/road splits  → fetched OK
@@ -25,7 +37,12 @@ NOT available to this build. Anything that needs it is published as BLOCKED, nev
 
 from __future__ import annotations
 
+import json
 import math
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+RAW = ROOT / "data" / "raw"
 
 # --------------------------------------------------------------------------- sources
 SOURCES = {
@@ -154,52 +171,10 @@ TEAM_SOURCE = {
 }
 
 # --------------------------------------------------------------------------- the slate
-# From https://www.nba.com/schedule (date=2026-11-14), read 2026-11-14.
-# date, time_et, away, home, game_id, arena, city, national_broadcast, cup_group
-SLATE = [
-    ("2026-11-14", "19:00", "DEN", "NOP", "0022600231", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
-    ("2026-11-14", "19:30", "DAL", "CLE", "0022600232", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
-    ("2026-11-14", "20:00", "DET", "MIA", "0022600233", "Kaseya Center", "Miami, FL", "NBA TV", ""),
-    ("2026-11-14", "20:00", "BKN", "MEM", "0022600234", "FedExForum", "Memphis, TN", "League Pass", ""),
-    ("2026-11-14", "20:00", "CHI", "MIN", "0022600235", "Target Center", "Minneapolis, MN", "League Pass", ""),
-    ("2026-11-15", "13:00", "IND", "PHI", "0022600236", "Xfinity Mobile Arena", "Philadelphia, PA", "League Pass", ""),
-    ("2026-11-15", "16:00", "LAL", "PHX", "0022600237", "Mortgage Matchup Center", "Phoenix, AZ", "League Pass", ""),
-    ("2026-11-15", "16:30", "CHA", "LAC", "0022600238", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
-    ("2026-11-15", "17:00", "SAS", "UTA", "0022600239", "Delta Center", "Salt Lake City, UT", "League Pass", ""),
-    ("2026-11-15", "18:00", "DAL", "BOS", "0022600240", "TD Garden", "Boston, MA", "League Pass", ""),
-    ("2026-11-15", "18:00", "NYK", "TOR", "0022600241", "Scotiabank Arena", "Toronto, ON", "League Pass", ""),
-    ("2026-11-15", "19:00", "HOU", "WAS", "0022600242", "Capital One Arena", "Washington, DC", "MNMT / League Pass", ""),
-    ("2026-11-15", "20:00", "ATL", "MIL", "0022600243", "Fiserv Forum", "Milwaukee, WI", "League Pass", ""),
-    ("2026-11-15", "21:00", "OKC", "SAC", "0022600244", "Golden 1 Center", "Sacramento, CA", "League Pass", ""),
-    ("2026-11-16", "19:00", "ORL", "BOS", "0022600245", "TD Garden", "Boston, MA", "Peacock / NBC Sports Network", ""),
-    ("2026-11-16", "19:00", "CHI", "CLE", "0022600246", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
-    ("2026-11-16", "19:00", "MEM", "WAS", "0022600247", "Capital One Arena", "Washington, DC", "MNMT / League Pass", ""),
-    ("2026-11-16", "19:30", "PHI", "BKN", "0022600248", "Barclays Center", "Brooklyn, NY", "League Pass", ""),
-    ("2026-11-16", "19:30", "HOU", "MIA", "0022600249", "Kaseya Center", "Miami, FL", "League Pass", ""),
-    ("2026-11-16", "20:00", "POR", "MIN", "0022600250", "Target Center", "Minneapolis, MN", "League Pass", ""),
-    ("2026-11-16", "20:00", "GSW", "NOP", "0022600251", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
-    ("2026-11-16", "21:00", "PHX", "DEN", "0022600252", "Ball Arena", "Denver, CO", "League Pass", ""),
-    # 11/13 games: kept so a settled-game audit is possible, and because the injury report
-    # that IS readable (11/13 04:15 PM) covers them.
-    ("2026-11-13", "19:00", "NYK", "IND", "0022600034", "Gainbridge Fieldhouse", "Indianapolis, IN", "Prime Video", "East Group B"),
-    ("2026-11-13", "19:00", "MIL", "ORL", "0022600035", "Kia Center", "Orlando, FL", "League Pass", "East Group A"),
-    ("2026-11-13", "20:00", "CLE", "MIA", "0022600036", "Kaseya Center", "Miami, FL", "League Pass", "East Group B"),
-    ("2026-11-13", "20:00", "ATL", "CHI", "0022600037", "United Center", "Chicago, IL", "League Pass", "East Group C"),
-    ("2026-11-13", "20:00", "MEM", "NOP", "0022600038", "Smoothie King Center", "New Orleans, LA", "League Pass", "West Group B"),
-    ("2026-11-13", "20:30", "UTA", "HOU", "0022600039", "Toyota Center", "Houston, TX", "League Pass", "West Group A"),
-    ("2026-11-13", "21:30", "GSW", "SAS", "0022600040", "Frost Bank Center", "San Antonio, TX", "Prime Video", "West Group C"),
-    ("2026-11-13", "22:00", "POR", "SAC", "0022600041", "Golden 1 Center", "Sacramento, CA", "League Pass", "West Group C"),
-    ("2026-11-13", "22:30", "OKC", "LAC", "0022600042", "Intuit Dome", "Inglewood, CA", "League Pass", "West Group B"),
-]
-
-# Games published on the official schedule that fall OUTSIDE the 3-day window (context only).
-OUTSIDE_WINDOW = [
-    ("2026-11-17", "19:30", "NYK", "TOR", "0022600253", "Scotiabank Arena", "Toronto, ON"),
-    ("2026-11-17", "20:00", "POR", "MIN", "0022600254", "Target Center", "Minneapolis, MN"),
-    ("2026-11-17", "20:00", "DET", "SAS", "0022600255", "Frost Bank Center", "San Antonio, TX"),
-    ("2026-11-17", "23:00", "CHA", "LAL", "0022600256", "Crypto.com Arena", "Los Angeles, CA"),
-    ("2026-11-17", "22:30", "UTA", "LAC", "0022600257", "Intuit Dome", "Inglewood, CA"),
-]
+# The slate is no longer transcribed here: it is READ from the committed official snapshot
+# data/raw/slate_2026-11-14_to_11-17.json (36 games: 9 day-before context games on
+# 2026-11-13 plus the 27-game pick window 2026-11-14 .. 2026-11-17, which is the build
+# date + 3 days). See the loaders at the foot of this module.
 
 # --------------------------------------------------------------------------- injuries
 # Full 95-row transcription of the 11/13/26 04:15 PM ET report — matches the committed
@@ -386,3 +361,61 @@ def home_win_rate_se() -> float:
     i = integrity()
     n = i["home_w"] + i["home_l"]
     return math.sqrt(0.25 / n)
+
+
+# --------------------------------------------------------------------------- committed official snapshots
+# Session arena/6650be4d-nba2 (2026-11-14). The published tree reads the slate, the current
+# standings, the newest injury release and the played finals from the committed snapshots so
+# that the site and the repository's audit trail are the same numbers.
+
+def _load(name: str) -> dict:
+    return json.loads((RAW / name).read_text())
+
+
+def _rows(doc: dict) -> list[dict]:
+    return [dict(zip(doc["columns"], r)) for r in doc["records"]]
+
+
+# ---- the slate: 36 games, 2026-11-13 (day-before context) .. 2026-11-17 (T+3)
+_SLATE_DOC = _load("slate_2026-11-14_to_11-17.json")
+SLATE = [(r["date"], r["time_et"], r["away"], r["home"], r["game_id"], r["arena"],
+          f"{r['city']}, {r['state']}", r["broadcast"], r["cup_group"])
+         for r in _rows(_SLATE_DOC)]
+CONTEXT_DATE = "2026-11-13"
+WINDOW_DATES = sorted({r[0] for r in SLATE if r[0] > CONTEXT_DATE})
+SLATE_SOURCE = "https://www.nba.com/schedule"
+
+
+def slate_by_date(date: str) -> list[tuple]:
+    return [r for r in SLATE if r[0] == date]
+
+
+# ---- the official standings, read from nba.com/standings on 2026-11-14
+_STANDINGS_DOC = _load("official_standings_2026-11-14.json")
+STANDINGS = {r["tricode"]: r for r in _rows(_STANDINGS_DOC)}
+STANDINGS_SOURCE = "https://www.nba.com/standings"
+STANDINGS_AS_OF = _STANDINGS_DOC.get("as_of", "2026-11-14")
+
+
+def standings_rows() -> list[dict]:
+    out = []
+    for tri in sorted(STANDINGS):
+        d = STANDINGS[tri]
+        g = d["w"] + d["l"]
+        out.append({"tricode": tri, "name": d["name"], "w": d["w"], "l": d["l"],
+                    "pct": round(d["w"] / g, 3) if g else None,
+                    "home": d["home"], "road": d["road"], "conf": d["conf"], "div": d["div"]})
+    return out
+
+
+# ---- the newest official injury release (2026-11-14 05:00 a.m ET)
+_INJ_DOC = _load("injury_report_2026-11-14_0500ET.json")
+INJURIES_LATEST = [(r["game_date"], r["time_et"], r["matchup"], r["team"], r["player"],
+                    r["status"], r["reason"], r["attribution"]) for r in _rows(_INJ_DOC)]
+INJURIES_LATEST_RELEASE = _INJ_DOC.get("release", "2026-11-14 05:00 a.m ET")
+INJURIES_LATEST_SOURCE = "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"
+
+# ---- the official finals for the nine 2026-11-13 games
+_FINALS_DOC = _load("finals_2026-11-13.json")
+FINALS = {r["game_id"]: r for r in _FINALS_DOC["records"]}
+FINALS_SOURCE = "https://www.nba.com/schedule?date=2026-11-14"

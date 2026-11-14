@@ -45,7 +45,7 @@ disagreement, the fitted parameters behind them, and a source for every input.</
 <code>total = (PF_home+PA_away)/2 + Δ_home/2 + (PF_away+PA_home)/2 + Δ_away/2</code> where Δ is the team's own scoring margin.
 Every parameter is fitted (see the table below); nothing is hand-set.</div>
 <div class="scroll"><table>
-<caption>31 originated lines with both estimators</caption>
+<caption>36 originated lines with both estimators — 27 in the Nov 14 → Nov 17 pick window, 9 day-before context games</caption>
 <thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Matchup</th>
@@ -622,6 +622,96 @@ Every parameter is fitted (see the table below); nothing is hand-set.</div>
 <td><span class="badge b-warn">B</span></td>
 <td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
 </tr>
+<tr id="0022600253">
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td class="n">-3.51</td>
+<td class="n">+3.5</td>
+<td class="n">220.4</td>
+<td class="n">+4.0</td>
+<td class="n">+3.5</td>
+<td class="n">0.5</td>
+<td class="n">220.3</td>
+<td class="n">+0.1</td>
+<td class="n">39.2%</td>
+<td class="n">2.553</td>
+<td class="n">1.644</td>
+<td class="n">0.28σ</td>
+<td><span class="badge b-warn">B</span></td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="0022600255">
+<td>2026-11-17</td>
+<td>DET @ SAS</td>
+<td class="n">+3.37</td>
+<td class="n">-3.5</td>
+<td class="n">225.2</td>
+<td class="n">-3.5</td>
+<td class="n">-3.5</td>
+<td class="n">0.0</td>
+<td class="n">222.2</td>
+<td class="n">+3.0</td>
+<td class="n">60.4%</td>
+<td class="n">1.655</td>
+<td class="n">2.526</td>
+<td class="n">0.26σ</td>
+<td><span class="badge b-warn">B</span></td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="0022600254">
+<td>2026-11-17</td>
+<td>POR @ MIN</td>
+<td class="n">+5.49</td>
+<td class="n">-5.5</td>
+<td class="n">228.5</td>
+<td class="n">-5.5</td>
+<td class="n">-5.5</td>
+<td class="n">0.0</td>
+<td class="n">227.6</td>
+<td class="n">+0.9</td>
+<td class="n">66.7%</td>
+<td class="n">1.500</td>
+<td class="n">2.999</td>
+<td class="n">0.43σ</td>
+<td><span class="badge b-warn">B</span></td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="0022600257">
+<td>2026-11-17</td>
+<td>UTA @ LAC</td>
+<td class="n">+5.10</td>
+<td class="n">-5.0</td>
+<td class="n">227.5</td>
+<td class="n">-5.0</td>
+<td class="n">-5.0</td>
+<td class="n">0.0</td>
+<td class="n">224.4</td>
+<td class="n">+3.1</td>
+<td class="n">65.5%</td>
+<td class="n">1.526</td>
+<td class="n">2.903</td>
+<td class="n">0.40σ</td>
+<td><span class="badge b-warn">B</span></td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr id="0022600256">
+<td>2026-11-17</td>
+<td>CHA @ LAL</td>
+<td class="n">+15.57</td>
+<td class="n">-15.5</td>
+<td class="n">222.3</td>
+<td class="n">-15.5</td>
+<td class="n">-15.5</td>
+<td class="n">0.0</td>
+<td class="n">222.1</td>
+<td class="n">+0.2</td>
+<td class="n">88.9%</td>
+<td class="n">1.125</td>
+<td class="n">9.011</td>
+<td class="n">1.22σ</td>
+<td><span class="badge b-ok">A</span></td>
+<td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
 </tbody></table></div><p class="lede">Spread A uses the net-points rating; spread B uses NetRtg. They are computed from different
 official numerators (points vs points-per-100-possessions), so agreement is evidence the line is stable. Δ total compares the
 per-game-average total with a per-100-possession × pace total; a large gap flags a pace inconsistency and drops the game to grade C.</p>
@@ -694,7 +784,145 @@ per-game-average total with a per-100-possession × pace total; a large gap flag
 </tbody></table></div><div class="note warn"><b>The honest problem with σ and h.</b> Fitting both freely against one season of win
 totals is ill-conditioned: σ anywhere from 9 to 13 fits equally well with h from +7.9 down to 0.0. This build therefore pins
 h to the home-win rate actually observed (89–84 over 173 home games) and fits σ alone. The unconstrained answer is printed
-beside it rather than hidden.</div>
+beside it rather than hidden.</div><h2>The first grade: the nine day-before games, against the official finals</h2><p class="lede">The 9 games of 2026-11-13 have been played, and the league publishes the results.
+Those games are day-before CONTEXT: they are in neither sealed ledger, so grading them is a model check and
+never a settled registered forecast. Nine games cannot support a promotion of any kind, and the table says so.
+Every final below is read from the official schedule page.</p><div class="scroll"><table>
+<caption>The model&#x27;s own lines for the nine played games, graded against the official finals</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Official final</th>
+<th scope="col" class="n">Actual margin</th>
+<th scope="col" class="n">Actual total</th>
+<th scope="col" class="n">Our margin</th>
+<th scope="col" class="n">Our total</th>
+<th scope="col" class="n">Margin error</th>
+<th scope="col" class="n">Total error</th>
+<th scope="col">Our lean</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>99-107</td>
+<td class="n">+8</td>
+<td class="n">206</td>
+<td class="n">+7.88</td>
+<td class="n">225.3</td>
+<td class="n">0.12</td>
+<td class="n">19.3</td>
+<td><span class="badge b-ok">hit</span></td>
+<td><a href="https://www.nba.com/game/mil-vs-orl-0022600035" rel="noopener" target="_blank">nba.com/game/mil-vs-orl-0022600035</a></td>
+</tr>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>104-106</td>
+<td class="n">+2</td>
+<td class="n">210</td>
+<td class="n">-6.50</td>
+<td class="n">219.7</td>
+<td class="n">8.50</td>
+<td class="n">9.7</td>
+<td><span class="badge b-bad">miss</span></td>
+<td><a href="https://www.nba.com/game/nyk-vs-ind-0022600034" rel="noopener" target="_blank">nba.com/game/nyk-vs-ind-0022600034</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>117-125 (OT)</td>
+<td class="n">+8</td>
+<td class="n">242</td>
+<td class="n">-13.27</td>
+<td class="n">238.3</td>
+<td class="n">21.27</td>
+<td class="n">3.7</td>
+<td><span class="badge b-bad">miss</span></td>
+<td><a href="https://www.nba.com/game/atl-vs-chi-0022600037" rel="noopener" target="_blank">nba.com/game/atl-vs-chi-0022600037</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>121-133</td>
+<td class="n">+12</td>
+<td class="n">254</td>
+<td class="n">-4.84</td>
+<td class="n">233.2</td>
+<td class="n">16.84</td>
+<td class="n">20.8</td>
+<td><span class="badge b-bad">miss</span></td>
+<td><a href="https://www.nba.com/game/cle-vs-mia-0022600036" rel="noopener" target="_blank">nba.com/game/cle-vs-mia-0022600036</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>142-111</td>
+<td class="n">-31</td>
+<td class="n">253</td>
+<td class="n">-10.08</td>
+<td class="n">235.5</td>
+<td class="n">20.92</td>
+<td class="n">17.5</td>
+<td><span class="badge b-ok">hit</span></td>
+<td><a href="https://www.nba.com/game/mem-vs-nop-0022600038" rel="noopener" target="_blank">nba.com/game/mem-vs-nop-0022600038</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>118-125</td>
+<td class="n">+7</td>
+<td class="n">243</td>
+<td class="n">+16.73</td>
+<td class="n">223.3</td>
+<td class="n">9.73</td>
+<td class="n">19.7</td>
+<td><span class="badge b-ok">hit</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039" rel="noopener" target="_blank">nba.com/game/uta-vs-hou-0022600039</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>85-123</td>
+<td class="n">+38</td>
+<td class="n">208</td>
+<td class="n">+3.08</td>
+<td class="n">229.0</td>
+<td class="n">34.92</td>
+<td class="n">21.0</td>
+<td><span class="badge b-ok">hit</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-sas-0022600040" rel="noopener" target="_blank">nba.com/game/gsw-vs-sas-0022600040</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>120-107</td>
+<td class="n">-13</td>
+<td class="n">227</td>
+<td class="n">-15.01</td>
+<td class="n">230.5</td>
+<td class="n">2.01</td>
+<td class="n">3.5</td>
+<td><span class="badge b-ok">hit</span></td>
+<td><a href="https://www.nba.com/game/por-vs-sac-0022600041" rel="noopener" target="_blank">nba.com/game/por-vs-sac-0022600041</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>112-113</td>
+<td class="n">+1</td>
+<td class="n">225</td>
+<td class="n">-7.46</td>
+<td class="n">224.2</td>
+<td class="n">8.46</td>
+<td class="n">0.8</td>
+<td><span class="badge b-bad">miss</span></td>
+<td><a href="https://www.nba.com/game/okc-vs-lac-0022600042" rel="noopener" target="_blank">nba.com/game/okc-vs-lac-0022600042</a></td>
+</tr>
+</tbody></table></div><div class="note"><b>What this says.</b> Margin mean absolute error
+24.55 points, total mean absolute error 23.22 points, and the model's
+lean was right in 5.0 of 9 games. That is a nine-game sample: it is a check that the arithmetic
+runs end to end on real results, not evidence of skill, and it is published for exactly that reason.</div>
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.

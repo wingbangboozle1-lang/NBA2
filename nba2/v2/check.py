@@ -71,15 +71,20 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/slate_2026-11-13_to_11-16.json").read_text())
+    raw = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17.json").read_text())
     from . import official as O
-    if len(O.SLATE) != 31:
-        problems.append(f"SLATE has {len(O.SLATE)} games, expected 31")
-    if len(raw["records"]) != 31:
-        problems.append("committed raw snapshot no longer has 31 games")
+    if len(O.SLATE) != 36:
+        problems.append(f"SLATE has {len(O.SLATE)} games, expected 36")
+    if len(raw["records"]) != 36:
+        problems.append("committed raw snapshot no longer has 36 games")
+    window = [l for l in O.SLATE if l[0] > O.CONTEXT_DATE]
+    if len(window) != 27:
+        problems.append(f"pick window has {len(window)} games, expected 27 (11/14..11/17)")
+    if max(l[0] for l in O.SLATE) != "2026-11-17":
+        problems.append("the published window does not reach build-date + 3 days")
     lines = json.loads((ROOT / "data/v2/lines.json").read_text())
-    if len(lines["lines"]) != 31:
-        problems.append("lines.json does not have 31 lines")
+    if len(lines["lines"]) != len(O.SLATE):
+        problems.append(f"lines.json has {len(lines['lines'])} lines, expected {len(O.SLATE)}")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

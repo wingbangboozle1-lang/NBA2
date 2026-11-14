@@ -283,6 +283,46 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Fixed: build_is_idempotent now reports the property by construction, and the stamp is derived from the newest retrieved_at_utc recorded inside the committed snapshots, so it is a function of the committed bytes rather than of mtime or the clock. Verified by cloning the branch fresh (as CI does), running the suite, and confirming all four rebuilds are byte-identical.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
 </tr>
+<tr id="F-030">
+<td><span class="badge b-bad">F-030</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Verification</td>
+<td>CORRECTION (2026-11-14, session arena/6650be4d-nba2): the 11/13 19:30 ET official injury release was transcribed with Caleb Martin under the CLEVELAND Cavaliers. The PDF breaks across pages with the Team column blank on the continuation rows, and Martin&#x27;s row falls in that gap, immediately before the &#x27;Cleveland Cavaliers | NOT YET SUBMITTED&#x27; line - so the team was inferred from the wrong side of the break. The 11/14 05:00 a.m ET release repeats the team on every row and prints Martin under the DALLAS Mavericks.</td>
+<td>The published window rows now come from the 05:00 a.m ET release, so the corrected attribution is what the site shows, and the release-to-release delta on the Injuries page prints every row that changed.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-031">
+<td><span class="badge b-warn">F-031</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>The 2026-11-13 third-party ratings snapshot carries its own internal-consistency labels, and two of them were wrong. The league-wide close and blowout sums DO balance (close 99 = 99, blowout 88 = 88) although the label said FAIL, and the per-team bound close+blowout &lt;= games played does NOT hold although the label said PASS: 18 of the 30 clubs show more close and blowout games than they played (ATL 13 in a 12-game record, MEM 12 in 11).</td>
+<td>The snapshot&#x27;s correction block records the original text verbatim; the close/blowout columns are excluded from the luck table, and the per-team check is now part of the repository&#x27;s own checker.</td>
+<td><a href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" rel="noopener" target="_blank">basketball-reference.com/leagues/NBA_2027_standings…</a></td>
+</tr>
+<tr id="F-032">
+<td><span class="badge b-off">F-032</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Verification</td>
+<td>Two official pages disagree on the tip time of one game in the window: the /schedule card for 0022600249 (HOU @ MIA, 2026-11-16) renders &#x27;8:00 PM ET&#x27;, while the game&#x27;s own page renders &#x27;7:30 PM ET&#x27; in both its game rail and its header line. The other 35 games were re-read in this session and match the committed snapshot exactly.</td>
+<td>The published value follows the game&#x27;s own page. Treat that page as authoritative for its tip time.</td>
+<td><a href="https://www.nba.com/game/hou-vs-mia-0022600249" rel="noopener" target="_blank">nba.com/game/hou-vs-mia-0022600249</a></td>
+</tr>
+<tr id="F-033">
+<td><span class="badge b-warn">F-033</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>The model&#x27;s team inputs (records, scoring averages, advanced ratings) were read from the official NBA pages on 2026-11-13, before the nine 2026-11-13 games were played, and could not be re-read in this session. They therefore disagree with the league&#x27;s current table for 18 of the 30 clubs.</td>
+<td>The current official records are published beside them on the Methodology page, and every published page says which date its numbers carry. Nothing is silently refreshed.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-034">
+<td><span class="badge b-info">F-034</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Verification</td>
+<td>The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. The nine 2026-11-13 games are kept as day-before context and graded against the official finals.</td>
+<td>The window is read from the committed slate snapshot, so it cannot drift from the brief&#x27;s three-day limit.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

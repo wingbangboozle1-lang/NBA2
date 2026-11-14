@@ -25,9 +25,25 @@ Source classes: `official` (nba.com / ak-static.cms.nba.com / cdn.nba.com), `thi
 every such row is flagged), `derived` (computed in-repo from a committed snapshot), `blocked`
 (we know we need it; we do not have it).
 
-## The dashboard this session generates
+## Which tree is published
 
-`index.html` + `pages/**` (20 pages, 40 tables, 1168 rows) are rendered from
+**One tree reaches a reader: [`site/`](site/), published at the repository root by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
+site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
+returns 404. The repository still holds the earlier trees — they are kept for history and for
+review, and they are **not** published. Nothing was deleted to get here; moving the rest under
+`archive/` is suggestion S-27/Q-27, waiting on an owner decision.
+
+| Tree | Published | Built by | What it is |
+|---|---|---|---|
+| `site/` | **yes** — the Pages root | `python -m nba2.v2` | the canonical dashboard: landing page, category subpages, per-row sourced tables, the questions register, the suggestions queue, the Flagged-for-review page and the live-verification log |
+| `index.html`, `pages/**` | no | `nba2/pipeline/build_site_data` → `build_site` | the earlier (v1) dashboard; still built and linted by CI, still the home of the sealed-ledger machinery, the reconciliation page and the provenance-linted table set |
+| `backtest/**` | no | `backtest/engine/build.py` | the walk-forward measured-skill report over official history |
+| `docs/**`, `verified/**`, `dashboard/**`, `originated/**`, `archive/**` | no | earlier sessions | history and review material |
+
+## The v1 dashboard tree (retained, not published)
+
+`index.html` + `pages/**` (20 pages, 46 tables, 1325 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -64,12 +80,12 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## Site surfaces that already existed (preserved, not discarded)
 
-Four sessions worked in parallel, so the repository publishes more than one surface. This is the
-honest map rather than a claim that there is one generator:
+Several sessions worked in parallel, so the repository contains more than one surface. This is the
+honest map rather than a claim that there is one generator — and only `site/` is published:
 
 | Surface | Built by | Notes |
 |---|---|---|
-| root `*.html` (`picks`, `strategies`, `injuries`, `correlations`, `executive-summary`, `suggestions`, `questions`, `flagged`) | `build_site.py` + `nba2/generate.py` from `nba2/data/*.json` (session arena-7b4973eb) | its own originated lines; superseded as the landing page, still served, and reconciled against ours on [the reconciliation page](pages/reconciliation.html) |
+| root `*.html` (`picks`, `strategies`, `injuries`, `correlations`, `executive-summary`, `suggestions`, `questions`, `flagged`) | `build_site.py` + `nba2/generate.py` from `nba2/data/*.json` (session arena-7b4973eb) | its own originated lines; superseded as the landing page, retained and reconciled against ours on [the reconciliation page](pages/reconciliation.html) |
 | `docs/**` | session arena-35264d96 | 13-page verification-first documentation layer, left untouched |
 | `verified/**`, `data/verified/**` | sessions arena-23927d63 / arena-7b4973eb | row-level verification records for schedule, injuries and gates |
 | `archive/**` | integration | byte-for-byte copies of the `main` pages this merge replaced, plus the earlier session's landing pages |
@@ -83,7 +99,10 @@ python -m nba2.pipeline.seal_predictions          # pre-register the window's li
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
 python -m nba2.pipeline.lint                       # provenance + links + staleness gate
-python -m nba2.pipeline.settle                      # PENDING until official final scores exist
+python -m nba2.pipeline.settle                      # unmeasured until official final scores cover the sealed games
+
+python -m nba2.v2                                    # the PUBLISHED tree: site/ from data/raw/
+python -m nba2.v2.check                              # every published row sourced, every blank explained
 
 python3 nba2/generate.py && python3 build_site.py   # the prior session's root dashboard
 python3 tools/verify_site.py                        # docs-layer source check
@@ -253,7 +272,7 @@ dashboards with different numbers is worse than one, and the reconciliation of a
 decision logged on the new site's Flagged page (F-011).
 
 ```bash
-python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (19 pages: the dashboard, the live-verification log and the decision queue)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 59 tests

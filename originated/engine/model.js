@@ -36,7 +36,7 @@ const TEAM_TZ = {
   ATL: -5, BOS: -5, BKN: -5, CHA: -5, CHI: -6, CLE: -5, DAL: -6, DEN: -7, DET: -5,
   GSW: -8, HOU: -6, IND: -5, LAC: -8, LAL: -8, MEM: -6, MIA: -5, MIL: -6, MIN: -6,
   NOP: -6, NYK: -5, OKC: -6, ORL: -5, PHI: -5, PHX: -7, POR: -8, SAC: -8, SAS: -6,
-  TOR: -5, UTA: -7, WSH: -5
+  TOR: -5, UTA: -7, WAS: -5
 };
 
 /** Weight of each official injury-report status in the availability indices. */

@@ -146,6 +146,10 @@ def table_rows(entries: list[Entry]) -> list[dict]:
     for e in entries:
         passed = sum(1 for r in e.results if r.result == "PASS")
         failed = sum(1 for r in e.results if r.result == "FAIL")
+        # AT-RISK is not BLOCKED: a gate that is blocked because the input does not exist and a
+        # gate that is at risk because the sample is short are different facts, and collapsing
+        # them (as this table did until 2026-11-14) makes a leaderboard row claim "10 blocked"
+        # when the gate matrix says "8 blocked + 2 at-risk".
         blocked = sum(1 for r in e.results if r.result == "BLOCKED")
         at_risk = sum(1 for r in e.results if r.result == "AT-RISK")
         rows.append({

@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Picks</h2><p>Every game in the window gets a lean, a trigger and a stake of 0% — 0% is the policy, not a placeholder.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="picks" data-rows="27">
 <h2>Picks — expressed as triggers, not as &#x27;bets&#x27;</h2>
 <p class="blurb">A pick with no price is a guess. So each row states the number the market would have to show before our line justifies action, and the stake stays 0% until an odds feed exists. This is the honest shape of a line-origination desk before it has execution. The table covers the pick window from the snapshot&#x27;s as-of date forward (today + 3 days max); the day-before context games are priced on the Lines page for calibration only.</p>
@@ -444,6 +444,169 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">Triggers = our line ± 1.5 pts (unratified hurdle, see FLAG-LINE-03).</p>
+</section><section class="card table-card" id="finals_grade" data-rows="9">
+<h2>First grade of the published lines — the nine 2026-11-13 context games</h2>
+<p class="blurb">The nine games that had already been played when this window was priced. They are day-before context, NOT sealed predictions, so this is a model check and never a settled bet: neither sealed ledger covers them (FLAG-SET-02). Nine games cannot support a promotion of any kind, and the table says so. n=9 · margin MAE 12.97 · total MAE 12.89 · lean correct 5/9</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">First grade of the published lines — the nine 2026-11-13 context games</caption><thead><tr>
+<th scope="col">Official game ID</th>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Official final</th>
+<th scope="col">Actual margin</th>
+<th scope="col">Actual total</th>
+<th scope="col">Our margin</th>
+<th scope="col">Our total</th>
+<th scope="col">Margin error</th>
+<th scope="col">Total error</th>
+<th scope="col">Our lean</th>
+<th scope="col">Lean correct?</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="final-0022600034">
+<td>0022600034</td>
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>104-106</td>
+<td>+2</td>
+<td>210</td>
+<td>-5.00</td>
+<td>219.5</td>
+<td>7.00</td>
+<td>9.5</td>
+<td>away</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600035">
+<td>0022600035</td>
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>99-107</td>
+<td>+8</td>
+<td>206</td>
+<td>+8.18</td>
+<td>225.5</td>
+<td>0.18</td>
+<td>19.5</td>
+<td>home</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600036">
+<td>0022600036</td>
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>121-133</td>
+<td>+12</td>
+<td>254</td>
+<td>-2.94</td>
+<td>233.0</td>
+<td>14.94</td>
+<td>21.0</td>
+<td>away</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600037">
+<td>0022600037</td>
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>117-125 (OT)</td>
+<td>+8</td>
+<td>242</td>
+<td>-10.53</td>
+<td>238.5</td>
+<td>18.53</td>
+<td>3.5</td>
+<td>away</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600038">
+<td>0022600038</td>
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>142-111</td>
+<td>-31</td>
+<td>253</td>
+<td>-8.34</td>
+<td>235.5</td>
+<td>22.66</td>
+<td>17.5</td>
+<td>away</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600039">
+<td>0022600039</td>
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>118-125</td>
+<td>+7</td>
+<td>243</td>
+<td>+17.40</td>
+<td>223.5</td>
+<td>10.40</td>
+<td>19.5</td>
+<td>home</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600040">
+<td>0022600040</td>
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>85-123</td>
+<td>+38</td>
+<td>208</td>
+<td>+3.15</td>
+<td>229.0</td>
+<td>34.85</td>
+<td>21.0</td>
+<td>home</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600041">
+<td>0022600041</td>
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>120-107</td>
+<td>-13</td>
+<td>227</td>
+<td>-13.62</td>
+<td>230.5</td>
+<td>0.62</td>
+<td>3.5</td>
+<td>away</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+<tr id="final-0022600042">
+<td>0022600042</td>
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>112-113</td>
+<td>+1</td>
+<td>225</td>
+<td>-6.55</td>
+<td>224.0</td>
+<td>7.55</td>
+<td>1.0</td>
+<td>away</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Finals from the official schedule page; the lines from this site&#x27;s own published output for the same games.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

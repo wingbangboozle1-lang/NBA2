@@ -1,16 +1,97 @@
 {
-  "source": "https://www.nba.com/games?date=2026-11-13",
-  "captured_utc": "2026-11-14T09:45:00Z",
-  "captured_by": "arena/6c5195d1-nba2 (live fetch of the official NBA.com games page; 9 of 9 finals recorded)",
+  "dataset": "official_final_scores",
+  "as_of": "2026-11-13",
+  "retrieved_at_utc": "2026-11-14T10:25:00Z",
+  "method": "platform page-fetch tool (the build sandbox cannot open TLS to nba.com: curl returns HTTP 000)",
+  "source": "https://www.nba.com/schedule?date=2026-11-14",
+  "note": "The nine 2026-11-13 games, read as 'Final' / 'Final/OT' on the official schedule page. These games are the day-before context the model priced; they are NOT in either sealed ledger, so settling against them must never be reported as a settled registered forecast. Merged during the arena/6c5195d1-nba2 final-integration reconciliation: two sessions captured these nine finals independently (different official URLs, same day) and all 9 of 9 scores agree; both captures are recorded under cross_captures.",
   "records": [
-    {"game_id": "0022600034", "home_pts": 106, "away_pts": 104, "source": "https://www.nba.com/game/nyk-vs-ind-0022600034"},
-    {"game_id": "0022600035", "home_pts": 107, "away_pts": 99, "source": "https://www.nba.com/game/mil-vs-orl-0022600035"},
-    {"game_id": "0022600036", "home_pts": 133, "away_pts": 121, "source": "https://www.nba.com/game/cle-vs-mia-0022600036"},
-    {"game_id": "0022600037", "home_pts": 125, "away_pts": 117, "source": "https://www.nba.com/game/atl-vs-chi-0022600037"},
-    {"game_id": "0022600038", "home_pts": 111, "away_pts": 142, "source": "https://www.nba.com/game/mem-vs-nop-0022600038"},
-    {"game_id": "0022600039", "home_pts": 125, "away_pts": 118, "source": "https://www.nba.com/game/uta-vs-hou-0022600039"},
-    {"game_id": "0022600040", "home_pts": 123, "away_pts": 85, "source": "https://www.nba.com/game/gsw-vs-sas-0022600040"},
-    {"game_id": "0022600041", "home_pts": 107, "away_pts": 120, "source": "https://www.nba.com/game/por-vs-sac-0022600041"},
-    {"game_id": "0022600042", "home_pts": 113, "away_pts": 112, "source": "https://www.nba.com/game/okc-vs-lac-0022600042"}
+    {
+      "game_id": "0022600034",
+      "away_pts": 104,
+      "home_pts": 106,
+      "overtime": false,
+      "source": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600035",
+      "away_pts": 99,
+      "home_pts": 107,
+      "overtime": false,
+      "source": "https://www.nba.com/game/mil-vs-orl-0022600035",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600036",
+      "away_pts": 121,
+      "home_pts": 133,
+      "overtime": false,
+      "source": "https://www.nba.com/game/cle-vs-mia-0022600036",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600037",
+      "away_pts": 117,
+      "home_pts": 125,
+      "overtime": true,
+      "source": "https://www.nba.com/game/atl-vs-chi-0022600037",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600038",
+      "away_pts": 142,
+      "home_pts": 111,
+      "overtime": false,
+      "source": "https://www.nba.com/game/mem-vs-nop-0022600038",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600039",
+      "away_pts": 118,
+      "home_pts": 125,
+      "overtime": false,
+      "source": "https://www.nba.com/game/uta-vs-hou-0022600039",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600040",
+      "away_pts": 85,
+      "home_pts": 123,
+      "overtime": false,
+      "source": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600041",
+      "away_pts": 120,
+      "home_pts": 107,
+      "overtime": false,
+      "source": "https://www.nba.com/game/por-vs-sac-0022600041",
+      "cross_confirmed": true
+    },
+    {
+      "game_id": "0022600042",
+      "away_pts": 112,
+      "home_pts": 113,
+      "overtime": false,
+      "source": "https://www.nba.com/game/okc-vs-lac-0022600042",
+      "cross_confirmed": true
+    }
+  ],
+  "cross_captures": [
+    {
+      "by_session": "arena/6c5195d1-nba2",
+      "captured_utc": "2026-11-14T09:45:00Z",
+      "source": "https://www.nba.com/games?date=2026-11-13",
+      "agreement": "9 of 9 scores identical to the arena/6650be4d capture",
+      "by": "arena/6c5195d1-nba2 (live fetch of the official NBA.com games page; 9 of 9 finals recorded)"
+    },
+    {
+      "by_session": "arena/6650be4d-nba2",
+      "captured_utc": "2026-11-14T10:25:00Z",
+      "source": "https://www.nba.com/schedule?date=2026-11-14",
+      "agreement": "9 of 9 scores identical to the arena/6c5195d1 capture"
+    }
   ]
 }

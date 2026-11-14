@@ -25,9 +25,9 @@
   "checks": [
    {
     "id": "repo-schedule",
-    "what": "Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)",
-    "repo_value": "31 games",
-    "live_value": "31 games",
+    "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
+    "repo_value": "36 games",
+    "live_value": "36 games",
     "result": "MATCH",
     "detail": "no differences found",
     "src": "https://www.nba.com/schedule"
@@ -52,9 +52,18 @@
    },
    {
     "id": "repo-wl",
-    "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
-    "repo_value": "30/30 identical",
+    "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
+    "repo_value": "12/30 identical",
     "live_value": "30 teams",
+    "result": "AGED",
+    "detail": "18 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: ['ATL', 'CHI', 'CLE', 'GSW', 'HOU', 'IND', 'LAC', 'MEM', 'MIA', 'MIL', 'NOP', 'NYK', 'OKC', 'ORL', 'POR', 'SAC', 'SAS', 'UTA']",
+    "src": "https://www.nba.com/standings"
+   },
+   {
+    "id": "repo-wl-current",
+    "what": "The published team's official W-L column vs nba.com/standings read 2026-11-14",
+    "repo_value": "30/30 identical",
+    "live_value": "30 teams, official table read 2026-11-14",
     "result": "MATCH",
     "detail": "no differences found",
     "src": "https://www.nba.com/standings"

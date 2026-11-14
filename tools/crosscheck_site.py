@@ -272,7 +272,7 @@ def check_snapshots(r: Report, site: dict):
         allowed = {"Out", "Doubtful", "Questionable", "Probable", "Available", "NOT YET SUBMITTED",
                    "Suspended", "G League - On Two-Way Contract", "G League - On Assignment", "Rest",
                    "Personal Reasons", "G League - Two-Way", "Not With Team"}
-        statuses = {x[icols["status"]] for x in irecs}
+        statuses = {x[icols["status"]] for x in irecs if x[icols["status"]] is not None}
         r.add(f"CC-SNAP-09:{f_.stem}", g, f"{f_.name}: every status string is one the report can print",
               "set of status values in the snapshot",
               PASS if statuses <= allowed else INFO,
@@ -307,16 +307,43 @@ def check_snapshots(r: Report, site: dict):
     close_l = sum(x[rcols["close_l"]] for x in rrecs)
     blow_w = sum(x[rcols["blowout_w"]] for x in rrecs)
     blow_l = sum(x[rcols["blowout_l"]] for x in rrecs)
-    claimed = " ".join(str(x) for x in rat.get("provenance", {}).get("internal_consistency_checks", []))
-    recompute_fail = (close_w != close_l) or (blow_w != blow_l)
-    says_fail = "FAIL" in claimed
-    r.add("CC-SNAP-13", g, "ratings: the snapshot's own PASS/FAIL labels still describe the data",
-          f"sum(close_w)={close_w} vs sum(close_l)={close_l}; sum(blowout_w)={blow_w} vs sum(blowout_l)={blow_l}",
-          PASS if recompute_fail == says_fail else FAIL,
-          f"recomputed imbalance => {'FAIL' if recompute_fail else 'PASS'}; stored labels say "
-          f"{'FAIL' if says_fail else 'PASS'}",
-          note="every close/blowout game is one win and one loss, so the league-wide sums must match; a "
-               "mismatch means the per-team split columns are not a complete partition of the games")
+    # The snapshot carries FOUR labels, each about a different arithmetic fact. The old check
+    # looked for the string "FAIL" anywhere in them and compared it with a single league-wide
+    # recomputation, so a snapshot that got two labels right and two wrong passed. Each label is
+    # now matched to its own recomputation.
+    checks = rat.get("provenance", {}).get("internal_consistency_checks", [])
+    home_ok = all(x[rcols["home_w"]] + x[rcols["home_l"]] + x[rcols["road_w"]] + x[rcols["road_l"]]
+                  == x[rcols["w"]] + x[rcols["l"]] for x in rrecs)
+    over_games = [x[rcols["tricode"]] for x in rrecs
+                  if x[rcols["close_w"]] + x[rcols["close_l"]] + x[rcols["blowout_w"]] + x[rcols["blowout_l"]]
+                  > x[rcols["w"]] + x[rcols["l"]]]
+    truth = {
+        "home_w+home_l+road_w+road_l == w+l for all 30 teams": home_ok,
+        "close_w+close_l+blowout_w+blowout_l <= w+l for all teams": not over_games,
+        "sum(close_w) == sum(close_l) required by construction": close_w == close_l,
+        "sum(blowout_w) == sum(blowout_l) required by construction": blow_w == blow_l,
+    }
+    label_bad = []
+    for c in checks:
+        c = str(c)
+        key = next((k for k in truth if c.startswith(k)), None)
+        if key is None:
+            label_bad.append(f"unrecognised check: {c[:60]}")
+            continue
+        says_fail = "FAIL" in c
+        if says_fail == (not truth[key]):
+            continue
+        label_bad.append(f"{key}: label says {'FAIL' if says_fail else 'PASS'}, recomputation says "
+                         f"{'FAIL' if not truth[key] else 'PASS'}")
+    r.add("CC-SNAP-13", g, "ratings: each of the snapshot's own PASS/FAIL labels matches its own recomputation",
+          f"4 labels vs 4 recomputations (home/road {home_ok}; close+blowout<=games "
+          f"{'ok' if not over_games else f'{len(over_games)} violations'}; close {close_w}={close_l}; "
+          f"blowout {blow_w}={blow_l})",
+          PASS if not label_bad else FAIL,
+          f"{len(label_bad)} label(s) disagree: {label_bad[:2] or 'none'}",
+          note="every close/blowout game is one win and one loss, so the league-wide sums must match; the "
+               "per-team bound is a separate fact and has to be checked per team - a league-level check "
+               "alone would have passed a snapshot that 18 clubs contradict")
     pct_bad = [x[rcols["tricode"]] for x in rrecs
                if abs(round(x[rcols["w"]] / (x[rcols["w"]] + x[rcols["l"]]), 3) - x[rcols["pct"]]) > 0.0015]
     r.add("CC-SNAP-14", g, "ratings: winning percentage equals W/(W+L) to 3 dp",
@@ -491,8 +518,14 @@ def check_derived_arithmetic(r: Report, site: dict):
     r.add("CC-DER-04", g, "ratings table is internally consistent (net = PS/G - PA/G; shrunk = SRS x lambda; GP = W+L)",
           f"recompute from the published cells of all {len(ratings)} rows", PASS if not bad else FAIL,
           f"{len(bad)} violation(s): {bad[:4] or 'none'}")
-    recs_official = {t["team"]: f"{t['wins']}-{t['losses']}"
-                     for t in load_json(ROOT / "nba2" / "data" / "records.json")["teams"]}
+    # CR-4 (retargeted 2026-11-14 in the final merge): 'wl_official' is sourced from the league's
+    # own standings capture (arena/6650be4d switched the column's source to
+    # data/raw/official_standings_2026-11-14.json); the check compares each column with the file
+    # that column is actually rendered from.
+    _stand = load_json(ROOT / "data" / "raw" / "official_standings_2026-11-14.json")
+    _stand_cols = {c: i for i, c in enumerate(_stand["columns"])}
+    recs_official = {x[_stand_cols["tricode"]]: f"{x[_stand_cols['w']]}-{x[_stand_cols['l']]}"
+                     for x in _stand["records"]}
     snap = load_json(snapshot_candidates("ratings")[0])
     snap_cols = {c: i for i, c in enumerate(snap["columns"])}
     snap_wl = {x[snap_cols["tricode"]]: f"{x[snap_cols['w']]}-{x[snap_cols['l']]}"
@@ -505,18 +538,18 @@ def check_derived_arithmetic(r: Report, site: dict):
             prov_bad.append(f"{tc}: 'W-L (ratings source)' {v.get('wl')} != ratings snapshot {snap_wl.get(tc)}")
         if v.get("wl_official") is not None and recs_official.get(tc) not in (None, v.get("wl_official")):
             prov_bad.append(f"{tc}: 'W-L (official NBA.com)' {v.get('wl_official')} != "
-                            f"nba2/data/records.json {recs_official.get(tc)}")
+                            f"data/raw/official_standings_2026-11-14.json {recs_official.get(tc)}")
     caption = str(section(site, "ratings").get("source_note") or "")
     caption_ok = ("NBA.com" in caption or "nba.com" in caption) and \
                  ("Basketball-Reference" in caption or "third-party" in caption or "ratings snapshot" in caption)
     r.add("CC-DER-05", g, "the two W-L columns are independent measurements, as the caption claims",
           "each column is diffed against its own capture — 'W-L (official NBA.com)' vs "
-          "nba2/data/records.json and 'W-L (ratings source)' vs the ratings snapshot — and the "
+          "data/raw/official_standings_2026-11-14.json and 'W-L (ratings source)' vs the ratings snapshot — and the "
           "caption must name both sources",
           PASS if not prov_bad and caption_ok else FAIL,
           f"{len(prov_bad)} provenance mismatch(es): {prov_bad[:3] or 'none'}; caption names both "
           f"sources: {caption_ok}",
-          evidence="nba2/data/records.json; " + str(RATINGS_EVIDENCE),
+          evidence="data/raw/official_standings_2026-11-14.json (official NBA.com standings); " + str(RATINGS_EVIDENCE),
           note="2026-11-14 arena/6c5195d1 (CR-4): the old test failed whenever the two columns held "
                "identical values on all rows — but identical values are exactly what two agreeing "
                "independent captures produce, while the pre-fix build really did print one field "
@@ -777,7 +810,9 @@ def check_seal(r: Report, site: dict):
                "flagged the five same-day 11/14 games in sealed-2026-11-14 even though the ledger "
                "was sealed at 00:58 UTC and every one of those tips is 23:00 UTC or later. The "
                "invariant the seal exists to prove is temporal order — tip after seal — so the "
-               "comparison is now over datetimes.")
+               "comparison is now over datetimes. (arena/6650be4d independently relaxed the "
+               "date-only rule to allow same-day games; the datetime rule is kept because it also "
+               "catches a same-day game sealed after its own tip.)")
     r.add("CC-SEAL-05", g, "sealed tip times equal the official tip times they were sealed against",
           "per-game time compare", PASS if not wrong_time else FAIL,
           f"{len(wrong_time)} problem(s): {wrong_time[:3] or 'none'}",

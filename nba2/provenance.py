@@ -72,6 +72,26 @@ register_source("nba_injury_pdf_1114", "NBA Official Injury Report 11/13 19:30 E
                 "data/raw/injury_report_2026-11-14_daybefore.json. Same document as nba_injury_pdf; two independent transcriptions exist and are cross-checked.")
 register_source("bref_standings", "Basketball-Reference 2026-27 Standings", "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
                 Src.THIRD_PARTY, "Conference + Expanded standings. W-L cross-checked against NBA.com for 28/30 teams in the original capture (TOR/WAS not visible there); re-read 2026-11-14: all 30 W-L identical (ratings_recheck_2026-11-14.json).")
+register_source("nba_standings_official", "NBA.com Standings — 2026-27 official table",
+                "https://www.nba.com/standings", Src.OFFICIAL,
+                "All 30 clubs' W-L plus HOME/ROAD/CONF/DIV splits, read 2026-11-14 10:25 UTC "
+                "(session arena/6650be4d-nba2). The 'Margins & Stats' section of the same page did "
+                "NOT render PS/G, PA/G or SRS for this client, so those three fields remain "
+                "third-party (FLAG-RAT-01).")
+register_source("nba_injury_pdf_0500", "NBA Official Injury Report 11/14 05:00 ET (official)",
+                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+                Src.OFFICIAL,
+                "Newest release listed on the official index at capture time (the index lists the "
+                "2026-11-14 releases from 12:00 a.m ET through 5:00 a.m ET). It supersedes the "
+                "11/13 19:30 ET release for the pick window, is the first release carrying the "
+                "2026-11-15 slots, and is the first in which every row repeats its team - which is "
+                "what removes the page-break ambiguity behind FLAG-INJ-08.")
+register_source("nba_games_finals", "NBA.com Schedule — 2026-11-13 final scores (official)",
+                "https://www.nba.com/schedule?date=2026-11-14", Src.OFFICIAL,
+                "The nine 2026-11-13 games read as Final / Final/OT on the official schedule page, "
+                "2026-11-14 10:25 UTC. These are day-before context games: they are in neither "
+                "sealed ledger, so grading against them is a model check, never a settled "
+                "registered forecast (FLAG-SET-02).")
 register_source("nba_stats_blocked", "stats.nba.com JSON endpoints", "https://stats.nba.com/stats/leaguestandingsv3",
                 Src.BLOCKED, "Unreachable from this environment; nba.com/stats tables are client-rendered.")
 register_source("odds_blocked", "Market odds feed", "", Src.BLOCKED,
