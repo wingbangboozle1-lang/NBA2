@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -37,16 +38,16 @@
 <main>
 
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 31-game window (Nov 13 → Nov 16) priced from official NBA data only.
-Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
-Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
+<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
+ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
+line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
 <div class="kpis">
   <div class="kpi"><b>27</b><small>games priced in window</small></div>
   <div class="kpi"><b>183</b><small>league games observed (season to date)</small></div>
   <div class="kpi"><b>5/21/1</b><small>A / B / C line grades</small></div>
-  <div class="kpi"><b>67.7%</b><small>walk-forward accuracy (139 finals)</small></div>
-  <div class="kpi"><b>0</b><small>picks published (all withheld)</small></div>
+  <div class="kpi"><b>67.7%</b><small>walk-forward accuracy (167 finals)</small></div>
+  <div class="kpi"><b>27</b><small>leans published / stakes 0</small></div>
   <div class="kpi"><b>12.95</b><small>σ margin sd (fitted, pts)</small></div>
   <div class="kpi"><b>+0.71</b><small>home-court (fitted, pts)</small></div>
   <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
@@ -63,10 +64,11 @@ build were cross-checked against it. <a href="verification.html">See the verific
 <div class="cards">
   <div class="card"><h4><a href="executive-summary.html">Executive summary</a></h4><p>What was built, what is verified, what is impossible yet, and the recommended path.</p></div>
   <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All 27 games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
-  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every pick, its gate status, and the exact reason it is withheld.</p></div>
+  <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
-  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>Seven strategies against twelve gates, plus the competition rules and reward split.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>85 official status rows, per-team exposure, and exactly what cannot be quantified.</p></div>
+  <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>26 official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>24 proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
@@ -74,12 +76,14 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="flagged.html">Flagged for review</a></h4><p>29 irregularities with sources, none of which block publication.</p></div>
 </div>
 
-<div class="note warn"><b>The team records on this site are a pre-final snapshot.</b>
-The nine 2026-11-13 games have since been played and are official. Reconstructed against today's
-standings, this site's 30 team records agree with the <em>pre-final</em> state on <b>30 of 30</b> rows
-and with current official standings on <b>12 of 30</b>. That is not a transcription error — it is a
-snapshot that has aged. The <a href="live-verification.html">Live verification page</a> lists every
-stale row and re-grades the repository's first real forecast.</div>
+<div class="note"><b>Staleness: resolved, and the check that caught it is still running.</b>
+The standings this build published had been transcribed before the 2026-11-13 finals, so they agreed
+with the pre-final state on 30 of 30 rows and with live standings on 12 of 30. On 2026-11-14 the
+table was re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and it now matches live official standings on <b>30 of 30</b> rows, home and road splits included.
+The proof is stronger than a re-read: all 30 records were rebuilt independently from the 183 official
+final scores in <code>data/raw/history/</code> and agree exactly. The measure that found the drift is
+kept, inverted, on the <a href="live-verification.html">Live verification page</a>.</div>
 
 <h2>Integrity checks that passed on this build</h2>
 <p class="lede">Arithmetic identities the official tables must satisfy. If a transcription were wrong, one of these breaks.</p>

@@ -19,6 +19,7 @@
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
 <a href="correlations.html">Correlations &amp; parlays</a>
 <a href="props.html">Player props</a>
 <a href="injuries.html">Injuries &amp; rotation</a>
@@ -114,9 +115,10 @@ provenance lint proves all 915 published rows carry a source, the site is byte-f
 <code>docs/</code>, <code>dashboard/</code>, <code>verified/</code>, <code>originated/</code>). A reader has no way to know
 which one is current. The root page says "as-of 2026-11-13" while its own ledger is sealed at 22:51 that day, and the site
 still shows a snapshot several hours old on the next day.</div>
-<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price, no per-game results, no player game
-logs. Those three absences are why the prior build could not produce a single settled bet, and they are why this build
-withholds all 27 window picks rather than publishing confidence it cannot support.</div>
+<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price and no player game logs.
+Per-game results are no longer missing — 183 official finals are committed and every one of the 30 standings records
+rebuilds from them exactly — so backtests, out-of-sample splits and settlement all run today. The two remaining
+absences are why every stake on this site is 0.00 units rather than a number that looks like a bet.</div>
 <h2>What this session changed, and what it deliberately did not</h2>
 <p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
 plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier
