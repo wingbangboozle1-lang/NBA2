@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "1fdba6f1ad6de0c058d01e024066e8f39ea8eac65686f79cd67979e10b66a187",
+  "input_digest": "2bb76cc571986fe835b5cbc8be436c404f7ddf0119d1580ecb817434f5f9edde",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -32027,8 +32027,8 @@
       "benefit": "One site, one set of numbers, no chance of a reader landing on the stale one.",
       "effort": "S",
       "risk": "Low, but it is a repository setting change that only the owner can make — this session cannot push it and should not guess.",
-      "recommendation": "No action required — measured, not assumed. Do NOT 'fix' the Pages setting on the strength of the API field alone; re-fetch the live URL first, because the field contradicts what is served.",
-      "status": "implemented this session (verified by fetching the live URL)"
+      "recommendation": "No action required — measured, not assumed: the live URL already serves the v2 site/ tree, proven because /strategy-lab.html resolves and that file exists only under site/. Do NOT 'fix' the Pages setting on the strength of the API's build_type field alone; it contradicts what is actually served.",
+      "status": "implemented this session"
      },
      "source": {
       "name": "COORDINATION.md",

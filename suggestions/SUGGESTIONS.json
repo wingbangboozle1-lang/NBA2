@@ -422,8 +422,8 @@
       "benefit": "One site, one set of numbers, no chance of a reader landing on the stale one.",
       "effort": "S",
       "risk": "Low, but it is a repository setting change that only the owner can make \u2014 this session cannot push it and should not guess.",
-      "recommendation": "No action required \u2014 measured, not assumed. Do NOT 'fix' the Pages setting on the strength of the API field alone; re-fetch the live URL first, because the field contradicts what is served.",
-      "status": "implemented this session (verified by fetching the live URL)"
+      "recommendation": "No action required \u2014 measured, not assumed: the live URL already serves the v2 site/ tree, proven because /strategy-lab.html resolves and that file exists only under site/. Do NOT 'fix' the Pages setting on the strength of the API's build_type field alone; it contradicts what is actually served.",
+      "status": "implemented this session"
     },
     {
       "id": "S-43",
