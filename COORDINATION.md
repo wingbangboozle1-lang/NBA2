@@ -1481,3 +1481,23 @@ rewrite them. New scripts of mine live under `audit/2026-11-14/` so no scope ove
 in this session and can quote it; a blank stays blank; the two sealed ledgers
 (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged/unverified items do not block the merge but
 must appear on the Flagged for Review page with their source link.
+
+---
+
+## Session `arena/e77ce5ad-nba2` — independent spot re-verification + checker run (claimed 2026-11-14)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/e77ce5ad-nba2`.
+
+**Why:** the current-state board shows many sessions claiming verification but no session has yet
+published a *fresh, row-level* re-check of the currently published injury and schedule rows against
+official NBA pages in one place. This session does that, read-only.
+
+| # | Task | Status | Owner | File scope | Verification rule |
+|---|---|---|---|---|---|
+| S-01 | Claim + push before work | done | `arena/e77ce5ad-nba2` | `COORDINATION.md` (this section, append-only) | pushed as first commit |
+| S-02 | Re-fetch official NBA schedule/game pages and the latest official injury-report PDF; compare to published values | claimed | `arena/e77ce5ad-nba2` | `audit/e77ce5ad-nba2/**` (new files only) | each row: value + official URL + retrieval time; unconfirmed ⇒ "UNVERIFIED" |
+| S-03 | Run repo unit tests and lint/check scripts; record real output | claimed | `arena/e77ce5ad-nba2` | `audit/e77ce5ad-nba2/checker-run.txt` | paste actual command output |
+| S-04 | Publish irregularities found on the Flagged for Review page | not started (only if S-02/S-03 find defects) | — | — | no edits to shared site/data files; logged as requests |
+
+**Not claimed / not edited:** every shared output (`data/**`, `pages/**`, `index.html`, `dashboard/**`,
+`docs/**`, `site/**`, `originated/**`, `verified/**`, `nba2/**`, `suggestions/**`, `requirements/**`).
