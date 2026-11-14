@@ -660,11 +660,16 @@ FLAGS += [
      "played, and all 30 team records now rebuild with zero mismatches.",
      "Fixed. Backtests, out-of-sample splits and settlement run on the full window.",
      "https://www.nba.com/games?date=2026-11-13"),
-    ("F-038", "medium", "Data", "No official injury row exists for any 11/16 or 11/17 game, and at capture time "
-     "(11/14 04:30 AM ET) no team had filed for 11/15 either. This is the filing rule working as designed — a team "
-     "files by 5 p.m. local the day before — so it is a property of the calendar, not a retrieval failure. The "
-     "05:30 AM ET 11/14 report returned AccessDenied, so 04:30 AM is the freshest reachable release.",
-     "Those cells are blank and labelled with the filing rule. No value was inferred or carried forward.",
+    ("F-038", "medium", "Data", "No official injury row exists for any 11/16 or 11/17 game in the capture this "
+     "site uses, and in that same capture (11/14 04:30 AM ET) no team had filed for 11/15 either. Part of this is "
+     "the filing rule working as designed — a team files by 5 p.m. local the day before — but it is NOT only the "
+     "calendar: a LATER official release committed to this repository by another session (11/14 05:00 AM ET, "
+     "data/raw/injury_report_2026-11-14_0500ET.json) already contains 18 rows for 11/15 that the 04:30 AM capture "
+     "lacks. The empty 11/15 cells on this site are therefore partly an artefact of WHEN the snapshot was taken, "
+     "not purely of the filing deadline. A 05:30 AM ET fetch attempted in this session returned AccessDenied.",
+     "Those cells are blank and labelled with the filing rule and the capture timestamp. No value was inferred or "
+     "carried forward, and this page's 04:30 AM capture was not silently swapped for the 05:00 AM one without "
+     "re-verifying it against the official PDF.",
      "https://official.nba.com/nba-injury-report-2026-27-season/"),
     ("F-039", "low", "Site", "The GitHub Pages setting on this repository is still build_type 'legacy' (deploy "
      "from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever "

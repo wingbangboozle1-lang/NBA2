@@ -2223,3 +2223,53 @@ the owner, so it is raised as decision **S-31** on `site/decision-queue.html` ra
 (run 43587555531, 2026-11-14T10:55:33Z), and the workflow fails the build if the committed `site/` ever differs
 from a rebuild. So flipping the setting to `workflow` is a one-line change that will produce a live, verified v2
 site; leaving it as `legacy` keeps the v1 tree live with its 8 known crosscheck failures.
+
+### Merge-conflict record — `arena/ac5fab5c-nba2` rebase onto `main` (PR #58)
+
+`main` had advanced by ~40 commits since this branch was cut, and another session
+(`arena/6650be4d-nba2`) had refreshed the **same v2 tree** on the same day. Twelve commits were
+rebased; nine conflicted. Nothing from the other session was discarded.
+
+**The substantive conflict: two sessions refreshed the same v2 snapshot.** Their `official.py` reads
+the slate/standings/injuries/finals out of `data/raw/` snapshots and carries a 36-game slate
+(11/13→11/17, 9 day-before context games + a 27-game window). Mine transcribes a 2026-11-14 re-read
+and carries a 27-game slate (11/14→11/17). Both are internally consistent, so one had to be chosen.
+**Mine was kept,** because it is the set this session's 80 tests and 183/183 results history are built
+on. What their version uniquely contributed is **not lost**:
+
+- their nine 2026-11-13 graded games are now inside the 167-game walk-forward backtest
+  (the last scored date in `data/v2/backtest.json` is 2026-11-13), rather than a separate section;
+- every `data/raw/` capture they wrote is present and untouched — `official_standings_2026-11-14.json`,
+  `finals_2026-11-13.json`, `finals_all.json`, `injury_report_2026-11-14_0500ET.json`,
+  `injury_report_2026-11-13_1930ET.json`, `ratings_recheck_2026-11-14.json`,
+  `slate_2026-11-14_to_11-17.json`, `slate_context_2026-11-17.json`;
+- `data/settlement.json` and their whole settlement exercise is intact;
+- their `suggestions/SUGGESTIONS.json` entries S-01…S-39 are all present.
+
+**Register ID collisions, resolved by renumbering this session's entries (never theirs):**
+
+| Register | Collision | Resolution |
+|---|---|---|
+| Flags | both sessions issued F-030…F-034 | theirs keep F-030…F-034; **mine renumbered to F-036…F-041** (+F-042 for a pre-existing dangling ref, below) |
+| v2 suggestions | both issued SG-25…SG-28 | theirs keep SG-25…SG-28; **mine renumbered to SG-31…SG-36** |
+| Questions | both issued Q-15…Q-17 | theirs keep Q-15…Q-17; **mine renumbered to Q-20…Q-24** |
+| Decision queue | both issued S-29…S-33 | theirs keep S-29…S-39; **mine renumbered to S-40…S-44** |
+
+A blanket string replace initially renamed theirs as well; this was caught by a duplicate-ID check and
+reverted surgically, restoring their IDs at lines 240/248/254/260 of `nba2/v2/content.py`. A duplicate-ID
+assertion now runs over all three registers (0 duplicates).
+
+**Two defects found in `main` while merging — logged, not silently edited:**
+
+- **F-042** a published paragraph cites an open question by the ID `Q-28`, but the register runs to Q-24,
+  so the reference resolves to nothing. Inherited from the 2026-11-14 refresh on `main`.
+- **F-038 (corrected)** this session had written that the empty 11/15 injury cells were purely the filing
+  rule. The other session's later official release (11/14 05:00 AM ET) contains **18 rows for 11/15** that
+  this site's 04:30 AM capture lacks. The flag now says the honest thing: those empty cells are partly an
+  artefact of when the snapshot was taken. The 04:30 AM capture was **not** silently swapped for the newer
+  one without re-verifying it against the official PDF.
+
+**Post-merge verification (run on the merged tree):** `python3 -m nba2.v2` → 20 pages;
+`python3 -m nba2.v2.check` → OK — 0 structural, 0 semantic;
+`python3 -m unittest discover -s nba2/v2 -t . -p "test_*.py"` → **Ran 80 tests … OK**;
+183 games, all unique; `integrity()` 30 teams / 183 W / 183 L / points identity OK.

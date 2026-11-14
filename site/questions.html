@@ -37,7 +37,7 @@
 </aside>
 <main>
 <h1>Open questions</h1>
-<p class="lede">17 questions that block a decision, each with what is known, what is not, and the exact route to an
+<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 <div class="scroll"><table>
 <caption>Decision-blocking questions</caption>
@@ -193,11 +193,10 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
 </tr>
 <tr id="Q-15">
 <td>Q-15</td>
-<<<<<<< HEAD
 <td>Do the scoring averages and advanced ratings this model runs on still describe the teams?</td>
 <td>Partly answered: the records can be checked every day, and the league&#x27;s current table is published beside the model&#x27;s inputs. The scoring averages and NetRtg were read on 2026-11-13, before the nine 2026-11-13 games, so for the 18 clubs that played they are one game stale.</td>
 <td>A current read of the three official team-stat pages (traditional, opponent, advanced), and the diff against what the model used.</td>
-<td>Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the committed transcription, and publish the delta (suggestion SG-25).</td>
+<td>Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the committed transcription, and publish the delta (suggestion SG-31).</td>
 <td><span class="badge b-bad">BLOCKING</span></td>
 <td>Blocks claiming that the published lines start from current inputs; does not block publishing them.</td>
 <td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
@@ -221,27 +220,29 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
 <td><span class="badge b-bad">BLOCKING</span></td>
 <td>Blocks any per-team luck claim that uses the close/blowout split.</td>
 <td><a href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" rel="noopener" target="_blank">basketball-reference.com/leagues/NBA_2027_standings…</a></td>
-=======
+</tr>
+<tr id="Q-20">
+<td>Q-20</td>
 <td>Is the measured same-game correlation precise enough to price a two-leg parlay?</td>
 <td>Measured at +0.0393 (95% CI -0.1133 to +0.1900, n = 167). It is statistically indistinguishable from zero AND the interval still spans a range wide enough to move a two-leg price by several percent.</td>
 <td>A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.</td>
-<td>Keep appending official finals (SG-25) and recompute; the interval will narrow as 1/sqrt(n).</td>
+<td>Keep appending official finals (SG-31) and recompute; the interval will narrow as 1/sqrt(n).</td>
 <td><span class="badge b-warn">open</span></td>
-<td>Decides whether SG-28 (publish the parlay price) is safe to ship.</td>
+<td>Decides whether SG-34 (publish the parlay price) is safe to ship.</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
-<tr id="Q-16">
-<td>Q-16</td>
+<tr id="Q-21">
+<td>Q-21</td>
 <td>Is 300 settled bets the right bar for every strategy, or only for single bets?</td>
 <td>300 is applied uniformly (G7). But the two parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval — the bar is not equally strict across types.</td>
 <td>Each strategy&#x27;s own bet-to-bet correlation, which the lab can now simulate from settled history.</td>
-<td>Run a power simulation per strategy on its own settled stream and set n per type (SG-26).</td>
+<td>Run a power simulation per strategy on its own settled stream and set n per type (SG-32).</td>
 <td><span class="badge b-warn">open</span></td>
 <td>Sets when each strategy becomes rank-eligible on the leaderboard.</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
-<tr id="Q-17">
-<td>Q-17</td>
+<tr id="Q-22">
+<td>Q-22</td>
 <td>How much of S1&#x27;s 64.7% hit rate survives once the schedule it faced is controlled for?</td>
 <td>64.7% over 167 bets, p = 0.0002 against a coin flip, and it holds out of sample (66.7% on the last 30% of dates). But the sample is one month of one season, and a soft early-season schedule would inflate it.</td>
 <td>Strength of schedule per team, computed from the same committed finals.</td>
@@ -250,26 +251,25 @@ answer. Nothing here is rhetorical: every question names the dataset or the meas
 <td>Decides whether the signal is real skill or a schedule artefact — the single most important open question on the site.</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
-<tr id="Q-18">
-<td>Q-18</td>
+<tr id="Q-23">
+<td>Q-23</td>
 <td>Do the two ratings estimators disagree enough for their disagreement to be a usable signal?</td>
 <td>They disagree by at most 0.68 pts across 30 teams. That is reassuring for stability and useless for signal: there is currently no game where the two estimators tell materially different stories.</td>
 <td>A season with more heterogeneous teams, or an estimator built on a genuinely different input (e.g. possession-level efficiency from play-by-play).</td>
 <td>Track the max disagreement weekly; promote it to a headline only if it ever exceeds ~2 pts for a game.</td>
 <td><span class="badge b-warn">open</span></td>
-<td>Decides whether SG-27 is worth doing.</td>
+<td>Decides whether SG-33 is worth doing.</td>
 <td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
 </tr>
-<tr id="Q-19">
-<td>Q-19</td>
+<tr id="Q-24">
+<td>Q-24</td>
 <td>What fraction of the 11/15-11/17 slate will have an official injury filing before tip?</td>
 <td>At capture (11/14 04:30 AM ET) zero teams had filed for 11/15, and no 11/16 or 11/17 rows exist in any published report, because the filing deadline is 5 p.m. local the day before. This is expected, not a retrieval failure.</td>
 <td>A timestamped capture on the afternoon of 11/14, 11/15 and 11/16.</td>
-<td>Re-fetch at 19:00 ET each day and diff (SG-25 covers the mechanism).</td>
+<td>Re-fetch at 19:00 ET each day and diff (SG-31 covers the mechanism).</td>
 <td><span class="badge b-warn">open</span></td>
 <td>Decides how far ahead an injury-driven line can honestly be published.</td>
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
->>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
 </tr>
 </tbody></table></div>
 <h2>Questions this session's live evidence raised (6)</h2>

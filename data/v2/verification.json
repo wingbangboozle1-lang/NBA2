@@ -25,9 +25,9 @@
   "checks": [
    {
     "id": "repo-schedule",
-    "what": "Committed slate snapshot vs live nba.com/schedule transcription (date, away, home, game id)",
-    "repo_value": "31 games",
-    "live_value": "22 games",
+    "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
+    "repo_value": "36 games",
+    "live_value": "27 games",
     "result": "MISMATCH",
     "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039')] only-in-live=[]",
     "src": "https://www.nba.com/schedule?date=2026-11-15"
@@ -52,11 +52,20 @@
    },
    {
     "id": "repo-wl",
-    "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
-    "repo_value": "12/30 identical",
+    "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
+    "repo_value": "30/30 identical",
     "live_value": "30 teams",
-    "result": "MISMATCH",
-    "detail": "{'ATL': ('7-5', '7-6'), 'CHI': ('1-9', '2-9'), 'CLE': ('6-6', '6-7'), 'GSW': ('8-4', '8-5'), 'HOU': ('9-3', '10-3'), 'IND': ('4-8', '5-8'), 'LAC': ('2-8', '3-8'), 'MEM': ('7-4', '8-4'), 'MIA': ('5-6', '6-6'), 'MIL': ('1-11', '1-12'), 'NOP': ('4-8', '4-9'), 'NYK': ('6-5', '6-6'), 'OKC': ('8-4', '8-5'), 'ORL': ('4-7', '5-7'), 'POR': ('8-3', '9-3'), 'SAC': ('1-10', '1-11'), 'SAS': ('10-2', '11-2'), 'UTA': ('1-11', '1-12')}",
+    "result": "MATCH",
+    "detail": "no differences found",
+    "src": "https://www.nba.com/standings"
+   },
+   {
+    "id": "repo-wl",
+    "what": "W-L cross-check",
+    "repo_value": "n/a",
+    "live_value": "n/a",
+    "result": "ERROR",
+    "detail": "module 'nba2.v2.official' has no attribute 'STANDINGS'",
     "src": "https://www.nba.com/standings"
    }
   ],
