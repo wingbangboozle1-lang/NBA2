@@ -662,7 +662,13 @@
     "status": "PASS",
     "measured": "our MAE 12.17 pts vs baseline (a) 0.0-spread 13.27 (gain +1.09) and baseline (b) raw point differential 15.19 (gain +3.02)",
     "required": "beat BOTH baselines by >= 0.30 points of MAE",
-    "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. This gate is the one that failed.",
+    "baseline_c_shrunk_net_no_hca": 12.093,
+    "gain_from_shrinkage": 1.173,
+    "gain_from_home_court": -0.08,
+    "disputed": true,
+    "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.09 vs 12.17 MAE (home-court gain -0.08 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
+    "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.08 pts. Passing this gate on baseline (b) alone would be a false positive.",
+    "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. NOTE: this baseline is unshrunk and is a strawman -- see baseline (c) and the disputed flag below.",
     "gap_test": {
      "n": 139,
      "mean_abs_error_model": 12.173,
@@ -788,7 +794,14 @@
     "G-06",
     "G-09",
     "G-10"
-   ]
+   ],
+   "passed_reliable": [
+    "G-07"
+   ],
+   "passed_disputed": [
+    "G-04"
+   ],
+   "note": "A gate in passed_disputed meets its registered wording but fails the stricter fair-baseline comparison, so it is not counted as evidence of skill and does not count toward the reward fraction."
   }
  },
  "leaderboard": [
@@ -805,7 +818,13 @@
    "z_deflated_for_search": 2.17,
    "auroc_winner": 0.7466,
    "mean_abs_margin_error": 11.813,
-   "gate_pass_fraction": 0.333,
+   "gate_pass_fraction": 0.167,
+   "gates_counted": [
+    "G-07"
+   ],
+   "gates_disputed_excluded": [
+    "G-04"
+   ],
    "reward_units": 0.0,
    "status": "withheld: a validation gate is FAILED",
    "rank": 1,
@@ -824,7 +843,13 @@
    "z_deflated_for_search": 0.0,
    "auroc_winner": 0.534,
    "mean_abs_margin_error": 14.453,
-   "gate_pass_fraction": 0.333,
+   "gate_pass_fraction": 0.167,
+   "gates_counted": [
+    "G-07"
+   ],
+   "gates_disputed_excluded": [
+    "G-04"
+   ],
    "reward_units": 0.0,
    "status": "withheld: a validation gate is FAILED",
    "rank": 2,
@@ -843,7 +868,13 @@
    "z_deflated_for_search": 0.0,
    "auroc_winner": 0.5653,
    "mean_abs_margin_error": 10.628,
-   "gate_pass_fraction": 0.333,
+   "gate_pass_fraction": 0.167,
+   "gates_counted": [
+    "G-07"
+   ],
+   "gates_disputed_excluded": [
+    "G-04"
+   ],
    "reward_units": 0.0,
    "status": "withheld: a validation gate is FAILED",
    "rank": 3,
@@ -862,7 +893,13 @@
    "z_deflated_for_search": 0.0,
    "auroc_winner": 0.5653,
    "mean_abs_margin_error": 10.628,
-   "gate_pass_fraction": 0.333,
+   "gate_pass_fraction": 0.167,
+   "gates_counted": [
+    "G-07"
+   ],
+   "gates_disputed_excluded": [
+    "G-04"
+   ],
    "reward_units": 0.0,
    "status": "withheld: a validation gate is FAILED",
    "rank": 4,

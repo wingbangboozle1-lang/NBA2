@@ -46,7 +46,9 @@ def build(rows: Sequence[dict], gate_result: dict, games_n: int) -> list[dict]:
     summary = gate_result["summary"]
     # gate score: fraction of *evaluable* gates that pass, zero if any gate FAILS
     evaluable = len(summary["passed"]) + len(summary["failed"]) + len(summary["partial"])
-    gate_pass_frac = len(summary["passed"]) / evaluable if evaluable else 0.0
+    # Disputed passes (met the letter of the rule but lost to the fair baseline) never count.
+    counted = [g for g in summary["passed"] if g not in summary.get("passed_disputed", [])]
+    gate_pass_frac = len(counted) / evaluable if evaluable else 0.0
     any_fail = bool(summary["failed"])
 
     out = []
@@ -79,6 +81,8 @@ def build(rows: Sequence[dict], gate_result: dict, games_n: int) -> list[dict]:
             "auroc_winner": t.get("auroc_winner"),
             "mean_abs_margin_error": t.get("mean_abs_margin_error"),
             "gate_pass_fraction": round(gate_pass_frac, 3),
+            "gates_counted": counted,
+            "gates_disputed_excluded": summary.get("passed_disputed", []),
             "reward_units": reward,
             "status": ("withheld: a validation gate is FAILED" if any_fail
                        else "withheld: sample below the G-01 floor" if n < 300

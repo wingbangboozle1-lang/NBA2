@@ -3,6 +3,7 @@
 Every data-table row must carry a source link - checked by scripts/check_site.py.
 Deterministic; stdlib only. Run: python3 scripts/build_site.py"""
 import csv, html, os
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -27,6 +28,19 @@ def link(url, text=None):
     if not url:
         return '<span class="flag">unverified</span>'
     return f'<a href="{html.escape(url)}" target="_blank" rel="noopener">{html.escape(text or url)}</a>'
+
+
+def cell(v):
+    """Blank cells carry the dashboard's blank marker — never an empty <td> (CR-4)."""
+    return v if str(v).strip() else '<span class="flag">—</span>'
+
+
+def src_label(p):
+    """Label a Source cell for what it actually links to (V-05)."""
+    if p["source_type"] == "official":
+        return "nba.com player page"
+    host = urlparse(p["source_url"]).netloc
+    return host or "source link"
 
 
 def page(fname, title, body):
@@ -345,7 +359,8 @@ Reward payouts are locked until (a) market feed exists for CLV and (b) sizing is
 {table(["Team", "Record", "NRtg/A", "Expected wins", "Luck component", "Source"], lk_rows)}
 <h2>Season production baselines (verified NBA.com rows)</h2>
 {table(["Team", "Player", "PPG", "RPG", "APG", "As of", "Source", "Status"],
-       [[p["team"], p["player"], p["ppg"], p["rpg"], p["apg"], p["as_of"], short(p["source_url"], "nba.com player page"), p["verified"]]
+       [[p["team"], cell(p["player"]), cell(p["ppg"]), cell(p["rpg"]), cell(p["apg"]),
+         cell(p["as_of"]), short(p["source_url"], src_label(p)), p["verified"]]
         for p in read("player-baselines-2026-11-13.csv")])}
 """
     page("data.html", "Data Tables", body)
