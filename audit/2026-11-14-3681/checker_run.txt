@@ -1,21 +1,26 @@
-=== FINAL SWEEP 2 2026-11-14T11:23:25Z ===
+=== POST-REBASE-2 SWEEP 2026-11-14T11:43:11Z ===
+wrote pages/verification-report.html
+built report: {'n_games': 155, 'n_graded': 139, 'first_date': '2026-10-20', 'last_date': '2026-11-12', 'n_dates': 21, 'generated': '2026-11-14'}
+36 lines, 30 teams
+--- lint ---
+LINT OK — 1404 rows across 50 tables, every row sourced, every blank explained
 --- crosscheck ---
-97 checks: 89 pass, 0 fail, 8 info, 0 n/a
+97 checks: 88 pass, 1 fail, 8 info, 0 n/a
 --- unit ---
 
 OK
 
 OK
---- v2 self-tests ---
 
-FAILED (errors=2)
---- verify_site ---
+OK
+--- verify_site/links/v2check ---
 VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
---- links ---
 ALL INTERNAL LINKS OK
---- lint ---
-LINT OK — 1401 rows across 50 tables, every row sourced, every blank explained
---- README counts ---
-README counts already current (21/50/1401); nothing to do
+OK — 0 structural, 0 semantic
+--- README ---
+README counts -> 21 pages, 50 tables, 1404 rows
 --- crosscheck after README ---
 97 checks: 89 pass, 0 fail, 8 info, 0 n/a
+--- seals ---
+sealed-2026-11-13.json: seal verified cf7dedc689597cb8… (22 predictions)
+sealed-2026-11-14.json: seal verified c841e8f396dae6ca… (27 predictions)

@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="91">
+    <section class="card table-card" id="flags" data-rows="94">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -342,6 +342,26 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
 </tr>
+<tr id="FLAG-ORIG-01">
+<td>FLAG-ORIG-01</td>
+<td>low</td>
+<td>provenance</td>
+<td>In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON keys: each team object has both &quot;conf&quot;: &quot;East|West&quot; and &quot;conf&quot;: &quot;&lt;conference record&gt;&quot;. A JSON parser silently keeps the last, so the conference name is unreachable and originated/engine/model.js publishes the conference record in its place. Not fixed here (the WSH→WAS team-key fix was this session&#x27;s scope; the schema repair is the tree owner&#x27;s call) — flagged for review 2026-11-14 by arena/6c5195d1.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json</a></td>
+<td>Owner renames one of the two keys (e.g. conf_record) and regenerates originated/ (the 24-check verifier must stay green).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ORIG-01">FLAG-ORIG-01</a></td>
+</tr>
+<tr id="FLAG-PAGES-01">
+<td>FLAG-PAGES-01</td>
+<td>info</td>
+<td>provenance</td>
+<td>Two verified site trees ship from this repository, and only ONE is served: probed 2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed by the deploy-pages action) while the root tree&#x27;s pages/ URLs return 404 — the Pages API&#x27;s build_type: legacy (branch main /) does not describe the artifact readers receive. Both trees are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The root tree additionally publishes the sealed-ledger picks and the settlement chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and suggestion S-27/Q-27 (owner: archive the root tree or surface it).</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml</a></td>
+<td>Owner decides S-27: archive the root tree or restore it as the published surface; until then it stays CI-verified and refreshed nightly.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PAGES-01">FLAG-PAGES-01</a></td>
+</tr>
 <tr id="FLAG-PARAM-01">
 <td>FLAG-PARAM-01</td>
 <td>low</td>
@@ -568,7 +588,7 @@
 <td>ratings</td>
 <td>The close-game and blowout-game split columns are internally inconsistent AT THE TEAM LEVEL: for 18 of the 30 clubs the close and blowout rows together account for more games than the club has played (ATL shows 13 close+blowout games in a 12-game record, MEM 12 in 11, DET 12 in 11). The league-wide sums DO balance (close 99=99, blowout 88=88), so a league-level check alone would have passed - the check has to be per team. These columns are therefore NOT used for any model parameter and are left blank in the luck table: a split that contradicts the games played cannot support a per-team luck claim. The cause is the text extraction of the source table (blank/merged cells), not necessarily the source itself.</td>
 <td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
-<td>Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout &lt;= games played.</td>
+<td>Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout &lt;= games played (owner decision tracked as suggestion S-34, renumbered from the queue-fragment S-26).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
 </tr>
@@ -636,9 +656,9 @@
 <td>FLAG-SET-01</td>
 <td>info</td>
 <td>provenance</td>
-<td>Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against a real official finals snapshot (data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.</td>
+<td>Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:44:01+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.</td>
 <td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json</a></td>
-<td>Commit data/raw/finals_&lt;date&gt;.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).</td>
+<td>Commit data/raw/finals_&lt;date&gt;.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-01">FLAG-SET-01</a></td>
 </tr>
@@ -661,6 +681,16 @@
 <td>Connect a licensed odds feed (see requirements R-101 and the Questions page, Q-04).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
+</tr>
+<tr id="FLAG-SLATE-02">
+<td>FLAG-SLATE-02</td>
+<td>info</td>
+<td>provenance</td>
+<td>Historical flag (raised 2026-11-13, kept registered so the ratings table&#x27;s TOR/WAS rows can link the coverage history they carry per CR-4): the win-loss records for Toronto and Washington &#x27;were not visible in the retrieved NBA.com page text; third-party value only&#x27; in the capture that raised it. RESOLVED — see FLAG-RES-01: on 2026-11-14 all 30 teams&#x27; W-L were re-read from the official standings page (TOR 5-7, WAS 4-9) and match, and nba2/data/records.json verifies TOR/WAS via their official NBA.com team pages.</td>
+<td><a class="cell-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">https://www.nba.com/standings</a></td>
+<td>None — recorded history. FLAG-RES-01 carries the resolution evidence.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-02">FLAG-SLATE-02</a></td>
 </tr>
 <tr id="FLAG-SLATE-03">
 <td>FLAG-SLATE-03</td>

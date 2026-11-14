@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "87d7390d7b4d2fad81fa4dd34da358b899642a04f55bfca19904100f187db5d7",
+  "input_digest": "3620ce39c13b245aceecd8f76f83955ec5961c7366050f778b3b42a819cabee3",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -50,8 +50,8 @@
  "sections": {
   "ratings": {
    "title": "Team ratings table (the model's only inputs)",
-   "blurb": "The two win-loss columns are INDEPENDENT measurements and they are printed side by side for exactly that reason: the model runs on the 2026-11-13 third-party snapshot (the left-hand pair), while the right-hand pair is the league's own table read on 2026-11-14. They differ for 18 clubs because the nine 2026-11-13 games were played in between — an aged snapshot, not a transcription error. PS/G, PA/G and SRS could still not be pulled from an official endpoint (FLAG-RAT-01); the 'Margins & Stats' section of nba.com/standings does not render them for a non-browser client.",
-   "source_note": "Left column: data/raw/team_ratings_2026-11-13.json (third party). Right column: data/raw/official_standings_2026-11-14.json (official NBA.com).",
+   "blurb": "The two win-loss columns are INDEPENDENT measurements and they are printed side by side for exactly that reason: the model runs on the 2026-11-13 third-party snapshot (the left-hand pair), while the right-hand pair is the league's own table read on 2026-11-14 — NBA.com/standings. They differ for 18 clubs because the nine 2026-11-13 games were played in between — an aged snapshot, not a transcription error. PS/G, PA/G and SRS could still not be pulled from an official endpoint (FLAG-RAT-01); the 'Margins & Stats' section of nba.com/standings does not render them for a non-browser client.",
+   "source_note": "Left column: data/raw/team_ratings_2026-11-13.json (third-party Basketball-Reference snapshot). Right column: data/raw/official_standings_2026-11-14.json (official NBA.com).",
    "columns": [
     {
      "key": "team",
@@ -31014,7 +31014,7 @@
   },
   "suggestions": {
    "title": "Site-improvement suggestions — review queue",
-   "blurb": "Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue's state is the record of that decision.",
+   "blurb": "Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.",
    "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
    "columns": [
     {
@@ -42563,8 +42563,8 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against a real official finals snapshot (data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the loader reports 0 of 22 and 0 of 27 games settled: the nine played games are day-before context that neither sealed ledger covers, so the sealed games of 11/14–17 still have no official final scores. Metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
-      "method": "python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed"
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:44:01+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
       "name": "NBA.com Schedule — 2026-11-13 final scores (official)",
@@ -44368,13 +44368,13 @@
      "values": {
       "id": "S-A04",
       "title": "Settle the sealed ledger as soon as finals exist",
-      "problem": "Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.",
+      "problem": "At proposal time settlement had run but measured nothing: data/settlement.json carried settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell was blank and the gates stayed blocked — correctly, because the sealed games of 11/14–17 had not finished.",
       "proposal": "After each game day, commit data/raw/finals_<date>.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.",
       "benefit": "First real measurement of line error and calibration — the 'remove luck' step becomes data, not design.",
       "effort": "Low — settle.py is written, tested, and already produces the pending record.",
       "risk": "None if finals come from official box scores; never impute a score.",
       "recommendation": "Run it after 11/14's games are final, then after each subsequent game day.",
-      "status": "partially done — settle runs; awaiting official finals"
+      "status": "partially done — the finals ingest chain is live and verified (finals_all.json carries the nine official 11/13 finals; 0 of 49 sealed games have been played as of 2026-11-14); the nightly ingest job now fetches, merges and settles each game day automatically"
      },
      "source": {
       "name": "COORDINATION.md",
@@ -44400,7 +44400,7 @@
       "effort": "Medium — mostly a decision plus five banner edits.",
       "risk": "Low — nothing is deleted; trees stay for audit.",
       "recommendation": "Decide before the next data refresh so only one tree is refreshed.",
-      "status": "owner decision"
+      "status": "DECIDED 2026-11-14, CORRECTED the same day after direct probing (merge reconciliation log, COORDINATION.md): the live URL serves the v2 site/ artifact (pages/session-audit.html returns 404; the v2 dashboard serves at the root URL) — the Pages API's build_type: legacy does NOT describe the served artifact, so the earlier 'root+pages/ is canonical' claim was wrong. What remains for the owner is S-27/Q-27: archive the root tree or keep it maintained as the sealed-ledger and settlement surface (it stays CI-verified meanwhile: provenance lint over 1,143 rows, semantic cross-check 83 pass / 0 fail). See FLAG-PAGES-01."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -45493,6 +45493,52 @@
      "verified": false
     },
     {
+     "key": "FLAG-ORIG-01",
+     "values": {
+      "id": "FLAG-ORIG-01",
+      "severity": "low",
+      "area": "provenance",
+      "statement": "In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON keys: each team object has both \"conf\": \"East|West\" and \"conf\": \"<conference record>\". A JSON parser silently keeps the last, so the conference name is unreachable and originated/engine/model.js publishes the conference record in its place. Not fixed here (the WSH→WAS team-key fix was this session's scope; the schema repair is the tree owner's call) — flagged for review 2026-11-14 by arena/6c5195d1.",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json",
+      "action": "Owner renames one of the two keys (e.g. conf_record) and regenerates originated/ (the 24-check verifier must stay green)."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-ORIG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-PAGES-01",
+     "values": {
+      "id": "FLAG-PAGES-01",
+      "severity": "info",
+      "area": "provenance",
+      "statement": "Two verified site trees ship from this repository, and only ONE is served: probed 2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed by the deploy-pages action) while the root tree's pages/ URLs return 404 — the Pages API's build_type: legacy (branch main /) does not describe the artifact readers receive. Both trees are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The root tree additionally publishes the sealed-ledger picks and the settlement chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and suggestion S-27/Q-27 (owner: archive the root tree or surface it).",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml",
+      "action": "Owner decides S-27: archive the root tree or restore it as the published surface; until then it stays CI-verified and refreshed nightly."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-PAGES-01"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-PARAM-01",
      "values": {
       "id": "FLAG-PARAM-01",
@@ -46006,7 +46052,7 @@
       "area": "ratings",
       "statement": "The close-game and blowout-game split columns are internally inconsistent AT THE TEAM LEVEL: for 18 of the 30 clubs the close and blowout rows together account for more games than the club has played (ATL shows 13 close+blowout games in a 12-game record, MEM 12 in 11, DET 12 in 11). The league-wide sums DO balance (close 99=99, blowout 88=88), so a league-level check alone would have passed - the check has to be per team. These columns are therefore NOT used for any model parameter and are left blank in the luck table: a split that contradicts the games played cannot support a per-team luck claim. The cause is the text extraction of the source table (blank/merged cells), not necessarily the source itself.",
       "source": "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
-      "action": "Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout <= games played."
+      "action": "Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout <= games played (owner decision tracked as suggestion S-34, renumbered from the queue-fragment S-26)."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -46165,9 +46211,9 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against a real official finals snapshot (data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:44:01+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
-      "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page)."
+      "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },
      "source": {
       "name": "COORDINATION.md",
@@ -46225,6 +46271,29 @@
      "note": "",
      "flags": [
       "FLAG-SLATE-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-SLATE-02",
+     "values": {
+      "id": "FLAG-SLATE-02",
+      "severity": "info",
+      "area": "provenance",
+      "statement": "Historical flag (raised 2026-11-13, kept registered so the ratings table's TOR/WAS rows can link the coverage history they carry per CR-4): the win-loss records for Toronto and Washington 'were not visible in the retrieved NBA.com page text; third-party value only' in the capture that raised it. RESOLVED — see FLAG-RES-01: on 2026-11-14 all 30 teams' W-L were re-read from the official standings page (TOR 5-7, WAS 4-9) and match, and nba2/data/records.json verifies TOR/WAS via their official NBA.com team pages.",
+      "source": "https://www.nba.com/standings",
+      "action": "None — recorded history. FLAG-RES-01 carries the resolution evidence."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SLATE-02"
      ],
      "verified": false
     },
@@ -46874,6 +46943,27 @@
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
