@@ -4,8 +4,9 @@ Read with: [`analysis/crosscheck-5b80b88a.md`](crosscheck-5b80b88a.md) — the 8
 session ran, each with its recomputation — and
 [`queue-additions-5b80b88a.json`](queue-additions-5b80b88a.json), the merge-ready queue rows.
 
-Baseline for every number below: `main` at `ed017f5` (PR #27 merged 2026-11-14 ~01:07 UTC), which
-includes the data-window refresh from session `arena/5a5fa7c4-nba2`. If `main` moves again, the
+Baseline for every number below: `main` at `1ba60fc` (PR #28/#30, 2026-11-14 ~01:19 UTC), which adds the
+measured-skill backtest surface from session `arena/f7477d5e-nba2` on top of the data-window refresh
+(`ed017f5`, PRs #24/#25/#27). If `main` moves again, the
 counts move with it — which is finding F2 below, in another form.
 
 ## 1. What the system is, in one paragraph
@@ -30,7 +31,7 @@ and rebuild — failing closed if any gate or endpoint fails.
 | Sealed forward predictions | 22, digest `cf7dedc689597cb8…` printed on every page; equals the displayed line table | `CC-SEAL-01…06` |
 | Reward pool | 100 units, 0 allocated, no strategy promoted | `CC-GATE-03/05` |
 | Tests | 62, all passing | `python3 -m unittest discover -s nba2/tests -t .` |
-| This session's independent checks | 80: 65 pass, 8 fail, 7 info | `tools/crosscheck_site.py` |
+| This session's independent checks | 88: 72 pass, 8 fail, 8 info | `tools/crosscheck_site.py` |
 
 ## 2. What is real, what is derived, and what is deliberately empty
 
@@ -55,11 +56,11 @@ in-game game-flow columns. Three of those cells were fabricated by an earlier se
 in review (irregularities I-01…I-03 on the Flagged for Review page). A number there would be the
 failure mode this project exists to avoid.
 
-## 3. The eight failing checks, as seven findings
+## 3. The eight failing checks, as eight findings
 
 Each was reproduced by recomputing from the committed files; **none of them changes a published
-line, pick, or model input**, and two of them are defects in code merged an hour before this
-report was written.
+line, pick, or model input**, and three of them are defects in code merged within the hour before
+this report was written.
 
 | # | Finding | Evidence | Why it matters |
 |---|---|---|---|
@@ -69,7 +70,8 @@ report was written.
 | **F4** | The column labelled "W-L (official NBA.com)" is filled from the third-party source, so the advertised disagreement guard cannot fire | `build_site_data.py:111` (`wl_official` from the same object as `wl`); 30/30 identical; `CC-DER-05` | It reads as verification and is a copy |
 | **F5** | AT-RISK gates are reported as "blocked" on all nine leaderboard rows | `leaderboard.py:149` folds `"AT-RISK"` into `gates_blocked`; matrix says 8 blocked + 2 at-risk; `CC-GATE-02` | At-risk gates are the ones a single data change can move — the roadmap is hidden by the flattening |
 | **F6** | Washington is keyed `WSH` on one surface and `WAS` on four others | `originated/data/teams.json` vs `nba2/data/records.json`, `data/standings-2026-11-13.csv`, the ratings snapshot, the published table; `CC-X-00` | Any join drops the club *silently*; it is also how a coverage figure gets misread as a data conflict |
-| **F7** | 7 published rows are rendered on no page (`parlays_xg`, `parlay_costs`) | `build_site_data.py:852-853` vs `build_site.py:260`; `CC-HTML-03` | Cross-game parlays and stacking cost — both explicitly requested — are invisible while being counted in every total |
+| **F7** | The measured result lives on a second surface only. The canonical site still reads `gates_passed = 0 of 90` and "nothing has settled yet", while `backtest/` reports 2 of 10 gates PASS on 139 graded games — different metrics (graded games vs settled bets against a price), so not a contradiction, but a reader of the landing page cannot see that grading happened at all. The two also use different gate vocabularies: `AT-RISK` on the site, `PARTIAL` in the backtest | `CC-BT-08`; `backtest/data/report.json` → `gates.summary`, `data/site.json` → `meta.gates_passed` | The project's headline question — "is there skill here?" — has a partial answer that the site does not carry |
+| **F8** | 7 published rows are rendered on no page (`parlays_xg`, `parlay_costs`) | `build_site_data.py:852-853` vs `build_site.py:260`; `CC-HTML-03` | Cross-game parlays and stacking cost — both explicitly requested — are invisible while being counted in every total |
 
 What the harness *confirmed*, because a verification log that only lists faults is not a
 verification: no value on any blocked-source row; every blank carrying a flag or a note; every
@@ -98,6 +100,28 @@ Appendix 1 of the cross-check report is a 30-row matrix of every committed captu
 **Recommended site wording:** "30/30 clubs agree; 28/30 were visible in the 11/13 22:26 UTC
 game-card capture; TOR and WAS are confirmed by a second official capture." Never a bare "28/30".
 
+## 4b. What the measured backtest says — and it is not "we have edge"
+
+`backtest/data/report.json` (session `arena/f7477d5e-nba2`, PR #28) grades 155 official final
+scores, 139 of them with a line to compare against. This session re-derived its arithmetic from the
+committed game rows rather than trusting it — `CC-BT-01…07` all pass: the counts, every published
+rate over its own numerator and denominator, the tier and calibration partitions, the gate index,
+and the rule that nobody is paid while a gate fails. What those numbers say:
+
+| Measure | Our model | The naive alternative | Verdict in the report |
+|---|---|---|---|
+| Margin error (MAE, points) | 12.173 | 13.266 (zero-line baseline) | better, but `p = 0.348` — not significant |
+| Straight-up hit rate | 62.59% (87/139) | **64.03% (89/139) for "pick the club with the better net rating"** | the baseline picks more winners; `p = 0.902` |
+| Winner discrimination (AUROC) | 0.7015 | — | useful ordering, not a priced edge |
+| Tier A only | 76.9% (65 games), deflated z = 2.17 | coin flip 0.5 | the one signal worth following up |
+| Rewards | — | — | **0 units allocated**, because G-01 (300 settled bets) is FAIL at 46% of sample |
+
+The honest reading for anyone deciding where to spend: **a one-line naive rule is currently as good
+as the model at picking winners**, and the sample cannot tell 63% from 52% (their own `power` table:
+a 1-point edge needs ~4,551 games at 80% power). That is the luck-removal requirement doing its
+job — and it is the single most decision-relevant fact on the repository today, which is why F7
+(it lives on an unintegrated surface) matters.
+
 ## 5. Luck removal and the leaderboard: where it honestly stands
 
 The machinery that separates skill from luck is built and enforced: pre-registration with the
@@ -107,7 +131,7 @@ near-identical strategies cannot take five prizes; the reward pool at 100 units 
 allocated**; and no promotion while gates are unmeasured. The luck columns themselves are
 arithmetically sound (`CC-DER-06`).
 
-What is missing is history and price. Two things changed this week: `refresh.py --finals` now
+What is missing is a price. Two things changed this week: `refresh.py --finals` now
 fetches official final scores into the shape `settle` expects, so the ledger can start accruing
 graded results without a human in the loop — **if** the endpoint answers from a runner; and there
 is still no market price, so CLV, ROI and stake sizing stay empty, and every "edge" on the site
@@ -137,7 +161,7 @@ CDN, and are we allowed to poll it), not an ambiguity about whether the data exi
 
 ## 7. Decision path, in order
 
-1. **Fix F1 today** — it is live on the deployed site, it is three lines (`nys -= filed` before the
+1. **Fix F1 today (and read 4b before writing any stake)** — it is live on the deployed site, it is three lines (`nys -= filed` before the
    subtraction, or recompute both counts from the union), and it is the only finding here that is a
    wrong *number* rather than a wrong *label*. Add the "no negative counts" assertion (S-21) so the
    class dies with it.
@@ -148,7 +172,8 @@ CDN, and are we allowed to poll it), not an ambiguity about whether the data exi
 4. **Answer Q-26** (promotion policy) so a reward can be paid mechanically the moment bets settle.
 5. **Then the labels** — F2 through F5, F7: low effort, no model change, all of them things a
    reviewer will otherwise keep re-discovering.
-6. **Decide the canonical surface (Q-25).** Five published surfaces with five models is the biggest
-   remaining usability risk after staleness.
+6. **Decide the canonical surface (Q-25).** Six surfaces now — `backtest/**` was added by PR #28
+   rather than folded into the shared data, which is precisely the failure mode Q-25 was written
+   about, and it is why F7 exists at all.
 7. **Only after 1-4** talk about props and stakes: they need player-level and price feeds, and no
    modelling inside this repository can substitute for inputs it does not have.

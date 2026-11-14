@@ -112,6 +112,17 @@
       "risk": "A nightly job that always fails is noise; that is why the schedule stays off until the probe result is known.",
       "recommendation": "Accept; it is one line of prose per run and it is the difference between 'stale' and 'known stale'.",
       "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-31",
+      "title": "Make 'beats the naive baseline' a gate, and publish the baseline column on the site",
+      "problem": "The measured backtest already shows the problem: on 139 graded games the originated model hits 62.59% straight-up while 'pick the club with the better net rating' hits 64.03%, and the margin-error advantage (12.173 vs 13.266 MAE) is not significant (p = 0.348). Nothing in the gate set fails a strategy for losing to a naive rule, so a leaderboard could in principle promote a model that a one-line lookup matches. The result is also only visible on backtest/**, not on the canonical site.",
+      "proposal": "Add G-11 'must beat the best naive baseline on the same games, with a paired test excluding 0' to the gate set, and put the baseline column beside every score on pages/strategies.html. The numbers already exist in backtest/data/report.json (naive_baselines), and tools/crosscheck_site.py recomputes them, so this is wiring, not research.",
+      "benefit": "The competition measures skill instead of activity: a strategy earns a reward only by beating what a fan could do with a standings table, which is the actual standard the brief asks for ('selectively skill based').",
+      "effort": "medium (one gate definition + a rendered column; no new data needed)",
+      "risk": "Every current strategy would fail G-11, which is the truthful result, not a bug.",
+      "recommendation": "Accept. This is the most useful single change available to the leaderboard design.",
+      "status": "awaiting owner decision"
     }
   ],
   "questions": [
@@ -136,8 +147,8 @@
     {
       "id": "Q-25",
       "question": "Which surface is canonical, and what happens to the other four?",
-      "have": "The root generated site (index.html + pages/**, 33 tables / 915 rows) is the Pages landing; `docs/`, `dashboard/`, `originated/`, `verified/` and the legacy root pages are all still published, each with its own model, window and injury conventions, and each with a passing checker of its own.",
-      "missing": "An owner decision: retire, archive under a clear label, or keep as alternates — plus a rule for what a new session may write into (because right now a new session adds a sixth surface by default).",
+      "have": "Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.",
+      "missing": "An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.",
       "how": "Pick one; move the others to `archive/` with a redirect note on each landing, or keep them and put the surface inventory (already a published table) at the top of the landing page.",
       "impact": "Five surfaces means five answers to 'what is our line for DEN@NOP', all defensible, none canonical. That is the failure mode a leaderboard project cannot afford.",
       "severity": "medium"

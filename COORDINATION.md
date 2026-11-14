@@ -1048,3 +1048,43 @@ merge** — see conflict log.
 ### PR & merge result
 
 - **PR #29:** https://github.com/wingbangboozle1-lang/NBA2/pull/29 — `arena/5b80b88a-nba2` → `main` (files added only; no shared artefact touched). Recorded here after the merge and Pages confirmation, per protocol.
+
+### Addendum — after the third rebase (main @ `1ba60fc`, PRs #28/#30), 2026-11-14 ~01:22 UTC
+
+`main` moved a third time while this session worked: session `arena/f7477d5e-nba2` merged
+PR #28 (measured-skill backtest: `backtest/**`, `data/raw/history/**` with 155 official final
+scores, `tools/verify_backtest.py`, CI gate) and PR #30 (its record). Rebase #3 produced one
+further `COORDINATION.md` end-of-file conflict, again resolved append-only with both sections kept.
+
+**Consequences recorded honestly, rather than left stale:**
+
+1. **This session's harness grew to cover the new surface.** `CC-BT-01…08` recompute the backtest
+   report from the committed game rows: headline counts (155 games / 21 dates / the date span),
+   no future-dated rows in a "final scores" set, every published rate equal to its own numerator
+   over its own denominator (ATS 87/139 = 0.6259, all three naive baselines, the head-to-head
+   difference), the tier and calibration partitions summing to `accuracy.n`, the gate summary being
+   a true index of the ten per-gate statuses, every gate percentage following from the numbers
+   printed beside it, and the rule that nobody is paid while a gate fails. **All pass.** That is
+   complementary to `tools/verify_backtest.py`, which checks structure (per-row official URL,
+   links, placeholders, byte-reproducibility) but not arithmetic. Total now **88 checks: 72 PASS ·
+   8 FAIL · 8 INFO**.
+2. **A claim in this session's first draft of the executive summary was wrong and is corrected in
+   place:** it said "what is missing is history and price". After PR #28, history exists in-repo;
+   only the price is missing. The correction is recorded here rather than quietly edited.
+3. **New finding F7** (`CC-BT-08`): the measured result lives only on `backtest/**`. The canonical
+   site still publishes `gates_passed = 0 of 90` with "nothing has settled yet", which remains true
+   *as the site defines it* (settled bets against a market price), while the backtest surface
+   reports 2 of 10 gates PASS on 139 graded games and uses a different gate vocabulary
+   (`PARTIAL` vs the site's `AT-RISK`). Not a contradiction — an unintegration. The previous F7
+   (7 rows rendered on no page) is therefore now **F8**; the table above and the report use the new
+   numbering.
+4. **The most decision-relevant number in the repository, verified by this session rather than
+   repeated:** on graded games the originated model hits **62.59%** straight-up (87/139) while
+   "back the club with the better net rating" hits **64.03%** (89/139), p = 0.902; the model's
+   margin MAE is better (12.173 vs 13.266) but not significantly (p = 0.348). No strategy is paid,
+   G-01 is FAIL at 46% of its sample, and their own power table says a 1-point edge needs ~4,551
+   games at 80% power. **There is no demonstrated edge yet — the gate machinery is what is
+   demonstrating it.** S-31 proposes making "must beat the best naive baseline" a gate.
+5. `Q-25` (which surface is canonical) was updated with the measured fact: the count is now **six**,
+   and a session that wants to publish measured results currently has no option except adding
+   another tree — which is how F7 came to exist.

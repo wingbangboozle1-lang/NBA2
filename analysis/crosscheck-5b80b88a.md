@@ -1,12 +1,12 @@
 # Independent cross-check of the published site against the committed snapshots
 
-Owner: `arena/5b80b88a-nba2` · run 2026-11-14 01:16 UTC · tool: `tools/crosscheck_site.py` (stdlib only, read-only)
+Owner: `arena/5b80b88a-nba2` · run 2026-11-14 01:20 UTC · tool: `tools/crosscheck_site.py` (stdlib only, read-only)
 
 ## What this is, in one paragraph
 
 CI proves the HTML is a faithful render of `data/site.json`, and the provenance lint proves every row is labelled. Neither can prove that a label matches what it points at, because the same code produced both. This report re-derives each published claim from the committed snapshot files with its own arithmetic. A **PASS** means the published artefact agrees with the committed snapshot and with the other surfaces in this repository; it is never a claim that the official source was re-read today, because this environment has no route to `nba.com` — measured, not assumed: `python3 tools/ingest_official.py --probe` returns a TLS failure for all four official endpoints from the sandbox that produced this report. A **FAIL** is a defect worth a change request. An **N/A** means the claim's referent is not computable from committed evidence, and no plausible number was substituted for it.
 
-**Result: 65 PASS · 8 FAIL · 7 INFO · 0 N/A over 80 checks.**
+**Result: 72 PASS · 8 FAIL · 8 INFO · 0 N/A over 88 checks.**
 
 ## Findings that need a decision
 
@@ -87,6 +87,14 @@ CI proves the HTML is a faithful render of `data/site.json`, and the provenance 
 | CC-X-07 | G. cross-surface facts | the other session's line file is the actual referent of the comparison table | the xlines rows must correspond to rows that exist in data/our-lines.csv | PASS | 23/23 comparison rows have a source row on disk |
 | CC-X-08 | G. cross-surface facts | the cross-session record-agreement claim equals its own table | recount agree rows in xrecords (30/30) vs the title 30/30 agree | PASS | recomputed 30/30 |
 | CC-X-09 | G. cross-surface facts | the cross-session comparison does not silently compare a value with itself | the PS/G column of the prior session must be genuinely blank where that session had no source | PASS | 28/30 rows blank on their side |
+| CC-BT-01 | K. the measured-skill surface, recomputed | the report's headline counts equal a recount of the committed game rows | 155 unique games across 6 history files, 21 dates 2026-10-20..2026-11-12 | PASS | report says n_games=155, n_dates=21, 2026-10-20..2026-11-12; bad rows: none |
+| CC-BT-02 | K. the measured-skill surface, recomputed | a 'final scores' set contains only games that precede the snapshot it is graded against | compare each game date with the slate snapshot as_of (2026-11-13) | PASS | 0 game(s) dated after the snapshot: none |
+| CC-BT-03 | K. the measured-skill surface, recomputed | every published rate equals its own numerator over its own denominator | recompute ATS hit rate, the three naive baselines, and the head-to-head difference | PASS | 0 violation(s): none |
+| CC-BT-04 | K. the measured-skill surface, recomputed | the tier and calibration breakdowns partition the graded sample, and each bin reports its own range | tiers 139 / calibration 139 / accuracy.n 139 | PASS | 0 problem(s): none |
+| CC-BT-05 | K. the measured-skill surface, recomputed | the gate summary is a true index of the per-gate statuses | regroup the 10 gate verdicts by status and compare with the summary lists | PASS | 0 problem(s): none |
+| CC-BT-06 | K. the measured-skill surface, recomputed | every gate verdict follows from the numbers printed beside it | parse each 'arithmetic' string and re-check the percentage and the pass/fail direction | PASS | 0 problem(s): none |
+| CC-BT-07 | K. the measured-skill surface, recomputed | the provisional leaderboard ranks by the metric it names, and pays nobody while a gate fails | 4 strategies; gate summary failed=['G-01'] blocked=['G-02', 'G-06', 'G-09', 'G-10'] | PASS | 0 problem(s): none |
+| CC-BT-08 | K. the measured-skill surface, recomputed | the two surfaces tell one story about what has been measured | root site publishes gates_passed=0 of 90 with the line 'Ledger opens with the 2026-11-13 slate; nothing has settled yet'; the backtest surface reports 2 of 10 gates PASS on 139 graded games | INFO | the two are not contradictory — the site's gates are stated in settled bets against a price, the backtest's in graded games against outcomes — but a reader of the canonical page cannot see that 139 games have been graded at all, and the vocabulary differs (PASS/FAIL/BLOCKED/AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL) |
 | CC-DOC-01 | H. documentation claims | README's published counts match the artefacts on disk | measure each figure directly: README table count=36; README row count=964; README test count=62; README page count=18 | **FAIL** | 2 stale figure(s): ['README table count: text 33 vs measured 36', 'README row count: text 915 vs measured 964'] |
 | CC-DOC-02 | H. documentation claims | meta.games / meta.teams / meta.injury_rows equal the sections they describe | recount the slate, ratings and injuries tables | PASS | meta 31/30/95 vs 31/30/95 |
 | CC-DOC-03 | H. documentation claims | meta.tiers equals a recount of the line table | count tier letters: {'B': 15, 'C': 16} | PASS | meta {'A': 0, 'B': 15, 'C': 16, 'BLOCKED': 0} |
@@ -111,7 +119,7 @@ CI proves the HTML is a faithful render of `data/site.json`, and the provenance 
 - CC-SNAP-08:injury_report_2026-11-13: <https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf>
 - CC-PUB-05: <https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf>
 - CC-SEAL-01: <https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json>
-- snapshot provenance recorded by the build: <https://www.nba.com/games>
+- CC-BT-01: <https://www.nba.com/games>
 - snapshot provenance recorded by the build: <https://www.basketball-reference.com/leagues/NBA_2027_standings.html>
 
 ## Appendix 1 — per-club win-loss evidence across every committed capture (this is what settles the `28/30` vs `30/30` wording conflict)

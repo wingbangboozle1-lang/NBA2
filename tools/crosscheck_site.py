@@ -978,6 +978,167 @@ def check_cross_surface(r: Report, site: dict):
           PASS if both_same else INFO, f"{both_same}/{len(xrec)} rows blank on their side")
 
 
+def check_backtest_surface(r: Report, site: dict):
+    """Recompute the measured-skill report from the committed game rows.
+
+    `tools/verify_backtest.py` (the owner's own checker) verifies structure: every row has an
+    official URL, links resolve, no placeholders, byte-reproducible pages. Nothing verifies the
+    *arithmetic* of the headline statistics, which is the part a reader acts on. These checks do,
+    from `data/raw/history/games_*.json`.
+    """
+    g = "K. the measured-skill surface, recomputed"
+    hist = sorted((RAW / "history").glob("games_*.json"))
+    rep_path = ROOT / "backtest" / "data" / "report.json"
+    if not hist or not rep_path.exists():
+        r.add("CC-BT-00", g, "the backtest surface and its history snapshots both exist",
+              f"history files: {len(hist)}; report: {rep_path.exists()}", NA,
+              "one or both are absent in this checkout, so nothing is asserted about them")
+        return
+    rep = load_json(rep_path)
+    games: dict[str, dict] = {}
+    bad_rows = []
+    for f in hist:
+        doc = load_json(f)
+        for x in doc.get("games", []):
+            gid = str(x.get("game_id") or "")
+            if not re.fullmatch(r"002\d{7}", gid):
+                bad_rows.append(f"{f.name}: game_id {gid!r}")
+                continue
+            if gid in games:
+                bad_rows.append(f"{f.name}: game_id {gid} duplicated across history files")
+            a, h = x.get("away_pts"), x.get("home_pts")
+            if not (isinstance(a, int) and isinstance(h, int) and a >= 0 and h >= 0):
+                bad_rows.append(f"{gid}: scores are not two non-negative integers ({a!r}/{h!r})")
+            if {x.get("away"), x.get("home")} - TEAM_TRICODES:
+                bad_rows.append(f"{gid}: unknown tricode {x.get('away')}/{x.get('home')}")
+            if not str(x.get("source_url") or "").startswith("https://www.nba.com/game/"):
+                bad_rows.append(f"{gid}: no official game URL on the row")
+            games[gid] = x
+    dates = sorted({x["date"] for x in games.values()})
+    meta = rep.get("meta", {})
+    count_ok = (meta.get("n_games") == len(games) and meta.get("n_dates") == len(dates)
+                and str(meta.get("first_date")) == dates[0] and str(meta.get("last_date")) == dates[-1])
+    r.add("CC-BT-01", g, "the report's headline counts equal a recount of the committed game rows",
+          f"{len(games)} unique games across {len(hist)} history files, {len(dates)} dates "
+          f"{dates[0]}..{dates[-1]}" if dates else "no games",
+          PASS if count_ok and not bad_rows else FAIL,
+          f"report says n_games={meta.get('n_games')}, n_dates={meta.get('n_dates')}, "
+          f"{meta.get('first_date')}..{meta.get('last_date')}; bad rows: {bad_rows[:3] or 'none'}",
+          evidence="https://www.nba.com/games")
+    as_of = str(load_json(snapshot_candidates("slate")[0]).get("as_of"))
+    future = [gid for gid, x in games.items() if str(x.get("date")) > as_of]
+    r.add("CC-BT-02", g, "a 'final scores' set contains only games that precede the snapshot it is graded against",
+          f"compare each game date with the slate snapshot as_of ({as_of})",
+          PASS if not future else FAIL, f"{len(future)} game(s) dated after the snapshot: {future[:4] or 'none'}")
+
+    def frac(a, b):
+        return round(a / b, 4) if b else None
+
+    acc, ats, nb = rep.get("accuracy", {}), rep.get("ats", {}), rep.get("naive_baselines", {})
+    arith = []
+    if ats.get("n") and ats.get("hits") is not None:
+        if abs(frac(ats["hits"], ats["n"]) - round(float(ats.get("hit_rate", 0)), 4)) > 0.0002:
+            arith.append(f"ats.hit_rate {ats.get('hit_rate')} != {ats['hits']}/{ats['n']}")
+        if abs(float(ats.get("hit_rate", 0)) - float(acc.get("straight_up_accuracy", -1))) > 0.0002:
+            arith.append("ats.hit_rate and accuracy.straight_up_accuracy disagree")
+    for name in ("always_home", "better_net_rating", "originated_model"):
+        blk = nb.get(name) or {}
+        n = blk.get("n", nb.get("n_games"))
+        if blk.get("hits") is not None and n:
+            if abs(frac(blk["hits"], n) - round(float(blk.get("rate", 0)), 4)) > 0.0002:
+                arith.append(f"naive_baselines.{name}.rate {blk.get('rate')} != {blk['hits']}/{n}")
+    m, b = nb.get("originated_model", {}).get("rate"), nb.get("better_net_rating", {}).get("rate")
+    mb = nb.get("model_vs_better_net", {})
+    if m is not None and b is not None and "observed_diff" in mb:
+        if abs(round(m - b, 4) - float(mb["observed_diff"])) > 0.0002:
+            arith.append(f"model_vs_better_net.observed_diff {mb['observed_diff']} != {m} - {b}")
+        if bool(mb.get("model_better")) != (m > b):
+            arith.append(f"model_better={mb.get('model_better')} contradicts {m} vs {b}")
+    r.add("CC-BT-03", g, "every published rate equals its own numerator over its own denominator",
+          "recompute ATS hit rate, the three naive baselines, and the head-to-head difference",
+          PASS if not arith else FAIL, f"{len(arith)} violation(s): {arith[:4] or 'none'}")
+
+    tiers = rep.get("tiers", [])
+    tier_sum = sum(int(x.get("n", 0)) for x in tiers)
+    cal = rep.get("calibration", [])
+    cal_sum = sum(int(x.get("n", 0)) for x in cal)
+    probs = []
+    if acc.get("n") and tier_sum != acc["n"]:
+        probs.append(f"tiers sum {tier_sum} != accuracy.n {acc['n']}")
+    if acc.get("n") and cal_sum != acc["n"]:
+        probs.append(f"calibration bins sum {cal_sum} != accuracy.n {acc['n']}")
+    for x in cal:
+        mp, lo, hi = x.get("mean_predicted"), None, None
+        mm = re.match(r"^(\d+)%-(\d+)%$", str(x.get("bin", "")))
+        if mm and mp is not None:
+            lo, hi = int(mm.group(1)) / 100, int(mm.group(2)) / 100
+            if not (lo - 0.02 <= float(mp) <= hi + 0.02):
+                probs.append(f"bin {x['bin']}: mean_predicted {mp} outside the bin's own range")
+        for k in ("ci95_low", "ci95_high"):
+            if x.get(k) is not None and not (0 <= float(x[k]) <= 1):
+                probs.append(f"bin {x.get('bin')}: {k}={x[k]} is not a probability")
+        if x.get("ci95_low") is not None and x.get("ci95_high") is not None and float(x["ci95_low"]) > float(x["ci95_high"]):
+            probs.append(f"bin {x.get('bin')}: CI inverted")
+    r.add("CC-BT-04", g, "the tier and calibration breakdowns partition the graded sample, and each bin reports its own range",
+          f"tiers {tier_sum} / calibration {cal_sum} / accuracy.n {acc.get('n')}",
+          PASS if not probs else FAIL, f"{len(probs)} problem(s): {probs[:4] or 'none'}")
+
+    gates = rep.get("gates", {}).get("gates", {})
+    summary = rep.get("gates", {}).get("summary", {})
+    recomputed = {"PASS": [], "FAIL": [], "BLOCKED": [], "PARTIAL": []}
+    for gid, gd in gates.items():
+        recomputed.setdefault(str(gd.get("status")), []).append(gid)
+    sum_bad = []
+    for key, label in (("passed", "PASS"), ("failed", "FAIL"), ("blocked", "BLOCKED"), ("partial", "PARTIAL")):
+        if sorted(summary.get(key, [])) != sorted(recomputed.get(label, [])):
+            sum_bad.append(f"{key}: summary {sorted(summary.get(key, []))} vs gate states {sorted(recomputed.get(label, []))}")
+    if summary.get("n") != len(gates):
+        sum_bad.append(f"summary.n {summary.get('n')} != {len(gates)} gates defined")
+    r.add("CC-BT-05", g, "the gate summary is a true index of the per-gate statuses",
+          f"regroup the {len(gates)} gate verdicts by status and compare with the summary lists",
+          PASS if not sum_bad else FAIL, f"{len(sum_bad)} problem(s): {sum_bad[:3] or 'none'}")
+    m_bad = []
+    for gid, gd in gates.items():
+        mm = re.search(r"(\d+)\s*/\s*(\d+)", str(gd.get("arithmetic", "")))
+        if mm:
+            n, req = int(mm.group(1)), int(mm.group(2))
+            pct = re.search(r"(\d+)%", str(gd.get("arithmetic", "")))
+            if pct and abs(round(100 * n / req) - int(pct.group(1))) > 1:
+                m_bad.append(f"{gid}: says {pct.group(1)}% but {n}/{req} = {100 * n / req:.1f}%")
+            if gd.get("status") == "FAIL" and req and n >= req:
+                m_bad.append(f"{gid}: FAIL while {n} >= {req}")
+    r.add("CC-BT-06", g, "every gate verdict follows from the numbers printed beside it",
+          "parse each 'arithmetic' string and re-check the percentage and the pass/fail direction",
+          PASS if not m_bad else FAIL, f"{len(m_bad)} problem(s): {m_bad[:3] or 'none'}",
+          note="the same rule the site applies to itself, applied to the tree that now measures it")
+
+    lb = rep.get("leaderboard", [])
+    lb_bad = []
+    zs = [float(x.get("z_deflated_for_search") or 0) for x in lb]
+    if zs != sorted(zs, reverse=True):
+        lb_bad.append(f"ranks are not ordered by the deflated z the notes say is the ranking metric: {zs}")
+    if any(x.get("reward_units") for x in lb) and (summary.get("failed") or []):
+        lb_bad.append("a reward is allocated while a gate is FAILED")
+    if not summary.get("failed") and not summary.get("blocked"):
+        lb_bad.append("rewards withheld even though no gate is failed or blocked")
+    r.add("CC-BT-07", g, "the provisional leaderboard ranks by the metric it names, and pays nobody while a gate fails",
+          f"{len(lb)} strategies; gate summary failed={summary.get('failed')} blocked={summary.get('blocked')}",
+          PASS if not lb_bad else FAIL, f"{len(lb_bad)} problem(s): {lb_bad[:3] or 'none'}")
+
+    site_gp = site["meta"].get("gates_passed")
+    bt_pass = len(recomputed.get("PASS", []))
+    r.add("CC-BT-08", g, "the two surfaces tell one story about what has been measured",
+          f"root site publishes gates_passed={site_gp} of {site['meta'].get('gates_total')} with the line "
+          f"'Ledger opens with the 2026-11-13 slate; nothing has settled yet'; the backtest surface reports "
+          f"{bt_pass} of {len(gates)} gates PASS on {acc.get('n')} graded games",
+          INFO if bt_pass else PASS,
+          f"the two are not contradictory — the site's gates are stated in settled bets against a price, the "
+          f"backtest's in graded games against outcomes — but a reader of the canonical page cannot see that "
+          f"{acc.get('n')} games have been graded at all, and the vocabulary differs (PASS/FAIL/BLOCKED/"
+          f"AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL)",
+          note="filed as finding F8: the measured result exists, but only on a second surface")
+
+
 def check_docs(r: Report, site: dict):
     g = "H. documentation claims"
     readme = (ROOT / "README.md").read_text()
@@ -1343,6 +1504,7 @@ def main() -> int:
     check_seal(r, site)
     check_flags_blanks(r, site)
     check_cross_surface(r, site)
+    check_backtest_surface(r, site)
     check_docs(r, site)
     check_html(r, site)
     check_freshness(r, site)
