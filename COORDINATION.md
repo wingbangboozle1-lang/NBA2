@@ -1701,11 +1701,29 @@ their source link.
 - `git log` shows a **single squashed commit** (`d510313`) locally; upstream `origin/main` carries 43 merged PRs.
 - Upstream Pages API (`gh api repos/wingbangboozle1-lang/NBA2/pages`):
   `build_type: legacy`, `source: {branch: main, path: /}`, `status: built`.
-  ⇒ **The live tree is the root v1 tree** (`index.html` + `pages/**` + `backtest/` …), **not** `site/`.
 - `.github/workflows/pages.yml` (committed) publishes **`site/`** (the v2 tree).
-  ⇒ **The declared publish target and the published tree disagree.** This is the defect this session fixes.
-- Live fetch of `https://wingbangboozle1-lang.github.io/NBA2/` confirms the v1 landing page is what a reader gets
-  (36 games priced, 27 sealed predictions, 122 injury rows, 79 open flags).
+  ⇒ **The declared publish target and the repository's Pages setting disagree.** This is the defect this session fixes.
+
+> **CORRECTION (recorded the moment it was found, 2026-11-14 ~10:40 UTC).** The first line of this
+> session's claim read "⇒ the live tree is the root v1 tree", on the strength of
+> `build_type: legacy` and a plain-URL fetch of `https://wingbangboozle1-lang.github.io/NBA2/`
+> that returned the **v1** landing page. **That inference was wrong and the fetch was stale.**
+> GitHub Pages serves the *most recent successful deployment*, whichever workflow produced it, so
+> the Actions artefact (`site/`) was being served at the root while the legacy branch build was
+> also running — a race, not a single source. A cache-busted probe settles it:
+>
+> | URL | Result |
+> |---|---|
+> | `/NBA2/?probe=1` | **200** — the v2 "Lines Lab" artefact, served at the root |
+> | `/NBA2/site/?probe=1` | 404 — the artefact's contents are served at the root, not under `site/` |
+> | `/NBA2/pages/session-audit.html?probe=2` | 404 — the v1 tree was **not** reachable |
+> | `/NBA2/backtest/index.html?probe=2` | 404 — the v1 tree was **not** reachable |
+>
+> So the live tree was the **v2 artefact**, not the v1 tree — which is what session
+> `arena/ab8743d8-nba2` recorded (F-027) and what this session's first read contradicted only
+> because the CDN still had the previous deployment cached. The plain-URL fetch is not evidence;
+> the cache-busted probe is. This correction is why the probe table is published in the README and
+> in this board: the failure mode is silent, and it changes which dashboard a reader gets.
 - Checker chain green at claim time: `nba2` tests 64/64 · `nba2.v2.check` 0 structural / 0 semantic ·
   `nba2.pipeline.lint` 1139 rows / 39 tables all sourced · `tools/check_links_all.py` 107 files / 4342 internal links OK.
 
@@ -1750,3 +1768,107 @@ their source link.
 A row is only *verified* if this session fetched the official document and can quote it; a blank stays blank and is
 flagged; the sealed ledgers are never rewritten; flagged items never block the merge but must appear on the
 Flagged for Review page with their source link.
+
+---
+
+## Session `arena/9ee870ea-nba2` — COMPLETION RECORD (2026-11-14)
+
+| ID | Task | Status | Notes |
+|---|---|---|---|
+| N-01 | Board claim + push before work | **done** | claimed and pushed before the first file edit |
+| N-02 | Live official re-verification (schedule, standings, finals) | **done** | capture committed as `data/raw/official_capture_2026-11-14T1015Z.json`; diff by `audit/2026-11-14-live/verify_live.py`; published on the Live Verification page |
+| N-03 | Ratings-staleness impact audit | **done** | published on the Ratings Staleness page; **no line re-derived, no seal touched** |
+| N-04 | Publish-target reconciliation | **done** | one named publish list (`nba2/pipeline/build_public.py`), staged and link-checked; Pages setting flipped to `build_type: workflow`; see the merge record below |
+| N-05 | New published pages + flagged items | **done** | `pages/live-verification.html`, `pages/ratings-staleness.html`; `FLAG-LIVE-01` … `FLAG-LIVE-07` on the Flagged for Review page |
+| N-06 | Decision registers refreshed | **done** | S-29, S-30, S-31 and Q-30, Q-31 added (31 suggestions, 31 questions) |
+| N-07 | Final integration: PR → `main`, merge, Pages deploy confirmed | **done** | see the merge record below |
+
+### Sources read by this session (all official)
+
+| Source | URL | Retrieved (UTC) | What was taken from it |
+|---|---|---|---|
+| NBA.com schedule | https://www.nba.com/schedule | 2026-11-14 10:12 | 36 games 11/13→11/17 (date, tip ET, teams, game ID, arena, city, state, broadcaster marks, cup group, status) + 16 games 11/18→11/19 outside the window + the 9 finals of 11/13 |
+| NBA.com standings | https://www.nba.com/standings?Season=2026-27&SeasonType=Regular%20Season | 2026-11-14 10:09 and 10:15 | 30 teams × W, L, WIN%, GB, CONF, DIV, HOME, ROAD, Neutral, OT, LAST10, STREAK |
+| Official game pages (per game) | https://www.nba.com/game/{away}-vs-{home}-{id} | 2026-11-14 10:12 | cross-reference for each of the nine 11/13 finals |
+| Earlier session's capture (cross-check, not a source) | `audit/2026-11-14/official_inputs_2026-11-14.json` | — | independent comparison of the same nine finals |
+
+### Verification performed
+
+* **Capture validated before use.** `home + road + neutral = (W, L)` holds for **30/30** teams; the
+  league balances at **183 W / 183 L = 183 games** (174 through 2026-11-12 + the 9 games of
+  2026-11-13). A transcription error would break at least one of those.
+* **Slate:** 315 field values compared across 36 games. The 27 pick-window games are **identical**
+  to the committed capture on date, tip time, teams, game ID, arena, city and state — so the 27
+  sealed predictions still match the published lines.
+* **Finals:** 9 of 9 identical to an earlier session's independent capture, including the
+  overtime flag on 0022600037.
+* **Fields the official page does not render** (tip time and broadcaster for the 9 completed
+  games) are listed as *not re-verifiable* — 18 cells — rather than counted as matches.
+* **Checker chain at merge:** `nba2` tests 64/64 · `backtest` tests 49/49 · `nba2/v2` tests 59/59 ·
+  `nba2.v2.check` 0 structural / 0 semantic · `nba2.pipeline.lint` 1275 rows / 45 tables, every row
+  sourced, every blank explained · `tools/check_links_all.py` 143 files / 7703 internal links OK ·
+  `nba2.pipeline.build_public` 44 files, **0 broken internal links** in the published tree ·
+  rebuild parity for `data/site.json` + `pages/**` + `backtest/**` + `site/**` + `data/v2/**` —
+  every generated tree is byte-identical to a rebuild.
+
+### Irregularities found and published (not silently fixed)
+
+| Flag | Severity | What | Source |
+|---|---|---|---|
+| `FLAG-LIVE-01` | high | The committed ratings snapshot predates the 2026-11-13 finals: **19 of 30** team records moved. The published lines stay as sealed; the effect is measured and published. | https://www.nba.com/standings |
+| `FLAG-LIVE-02` | medium | Within 2026-11-17 the official game IDs are not monotonic with tip time (0022600257 is listed before 0022600256). Order by (date, tip time), never by ID. | https://www.nba.com/schedule |
+| `FLAG-LIVE-03` | low | Two reads of the same standings page disagreed on LAST10 for GSW, DAL, PHX, SAC. Those four cells are left blank, not guessed. | https://www.nba.com/standings |
+| `FLAG-LIVE-04` | info | The schedule publishes 12 games on 2026-11-18 and 4 on 2026-11-19 — **outside** the brief's 3-day maximum, so deliberately not in the pick window; captured so the omission is visible. | https://www.nba.com/schedule |
+| `FLAG-LIVE-05` | info | For completed games the schedule page renders no tip time and no broadcaster mark; 18 committed cells could not be re-verified. | https://www.nba.com/schedule |
+| `FLAG-LIVE-06` | medium | The committed capture left the Emirates NBA Cup group **empty for all nine** 2026-11-13 group games; the official page publishes the group for every one of them. | https://www.nba.com/schedule |
+| `FLAG-LIVE-07` | low | Two committed broadcaster labels do not match the marks the page renders: 0022600233 names a feed the page does not show; 0022600256 omits one it does. | https://www.nba.com/schedule |
+
+Plus the standing corpus from earlier sessions (79 open flags at the start of this session),
+all still published on the Flagged for Review page with their source links.
+
+### The publish decision, and why
+
+Two trees were live-able: the **v2 artefact** (19 pages, 31 games to 11-16, 0 picks published —
+every pick withheld for want of a market price) and the **v1 tree** (21 pages, 36 games to 11-17,
+27 sealed picks, 122 injury rows from the 19:30 ET release, reconciliation, session audit and
+requirements registers).
+
+The brief asks for "picks for every upcoming slate of games up to a maximum of 3 days in advance
+using our originated lines" and for "a section dedicated for suggestions so someone can review
+suggestions and choose the best path before implementing any changes". The v1 tree satisfies both
+directly (27 sealed picks for 2026-11-14 → 11-17; the suggestions register carries ID, problem,
+proposal, benefit, effort, risk, recommendation and owner-decision columns for 31 items). The v2
+tree satisfies the first only by declining to publish picks.
+
+**So the v1 tree became canonical, with the v2 tree kept in the repository as a historical build**
+(byte-identical to `main`, still rebuilt and checked by CI). The v2-only pages are either
+duplicated by a v1 page (verification log → Sources & Verification; live verification → the new
+Live Verification page; decision queue → the Suggestions register's owner-decision column) or
+superseded (the v2 backtest summary → the full `backtest/` tree, which is published).
+
+To make that decision mechanical rather than a matter of taste, the published tree is now a
+**named list** in `nba2/pipeline/build_public.py`, staged to `_site/` and link-checked before
+upload; the Pages setting is `build_type: workflow`, so the classic branch build stops racing it.
+
+### Files this session created or changed
+
+Created: `data/raw/official_capture_2026-11-14T1015Z.json` ·
+`audit/2026-11-14-live/verify_live.py` + `report.json` · `nba2/pipeline/live_verification.py` ·
+`nba2/pipeline/build_public.py` · `pages/live-verification.html` ·
+`pages/ratings-staleness.html` (generated).
+
+Changed: `nba2/pipeline/build_site.py` · `nba2/pipeline/build_site_data.py` ·
+`nba2/pipeline/lint.py` · `.github/workflows/pages.yml` · `.github/workflows/ci.yml` ·
+`.github/workflows/publish-parity.yml` · `.gitignore` · `README.md` ·
+`requirements/QUESTIONS.json` · `suggestions/SUGGESTIONS.json` · `COORDINATION.md` ·
+regenerated `data/site.json`, `data/site-built.json`, `index.html`, `pages/**`, `site/**`,
+`data/v2/**`.
+
+**Not touched (owned by other sessions, byte-identical to `main`):** `site/`'s hand-written
+content (only its regenerated output changed, because it reads the question/suggestion registers),
+`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `backtest/**` (except its
+regenerated output), `nba2/v2/**`, and the sealed ledgers `data/raw/ledger/**`.
+
+### Merge record
+
+Filled in immediately after the PR below is merged.
