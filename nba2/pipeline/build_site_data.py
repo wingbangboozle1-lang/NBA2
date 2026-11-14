@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 RAW = DATA / "raw"
 OUT = DATA / "site.json"
-PREVIEW_VERIFIED = set(json.loads((RAW / "slate_2026-11-13_to_11-16.json").read_text())["preview_verified_game_ids"])
+PREVIEW_VERIFIED = set(json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["preview_verified_game_ids"])
 
 SRC_SLATE = "nba_schedule"
 SRC_GAMES = "nba_games"
@@ -334,7 +334,7 @@ def build_picks_rows(lines: list[LN.GameLine]) -> dict:
                  "Triggers = our line ± 1.5 pts (unratified hurdle, see FLAG-LINE-03).")
 
 
-def build_injury_tables(rows: list[INJ.InjuryRow]) -> tuple[dict, dict]:
+def build_injury_tables(rows: list[INJ.InjuryRow], raw: dict) -> tuple[dict, dict]:
     detail = []
     for i, r in enumerate(rows):
         fl = []
@@ -356,12 +356,12 @@ def build_injury_tables(rows: list[INJ.InjuryRow]) -> tuple[dict, dict]:
                                 ("reason", "Reason"), ("p_play", "Our P(plays)"),
                                 ("minutes_impact", "Minutes impact"), ("production_impact", "Production impact"),
                                 ("line_adjustment", "Line adjustment"), ("attribution", "Row attribution")],
-                       "Official NBA injury report — 11/13/26 16:15 ET release",
+                       f"Official NBA injury report — {raw.get('report_stamp_et', 'unknown')} ET release",
                        "Transcribed from the NBA's own referee-operations PDF. The three middle columns are "
                        "blank by policy: the report contains no minutes or production data, so any number we "
                        "put there would be invented. P(plays) is our modelling convention for counting bodies, "
                        "not a league probability.",
-                       "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf")
+                       raw.get("provenance", {}).get("url", ""))
 
     rot = INJ.rotation_index(rows)
     rrows = []
@@ -537,7 +537,7 @@ def build_gameflow_rows(games: list[dict], spots: dict, flow: list[dict]) -> dic
                  "https://www.nba.com/schedule")
 
 
-def build_anomaly_rows(anomalies: list[dict]) -> dict:
+def build_anomaly_rows(anomalies: list[dict], ctx: dict) -> dict:
     rows = []
     for a in anomalies:
         rows.append(make_row(
@@ -551,7 +551,8 @@ def build_anomaly_rows(anomalies: list[dict]) -> dict:
                         ("disposition", "Disposition")],
                  "Slate irregularities found while transcribing",
                  "Recorded, not fixed. Each of these would corrupt an automated pipeline that trusted the "
-                 "pattern instead of the value.", "https://www.nba.com/schedule retrieved 2026-11-13 22:39 UTC.")
+                 "pattern instead of the value.",
+                 f"https://www.nba.com/schedule retrieved {ctx.get('retrieved_at_utc', 'unknown')}.")
 
 
 def build_correlation_rows(model: RT.RatingModel, lines: list[LN.GameLine]) -> dict:
@@ -874,6 +875,9 @@ def input_digest() -> str:
     names = [config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
              config.SNAPSHOT_CONTEXT, config.SNAPSHOT_LEADERS,
              "official_game_times_2026-11-13.json"]
+    for extra in (config.SNAPSHOT_PREVIOUS_SLATE, config.SNAPSHOT_PREVIOUS_INJURY):
+        if extra:
+            names.append(extra)
     for n in names:
         f = RAW / n
         if f.exists():
@@ -918,7 +922,7 @@ def build() -> dict:
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
     inj_rows, inj_raw = INJ.load(RAW / config.SNAPSHOT_INJURY)
     injw_rows, injw_raw = INJ.load(RAW / SNAPSHOT_INJURY_WINDOW)
-    anomalies_raw = json.loads((RAW / "slate_context_2026-11-17.json").read_text())
+    anomalies_raw = json.loads((RAW / config.SNAPSHOT_CONTEXT).read_text())
     requirements = json.loads((ROOT / "requirements" / "REQUIREMENTS.json").read_text())
     questions = json.loads((ROOT / "requirements" / "QUESTIONS.json").read_text())
     suggestions = json.loads((ROOT / "suggestions" / "SUGGESTIONS.json").read_text())
@@ -960,13 +964,13 @@ def build() -> dict:
         "slate": build_slate_rows(games),
         "lines": build_lines_rows(model, lines),
         "picks": build_picks_rows(lines),
-        "injuries": build_injury_tables(inj_rows)[0],
-        "rotation": build_injury_tables(inj_rows)[1],
+        "injuries": build_injury_tables(inj_rows, inj_raw)[0],
+        "rotation": build_injury_tables(inj_rows, inj_raw)[1],
         "injuries_window": win_detail,
         "rotation_window": win_rot,
         "availability_window": build_availability_window_rows(games),
         "gameflow": build_gameflow_rows(games, spots, flow),
-        "anomalies": build_anomaly_rows(anomalies_raw["records"]),
+        "anomalies": build_anomaly_rows(anomalies_raw["records"], anomalies_raw),
         "corroboration": build_corroboration_rows(games, load_time_corroboration()),
         "leaders": build_leader_rows(inj_rows, RAW / "team_leaders_2026-11-13.json"),
         "correlation": build_correlation_rows(model, lines),
@@ -1049,8 +1053,13 @@ def build() -> dict:
             "generated_at_utc": stamp,
             "input_digest": digest,
             "build_is_idempotent": same_inputs,
-            "snapshot_as_of": "2026-11-13",
-            "slate_window": "2026-11-13 → 2026-11-16 (today + 3 days)",
+            "snapshot_as_of": slate_raw.get("as_of", "unknown"),
+            "slate_window": (f"{slate_raw['window']['first_game_date']} \u2192 "
+                             f"{slate_raw['window']['last_game_date']} (today + "
+                             f"{slate_raw['window']['days_in_advance']} days)"),
+            "slate_snapshot": config.SNAPSHOT_SLATE,
+            "injury_snapshot": config.SNAPSHOT_INJURY,
+            "injury_report_stamp_et": inj_raw.get("report_stamp_et", "unknown"),
             "games": len(games), "teams": len(model.order),
             "injury_rows": len(inj_rows),
             "injury_status_rows": sum(1 for r in inj_rows if r.status != "NOT YET SUBMITTED"),

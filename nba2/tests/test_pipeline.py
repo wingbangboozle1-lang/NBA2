@@ -73,15 +73,21 @@ class TestRegistry(unittest.TestCase):
         self.assertGreaterEqual(len(after), before)
 
     def test_every_snapshot_flag_is_registered(self):
-        """Nothing in the committed data may reference a flag the site does not publish."""
-        ids = {f.id for f in all_flags()}
+        """Nothing in the committed data may reference a flag the site does not publish.
+
+        The check is against the *published* flag table, not an allow-list in this file: a
+        snapshot may add a flag, and the only acceptable place for it to appear is the
+        Flagged-for-Review page a reviewer actually reads.
+        """
+        published = {r["values"]["id"]
+                     for r in json.loads((ROOT / "data" / "site.json").read_text())
+                     ["sections"]["flags"]["rows"]}
+        self.assertTrue(published, "the published site must have a flag table")
         for name in (config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
                      config.SNAPSHOT_CONTEXT):
             doc = json.loads((ROOT / config.DATA_DIR / name).read_text())
             for f in doc.get("flags", []):
-                self.assertIn(f["id"], ids | {"FLAG-SLATE-01", "FLAG-SLATE-02", "FLAG-SLATE-03",
-                                              "FLAG-RAT-01", "FLAG-RAT-02", "FLAG-INJ-01",
-                                              "FLAG-INJ-02", "FLAG-INJ-03"},
+                self.assertIn(f["id"], published,
                               f"{name}: flag {f['id']} is not surfaced on the site")
 
 
@@ -114,9 +120,11 @@ class TestModel(unittest.TestCase):
                              "fewer games must mean a smaller weight on one's own rating")
 
     def test_every_game_gets_a_line(self):
-        self.assertEqual(len(self.lines), 31)
+        snapshot = json.loads((ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE).read_text())
+        n = len(snapshot["records"])
+        self.assertEqual(len(self.lines), n)
         priced = [l for l in self.lines if l.spread_home is not None and l.total_line is not None]
-        self.assertEqual(len(priced), 31, "R-012: the slate must be complete, no silent drops")
+        self.assertEqual(len(priced), n, "R-012: the slate must be complete, no silent drops")
 
     def test_lines_are_half_point_and_total_is_centred(self):
         for l in self.lines:
@@ -256,6 +264,15 @@ class TestAdjudication(unittest.TestCase):
                                 "fewer is a join bug, not a cleaner dataset")
 
     def test_three_way_table_shows_stripped_gap(self):
+        """The published cross-session claim must be the one the data supports.
+
+        An earlier session concluded that most model disagreement was an unratified
+        convention. That held for the 2026-11-13 comparison set. When the window rolled
+        forward the comparable set changed and the conclusion did NOT replicate, so the
+        page now computes the direction instead of asserting it. This test pins that: the
+        page may not claim a reduction the measurement does not show, and it may not omit
+        the numbers either.
+        """
         from nba2.models import lines as LN, ratings as RT
         from nba2.pipeline import adjudicate as AD
         model = RT.build(ROOT)
@@ -270,9 +287,21 @@ class TestAdjudication(unittest.TestCase):
         import statistics
         raw = [abs(float(r["values"]["gap_raw"].split()[0])) for r in withboth]
         adj = [abs(float(r["values"]["gap_after_stripping"].split()[0])) for r in withboth]
-        self.assertLess(statistics.median(adj), statistics.median(raw),
-                        "removing the other model's injury convention must shrink the median gap; "
-                        "if it does not, the 'convention not data' claim on the site is false")
+        mean_raw, mean_adj = statistics.mean(raw), statistics.mean(adj)
+        # the published blurb must quote the measurement
+        self.assertIn(f"{mean_raw:.1f} pts as published", tbl["blurb"])
+        self.assertIn(f"{mean_adj:.1f} pts", tbl["blurb"])
+        # and it may not claim a reduction that the measurement does not show
+        moved = [(r, a) for r, a in zip(raw, adj) if abs(r - a) > 1e-9]
+        if moved and mean_adj >= mean_raw:
+            self.assertNotIn("shrinks the mean gap", tbl["blurb"],
+                             "the page claims a reduction the current comparison set does not show")
+        # the flag page must carry the same statement
+        site = json.loads((ROOT / "data" / "site.json").read_text())
+        flag_rows = [r for r in site["sections"]["flags"]["rows"]
+                     if r["values"]["id"] == "FLAG-XSESS-07"]
+        self.assertTrue(flag_rows, "the cross-session flag must be published")
+        self.assertIn(f"{mean_raw:.1f} pts", flag_rows[0]["values"]["statement"])
 
 
 class TestPublishedSite(unittest.TestCase):
@@ -310,11 +339,14 @@ class TestPublishedSite(unittest.TestCase):
                     self.assertTrue(r["flags"], f"{key}/{r['key']}: blank with no flag")
 
     def test_slate_is_complete_for_the_window(self):
+        """The published slate must be exactly the official window, day for day."""
         rows = self.data["sections"]["slate"]["rows"]
         by_date: dict[str, int] = {}
         for r in rows:
             by_date[r["values"]["date"]] = by_date.get(r["values"]["date"], 0) + 1
-        self.assertEqual(by_date, {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8})
+        snapshot = json.loads((ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE).read_text())
+        self.assertEqual(by_date, snapshot["counts_check"],
+                         "published slate dates must match the official per-date counts")
 
     def test_no_invented_injury_or_correlation_numbers(self):
         """Values this repository fabricated in an earlier session must never come back as data.
@@ -342,7 +374,9 @@ class TestPublishedSite(unittest.TestCase):
         ok, _, _ = LD.verify(path)
         self.assertTrue(ok)
         self.assertEqual(seal["sha256"], json.loads(path.read_text())["header"]["sha256"])
-        self.assertEqual(seal["n_predictions"], 22, "T+1..T+3 window only")
+        snapshot = json.loads((ROOT / config.DATA_DIR / config.SNAPSHOT_SLATE).read_text())
+        self.assertEqual(seal["n_predictions"], snapshot["pick_window"]["n_games"],
+                         "the seal must cover exactly the games the snapshot says are still ahead")
 
 
 class TestReproducibility(unittest.TestCase):

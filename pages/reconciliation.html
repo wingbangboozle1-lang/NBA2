@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Reconciliation</h2><p>Same official documents, two sessions, two answers. Every disagreement is listed rather than averaged.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-13 23:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 00:49 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="surfaces" data-rows="8">
 <h2>Everything published in this repository, and who made it</h2>
 <p class="blurb">Six independent site layers now exist in one repo because six sessions worked in parallel, three of them merged while this page was being written. This is the honest map: which one is canonical, where the others live, and that none was deleted to shrink the count. The durable fix is structural — own a directory and a data namespace, as `originated/**` did — not a stricter merge rule.</p>
@@ -480,9 +480,9 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">theirs: nba2/data/records.json · ours: data/raw/team_ratings_2026-11-13.json</p>
-</section><section class="card table-card" id="x3way" data-rows="31">
+</section><section class="card table-card" id="x3way" data-rows="23">
 <h2>Three originated lines for the same games — and how much of the gap is convention</h2>
-<p class="blurb">Mean |gap| across 31 games: 2.9 pts as published, 2.7 pts once session 3&#x27;s own injury adjustment is stripped out using the fields it published. The reduction is the point: two teams reading the same official data and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter nobody ratified is not evidence.</p>
+<p class="blurb">Mean |gap| across 22 comparable games: 2.6 pts as published, 2.8 pts once session 3&#x27;s own injury adjustment is stripped out using the fields it published. Removing that convention does not shrink the gap: it moves the mean from 2.2 to 3.1 pts on those 4 games. the earlier claim that most disagreement is an unratified convention does not replicate on the current comparison set and is therefore not repeated here. The comparison set moves with the window: when the window rolled forward the comparable set changed, so this sentence is recomputed from the data on every build and never asserts a direction the measurement does not show.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Three originated lines for the same games — and how much of the gap is convention</caption><thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Matchup</th>
@@ -494,123 +494,6 @@
 <th scope="col">Gap after stripping</th>
 <th scope="col">Why they differ</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
-<tr id="0022600034">
-<td>2026-11-13</td>
-<td>NYK @ IND</td>
-<td>+5.0</td>
-<td>+2.5</td>
-<td>+11.0 (inj +4.1/+0.0)</td>
-<td>+6.9</td>
-<td>+6.0 pts</td>
-<td>+1.9 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600035">
-<td>2026-11-13</td>
-<td>MIL @ ORL</td>
-<td>-8.0</td>
-<td>-2.0</td>
-<td>-4.0 (inj +6.4/+0.0)</td>
-<td>-10.4</td>
-<td>+4.0 pts</td>
-<td>-2.4 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600036">
-<td>2026-11-13</td>
-<td>CLE @ MIA</td>
-<td>+3.0</td>
-<td>-6.5</td>
-<td>+0.5 (inj +0.8/+3.6)</td>
-<td>+3.3</td>
-<td>-2.5 pts</td>
-<td>+0.3 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600037">
-<td>2026-11-13</td>
-<td>ATL @ CHI</td>
-<td>+10.5</td>
-<td>+1.0</td>
-<td>+12.5 (inj +3.6/+3.6)</td>
-<td>+12.5</td>
-<td>+2.0 pts</td>
-<td>+2.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600038">
-<td>2026-11-13</td>
-<td>MEM @ NOP</td>
-<td>+8.5</td>
-<td>-0.5</td>
-<td>+12.0 (inj +4.4/+3.2)</td>
-<td>+10.8</td>
-<td>+3.5 pts</td>
-<td>+2.3 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600039">
-<td>2026-11-13</td>
-<td>UTA @ HOU</td>
-<td>-17.5</td>
-<td>-13.0</td>
-<td>-23.0 (inj +2.4/+2.4)</td>
-<td>-23.0</td>
-<td>-5.5 pts</td>
-<td>-5.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600040">
-<td>2026-11-13</td>
-<td>GSW @ SAS</td>
-<td>-3.0</td>
-<td>-8.0</td>
-<td>-8.0 (inj +2.4/+7.3)</td>
-<td>-3.1</td>
-<td>-5.0 pts</td>
-<td>-0.1 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600041">
-<td>2026-11-13</td>
-<td>POR @ SAC</td>
-<td>+13.5</td>
-<td>+6.0</td>
-<td>+16.0 (inj +2.4/+4.4)</td>
-<td>+18.0</td>
-<td>+2.5 pts</td>
-<td>+4.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600042">
-<td>2026-11-13</td>
-<td>OKC @ LAC</td>
-<td>+6.5</td>
-<td>+2.5</td>
-<td>+8.0 (inj +3.2/+4.4)</td>
-<td>+9.2</td>
-<td>+1.5 pts</td>
-<td>+2.7 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
 <tr id="0022600231">
 <td>2026-11-14</td>
 <td>DEN @ NOP</td>
@@ -897,11 +780,24 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
 </tr>
+<tr id="0022600253">
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td>+1.5</td>
+<td>-2.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
+</tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/site.json · session 2: nba2/data/picks.json · session 3: data/our-lines.csv (scripts/model.py)</p>
 </section><section class="card table-card" id="xlines" data-rows="23">
 <h2>Line-for-line: this model vs the model already on main</h2>
-<p class="blurb">2 of 23 matched games agree within 1.5 points; 21 disagree | median |Δ| 6.0 pts, max 11.0 pts across 23 matched games. Both numbers are shown because neither is verified against a market — averaging them would manufacture a false consensus, and deleting one would hide a real uncertainty.</p>
+<p class="blurb">2 of 14 matched games agree within 1.5 points; 12 disagree | median |Δ| 6.0 pts, max 11.0 pts across 14 matched games. Both numbers are shown because neither is verified against a market — averaging them would manufacture a false consensus, and deleting one would hide a real uncertainty.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Line-for-line: this model vs the model already on main</caption><thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Matchup</th>
@@ -915,141 +811,6 @@
 <th scope="col">Reconciliation</th>
 <th scope="col">Their source</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
-<tr id="0022600034">
-<td>2026-11-13</td>
-<td>NYK @ IND</td>
-<td>IND +5.0</td>
-<td>NYK -2.5</td>
-<td>+2.5 pts</td>
-<td>219.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.356</td>
-<td>0.425</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600035">
-<td>2026-11-13</td>
-<td>MIL @ ORL</td>
-<td>ORL -8.0</td>
-<td>MIL +2.0</td>
-<td>-6.0 pts</td>
-<td>225.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.727</td>
-<td>0.566</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600036">
-<td>2026-11-13</td>
-<td>CLE @ MIA</td>
-<td>MIA +3.0</td>
-<td>CLE +6.5</td>
-<td>+9.5 pts</td>
-<td>233.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.414</td>
-<td>0.677</td>
-<td>OPPOSITE SIDES — abstain</td>
-<td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600037">
-<td>2026-11-13</td>
-<td>ATL @ CHI</td>
-<td>CHI +10.5</td>
-<td>ATL -1.0</td>
-<td>+9.5 pts</td>
-<td>238.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.219</td>
-<td>0.465</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600038">
-<td>2026-11-13</td>
-<td>MEM @ NOP</td>
-<td>NOP +8.5</td>
-<td>MEM +0.5</td>
-<td>+9.0 pts</td>
-<td>235.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.270</td>
-<td>0.519</td>
-<td>OPPOSITE SIDES — abstain</td>
-<td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600039">
-<td>2026-11-13</td>
-<td>UTA @ HOU</td>
-<td>HOU -17.5</td>
-<td>UTA +13.0</td>
-<td>-4.5 pts</td>
-<td>223.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.900</td>
-<td>0.825</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/uta-vs-hou-0022600039</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600040">
-<td>2026-11-13</td>
-<td>GSW @ SAS</td>
-<td>SAS -3.0</td>
-<td>GSW +8.0</td>
-<td>+5.0 pts</td>
-<td>229.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.592</td>
-<td>0.721</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/gsw-vs-sas-0022600040</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600041">
-<td>2026-11-13</td>
-<td>POR @ SAC</td>
-<td>SAC +13.5</td>
-<td>POR -6.0</td>
-<td>+7.5 pts</td>
-<td>230.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.158</td>
-<td>0.329</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/por-vs-sac-0022600041</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
-<tr id="0022600042">
-<td>2026-11-13</td>
-<td>OKC @ LAC</td>
-<td>LAC +6.5</td>
-<td>OKC -2.5</td>
-<td>+4.0 pts</td>
-<td>224.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.315</td>
-<td>0.434</td>
-<td>DISAGREES — investigate before use</td>
-<td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
-</tr>
 <tr id="0022600231">
 <td>2026-11-14</td>
 <td>DEN @ NOP</td>
@@ -1260,12 +1021,147 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
 </tr>
+<tr id="0022600034">
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>NYK -2.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.425</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600035">
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>MIL +2.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.566</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600036">
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>CLE +6.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.677</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600037">
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>ATL -1.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.465</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600038">
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>MEM +0.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.519</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600039">
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>UTA +13.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.825</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/uta-vs-hou-0022600039</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600040">
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>GSW +8.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.721</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/gsw-vs-sas-0022600040</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600041">
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>POR -6.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.329</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/por-vs-sac-0022600041</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
+<tr id="0022600042">
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>OKC -2.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>0.434</td>
+<td>only in the prior session&#x27;s slate — outside our 11/13–11/16 window or unmatched</td>
+<td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
+</tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/raw snapshots → nba2/models/lines.py · theirs: nba2/data/picks.json → nba2/picks.py</p>
-</section><section class="card table-card" id="xadjudicate" data-rows="6">
-<h2>Status conflicts, adjudicated against a third official revision — 6 of 6 resolved in favour of the latest read</h2>
+</section><section class="card table-card" id="xadjudicate" data-rows="11">
+<h2>Status conflicts, adjudicated against a third official revision — 5 of 11 resolved in favour of the latest read</h2>
 <p class="blurb">Two sessions disagreed on six statuses and both believed they had read the same document correctly. A third session had ingested the 17:15 ET revision, which is later than ours, so the disagreement is now testable instead of a matter of trust. This is what &#x27;verify against official sources&#x27; is actually worth: not a claim of care, but a second and third copy to compare against.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Status conflicts, adjudicated against a third official revision — 6 of 6 resolved in favour of the latest read</caption><thead><tr>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Status conflicts, adjudicated against a third official revision — 5 of 11 resolved in favour of the latest read</caption><thead><tr>
 <th scope="col">Game date</th>
 <th scope="col">Team</th>
 <th scope="col">Player</th>
@@ -1275,6 +1171,30 @@
 <th scope="col">Official reason</th>
 <th scope="col">Adjudication</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="2026-11-13|ATL|dennis">
+<td>2026-11-13</td>
+<td>Atlanta Hawks</td>
+<td>Dennis, RayJ</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Questionable</td>
+<td>G League - Two-Way</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="2026-11-13|ATL|flemings">
+<td>2026-11-13</td>
+<td>Atlanta Hawks</td>
+<td>Flemings, Kingston</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Questionable</td>
+<td>Injury/Illness - Lumbar Spasm</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
 <tr id="2026-11-13|ATL|wilson">
 <td>2026-11-13</td>
 <td>Atlanta Hawks</td>
@@ -1286,6 +1206,30 @@
 <td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|IND|mcconnell">
+<td>2026-11-13</td>
+<td>Indiana Pacers</td>
+<td>McConnell, T.J.</td>
+<td>Probable</td>
+<td>Available</td>
+<td>Probable</td>
+<td>Injury/Illness - Right Hamstring Strain</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="2026-11-13|IND|nesmith">
+<td>2026-11-13</td>
+<td>Indiana Pacers</td>
+<td>Nesmith, Aaron</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Questionable</td>
+<td>Injury/Illness - Right Knee Soreness</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
 </tr>
 <tr id="2026-11-13|MIA|antetokounmpo">
 <td>2026-11-13</td>
@@ -1304,33 +1248,45 @@
 <td>Miami Heat</td>
 <td>Larsson, Pelle</td>
 <td>Questionable</td>
-<td>Doubtful</td>
+<td>Out</td>
 <td>Doubtful</td>
 <td>Injury/Illness - Illness</td>
-<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td>17:15 revision says &#x27;Doubtful&#x27;, matching neither — three-way discrepancy</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
 </tr>
 <tr id="2026-11-13|MIA|thompson">
 <td>2026-11-13</td>
 <td>Miami Heat</td>
 <td>Thompson, Klay</td>
 <td>Questionable</td>
-<td>Probable</td>
+<td>Out</td>
 <td>Probable</td>
 <td>Injury/Illness - Left Ankle Soreness</td>
+<td>17:15 revision says &#x27;Probable&#x27;, matching neither — three-way discrepancy</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="2026-11-13|ORL|cain">
+<td>2026-11-13</td>
+<td>Orlando Magic</td>
+<td>Cain, Jamal</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Available</td>
+<td>Injury/Illness - Left ShoulderContusion</td>
 <td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
 </tr>
-<tr id="2026-11-13|NOP|murray">
+<tr id="2026-11-13|ORL|suggs">
 <td>2026-11-13</td>
-<td>New Orleans Pelicans</td>
-<td>Murray, Dejounte</td>
-<td>Doubtful</td>
-<td>Out</td>
-<td>Out</td>
-<td>Injury/Illness - Left Ankle Sprain</td>
+<td>Orlando Magic</td>
+<td>Suggs, Jalen</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Available</td>
+<td>Injury/Illness - Right Knee Contusion/Bone Bruise</td>
 <td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
@@ -1349,10 +1305,10 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">Injury-Report_2026-11-13_01_00PM.pdf / _04_15PM.pdf / _05_15PM.pdf</p>
-</section><section class="card table-card" id="xinjuries" data-rows="109">
-<h2>Injury rows: 78 in both captures (6 status conflicts), 14 only theirs, 17 only ours</h2>
+</section><section class="card table-card" id="xinjuries" data-rows="130">
+<h2>Injury rows: 83 in both captures (11 status conflicts), 9 only theirs, 38 only ours</h2>
 <p class="blurb">Two sessions read two different revisions of the same official PDF. Where they differ, the report — not the model — changed underneath us, which is exactly why an injury-aware line must be re-issued at game time rather than sealed three days early.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Injury rows: 78 in both captures (6 status conflicts), 14 only theirs, 17 only ours</caption><thead><tr>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Injury rows: 83 in both captures (11 status conflicts), 9 only theirs, 38 only ours</caption><thead><tr>
 <th scope="col">Game date</th>
 <th scope="col">Team</th>
 <th scope="col">Player</th>
@@ -1367,24 +1323,24 @@
 <td>ATL</td>
 <td>Dennis, RayJ</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Available</td>
 <td>G League - Two-Way</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|ATL|flemings">
 <td>2026-11-13</td>
 <td>ATL</td>
 <td>Flemings, Kingston</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Available</td>
 <td>Injury/Illness - Lumbar Spasm</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|ATL|gilbert">
 <td>2026-11-13</td>
@@ -1763,24 +1719,24 @@
 <td>IND</td>
 <td>McConnell, T.J.</td>
 <td>Probable</td>
-<td>Probable</td>
+<td>Available</td>
 <td>Injury/Illness - Right Hamstring Strain</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|IND|nesmith">
 <td>2026-11-13</td>
 <td>IND</td>
 <td>Nesmith, Aaron</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Available</td>
 <td>Injury/Illness - Right Knee Soreness</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|IND|sheppard">
 <td>2026-11-13</td>
@@ -1967,7 +1923,7 @@
 <td>MIA</td>
 <td>Larsson, Pelle</td>
 <td>Questionable</td>
-<td>Doubtful</td>
+<td>Out</td>
 <td>Injury/Illness - Illness</td>
 <td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
@@ -1979,7 +1935,7 @@
 <td>MIA</td>
 <td>Thompson, Klay</td>
 <td>Questionable</td>
-<td>Probable</td>
+<td>Out</td>
 <td>Injury/Illness - Left Ankle Soreness</td>
 <td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
@@ -2075,12 +2031,12 @@
 <td>NOP</td>
 <td>Murray, Dejounte</td>
 <td>Doubtful</td>
-<td>Out</td>
+<td>Doubtful</td>
 <td>Injury/Illness - Left Ankle Sprain</td>
-<td>STATUS DISAGREES</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|NOP|pierre jr.">
 <td>2026-11-13</td>
@@ -2121,62 +2077,62 @@
 <tr id="2026-11-13|OKC|mitchell">
 <td>2026-11-13</td>
 <td>OKC</td>
-<td>Ajay Mitchell</td>
+<td>Mitchell, Ajay</td>
 <td>Questionable</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>only in the prior capture — we did not read a row for this player</td>
+<td>Questionable</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|OKC|sorber">
 <td>2026-11-13</td>
 <td>OKC</td>
-<td>Thomas Sorber</td>
+<td>Sorber, Thomas</td>
 <td>Out</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>only in the prior capture — we did not read a row for this player</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Surgery</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|OKC|topic">
 <td>2026-11-13</td>
 <td>OKC</td>
-<td>Nikola Topic</td>
+<td>Topic, Nikola</td>
 <td>Available</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>only in the prior capture — we did not read a row for this player</td>
+<td>Available</td>
+<td>-</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|OKC|wallace">
 <td>2026-11-13</td>
 <td>OKC</td>
-<td>Cason Wallace</td>
+<td>Wallace, Cason</td>
 <td>Out</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>only in the prior capture — we did not read a row for this player</td>
+<td>Out</td>
+<td>Injury/Illness - Left Shoulder Surgery</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|OKC|williams">
 <td>2026-11-13</td>
 <td>OKC</td>
-<td>Jaylin Williams</td>
+<td>Williams, Jaylin</td>
 <td>Out</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>only in the prior capture — we did not read a row for this player</td>
+<td>Out</td>
+<td>Injury/Illness - Low Back Spasms</td>
+<td>corroborated</td>
 <td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+<td class='flagcell'>—</td>
 </tr>
 <tr id="2026-11-13|ORL|banchero">
 <td>2026-11-13</td>
@@ -2184,7 +2140,7 @@
 <td>Banchero, Paolo</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Right High Ankle Sprain</td>
+<td>Injury/Illness - Right High AnkleSprain</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
@@ -2195,19 +2151,19 @@
 <td>ORL</td>
 <td>Cain, Jamal</td>
 <td>Questionable</td>
-<td>Questionable</td>
-<td>Injury/Illness - Left Shoulder Contusion</td>
-<td>corroborated</td>
+<td>Available</td>
+<td>Injury/Illness - Left ShoulderContusion</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|ORL|da silva">
 <td>2026-11-13</td>
 <td>ORL</td>
 <td>da Silva, Tristan</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>Questionable</td>
+<td>Available</td>
 <td>Injury/Illness - Left Calf Strain</td>
 <td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
@@ -2220,7 +2176,7 @@
 <td>Isaac, Jonathan</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Left Knee Injury Management</td>
+<td>Injury/Illness - Left Knee InjuryManagement</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
@@ -2232,7 +2188,7 @@
 <td>Nelson, Izaiyah</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Left Ankle Injury Recovery</td>
+<td>Injury/Illness - Left Ankle InjuryRecovery</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
@@ -2267,12 +2223,12 @@
 <td>ORL</td>
 <td>Suggs, Jalen</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Available</td>
 <td>Injury/Illness - Right Knee Contusion/Bone Bruise</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|POR|krejci">
 <td>2026-11-13</td>
@@ -2538,14 +2494,74 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
 </tr>
-<tr id="2026-11-14|BKN|">
+<tr id="2026-11-14|BKN|bilodeau">
 <td>2026-11-14</td>
 <td>BKN</td>
+<td>Bilodeau, Tyler</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>NOT YET SUBMITTED</td>
-<td>Team submission outstanding at report time</td>
-<td>coverage: our NOT-YET-SUBMITTED placeholder row, not a status</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|BKN|brown jr.">
+<td>2026-11-14</td>
+<td>BKN</td>
+<td>Brown Jr., Mikel</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Questionable</td>
+<td>Injury/Illness - Illness</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|BKN|jefferson">
+<td>2026-11-14</td>
+<td>BKN</td>
+<td>Jefferson, Joshua</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|BKN|nelson">
+<td>2026-11-14</td>
+<td>BKN</td>
+<td>Nelson, Grant</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|BKN|saraf">
+<td>2026-11-14</td>
+<td>BKN</td>
+<td>Saraf, Ben</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|BKN|traore">
+<td>2026-11-14</td>
+<td>BKN</td>
+<td>Traore, Nolan</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Probable</td>
+<td>Injury/Illness - Right Calf Tightness / Soreness</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
@@ -2574,38 +2590,206 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
 </tr>
-<tr id="2026-11-14|DAL|">
+<tr id="2026-11-14|DAL|biberovic">
 <td>2026-11-14</td>
 <td>DAL</td>
+<td>Biberovic, Tarik</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>NOT YET SUBMITTED</td>
-<td>Team submission outstanding at report time</td>
-<td>coverage: our NOT-YET-SUBMITTED placeholder row, not a status</td>
+<td>Out</td>
+<td>Injury/Illness - Right Heel Bursitis</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
 </tr>
-<tr id="2026-11-14|DEN|">
+<tr id="2026-11-14|DAL|christie">
+<td>2026-11-14</td>
+<td>DAL</td>
+<td>Christie, Max</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Questionable</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DAL|de larrea">
+<td>2026-11-14</td>
+<td>DAL</td>
+<td>de Larrea, Sergio</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Sprain</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DAL|johnson jr.">
+<td>2026-11-14</td>
+<td>DAL</td>
+<td>Johnson Jr., Morez</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Probable</td>
+<td>Injury/Illness - Left Shin / Tibia Contusion</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DAL|lively ii">
+<td>2026-11-14</td>
+<td>DAL</td>
+<td>Lively II, Dereck</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Foot Surgery</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DAL|martin">
+<td>2026-11-14</td>
+<td>DAL</td>
+<td>Martin, Caleb</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Available</td>
+<td>Injury/Illness - Right Thumb Splint</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DEN|holmes ii">
 <td>2026-11-14</td>
 <td>DEN</td>
+<td>Holmes II, DaRon</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>NOT YET SUBMITTED</td>
-<td>Team submission outstanding at report time</td>
-<td>coverage: our NOT-YET-SUBMITTED placeholder row, not a status</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
 </tr>
-<tr id="2026-11-14|DET|">
+<tr id="2026-11-14|DEN|nembhard">
+<td>2026-11-14</td>
+<td>DEN</td>
+<td>Nembhard, Ryan</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DEN|strawther">
+<td>2026-11-14</td>
+<td>DEN</td>
+<td>Strawther, Julian</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Left Knee Sprain</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DEN|whitmore">
+<td>2026-11-14</td>
+<td>DEN</td>
+<td>Whitmore, Cam</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|duren">
 <td>2026-11-14</td>
 <td>DET</td>
+<td>Duren, Jalen</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Hamstring Strain</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>NOT YET SUBMITTED</td>
-<td>Team submission outstanding at report time</td>
-<td>coverage: our NOT-YET-SUBMITTED placeholder row, not a status</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|harkless">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Harkless, Elijah</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Questionable</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|joe">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Joe, Isaiah</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Hip Contusion</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|jones">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Jones, Isaac</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Questionable</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|lanier">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Lanier, Chaz</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|okorie">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Okorie, Ebuka</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|DET|onyenso">
+<td>2026-11-14</td>
+<td>DET</td>
+<td>Onyenso, Ugonna</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
@@ -2634,14 +2818,38 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
 </tr>
-<tr id="2026-11-14|MIN|">
+<tr id="2026-11-14|MIN|beringer">
 <td>2026-11-14</td>
 <td>MIN</td>
+<td>Beringer, Joan</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Available</td>
+<td>Injury/Illness - Face Mask</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>NOT YET SUBMITTED</td>
-<td>Team submission outstanding at report time</td>
-<td>coverage: our NOT-YET-SUBMITTED placeholder row, not a status</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|MIN|divincenzo">
+<td>2026-11-14</td>
+<td>MIN</td>
+<td>DiVincenzo, Donte</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Achilles Tendon Repair / Surgery</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
+</tr>
+<tr id="2026-11-14|MIN|edwards">
+<td>2026-11-14</td>
+<td>MIN</td>
+<td>Edwards, Anthony</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Arthroscopy</td>
+<td>only in our capture (16:15 ET revision; they read 13:00 ET)</td>
 <td><span class="blank" title="blank because: FLAG-XSESS-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>

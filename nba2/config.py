@@ -11,7 +11,9 @@ Policy (enforced by nba2.pipeline.lint):
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 
@@ -457,11 +459,53 @@ REWARD_WEIGHTS = {
 }
 
 DATA_DIR = "data/raw"
-SNAPSHOT_SLATE = "slate_2026-11-13_to_11-16.json"
-SNAPSHOT_CONTEXT = "slate_context_2026-11-17.json"
+ROOT_DIR = Path(__file__).resolve().parents[1]
+RAW_DIR = ROOT_DIR / DATA_DIR
+
+SNAPSHOT_CONTEXT = "slate_context_2026-11-14.json"
 SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
-SNAPSHOT_INJURY = "injury_report_2026-11-13.json"
+
+
+def _snapshot_ranking(kind: str) -> list[tuple[tuple, str]]:
+    """Rank the committed snapshots of one kind, newest first.
+
+    The window has to roll forward without anyone editing a constant, but the choice must
+    still be *deterministic* - a build that silently picked a random file would not be
+    reproducible. So the ranking key is read out of the snapshot itself:
+
+      * slate  -> (window.first_game_date, retrieved_at_utc)
+      * injury -> (report_stamp_et, retrieved_at_utc)
+
+    Ties are broken by file name, so the order never depends on directory order.
+    """
+    out: list[tuple[tuple, str]] = []
+    pattern = "slate_*.json" if kind == "slate" else "injury_report_*.json"
+    for p in sorted(RAW_DIR.glob(pattern)):
+        if kind == "slate" and p.name.startswith("slate_context_"):
+            continue
+        try:
+            doc = json.loads(p.read_text())
+            if kind == "slate":
+                key = (doc["window"]["first_game_date"], doc.get("retrieved_at_utc", ""), p.name)
+            else:
+                key = (doc["report_stamp_et"], doc.get("retrieved_at_utc", ""), p.name)
+        except Exception:
+            continue
+        out.append((key, p.name))
+    out.sort(reverse=True)
+    return out
+
+
+_S = _snapshot_ranking("slate")
+_I = _snapshot_ranking("injury")
+
+# The live window. The previous revision is kept so the site can publish the difference
+# between two official revisions instead of only the latest one.
+SNAPSHOT_SLATE = _S[0][1] if _S else "slate_2026-11-13_to_11-16.json"
+SNAPSHOT_PREVIOUS_SLATE = _S[1][1] if len(_S) > 1 else None
+SNAPSHOT_INJURY = _I[0][1] if _I else "injury_report_2026-11-13.json"
+SNAPSHOT_PREVIOUS_INJURY = _I[1][1] if len(_I) > 1 else None
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

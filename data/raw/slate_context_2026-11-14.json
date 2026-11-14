@@ -1,0 +1,224 @@
+{
+ "dataset": "slate_context_outside_window",
+ "purpose": "Rows seen on the official schedule page that fall OUTSIDE the current pick window. Held separately so the pick slate cannot be silently widened, and so the games that have already tipped are kept visible as the calibration set instead of vanishing.",
+ "source": "https://www.nba.com/schedule",
+ "retrieved_at_utc": "2026-11-14T01:05:00Z",
+ "active_window": {
+  "first_game_date": "2026-11-14",
+  "last_game_date": "2026-11-17",
+  "days_in_advance": 3
+ },
+ "previous_window": {
+  "first_game_date": "2026-11-13",
+  "last_game_date": "2026-11-16",
+  "days_in_advance": 3
+ },
+ "anomalies_note": "The two repeat matchups below were transcribed exactly as rendered by the official schedule page and were independently confirmed on the official New York Knicks team schedule page (https://www.nba.com/knicks/schedule, retrieved 2026-11-14), which lists NYK @ Toronto at Scotiabank Arena on both Nov 15 and Nov 17. They are therefore a property of the published schedule, not a one-off rendering artefact.",
+ "records": [
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "matchup": "NYK @ TOR",
+   "observation": "Identical matchup and arena (Scotiabank Arena) as 0022600241 on 2026-11-15, two days apart. Confirmed on the official Knicks schedule page on 2026-11-14, which lists both dates. The game IS inside the pick window, so it is priced; the anomaly is that the same pairing is scheduled twice at the same venue two days running.",
+   "window": "inside pick window (11/14-11/17)"
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "matchup": "POR @ MIN",
+   "observation": "Identical matchup, arena (Target Center) and tip time (8:00 PM ET) as 0022600250 on 2026-11-16, on consecutive days. A back-to-back rematch at the same venue and the same tip time is not a normal scheduling pattern; recorded as a data-integrity flag.",
+   "window": "inside pick window (11/14-11/17)"
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "matchup": "UTA @ LAC",
+   "observation": "Game ids are not monotonic with tip time on 2026-11-17: the page prints 0022600257 (UTA @ LAC, 10:30 PM ET) before 0022600256 (CHA @ LAL, 11:00 PM ET). Any ingest that sorts by id, or infers a date from an id range, will mis-join these rows.",
+   "window": "inside pick window (11/14-11/17)"
+  },
+  {
+   "game_id": "n/a",
+   "date": "2026-11-14",
+   "matchup": "\u2014",
+   "observation": "https://www.nba.com/games?dates=MM/DD/YYYY ignores the dates parameter for non-browser clients and always returns the current day's slate; the day picker is applied client-side. Date-window scrapes must use /schedule, not /games?dates=.",
+   "window": "ingest hazard"
+  }
+ ],
+ "dropped_games_now_played": [
+  {
+   "game_id": "0022600034",
+   "date": "2026-11-13",
+   "time_et": "19:00",
+   "matchup": "NYK @ IND",
+   "arena": "Gainbridge Fieldhouse",
+   "city": "Indianapolis",
+   "state": "IN",
+   "broadcast": "Prime Video",
+   "cup_group": "East Group B",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600035",
+   "date": "2026-11-13",
+   "time_et": "19:00",
+   "matchup": "MIL @ ORL",
+   "arena": "Kia Center",
+   "city": "Orlando",
+   "state": "FL",
+   "broadcast": "League Pass",
+   "cup_group": "East Group A",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600036",
+   "date": "2026-11-13",
+   "time_et": "20:00",
+   "matchup": "CLE @ MIA",
+   "arena": "Kaseya Center",
+   "city": "Miami",
+   "state": "FL",
+   "broadcast": "League Pass",
+   "cup_group": "East Group B",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600037",
+   "date": "2026-11-13",
+   "time_et": "20:00",
+   "matchup": "ATL @ CHI",
+   "arena": "United Center",
+   "city": "Chicago",
+   "state": "IL",
+   "broadcast": "League Pass",
+   "cup_group": "East Group C",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600038",
+   "date": "2026-11-13",
+   "time_et": "20:00",
+   "matchup": "MEM @ NOP",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans",
+   "state": "LA",
+   "broadcast": "League Pass",
+   "cup_group": "West Group B",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600039",
+   "date": "2026-11-13",
+   "time_et": "20:30",
+   "matchup": "UTA @ HOU",
+   "arena": "Toyota Center",
+   "city": "Houston",
+   "state": "TX",
+   "broadcast": "League Pass",
+   "cup_group": "West Group A",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600040",
+   "date": "2026-11-13",
+   "time_et": "21:30",
+   "matchup": "GSW @ SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio",
+   "state": "TX",
+   "broadcast": "Prime Video",
+   "cup_group": "West Group C",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600041",
+   "date": "2026-11-13",
+   "time_et": "22:00",
+   "matchup": "POR @ SAC",
+   "arena": "Golden 1 Center",
+   "city": "Sacramento",
+   "state": "CA",
+   "broadcast": "League Pass",
+   "cup_group": "West Group C",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  },
+  {
+   "game_id": "0022600042",
+   "date": "2026-11-13",
+   "time_et": "22:30",
+   "matchup": "OKC @ LAC",
+   "arena": "Intuit Dome",
+   "city": "Inglewood",
+   "state": "CA",
+   "broadcast": "League Pass",
+   "cup_group": "West Group B",
+   "note": "Tipped on or before 2026-11-13; outside the current pick window."
+  }
+ ],
+ "added_games": [
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "time_et": "19:30",
+   "matchup": "NYK @ TOR",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto",
+   "state": "ON",
+   "broadcast": "League Pass",
+   "cup_group": null,
+   "note": "Entered the pick window on 2026-11-14."
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "time_et": "20:00",
+   "matchup": "POR @ MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis",
+   "state": "MN",
+   "broadcast": "League Pass",
+   "cup_group": null,
+   "note": "Entered the pick window on 2026-11-14."
+  },
+  {
+   "game_id": "0022600255",
+   "date": "2026-11-17",
+   "time_et": "20:00",
+   "matchup": "DET @ SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio",
+   "state": "TX",
+   "broadcast": "Peacock / NBC",
+   "cup_group": null,
+   "note": "Entered the pick window on 2026-11-14."
+  },
+  {
+   "game_id": "0022600256",
+   "date": "2026-11-17",
+   "time_et": "23:00",
+   "matchup": "CHA @ LAL",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles",
+   "state": "CA",
+   "broadcast": "Peacock / NBC",
+   "cup_group": null,
+   "note": "Entered the pick window on 2026-11-14."
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "time_et": "22:30",
+   "matchup": "UTA @ LAC",
+   "arena": "Intuit Dome",
+   "city": "Inglewood",
+   "state": "CA",
+   "broadcast": "League Pass",
+   "cup_group": null,
+   "note": "Entered the pick window on 2026-11-14."
+  }
+ ],
+ "counts": {
+  "dropped": 9,
+  "added": 5,
+  "carried_over_unchanged": 22
+ }
+}

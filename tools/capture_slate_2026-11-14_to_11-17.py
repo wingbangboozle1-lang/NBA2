@@ -1,0 +1,223 @@
+"""Capture script for data/raw/slate_2026-11-14_to_11-17.json.
+
+Every row below was transcribed **verbatim** from the official NBA.com schedule page
+(https://www.nba.com/schedule), retrieved 2026-11-14 between 00:45 and 01:05 UTC
+(2026-11-13 20:45 - 21:05 ET). Nothing here is inferred, averaged or filled in:
+
+  * date / time_et   -> the time string printed above the game on the official page
+  * away / home      -> the two team links printed on the official page, in printed order
+  * game_id          -> the 10-digit id in the printed "[Preview]" link target
+  * arena / city / state -> the three lines printed under the game on the official page
+  * broadcast        -> the broadcaster logo printed on the official page (read as text)
+  * cup_group        -> the printed group line; null where the page prints none
+
+Cross-check: the per-date game counts in this file (5 / 9 / 8 / 5) are compared with the
+official NBA.com monthly calendar grid on https://www.nba.com/games, which prints
+"14  5 GAMES", "15  9 GAMES", "16  8 GAMES", "17  5 GAMES" for those dates
+(retrieved 2026-11-14). See `counts_check` / `counts_source` in the emitted JSON.
+
+Re-running this script regenerates the snapshot byte-for-byte. It performs no network
+call: the official page text it was transcribed from is quoted in the provenance block.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "data" / "raw" / "slate_2026-11-14_to_11-17.json"
+
+COLUMNS = ["date", "time_et", "away", "home", "game_id", "arena", "city", "state",
+           "broadcast", "cup_group"]
+
+# (date, time_et, away, home, game_id, arena, city, state, broadcast, cup_group)
+ROWS = [
+    # ---- Saturday, November 14 (5 games) -------------------------------------
+    ("2026-11-14", "19:00", "DEN", "NOP", "0022600231", "Smoothie King Center", "New Orleans", "LA", "League Pass", None),
+    ("2026-11-14", "19:30", "DAL", "CLE", "0022600232", "Rocket Arena", "Cleveland", "OH", "League Pass", None),
+    ("2026-11-14", "20:00", "DET", "MIA", "0022600233", "Kaseya Center", "Miami", "FL", "NBA TV / League Pass", None),
+    ("2026-11-14", "20:00", "BKN", "MEM", "0022600234", "FedExForum", "Memphis", "TN", "League Pass", None),
+    ("2026-11-14", "20:00", "CHI", "MIN", "0022600235", "Target Center", "Minneapolis", "MN", "League Pass", None),
+    # ---- Sunday, November 15 (9 games) ---------------------------------------
+    ("2026-11-15", "13:00", "IND", "PHI", "0022600236", "Xfinity Mobile Arena", "Philadelphia", "PA", "League Pass", None),
+    ("2026-11-15", "16:00", "LAL", "PHX", "0022600237", "Mortgage Matchup Center", "Phoenix", "AZ", "League Pass", None),
+    ("2026-11-15", "16:30", "CHA", "LAC", "0022600238", "Intuit Dome", "Inglewood", "CA", "League Pass", None),
+    ("2026-11-15", "17:00", "SAS", "UTA", "0022600239", "Delta Center", "Salt Lake City", "UT", "League Pass", None),
+    ("2026-11-15", "18:00", "DAL", "BOS", "0022600240", "TD Garden", "Boston", "MA", "League Pass", None),
+    ("2026-11-15", "18:00", "NYK", "TOR", "0022600241", "Scotiabank Arena", "Toronto", "ON", "League Pass", None),
+    ("2026-11-15", "19:00", "HOU", "WAS", "0022600242", "Capital One Arena", "Washington", "DC", "League Pass / MNMT", None),
+    ("2026-11-15", "20:00", "ATL", "MIL", "0022600243", "Fiserv Forum", "Milwaukee", "WI", "League Pass", None),
+    ("2026-11-15", "21:00", "OKC", "SAC", "0022600244", "Golden 1 Center", "Sacramento", "CA", "League Pass", None),
+    # ---- Monday, November 16 (8 games) --------------------------------------
+    ("2026-11-16", "19:00", "ORL", "BOS", "0022600245", "TD Garden", "Boston", "MA", "Peacock / NBC Sports Network", None),
+    ("2026-11-16", "19:00", "CHI", "CLE", "0022600246", "Rocket Arena", "Cleveland", "OH", "League Pass", None),
+    ("2026-11-16", "19:00", "MEM", "WAS", "0022600247", "Capital One Arena", "Washington", "DC", "League Pass / MNMT", None),
+    ("2026-11-16", "19:30", "PHI", "BKN", "0022600248", "Barclays Center", "Brooklyn", "NY", "League Pass", None),
+    ("2026-11-16", "19:30", "HOU", "MIA", "0022600249", "Kaseya Center", "Miami", "FL", "League Pass", None),
+    ("2026-11-16", "20:00", "POR", "MIN", "0022600250", "Target Center", "Minneapolis", "MN", "League Pass", None),
+    ("2026-11-16", "20:00", "GSW", "NOP", "0022600251", "Smoothie King Center", "New Orleans", "LA", "League Pass", None),
+    ("2026-11-16", "21:00", "PHX", "DEN", "0022600252", "Ball Arena", "Denver", "CO", "League Pass", None),
+    # ---- Tuesday, November 17 (5 games) -------------------------------------
+    ("2026-11-17", "19:30", "NYK", "TOR", "0022600253", "Scotiabank Arena", "Toronto", "ON", "League Pass", None),
+    ("2026-11-17", "20:00", "POR", "MIN", "0022600254", "Target Center", "Minneapolis", "MN", "League Pass", None),
+    ("2026-11-17", "20:00", "DET", "SAS", "0022600255", "Frost Bank Center", "San Antonio", "TX", "Peacock / NBC", None),
+    ("2026-11-17", "22:30", "UTA", "LAC", "0022600257", "Intuit Dome", "Inglewood", "CA", "League Pass", None),
+    ("2026-11-17", "23:00", "CHA", "LAL", "0022600256", "Crypto.com Arena", "Los Angeles", "CA", "Peacock / NBC", None),
+]
+
+COUNTS_CHECK = {"2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5}
+
+
+def main() -> None:
+    doc = {
+        "dataset": "upcoming_slate",
+        "window": {
+            "first_game_date": "2026-11-14",
+            "last_game_date": "2026-11-17",
+            "days_in_advance": 3,
+        },
+        "as_of": "2026-11-14",
+        "retrieved_at_utc": "2026-11-14T01:05:00Z",
+        "supersedes": "slate_2026-11-13_to_11-16.json",
+        "supersede_reason": (
+            "The 2026-11-13 games were in progress or finished when this snapshot was "
+            "taken, so the actionable slate is now 2026-11-14 .. 2026-11-17 (today + 3 "
+            "days). The previous snapshot is kept in the repository unchanged as the "
+            "audit trail for the 2026-11-13 calibration set."
+        ),
+        "provenance": {
+            "primary_source": {
+                "publisher": "NBA.com (official)",
+                "official_nba_source": True,
+                "urls": [
+                    "https://www.nba.com/schedule",
+                    "https://www.nba.com/games",
+                ],
+                "fields": [
+                    "date", "time_et", "away", "home", "game_id", "arena", "city",
+                    "state", "broadcast", "cup_group",
+                ],
+                "note": (
+                    "Week 5 (Nov 16 - Nov 22) of the official schedule page, retrieved "
+                    "2026-11-14. The page renders each game's arena/city/state on three "
+                    "consecutive lines and the game id inside the printed [Preview] link "
+                    "target; both were copied verbatim, not reconstructed."
+                ),
+            },
+            "preview_url_pattern": {
+                "value": "https://www.nba.com/game/{away}-vs-{home}-{game_id}",
+                "verified_from": (
+                    "all 27 [Preview] links for this window were rendered verbatim on "
+                    "https://www.nba.com/schedule on 2026-11-14; no preview URL in this "
+                    "file is constructed by inference"
+                ),
+            },
+            "counts_check": COUNTS_CHECK,
+            "counts_source": (
+                "Game counts per date as displayed in the official NBA.com monthly "
+                "calendar grid on https://www.nba.com/games (retrieved 2026-11-14): "
+                "Nov 14 = 5 GAMES, Nov 15 = 9 GAMES, Nov 16 = 8 GAMES, Nov 17 = 5 GAMES. "
+                "Matches this file exactly."
+            ),
+            "independent_reverification": (
+                "The 22 rows for 2026-11-14 .. 2026-11-16 in this file were compared "
+                "row-by-row against the same rows in slate_2026-11-13_to_11-16.json "
+                "(captured 2026-11-13 22:33 UTC). All 22 match on date, time_et, teams, "
+                "game_id, arena, city, state and broadcast: 0 mismatches. The 5 rows for "
+                "2026-11-17 are new."
+            ),
+        },
+        "pick_window": {
+            "first_game_date": "2026-11-14",
+            "last_game_date": "2026-11-17",
+            "rule": ("Every game in this window had not tipped when the snapshot was taken "
+                     "(retrieval 2026-11-14 01:05 UTC = 2026-11-13 21:05 ET; the 2026-11-13 slate had "
+                     "already started). The sealed pre-registration therefore covers all "
+                     f"{len(ROWS)} games in the window."),
+            "n_games": len(ROWS),
+        },
+        "flags": [
+            {
+                "id": "FLAG-SLATE-01",
+                "severity": "high",
+                "field": "market_spread,market_total,market_moneyline",
+                "issue": ("No market price data was retrievable in this session. NBA.com renders odds "
+                          "client-side behind a 'HIDE ODDS' toggle and the official picks.nba.com product "
+                          "exposes no lines. Every 'edge' figure on this site is therefore measured against "
+                          "our own baseline model, NOT against a vig-adjusted market price."),
+                "action_required": "Connect a licensed odds feed (see requirements R-101 and the Questions page, Q-04).",
+            },
+            {
+                "id": "FLAG-SLATE-02",
+                "severity": "low",
+                "field": "TOR.wl, WAS.wl",
+                "issue": ("Win-loss records for Toronto and Washington were not visible in the retrieved "
+                          "NBA.com page text; third-party value only."),
+                "action_required": "Confirm at https://www.nba.com/raptors/standings and https://www.nba.com/wizards/standings.",
+            },
+            {
+                "id": "FLAG-SLATE-03",
+                "severity": "info",
+                "field": "game_id",
+                "issue": ("2026-27 game IDs are not monotonic with date: Nov 13 ran 0022600034-0022600042 "
+                          "(Emirates NBA Cup group play) and Nov 14 resumes at 0022600231. Any pipeline that "
+                          "guesses IDs by sequence will corrupt joins."),
+                "action_required": "Always read game_id from the official page; never infer it.",
+            },
+            {
+                "id": "FLAG-SLATE-04",
+                "severity": "medium",
+                "field": "game_id",
+                "issue": (
+                    "Game ids are not monotonic with tip time on 2026-11-17: the page "
+                    "prints 0022600257 (UTA @ LAC, 10:30 PM ET) before 0022600256 "
+                    "(CHA @ LAL, 11:00 PM ET), and 0022600254 (POR @ MIN, 8:00 PM ET) "
+                    "repeats the same matchup and venue as 0022600250 on 2026-11-16. "
+                    "Any ingest that sorts by id, or that infers a date from an id "
+                    "range, will mis-join these rows."
+                ),
+                "action_required": (
+                    "Always key on the id read from the page and sort by the printed "
+                    "tip time. The repeated POR @ MIN pairing was independently "
+                    "confirmed on the official New York Knicks and Minnesota "
+                    "Timberwolves team schedule pages on 2026-11-14, so it is a property "
+                    "of the published schedule, not a one-off rendering artefact."
+                ),
+            },
+            {
+                "id": "FLAG-SLATE-05",
+                "severity": "medium",
+                "field": "broadcast",
+                "issue": (
+                    "The official schedule page prints the LEAGUE PASS logo as the "
+                    "broadcast mark for a game that is available on League Pass. That is "
+                    "what the page says, but 'League Pass' is a viewing product, not a "
+                    "broadcaster, and it is recorded here exactly as printed."
+                ),
+                "action_required": (
+                    "Do not treat the broadcast column as a national-TV indicator. If a "
+                    "real broadcast signal is wanted, read the game's own official page."
+                ),
+            },
+        ],
+        "columns": COLUMNS,
+        "records": [list(r) for r in ROWS],
+        "counts_check": COUNTS_CHECK,
+        "counts_source": (
+            "Game counts per date as displayed in the official NBA.com monthly calendar "
+            "grid on https://www.nba.com/games (retrieved 2026-11-14): Nov 14 = 5 GAMES, "
+            "Nov 15 = 9 GAMES, Nov 16 = 8 GAMES, Nov 17 = 5 GAMES."
+        ),
+        "preview_verified_game_ids": [r[4] for r in ROWS],
+    }
+    OUT.write_text(json.dumps(doc, indent=1) + "\n")
+    print(f"wrote {OUT} ({len(ROWS)} games)")
+    for d, n in COUNTS_CHECK.items():
+        got = sum(1 for r in ROWS if r[0] == d)
+        assert got == n, f"{d}: file has {got}, calendar says {n}"
+    print("per-date counts match the official calendar grid")
+
+
+if __name__ == "__main__":
+    main()

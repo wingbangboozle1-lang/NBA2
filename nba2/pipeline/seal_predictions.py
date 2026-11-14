@@ -22,12 +22,18 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def pick_window(slate: dict) -> tuple[str, str]:
-    """Games strictly after the snapshot date, through as_of + days_in_advance.
+    """The games that are still ahead of us when the snapshot was taken.
 
-    Today's games are excluded from the sealed set: their injury report is already hours old, so
-    a line published for them now is not a forecast, it is a recap. They stay on the site as the
-    calibration slate.
+    The snapshot may state its pick window explicitly (`pick_window` in the snapshot JSON).
+    That is the authoritative answer and it is committed, so sealing stays deterministic.
+    Without it we fall back to the date rule: games strictly after the snapshot date, through
+    as_of + days_in_advance. Today's games are excluded under that rule because their injury
+    report is already hours old, so a line published for them is a recap, not a forecast; they
+    stay on the site as the calibration slate.
     """
+    explicit = slate.get("pick_window")
+    if explicit:
+        return explicit["first_game_date"], explicit["last_game_date"]
     as_of = slate["as_of"]
     days = slate["window"].get("days_in_advance", 3)
     start = (datetime.strptime(as_of, "%Y-%m-%d").date() + timedelta(days=1)).isoformat()

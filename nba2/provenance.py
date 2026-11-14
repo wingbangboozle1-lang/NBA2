@@ -62,14 +62,44 @@ register_source("nba_games", "NBA.com Games & Scores (official)", "https://www.n
                 "Game cards with W-L and Emirates NBA Cup group records. Retrieved 2026-11-13 22:26 UTC.")
 register_source("nba_game_card", "NBA.com Game Preview (official)", "https://www.nba.com/game/den-vs-nop-0022600231",
                 Src.OFFICIAL, "Cross-check of Nov 13-15 win-loss records.")
-register_source("nba_injury_pdf", "NBA Official Injury Report 11/13 16:15 ET (official)",
-                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", Src.OFFICIAL,
-                "7-page referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason.")
-register_source("nba_injury_pdf_1114", "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+register_source("nba_injury_pdf_1114", "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before "
+                "designations (official)",
                 "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", Src.OFFICIAL,
-                "Later release of the same referee-operations series: first document carrying 2026-11-14 participation "
-                "designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at "
-                "data/raw/injury_report_2026-11-14_daybefore.json.")
+                "Later release of the same referee-operations series: first document carrying 2026-11-14 "
+                "participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 "
+                "00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json.")
+
+
+def _injury_source(name: str, fallback: str) -> tuple[str, str]:
+    """URL + stamp of the active (or previous) official injury-report snapshot.
+
+    The source register must name the document the site actually used, so it is read from
+    the snapshot rather than hard-coded; a hard-coded URL would keep pointing at an older
+    revision after the window rolls forward.
+    """
+    import json
+    from . import config
+    fname = config.SNAPSHOT_INJURY if name == "active" else config.SNAPSHOT_PREVIOUS_INJURY
+    if not fname:
+        return ("", "")
+    path = config.ROOT_DIR / config.DATA_DIR / fname
+    try:
+        doc = json.loads(path.read_text())
+    except Exception:
+        return ("", "")
+    return (doc.get("provenance", {}).get("url", ""), doc.get("report_stamp_et", ""))
+
+
+_INJ_URL, _INJ_STAMP = _injury_source("active", "")
+_PREV_INJ_URL, _PREV_INJ_STAMP = _injury_source("previous", "")
+register_source("nba_injury_pdf", f"NBA Official Injury Report {_INJ_STAMP} ET (official)",
+                _INJ_URL, Src.OFFICIAL,
+                "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. "
+                "The URL is read from the active snapshot, so it always names the revision the site used.")
+register_source("nba_injury_pdf_prev", f"NBA Official Injury Report {_PREV_INJ_STAMP} ET (official, earlier revision)",
+                _PREV_INJ_URL, Src.OFFICIAL,
+                "The previous official revision, kept so the status churn between two revisions can be published "
+                "instead of only the latest state.")
 register_source("bref_standings", "Basketball-Reference 2026-27 Standings", "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
                 Src.THIRD_PARTY, "Conference + Expanded standings. W-L cross-checks against NBA.com for 28/30 teams.")
 register_source("nba_stats_blocked", "stats.nba.com JSON endpoints", "https://stats.nba.com/stats/leaguestandingsv3",

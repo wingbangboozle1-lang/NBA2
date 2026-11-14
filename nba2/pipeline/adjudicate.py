@@ -204,11 +204,29 @@ def reconcile_three_way(mine_lines, their_picks: dict) -> dict:
         ))
     mean_raw = sum(gaps_raw) / len(gaps_raw) if gaps_raw else float("nan")
     mean_adj = sum(gaps_adj) / len(gaps_adj) if gaps_adj else float("nan")
+    # Rows where the earlier model actually embedded a convention: only those can move when the
+    # convention is stripped. Reporting one number over all rows would hide which is which.
+    moved = [(r, a) for r, a in zip(gaps_raw, gaps_adj) if abs(r - a) > 1e-9]
+    if moved:
+        m_raw = sum(r for r, _ in moved) / len(moved)
+        m_adj = sum(a for _, a in moved) / len(moved)
+        if m_adj < m_raw:
+            direction = (f"removing that convention shrinks the mean gap from {m_raw:.1f} to {m_adj:.1f} pts "
+                         f"on those {len(moved)} games — so most of the disagreement there is a parameter, "
+                         "not a difference in the evidence")
+        else:
+            direction = (f"removing that convention does NOT shrink the gap: it moves the mean from {m_raw:.1f} "
+                         f"to {m_adj:.1f} pts on those {len(moved)} games. The earlier claim that most "
+                         "disagreement is an unratified convention does not replicate on the current "
+                         "comparison set and is therefore not repeated here")
+    else:
+        m_raw = m_adj = float("nan")
+        direction = ("no game in this comparison carries a non-zero convention in the earlier model, so "
+                     "stripping changes nothing and there is nothing to conclude about conventions here")
     flag("FLAG-XSESS-07", "high", "cross-session",
-         f"Three models, one slate: mean absolute spread disagreement is {mean_raw:.1f} pts, and "
-         f"{mean_adj:.1f} pts after removing session 3's own injury adjustment from its line. Most of the "
-         "apparent model disagreement is unratified convention, not a difference in the evidence — which is "
-         "why every convention on this site is labelled and none is treated as a fact.",
+         f"Three models, one slate: mean absolute spread disagreement is {mean_raw:.1f} pts over "
+         f"{len(gaps_raw)} comparable games, and {mean_adj:.1f} pts after removing session 3's own injury "
+         f"adjustment from its line. {direction.capitalize()}.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py",
          "Ratify one injury/rest convention (or none) before any trigger is armed; see S-04.")
     return table(rows, [("date", "Date"), ("matchup", "Matchup"), ("ours", "Ours"),
@@ -217,10 +235,10 @@ def reconcile_three_way(mine_lines, their_picks: dict) -> dict:
                         ("gap_raw", "Gap"), ("gap_after_stripping", "Gap after stripping"),
                         ("note", "Why they differ")],
                  "Three originated lines for the same games — and how much of the gap is convention",
-                 f"Mean |gap| across {len(gaps_raw)} games: {mean_raw:.1f} pts as published, "
+                 f"Mean |gap| across {len(gaps_raw)} comparable games: {mean_raw:.1f} pts as published, "
                  f"{mean_adj:.1f} pts once session 3's own injury adjustment is stripped out using the "
-                 "fields it published. The reduction is the point: two teams reading the same official data "
-                 "and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter "
-                 "nobody ratified is not evidence.",
+                 f"fields it published. {direction.capitalize()}. The comparison set moves with the window: "
+                 "when the window rolled forward the comparable set changed, so this sentence is recomputed "
+                 "from the data on every build and never asserts a direction the measurement does not show.",
                  "ours: data/site.json · session 2: nba2/data/picks.json · session 3: data/our-lines.csv "
                  "(scripts/model.py)")
