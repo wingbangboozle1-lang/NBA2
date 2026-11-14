@@ -257,12 +257,64 @@ SLATE = [
     ("2026-11-17", "22:30", "UTA", "LAC", "0022600257", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
 ]
 
+# --------------------------------------------------------------------------- rest / density
+# Every game date each team plays or played within the stretch of the official schedule read on
+# 2026-11-14. These are DATES ONLY, transcribed from https://www.nba.com/schedule, and they are
+# what "rest" and "back-to-back" are computed from — the priced window alone is not enough,
+# because a team can enter the window on the second of a back-to-back and a window-local count
+# cannot see it. 11/13 appears because those games were played and finished.
+SCHEDULE_DATES_ALL = {
+    "ATL": ["2026-11-13", "2026-11-15"],
+    "BOS": ["2026-11-15", "2026-11-16"],
+    "BKN": ["2026-11-14", "2026-11-16", "2026-11-18"],
+    "CHA": ["2026-11-15", "2026-11-17"],
+    "CHI": ["2026-11-13", "2026-11-14", "2026-11-16", "2026-11-18"],
+    "CLE": ["2026-11-13", "2026-11-14", "2026-11-16", "2026-11-18"],
+    "DAL": ["2026-11-14", "2026-11-15"],
+    "DEN": ["2026-11-14", "2026-11-16"],
+    "DET": ["2026-11-14", "2026-11-17", "2026-11-18"],
+    "GSW": ["2026-11-13", "2026-11-16"],
+    "HOU": ["2026-11-13", "2026-11-15", "2026-11-16", "2026-11-18"],
+    "IND": ["2026-11-13", "2026-11-15", "2026-11-18"],
+    "LAC": ["2026-11-13", "2026-11-15", "2026-11-17"],
+    "LAL": ["2026-11-13", "2026-11-15", "2026-11-17"],
+    "MEM": ["2026-11-13", "2026-11-14", "2026-11-16", "2026-11-18"],
+    "MIA": ["2026-11-13", "2026-11-14", "2026-11-16", "2026-11-18"],
+    "MIL": ["2026-11-13", "2026-11-15", "2026-11-18"],
+    "MIN": ["2026-11-14", "2026-11-16", "2026-11-17"],
+    "NOP": ["2026-11-13", "2026-11-14", "2026-11-16", "2026-11-18"],
+    "NYK": ["2026-11-13", "2026-11-15", "2026-11-17"],
+    "OKC": ["2026-11-13", "2026-11-15"],
+    "ORL": ["2026-11-13", "2026-11-16", "2026-11-18"],
+    "PHI": ["2026-11-15", "2026-11-16", "2026-11-18"],
+    "PHX": ["2026-11-15", "2026-11-16"],
+    "POR": ["2026-11-13", "2026-11-16", "2026-11-17"],
+    "SAC": ["2026-11-13", "2026-11-15"],
+    "SAS": ["2026-11-13", "2026-11-15", "2026-11-17"],
+    "TOR": ["2026-11-15", "2026-11-17", "2026-11-18"],
+    "UTA": ["2026-11-13", "2026-11-15", "2026-11-17"],
+    "WAS": ["2026-11-15", "2026-11-16", "2026-11-18"],
+}
+
+# The days immediately before the window that a rest count may look back to. 11/12 is inferred
+# as a non-game day ONLY for teams whose next listed game is 11/14 or later and whose count cannot
+# otherwise be closed; it is never published as a rest figure on its own.
+KNOWN_NO_GAME_DATES = ["2026-11-12"]
+
 # Games published on the official schedule that fall OUTSIDE the 3-day window (day-after
-# context only — never priced, never picked). Wednesday 11/18 = "12 Games" on the official
-# day header; these are the first two, kept so the window edge is visible rather than silent.
+# context only — never priced, never picked). Wednesday 11/18 = "12 Games" on the official day
+# header. Only the seven games actually read off the page are transcribed here; the remaining
+# five are NOT filled in, because filling them in from the day total would be inference.
 OUTSIDE_WINDOW = [
     ("2026-11-18", "19:00", "MEM", "CLE", "0022600258", "Rocket Arena", "Cleveland, OH"),
     ("2026-11-18", "19:00", "HOU", "IND", "0022600259", "Gainbridge Fieldhouse", "Indianapolis, IN"),
+    ("2026-11-18", "19:00", "MIL", "MIA", "0022600260", "Kaseya Center", "Miami, FL"),
+    ("2026-11-18", "19:00", "PHI", "ORL", "0022600261", "Kia Center", "Orlando, FL"),
+    ("2026-11-18", "19:30", "CHI", "BKN", "0022600262", "Barclays Center", "Brooklyn, NY"),
+    ("2026-11-18", "19:30", "WAS", "TOR", "0022600263", "Scotiabank Arena", "Toronto, ON"),
+    ("2026-11-18", "20:00", "DET", "NOP", "0022600264", "Smoothie King Center", "New Orleans, LA"),
+    # the official page continues past this point (11/18 header = "12 Games"); the remaining
+    # five are deliberately left untranscribed rather than inferred from the day total.
 ]
 
 # --------------------------------------------------------------------------- injuries

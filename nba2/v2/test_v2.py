@@ -84,6 +84,41 @@ class TestOfficialSnapshot(unittest.TestCase):
         priced = {g[4] for g in O.SLATE}
         self.assertFalse(priced & {g[4] for g in O.OUTSIDE_WINDOW})
 
+    def test_rest_table_agrees_with_the_priced_slate(self):
+        """O.SCHEDULE_DATES_ALL is hand-transcribed. A mistyped date here silently produces a
+        wrong rest day for a team, so it must be pinned to the slate: in-window dates and the
+        day-after context dates have to agree exactly, in both directions."""
+        slate_pairs = {(d, t) for (d, _t, a, h, _g, *_r) in O.SLATE for t in (a, h)}
+        listed_in_window = {(dt, t) for t, ds in O.SCHEDULE_DATES_ALL.items()
+                            for dt in ds if "2026-11-14" <= dt <= "2026-11-17"}
+        self.assertEqual(slate_pairs, listed_in_window)
+        out_pairs = {(g[0], t) for g in O.OUTSIDE_WINDOW for t in (g[2], g[3])}
+        listed_after = {(dt, t) for t, ds in O.SCHEDULE_DATES_ALL.items() for dt in ds
+                        if dt > "2026-11-17"}
+        self.assertEqual(out_pairs, listed_after)
+        # no team may be listed twice on one date
+        for t, ds in O.SCHEDULE_DATES_ALL.items():
+            self.assertEqual(len(ds), len(set(ds)), t)
+        # every team in the team table must appear
+        self.assertEqual(set(O.SCHEDULE_DATES_ALL), set(O.TEAMS))
+
+    def test_team_source_links_use_real_nba_urls(self):
+        """nba.com/stats/team/ATL is not a page; team URLs are keyed by the 10-digit team id."""
+        for tri, url in O.TEAM_SOURCE.items():
+            self.assertRegex(url, r"^https://www\.nba\.com/stats/team/\d{10}/traditional$", tri)
+            self.assertIn(O.TEAM_ID[tri], url)
+
+    def test_every_line_row_carries_its_own_official_game_url(self):
+        """The published claim is 'a source link on every row', so each line must link to the
+        game it prices, not to a shared parameters page."""
+        teams, cal = M.build_teams()
+        lines = M.originated_lines(teams, cal)
+        self.assertEqual(len(lines), len(O.SLATE))
+        for ln in lines:
+            want = f"https://www.nba.com/game/{ln.away.lower()}-vs-{ln.home.lower()}-{ln.game_id}"
+            self.assertEqual(ln.source_url, want)
+            self.assertEqual(ln.as_dict()["source_url"], want)
+
     def test_neutral_site_games_close_the_schedule_identity(self):
         """home+road+neutral must equal W+L for every team (official /standings has a Neutral column)."""
         for t, v in O.TEAMS.items():

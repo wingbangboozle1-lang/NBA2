@@ -248,14 +248,18 @@ def build(run_backtest: bool = True):
     # ------------------------------------------------------------------ index
     n_lines = len(lines)
     tiers = {g: sum(1 for l in lines if l.grade == g) for g in "ABC"}
+    _dates = sorted({l.date for l in lines})
+    win_from = _dates[0] if _dates else "—"
+    win_to = _dates[-1] if _dates else "—"
     blocked = len([1 for v in O.BLOCKED.values()])
     _acc = "—"
     if (DATA / "backtest.json").exists():
         _acc = f"{json.loads((DATA / 'backtest.json').read_text())['headline']['straight_up_accuracy']*100:.1f}%"
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 31-game window (Nov 13 → Nov 16) priced from official NBA data only.
-Two independent ratings, a fitted home-court term, published formulas, and a source link on every row.
+<p class="lede">A {n_lines}-game window ({win_from} → {win_to}) priced from official NBA data only.
+Two independent ratings, a fitted home-court term, published formulas, and — new in this build — a link on
+every row to that game's own official nba.com page.
 Nothing here is a betting tip: no market price is connected, so every pick is withheld and says which gate stopped it.</p>
 
 <div class="kpis">
@@ -272,9 +276,11 @@ Nothing here is a betting tip: no market price is connected, so every pick is wi
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-{n_lines} games and prints the failing gate next to each. What is genuinely new is verification: every number
-on this site was re-read from an official NBA page on {O.AS_OF}, and the identical claims from the previous
-build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
+{n_lines} games and prints the failing gate next to each. What is genuinely new in this build is the window and
+the provenance: the slate now covers the live three-day horizon ({win_from} → {win_to}) instead of the expired
+one it shipped with, and every priced row links to the official game page it was read from. The team table was
+re-read row by row from nba.com/standings and the three stats tables on {O.AS_OF}; the injury snapshot dates from
+2026-11-13 and is published as such. <a href="verification.html">See the verification log</a>.</div>
 
 <h2>Start here</h2>
 <div class="cards">
@@ -347,13 +353,13 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
 """
     rows = [
         {"cells": ["Games in window", f"{len(lines)}", "2026-11-13 → 2026-11-16", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Games verified against the official schedule", "31 / 31", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games verified against the official schedule", f"{len(O.SLATE)} / {len(O.SLATE)}", "date, tip time, arena, game id, per-row game URL", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Injury rows verified against the official PDF", "85 / 85 (+10 not-yet-submitted)", "11/13/26 04:15 PM ET", srclink(O.INJURY_PDF_URL)]},
         {"cells": ["Measured correlations", "6", "computed from the official team, opponent and advanced tables", srclink(O.SOURCES["team_adv"][1])]},
         {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["game_logs"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Picks published", "0 / 31", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
+        {"cells": ["Picks published", f"0 / {len(O.SLATE)}", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
         {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["game_logs"][2])]},
         {"cells": ["Open decision questions", "14", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Suggestions awaiting a decision", "18", "3 recommended first — see the queue page", srclink(O.SOURCES["schedule"][1])]},
@@ -375,7 +381,7 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
     body = """<h1>Picks &amp; the upcoming slate</h1>
 <p class="lede">Every game in the three-day window is priced. Every pick is then withheld, because two gates cannot pass
 without data that does not exist in this environment. This page is deliberately the most conservative on the site.</p>
-<div class="note bad"><b>0 of 31 picks are published.</b> Not because the model failed, but because a bet needs a price to beat
+<div class="note bad"><b>0 of {n_lines} picks are published.</b> Not because the model failed, but because a bet needs a price to beat
 (G6) and a settled history to prove skill (G7). Neither exists. Publishing a pick anyway would be the one thing this build refuses to do.</div>
 """
     rows = []
@@ -388,7 +394,7 @@ without data that does not exist in this environment. This page is deliberately 
             esc(d["pick_status"]), srclink(f"https://www.nba.com/game/{d['matchup'].split(' @ ')[0].lower()}-vs-{d['matchup'].split(' @ ')[1].lower()}-{d['game_id']}"),
         ]})
     body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total", "P(home win)", "Status", "Source"],
-                  rows, "All 31 games: line, grade and pick status", num_cols=(4, 5, 6), idcol="id")
+                  rows, "Every game in the window: line, grade and pick status", num_cols=(4, 5, 6), idcol="id")
 
     body += """<h2>Why each pick is withheld</h2>
 """
@@ -407,7 +413,7 @@ they are kept because the only injury report that is fetchable covers them.</p>
         srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), esc(arena), esc(city), esc(tv or "—"), esc(cup or "—"),
                                srclink("https://www.nba.com/schedule?date=" + d)]})
     body += table(["Date", "ET", "Matchup", "Game ID", "Arena", "City", "National TV", "Cup group", "Source"],
-                  srows, "31 games on the official schedule", idcol=None)
+                  srows, "The priced slate, read from the official schedule", idcol=None)
     built["picks.html"] = page("picks.html", "Picks &amp; slate", body, "picks.html")
 
     # ------------------------------------------------------------------ lines
@@ -435,7 +441,7 @@ Every parameter is fitted (see the table below); nothing is hand-set.</div>
         ]})
     body += table(["Date", "Matchup", "Margin", "Spread", "Total", "Spread A", "Spread B", "Δ spread",
                    "Total B", "Δ total", "P(home)", "Fair home", "Fair away", "Conviction", "Grade", "Source"],
-                  rows, "31 originated lines with both estimators", num_cols=tuple(range(2, 14)), idcol="id")
+                  rows, f"{n_lines} originated lines with both estimators", num_cols=tuple(range(2, 14)), idcol="id")
 
     body += """<p class="lede">Spread A uses the net-points rating; spread B uses NetRtg. They are computed from different
 official numerators (points vs points-per-100-possessions), so agreement is evidence the line is stable. Δ total compares the
@@ -728,41 +734,53 @@ the same columns blank; this build keeps them blank and states the reason on eve
     body = """<h1>Game flow</h1>
 <p class="lede">What the schedule alone can tell you about how a game is likely to unfold, and what needs play-by-play.</p>
 """
-    # schedule density from official dates
+    # Rest and density are computed from the FULL stretch of the official schedule that was read
+    # (O.SCHEDULE_DATES_ALL), not from the priced window. Using the window alone was a real bug:
+    # every team's first priced game looked like "first in window / rested" because the previous
+    # game (often 11/13) sat outside the window, so genuine back-to-backs were invisible.
     from collections import defaultdict
     team_dates = defaultdict(list)
-    for (d, t, a, h, gid, arena, city, tv, cup) in O.SLATE:
-        team_dates[a].append(d)
-        team_dates[h].append(d)
-    for k in team_dates:
-        team_dates[k] = sorted(set(team_dates[k]))
+    for team, ds in O.SCHEDULE_DATES_ALL.items():
+        team_dates[team] = sorted(set(ds))
     rows = []
     for (d, t, a, h, gid, arena, city, tv, cup) in sorted(O.SLATE):
         def density(team):
+            """(rest_days_before_this_game, games_in_this_gap) straight from official dates."""
+            from datetime import date as _d
             ds = team_dates[team]
             prev = [x for x in ds if x < d]
-            rest = None
-            if prev:
-                from datetime import date as _d
-                y1, m1, d1 = map(int, prev[-1].split("-"))
-                y2, m2, d2 = map(int, d.split("-"))
-                rest = (_d(y2, m2, d2) - _d(y1, m1, d1)).days - 1
-            last3 = [x for x in ds[-3:]]
-            return rest, len([x for x in ds if x <= d])
+            if not prev:
+                return None, len([x for x in ds if x <= d])
+            y1, m1, d1 = map(int, prev[-1].split("-"))
+            y2, m2, d2 = map(int, d.split("-"))
+            return (_d(y2, m2, d2) - _d(y1, m1, d1)).days - 1, len([x for x in ds if x <= d])
         ra, na = density(a)
         rh, nh = density(h)
+
+        def rest_cell(r):
+            if r is None:
+                return '<span class="blank">no prior game in captured span</span>'
+            return esc(r)
+
+        def dens_badge(r):
+            if r is None:
+                return badge("unknown", "off")
+            if r == 0:
+                return badge("B2B", "warn")
+            if r == 1:
+                return badge("1 day", "off")
+            return badge("rested", "ok")
         rows.append({"id": gid, "cells": [
             esc(d), f"{esc(a)} @ {esc(h)}",
-            esc(ra) if ra is not None else '<span class="blank">first in window</span>',
-            esc(rh) if rh is not None else '<span class="blank">first in window</span>',
+            rest_cell(ra), rest_cell(rh),
             esc(na), esc(nh),
-            badge("B2B", "warn") if ra == 0 else badge("rested", "off"),
-            badge("B2B", "warn") if rh == 0 else badge("rested", "off"),
+            dens_badge(ra), dens_badge(rh),
             '<span class="blank">needs play-by-play</span>',
             srclink("https://www.nba.com/schedule?date=" + d)]})
-    body += table(["Date", "Matchup", "Rest (away, days)", "Rest (home, days)", "Games in window (away)",
-                   "Games in window (home)", "Away density", "Home density", "Pace / garbage / foul flow", "Source"],
-                  rows, "Schedule-derived rest and density — fully official", num_cols=(2, 3, 4, 5), idcol="id")
+    body += table(["Date", "Matchup", "Rest (away, days)", "Rest (home, days)", "Games in captured span (away)",
+                   "Games in captured span (home)", "Away density", "Home density",
+                   "Pace / garbage / foul flow", "Source"],
+                  rows, "Schedule-derived rest and density — fully official, computed across the whole captured span", num_cols=(2, 3, 4, 5), idcol="id")
     body += """<h2>Three flow effects that are real, and what each needs</h2>
 <div class="cards">
   <div class="card"><h4>Rest and density <span class="badge b-ok">measurable now</span></h4>
@@ -886,7 +904,7 @@ which one is current. The root page says "as-of 2026-11-13" while its own ledger
 still shows a snapshot several hours old on the next day.</div>
 <div class="note bad"><b>What is missing, and blocks the brief.</b> No market price, no per-game results, no player game
 logs. Those three absences are why the prior build could not produce a single settled bet, and they are why this build
-withholds all 31 picks rather than publishing confidence it cannot support.</div>
+withholds all {n_lines} picks rather than publishing confidence it cannot support.</div>
 <h2>What this session changed, and what it deliberately did not</h2>
 <p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
 plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier

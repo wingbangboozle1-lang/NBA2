@@ -557,7 +557,7 @@
   [
    "Q-13",
    "Is the schedule data used here complete for the window?",
-   "Yes for 11/13\u201311/16: 31 games, matching the official schedule's per-day counts (9/5/9/8), and identical to the committed snapshot.",
+   "Yes for the current window 2026-11-14 \u2192 2026-11-17: 27 games, matching the official schedule's per-day day headers (5/9/8/5). The window rolls with the clock: it used to run 11/13\u201311/16 and priced nine games that had already gone Final, so it was retired rather than shipped again.",
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
@@ -804,7 +804,7 @@
    "R-9",
    "Generate picks for every upcoming slate, max 3 days ahead",
    "Delivered (withheld)",
-   "31 games, 11/13\u219211/16, every game covered; picks are computed and then withheld with the failing gate printed."
+   "27 games, 2026-11-14\u21922026-11-17 (build date + 3 days, the brief's maximum), every game covered; picks are computed and then withheld with the failing gate printed. The previous build shipped an expired window that included nine already-Final games."
   ],
   [
    "R-10",
