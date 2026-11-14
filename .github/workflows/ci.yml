@@ -34,15 +34,7 @@ jobs:
       - name: Verify the sealed prediction ledgers (never rewrite them)
         run: |
           for f in data/raw/ledger/sealed-*.json; do
-            python -c "
-import json, pathlib, sys
-from nba2.models import ledger as LD
-p = pathlib.Path('$f')
-ok, stored, recomp = LD.verify(p)
-d = json.loads(p.read_text())
-print('seal', d['header']['n_predictions'], stored[:16])
-sys.exit(0 if ok else 1)
-"
+            python -c "from nba2.models import ledger as LD; import json, pathlib, sys; p = pathlib.Path('$f'); ok, stored, recomp = LD.verify(p); d = json.loads(p.read_text()); print('seal', d['header']['n_predictions'], stored[:16], 'VERIFIED' if ok else 'BROKEN'); sys.exit(0 if ok else 1)"
           done
 
       - name: Rebuild site data and HTML
