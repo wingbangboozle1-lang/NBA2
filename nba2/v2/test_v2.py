@@ -5,16 +5,20 @@ Run:  python -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import math
 import re
+import tempfile
 from pathlib import Path
 
 import unittest
 
 from . import content as C
 from . import model as M
+from . import live as LV
 from . import official as O
+from . import refresh_status as RS
 from . import report as R
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -158,6 +162,82 @@ class TestModel(unittest.TestCase):
         self.assertLess(worst, 2.0, f"worst spread disagreement {worst}")
 
 
+class TestRefreshStatus(unittest.TestCase):
+    @staticmethod
+    def env(status="failure"):
+        env = {
+            "RUN_STATUS": status,
+            "RUN_ID": "123456789",
+            "RUN_SHA": "a" * 40,
+            "RUN_EVENT": "schedule",
+            "RUN_REF": "refs/heads/main",
+            "STEP_WINDOW_DATES": "success",
+            "STEP_INJURY_ARCHIVE": "success",
+            "STEP_FINALS_FETCH": "failure" if status == "failure" else "success",
+            "STEP_TRANSCRIPT_CHECK": "skipped" if status == "failure" else "success",
+            "STEP_LEDGER_GUARD": "skipped" if status == "failure" else "success",
+            "STEP_SETTLEMENT": "skipped" if status == "failure" else "success",
+            "STEP_VERIFY": "skipped" if status == "failure" else "success",
+            "STEP_SEMANTIC_CROSSCHECK": "skipped" if status == "failure" else "success",
+            "STEP_COMMIT_SNAPSHOTS": "skipped" if status == "failure" else "success",
+        }
+        return env
+
+    def test_status_writer_and_reader_preserve_run_provenance(self):
+        fixed_now = dt.datetime(2026, 11, 14, 18, 0, tzinfo=dt.timezone.utc)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "refresh_status.json"
+            written = RS.record_run(self.env(), path=path, now=fixed_now)
+            loaded = RS.read_status(path)
+        self.assertEqual(loaded, written)
+        self.assertEqual(loaded["status"], "failure")
+        self.assertEqual(loaded["run_url"], "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/123456789")
+        self.assertIn("/blob/" + "a" * 40 + "/.github/workflows/refresh.yml", loaded["workflow_url"])
+        self.assertFalse(loaded["v2_model_inputs_refreshed"])
+        self.assertEqual(loaded["recorded_at_utc"], "2026-11-14T18:00:00Z")
+
+    def test_reader_rejects_bad_provenance_and_false_v2_freshness_claims(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "refresh_status.json"
+            RS.record_run(self.env(), path=path, now=dt.datetime(2026, 11, 14, tzinfo=dt.timezone.utc))
+            record = json.loads(path.read_text())
+            record["run_url"] = "https://example.invalid/fake-run"
+            path.write_text(json.dumps(record))
+            with self.assertRaisesRegex(ValueError, "run_url"):
+                RS.read_status(path)
+            record["run_url"] = "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/123456789"
+            record["v2_model_inputs_refreshed"] = True
+            path.write_text(json.dumps(record))
+            with self.assertRaisesRegex(ValueError, "not evidence of a v2 model-input refresh"):
+                RS.read_status(path)
+
+    def test_display_keeps_v1_workflow_success_separate_from_v2_freshness(self):
+        from . import build as B
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "refresh_status.json"
+            failed = RS.record_run(self.env("failure"), path=path,
+                                   now=dt.datetime(2026, 11, 14, tzinfo=dt.timezone.utc))
+            failed_view = B.refresh_display(failed)
+            self.assertEqual(failed_view["label"], "FAILED")
+            self.assertIn("official finals fetch", failed_view["message"])
+            self.assertIn("exact endpoint/error is unverified", failed_view["message"])
+            self.assertIn("no refreshed snapshot was committed", failed_view["message"])
+            succeeded = RS.record_run(self.env("success"), path=path,
+                                      now=dt.datetime(2026, 11, 14, tzinfo=dt.timezone.utc))
+            success_view = B.refresh_display(succeeded)
+            self.assertIn("SUCCESS — v1 workflow only", success_view["label"])
+            self.assertIn("not proof that the published v2 model inputs are fresh", success_view["message"])
+
+    def test_decision_queue_links_the_run_and_workflow_separately(self):
+        rows = {r["id"]: r for r in LV.decision_queue()["items"]}
+        status = RS.read_status()
+        self.assertEqual(rows["S-40"]["evidence"], status["run_url"])
+        self.assertEqual(rows["S-40"]["source"], status["workflow_url"])
+        self.assertIn("does not append each date", rows["S-40"]["problem"])
+        self.assertIn("did not refresh the published v2 model inputs", rows["S-40"]["problem"])
+        self.assertNotIn("never run", rows["S-40"]["problem"].lower())
+
+
 class TestReportAndContent(unittest.TestCase):
     def test_every_content_row_has_a_source_url(self):
         for g in C.GATES:
@@ -253,6 +333,32 @@ class TestPublishedSite(unittest.TestCase):
         self.assertEqual(K.check(), [])
         self.assertEqual(K.semantic(), [])
 
+    def test_operational_refresh_status_is_published_without_stale_never_ran_claims(self):
+        from . import build as B
+        B.build()
+        status = RS.read_status()
+        index = (ROOT / "site" / "index.html").read_text()
+        decision = (ROOT / "site" / "decision-queue.html").read_text()
+        summary = (ROOT / "site" / "executive-summary.html").read_text()
+        picks = (ROOT / "site" / "picks.html").read_text()
+        suggestions = (ROOT / "site" / "suggestions.html").read_text()
+        self.assertIn("Automated refresh status:", index)
+        self.assertIn(status["run_url"], index)
+        self.assertIn(status["workflow_url"], index)
+        self.assertIn("machine-readable status record", index)
+        self.assertIn("This is not a live slate", picks)
+        self.assertIn(status["run_url"], picks)
+        self.assertIn(status["run_url"], decision)
+        self.assertIn(status["workflow_url"], decision)
+        self.assertIn("Latest recorded scheduled-ingest result", summary)
+        for page in (decision, summary, suggestions):
+            lower = page.lower()
+            for stale_claim in ("has never run", "has never executed", "run list is empty"):
+                self.assertNotIn(stale_claim, lower)
+        published = json.loads((ROOT / "data" / "v2" / "refresh_status.json").read_text())
+        self.assertEqual(published["run_id"], status["run_id"])
+        self.assertFalse(published["v2_model_inputs_refreshed"])
+
     def test_every_page_has_the_nav(self):
         from .build import NAV
         site = ROOT / "site"
@@ -286,7 +392,7 @@ class TestPublishedSite(unittest.TestCase):
                              f"site/data/{f.name} is stale — copy it after the build, not before")
 
     def test_json_artefacts_are_published(self):
-        for name in ("teams.json", "lines.json", "verification.json", "content.json"):
+        for name in ("teams.json", "lines.json", "verification.json", "refresh_status.json", "content.json"):
             self.assertTrue((ROOT / "data" / "v2" / name).exists(), name)
 
 

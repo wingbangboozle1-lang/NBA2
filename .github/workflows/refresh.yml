@@ -15,8 +15,11 @@
 # * never writes data/raw/ledger/** — the sealed predictions are frozen (verified
 #   explicitly before any commit);
 # * never creates picks, lines or stakes — promotion still requires the owner;
-# * never publishes on a failed gate (fail-closed: any subcommand error aborts before
-#   the commit step).
+# * never publishes refreshed NBA inputs on a failed gate (the snapshot-commit step is
+#   skipped and partial runner-local files are discarded);
+# * an always-run, main-branch status step publishes only the run outcome and the
+#   deterministic v2 status display. It does not stage data/raw, alter sealed picks,
+#   or turn a failed refresh into a fresh-model claim.
 #
 # Scheduled times (UTC): 14:05 ≈ 09:05 ET (overnight finals), 18:35 ≈ 13:35 ET (after
 # the 11 a.m.-1 p.m. local game-day injury-report window). Manual dispatch allowed.
@@ -59,6 +62,7 @@ jobs:
           PY
 
       - name: Archive newest official injury reports for window dates
+        id: injury_archive
         run: |
           set -euo pipefail
           python3 - <<'PY'
@@ -75,6 +79,7 @@ jobs:
           PY
 
       - name: Fetch official finals for arrived window dates
+        id: finals_fetch
         run: |
           set -euo pipefail
           python3 - <<'PY'
@@ -90,6 +95,7 @@ jobs:
           PY
 
       - name: Cross-check committed transcripts against archived PDFs
+        id: transcript_check
         run: |
           set -euo pipefail
           for f in data/raw/injury_report_*.json; do
@@ -97,6 +103,7 @@ jobs:
           done
 
       - name: Guard — the sealed ledger must be untouched
+        id: ledger_guard
         run: |
           set -euo pipefail
           git diff --exit-code -- data/raw/ledger || {
@@ -106,9 +113,11 @@ jobs:
           git diff --cached --exit-code -- data/raw/ledger
 
       - name: Settle sealed predictions (PENDING until official finals exist)
+        id: settlement
         run: python3 -m nba2.pipeline.settle
 
       - name: Verify (unit tests + seal + provenance lint)
+        id: verify
         run: |
           set -euo pipefail
           python3 -m unittest discover -s nba2/tests -t .
@@ -118,6 +127,7 @@ jobs:
           python3 -m nba2.pipeline.lint
 
       - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
+        id: semantic_crosscheck
         run: |
           set -uo pipefail
           python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || true
@@ -131,6 +141,7 @@ jobs:
           echo "would freeze the ledger's metrics whenever the ratings capture ages."
 
       - name: Commit refreshed snapshots (only when something changed)
+        id: commit_snapshots
         run: |
           set -euo pipefail
           git config user.name "nba2-ingest-bot"
@@ -141,4 +152,46 @@ jobs:
             exit 0
           fi
           git commit -m "ingest(bot): nightly refresh — official injury releases archived, finals fetched; sealed ledger untouched (verify chain passed)"
-          git push origin HEAD:${GITHUB_REF_NAME}
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Record refresh outcome and publish status (never partial inputs)
+        if: ${{ always() && github.ref == 'refs/heads/main' }}
+        env:
+          RUN_STATUS: ${{ job.status }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_SHA: ${{ github.sha }}
+          RUN_EVENT: ${{ github.event_name }}
+          RUN_REF: ${{ github.ref }}
+          STEP_WINDOW_DATES: ${{ steps.dates.outcome || 'not-run' }}
+          STEP_INJURY_ARCHIVE: ${{ steps.injury_archive.outcome || 'not-run' }}
+          STEP_FINALS_FETCH: ${{ steps.finals_fetch.outcome || 'not-run' }}
+          STEP_TRANSCRIPT_CHECK: ${{ steps.transcript_check.outcome || 'not-run' }}
+          STEP_LEDGER_GUARD: ${{ steps.ledger_guard.outcome || 'not-run' }}
+          STEP_SETTLEMENT: ${{ steps.settlement.outcome || 'not-run' }}
+          STEP_VERIFY: ${{ steps.verify.outcome || 'not-run' }}
+          STEP_SEMANTIC_CROSSCHECK: ${{ steps.semantic_crosscheck.outcome || 'not-run' }}
+          STEP_COMMIT_SNAPSHOTS: ${{ steps.commit_snapshots.outcome || 'not-run' }}
+        run: |
+          set -euo pipefail
+          # The hosted runner is disposable. A failed snapshot push could leave a local
+          # commit at HEAD, so reset to the remote branch (not local HEAD) before status
+          # publication; this prevents the status-only push from replaying unpushed NBA inputs.
+          # Also discard uncommitted PDFs/finals. This path never stages or commits data/raw.
+          git fetch origin "$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"
+          git reset --hard "origin/$GITHUB_REF_NAME"
+          git clean -fd
+          python3 -m nba2.v2.refresh_status
+          python3 -m nba2.v2
+          python3 -m nba2.v2.check
+          python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
+          git config user.name "nba2-ingest-bot"
+          git config user.email "nba2-ingest-bot@users.noreply.github.com"
+          git add data/operations/refresh_status.json data/v2 site
+          if git diff --cached --quiet; then
+            echo "Refresh status and published v2 artefacts are unchanged."
+            exit 0
+          fi
+          git commit -m "status(bot): record refresh outcome ${RUN_STATUS} (#${RUN_ID})"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
