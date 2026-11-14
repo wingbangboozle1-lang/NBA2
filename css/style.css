@@ -344,3 +344,25 @@ table.data tr.is-target { background: #fff7db !important; outline: 2px solid #e0
 .side-note { font-size: .7rem; color: var(--text-muted, #5b6472); padding: 12px; line-height: 1.5; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .cat-card h3 { margin: 0; font-size: .86rem; }
+
+/* --- Session arena/3681def8: categorised navigation + graded-results callout ------- */
+.sidebar nav .nav-group { margin-bottom: 0.85rem; }
+.sidebar nav .nav-cat {
+  display: block; font-size: .66rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--text-muted, #5b6472);
+  padding: 0 0 .25rem .75rem;
+}
+.sidebar nav .nav-group > ul { margin: 0 0 0 .5rem; padding: 0; }
+.sidebar nav .nav-group > ul > li { margin-bottom: .15rem; }
+.sidebar nav .nav-group > ul a { font-size: .84rem; padding: .32rem .6rem; }
+
+.cat-block { margin-bottom: 1.35rem; }
+.cat-block:last-child { margin-bottom: 0; }
+.cat-head {
+  margin: 0 0 .15rem; font-size: .78rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--primary, #1d4ed8);
+}
+.cat-desc { margin: 0 0 .6rem; font-size: .84rem; color: var(--text-muted, #5b6472); }
+.cat-card h4 { margin: 0; font-size: .86rem; color: var(--primary, #1d4ed8); }
+.kpi-n { margin-top: .35rem; font-size: .68rem; line-height: 1.35; color: var(--text-muted, #5b6472); }
+.cell-link { font-size: .8rem; word-break: break-all; }

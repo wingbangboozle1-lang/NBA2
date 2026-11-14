@@ -1,97 +1,263 @@
 {
-  "dataset": "official_final_scores",
-  "as_of": "2026-11-13",
+  "schema": "nba2.finals.v1",
+  "season": "2026-27",
+  "date": "2026-11-13",
   "retrieved_at_utc": "2026-11-14T10:25:00Z",
-  "method": "platform page-fetch tool (the build sandbox cannot open TLS to nba.com: curl returns HTTP 000)",
-  "source": "https://www.nba.com/schedule?date=2026-11-14",
-  "note": "The nine 2026-11-13 games, read as 'Final' / 'Final/OT' on the official schedule page. These games are the day-before context the model priced; they are NOT in either sealed ledger, so settling against them must never be reported as a settled registered forecast. Merged during the arena/6c5195d1-nba2 final-integration reconciliation: two sessions captured these nine finals independently (different official URLs, same day) and all 9 of 9 scores agree; both captures are recorded under cross_captures.",
+  "retrieval_method": "platform page-fetch tool (direct curl from the sandbox returns HTTP 000 for all nba.com hosts)",
+  "provenance": {
+    "publisher": "NBA.com (official)",
+    "official_nba_source": true,
+    "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+    "note": "Final scores read from the official NBA.com schedule grid (Week 4, Nov 9-15). Every game card rendered 'Final' with both team scores. ATL@CHI rendered 'Final/OT'. Each row carries its own game page as the per-row source link."
+  },
+  "counts_check": {
+    "n_games": 9
+  },
+  "games": [
+    {
+      "game_id": "0022600034",
+      "date": "2026-11-13",
+      "away": "NYK",
+      "home": "IND",
+      "away_pts": 104,
+      "home_pts": 106,
+      "home_margin": 2,
+      "total_pts": 210,
+      "periods": 4,
+      "cup_group": "East Group B",
+      "venue": {
+        "arena": "Gainbridge Fieldhouse",
+        "city": "Indianapolis",
+        "state": "IN"
+      },
+      "source_url": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600035",
+      "date": "2026-11-13",
+      "away": "MIL",
+      "home": "ORL",
+      "away_pts": 99,
+      "home_pts": 107,
+      "home_margin": 8,
+      "total_pts": 206,
+      "periods": 4,
+      "cup_group": "East Group A",
+      "venue": {
+        "arena": "Kia Center",
+        "city": "Orlando",
+        "state": "FL"
+      },
+      "source_url": "https://www.nba.com/game/mil-vs-orl-0022600035",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600036",
+      "date": "2026-11-13",
+      "away": "CLE",
+      "home": "MIA",
+      "away_pts": 121,
+      "home_pts": 133,
+      "home_margin": 12,
+      "total_pts": 254,
+      "periods": 4,
+      "cup_group": "East Group B",
+      "venue": {
+        "arena": "Kaseya Center",
+        "city": "Miami",
+        "state": "FL"
+      },
+      "source_url": "https://www.nba.com/game/cle-vs-mia-0022600036",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600037",
+      "date": "2026-11-13",
+      "away": "ATL",
+      "home": "CHI",
+      "away_pts": 117,
+      "home_pts": 125,
+      "home_margin": 8,
+      "total_pts": 242,
+      "periods": 5,
+      "cup_group": "East Group C",
+      "venue": {
+        "arena": "United Center",
+        "city": "Chicago",
+        "state": "IL"
+      },
+      "source_url": "https://www.nba.com/game/atl-vs-chi-0022600037",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": "Final/OT"
+    },
+    {
+      "game_id": "0022600038",
+      "date": "2026-11-13",
+      "away": "MEM",
+      "home": "NOP",
+      "away_pts": 142,
+      "home_pts": 111,
+      "home_margin": -31,
+      "total_pts": 253,
+      "periods": 4,
+      "cup_group": "West Group B",
+      "venue": {
+        "arena": "Smoothie King Center",
+        "city": "New Orleans",
+        "state": "LA"
+      },
+      "source_url": "https://www.nba.com/game/mem-vs-nop-0022600038",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600039",
+      "date": "2026-11-13",
+      "away": "UTA",
+      "home": "HOU",
+      "away_pts": 118,
+      "home_pts": 125,
+      "home_margin": 7,
+      "total_pts": 243,
+      "periods": 4,
+      "cup_group": "West Group A",
+      "venue": {
+        "arena": "Toyota Center",
+        "city": "Houston",
+        "state": "TX"
+      },
+      "source_url": "https://www.nba.com/game/uta-vs-hou-0022600039",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600040",
+      "date": "2026-11-13",
+      "away": "GSW",
+      "home": "SAS",
+      "away_pts": 85,
+      "home_pts": 123,
+      "home_margin": 38,
+      "total_pts": 208,
+      "periods": 4,
+      "cup_group": "West Group C",
+      "venue": {
+        "arena": "Frost Bank Center",
+        "city": "San Antonio",
+        "state": "TX"
+      },
+      "source_url": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600041",
+      "date": "2026-11-13",
+      "away": "POR",
+      "home": "SAC",
+      "away_pts": 120,
+      "home_pts": 107,
+      "home_margin": -13,
+      "total_pts": 227,
+      "periods": 4,
+      "cup_group": "West Group C",
+      "venue": {
+        "arena": "Golden 1 Center",
+        "city": "Sacramento",
+        "state": "CA"
+      },
+      "source_url": "https://www.nba.com/game/por-vs-sac-0022600041",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    },
+    {
+      "game_id": "0022600042",
+      "date": "2026-11-13",
+      "away": "OKC",
+      "home": "LAC",
+      "away_pts": 112,
+      "home_pts": 113,
+      "home_margin": 1,
+      "total_pts": 225,
+      "periods": 4,
+      "cup_group": "West Group B",
+      "venue": {
+        "arena": "Intuit Dome",
+        "city": "Inglewood",
+        "state": "CA"
+      },
+      "source_url": "https://www.nba.com/game/okc-vs-lac-0022600042",
+      "list_url": "https://www.nba.com/schedule?date=2026-11-14",
+      "note": null
+    }
+  ],
   "records": [
     {
       "game_id": "0022600034",
       "away_pts": 104,
       "home_pts": 106,
       "overtime": false,
-      "source": "https://www.nba.com/game/nyk-vs-ind-0022600034",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/nyk-vs-ind-0022600034"
     },
     {
       "game_id": "0022600035",
       "away_pts": 99,
       "home_pts": 107,
       "overtime": false,
-      "source": "https://www.nba.com/game/mil-vs-orl-0022600035",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/mil-vs-orl-0022600035"
     },
     {
       "game_id": "0022600036",
       "away_pts": 121,
       "home_pts": 133,
       "overtime": false,
-      "source": "https://www.nba.com/game/cle-vs-mia-0022600036",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/cle-vs-mia-0022600036"
     },
     {
       "game_id": "0022600037",
       "away_pts": 117,
       "home_pts": 125,
       "overtime": true,
-      "source": "https://www.nba.com/game/atl-vs-chi-0022600037",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/atl-vs-chi-0022600037"
     },
     {
       "game_id": "0022600038",
       "away_pts": 142,
       "home_pts": 111,
       "overtime": false,
-      "source": "https://www.nba.com/game/mem-vs-nop-0022600038",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/mem-vs-nop-0022600038"
     },
     {
       "game_id": "0022600039",
       "away_pts": 118,
       "home_pts": 125,
       "overtime": false,
-      "source": "https://www.nba.com/game/uta-vs-hou-0022600039",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/uta-vs-hou-0022600039"
     },
     {
       "game_id": "0022600040",
       "away_pts": 85,
       "home_pts": 123,
       "overtime": false,
-      "source": "https://www.nba.com/game/gsw-vs-sas-0022600040",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/gsw-vs-sas-0022600040"
     },
     {
       "game_id": "0022600041",
       "away_pts": 120,
       "home_pts": 107,
       "overtime": false,
-      "source": "https://www.nba.com/game/por-vs-sac-0022600041",
-      "cross_confirmed": true
+      "source": "https://www.nba.com/game/por-vs-sac-0022600041"
     },
     {
       "game_id": "0022600042",
       "away_pts": 112,
       "home_pts": 113,
       "overtime": false,
-      "source": "https://www.nba.com/game/okc-vs-lac-0022600042",
-      "cross_confirmed": true
-    }
-  ],
-  "cross_captures": [
-    {
-      "by_session": "arena/6c5195d1-nba2",
-      "captured_utc": "2026-11-14T09:45:00Z",
-      "source": "https://www.nba.com/games?date=2026-11-13",
-      "agreement": "9 of 9 scores identical to the arena/6650be4d capture",
-      "by": "arena/6c5195d1-nba2 (live fetch of the official NBA.com games page; 9 of 9 finals recorded)"
-    },
-    {
-      "by_session": "arena/6650be4d-nba2",
-      "captured_utc": "2026-11-14T10:25:00Z",
-      "source": "https://www.nba.com/schedule?date=2026-11-14",
-      "agreement": "9 of 9 scores identical to the arena/6c5195d1 capture"
+      "source": "https://www.nba.com/game/okc-vs-lac-0022600042"
     }
   ]
 }

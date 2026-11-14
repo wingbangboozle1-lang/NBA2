@@ -24,7 +24,7 @@ from ..models import leaderboard as LB
 from ..models import lines as LN
 from ..models import props as PR
 from ..models import ratings as RT
-from ..provenance import SOURCES, Src, all_flags, flag, make_row, register_source, table
+from ..provenance import SOURCES, Row, Src, all_flags, flag, make_row, register_source, table
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
@@ -93,6 +93,51 @@ register_source(
     "Fresh checker sweep, live-site fetches and official-source re-reads performed "
     "2026-11-14 by session arena/fc58f84f-nba2. Every value on the Verification Report "
     "page was produced in that session; official URLs are cited in the row text.")
+
+# --- Sources added by session arena/3681def8-nba2 (2026-11-14, first graded card) -------
+SRC_FINALS = "nba_finals_1113"
+SRC_STANDINGS_LIVE = "nba_standings_1114"
+SRC_INJ_1114_AM = "nba_injury_pdf_1114_0500"
+SRC_DER_GRADED = "derived_graded"
+
+register_source(
+    SRC_FINALS,
+    "NBA.com Schedule — 2026-11-13 final scores (official)",
+    "https://www.nba.com/schedule?date=2026-11-14",
+    Src.OFFICIAL,
+    "Final scores for the nine 2026-11-13 games, read from the Week 4 (Nov 9-15) grid of the "
+    "official schedule on 2026-11-14 ~10:20 UTC; each game card rendered 'Final' with both team "
+    "scores (ATL@CHI 'Final/OT'). Every row also carries its own nba.com/game/<slug>-<id> URL. "
+    "Snapshot: data/raw/finals_2026-11-13.json. Verified by the identity in check C2-B: "
+    "(committed ratings W-L) + (these nine results) = the official NBA.com standings, 30/30 clubs.")
+register_source(
+    SRC_STANDINGS_LIVE,
+    "NBA.com Standings 2026-11-14 (official)",
+    "https://www.nba.com/standings",
+    Src.OFFICIAL,
+    "'NBA 2026-27 Regular Season Standings', Group By Conference, retrieved 2026-11-14 ~10:29 UTC "
+    "and including the completed 2026-11-13 games. This is the first win-loss capture in the "
+    "repository taken from an official NBA page — the ratings snapshot's W-L is third-party "
+    "(basketball-reference) and remains flagged FLAG-RAT-01. Snapshot: "
+    "data/raw/standings_2026-11-14_official.json.")
+register_source(
+    SRC_INJ_1114_AM,
+    "NBA Official Injury Report 11/14 05:00 AM ET (official)",
+    "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+    Src.OFFICIAL,
+    "Freshest release listed on https://official.nba.com/nba-injury-report-2026-27-season/ at "
+    "retrieval (2026-11-14 ~10:29 UTC); document header reads 'Injury Report: 11/14/26 05:00 AM'. "
+    "26 named designations across the five 11/14 games, five clubs still NOT YET SUBMITTED, and "
+    "all eighteen 11/15 club entries NOT YET SUBMITTED. The PDF's Game Time column is a 12-hour "
+    "ET clock printed without a meridiem. Snapshot: data/raw/injury_report_2026-11-14_0500AM.json.")
+register_source(
+    SRC_DER_GRADED,
+    "Derived: the 2026-11-13 graded card (nba2 model vs official finals)",
+    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-3681/grade_1113.py",
+    Src.DERIVED,
+    "Our originated lines for the nine 2026-11-13 games, produced from the committed ratings "
+    "snapshot that predates every tip, compared with the official final scores. Reproduce with "
+    "`python3 audit/2026-11-14-3681/grade_1113.py`. Output: data/graded_2026-11-13.json.")
 
 
 def _flag_ids(*ids: str) -> list[str]:
@@ -1345,6 +1390,207 @@ def build_verification_rows() -> dict:
     )
 
 
+def _graded() -> dict | None:
+    p = DATA / "graded_2026-11-13.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def build_graded_rows() -> dict | None:
+    """The 2026-11-13 card: our originated number next to the official final score."""
+    g = _graded()
+    if g is None:
+        return None
+    rows = []
+    for r in g["games"]:
+        rows.append(make_row(
+            r["game_id"], SRC_DER_GRADED, ["FLAG-GRADE-01", "FLAG-GRADE-02", "FLAG-GRADE-03"],
+            matchup=r["matchup"], date=r["date"],
+            final=f"{r['away_pts']}–{r['home_pts']}" + (" (OT)" if r["ot"] else ""),
+            our_spread_home=(f"{r['our_spread_home']:+.1f}" if r["our_spread_home"] is not None
+                             else None),
+            our_total=(f"{r['our_total_line']:.1f}" if r["our_total_line"] is not None else None),
+            actual_margin_home=f"{r['actual_margin_home']:+d}",
+            margin_error=f"{r['margin_error']:+.2f}",
+            actual_total=f"{r['actual_total']}",
+            total_error=f"{r['total_error']:+.2f}",
+            winner_call=("correct" if r["winner_correct"] else "wrong"),
+            source=r["source_url"],
+        ))
+    return table(
+        rows,
+        [("matchup", "Game"), ("date", "Date"), ("final", "Official final"),
+         ("our_spread_home", "Our spread (home)"), ("our_total", "Our total"),
+         ("actual_margin_home", "Actual margin (home)"), ("margin_error", "Margin error"),
+         ("actual_total", "Actual total"), ("total_error", "Total error"),
+         ("winner_call", "Winner call"), ("source", "Official game page")],
+        "Graded card — 2026-11-13: our line vs the official final score",
+        "Nine games, priced from the committed ratings snapshot that predates every tip, scored "
+        "against the official NBA.com finals. This is the first card in the repository graded "
+        "against real results rather than against itself. It is a walk-forward backtest, not a "
+        "pre-registered ledger — see FLAG-GRADE-01 before reading anything into it.")
+
+
+def build_graded_summary_rows() -> dict | None:
+    """The measurements that decide whether the numbers above mean anything."""
+    g = _graded()
+    if g is None:
+        return None
+    m, v = g["metrics"], g["verdict"]
+
+    def r(k: str, metric: str, model, baseline, verdict: str, note: str) -> Row:
+        return make_row(
+            k, SRC_DER_GRADED, ["FLAG-GRADE-01", "FLAG-GRADE-02", "FLAG-GRADE-03"],
+            metric=metric,
+            model=("" if model is None else str(model)),
+            baseline=("" if baseline is None else str(baseline)),
+            verdict=verdict, note=note)
+
+    pm = m["permutation_tests"]
+    lo, hi = v["straight_up_ci95"]
+    rows = [
+        r("grade-mae-margin", "Margin MAE (points)", v["model_margin_mae"],
+          v["baseline_margin_mae"], "model closer, not significant",
+          "Baseline is 'predict a 0-point home margin' — the no-information rule. "
+          f"Improvement {pm['margin']['improvement_points']} pts/game, permutation p = "
+          f"{pm['margin']['p_value']}."),
+        r("grade-mae-total", "Total MAE (points)", v["model_total_mae"],
+          v["baseline_total_mae"], "model closer, not significant",
+          "Baseline is the league-mean total with no team information. Improvement "
+          f"{pm['total']['improvement_points']} pts/game, permutation p = "
+          f"{pm['total']['p_value']} — the largest effect on the card, still not established."),
+        r("grade-su", "Straight-up winner accuracy",
+          f"{m['straight_up_hits']}/{g['n_games']} = {v['straight_up_accuracy']:.1%}",
+          "50%", "coin flip NOT excluded",
+          f"Wilson 95% CI [{lo:.1%}, {hi:.1%}] spans 50%, so chance is not ruled out."),
+        r("grade-auroc", "Winner AUROC", v["auroc"], "0.500",
+          "above chance", "Ranking quality of the predicted margin; scale- and bias-free, so it "
+          "cannot be inflated by tuning a constant."),
+        r("grade-brier", "Brier score (win probability)", v["brier_model"],
+          v["brier_baseline"], "marginally better",
+          "Lower is better. A 0.25 baseline is a constant 50% forecast for every game."),
+        r("grade-power", "Games needed for 80% power at a 55% hit rate",
+          g["n_games"], m["power_to_detect_55pct_at_80pct_power"],
+          "sample far too small",
+          "At 5% significance. Nine games cannot establish a 55% hit rate, and no gate or "
+          "reward may be released on it."),
+        r("grade-roi", "ROI / CLV / stake", None, None, "not computable",
+          "No market price exists in this repository, so there is nothing to beat and no "
+          "return to measure. Blank by policy, not by omission."),
+        r("grade-cover", "Games where the home team covered our own spread",
+          sum(1 for c in g["cover_vs_our_line"] if c["result"] == "home covers"),
+          f"{len(g['cover_vs_our_line'])} graded",
+          "self-consistency only",
+          "The line is ours, so covering it measures internal coherence, not market skill. "
+          "Reported for completeness and for no other reason."),
+    ]
+    return table(
+        rows,
+        [("metric", "Measurement"), ("model", "Model"), ("baseline", "Baseline"),
+         ("verdict", "Verdict"), ("note", "How to read it")],
+        "What the graded card does and does not establish",
+        "Every number below is computed from the nine games on the card. Where a comparison "
+        "could not be computed honestly, the cell is blank and the reason is in the note.")
+
+
+def build_standings_live_rows() -> dict | None:
+    """Official NBA.com W-L, read live on 2026-11-14 (includes the completed 11/13 games)."""
+    p = RAW / "standings_2026-11-14_official.json"
+    if not p.exists():
+        return None
+    snap = json.loads(p.read_text())
+    cols = snap["columns"]
+    url = "https://www.nba.com/standings"
+    rows = []
+    for rec in snap["records"]:
+        d = dict(zip(cols, rec))
+        team_id = config.TEAM_ID.get(d["tricode"])
+        rows.append(make_row(
+            d["tricode"], SRC_STANDINGS_LIVE, (),
+            tricode=d["tricode"], conference=d["conference"], rank=str(d["conf_rank"]),
+            w=str(d["w"]), l=str(d["l"]), pct=d["win_pct"], gb=str(d["gb"]),
+            conf=d["conf"], div=d["div"], home=d["home"], road=d["road"],
+            last10=d["last10"], streak=d["streak"],
+            source=(config.TEAM_PROFILE_URL.format(team_id=team_id,
+                                                   slug=_slug(d["tricode"]))
+                    if team_id else url),
+        ))
+    return table(
+        rows,
+        [("tricode", "Team"), ("conference", "Conf"), ("rank", "#"), ("w", "W"), ("l", "L"),
+         ("pct", "WIN%"), ("gb", "GB"), ("conf", "Conf rec"), ("div", "Div rec"),
+         ("home", "Home"), ("road", "Road"), ("last10", "L10"), ("streak", "Streak"),
+         ("source", "Official team page")],
+        "Official standings — NBA.com, read live 2026-11-14",
+        "The first win-loss capture in this repository taken from an official NBA page; every "
+        "earlier snapshot used basketball-reference for W-L (FLAG-RAT-01). Includes the "
+        "completed 2026-11-13 games. Clubs have played 10-14 games, so win counts are not "
+        "comparable across rows — the order is by win percentage, as on the official page.")
+
+
+def _slug(tricode: str) -> str:
+    return {"ATL": "hawks", "BOS": "celtics", "BKN": "nets", "CHA": "hornets", "CHI": "bulls",
+            "CLE": "cavaliers", "DAL": "mavericks", "DEN": "nuggets", "DET": "pistons",
+            "GSW": "warriors", "HOU": "rockets", "IND": "pacers", "LAC": "clippers",
+            "LAL": "lakers", "MEM": "grizzlies", "MIA": "heat", "MIL": "bucks",
+            "MIN": "timberwolves", "NOP": "pelicans", "NYK": "knicks", "OKC": "thunder",
+            "ORL": "magic", "PHI": "sixers", "PHX": "suns", "POR": "blazers", "SAC": "kings",
+            "SAS": "spurs", "TOR": "raptors", "UTA": "jazz", "WAS": "wizards"}.get(tricode, "")
+
+
+def build_injury_1114_rows() -> dict | None:
+    """Per-club filing state for the 11/14-11/15 slates, from the 05:00 AM ET release."""
+    p = RAW / "injury_report_2026-11-14_0500AM.json"
+    if not p.exists():
+        return None
+    snap = json.loads(p.read_text())
+    pdf = snap["provenance"]["url"]
+    # The committed injury snapshots use the shared tabular shape — `columns` plus
+    # list-of-lists `records` — so that tools/crosscheck_site.py can index any of them
+    # positionally. Dict-ify here rather than re-serialising the file, which would break
+    # that checker.
+    rows_raw = snap["records"]
+    if rows_raw and isinstance(rows_raw[0], list):
+        cols = snap["columns"]
+        rows_raw = [dict(zip(cols, r)) for r in rows_raw]
+    by_game: dict[tuple[str, str], list[dict]] = {}
+    for r in rows_raw:
+        by_game.setdefault((r["game_date"], r["matchup"]), []).append(r)
+
+    rows = []
+    for (date, matchup), recs in sorted(by_game.items()):
+        clubs = sorted({r["team"] for r in recs})
+        nys = [r["team"] for r in recs if r["status"] == "NOT YET SUBMITTED"]
+        # A club that has filed nothing still occupies a row — with the document's own
+        # NOT YET SUBMITTED wording in the status column. Only rows naming a player are
+        # designations, so the counts below are player counts, never club counts.
+        filed = [r for r in recs if r["status"] != "NOT YET SUBMITTED"]
+        out = sum(1 for r in filed if r["status"] == "Out")
+        ques = sum(1 for r in filed if r["status"] == "Questionable")
+        prob = sum(1 for r in filed if r["status"] == "Probable")
+        avail = sum(1 for r in filed if r["status"] == "Available")
+        rows.append(make_row(
+            f"{date}-{matchup}", SRC_INJ_1114_AM, (),
+            date=date, matchup=matchup,
+            clubs_filed=f"{len(clubs) - len(nys)}/{len(clubs)}",
+            out=str(out), questionable=str(ques), probable=str(prob), available=str(avail),
+            not_submitted=(", ".join(nys) if nys else "none"),
+            players=", ".join(sorted(r["player"] for r in filed)) or "none filed",
+            source=pdf,
+        ))
+    return table(
+        rows,
+        [("date", "Game date"), ("matchup", "Matchup"), ("clubs_filed", "Clubs filed"),
+         ("out", "Out"), ("questionable", "Questionable"), ("probable", "Probable"),
+         ("available", "Available"), ("not_submitted", "NOT YET SUBMITTED"),
+         ("players", "Named designations"), ("source", "Official PDF")],
+        "Filing state at the 11/14 05:00 AM ET release",
+        "Read straight from the official referee-operations PDF. 'NOT YET SUBMITTED' is the "
+        "document's own wording for a club that has filed nothing for that game — at this "
+        "release the 11 a.m.-1 p.m. local game-day window had not yet opened for the 11/14 "
+        "games, and the 11/15 filings were not yet due (FLAG-INJ-10). Counts are filing counts, "
+        "not injury impact: no minutes or production figure is asserted anywhere on this site.")
+
+
 def input_digest() -> str:
     """sha256 over every committed input, so 'the same inputs produce the same bytes' is checkable.
 
@@ -1795,6 +2041,10 @@ def build() -> dict:
         "xlines": x["lines"], "xrecords": x["records"], "xinjuries": x["injuries"],
         "surfaces": x["inventory"],
         "x3way": x3, "xadjudicate": xadj,
+        "graded": build_graded_rows(),
+        "graded_summary": build_graded_summary_rows(),
+        "standings_live": build_standings_live_rows(),
+        "injury_1114": build_injury_1114_rows(),
         "audit": build_audit_rows(),
         "injury_delta": build_injury_delta_rows(),
         "audit_suggestions": build_audit_suggestions_rows(),
@@ -1802,6 +2052,8 @@ def build() -> dict:
         "flags": None,   # filled below
         "sources": None,
     }
+
+    sections = {k: v for k, v in sections.items() if v is not None}
 
     flag_rows = [make_row(
         f.id, SRC_COORD, _flag_ids(f.id),
@@ -2168,6 +2420,60 @@ def main() -> None:
          "TOR 5-7 and WAS 4-9 — the two records the flag was raised for.",
          "https://www.nba.com/standings",
          "Owner closes FLAG-SLATE-02; no value changed — the third-party rows are now official too.")
+
+    # --- flags registered by session arena/3681def8-nba2 (first graded card) ---------
+    flag("FLAG-GRADE-01", "high", "graded",
+         "The 2026-11-13 graded card is a walk-forward backtest, NOT a pre-registered forward "
+         "test. No sealed ledger covers 2026-11-13: sealed-2026-11-13.json predicts 11/14-11/16 "
+         "and sealed-2026-11-14.json predicts 11/14-11/17. The project began on the evening of "
+         "2026-11-13 when that slate was already live, so nothing was sealed for it. The inputs "
+         "are strictly point-in-time (the ratings snapshot was retrieved 2026-11-13 22:35 UTC; "
+         "the first tip was 2026-11-14 00:00 UTC, and the identity ratings+results==official "
+         "standings holds for 30/30 clubs), but the predictions were not published before the "
+         "games. Treat the result as evidence about the model, not as a betting record.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-3681/grade_1113.py",
+         "Seal every slate before its first tip from now on; the 11/14-11/17 ledger already does.")
+    flag("FLAG-GRADE-02", "high", "graded",
+         "n = 9 games. Neither improvement on the graded card is statistically significant: "
+         "permutation p = 0.952 for margin error and p = 0.402 for total error. Detecting a 55% "
+         "hit rate at 5% significance with 80% power needs about 1,565 graded games. The card "
+         "does not establish skill and does not unblock any gate.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/graded_2026-11-13.json",
+         "Keep grading every completed slate; re-test only when the sample supports it.")
+    flag("FLAG-GRADE-03", "high", "graded",
+         "No market price exists in this repository, so the graded card cannot report ROI, CLV or "
+         "stake. 'Covering our own line' is self-consistency only, not a market test — the cover "
+         "column is published with that caveat attached.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/settle.py",
+         "Connect a licensed odds feed (R-101) before any betting claim.")
+    flag("FLAG-GRADE-04", "info", "graded",
+         "Two of the nine games missed by more than 20 points on the margin (GSW@SAS: predicted "
+         "SAS +3.2, actual SAS +38; MEM@NOP: predicted MEM by 8.3, actual MEM by 31). Both are "
+         "reported, not smoothed — they are the main drivers of the margin MAE.",
+         "https://www.nba.com/game/gsw-vs-sas-0022600040",
+         "Investigate whether the early-season ratings over-shrink large true gaps (S-31).")
+    flag("FLAG-STAND-01", "low", "standings",
+         "Games played are uneven this early in the season: Denver has played 10 games while "
+         "Utah, Milwaukee, Boston, Detroit, Brooklyn and Philadelphia have played 12-14. "
+         "Win-percentage ordering and SRS both handle this, but raw win counts do not — the "
+         "official standings page orders by percentage, and this snapshot does the same.",
+         "https://www.nba.com/standings",
+         "No action; noted so nobody reads DEN's 6-4 as a shorter schedule bug.")
+    flag("FLAG-SEAL-05", "low", "ledger",
+         "Crosscheck CC-SEAL-04 reports five 2026-11-14 ledger predictions as not tipped "
+         "after the snapshot. It compares calendar dates, not timestamps, and is a false "
+         "positive: the ledger was sealed 2026-11-14T00:58:54Z and the earliest game in it "
+         "tips 2026-11-14 19:00 ET = 2026-11-15T00:00Z, a 23.02-hour lead. The minimum lead "
+         "across all 27 predictions is 23.02 hours.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
+         "Owner of tools/crosscheck_site.py compares datetimes instead of dates (RR-19).")
+    flag("FLAG-INJ-10", "info", "injuries",
+         "At the 2026-11-14 05:00 AM ET release, five of the ten clubs on the 11/14 slate had "
+         "filed nothing (New Orleans, Cleveland, Memphis, Miami, Chicago) and all eighteen 11/15 "
+         "club entries read NOT YET SUBMITTED. This is the official state of the document, not a "
+         "parsing failure — the 11 a.m.-1 p.m. local game-day filing window had not opened.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+         "Re-fetch after 1 p.m. ET for a complete 11/14 card, and after 5 p.m. ET for 11/15.")
 
     data = build()
     OUT.parent.mkdir(parents=True, exist_ok=True)

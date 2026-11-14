@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html" class="active">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li class="nav-group"><span class="nav-cat">Decide</span><ul><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="graded.html">Graded Results</a></li></ul></li><li class="nav-group"><span class="nav-cat">Measure</span><ul><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li></ul></li><li class="nav-group"><span class="nav-cat">Inputs</span><ul><li><a href="injuries.html" class="active">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li></ul></li><li class="nav-group"><span class="nav-cat">Governance</span><ul><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li><li><a href="verification-report.html">Verification Report</a></li></ul></li><li class="nav-group"><span class="nav-cat">Project</span><ul><li><a href="requirements.html">Requirements</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li></ul></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -1117,7 +1117,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</p>
+<p class="tablenote"><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</a></p>
 </section><section class="card table-card" id="leaders" data-rows="11">
 <h2>Leader-availability cross-check (official report vs official game card)</h2>
 <p class="blurb">Two official documents joined on team+player. &#x27;NOT LISTED ON REPORT&#x27; means the report we retrieved contains no row for that player — it is not a guarantee of availability, which is why the impact column stays blank. Leaders were captured from the 2026-11-13 game cards; injury statuses come from the 2026-11-13 19:30 ET release.</p>
@@ -2067,7 +2067,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</p>
+<p class="tablenote"><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</a></p>
 </section><section class="card table-card" id="injuries" data-rows="122">
 <h2>Official NBA injury report — 11/13/26 19:30 ET release (freshest at build time; supersedes the 16:15 capture)</h2>
 <p class="blurb">Transcribed from the NBA&#x27;s own referee-operations PDF. The three middle columns are blank by policy: the report contains no minutes or production data, so any number we put there would be invented. P(plays) is our modelling convention for counting bodies, not a league probability. Covers 11/13 games plus the first official statuses for the 11/14 slate (five teams had still not submitted at this release).</p>
@@ -4038,7 +4038,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>
+<p class="tablenote"><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></p>
 </section><section class="card table-card" id="injuries_window" data-rows="31">
 <h2>Official NBA injury report — 2026-11-14 day-before designations (11/13/26 19:30 ET release)</h2>
 <p class="blurb">First official designations for the 2026-11-14 slate: five teams had filed by the 5 p.m. ET day-before deadline, five had not (NOT YET SUBMITTED). Game-day reports on 11/14 (11 a.m.-1 p.m. local) can still change these statuses. The three impact columns are blank by policy — the report contains no minutes or production data, so any number there would be invented. P(plays) is our modelling convention for counting bodies, not a league probability.</p>
@@ -4553,7 +4553,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>
+<p class="tablenote"><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></p>
 </section><section class="card table-card" id="injury_delta_release" data-rows="30">
 <h2>Injury release delta — 19:30 ET (published before) vs 05:00 a.m ET (published now)</h2>
 <p class="blurb">An injury report is re-issued several times a day and a player who was Questionable at 19:30 can be Out at 05:00. The diff is published so the churn is visible instead of hidden behind whichever release happened to be latest.</p>

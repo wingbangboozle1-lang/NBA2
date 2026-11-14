@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -30,28 +31,45 @@ def _load_data() -> dict:
 if (ROOT / "data" / "site.json").exists():
     _load_data()
 
-NAV = [
-    ("index.html", "Dashboard"),
-    ("pages/executive-summary.html", "Executive Summary"),
-    ("pages/picks.html", "Picks (3-day slate)"),
-    ("pages/lines.html", "Originated Lines"),
-    ("pages/strategies.html", "Strategy Leaderboard"),
-    ("backtest/index.html", "Measured-Skill Backtest"),
-    ("pages/parlays.html", "Correlation & Parlays"),
-    ("pages/props.html", "Player Props & Combos"),
-    ("pages/injuries.html", "Injuries & Rotation"),
-    ("pages/game-flow.html", "Game Flow"),
-    ("pages/research-scaffold.html", "Research Blueprint (session 1)"),
-    ("pages/methodology.html", "Methodology & Parameters"),
-    ("pages/requirements.html", "Requirements"),
-    ("pages/repo-review.html", "Repo Review"),
-    ("pages/questions.html", "Open Questions"),
-    ("pages/suggestions.html", "Suggestions Queue"),
-    ("pages/reconciliation.html", "Cross-session Reconciliation"),
-    ("pages/session-audit.html", "Session Audit"),
-    ("pages/verification-report.html", "Verification Report"),
-    ("pages/flagged-review.html", "Flagged for Review"),
-    ("pages/sources.html", "Sources & Verification"),
+# Subpages are grouped by the decision they support, so the site reads as a dashboard
+# rather than a file listing. `NAV` (flat) is what the sidebar renders; `NAV_GROUPS`
+# carries the same entries plus the category each one belongs to.
+NAV_GROUPS: list[tuple[str, str, list[tuple[str, str]]]] = [
+    ("Decide", "What the desk would act on today, and what has actually been proven.", [
+        ("pages/picks.html", "Picks (3-day slate)"),
+        ("pages/lines.html", "Originated Lines"),
+        ("pages/graded.html", "Graded Results"),
+    ]),
+    ("Measure", "Whether any of it is skill rather than luck.", [
+        ("pages/strategies.html", "Strategy Leaderboard"),
+        ("backtest/index.html", "Measured-Skill Backtest"),
+        ("pages/parlays.html", "Correlation & Parlays"),
+        ("pages/props.html", "Player Props & Combos"),
+    ]),
+    ("Inputs", "The verified facts every number is built from.", [
+        ("pages/injuries.html", "Injuries & Rotation"),
+        ("pages/game-flow.html", "Game Flow"),
+    ]),
+    ("Governance", "What we know, what we do not, and what needs your decision.", [
+        ("pages/executive-summary.html", "Executive Summary"),
+        ("pages/questions.html", "Open Questions"),
+        ("pages/suggestions.html", "Suggestions Queue"),
+        ("pages/flagged-review.html", "Flagged for Review"),
+        ("pages/sources.html", "Sources & Verification"),
+        ("pages/verification-report.html", "Verification Report"),
+    ]),
+    ("Project", "How the repository got here, and what it still owes the brief.", [
+        ("pages/requirements.html", "Requirements"),
+        ("pages/methodology.html", "Methodology & Parameters"),
+        ("pages/repo-review.html", "Repo Review"),
+        ("pages/reconciliation.html", "Cross-session Reconciliation"),
+        ("pages/session-audit.html", "Session Audit"),
+        ("pages/research-scaffold.html", "Research Blueprint (session 1)"),
+    ]),
+]
+
+NAV: list[tuple[str, str]] = [("index.html", "Dashboard")] + [
+    (href, label) for _cat, _desc, items in NAV_GROUPS for href, label in items
 ]
 
 BADGE = {
@@ -63,6 +81,13 @@ BADGE = {
 
 INTROS = {
     "pages/executive-summary.html": "<p>One page for a decision-maker: what exists, what is proven, what is blocked, and the single next decision.</p>",
+    "pages/graded.html":
+        "<p>The first card in this repository scored against official results. Nine games "
+        "from 2026-11-13, priced from the ratings snapshot that predates every tip, graded "
+        "against the final scores on NBA.com. The headline is deliberately unflattering: the "
+        "totals beat a no-information baseline by 3.3 points per game, the margins beat it by "
+        "0.4, and with nine games neither result is statistically significant &mdash; about "
+        "1,565 graded games are needed to settle the question.</p>",
     "pages/picks.html": "<p>Every game in the window gets a lean, a trigger and a stake of 0% — 0% is the policy, not a placeholder.</p>",
     "pages/lines.html": "<p>Our numbers, one row per game, with the disagreement between the two base ratings printed next to the line.</p>",
     "pages/strategies.html": "<p>Hypotheses, gates and scores. Empty scores are the honest state of a project that has settled nothing.</p>",
@@ -93,10 +118,25 @@ INTROS = {
 }
 
 
+_URL_RE = re.compile(r"^https?://\S+$")
+
+
 def esc(v) -> str:
+    """Escape a cell value.
+
+    A cell whose entire value is an http(s) URL is rendered as a link. Several tables
+    (the slate's official game page, the graded card's per-game source) hold a verified
+    URL as data; printing it as text forces a reviewer to copy-paste it, which is exactly
+    the friction FLAG-AUD-01 was raised for. Linking the cell does not change the value,
+    the provenance badge, or the row's own source column.
+    """
     if v is None:
         return '<span class="blank">—</span>'
-    return html.escape(str(v))
+    s = str(v)
+    if _URL_RE.match(s):
+        return (f'<a class="cell-link" href="{html.escape(s, quote=True)}" target="_blank" '
+                f'rel="noopener">{html.escape(s)}</a>')
+    return html.escape(s)
 
 
 def _href(target: str, sub: bool) -> str:
@@ -177,6 +217,43 @@ def kpis() -> str:
     return "".join(parts)
 
 
+def graded_strip(sub: bool = False) -> str:
+    """The most decision-relevant block on the site: what the model has actually been
+    measured to do against official results, and what that sample can support."""
+    g = DATA["sections"].get("graded_summary")
+    graded = DATA["sections"].get("graded")
+    if not g or not graded:
+        return ""
+    pick = {r["values"]["metric"]: r["values"] for r in g["rows"]}
+    mae_t = pick.get("Total MAE (points)", {})
+    mae_m = pick.get("Margin MAE (points)", {})
+    power = pick.get("Games needed for 80% power at a 55% hit rate", {})
+    su = pick.get("Straight-up winner accuracy", {})
+    cells = [
+        (mae_m.get("model"), "margin MAE (pts)", mae_m.get("note", "")),
+        (mae_t.get("model"), "total MAE (pts)", mae_t.get("note", "")),
+        (su.get("model"), "winner calls", su.get("note", "")),
+        (power.get("baseline"), "games needed for power", power.get("note", "")),
+    ]
+    dash = "\u2014"
+    body = "".join(
+        f'<div class="kpi"><div class="kpi-v">{html.escape(str(v) if v else dash)}</div>'
+        f'<div class="kpi-l">{html.escape(lbl)}</div>'
+        f'<div class="kpi-n">{html.escape(note[:150])}</div></div>'
+        for v, lbl, note in cells)
+    link = _href("pages/graded.html", sub)
+    flaglink = _href("pages/flagged-review.html", sub) + "#FLAG-GRADE-01"
+    return ('<section class="card"><h2>Graded against official results</h2>'
+            '<p class="blurb">The nine games of 2026-11-13, priced from the ratings snapshot that '
+            'predates every tip and scored against the final scores on NBA.com. This is the only '
+            'card in the repository measured against real outcomes rather than against itself. '
+            'It is a walk-forward backtest, not a pre-registered ledger ('
+            f'<a href="{flaglink}">FLAG-GRADE-01</a>).</p>'
+            f'<div class="kpi-grid">{body}</div>'
+            f'<p class="blurb"><a href="{link}">Full card, every game, with source links &rarr;</a></p>'
+            "</section>")
+
+
 def policy_strip(sub: bool = False) -> str:
     m = DATA["meta"]
     seal = m.get("seal") or {}
@@ -202,9 +279,15 @@ def page(title: str, sections: list[str], body_intro: str = "", sub: bool = Fals
          active: str = "") -> str:
     active_name = active.split("/")[-1]
     items = []
-    for href, label in NAV:
-        cls = ' class="active"' if href.split("/")[-1] == active_name else ""
-        items.append(f'<li><a href="{_href(href, sub)}"{cls}>{html.escape(label)}</a></li>')
+    for category, _desc, entries in NAV_GROUPS:
+        inner = []
+        for href, label in entries:
+            cls = ' class="active"' if href.split("/")[-1] == active_name else ""
+            inner.append(f'<li><a href="{_href(href, sub)}"{cls}>{html.escape(label)}</a></li>')
+        items.append(f'<li class="nav-group"><span class="nav-cat">{html.escape(category)}</span>'
+                     f'<ul>{"".join(inner)}</ul></li>')
+    home_cls = ' class="active"' if active_name == "index.html" else ""
+    items.insert(0, f'<li><a href="{_href("index.html", sub)}"{home_cls}>Dashboard</a></li>')
     nav = "".join(items)
     base = "../" if sub else ""
     return f"""<!DOCTYPE html>
@@ -256,6 +339,8 @@ def _pages() -> dict[str, list[str]]:
     return {
         "pages/executive-summary.html": [
             '<div class="card">' + kpis() + "</div>",
+            graded_strip(True),
+            render_table(sec("graded_summary"), L),
             render_table({**sec("lines"),
                           "title": "Snapshot of the priced slate (first 8 rows)",
                           "rows": sec("lines")["rows"][:8],
@@ -266,6 +351,10 @@ def _pages() -> dict[str, list[str]]:
                           "rows": sec("flags")["rows"][:5],
                           "anchor": "summary-flags"}, L),
         ],
+        "pages/graded.html": [render_table(sec("graded"), L),
+                              render_table(sec("graded_summary"), L),
+                              render_table(sec("standings_live"), L),
+                              render_table(sec("injury_1114"), L)],
         "pages/picks.html": [render_table(sec("picks"), L),
                              render_table(sec("finals_grade"), L)],
         "pages/lines.html": [render_table(sec("lines"), L), render_table(sec("slate"), L),
@@ -317,11 +406,18 @@ def build() -> list[str]:
 
     home_sections = [
         '<div class="card">' + kpis() + "</div>",
-        '<section class="card"><h2>Sections</h2><p class="blurb">Ordered so a reader meets the data before the '
-        "opinion: what we know, what we price, what is blocked.</p><div class=\"cat-grid\">"
-        + "".join(f'<a class="cat-card" href="{href}"><h3>{html.escape(label)}</h3></a>'
-                  for href, label in NAV[1:])
-        + "</div></section>",
+        graded_strip(),
+        '<section class="card"><h2>Sections</h2><p class="blurb">Grouped by the decision each '
+        "one supports, so the site reads as a dashboard rather than a file listing.</p>"
+        + "".join(
+            f'<div class="cat-block"><h3 class="cat-head">{html.escape(cat)}</h3>'
+            f'<p class="cat-desc">{html.escape(desc)}</p><div class="cat-grid">'
+            + "".join(f'<a class="cat-card" href="{href}"><h4>{html.escape(label)}</h4></a>'
+                      for href, label in entries)
+            + "</div></div>"
+            for cat, desc, entries in NAV_GROUPS)
+        + "</section>",
+        render_table(sec("standings_live"), False),
         render_table(sec("anomalies"), False),
         render_table(sec("slate"), False),
     ]
