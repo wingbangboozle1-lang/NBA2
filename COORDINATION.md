@@ -2911,19 +2911,34 @@ logged as S-48 with the evidence.
 
 ---
 
-## 2026-11-14 — session `arena/55e1ea20-nba2` — IN PROGRESS
+## 2026-11-14 — session `arena/55e1ea20-nba2` — DONE
 
-Branch: `arena/55e1ea20-nba2`, based on `main` @ `b3ed44d8` (HEAD == main at session start).
-Session ID: `arena/55e1ea20-nba2`. This session re-runs an independent line-by-line verification of the
-committed v2 site against official NBA sources, investigates/flags the recorded `repo-wl` ERROR cross-check
-(`module 'nba2.v2.official' has no attribute 'STANDINGS'` in `data/v2/verification.json`), then performs the
-final integration: PR `arena/55e1ea20-nba2` → `main`, merge, confirm GitHub Pages deploy, and record PR link +
-merge result here.
+Branch: `arena/55e1ea20-nba2`, based on `main` @ `b3ed44d8`; rebased onto `main` @ `0baa9a8` and merged via PR #64.
+Session ID: `arena/55e1ea20-nba2`.
 
-| Claimed task | Status | Owner | File scope | Sources / verification |
-|---|---|---|---|---|
-| P-13 Independent line-by-line re-verification vs official NBA sources (standings, schedule, injury report PDF; spot checks, no inferred values) | in progress | arena/55e1ea20-nba2 | `audit/2026-11-14-55e1ea20/` (new, append-only); read-only spot checks of `site/**`, `data/v2/**`, `nba2/v2/official.py` | nba.com/standings; nba.com/schedule; nba.com/games; ak-static.cms.nba.com injury PDF; official.nba.com injury index |
-| Investigate `repo-wl` ERROR cross-check; fix if a real bug, otherwise keep flagged with source | in progress | arena/55e1ea20-nba2 | `nba2/v2/official.py`, `nba2/v2/build.py`, `data/v2/verification.json`, `site/**` (regenerated only) | nba.com/standings |
-| P-12 Integration: PR → main, merge, confirm Pages deploy, record PR link + merge result here | unclaimed | arena/55e1ea20-nba2 | repo-wide via merge; `COORDINATION.md` (this section, final record) | GitHub PR + Pages deploy run |
+### Verification performed this session (independent, against live official NBA pages)
+- Standings: nba.com/standings read 2026-11-14 matches `nba2/v2/official.py` TEAMS 30/30 — W/L and home/road splits (spot checks: ATL 7-6 home 3-3 road 4-3; BOS 10-2 home 5-0 road 5-2; MIL 1-12 home 1-6 road 0-6; SAS 11-2 home 5-2 road 6-0).
+- Slate: nba.com/schedule?date=2026-11-15 matches the committed 27-game Nov 14-17 window exactly — dates, ET times, arenas, game IDs 0022600231–0022600257 (e.g. DEN@NOP 0022600231 19:00 Smoothie King Center; NYK@TOR 0022600253 19:30 Scotiabank Arena).
+- Injury report: official Injury-Report_2026-11-14_04_30AM.pdf matches committed structure — 26 player rows, not-yet-submitted teams, days 2-3 blank and flagged (e.g. DAL@CLE Christie Questionable / Lively II Out; BKN@MEM Bilodeau / Brown Jr. / Jefferson / Nelson / Saraf Out).
 
-Working rule for this session: no committed data value is changed or inferred; anything that fails an official-source check is left blank and flagged on the Flagged for Review page instead. Claims are pushed before any other work.
+### Changes (PR #64, merged to main)
+- `nba2/v2/official.py`: added STANDINGS / STANDINGS_AS_OF / STANDINGS_SOURCE, re-expressed from the standings snapshot, so report.py's W-L cross-check runs; published result MATCH 30/30 (previously ERROR `module 'nba2.v2.official' has no attribute 'STANDINGS'`).
+- `tools/crosscheck_site.py` CC-BT-03: ATS hit rate vs straight-up accuracy equality asserted only on equal denominators (105/166 = 0.6325 vs 105/167 = 0.6287 — push-game population difference); each rate still verified against its own hits/n; no performance value changed.
+- `README.md`: v1 row count 1,404 -> 1,409.
+- Regenerated `data/v2/verification.json` and the `site/` pages; rebuilds confirmed as fixed points.
+
+### Full verification suite (committed state)
+64 v1 + 80 v2 unit tests OK; `lint` 1,409 rows / 50 tables every row sourced; 4,914 internal links OK; `crosscheck_site.py` 90 pass / 0 fail / 7 info; `nba2.v2.check` 0 structural / 0 semantic.
+
+### Flagged irregularities (do not block merge; published on the Flagged for Review page)
+- G6: no licensed market price feed — stakes held at 0.00, leans with trigger prices only. Decision S-01 on the suggestions queue.
+- Player game logs unavailable — S7 (minutes/props/injury replacement) blocked. Decision S-41.
+- G7: largest strategy has 167 settled bets vs 300 required. Decision S-43.
+- Crosscheck informational items: CC-FRESH-02 freshness disclosure; CC-HTML-03b em-dash usage.
+No committed data value was inferred or filled in.
+
+### PR & merge result
+- PR #64: https://github.com/wingbangboozle1-lang/NBA2/pull/64
+- Merged to main as commit 46bc33125fba5c775ac5ce3b49c1b47e74b7b4b3 at 2026-11-14T18:58:41Z via `gh pr merge 64 --merge` (no approval waited).
+- GitHub Pages: pages.yml run #58 triggered by the merge push (head 46bc331); Pages status `building` / run queued at record time — deploy confirmation pending the queued build; live re-fetch of the fixed verification.html (MATCH 30/30, no ERROR badge) follows once the build completes.
+
