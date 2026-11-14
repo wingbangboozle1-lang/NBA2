@@ -268,13 +268,16 @@ SUGGESTIONS = [
 # arena/ac5fab5c-nba2 (2026-11-14). These were written after the results history was completed,
 # so several earlier entries that said "blocked, no data" now have a cheaper answer.
 SUGGESTIONS += [
-    ("SG-31", "Data plumbing", "Schedule a nightly job that appends each night's official finals to "
-     "data/raw/history/ and asserts the per-date game count against the nba.com day-strip calendar.",
-     "The history is complete today (183/183) precisely because the count is checkable: the standings imply 183 "
-     "games and the calendar gives per-date counts. Automating the append with that assertion means the window "
-     "can never silently fall behind again, which is the failure the pre-finals standings drift was.",
-     "Low — the shape already exists in .github/workflows/refresh.yml",
-     "A runner with normal internet egress (nba.com is TLS-blocked from this sandbox)",
+    ("SG-31", "Data plumbing", "Make the existing nightly ingest actually fire, and extend it to the v2 results "
+     "history in data/raw/history/.",
+     "A cron ingest already exists (.github/workflows/refresh.yml) and has never run — its run list is empty, and "
+     "the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not "
+     "this history. The cost is visible: the log sat 28 games short for a day and the published standings were a "
+     "full day stale with nothing able to detect either. The count is eminently checkable — the standings imply "
+     "183 games and the nba.com day-strip calendar gives per-date counts.",
+     "Low — the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has "
+     "been merged to the default branch once",
+     "Confirmation that the cron is enabled on the default branch",
      "RECOMMENDED — cheapest fix with the largest effect on trust"),
     ("SG-32", "Model", "Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.",
      "300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters "

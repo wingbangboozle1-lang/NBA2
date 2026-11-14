@@ -447,44 +447,10 @@
   [
    "SG-25",
    "Data plumbing",
-<<<<<<< HEAD
-   "Re-read the three official team-stat pages (traditional, opponent, advanced) and re-cut the model inputs.",
-   "The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the published lines therefore start from a slightly out-of-date level.",
-   "Low \u2014 the three pages render for this client; the capture is a transcription plus a diff",
-   "none \u2014 the pages are reachable through the platform page-reader; a runner can do it unattended (SG-1)",
-   "QUEUED \u2014 owner decision"
-  ],
-  [
-   "SG-26",
-   "Data plumbing",
-   "Make the nightly refresh rebuild the published v2 tree as well as the v1 tree, and diff both against the commit.",
-   "refresh.yml fetches the newest official injury release and the finals, then rebuilds only the v1 tree. The tree a reader actually sees is the v2 one, so the data the refresh collects never reaches it.",
-   "Low \u2014 the build commands already exist (python -m nba2.v2, python -m nba2.v2.check)",
-   "none",
-   "QUEUED \u2014 owner decision"
-  ],
-  [
-   "SG-27",
-   "Verification",
-   "Add a release-to-release injury diff to the build, and fail the build when a status changes.",
-   "A report is re-issued several times a day. The 11/14 05:00 a.m ET release moved nothing relative to the 11/13 19:30 ET release on the 26 shared rows, but the next one might, and a changed status is a different bet.",
-   "Low \u2014 the diff is computed in the build and published on the Injuries page today",
-   "none",
-   "IMPLEMENTED \u2014 published as a table on the Injuries page"
-  ],
-  [
-   "SG-28",
-   "Verification",
-   "Move the five unpublished site trees under archive/ with dated notes, and delete nothing.",
-   "Six trees still live at the repository root. Only the v2 tree is published, but a maintainer cloning the repo sees six dashboards and no marker saying which one is live. The published tree also needs a marker saying so.",
-   "Low \u2014 a move plus one banner per tree",
-   "none",
-   "QUEUED \u2014 owner decision"
-=======
-   "Schedule a nightly job that appends each night's official finals to data/raw/history/ and asserts the per-date game count against the nba.com day-strip calendar.",
-   "The history is complete today (183/183) precisely because the count is checkable: the standings imply 183 games and the calendar gives per-date counts. Automating the append with that assertion means the window can never silently fall behind again, which is the failure the pre-finals standings drift was.",
-   "Low \u2014 the shape already exists in .github/workflows/refresh.yml",
-   "A runner with normal internet egress (nba.com is TLS-blocked from this sandbox)",
+   "Make the existing nightly ingest actually fire, and extend it to the v2 results history in data/raw/history/.",
+   "A cron ingest already exists (.github/workflows/refresh.yml) and has never run \u2014 its run list is empty, and the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not this history. The cost is visible: the log sat 28 games short for a day and the published standings were a full day stale with nothing able to detect either. The count is eminently checkable \u2014 the standings imply 183 games and the nba.com day-strip calendar gives per-date counts.",
+   "Low \u2014 the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has been merged to the default branch once",
+   "Confirmation that the cron is enabled on the default branch",
    "RECOMMENDED \u2014 cheapest fix with the largest effect on trust"
   ],
   [
@@ -531,7 +497,6 @@
    "Medium \u2014 needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores",
    "A runner with normal internet egress",
    "RECOMMENDED \u2014 the last hard blocker"
->>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
   ]
  ],
  "questions": [
@@ -663,32 +628,6 @@
   ],
   [
    "Q-15",
-<<<<<<< HEAD
-   "Do the scoring averages and advanced ratings this model runs on still describe the teams?",
-   "Partly answered: the records can be checked every day, and the league's current table is published beside the model's inputs. The scoring averages and NetRtg were read on 2026-11-13, before the nine 2026-11-13 games, so for the 18 clubs that played they are one game stale.",
-   "A current read of the three official team-stat pages (traditional, opponent, advanced), and the diff against what the model used.",
-   "Re-fetch nba.com/stats/teams/traditional, /opponent and /advanced, diff GP/PTS/NetRtg/Pace/PIE against the committed transcription, and publish the delta (suggestion SG-25).",
-   "Blocks claiming that the published lines start from current inputs; does not block publishing them.",
-   "https://www.nba.com/stats/teams/traditional"
-  ],
-  [
-   "Q-16",
-   "Does an official injury release change a designation between editions?",
-   "Answered for the pair this session compared: the 2026-11-14 05:00 a.m ET release and the 2026-11-13 19:30 ET release share 26 player rows and every one of them has the same status and reason. The delta table is published on the Injuries page.",
-   "Whether the pattern holds for every future pair, and how large the pre-tip churn is in practice.",
-   "Diff every new release against the previous one on the keys (date, matchup, player); count the status moves per release and publish the rate.",
-   "Blocks any claim about how stable a designation is; the answer so far is published.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"
-  ],
-  [
-   "Q-17",
-   "Why does the third-party ratings snapshot's close/blowout split contradict the games played?",
-   "Answered in part: the league-wide sums balance (close 99 = 99, blowout 88 = 88) but the per-team bound close+blowout <= games played does not hold for 18 of 30 clubs. The cause is the text extraction of the source table, which has blank/merged cells - not the league's data.",
-   "The row-level truth for those 18 clubs.",
-   "Re-extract the close and blowout columns from the source table row by row and re-check the per-team bound; until then the columns stay out of the luck table.",
-   "Blocks any per-team luck claim that uses the close/blowout split.",
-   "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"
-=======
    "Is the measured same-game correlation precise enough to price a two-leg parlay?",
    "Measured at +0.0393 (95% CI -0.1133 to +0.1900, n = 167). It is statistically indistinguishable from zero AND the interval still spans a range wide enough to move a two-leg price by several percent.",
    "A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.",
@@ -731,7 +670,6 @@
    "Re-fetch at 19:00 ET each day and diff (SG-25 covers the mechanism).",
    "Decides how far ahead an injury-driven line can honestly be published.",
    "https://official.nba.com/nba-injury-report-2026-27-season/"
->>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
   ]
  ],
  "flags": [
@@ -969,45 +907,6 @@
   ],
   [
    "F-030",
-<<<<<<< HEAD
-   "high",
-   "Verification",
-   "CORRECTION (2026-11-14, session arena/6650be4d-nba2): the 11/13 19:30 ET official injury release was transcribed with Caleb Martin under the CLEVELAND Cavaliers. The PDF breaks across pages with the Team column blank on the continuation rows, and Martin's row falls in that gap, immediately before the 'Cleveland Cavaliers | NOT YET SUBMITTED' line - so the team was inferred from the wrong side of the break. The 11/14 05:00 a.m ET release repeats the team on every row and prints Martin under the DALLAS Mavericks.",
-   "The published window rows now come from the 05:00 a.m ET release, so the corrected attribution is what the site shows, and the release-to-release delta on the Injuries page prints every row that changed.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf"
-  ],
-  [
-   "F-031",
-   "medium",
-   "Verification",
-   "The 2026-11-13 third-party ratings snapshot carries its own internal-consistency labels, and two of them were wrong. The league-wide close and blowout sums DO balance (close 99 = 99, blowout 88 = 88) although the label said FAIL, and the per-team bound close+blowout <= games played does NOT hold although the label said PASS: 18 of the 30 clubs show more close and blowout games than they played (ATL 13 in a 12-game record, MEM 12 in 11).",
-   "The snapshot's correction block records the original text verbatim; the close/blowout columns are excluded from the luck table, and the per-team check is now part of the repository's own checker.",
-   "https://www.basketball-reference.com/leagues/NBA_2027_standings.html"
-  ],
-  [
-   "F-032",
-   "low",
-   "Verification",
-   "Two official pages disagree on the tip time of one game in the window: the /schedule card for 0022600249 (HOU @ MIA, 2026-11-16) renders '8:00 PM ET', while the game's own page renders '7:30 PM ET' in both its game rail and its header line. The other 35 games were re-read in this session and match the committed snapshot exactly.",
-   "The published value follows the game's own page. Treat that page as authoritative for its tip time.",
-   "https://www.nba.com/game/hou-vs-mia-0022600249"
-  ],
-  [
-   "F-033",
-   "medium",
-   "Model",
-   "The model's team inputs (records, scoring averages, advanced ratings) were read from the official NBA pages on 2026-11-13, before the nine 2026-11-13 games were played, and could not be re-read in this session. They therefore disagree with the league's current table for 18 of the 30 clubs.",
-   "The current official records are published beside them on the Methodology page, and every published page says which date its numbers carry. Nothing is silently refreshed.",
-   "https://www.nba.com/standings"
-  ],
-  [
-   "F-034",
-   "info",
-   "Verification",
-   "The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. The nine 2026-11-13 games are kept as day-before context and graded against the official finals.",
-   "The window is read from the committed slate snapshot, so it cannot drift from the brief's three-day limit.",
-   "https://www.nba.com/schedule"
-=======
    "info",
    "Verification",
    "RESOLVED this session \u2014 the committed standings were a pre-finals snapshot. They agreed with the pre-11/13-finals state on 30 of 30 rows and with live official standings on only 12 of 30. Re-read from nba.com/standings on 2026-11-14: they now match live official standings on 30 of 30 rows, home and road splits included, and all 30 records rebuild exactly from the 183 committed official finals. The staleness measure that caught it is retained and inverted.",
@@ -1053,7 +952,6 @@
    "Two matchups appear twice inside the 3-day window: NYK @ TOR (11/15 game 0022600241 and 11/17 game 0022600253) and POR @ MIN (11/16 game 0022600250 and 11/17 game 0022600254).",
    "Verified genuine by reading the official schedule block, not a duplication error in the slate capture. Both games are priced separately.",
    "https://www.nba.com/schedule?date=2026-11-15"
->>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
   ]
  ],
  "requirements": [
@@ -1067,7 +965,7 @@
    "R-2",
    "Originate own NBA lines",
    "Delivered (projection)",
-   "36 lines with spread, total, moneyline fair odds, per game, with the formula and every input sourced."
+   "31 lines with spread, total, moneyline fair odds, per game, with the formula and every input sourced."
   ],
   [
    "R-3",
@@ -1151,21 +1049,15 @@
   ],
   [
    "Python unit tests",
-   "64 pass (v1 pipeline) + 59 pass (v2 model) + 49 pass (backtest)",
-   "`python3 -m unittest discover -s nba2/tests -t .`; `... -s nba2/v2 -p 'test_*.py'`; `... -s backtest/tests`",
+   "55 pass in 0.589 s",
+   "`python3 -m unittest discover -s nba2/tests -t .`",
    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests"
   ],
   [
    "Provenance lint",
-   "1,296 rows across 45 tables, every row sourced",
+   "915 rows across 33 tables, every row sourced",
    "`python3 -m nba2.pipeline.lint`",
    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline"
-  ],
-  [
-   "Repository cross-checker",
-   "94 checks: 86 pass, 0 fail, 8 informational",
-   "`python3 tools/crosscheck_site.py`",
-   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py"
   ],
   [
    "Sealed prediction ledger",
@@ -1187,8 +1079,8 @@
   ],
   [
    "Parallel site trees present",
-   "6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/) \u2014 only this v2 tree is published; the other five are retained for history and are unreachable to a reader",
-   "directory listing + live probe (the /pages/ paths answer 404)",
+   "6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)",
+   "directory listing",
    "https://github.com/wingbangboozle1-lang/NBA2"
   ],
   [

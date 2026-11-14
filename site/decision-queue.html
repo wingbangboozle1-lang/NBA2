@@ -144,9 +144,9 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <tr id="S-29">
 <td>S-29</td>
 <td><span class="badge b-off">data</span></td>
-<td>Schedule a nightly job that appends each night&#x27;s official finals and asserts the per-date count</td>
-<td>The results history was incomplete for most of this project&#x27;s life, and the standings published on the site drifted a full day behind without anything noticing. Both are the same failure: no job appends results, and nothing compares a published row against a fresher capture. — evidence: the standings were a pre-finals snapshot for a full day and nothing on the site could detect it; the 183-game log was 28 games short and stayed that way for a day</td>
-<td>Each night&#x27;s finals are appended automatically, and a mismatch against the standings-implied game count fails the run instead of silently publishing a stale window.</td>
+<td>Make the existing nightly ingest actually run, and extend it to the v2 results history</td>
+<td>A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo&#x27;s own freshness check (CC-FRESH-03) reports &#x27;the schedule is armed but nothing has run&#x27;. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either. — evidence: a nightly ingest workflow is committed and scheduled but has never run (gh run list is empty), and the repo&#x27;s own freshness check CC-FRESH-03 reports exactly that: armed, zero runs</td>
+<td>The existing cron actually fires, and it appends to the v2 results history as well as the v1 pipeline; a mismatch against the standings-implied game count fails the run instead of silently publishing a stale window.</td>
 <td>S</td>
 <td><span class="badge b-warn">awaiting owner decision</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>

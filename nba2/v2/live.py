@@ -390,8 +390,9 @@ def decision_queue() -> dict:
         "S-25": "The Pages workflow cannot publish a build whose newest capture is older than a per-table limit.",
         "S-26": "S2 selections name the side that takes the points, matching the file's own spread label.",
         "S-27": "The unreachable v1 tree moves under archive/ with dated notes; one generator remains.",
-        "S-29": "Each night's finals are appended automatically, and a mismatch against the standings-implied "
-                "game count fails the run instead of silently publishing a stale window.",
+        "S-29": "The existing cron actually fires, and it appends to the v2 results history as well as the v1 "
+                "pipeline; a mismatch against the standings-implied game count fails the run instead of silently "
+                "publishing a stale window.",
         "S-30": "Player-level correlations become measurable, the props page can price, the injuries page can "
                 "fill minutes and production, and strategy S7 generates its first bet.",
         "S-31": "One site is live and the other tree is archived with a dated note, so no reader can reach a "
@@ -409,8 +410,8 @@ def decision_queue() -> dict:
         "S-25": "every page prints an as-of date and no build fails when it is old",
         "S-26": "picks.json prints 'POR +6.0' where its own label reads 'POR -6.0'",
         "S-27": "pages/*.html return 404 on the live site while site/data/teams.json returns 200 — one tree is served",
-        "S-29": "the standings were a pre-finals snapshot for a full day and nothing on the site could detect it; "
-                "the 183-game log was 28 games short and stayed that way for a day",
+        "S-29": "a nightly ingest workflow is committed and scheduled but has never run (gh run list is empty), "
+                "and the repo's own freshness check CC-FRESH-03 reports exactly that: armed, zero runs",
         "S-30": "3 of 7 correlations on the lab page are BLOCKED and all three are player-level; S7 has 0 bets",
         "S-31": "the Pages setting is 'legacy' (root of main) while pages.yml publishes site/ — the two trees "
                 "disagree and both are reachable",
