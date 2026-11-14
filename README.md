@@ -27,7 +27,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (19 pages, 39 tables, 1124 rows) are rendered from
+`index.html` + `pages/**` (19 pages, 39 tables, 1131 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -58,7 +58,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 62 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 66 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
@@ -78,7 +78,7 @@ honest map rather than a claim that there is one generator:
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (64 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (66 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -97,7 +97,7 @@ injury-report PDFs for the window dates under `data/raw/pdf/`, fetches official 
 arrived window dates into `data/raw/finals_*.json`, merges them into the settlement input, settles
 the sealed ledger, and rebuilds the site — **only if** the full verify chain (unit tests, seal
 verification, provenance lint) passes and `data/raw/ledger/` is byte-identical. It is fail-closed
-(`nba2/pipeline/refresh.py`, covered by the 64-test suite): an unreachable official endpoint or a
+(`nba2/pipeline/refresh.py`, covered by the 66-test suite): an unreachable official endpoint or a
 schema drift aborts the
 job before anything is committed, and a missing future-date release or a not-yet-final scoreboard is
 reported as the expected pre-deadline state, not an error. What it never does: rewrite sealed

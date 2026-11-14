@@ -376,13 +376,37 @@ def check_published_vs_snapshot(r: Report, site: dict):
           "recount over published injury rows", PASS if not p_bad else FAIL,
           f"{len(p0)} rows; Out rows with p_play != 0.00: {len(p_bad)}")
 
-    times = load_json(snapshot_candidates("times")[0])
-    tmap = {}
-    for rec in times["records"]:
-        d, mu, tm, present = rec[0], rec[1], rec[2], rec[3]
-        tmap[(d, mu)] = tm if present else None
+    # Corroboration re-derivation merges EVERY times capture (oldest -> newest, fresher wins,
+    # adjudication corrections honoured) — the same rule the pipeline documents — then checks
+    # each published row's verdict against the class its key actually falls in, and checks the
+    # title's six counts against the recomputation.
+    tmap, trecheck = {}, set()
+    for fpath in reversed(snapshot_candidates("times")):
+        doc = load_json(fpath)
+        cols = doc["columns"]
+        for rec in doc["records"]:
+            d = dict(zip(cols, rec))
+            a, h = d["matchup"].split("@")
+            key = (d["date"], f"{a}@{h}")
+            prev = tmap.get(key)
+            older = bool(prev and prev["captured"]) or (prev or {}).get("older", False)
+            tmap[key] = {"t": d["time_et"] if d["time_captured"] else (prev or {}).get("t"),
+                         "captured": bool(d["time_captured"]), "older": older if not d["time_captured"] else False}
+        for c in doc.get("corrections", []):
+            if c.get("field") in ("captured", "older_captured"):
+                a, h = c["matchup"].split("@")
+                key = (c["date"], f"{a}@{h}")
+                if key in tmap:
+                    tmap[key]["older" if c["field"] == "older_captured" else "captured"] = bool(c.get("to"))
+        rechk = doc.get("game_page_recheck", [])
+        if isinstance(rechk, dict):
+            rechk = rechk.get("rows", [])
+        for rc in rechk:
+            a, h = rc["matchup"].split("@")
+            trecheck.add((rc["date"], f"{a}@{h}"))
     corr_rows = rows_of(site, "corroboration")
-    corr_bad, n_corrob, n_lost, n_outside = [], 0, 0, 0
+    corr_bad = []
+    counts = {"readable": 0, "earlier": 0, "lost": 0, "recheck": 0, "mismatch": 0, "outside": 0}
     for row in corr_rows:
         v = vals(row)
         gid = v.get("game_id")
@@ -391,35 +415,54 @@ def check_published_vs_snapshot(r: Report, site: dict):
             corr_bad.append(f"{gid}: not in the slate snapshot")
             continue
         key = (src[scols["date"]], f"{src[scols['away']]}@{src[scols['home']]}")
-        t_time = tmap.get(key)
         verdict = str(v.get("verdict", ""))
         sched = norm_time(src[scols["time_et"]])
-        if key in tmap:
-            if tmap[key] is None:
-                n_lost += 1
-                if "time cell was lost" not in verdict:
-                    corr_bad.append(f"{gid}: snapshot says time lost, verdict says {verdict!r}")
+        entry = tmap.get(key)
+        if entry is not None:
+            agree = entry["captured"] and norm_time(entry["t"]) == sched
+            if entry["captured"] and not agree:
+                cls = "mismatch"
+            elif agree:
+                cls = "readable"
+            elif entry["older"]:
+                cls = "earlier"
             else:
-                if norm_time(tmap[key]) != sched:
-                    n_corrob += 0
-                    corr_bad.append(f"{gid}: times differ ({sched} vs {tmap[key]}) yet row claims corroboration")
-                else:
-                    n_corrob += 1
-                    if "MATCHUP + TIP TIME" not in verdict:
-                        corr_bad.append(f"{gid}: times agree but verdict does not say so: {verdict!r}")
+                cls = "lost"
+        elif key in trecheck:
+            cls = "recheck"
         else:
-            n_outside += 1
-            if "not in the 11/13 report" not in verdict:
-                corr_bad.append(f"{gid}: absent from the second document but verdict says {verdict!r}")
+            cls = "outside"
+        counts[cls] += 1
+        if cls in ("readable", "earlier") and "MATCHUP + TIP TIME" not in verdict:
+            corr_bad.append(f"{gid}: times agree but verdict does not say so: {verdict!r}")
+        if cls == "lost" and not ("unreadable" in verdict or "time cell was lost" in verdict):
+            corr_bad.append(f"{gid}: time cell lost in every extraction, verdict says {verdict!r}")
+        if cls == "recheck" and not ("games page" in verdict or "games-page recheck" in verdict):
+            corr_bad.append(f"{gid}: games-page-only row, verdict says {verdict!r}")
+        if cls == "outside" and not ("not covered" in verdict or "not in the" in verdict):
+            corr_bad.append(f"{gid}: absent from every release but verdict says {verdict!r}")
     title = section(site, "corroboration")["title"]
-    claim = re.findall(r"(\d+) of (\d+) games confirmed twice", title)
-    claim_lost = re.findall(r"(\d+) matchups confirmed", title)
-    counts_ok = bool(claim) and int(claim[0][0]) == n_corrob and int(claim[0][1]) == len(corr_rows) \
-        and bool(claim_lost) and int(claim_lost[0]) == n_lost
+
+    def _t(pattern):
+        m = re.findall(pattern, title)
+        return int(m[0]) if m else None
+
+    claims = {
+        "readable": _t(r"(\d+) of \d+ games confirmed twice by a readable"),
+        "earlier": _t(r"(\d+) more via the earlier release"),
+        "lost": _t(r"(\d+) matchups confirmed with the cell unreadable"),
+        "recheck": _t(r"(\d+) covered only by the games-page recheck"),
+        "mismatch": _t(r"(\d+) mismatches"),
+        "outside": _t(r"(\d+) outside every release"),
+    }
+    total = _t(r"\d+ of (\d+) games confirmed twice by a readable")
+    counts_ok = all(claims[k] == counts[k] for k in counts) and total == len(corr_rows)
+    diff = {k: (claims[k], counts[k]) for k in counts if claims[k] != counts[k]}
     r.add("CC-PUB-05", g, "the corroboration table's title counts match its own rows",
-          "recompute corroborated / time-lost / outside counts from the two snapshots, compare with the title",
+          "merge every times capture the way the pipeline does, reclassify all 36 rows, compare the title's six counts",
           PASS if counts_ok and not corr_bad else FAIL,
-          f"recomputed {n_corrob} twice-confirmed, {n_lost} time-lost, {n_outside} outside; title: {title!r}"
+          f"recomputed {counts}; title: {title!r}"
+          + (f"; count mismatches (title vs rows): {diff}" if diff else "")
           + (f"; row-level problems: {corr_bad[:3]}" if corr_bad else ""),
           evidence="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf")
 

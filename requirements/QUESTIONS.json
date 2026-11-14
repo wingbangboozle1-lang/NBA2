@@ -1,10 +1,10 @@
 {
-  "title": "NBA2 \u2014 questions that must be answered before a decision is reasonable",
+  "title": "NBA2 — questions that must be answered before a decision is reasonable",
   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.",
   "questions": [
     {
       "id": "Q-01",
-      "question": "Which odds source are we measuring against \u2014 and are we allowed to store its closing prices?",
+      "question": "Which odds source are we measuring against — and are we allowed to store its closing prices?",
       "have": "The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.",
       "missing": "Any licensed book price, opening or closing, for any sport.",
       "how": "Owner picks a vendor (theScore Sportsdata/Odds API, Sportradar, or a sportsbook affiliate feed) and confirms storage rights; then add an ingest to data/raw.",
@@ -58,7 +58,7 @@
     },
     {
       "id": "Q-07",
-      "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status\u2192P(plays) weights, gate thresholds, \u03c1 band)?",
+      "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?",
       "have": "Every one of them written down with its rationale and band on the Parameters page.",
       "missing": "A decision, because they currently control which games are actionable.",
       "how": "Owner reviews the Parameters page and either accepts or edits config.py.",
@@ -77,7 +77,7 @@
     {
       "id": "Q-09",
       "question": "What is the definition of 'removing luck' you will accept as a gate?",
-      "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat \u2265 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
+      "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
       "missing": "Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.",
       "how": "Owner picks; add to gates.",
       "impact": "Changes which strategies can win the leaderboard, and therefore what gets built next.",
@@ -131,7 +131,7 @@
     {
       "id": "Q-15",
       "question": "What is the procedure when a game is postponed or a star is ruled out at warmups?",
-      "have": "Nothing \u2014 the model has no re-quote path.",
+      "have": "Nothing — the model has no re-quote path.",
       "missing": "Trigger for re-pricing and a rule for voiding sealed predictions.",
       "how": "Design a re-seal event in the ledger (new seal with reason, original kept).",
       "impact": "Settling against a cancelled game would corrupt the leaderboard.",
@@ -184,7 +184,7 @@
     },
     {
       "id": "Q-21",
-      "question": "What exactly should the executive summary optimise for \u2014 opportunity, risk, or project state?",
+      "question": "What exactly should the executive summary optimise for — opportunity, risk, or project state?",
       "have": "It currently reports project state and blockers first, because that is the truth today.",
       "missing": "Whether you want a picks-first summary as soon as prices exist.",
       "how": "Owner decision; the summary is generated, so it is a template change.",
@@ -195,7 +195,7 @@
       "id": "Q-22",
       "question": "Which numbers on this site would change your decision if they moved by 10%?",
       "have": "A sensitivity band for every structural parameter, and a stability fraction per line.",
-      "missing": "Your decision threshold \u2014 currently the model assumes \u00b110% matters, and suppresses a pick when it does.",
+      "missing": "Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.",
       "how": "Owner states a threshold; encode in G-08.",
       "impact": "This is the difference between a research dashboard and a betting system.",
       "severity": "MEDIUM"
@@ -247,7 +247,7 @@
     {
       "id": "Q-27",
       "question": "Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?",
-      "have": "A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served \u2014 site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.",
+      "have": "A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.",
       "missing": "Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.",
       "how": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml's parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.",
       "impact": "Every minute spent verifying the v1 tree is spent on a surface nobody reads, and its stale numbers keep appearing in repo-wide audits and confusing later sessions.",
@@ -276,6 +276,39 @@
       "severity": "MEDIUM",
       "source": "https://www.nba.com/schedule",
       "evidence": "nba2/pipeline/build_site_data.py::_content_stamp"
+    },
+    {
+      "id": "Q-30",
+      "question": "Which team site-specific spread/price instruments (PF/G vs PA/G, last-5, W-L) predict against the spread best, and how far do the three independent line strands disagree?",
+      "have": "Three independent line strands exist (MAPIE/quantile, bootstrap front office, Elo+L5 adjustments) and the 2026-11-14 lines table already publishes per-row flags where the strands disagree (FLAG-LINE-02); the origin prices show 5d0c7dc7 etc.",
+      "missing": "No instrument-level backtest: nobody has measured which of PF/G vs PA/G, L5 or W-L carries ATS signal, so the strands' disagreement is described but never quantified against outcomes.",
+      "how": "Grade the 139-game backtest sample strand-by-strand and instrument-by-instrument; report which combination predicts ATS margins best and the distribution of strand disagreements.",
+      "impact": "Decides what the originated line should actually be built from before any market comparison (F-026) is attempted.",
+      "severity": "HIGH",
+      "source": "https://www.nba.com/stats",
+      "evidence": "backtest/ summary + data/site.json lines table"
+    },
+    {
+      "id": "Q-31",
+      "question": "What is the earliest tail of a graded sample in which a selection rule's edge claim stays within its own stated noise?",
+      "have": "The luck ladder exists and the strategies register records N=1 per strategy; the backtest grades 139 games; the ledger's own noise model (skellam/margin sd) quantifies per-game variance.",
+      "missing": "No boundary: nobody has computed at what sample size the current rules' measured edges stop being indistinguishable from luck under the site's own noise model.",
+      "how": "Simulate each strategy rule on the backtest sample with the site's noise model; publish the smallest N at which the measured edge separates from the luck ladder's band, per rule.",
+      "impact": "Defines when a gate could honestly flip from BLOCKED to PASS, and prevents over-reading small samples (S-22).",
+      "severity": "MEDIUM",
+      "source": "https://www.nba.com/stats",
+      "evidence": "nba2/models/ (noise model) + backtest/ summary"
+    },
+    {
+      "id": "Q-32",
+      "question": "What is the right release-cadence policy for 05:15 AM ET PDFs, which the filing rules do not mention?",
+      "have": "The 2026-11-14 release was published at 05:15 AM ET although the official filing page documents 05:00 PM/AM-style slots; the capture chain now has three releases with zero status changes on shared rows.",
+      "missing": "A policy: nothing says whether 05:15 AM is a recurring slot, a one-off early publish, or a replacement of 05:00 AM. The nightly ingest (FLAG-REFRESH-01) needs to know which filenames to expect.",
+      "how": "Watch the injury index for the next few days; if 05:15 AM repeats, treat it as the standing early slot in the ingest's expected-file list; if it does not, keep probing 05:00 AM first and falling back.",
+      "impact": "Determines the ingest's expected-capture list and how much of the pre-tip window is routinely covered.",
+      "severity": "MEDIUM",
+      "source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "evidence": "data/raw/injury_report_2026-11-14_0515AMET.json provenance"
     }
   ]
 }

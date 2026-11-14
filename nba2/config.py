@@ -474,9 +474,17 @@ SNAPSHOT_SLATE = "slate_2026-11-14_to_11-17.json"
 SNAPSHOT_CONTEXT = "slate_context_2026-11-17.json"
 SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
-SNAPSHOT_INJURY = "injury_report_2026-11-13_1930ET.json"
+# 2026-11-14 05:15 AM ET refresh (session arena/3fbd894a-nba2): the freshest official
+# release at build time supersedes the 19:30 ET 11/13 capture (kept committed as the
+# audit trail). It covers the 2026-11-14 and 2026-11-15 game blocks; 11/16-17 designations
+# do not exist in any published release yet (FLAG-INJ-13 / FLAG-SLATE-06).
+SNAPSHOT_INJURY = "injury_report_2026-11-14_0515AMET.json"
 SNAPSHOT_TIMES = "official_game_times_2026-11-14.json"
 SNAPSHOT_TIMES_PRIOR = "official_game_times_2026-11-13.json"
+# Freshest times capture (05:15 AM release + nba.com/games?date= recheck). Supersedes
+# SNAPSHOT_TIMES for the 2026-11-14 keys — that file's DET@MIA row overclaims a time cell
+# its own sibling capture records as lost (irregularity I-02).
+SNAPSHOT_TIMES_LATEST = "official_game_times_2026-11-14_0515AMET.json"
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

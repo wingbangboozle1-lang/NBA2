@@ -363,6 +363,17 @@ def build_times_capture(rows: list[list], recheck: list[dict]) -> dict:
                 "resolution": "value taken from the official games page recheck (time_captured stays false)",
                 "evidence": src["source_url"],
             })
+    # adjudication (irregularity I-02): the 11/13 19:30 ET times capture records DET@MIA as
+    # time_captured=true, but its own sibling transcription documents that extraction losing
+    # the cell (injury_report_2026-11-14_daybefore.json, record_counts.note + FLAG-INJ-06).
+    # No extraction carries a readable DET@MIA time cell, so no earlier capture may claim one.
+    corrections.append({
+        "date": "2026-11-14", "matchup": "DET@MIA", "field": "older_captured", "to": False,
+        "resolution": ("overrules official_game_times_2026-11-14.json's time_captured=true for this game: "
+                       "that cell was lost in that extraction too, per its own sibling transcription; "
+                       "the tip (8:00 PM ET) stands on the official games-page recheck"),
+        "evidence": "data/raw/injury_report_2026-11-14_daybefore.json (record_counts.games_covered_note + FLAG-INJ-06)",
+    })
 
     return {
         "dataset": "official_game_times_and_matchups_from_injury_report",

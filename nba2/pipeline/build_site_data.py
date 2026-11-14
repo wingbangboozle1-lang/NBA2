@@ -36,7 +36,7 @@ SRC_SLATE = "nba_schedule"
 SRC_GAMES = "nba_games"
 SRC_INJ = "nba_injury_pdf"
 SRC_INJ_W = "nba_injury_pdf_1114"
-SNAPSHOT_INJURY_WINDOW = "injury_report_2026-11-14_daybefore.json"
+SNAPSHOT_INJURY_WINDOW = "injury_report_2026-11-14_0515AMET.json"
 SRC_RAT = "bref_standings"
 SRC_DER = "derived_lines"
 SRC_DER_RAT = "derived_ratings"
@@ -58,7 +58,7 @@ register_source(
     "Latest official revision this session could fetch (2026-11-14 ~01:20 UTC). A 20:15 ET "
     "revision does not exist (CDN AccessDenied). Retrieved via the page fetcher; full text captured "
     "in audit/raw_injury_2026-11-13_0715PM_chunk{0,1}.md. The published site rows now come from the "
-    "later official 19:30 ET release, ingested by the 2026-11-14 refresh.")
+    "11/14 05:15 AM ET release (ingested 2026-11-14 by session arena/3fbd894a-nba2).")
 register_source(
     SRC_STANDINGS,
     "NBA.com Standings (official)",
@@ -198,14 +198,16 @@ def build_luck_rows(model: RT.RatingModel) -> dict:
 
 
 def load_time_corroboration() -> dict:
-    """(date, away@home) -> (time_et, captured) from the official injury reports.
+    """(date, away@home) -> record from the official injury reports + games-page recheck.
 
-    Two committed captures exist (the 2026-11-13 1:00 PM release and the 2026-11-13 7:30 PM
-    release this refresh added). The fresher file wins on any key it covers; the older one
-    fills the rest, so nothing verified before is silently dropped.
+    Three committed captures exist (2026-11-13 1:00 PM release, 2026-11-13 7:30 PM
+    release, 2026-11-14 5:15 AM release). The fresher file wins on any key it covers;
+    the older ones fill the rest, so nothing verified before is silently dropped. The
+    05:15 AM file additionally carries a per-game recheck against nba.com/games?date=
+    pages (irregularity I-05: the bare schedule URL is a JavaScript shell).
     """
     out: dict = {}
-    for fname in (config.SNAPSHOT_TIMES_PRIOR, config.SNAPSHOT_TIMES):
+    for fname in (config.SNAPSHOT_TIMES_PRIOR, config.SNAPSHOT_TIMES, config.SNAPSHOT_TIMES_LATEST):
         path = RAW / fname
         if not path.exists():
             continue
@@ -214,76 +216,134 @@ def load_time_corroboration() -> dict:
         for rec in raw["records"]:
             d = dict(zip(cols, rec))
             a, h = d["matchup"].split("@")
-            out[(d["date"], f"{a} @ {h}")] = (d["time_et"], bool(d["time_captured"]))
+            key = (d["date"], f"{a} @ {h}")
+            prev = out.get(key)
+            older_captured = bool(prev and prev["captured"]) or (prev or {}).get("older_captured", False)
+            out[key] = {
+                "time_et": d["time_et"],
+                "captured": bool(d["time_captured"]),
+                "older_captured": older_captured if not d["time_captured"] else False,
+                "file": fname,
+            }
+        # adjudications recorded inside the capture apply after the merge (e.g. I-02: an
+        # older file's captured=true can be an overclaim its own sibling capture disproves)
+        for c in raw.get("corrections", []):
+            if c.get("field") not in ("captured", "older_captured"):
+                continue
+            a, h = c["matchup"].split("@")
+            key = (c["date"], f"{a} @ {h}")
+            if key in out:
+                out[key][c["field"]] = bool(c.get("to"))
     return out
 
 
-def build_corroboration_rows(games: list[dict], corrob: dict) -> dict:
+def load_games_page_recheck() -> dict:
+    """(date, away@home) -> row of the 2026-11-14 games-page recheck, if present."""
+    path = RAW / config.SNAPSHOT_TIMES_LATEST
+    if not path.exists():
+        return {}
+    raw = json.loads(path.read_text())
+    out = {}
+    for r in raw.get("game_page_recheck", {}).get("rows", []):
+        a, h = r["matchup"].split("@")
+        out[(r["date"], f"{a} @ {h}")] = r
+    return out
+
+
+def build_corroboration_rows(games: list[dict], corrob: dict, recheck: dict) -> dict:
     """Second-official-document check of the slate itself: do the game, the time and the
-    matchup agree across NBA.com/schedule and the referee-operations injury report?"""
+    matchup agree across the NBA.com game listings and the referee-operations injury report?"""
     rows = []
-    agree_time = lost = absent = mismatch = 0
+    agree = agree_early = lost = absent = mismatch = games_only = 0
     for g in games:
         key = (g["date"], f"{g['away']} @ {g['home']}")
         got = corrob.get(key)
+        in_recheck = key in recheck
+        fl: list[str] = []
         if got is None:
-            absent += 1
-            verdict = "not covered by the current injury-report release (it lists 11/13 + 11/14 only)"
-            fl = ["FLAG-SLATE-04"]
-        else:
-            their_time, captured = got
-            verdict_ = None
-            if captured and their_time == g["time_et"]:
-                agree_time += 1
-                verdict, fl = "MATCHUP + TIP TIME corroborated by a second official document", []
-            elif captured:
-                mismatch += 1
-                verdict, fl = f"TIME MISMATCH — schedule says {g['time_et']}, report says {their_time}", ["FLAG-SLATE-04"]
+            cell = "— (no release covers it)"
+            if in_recheck:
+                games_only += 1
+                verdict = ("not covered by any injury-report release yet (they appear in the releases of "
+                           "each game day); tip, matchup and game ID re-verified at the official games page")
             else:
-                lost += 1
-                verdict, fl = "matchup corroborated; the report's time cell was lost to a page break", ["FLAG-SLATE-04"]
+                absent += 1
+                verdict = "not covered by any committed capture"
+            fl = ["FLAG-SLATE-04"]
+        elif got["captured"]:
+            cell = got["time_et"] or None
+            if got["time_et"] == g["time_et"]:
+                agree += 1
+                verdict = "MATCHUP + TIP TIME corroborated by a second official document (readable time cell)"
+                fl = []
+            else:
+                mismatch += 1
+                verdict = f"TIME MISMATCH — schedule says {g['time_et']}, report says {got['time_et']}"
+                fl = ["FLAG-SLATE-04"]
+        elif got["older_captured"]:
+            agree_early += 1
+            cell = "— (fresher extraction lost the cell)"
+            verdict = ("MATCHUP + TIP TIME corroborated by the 11/13 19:30 ET release's readable cell; "
+                       "the fresher 05:15 AM extraction dropped it at a page break")
+            fl = []
+        else:
+            lost += 1
+            cell = "— (cell unreadable)"
+            verdict = ("matchup corroborated; the time cell is unreadable in every extraction — "
+                       "tip re-verified at the official games page")
+            fl = ["FLAG-SLATE-04"]
         rows.append(make_row(
             g["game_id"], "nba_injury_pdf", _flag_ids(*fl) if fl else (),
             date=g["date"], matchup=f"{g['away']} @ {g['home']}", game_id=g["game_id"],
-            schedule_time=g["time_et"], report_time_cell=(got[0] if got and got[0] else None),
-            verdict=verdict,
+            schedule_time=g["time_et"], report_time_cell=cell, verdict=verdict,
         ))
     n = len(games)
     return table(rows, [("date", "Date"), ("matchup", "Matchup"), ("game_id", "Official game ID"),
-                        ("schedule_time", "Time from /schedule"), ("report_time_cell", "Time from injury report"),
+                        ("schedule_time", "Time from the game listings"), ("report_time_cell", "Time from injury report"),
                         ("verdict", "Cross-document result")],
-                 f"Cross-document corroboration: {agree_time} of {n} games confirmed twice, "
-                 f"{lost} matchups confirmed with the time cell unreadable, {mismatch} mismatches, "
-                 f"{absent} outside that report",
-                 "The schedule page is the only source for most of this slate, and its times are printed as a "
-                 "loose list — the reason FLAG-SLATE-04 was raised. The injury report repeats each matchup with "
-                 "its own time cell, so where the two agree the time is no longer a single-source claim. The "
-                 "2026-11-14 refresh supersedes the earlier capture: all 14 games the 11/13 19:30 ET release "
-                 "covers (11/13 + 11/14) now corroborate with readable time cells and zero conflicts.",
-                 "https://www.nba.com/schedule vs https://ak-static.cms.nba.com/referee/injury/"
-                 "Injury-Report_2026-11-13_07_30PM.pdf")
+                 f"Cross-document corroboration: {agree} of {n} games confirmed twice by a readable injury-report "
+                 f"time cell, {agree_early} more via the earlier release's cell, {lost} matchups confirmed with the "
+                 f"cell unreadable in the freshest extraction, {games_only} covered only by the games-page recheck, "
+                 f"{mismatch} mismatches, {absent} outside every release",
+                 "The bare /schedule page is a JavaScript shell and its time list is not reliably aligned with the "
+                 "games beside it (irregularity I-05) — the reason FLAG-SLATE-04 was raised. The referee-operations "
+                 "injury report repeats each matchup with its own time cell, and the games?date= pages print the tip "
+                 "on the game card, so where these agree the time is no longer a single-source claim. All 36 rows of "
+                 "this window were re-read against nba.com/games?date= pages on 2026-11-14 (27/27 pick-window rows "
+                 "matching the slate, 0 mismatches; audit/3fbd894a/). The explicit printed-tip rule (hour 1-11 -> PM, "
+                 "12:xx -> noon) resolves the AM/PM ambiguity irregularity I-03 raised.",
+                 "https://www.nba.com/games + https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf")
 
 
 def build_slate_rows(games: list[dict]) -> dict:
     rows = []
     corrob = load_time_corroboration()
+    recheck = load_games_page_recheck()
     for g in games:
         key = (g["date"], f"{g['away']} @ {g['home']}")
         got = corrob.get(key)
-        if got and got[1] and got[0] == g["time_et"]:
+        if got and got["captured"] and got["time_et"] == g["time_et"]:
             tstatus = "corroborated (injury report, official)"
             fl = []
-        elif got and not got[1]:
-            tstatus = "matchup confirmed, time cell unreadable — single-source"
-            fl = ["FLAG-SLATE-04"]
+        elif got and not got["captured"] and got.get("older_captured"):
+            tstatus = "corroborated (11/13 19:30 ET release's readable cell; fresher extraction lost it)"
+            fl = []
+        elif got and not got["captured"] and key in recheck:
+            tstatus = "matchup confirmed; report cell unreadable — tip verified at the official games page"
+            fl = []
         elif got:
-            tstatus = f"CONFLICT: report says {got[0]}"
+            tstatus = f"CONFLICT: report says {got['time_et']}" if got["captured"] else "matchup confirmed, time cell unreadable — single-source"
             fl = ["FLAG-SLATE-04"]
+        elif key in recheck:
+            tstatus = "outside every injury-report release — tip verified at the official games page"
+            fl = []
         else:
             tstatus = "outside the second document's coverage — single-source"
             fl = ["FLAG-SLATE-04"]
         if g["game_id"] not in PREVIEW_VERIFIED:
             fl.append("FLAG-SLATE-05")
+        if g["date"] == "2026-11-17":
+            fl.append("FLAG-SURF-01")
         rows.append(make_row(
             g["game_id"], SRC_SLATE, _flag_ids(*fl),
             date=g["date"], time_et=g["time_et"],
@@ -411,13 +471,16 @@ def build_injury_tables(rows: list[INJ.InjuryRow]) -> tuple[dict, dict]:
                                 ("reason", "Reason"), ("p_play", "Our P(plays)"),
                                 ("minutes_impact", "Minutes impact"), ("production_impact", "Production impact"),
                                 ("line_adjustment", "Line adjustment"), ("attribution", "Row attribution")],
-                       "Official NBA injury report — 11/13/26 19:30 ET release (freshest at build time; supersedes the 16:15 capture)",
+                       "Official NBA injury report — 11/14/26 05:15 AM ET release (freshest at build time; supersedes the 19:30 capture)",
                        "Transcribed from the NBA's own referee-operations PDF. The three middle columns are "
                        "blank by policy: the report contains no minutes or production data, so any number we "
                        "put there would be invented. P(plays) is our modelling convention for counting bodies, "
-                       "not a league probability. Covers 11/13 games plus the first official statuses for the "
-                       "11/14 slate (five teams had still not submitted at this release).",
-                       "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf")
+                       "not a league probability. Covers the five 11/14 games (five teams filed by the 5 p.m. "
+                       "day-before deadline; five still NOT YET SUBMITTED) and the nine 11/15 games (all 18 team "
+                       "rows are placeholders — designations are due by 5 p.m. local today). The completed 11/13 "
+                       "game rows stay in the superseded 19:30 capture and the Session Audit delta table. No "
+                       "published release yet lists the 11/16-17 games (FLAG-INJ-13).",
+                       "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf")
 
     rot = INJ.rotation_index(rows)
     rrows = []
@@ -448,21 +511,21 @@ def build_injury_tables(rows: list[INJ.InjuryRow]) -> tuple[dict, dict]:
 
 
 def build_window_injury_tables() -> tuple[dict, dict]:
-    """2026-11-14 day-before designations from the 11/13/26 19:30 ET official release.
+    """Pick-window designations from the freshest official release (11/14/26 05:15 AM ET).
 
-    Kept in separate tables from the 16:15 ET capture: different release, different source
-    URL, so mixing them under one title would misstate what a reviewer is looking at. The
-    impact columns stay blank for the same reason as the 16:15 table: the official report
-    carries no minutes, usage or production data (FLAG-INJ-02).
+    Kept in separate tables from the full release table so the window view is auditable on
+    its own: 31 rows for the five 2026-11-14 games plus 18 placeholder rows for the nine
+    2026-11-15 games. The impact columns stay blank: the official report carries no
+    minutes, usage or production data (FLAG-INJ-02).
     """
     rows_w, _raw_w = INJ.load(RAW / SNAPSHOT_INJURY_WINDOW)
     detail = []
     for i, r in enumerate(rows_w):
         fl = ["FLAG-INJ-02"]
         if r.attribution == "C":
-            fl.append("FLAG-INJ-05")
+            fl.append("FLAG-INJ-12")
         if not r.time_et:
-            fl.append("FLAG-INJ-06")
+            fl.append("FLAG-INJ-11")
         if r.status == "NOT YET SUBMITTED":
             fl.append("FLAG-INJ-04")
         detail.append(make_row(
@@ -478,20 +541,23 @@ def build_window_injury_tables() -> tuple[dict, dict]:
                                 ("reason", "Reason"), ("p_play", "Our P(plays)"),
                                 ("minutes_impact", "Minutes impact"), ("production_impact", "Production impact"),
                                 ("line_adjustment", "Line adjustment"), ("attribution", "Row attribution")],
-                       "Official NBA injury report — 2026-11-14 day-before designations (11/13/26 19:30 ET release)",
-                       "First official designations for the 2026-11-14 slate: five teams had filed by the 5 p.m. ET "
-                       "day-before deadline, five had not (NOT YET SUBMITTED). Game-day reports on 11/14 (11 a.m.-1 p.m. "
-                       "local) can still change these statuses. The three impact columns are blank by policy — the "
-                       "report contains no minutes or production data, so any number there would be invented. "
-                       "P(plays) is our modelling convention for counting bodies, not a league probability.",
-                       "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf")
+                       "Official NBA injury report — pick-window designations (11/14/26 05:15 AM ET release)",
+                       "Freshest official designations inside the pick window: 31 rows for the five 2026-11-14 "
+                       "games (five teams filed by the 5 p.m. day-before deadline, five still NOT YET SUBMITTED) "
+                       "and 18 placeholder rows for the nine 2026-11-15 games (their designations are due by "
+                       "5 p.m. local today). Game-day reports on each slate day (11 a.m.-1 p.m. local) can still "
+                       "change these statuses. No published release lists the 11/16-17 games yet (FLAG-INJ-13). "
+                       "The three impact columns are blank by policy — the report contains no minutes or "
+                       "production data, so any number there would be invented. P(plays) is our modelling "
+                       "convention for counting bodies, not a league probability.",
+                       "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf")
 
     rot = INJ.rotation_index(rows_w)
     rrows = []
     for tri in sorted(rot):
         d = rot[tri]
         rrows.append(make_row(
-            f"rotw-{tri}", SRC_INJ_W, _flag_ids("FLAG-INJ-02", "FLAG-INJ-07"),
+            f"rotw-{tri}", SRC_INJ_W, _flag_ids("FLAG-INJ-02", "FLAG-INJ-04"),
             team=d["team"], out=d["out"], doubtful=d["doubtful"], questionable=d["questionable"],
             probable=d["probable"], available=d["available_listed"],
             two_way_or_susp=d["gleague_or_suspension"], not_submitted=d["not_yet_submitted"],
@@ -506,26 +572,30 @@ def build_window_injury_tables() -> tuple[dict, dict]:
                             ("not_submitted", "Not yet submitted"), ("exp_missing", "Expected bodies missing"),
                             ("sd", "Band"), ("floor", "Rotation floor"), ("risk", "Risk tier"),
                             ("games", "Games affected")],
-                   "Rotation-body impact — 2026-11-14 slate (day-before designations)",
-                   "Same body-counting arithmetic as the 16:15 table, applied to the day-before designations. "
+                   "Rotation-body impact — pick-window designations (11/14 05:15 AM ET release)",
+                   "Same body-counting arithmetic as the full table, applied to the pick-window rows. "
                    "A team whose report row is NOT YET SUBMITTED contributes a placeholder, not a body count: "
-                   "their designations simply have not been filed yet (FLAG-INJ-07).",
-                   "Derived in nba2/models/injuries.py from the 11/13 19:30 ET official release.")
+                   "their designations simply have not been filed yet (FLAG-INJ-04 / FLAG-INJ-13).",
+                   "Derived in nba2/models/injuries.py from the 11/14 05:15 AM ET official release.")
     return detail_tbl, rot_tbl
 
 
 def build_availability_window_rows(games: list[dict]) -> dict:
     """How much of the sealed pick window is availability-blind, per window date.
 
-    Counts are derived by unioning the team designations across both official injury
-    snapshots (16:15 ET and 19:30 ET of 11/13). A date with no rows at all in either
-    document is reported as such — absence of a row is a fact about the release, not a
-    guess about availability.
+    Counts are derived by unioning the team designations across the committed official
+    injury snapshots (11/13 16:15 + 19:30 ET and 11/14 05:15 AM ET releases). A date with
+    no rows at all in any document is reported as such — absence of a row is a fact about
+    the releases, not a guess about availability.
     """
     rows_w, _ = INJ.load(RAW / SNAPSHOT_INJURY_WINDOW)
     rows_base, _ = INJ.load(RAW / config.SNAPSHOT_INJURY)
+    older_rows: list = []
+    old_path = RAW / "injury_report_2026-11-14_daybefore.json"
+    if old_path.exists():  # superseded 11/13 19:30 ET window capture: unioned so nothing is dropped
+        older_rows, _ = INJ.load(old_path)
     per_date: dict[str, dict] = {}
-    for r in rows_base + rows_w:
+    for r in older_rows + rows_base + rows_w:
         d = per_date.setdefault(r.game_date, {"filed": set(), "nys": set()})
         if r.status == "NOT YET SUBMITTED":
             d["nys"].add(r.team)
@@ -542,23 +612,23 @@ def build_availability_window_rows(games: list[dict]) -> dict:
         unlisted = slots - filed - nys
         coverage = f"{filed / slots:.0%}" if slots else None
         rows.append(make_row(
-            f"avail-{date}", SRC_INJ_W, _flag_ids("FLAG-INJ-07", "FLAG-SLATE-06"),
+            f"avail-{date}", SRC_INJ_W, _flag_ids("FLAG-INJ-04", "FLAG-SLATE-06"),
             date=date, games=n_games, slots=slots, filed=filed,
             not_yet_submitted=nys, no_rows_yet=unlisted,
             coverage=coverage,
-            note=("day-before designations captured (11/13 19:30 ET release)" if filed else
-                  "no designations in either 11/13 release yet"),
+            note=("designations captured (latest: 11/14 05:15 AM ET release)" if filed else
+                  "no designations in any published release yet"),
         ))
     return table(rows, [("date", "Window date"), ("games", "Games"), ("slots", "Team-slots"),
                         ("filed", "Team-slots with a designation"), ("not_yet_submitted", "NOT YET SUBMITTED"),
                         ("no_rows_yet", "No row in any release yet"), ("coverage", "Designation coverage"),
                         ("note", "Note")],
-                "Availability coverage of the sealed pick window (2026-11-14 → 11-16)",
-                "Computed from both official injury snapshots, never inferred. 'Coverage' is the share of "
-                "team-slots carrying any official participation designation at capture time; it rises as "
-                "later releases are ingested. The lines for this window were originated from the 2026-11-13 "
-                "snapshot and sealed; availability data refreshes around them.",
-                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf")
+                "Availability coverage of the sealed pick window (2026-11-14 → 11-17)",
+                "Computed from the union of the committed official injury snapshots, never inferred. "
+                "'Coverage' is the share of team-slots carrying any official participation designation at "
+                "capture time; it rises as later releases are ingested. The lines for this window were "
+                "originated from the 2026-11-13 snapshot and sealed; availability data refreshes around them.",
+                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf")
 
 
 def build_gameflow_rows(games: list[dict], spots: dict, flow: list[dict]) -> dict:
@@ -908,8 +978,8 @@ def build_leader_rows(inj_rows: list[INJ.InjuryRow], leaders_path: Path) -> dict
                  "Two official documents joined on team+player. 'NOT LISTED ON REPORT' means the report we "
                  "retrieved contains no row for that player — it is not a guarantee of availability, which is "
                  "why the impact column stays blank. Leaders were captured from the 2026-11-13 game cards; "
-                 "injury statuses come from the 2026-11-13 19:30 ET release.",
-                 "https://www.nba.com/games + the 11/13 19:30 ET injury report")
+                 "injury statuses come from the freshest official release (11/14 05:15 AM ET).",
+                 "https://www.nba.com/games + the 11/14 05:15 AM ET injury report")
 
 
 def build_repo_review_rows(review: list[dict]) -> dict:
@@ -1192,7 +1262,7 @@ def input_digest() -> str:
     h = hashlib.sha256()
     names = [config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
              SNAPSHOT_INJURY_WINDOW, config.SNAPSHOT_CONTEXT, config.SNAPSHOT_LEADERS,
-             config.SNAPSHOT_TIMES, config.SNAPSHOT_TIMES_PRIOR,
+             config.SNAPSHOT_TIMES, config.SNAPSHOT_TIMES_PRIOR, config.SNAPSHOT_TIMES_LATEST,
              "ratings_recheck_2026-11-14.json"]
     for n in names:
         f = RAW / n
@@ -1306,7 +1376,12 @@ def build() -> dict:
         model, lines, inj_rows)
     inj_theirs_raw = XSESS._load(XSESS.THEIRS / "injuries.json") or {"games": []}
     picks_theirs = XSESS._load(XSESS.THEIRS / "picks.json") or {"lines": []}
-    xadj = ADJ.adjudicate(inj_theirs_raw, inj_rows)
+    # The cross-session adjudication compares their transcription against OUR transcription
+    # of the same 11/13 19:30 ET release — a same-document join. It is pinned to that capture
+    # and must NOT follow config.SNAPSHOT_INJURY: comparing against a later release would
+    # turn genuine status changes between releases into fake "transcription conflicts".
+    adj_rows, _ = INJ.load(RAW / "injury_report_2026-11-13_1930ET.json")
+    xadj = ADJ.adjudicate(inj_theirs_raw, adj_rows)
     x3 = ADJ.reconcile_three_way(lines, picks_theirs)
     x = {"lines": xlines, "records": xrecords, "injuries": xinjuries, "inventory": xsurfaces}
 
@@ -1324,7 +1399,7 @@ def build() -> dict:
         "availability_window": build_availability_window_rows(games),
         "gameflow": build_gameflow_rows(games, spots, flow),
         "anomalies": build_anomaly_rows(anomalies_raw["records"], {g["game_id"] for g in games}),
-        "corroboration": build_corroboration_rows(games, load_time_corroboration()),
+        "corroboration": build_corroboration_rows(games, load_time_corroboration(), load_games_page_recheck()),
         "leaders": build_leader_rows(inj_rows, RAW / "team_leaders_2026-11-13.json"),
         "correlation": build_correlation_rows(model, lines),
         "parlays": build_parlay_rows(model, lines),
@@ -1560,22 +1635,34 @@ def main() -> None:
     flag("FLAG-SRC-01", "low", "sourcing", "Rows sourced to a third party, to derivation, or to a blocked "
          "endpoint are flagged even when the value looks fine.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md", "No action; disclosure by design.")
-    flag("FLAG-INJ-01", "medium", "injuries", "27 of 122 rows inherit their team from the last team label printed in "
-         "their game block because the PDF table breaks across pages; not individually confirmed. One row "
-         "(DAL@CLE Martin, Caleb) is attributed from cross-release evidence documented in the snapshot.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", "Confirm against the PDF image.")
-    flag("FLAG-INJ-02", "high", "injuries", "Minutes/production/line impact columns are blank for all 122 rows. "
+    flag("FLAG-INJ-01", "medium", "injuries", "1 of 49 rows in the current release (BKN@MEM Traore, Nolan) inherits its "
+         "team from the last team label printed in the game block because the PDF table breaks across pages; not "
+         "individually confirmed. (In the superseded 19:30 capture, 27 of 122 rows needed the convention; its "
+         "DAL@CLE Martin, Caleb row used cross-release evidence — see FLAG-CUR-02.)",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf", "Confirm against the PDF image.")
+    flag("FLAG-INJ-02", "high", "injuries", "Minutes/production/line impact columns are blank for all 49 rows. "
          "The official report has no such fields and no player-level feed is connected.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", "Connect R-102.")
-    flag("FLAG-INJ-03", "medium", "injuries", "'No rows for this team' is not 'team is healthy'. The 11/13 19:30 ET release "
-         "carries no explicit MIL or NYK rows at all (their blocks list only the opponent's players), so "
-         "absence from our transcription is not evidence of availability.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", "Re-parse the full 7 pages.")
-    flag("FLAG-INJ-04", "medium", "injuries", "Five of the ten 2026-11-14 teams (NOP, CLE, MEM, CHI, MIA) had not submitted "
-         "their report in the 11/13 19:30 ET release, and no report exists yet for 11/15-17 — those lines carry "
-         "no availability data. This is structural to publishing at T-3, not a to-do item; the game-day report "
-         "(11 a.m.-1 p.m. local) is the next mandatory filing.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", "Re-run at game-day 13:00 ET.")
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf", "Connect R-102.")
+    flag("FLAG-INJ-03", "medium", "injuries", "'No rows for this team' is not 'team is healthy'. No release published "
+         "yet lists the 11/16-17 games (26 team-slots), and the NOT YET SUBMITTED placeholder rows for 11/14-15 are "
+         "filings, not statuses — absence of a status row is not evidence of availability.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf", "Re-run after each later release.")
+    flag("FLAG-INJ-04", "medium", "injuries", "Five of the ten 2026-11-14 teams (NOP, CLE, MEM, CHI, MIA) had still not "
+         "submitted at the 11/14 05:15 AM ET release, and all eighteen 2026-11-15 team-slots are NOT YET SUBMITTED "
+         "(designations are due by 5 p.m. local today). This is structural to publishing at T-3, not a to-do item; "
+         "the game-day report (11 a.m.-1 p.m. local) is the next mandatory filing.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf", "Re-run at game-day 13:00 ET.")
+    flag("FLAG-INJ-11", "medium", "injuries", "The 05:15 AM text extraction lost the tip-time cell for the CHI@MIN "
+         "and DET@MIA blocks (12 rows carry a blank Tip column — blanks stay blank). Both tips (8:00 PM ET) are "
+         "verified at the official games page and recorded in the times capture with time_captured=false. The old "
+         "times capture recorded DET@MIA as captured=true, overclaiming a cell its own sibling capture documents "
+         "as lost (irregularity I-02) — the newer capture supersedes that row.",
+         "https://www.nba.com/games?date=2026-11-14", "None — disclosure; values carry honest provenance.")
+    flag("FLAG-INJ-13", "info", "injuries", "No official release published yet lists the 2026-11-16 or 2026-11-17 "
+         "games (13 window games, 26 team-slots): designations appear in the releases of each game day. Those "
+         "rows are absent by coverage state, not missing transcription (irregularity I-04 adjudicated).",
+         "https://official.nba.com/nba-injury-report-2026-27-season/",
+         "Nightly ingest picks up each game day's release.")
     flag("FLAG-PROC-01", "high", "process", "A patch script in this session overwrote "
          "data/raw/injury_report_2026-11-13.json with source code (a reused variable name in a throwaway "
          "editing script). Detected on the next build when the JSON failed to parse; restored from commit "
@@ -1599,18 +1686,33 @@ def main() -> None:
          "31 slugs was read back from links nba.com itself prints (schedule previews + the game rail) "
          "and matched 31/31. Keep the click-through habit for each new slate. See the Session Audit page.")
     flag("FLAG-SLATE-06", "high", "slate", "Availability data for the pick window is still incomplete: the "
-         "11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots "
-         "filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15-17, so most of the window is priced "
+         "freshest release (11/14 05:15 AM ET) carries designations for 2026-11-14 (5 of 10 team-slots filed, "
+         "5 NOT YET SUBMITTED) and 2026-11-15 (0 of 18 filed — day-before designations are due by 5 p.m. local "
+         "today), and no release yet lists the 11/16-17 games (26 team-slots), so most of the window is priced "
          "without availability data. This is a structural property of publishing at T-3, not a to-do item.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf",
          "Re-issue availability after each later release (the nightly ingest workflow now does this; see FLAG-REFRESH-01).")
+    flag("FLAG-SURF-01", "medium", "coverage", "2026-11-17 window coverage of the legacy session-3 surfaces "
+         "(measured 2026-11-14, session arena/3fbd894a; requested by session arena/0e2a8163): "
+         "data/picks.csv (38 rows: 11/13×11, 11/14×5, 11/15×12, 11/16×10), data/our-lines.csv (31 rows: 9/5/9/8), "
+         "data/prop-lines.csv (61 rows: 18/10/17/16) and data/parlays.csv (65 rows: 20/10/18/17) all stop at "
+         "2026-11-16 — every file is absent the five 2026-11-17 window games. nba2/data/schedule.json "
+         "(23 rows) covers 2026-11-13..2026-11-15 only — absent 2026-11-16 and 2026-11-17. nba2/data/injuries.json "
+         "carries no 2026-11-16/17 content. The authoritative surfaces carry the full window: data/site.json "
+         "(36 slate rows / 27 picks), data/raw/slate_2026-11-14_to_11-17.json (36 rows) and the sealed "
+         "11/14 04:04 ET ledger (27 rows) — so the gap is confined to legacy exports and the intermediate "
+         "schedule copy, and is documented rather than filled in behind the other sessions' back.",
+         "https://www.nba.com/games?date=2026-11-17",
+         "Do not backfill the legacy CSVs from derived data without their owners: they are historical session-3 "
+         "exports (FLAG-SLATE-03). Any future export of those surfaces should regenerate from the sealed ledger.")
     flag("FLAG-REPO-01", "low", "repo review", "Repo-review findings are point-in-time (main @ 7fa2a24). Later "
          "commits may fix or reintroduce them.",
          "https://github.com/wingbangboozle1-lang/NBA2/commits/main", "Re-run review on each merge.")
-    flag("FLAG-REFRESH-01", "low", "injuries", "The 2026-11-14 availability refresh is a point-in-time capture "
-         "(11/13 19:30 ET official release, retrieved 2026-11-14 00:47 UTC). Later releases on 11/14 (continual "
-         "updates, game-day reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest "
-         "workflow fetches and archives them but does not rewrite sealed predictions.",
+    flag("FLAG-REFRESH-01", "low", "injuries", "The published availability data is a point-in-time capture "
+         "(11/14 05:15 AM ET official release, retrieved 2026-11-14 10:45 UTC; supersedes the 11/13 19:30 ET "
+         "capture, 0 status changes on shared rows). Later releases on 11/14 (continual updates, game-day "
+         "reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest workflow fetches "
+         "and archives them but does not rewrite sealed predictions.",
          "https://official.nba.com/nba-injury-report-2026-27-season/",
          "Let the nightly workflow ingest later releases; verify the archived PDF against the transcript.")
 
@@ -1619,9 +1721,9 @@ def main() -> None:
          "Currency history worth keeping on the record: the first published injury rows (official "
          "16:15 ET release) were superseded three times the same evening — 17:15, 18:15 and 19:15 ET "
          "— by 12 status changes and 32 added rows (complete line-by-line delta on the Session Audit "
-         "page). The site now publishes the official 19:30 ET release, ingested by the 2026-11-14 "
-         "refresh; later game-day releases can still change statuses before tip-off (FLAG-REFRESH-01), "
-         "and no rows exist yet for 11/15–17 (FLAG-SLATE-06).",
+         "page). The site now publishes the official 11/14 05:15 AM ET release (ingested 2026-11-14 by session "
+         "arena/3fbd894a-nba2), which adds the 11/15 placeholder blocks; later game-day releases can still "
+         "change statuses before tip-off (FLAG-REFRESH-01), and no rows exist yet for 11/16–17 (FLAG-SLATE-06).",
          "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf",
          "Nightly ingest now covers later releases (refresh workflow); the delta table stays as the "
          "audit trail of what changed between revisions (suggestion S-A01 — implemented).")

@@ -1,6 +1,6 @@
 {
   "title": "NBA2 site-improvement queue",
-  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision \u2014 not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
+  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
   "status_key": {
     "awaiting owner decision": "no action taken",
     "applied in this PR": "already built as part of the integration work",
@@ -13,7 +13,7 @@
       "problem": "Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.",
       "proposal": "Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.",
       "benefit": "Unblocks gates G-02, G-05 on real PnL, G-09, and converts every table from 'projection' to 'decision'.",
-      "effort": "M \u2014 ingest + storage + retention policy",
+      "effort": "M — ingest + storage + retention policy",
       "risk": "Vendor cost; storing closing lines needs storage rights (Q-18 style check).",
       "recommendation": "Accept first; nothing else on this list pays as well.",
       "status": "awaiting owner decision"
@@ -21,8 +21,8 @@
     {
       "id": "S-02",
       "title": "Ingest official game-level results daily",
-      "problem": "\u03c3, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
-      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to \u22652 seasons for fitting.",
+      "problem": "σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
+      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.",
       "benefit": "Turns the two fitted constants into measured ones and kills the circularity in G-04.",
       "effort": "M",
       "risk": "Needs network access from a runner (unavailable in this sandbox).",
@@ -48,7 +48,7 @@
       "benefit": "Makes accountability real instead of implied; a one-hour task that removes a whole class of silent bias.",
       "effort": "S",
       "risk": "None.",
-      "recommendation": "Accept now \u2014 it blocks 'is this site trustworthy' more than any data purchase.",
+      "recommendation": "Accept now — it blocks 'is this site trustworthy' more than any data purchase.",
       "status": "awaiting owner decision"
     },
     {
@@ -58,7 +58,7 @@
       "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
       "benefit": "Makes the leaderboard a science instead of a search result; costs ~20 lines.",
       "effort": "S",
-      "risk": "Requires discipline to log failed attempts too \u2014 that is the point.",
+      "risk": "Requires discipline to log failed attempts too — that is the point.",
       "recommendation": "Accept; pair with a rule 'no evaluation without registration'.",
       "status": "awaiting owner decision"
     },
@@ -70,7 +70,7 @@
       "benefit": "Turns every gap into a one-click work item for the reviewer instead of a mystery.",
       "effort": "S",
       "risk": "Adds ~40 lines of build logic; must stay in sync with the flag registry.",
-      "recommendation": "Accept \u2014 cheap and it is what the Flagged page exists for.",
+      "recommendation": "Accept — cheap and it is what the Flagged page exists for.",
       "status": "awaiting owner decision"
     },
     {
@@ -109,19 +109,19 @@
     {
       "id": "S-10",
       "title": "Add a game-day re-issue build (T-0) alongside the T-3 build",
-      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' \u2014 proven this session \u2014 so a 3-day-ahead line is structurally injury-blind.",
+      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' — proven this session — so a 3-day-ahead line is structurally injury-blind.",
       "proposal": "Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.",
       "benefit": "Converts a weakness into a measurable quantity: how much our line moves on availability news, which is a strategy family of its own.",
       "effort": "M",
       "risk": "Doubles storage of sealed ledgers (small).",
-      "recommendation": "Accept \u2014 the best idea on this list for model quality per unit of data.",
+      "recommendation": "Accept — the best idea on this list for model quality per unit of data.",
       "status": "awaiting owner decision"
     },
     {
       "id": "S-11",
       "title": "Show per-line contribution of every input",
       "problem": "'San Antonio -4.5' is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.",
-      "proposal": "Add a decomposition column (SRS gap \u00d7\u03bb, raw-margin gap \u00d7\u03bb, HCA, injury adj) per line, computed not asserted.",
+      "proposal": "Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.",
       "benefit": "Reviewers can disagree with a component instead of the whole number; that is how a model gets better.",
       "effort": "S",
       "risk": "Wider tables on mobile.",
@@ -155,7 +155,7 @@
       "title": "Table ergonomics: sticky headers, density toggle, CSV export",
       "problem": "The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.",
       "proposal": "Sticky thead, a compact-density class, and a per-table 'download CSV' that includes the source column.",
-      "benefit": "Reviewers can work offline without losing provenance \u2014 export keeps the source link per row.",
+      "benefit": "Reviewers can work offline without losing provenance — export keeps the source link per row.",
       "effort": "S",
       "risk": "None material.",
       "recommendation": "Accept.",
@@ -213,7 +213,7 @@
       "benefit": "Reduces accidental disclosure; keeps the public surface explicit.",
       "effort": "M (changes every relative link + breaks current live URLs unless redirected)",
       "risk": "URL churn; needs a redirect plan for the already-live root pages.",
-      "recommendation": "Defer \u2014 real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
+      "recommendation": "Defer — real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
       "status": "awaiting owner decision"
     },
     {
@@ -285,18 +285,18 @@
     {
       "id": "S-26",
       "title": "Fix the spread-sign inversion in the S2 selections before any of it is graded by a human",
-      "problem": "S2_SpreadValue emits 'POR +6.0' for a game where the same file's label says 'POR -6.0' and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model's own number.",
+      "problem": "S2_SpreadValue emits 'POR +6.0' for a game where the same file's label says 'POR -6.0' and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model's own number. APPLIED by session arena/3fbd894a (2026-11-14): the S2 label now names the side with the points (a favourite gets '-N', a dog '+N'), regression-tested in nba2/tests/test_pipeline.py::test_s2_selection_matches_its_own_label. Picks strings change; the sealed ledgers never contain selection labels and are untouched.",
       "proposal": "Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).",
       "benefit": "Removes a defect that silently inverts a published recommendation.",
       "effort": "S",
       "risk": "picks.json is another session's artefact; the change is logged here for its owner rather than made unilaterally.",
       "recommendation": "Accept and assign to the owner of nba2/picks.py.",
-      "status": "awaiting owner decision"
+      "status": "applied in this PR"
     },
     {
       "id": "S-27",
       "title": "Retire the unreachable v1 tree instead of maintaining two generators",
-      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page \u2014 pages/session-audit.html and pages/executive-summary.html were both checked \u2014 yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
+      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
       "proposal": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.",
       "benefit": "One number per question is the precondition for every other claim on the site.",
       "effort": "M",
@@ -312,7 +312,95 @@
       "benefit": "Turns a class of silent, self-erasing test passes into a failure at PR time.",
       "effort": "S",
       "risk": "Adds ~30s of CI; no production risk.",
-      "recommendation": "Accept \u2014 this is the check that found F-029.",
+      "recommendation": "Accept — this is the check that found F-029.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-29",
+      "title": "Publish the backtest's graded sample on the canonical page, and align the two gate vocabularies",
+      "problem": "CC-BT-08 (2026-11-14 crosscheck): the 139 graded backtest games and their pass/fail/partial results exist only on the backtest surface; the canonical pages never show them, and the two surfaces use different gate vocabulary (PASS/FAIL/BLOCKED/AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL).",
+      "proposal": "Add a small 'what has actually been measured' table to the leaderboard/summary pages that states the graded sample (139 games), links the backtest page, and prints both vocabularies side by side with a one-line definition of each state.",
+      "benefit": "A reader of the main page can no longer conclude that nothing has been measured.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-30",
+      "title": "Run the nightly ingest once, and alert when a scheduled ingest has zero runs",
+      "problem": "CC-FRESH-03 (2026-11-14): the refresh.yml schedule is armed but no ingest run is recorded, so the site's freshness still depends on a manual capture; the check stays INFO until a run exists.",
+      "proposal": "Trigger refresh.yml via workflow_dispatch once and confirm it commits a capture; add a tiny staleness alarm (e.g. a CI step that fails when data/raw has no capture newer than 48h while games are scheduled).",
+      "benefit": "The T-3 publishing cadence becomes self-sustaining instead of hand-maintained.",
+      "effort": "low",
+      "risk": "medium",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-31",
+      "title": "Unify the input-digest file set between the build and the crosschecker",
+      "problem": "CC-DOC-07 (2026-11-14): the build's meta.input_digest and the crosschecker's digest hash different file sets by design (the build hashes a fixed list plus ledger inputs), so the two can never equal each other and the discrepancy reads like tampering.",
+      "proposal": "Give the digest one shared manifest (the file list lives in one module both import) so the two numbers are comparable, or label them 'build digest' and 'checker digest' with the file lists printed.",
+      "benefit": "Removes a permanently alarming INFO that trains readers to ignore digest mismatches.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-32",
+      "title": "Resolve the 28/30 vs 30/30 team-count wording with the committed reconciliation",
+      "problem": "CC-X-02 (2026-11-14): every surface now measures 30/30 clubs, but some prose still says 28/30; the checker finds the conflict resolvable from committed evidence and CC-X-03 publishes the per-club coverage.",
+      "proposal": "Point the stale prose at the CC-X-02/03 reconciliation (data/site.json cross-team-tables) instead of rewriting history — add a one-line note where 28/30 appears.",
+      "benefit": "One number for one fact across the repo.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-33",
+      "title": "Show the cross-session injury adjudication (the 16:15-vs-19:30 conflict table) on a canonical page",
+      "problem": "CC/HTML review: the xadjudicate table (the same-document join of the two sessions' transcriptions, 15 rows, 6 known conflicts) is published in data/site.json but a reader of the main pages never sees how the two captures disagree.",
+      "proposal": "Link the adjudication table from the injuries page's notes so the conflict-handling story (what the third revision said) is one click from the data it explains.",
+      "benefit": "The 'cross-checks can contradict us' claim becomes visible instead of asserted.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-34",
+      "title": "Document the em-dash convention once, where the tables are introduced",
+      "problem": "CC-HTML-03b (2026-11-14): the literal em-dash is used consistently for 'not applicable' across 8 tables (109 cells) but the convention is only documented in each table's blurb.",
+      "proposal": "Add one line to the landing page or the sources page: '— means not applicable; a blank with a flag means not verified'.",
+      "benefit": "New readers stop reading — as missing data.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-35",
+      "title": "Keep the 'as-of' disclosure pattern for stale snapshots in future refreshes",
+      "problem": "CC-FRESH-02 (2026-11-14): stale snapshots are disclosed rather than hidden (every page prints its as-of date) — the checker records this as the good pattern to preserve.",
+      "proposal": "No change now; treat 'disclose, never hide' as the standing rule for refresh sessions and encode it in the refresh checklist.",
+      "benefit": "The pattern outlives the session that invented it.",
+      "effort": "none",
+      "risk": "none",
+      "recommendation": "adopt as standing rule",
+      "status": "applied in this PR"
+    },
+    {
+      "id": "S-36",
+      "title": "Give the corroboration table's verdict classes stable machine names",
+      "problem": "The 2026-11-14 re-derivation (session arena/3fbd894a) rebuilt the corroboration verdicts as six classes (readable cell / earlier release's cell / cell unreadable / games-page-only / mismatch / outside), but they exist only as prose strings the checker matches with substring tests.",
+      "proposal": "Add a 'class' column with the six stable names and let the prose be derived from it; the checker then compares enums instead of sentences.",
+      "benefit": "Verdict checks stop breaking when the prose is edited.",
+      "effort": "low",
+      "risk": "low",
+      "recommendation": "do it",
       "status": "awaiting owner decision"
     }
   ]

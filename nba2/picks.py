@@ -30,6 +30,23 @@ def write(name, obj):
         json.dump(obj, f, indent=2, ensure_ascii=False)
 
 
+def s2_selection(line):
+    """The S2 selection string for one line, and the model win prob of the named side.
+
+    Convention (F-025, fixed 2026-11-14): `predicted_margin` is the expected HOME margin
+    and `originated_spread` is the home-perspective handicap (negative = home favored).
+    A selection names the model's favorite carrying that side's OWN line — the favorite
+    gives points, so the number is always negative: "MIA -6.5" or "NYK -2.5", never
+    "MIA +6.5" (that is the dog) and never a flipped sign on the right side.
+    """
+    margin = line["predicted_margin"]
+    if margin > 0:
+        # home favorite: home's own line is the negation of the home-perspective spread
+        return f"{line['home']} {-line['originated_spread']:+.1f}", line["home_win_prob"]
+    # away favorite: the home-perspective spread is already the away side's line
+    return f"{line['away']} {line['originated_spread']:+.1f}", line["away_win_prob"]
+
+
 def main():
     schedule = load("schedule.json")
     records_doc = load("records.json")
@@ -93,12 +110,7 @@ def main():
     for line in lines:
         margin = line["predicted_margin"]
         if abs(margin) >= STRONG_MARGIN:
-            if margin > 0:
-                sel = f"{line['home']} {line['originated_spread']:+.1f}"
-                prob = line["home_win_prob"]
-            else:
-                sel = f"{line['away']} {-line['originated_spread']:+.1f}"
-                prob = line["away_win_prob"]
+            sel, prob = s2_selection(line)
             signals_by_strategy["S2_SpreadValue"].append({
                 "strategy_id": "S2_SpreadValue", "game_id": line["game_id"],
                 "game": f"{line['away']} @ {line['home']}", "source": line["source"],

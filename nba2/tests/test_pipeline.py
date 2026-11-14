@@ -247,7 +247,10 @@ class TestAdjudication(unittest.TestCase):
     def test_conflicts_are_adjudicated_not_assumed(self):
         from nba2.pipeline import adjudicate as AD
         from nba2.models import injuries as INJ
-        rows, _ = INJ.load(ROOT / config.DATA_DIR / config.SNAPSHOT_INJURY)
+        # Same-document join: their transcription vs ours of the 11/13 19:30 ET release.
+        # Pinned deliberately — config.SNAPSHOT_INJURY follows the freshest release, and
+        # comparing across releases would turn real status changes into fake conflicts.
+        rows, _ = INJ.load(ROOT / config.DATA_DIR / "injury_report_2026-11-13_1930ET.json")
         their = AD.json.loads((ROOT / "nba2" / "data" / "injuries.json").read_text()) \
             if hasattr(AD, "json") else json.loads((ROOT / "nba2" / "data" / "injuries.json").read_text())
         tbl = AD.adjudicate(their, rows)
@@ -466,6 +469,66 @@ class TestColumnGuard(unittest.TestCase):
         self.assertEqual(EMPTY_OK - still, set(),
                          "these 'deliberately blank' columns now contain data — publish that fact "
                          "instead of leaving them on the allow-list")
+
+
+class TestS2SelectionLabels(unittest.TestCase):
+    """F-025 regression: an S2 selection must name the model's favorite with that side's own
+    line. A reader taking the label at face value must take the right side of the model's
+    own number — the favorite gives points, so the printed number is negative."""
+
+    def _picks(self):
+        return json.loads((ROOT / "nba2" / "data" / "picks.json").read_text())
+
+    def _picks_module(self):
+        import sys
+        p = str(ROOT / "nba2")
+        if p not in sys.path:
+            sys.path.insert(0, p)
+        import picks
+        return picks
+
+    def test_s2_selection_matches_its_own_label(self):
+        picks = self._picks_module()
+        doc = self._picks()
+        checked = 0
+        for line in doc["lines"]:
+            margin = line["predicted_margin"]
+            if abs(margin) < picks.STRONG_MARGIN:
+                continue
+            sel, prob = picks.s2_selection(line)
+            team, _, num = sel.partition(" ")
+            val = float(num)
+            # the named side is the favorite: home when the expected HOME margin is positive
+            fav = line["home"] if margin > 0 else line["away"]
+            dog = line["away"] if margin > 0 else line["home"]
+            self.assertEqual(team, fav, f"{line['game_id']}: S2 must name the favorite {fav}, got {sel!r}")
+            self.assertNotEqual(team, dog)
+            # the number is the named side's OWN line: home's line is the negation of the
+            # home-perspective spread; away's line is the spread itself. The favorite gives
+            # points, so the value is negative — never a flipped sign on the right side.
+            own_line = -line["originated_spread"] if margin > 0 else line["originated_spread"]
+            self.assertAlmostEqual(val, own_line, places=2,
+                                   msg=f"{line['game_id']}: {sel!r} must carry {team}'s own line {own_line:+.1f}")
+            self.assertLess(val, 0, f"{line['game_id']}: a favorite's label must give points: {sel!r}")
+            self.assertGreater(prob, 0.5, f"{line['game_id']}: the named side must be the model's favorite")
+            # the shipped artifact must agree with the code that generates it
+            shipped = [s for s in doc.get("strategies", [])
+                       if s.get("strategy_id") == "S2_SpreadValue" and s.get("game_id") == line["game_id"]]
+            for s in shipped:
+                self.assertEqual(s["selection"], sel,
+                                 f"{line['game_id']}: picks.json S2 row {s['selection']!r} != rule output {sel!r}")
+                self.assertEqual(s["leg"]["selection"], sel)
+            checked += 1
+        self.assertGreaterEqual(checked, 4, "the strong-margin games of the graded window must be covered")
+
+    def test_s2_selection_synthetic_conventions(self):
+        picks = self._picks_module()
+        home_fav = {"game_id": "X", "home": "MIA", "away": "CLE", "predicted_margin": 6.31,
+                    "originated_spread": 6.5, "home_win_prob": 0.8, "away_win_prob": 0.2}
+        away_fav = {"game_id": "Y", "home": "IND", "away": "NYK", "predicted_margin": -2.56,
+                    "originated_spread": -2.5, "home_win_prob": 0.425, "away_win_prob": 0.575}
+        self.assertEqual(picks.s2_selection(home_fav)[0], "MIA -6.5")
+        self.assertEqual(picks.s2_selection(away_fav)[0], "NYK -2.5")
 
 
 if __name__ == "__main__":

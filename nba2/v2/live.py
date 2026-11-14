@@ -214,8 +214,16 @@ def grade() -> dict:
                 g = games.get(gids[0])
                 if g:
                     sel = sig["selection"]
-                    res = (_grade_spread(sel, g) if ("+" in sel and not sel.endswith("ML"))
-                           else _grade_ml(sel, g))
+                    # a spread selection ends in a signed number ("MIA -6.5"); a moneyline
+                    # selection ends in "ML". Dispatch on the number's shape, not on the sign
+                    # character — the F-025 fix made favorite labels carry '-' and a '+'
+                    # sniff would misroute every one of them to the ML grader (None -> UNGRADABLE).
+                    try:
+                        float(sel.rsplit(" ", 1)[1])
+                        is_spread = not sel.endswith("ML")
+                    except (ValueError, IndexError):
+                        is_spread = False
+                    res = (_grade_spread(sel, g) if is_spread else _grade_ml(sel, g))
                 else:
                     # The game exists on the official 11/14-11/15 schedule and has simply not
                     # been played. That is the expected state, not a data problem.
