@@ -2754,3 +2754,15 @@ P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record
 **Verification totals on the merged `main`:** 64 v1 tests + 80 v2 tests = **144 tests, all passing**;
 20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
 every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
+
+## 2026-11-14 — session `arena/e17ff73a-nba2` — audit and correctness fixes
+
+**Scope:** `README.md`, `tools/crosscheck_site.py`, and this append-only record.
+
+**Findings and changes:**
+- Removed CC-BT-03's invalid requirement that ATS hit rate equal straight-up winner accuracy. These are different measures with different denominators: the report records ATS as 105/166 = 0.6325 and straight-up accuracy as 0.6287 over 167 graded games. CC-BT-03 continues to validate each rate against its own numerator/denominator; no performance value was changed.
+- Corrected the README's legacy v1 row count from 1,404 to 1,409 to match the current generated data, as detected by CC-DOC-01.
+
+**Verification:** `python tools/crosscheck_site.py` — 97 checks, 90 pass, 0 fail, 7 informational; `python tools/verify_site.py` — 13 pages/249 rows, source links present and no broken internal links; `python tools/check_links_all.py` — 4,914 internal links all OK; `python -m unittest discover -s nba2/tests -t .` — 64 passed; `python -m unittest discover -s backtest/tests -t .` — 49 passed; `python -m nba2.v2.check` — 0 structural / 0 semantic; `git diff --check` — clean.
+
+**Irregularities:** the crosscheck reports seven informational items, including known data coverage/reporting caveats. CC-HTML-03b notes one em-dash interpretation anomaly; it is not changed in this scoped audit. No external data values were introduced. The backtest report itself cautions that ATS is a self-consistency test against originated lines, not a market test; no odds feed means no ROI/CLV.
