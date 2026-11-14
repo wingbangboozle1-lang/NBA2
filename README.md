@@ -25,14 +25,50 @@ Source classes: `official` (nba.com / ak-static.cms.nba.com / cdn.nba.com), `thi
 every such row is flagged), `derived` (computed in-repo from a committed snapshot), `blocked`
 (we know we need it; we do not have it).
 
+## The published site — one tree, named
+
+The live site is built from **one named tree**, listed explicitly in
+[`nba2/pipeline/build_public.py`](nba2/pipeline/build_public.py):
+
+```
+index.html + flagged.html        the canonical dashboard
+pages/**                         its 21 category subpages
+backtest/**                      the measured-skill backtest the dashboard links to
+css/ assets/ styles.css app.js   the styles and behaviour
+COORDINATION.md README.md        the board and the map of the repository
+```
+
+`.github/workflows/pages.yml` is what publishes: it rebuilds the tree from the committed
+snapshots, fails if the committed files differ from that rebuild, stages the publish list, and
+**fails the deploy if any internal link in the staged tree does not resolve**.
+
+> **One repository setting could not be changed from this session.** The Pages setting is still
+> `build_type: legacy` (deploy from the branch root): the GitHub API answers **403 — "Resource
+> not accessible by integration"** for `PUT /repos/{owner}/{repo}/pages` from the token this
+> session has (independently confirmed by two earlier sessions). In practice the **Actions
+> deployment wins** — the classic branch build is cancelled when a newer deployment is created —
+> and the live site serves the named tree. The one-click fix is recorded as **S-32** and
+> **FLAG-LIVE-08**: *Settings → Pages → Build and deployment → Source → GitHub Actions*. No code
+> change is required, and nothing on the site changes if it is not done.
+
+Everything else that is in this repository (`site/`, `docs/`, `dashboard/`, `originated/`,
+`verified/`, `archive/`, the code, the data) stays in the repository as history and is linked
+as *source*. It is not shipped as a second dashboard — see
+[the reconciliation page](pages/reconciliation.html) for the status of each tree.
+
+> **Why this changed.** Until 2026-11-14 the committed `pages.yml` published the `site/` tree
+> while the Pages setting published the repository root, so a reader received a different
+> dashboard from the one CI built — and the two answered "what are the picks?" differently
+> (27 sealed picks vs 0 published). One publish target, one window, one answer.
+
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (20 pages, 40 tables, 1149 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 46 tables, 1290 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
 |---|---|
-| Dashboard | KPIs, slate, slate irregularities |
+| Dashboard | KPIs, slate, slate irregularities, and which build is canonical |
 | Executive Summary | one screen: what exists, what is proven, what blocks it |
 | Picks (3-day slate) | lean + trigger + 0% stake per game, for 2026-11-14 → 11-17 |
 | Originated Lines | every game: both base ratings, consensus margin, spread, total, P(win), fair odds, sensitivity stability, tier — plus the cross-document corroboration table |
@@ -41,6 +77,8 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | Player Props & Combos | pricing model present, inputs absent — every row blank by policy |
 | Injuries & Rotation | 122 official report rows (11/13 19:30 ET release, incl. first 11/14 statuses), rotation-body arithmetic, leader cross-check |
 | Game Flow | schedule-spot load from official dates; in-game columns blank |
+| **Live Verification** | the 2026-11-14 10:15 UTC official re-read: every check, every difference, every field the page does not render |
+| **Ratings Staleness** | what a one-slate records refresh does to the published lines, measured and deliberately not applied |
 | Methodology & Parameters | fitted σ/HCA, every tunable number with its status and band, ratings, skill/luck |
 | Requirements · Repo Review · Open Questions · Suggestions Queue | the registers, kept as JSON in the repo |
 | Cross-session Reconciliation | this model vs the model already on `main`, and this session's injury capture vs the prior one |
@@ -57,23 +95,28 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | `data/site.json` | every published table, one object per section |
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
-| `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
+| `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `build_public` (the named publish list + its link check), `seal_predictions`, `settle`, `reconcile` |
 | `nba2/tests/` | 62 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
 ## Site surfaces that already existed (preserved, not discarded)
 
-Four sessions worked in parallel, so the repository publishes more than one surface. This is the
-honest map rather than a claim that there is one generator:
+Several sessions worked in parallel, so the repository contains more than one site tree. This is
+the honest map rather than a claim that there is one generator — and, since 2026-11-14, only
+one of them is published:
 
-| Surface | Built by | Notes |
-|---|---|---|
-| root `*.html` (`picks`, `strategies`, `injuries`, `correlations`, `executive-summary`, `suggestions`, `questions`, `flagged`) | `build_site.py` + `nba2/generate.py` from `nba2/data/*.json` (session arena-7b4973eb) | its own originated lines; superseded as the landing page, still served, and reconciled against ours on [the reconciliation page](pages/reconciliation.html) |
-| `docs/**` | session arena-35264d96 | 13-page verification-first documentation layer, left untouched |
-| `verified/**`, `data/verified/**` | sessions arena-23927d63 / arena-7b4973eb | row-level verification records for schedule, injuries and gates |
-| `archive/**` | integration | byte-for-byte copies of the `main` pages this merge replaced, plus the earlier session's landing pages |
-| `tools/**` | prior sessions | `generate_picks_lab.py`, `verify_site.py`, `check_links_all.py` — independent link and source checks; still pass |
+| Surface | Built by | Published? | Notes |
+|---|---|---|---|
+| root `*.html` + `pages/**` | `nba2/pipeline/build_site.py` from `data/site.json` | **yes — this is the live site** | the canonical dashboard; 21 pages, 46 tables, 1290 rows, every row sourced |
+| `backtest/**` | session arena-f7477d5e | **yes** | the measured-skill backtest the dashboard links to; 155 official finals, leakage-tested |
+| `site/**` (v2 "Lines Lab") | session arena-6e7afc65 | no — repository only | a second dashboard built one window earlier (31 games, 11-13 → 11-16) that publishes no picks; kept for the record, reconciled on [the reconciliation page](pages/reconciliation.html) |
+| root `picks.html`, `strategies.html`, … (the arena-7b4973eb set) | `build_site.py` + `nba2/generate.py` | no — superseded | its own originated lines; reconciled against ours on the reconciliation page |
+| `docs/**` | session arena-35264d96 | no — repository only | 13-page verification-first documentation layer, left untouched |
+| `dashboard/**` | session arena-10957a28 | no — repository only | 12-page CSV-driven dashboard with its own checker (`scripts/check_site.py`), still passing |
+| `verified/**`, `data/verified/**` | sessions arena-23927d63 / arena-7b4973eb | no — repository only | row-level verification records for schedule, injuries and gates |
+| `archive/**` | integration | no — repository only | byte-for-byte copies of the `main` pages this merge replaced |
+| `tools/**` | prior sessions | no — repository only | `generate_picks_lab.py`, `verify_site.py`, `check_links_all.py` — independent link and source checks; still pass |
 
 ## Reproduce everything
 
@@ -83,8 +126,10 @@ python -m nba2.pipeline.seal_predictions          # pre-register the window's li
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
 python -m nba2.pipeline.lint                       # provenance + links + staleness gate
+python -m nba2.pipeline.build_public --out _site  # the named publish list + its link check
 python -m nba2.pipeline.settle                      # PENDING until official final scores exist
 
+python3 audit/2026-11-14-live/verify_live.py       # the 2026-11-14 official re-verification
 python3 nba2/generate.py && python3 build_site.py   # the prior session's root dashboard
 python3 tools/verify_site.py                        # docs-layer source check
 python3 tools/check_links_all.py                    # whole-site link check
@@ -162,6 +207,31 @@ NOT YET SUBMITTED) and is published on [the injuries page](pages/injuries.html) 
 the nightly ingest workflow archives later releases without touching the sealed ledger.
 Snapshots are point-in-time captures, not live feeds — read `meta.as_of`
 before trusting any number, and see [the sources page](pages/sources.html) for retrieval timestamps.
+
+### The ratings snapshot is one slate behind (measured 2026-11-14 10:15 UTC)
+
+The committed ratings snapshot (`data/raw/team_ratings_2026-11-13.json`) was retrieved
+2026-11-13 22:35 UTC, while the 2026-11-13 slate was still running, so it reflects games through
+**2026-11-12**. A live re-read of the official standings on 2026-11-14 10:15 UTC found that
+**19 of 30 teams** had moved.
+
+The published lines are derived from the committed snapshot and the sealed ledgers are
+immutable, so **the lines were not silently re-derived**. Instead the effect is measured and
+published on [the Ratings Staleness page](pages/ratings-staleness.html):
+
+| Quantity | As published | Re-anchored to the live standings |
+|---|---|---|
+| σ margin sd (pts, fitted) | 13.58 | 14.27 |
+| Home-court advantage (pts, fitted) | **+1.53** | **−0.29** |
+| Fit RMSE (wins) | 1.31 | 1.40 |
+| Largest spread move, pick window | — | 2.0 pts (mean 1.78) |
+| Games whose lean would flip | — | 1 of 27 |
+
+Two things follow. The movement is bounded — 2 points of spread on a 12-game sample is noise, and
+it does not justify rewriting a seal. But the **sign of the fitted home-court term flips on a
+one-slate refresh**, which is the clearest evidence yet that HCA is not identified at this sample
+size and must stay unratified (`FLAG-PARAM-02`). The policy question — how stale may a snapshot
+be before a line is published — is open as **Q-30**, and the fix is proposed as **S-29**.
 
 ## Repo conventions
 
@@ -246,6 +316,16 @@ bettable edge) and **no official per-player feed** (so every player prop thresho
 
 ## v2 — verified rebuild and the live site (session `arena/6e7afc65-nba2`, 2026-11-14)
 
+> **Superseded on the publish target (2026-11-14, session `arena/9ee870ea-nba2`).** This session
+> intended the published site to become **`site/`**, built by `nba2/v2`. It did not happen, and the
+> reason is worth recording: the repository's Pages setting stayed on the classic branch build
+> (`build_type: legacy`), so the live site kept serving the root tree while the committed workflow
+> published `site/` — and the `site/` tree is one data window behind (31 games, 11-13 → 11-16) and
+> publishes no picks, because it withholds every pick for want of a market price. The publish
+> target has now been reconciled in the other direction: **one named tree** (see
+> [the published site section](#the-published-site--one-tree-named)), with `site/` kept in the
+> repository as a historical build. The tree itself is unchanged and still builds and verifies.
+
 The published GitHub Pages site is now **`site/`**, built by `nba2/v2` from official NBA pages that were
 fetched live during that session. The earlier trees (root `*.html`, `pages/`, `docs/`, `dashboard/`,
 `verified/`, `originated/`) remain in the repository unchanged but are **no longer published** — six
@@ -257,7 +337,7 @@ python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, inc
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
-python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/tests -t .                # 62 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
@@ -347,3 +427,84 @@ two dashboards both reach a reader. Probing the live site disproved it — `/NBA
 `site/` artefact) is published; the v1 tree is unreachable debt that CI still rebuilds (F-027, corrected). Two
 irregularities in another session's files — a spread-sign inversion in the S2 selections (F-025) and that unreachable
 tree (F-027) — are **published, not silently fixed**.
+
+---
+
+## Integration session `arena/9ee870ea-nba2` — one published tree, and a live re-verification (2026-11-14)
+
+### What was wrong, and what was done about it
+
+The repository's Pages setting said `build_type: legacy` (publish the branch root) while the
+committed `pages.yml` uploaded the `site/` tree. Both ran on every push to `main`, and the
+**most recent deployment wins** — so which dashboard a reader got depended on which build
+finished last. (The setting could not be changed from a token: the Pages API answers **403 —
+"Resource not accessible by integration"**, independently confirmed by two earlier sessions.
+The named-tree workflow wins in practice because the classic build is cancelled once a newer
+deployment exists; **S-32** records the one-click admin fix.) Probing the live site with a cache-busting query settled it:
+
+| URL | Result |
+|---|---|
+| `/NBA2/?probe=1` | **200** — the v2 "Lines Lab" artefact, served at the root |
+| `/NBA2/site/?probe=1` | 404 — the artefact's contents are served at the root, not under `site/` |
+| `/NBA2/pages/session-audit.html?probe=2` | 404 — the v1 tree was **not** reachable |
+| `/NBA2/backtest/index.html?probe=2` | 404 — the v1 tree was **not** reachable |
+
+(An earlier plain-URL fetch in this session returned the *v1* landing page: the GitHub Pages CDN
+still had the previous deployment cached. That is why the probe above is cache-busted and why the
+first read of the live site was corrected rather than trusted.)
+
+Two trees, two windows, two answers to "what are the picks?" — 27 sealed picks in one, 0 in the
+other, because the v2 build withholds every pick for want of a market price. The brief asks for
+picks for every slate up to three days out, so the v1 tree is the better product; but it was not
+the one being served.
+
+**The fix:**
+
+1. `nba2/pipeline/build_public.py` names the published tree explicitly — dashboard, its 20
+   subpages, the measured-skill backtest, the styles, the board, and the machine-readable mirror
+   `data/site.json`. A new top-level directory cannot become public by accident.
+2. It **stages** that list into `_site/` and **fails** if any internal link in the staged tree does
+   not resolve — so a broken link is a build failure, not a support ticket.
+3. `.github/workflows/pages.yml` publishes the staged tree; `ci.yml` and `publish-parity.yml` both
+   stage it and check it before anything is deployed.
+4. The classic branch build stops racing the workflow: the Actions deployment is created last
+   and the classic build is cancelled once a newer deployment exists, so the named tree wins in
+   practice. The repository's Pages *setting* is still `build_type: legacy` and could not be
+   changed from a token (the API answers 403) — see **S-32 / FLAG-LIVE-08** for the one-click
+   admin fix. The last successful deployment stays live if a build fails, so the exposure is a
+   stale site rather than a down one.
+
+### The re-verification (this is the part that is new)
+
+Official NBA.com pages were read again at **2026-11-14 10:15 UTC** — the schedule and the
+standings — and diffed field by field against every committed snapshot. The capture is committed
+as `data/raw/official_capture_2026-11-14T1015Z.json`; the diff is
+`audit/2026-11-14-live/verify_live.py` → `report.json`; both are published on the
+**Live Verification** page.
+
+| Check | Result |
+|---|---|
+| Capture validated before use | 30/30 teams satisfy `home + road + neutral = (W, L)`; the league balances at 183 W / 183 L = 183 games (174 through 11-12 + the 9 games of 11-13) |
+| Slate re-read | 315 field values compared across 36 games |
+| The 27 pick-window games | **identical** to the committed capture on date, tip time, teams, game ID, arena, city and state — so the 27 sealed predictions still match what is published |
+| 2026-11-13 finals | **identical** to an earlier session's independent capture, all 9 games, including the overtime flag |
+| Fields the page does not render | 18 (tip time and broadcaster for the 9 completed games) — listed as *not re-verifiable*, not as matches |
+| Differences found | 11: 9 empty Cup-group cells in the committed capture (the official page publishes the group for all nine) and 2 broadcaster labels that do not match the marks the page renders |
+| Team records | **19 of 30** moved since the committed snapshot — see the staleness table above |
+
+### New flags
+
+`FLAG-LIVE-01` … `FLAG-LIVE-07` — the ratings snapshot is one slate behind (high), the game IDs
+are not monotonic within 2026-11-17 (medium), the Cup group was never captured (medium), two
+broadcaster labels do not match the page (low), and three informational notes. All seven are on
+the Flagged for Review page with their source links.
+
+### What was deliberately not done
+
+* **No line was re-derived.** The sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are immutable and the
+  published lines must keep matching them, so the staleness is *disclosed* (Ratings Staleness
+  page) instead of silently corrected.
+* **No file owned by another session was edited.** `site/`, `docs/`, `dashboard/`, `originated/`,
+  `verified/`, `archive/`, `backtest/` and `nba2/v2/**` are byte-identical to `main`.
+* **No pick, ROI, CLV or leaderboard rank was published.** There is still no market price, and a
+  forecast without a price is not an edge.

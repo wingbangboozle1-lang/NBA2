@@ -1,6 +1,6 @@
 {
   "title": "NBA2 site-improvement queue",
-  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision \u2014 not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
+  "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
   "status_key": {
     "awaiting owner decision": "no action taken",
     "applied in this PR": "already built as part of the integration work",
@@ -13,7 +13,7 @@
       "problem": "Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.",
       "proposal": "Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.",
       "benefit": "Unblocks gates G-02, G-05 on real PnL, G-09, and converts every table from 'projection' to 'decision'.",
-      "effort": "M \u2014 ingest + storage + retention policy",
+      "effort": "M — ingest + storage + retention policy",
       "risk": "Vendor cost; storing closing lines needs storage rights (Q-18 style check).",
       "recommendation": "Accept first; nothing else on this list pays as well.",
       "status": "awaiting owner decision"
@@ -21,8 +21,8 @@
     {
       "id": "S-02",
       "title": "Ingest official game-level results daily",
-      "problem": "\u03c3, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
-      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to \u22652 seasons for fitting.",
+      "problem": "σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.",
+      "proposal": "Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.",
       "benefit": "Turns the two fitted constants into measured ones and kills the circularity in G-04.",
       "effort": "M",
       "risk": "Needs network access from a runner (unavailable in this sandbox).",
@@ -48,7 +48,7 @@
       "benefit": "Makes accountability real instead of implied; a one-hour task that removes a whole class of silent bias.",
       "effort": "S",
       "risk": "None.",
-      "recommendation": "Accept now \u2014 it blocks 'is this site trustworthy' more than any data purchase.",
+      "recommendation": "Accept now — it blocks 'is this site trustworthy' more than any data purchase.",
       "status": "awaiting owner decision"
     },
     {
@@ -58,7 +58,7 @@
       "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
       "benefit": "Makes the leaderboard a science instead of a search result; costs ~20 lines.",
       "effort": "S",
-      "risk": "Requires discipline to log failed attempts too \u2014 that is the point.",
+      "risk": "Requires discipline to log failed attempts too — that is the point.",
       "recommendation": "Accept; pair with a rule 'no evaluation without registration'.",
       "status": "awaiting owner decision"
     },
@@ -70,7 +70,7 @@
       "benefit": "Turns every gap into a one-click work item for the reviewer instead of a mystery.",
       "effort": "S",
       "risk": "Adds ~40 lines of build logic; must stay in sync with the flag registry.",
-      "recommendation": "Accept \u2014 cheap and it is what the Flagged page exists for.",
+      "recommendation": "Accept — cheap and it is what the Flagged page exists for.",
       "status": "awaiting owner decision"
     },
     {
@@ -109,19 +109,19 @@
     {
       "id": "S-10",
       "title": "Add a game-day re-issue build (T-0) alongside the T-3 build",
-      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' \u2014 proven this session \u2014 so a 3-day-ahead line is structurally injury-blind.",
+      "problem": "Injury reports for future days are 'NOT YET SUBMITTED' — proven this session — so a 3-day-ahead line is structurally injury-blind.",
       "proposal": "Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.",
       "benefit": "Converts a weakness into a measurable quantity: how much our line moves on availability news, which is a strategy family of its own.",
       "effort": "M",
       "risk": "Doubles storage of sealed ledgers (small).",
-      "recommendation": "Accept \u2014 the best idea on this list for model quality per unit of data.",
+      "recommendation": "Accept — the best idea on this list for model quality per unit of data.",
       "status": "awaiting owner decision"
     },
     {
       "id": "S-11",
       "title": "Show per-line contribution of every input",
       "problem": "'San Antonio -4.5' is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.",
-      "proposal": "Add a decomposition column (SRS gap \u00d7\u03bb, raw-margin gap \u00d7\u03bb, HCA, injury adj) per line, computed not asserted.",
+      "proposal": "Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.",
       "benefit": "Reviewers can disagree with a component instead of the whole number; that is how a model gets better.",
       "effort": "S",
       "risk": "Wider tables on mobile.",
@@ -155,7 +155,7 @@
       "title": "Table ergonomics: sticky headers, density toggle, CSV export",
       "problem": "The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.",
       "proposal": "Sticky thead, a compact-density class, and a per-table 'download CSV' that includes the source column.",
-      "benefit": "Reviewers can work offline without losing provenance \u2014 export keeps the source link per row.",
+      "benefit": "Reviewers can work offline without losing provenance — export keeps the source link per row.",
       "effort": "S",
       "risk": "None material.",
       "recommendation": "Accept.",
@@ -213,7 +213,7 @@
       "benefit": "Reduces accidental disclosure; keeps the public surface explicit.",
       "effort": "M (changes every relative link + breaks current live URLs unless redirected)",
       "risk": "URL churn; needs a redirect plan for the already-live root pages.",
-      "recommendation": "Defer \u2014 real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
+      "recommendation": "Defer — real improvement, but it breaks existing links and none of the currently committed files are sensitive.",
       "status": "awaiting owner decision"
     },
     {
@@ -296,7 +296,7 @@
     {
       "id": "S-27",
       "title": "Retire the unreachable v1 tree instead of maintaining two generators",
-      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page \u2014 pages/session-audit.html and pages/executive-summary.html were both checked \u2014 yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
+      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
       "proposal": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.",
       "benefit": "One number per question is the precondition for every other claim on the site.",
       "effort": "M",
@@ -312,7 +312,51 @@
       "benefit": "Turns a class of silent, self-erasing test passes into a failure at PR time.",
       "effort": "S",
       "risk": "Adds ~30s of CI; no production risk.",
-      "recommendation": "Accept \u2014 this is the check that found F-029.",
+      "recommendation": "Accept — this is the check that found F-029.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-29",
+      "title": "Re-anchor the ratings snapshot after every slate completes, and seal the next window from the re-anchored snapshot",
+      "problem": "The committed ratings snapshot (retrieved 2026-11-13 22:35 UTC, while the 2026-11-13 slate was still in progress) is one full slate behind the official standings. A live re-read on 2026-11-14 10:15 UTC found 19 of 30 teams had moved. The published lines are therefore computed from records that are already one game old, and the fitted home-court term flips sign (+1.53 to -0.29 pts) on that single refresh.",
+      "proposal": "Add a post-slate step to the refresh workflow: after the last game of a date is final, re-read the official standings, write a new dated snapshot to data/raw, and build the NEXT window's lines from it. The current window's sealed predictions stay untouched — a seal that moves after the fact is not a seal. The measured effect of the lag is already published on the Ratings Staleness page, so the decision can be made with numbers rather than intuition.",
+      "benefit": "Lines that use records through yesterday instead of through two days ago; a home-court term that is not decided by one slate; and a published, continuous measure of how stale the inputs are, which is itself a quality metric for the desk.",
+      "effort": "M — one ingest step, one dated snapshot, one build wiring change.",
+      "risk": "Re-anchoring changes published numbers between windows, which makes the backtest series less comparable unless the snapshot date is recorded on every row. It also means a line's provenance is 'snapshot as of X', not 'live'.",
+      "recommendation": "Accept. The published staleness effect is bounded (max 2.0 pts of spread movement across the whole window, one lean flip in 27 games), so this is a precision improvement rather than a correctness emergency — but the HCA sign flip is a strong argument that no parameter should be promoted on ~12 games of data.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-30",
+      "title": "Publish exactly one dashboard, from one named tree, with the link check in the build",
+      "problem": "The repository grew six site trees from parallel sessions. For a while the committed pages.yml published the `site/` tree while the repository's Pages setting published the root tree, so a reader received a different dashboard from the one CI built, and two different dashboards answered 'what are the picks?' differently (27 sealed picks vs 0 published).",
+      "proposal": "Name the published tree explicitly in `nba2/pipeline/build_public.py` (dashboard + subpages + backtest + styles + board + data/site.json), stage it as a build artifact, check every internal link in it before upload, and let the Pages workflow publish that artifact. The other trees stay in the repository as history and are linked from the reconciliation page as source. The repository's Pages *setting* is a separate, one-click admin action (S-32) that this session's token could not make.",
+      "benefit": "One site, one window, one answer to every question; the deploy can no longer drift from the committed tree; a broken link fails CI instead of reaching a reader.",
+      "effort": "S — a named publish list, a staging step, one workflow edit, one repository setting.",
+      "risk": "The classic branch build still runs alongside the workflow. In practice the Actions deployment is created last and the classic build is cancelled once a newer deployment exists, so the named tree wins; but until the setting is flipped, the repository's configuration and the workflow still disagree on paper. If the workflow fails, the last successful deployment stays live, so the exposure is a stale site rather than a down one.",
+      "recommendation": "Applied in this PR — see the Live Verification page and the merge record in COORDINATION.md. Revert the repository setting if the owner prefers the classic branch build.",
+      "status": "applied in this PR (tree named, staged, link-checked); Pages setting tracked in S-32"
+    },
+    {
+      "id": "S-31",
+      "title": "Store the broadcaster marks the page renders, and the cup group, rather than a prose label",
+      "problem": "The live re-read found the committed capture leaves the Emirates NBA Cup group empty for all nine 2026-11-13 group games (so the published slate table shows an empty Cup cell with no explanation), and stores a single prose broadcaster label that does not match the marks the official page renders for two games — one names a feed the page does not show, one omits a feed it does.",
+      "proposal": "Capture the broadcaster as the list of marks rendered on the page, and fill the cup group from the same read. Neither field feeds a line, so this changes no published number; it changes what a reader sees on the Verified slate table.",
+      "benefit": "The flagship slate table stops showing a dash where the league published a group label.",
+      "effort": "S — one column-shape change in the capture and one in the renderer.",
+      "risk": "None to the model: cup_group and broadcast are display-only fields (verified in nba2/models/lines.py).",
+      "recommendation": "Accept, and fold into the next capture refresh rather than patching the old one.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-32",
+      "title": "Switch the Pages source to GitHub Actions (one admin action, no code)",
+      "problem": "The repository's Pages setting says 'deploy from the branch root' (build_type: legacy) while the workflow publishes a named, link-checked tree. The classic build is cancelled when a newer deployment is created, so the live site is right in practice, but the repository setting and the workflow still disagree on paper — and the setting cannot be changed from a token without admin rights (the API answers 403).",
+      "proposal": "In Settings -> Pages -> Build and deployment, set Source to 'GitHub Actions'. Nothing in the repository needs to change: .github/workflows/pages.yml already publishes the named tree and fails the build on a broken internal link.",
+      "benefit": "One source of truth for what is published; no second, silently-cancelled build; the repository setting matches what a reader actually gets.",
+      "effort": "S — one admin action, no code.",
+      "risk": "If the Actions workflow is later disabled or its permissions are removed, the site would have no publisher at all. The workflow is committed with the repository and is exercised on every push to main.",
+      "recommendation": "Accept. Until it is done, the published tree is still the named one and every internal link in it is checked before deploy.",
       "status": "awaiting owner decision"
     }
   ]

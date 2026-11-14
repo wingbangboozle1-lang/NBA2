@@ -114,11 +114,16 @@ def lint_data(data: dict) -> list[str]:
 def lint_html(data: dict, root: Path) -> list[str]:
     problems: list[str] = []
     html_pages = sorted(p for p in root.glob("**/*.html")
-                        if ".git/" not in str(p) and "node_modules" not in str(p))
+                        if ".git/" not in str(p) and "node_modules" not in str(p)
+                        # the staged publish tree is a byte copy of files that are linted in place
+                        and "_site/" not in p.as_posix())
     if not html_pages:
         return ["no HTML files found"]
 
-    # Pages publishes the repo root, so "exists on disk" == "will be reachable".
+    # The published tree is named explicitly in nba2/pipeline/build_public.py, so "exists on
+    # disk" is no longer the same as "will be reachable". Every link target is still checked
+    # against the repository, which is the stricter test: a link must resolve to a committed
+    # file, not merely to a file that happens to sit in the publish list.
     existing = {p.relative_to(root).as_posix() for p in root.glob("**/*")
                 if p.is_file() and ".git/" not in p.as_posix()}
 

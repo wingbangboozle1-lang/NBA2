@@ -13,15 +13,15 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html" class="active">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="live-verification.html">Live Verification</a></li><li><a href="ratings-staleness.html">Ratings Staleness</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html" class="active">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Sources</h2><p>What we read, when, and what we could not read at all.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="sources" data-rows="22">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="sources" data-rows="27">
 <h2>Source register + verification log</h2>
 <p class="blurb">Retrieval times are UTC. Anything marked &#x27;no — blocked&#x27; contributed no value to any table on this site.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Source register + verification log</caption><thead><tr>
@@ -192,6 +192,26 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
 </tr>
+<tr id="nba_live_capture_2026_11_14">
+<td>nba_live_capture_2026_11_14</td>
+<td>NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</td>
+<td>https://www.nba.com/schedule</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Schedule page (https://www.nba.com/schedule) and standings page (https://www.nba.com/standings?Season=2026-27&amp;SeasonType=Regular%20Season) read by session arena/9ee870ea-nba2 on 2026-11-14 ~10:12-10:15 UTC. Committed as data/raw/official_capture_2026-11-14T1015Z.json. The schedule page renders score, venue, city/state, cup group and game ID for completed games, but not the tip time or the broadcaster mark; those two fields are blank for the nine completed 2026-11-13 games rather than carried over.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="live_verification_audit">
+<td>live_verification_audit</td>
+<td>Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>Machine diff of the live capture against every committed snapshot, produced by audit/2026-11-14-live/verify_live.py. The script is in the repository and re-runnable; its output is committed as audit/2026-11-14-live/report.json.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
 <tr id="xsession_data">
 <td>xsession_data</td>
 <td>Prior session&#x27;s committed dataset (this repo)</td>
@@ -231,6 +251,36 @@
 <td>Game summary page for the 2026-11-17 repeat matchup; used to adjudicate FLAG-ANOM-01.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
+</tr>
+<tr id="register_requirements">
+<td>register_requirements</td>
+<td>Requirements register (requirements/REQUIREMENTS.json)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/REQUIREMENTS.json</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>The requirements register as committed to the repository. Each published row is one entry of this file, so a reviewer can diff the table against the register it was rendered from.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="register_questions">
+<td>register_questions</td>
+<td>Open-questions register (requirements/QUESTIONS.json)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>The open-questions register as committed to the repository. Each published row is one entry of this file.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="register_suggestions">
+<td>register_suggestions</td>
+<td>Suggestions register (suggestions/SUGGESTIONS.json)</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json</td>
+<td>Derived in-repo from a verified snapshot</td>
+<td>yes</td>
+<td>The suggestions register as committed to the repository. Each published row is one entry of this file, including its owner-decision state.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
 </tr>
 <tr id="session_audit">
 <td>session_audit</td>

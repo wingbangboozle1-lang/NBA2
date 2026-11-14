@@ -13,15 +13,138 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html" class="active">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html" class="active">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="live-verification.html">Live Verification</a></li><li><a href="ratings-staleness.html">Ratings Staleness</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Executive Summary</h2><p>One page for a decision-maker: what exists, what is proven, what is blocked, and the single next decision.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <div class="card"><div class="kpi-grid"><div class="kpi"><div class="kpi-v">36</div><div class="kpi-l">games priced in window</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Tier A lines</div></div><div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Tier B lines</div></div><div class="kpi"><div class="kpi-v">19</div><div class="kpi-l">Tier C (do-not-bet)</div></div><div class="kpi"><div class="kpi-v">122</div><div class="kpi-l">official injury rows (117 status + 5 pending)</div></div><div class="kpi"><div class="kpi-v">13.58</div><div class="kpi-l">σ margin (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">1.53</div><div class="kpi-l">home-court adv (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">0/90</div><div class="kpi-l">gates passed</div></div><div class="kpi"><div class="kpi-v">100</div><div class="kpi-l">reward units unallocated</div></div><div class="kpi"><div class="kpi-v">79</div><div class="kpi-l">open flags</div></div></div></div><section class="card table-card" id="summary-lines" data-rows="8">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="card"><div class="kpi-grid"><div class="kpi"><div class="kpi-v">36</div><div class="kpi-l">games priced in window</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Tier A lines</div></div><div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Tier B lines</div></div><div class="kpi"><div class="kpi-v">19</div><div class="kpi-l">Tier C (do-not-bet)</div></div><div class="kpi"><div class="kpi-v">122</div><div class="kpi-l">official injury rows (117 status + 5 pending)</div></div><div class="kpi"><div class="kpi-v">13.58</div><div class="kpi-l">σ margin (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">1.53</div><div class="kpi-l">home-court adv (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">0/90</div><div class="kpi-l">gates passed</div></div><div class="kpi"><div class="kpi-v">100</div><div class="kpi-l">reward units unallocated</div></div><div class="kpi"><div class="kpi-v">87</div><div class="kpi-l">open flags</div></div></div></div><section class="card table-card" id="summary-live-verification" data-rows="10">
+<h2>Verified against NBA.com on 2026-11-14 at 10:15 UTC</h2>
+<p class="blurb">Every line on this page was produced by reading an official NBA.com page in this session and comparing it with the committed snapshots. Nothing is inferred from a previous session&#x27;s note.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Verified against NBA.com on 2026-11-14 at 10:15 UTC</caption><thead><tr>
+<th scope="col">Check</th>
+<th scope="col">Result</th>
+<th scope="col">Detail</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="capture-sources">
+<td>Official documents read</td>
+<td>2 pages: nba.com/schedule and nba.com/standings</td>
+<td>Schedule and standings, both read by session arena/9ee870ea-nba2 on 2026-11-14 ~10:12-10:15 UTC. Direct TLS to nba.com is blocked from the build sandbox, so the retrieval was made with the platform page-fetcher; the read is recorded in the committed capture, not inferred.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-teams">
+<td>Standings rows captured</td>
+<td>30 of 30 teams</td>
+<td>Every team row carries W, L, WIN%, GB, CONF, DIV, HOME, ROAD, Neutral, OT, LAST10 and STREAK as rendered by the official standings table.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-split-arithmetic">
+<td>home + road + neutral = (W, L) for every team</td>
+<td>30/30 teams balance</td>
+<td>An internal consistency check on the official table itself: the splits must add back to the record. Every team balances, so the transcribed splits are internally consistent rather than a plausible-looking guess.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-03">FLAG-LIVE-03</a></td>
+</tr>
+<tr id="capture-league-totals">
+<td>League totals balance</td>
+<td>183 W / 183 L = 183 games played</td>
+<td>The 30 records sum to an even number of team-games and the wins equal the losses, which is only possible if the transcription is complete. 183 games played = 174 through 2026-11-12 plus the 9 games of 2026-11-13.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-slate-counts">
+<td>Per-date game counts vs the page&#x27;s own day headers</td>
+<td>match: 9 / 5 / 9 / 8 / 5</td>
+<td>The NBA&#x27;s own day headers (&#x27;9 Games&#x27;, &#x27;5 Games&#x27;, &#x27;9 Games&#x27;, &#x27;8 Games&#x27;, &#x27;5 Games&#x27;) agree with the number of games transcribed for each date.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-slate-fields">
+<td>Slate field values re-read and compared</td>
+<td>315 field values across 36 games</td>
+<td>11 differences found (listed in the next table); 18 fields could not be re-read because the official page does not render them for completed games.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-pick-window">
+<td>Pick window re-verified end to end</td>
+<td>differences found</td>
+<td>All 27 games of the sealed pick window (2026-11-14 to 2026-11-17) match the committed capture on date, tip time, teams, game ID, arena, city, state and broadcast, except the two broadcaster labels listed below. The 27 sealed predictions are therefore still a faithful pre-registration of what is published.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-04">FLAG-LIVE-04</a></td>
+</tr>
+<tr id="capture-outside-window">
+<td>Games outside the 3-day pick window</td>
+<td>16 games captured (12 on 11-18, 4 on 11-19)</td>
+<td>The brief&#x27;s maximum is 3 days ahead of the build date, so these are deliberately not in the pick window. They are captured and published so that the omission is visible rather than silent.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-04">FLAG-LIVE-04</a></td>
+</tr>
+<tr id="capture-finals">
+<td>2026-11-13 finals vs an earlier session&#x27;s independent capture</td>
+<td>IDENTICAL</td>
+<td>Nine finals read from the official schedule page in this session, compared against the scores a different session captured from the official game cards. Every score, every team and the overtime flag agree.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-ladder">
+<td>Team records vs the committed ratings snapshot</td>
+<td>19 of 30 teams moved</td>
+<td>The committed ratings snapshot was taken while the 2026-11-13 slate was still in progress, so it is one slate behind the live official standings. Quantified on the Ratings Staleness page.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">read 2026-11-14 10:12-10:15 UTC; diff by audit/2026-11-14-live/verify_live.py</p>
+</section><section class="card table-card" id="summary-staleness" data-rows="4">
+<h2>The one thing a reader must know about the inputs</h2>
+<p class="blurb">Truncated here; the full table, and the per-game movement, are on the Ratings Staleness page.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">The one thing a reader must know about the inputs</caption><thead><tr>
+<th scope="col">Item</th>
+<th scope="col">As published</th>
+<th scope="col">If re-anchored to the live standings</th>
+<th scope="col">What it means</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="stale-what">
+<td>What was re-anchored</td>
+<td>W-L and the home/road splits, from the live official standings.</td>
+<td>—</td>
+<td>The published lines are unchanged: the sealed ledgers are immutable by design and a pre-registered forecast that moves after the fact is not a pre-registered forecast.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-not">
+<td>What was NOT re-anchored</td>
+<td>SRS, points per game, points allowed per game and the close/blowout splits stay at their committed third-party values, because the official standings do not publish them. The movement below is therefore a LOWER BOUND on the true staleness effect.</td>
+<td>—</td>
+<td>The movement below is therefore a lower bound on the true staleness effect, not an estimate of the full effect.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-sigma">
+<td>σ margin sd (pts, fitted)</td>
+<td>13.58</td>
+<td>14.27</td>
+<td>σ is fitted from win totals, so a records refresh moves it. It is published with a ±10% band for exactly this reason.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PARAM-01">FLAG-PARAM-01</a></td>
+</tr>
+<tr id="stale-hca">
+<td>Home-court advantage (pts, fitted)</td>
+<td>1.53</td>
+<td>-0.29</td>
+<td>The sign of the fitted home-court term flips on a one-slate records refresh. That is the clearest evidence that HCA is not identified at this sample size, and it must stay unratified.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PARAM-02">FLAG-PARAM-02</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">computed by audit/2026-11-14-live/verify_live.py from the committed snapshot and the live official standings</p>
+</section><section class="card table-card" id="summary-lines" data-rows="8">
 <h2>Snapshot of the priced slate (first 8 rows)</h2>
 <p class="blurb">Full table on the Originated Lines page; truncated here so the summary fits one screen.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Snapshot of the priced slate (first 8 rows)</caption><thead><tr>

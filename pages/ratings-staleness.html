@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratings Staleness · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="live-verification.html">Live Verification</a></li><li><a href="ratings-staleness.html" class="active">Ratings Staleness</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Ratings Staleness</h2><p>How far the published lines would move if the ratings snapshot were re-anchored to the live official standings — measured, published, and deliberately <em>not</em> applied, because the sealed pre-registrations must keep matching what is published.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="staleness_summary" data-rows="8">
+<h2>Ratings staleness — what a one-slate records refresh does to the published numbers</h2>
+<p class="blurb">The committed ratings snapshot predates the 2026-11-13 finals. This is the measured size of that gap. It is published rather than silently corrected, because the sealed pre-registrations for this window must keep matching the published lines.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Ratings staleness — what a one-slate records refresh does to the published numbers</caption><thead><tr>
+<th scope="col">Item</th>
+<th scope="col">As published</th>
+<th scope="col">If re-anchored to the live standings</th>
+<th scope="col">What it means</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="stale-what">
+<td>What was re-anchored</td>
+<td>W-L and the home/road splits, from the live official standings.</td>
+<td>—</td>
+<td>The published lines are unchanged: the sealed ledgers are immutable by design and a pre-registered forecast that moves after the fact is not a pre-registered forecast.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-not">
+<td>What was NOT re-anchored</td>
+<td>SRS, points per game, points allowed per game and the close/blowout splits stay at their committed third-party values, because the official standings do not publish them. The movement below is therefore a LOWER BOUND on the true staleness effect.</td>
+<td>—</td>
+<td>The movement below is therefore a lower bound on the true staleness effect, not an estimate of the full effect.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-sigma">
+<td>σ margin sd (pts, fitted)</td>
+<td>13.58</td>
+<td>14.27</td>
+<td>σ is fitted from win totals, so a records refresh moves it. It is published with a ±10% band for exactly this reason.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PARAM-01">FLAG-PARAM-01</a></td>
+</tr>
+<tr id="stale-hca">
+<td>Home-court advantage (pts, fitted)</td>
+<td>1.53</td>
+<td>-0.29</td>
+<td>The sign of the fitted home-court term flips on a one-slate records refresh. That is the clearest evidence that HCA is not identified at this sample size, and it must stay unratified.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a> <a class="flagchip" href="flagged-review.html#FLAG-PARAM-02">FLAG-PARAM-02</a></td>
+</tr>
+<tr id="stale-rmse">
+<td>Fit RMSE (wins vs the .500 baseline)</td>
+<td>1.3148</td>
+<td>1.402</td>
+<td>A lower RMSE means the fitted parameters reproduce the observed win totals better. Both values are far below the 2.78-win .500 baseline, so the fit still beats the trivial model after re-anchoring.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-max">
+<td>Largest spread move, pick window</td>
+<td>—</td>
+<td>2.0 pts (max), 1.778 pts (mean) over 27 games</td>
+<td>A 2-point move is inside the noise of a 12-game sample, which is why no line is promoted on the strength of one.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-leans">
+<td>Games whose lean would flip</td>
+<td>—</td>
+<td>1 of 27 pick-window games</td>
+<td>The direction of a line is far more stable than its number, which is why the triggers, not the lines, are the published output.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-seal">
+<td>Sealed ledgers</td>
+<td>untouched: cf7dedc6… (22 predictions) and c841e8f3… (27 predictions)</td>
+<td>—</td>
+<td>A sealed ledger is verified byte-for-byte by CI on every push. Nothing in this audit wrote to data/raw/ledger/.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">computed by audit/2026-11-14-live/verify_live.py from the committed snapshot and the live official standings</p>
+</section><section class="card table-card" id="staleness_games" data-rows="36">
+<h2>Ratings staleness — every game, published vs re-anchored</h2>
+<p class="blurb">One row per game in the window. &#x27;Published&#x27; is what the site shows and what the sealed ledger contains. &#x27;Re-anchored&#x27; is the same model re-fitted with W-L and the home/road splits taken from the live official standings, with SRS and the points splits left at their committed third-party values. It is a disclosure, not a replacement.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Ratings staleness — every game, published vs re-anchored</caption><thead><tr>
+<th scope="col">Game ID</th>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Published spread (home)</th>
+<th scope="col">Re-anchored spread (home)</th>
+<th scope="col">Move (pts)</th>
+<th scope="col">Published total</th>
+<th scope="col">Re-anchored total</th>
+<th scope="col">Move (pts)</th>
+<th scope="col">Published lean</th>
+<th scope="col">Re-anchored lean</th>
+<th scope="col">Lean flipped?</th>
+<th scope="col">In pick window?</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="stale-0022600034">
+<td>0022600034</td>
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>5.0</td>
+<td>7.0</td>
+<td>2.0</td>
+<td>219.5</td>
+<td>219.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600035">
+<td>0022600035</td>
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>-8.0</td>
+<td>-6.5</td>
+<td>1.5</td>
+<td>225.5</td>
+<td>225.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600036">
+<td>0022600036</td>
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>3.0</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>233.0</td>
+<td>233.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600037">
+<td>0022600037</td>
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>10.5</td>
+<td>12.5</td>
+<td>2.0</td>
+<td>238.5</td>
+<td>238.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600038">
+<td>0022600038</td>
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>8.5</td>
+<td>10.0</td>
+<td>1.5</td>
+<td>235.5</td>
+<td>235.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600039">
+<td>0022600039</td>
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>-17.5</td>
+<td>-15.5</td>
+<td>2.0</td>
+<td>223.5</td>
+<td>223.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600040">
+<td>0022600040</td>
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>-3.0</td>
+<td>-1.5</td>
+<td>1.5</td>
+<td>229.0</td>
+<td>229.0</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600041">
+<td>0022600041</td>
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>13.5</td>
+<td>15.5</td>
+<td>2.0</td>
+<td>230.5</td>
+<td>230.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600042">
+<td>0022600042</td>
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>6.5</td>
+<td>8.5</td>
+<td>2.0</td>
+<td>224.0</td>
+<td>224.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>no — day-before context</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600231">
+<td>0022600231</td>
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>2.0</td>
+<td>234.5</td>
+<td>234.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600232">
+<td>0022600232</td>
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>-1.0</td>
+<td>0.5</td>
+<td>1.5</td>
+<td>228.0</td>
+<td>228.0</td>
+<td>0.0</td>
+<td>home</td>
+<td>away</td>
+<td>YES</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600233">
+<td>0022600233</td>
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>6.0</td>
+<td>7.5</td>
+<td>1.5</td>
+<td>229.5</td>
+<td>229.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600234">
+<td>0022600234</td>
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>-10.5</td>
+<td>-8.5</td>
+<td>2.0</td>
+<td>227.5</td>
+<td>227.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600235">
+<td>0022600235</td>
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>-23.0</td>
+<td>-21.0</td>
+<td>2.0</td>
+<td>233.5</td>
+<td>233.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600236">
+<td>0022600236</td>
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td>-4.5</td>
+<td>-3.0</td>
+<td>1.5</td>
+<td>223.0</td>
+<td>223.0</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600237">
+<td>0022600237</td>
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>2.0</td>
+<td>232.0</td>
+<td>232.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600238">
+<td>0022600238</td>
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td>-7.5</td>
+<td>-5.5</td>
+<td>2.0</td>
+<td>219.5</td>
+<td>219.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600239">
+<td>0022600239</td>
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td>14.5</td>
+<td>16.5</td>
+<td>2.0</td>
+<td>226.0</td>
+<td>226.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600240">
+<td>0022600240</td>
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td>-6.5</td>
+<td>-4.5</td>
+<td>2.0</td>
+<td>221.5</td>
+<td>221.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600241">
+<td>0022600241</td>
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td>1.5</td>
+<td>3.0</td>
+<td>1.5</td>
+<td>220.5</td>
+<td>220.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600242">
+<td>0022600242</td>
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td>13.0</td>
+<td>14.5</td>
+<td>1.5</td>
+<td>224.0</td>
+<td>224.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600243">
+<td>0022600243</td>
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td>10.0</td>
+<td>11.5</td>
+<td>1.5</td>
+<td>231.5</td>
+<td>231.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600244">
+<td>0022600244</td>
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td>11.5</td>
+<td>13.5</td>
+<td>2.0</td>
+<td>223.5</td>
+<td>223.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600245">
+<td>0022600245</td>
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td>-12.0</td>
+<td>-10.0</td>
+<td>2.0</td>
+<td>220.0</td>
+<td>220.0</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600246">
+<td>0022600246</td>
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td>-14.0</td>
+<td>-12.0</td>
+<td>2.0</td>
+<td>236.5</td>
+<td>236.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600247">
+<td>0022600247</td>
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td>8.5</td>
+<td>10.0</td>
+<td>1.5</td>
+<td>228.0</td>
+<td>228.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600248">
+<td>0022600248</td>
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td>3.5</td>
+<td>5.0</td>
+<td>1.5</td>
+<td>223.0</td>
+<td>223.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600249">
+<td>0022600249</td>
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td>10.0</td>
+<td>12.0</td>
+<td>2.0</td>
+<td>229.0</td>
+<td>229.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600250">
+<td>0022600250</td>
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td>-5.0</td>
+<td>-3.0</td>
+<td>2.0</td>
+<td>228.5</td>
+<td>228.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600251">
+<td>0022600251</td>
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td>11.5</td>
+<td>13.0</td>
+<td>1.5</td>
+<td>236.0</td>
+<td>236.0</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600252">
+<td>0022600252</td>
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td>-4.5</td>
+<td>-3.0</td>
+<td>1.5</td>
+<td>228.0</td>
+<td>228.0</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600253">
+<td>0022600253</td>
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td>1.5</td>
+<td>3.0</td>
+<td>1.5</td>
+<td>220.5</td>
+<td>220.5</td>
+<td>0.0</td>
+<td>away</td>
+<td>away</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600254">
+<td>0022600254</td>
+<td>2026-11-17</td>
+<td>POR @ MIN</td>
+<td>-5.0</td>
+<td>-3.0</td>
+<td>2.0</td>
+<td>228.5</td>
+<td>228.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600255">
+<td>0022600255</td>
+<td>2026-11-17</td>
+<td>DET @ SAS</td>
+<td>-6.0</td>
+<td>-4.0</td>
+<td>2.0</td>
+<td>225.5</td>
+<td>225.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600256">
+<td>0022600256</td>
+<td>2026-11-17</td>
+<td>CHA @ LAL</td>
+<td>-17.0</td>
+<td>-15.0</td>
+<td>2.0</td>
+<td>222.5</td>
+<td>222.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="stale-0022600257">
+<td>0022600257</td>
+<td>2026-11-17</td>
+<td>UTA @ LAC</td>
+<td>-5.5</td>
+<td>-4.0</td>
+<td>1.5</td>
+<td>227.5</td>
+<td>227.5</td>
+<td>0.0</td>
+<td>home</td>
+<td>home</td>
+<td>no</td>
+<td>yes</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">computed by audit/2026-11-14-live/verify_live.py</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

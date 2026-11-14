@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Verification · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="live-verification.html" class="active">Live Verification</a></li><li><a href="ratings-staleness.html">Ratings Staleness</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Live Verification</h2><p>An official-source re-check run on 2026-11-14 at 10:15 UTC: the schedule and the standings were read again from NBA.com and diffed against every committed snapshot, field by field. Every difference is listed; so is every field the page does not render.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="live_capture_check" data-rows="10">
+<h2>Live verification — what was read, what matched, what did not</h2>
+<p class="blurb">Every line on this page was produced by reading an official NBA.com page in this session and comparing it with the committed snapshots. Nothing is inferred from a previous session&#x27;s note.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Live verification — what was read, what matched, what did not</caption><thead><tr>
+<th scope="col">Check</th>
+<th scope="col">Result</th>
+<th scope="col">Detail</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="capture-sources">
+<td>Official documents read</td>
+<td>2 pages: nba.com/schedule and nba.com/standings</td>
+<td>Schedule and standings, both read by session arena/9ee870ea-nba2 on 2026-11-14 ~10:12-10:15 UTC. Direct TLS to nba.com is blocked from the build sandbox, so the retrieval was made with the platform page-fetcher; the read is recorded in the committed capture, not inferred.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-teams">
+<td>Standings rows captured</td>
+<td>30 of 30 teams</td>
+<td>Every team row carries W, L, WIN%, GB, CONF, DIV, HOME, ROAD, Neutral, OT, LAST10 and STREAK as rendered by the official standings table.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-split-arithmetic">
+<td>home + road + neutral = (W, L) for every team</td>
+<td>30/30 teams balance</td>
+<td>An internal consistency check on the official table itself: the splits must add back to the record. Every team balances, so the transcribed splits are internally consistent rather than a plausible-looking guess.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-03">FLAG-LIVE-03</a></td>
+</tr>
+<tr id="capture-league-totals">
+<td>League totals balance</td>
+<td>183 W / 183 L = 183 games played</td>
+<td>The 30 records sum to an even number of team-games and the wins equal the losses, which is only possible if the transcription is complete. 183 games played = 174 through 2026-11-12 plus the 9 games of 2026-11-13.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-slate-counts">
+<td>Per-date game counts vs the page&#x27;s own day headers</td>
+<td>match: 9 / 5 / 9 / 8 / 5</td>
+<td>The NBA&#x27;s own day headers (&#x27;9 Games&#x27;, &#x27;5 Games&#x27;, &#x27;9 Games&#x27;, &#x27;8 Games&#x27;, &#x27;5 Games&#x27;) agree with the number of games transcribed for each date.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-slate-fields">
+<td>Slate field values re-read and compared</td>
+<td>315 field values across 36 games</td>
+<td>11 differences found (listed in the next table); 18 fields could not be re-read because the official page does not render them for completed games.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-pick-window">
+<td>Pick window re-verified end to end</td>
+<td>differences found</td>
+<td>All 27 games of the sealed pick window (2026-11-14 to 2026-11-17) match the committed capture on date, tip time, teams, game ID, arena, city, state and broadcast, except the two broadcaster labels listed below. The 27 sealed predictions are therefore still a faithful pre-registration of what is published.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-04">FLAG-LIVE-04</a></td>
+</tr>
+<tr id="capture-outside-window">
+<td>Games outside the 3-day pick window</td>
+<td>16 games captured (12 on 11-18, 4 on 11-19)</td>
+<td>The brief&#x27;s maximum is 3 days ahead of the build date, so these are deliberately not in the pick window. They are captured and published so that the omission is visible rather than silent.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-04">FLAG-LIVE-04</a></td>
+</tr>
+<tr id="capture-finals">
+<td>2026-11-13 finals vs an earlier session&#x27;s independent capture</td>
+<td>IDENTICAL</td>
+<td>Nine finals read from the official schedule page in this session, compared against the scores a different session captured from the official game cards. Every score, every team and the overtime flag agree.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="capture-ladder">
+<td>Team records vs the committed ratings snapshot</td>
+<td>19 of 30 teams moved</td>
+<td>The committed ratings snapshot was taken while the 2026-11-13 slate was still in progress, so it is one slate behind the live official standings. Quantified on the Ratings Staleness page.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-live" target="_blank" rel="noopener">Live verification audit, session arena/9ee870ea-nba2 (derived in-repo)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">read 2026-11-14 10:12-10:15 UTC; diff by audit/2026-11-14-live/verify_live.py</p>
+</section><section class="card table-card" id="live_slate_diff" data-rows="29">
+<h2>Slate re-check — every difference and every field the page does not render</h2>
+<p class="blurb">315 field values compared across 36 games. Every difference is listed; there is no rounding or &#x27;close enough&#x27; here — a difference is a difference. Fields the official page does not render for completed games (tip time, broadcaster) are listed too, because a value that cannot be re-read is not the same as a value that matched.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Slate re-check — every difference and every field the page does not render</caption><thead><tr>
+<th scope="col">Game ID</th>
+<th scope="col">Field</th>
+<th scope="col">Kind</th>
+<th scope="col">Committed capture</th>
+<th scope="col">Live official read</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="diff-0022600034-cup_group">
+<td>0022600034</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>East Group B</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600035-cup_group">
+<td>0022600035</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>East Group A</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600036-cup_group">
+<td>0022600036</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>East Group B</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600037-cup_group">
+<td>0022600037</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>East Group C</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600038-cup_group">
+<td>0022600038</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>West Group B</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600039-cup_group">
+<td>0022600039</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>West Group A</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600040-cup_group">
+<td>0022600040</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>West Group C</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600041-cup_group">
+<td>0022600041</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>West Group C</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600042-cup_group">
+<td>0022600042</td>
+<td>cup_group</td>
+<td>value differs</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>West Group B</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-06">FLAG-LIVE-06</a></td>
+</tr>
+<tr id="diff-0022600233-broadcast">
+<td>0022600233</td>
+<td>broadcast</td>
+<td>broadcaster marks differ</td>
+<td>LEAGUE PASS, NBA TV</td>
+<td>NBA TV</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-07">FLAG-LIVE-07</a></td>
+</tr>
+<tr id="diff-0022600256-broadcast">
+<td>0022600256</td>
+<td>broadcast</td>
+<td>broadcaster marks differ</td>
+<td>Peacock</td>
+<td>NBC, Peacock</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-07">FLAG-LIVE-07</a></td>
+</tr>
+<tr id="notrendered-0022600034-time_et">
+<td>0022600034</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>19:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600034-broadcast">
+<td>0022600034</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>Prime Video</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600035-time_et">
+<td>0022600035</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>19:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600035-broadcast">
+<td>0022600035</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600036-time_et">
+<td>0022600036</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>20:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600036-broadcast">
+<td>0022600036</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600037-time_et">
+<td>0022600037</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>20:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600037-broadcast">
+<td>0022600037</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600038-time_et">
+<td>0022600038</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>20:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600038-broadcast">
+<td>0022600038</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600039-time_et">
+<td>0022600039</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>20:30</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600039-broadcast">
+<td>0022600039</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600040-time_et">
+<td>0022600040</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>21:30</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600040-broadcast">
+<td>0022600040</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>Prime Video</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600041-time_et">
+<td>0022600041</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>22:00</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600041-broadcast">
+<td>0022600041</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600042-time_et">
+<td>0022600042</td>
+<td>time_et</td>
+<td>not rendered by the official page</td>
+<td>22:30</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+<tr id="notrendered-0022600042-broadcast">
+<td>0022600042</td>
+<td>broadcast</td>
+<td>not rendered by the official page</td>
+<td>League Pass</td>
+<td><span class="blank" title="blank because: FLAG-LIVE-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-05">FLAG-LIVE-05</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">read 2026-11-14 10:12 UTC; committed capture 2026-11-14 01:05 UTC</p>
+</section><section class="card table-card" id="live_records_diff" data-rows="30">
+<h2>Team records — the committed ratings snapshot vs the live official standings</h2>
+<p class="blurb">The committed snapshot (retrieved 2026-11-13 22:35 UTC, while the 11/13 slate was still running) is one slate behind the live official standings read on 2026-11-14 10:15 UTC. The published lines are derived from the committed snapshot and the sealed ledgers are immutable, so the lines stay as sealed — the effect of re-anchoring is measured and published on the Ratings Staleness page instead.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Team records — the committed ratings snapshot vs the live official standings</caption><thead><tr>
+<th scope="col">Team</th>
+<th scope="col">Committed W-L</th>
+<th scope="col">Live official W-L</th>
+<th scope="col">Change</th>
+<th scope="col">Committed home</th>
+<th scope="col">Live home</th>
+<th scope="col">Committed road</th>
+<th scope="col">Live road</th>
+<th scope="col">Moved?</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="rec-ATL">
+<td>ATL</td>
+<td>7-5</td>
+<td>7-6</td>
+<td>+0W / +1L</td>
+<td>3-3</td>
+<td>3-3</td>
+<td>4-2</td>
+<td>4-3</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-BKN">
+<td>BKN</td>
+<td>3-8</td>
+<td>3-8</td>
+<td>unchanged</td>
+<td>1-3</td>
+<td>1-3</td>
+<td>2-5</td>
+<td>2-5</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-BOS">
+<td>BOS</td>
+<td>10-2</td>
+<td>10-2</td>
+<td>unchanged</td>
+<td>5-0</td>
+<td>5-0</td>
+<td>5-2</td>
+<td>5-2</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-CHA">
+<td>CHA</td>
+<td>4-8</td>
+<td>4-8</td>
+<td>unchanged</td>
+<td>3-4</td>
+<td>3-4</td>
+<td>1-4</td>
+<td>1-4</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-CHI">
+<td>CHI</td>
+<td>1-9</td>
+<td>2-9</td>
+<td>+1W / +0L</td>
+<td>0-4</td>
+<td>1-4</td>
+<td>1-5</td>
+<td>1-5</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-CLE">
+<td>CLE</td>
+<td>6-6</td>
+<td>6-7</td>
+<td>+0W / +1L</td>
+<td>4-2</td>
+<td>4-2</td>
+<td>2-4</td>
+<td>2-5</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-DAL">
+<td>DAL</td>
+<td>7-5</td>
+<td>7-5</td>
+<td>unchanged</td>
+<td>5-2</td>
+<td>5-2</td>
+<td>2-3</td>
+<td>2-3</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-DEN">
+<td>DEN</td>
+<td>6-4</td>
+<td>6-4</td>
+<td>+0W / +0L</td>
+<td>2-2</td>
+<td>2-2</td>
+<td>4-2</td>
+<td>3-2</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-DET">
+<td>DET</td>
+<td>8-3</td>
+<td>8-3</td>
+<td>unchanged</td>
+<td>3-2</td>
+<td>3-2</td>
+<td>5-1</td>
+<td>5-1</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-GSW">
+<td>GSW</td>
+<td>8-4</td>
+<td>8-5</td>
+<td>+0W / +1L</td>
+<td>6-1</td>
+<td>6-1</td>
+<td>2-3</td>
+<td>2-4</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-HOU">
+<td>HOU</td>
+<td>9-3</td>
+<td>10-3</td>
+<td>+1W / +0L</td>
+<td>6-1</td>
+<td>7-1</td>
+<td>3-2</td>
+<td>3-2</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-IND">
+<td>IND</td>
+<td>4-8</td>
+<td>5-8</td>
+<td>+1W / +0L</td>
+<td>1-5</td>
+<td>2-4</td>
+<td>3-3</td>
+<td>3-3</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-LAC">
+<td>LAC</td>
+<td>2-8</td>
+<td>3-8</td>
+<td>+1W / +0L</td>
+<td>2-3</td>
+<td>3-3</td>
+<td>0-5</td>
+<td>0-5</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-LAL">
+<td>LAL</td>
+<td>11-2</td>
+<td>11-2</td>
+<td>unchanged</td>
+<td>5-1</td>
+<td>5-1</td>
+<td>6-1</td>
+<td>6-1</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-MEM">
+<td>MEM</td>
+<td>7-4</td>
+<td>8-4</td>
+<td>+1W / +0L</td>
+<td>2-4</td>
+<td>2-4</td>
+<td>5-0</td>
+<td>6-0</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-MIA">
+<td>MIA</td>
+<td>5-6</td>
+<td>6-6</td>
+<td>+1W / +0L</td>
+<td>1-3</td>
+<td>2-3</td>
+<td>4-3</td>
+<td>4-3</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-MIL">
+<td>MIL</td>
+<td>1-11</td>
+<td>1-12</td>
+<td>+0W / +1L</td>
+<td>1-6</td>
+<td>1-6</td>
+<td>0-5</td>
+<td>0-6</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-MIN">
+<td>MIN</td>
+<td>9-3</td>
+<td>9-3</td>
+<td>unchanged</td>
+<td>5-1</td>
+<td>5-1</td>
+<td>4-2</td>
+<td>4-2</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-NOP">
+<td>NOP</td>
+<td>4-8</td>
+<td>4-9</td>
+<td>+0W / +1L</td>
+<td>3-4</td>
+<td>3-5</td>
+<td>1-4</td>
+<td>1-4</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-NYK">
+<td>NYK</td>
+<td>6-5</td>
+<td>6-6</td>
+<td>+0W / +1L</td>
+<td>4-3</td>
+<td>4-3</td>
+<td>2-2</td>
+<td>2-3</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-OKC">
+<td>OKC</td>
+<td>8-4</td>
+<td>8-5</td>
+<td>+0W / +1L</td>
+<td>5-0</td>
+<td>5-0</td>
+<td>3-4</td>
+<td>3-5</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-ORL">
+<td>ORL</td>
+<td>4-7</td>
+<td>5-7</td>
+<td>+1W / +0L</td>
+<td>0-4</td>
+<td>1-4</td>
+<td>4-3</td>
+<td>4-3</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-PHI">
+<td>PHI</td>
+<td>10-3</td>
+<td>10-3</td>
+<td>unchanged</td>
+<td>5-2</td>
+<td>5-2</td>
+<td>5-1</td>
+<td>5-1</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-PHX">
+<td>PHX</td>
+<td>5-6</td>
+<td>5-6</td>
+<td>unchanged</td>
+<td>5-3</td>
+<td>5-3</td>
+<td>0-3</td>
+<td>0-3</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-POR">
+<td>POR</td>
+<td>8-3</td>
+<td>9-3</td>
+<td>+1W / +0L</td>
+<td>3-2</td>
+<td>3-2</td>
+<td>5-1</td>
+<td>6-1</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-SAC">
+<td>SAC</td>
+<td>1-10</td>
+<td>1-11</td>
+<td>+0W / +1L</td>
+<td>0-6</td>
+<td>0-7</td>
+<td>1-4</td>
+<td>1-4</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-SAS">
+<td>SAS</td>
+<td>10-2</td>
+<td>11-2</td>
+<td>+1W / +0L</td>
+<td>4-2</td>
+<td>5-2</td>
+<td>6-0</td>
+<td>6-0</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-TOR">
+<td>TOR</td>
+<td>5-7</td>
+<td>5-7</td>
+<td>unchanged</td>
+<td>2-3</td>
+<td>2-3</td>
+<td>3-4</td>
+<td>3-4</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="rec-UTA">
+<td>UTA</td>
+<td>1-11</td>
+<td>1-12</td>
+<td>+0W / +1L</td>
+<td>1-6</td>
+<td>1-6</td>
+<td>0-5</td>
+<td>0-6</td>
+<td>YES</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-01">FLAG-LIVE-01</a></td>
+</tr>
+<tr id="rec-WAS">
+<td>WAS</td>
+<td>4-9</td>
+<td>4-9</td>
+<td>unchanged</td>
+<td>2-3</td>
+<td>2-3</td>
+<td>2-6</td>
+<td>2-6</td>
+<td>no</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">committed snapshot 2026-11-13 22:35 UTC; live standings 2026-11-14 10:15 UTC</p>
+</section><section class="card table-card" id="live_finals" data-rows="9">
+<h2>2026-11-13 finals — this session&#x27;s read vs an earlier session&#x27;s independent capture</h2>
+<p class="blurb">Two independent reads of the same nine official games, taken by different sessions from different official pages, agree on every score, every team and the overtime flag. The earlier capture is in audit/2026-11-14/official_inputs_2026-11-14.json.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">2026-11-13 finals — this session&#x27;s read vs an earlier session&#x27;s independent capture</caption><thead><tr>
+<th scope="col">Game ID</th>
+<th scope="col">Matchup</th>
+<th scope="col">Away</th>
+<th scope="col">Home</th>
+<th scope="col">Status</th>
+<th scope="col">Earlier session&#x27;s capture</th>
+<th scope="col">Agreement</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="final-0022600034">
+<td>0022600034</td>
+<td>NYK @ IND</td>
+<td>104</td>
+<td>106</td>
+<td>Final</td>
+<td>104-106</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600035">
+<td>0022600035</td>
+<td>MIL @ ORL</td>
+<td>99</td>
+<td>107</td>
+<td>Final</td>
+<td>99-107</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600036">
+<td>0022600036</td>
+<td>CLE @ MIA</td>
+<td>121</td>
+<td>133</td>
+<td>Final</td>
+<td>121-133</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600037">
+<td>0022600037</td>
+<td>ATL @ CHI</td>
+<td>117</td>
+<td>125</td>
+<td>Final/OT</td>
+<td>117-125</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600038">
+<td>0022600038</td>
+<td>MEM @ NOP</td>
+<td>142</td>
+<td>111</td>
+<td>Final</td>
+<td>142-111</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600039">
+<td>0022600039</td>
+<td>UTA @ HOU</td>
+<td>118</td>
+<td>125</td>
+<td>Final</td>
+<td>118-125</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600040">
+<td>0022600040</td>
+<td>GSW @ SAS</td>
+<td>85</td>
+<td>123</td>
+<td>Final</td>
+<td>85-123</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600041">
+<td>0022600041</td>
+<td>POR @ SAC</td>
+<td>120</td>
+<td>107</td>
+<td>Final</td>
+<td>120-107</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="final-0022600042">
+<td>0022600042</td>
+<td>OKC @ LAC</td>
+<td>112</td>
+<td>113</td>
+<td>Final</td>
+<td>112-113</td>
+<td>identical</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com schedule + standings, read live 2026-11-14 10:15 UTC (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">this session 2026-11-14 10:12 UTC; earlier session 2026-11-14 ~00:58 UTC</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 {
-  "title": "NBA2 \u2014 questions that must be answered before a decision is reasonable",
+  "title": "NBA2 — questions that must be answered before a decision is reasonable",
   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.",
   "questions": [
     {
       "id": "Q-01",
-      "question": "Which odds source are we measuring against \u2014 and are we allowed to store its closing prices?",
+      "question": "Which odds source are we measuring against — and are we allowed to store its closing prices?",
       "have": "The full slate, our lines, and the knowledge that NBA.com renders odds client-side only and picks.nba.com publishes none.",
       "missing": "Any licensed book price, opening or closing, for any sport.",
       "how": "Owner picks a vendor (theScore Sportsdata/Odds API, Sportradar, or a sportsbook affiliate feed) and confirms storage rights; then add an ingest to data/raw.",
@@ -58,7 +58,7 @@
     },
     {
       "id": "Q-07",
-      "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status\u2192P(plays) weights, gate thresholds, \u03c1 band)?",
+      "question": "Who ratifies the eleven unratified thresholds (disagreement tolerance, conviction cut, trigger hurdle, status→P(plays) weights, gate thresholds, ρ band)?",
       "have": "Every one of them written down with its rationale and band on the Parameters page.",
       "missing": "A decision, because they currently control which games are actionable.",
       "how": "Owner reviews the Parameters page and either accepts or edits config.py.",
@@ -77,7 +77,7 @@
     {
       "id": "Q-09",
       "question": "What is the definition of 'removing luck' you will accept as a gate?",
-      "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat \u2265 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
+      "have": "Four candidate mechanisms implemented: bootstrap CI on PnL, t-stat ≥ 2, calibration slope, and rewards weighted on CLV/accuracy rather than PnL.",
       "missing": "Whether you also require a variance-reduction metric (e.g. Sharpe of residualised PnL) or a holdout-only payout.",
       "how": "Owner picks; add to gates.",
       "impact": "Changes which strategies can win the leaderboard, and therefore what gets built next.",
@@ -131,7 +131,7 @@
     {
       "id": "Q-15",
       "question": "What is the procedure when a game is postponed or a star is ruled out at warmups?",
-      "have": "Nothing \u2014 the model has no re-quote path.",
+      "have": "Nothing — the model has no re-quote path.",
       "missing": "Trigger for re-pricing and a rule for voiding sealed predictions.",
       "how": "Design a re-seal event in the ledger (new seal with reason, original kept).",
       "impact": "Settling against a cancelled game would corrupt the leaderboard.",
@@ -184,7 +184,7 @@
     },
     {
       "id": "Q-21",
-      "question": "What exactly should the executive summary optimise for \u2014 opportunity, risk, or project state?",
+      "question": "What exactly should the executive summary optimise for — opportunity, risk, or project state?",
       "have": "It currently reports project state and blockers first, because that is the truth today.",
       "missing": "Whether you want a picks-first summary as soon as prices exist.",
       "how": "Owner decision; the summary is generated, so it is a template change.",
@@ -195,7 +195,7 @@
       "id": "Q-22",
       "question": "Which numbers on this site would change your decision if they moved by 10%?",
       "have": "A sensitivity band for every structural parameter, and a stability fraction per line.",
-      "missing": "Your decision threshold \u2014 currently the model assumes \u00b110% matters, and suppresses a pick when it does.",
+      "missing": "Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.",
       "how": "Owner states a threshold; encode in G-08.",
       "impact": "This is the difference between a research dashboard and a betting system.",
       "severity": "MEDIUM"
@@ -247,11 +247,11 @@
     {
       "id": "Q-27",
       "question": "Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?",
-      "have": "A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served \u2014 site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.",
-      "missing": "Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.",
-      "how": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml's parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.",
-      "impact": "Every minute spent verifying the v1 tree is spent on a surface nobody reads, and its stale numbers keep appearing in repo-wide audits and confusing later sessions.",
-      "severity": "MEDIUM",
+      "have": "Answered on 2026-11-14 by session arena/9ee870ea-nba2. A cache-busted probe of the live site showed the v2 tree was served at the root and the v1 tree was not reachable (pages/session-audit.html and backtest/index.html both 404). The publish target was then reconciled the other way: the v1 tree is canonical because it carries the 27 sealed picks for 11-14 -> 11-17 and the newer 19:30 ET injury release, while the v2 tree withholds every pick for want of a market price. The v1 tree is now published by a named, link-checked publish list; the v2 tree stays in the repository as a historical build, still rebuilt and checked by CI. Nothing is deleted. The Pages setting remains build_type=legacy (S-32 / FLAG-LIVE-08).",
+      "missing": "Nothing blocking: the question is answered. What is still missing is the one-click admin action that points the repository's Pages setting at the workflow (S-32), so the published tree is described by the repository configuration and not only by the deployment that happened to win.",
+      "how": "No action needed for the question itself. For the residual setting: Settings -> Pages -> Build and deployment -> Source -> GitHub Actions, then re-run the publish workflow and re-fetch the live root with a cache-busting query.",
+      "impact": "The question is closed: the v1 tree stays, is published, and is the product. The residual setting is a documentation-accuracy item, not a publication risk.",
+      "severity": "LOW",
       "source": "https://github.com/wingbangboozle1-lang/NBA2",
       "evidence": "audit/2026-11-14/deploy_probe.json"
     },
@@ -276,6 +276,24 @@
       "severity": "MEDIUM",
       "source": "https://www.nba.com/schedule",
       "evidence": "nba2/pipeline/build_site_data.py::_content_stamp"
+    },
+    {
+      "id": "Q-30",
+      "question": "How stale may a ratings snapshot be before a line is published, and what do we do about it?",
+      "have": "A measured answer for the current window: the committed snapshot is one slate behind the official standings (19 of 30 teams moved), the published lines would move by at most 2.0 pts of spread with one lean flipping in 27 games, and the fitted home-court term changes sign. All of it is published on the Ratings Staleness page.",
+      "missing": "A policy. Nothing in the repository says whether a snapshot may be one, two or three slates old, and no gate tests it, so the answer is currently decided by when the refresh happens to run.",
+      "how": "Owner sets a maximum snapshot age (in completed slates) and whether the line is published with the staleness disclosed or suppressed until the snapshot is re-anchored. Then either implement S-29 (re-anchor after each slate) or add a gate that blocks publication when the snapshot age exceeds the policy.",
+      "impact": "Decides whether a reader of a line needs to know that the underlying records are one game old. It also decides whether the fitted home-court advantage — whose sign flips on a one-slate refresh — can ever be treated as identified.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "Q-31",
+      "question": "Which build of the dashboard is the product, and what happens to the other five?",
+      "have": "A working answer applied in this session: one named published tree (dashboard + measured-skill backtest + styles + board), staged as a build artifact, link-checked before upload, with the other trees kept in the repository and linked from the reconciliation page.",
+      "missing": "An owner decision on whether the superseded trees should be archived in the repository or deleted, and on whether the `site/` (v2) tree — which is one window behind and publishes no picks — should be kept as a historical build or refreshed and made canonical.",
+      "how": "Confirm the published tree, then archive or delete the rest; the history is in git either way.",
+      "impact": "Low for the numbers, high for trust: two dashboards on one domain is how a reader learns not to believe either.",
+      "severity": "MEDIUM"
     }
   ]
 }

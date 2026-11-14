@@ -1,0 +1,1465 @@
+{
+ "dataset": "official_live_capture",
+ "purpose": "Official-source capture taken by session arena/9ee870ea-nba2 on 2026-11-14 ~10:15 UTC, used to (a) re-verify the committed slate and team records line by line, (b) quantify the staleness of the committed ratings snapshot, and (c) show which games fall outside the brief's 3-day pick window. Nothing here is inferred: every field was read from the official pages listed below.",
+ "captured_at_utc": "2026-11-14T10:15:00Z",
+ "capture_method": "Platform page-fetch tool. Direct curl/urllib from this sandbox cannot open TLS to www.nba.com (SSL_ERROR_SYSCALL, re-probed this session) \u2014 the same egress block every prior session recorded. Every value below therefore comes from the fetch tool reading the official page, and the retrieval timestamp is recorded per source.",
+ "sources": [
+  {
+   "id": "nba_schedule",
+   "publisher": "NBA.com (official)",
+   "url": "https://www.nba.com/schedule?date=2026-11-17",
+   "retrieved_at_utc": "2026-11-14T10:12:00Z",
+   "note": "The schedule page renders the whole schedule list (Week 4 from 2026-11-13 onward), not just the requested date; the '?date=' parameter did not narrow the rendered window. Nine chunks were read to cover 2026-11-13 through 2026-11-20. The NBA's own day headers ('9 Games', '5 Games', ...) were used as the per-date count check.",
+   "official_nba_source": true
+  },
+  {
+   "id": "nba_standings",
+   "publisher": "NBA.com (official)",
+   "url": "https://www.nba.com/standings?Season=2026-27&SeasonType=Regular%20Season",
+   "retrieved_at_utc": "2026-11-14T10:15:00Z",
+   "note": "Read twice in this session, at 10:09 UTC and 10:15 UTC. W, L and the HOME/ROAD/Neutral splits were identical in both reads and additionally satisfy home+road+neutral = (w, l) for 30 of 30 teams, and the league totals balance at 183 wins and 183 losses (366 team-games) \u2014 consistent with 174 completed games through 2026-11-12 plus the 9 games of 2026-11-13. The LAST10 column differed between the two reads for four teams (GSW, DAL, PHX, SAC); those four cells are left blank and flagged rather than guessed.",
+   "official_nba_source": true
+  }
+ ],
+ "schedule": {
+  "columns": [
+   "date",
+   "time_et",
+   "away",
+   "home",
+   "game_id",
+   "arena",
+   "city",
+   "state",
+   "broadcast",
+   "cup_group",
+   "status",
+   "fields_rendered"
+  ],
+  "in_pick_window_note": "The brief's maximum is 3 days ahead of the build date (2026-11-14). The pick window is therefore 2026-11-14, 11-15, 11-16 and 11-17. Games dated 2026-11-18 or later are outside it and are listed separately so that the omission is visible rather than silent.",
+  "records": [
+   [
+    "2026-11-13",
+    null,
+    "NYK",
+    "IND",
+    "0022600034",
+    "Gainbridge Fieldhouse",
+    "Indianapolis",
+    "IN",
+    null,
+    "East Group B",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "MIL",
+    "ORL",
+    "0022600035",
+    "Kia Center",
+    "Orlando",
+    "FL",
+    null,
+    "East Group A",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "CLE",
+    "MIA",
+    "0022600036",
+    "Kaseya Center",
+    "Miami",
+    "FL",
+    null,
+    "East Group B",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "ATL",
+    "CHI",
+    "0022600037",
+    "United Center",
+    "Chicago",
+    "IL",
+    null,
+    "East Group C",
+    "Final/OT",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "MEM",
+    "NOP",
+    "0022600038",
+    "Smoothie King Center",
+    "New Orleans",
+    "LA",
+    null,
+    "West Group B",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "UTA",
+    "HOU",
+    "0022600039",
+    "Toyota Center",
+    "Houston",
+    "TX",
+    null,
+    "West Group A",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "GSW",
+    "SAS",
+    "0022600040",
+    "Frost Bank Center",
+    "San Antonio",
+    "TX",
+    null,
+    "West Group C",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "POR",
+    "SAC",
+    "0022600041",
+    "Golden 1 Center",
+    "Sacramento",
+    "CA",
+    null,
+    "West Group C",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-13",
+    null,
+    "OKC",
+    "LAC",
+    "0022600042",
+    "Intuit Dome",
+    "Inglewood",
+    "CA",
+    null,
+    "West Group B",
+    "Final",
+    "date, teams, score/status, arena, city, state, cup_group, game_id (tip time and broadcaster not rendered for completed games)"
+   ],
+   [
+    "2026-11-14",
+    "19:00",
+    "DEN",
+    "NOP",
+    "0022600231",
+    "Smoothie King Center",
+    "New Orleans",
+    "LA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-14",
+    "19:30",
+    "DAL",
+    "CLE",
+    "0022600232",
+    "Rocket Arena",
+    "Cleveland",
+    "OH",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-14",
+    "20:00",
+    "DET",
+    "MIA",
+    "0022600233",
+    "Kaseya Center",
+    "Miami",
+    "FL",
+    [
+     "NBA TV"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-14",
+    "20:00",
+    "BKN",
+    "MEM",
+    "0022600234",
+    "FedExForum",
+    "Memphis",
+    "TN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-14",
+    "20:00",
+    "CHI",
+    "MIN",
+    "0022600235",
+    "Target Center",
+    "Minneapolis",
+    "MN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "13:00",
+    "IND",
+    "PHI",
+    "0022600236",
+    "Xfinity Mobile Arena",
+    "Philadelphia",
+    "PA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "16:00",
+    "LAL",
+    "PHX",
+    "0022600237",
+    "Mortgage Matchup Center",
+    "Phoenix",
+    "AZ",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "16:30",
+    "CHA",
+    "LAC",
+    "0022600238",
+    "Intuit Dome",
+    "Inglewood",
+    "CA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "17:00",
+    "SAS",
+    "UTA",
+    "0022600239",
+    "Delta Center",
+    "Salt Lake City",
+    "UT",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "18:00",
+    "DAL",
+    "BOS",
+    "0022600240",
+    "TD Garden",
+    "Boston",
+    "MA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "18:00",
+    "NYK",
+    "TOR",
+    "0022600241",
+    "Scotiabank Arena",
+    "Toronto",
+    "ON",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "19:00",
+    "HOU",
+    "WAS",
+    "0022600242",
+    "Capital One Arena",
+    "Washington",
+    "DC",
+    [
+     "LEAGUE PASS",
+     "TV: MNMT/Monumental+"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "20:00",
+    "ATL",
+    "MIL",
+    "0022600243",
+    "Fiserv Forum",
+    "Milwaukee",
+    "WI",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-15",
+    "21:00",
+    "OKC",
+    "SAC",
+    "0022600244",
+    "Golden 1 Center",
+    "Sacramento",
+    "CA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "19:00",
+    "ORL",
+    "BOS",
+    "0022600245",
+    "TD Garden",
+    "Boston",
+    "MA",
+    [
+     "Peacock",
+     "NBC Sports Network"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "19:00",
+    "CHI",
+    "CLE",
+    "0022600246",
+    "Rocket Arena",
+    "Cleveland",
+    "OH",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "19:00",
+    "MEM",
+    "WAS",
+    "0022600247",
+    "Capital One Arena",
+    "Washington",
+    "DC",
+    [
+     "LEAGUE PASS",
+     "TV: MNMT/Monumental+"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "19:30",
+    "PHI",
+    "BKN",
+    "0022600248",
+    "Barclays Center",
+    "Brooklyn",
+    "NY",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "19:30",
+    "HOU",
+    "MIA",
+    "0022600249",
+    "Kaseya Center",
+    "Miami",
+    "FL",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "20:00",
+    "POR",
+    "MIN",
+    "0022600250",
+    "Target Center",
+    "Minneapolis",
+    "MN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "20:00",
+    "GSW",
+    "NOP",
+    "0022600251",
+    "Smoothie King Center",
+    "New Orleans",
+    "LA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-16",
+    "21:00",
+    "PHX",
+    "DEN",
+    "0022600252",
+    "Ball Arena",
+    "Denver",
+    "CO",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-17",
+    "19:30",
+    "NYK",
+    "TOR",
+    "0022600253",
+    "Scotiabank Arena",
+    "Toronto",
+    "ON",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-17",
+    "20:00",
+    "POR",
+    "MIN",
+    "0022600254",
+    "Target Center",
+    "Minneapolis",
+    "MN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-17",
+    "20:00",
+    "DET",
+    "SAS",
+    "0022600255",
+    "Frost Bank Center",
+    "San Antonio",
+    "TX",
+    [
+     "Peacock",
+     "NBC"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-17",
+    "22:30",
+    "UTA",
+    "LAC",
+    "0022600257",
+    "Intuit Dome",
+    "Inglewood",
+    "CA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-17",
+    "23:00",
+    "CHA",
+    "LAL",
+    "0022600256",
+    "Crypto.com Arena",
+    "Los Angeles",
+    "CA",
+    [
+     "Peacock",
+     "NBC"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ]
+  ],
+  "counts_read_from_day_headers": {
+   "2026-11-13": 9,
+   "2026-11-14": 5,
+   "2026-11-15": 9,
+   "2026-11-16": 8,
+   "2026-11-17": 5
+  },
+  "outside_pick_window": [
+   [
+    "2026-11-18",
+    "19:00",
+    "MEM",
+    "CLE",
+    "0022600258",
+    "Rocket Arena",
+    "Cleveland",
+    "OH",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "19:00",
+    "HOU",
+    "IND",
+    "0022600259",
+    "Gainbridge Fieldhouse",
+    "Indianapolis",
+    "IN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "19:00",
+    "MIL",
+    "MIA",
+    "0022600260",
+    "Kaseya Center",
+    "Miami",
+    "FL",
+    [
+     "ESPN"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "19:00",
+    "PHI",
+    "ORL",
+    "0022600261",
+    "Kia Center",
+    "Orlando",
+    "FL",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "19:30",
+    "CHI",
+    "BKN",
+    "0022600262",
+    "Barclays Center",
+    "Brooklyn",
+    "NY",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "19:30",
+    "WAS",
+    "TOR",
+    "0022600263",
+    "Scotiabank Arena",
+    "Toronto",
+    "ON",
+    [
+     "LEAGUE PASS",
+     "TV: MNMT/Monumental+"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "20:00",
+    "DET",
+    "NOP",
+    "0022600264",
+    "Smoothie King Center",
+    "New Orleans",
+    "LA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "20:00",
+    "ATL",
+    "OKC",
+    "0022600265",
+    "Paycom Center",
+    "Oklahoma City",
+    "OK",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "21:00",
+    "BOS",
+    "DEN",
+    "0022600266",
+    "Ball Arena",
+    "Denver",
+    "CO",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "21:30",
+    "GSW",
+    "DAL",
+    "0022600267",
+    "American Airlines Center",
+    "Dallas",
+    "TX",
+    [
+     "ESPN"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "22:00",
+    "UTA",
+    "LAL",
+    "0022600268",
+    "Crypto.com Arena",
+    "Los Angeles",
+    "CA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-18",
+    "22:00",
+    "PHX",
+    "SAC",
+    "0022600269",
+    "Golden 1 Center",
+    "Sacramento",
+    "CA",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-19",
+    "20:00",
+    "GSW",
+    "MEM",
+    "0022600270",
+    "FedExForum",
+    "Memphis",
+    "TN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-19",
+    "20:00",
+    "POR",
+    "MIL",
+    "0022600271",
+    "Fiserv Forum",
+    "Milwaukee",
+    "WI",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-19",
+    "20:00",
+    "NYK",
+    "MIN",
+    "0022600272",
+    "Target Center",
+    "Minneapolis",
+    "MN",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ],
+   [
+    "2026-11-19",
+    "20:00",
+    "LAC",
+    "SAS",
+    "0022600273",
+    "Frost Bank Center",
+    "San Antonio",
+    "TX",
+    [
+     "LEAGUE PASS"
+    ],
+    null,
+    "Scheduled",
+    "all fields"
+   ]
+  ],
+  "outside_pick_window_count_read_from_day_headers": {
+   "2026-11-18": 12,
+   "2026-11-19": 4
+  },
+  "id_order_anomaly": "Within 2026-11-17 the official game IDs are not monotonic with tip time: 0022600257 (UTA @ LAC, 10:30 PM ET) is listed before 0022600256 (CHA @ LAL, 11:00 PM ET). Any pipeline that infers ordering from the ID sequence will order those two games wrongly. Recorded as FLAG-LIVE-02.",
+  "tip_time_caveat_2026_11_13": "For the nine completed 2026-11-13 games the official schedule page renders the score and the venue but not the tip time, so time_et is null for those rows and those times are NOT re-verified by this capture. All 27 pick-window games were re-read with tip time and matched the committed capture exactly.",
+  "broadcast_note": "broadcast lists the broadcaster marks rendered on the official page for that game, as marks (not as prose). Where the page renders the LEAGUE PASS logo together with a regional TV feed, both are listed. The committed 2026-11-13 capture stored a single prose label per game, so the two are compared as mark sets rather than as strings.",
+  "broadcast_caveat_2026_11_13": "For the nine completed 2026-11-13 games the page renders no broadcaster mark, so broadcast is null for those rows and the committed labels are NOT re-verified by this capture."
+ },
+ "finals_2026_11_13": {
+  "columns": [
+   "game_id",
+   "date",
+   "away",
+   "home",
+   "away_score",
+   "home_score",
+   "ot",
+   "status_text",
+   "source"
+  ],
+  "note": "Read from the official schedule page in this session, where all nine 2026-11-13 games render as Final (one as Final/OT). The same scores are also carried in the earlier session's capture audit/2026-11-14/official_inputs_2026-11-14.json; the two captures are compared in the report.",
+  "records": [
+   [
+    "0022600034",
+    "2026-11-13",
+    "NYK",
+    "IND",
+    104,
+    106,
+    false,
+    "Final",
+    "https://www.nba.com/game/nyk-vs-ind-0022600034"
+   ],
+   [
+    "0022600035",
+    "2026-11-13",
+    "MIL",
+    "ORL",
+    99,
+    107,
+    false,
+    "Final",
+    "https://www.nba.com/game/mil-vs-orl-0022600035"
+   ],
+   [
+    "0022600036",
+    "2026-11-13",
+    "CLE",
+    "MIA",
+    121,
+    133,
+    false,
+    "Final",
+    "https://www.nba.com/game/cle-vs-mia-0022600036"
+   ],
+   [
+    "0022600037",
+    "2026-11-13",
+    "ATL",
+    "CHI",
+    117,
+    125,
+    true,
+    "Final/OT",
+    "https://www.nba.com/game/atl-vs-chi-0022600037"
+   ],
+   [
+    "0022600038",
+    "2026-11-13",
+    "MEM",
+    "NOP",
+    142,
+    111,
+    false,
+    "Final",
+    "https://www.nba.com/game/mem-vs-nop-0022600038"
+   ],
+   [
+    "0022600039",
+    "2026-11-13",
+    "UTA",
+    "HOU",
+    118,
+    125,
+    false,
+    "Final",
+    "https://www.nba.com/game/uta-vs-hou-0022600039"
+   ],
+   [
+    "0022600040",
+    "2026-11-13",
+    "GSW",
+    "SAS",
+    85,
+    123,
+    false,
+    "Final",
+    "https://www.nba.com/game/gsw-vs-sas-0022600040"
+   ],
+   [
+    "0022600041",
+    "2026-11-13",
+    "POR",
+    "SAC",
+    120,
+    107,
+    false,
+    "Final",
+    "https://www.nba.com/game/por-vs-sac-0022600041"
+   ],
+   [
+    "0022600042",
+    "2026-11-13",
+    "OKC",
+    "LAC",
+    112,
+    113,
+    false,
+    "Final",
+    "https://www.nba.com/game/okc-vs-lac-0022600042"
+   ]
+  ]
+ },
+ "standings": {
+  "columns": [
+   "tricode",
+   "w",
+   "l",
+   "win_pct",
+   "gb",
+   "conf",
+   "div",
+   "home",
+   "road",
+   "neutral",
+   "ot",
+   "last10",
+   "streak"
+  ],
+  "note": "Official 2026-27 regular-season standings read twice in this session. 'gb' is the NBA's own games-behind column and is left as rendered ('--' for the conference leaders). home/road/neutral are the NBA's split columns. last10 is null for the four teams whose two reads disagreed (see sources.nba_standings.note).",
+  "records": [
+   [
+    "BOS",
+    10,
+    2,
+    ".833",
+    "--",
+    "10-1",
+    "4-0",
+    "5-0",
+    "5-2",
+    "0-0",
+    "1-0",
+    "9-1",
+    "W 5"
+   ],
+   [
+    "PHI",
+    10,
+    3,
+    ".769",
+    "0.5",
+    "10-3",
+    "3-1",
+    "5-2",
+    "5-1",
+    "0-0",
+    "0-0",
+    "7-3",
+    "W 1"
+   ],
+   [
+    "DET",
+    8,
+    3,
+    ".727",
+    "1.5",
+    "8-2",
+    "0-0",
+    "3-2",
+    "5-1",
+    "0-0",
+    "1-0",
+    "7-3",
+    "W 2"
+   ],
+   [
+    "ATL",
+    7,
+    6,
+    ".538",
+    "3.5",
+    "7-2",
+    "4-1",
+    "3-3",
+    "4-3",
+    "0-0",
+    "0-1",
+    "5-5",
+    "L 2"
+   ],
+   [
+    "MIA",
+    6,
+    6,
+    ".500",
+    "4",
+    "3-2",
+    "1-1",
+    "2-3",
+    "4-3",
+    "0-0",
+    "1-0",
+    "6-4",
+    "W 3"
+   ],
+   [
+    "NYK",
+    6,
+    6,
+    ".500",
+    "4",
+    "6-6",
+    "1-3",
+    "4-3",
+    "2-3",
+    "0-0",
+    "0-0",
+    "6-4",
+    "L 2"
+   ],
+   [
+    "CLE",
+    6,
+    7,
+    ".462",
+    "4.5",
+    "5-5",
+    "1-0",
+    "4-2",
+    "2-5",
+    "0-0",
+    "1-0",
+    "4-6",
+    "L 1"
+   ],
+   [
+    "TOR",
+    5,
+    7,
+    ".417",
+    "5",
+    "4-3",
+    "0-2",
+    "2-3",
+    "3-4",
+    "0-0",
+    "0-0",
+    "3-7",
+    "L 3"
+   ],
+   [
+    "ORL",
+    5,
+    7,
+    ".417",
+    "5",
+    "3-4",
+    "0-2",
+    "1-4",
+    "4-3",
+    "0-0",
+    "0-1",
+    "5-5",
+    "W 3"
+   ],
+   [
+    "IND",
+    5,
+    8,
+    ".385",
+    "5.5",
+    "3-5",
+    "0-1",
+    "2-4",
+    "3-3",
+    "0-1",
+    "0-0",
+    "3-7",
+    "W 2"
+   ],
+   [
+    "CHA",
+    4,
+    8,
+    ".333",
+    "6",
+    "4-7",
+    "2-2",
+    "3-4",
+    "1-4",
+    "0-0",
+    "0-0",
+    "3-7",
+    "L 1"
+   ],
+   [
+    "WAS",
+    4,
+    9,
+    ".308",
+    "6.5",
+    "4-8",
+    "2-3",
+    "2-3",
+    "2-6",
+    "0-0",
+    "0-1",
+    "2-8",
+    "L 6"
+   ],
+   [
+    "BKN",
+    3,
+    8,
+    ".273",
+    "6.5",
+    "2-7",
+    "0-2",
+    "1-3",
+    "2-5",
+    "0-0",
+    "0-1",
+    "3-7",
+    "W 1"
+   ],
+   [
+    "CHI",
+    2,
+    9,
+    ".182",
+    "7.5",
+    "2-8",
+    "1-0",
+    "1-4",
+    "1-5",
+    "0-0",
+    "1-0",
+    "2-8",
+    "W 1"
+   ],
+   [
+    "MIL",
+    1,
+    12,
+    ".077",
+    "9.5",
+    "1-9",
+    "1-2",
+    "1-6",
+    "0-6",
+    "0-0",
+    "0-0",
+    "1-9",
+    "L 9"
+   ],
+   [
+    "SAS",
+    11,
+    2,
+    ".846",
+    "--",
+    "10-2",
+    "2-1",
+    "5-2",
+    "6-0",
+    "0-0",
+    "1-0",
+    "10-0",
+    "W 11"
+   ],
+   [
+    "LAL",
+    11,
+    2,
+    ".846",
+    "--",
+    "6-2",
+    "4-1",
+    "5-1",
+    "6-1",
+    "0-0",
+    "0-0",
+    "8-2",
+    "W 7"
+   ],
+   [
+    "HOU",
+    10,
+    3,
+    ".769",
+    "1",
+    "6-3",
+    "2-1",
+    "7-1",
+    "3-2",
+    "0-0",
+    "0-0",
+    "7-3",
+    "W 3"
+   ],
+   [
+    "POR",
+    9,
+    3,
+    ".750",
+    "1.5",
+    "6-3",
+    "2-1",
+    "3-2",
+    "6-1",
+    "0-0",
+    "1-0",
+    "7-3",
+    "W 3"
+   ],
+   [
+    "MIN",
+    9,
+    3,
+    ".750",
+    "1.5",
+    "5-2",
+    "2-1",
+    "5-1",
+    "4-2",
+    "0-0",
+    "0-1",
+    "7-3",
+    "W 5"
+   ],
+   [
+    "MEM",
+    8,
+    4,
+    ".667",
+    "2.5",
+    "7-3",
+    "1-1",
+    "2-4",
+    "6-0",
+    "0-0",
+    "0-1",
+    "6-4",
+    "W 1"
+   ],
+   [
+    "GSW",
+    8,
+    5,
+    ".615",
+    "3",
+    "6-5",
+    "3-2",
+    "6-1",
+    "2-4",
+    "0-0",
+    "1-0",
+    null,
+    "L 2"
+   ],
+   [
+    "OKC",
+    8,
+    5,
+    ".615",
+    "3",
+    "5-5",
+    "2-1",
+    "5-0",
+    "3-5",
+    "0-0",
+    "0-0",
+    "5-5",
+    "L 3"
+   ],
+   [
+    "DEN",
+    6,
+    4,
+    ".600",
+    "3.5",
+    "4-4",
+    "0-2",
+    "2-2",
+    "3-2",
+    "1-0",
+    "1-0",
+    "6-4",
+    "W 1"
+   ],
+   [
+    "DAL",
+    7,
+    5,
+    ".583",
+    "3.5",
+    "3-5",
+    "1-3",
+    "5-2",
+    "2-3",
+    "0-0",
+    "0-0",
+    null,
+    "L 1"
+   ],
+   [
+    "PHX",
+    5,
+    6,
+    ".455",
+    "4",
+    "3-6",
+    "2-1",
+    "5-3",
+    "0-3",
+    "0-0",
+    "0-0",
+    null,
+    "W 2"
+   ],
+   [
+    "NOP",
+    4,
+    9,
+    ".308",
+    "7",
+    "3-7",
+    "1-1",
+    "3-5",
+    "1-4",
+    "0-0",
+    "2-1",
+    "4-6",
+    "L 5"
+   ],
+   [
+    "LAC",
+    3,
+    8,
+    ".273",
+    "7",
+    "3-6",
+    "1-4",
+    "3-3",
+    "0-5",
+    "0-0",
+    "0-1",
+    "2-8",
+    "W 1"
+   ],
+   [
+    "SAC",
+    1,
+    11,
+    ".083",
+    "9.5",
+    "1-9",
+    "0-2",
+    "0-7",
+    "1-4",
+    "0-0",
+    "0-0",
+    null,
+    "L 5"
+   ],
+   [
+    "UTA",
+    1,
+    12,
+    ".077",
+    "10",
+    "1-10",
+    "0-2",
+    "1-6",
+    "0-6",
+    "0-0",
+    "0-2",
+    "0-10",
+    "L 11"
+   ]
+  ]
+ }
+}

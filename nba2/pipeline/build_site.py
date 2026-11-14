@@ -41,6 +41,8 @@ NAV = [
     ("pages/props.html", "Player Props & Combos"),
     ("pages/injuries.html", "Injuries & Rotation"),
     ("pages/game-flow.html", "Game Flow"),
+    ("pages/live-verification.html", "Live Verification"),
+    ("pages/ratings-staleness.html", "Ratings Staleness"),
     ("pages/research-scaffold.html", "Research Blueprint (session 1)"),
     ("pages/methodology.html", "Methodology & Parameters"),
     ("pages/requirements.html", "Requirements"),
@@ -70,6 +72,14 @@ INTROS = {
     "pages/props.html": "<p>The pricing code is real; the inputs are not available. That asymmetry is the whole page.</p>",
     "pages/injuries.html": "<p>Official report rows, rotation-body arithmetic, and the impact columns left blank on purpose.</p>",
     "pages/game-flow.html": "<p>Schedule-spot facts from the official slate, and the in-game columns we refuse to narrate.</p>",
+    "pages/live-verification.html":
+        "<p>An official-source re-check run on 2026-11-14 at 10:15 UTC: the schedule and the "
+        "standings were read again from NBA.com and diffed against every committed snapshot, "
+        "field by field. Every difference is listed; so is every field the page does not render.</p>",
+    "pages/ratings-staleness.html":
+        "<p>How far the published lines would move if the ratings snapshot were re-anchored to "
+        "the live official standings — measured, published, and deliberately <em>not</em> applied, "
+        "because the sealed pre-registrations must keep matching what is published.</p>",
     "pages/methodology.html": "<p>How a line gets made here, which parameters are fitted, and which are still someone's opinion.</p>",
     "pages/requirements.html": "<p>The full requirements list from the brief, with a status you can argue with.</p>",
     "pages/repo-review.html": "<p>Line-by-line review of the repository, including work already merged by other sessions.</p>",
@@ -256,6 +266,16 @@ def _pages() -> dict[str, list[str]]:
     return {
         "pages/executive-summary.html": [
             '<div class="card">' + kpis() + "</div>",
+            render_table({**sec("live_capture_check"),
+                          "title": "Verified against NBA.com on 2026-11-14 at 10:15 UTC",
+                          "rows": sec("live_capture_check")["rows"],
+                          "anchor": "summary-live-verification"}, L),
+            render_table({**sec("staleness_summary"),
+                          "title": "The one thing a reader must know about the inputs",
+                          "rows": sec("staleness_summary")["rows"][:4],
+                          "anchor": "summary-staleness",
+                          "blurb": "Truncated here; the full table, and the per-game movement, are on the "
+                                   "Ratings Staleness page."}, L),
             render_table({**sec("lines"),
                           "title": "Snapshot of the priced slate (first 8 rows)",
                           "rows": sec("lines")["rows"][:8],
@@ -279,6 +299,12 @@ def _pages() -> dict[str, list[str]]:
                                 render_table(sec("leaders"), L),
                                 render_table(sec("injuries"), L), render_table(sec("injuries_window"), L)],
         "pages/game-flow.html": [render_table(sec("gameflow"), L), render_table(sec("anomalies"), L)],
+        "pages/live-verification.html": [render_table(sec("live_capture_check"), L),
+                                         render_table(sec("live_slate_diff"), L),
+                                         render_table(sec("live_records_diff"), L),
+                                         render_table(sec("live_finals"), L)],
+        "pages/ratings-staleness.html": [render_table(sec("staleness_summary"), L),
+                                         render_table(sec("staleness_games"), L)],
         "pages/methodology.html": [render_table(sec("calibration"), L), render_table(sec("params"), L),
                                    render_table(sec("ratings"), L), render_table(sec("luck"), L)],
         "pages/requirements.html": [render_table(sec("requirements"), L)],
@@ -310,6 +336,17 @@ def build() -> list[str]:
 
     home_sections = [
         '<div class="card">' + kpis() + "</div>",
+        '<section class="card"><h2>Which build is this?</h2><p class="blurb">One dashboard, one window, '
+        "one set of numbers — and every other page in this repository is either a page of this "
+        "dashboard, the measured-skill backtest, or a build kept for the record and linked from the "
+        "reconciliation page.</p><div class=\"cat-grid\">"
+        '<a class="cat-card" href="pages/live-verification.html"><h3>This build, re-checked against '
+        'NBA.com</h3></a>'
+        '<a class="cat-card" href="backtest/index.html"><h3>Measured-Skill Backtest (separate tree)</h3></a>'
+        '<a class="cat-card" href="pages/reconciliation.html"><h3>Every other build in this repository, '
+        'and its status</h3></a>'
+        '<a class="cat-card" href="pages/flagged-review.html"><h3>Everything still unverified</h3></a>'
+        "</div></section>",
         '<section class="card"><h2>Sections</h2><p class="blurb">Ordered so a reader meets the data before the '
         "opinion: what we know, what we price, what is blocked.</p><div class=\"cat-grid\">"
         + "".join(f'<a class="cat-card" href="{href}"><h3>{html.escape(label)}</h3></a>'

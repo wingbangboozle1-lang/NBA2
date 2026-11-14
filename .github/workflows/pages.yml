@@ -1,9 +1,30 @@
 name: Publish GitHub Pages
 
-# Publishes the v2 site tree (site/). The v1 trees (root *.html, pages/, docs/, dashboard/,
-# verified/, originated/) stay in the repository for history but are no longer published:
-# they contain snapshots that disagree with each other, and shipping six versions of the
-# same dashboard is how a reader learns not to trust any of them.
+# ---------------------------------------------------------------------------------------------
+# WHAT THIS PUBLISHES
+#
+# One tree: the canonical dashboard (`index.html` + `pages/**`), the measured-skill backtest it
+# links to, and the styles. The list is explicit in `nba2/pipeline/build_public.py` — a new
+# top-level directory in the repository cannot become part of the public site by accident.
+#
+# WHY IT IS NOT "THE REPO ROOT"
+#
+# This repository contains several site trees from parallel sessions (`site/`, `docs/`,
+# `dashboard/`, `originated/`, `verified/`, `archive/`). Publishing all of them put six versions
+# of the same dashboard on one domain, and — until this workflow was changed — the workflow
+# published `site/` while the repository's Pages setting published the root tree, so a reader
+# got a different site from the one CI built. The canonical tree is now named, built and
+# link-checked in one place, and the other trees stay in the repository as history, linked as
+# source.
+#
+# `nba2/pipeline/build_public.py` fails the job if any internal link in the published tree does
+# not resolve. NOTE: the repository's Pages *setting* is still `build_type: legacy` (deploy from
+# the branch root) and cannot be changed from a token — the API answers 403. In practice this
+# workflow wins the race: the classic build is cancelled once a newer deployment is created.
+# The one-click fix (Settings -> Pages -> Source -> GitHub Actions) is recorded as S-32 /
+# FLAG-LIVE-08; nothing about the published tree changes if it is not done.
+# ---------------------------------------------------------------------------------------------
+
 on:
   push:
     branches: [main]
@@ -24,25 +45,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Rebuild the v2 site from the committed official snapshot
+      - name: Rebuild the published tree from the committed snapshots
         run: |
-          python -m nba2.v2
-          python -m nba2.v2.check
+          python -m nba2.pipeline.build_site_data
+          python -m nba2.pipeline.build_site
+          python -m backtest.engine.build
 
-      - name: Fail if the committed site differs from a rebuild
+      - name: Fail if the committed tree differs from a rebuild
         run: |
-          git add -A -- site data/v2
-          if ! git diff --cached --quiet -- site; then
-            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
-            git diff --cached --stat -- site | tail -40
+          git add -A
+          if ! git diff --cached --quiet -- data/site.json data/site-built.json '*.html' pages backtest; then
+            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- data/site.json data/site-built.json '*.html' pages backtest | tr '\n' ' ')"
+            git diff --cached --stat -- data/site.json data/site-built.json '*.html' pages backtest | tail -40
             exit 1
           fi
-          echo "published artefacts match the v2 model"
+          echo "published artefacts match the pipeline"
+
+      - name: Stage the published tree and prove every internal link resolves
+        run: python -m nba2.pipeline.build_public --out _site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _site
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
