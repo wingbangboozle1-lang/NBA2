@@ -669,3 +669,21 @@ A second remote advance occurred before PR #16 was ready to merge: PR #18 from `
 | V1 | Re-run repo health checks; document current limitations without changing shared site/data | done | `arena/9707c113-nba2` | `analysis/session-9707-audit.md`, append-only `COORDINATION.md` | 55 tests; 915-row/33-table lint; all dashboard checkers pass; originated 24/24; source scope and limits recorded in report. |
 
 The claim was committed and pushed before starting. Verification results and limits are documented in `analysis/session-9707-audit.md`. Official-source pointers carried forward from prior source records: [NBA schedule](https://www.nba.com/schedule), [NBA injury report 2026-11-13 04:15 PM ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf). This session did not re-certify all underlying rows. Generated output and tracked bytecode changes from test commands were restored; product data/site files remain unchanged.
+
+---
+
+## Session `arena/c09e0241-nba2` — external-source verification, CR-4 handoff fix, final integration (2026-11-14)
+
+Claimed 2026-11-14 (UTC ~01:00). Claim committed and pushed before work started, per protocol.
+Session ID: `arena/c09e0241-nba2`. Working branch is platform-pinned; no branch switch or worktree.
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| D1 | Claim session + file scope | in progress | `arena/c09e0241-nba2` | this section of `COORDINATION.md` | this claim |
+| D2 | External official-source verification pass (A-04: reachability + content spot-check of published source links) | unclaimed→claimed | `arena/c09e0241-nba2` | `analysis/source-verification-c09e0241.md`; append-only board entries | live fetches of official URLs (nba.com / ak-static.cms.nba.com) via platform page fetch; results + timestamps recorded per URL |
+| D3 | CR-4 handoff fix: unstyled empty `<td>` in `dashboard/data.html` (owner `arena-10957a28` finished; handoff taken over per >60-min/finished-owner rule) | unclaimed→claimed | `arena/c09e0241-nba2` | `dashboard/data.html` (the single blank cell only) | cell given the site's standard blank marker + flag reference; `scripts/check_site.py` must still PASS after the edit |
+| D4 | Residual README doc fix: stale `(49 tests)` comment in the reproduce block (A-02 handoff; `README.md` otherwise untouched) | unclaimed→claimed | `arena/c09e0241-nba2` | `README.md` (one comment line) | count independently reproduced: `python3 -m unittest discover -s nba2/tests -t .` → 55 |
+| D5 | Final integration: re-verify combined tree after other sessions' open work (PR #21 by `arena/79e87c81-nba2` is OPEN and owns `data/raw/**`, `data/site.json`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `index.html`, `pages/**`, capture tools, `.github/workflows/ci.yml` — this session does NOT edit those), run all checkers, open PR → `main`, merge, confirm Pages deploy, record result here | unclaimed→claimed | `arena/c09e0241-nba2` | repo-wide verification; this board section for the record | all repo checkers + official-source spot checks; PR link + merge commit + Pages run recorded below |
+
+**Scope (files this session may edit):** `analysis/source-verification-c09e0241.md`, `dashboard/data.html` (CR-4 cell only), `README.md` (one comment line), this append-only section of `COORDINATION.md`. Read-only everywhere else. **Not touching** (owned by active session `arena/79e87c81-nba2` via PR #21): `data/raw/**`, `data/site.json`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `nba2/tests/**`, `index.html`, `pages/**`, `tools/capture_*`, `tools/refresh_player_stats.py`, `.github/workflows/ci.yml`. **Not touching** (finished sessions): `docs/**`, `dashboard/**` except the single CR-4 cell, `originated/**`, `verified/**`, `tools/**` except read-only runs, `scripts/**` except read-only runs.
+
