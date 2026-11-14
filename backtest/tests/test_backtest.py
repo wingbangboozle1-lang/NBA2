@@ -231,6 +231,31 @@ class TestGatesAndLeaderboard(unittest.TestCase):
     def test_small_sample_fails_gate_01(self):
         self.assertEqual(self.gres["gates"]["G-01"]["status"], "FAIL")
 
+    def test_gate_04_is_disputed_not_accepted(self):
+        """A pass won against an unshrunk raw differential is a strawman.
+
+        The registered baseline (b) reads up to -66 points in week one, so any sane model beats
+        it. Measured against a shrunk differential with no home-court term, the model is WORSE.
+        The gate must therefore never be counted as evidence of skill.
+        """
+        g4 = self.gres["gates"]["G-04"]
+        self.assertTrue(g4["disputed"], "G-04 must not be accepted on a strawman baseline")
+        self.assertLessEqual(g4["gain_from_home_court"], 0.0)
+        self.assertNotIn("G-04", self.gres["summary"]["passed_reliable"])
+        self.assertIn("G-04", self.gres["summary"]["passed_disputed"])
+
+    def test_strawman_baseline_is_absurd_on_purpose(self):
+        """Documents the defect: the registered baseline is worse than predicting zero."""
+        g4 = self.gres["gates"]["G-04"]
+        # baseline (b) is worse than the 0.0-spread baseline (a)
+        self.assertGreater(g4["baseline_c_shrunk_net_no_hca"] - g4["gain_from_shrinkage"], 0)
+
+    def test_disputed_gates_earn_no_reward_fraction(self):
+        board = leaderboard.build(self.rows, self.gres, len(self.games))
+        for row in board:
+            self.assertNotIn("G-04", row["gates_counted"])
+            self.assertIn("G-04", row["gates_disputed_excluded"])
+
     def test_no_reward_when_any_gate_fails(self):
         board = leaderboard.build(self.rows, self.gres, len(self.games))
         if self.gres["summary"]["failed"]:

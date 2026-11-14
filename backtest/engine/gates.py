@@ -15,7 +15,7 @@ from __future__ import annotations
 import math
 from typing import Sequence
 
-from . import skill, stats
+from . import skill, stats, walkforward
 
 try:  # the repo's own gate definitions
     from nba2 import config as repo_config
@@ -84,6 +84,22 @@ def evaluate(rows: Sequence[dict], corr: dict) -> dict:
     net_only = [abs(r["pred_margin_net_only"] - r["actual_margin_home"])
                 for r in graded if r.get("pred_margin_net_only") is not None]
     mae_b = round(sum(net_only) / len(net_only), 3) if net_only else None
+
+    # Baseline (c): the FAIR shape of baseline (b). Baseline (b) is an unshrunk raw point
+    # differential, which in the first week can read -66 or +31 points and is then wrong by
+    # construction. Applying the same shrinkage the model uses, but NO home-court term,
+    # isolates what the home-court estimate actually contributes. Without this the registered
+    # gate can be won against a strawman.
+    net_c = []
+    for r in graded:
+        if r.get("pred_margin_net_only") is None:
+            continue
+        n = min(r.get("home_games_before", 0), r.get("away_games_before", 0))
+        net_c.append(abs(walkforward.shrink(r["pred_margin_net_only"], n)
+                         - r["actual_margin_home"]))
+    mae_c = round(sum(net_c) / len(net_c), 3) if net_c else None
+    hca_gain = round(mae_c - mae_model, 3) if (mae_c is not None and mae_model is not None) else None
+    shrink_gain = round(mae_a - mae_c, 3) if (mae_c is not None and mae_a is not None) else None
     if mae_model is None or mae_a is None:
         results["G-04"] = {"status": "BLOCKED", "measured": "no graded lines"}
     else:
@@ -97,6 +113,26 @@ def evaluate(rows: Sequence[dict], corr: dict) -> dict:
                          f"{mae_b:.2f} (gain {beats_b:+.2f})" if mae_b is not None else
                          f"our MAE {mae_model:.2f} vs baseline {mae_a:.2f}"),
             "required": "beat BOTH baselines by >= 0.30 points of MAE",
+            "baseline_c_shrunk_net_no_hca": mae_c,
+            "gain_from_shrinkage": shrink_gain,
+            "gain_from_home_court": hca_gain,
+            # A pass won against an unshrunk strawman is not evidence. If the model does not
+            # also beat baseline (c) -- same shrinkage, no home-court term -- the gate is reported
+            # as PASS-as-registered but DISPUTED, and it is excluded from the reward fraction.
+            "disputed": (hca_gain is not None and hca_gain <= 0.0),
+            "dispute_reason": (
+                f"Model fails to beat baseline (c), a shrunk differential with no home-court term: "
+                f"{mae_c:.2f} vs {mae_model:.2f} MAE (home-court gain {hca_gain:+.2f} pts). "
+                "The registered gate compares against an unshrunk baseline that is wrong by "
+                "construction in week one, so this PASS is a false positive and must not be "
+                "counted as evidence of skill."
+                if (hca_gain is not None and hca_gain <= 0.0) else ""),
+            "strawman_warning": (
+                "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it "
+                "reads up to -66 points, so it is wrong by construction and any sane model beats "
+                "it. Baseline (c) applies the same shrinkage with no home-court term; the true "
+                f"gain over it is only {hca_gain:+.2f} pts. Passing this gate on baseline (b) "
+                "alone would be a false positive." if hca_gain is not None else ""),
             "why_it_matters": ("Baseline (b) is the important one: if shrinkage and the "
                                "home-court term do not beat a raw point differential, the "
                                "model is decoration. This gate is the one that failed."),
@@ -187,10 +223,17 @@ def evaluate(rows: Sequence[dict], corr: dict) -> dict:
     failed = [k for k, v in out.items() if v["status"] == "FAIL"]
     partial = [k for k, v in out.items() if v["status"] == "PARTIAL"]
     blocked = [k for k, v in out.items() if v["status"] == "BLOCKED"]
+    disputed = [k for k, v in out.items() if v.get("disputed")]
+    reliable = [k for k in passed if k not in disputed]
     return {
         "gates": out,
         "summary": {"n": len(out), "passed": passed, "failed": failed,
-                    "partial": partial, "blocked": blocked},
+                    "partial": partial, "blocked": blocked,
+                    "passed_reliable": reliable,
+                    "passed_disputed": disputed,
+                    "note": ("A gate in passed_disputed meets its registered wording but fails the "
+                             "stricter fair-baseline comparison, so it is not counted as evidence "
+                             "of skill and does not count toward the reward fraction.")},
     }
 
 

@@ -175,14 +175,42 @@ runtime** — the backtest cannot quietly relax a threshold to make itself pass.
 | G-01 sample size (300 settled) | **FAIL** | 139 graded |
 | G-02 line-shopping evidence | **BLOCKED** | no captured closing lines |
 | G-03 calibration | **PARTIAL** | Brier 0.2266 ≤ 0.245 and n ≥ 100 met; calibration shape non-monotone |
-| G-04 beat naive baselines by 0.30 MAE | **FAIL** | margin gap 1.09, total gap **negative** |
+| G-04 beat naive baselines by 0.30 MAE | **PASS — but DISPUTED** | wins against an unshrunk strawman; loses to a fair shrunk baseline by 0.08 pts (§5.1) |
 | G-05 forward ROI | **PARTIAL** | forecast half done, ROI half blocked |
 | G-06 bankroll / drawdown | **BLOCKED** | no settled bets |
 | G-07 walk-forward, no lookahead | **PASS** | leakage-tested, degradation within 25% |
 | G-08–G-10 | **PARTIAL / BLOCKED** | downstream of G-01 and G-02 |
 
-**1 passed, 2 failed, 3 partial, 4 blocked.** G-07 passing is a genuine, new result: the pipeline is
-now *demonstrably* leak-free. G-04 failing is the reason no reward is paid.
+**1 passed reliably (G-07), 1 passed only as registered and disputed (G-04), 1 failed (G-01),
+3 partial, 4 blocked.** G-07 passing is a genuine, new result: the pipeline is now *demonstrably*
+leak-free.
+
+### 5.1 G-04 is a false positive, and that is a finding in itself
+
+G-04's registered wording is *"beat both baselines by ≥ 0.30 MAE"*, where baseline (b) is a **raw,
+unshrunk point differential**. In week one that quantity reads anywhere from **−66 to +31 points**
+and is wrong by construction, so any sane model beats it. The gate passed, and a careless report
+would have published that as skill.
+
+Against a **fair** baseline — the same shrinkage, but *no* home-court term — the decomposition is:
+
+| Component | MAE | Contribution |
+|---|---|---|
+| 0.0-spread baseline (a) | 13.27 | — |
+| + shrinkage | **12.09** | **−1.17 pts (all of the gain)** |
+| + home-court term (the model) | 12.17 | **+0.08 pts (slightly worse)** |
+
+**Shrinkage does all the work; the home-court term does nothing on this sample.** Two consequences:
+
+1. G-04 is now reported as `PASS` *as registered* with **`disputed: true`**, is excluded from the
+   reward fraction (which falls from 2/6 to **1/6**), and is not counted as evidence of skill.
+2. The registered gate wording should be tightened to compare against baseline (c). That is a
+   **rule change** and is therefore listed as open question **Q-7 / decision D-01**, not made
+   unilaterally by this report — changing a threshold after seeing the result is exactly the failure
+   mode the gate exists to prevent.
+
+This is the most valuable single result in the report: it caught the report's *own* temptation to
+declare victory.
 
 ### Leaderboard
 
@@ -196,7 +224,8 @@ search. Tier mapping is pre-registered: S-01→A, S-02→B, S-03→C, S-07→C.
 | 2 | S-02 | B | 36 | 50.0% | 0.00 | 0.00 | **0** |
 | 3 | S-03 | C | 38 | 50.0% | 0.00 | 0.00 | **0** |
 
-Reward is withheld from **every** strategy because G-04 fails and n < 300. That is the design
+Reward is withheld from **every** strategy because G-01 fails (n = 65–38, far below 300) and the
+gate fraction counts only reliable passes (1 of 6). That is the design
 working: S-01's raw z of 4.34 would look like a triumph in a report that did not deflate for the
 search or gate on the baselines.
 
@@ -213,8 +242,9 @@ search or gate on the baselines.
    better point differential, with p = 0.90. Any headline claiming model edge overstates it.
 4. **Parlay correlation pricing is unearned.** S-04's premise fails measurement; price legs as
    independent and disclose the +0.85 pp residual.
-5. **The gates now have teeth.** G-07 passes, G-04 fails, and no reward is paid. The gate framework
-   is no longer decorative.
+5. **The gates now have teeth — including against this report.** G-07 passes reliably; G-04 passed
+   only against a strawman and is reported as disputed; no reward is paid. The gate framework is no
+   longer decorative, and it caught the report's own temptation to declare victory (§5.1).
 
 ---
 
@@ -228,6 +258,8 @@ search or gate on the baselines.
 | Q-4 | Why does the total model lose to a constant? | It determines whether totals are fixable or should be retired. | Decompose total error into pace and efficiency components |
 | Q-5 | Is the 60–70% bin's underconfidence real? | Correcting it is the cheapest available accuracy gain. | Recalibrate on the full window once n > 300 |
 | Q-6 | Does the neutral-site game need its own HCA term? | One game in the sample (FLAG-BT-03); a wrong term silently corrupts pricing. | Set HCA to 0 for neutral games and verify against a larger neutral-site sample (Cup games) |
+| **Q-7** | **Should G-04's baseline (b) be replaced by the shrunk no-HCA baseline (c)?** | As worded, G-04 can be passed by a strawman — it passed here while the model is *worse* than a fair baseline. Leaving it unchanged means the gate is decorative. | Propose baseline (c) in `nba2/config.py` as a **new registered rule version**, effective only on games *after* the amendment date, so the same sample cannot be re-scored |
+| **Q-8** | **Does the home-court term earn its place at all?** | Measured contribution is +0.08 MAE — i.e. it makes the model slightly worse. If it never helps, it is a free parameter with no return. | Ablate HCA across the full window and across a second season before removing it |
 
 **How to discover what is missing:** the fastest unblock is Q-1. Every ROI gate is currently
 `BLOCKED` for exactly one missing input — a price. Until a closing-line source exists, no amount of
