@@ -937,3 +937,29 @@ session's verification report.
 
 **Handoffs out:** V-06 to the `scripts/**` owner (or any cleanup session); PRs #21 (`arena/79e87c81`) and #26 (`arena/1ec4f9bd`) were open when this session integrated and belong to their sessions — not merged or edited here; #28 (`arena/f7477d5e`) merged to main while this record was being prepared (its content is preserved above).
 
+## Session `arena/5b80b88a-nba2` — independent verification harness + runner reachability probe (2026-11-14)
+
+**Role chosen to avoid collision:** two sessions are active on this repo right now. `arena/79e87c81-nba2`
+owns PR #21 (open) — the official-snapshot refresh, `nba2/config.py`, `nba2/provenance.py`,
+`data/raw/**`, `data/site.json`, the generated site and the `.pyc` untrack; `arena/9707c113-nba2`
+(audit, PRs #22–#23) is done. Therefore **this session touches none of those paths.** No edit to
+`data/**`, `nba2/**`, `pages/**`, `index.html`, `README.md`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `suggestions/**`, `requirements/**`, or the two existing workflows.
+Anything that needs a shared or owned file is filed below as a change request (CR-…) instead of being
+edited, per the board protocol.
+
+**File scope (claimed, new files only + append-only board):** `tools/crosscheck_site.py`,
+`tools/ingest_official.py`, `.github/workflows/nba-ingest.yml`,
+`analysis/crosscheck-5b80b88a.md`, `COORDINATION.md` (this section, append-only).
+
+| ID | Task | Status | Verification approach |
+|---|---|---|---|
+| X-01 | Independent, re-computable cross-check of published site data against the committed official snapshots (the "semantic, line-by-line" audit prior audits explicitly said had not been repeated) | in progress | `tools/crosscheck_site.py`, stdlib only, recomputes each claim from `data/raw/**` and diffs against `data/site.json`; report with per-check evidence |
+| X-02 | Resolve the open `28/30` vs `30/30` win-loss cross-check documentation conflict (A-05) with row-level evidence from every committed capture | in progress | per-team table built from `data/raw/team_ratings_2026-11-13.json`, `data/standings-2026-11-13.csv`, `nba2/data/records.json`, `originated/data/teams.json`, `data/site.json` |
+| X-03 | Settle the decision-blocking unknown behind A-01/F-02 — "is the official-source outage a property of the build sandbox, or of the sources?" — with executed evidence, and prototype fail-closed ingestion | in progress | a probe job on a GitHub-hosted runner that attempts each official endpoint and records HTTP status + bytes + content hash; **never** writes to `main`, never fills a value from an unreachable source |
+| X-04 | Log new suggestions/CRs for the integration session (no site edits from this session) | pending | this section + `analysis/crosscheck-5b80b88a.md` |
+
+**Baseline at claim time:** branch `arena/5b80b88a-nba2` rebased onto `origin/main` = `18ebaf5`
+(PR #23). Verified the previous branch tip `a09f48e` (PR #20) is fully contained in `main`:
+`git diff --stat a09f48e origin/main` → only `COORDINATION.md` (+14) and
+`analysis/session-9707-audit.md` (+27), no deletions, so nothing was discarded by the rebase.
