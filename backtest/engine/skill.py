@@ -73,12 +73,19 @@ def accuracy_block(rows: Sequence[dict]) -> dict:
     }
 
 
-def ats_block(rows: Sequence[dict]) -> dict:
+def ats_block(rows: Sequence[dict], straight_up_hits: int | None = None,
+              straight_up_n: int | None = None) -> dict:
     """Against-the-spread behaviour of our own line, plus the honest caveat.
 
     Because we originate the number, "covering our own line" only measures
     self-consistency. The market-free statistics in `accuracy_block` are the ones that
     answer whether the number is any good.
+
+    Reconciliation published with the block (crosscheck CC-BT-03). The ATS denominator drops
+    any game whose own line is a pick'em, so it can be one game smaller than the straight-up
+    denominator. When that happens the two hit rates differ by construction and a reader cannot
+    tell arithmetic from error, so the count of games the two blocks disagree on, and the reason,
+    are now published beside the two rates.
     """
     graded = [r for r in rows if r["pred_margin_home"] is not None]
     if not graded:
@@ -100,9 +107,23 @@ def ats_block(rows: Sequence[dict]) -> dict:
         if lean_home == (actual > 0):
             hits += 1
     ci = stats.wilson_interval(hits, graded_n) if graded_n else None
+    pickems = len(graded) - graded_n
+    su_hits = straight_up_hits if straight_up_hits is not None else hits
+    su_n = straight_up_n if straight_up_n is not None else graded_n
     return {
         "n": graded_n, "hits": hits, "pushes_reported": pushes,
+        "pickem_games_excluded": pickems,
         "hit_rate": round(hits / graded_n, 4) if graded_n else None,
+        "straight_up_for_comparison": {
+            "n": su_n, "hits": su_hits,
+            "rate": round(su_hits / su_n, 4) if su_n else None,
+            "same_picks_different_denominator": pickems != 0,
+            "why": ("the ATS block drops any game whose originated line is exactly a pick'em, so "
+                    "its denominator is smaller than the straight-up denominator by that many "
+                    "games; the two rates are therefore expected to differ slightly and the "
+                    "difference is arithmetic, not an inconsistency")
+                   if pickems else "identical denominator on this sample",
+        },
         "ci95": [round(x, 4) for x in ci] if ci else None,
         "note": ("Self-consistency only: the line is ours, so this is not a market test. "
                  "No odds feed exists, so no ROI or CLV can be computed and none is shown."),

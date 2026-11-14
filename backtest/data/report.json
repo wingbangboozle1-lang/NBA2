@@ -346,7 +346,15 @@
   "n": 166,
   "hits": 105,
   "pushes_reported": 1,
+  "pickem_games_excluded": 1,
   "hit_rate": 0.6325,
+  "straight_up_for_comparison": {
+   "n": 167,
+   "hits": 105,
+   "rate": 0.6287,
+   "same_picks_different_denominator": true,
+   "why": "the ATS block drops any game whose originated line is exactly a pick'em, so its denominator is smaller than the straight-up denominator by that many games; the two rates are therefore expected to differ slightly and the difference is arithmetic, not an inconsistency"
+  },
   "ci95": [
    0.557,
    0.7021
