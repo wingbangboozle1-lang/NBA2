@@ -1440,3 +1440,58 @@ instead of editing it.
   owners; v1 + v2 rebuild byte-parity OK.
 - **Flagged items do not block this merge** — they are published on both Flagged for Review
   pages with source links, as the protocol requires.
+
+---
+
+## Session `arena/6c5195d1-nba2` — task claim (2026-11-14 UTC ~09:45)
+
+Registry row: `arena/6c5195d1-nba2` — final-integration session: resolve the six open
+crosscheck failures, capture 11/13 official finals + settle the sealed ledgers where games
+have completed, apply the still-open root-surface integration requests from
+`arena/f7477d5e-nba2`, re-verify against live official sources, full checker sweep, then
+PR → main → merge → Pages confirm. Branch pinned by Arena to `arena/6c5195d1-nba2`
+(base `1bfb44d` = current `main` HEAD). Claim committed and pushed **before** any file edit,
+per protocol. No other session holds an open claim in the board above; all prior sessions
+are recorded complete.
+
+### File scope (this session)
+
+- `COORDINATION.md` — append-only (this section + completion record).
+- `nba2/pipeline/**`, `nba2/config.py`, `nba2/provenance.py` — only where required for the
+  crosscheck fixes (gate-tally derivation, corroboration verdicts, W-L provenance column)
+  and settlement ingestion; every change must keep `ci.yml` green and rebuild byte-parity.
+- `data/site.json`, root `index.html`, `pages/**` — regenerated outputs of the pipeline only
+  (never hand-edited), as the final integration session per the board protocol.
+- `data/raw/**` — additive captures only (11/13 finals snapshot); existing snapshots only
+  via explicit in-file `correction` records (precedent: f7477d5e's DET@CHA fix); the sealed
+  ledger `data/raw/ledger/**` remains immutable.
+- `originated/data/teams.json` + regenerated `originated/` artifacts — CC-X-00 team-key fix
+  only (WSH → WAS), owner sessions finished (handoff rule).
+- `tools/crosscheck_site.py` — only where a check is factually wrong (CC-SEAL-04 date vs
+  datetime comparison under review); every such change documented with evidence below.
+- `audit/**` — new session audit files (finals capture, verification log, checker runs).
+- `README.md` — only stale counts/claims (e.g., retired "no game-level results history"
+  wording) as part of the integration requests.
+
+Owned by others and NOT touched: `data/raw/ledger/**` (sealed, immutable), `nba2/v2/**`,
+`site/**`, `data/v2/**`, `.github/workflows/**`, `docs/**`, `dashboard/**`, `verified/**`,
+`backtest/**`, `originated/**` except the single team-key field, `archive/**`, `tools/**`
+except `crosscheck_site.py` as scoped above.
+
+### Task board — arena/6c5195d1 (F-01…F-08)
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| F-01 | Claim session + file scope; push before work | done | `arena/6c5195d1-nba2` | `COORDINATION.md` (this section) | this claim |
+| F-02 | Resolve the six open crosscheck failures (CC-SNAP-13, CC-PUB-05, CC-DER-05, CC-GATE-02, CC-SEAL-04, CC-X-00) without inventing values | in progress | `arena/6c5195d1-nba2` | see scope above | `python3 tools/crosscheck_site.py` must end 0 fail; any checker change justified with committed evidence |
+| F-03 | Live official-source re-verification + capture of 2026-11-13 final scores from nba.com/games (platform fetcher reaches nba.com; re-verified 09:40 UTC) | in progress | `arena/6c5195d1-nba2` | `data/raw/history/games_2026-11-13.json` (new), `audit/**` | one `nba.com/game/<id>` URL per row; no row without a fetched source |
+| F-04 | Settle sealed-ledger games whose finals are now official; refresh site metrics | in progress | `arena/6c5195d1-nba2` | `data/settlement.json` (via `nba2.pipeline.settle`), regenerated site | seal re-verified before and after; unsettled games stay PENDING |
+| F-05 | Root-surface integration requests from `arena/f7477d5e-nba2`: link `/backtest/` from root nav, retire the false "no game-level results history" claim, reconcile G-04 (measured FAIL) / G-07 (evaluable) | in progress | `arena/6c5195d1-nba2` | `nba2/pipeline/build_site.py` (content), regenerated `pages/**`, `README.md` | `tools/check_links_all.py` + `ci.yml` lint must pass |
+| F-06 | Executive summary / questions / suggestions refresh to current measured state | in progress | `arena/6c5195d1-nba2` | `nba2/pipeline/build_site_data.py` (content), regenerated site | every new claim carries a source; nothing unverified |
+| F-07 | Full checker sweep (all test suites, lint, link check, rebuild parity, both site trees) | in progress | `arena/6c5195d1-nba2` | `audit/**` | command output recorded per checker |
+| F-08 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR + run IDs here | unclaimed→claimed | `arena/6c5195d1-nba2` | `COORDINATION.md` (append-only) | `gh pr merge`, `gh run list`, live fetch |
+
+**Rule for this session:** every row published carries an official source link or a
+flag/blank; values are never inferred. The sealed ledger is never rewritten. Prior sessions'
+board sections are preserved verbatim (append-only). Flagged irregularities do not block the
+merge; they are published on the Flagged for Review page.
