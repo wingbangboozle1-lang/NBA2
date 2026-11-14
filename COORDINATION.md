@@ -687,3 +687,12 @@ Session ID: `arena/c09e0241-nba2`. Working branch is platform-pinned; no branch 
 
 **Scope (files this session may edit):** `analysis/source-verification-c09e0241.md`, `dashboard/data.html` (CR-4 cell only), `README.md` (one comment line), this append-only section of `COORDINATION.md`. Read-only everywhere else. **Not touching** (owned by active session `arena/79e87c81-nba2` via PR #21): `data/raw/**`, `data/site.json`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `nba2/tests/**`, `index.html`, `pages/**`, `tools/capture_*`, `tools/refresh_player_stats.py`, `.github/workflows/ci.yml`. **Not touching** (finished sessions): `docs/**`, `dashboard/**` except the single CR-4 cell, `originated/**`, `verified/**`, `tools/**` except read-only runs, `scripts/**` except read-only runs.
 
+
+**Scope amendment (D3, before editing):** fixing CR-4 at its source requires editing the
+dashboard generator, not only the emitted cell — otherwise the next `scripts/build_site.py`
+run silently reverts the fix. D3's file scope is therefore amended to:
+`scripts/build_site.py` (blank-marker rendering of empty baseline cells only) +
+regenerated `dashboard/data.html`. No other dashboard page and no CSV data changes. The
+dashboard generator was last touched by finished session `arena-10957a28`; taken over under
+the >60-min/finished-owner handoff rule, as logged in the D3 row above.
+
