@@ -1560,3 +1560,5 @@ Findings, with file/source links and action proposals in the report:
 - **EAE-F04 (medium):** the backtest's disputed baseline is explicitly disclosed; no rewards should be released.
 
 Limit: NBA schedule was fetched but rendered with no game rows in this client; no new current slate/injury numeric field is asserted. See report for official source links, verification limits, and decision-ready next steps.
+
+**Concurrent-session integration note:** PR #44 (`arena/e77ce5ad-nba2`) merged into `main` while PR #45 was being prepared, adding an independent official spot-check section to this same append-only board. The first PR #45 merge attempt was correctly blocked as non-fast-forward/conflicting. Rebased onto updated `origin/main`, preserved the complete E77 section and EAE report/claim/result, re-ran no destructive operations, and will update PR #45 from the rebased head.
