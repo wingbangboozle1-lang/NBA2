@@ -2375,3 +2375,60 @@ re-read `build()` and the flag table afterwards.
 `pages/methodology.html`, `pages/questions.html`, `pages/repo-review.html`,
 `pages/sources.html`, `pages/suggestions.html`,
 `audit/2026-11-14-3681/{verify_live.py,checker_run.txt}`.
+
+---
+
+## 2026-11-14 — session `arena/3681def8-nba2` — SECOND INTEGRATION (main advanced 176 commits)
+
+Status: **done**. While PR #56 was open, `main` advanced 176 commits (to `7be403d`) —
+session `arena/6c5195d1-nba2` ran its own final integration (PR #49), merging PRs #43–#54
+together and resolving CR-3/CR-4/CR-5. Branch rebased onto that `main`; head `69502ca`,
+then one regeneration commit.
+
+Verified after the rebase: no conflict markers anywhere in tracked files (excluding two
+`audit/*.txt` logs, which quote markers deliberately as evidence), all four of this
+session's builder functions present **and** registered in `build()`, all seven flag IDs
+(`FLAG-GRADE-01..04`, `FLAG-STAND-01`, `FLAG-SEAL-05`, `FLAG-INJ-10`) registered with no
+duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html` routed.
+
+### Rebase conflict policy used
+
+* `COORDINATION.md` — append-only by protocol: every conflict block resolved by keeping
+  **both** sides, in order. Nothing from either session was dropped.
+* Generated trees (`data/site.json`, `pages/*.html`, `index.html`, `site/**`,
+  `data/v2/**`, `README.md`) — resolved to **this branch's** version and then
+  **regenerated from source**, because main's integration had changed blurbs, source notes
+  and the settlement record. The stale committed artefacts were the whole of the conflict;
+  regenerating *is* the resolution, and none of those files is hand-authored.
+* No source module (`nba2/**`, `tools/**`) conflicted.
+
+### Two findings worth carrying forward
+
+1. **`data/v2/verification.json` had been committed with literal conflict markers and was
+   not valid JSON at all** (marker at line 55). Found because the `publish-parity`
+   workflow failed on PR #56 — no local checker caught it, since `nba2.v2.check` reads the
+   rebuilt tree, not the committed one. `nba2/v2/report.py` was clean and already carried
+   both halves of the disputed check, so regenerating resolved it with nothing lost.
+   **Lesson: after any rebase, grep the tree for `^<<<<<<<` and `^>>>>>>>`, and
+   `json.load` every committed `.json`.** Reading the diff is not enough — the markers were
+   inside a generated file that no one opens.
+2. **`python -m nba2.pipeline.settle` invalidates the next rebuild.** `settle` stamps a new
+   `settled_at` into `data/settlement.json`, which is part of the build's input digest, so
+   the first `build_site_data` afterwards produces different bytes and
+   `nba2/tests/test_pipeline.py::test_rebuild_produces_identical_rows` fails. It self-heals
+   on the following build and is not a defect in the model — but the rule is: **run
+   `settle`, then rebuild, then commit.** Committing a `settle` output without rebuilding
+   will fail the parity workflow.
+
+### Verification after the second rebase
+
+* **50 tables / 1404 rows** (+3 rows from main's own integration); `lint` OK — every row
+  sourced, every blank explained.
+* **`tools/crosscheck_site.py`: 97 checks — 89 pass, 0 fail, 8 info.**
+* **172 unit tests OK** (64 nba2 + 49 backtest + 59 v2).
+* Both seals verified, neither rewritten: `cf7dedc689597cb8…` (22), `c841e8f396dae6ca…` (27).
+* `verify_site` PASSED; `check_links_all` ALL OK; `nba2.v2.check` OK — 0 structural,
+  0 semantic.
+* **All four trees are fixed points**: a second full rebuild produces an empty `git diff`,
+  which is exactly what the `publish-parity` workflow asserts and what fixed the failure
+  above.

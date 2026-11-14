@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "3620ce39c13b245aceecd8f76f83955ec5961c7366050f778b3b42a819cabee3",
+  "input_digest": "d4bfafa08b6bfd853b0f241a06f6be91515405787aa5b4bec52abbdd8c38de3a",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -42563,7 +42563,7 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:44:01+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
       "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
@@ -46211,7 +46211,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:44:01+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },
