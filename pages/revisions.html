@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisions · NBA2</title>
+<meta name="description" content="Originated NBA lines, validation gates and verified slate data. Research dashboard, not betting advice.">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
+    <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
+  </header>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="revisions.html" class="active">Revision Changes</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+    <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
+      <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="hero"><h2>Revisions</h2><p>What changed between two official releases. The churn is the signal; publishing only the newest revision hides it.</p></section>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="revision_injury" data-rows="4">
+<h2>Injury-report revisions: what changed between the 2026-11-13 18:30 and 2026-11-13 19:30 ET releases</h2>
+<p class="blurb">4 player rows differ between the two official releases, across 2 teams and 4 players. Transitions: Questionable → Available (2) · Questionable → Out (1) · Doubtful → Out (1). A status change is the single most decision-relevant thing in this whole site: a player who was Questionable and is now Out is a different bet.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Injury-report revisions: what changed between the 2026-11-13 18:30 and 2026-11-13 19:30 ET releases</caption><thead><tr>
+<th scope="col">Game date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Team</th>
+<th scope="col">Player</th>
+<th scope="col">Status (earlier release)</th>
+<th scope="col">Status (newer release)</th>
+<th scope="col">Change</th>
+<th scope="col">Reason on the official report</th>
+<th scope="col">Releases compared</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="revinj-0">
+<td>2026-11-13</td>
+<td>ATL@CHI</td>
+<td>Chicago Bulls</td>
+<td>Powell, Norman</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>status-changed</td>
+<td>-</td>
+<td>2026-11-13 18:30 → 2026-11-13 19:30 ET</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-02">FLAG-REV-02</a></td>
+</tr>
+<tr id="revinj-1">
+<td>2026-11-13</td>
+<td>ATL@CHI</td>
+<td>Chicago Bulls</td>
+<td>Swain, Dailyn</td>
+<td>Questionable</td>
+<td>Out</td>
+<td>status-changed</td>
+<td>Injury/Illness - Right Disc Irritation</td>
+<td>2026-11-13 18:30 → 2026-11-13 19:30 ET</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-02">FLAG-REV-02</a> <a class="flagchip" href="flagged-review.html#FLAG-REV-03">FLAG-REV-03</a></td>
+</tr>
+<tr id="revinj-2">
+<td>2026-11-13</td>
+<td>MEM@NOP</td>
+<td>New Orleans Pelicans</td>
+<td>Mathurin, Bennedict</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>status-changed</td>
+<td>Injury/Illness - Right Thumb Sprain</td>
+<td>2026-11-13 18:30 → 2026-11-13 19:30 ET</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-02">FLAG-REV-02</a></td>
+</tr>
+<tr id="revinj-3">
+<td>2026-11-13</td>
+<td>MEM@NOP</td>
+<td>New Orleans Pelicans</td>
+<td>Murray, Dejounte</td>
+<td>Doubtful</td>
+<td>Out</td>
+<td>status-changed</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>2026-11-13 18:30 → 2026-11-13 19:30 ET</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-02">FLAG-REV-02</a> <a class="flagchip" href="flagged-review.html#FLAG-REV-03">FLAG-REV-03</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Both releases are official NBA referee-operations PDFs; the newer one is https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>
+</section><section class="card table-card" id="revision_slate" data-rows="36">
+<h2>Slate revisions: what changed between the 2026-11-13→2026-11-16 and 2026-11-14→2026-11-17 windows</h2>
+<p class="blurb">22 games carried over unchanged, 5 were added, 9 dropped out because they were already played. The dropped games are listed rather than deleted, so the slate cannot look as if it silently shrank.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Slate revisions: what changed between the 2026-11-13→2026-11-16 and 2026-11-14→2026-11-17 windows</caption><thead><tr>
+<th scope="col">Change</th>
+<th scope="col">Official game ID</th>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Tip (ET)</th>
+<th scope="col">Arena</th>
+<th scope="col">What changed</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="revslate-0022600231-car">
+<td>carried over unchanged</td>
+<td>0022600231</td>
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>19:00</td>
+<td>Smoothie King Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600232-car">
+<td>carried over unchanged</td>
+<td>0022600232</td>
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>19:30</td>
+<td>Rocket Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600233-car">
+<td>carried over unchanged</td>
+<td>0022600233</td>
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>20:00</td>
+<td>Kaseya Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600234-car">
+<td>carried over unchanged</td>
+<td>0022600234</td>
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>20:00</td>
+<td>FedExForum</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600235-car">
+<td>carried over unchanged</td>
+<td>0022600235</td>
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>20:00</td>
+<td>Target Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600236-car">
+<td>carried over unchanged</td>
+<td>0022600236</td>
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td>13:00</td>
+<td>Xfinity Mobile Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600237-car">
+<td>carried over unchanged</td>
+<td>0022600237</td>
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td>16:00</td>
+<td>Mortgage Matchup Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600238-car">
+<td>carried over unchanged</td>
+<td>0022600238</td>
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td>16:30</td>
+<td>Intuit Dome</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600239-car">
+<td>carried over unchanged</td>
+<td>0022600239</td>
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td>17:00</td>
+<td>Delta Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600240-car">
+<td>carried over unchanged</td>
+<td>0022600240</td>
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td>18:00</td>
+<td>TD Garden</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600241-car">
+<td>carried over unchanged</td>
+<td>0022600241</td>
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td>18:00</td>
+<td>Scotiabank Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600242-car">
+<td>carried over unchanged</td>
+<td>0022600242</td>
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td>19:00</td>
+<td>Capital One Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600243-car">
+<td>carried over unchanged</td>
+<td>0022600243</td>
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td>20:00</td>
+<td>Fiserv Forum</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600244-car">
+<td>carried over unchanged</td>
+<td>0022600244</td>
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td>21:00</td>
+<td>Golden 1 Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600245-car">
+<td>carried over unchanged</td>
+<td>0022600245</td>
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td>19:00</td>
+<td>TD Garden</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600246-car">
+<td>carried over unchanged</td>
+<td>0022600246</td>
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td>19:00</td>
+<td>Rocket Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600247-car">
+<td>carried over unchanged</td>
+<td>0022600247</td>
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td>19:00</td>
+<td>Capital One Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600248-car">
+<td>carried over unchanged</td>
+<td>0022600248</td>
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td>19:30</td>
+<td>Barclays Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600249-car">
+<td>carried over unchanged</td>
+<td>0022600249</td>
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td>19:30</td>
+<td>Kaseya Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600250-car">
+<td>carried over unchanged</td>
+<td>0022600250</td>
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td>20:00</td>
+<td>Target Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600251-car">
+<td>carried over unchanged</td>
+<td>0022600251</td>
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td>20:00</td>
+<td>Smoothie King Center</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600252-car">
+<td>carried over unchanged</td>
+<td>0022600252</td>
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td>21:00</td>
+<td>Ball Arena</td>
+<td>same matchup, date and arena; the game survived the window roll</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600253-add">
+<td>added in the newer revision</td>
+<td>0022600253</td>
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td>19:30</td>
+<td>Scotiabank Arena</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600254-add">
+<td>added in the newer revision</td>
+<td>0022600254</td>
+<td>2026-11-17</td>
+<td>POR @ MIN</td>
+<td>20:00</td>
+<td>Target Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600255-add">
+<td>added in the newer revision</td>
+<td>0022600255</td>
+<td>2026-11-17</td>
+<td>DET @ SAS</td>
+<td>20:00</td>
+<td>Frost Bank Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600257-add">
+<td>added in the newer revision</td>
+<td>0022600257</td>
+<td>2026-11-17</td>
+<td>UTA @ LAC</td>
+<td>22:30</td>
+<td>Intuit Dome</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600256-add">
+<td>added in the newer revision</td>
+<td>0022600256</td>
+<td>2026-11-17</td>
+<td>CHA @ LAL</td>
+<td>23:00</td>
+<td>Crypto.com Arena</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="revslate-0022600034-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600034</td>
+<td>2026-11-13</td>
+<td>NYK @ IND</td>
+<td>19:00</td>
+<td>Gainbridge Fieldhouse</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600035-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600035</td>
+<td>2026-11-13</td>
+<td>MIL @ ORL</td>
+<td>19:00</td>
+<td>Kia Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600036-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600036</td>
+<td>2026-11-13</td>
+<td>CLE @ MIA</td>
+<td>20:00</td>
+<td>Kaseya Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600037-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600037</td>
+<td>2026-11-13</td>
+<td>ATL @ CHI</td>
+<td>20:00</td>
+<td>United Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600038-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600038</td>
+<td>2026-11-13</td>
+<td>MEM @ NOP</td>
+<td>20:00</td>
+<td>Smoothie King Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600039-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600039</td>
+<td>2026-11-13</td>
+<td>UTA @ HOU</td>
+<td>20:30</td>
+<td>Toyota Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600040-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600040</td>
+<td>2026-11-13</td>
+<td>GSW @ SAS</td>
+<td>21:30</td>
+<td>Frost Bank Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600041-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600041</td>
+<td>2026-11-13</td>
+<td>POR @ SAC</td>
+<td>22:00</td>
+<td>Golden 1 Center</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="revslate-0022600042-dro">
+<td>dropped (already played / outside the window)</td>
+<td>0022600042</td>
+<td>2026-11-13</td>
+<td>OKC @ LAC</td>
+<td>22:30</td>
+<td>Intuit Dome</td>
+<td>newly published on the official schedule</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://www.nba.com/schedule</p>
+</section>
+    <footer class="footer">
+      <p>Research and specification artefacts, not betting advice. No market price was available to this build;
+      lines are model projections. If you or someone you know has a gambling problem, call the National Problem
+      Gambling Helpline (1-800-522-4700, US, 24/7) or your local service. 21+ where legal.</p>
+      <p>Snapshots: <code>data/raw/</code> · Engine: <code>nba2/</code> ·
+      Board: <a href="../COORDINATION.md">COORDINATION.md</a> ·
+      <a href="https://github.com/wingbangboozle1-lang/NBA2">repository</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../app.js" defer></script>
+</body>
+</html>

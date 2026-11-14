@@ -14,6 +14,7 @@ from pathlib import Path
 
 from .. import config
 from . import adjudicate as ADJ
+from . import revisions as REV
 from . import reconcile as XSESS
 from ..models import correlation as corr
 from ..models import gates as G
@@ -543,6 +544,86 @@ def build_gameflow_rows(games: list[dict], spots: dict, flow: list[dict]) -> dic
                  "https://www.nba.com/schedule")
 
 
+def build_revision_rows(old_inj: dict, new_inj: dict, old_slate: dict, new_slate: dict) -> dict:
+    """What changed between two official revisions.
+
+    Two separate diffs, because the league revises two different things on different
+    cadences: the injury report is re-issued several times an hour for the games about
+    to tip, and the schedule page changes as games are added, moved and played. Both
+    diffs are computed from the committed snapshots, so every row is a fact about two
+    official documents rather than a narrative.
+    """
+    inj_rows = REV.diff_revisions(old_inj, new_inj)
+    inj_summary = REV.summarize(inj_rows)
+    rows = []
+    for i, r in enumerate(inj_rows):
+        fl = []
+        if r.change == "status-changed":
+            fl.append("FLAG-REV-02")
+        if r.new_status == "Out" or r.old_status == "Out":
+            fl.append("FLAG-REV-03")
+        rows.append(make_row(
+            f"revinj-{i}", SRC_INJ, _flag_ids(*fl),
+            game_date=r.game_date, matchup=r.matchup, team=r.team, player=r.player,
+            old_status=r.old_status, new_status=r.new_status, change=r.change,
+            reason=r.reason,
+            revision=f"{old_inj.get('report_stamp_et', '?')} → {new_inj.get('report_stamp_et', '?')}",
+        ))
+    transitions = " · ".join(f"{k} ({v})" for k, v in inj_summary["by_transition"].items())
+    detail = table(rows, [("game_date", "Game date"), ("matchup", "Matchup"),
+                           ("team", "Team"), ("player", "Player"),
+                           ("old_status", "Status (earlier release)"),
+                           ("new_status", "Status (newer release)"),
+                           ("change", "Change"), ("reason", "Reason on the official report"),
+                           ("revision", "Releases compared")],
+                   f"Injury-report revisions: what changed between the "
+                   f"{old_inj.get('report_stamp_et', '?')} and "
+                   f"{new_inj.get('report_stamp_et', '?')} releases",
+                   f"{inj_summary['total_changes']} player rows differ between the two official "
+                   f"releases, across {inj_summary['teams_affected']} teams and "
+                   f"{inj_summary['players_affected']} players. Transitions: {transitions or 'none'}. "
+                   "A status change is the single most decision-relevant thing in this whole "
+                   "site: a player who was Questionable and is now Out is a different bet.",
+                   f"Both releases are official NBA referee-operations PDFs; the newer one is "
+                   f"{new_inj.get('provenance', {}).get('url', '')}")
+
+    sd = REV.slate_diff(old_slate, new_slate)
+    srows = []
+    for kind, games in (("carried over unchanged", sd["carryover"]),
+                        ("added in the newer revision", sd["added"]),
+                        ("dropped (already played / outside the window)", sd["dropped"])):
+        for g in games:
+            fl = []
+            if kind.startswith("dropped"):
+                fl.append("FLAG-REV-04")
+            if g.get("changed_fields"):
+                fl.append("FLAG-REV-05")
+            srows.append(make_row(
+                f"revslate-{g['game_id']}-{kind[:3]}", SRC_SLATE, _flag_ids(*fl),
+                change=kind, game_id=g["game_id"], date=g.get("date"),
+                matchup=f"{g.get('away')} @ {g.get('home')}",
+                time_et=g.get("time_et"), arena=g.get("arena"),
+                detail=(", ".join(f"{k}: {v[0]} → {v[1]}" for k, v in g["changed_fields"].items())
+                        if g.get("changed_fields") else
+                        ("same matchup, date and arena; the game survived the window roll"
+                         if kind.startswith("carried") else "newly published on the official schedule")),
+            ))
+    slate_tbl = table(srows, [("change", "Change"), ("game_id", "Official game ID"),
+                               ("date", "Date"), ("matchup", "Matchup"), ("time_et", "Tip (ET)"),
+                               ("arena", "Arena"), ("detail", "What changed")],
+                      f"Slate revisions: what changed between the "
+                      f"{old_slate['window']['first_game_date']}→{old_slate['window']['last_game_date']} "
+                      f"and {new_slate['window']['first_game_date']}→{new_slate['window']['last_game_date']} windows",
+                      f"{len(sd['carryover'])} games carried over unchanged, {len(sd['added'])} were added, "
+                      f"{len(sd['dropped'])} dropped out because they were already played. The dropped "
+                      "games are listed rather than deleted, so the slate cannot look as if it "
+                      "silently shrank.",
+                      "https://www.nba.com/schedule")
+    return {"detail": detail, "slate": slate_tbl,
+            "summary": inj_summary,
+            "slate_summary": {k: len(v) for k, v in sd.items()}}
+
+
 def build_anomaly_rows(anomalies: list[dict], ctx: dict) -> dict:
     rows = []
     for a in anomalies:
@@ -942,6 +1023,15 @@ def build() -> dict:
     by_team = INJ.by_team(inj_rows)
     lines = LN.price_slate(model, games, by_team)
     win_detail, win_rot = build_window_injury_tables()
+    # The previous official revisions, when both exist. The diff needs two different
+    # releases; without a previous one there is nothing honest to publish.
+    prev_inj = prev_slate = None
+    if config.SNAPSHOT_PREVIOUS_INJURY:
+        prev_inj = json.loads((RAW / config.SNAPSHOT_PREVIOUS_INJURY).read_text())
+    if config.SNAPSHOT_PREVIOUS_SLATE:
+        prev_slate = json.loads((RAW / config.SNAPSHOT_PREVIOUS_SLATE).read_text())
+    rev_tbl = (build_revision_rows(prev_inj, inj_raw, prev_slate, slate_raw)
+               if prev_inj and prev_slate else None)
     spots = GF.schedule_spots(games, min(g["date"] for g in games), max(g["date"] for g in games))
     flow = GF.game_flow_inputs(games, spots)
 
@@ -980,6 +1070,8 @@ def build() -> dict:
         "injuries_window": win_detail,
         "rotation_window": win_rot,
         "availability_window": build_availability_window_rows(games),
+        **({"revision_injury": rev_tbl["detail"],
+            "revision_slate": rev_tbl["slate"]} if rev_tbl else {}),
         "gameflow": build_gameflow_rows(games, spots, flow),
         "anomalies": build_anomaly_rows(anomalies_raw["records"], anomalies_raw),
         "corroboration": build_corroboration_rows(games, load_time_corroboration()),
@@ -1249,6 +1341,29 @@ def main() -> None:
          SOURCES["nba_injury_pdf"].url,
          "Re-issue availability after each later release (the nightly ingest workflow does this; "
          "see FLAG-REFRESH-01).")
+    flag("FLAG-REV-01", "medium", "revisions", "The revision diff compares two official releases "
+         "that are at most a few hours apart. It shows the churn; it does not say which release "
+         "was right, and a status can still change before tip-off.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+         "Re-capture at each later release (the nightly ingest workflow does this).")
+    flag("FLAG-REV-02", "low", "revisions", "A status change is published without a reason for the "
+         "change itself: the official report states the CURRENT status and the CURRENT reason, "
+         "not why it moved. The reason column is the official reason as of the newer release.",
+         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+         "No action; the source does not publish change reasons.")
+    flag("FLAG-REV-03", "medium", "revisions", "A player whose status changed to Out between two "
+         "releases is a real availability change, but quantifying what it is worth in points "
+         "requires player minutes and production data this repository still lacks (FLAG-INJ-11).",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/injuries.py",
+         "Attach official per-player minutes (R-102).")
+    flag("FLAG-REV-04", "info", "revisions", "Games listed as dropped left the pick window because "
+         "they were played. They are kept visible so the slate's size can be reconciled, not "
+         "quietly removed.",
+         "https://www.nba.com/schedule", "No action.")
+    flag("FLAG-REV-05", "low", "revisions", "A game id present in both windows with a changed field "
+         "means the official schedule page was edited upstream. The newer value is published and "
+         "the old one is shown next to it.",
+         "https://www.nba.com/schedule", "No action.")
     flag("FLAG-REPO-01", "low", "repo review", "Repo-review findings are point-in-time (main @ 7fa2a24). Later "
          "commits may fix or reintroduce them.",
          "https://github.com/wingbangboozle1-lang/NBA2/commits/main", "Re-run review on each merge.")

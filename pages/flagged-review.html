@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="revisions.html">Revision Changes</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="77">
+    <section class="card table-card" id="flags" data-rows="82">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -511,6 +511,56 @@
 <td>Owner review.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
+</tr>
+<tr id="FLAG-REV-01">
+<td>FLAG-REV-01</td>
+<td>medium</td>
+<td>revisions</td>
+<td>The revision diff compares two official releases that are at most a few hours apart. It shows the churn; it does not say which release was right, and a status can still change before tip-off.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-capture at each later release (the nightly ingest workflow does this).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-01">FLAG-REV-01</a></td>
+</tr>
+<tr id="FLAG-REV-02">
+<td>FLAG-REV-02</td>
+<td>low</td>
+<td>revisions</td>
+<td>A status change is published without a reason for the change itself: the official report states the CURRENT status and the CURRENT reason, not why it moved. The reason column is the official reason as of the newer release.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>No action; the source does not publish change reasons.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-02">FLAG-REV-02</a></td>
+</tr>
+<tr id="FLAG-REV-03">
+<td>FLAG-REV-03</td>
+<td>medium</td>
+<td>revisions</td>
+<td>A player whose status changed to Out between two releases is a real availability change, but quantifying what it is worth in points requires player minutes and production data this repository still lacks (FLAG-INJ-11).</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/injuries.py</td>
+<td>Attach official per-player minutes (R-102).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-03">FLAG-REV-03</a></td>
+</tr>
+<tr id="FLAG-REV-04">
+<td>FLAG-REV-04</td>
+<td>info</td>
+<td>revisions</td>
+<td>Games listed as dropped left the pick window because they were played. They are kept visible so the slate&#x27;s size can be reconciled, not quietly removed.</td>
+<td>https://www.nba.com/schedule</td>
+<td>No action.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-04">FLAG-REV-04</a></td>
+</tr>
+<tr id="FLAG-REV-05">
+<td>FLAG-REV-05</td>
+<td>low</td>
+<td>revisions</td>
+<td>A game id present in both windows with a changed field means the official schedule page was edited upstream. The newer value is published and the old one is shown next to it.</td>
+<td>https://www.nba.com/schedule</td>
+<td>No action.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REV-05">FLAG-REV-05</a></td>
 </tr>
 <tr id="FLAG-SLATE-01">
 <td>FLAG-SLATE-01</td>

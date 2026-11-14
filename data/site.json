@@ -12735,6 +12735,1288 @@
     }
    ]
   },
+  "revision_injury": {
+   "title": "Injury-report revisions: what changed between the 2026-11-13 18:30 and 2026-11-13 19:30 ET releases",
+   "blurb": "4 player rows differ between the two official releases, across 2 teams and 4 players. Transitions: Questionable → Available (2) · Questionable → Out (1) · Doubtful → Out (1). A status change is the single most decision-relevant thing in this whole site: a player who was Questionable and is now Out is a different bet.",
+   "source_note": "Both releases are official NBA referee-operations PDFs; the newer one is https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+   "columns": [
+    {
+     "key": "game_date",
+     "label": "Game date"
+    },
+    {
+     "key": "matchup",
+     "label": "Matchup"
+    },
+    {
+     "key": "team",
+     "label": "Team"
+    },
+    {
+     "key": "player",
+     "label": "Player"
+    },
+    {
+     "key": "old_status",
+     "label": "Status (earlier release)"
+    },
+    {
+     "key": "new_status",
+     "label": "Status (newer release)"
+    },
+    {
+     "key": "change",
+     "label": "Change"
+    },
+    {
+     "key": "reason",
+     "label": "Reason on the official report"
+    },
+    {
+     "key": "revision",
+     "label": "Releases compared"
+    }
+   ],
+   "rows": [
+    {
+     "key": "revinj-0",
+     "values": {
+      "game_date": "2026-11-13",
+      "matchup": "ATL@CHI",
+      "team": "Chicago Bulls",
+      "player": "Powell, Norman",
+      "old_status": "Questionable",
+      "new_status": "Available",
+      "change": "status-changed",
+      "reason": "-",
+      "revision": "2026-11-13 18:30 → 2026-11-13 19:30 ET"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revinj-1",
+     "values": {
+      "game_date": "2026-11-13",
+      "matchup": "ATL@CHI",
+      "team": "Chicago Bulls",
+      "player": "Swain, Dailyn",
+      "old_status": "Questionable",
+      "new_status": "Out",
+      "change": "status-changed",
+      "reason": "Injury/Illness - Right Disc Irritation",
+      "revision": "2026-11-13 18:30 → 2026-11-13 19:30 ET"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-02",
+      "FLAG-REV-03"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revinj-2",
+     "values": {
+      "game_date": "2026-11-13",
+      "matchup": "MEM@NOP",
+      "team": "New Orleans Pelicans",
+      "player": "Mathurin, Bennedict",
+      "old_status": "Questionable",
+      "new_status": "Available",
+      "change": "status-changed",
+      "reason": "Injury/Illness - Right Thumb Sprain",
+      "revision": "2026-11-13 18:30 → 2026-11-13 19:30 ET"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-02"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revinj-3",
+     "values": {
+      "game_date": "2026-11-13",
+      "matchup": "MEM@NOP",
+      "team": "New Orleans Pelicans",
+      "player": "Murray, Dejounte",
+      "old_status": "Doubtful",
+      "new_status": "Out",
+      "change": "status-changed",
+      "reason": "Injury/Illness - Left Ankle Sprain",
+      "revision": "2026-11-13 18:30 → 2026-11-13 19:30 ET"
+     },
+     "source": {
+      "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-02",
+      "FLAG-REV-03"
+     ],
+     "verified": true
+    }
+   ],
+   "sources": [
+    {
+     "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+    },
+    {
+     "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+    },
+    {
+     "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+    },
+    {
+     "name": "NBA Official Injury Report 2026-11-13 19:30 ET ET (official)",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used."
+    }
+   ]
+  },
+  "revision_slate": {
+   "title": "Slate revisions: what changed between the 2026-11-13→2026-11-16 and 2026-11-14→2026-11-17 windows",
+   "blurb": "22 games carried over unchanged, 5 were added, 9 dropped out because they were already played. The dropped games are listed rather than deleted, so the slate cannot look as if it silently shrank.",
+   "source_note": "https://www.nba.com/schedule",
+   "columns": [
+    {
+     "key": "change",
+     "label": "Change"
+    },
+    {
+     "key": "game_id",
+     "label": "Official game ID"
+    },
+    {
+     "key": "date",
+     "label": "Date"
+    },
+    {
+     "key": "matchup",
+     "label": "Matchup"
+    },
+    {
+     "key": "time_et",
+     "label": "Tip (ET)"
+    },
+    {
+     "key": "arena",
+     "label": "Arena"
+    },
+    {
+     "key": "detail",
+     "label": "What changed"
+    }
+   ],
+   "rows": [
+    {
+     "key": "revslate-0022600231-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600231",
+      "date": "2026-11-14",
+      "matchup": "DEN @ NOP",
+      "time_et": "19:00",
+      "arena": "Smoothie King Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600232-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600232",
+      "date": "2026-11-14",
+      "matchup": "DAL @ CLE",
+      "time_et": "19:30",
+      "arena": "Rocket Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600233-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600233",
+      "date": "2026-11-14",
+      "matchup": "DET @ MIA",
+      "time_et": "20:00",
+      "arena": "Kaseya Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600234-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600234",
+      "date": "2026-11-14",
+      "matchup": "BKN @ MEM",
+      "time_et": "20:00",
+      "arena": "FedExForum",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600235-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600235",
+      "date": "2026-11-14",
+      "matchup": "CHI @ MIN",
+      "time_et": "20:00",
+      "arena": "Target Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600236-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600236",
+      "date": "2026-11-15",
+      "matchup": "IND @ PHI",
+      "time_et": "13:00",
+      "arena": "Xfinity Mobile Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600237-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600237",
+      "date": "2026-11-15",
+      "matchup": "LAL @ PHX",
+      "time_et": "16:00",
+      "arena": "Mortgage Matchup Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600238-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600238",
+      "date": "2026-11-15",
+      "matchup": "CHA @ LAC",
+      "time_et": "16:30",
+      "arena": "Intuit Dome",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600239-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600239",
+      "date": "2026-11-15",
+      "matchup": "SAS @ UTA",
+      "time_et": "17:00",
+      "arena": "Delta Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600240-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600240",
+      "date": "2026-11-15",
+      "matchup": "DAL @ BOS",
+      "time_et": "18:00",
+      "arena": "TD Garden",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600241-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600241",
+      "date": "2026-11-15",
+      "matchup": "NYK @ TOR",
+      "time_et": "18:00",
+      "arena": "Scotiabank Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600242-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600242",
+      "date": "2026-11-15",
+      "matchup": "HOU @ WAS",
+      "time_et": "19:00",
+      "arena": "Capital One Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600243-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600243",
+      "date": "2026-11-15",
+      "matchup": "ATL @ MIL",
+      "time_et": "20:00",
+      "arena": "Fiserv Forum",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600244-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600244",
+      "date": "2026-11-15",
+      "matchup": "OKC @ SAC",
+      "time_et": "21:00",
+      "arena": "Golden 1 Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600245-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600245",
+      "date": "2026-11-16",
+      "matchup": "ORL @ BOS",
+      "time_et": "19:00",
+      "arena": "TD Garden",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600246-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600246",
+      "date": "2026-11-16",
+      "matchup": "CHI @ CLE",
+      "time_et": "19:00",
+      "arena": "Rocket Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600247-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600247",
+      "date": "2026-11-16",
+      "matchup": "MEM @ WAS",
+      "time_et": "19:00",
+      "arena": "Capital One Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600248-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600248",
+      "date": "2026-11-16",
+      "matchup": "PHI @ BKN",
+      "time_et": "19:30",
+      "arena": "Barclays Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600249-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600249",
+      "date": "2026-11-16",
+      "matchup": "HOU @ MIA",
+      "time_et": "19:30",
+      "arena": "Kaseya Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600250-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600250",
+      "date": "2026-11-16",
+      "matchup": "POR @ MIN",
+      "time_et": "20:00",
+      "arena": "Target Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600251-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600251",
+      "date": "2026-11-16",
+      "matchup": "GSW @ NOP",
+      "time_et": "20:00",
+      "arena": "Smoothie King Center",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600252-car",
+     "values": {
+      "change": "carried over unchanged",
+      "game_id": "0022600252",
+      "date": "2026-11-16",
+      "matchup": "PHX @ DEN",
+      "time_et": "21:00",
+      "arena": "Ball Arena",
+      "detail": "same matchup, date and arena; the game survived the window roll"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600253-add",
+     "values": {
+      "change": "added in the newer revision",
+      "game_id": "0022600253",
+      "date": "2026-11-17",
+      "matchup": "NYK @ TOR",
+      "time_et": "19:30",
+      "arena": "Scotiabank Arena",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600254-add",
+     "values": {
+      "change": "added in the newer revision",
+      "game_id": "0022600254",
+      "date": "2026-11-17",
+      "matchup": "POR @ MIN",
+      "time_et": "20:00",
+      "arena": "Target Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600255-add",
+     "values": {
+      "change": "added in the newer revision",
+      "game_id": "0022600255",
+      "date": "2026-11-17",
+      "matchup": "DET @ SAS",
+      "time_et": "20:00",
+      "arena": "Frost Bank Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600257-add",
+     "values": {
+      "change": "added in the newer revision",
+      "game_id": "0022600257",
+      "date": "2026-11-17",
+      "matchup": "UTA @ LAC",
+      "time_et": "22:30",
+      "arena": "Intuit Dome",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600256-add",
+     "values": {
+      "change": "added in the newer revision",
+      "game_id": "0022600256",
+      "date": "2026-11-17",
+      "matchup": "CHA @ LAL",
+      "time_et": "23:00",
+      "arena": "Crypto.com Arena",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600034-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600034",
+      "date": "2026-11-13",
+      "matchup": "NYK @ IND",
+      "time_et": "19:00",
+      "arena": "Gainbridge Fieldhouse",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600035-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600035",
+      "date": "2026-11-13",
+      "matchup": "MIL @ ORL",
+      "time_et": "19:00",
+      "arena": "Kia Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600036-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600036",
+      "date": "2026-11-13",
+      "matchup": "CLE @ MIA",
+      "time_et": "20:00",
+      "arena": "Kaseya Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600037-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600037",
+      "date": "2026-11-13",
+      "matchup": "ATL @ CHI",
+      "time_et": "20:00",
+      "arena": "United Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600038-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600038",
+      "date": "2026-11-13",
+      "matchup": "MEM @ NOP",
+      "time_et": "20:00",
+      "arena": "Smoothie King Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600039-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600039",
+      "date": "2026-11-13",
+      "matchup": "UTA @ HOU",
+      "time_et": "20:30",
+      "arena": "Toyota Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600040-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600040",
+      "date": "2026-11-13",
+      "matchup": "GSW @ SAS",
+      "time_et": "21:30",
+      "arena": "Frost Bank Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600041-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600041",
+      "date": "2026-11-13",
+      "matchup": "POR @ SAC",
+      "time_et": "22:00",
+      "arena": "Golden 1 Center",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    },
+    {
+     "key": "revslate-0022600042-dro",
+     "values": {
+      "change": "dropped (already played / outside the window)",
+      "game_id": "0022600042",
+      "date": "2026-11-13",
+      "matchup": "OKC @ LAC",
+      "time_et": "22:30",
+      "arena": "Intuit Dome",
+      "detail": "newly published on the official schedule"
+     },
+     "source": {
+      "name": "NBA.com Schedule (official)",
+      "url": "https://www.nba.com/schedule",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": true
+    }
+   ],
+   "sources": [
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    },
+    {
+     "name": "NBA.com Schedule (official)",
+     "url": "https://www.nba.com/schedule",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Week 4 / Week 5 sections; game IDs, times ET, arenas, broadcasts. Retrieved 2026-11-13 22:33 UTC."
+    }
+   ]
+  },
   "gameflow": {
    "title": "Game flow — what the slate tells us, and everything it does not",
    "blurb": "Left of the divider: computed from official schedule dates. Right of the divider: blank, because in-game flow needs play-by-play, lineups and foul data that this repository does not have. A 'game flow analysis' that narrates those four columns without the data is storytelling, and it is how books get paid.",
@@ -32864,6 +34146,121 @@
      "verified": false
     },
     {
+     "key": "FLAG-REV-01",
+     "values": {
+      "id": "FLAG-REV-01",
+      "severity": "medium",
+      "area": "revisions",
+      "statement": "The revision diff compares two official releases that are at most a few hours apart. It shows the churn; it does not say which release was right, and a status can still change before tip-off.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "Re-capture at each later release (the nightly ingest workflow does this)."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-REV-02",
+     "values": {
+      "id": "FLAG-REV-02",
+      "severity": "low",
+      "area": "revisions",
+      "statement": "A status change is published without a reason for the change itself: the official report states the CURRENT status and the CURRENT reason, not why it moved. The reason column is the official reason as of the newer release.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "action": "No action; the source does not publish change reasons."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-02"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-REV-03",
+     "values": {
+      "id": "FLAG-REV-03",
+      "severity": "medium",
+      "area": "revisions",
+      "statement": "A player whose status changed to Out between two releases is a real availability change, but quantifying what it is worth in points requires player minutes and production data this repository still lacks (FLAG-INJ-11).",
+      "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/injuries.py",
+      "action": "Attach official per-player minutes (R-102)."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-03"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-REV-04",
+     "values": {
+      "id": "FLAG-REV-04",
+      "severity": "info",
+      "area": "revisions",
+      "statement": "Games listed as dropped left the pick window because they were played. They are kept visible so the slate's size can be reconciled, not quietly removed.",
+      "source": "https://www.nba.com/schedule",
+      "action": "No action."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-04"
+     ],
+     "verified": false
+    },
+    {
+     "key": "FLAG-REV-05",
+     "values": {
+      "id": "FLAG-REV-05",
+      "severity": "low",
+      "area": "revisions",
+      "statement": "A game id present in both windows with a changed field means the official schedule page was edited upstream. The newer value is published and the old one is shown next to it.",
+      "source": "https://www.nba.com/schedule",
+      "action": "No action."
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REV-05"
+     ],
+     "verified": false
+    },
+    {
      "key": "FLAG-SLATE-01",
      "values": {
       "id": "FLAG-SLATE-01",
@@ -33532,6 +34929,41 @@
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
