@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="28">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:45 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="suggestions" data-rows="36">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -363,13 +363,13 @@
 <tr id="S-26">
 <td>S-26</td>
 <td>Fix the spread-sign inversion in the S2 selections before any of it is graded by a human</td>
-<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number.</td>
+<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number. APPLIED by session arena/3fbd894a (2026-11-14): the S2 label now names the side with the points (a favourite gets &#x27;-N&#x27;, a dog &#x27;+N&#x27;), regression-tested in nba2/tests/test_pipeline.py::test_s2_selection_matches_its_own_label. Picks strings change; the sealed ledgers never contain selection labels and are untouched.</td>
 <td>Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).</td>
 <td>Removes a defect that silently inverts a published recommendation.</td>
 <td>S</td>
 <td>picks.json is another session&#x27;s artefact; the change is logged here for its owner rather than made unilaterally.</td>
 <td>Accept and assign to the owner of nba2/picks.py.</td>
-<td>awaiting owner decision</td>
+<td>applied in this PR</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
@@ -395,6 +395,110 @@
 <td>S</td>
 <td>Adds ~30s of CI; no production risk.</td>
 <td>Accept — this is the check that found F-029.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-29">
+<td>S-29</td>
+<td>Publish the backtest&#x27;s graded sample on the canonical page, and align the two gate vocabularies</td>
+<td>CC-BT-08 (2026-11-14 crosscheck): the 139 graded backtest games and their pass/fail/partial results exist only on the backtest surface; the canonical pages never show them, and the two surfaces use different gate vocabulary (PASS/FAIL/BLOCKED/AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL).</td>
+<td>Add a small &#x27;what has actually been measured&#x27; table to the leaderboard/summary pages that states the graded sample (139 games), links the backtest page, and prints both vocabularies side by side with a one-line definition of each state.</td>
+<td>A reader of the main page can no longer conclude that nothing has been measured.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-30">
+<td>S-30</td>
+<td>Run the nightly ingest once, and alert when a scheduled ingest has zero runs</td>
+<td>CC-FRESH-03 (2026-11-14): the refresh.yml schedule is armed but no ingest run is recorded, so the site&#x27;s freshness still depends on a manual capture; the check stays INFO until a run exists.</td>
+<td>Trigger refresh.yml via workflow_dispatch once and confirm it commits a capture; add a tiny staleness alarm (e.g. a CI step that fails when data/raw has no capture newer than 48h while games are scheduled).</td>
+<td>The T-3 publishing cadence becomes self-sustaining instead of hand-maintained.</td>
+<td>low</td>
+<td>medium</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-31">
+<td>S-31</td>
+<td>Unify the input-digest file set between the build and the crosschecker</td>
+<td>CC-DOC-07 (2026-11-14): the build&#x27;s meta.input_digest and the crosschecker&#x27;s digest hash different file sets by design (the build hashes a fixed list plus ledger inputs), so the two can never equal each other and the discrepancy reads like tampering.</td>
+<td>Give the digest one shared manifest (the file list lives in one module both import) so the two numbers are comparable, or label them &#x27;build digest&#x27; and &#x27;checker digest&#x27; with the file lists printed.</td>
+<td>Removes a permanently alarming INFO that trains readers to ignore digest mismatches.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-32">
+<td>S-32</td>
+<td>Resolve the 28/30 vs 30/30 team-count wording with the committed reconciliation</td>
+<td>CC-X-02 (2026-11-14): every surface now measures 30/30 clubs, but some prose still says 28/30; the checker finds the conflict resolvable from committed evidence and CC-X-03 publishes the per-club coverage.</td>
+<td>Point the stale prose at the CC-X-02/03 reconciliation (data/site.json cross-team-tables) instead of rewriting history — add a one-line note where 28/30 appears.</td>
+<td>One number for one fact across the repo.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-33">
+<td>S-33</td>
+<td>Show the cross-session injury adjudication (the 16:15-vs-19:30 conflict table) on a canonical page</td>
+<td>CC/HTML review: the xadjudicate table (the same-document join of the two sessions&#x27; transcriptions, 15 rows, 6 known conflicts) is published in data/site.json but a reader of the main pages never sees how the two captures disagree.</td>
+<td>Link the adjudication table from the injuries page&#x27;s notes so the conflict-handling story (what the third revision said) is one click from the data it explains.</td>
+<td>The &#x27;cross-checks can contradict us&#x27; claim becomes visible instead of asserted.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-34">
+<td>S-34</td>
+<td>Document the em-dash convention once, where the tables are introduced</td>
+<td>CC-HTML-03b (2026-11-14): the literal em-dash is used consistently for &#x27;not applicable&#x27; across 8 tables (109 cells) but the convention is only documented in each table&#x27;s blurb.</td>
+<td>Add one line to the landing page or the sources page: &#x27;— means not applicable; a blank with a flag means not verified&#x27;.</td>
+<td>New readers stop reading — as missing data.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-35">
+<td>S-35</td>
+<td>Keep the &#x27;as-of&#x27; disclosure pattern for stale snapshots in future refreshes</td>
+<td>CC-FRESH-02 (2026-11-14): stale snapshots are disclosed rather than hidden (every page prints its as-of date) — the checker records this as the good pattern to preserve.</td>
+<td>No change now; treat &#x27;disclose, never hide&#x27; as the standing rule for refresh sessions and encode it in the refresh checklist.</td>
+<td>The pattern outlives the session that invented it.</td>
+<td>none</td>
+<td>none</td>
+<td>adopt as standing rule</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-36">
+<td>S-36</td>
+<td>Give the corroboration table&#x27;s verdict classes stable machine names</td>
+<td>The 2026-11-14 re-derivation (session arena/3fbd894a) rebuilt the corroboration verdicts as six classes (readable cell / earlier release&#x27;s cell / cell unreadable / games-page-only / mismatch / outside), but they exist only as prose strings the checker matches with substring tests.</td>
+<td>Add a &#x27;class&#x27; column with the six stable names and let the prose be derived from it; the checker then compares enums instead of sentences.</td>
+<td>Verdict checks stop breaking when the prose is edited.</td>
+<td>low</td>
+<td>low</td>
+<td>do it</td>
 <td>awaiting owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>

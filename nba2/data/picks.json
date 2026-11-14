@@ -178,12 +178,12 @@
           "source": "https://www.nba.com/game/cle-vs-mia-0022600036",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "MIA +6.5",
+          "selection": "MIA -6.5",
           "model_win_prob": 0.677,
           "spread_edge": 6.31,
           "leg": {
             "game_id": "0022600036",
-            "selection": "MIA +6.5"
+            "selection": "MIA -6.5"
           }
         },
         {
@@ -193,12 +193,12 @@
           "source": "https://www.nba.com/game/uta-vs-hou-0022600039",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "HOU +13.0",
+          "selection": "HOU -13.0",
           "model_win_prob": 0.825,
           "spread_edge": 13.17,
           "leg": {
             "game_id": "0022600039",
-            "selection": "HOU +13.0"
+            "selection": "HOU -13.0"
           }
         },
         {
@@ -208,12 +208,12 @@
           "source": "https://www.nba.com/game/gsw-vs-sas-0022600040",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "SAS +8.0",
+          "selection": "SAS -8.0",
           "model_win_prob": 0.721,
           "spread_edge": 8.07,
           "leg": {
             "game_id": "0022600040",
-            "selection": "SAS +8.0"
+            "selection": "SAS -8.0"
           }
         },
         {
@@ -223,12 +223,12 @@
           "source": "https://www.nba.com/game/por-vs-sac-0022600041",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "POR +6.0",
+          "selection": "POR -6.0",
           "model_win_prob": 0.671,
           "spread_edge": 6.07,
           "leg": {
             "game_id": "0022600041",
-            "selection": "POR +6.0"
+            "selection": "POR -6.0"
           }
         },
         {
@@ -238,12 +238,12 @@
           "source": "https://www.nba.com/game/bkn-vs-mem-0022600234",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "MEM +8.0",
+          "selection": "MEM -8.0",
           "model_win_prob": 0.725,
           "spread_edge": 8.23,
           "leg": {
             "game_id": "0022600234",
-            "selection": "MEM +8.0"
+            "selection": "MEM -8.0"
           }
         },
         {
@@ -253,12 +253,12 @@
           "source": "https://www.nba.com/game/chi-vs-min-0022600235",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "MIN +12.0",
+          "selection": "MIN -12.0",
           "model_win_prob": 0.803,
           "spread_edge": 11.95,
           "leg": {
             "game_id": "0022600235",
-            "selection": "MIN +12.0"
+            "selection": "MIN -12.0"
           }
         },
         {
@@ -268,12 +268,12 @@
           "source": "https://www.nba.com/game/ind-vs-phi-0022600236",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "PHI +9.0",
+          "selection": "PHI -9.0",
           "model_win_prob": 0.746,
           "spread_edge": 9.17,
           "leg": {
             "game_id": "0022600236",
-            "selection": "PHI +9.0"
+            "selection": "PHI -9.0"
           }
         },
         {
@@ -283,12 +283,12 @@
           "source": "https://www.nba.com/game/sas-vs-uta-0022600239",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "SAS +6.0",
+          "selection": "SAS -6.0",
           "model_win_prob": 0.676,
           "spread_edge": 6.25,
           "leg": {
             "game_id": "0022600239",
-            "selection": "SAS +6.0"
+            "selection": "SAS -6.0"
           }
         },
         {
@@ -298,12 +298,12 @@
           "source": "https://www.nba.com/game/dal-vs-bos-0022600240",
           "data_class": "Model (originated; inputs verified to NBA.com)",
           "bet_type": "single",
-          "selection": "BOS +7.0",
+          "selection": "BOS -7.0",
           "model_win_prob": 0.689,
           "spread_edge": 6.75,
           "leg": {
             "game_id": "0022600240",
-            "selection": "BOS +7.0"
+            "selection": "BOS -7.0"
           }
         }
       ]

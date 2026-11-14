@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="29">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:45 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="questions" data-rows="32">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -348,6 +348,39 @@
 <td>A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.</td>
 <td>Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.</td>
 <td>Without it &#x27;as of&#x27; is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-30">
+<td>Q-30</td>
+<td>Which team site-specific spread/price instruments (PF/G vs PA/G, last-5, W-L) predict against the spread best, and how far do the three independent line strands disagree?</td>
+<td>Three independent line strands exist (MAPIE/quantile, bootstrap front office, Elo+L5 adjustments) and the 2026-11-14 lines table already publishes per-row flags where the strands disagree (FLAG-LINE-02); the origin prices show 5d0c7dc7 etc.</td>
+<td>No instrument-level backtest: nobody has measured which of PF/G vs PA/G, L5 or W-L carries ATS signal, so the strands&#x27; disagreement is described but never quantified against outcomes.</td>
+<td>Grade the 139-game backtest sample strand-by-strand and instrument-by-instrument; report which combination predicts ATS margins best and the distribution of strand disagreements.</td>
+<td>Decides what the originated line should actually be built from before any market comparison (F-026) is attempted.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-31">
+<td>Q-31</td>
+<td>What is the earliest tail of a graded sample in which a selection rule&#x27;s edge claim stays within its own stated noise?</td>
+<td>The luck ladder exists and the strategies register records N=1 per strategy; the backtest grades 139 games; the ledger&#x27;s own noise model (skellam/margin sd) quantifies per-game variance.</td>
+<td>No boundary: nobody has computed at what sample size the current rules&#x27; measured edges stop being indistinguishable from luck under the site&#x27;s own noise model.</td>
+<td>Simulate each strategy rule on the backtest sample with the site&#x27;s noise model; publish the smallest N at which the measured edge separates from the luck ladder&#x27;s band, per rule.</td>
+<td>Defines when a gate could honestly flip from BLOCKED to PASS, and prevents over-reading small samples (S-22).</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-32">
+<td>Q-32</td>
+<td>What is the right release-cadence policy for 05:15 AM ET PDFs, which the filing rules do not mention?</td>
+<td>The 2026-11-14 release was published at 05:15 AM ET although the official filing page documents 05:00 PM/AM-style slots; the capture chain now has three releases with zero status changes on shared rows.</td>
+<td>A policy: nothing says whether 05:15 AM is a recurring slot, a one-off early publish, or a replacement of 05:00 AM. The nightly ingest (FLAG-REFRESH-01) needs to know which filenames to expect.</td>
+<td>Watch the injury index for the next few days; if 05:15 AM repeats, treat it as the standing early slot in the ingest&#x27;s expected-file list; if it does not, keep probing 05:00 AM first and falling back.</td>
+<td>Determines the ingest&#x27;s expected-capture list and how much of the pre-tip window is routinely covered.</td>
 <td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>

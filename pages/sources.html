@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Sources</h2><p>What we read, when, and what we could not read at all.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:45 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="sources" data-rows="21">
 <h2>Source register + verification log</h2>
 <p class="blurb">Retrieval times are UTC. Anything marked &#x27;no — blocked&#x27; contributed no value to any table on this site.</p>
@@ -48,7 +48,7 @@
 <td>https://www.nba.com/games</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Game cards with W-L and Emirates NBA Cup group records. Retrieved 2026-11-13 22:26 UTC.</td>
+<td>Game cards with W-L and Emirates NBA Cup group records. Retrieved 2026-11-13 22:26 UTC; re-fetched 2026-11-14 ~10:35-10:55 UTC as games?date= pages for 11/14-11/17 (all 27 pick-window tips re-read, 27/27 matching the slate; audit/3fbd894a/games_pages_2026-11-14_to_11-17.md). The bare /schedule URL is a JavaScript shell and is never cited alone (irregularity I-05).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -64,21 +64,21 @@
 </tr>
 <tr id="nba_injury_pdf">
 <td>nba_injury_pdf</td>
-<td>NBA Official Injury Report 11/13 19:30 ET (official)</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>NBA Official Injury Report 11/14 05:15 AM ET (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Freshest release at build time (supersedes the 16:15 capture, which stays committed). Columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. 122 rows transcribed (session arena/1ec4f9bd-nba2, retrieved ~01:05 UTC).</td>
+<td>Freshest release at build time (supersedes the 11/13 19:30 ET capture, which stays committed). Columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. 49 rows transcribed for the 2026-11-14 and 2026-11-15 game blocks (session arena/3fbd894a-nba2, retrieved 2026-11-14 10:45 UTC; verbatim capture + deterministic parser under audit/3fbd894a/). 11/16-17 designations do not exist in any published release yet.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="nba_injury_pdf_1114">
 <td>nba_injury_pdf_1114</td>
-<td>NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>NBA Official Injury Report 11/14 05:15 AM ET — pick-window designations (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC (session arena/5a5fa7c4-nba2); transcript at data/raw/injury_report_2026-11-14_daybefore.json. Same document as nba_injury_pdf; two independent transcriptions exist and are cross-checked.</td>
+<td>Same referee-operations release as nba_injury_pdf, transcribed for the pick-window tables: 31 rows for the five 2026-11-14 games (five teams filed; five NOT YET SUBMITTED) and 18 placeholder rows for the nine 2026-11-15 games (day-before designations not due until 5 p.m. local 11/14). Transcript at data/raw/injury_report_2026-11-14_0515AMET.json (0 status changes vs the 19:30 ET release on shared rows).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -208,7 +208,7 @@
 <td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
-<td>Latest official revision this session could fetch (2026-11-14 ~01:20 UTC). A 20:15 ET revision does not exist (CDN AccessDenied). Retrieved via the page fetcher; full text captured in audit/raw_injury_2026-11-13_0715PM_chunk{0,1}.md. The published site rows now come from the later official 19:30 ET release, ingested by the 2026-11-14 refresh.</td>
+<td>Latest official revision this session could fetch (2026-11-14 ~01:20 UTC). A 20:15 ET revision does not exist (CDN AccessDenied). Retrieved via the page fetcher; full text captured in audit/raw_injury_2026-11-13_0715PM_chunk{0,1}.md. The published site rows now come from the 11/14 05:15 AM ET release (ingested 2026-11-14 by session arena/3fbd894a-nba2).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>

@@ -122,10 +122,10 @@ until you accept it. This session never writes <code>accepted</code>.</div>
 <td>S-26</td>
 <td><span class="badge b-off">model</span></td>
 <td>Fix the spread-sign inversion in the S2 selections before any of it is graded by a human</td>
-<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number. — evidence: picks.json prints &#x27;POR +6.0&#x27; where its own label reads &#x27;POR -6.0&#x27;</td>
+<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number. APPLIED by session arena/3fbd894a (2026-11-14): the S2 label now names the side with the points (a favourite gets &#x27;-N&#x27;, a dog &#x27;+N&#x27;), regression-tested in nba2/tests/test_pipeline.py::test_s2_selection_matches_its_own_label. Picks strings change; the sealed ledgers never contain selection labels and are untouched. — evidence: picks.json prints &#x27;POR +6.0&#x27; where its own label reads &#x27;POR -6.0&#x27;</td>
 <td>S2 selections name the side that takes the points, matching the file&#x27;s own spread label.</td>
 <td>S</td>
-<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><span class="badge b-warn">applied in this PR</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json" rel="noopener" target="_blank">capture</a></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">official</a></td>
 </tr>
