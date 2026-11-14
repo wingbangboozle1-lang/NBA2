@@ -157,11 +157,13 @@ published on the Flagged page rather than fixed silently in someone else's file.
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
 <h2>The single next decision</h2>
-<p><b>Decide which tree is the site.</b> The Pages API reports <code>source: main /</code>, which serves the repository
-root, while the workflow in this repository publishes the <code>site/</code> artefact and the live index is the v2
-dashboard. Both contain a full dashboard with different numbers. While that is true, no verification on either tree can
-be treated as authoritative — which is why it is ranked above the odds feed in the
-<a href="decision-queue.html">decision queue</a>, despite being a one-line settings change.</p>
+<p><b>Retire the tree nobody can reach, then decide what a pick is worth.</b> Probing the live site settles which tree is
+published: <code>/NBA2/pages/session-audit.html</code> and <code>/NBA2/pages/executive-summary.html</code> both return
+<b>404</b> while <code>/NBA2/data/teams.json</code> returns <b>200</b> with v2 content. So exactly one tree — the
+<code>site/</code> artefact — reaches a reader, and the v1 tree at the repository root is unreachable maintenance debt
+that CI still rebuilds and lints on every push. Retiring it is cheap and removes a stale record set from the audit
+surface. The expensive decision remains the price: with no odds feed, nothing on this site can ever become a bet.
+<a href="decision-queue.html">The queue ranks both.</a></p>
 <div class="cards">
   <div class="card"><h4><a href="decision-queue.html">Review the decision queue</a></h4><p>Seven numbered decisions,
   each with its evidence, the change it would make, and an accept / reject / defer action. Nothing is implemented until

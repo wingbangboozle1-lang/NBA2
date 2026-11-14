@@ -341,5 +341,9 @@ now proposed as DG-02 / Q-23 and enforced ahead of merge by
 workflow previously compared the committed `site/` tree against a rebuild, so the published artefact could drift from
 its own inputs and only break at deploy time on `main`.
 
-Nothing was invented. Two irregularities in another session's files — a spread-sign inversion in the S2 selections
-(F-025) and two dashboards both claiming to be the site (F-027) — are **published, not silently fixed**.
+Nothing was invented, and one of this session's own findings was **corrected before publication**: a first draft claimed
+two dashboards both reach a reader. Probing the live site disproved it — `/NBA2/pages/session-audit.html` and
+`/NBA2/pages/executive-summary.html` return **404**, `/NBA2/data/teams.json` returns **200**. Exactly one tree (the
+`site/` artefact) is published; the v1 tree is unreachable debt that CI still rebuilds (F-027, corrected). Two
+irregularities in another session's files — a spread-sign inversion in the S2 selections (F-025) and that unreachable
+tree (F-027) — are **published, not silently fixed**.

@@ -243,11 +243,11 @@ separately so a reviewer can see which questions the evidence produced and which
 </tr>
 <tr id="Q-27">
 <td>Q-27</td>
-<td>Which tree is the canonical site, and who is allowed to change the Pages setting?</td>
-<td>Evidence of two answers in the repository at once: .github/workflows/pages.yml says it publishes site/ (v2) and its last run succeeded; the live index page served on 2026-11-14 is the v2 dashboard, while the GitHub Pages API reports source = main /, which publishes the repository root (the v1 tree). The root tree still contains its own index.html and pages/.</td>
-<td>One recorded decision. The repository root and site/ currently both contain a full dashboard with different numbers from different snapshots.</td>
-<td>Owner (or the integration session) sets Pages to &#x27;GitHub Actions&#x27; to publish the site/ artifact, and the root HTML is either deleted or moves under archive/ with a redirect. Then exactly one build can reach a reader.</td>
-<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?</td>
+<td>A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.</td>
+<td>Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.</td>
+<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml&#x27;s parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.</td>
+<td><span class="badge b-warn">MEDIUM</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="Q-28">

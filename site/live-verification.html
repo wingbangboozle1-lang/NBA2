@@ -51,6 +51,48 @@ rows by hand. A page is cheaper than vigilance.</div>
   <div class="kpi"><b>7/9</b><small>where "always pick home" would have</small></div>
 </div>
 
+<h2>0. Which tree is actually published (probed, not assumed)</h2>
+<p class="lede">A correction to this session's own first draft. It claimed two dashboards both reach a reader. That was
+wrong, and the probe below is why. On 2026-11-14 the live site was fetched at three paths:</p>
+<div class="scroll"><table>
+<caption>One tree is served. The Pages API&#x27;s build_type=legacy / source=main is stale metadata that does not describe what readers get, which the 404s above prove.</caption>
+<thead><tr>
+<th scope="col">Path probed</th>
+<th scope="col">HTTP</th>
+<th scope="col">What came back</th>
+<th scope="col">URL</th>
+</tr></thead><tbody>
+<tr>
+<td>/NBA2/</td>
+<td><span class="badge b-ok">200</span></td>
+<td>v2 dashboard — title &#x27;Dashboard · NBA2 Lines Lab v2&#x27;</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/</a></td>
+</tr>
+<tr>
+<td>/NBA2/data/teams.json</td>
+<td><span class="badge b-ok">200</span></td>
+<td>v2 artefact: as_of, calibration.margin_sd 12.75, 30 teams with reliability and luck_z</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/data/teams.json" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/data/teams.json</a></td>
+</tr>
+<tr>
+<td>/NBA2/pages/session-audit.html</td>
+<td><span class="badge b-bad">404</span></td>
+<td>this file exists in the repository (v1 tree) — site/ has no pages/ directory</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/pages/session-audit.html" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/pages/session-a…</a></td>
+</tr>
+<tr>
+<td>/NBA2/pages/executive-summary.html</td>
+<td><span class="badge b-bad">404</span></td>
+<td>also exists in the repository (v1 tree) and is also unreachable</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/pages/executive-summary.html" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/pages/executive…</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>What that means.</b> Only the <code>site/</code> artefact built by
+<code>pages.yml</code> reaches a reader. The v1 tree at the repository root — root <code>index.html</code>,
+<code>pages/**</code>, <code>flagged.html</code>, <code>data/site.json</code> — is <b>unreachable</b>, yet CI still
+regenerates, lints and parity-checks it on every push, and it carries records that have been stale since the 11/13
+finals. The defect is unreachable maintenance debt, not a live fork: the recommendation (DG-01 / S-27) is to move it
+under <code>archive/</code> with dated notes, deleting nothing.</div>
+
 <h2>1. Official pages read this session</h2>
 <div class="scroll"><table>
 <caption>Read at 2026-11-14T09:56:00Z; nba.com is unreachable by direct HTTPS from the build sandbox, so these were fetched through the platform page-reader. The method is stated because it is part of the evidence.</caption>

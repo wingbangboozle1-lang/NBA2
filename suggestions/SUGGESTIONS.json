@@ -295,9 +295,9 @@
     },
     {
       "id": "S-27",
-      "title": "Collapse the six dashboards to one before adding a seventh",
-      "problem": "The repository contains root v1 pages, docs/, dashboard/, verified/, originated/, site/ (v2) and backtest/. Each has different numbers from a different snapshot. Every integration session has logged this and none has closed it.",
-      "proposal": "Pick site/ as canonical, move the others under archive/ with a redirect page that names the date each was frozen, and delete nothing.",
+      "title": "Retire the unreachable v1 tree instead of maintaining two generators",
+      "problem": "Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page \u2014 pages/session-audit.html and pages/executive-summary.html were both checked \u2014 yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.",
+      "proposal": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.",
       "benefit": "One number per question is the precondition for every other claim on the site.",
       "effort": "M",
       "risk": "Breaks inbound links to the old trees; the redirect pages fix that.",

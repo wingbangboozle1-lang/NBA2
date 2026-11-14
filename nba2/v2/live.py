@@ -366,7 +366,7 @@ def decision_queue() -> dict:
         "S-21": "site", "S-22": "model", "S-23": "model", "S-24": "site",
         "S-25": "site", "S-26": "model", "S-27": "governance",
     }
-    blocking = {"S-27", "S-25", "S-26"}
+    blocking = {"S-25", "S-26"}
     what_changes = {
         "S-21": "A new page exists, generated from dated official captures, and it fails the build if a capture is missing.",
         "S-22": "Every hit-rate table renders both 'signal rows' and 'distinct games'; a rate without its n is a lint error.",
@@ -374,7 +374,7 @@ def decision_queue() -> dict:
         "S-24": "The suggestions page becomes this queue, with an explicit owner action on every row.",
         "S-25": "The Pages workflow cannot publish a build whose newest capture is older than a per-table limit.",
         "S-26": "S2 selections name the side that takes the points, matching the file's own spread label.",
-        "S-27": "One dashboard is served; the other five move under archive/ behind dated redirects.",
+        "S-27": "The unreachable v1 tree moves under archive/ with dated notes; one generator remains.",
     }
     evidence = {
         "S-21": "18 of 30 published team records no longer match today's official standings",
@@ -383,7 +383,7 @@ def decision_queue() -> dict:
         "S-24": "suggestions were a list of status strings with no action a reviewer could take",
         "S-25": "every page prints an as-of date and no build fails when it is old",
         "S-26": "picks.json prints 'POR +6.0' where its own label reads 'POR -6.0'",
-        "S-27": "the live index is the v2 tree while the Pages API reports source = main /",
+        "S-27": "pages/*.html return 404 on the live site while site/data/teams.json returns 200 — one tree is served",
     }
     items = []
     for r in reg:

@@ -246,14 +246,14 @@
     },
     {
       "id": "Q-27",
-      "question": "Which tree is the canonical site, and who is allowed to change the Pages setting?",
-      "have": "Evidence of two answers in the repository at once: .github/workflows/pages.yml says it publishes site/ (v2) and its last run succeeded; the live index page served on 2026-11-14 is the v2 dashboard, while the GitHub Pages API reports source = main /, which publishes the repository root (the v1 tree). The root tree still contains its own index.html and pages/.",
-      "missing": "One recorded decision. The repository root and site/ currently both contain a full dashboard with different numbers from different snapshots.",
-      "how": "Owner (or the integration session) sets Pages to 'GitHub Actions' to publish the site/ artifact, and the root HTML is either deleted or moves under archive/ with a redirect. Then exactly one build can reach a reader.",
-      "impact": "Every published number's credibility depends on which of the two trees the reader happens to land on. Two dashboards with different records is the failure the last three integration sessions each logged and none closed.",
-      "severity": "BLOCKING",
+      "question": "Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?",
+      "have": "A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served \u2014 site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.",
+      "missing": "Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.",
+      "how": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml's parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.",
+      "impact": "Every minute spent verifying the v1 tree is spent on a surface nobody reads, and its stale numbers keep appearing in repo-wide audits and confusing later sessions.",
+      "severity": "MEDIUM",
       "source": "https://github.com/wingbangboozle1-lang/NBA2",
-      "evidence": "COORDINATION.md E-07 owner decision; gh api repos/.../pages -> build_type legacy"
+      "evidence": "audit/2026-11-14/deploy_probe.json"
     },
     {
       "id": "Q-28",

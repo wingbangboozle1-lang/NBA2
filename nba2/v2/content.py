@@ -436,12 +436,15 @@ FLAGS = [
      "PnL is null on every row and the reason is printed beside it. Q-28 asks the owner to choose between "
      "a licensed feed, manual entry, or a permanent no-PnL policy.",
      "https://www.nba.com/games"),
-    ("F-027", "low", "Product",
-     "The published site is the v2 tree (live index fetched 2026-11-14 is the v2 dashboard and its "
-     "pages.yml run succeeded), while the GitHub Pages API reports source = main /, which serves the "
-     "repository root. Both trees contain a full dashboard with different numbers.",
-     "Published, not resolved: switching the Pages source changes every page a reader sees, which is an "
-     "owner decision (Q-27 / DG-01). Recorded here so no future session assumes one tree is authoritative.",
+    ("F-027", "medium", "Product",
+     "Two full dashboards exist in the repository but only one reaches a reader. Probed directly: pages that exist "
+     "only in the v1 tree (pages/session-audit.html, pages/executive-summary.html) return HTTP 404 on the live site, "
+     "while site/-only artefacts (data/teams.json) return 200 with v2 content. So the site/ artefact built by "
+     "pages.yml is the published site, and the root v1 tree is unreachable — yet ci.yml still regenerates, lints and "
+     "parity-checks it on every push.",
+     "Corrected finding: an earlier draft of this flag claimed both trees publish a dashboard. That was wrong. The "
+     "real defect is unreachable maintenance debt, not a live fork — the v1 tree carries stale records (see F-023) "
+     "that no reader can see but every build pays for. Recommendation DG-01 stands: retire the v1 tree to archive/.",
      "https://github.com/wingbangboozle1-lang/NBA2"),
     ("F-028", "info", "Verification",
      "The '30/30 identical' W-L cross-check on the dashboard and verification pages was true when it was "

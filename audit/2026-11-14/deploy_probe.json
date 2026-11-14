@@ -1,0 +1,14 @@
+{
+  "probe": "Which tree does the published GitHub Pages site actually serve?",
+  "method": "HTTP GET of pages that exist in only one tree, plus the Pages API settings",
+  "at_utc": "2026-11-14T10:40:00Z",
+  "results": [
+    {"url": "https://wingbangboozle1-lang.github.io/NBA2/", "status": "200", "content": "v2 dashboard, title 'Dashboard · NBA2 Lines Lab v2', nav includes Decision queue and Live verification", "tree": "site/"},
+    {"url": "https://wingbangboozle1-lang.github.io/NBA2/data/teams.json", "status": "200", "content": "v2 artefact (as_of, calibration.margin_sd 12.75, 30 teams with reliability/luck_z)", "tree": "site/"},
+    {"url": "https://wingbangboozle1-lang.github.io/NBA2/pages/session-audit.html", "status": "404", "note": "this file exists in the repository at pages/session-audit.html (v1 tree)", "tree": "site/ has no pages/ directory"},
+    {"url": "https://wingbangboozle1-lang.github.io/NBA2/pages/executive-summary.html", "status": "404", "note": "exists at pages/executive-summary.html (v1 tree)", "tree": "site/ has no pages/ directory"}
+  ],
+  "pages_api": {"build_type": "legacy", "source": {"branch": "main", "path": "/"}, "status": "built"},
+  "conclusion": "Exactly ONE tree is served: the site/ artefact published by .github/workflows/pages.yml. The Pages API's build_type=legacy + source main/ is stale metadata that does not describe what is served - proved by the 404s above. The v1 tree (root index.html, pages/**, data/site.json) is NOT reachable to any reader, yet it is still generated, linted and parity-checked by ci.yml on every push, and still contains claims that were true only before the 11/13 finals.",
+  "corrected_claim": "An earlier draft of this session's own finding (F-027) said two trees both publish a dashboard. That was wrong and is corrected here: one tree publishes, and the other is unreachable maintenance debt."
+}

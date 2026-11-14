@@ -421,11 +421,13 @@ published on the Flagged page rather than fixed silently in someone else's file.
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
 <h2>The single next decision</h2>
-<p><b>Decide which tree is the site.</b> The Pages API reports <code>source: main /</code>, which serves the repository
-root, while the workflow in this repository publishes the <code>site/</code> artefact and the live index is the v2
-dashboard. Both contain a full dashboard with different numbers. While that is true, no verification on either tree can
-be treated as authoritative — which is why it is ranked above the odds feed in the
-<a href="decision-queue.html">decision queue</a>, despite being a one-line settings change.</p>
+<p><b>Retire the tree nobody can reach, then decide what a pick is worth.</b> Probing the live site settles which tree is
+published: <code>/NBA2/pages/session-audit.html</code> and <code>/NBA2/pages/executive-summary.html</code> both return
+<b>404</b> while <code>/NBA2/data/teams.json</code> returns <b>200</b> with v2 content. So exactly one tree — the
+<code>site/</code> artefact — reaches a reader, and the v1 tree at the repository root is unreachable maintenance debt
+that CI still rebuilds and lints on every push. Retiring it is cheap and removes a stale record set from the audit
+surface. The expensive decision remains the price: with no odds feed, nothing on this site can ever become a bet.
+<a href="decision-queue.html">The queue ranks both.</a></p>
 <div class="cards">
   <div class="card"><h4><a href="decision-queue.html">Review the decision queue</a></h4><p>Seven numbered decisions,
   each with its evidence, the change it would make, and an accept / reject / defer action. Nothing is implemented until
@@ -1150,6 +1152,33 @@ rows by hand. A page is cheaper than vigilance.</div>
   <div class="kpi"><b>{gr.get('side_accuracy',{}).get('model','—')}/{gr.get('side_accuracy',{}).get('n','—')}</b><small>games where the model named the winner</small></div>
   <div class="kpi"><b>{gr.get('side_accuracy',{}).get('always_home','—')}/{gr.get('side_accuracy',{}).get('n','—')}</b><small>where "always pick home" would have</small></div>
 </div>
+
+<h2>0. Which tree is actually published (probed, not assumed)</h2>
+<p class="lede">A correction to this session's own first draft. It claimed two dashboards both reach a reader. That was
+wrong, and the probe below is why. On 2026-11-14 the live site was fetched at three paths:</p>
+"""
+    rows = [
+        {"cells": [esc("/NBA2/"), badge("200", "ok"), esc("v2 dashboard — title 'Dashboard · NBA2 Lines Lab v2'"),
+                   srclink("https://wingbangboozle1-lang.github.io/NBA2/")]},
+        {"cells": [esc("/NBA2/data/teams.json"), badge("200", "ok"),
+                   esc("v2 artefact: as_of, calibration.margin_sd 12.75, 30 teams with reliability and luck_z"),
+                   srclink("https://wingbangboozle1-lang.github.io/NBA2/data/teams.json")]},
+        {"cells": [esc("/NBA2/pages/session-audit.html"), badge("404", "bad"),
+                   esc("this file exists in the repository (v1 tree) — site/ has no pages/ directory"),
+                   srclink("https://wingbangboozle1-lang.github.io/NBA2/pages/session-audit.html")]},
+        {"cells": [esc("/NBA2/pages/executive-summary.html"), badge("404", "bad"),
+                   esc("also exists in the repository (v1 tree) and is also unreachable"),
+                   srclink("https://wingbangboozle1-lang.github.io/NBA2/pages/executive-summary.html")]},
+    ]
+    body += table(["Path probed", "HTTP", "What came back", "URL"], rows,
+                  "One tree is served. The Pages API's build_type=legacy / source=main is stale metadata that does "
+                  "not describe what readers get, which the 404s above prove.")
+    body += f"""<div class="note warn"><b>What that means.</b> Only the <code>site/</code> artefact built by
+<code>pages.yml</code> reaches a reader. The v1 tree at the repository root — root <code>index.html</code>,
+<code>pages/**</code>, <code>flagged.html</code>, <code>data/site.json</code> — is <b>unreachable</b>, yet CI still
+regenerates, lints and parity-checks it on every push, and it carries records that have been stale since the 11/13
+finals. The defect is unreachable maintenance debt, not a live fork: the recommendation (DG-01 / S-27) is to move it
+under <code>archive/</code> with dated notes, deleting nothing.</div>
 
 <h2>1. Official pages read this session</h2>
 """

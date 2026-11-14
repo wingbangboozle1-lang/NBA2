@@ -260,11 +260,11 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr id="F-027">
-<td><span class="badge b-off">F-027</span></td>
-<td><span class="badge b-off">low</span></td>
+<td><span class="badge b-warn">F-027</span></td>
+<td><span class="badge b-warn">medium</span></td>
 <td>Product</td>
-<td>The published site is the v2 tree (live index fetched 2026-11-14 is the v2 dashboard and its pages.yml run succeeded), while the GitHub Pages API reports source = main /, which serves the repository root. Both trees contain a full dashboard with different numbers.</td>
-<td>Published, not resolved: switching the Pages source changes every page a reader sees, which is an owner decision (Q-27 / DG-01). Recorded here so no future session assumes one tree is authoritative.</td>
+<td>Two full dashboards exist in the repository but only one reaches a reader. Probed directly: pages that exist only in the v1 tree (pages/session-audit.html, pages/executive-summary.html) return HTTP 404 on the live site, while site/-only artefacts (data/teams.json) return 200 with v2 content. So the site/ artefact built by pages.yml is the published site, and the root v1 tree is unreachable — yet ci.yml still regenerates, lints and parity-checks it on every push.</td>
+<td>Corrected finding: an earlier draft of this flag claimed both trees publish a dashboard. That was wrong. The real defect is unreachable maintenance debt, not a live fork — the v1 tree carries stale records (see F-023) that no reader can see but every build pays for. Recommendation DG-01 stands: retire the v1 tree to archive/.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="F-028">

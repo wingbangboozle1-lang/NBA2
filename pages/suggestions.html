@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 09:49 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 09:59 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="suggestions" data-rows="27">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
@@ -375,9 +375,9 @@
 </tr>
 <tr id="S-27">
 <td>S-27</td>
-<td>Collapse the six dashboards to one before adding a seventh</td>
-<td>The repository contains root v1 pages, docs/, dashboard/, verified/, originated/, site/ (v2) and backtest/. Each has different numbers from a different snapshot. Every integration session has logged this and none has closed it.</td>
-<td>Pick site/ as canonical, move the others under archive/ with a redirect page that names the date each was frozen, and delete nothing.</td>
+<td>Retire the unreachable v1 tree instead of maintaining two generators</td>
+<td>Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.</td>
+<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.</td>
 <td>One number per question is the precondition for every other claim on the site.</td>
 <td>M</td>
 <td>Breaks inbound links to the old trees; the redirect pages fix that.</td>
