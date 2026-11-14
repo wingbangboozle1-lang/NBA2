@@ -419,8 +419,8 @@ def build_gameflow_rows(games: list[dict], spots: dict, flow: list[dict]) -> dic
             date=f["date"], matchup=f["matchup"],
             home_games_window=f"{hs.games_in_window} ({hs.home_games}H/{hs.away_games}A)" if hs else None,
             away_games_window=f"{as_.games_in_window} ({as_.home_games}H/{as_.away_games}A)" if as_ else None,
-            home_b2b="YES" if f["home_b2b"] else "not in window",
-            away_b2b="YES" if f["away_b2b"] else "not in window",
+            home_b2b="YES" if f["home_b2b"] else "no",
+            away_b2b="YES" if f["away_b2b"] else "no",
             home_3_in_4="YES" if f["home_3_in_4"] else "no",
             away_3_in_4="YES" if f["away_3_in_4"] else "no",
             rest_home=None, rest_away=None,
@@ -1070,6 +1070,12 @@ def main() -> None:
     flag("FLAG-FLOW-01", "high", "game flow", "Rest days, pace, garbage time, foul trouble and closing lineups "
          "are blank because the needed data (prior game dates outside the window, PBP, lineups) is not in the repo.",
          "https://www.nba.com/schedule", "Extend snapshot window to the full season (R-103).")
+    flag("FLAG-FLOW-03", "medium", "game flow", "FIXED 2026-11-14 (COORDINATION.md I-07): the B2B/3-in-4 flags used "
+         "substring matching against the pair/sequence strings, so the FIRST night of a consecutive pair was also "
+         "flagged (e.g. DAL on 11/14 before its 11/15 game). Detection now anchors on the second/third night; a "
+         "regression test pins it. Rows published before 2026-11-14 carry the inflated values.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/gameflow.py",
+         "No action for the current build; treat pre-refresh game-flow B2B values as over-counted.")
     flag("FLAG-FLOW-02", "medium", "game flow", "Back-to-back detection only sees inside 2026-11-13..17; a team "
          "playing Nov 12 is invisible, so 'not in window' does not mean 'rested'.",
          "https://www.nba.com/schedule", "Same as R-103.")

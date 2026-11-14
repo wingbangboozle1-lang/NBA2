@@ -352,6 +352,46 @@ class TestPublishedSite(unittest.TestCase):
                          "window = as_of (2026-11-14) .. as_of+3 (2026-11-17); 11/13 context games excluded")
 
 
+
+class TestGameFlowB2B(unittest.TestCase):
+    """Regression for the 2026-11-14 fix (COORDINATION.md I-07): the first night of a
+    consecutive pair must NOT be flagged as a back-to-back; only the second night is."""
+
+    def _games(self):
+        g = lambda gid, d, a, h: {"game_id": gid, "date": d, "time_et": "19:00",
+                                  "away": a, "home": h, "arena": "A", "city": "C",
+                                  "state": "S", "broadcast": "B", "cup_group": None,
+                                  "preview_url": ""}
+        return [g("1", "2026-11-13", "XXX", "YYY"),
+                g("2", "2026-11-14", "YYY", "ZZZ"),
+                g("3", "2026-11-15", "YYY", "WWW"),
+                g("4", "2026-11-16", "QQQ", "YYY")]
+
+    def test_first_night_of_pair_is_not_a_b2b(self):
+        from nba2.models import gameflow as GF
+        games = self._games()
+        spots = GF.schedule_spots(games, "2026-11-13", "2026-11-16")
+        rows = {r["matchup"]: r for r in GF.game_flow_inputs(games, spots)}
+        # YYY plays 11/13, 11/14, 11/15, 11/16
+        self.assertFalse(rows["XXX @ YYY"]["home_b2b"], "11/13 is YYY's first game, not a B2B")
+        self.assertTrue(rows["YYY @ ZZZ"]["away_b2b"], "11/14 is the second night -> B2B")
+        self.assertTrue(rows["YYY @ WWW"]["away_b2b"], "11/15 is the second night of 11/14+11/15 -> B2B")
+        self.assertTrue(rows["QQQ @ YYY"]["home_b2b"], "11/16 is the second night of 11/15+11/16 -> B2B")
+
+    def test_three_in_four_flags_only_the_third_game(self):
+        from nba2.models import gameflow as GF
+        games = self._games()
+        spots = GF.schedule_spots(games, "2026-11-13", "2026-11-16")
+        rows = {r["matchup"]: r for r in GF.game_flow_inputs(games, spots)}
+        # YYY plays 11/13, 11/14, 11/15 -> third game in four days is 11/15
+        self.assertFalse(rows["XXX @ YYY"]["home_3_in_4"])
+        self.assertFalse(rows["YYY @ ZZZ"]["away_3_in_4"])
+        self.assertTrue(rows["YYY @ WWW"]["away_3_in_4"])
+        # 11/16 is YYY's third game inside the rolling four-day window (14,15,16), so it is
+        # itself a 3-in-4 night AND the second night of a back-to-back (tested above)
+        self.assertTrue(rows["QQQ @ YYY"]["home_3_in_4"])
+
+
 class TestReproducibility(unittest.TestCase):
     def test_rebuild_produces_identical_rows(self):
         """Determinism is what makes a published number checkable: rebuild in a subprocess and

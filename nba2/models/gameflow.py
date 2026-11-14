@@ -92,21 +92,34 @@ def schedule_spots(games: list[dict], window_start: str, window_end: str) -> dic
 
 
 def game_flow_inputs(games: list[dict], spots: dict[str, Spot]) -> list[dict]:
-    """Per-game game-flow context. Every field we cannot verify is None on purpose."""
+    """Per-game game-flow context. Every field we cannot verify is None on purpose.
+
+    B2B / 3-in-4 are flagged on the night the load COMPLETES: a back-to-back is the team's
+    SECOND consecutive day (the second element of a `d1+d2` pair), a 3-in-4 is the team's
+    THIRD game inside four days (the last element of a `d1->d2->d3` sequence). Earlier
+    revisions of this function substring-matched the game date against the whole pair/sequence
+    string, which also flagged the first night of a pair — inflating B2B counts for e.g. a
+    team whose two in-window games simply sat on consecutive dates (fixed 2026-11-14, see
+    irregularity I-07 in COORDINATION.md and the regression test).
+    """
     rows = []
     for g in games:
         hs = spots.get(g["home"])
         as_ = spots.get(g["away"])
+        home_b2b_dates = {p.split("+")[1] for p in (hs.b2b_nights if hs else [])}
+        away_b2b_dates = {p.split("+")[1] for p in (as_.b2b_nights if as_ else [])}
+        home_34_dates = {s.split("->")[-1] for s in (hs.three_in_four if hs else [])}
+        away_34_dates = {s.split("->")[-1] for s in (as_.three_in_four if as_ else [])}
         rows.append({
             "game_id": g["game_id"],
             "date": g["date"],
             "matchup": f"{g['away']} @ {g['home']}",
             "home_rest_days": None,          # needs the previous game date outside our window
             "away_rest_days": None,
-            "home_b2b": bool(hs and any(g["date"] in pair for pair in hs.b2b_nights)),
-            "away_b2b": bool(as_ and any(g["date"] in pair for pair in as_.b2b_nights)),
-            "home_3_in_4": bool(hs and any(g["date"] in seq for seq in hs.three_in_four)),
-            "away_3_in_4": bool(as_ and any(g["date"] in seq for seq in as_.three_in_four)),
+            "home_b2b": g["date"] in home_b2b_dates,
+            "away_b2b": g["date"] in away_b2b_dates,
+            "home_3_in_4": g["date"] in home_34_dates,
+            "away_3_in_4": g["date"] in away_34_dates,
             "pace_projection": None,         # needs possession/pace data
             "garbage_time_risk": None,        # needs projected margin + rotation depth
             "foul_trouble_risk": None,        # needs referee assignments + player foul rates
