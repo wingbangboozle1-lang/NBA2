@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-11-13T23:09:03.304Z",
+    "generated": "2026-11-14T09:57:42.813Z",
     "season": "2026-27",
     "asOf": "2026-11-13",
     "gamesInWindow": 23,
@@ -347,7 +347,7 @@
       "src": "S02"
     },
     {
-      "abbr": "WSH",
+      "abbr": "WAS",
       "name": "Washington Wizards",
       "conf": "4-8",
       "gp": 13,
@@ -1935,7 +1935,7 @@
       "id": "0022600242",
       "date": "2026-11-15",
       "away": "HOU",
-      "home": "WSH",
+      "home": "WAS",
       "awayPrev": "2026-11-13",
       "homePrev": null,
       "awayRest": 1,
@@ -2801,7 +2801,7 @@
     {
       "id": "0022600242",
       "away": "HOU",
-      "home": "WSH",
+      "home": "WAS",
       "expAwayPts": 115.27,
       "expHomePts": 109.03,
       "expTotal": 224.3,
@@ -2830,7 +2830,7 @@
       "awayB2B": false,
       "homeB2B": false,
       "tzDelta": 1,
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "date": "2026-11-15",
       "timeEt": "7:00 PM ET",
       "venue": "Capital One Arena",
@@ -4220,7 +4220,7 @@
       "strategy": "S06",
       "gameId": "0022600242",
       "date": "2026-11-15",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "trigger": "either team on a streak of 6+ games",
       "fairAmerican": -110,
       "marketDecimal": 1.91841376908474,
@@ -6609,9 +6609,9 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
-        "WSH moneyline",
+        "WAS moneyline",
         "Over 224.5"
       ],
       "pTrueJoint": 0.1538,
@@ -6628,9 +6628,9 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
-        "WSH moneyline",
+        "WAS moneyline",
         "Under 224.5"
       ],
       "pTrueJoint": 0.1595,
@@ -6647,7 +6647,7 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
         "HOU moneyline",
         "Over 224.5"
@@ -6666,7 +6666,7 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
         "HOU moneyline",
         "Under 224.5"
@@ -6685,10 +6685,10 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
         "Over 224.5",
-        "WSH 7"
+        "WAS 7"
       ],
       "pTrueJoint": 0.2431,
       "pIndependent": 0.2449,
@@ -6704,10 +6704,10 @@
       "strategy": "S09",
       "kind": "same-game parlay",
       "gameId": "0022600242",
-      "matchup": "HOU @ WSH",
+      "matchup": "HOU @ WAS",
       "legs": [
         "Under 224.5",
-        "WSH 7"
+        "WAS 7"
       ],
       "pTrueJoint": 0.256,
       "pIndependent": 0.2542,

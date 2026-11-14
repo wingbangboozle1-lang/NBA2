@@ -148,7 +148,7 @@ def build_ratings_rows(model: RT.RatingModel) -> dict:
         rows.append(make_row(
             tc, SRC_RAT, _flag_ids("FLAG-RAT-01"),
             team=t.name, tricode=tc,
-            wl=f"{t.wins}-{t.losses}", wl_official=f"{t.wins}-{t.losses}",
+            wl=f"{t.wins}-{t.losses}",
             ppg=f"{t.ppg:.1f}" if t.ppg is not None else None,
             oppg=f"{t.oppg:.1f}" if t.oppg is not None else None,
             net=f"{t.net_ppg:+.1f}" if t.net_ppg is not None else None,
@@ -157,15 +157,23 @@ def build_ratings_rows(model: RT.RatingModel) -> dict:
             srs_shrunk=f"{t.srs_shrunk:+.2f}" if t.srs_shrunk is not None else None,
             games=t.games,
         ))
-    return table(rows, [("team", "Team"), ("wl_official", "W-L (official NBA.com)"),
+    # CORRECTED 2026-11-14 (session arena/a7d4a562): this table used to print two W-L columns
+    # labelled "official NBA.com" and "ratings source" and claim "if they ever disagree, the table
+    # is wrong". Both columns were populated from the SAME field, so the guard could never fire and
+    # the "official" label was not true of this snapshot. The duplicate column is now dropped rather
+    # than relabelled: a second column that cannot disagree is decoration, not verification.
+    return table(rows, [("team", "Team"),
                         ("wl", "W-L (ratings source)"), ("ppg", "PS/G"), ("oppg", "PA/G"),
                         ("net", "Margin/G"), ("srs", "SRS"), ("games", "GP"),
                         ("lam", "Reliability λ"), ("srs_shrunk", "SRS × λ")],
                  "Team ratings table (the model's only inputs)",
-                 "W-L is confirmed against NBA.com for 28 of 30 clubs; TOR and WAS were not visible in the "
-                 "retrieved official page text and are flagged. PS/G, PA/G and SRS could not be pulled from an "
-                 "official endpoint at all — that is the single biggest data gap on this site.",
-                 "Both W-L columns are printed on purpose: if they ever disagree, the table is wrong.")
+                 "PS/G, PA/G and SRS could not be pulled from an official endpoint at all — that is the single "
+                 "biggest data gap on this site, and every such row carries FLAG-RAT-01.",
+                 "W-L here is the ratings snapshot's own record, read from a third-party source. It is NOT "
+                 "independently confirmed inside this table: an earlier build printed a second 'official' "
+                 "column that was in fact the same field twice, which is why the duplicate was removed. "
+                 "Independent confirmation against nba.com lives in data/raw/ratings_recheck_2026-11-14.json "
+                 "and on the v2 site's team table, not here.")
 
 
 def build_luck_rows(model: RT.RatingModel) -> dict:
@@ -780,7 +788,9 @@ def build_strategy_rows(entries: list[LB.Entry]) -> dict:
             e.strategy_id, SRC_DER, _flag_ids(*fl),
             id=e.strategy_id, name=r["name"], family=r["family"],
             score=None if r["score"] is None else f"{r['score']:.1f}",
-            tier=r["tier"], gates=f"{r['gates_passed']} pass / {r['gates_failed']} fail / {r['gates_blocked']} blocked",
+            tier=r["tier"],
+            gates=(f"{r['gates_passed']} pass / {r['gates_failed']} fail / "
+                   f"{r['gates_blocked']} blocked / {r.get('gates_at_risk', 0)} at risk"),
             bets=r["n_bets"], cluster=r["cluster"], reward=None,
             blocking=r["blocking"][:220],
         ))
@@ -1233,8 +1243,17 @@ def build() -> dict:
         except Exception:
             prev = {}
     same_inputs = prev.get("input_digest") == digest
-    stamp = prev.get("generated_at_utc") if same_inputs else \
-        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # Determinism rule: when the inputs have not changed, neither does any published byte — not
+    # even the stamp. Re-stamping on every rebuild made site.json differ from its own rebuild,
+    # which is exactly what CI's byte-parity gate exists to prevent. The current real time is
+    # printed instead of omitted so a reader can still see when this digest was first published.
+    if same_inputs:
+        stamp = prev.get("generated_at_utc")
+    else:
+        stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    published_state = ("unchanged — inputs identical to the previous build, so every byte including "
+                       "this stamp is the previous build's" if same_inputs else
+                       "new — the input digest changed, so this build is the one that first published it")
     data_as_of = json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["as_of"]
     model = RT.build(ROOT)
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
@@ -1375,7 +1394,9 @@ def build() -> dict:
         "meta": {
             "generated_at_utc": stamp,
             "input_digest": digest,
+            # NOT a wall-clock property: it says whether this build reproduced an earlier one.
             "build_is_idempotent": same_inputs,
+            "build_state": published_state,
             "snapshot_as_of": data_as_of,
             "slate_window": (
                 f"{min(g['date'] for g in games)} → {max(g['date'] for g in games)} "

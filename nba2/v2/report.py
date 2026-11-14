@@ -106,7 +106,9 @@ def repo_integrity() -> dict:
     try:
         site = json.loads((ROOT / "data/site.json").read_text())
         rows = site["sections"]["ratings"]["rows"]
-        repo_wl = {r["key"]: r["values"].get("wl_official") for r in rows}
+        # the v1 table no longer carries a duplicate "official" column (removed as unverifiable);
+        # fall back to its single W-L field so the comparison still runs
+        repo_wl = {r["key"]: (r["values"].get("wl_official") or r["values"].get("wl")) for r in rows}
         live_wl = {t: f"{v[0]}-{v[1]}" for t, v in O.TEAMS.items()}
         same = sum(1 for t in O.TEAMS if repo_wl.get(t) == live_wl[t])
         res["checks"].append({

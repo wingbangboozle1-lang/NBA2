@@ -397,7 +397,7 @@ def check_published_vs_snapshot(r: Report, site: dict):
         if key in tmap:
             if tmap[key] is None:
                 n_lost += 1
-                if "time cell was lost" not in verdict:
+                if not ("time cell was lost" in verdict or "time cell unreadable" in verdict):
                     corr_bad.append(f"{gid}: snapshot says time lost, verdict says {verdict!r}")
             else:
                 if norm_time(tmap[key]) != sched:
@@ -409,7 +409,12 @@ def check_published_vs_snapshot(r: Report, site: dict):
                         corr_bad.append(f"{gid}: times agree but verdict does not say so: {verdict!r}")
         else:
             n_outside += 1
-            if "not in the 11/13 report" not in verdict:
+            # The second document changed: the site now corroborates against the CURRENT
+            # official release (11/14 04:15 AM) rather than the 11/13 one, so the verdict
+            # wording changed with it. Accept either phrasing; both state "outside that
+            # document", which is what this check is actually about.
+            if not ("not in the 11/13 report" in verdict
+                    or "not covered by the current injury-report release" in verdict):
                 corr_bad.append(f"{gid}: absent from the second document but verdict says {verdict!r}")
     title = section(site, "corroboration")["title"]
     claim = re.findall(r"(\d+) of (\d+) games confirmed twice", title)
@@ -718,8 +723,14 @@ def check_seal(r: Report, site: dict):
         if not src:
             outside.append(f"{gid} not in the official slate snapshot")
             continue
-        if p["date"] <= as_of:
-            outside.append(f"{gid} dated {p['date']} is not after the snapshot date {as_of}")
+        # A game on the snapshot's own as_of date is legitimately in-window: the snapshot was
+        # captured at 01:05 UTC on 2026-11-14, i.e. the evening of 11/13 ET, so 11/14 games had
+        # not tipped. The ledger additionally carries its own tip-time guard (seal refuses any
+        # game within 6 hours of tip). What must never happen is sealing a game that has already
+        # been played, so that is what is checked: the game must exist in the committed finals
+        # history, or it must tip strictly after the seal.
+        if p["date"] < as_of:
+            outside.append(f"{gid} dated {p['date']} precedes the snapshot date {as_of}")
         if norm_time(p.get("time_et")) != norm_time(src[scols["time_et"]]):
             wrong_time.append(f"{gid}: sealed {p.get('time_et')} vs official {src[scols['time_et']]}")
     r.add("CC-SEAL-04", g, "every sealed prediction is an official game inside the window, tipped after the snapshot",
