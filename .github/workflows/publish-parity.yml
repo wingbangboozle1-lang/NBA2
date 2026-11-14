@@ -75,14 +75,18 @@ jobs:
             echo "::error::a sealed ledger changed during verification — the seal must be immutable"
             exit 1
           fi
-          python -c "from nba2.models import ledger as LD; import glob, json, pathlib, sys
-ok = True
-for f in sorted(glob.glob('data/raw/ledger/sealed-*.json')):
-    p = pathlib.Path(f); okf, stored, recomp = LD.verify(p)
-    n = json.loads(p.read_text())['header']['n_predictions']
-    print(f'sealed {n:3d} predictions  {stored[:16]}…  {\"VERIFIED\" if okf else \"BROKEN\"}')
-    ok = ok and okf
-sys.exit(0 if ok else 1)"
+          python - <<'PYEOF'
+          from nba2.models import ledger as LD
+          import glob, json, pathlib, sys
+          ok = True
+          for f in sorted(glob.glob('data/raw/ledger/sealed-*.json')):
+              p = pathlib.Path(f)
+              good, stored, recomputed = LD.verify(p)
+              n = json.loads(p.read_text())['header']['n_predictions']
+              print(f"sealed {n:3d} predictions  {stored[:16]}  {'VERIFIED' if good else 'BROKEN'}")
+              ok = ok and good
+          sys.exit(0 if ok else 1)
+          PYEOF
 
       - name: Provenance — every row sourced, every blank explained, no broken links
         run: |
