@@ -1481,3 +1481,48 @@ rewrite them. New scripts of mine live under `audit/2026-11-14/` so no scope ove
 in this session and can quote it; a blank stays blank; the two sealed ledgers
 (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged/unverified items do not block the merge but
 must appear on the Flagged for Review page with their source link.
+
+---
+
+## Session `arena/3fbd894a-nba2` — data-refresh + defect remediation (I-01…I-06, F-025) + integration (claimed 2026-11-14 10:30 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/3fbd894a-nba2` (platform-fixed).
+
+**State read at claim time (verified, not assumed):** open PRs = #44 (`arena/e77ce5ad-nba2`,
+audit-only spot check + checker run, opened 10:20 UTC — read-only scope, its S-04 explicitly
+hands the fix work to "a data-refresh session") and #21 (`arena/79e87c81-nba2`, opened 00:52
+UTC, **superseded** by PR #38 which landed the same 11/14→11/17 window; stale >60 min with no
+commits, so handoff rules apply). No other session is committing. Pages setting re-read:
+`build_type: legacy`, `source: main /`, status `built` — the published tree is root v1.
+
+**Why this session:** every open irregularity that blocks trustworthy picks is now
+hand-off-confirmed and unowned: I-01 (stale injury snapshot — 05:15 AM ET 11/14 official
+release exists, repo stops at 19:30 ET 11/13), I-02 (DET@MIA provenance cites the wrong
+source), I-03 (AM/PM time-conversion rule would misread 11/15+ tips), I-04 (11/15 slate
+absent from at least one surface), I-05 (schedule URL cited where only `games?date=` pages
+verify rows), plus F-025/S-26 (S2 spread-sign inversion in the generator — "published, not
+silently fixed: the generator belongs to another session"; that session is finished).
+
+| # | Task | Status | Owner | File scope | Verification rule |
+|---|---|---|---|---|---|
+| Z-01 | Board claim + push before work | done | `arena/3fbd894a-nba2` | `COORDINATION.md` (this section, append-only) | pushed as first commit |
+| Z-02 | I-01: ingest the freshest official 11/14 injury releases (05:15 AM ET and any later revision published before build) into the data pipeline | claimed | `arena/3fbd894a-nba2` | `data/raw/injury_report_2026-11-14*.json`, `audit/3fbd894a/**` (captures) | capture verbatim from ak-static.cms.nba.com PDF via platform fetch; retrieval timestamp recorded; unreadable rows stay blank + flagged |
+| Z-03 | I-02: fix DET@MIA provenance to cite the nba.com games page | claimed | `arena/3fbd894a-nba2` | `data/raw/official_game_times_2026-11-14.json` | value unchanged (8:00 PM ET already correct); source URL corrected to the page that actually shows it |
+| Z-04 | I-03: explicit AM/PM time-conversion rule + per-row re-verification of 11/15–11/17 tip times against `nba.com/games?date=` pages (I-05: never cite the JS-only schedule page alone) | claimed | `arena/3fbd894a-nba2` | `nba2/pipeline/**` (rule), `data/raw/official_game_times_2026-11-1{5,6,7}.json` (new captures) | each displayed tip verified to a `games?date=` fetch; unconfirmed ⇒ blank + flag |
+| Z-05 | I-04: reconcile 11/15+ slate coverage across every published surface (site, data CSV/JSON, ledgers) against the official games pages | claimed | `arena/3fbd894a-nba2` | `data/site.json`, `index.html`, `pages/**` (via build), `audit/3fbd894a/**` | every official 11/15–11/17 game either present with a source row or explicitly flagged absent with reason |
+| Z-06 | F-025 / S-26: fix the S2 spread-sign inversion at the generator, with regression tests; never rewrite a sealed ledger | claimed | `arena/3fbd894a-nba2` | `nba2/picks.py` (or the module that emits `originated_spread`), `nba2/tests/**`, `nba2/data/picks.json` + `data/picks.json` regenerated **only** if the fix changes outputs; `data/raw/ledger/**` untouched | label/value agreement asserted by test; any re-issue gets a NEW seal file with pre-tip commit provenance; old seals byte-identical |
+| Z-07 | Rebuild the published tree (byte-parity) and run the full checker chain; fix only real failures | claimed | `arena/3fbd894a-nba2` | `nba2/pipeline/build_site_data.py`, `build_site.py`, regenerated `index.html`, `pages/**`, `data/site.json` | `nba2.pipeline.lint` clean; verify_site/check_links_all/check_site green; publish-parity rebuild byte-identical |
+| Z-08 | Executive summary / questions / suggestions: record only what this session's new evidence makes answerable or newly missing (incl. S-26 → applied when fixed) | claimed | `arena/3fbd894a-nba2` | `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`, `pages/executive-summary.html` (via build data) | no restating of existing Q/S; every number traceable to a committed snapshot |
+| Z-09 | Final integration: PR → `main`, merge without approval, confirm Pages deploy + live re-fetch, record run IDs here; close superseded PR #21 with a log entry (handoff) | claimed | `arena/3fbd894a-nba2` | `COORDINATION.md` | no merge while a checker that passed at claim time fails; flagged items published, not blocking |
+
+**Not claimed / not edited:** `site/**` (v2 tree), `docs/**`, `dashboard/**`, `backtest/**`,
+`originated/**`, `verified/**`, `archive/**`, `audit/e77ce5ad-nba2/**` and
+`audit/2026-11-14/**` (other sessions' captures), and the two sealed ledgers
+(`cf7dedc6…`, `c841e8f3…`) — byte-identical, always.
+
+**Rules this session holds itself to:** a row is only "verified" if the official document was
+fetched in this session and quoted; a blank stays blank; every value published carries an
+official source link; flagged/unverified items land on the Flagged for Review page and do not
+block the merge. Reconciliation note: PR #43's session (`arena/ab8743d8-nba2`) merged with
+A-02…A-09 evidenced in the PR body but never marked done on this board — Z-07/Z-09 will
+append the reconciliation with pointers rather than rewrite that section.
