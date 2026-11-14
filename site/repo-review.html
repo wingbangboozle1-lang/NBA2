@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Repo review · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html" class="on">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Repo review</h1>
+<p class="lede">A line-by-line look at what the repository already contains before this session added anything, verified by
+running its own checks rather than trusting its documentation.</p>
+<div class="scroll"><table>
+<caption>Repository facts, this session</caption>
+<thead><tr>
+<th scope="col">Property</th>
+<th scope="col">Observed</th>
+<th scope="col">How checked</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Files tracked at base commit a09f48e</td>
+<td>245 files (excluding .git)</td>
+<td>counted with `find . -path ./.git -prune -o -type f -print | wc -l`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main</a></td>
+</tr>
+<tr>
+<td>Python unit tests</td>
+<td>55 pass in 0.589 s</td>
+<td>`python3 -m unittest discover -s nba2/tests -t .`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Provenance lint</td>
+<td>915 rows across 33 tables, every row sourced</td>
+<td>`python3 -m nba2.pipeline.lint`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Sealed prediction ledger</td>
+<td>22 predictions, digest cf7dedc689597cb8… verified</td>
+<td>`python3 -m nba2.pipeline.seal_predictions --verify`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-13.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+<tr>
+<td>Site rebuild determinism</td>
+<td>data/site.json is byte-identical after a rebuild</td>
+<td>`python3 -m nba2.pipeline.build_site_data` then `cmp` against the committed file</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr>
+<td>Internal links at base commit</td>
+<td>75 HTML files, 3,233 internal links, all resolve</td>
+<td>`python3 tools/check_links_all.py`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/check_links_all.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
+</tr>
+<tr>
+<td>Parallel site trees present</td>
+<td>6 root/near-root trees (root *, pages/, docs/, dashboard/, verified/, originated/)</td>
+<td>directory listing</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr>
+<td>Tracked Python bytecode</td>
+<td>19 .pyc files tracked despite .gitignore</td>
+<td>`git ls-files &#x27;*.pyc&#x27; | wc -l`</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr>
+<td>Internationalisation / accessibility</td>
+<td>No lang-specific copy; tables use &lt;caption&gt; in the prior build; no automated a11y check</td>
+<td>grep + inspection of the prior build</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+</tbody></table></div><h2>Findings</h2>
+<div class="note"><b>What is genuinely good.</b> The existing pipeline is unusually disciplined: 55 unit tests pass, a
+provenance lint proves all 915 published rows carry a source, the site is byte-for-byte reproducible from committed data,
+22 predictions are hash-sealed, and 3,233 internal links resolve. That is a better foundation than most projects start with.</div>
+<div class="note warn"><b>What is wrong.</b> Six parallel site trees publish different numbers (root HTML, <code>pages/</code>,
+<code>docs/</code>, <code>dashboard/</code>, <code>verified/</code>, <code>originated/</code>). A reader has no way to know
+which one is current. The root page says "as-of 2026-11-13" while its own ledger is sealed at 22:51 that day, and the site
+still shows a snapshot several hours old on the next day.</div>
+<div class="note bad"><b>What is missing, and blocks the brief.</b> No market price, no per-game results, no player game
+logs. Those three absences are why the prior build could not produce a single settled bet, and they are why this build
+withholds all 31 picks rather than publishing confidence it cannot support.</div>
+<h2>What this session changed, and what it deliberately did not</h2>
+<p class="lede">All new work is in three new directories — <code>nba2/v2/</code>, <code>data/v2/</code> and <code>site/</code> —
+plus one appended block in <code>COORDINATION.md</code>. No file owned by another session was edited, so no earlier
+published output was destroyed. Where this build disagrees with an earlier one, the disagreement is on the verification page
+with both values shown.</p>
+<h2>Cleanup suggestions that are not this session's call</h2>
+<ul>
+  <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
+  <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
+  <li>Reconcile the README's claim of 49 tests with the 55 that actually run.</li>
+</ul>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -240,3 +240,32 @@ Review page listing every unverified cell and every declared assumption.
 
 Two blockers, both documented with remediation plans: **no market price feed** (so nothing here is a
 bettable edge) and **no official per-player feed** (so every player prop threshold is blank).
+
+---
+
+## v2 — verified rebuild and the live site (session `arena/6e7afc65-nba2`, 2026-11-14)
+
+The published GitHub Pages site is now **`site/`**, built by `nba2/v2` from official NBA pages that were
+fetched live during that session. The earlier trees (root `*.html`, `pages/`, `docs/`, `dashboard/`,
+`verified/`, `originated/`) remain in the repository unchanged but are **no longer published** — six
+dashboards with different numbers is worse than one, and the reconciliation of all six is an owner
+decision logged on the new site's Flagged page (F-011).
+
+```bash
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (16 pages)
+python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 34 tests
+python3 -m unittest discover -s nba2/tests -t .                # 55 tests (prior work, unchanged)
+```
+
+What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
+(standings, team/opponent/advanced stats, schedule, injury PDF); two independent ratings estimators are
+computed and their disagreement is published per game; σ and h are fitted with h pinned to the measured
+home-win rate because the unconstrained pair is only weakly identified; expected wins are forced to sum
+to actual wins so luck residuals sum to zero; and **every pick is withheld** because a bet needs a
+market price (gate G6) and a settled history (G7), neither of which exists in this environment.
+
+Verified this session: **31/31** games match the official schedule, **30/30** team records match live
+`nba.com/standings`, and **85/85** injury rows match the official `11/13/26 04:15 PM ET` PDF. That
+resolves the earlier 28/30-vs-30/30 W-L discrepancy in favour of 30/30. Full report:
+`analysis/verify-2026-11-14.md`.

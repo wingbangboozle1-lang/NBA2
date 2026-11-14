@@ -1,0 +1,38 @@
+name: Verify v2 model and site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Existing pipeline still passes (no regression this session caused)
+        run: python -m unittest discover -s nba2/tests -t .
+
+      - name: v2 model + source-completeness tests
+        run: python -m unittest discover -s nba2/v2 -t . -p 'test_*.py' -v
+
+      - name: Rebuild and verify the v2 site
+        run: |
+          python -m nba2.v2
+          python -m nba2.v2.check
+          echo "every table row carries a source link, every blank has a reason"
+
+      - name: Provenance gate on the v2 HTML
+        run: python -m nba2.v2.check

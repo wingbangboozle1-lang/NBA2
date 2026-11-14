@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Methodology · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html" class="on">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Methodology</h1>
+<p class="lede">The whole model, in the order it runs, with every parameter and its identification.</p>
+<h2>1. Inputs</h2>
+<p>Team records and home/road splits from the official standings; points for and against per game from the official team and
+opponent tables; offensive, defensive and net rating, pace and PIE from the official advanced table; the slate from the
+official schedule; injuries from the official report PDF. All 8 URLs are on the <a href="sources.html">sources page</a>.</p>
+
+<h2>2. Ratings</h2>
+<p>Two independent estimators, each shrunk toward the league mean by the measured reliability weight
+<code>λ = τ²/(τ² + σ²/games)</code>:</p>
+<pre>A: net points per game  r_A(t) = mean + λ · (PF(t) − PA(t) − mean)
+B: net rating → points  r_B(t) = mean + λ · (NetRtg(t) · Pace(t)/100 − mean)
+rating(t) = (r_A + r_B) / 2</pre>
+<p>τ² is estimated, not assumed: <code>τ² = Var(net points) − mean(σ²/games)</code>. Observed λ is 0.791 on average,
+so a 10-game record is treated as about 21% noise.</p>
+
+<h2>3. Calibration</h2>
+<p>σ is fitted by least squares against the 30 official win totals, with h pinned to the measured home-win rate:
+<code>h = σ(2p − 1)</code> where <code>p = 0.5145</code> over 173 home games.
+Result: σ = 12.75 pts, h = +0.37 pts, RMSE 1.006 wins
+versus 2.781 for a coin-flip baseline. Fitting both freely gives σ = 11.06,
+h = +6.00 — the same RMSE to three decimals, which is why the pair is not trusted.
+
+<h2>4. Lines</h2>
+<pre>margin   = rating(home) + h − rating(away)          # positive → home wins by
+spread   = −round_to_nearest_half(margin)            # home handicap
+p(home)  = Φ(margin / σ)
+fair odds= 1/p  and  1/(1−p)                         # no hold applied
+total    = Σ_team [ (PF(team) + PA(opp))/2 + ((PF−PA)(team) − (PF−PA)(opp))/2 ]</pre>
+<p>A second total is computed as <code>(OffRtg + opp DefRtg)/2 × pace/100</code> per team. The gap between the two is printed
+per game and any gap over 4.0 pts forces grade C.</p>
+
+<h2>5. Grading (not betting)</h2>
+<p>A = both spread estimators within 1.0 pt, |margin| ≥ 0.75σ, both total estimators within 2.0 pts.
+B = passes the minimum gates. C = fails one. <b>A grade is a statement about model stability, never about expected profit.</b>
+Expected profit requires a price, which is why every pick is withheld.</p>
+
+<h2>6. Luck</h2>
+<p>Expected wins come from the fitted model on each team's own point differential; the residual is luck, standardised by
+<code>sqrt(games·p·(1−p))</code>. Observed: 0 of 30 teams outside |z| ≤ 1.96.
+That means no team's record in this window is distinguishable from its underlying scoring level.</p>
+
+<h2>7. What would change the answer</h2>
+<ul>
+  <li>A price (any price) turns a projection into a testable claim.</li>
+  <li>Per-game results turn a testable claim into a score.</li>
+  <li>Player logs turn injuries and props from qualitative notes into numbers.</li>
+  <li>More games narrow σ and h, which are currently identified loosely against a single season.</li>
+</ul>
+<h2>8. Reproduce it</h2>
+<pre>python3 -m nba2.v2.build      # rebuilds data/v2/*.json and site/
+python3 -m nba2.tests.test_v2 # model invariants + source completeness</pre>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>
