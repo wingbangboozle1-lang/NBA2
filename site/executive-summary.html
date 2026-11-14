@@ -41,6 +41,10 @@
 <h1>Executive summary</h1>
 <p class="lede">The state of the project in one screen, then the numbers behind it, then the single next decision.
 Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
+<div class="note bad"><b>Automated refresh: FAILED.</b>
+Run 43605830665 failed (created 2026-11-14T14:37:25Z). Failed stage(s): official finals fetch. Passed before failure: window-date selection, official injury-report archive. Skipped downstream: injury transcript check, sealed-ledger guard, settlement, tests, seal, rebuild, and provenance verification, semantic cross-check, snapshot commit. The injury archive step passed on the runner, but no refreshed snapshot was committed. The exact endpoint/error is unverified; open the linked run for its logs. Status record captured at 2026-11-14T18:50:40Z. This workflow archives official injury reports and fetches/settles finals for the sealed v1 window. It does not refresh the published v2 team&#x27;s schedule, standings, ratings, or player inputs, and it does not provide market prices. A successful run is not a v2 line-freshness or bet-eligibility approval.<br>
+<a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">GitHub Actions run/history</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml" rel="noopener" target="_blank">workflow source</a> ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
 <div class="note"><b>Found this session, and fixed this session.</b> The standings on this site had been
@@ -218,12 +222,24 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <td>each with owner, evidence and discovery path — see Decisions needed</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/DECISIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
 </tr>
+<tr>
+<td>Latest recorded scheduled-ingest result (v1 scope)</td>
+<td>FAILED</td>
+<td>Run 43605830665 failed (created 2026-11-14T14:37:25Z). Failed stage(s): official finals fetch. Passed before failure: window-date selection, official injury-report archive. Skipped downstream: injury transcript check, sealed-ledger guard, settlement, tests, seal, rebuild, and provenance verification, semantic cross-check, snapshot commit. The injury archive step passed on the runner, but no refreshed snapshot was committed. The exact endpoint/error is unverified; open the linked run for its logs. Status record captured at 2026-11-14T18:50:40Z.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">GitHub Actions run/history</a></td>
+</tr>
+<tr>
+<td>Did this workflow refresh the published v2 model inputs?</td>
+<td>No</td>
+<td>This workflow archives official injury reports and fetches/settles finals for the sealed v1 window. It does not refresh the published v2 team's schedule, standings, ratings, or player inputs, and it does not provide market prices. A successful run is not a v2 line-freshness or bet-eligibility approval.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml" rel="noopener" target="_blank">workflow source</a></td>
+</tr>
 </tbody></table></div>
 <h2>Recommended sequence</h2>
 <ol>
   <li><b>Connect the odds feed (SG-3).</b> Nothing that involves money moves without a price. All other model work is preparation until then.</li>
-  <li><b>Connect a per-game results feed (SG-2).</b> This turns the model into something testable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion (SG-1).</b> Freshness gate G11 can never pass while data arrives by hand.</li>
+  <li><b>Automate complete official results-history updates (SG-2).</b> The committed history already supports a backtest; the missing piece is a complete point-in-time nightly append with source and coverage checks.</li>
+  <li><b>Connect the scheduled refresh to the published v2 inputs (SG-1 / SG-31).</b> The latest recorded result is FAILED (<a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">run details</a>); the current job handles sealed-window v1 settlement/injuries, not the v2 line inputs. Do not treat that run as a freshness pass.</li>
   <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>

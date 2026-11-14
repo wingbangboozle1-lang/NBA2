@@ -18,6 +18,7 @@ from . import content as C
 from . import live as LV
 from . import model as M
 from . import official as O
+from . import refresh_status as RS
 from . import report as R
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -156,6 +157,63 @@ def srclink(url, label=None):
     return f'<a href="{esc(url)}" rel="noopener" target="_blank">{esc(label)}</a>'
 
 
+REFRESH_STEP_LABELS = {
+    "window_dates": "window-date selection",
+    "injury_archive": "official injury-report archive",
+    "finals_fetch": "official finals fetch",
+    "transcript_check": "injury transcript check",
+    "ledger_guard": "sealed-ledger guard",
+    "settlement": "settlement",
+    "verify": "tests, seal, rebuild, and provenance verification",
+    "semantic_crosscheck": "semantic cross-check",
+    "commit_snapshots": "snapshot commit",
+}
+
+
+def refresh_display(status):
+    """Return a dated, cautious summary; a run result is not a model-freshness claim."""
+    state = status["status"]
+    when = status.get("run_created_at_utc") or status.get("recorded_at_utc") or "time not recorded"
+    when_label = "created" if status.get("run_created_at_utc") else "status recorded"
+    outcomes = status.get("step_outcomes", {})
+    failed = [REFRESH_STEP_LABELS.get(k, k) for k, v in outcomes.items() if v == "failure"]
+    skipped = [REFRESH_STEP_LABELS.get(k, k) for k, v in outcomes.items() if v == "skipped"]
+    passed = [REFRESH_STEP_LABELS.get(k, k) for k, v in outcomes.items() if v == "success"]
+    if state == "failure":
+        message = f"Run {status.get('run_id')} failed ({when_label} {when})."
+        if failed:
+            message += f" Failed stage(s): {', '.join(failed)}."
+        if passed:
+            message += f" Passed before failure: {', '.join(passed)}."
+        if skipped:
+            message += f" Skipped downstream: {', '.join(skipped)}."
+        if outcomes.get("injury_archive") == "success" and outcomes.get("commit_snapshots") != "success":
+            message += " The injury archive step passed on the runner, but no refreshed snapshot was committed."
+        message += " The exact endpoint/error is unverified; open the linked run for its logs."
+        if status.get("recorded_at_utc"):
+            message += f" Status record captured at {status['recorded_at_utc']}."
+        kind = "bad"
+        label = "FAILED"
+    elif state == "success":
+        message = (f"Run {status.get('run_id')} succeeded ({when_label} {when}) through the recorded v1 "
+                   "injury/finals/settlement checks. This is not proof that the published v2 model inputs are fresh.")
+        if status.get("recorded_at_utc"):
+            message += f" Status record captured at {status['recorded_at_utc']}."
+        kind = "ok"
+        label = "SUCCESS — v1 workflow only"
+    elif state == "cancelled":
+        message = f"Run {status.get('run_id')} was cancelled ({when_label} {when}); successful refresh is not confirmed."
+        if status.get("recorded_at_utc"):
+            message += f" Status record captured at {status['recorded_at_utc']}."
+        kind = "warn"
+        label = "CANCELLED"
+    else:
+        message = "No automated refresh result is recorded in this checkout; inspect the workflow history before relying on freshness."
+        kind = "warn"
+        label = "UNRECORDED"
+    return {"label": label, "kind": kind, "when": when, "message": message}
+
+
 def page(name, title, body, active=None):
     nav_bits = []
     for href, label in NAV:
@@ -233,6 +291,8 @@ def build(run_backtest: bool = True):
     lines = M.originated_lines(teams, cal)
     integ = O.integrity()
     xchecks = R.repo_integrity()
+    refresh = RS.read_status()
+    refresh_view = refresh_display(refresh)
     lines_d = [l.as_dict() for l in lines]
 
     # ------------------------------------------------------------------ data artefacts
@@ -246,8 +306,10 @@ def build(run_backtest: bool = True):
         "formula": "margin = (rating_home + h) − rating_away; rating = mean of two shrunk estimators; "
                    "p_home = Φ(margin/σ); spread = −round_0.5(margin); total = sum of two scoring estimators",
         "calibration": cal.as_dict(), "lines": lines_d}, indent=1))
+    (DATA / "refresh_status.json").write_text(json.dumps(refresh, indent=2, ensure_ascii=False) + "\n")
     (DATA / "verification.json").write_text(json.dumps({
         "as_of": O.AS_OF, "integrity": integ, "cross_checks": xchecks,
+        "operations": {"refresh": refresh},
         "retrieved": {k: {"url": v[1], "fields": v[2]} for k, v in O.SOURCES.items()},
         "blocked": {k: {"what": v[0], "why": v[1], "url": v[2]} for k, v in O.BLOCKED.items()}}, indent=1))
     (DATA / "content.json").write_text(json.dumps({
@@ -270,6 +332,10 @@ def build(run_backtest: bool = True):
 <p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
 ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
+<div class="note {refresh_view['kind']}"><b>Automated refresh status: {esc(refresh_view['label'])}.</b>
+{esc(refresh_view['message'])} {esc(refresh['scope_note'])}<br>
+{srclink(refresh['run_url'], 'GitHub Actions run/history')} · {srclink(refresh['workflow_url'], 'workflow source')} ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 
 <div class="kpis">
   <div class="kpi"><b>{len(lines)}</b><small>games priced in window</small></div>
@@ -386,7 +452,7 @@ official pages and shows where those rows now stand.</p>
 <p class="lede">Every table on this site is also published as JSON so a reviewer can diff it against the
 official pages without trusting the rendering: <a href="data/teams.json">teams.json</a> ·
 <a href="data/lines.json">lines.json</a> · <a href="data/verification.json">verification.json</a> ·
-<a href="data/content.json">content.json</a>.</p>
+<a href="data/refresh_status.json">refresh_status.json</a> · <a href="data/content.json">content.json</a>.</p>
 """
     built["index.html"] = page("index.html", "Dashboard", body, "index.html")
 
@@ -403,6 +469,10 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
     body = f"""<h1>Executive summary</h1>
 <p class="lede">The state of the project in one screen, then the numbers behind it, then the single next decision.
 Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
+<div class="note {refresh_view['kind']}"><b>Automated refresh: {esc(refresh_view['label'])}.</b>
+{esc(refresh_view['message'])} {esc(refresh['scope_note'])}<br>
+{srclink(refresh['run_url'], 'GitHub Actions run/history')} · {srclink(refresh['workflow_url'], 'workflow source')} ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 """
     body += f"""
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
@@ -478,14 +548,16 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Window games re-checked live on 2026-11-14 19:45Z (this session)", "27 / 27 identical", "date, tip time, away, home, game id, venue; script and capture committed", srclink("https://www.nba.com/schedule?date=2026-11-14")]},
         {"cells": ["Model accuracy vs the naive 'better record' rule", f"{100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['model_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}% vs {100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['baseline_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}%", f"on the {lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']} discordant games; exact McNemar p = {lab['skill_attribution']['headline_vs_win_pct_baseline']['mcnemar_exact_p']}", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Decisions that must be answered before further build", "8", "each with owner, evidence and discovery path — see Decisions needed", srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/DECISIONS.json")]},
+        {"cells": ["Latest recorded scheduled-ingest result (v1 scope)", refresh_view["label"], refresh_view["message"], srclink(refresh["run_url"], "GitHub Actions run/history")]},
+        {"cells": ["Did this workflow refresh the published v2 model inputs?", "No", refresh["scope_note"], srclink(refresh["workflow_url"], "workflow source")]}
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
 <h2>Recommended sequence</h2>
 <ol>
   <li><b>Connect the odds feed (SG-3).</b> Nothing that involves money moves without a price. All other model work is preparation until then.</li>
-  <li><b>Connect a per-game results feed (SG-2).</b> This turns the model into something testable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion (SG-1).</b> Freshness gate G11 can never pass while data arrives by hand.</li>
+  <li><b>Automate complete official results-history updates (SG-2).</b> The committed history already supports a backtest; the missing piece is a complete point-in-time nightly append with source and coverage checks.</li>
+  <li><b>Connect the scheduled refresh to the published v2 inputs (SG-1 / SG-31).</b> The latest recorded result is {esc(refresh_view['label'])} ({srclink(refresh['run_url'], 'run details')}); the current job handles sealed-window v1 settlement/injuries, not the v2 line inputs. Do not treat that run as a freshness pass.</li>
   <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
@@ -510,10 +582,15 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
     built["executive-summary.html"] = page("executive-summary.html", "Executive summary", body, "executive-summary.html")
 
     # ------------------------------------------------------------------ picks & slate
-    body = """<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the three-day window (2026-11-14 → 2026-11-17) is priced from our own originated lines,
-and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
-that the edge is not a coin flip that happened to land, and this repository has neither.</p>
+    body = f"""<h1>Picks &amp; the upcoming slate</h1>
+<p class="lede">The committed snapshot covers the 27-game window 2026-11-14 → 2026-11-17, using inputs dated {O.AS_OF}.
+This is not a live slate: do not treat a row as upcoming after its tip or as current after its inputs age. Each game has an
+originated lean, but no game gets a stake: a bet needs a market price and a settled sample large enough to distinguish
+skill from noise, and the required gates do not pass.</p>
+<div class="note {refresh_view['kind']}"><b>Freshness check: {esc(refresh_view['label'])}.</b>
+{esc(refresh_view['message'])} {esc(refresh['scope_note'])}<br>
+{srclink(refresh['run_url'], 'GitHub Actions run/history')} · {srclink(refresh['workflow_url'], 'workflow source')} ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
 <em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
@@ -1537,7 +1614,7 @@ so a path can be chosen before anything is implemented — nothing in the queue 
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. {_impl} items are already <code>IMPLEMENTED</code> and need no
 decision; {_rec} are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
-dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
+dependency. The highest-leverage remaining data decisions are odds, a complete scheduled results history, and a freshness-gated refresh of the inputs used by the published v2 model.</div>
 """
     order = {"RECOMMENDED — highest leverage": 0, "RECOMMENDED — unblocks the most": 1,
              "RECOMMENDED — required for any betting claim": 2, "RECOMMENDED": 3,
@@ -1549,17 +1626,25 @@ dependency. The three highest-ranked recommended items are all data connections,
         kind = "ok" if state.startswith("IMPLEMENTED") else "warn" if state.startswith("RECOMMENDED") or state.startswith("PARTIAL") else "off"
         if "BLOCKED" in state:
             kind = "bad"
+        suggestion_source = (
+            f'{srclink(RS.WORKFLOW_MAIN_URL, "workflow")} · {srclink(O.SOURCES["schedule"][1], "NBA schedule")}'
+            if sid == "SG-1" else
+            f'{srclink(refresh["run_url"], "Actions run/history")} · {srclink(O.SOURCES["games"][1], "NBA results")}'
+            if sid == "SG-2" else
+            f'{srclink(RS.WORKFLOW_MAIN_URL, "workflow")} · {srclink(refresh["run_url"], "Actions run/history")}'
+            if sid == "SG-31" else
+            srclink("https://github.com/wingbangboozle1-lang/NBA2")
+        )
         rows.append({"id": sid, "cells": [esc(sid), badge(area, "off"), esc(sug), esc(why), esc(effort), esc(dep),
-                                         badge(state, kind), srclink("https://github.com/wingbangboozle1-lang/NBA2")]})
+                                         badge(state, kind), suggestion_source]})
     body += table(["ID", "Area", "Suggestion", "Why it improves decision-making", "Effort", "Depends on", "Decision state", "Reference"],
                   rows, "Suggestion queue with decision states", idcol="id")
     body += """<h2>If you only do three things</h2>
 <ol>
   <li><b>Connect a licensed odds feed</b> (SG-3). Everything about edge, stake and ROI depends on it. Today the site
       correctly publishes zero picks because it has no price — that is a data gap, not a modelling gap.</li>
-  <li><b>Get per-game results</b> (SG-2). It turns every projection into something scoreable and lets the leaderboard exist.</li>
-  <li><b>Schedule the ingestion</b> (SG-1). Hand-made snapshots cannot satisfy a freshness gate, so no strategy can ever be
-      ranked on fresher-than-today data.</li>
+  <li><b>Automate complete official results-history updates</b> (SG-2). Existing results support walk-forward evaluation; the remaining need is complete point-in-time coverage after each game date.</li>
+  <li><b>Connect the scheduled job to the published v2 inputs</b> (SG-1 / SG-31). The last recorded outcome is {esc(refresh_view['label'])} ({srclink(refresh['run_url'], 'run details')}); the job currently processes sealed-window v1 injuries/finals/settlement and does not refresh the v2 line inputs.</li>
 </ol>
 <h2>Suggestions about this site's own design</h2>
 <div class="cards">
@@ -1648,10 +1733,11 @@ until you accept it. This session never writes <code>accepted</code>.</div>
             esc(it["id"]), badge(it["track"], "off"), esc(it["title"]),
             esc(it["problem"]), esc(it["changes"]), esc(it["effort"]),
             badge(it["status"], "ok" if it["status"].startswith("implemented") else "warn"),
-            srclink(it["evidence"], "capture"), srclink(it["source"], "official"),
+            srclink(it["evidence"], "GitHub run" if it["id"] == "S-40" else "capture"),
+            srclink(it["source"], "workflow" if it["id"] == "S-40" else "official"),
         ]})
     body += table(["ID", "Track", "Suggestion", "Problem today (evidence)", "What changes if accepted",
-                   "Effort", "State", "Evidence", "Official source"],
+                   "Effort", "State", "Evidence", "Source"],
                   dq_rows, "Decision queue — choose a path before implementation", idcol="id")
 
     body += """<h2>How to answer</h2>

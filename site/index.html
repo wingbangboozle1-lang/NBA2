@@ -43,6 +43,10 @@
 <p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
 ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
+<div class="note bad"><b>Automated refresh status: FAILED.</b>
+Run 43605830665 failed (created 2026-11-14T14:37:25Z). Failed stage(s): official finals fetch. Passed before failure: window-date selection, official injury-report archive. Skipped downstream: injury transcript check, sealed-ledger guard, settlement, tests, seal, rebuild, and provenance verification, semantic cross-check, snapshot commit. The injury archive step passed on the runner, but no refreshed snapshot was committed. The exact endpoint/error is unverified; open the linked run for its logs. Status record captured at 2026-11-14T18:50:40Z. This workflow archives official injury reports and fetches/settles finals for the sealed v1 window. It does not refresh the published v2 team&#x27;s schedule, standings, ratings, or player inputs, and it does not provide market prices. A successful run is not a v2 line-freshness or bet-eligibility approval.<br>
+<a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">GitHub Actions run/history</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml" rel="noopener" target="_blank">workflow source</a> ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 
 <div class="kpis">
   <div class="kpi"><b>27</b><small>games priced in window</small></div>
@@ -243,7 +247,7 @@ official pages and shows where those rows now stand.</p>
 <p class="lede">Every table on this site is also published as JSON so a reviewer can diff it against the
 official pages without trusting the rendering: <a href="data/teams.json">teams.json</a> ·
 <a href="data/lines.json">lines.json</a> · <a href="data/verification.json">verification.json</a> ·
-<a href="data/content.json">content.json</a>.</p>
+<a href="data/refresh_status.json">refresh_status.json</a> · <a href="data/content.json">content.json</a>.</p>
 
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.

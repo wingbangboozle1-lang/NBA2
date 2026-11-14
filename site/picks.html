@@ -39,9 +39,14 @@
 </aside>
 <main>
 <h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the three-day window (2026-11-14 → 2026-11-17) is priced from our own originated lines,
-and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
-that the edge is not a coin flip that happened to land, and this repository has neither.</p>
+<p class="lede">The committed snapshot covers the 27-game window 2026-11-14 → 2026-11-17, using inputs dated 2026-11-14.
+This is not a live slate: do not treat a row as upcoming after its tip or as current after its inputs age. Each game has an
+originated lean, but no game gets a stake: a bet needs a market price and a settled sample large enough to distinguish
+skill from noise, and the required gates do not pass.</p>
+<div class="note bad"><b>Freshness check: FAILED.</b>
+Run 43605830665 failed (created 2026-11-14T14:37:25Z). Failed stage(s): official finals fetch. Passed before failure: window-date selection, official injury-report archive. Skipped downstream: injury transcript check, sealed-ledger guard, settlement, tests, seal, rebuild, and provenance verification, semantic cross-check, snapshot commit. The injury archive step passed on the runner, but no refreshed snapshot was committed. The exact endpoint/error is unverified; open the linked run for its logs. Status record captured at 2026-11-14T18:50:40Z. This workflow archives official injury reports and fetches/settles finals for the sealed v1 window. It does not refresh the published v2 team&#x27;s schedule, standings, ratings, or player inputs, and it does not provide market prices. A successful run is not a v2 line-freshness or bet-eligibility approval.<br>
+<a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665" rel="noopener" target="_blank">GitHub Actions run/history</a> · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/b3ed44d839b77f071592cd10d3dc734bc7958b23/.github/workflows/refresh.yml" rel="noopener" target="_blank">workflow source</a> ·
+<a href="data/refresh_status.json">machine-readable status record</a>.</div>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
 <em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>

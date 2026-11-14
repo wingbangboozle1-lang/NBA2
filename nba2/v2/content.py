@@ -145,13 +145,17 @@ LEADERBOARD_RULES = [
 # --------------------------------------------------------------------------- suggestions
 # id, area, suggestion, why it improves decisions, effort, blocking dependency, decision state
 SUGGESTIONS = [
-    ("SG-1", "Data plumbing", "Move ingestion off the agent and onto a scheduled job that pulls the official schedule, standings and injury PDF once per hour, writing a dated snapshot.",
-     "Right now every dataset on the site is a hand-made snapshot. Freshness (gate G11) can never pass without automation, so no strategy can ever be ranked.",
-     "Medium (one GitHub Action + a parser)", "Sandbox TLS to nba.com is blocked; a GitHub Action runner has normal internet and can fetch it.",
+    ("SG-1", "Data plumbing",
+     "Connect a fail-closed, scheduled official-source refresh to the exact NBA inputs used by the published v2 model; store timestamped snapshots and suppress current-slate output when freshness or coverage gates fail.",
+     "An automated GitHub Actions workflow exists for sealed-window injury reports and v1 settlement. It is not the v2 line-input refresh, and a scheduled run is not proof of current schedule, standings, ratings, or injury inputs.",
+     "Medium — source adapters, timestamped snapshots, coverage and freshness gates",
+     "The latest recorded run and its step outcomes are linked on the dashboard; the exact failure cause is unverified. The workflow source shows its current scope.",
      "RECOMMENDED — highest leverage"),
-    ("SG-2", "Data plumbing", "Obtain a per-game result feed (official box score or licensed API) and store one row per game: date, teams, final score, quarter scores.",
-     "Unlocks backtests (G7), out-of-sample splits (G8), settlement, ROI, the leaderboard, and every correlation value in the brief.",
-     "Medium", "stats.nba.com and cdn.nba.com are unreachable here; a licensed feed or an Action-run scrape is needed.",
+    ("SG-2", "Data plumbing",
+     "Automate a complete official results history: append each final with game ID, date, teams, score, source URL, and retrieval time.",
+     "The repository already has official finals and a walk-forward backtest. What is missing is a scheduled, complete history update; the sealed-window refresh does not append to the v2 history, and a failed fetch must leave prior verified data untouched.",
+     "Medium — coverage checks, point-in-time storage, and a freshness gate",
+     "The exact endpoint/error from the latest failed run is unverified; see the linked Actions run and official NBA game pages before selecting a feed.",
      "RECOMMENDED — unblocks the most"),
     ("SG-3", "Data plumbing", "Connect a licensed odds feed with timestamps (opening and closing lines) for spread, total, moneyline and props.",
      "Without a price there is no edge, no stake, no ROI, no luck-adjusted P&L. Every 'pick' on this site is currently withheld for that reason.",
@@ -268,17 +272,12 @@ SUGGESTIONS = [
 # arena/ac5fab5c-nba2 (2026-11-14). These were written after the results history was completed,
 # so several earlier entries that said "blocked, no data" now have a cheaper answer.
 SUGGESTIONS += [
-    ("SG-31", "Data plumbing", "Make the existing nightly ingest actually fire, and extend it to the v2 results "
-     "history in data/raw/history/.",
-     "A cron ingest already exists (.github/workflows/refresh.yml) and has never run — its run list is empty, and "
-     "the repo's own freshness check CC-FRESH-03 says so in as many words. It also targets the v1 pipeline, not "
-     "this history. The cost is visible: the log sat 28 games short for a day and the published standings were a "
-     "full day stale with nothing able to detect either. The count is eminently checkable — the standings imply "
-     "183 games and the nba.com day-strip calendar gives per-date counts.",
-     "Low — the workflow is written and fail-closed; a scheduled workflow also only begins firing after it has "
-     "been merged to the default branch once",
-     "Confirmation that the cron is enabled on the default branch",
-     "RECOMMENDED — cheapest fix with the largest effect on trust"),
+    ("SG-31", "Data plumbing",
+     "Extend the scheduled ingest to update the v2 results history and the official inputs used by the published v2 lines.",
+     "The current scheduled workflow handles injury reports and finals/settlement for sealed v1 windows; it does not append results to data/raw/history/ or refresh the published v2 model's schedule, standings, and team-stat inputs. The dashboard links the latest recorded run and its observed step outcomes; the failed run's endpoint cause was not verified.",
+     "Medium — official-source retrieval plus per-date coverage and freshness checks",
+     "Requires a source contract and a successful end-to-end run; preserve the last verified snapshot on failure.",
+     "RECOMMENDED"),
     ("SG-32", "Model", "Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.",
      "300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters "
      "depends on the strategy's own correlation between bets: the parlay strategies need a different n than the "

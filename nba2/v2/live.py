@@ -26,6 +26,8 @@ import json
 import math
 from pathlib import Path
 
+from . import refresh_status as RS
+
 ROOT = Path(__file__).resolve().parents[2]
 AUDIT = ROOT / "audit" / "2026-11-14"
 PICKS = ROOT / "nba2" / "data" / "picks.json"
@@ -360,6 +362,33 @@ def checks() -> dict:
     return out
 
 
+def _refresh_run_evidence(status: dict) -> str:
+    """Human-readable evidence derived only from the committed GitHub Actions record."""
+    if not status.get("run_id"):
+        return "No refresh result is recorded in this checkout; the linked workflow history is the source of truth."
+    outcomes = status.get("step_outcomes", {})
+    failed = [name for name, result in outcomes.items() if result == "failure"]
+    skipped = [name for name, result in outcomes.items() if result == "skipped"]
+    timestamp = status.get("run_created_at_utc") or status.get("recorded_at_utc") or "time not recorded"
+    timestamp_label = "created" if status.get("run_created_at_utc") else "status recorded"
+    label = status.get("status", "unknown").upper()
+    parts = [f"Last recorded run {status['run_id']} was {label} ({timestamp_label} {timestamp})"]
+    if failed:
+        parts.append(f"failed stage(s): {', '.join(failed)}")
+    if skipped:
+        parts.append(f"skipped downstream stage(s): {', '.join(skipped)}")
+    if label == "FAILURE":
+        parts.append("the exact endpoint/error is unverified; inspect the linked run")
+    if status.get("recorded_at_utc"):
+        parts.append(f"status record captured at {status['recorded_at_utc']}")
+    if status.get("v2_model_inputs_refreshed") is False:
+        parts.append("this run did not refresh the published v2 model inputs")
+    if status.get("step_outcomes", {}).get("injury_archive") == "success" and \
+            status.get("step_outcomes", {}).get("commit_snapshots") != "success":
+        parts.append("the injury retrieval step passed, but the snapshot-commit step did not complete")
+    return "; ".join(parts)
+
+
 # --------------------------------------------------------------------------- 4. decision queue
 def decision_queue() -> dict:
     """The suggestions register, reshaped into decisions a reviewer can actually act on.
@@ -382,6 +411,7 @@ def decision_queue() -> dict:
         "S-40": "data", "S-41": "data", "S-42": "governance", "S-43": "model", "S-44": "parlays",
     }
     blocking = {"S-25", "S-26", "S-40", "S-41", "S-31"}
+    refresh = RS.read_status()
     what_changes = {
         "S-21": "A new page exists, generated from dated official captures, and it fails the build if a capture is missing.",
         "S-22": "Every hit-rate table renders both 'signal rows' and 'distinct games'; a rate without its n is a lint error.",
@@ -390,9 +420,9 @@ def decision_queue() -> dict:
         "S-25": "The Pages workflow cannot publish a build whose newest capture is older than a per-table limit.",
         "S-26": "S2 selections name the side that takes the points, matching the file's own spread label.",
         "S-27": "The unreachable v1 tree moves under archive/ with dated notes; one generator remains.",
-        "S-40": "The existing cron actually fires, and it appends to the v2 results history as well as the v1 "
-                "pipeline; a mismatch against the standings-implied game count fails the run instead of silently "
-                "publishing a stale window.",
+        "S-40": "A successful, source-verified pipeline would append complete official results to the history and "
+                "refresh the exact NBA inputs used by the published v2 model. It must enforce per-date coverage and "
+                "freshness, retain the last verified snapshot on failure, and never treat a v1 settlement run as a v2 refresh.",
         "S-41": "Player-level correlations become measurable, the props page can price, the injuries page can "
                 "fill minutes and production, and strategy S7 generates its first bet.",
         "S-42": "One site is live and the other tree is archived with a dated note, so no reader can reach a "
@@ -410,8 +440,7 @@ def decision_queue() -> dict:
         "S-25": "every page prints an as-of date and no build fails when it is old",
         "S-26": "picks.json prints 'POR +6.0' where its own label reads 'POR -6.0'",
         "S-27": "pages/*.html return 404 on the live site while site/data/teams.json returns 200 — one tree is served",
-        "S-40": "a nightly ingest workflow is committed and scheduled but has never run (gh run list is empty), "
-                "and the repo's own freshness check CC-FRESH-03 reports exactly that: armed, zero runs",
+        "S-40": _refresh_run_evidence(refresh),
         "S-41": "3 of 7 correlations on the lab page are BLOCKED and all three are player-level; S7 has 0 bets",
         "S-42": "the Pages setting is 'legacy' (root of main) while pages.yml publishes site/ — the two trees "
                 "disagree and both are reachable",
@@ -435,13 +464,14 @@ def decision_queue() -> dict:
             "effort": r["effort"],
             "status": r["status"],
             "source": (
+                refresh["workflow_url"] if sid == "S-40" else
                 "https://github.com/wingbangboozle1-lang/NBA2"
                 if sid in ("S-27", "S-42") else
                 "https://www.nba.com/stats/players/traditional" if sid == "S-41" else
-                "https://www.nba.com/games?date=2026-11-13" if sid == "S-40" else
                 CAPTURES["standings"]
             ),
-            "evidence": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json",
+            "evidence": (refresh["run_url"] if sid == "S-40" else
+                         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14/official_inputs_2026-11-14.json"),
             "blocking": sid in blocking,
         })
     return {
