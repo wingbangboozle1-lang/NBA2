@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html" class="active">Session Audit</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html" class="active">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -33,49 +33,49 @@
 <td>E-01 model + pipeline tests</td>
 <td>PASS — 64/64 nba2 tests and 49/49 backtest tests (re-run after the 2026-11-14 refresh merge)</td>
 <td>python -m unittest discover -s nba2/tests -t . and -s backtest/tests -t .</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-seal">
 <td>E-01 sealed-ledger verification</td>
 <td>VERIFIED — cf7dedc689597cb8… over 22 predictions; site prints the same digest</td>
 <td>python -m nba2.pipeline.seal_predictions --verify (ledger never rewritten)</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-lint">
 <td>E-01 provenance lint</td>
 <td>PASS — every published row sourced, every blank explained</td>
 <td>python -m nba2.pipeline.lint</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-links">
 <td>E-01 whole-repo internal link check</td>
 <td>PASS — all internal links OK across every HTML file in the repo</td>
 <td>python3 tools/check_links_all.py (counts recorded in COORDINATION.md)</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-docs">
 <td>E-01 docs/ site verifier</td>
 <td>PASS — 13 pages, 249 data rows, every row source-linked</td>
 <td>python3 tools/verify_site.py</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-dashboard">
 <td>E-01 dashboard/ site checker</td>
 <td>PASS — 12 pages, 524 rows, internal links resolve</td>
 <td>python3 scripts/check_site.py</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-01-originated">
 <td>E-01 originated/ engine verifier</td>
 <td>PASS — 24/24 checks</td>
 <td>node originated/engine/verify.js</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-02-slate">
@@ -138,7 +138,7 @@
 <td>E-04 sealed-ledger settlement status</td>
 <td>PENDING by design — data/settlement.json records settled_at 2026-11-14T09:59:34+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score); the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed (updated 2026-11-14 by arena/6c5195d1 when the finals ingest chain was brought up: finals_all.json now carries the nine official 11/13 finals)</td>
 <td>python -m nba2.pipeline.settle (no official final scores yet for the ledger&#x27;s games; the nightly ingest job fetches and settles them per game day)</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session verification artefacts (arena/72f9da58, arena/fc58f84f)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>

@@ -1,0 +1,115 @@
+[ ok ] CC-SNAP-01     every slate record has one cell per declared column
+[ ok ] CC-SNAP-02     official game IDs are unique and well-formed (002 + 7 digits)
+[ ok ] CC-SNAP-03     every club in the slate is one of the 30 NBA tricodes
+[ ok ] CC-SNAP-04     per-day game counts equal the snapshot's own counts_check
+[ ok ] CC-SNAP-05     every tip time parses as a 24h ET clock value
+[ ok ] CC-SNAP-06     the pick window never exceeds as-of + 3 days
+[ ok ] CC-SNAP-07     the published slate_window string matches the data
+[ ok ] CC-SNAP-08:injury_report_2026-11-13_1930ET injury_report_2026-11-13_1930ET.json: its own record_counts equal a recount of its records
+[ ok ] CC-SNAP-09:injury_report_2026-11-13_1930ET injury_report_2026-11-13_1930ET.json: every status string is one the report can print
+[ ok ] CC-SNAP-10:injury_report_2026-11-13_1930ET injury_report_2026-11-13_1930ET.json: attribution is recorded per row (E explicit / C continuation)
+[ ok ] CC-SNAP-08:injury_report_2026-11-14_daybefore injury_report_2026-11-14_daybefore.json: its own record_counts equal a recount of its records
+[ ok ] CC-SNAP-09:injury_report_2026-11-14_daybefore injury_report_2026-11-14_daybefore.json: every status string is one the report can print
+[ ok ] CC-SNAP-10:injury_report_2026-11-14_daybefore injury_report_2026-11-14_daybefore.json: attribution is recorded per row (E explicit / C continuation)
+[ ok ] CC-SNAP-08:injury_report_2026-11-13 injury_report_2026-11-13.json: its own record_counts equal a recount of its records
+[ ok ] CC-SNAP-09:injury_report_2026-11-13 injury_report_2026-11-13.json: every status string is one the report can print
+[ ok ] CC-SNAP-10:injury_report_2026-11-13 injury_report_2026-11-13.json: attribution is recorded per row (E explicit / C continuation)
+[ ok ] CC-SNAP-11:ratings team_ratings_2026-11-13.json states where and when it was retrieved
+[ ok ] CC-SNAP-11:times official_game_times_2026-11-14.json states where and when it was retrieved
+[ ok ] CC-SNAP-11:leaders team_leaders_2026-11-13.json states where and when it was retrieved
+[ ok ] CC-SNAP-11:context slate_context_2026-11-17.json states where and when it was retrieved
+[ ok ] CC-SNAP-12     ratings: home+road games reconcile with total games for all 30 clubs
+[FAIL] CC-SNAP-13     ratings: the snapshot's own PASS/FAIL labels still describe the data
+        observed: recomputed imbalance => PASS; stored labels say FAIL
+        note:     every close/blowout game is one win and one loss, so the league-wide sums must match; a mismatch means the per-team split columns are not a complete partition of the games
+[ ok ] CC-SNAP-14     ratings: winning percentage equals W/(W+L) to 3 dp
+[ ok ] CC-PUB-01      every published slate cell equals the snapshot cell
+[ ok ] CC-PUB-03      no minute/production/line impact value is published for any injury row
+[ ok ] CC-PUB-04      our P(plays) convention is applied consistently: 'Out' => 0.00
+[FAIL] CC-PUB-05      the corroboration table's title counts match its own rows
+        observed: recomputed 14 twice-confirmed, 0 time-lost, 22 outside; title: 'Cross-document corroboration: 14 of 36 games confirmed twice, 0 matchups confirmed with the time cell unreadable, 0 mismatches, 22 outside that report'; row-level problems: ["0022600236: absent from the second document but verdict says 'not covered by the current injury-report release (it lists 11/13 + 11/14 only)'", "0022600237: absent from the second document but verdict says 'not covered by the current injury-report release (it lists 11/13 + 11/14 only)'", "0022600238: absent from the second document but verdict says 'not covered by the current injury-report release (it lists 11/13 + 11/14 only)'"]
+[ ok ] CC-DER-01      spread string and sign follow from the projected margin
+[ ok ] CC-DER-02      published total equals the published per-team projections (±0.5)
+[ ok ] CC-DER-03      p(home) equals the implied probability of our own fair price
+[ ok ] CC-DER-04      ratings table is internally consistent (net = PS/G - PA/G; shrunk = SRS x lambda; GP = W+L)
+[FAIL] CC-DER-05      the two W-L columns are independent measurements, as the caption claims
+        observed: 30/30 rows identical; caption: 'Both W-L columns are printed on purpose: if they ever disagree, the table is wrong.'
+        note:     FAIL here is a presentation defect, not a wrong number: the column labelled 'W-L (official NBA.com)' is populated from the same third-party field as the other column, so the 'if they ever disagree the table is wrong' guard can never fire. See the CR in COORDINATION.md.
+[ ok ] CC-DER-06      luck table arithmetic (luck = actual - expected; split records fit inside the season)
+[ ok ] CC-DER-07      parlay table: joint interval ordered, boost = joint / independence
+[ ok ] CC-DER-11      no count published anywhere on the site is negative
+[ ok ] CC-DER-12      availability coverage recomputes from both official injury snapshots
+[ ok ] CC-DER-08      rotation table: expected-bodies-missing never exceeds the players actually listed, floor inside 0..15
+[ ok ] CC-DER-09      rotation counts equal a recount of the published injury rows for the same club
+[ ok ] CC-GATE-01     every gate verdict is one of the four defined states
+[FAIL] CC-GATE-02     each leaderboard row's gate tally equals the gate matrix
+        observed: 9 violation(s): ["S-01: claims '0 pass / 0 fail / 10 blocked', matrix says {'PASS': 0, 'FAIL': 0, 'BLOCKED': 8, 'AT-RISK': 2}", "S-02: claims '0 pass / 0 fail / 10 blocked', matrix says {'PASS': 0, 'FAIL': 0, 'BLOCKED': 8, 'AT-RISK': 2}", "S-03: claims '0 pass / 0 fail / 10 blocked', matrix says {'PASS': 0, 'FAIL': 0, 'BLOCKED': 8, 'AT-RISK': 2}"]
+[ ok ] CC-GATE-03     no strategy is promoted while it has zero gates passed
+[ ok ] CC-GATE-04     meta.gates_passed / gates_total equal a recount
+[ ok ] CC-GATE-05     no reward is allocated while no strategy has passed the gates
+[ ok ] CC-GATE-06     no performance score is published without settled bets behind it
+[ ok ] CC-GATE-07     every gate spec has a threshold and a failure mode stated
+[ ok ] CC-SEAL-01     the seal digest recomputes from the prediction array
+[ ok ] CC-SEAL-02     the number of sealed predictions equals the count in the header and on the site
+[ ok ] CC-SEAL-03     the digest printed on every page is the file's own digest
+[FAIL] CC-SEAL-04     every sealed prediction is an official game inside the window, tipped after the snapshot
+        observed: 5 problem(s): ['0022600231 dated 2026-11-14 is not after the snapshot date 2026-11-14', '0022600232 dated 2026-11-14 is not after the snapshot date 2026-11-14', '0022600233 dated 2026-11-14 is not after the snapshot date 2026-11-14']
+[ ok ] CC-SEAL-05     sealed tip times equal the official tip times they were sealed against
+[ ok ] CC-SEAL-06     what was sealed is exactly what the site displays
+[ ok ] CC-FLAG-01     no row cites a flag that does not exist
+[ ok ] CC-FLAG-02     every flag is attached to at least one published row
+[ ok ] CC-FLAG-03     every blank cell carries a flag or a note explaining it
+[ ok ] CC-FLAG-04     no value is present on a row whose source is blocked/unavailable
+[ ok ] CC-FLAG-05     an 'official' label only ever points at an NBA-official host
+[ ok ] CC-FLAG-06     count claims inside flag statements match the data they describe
+[FAIL] CC-X-00        every surface uses the same team key for the same club (joinability)
+        observed: WAS <- ['WSH (originated/data/teams.json)']
+        note:     a club written two ways is an invisible row in any join: it silently drops out of the comparison instead of failing it, which is exactly how a '28 of 30' coverage figure can read like a data defect
+[ ok ] CC-X-01        a club's W-L is the same number on every surface of this repo
+[info] CC-X-02        the 28/30 vs 30/30 wording conflict is resolvable from committed evidence
+        observed: ratings snapshot (Basketball-Reference, 2026-11-13): 30/30; nba2/data/records.json (NBA.com/schedule): 30/30; originated/data/teams.json (ESPN, cross-checked): 30/30; data/standings-2026-11-13.csv: 30/30; published ratings (site): 30/30
+        note:     see the reconciliation table in the report; CC-X-03 publishes the per-club evidence
+[info] CC-X-03        clubs the official-capture comparison covers, and the ones it does not
+        observed: uncovered by nba2/data/records.json: none
+[ ok ] CC-X-04        the two sessions' independent reads of the official tip times agree
+[ ok ] CC-X-05        a third surface's tip times agree with the canonical slate
+[ ok ] CC-X-06        the cross-session line-delta column is arithmetically right
+[ ok ] CC-X-07        the other session's line file is the actual referent of the comparison table
+[ ok ] CC-X-08        the cross-session record-agreement claim equals its own table
+[ ok ] CC-X-09        the cross-session comparison does not silently compare a value with itself
+[ ok ] CC-BT-01       the report's headline counts equal a recount of the committed game rows
+[ ok ] CC-BT-02       a 'final scores' set contains only games that precede the snapshot it is graded against
+[ ok ] CC-BT-03       every published rate equals its own numerator over its own denominator
+[ ok ] CC-BT-04       the tier and calibration breakdowns partition the graded sample, and each bin reports its own range
+[ ok ] CC-BT-05       the gate summary is a true index of the per-gate statuses
+[ ok ] CC-BT-06       every gate verdict follows from the numbers printed beside it
+[ ok ] CC-BT-07       the provisional leaderboard ranks by the metric it names, and pays nobody while a gate fails
+[info] CC-BT-08       the two surfaces tell one story about what has been measured
+        observed: the two are not contradictory — the site's gates are stated in settled bets against a price, the backtest's in graded games against outcomes — but a reader of the canonical page cannot see that 139 games have been graded at all, and the vocabulary differs (PASS/FAIL/BLOCKED/AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL)
+        note:     filed as finding F8: the measured result exists, but only on a second surface
+[FAIL] CC-DOC-01      README's published counts match the artefacts on disk
+        observed: 1 stale figure(s): ['README row count: text 1124 vs measured 1139']
+[ ok ] CC-DOC-02      meta.games / meta.teams / meta.injury_rows equal the sections they describe
+[ ok ] CC-DOC-03      meta.tiers equals a recount of the line table
+[ ok ] CC-DOC-04      the site reports which snapshot it is built from
+[ ok ] CC-DOC-05      generated_at_utc is a real timestamp and the build declares itself idempotent
+[info] CC-DOC-06      the verification line quoted on the coordination board matches the current build
+        observed: INFO when a refresh is in flight: the board is a historical record of the run that made it, and this session must not rewrite another session's log
+[info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
+        observed: this session's input digest 10c7a39bc2d58d80… vs meta.input_digest 52f4d4eadb00cda8…
+        note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
+[ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
+[ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
+[ ok ] CC-HTML-03     every row in the data file is rendered on some page
+[info] CC-HTML-03b    the literal em-dash is only ever used for “not applicable”, never for “not verified”
+        observed: anomalies: 1; gate_matrix: 9; gates: 3; injuries: 5; injuries_window: 5; params: 8; props: 4; slate: 36; xinjuries: 2
+[ ok ] CC-HTML-04     every navigation target on the landing page exists
+[ ok ] CC-HTML-05     no published page is unreachable from the landing page
+[ ok ] CC-FRESH-01    the snapshot is within one day of the run date (the freshness SLA the brief implies)
+[info] CC-FRESH-02    a stale snapshot is disclosed, not hidden
+        observed: the site prints the as-of date on every page
+[info] CC-FRESH-03    a scheduled ingestion exists, and it has actually run
+        observed: ci.yml: push,pull_request,workflow_dispatch; pages.yml: push,workflow_dispatch; publish-parity.yml: push,pull_request,workflow_dispatch; refresh.yml: schedule,workflow_dispatch; v2-verify.yml: push,pull_request,workflow_dispatch; ingest runs recorded: unknown (no runs reported or gh unavailable) — not a PASS: the schedule is armed but nothing has run, so the site's freshness still depends on a manual or first-scheduled ingest
+        note:     an active schedule with zero runs is not yet a refresh: the site is only as fresh as the last successful ingest run, so this check stays INFO until a run exists
+
+91 checks: 76 pass, 7 fail, 8 info, 0 n/a

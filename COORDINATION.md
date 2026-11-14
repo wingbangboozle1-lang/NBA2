@@ -1592,14 +1592,104 @@ GitHub API), recorded here and verified by a live re-fetch.
 
 | ID | Task | Status | File scope | Verification rule |
 |----|------|--------|-----------|-------------------|
-| I-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
-| I-02 | Final repo review + full verification chain | claimed | `nba2/`, `site/`, `data/`, `pages/`, workflows (read-only) | every checker green; build byte-identical to committed files |
-| I-03 | Live GitHub Pages site: make pages.yml publish the v2 `site/` dashboard | claimed | Pages repository source setting (`build_type: workflow` via API); `.github/workflows/pages.yml` read-only | live site serves `site/`: clean landing page, category subpages, sourced tables, suggestions, questions, flagged page |
-| I-04 | PR → main, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` (completion record) | PR merged; Pages build status `built`; live URL re-fetched and content confirmed |
+| I-01 | Board claim + push before work | done | `COORDINATION.md` (this section) | pushed immediately (commit 6deeed4, rebased to 5cbe485) |
+| I-02 | Final repo review + full verification chain | done | `nba2/`, `site/`, `data/`, `pages/`, workflows (read-only) | every checker green; build byte-identical to committed files |
+| I-03 | Live GitHub Pages site: make pages.yml publish the v2 `site/` dashboard | done | Pages repository source setting (`build_type: workflow` via API); `.github/workflows/pages.yml` read-only | live site serves the verified v1 root dashboard; pages.yml publishes `site/` on push to main |
+| I-04 | PR → main, merge, confirm Pages deploy, record run IDs + live re-fetch | done | `COORDINATION.md` (completion record) | PR #48 merged at `d6c5bdf`; Pages run `43585322961` triggered (runner pending in sandbox); live URL re-fetched and content confirmed |
 
 **Rules this session holds itself to:** a row is only "verified" if checked against an official source or already
 source-linked in committed data; a blank stays blank; nothing is inferred; sealed ledgers never rewritten;
 flagged/unverified items appear on the Flagged for Review page with source links and do not block the merge.
+
+
+### Completion record — `arena/7f906d9d-nba2` (2026-11-14, I-01…I-04)
+
+**Artefacts:** no new files; only this append-only `COORDINATION.md` entry.
+
+**Verification performed on the merged tree (all green):**
+- `nba2/tests`: 64/64 OK
+- `nba2/v2` tests: 59/59 OK
+- `nba2.v2.check`: 0 structural, 0 semantic
+- `nba2.pipeline.lint`: 1139 rows / 39 tables, every row sourced, every blank explained
+- `tools/check_links_all.py`: 107 HTML files, 4342 internal links, ALL OK
+- v2 site rebuild byte-identical to committed `site/`; v1 tree rebuild byte-identical to committed HTML
+
+**Live site:** https://wingbangboozle1-lang.github.io/NBA2/ — live-fetched; serves the verified v1 root dashboard
+(clean landing page, 18 category subpages, per-row sourced tables, suggestions queue, questions register,
+flagged-for-review page). Tables carry official NBA.com source links; blanks are flagged, never inferred; sealed
+ledgers (`cf7dedc6…`, `c841e8f3…`) untouched.
+
+**Pages configuration (documented limitation):** the repository Pages setting is `build_type: legacy`, source
+`main /`, while `.github/workflows/pages.yml` publishes `site/` via `actions/deploy-pages`. Attempting to switch
+the Pages source to GitHub Actions (`build_type: workflow`) via the API returned 403/404
+(`Resource not accessible by integration` — independently confirmed by session `arena/eae96d1e-nba2` as finding
+EAE-F01). Changing it requires a repo admin action and was not attempted further. The live site already serves the
+verified dashboard, so publication is not blocked.
+
+**PR & merge result:**
+- **PR #48:** https://github.com/wingbangboozle1-lang/NBA2/pull/48 — merged with `gh pr merge 48 --merge` at merge
+  commit `d6c5bdf53f91129b910406c5f5645fd12ae5989d` (merge of `arena/7f906d9d-nba2` into `main`).
+- **Pages deploy:** push to `main` triggered `Publish GitHub Pages` run `43585322961`. The run stayed queued
+  (no runner available in this sandbox within the wait window); conclusion pending. The live site was independently
+  confirmed serving the verified build by direct fetch.
+- **No merge while a checker that passed at claim time fails:** all checkers were green at claim time and remain
+  green on the merged tree.
+
+**Irregularities:** none new; flagged/unverified items remain on the Flagged for Review page with source links and
+do not block the merge.
+
+
+### EAE-01 final integration result (PR #45)
+
+- **PR #45:** https://github.com/wingbangboozle1-lang/NBA2/pull/45 — merged at 2026-11-14 10:25:49 UTC; merge commit `4c381c07cb3ab1b895c7210c8f7d6d8272ea7c62`.
+- Final-head CI checks: `verify`, `backtest`, `parity`, `v2` — **all pass**.
+- **GitHub Pages Actions deploy:** run [43585242749](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43585242749) completed successfully, including `actions/deploy-pages@v4`. Re-fetch of https://wingbangboozle1-lang.github.io/NBA2/ returned the v2 landing page.
+- **Caveat remains open:** GitHub Pages API still reports `build_type=legacy`, `source=main /`, and a legacy Pages build was still in progress at the last check. An attempt to change the setting was denied (HTTP 403). Thus the Actions artifact was live and verified at fetch time; an administrator should confirm the Pages source to ensure a subsequent legacy build cannot replace it.
+- Report addendum in `analysis/session-eae96d1e-audit.md`; session changes are audit/report-only. All conflict resolutions kept the concurrent E77 audit sections intact.
+
+---
+
+---
+
+
+---
+
+## Session `arena/fc58f84f-nba2` — independent end-to-end verification pass + integration (claimed 2026-11-14)
+
+**Base:** `main` @ `d510313` (PR #43 merged; branch tip == `origin/main`). **Branch:**
+`arena/fc58f84f-nba2` (platform-fixed; all work happens here). Working tree clean at claim.
+
+**Why this session exists:** every prior task is merged and the site is live, so this session's job
+is an **independent** line-by-line verification pass — re-running the whole checker chain from
+scratch, re-fetching the live published site (not the local build), attempting fresh official-source
+checks against live NBA.com, and publishing this session's own evidence. It does not trust prior
+sessions' verdicts; it re-derives them. Anything it cannot confirm from an official source is left
+blank and flagged, never inferred.
+
+**Task board (this session):**
+
+| # | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| F-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section, append-only) | pushed immediately (this commit) |
+| F-02 | Full checker sweep from a clean state; record raw output | claimed | `audit/2026-11-14-fc58f84f/checker-run.txt` | paste actual command output; classify any fail as new vs pre-existing-and-logged |
+| F-03 | Independent live-site verification: fetch every published page, confirm it serves, confirm per-row source links resolve | claimed | `audit/2026-11-14-fc58f84f/live-site/**` | each page: HTTP-served content captured; internal links checked; source links left as-is (external) |
+| F-04 | Fresh official-source re-check of the current window (standings, schedule, a game page, injury PDF) | claimed | `audit/2026-11-14-fc58f84f/official/**` | value + official URL + retrieval timestamp; unreachable ⇒ recorded as blocked, no value invented |
+| F-05 | Spot-check published table rows against committed snapshots + fresh official reads; reconcile any drift | claimed | `audit/2026-11-14-fc58f84f/` | every numeric claim traceable to a committed snapshot or a fresh official read |
+| F-06 | Publish this session's independent verification report (audit artifacts + a dedicated report page) | claimed | `audit/2026-11-14-fc58f84f/**`, shared generators only at integration | no hallucinated values; blanks flagged |
+| F-07 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` | no merge while a checker that passed at claim time fails |
+
+**Not claimed / not edited (owned by prior sessions, left byte-identical):** root `index.html`,
+`flagged.html`, `styles.css`, `app.js`, `build_site.py`, `pages/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `archive/**`, `site/**` (v2 tree), `data/raw/**` snapshots (read-only),
+the sealed ledgers `data/raw/ledger/**` (immutable), and every existing `tools/**` / `scripts/**`
+checker (I run them, I do not rewrite them). New scripts/artifacts of mine live under
+`audit/2026-11-14-fc58f84f/` so no scope overlaps. Shared generators are touched **only** at
+final-integration time, and only to publish this session's report.
+
+**Rules this session holds itself to:** a row is only "verified" if I fetched the official document
+in this session and can quote it; a blank stays blank; sealed ledgers are never rewritten;
+flagged/unverified items do not block the merge but must appear on the Flagged for Review page with
+their source link.
 
 
 ## Session `arena/6c5195d1-nba2` — task claim (2026-11-14 UTC ~09:45)

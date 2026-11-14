@@ -1,0 +1,14 @@
+{
+  "description": "Fresh official capture of NBA.com 2026-27 regular-season standings, fetched live via the platform page-fetch tool by session arena/fc58f84f-nba2. Used for independent line-by-line verification of committed records.json.",
+  "source": "https://www.nba.com/standings",
+  "retrieved_utc": "2026-11-14",
+  "method": "platform fetch_page tool (direct curl/TLS to nba.com is egress-blocked in this sandbox)",
+  "records": {
+    "BOS": [10, 2], "PHI": [10, 3], "DET": [8, 3], "ATL": [7, 6], "MIA": [6, 6],
+    "NYK": [6, 6], "CLE": [6, 7], "TOR": [5, 7], "ORL": [5, 7], "IND": [5, 8],
+    "CHA": [4, 8], "WAS": [4, 9], "BKN": [3, 8], "CHI": [2, 9], "MIL": [1, 12],
+    "SAS": [11, 2], "LAL": [11, 2], "HOU": [10, 3], "POR": [9, 3], "MIN": [9, 3],
+    "MEM": [8, 4], "GSW": [8, 5], "OKC": [8, 5], "DEN": [6, 4], "DAL": [7, 5],
+    "PHX": [5, 6], "NOP": [4, 9], "LAC": [3, 8], "SAC": [1, 11], "UTA": [1, 12]
+  }
+}

@@ -49,6 +49,7 @@ NAV = [
     ("pages/suggestions.html", "Suggestions Queue"),
     ("pages/reconciliation.html", "Cross-session Reconciliation"),
     ("pages/session-audit.html", "Session Audit"),
+    ("pages/verification-report.html", "Verification Report"),
     ("pages/flagged-review.html", "Flagged for Review"),
     ("pages/sources.html", "Sources & Verification"),
 ]
@@ -80,6 +81,11 @@ INTROS = {
         "schedule, team records re-read from the official standings, the injury-report "
         "currency delta line by line, and six suggestions put up for review before "
         "implementation. Nothing on this page is an implemented change.</p>",
+    "pages/verification-report.html":
+        "<p>A fresh, independent verification pass by session arena/fc58f84f-nba2: the "
+        "checker chain re-run from a clean state, the live GitHub Pages site re-fetched, "
+        "and the current window re-read against live official NBA.com sources. Every "
+        "result is this session's own; unconfirmed values stay blank and flagged.</p>",
     "pages/questions.html": "<p>What must be known before a reasonable decision can be made — and how to go find out.</p>",
     "pages/suggestions.html": "<p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p>",
     "pages/flagged-review.html": "<p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p>",
@@ -286,6 +292,7 @@ def _pages() -> dict[str, list[str]]:
         "pages/session-audit.html": [render_table(sec("audit"), L),
                                      render_table(sec("injury_delta"), L),
                                      render_table(sec("audit_suggestions"), L)],
+        "pages/verification-report.html": [render_table(sec("verification"), L)],
         "pages/flagged-review.html": [render_table(sec("flags"), L)],
         "pages/sources.html": [render_table(sec("sources"), L)],
     }

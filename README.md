@@ -27,7 +27,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (19 pages, 39 tables, 1158 rows) are rendered from
+`index.html` + `pages/**` (20 pages, 40 tables, 1168 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -256,7 +256,7 @@ decision logged on the new site's Flagged page (F-011).
 python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 43 tests
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 59 tests
 python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work + integration fixes)
 ```
 
