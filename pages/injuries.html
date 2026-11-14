@@ -13,14 +13,14 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html" class="active">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html" class="active">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Injuries</h2><p>Official report rows, rotation-body arithmetic, and the impact columns left blank on purpose.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:08 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="rotation" data-rows="21">
 <h2>Rotation-body impact (the part that IS computable)</h2>
 <p class="blurb">Counting bodies is defensible from the report alone. &#x27;Rotation floor&#x27; is the deepest available lineup assuming a 10-man rotation, ±1 band from the variance of the status weights. It is a depth statement, not a points statement.</p>
@@ -398,6 +398,247 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">Derived in nba2/models/injuries.py from the official PDF.</p>
+</section><section class="card table-card" id="rotation_window" data-rows="10">
+<h2>Rotation-body impact — 2026-11-14 slate (day-before designations)</h2>
+<p class="blurb">Same body-counting arithmetic as the 16:15 table, applied to the day-before designations. A team whose report row is NOT YET SUBMITTED contributes a placeholder, not a body count: their designations simply have not been filed yet (FLAG-INJ-07).</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Rotation-body impact — 2026-11-14 slate (day-before designations)</caption><thead><tr>
+<th scope="col">Team</th>
+<th scope="col">Out</th>
+<th scope="col">Doubtful</th>
+<th scope="col">Questionable</th>
+<th scope="col">Probable</th>
+<th scope="col">Available</th>
+<th scope="col">G-League/suspension</th>
+<th scope="col">Not yet submitted</th>
+<th scope="col">Expected bodies missing</th>
+<th scope="col">Band</th>
+<th scope="col">Rotation floor</th>
+<th scope="col">Risk tier</th>
+<th scope="col">Games affected</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="rotw-BKN">
+<td>Brooklyn Nets</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>4.60</td>
+<td>±0.61</td>
+<td>6</td>
+<td>SEVERE</td>
+<td>2026-11-14 BKN@MEM</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-CHI">
+<td>Chicago Bulls</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00</td>
+<td>±0.00</td>
+<td>10</td>
+<td>MINOR</td>
+<td>2026-11-14 CHI@MIN</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-CLE">
+<td>Cleveland Cavaliers</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00</td>
+<td>±0.00</td>
+<td>10</td>
+<td>MINOR</td>
+<td>2026-11-14 DAL@CLE</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-DAL">
+<td>Dallas Mavericks</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>3.60</td>
+<td>±0.61</td>
+<td>6</td>
+<td>SEVERE</td>
+<td>2026-11-14 DAL@CLE</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-DEN">
+<td>Denver Nuggets</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>4.00</td>
+<td>±0.00</td>
+<td>6</td>
+<td>SEVERE</td>
+<td>2026-11-14 DEN@NOP</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-DET">
+<td>Detroit Pistons</td>
+<td>5</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>5.90</td>
+<td>±0.70</td>
+<td>6</td>
+<td>SEVERE</td>
+<td>2026-11-14 DET@MIA</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-MEM">
+<td>Memphis Grizzlies</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00</td>
+<td>±0.00</td>
+<td>10</td>
+<td>MINOR</td>
+<td>2026-11-14 BKN@MEM</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-MIA">
+<td>Miami Heat</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00</td>
+<td>±0.00</td>
+<td>10</td>
+<td>MINOR</td>
+<td>2026-11-14 DET@MIA</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-MIN">
+<td>Minnesota Timberwolves</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>2.00</td>
+<td>±0.00</td>
+<td>8</td>
+<td>MATERIAL</td>
+<td>2026-11-14 CHI@MIN</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="rotw-NOP">
+<td>New Orleans Pelicans</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00</td>
+<td>±0.00</td>
+<td>10</td>
+<td>MINOR</td>
+<td>2026-11-14 DEN@NOP</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">Derived in nba2/models/injuries.py from the 11/13 19:30 ET official release.</p>
+</section><section class="card table-card" id="availability_window" data-rows="3">
+<h2>Availability coverage of the sealed pick window (2026-11-14 → 11-16)</h2>
+<p class="blurb">Computed from both official injury snapshots, never inferred. &#x27;Coverage&#x27; is the share of team-slots carrying any official participation designation at capture time; it rises as later releases are ingested. The lines for this window were originated from the 2026-11-13 snapshot and sealed; availability data refreshes around them.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Availability coverage of the sealed pick window (2026-11-14 → 11-16)</caption><thead><tr>
+<th scope="col">Window date</th>
+<th scope="col">Games</th>
+<th scope="col">Team-slots</th>
+<th scope="col">Team-slots with a designation</th>
+<th scope="col">NOT YET SUBMITTED</th>
+<th scope="col">No row in any release yet</th>
+<th scope="col">Designation coverage</th>
+<th scope="col">Note</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="avail-2026-11-15">
+<td>2026-11-15</td>
+<td>9</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+<td>18</td>
+<td>0%</td>
+<td>no designations in either 11/13 release yet</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
+</tr>
+<tr id="avail-2026-11-16">
+<td>2026-11-16</td>
+<td>8</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>0%</td>
+<td>no designations in either 11/13 release yet</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
+</tr>
+<tr id="avail-2026-11-17">
+<td>2026-11-17</td>
+<td>5</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>0%</td>
+<td>no designations in either 11/13 release yet</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a> <a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>
 </section><section class="card table-card" id="leaders" data-rows="11">
 <h2>Leader-availability cross-check (official report vs official game card)</h2>
 <p class="blurb">Two official documents joined on team+player. &#x27;NOT LISTED ON REPORT&#x27; means the report we retrieved contains no row for that player — it is not a guarantee of availability, which is why the impact column stays blank. Leaders were captured from the 2026-11-13 game cards; injury statuses come from the 2026-11-13 19:30 ET release.</p>
@@ -2513,6 +2754,521 @@
 <td>explicit</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>
+</section><section class="card table-card" id="injuries_window" data-rows="31">
+<h2>Official NBA injury report — 2026-11-14 day-before designations (11/13/26 19:30 ET release)</h2>
+<p class="blurb">First official designations for the 2026-11-14 slate: five teams had filed by the 5 p.m. ET day-before deadline, five had not (NOT YET SUBMITTED). Game-day reports on 11/14 (11 a.m.-1 p.m. local) can still change these statuses. The three impact columns are blank by policy — the report contains no minutes or production data, so any number there would be invented. P(plays) is our modelling convention for counting bodies, not a league probability.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Official NBA injury report — 2026-11-14 day-before designations (11/13/26 19:30 ET release)</caption><thead><tr>
+<th scope="col">Game date</th>
+<th scope="col">Tip (ET)</th>
+<th scope="col">Matchup</th>
+<th scope="col">Team</th>
+<th scope="col">Player</th>
+<th scope="col">Official status</th>
+<th scope="col">Reason</th>
+<th scope="col">Our P(plays)</th>
+<th scope="col">Minutes impact</th>
+<th scope="col">Production impact</th>
+<th scope="col">Line adjustment</th>
+<th scope="col">Row attribution</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="injw-0">
+<td>2026-11-14</td>
+<td>07:00</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Holmes II, DaRon</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-1">
+<td>2026-11-14</td>
+<td>07:00</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Nembhard, Ryan</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-2">
+<td>2026-11-14</td>
+<td>07:00</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Strawther, Julian</td>
+<td>Out</td>
+<td>Injury/Illness - Left Knee Sprain</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-3">
+<td>2026-11-14</td>
+<td>07:00</td>
+<td>DEN@NOP</td>
+<td>Denver Nuggets</td>
+<td>Whitmore, Cam</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-4">
+<td>2026-11-14</td>
+<td>07:00</td>
+<td>DEN@NOP</td>
+<td>New Orleans Pelicans</td>
+<td>—</td>
+<td>NOT YET SUBMITTED</td>
+<td>Team submission outstanding at report time</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+<tr id="injw-5">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Biberovic, Tarik</td>
+<td>Out</td>
+<td>Injury/Illness - Right Heel Bursitis</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-6">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Christie, Max</td>
+<td>Questionable</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>0.55</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-7">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>de Larrea, Sergio</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Sprain</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
+</tr>
+<tr id="injw-8">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Johnson Jr., Morez</td>
+<td>Probable</td>
+<td>Injury/Illness - Left Shin / Tibia Contusion</td>
+<td>0.85</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
+</tr>
+<tr id="injw-9">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Lively II, Dereck</td>
+<td>Out</td>
+<td>Injury/Illness - Right Foot Surgery</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
+</tr>
+<tr id="injw-10">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Dallas Mavericks</td>
+<td>Martin, Caleb</td>
+<td>Available</td>
+<td>Injury/Illness - Right Thumb Splint</td>
+<td>1.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
+</tr>
+<tr id="injw-11">
+<td>2026-11-14</td>
+<td>07:30</td>
+<td>DAL@CLE</td>
+<td>Cleveland Cavaliers</td>
+<td>—</td>
+<td>NOT YET SUBMITTED</td>
+<td>Team submission outstanding at report time</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+<tr id="injw-12">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Bilodeau, Tyler</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-13">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Brown Jr., Mikel</td>
+<td>Questionable</td>
+<td>Injury/Illness - Illness</td>
+<td>0.55</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-14">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Jefferson, Joshua</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-15">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Nelson, Grant</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-16">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Saraf, Ben</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-17">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Brooklyn Nets</td>
+<td>Traore, Nolan</td>
+<td>Probable</td>
+<td>Injury/Illness - Right Calf Tightness / Soreness</td>
+<td>0.85</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-18">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>BKN@MEM</td>
+<td>Memphis Grizzlies</td>
+<td>—</td>
+<td>NOT YET SUBMITTED</td>
+<td>Team submission outstanding at report time</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+<tr id="injw-19">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>CHI@MIN</td>
+<td>Chicago Bulls</td>
+<td>—</td>
+<td>NOT YET SUBMITTED</td>
+<td>Team submission outstanding at report time</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+</tr>
+<tr id="injw-20">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>Beringer, Joan</td>
+<td>Available</td>
+<td>Injury/Illness - Face Mask</td>
+<td>1.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-21">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>DiVincenzo, Donte</td>
+<td>Out</td>
+<td>Injury/Illness - Right Achilles Tendon Repair / Surgery</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-22">
+<td>2026-11-14</td>
+<td>08:00</td>
+<td>CHI@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td>Edwards, Anthony</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Arthroscopy</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
+</tr>
+<tr id="injw-23">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Duren, Jalen</td>
+<td>Out</td>
+<td>Injury/Illness - Right Hamstring Strain</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-24">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Harkless, Elijah</td>
+<td>Questionable</td>
+<td>G League - Two-Way</td>
+<td>0.55</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-25">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Joe, Isaiah</td>
+<td>Out</td>
+<td>Injury/Illness - Right Hip Contusion</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-26">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Jones, Isaac</td>
+<td>Questionable</td>
+<td>G League - Two-Way</td>
+<td>0.55</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-27">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Lanier, Chaz</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-28">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Okorie, Ebuka</td>
+<td>Out</td>
+<td>G League - On Assignment</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-29">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Detroit Pistons</td>
+<td>Onyenso, Ugonna</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td>0.00</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-05 FLAG-INJ-06">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>block-continuation (unconfirmed)</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
+</tr>
+<tr id="injw-30">
+<td>2026-11-14</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>DET@MIA</td>
+<td>Miami Heat</td>
+<td>—</td>
+<td>NOT YET SUBMITTED</td>
+<td>Team submission outstanding at report time</td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-INJ-02 FLAG-INJ-06 FLAG-INJ-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>explicit</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a> <a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
 </tr>
 </tbody></table></div>
 <p class="tablenote">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</p>

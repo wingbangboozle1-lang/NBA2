@@ -27,7 +27,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (17 pages, 33 tables, 989 rows) are rendered from
+`index.html` + `pages/**` (17 pages, 33 tables, 992 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -58,7 +58,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 55 standard-library tests: statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 62 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
@@ -78,7 +78,7 @@ honest map rather than a claim that there is one generator:
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (55 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (62 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -89,6 +89,20 @@ python3 nba2/generate.py && python3 build_site.py   # the prior session's root d
 python3 tools/verify_site.py                        # docs-layer source check
 python3 tools/check_links_all.py                    # whole-site link check
 ```
+
+## Nightly ingest (audit A-01 remediation, v1)
+
+`.github/workflows/refresh.yml` runs at 09:05/13:35 ET: it archives the newest official
+injury-report PDFs for the window dates under `data/raw/pdf/`, fetches official final scores for
+arrived window dates into `data/raw/finals_*.json`, merges them into the settlement input, settles
+the sealed ledger, and rebuilds the site — **only if** the full verify chain (unit tests, seal
+verification, provenance lint) passes and `data/raw/ledger/` is byte-identical. It is fail-closed
+(`nba2/pipeline/refresh.py`, 62 tests): an unreachable official endpoint or a schema drift aborts the
+job before anything is committed, and a missing future-date release or a not-yet-final scoreboard is
+reported as the expected pre-deadline state, not an error. What it never does: rewrite sealed
+predictions, originate picks, or size stakes — those stay gated behind owner decisions. Transcripts
+of injury PDFs remain human-verified inputs; the machine can only cross-check them.
+
 
 Python 3.11+, standard library only — no `pip install`, so no published number depends on a
 package version nobody pinned.
@@ -105,9 +119,10 @@ package version nobody pinned.
    independent read (30/30), and re-read from the upstream standings page on 2026-11-14 (30/30 identical,
    `data/raw/ratings_recheck_2026-11-14.json`).
 2. **Calibration** — margin volatility σ and home-court advantage are **fitted** by least squares to
-   the 30 verified win totals (σ ≈ 13.58 pts, HCA ≈ 1.53 pts; RMSE 1.31 wins vs 2.78 for a .500
-   baseline). Neither is copied from folklore; where two ways of estimating HCA disagree, the site
-   says so (`FLAG-PARAM-02`).
+   the committed win totals (σ ≈ 13.58 pts, HCA ≈ 1.53 pts; RMSE 1.31 wins vs 2.78 for a .500
+   baseline). These are fitted from the committed snapshot, not from a separately described
+   multi-season point-in-time history; do not interpret this as out-of-sample validation. Where two
+   ways of estimating HCA disagree, the site says so (`FLAG-PARAM-02`).
 3. **Shrinkage** — at ~12 games ratings are noise-heavy, so each is multiplied by a reliability
    weight λ = τ²/(τ²+se²) derived from the table's own dispersion.
 4. **Two views, one line** — schedule-adjusted SRS and raw scoring margin are carried separately; the
@@ -124,7 +139,7 @@ package version nobody pinned.
 |---|---|
 | No odds feed | no CLV, no ROI, no stake sizing (0% stake is policy, not a placeholder); gates G-02/G-05/G-09 unevaluable |
 | No player-level data (`stats.nba.com` unreachable here) | injury **impact**, props, prop combos, same-player correlation: blank |
-| No game-level results history | σ/HCA/correlations cannot be re-fit point-in-time; gate G-07 is AT-RISK by construction |
+| Game-level results history — **resolved in the backtest tree** (2026-11-14) | 155 official final scores (2026-10-20 → 11-12) now back a leakage-tested walk-forward ([backtest/](backtest/)); G-04 measured FAIL, G-07 measured PASS; the root site's σ/HCA/correlations are still snapshot-fitted pending owner ratification (S-04) |
 | Injury reports are same-day | a T-3 line is structurally availability-blind, so Tier A is suppressed for the whole slate |
 | Two models, one slate | 21 of 23 matched games disagree by >1.5 pts (3 favour opposite sides) — published, not averaged |
 | Owner decisions pending | 11 thresholds unratified; the reward pool is 100% unallocated until gates pass |
@@ -139,7 +154,12 @@ has settled. That is the design working, not a missing feature.
 context — already live or completed at retrieval — plus 27 pick-window games). Sealed pick window =
 `2026-11-14 → 2026-11-17` (27 games): every upcoming slate within the brief's 3-day maximum gets a
 pick. The seal refuses to run if any sealed game is within 6 hours of tip, so a recap can never enter
-the pre-registration ledger. Snapshots are point-in-time captures, not live feeds — read `meta.as_of`
+the pre-registration ledger. Availability data refreshes around the frozen seal: the 11/13 19:30 ET
+official release ([PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf))
+carries the first day-before designations for the 11/14 slate (5 of 10 team-slots filed; 11/15-17 still
+NOT YET SUBMITTED) and is published on [the injuries page](pages/injuries.html) with per-date coverage;
+the nightly ingest workflow archives later releases without touching the sealed ledger.
+Snapshots are point-in-time captures, not live feeds — read `meta.as_of`
 before trusting any number, and see [the sources page](pages/sources.html) for retrieval timestamps.
 
 ## Repo conventions

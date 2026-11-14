@@ -64,7 +64,12 @@ register_source("nba_game_card", "NBA.com Game Preview (official)", "https://www
                 Src.OFFICIAL, "Cross-check of Nov 13-15 win-loss records.")
 register_source("nba_injury_pdf", "NBA Official Injury Report 11/13 19:30 ET (official)",
                 "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", Src.OFFICIAL,
-                "Freshest release at build time (supersedes the 16:15 capture, which stays committed). Columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. 122 rows transcribed.")
+                "Freshest release at build time (supersedes the 16:15 capture, which stays committed). Columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. 122 rows transcribed (session arena/1ec4f9bd-nba2, retrieved ~01:05 UTC).")
+register_source("nba_injury_pdf_1114", "NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)",
+                "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf", Src.OFFICIAL,
+                "Later release of the same referee-operations series: first document carrying 2026-11-14 participation "
+                "designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC (session arena/5a5fa7c4-nba2); transcript at "
+                "data/raw/injury_report_2026-11-14_daybefore.json. Same document as nba_injury_pdf; two independent transcriptions exist and are cross-checked.")
 register_source("bref_standings", "Basketball-Reference 2026-27 Standings", "https://www.basketball-reference.com/leagues/NBA_2027_standings.html",
                 Src.THIRD_PARTY, "Conference + Expanded standings. W-L cross-checked against NBA.com for 28/30 teams in the original capture (TOR/WAS not visible there); re-read 2026-11-14: all 30 W-L identical (ratings_recheck_2026-11-14.json).")
 register_source("nba_stats_blocked", "stats.nba.com JSON endpoints", "https://stats.nba.com/stats/leaguestandingsv3",

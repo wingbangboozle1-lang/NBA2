@@ -1,0 +1,54 @@
+{
+ "schema": "nba2.postgame-records.v1",
+ "meta": {
+  "captured_utc": "2026-11-14",
+  "meaning": "official post-game W-L on the nba.com card; used only as a check",
+  "n_rows": 4,
+  "date_range": [
+   "2026-11-05",
+   "2026-11-05"
+  ]
+ },
+ "rows": [
+  {
+   "game_id": "0022600187",
+   "date": "2026-11-05",
+   "team": "ORL",
+   "side": "away",
+   "wins": 2,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/orl-vs-phx-0022600187",
+   "list_url": "https://www.nba.com/games?date=2026-11-05"
+  },
+  {
+   "game_id": "0022600187",
+   "date": "2026-11-05",
+   "team": "PHX",
+   "side": "home",
+   "wins": 2,
+   "losses": 5,
+   "source_url": "https://www.nba.com/game/orl-vs-phx-0022600187",
+   "list_url": "https://www.nba.com/games?date=2026-11-05"
+  },
+  {
+   "game_id": "0022600188",
+   "date": "2026-11-05",
+   "team": "MIA",
+   "side": "away",
+   "wins": 3,
+   "losses": 6,
+   "source_url": "https://www.nba.com/game/mia-vs-gsw-0022600188",
+   "list_url": "https://www.nba.com/games?date=2026-11-05"
+  },
+  {
+   "game_id": "0022600188",
+   "date": "2026-11-05",
+   "team": "GSW",
+   "side": "home",
+   "wins": 6,
+   "losses": 3,
+   "source_url": "https://www.nba.com/game/mia-vs-gsw-0022600188",
+   "list_url": "https://www.nba.com/games?date=2026-11-05"
+  }
+ ]
+}

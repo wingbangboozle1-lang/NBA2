@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correlation · NBA2 measured skill</title>
+<meta name="description" content="Walk-forward backtest of the NBA2 originated lines against official NBA.com final scores.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+</header>
+<aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html" class="active">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
+  <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
+</aside>
+<main class="main">
+
+<section class="hero"><h2>Correlation, measured</h2>
+<p>The repository previously published correlations as <em>structural placeholders</em>. These are
+computed from official final scores, with the sample size beside every value.</p></section>
+<div class="notice notice-warning"><strong>Finding: the same-game parlay premise is not supported.</strong>
+Strategy S-04 assumed the "favourite covers AND the total goes over" legs were positively dependent
+so a same-game parlay would be underpriced. Measured: r(margin, total) =
+<strong>-0.0089</strong> on 155 games, 95% CI -0.1663 to 0.149.
+The dependence is not detectable, so S-04's edge does not exist on this evidence.</div>
+<div class="card"><h2>Margin ↔ total correlation</h2>
+<div class="table-wrap"><table class="data"><caption>Observed correlation between final margin and final total</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Games</td><td>155</td></tr><tr><td>Pearson r</td><td><strong>-0.0089</strong></td></tr><tr><td>95% CI (Fisher z)</td><td>-0.1663 to 0.149</td></tr><tr><td>r² (share of variance)</td><td>0.0001</td></tr><tr><td>SD of margin (pts)</td><td>16.79</td></tr><tr><td>SD of total (pts)</td><td>19.39</td></tr><tr><td>Verdict</td><td>no detectable relationship at this sample size</td></tr></tbody></table></div>
+<p class="blurb">Source: each game's own nba.com page; see the
+<a href="walk-forward.html">walk-forward table</a> for all 155 rows.</p></div>
+<div class="card"><h2>Same-game leg dependence (home covers × over)</h2>
+<div class="table-wrap"><table class="data"><caption>Joint outcomes against our own originated line and total</caption><thead><tr><th scope="col">Cell</th><th scope="col">Games</th></tr></thead><tbody><tr><td>home cover over</td><td>33</td></tr><tr><td>home cover under</td><td>33</td></tr><tr><td>away cover over</td><td>34</td></tr><tr><td>away cover under</td><td>39</td></tr></tbody></table></div>
+<div class="table-wrap"><table class="data"><caption>Dependence versus the independence assumption</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Games</td><td>139</td></tr><tr><td>P(home covers)</td><td>47.5%</td></tr><tr><td>P(over)</td><td>48.2%</td></tr><tr><td>Joint observed</td><td>23.7%</td></tr><tr><td>Joint if independent</td><td>22.9%</td></tr><tr><td>Difference</td><td>+0.85 pp</td></tr><tr><td>z</td><td>0.24</td></tr></tbody></table></div>
+<p class="blurb">The two legs are treated as independent by naive parlay pricing. The observed difference is what a same-game parlay would be mispriced by BEFORE any vig; a z below about 2 means this sample cannot yet separate it from noise.</p></div>
+<div class="card"><h2>Cross-game independence</h2>
+<div class="table-wrap"><table class="data"><caption>Within-night correlation of home margins</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Same-night game pairs</td><td>645</td></tr><tr><td>Pearson r</td><td>0.0235</td></tr><tr><td>Verdict</td><td>no evidence of within-night dependence</td></tr></tbody></table></div></div>
+<div class="card"><h2>Rest and game flow — tested, not asserted</h2>
+<div class="table-wrap"><table class="data"><caption>Margin by rest situation, from official dates only</caption><thead><tr><th scope="col">Situation</th><th scope="col">Team-games</th><th scope="col">Mean margin</th></tr></thead><tbody><tr><td>Back-to-back (1 day rest)</td><td>46</td><td>-1.543</td></tr><tr><td>3+ days rest</td><td>70</td><td>1.271</td></tr><tr><td>3 games in 4 days</td><td>67</td><td>-0.284</td></tr></tbody></table></div>
+<p class="blurb">Back-to-back minus rested: -2.81 points,
+permutation p = 0.38 —
+<strong>not statistically significant</strong>.</p>
+<p class="blurb">A negative back-to-back margin is the fatigue story. The sign here is negative,
+which is consistent with it, but the p-value says this sample cannot separate it from noise. The
+qualitative claim on earlier pages ("back-to-backs depress production") is therefore
+<strong>directionally consistent but unproven</strong>.</p></div>
+
+<footer class="footer">
+  <p>Every row links its own source. Nothing here is betting advice, and no bet is placed by this repository.
+  No odds feed is connected, so no ROI, edge or stake is published anywhere on this site.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>

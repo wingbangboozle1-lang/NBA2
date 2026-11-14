@@ -57,6 +57,34 @@ jobs:
           fi
           echo "published artefacts match the pipeline"
 
+  backtest:
+    # The measured-skill report (backtest/) is a separate, self-contained tree. It is gated
+    # here so that a published number cannot drift from the committed official snapshots.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Backtest tests (leakage, estimators, reward gating, no market claims)
+        run: python -m unittest discover -s backtest/tests -t . -v
+
+      - name: Rebuild the measured-skill report
+        run: python -m backtest.engine.build
+
+      - name: Report verification (source per row, links, placeholders, determinism)
+        run: python3 tools/verify_backtest.py
+
+      - name: Fail if the committed report does not match a rebuild
+        run: |
+          git add -A
+          if ! git diff --cached --quiet -- backtest/; then
+            echo "::error::backtest/ differs from a rebuild of data/raw/history — commit the rebuild"; exit 1
+          fi
+          echo "backtest artefacts match the pipeline"
+
       - name: Sealed predictions digest
         run: |
           for f in data/raw/ledger/sealed-*.json; do
