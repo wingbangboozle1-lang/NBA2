@@ -1688,3 +1688,88 @@ final-integration time, and only to publish this session's report.
 in this session and can quote it; a blank stays blank; sealed ledgers are never rewritten;
 flagged/unverified items do not block the merge but must appear on the Flagged for Review page with
 their source link.
+---
+
+---
+
+## Session `arena/6650be4d-nba2` — final integration: live re-verification, defect repair, site consolidation (claimed 2026-11-14 ~10:20 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged, CI green on verify + backtest + v2 + publish-parity).
+**Branch:** `arena/6650be4d-nba2` (platform-fixed; no branch switch, no worktree).
+
+**Role.** Every other session on this board is finished (see the registry at the top: the last
+claim, `arena/9707c113-nba2`, is marked *done*). This session therefore acts as the **final
+integration session** named in the brief: it re-verifies the combined data line by line against
+official sources, repairs the defects that are *live on the site today*, makes the published
+surface unambiguous (one canonical landing page, category-grouped subpages, an explicit map of
+the historical trees), and publishes.
+
+**State read at claim time (verified, not assumed):**
+
+- Open PRs: **#21 only** (`arena/79e87c81-nba2`, opened 2026-11-14 00:52 UTC, last commit
+  01:18 UTC — **9 hours stale, no commits since**). Its window-roll-forward work was
+  **superseded** by PR #38 (`arena/1ec4f9bd-nba2`), which landed the same 11/14→11/17 slate,
+  the same 122-row injury release and the same seal. Under the handoff rule ("a claim more than
+  60 minutes old with no commits may be taken over, noting the handoff"), this session takes
+  over the *residual* scope of #21 and logs it below. PR #21 is **not** merged as-is: it
+  rewrites `data/site.json`, `index.html`, `pages/**`, `nba2/config.py`, `nba2/provenance.py`
+  and `nba2/pipeline/**`, all of which have moved on `main` since it was cut.
+- GitHub Pages setting re-read from the API this session: `build_type: legacy`, `source: main /`,
+  `status: built`. The **published** tree is therefore the **v1 root tree** (`index.html` +
+  `pages/**`), *not* `site/` (the v2 lab tree) that `.github/workflows/pages.yml` uploads.
+  Both are served, at `/` and `/site/`.
+- Environment re-probed this session: `curl`/`urllib` to `www.nba.com` returns HTTP 000
+  (egress blocked); the platform **page-fetch tool reaches `www.nba.com`**. Every official
+  capture below records which method produced it.
+- Local checker baseline on `d510313`: `nba2` **64/64** tests OK · `nba2/v2` **59/59** OK ·
+  `backtest` **49/49** OK · `nba2.pipeline.lint` **OK (1139 rows / 39 tables)** ·
+  `tools/crosscheck_site.py` → **91 checks: 76 pass, 7 FAIL, 8 info**.
+  A full rebuild (`build_site_data` + `build_site`) produced **no diff** — the committed
+  artefacts match the pipeline.
+
+### File scope claimed by this session
+
+`COORDINATION.md` (append-only) · `README.md` · `nba2/pipeline/build_site.py` ·
+`nba2/pipeline/build_site_data.py` · `nba2/provenance.py` · `nba2/models/leaderboard.py` ·
+`nba2/config.py` · `data/raw/team_ratings_2026-11-13.json` · `data/site.json` + `index.html` +
+`pages/**` (regenerated artefacts) · `tools/crosscheck_site.py` ·
+`originated/data/teams.json` (team-key alias, CC-X-00) · `.github/workflows/pages.yml` ·
+new `audit/2026-11-14-final/**` (verification captures).
+
+**Not claimed / not edited:** `data/raw/ledger/**` (sealed — immutable by design) ·
+`backtest/**` · `docs/**` · `dashboard/**` · `verified/**` · `site/**` (the v2 lab tree) ·
+`archive/**` · `nba2/v2/**` · `tools/**` other than `crosscheck_site.py` · `scripts/**` ·
+`analysis/**` other than this session's own file. Where a change is required there, it is
+logged as a change request instead of being edited.
+
+### Task board
+
+| ID | Task | Status | Verification rule |
+|---|---|---|---|
+| I-01 | Claim + push before work | done (this commit) | board is append-only |
+| I-02 | Re-verify the published slate / records / injuries against **live** official sources | claimed | value + official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flag |
+| I-03 | Repair the 7 live crosscheck FAILs, or prove each one is a false alarm | claimed | each fix re-run; a checker rule that is wrong is fixed **with the reason recorded**, never silenced |
+| I-04 | Canonical published surface: one landing page, category-grouped nav, explicit map of every tree still served | claimed | every link resolves; the map states each tree's status |
+| I-05 | Make the Pages workflow publish what is actually published (no silent divergence) | claimed | after deploy, the live URL serves the canonical tree |
+| I-06 | Suggestions review path on the canonical site: evidence + explicit accept / reject / defer action | claimed | no suggestion implemented on the owner's behalf |
+| I-07 | Questions register: add only what this session's evidence newly makes answerable / blocking | claimed | no restating of Q-01…Q-27 |
+| I-08 | Executive summary refreshed to the verified current state | claimed | every number traceable to a committed snapshot |
+| I-09 | Final integration: PR → `main`, merge, confirm Pages deploy, re-fetch the live site | claimed | no merge while a checker that passed at claim time fails |
+| I-10 | Handoff of PR #21: take over its residual scope, or record precisely why it is closed | claimed | handoff noted here with the evidence |
+
+### The 7 live crosscheck FAILs this session inherits (reproduced at claim time, not copied)
+
+| ID | Failure | This session's position |
+|---|---|---|
+| CC-SNAP-13 | ratings snapshot's own `internal_consistency_checks` labels say FAIL; recomputation says PASS | **real** — the snapshot's labels are wrong, so FLAG-RAT-02 publishes a false reason |
+| CC-PUB-05 | corroboration table title counts vs its own row verdicts (3 games) | to be adjudicated row by row |
+| CC-DER-05 | column labelled "W-L (official NBA.com)" is filled from the same third-party field as the column next to it | **real** — the guard can never fire; CR-4, still open |
+| CC-GATE-02 | leaderboard rows claim "0 pass / 0 fail / 10 blocked"; the matrix says 8 BLOCKED + 2 AT-RISK | **real** — AT-RISK is being presented as BLOCKED |
+| CC-SEAL-04 | sealed games dated 2026-11-14 are "not after the snapshot date 2026-11-14" | to be adjudicated (date vs tip time) |
+| CC-X-00 | `originated/data/teams.json` keys Washington as `WSH`; four other surfaces use `WAS` | **real** — joinability defect |
+| CC-DOC-01 | README says 1124 rows; the build produces 1139 | **real** — stale hand-copied count |
+
+**Rules this session holds itself to:** a row is only "verified" if the official document was
+fetched in this session and can be quoted; a blank stays blank and is flagged; the sealed
+ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged and unverified items do not
+block the merge but are published on the Flagged for Review page with their source link.
