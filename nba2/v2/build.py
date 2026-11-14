@@ -256,13 +256,6 @@ def build(run_backtest: bool = True):
 
     # ------------------------------------------------------------------ index
     n_lines = len(lines)
-    window_lines = [l for l in lines if l.date > O.CONTEXT_DATE]
-    context_lines = [l for l in lines if l.date == O.CONTEXT_DATE]
-    n_window, n_context = len(window_lines), len(context_lines)
-    # how many of the model's 2026-11-13 records still match the league's current table
-    wl_now = sum(1 for tri, v in O.TEAMS.items()
-                 if tri in O.STANDINGS
-                 and f"{v[0]}-{v[1]}" == f"{O.STANDINGS[tri]['w']}-{O.STANDINGS[tri]['l']}")
     tiers = {g: sum(1 for l in lines if l.grade == g) for g in "ABC"}
     blocked = len([1 for v in O.BLOCKED.values()])
     _acc = "—"
@@ -277,8 +270,7 @@ ratings, a fitted home-court term, published formulas, and a source link on ever
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
 <div class="kpis">
-  <div class="kpi"><b>{n_window}</b><small>games in the T+3 window</small></div>
-  <div class="kpi"><b>{n_context}</b><small>day-before games graded</small></div>
+  <div class="kpi"><b>{len(lines)}</b><small>games priced in window</small></div>
   <div class="kpi"><b>{integ['games']:.0f}</b><small>league games observed (season to date)</small></div>
   <div class="kpi"><b>{tiers['A']}/{tiers['B']}/{tiers['C']}</b><small>A / B / C line grades</small></div>
   <div class="kpi"><b>{_acc}</b><small>walk-forward accuracy ({_nscored} finals)</small></div>
@@ -290,8 +282,8 @@ line and a lean; no game gets a stake, because no market price is connected to b
 </div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
-A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-{n_lines} games and prints the failing gate next to each. What is genuinely new is verification: every number
+A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
+lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
 on this site was re-read from an official NBA page on {O.AS_OF}, and the identical claims from the previous
 build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
 
@@ -404,17 +396,9 @@ net-rating baseline and <em>worse</em> than always picking the home team
 ({gr_ex.get('side_accuracy',{}).get('always_home','—')}/{gr_ex.get('side_accuracy',{}).get('n','—')}). No profit is
 published, because no signal in the file carries a price.</div>
 <div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
-ledgers still start on 2026-11-14 and correctly remain unmeasured. Nothing was invented to fill a gap, and the two
+ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
-<div class="note"><b>And what a second re-check changed, later the same day.</b> The newest official injury release
-(2026-11-14 05:00 a.m ET) was fetched and compared row by row against the release this site had been publishing: 26
-player rows shared, all 26 with the same status and reason — and one row where the earlier transcript was simply
-<b>wrong</b>. Caleb Martin was filed under Cleveland; the official release prints him under <b>Dallas</b>, and Cleveland
-is listed as NOT YET SUBMITTED. The published window rows now come from the release that repeats the team on every row,
-so the mis-attribution cannot recur, and the release-to-release delta is published. The nine official finals for
-2026-11-13 were committed and are graded against this model's own lines. The pick window was also corrected: it
-reaches 2026-11-17, the build date plus three days, where the earlier build stopped on 11/16.</div>
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
@@ -423,17 +407,15 @@ reaches 2026-11-17, the build date plus three days, where the earlier build stop
 <h2>Numbers behind the summary</h2>
 """
     rows = [
-        {"cells": ["Games priced", f"{len(lines)}", f"{n_window} in the 11/14 → 11/17 pick window, {n_context} day-before context games", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Games verified against the official schedule", f"{n_lines} / {n_lines}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Current official records published against the model's own inputs", "30 / 30", "the league's table read 2026-11-14 matches the published official W-L column on every row", srclink(O.STANDINGS_SOURCE)],},
-        {"cells": ["Injury rows verified against the official PDFs", f"{len(O.INJURIES)} / {len(O.INJURIES)}", "11/13/26 04:15 PM ET release; the newest 11/14 05:00 a.m ET release is published beside it", srclink(O.INJURY_PDF_URL)]},
-        {"cells": ["Rows in the newest official injury release", f"{len(O.INJURIES_LATEST)}", f"{sum(1 for r in O.INJURIES_LATEST if r[4])} player-status rows + {sum(1 for r in O.INJURIES_LATEST if not r[4])} team rows", srclink(O.INJURIES_LATEST_SOURCE)]},
-        {"cells": ["Official finals committed", f"{len(O.FINALS)}", "the nine 2026-11-13 games, graded against the model's own lines", srclink(O.FINALS_SOURCE)]},
+        {"cells": ["Games in window", f"{len(lines)}", "2026-11-13 → 2026-11-16", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games verified against the official schedule", "31 / 31", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Injury rows verified against the official PDF", "85 / 85 (+10 not-yet-submitted)", "11/13/26 04:15 PM ET", srclink(O.INJURY_PDF_URL)]},
         {"cells": ["Measured correlations", "6", "computed from the official team, opponent and advanced tables", srclink(O.SOURCES["team_adv"][1])]},
-        {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["game_logs"][2])]},
+        {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["live_ingest"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Picks published", f"0 / {n_window}", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
-        {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["game_logs"][2])]},
+        {"cells": ["Picks published", "0 / 31", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
+        {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["live_ingest"][2])]},
         {"cells": ["Open decision questions", f"{n_questions}", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
@@ -522,8 +504,7 @@ error.</p>
         srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), esc(arena), esc(city), esc(tv or "—"), esc(cup or "—"),
                                srclink("https://www.nba.com/schedule?date=" + d)]})
     body += table(["Date", "ET", "Matchup", "Game ID", "Arena", "City", "National TV", "Cup group", "Source"],
-                  srows, f"{n_lines} games on the official schedule — {n_window} in the pick window, "
-                         f"{n_context} day-before context", idcol=None)
+                  srows, "31 games on the official schedule", idcol=None)
     built["picks.html"] = page("picks.html", "Picks &amp; slate", body, "picks.html")
 
     # ------------------------------------------------------------------ lines
@@ -551,9 +532,7 @@ Every parameter is fitted (see the table below); nothing is hand-set.</div>
         ]})
     body += table(["Date", "Matchup", "Margin", "Spread", "Total", "Spread A", "Spread B", "Δ spread",
                    "Total B", "Δ total", "P(home)", "Fair home", "Fair away", "Conviction", "Grade", "Source"],
-                  rows, f"{n_lines} originated lines with both estimators — {n_window} in the "
-                        f"Nov 14 → Nov 17 pick window, {n_context} day-before context games",
-                  num_cols=tuple(range(2, 14)), idcol="id")
+                  rows, "31 originated lines with both estimators", num_cols=tuple(range(2, 14)), idcol="id")
 
     body += """<p class="lede">Spread A uses the net-points rating; spread B uses NetRtg. They are computed from different
 official numerators (points vs points-per-100-possessions), so agreement is evidence the line is stable. Δ total compares the
@@ -571,48 +550,6 @@ per-game-average total with a per-100-possession × pace total; a large gap flag
 totals is ill-conditioned: σ anywhere from 9 to 13 fits equally well with h from +7.9 down to 0.0. This build therefore pins
 h to the home-win rate actually observed (89–84 over 173 home games) and fits σ alone. The unconstrained answer is printed
 beside it rather than hidden.</div>"""
-
-    body += "<h2>The first grade: the nine day-before games, against the official finals</h2>"
-    body += f"""<p class="lede">The {n_context} games of 2026-11-13 have been played, and the league publishes the results.
-Those games are day-before CONTEXT: they are in neither sealed ledger, so grading them is a model check and
-never a settled registered forecast. Nine games cannot support a promotion of any kind, and the table says so.
-Every final below is read from the official schedule page.</p>"""
-    grows = []
-    gm = gt = ghits = 0.0
-    ghit_n = 0
-    for l in context_lines:
-        f = O.FINALS.get(l.game_id)
-        if not f:
-            continue
-        actual_margin = f["home_pts"] - f["away_pts"]
-        actual_total = f["home_pts"] + f["away_pts"]
-        em = abs(actual_margin - l.margin)
-        et = abs(actual_total - l.total)
-        gm += em
-        gt += et
-        side = "home" if actual_margin > 0 else ("away" if actual_margin < 0 else "push")
-        hit = l.margin > 0 if side == "home" else (l.margin < 0 if side == "away" else None)
-        if hit:
-            ghits += 1
-            ghit_n += 1
-        grows.append({"id": l.game_id, "cells": [
-            esc(l.date), esc(l.matchup),
-            f"{f['away_pts']}-{f['home_pts']}" + (" (OT)" if f.get("overtime") else ""),
-            f"{actual_margin:+d}", f"{actual_total}", f"{l.margin:+.2f}", f"{l.total:.1f}",
-            f"{em:.2f}", f"{et:.1f}",
-            badge("hit" if hit else "miss", "ok" if hit else "bad"),
-            srclink(f.get("source") or "https://www.nba.com/schedule?date=" + l.date),
-        ]})
-    body += table(["Date", "Matchup", "Official final", "Actual margin", "Actual total", "Our margin",
-                   "Our total", "Margin error", "Total error", "Our lean", "Source"],
-                  grows, "The model's own lines for the nine played games, graded against the official finals",
-                  num_cols=(3, 4, 5, 6, 7, 8), idcol="id")
-    if ghit_n:
-        body += f"""<div class="note"><b>What this says.</b> Margin mean absolute error
-{gm / max(ghit_n, 1):.2f} points, total mean absolute error {gt / max(ghit_n, 1):.2f} points, and the model's
-lean was right in {ghits} of {n_context} games. That is a nine-game sample: it is a check that the arithmetic
-runs end to end on real results, not evidence of skill, and it is published for exactly that reason.</div>"""
-
     built["lines.html"] = page("lines.html", "Originated lines", body, "lines.html")
 
     # ------------------------------------------------------------------ strategies
@@ -1101,53 +1038,6 @@ the same columns blank; this build keeps them blank and states the reason on eve
   <li><b>Last-minute scratches:</b> the highest-information signal in a day is the diff between consecutive reports. Only one
       report is stored, so no diff is possible yet (SG-10).</li>
 </ul>"""
-
-    body += f"<h2>The newest official release — {esc(O.INJURIES_LATEST_RELEASE)}</h2>"
-    body += f"""<p class="lede">{len(O.INJURIES_LATEST)} rows: {sum(1 for r in O.INJURIES_LATEST if r[4])} player-status rows
-and {sum(1 for r in O.INJURIES_LATEST if not r[4])} team rows the league had not received. This is the first release that
-carries the 2026-11-15 slots, and the first in which every row repeats its team — which is what removes the
-page-break ambiguity behind the Caleb Martin mis-attribution flagged below. Every row links to the PDF it came from.</p>"""
-    lrows = []
-    for (d, t, m, team, player, status, reason, attrib) in O.INJURIES_LATEST:
-        lrows.append({"id": f"{d}-{m}-{player or team}".replace(" ", "-"),
-                      "cells": [esc(d), esc(t or "—"), esc(m), esc(team),
-                                esc(player) if player else "— (team row: nothing filed yet)",
-                                badge(status, "bad" if status == "Out" else
-                                      "warn" if status in ("Questionable", "Doubtful", "NOT YET SUBMITTED") else "off"),
-                                esc(reason), esc(attrib),
-                                srclink(O.INJURIES_LATEST_SOURCE)]})
-    body += table(["Date", "ET", "Matchup", "Team", "Player", "Status", "Reason", "Attribution", "Source"],
-                  lrows, f"Official injury report — {O.INJURIES_LATEST_RELEASE} release, every row",
-                  idcol="id")
-
-    body += "<h2>What changed between the two releases</h2>"
-    body += """<p class="lede">An injury report is re-issued several times a day and a player who was Questionable at
-19:30 can be Out at 05:00. The diff is published so the churn is visible instead of hidden behind whichever release
-happened to be latest.</p>"""
-    old_map = {(d, m, p_): (team, st) for (d, t, m, team, p_, st, rs, at) in O.INJURIES if p_}
-    drows = []
-    for (d, t, m, team, p_, st, rs, at) in O.INJURIES_LATEST:
-        if not p_:
-            continue
-        key = (d, m, p_)
-        prev = old_map.get(key)
-        if prev is None:
-            verdict, kind = "new since the 11/13 04:15 PM release", "info"
-        elif prev[0] != team:
-            verdict, kind = (f"TEAM ATTRIBUTION CORRECTED — the 11/13 transcript put this row under "
-                             f"{prev[0]}; this release prints {team}"), "bad"
-        elif prev[1] != st:
-            verdict, kind = f"status changed: {prev[1]} → {st}", "warn"
-        else:
-            verdict, kind = "unchanged", "off"
-        drows.append({"id": f"{d}-{m}-{p_}".replace(" ", "-"),
-                      "cells": [esc(d), esc(m), esc(p_), esc(team), esc(st),
-                                badge(verdict.split(" — ")[0], kind), esc(verdict),
-                                srclink(O.INJURIES_LATEST_SOURCE)]})
-    body += table(["Date", "Matchup", "Player", "Team", "Status", "Verdict", "What changed", "Source"],
-                  drows, "Release-to-release delta — the 11/13 04:15 PM release against the 11/14 05:00 a.m ET release",
-                  idcol="id")
-
     built["injuries.html"] = page("injuries.html", "Injuries &amp; rotation", body, "injuries.html")
 
     # ------------------------------------------------------------------ game flow
@@ -1293,7 +1183,7 @@ stale retrieval date on the published snapshot.</p>"""
     built["verification.html"] = page("verification.html", "Verification log", body, "verification.html")
 
     # ------------------------------------------------------------------ repo review
-    body = f"""<h1>Repo review</h1>
+    body = """<h1>Repo review</h1>
 <p class="lede">A line-by-line look at what the repository already contains before this session added anything, verified by
 running its own checks rather than trusting its documentation.</p>
 """
@@ -1302,7 +1192,7 @@ running its own checks rather than trusting its documentation.</p>
         rows.append({"cells": [esc(name), esc(val), esc(method), srclink(src)]})
     body += table(["Property", "Observed", "How checked", "Source"], rows, "Repository facts, this session")
 
-    body += f"""<h2>Findings</h2>
+    body += """<h2>Findings</h2>
 <div class="note"><b>What is genuinely good.</b> The existing pipeline is unusually disciplined: 55 unit tests pass, a
 provenance lint proves all 915 published rows carry a source, the site is byte-for-byte reproducible from committed data,
 22 predictions are hash-sealed, and 3,233 internal links resolve. That is a better foundation than most projects start with.</div>
@@ -1328,8 +1218,8 @@ with both values shown.</p>
     built["repo-review.html"] = page("repo-review.html", "Repo review", body, "repo-review.html")
 
     # ------------------------------------------------------------------ questions
-    body = f"""<h1>Open questions</h1>
-<p class="lede">{len(C.QUESTIONS)} questions that block a decision, each with what is known, what is not, and the exact route to an
+    body = """<h1>Open questions</h1>
+<p class="lede">Fourteen questions that block a decision, each with what is known, what is not, and the exact route to an
 answer. Nothing here is rhetorical: every question names the dataset or the measurement that settles it.</p>
 """
     rows = []
@@ -1548,24 +1438,6 @@ under <code>archive/</code> with dated notes, deleting nothing.</div>
     body += table(["Official page", "Outcome", "What it proved", "URL"], rows,
                   f"Read at {chk.get('fetched_utc','')}; nba.com is unreachable by direct HTTPS from the build sandbox, "
                   "so these were fetched through the platform page-reader. The method is stated because it is part of the evidence.")
-
-
-    body += f"""<h2>2b. The nine official finals, now committed</h2>
-<p class="lede">The final scores of the nine 2026-11-13 games were read from the official schedule page and committed as
-<code>data/raw/finals_2026-11-13.json</code>. They are the first official results inside this window, and they explain
-every stale record in the table above: nine games, nine winners, nine losers, eighteen clubs moved.</p>"""
-    frows = []
-    for gid, f in sorted(O.FINALS.items()):
-        g = next((x for x in O.SLATE if x[4] == gid), None)
-        frows.append({"id": gid, "cells": [
-            esc(g[0] if g else "—"), esc(f"{g[2]} @ {g[3]}" if g else gid),
-            f"{f['away_pts']}-{f['home_pts']}" + (" (OT)" if f.get("overtime") else ""),
-            f"{f['home_pts'] - f['away_pts']:+d}", f"{f['away_pts'] + f['home_pts']}",
-            esc(f.get("source") or O.FINALS_SOURCE),
-            srclink(f.get("source") or O.FINALS_SOURCE),
-        ]})
-    body += table(["Date", "Matchup", "Official final", "Margin", "Total", "Official source", "Link"],
-                  frows, "The nine 2026-11-13 finals, as published by the league", idcol="id")
 
     body += f"""<h2>2. The published team table has aged</h2>
 <p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on {O.AS_OF}

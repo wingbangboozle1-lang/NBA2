@@ -32,10 +32,10 @@ GATES = [
      "PROPOSED — policy", O.BLOCKED["odds"][2],
      "Without a price there is no edge, no stake size and no ROI. Currently FAILS for every line."),
     ("G7", "Backtest with settlement", "≥ 300 settled bets of the strategy's own signals, settled from official box scores.",
-     "PROPOSED — sample-size policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — sample-size policy", O.BLOCKED["live_ingest"][2],
      "300 bets is the point at which a 55% hit rate separates from 52.4% at 5% one-sided."),
     ("G8", "Out-of-sample holdout", "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
-     "PROPOSED — policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — policy", O.BLOCKED["live_ingest"][2],
      "Prevents publishing a curve fit."),
     ("G9", "Luck screen", "Every team the strategy relies on must be inside the luck noise band (|z| ≤ 1.96).",
      "COMPUTED this build — 30/30 pass", S["standings"][1],
@@ -47,7 +47,7 @@ GATES = [
      "OFFICIAL (NBA filing deadlines)", S["injury_policy"][1],
      "Teams must file by 5 p.m. local the day before, and 11 a.m.–1 p.m. on game day."),
     ("G12", "No look-ahead", "No input timestamped after the decision time may enter that decision.",
-     "PROPOSED — policy", O.BLOCKED["game_logs"][2],
+     "PROPOSED — policy", O.BLOCKED["live_ingest"][2],
      "The single most common way a profitable backtest is fake."),
 ]
 
@@ -87,7 +87,7 @@ STRATEGIES = [
         "gates_that_fail_today": "G6,G7,G10",
         "status": "BLOCKED — correlation unmeasured",
         "why": "The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a ±26% price error was already demonstrated in the prior build.",
-        "src": O.BLOCKED["game_logs"][2],
+        "src": O.BLOCKED["live_ingest"][2],
     },
     {
         "id": "S5", "name": "Player prop (points/rebounds/assists)", "type": "player prop",
@@ -124,7 +124,7 @@ LEADERBOARD_RULES = [
      "Win rate rewards luck on small samples; log-loss is a proper scoring rule, so honest probabilities beat lucky ones.",
      "PROPOSED", S["standings"][1]),
     ("Minimum sample to rank", "300 settled bets", "Below that the 95% interval on a 55% hit rate includes 50%.",
-     "PROPOSED", O.BLOCKED["game_logs"][2]),
+     "PROPOSED", O.BLOCKED["live_ingest"][2]),
     ("Trial accounting", "Every submitted strategy counts, including discarded ones",
      "Otherwise a submitter re-rolls variants until one looks good; the family-wise error rate explodes.",
      "PROPOSED", S["standings"][1]),
@@ -139,7 +139,7 @@ LEADERBOARD_RULES = [
      "PROPOSED — needs owner sign-off", O.BLOCKED["odds"][2]),
     ("Disqualifiers", "Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins",
      "Removes the three ways a leaderboard is usually gamed.",
-     "PROPOSED", O.BLOCKED["game_logs"][2]),
+     "PROPOSED", O.BLOCKED["live_ingest"][2]),
 ]
 
 # --------------------------------------------------------------------------- suggestions
@@ -307,7 +307,7 @@ QUESTIONS = [
      "Unanswerable without a backtest.",
      "Per-family hit rate, log-loss, and ROI at various thresholds.",
      "Backtest harness on settled results with pre-registered thresholds (SG-16).",
-     "Blocks the leaderboard ranking entirely.", O.BLOCKED["game_logs"][2]),
+     "Blocks the leaderboard ranking entirely.", O.BLOCKED["live_ingest"][2]),
     ("Q-9", "Are the two ratings estimators really independent, or is one a restatement of the other?",
      "Measured: r = +0.999, max spread disagreement 0.99 pts across 31 lines.",
      "Whether they share an input that makes agreement uninformative. NetRtg is per-possession and PF−PA is per-game, so they are computed from different numerators.",
@@ -327,7 +327,7 @@ QUESTIONS = [
      "Policy set at 300 settled bets (G7), chosen so a 55% hit rate separates from 52.4% at 5% one-sided.",
      "The true per-strategy variance, which depends on correlation between bets.",
      "Simulate the strategy's own bet stream once a backtest exists; recompute the required n.",
-     "Blocks ranking and rewards.", O.BLOCKED["game_logs"][2]),
+     "Blocks ranking and rewards.", O.BLOCKED["live_ingest"][2]),
     ("Q-13", "Is the schedule data used here complete for the window?",
      "Yes for 11/13–11/16: 31 games, matching the official schedule's per-day counts (9/5/9/8), and identical to the committed snapshot.",
      "Whether any game is postponed or moved after retrieval.",
@@ -376,7 +376,7 @@ FLAGS = [
     ("F-002", "high", "Data", "Per-game results now exist for 155 of 174 games (2026-10-20 → 11-12), captured from nba.com by a "
     "parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain "
     "unreachable, so player-level settlement is still impossible.",
-     "Gates G7, G8, G12 and the whole leaderboard are blocked.", O.BLOCKED["game_logs"][2]),
+     "Gates G7, G8, G12 and the whole leaderboard are blocked.", O.BLOCKED["live_ingest"][2]),
     ("F-003", "medium", "Data", "The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today's game statuses could not be re-filed.",
      "The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.",
      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf"),

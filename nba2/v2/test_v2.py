@@ -258,8 +258,9 @@ class TestPublishedSite(unittest.TestCase):
         site = ROOT / "site"
         pages = sorted(site.glob("*.html"))
         # 17 pages at the 2026-11-14 build; session arena/ab8743d8 added live-verification.html
-        # (live official re-verification) and decision-queue.html (suggestions review path).
-        self.assertEqual(len(pages), 19)
+        # (live official re-verification) and decision-queue.html (suggestions review path);
+        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation).
+        self.assertEqual(len(pages), 20)
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

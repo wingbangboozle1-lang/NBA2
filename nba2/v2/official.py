@@ -102,12 +102,13 @@ BLOCKED = {
         "Required for: any value/edge claim, stake sizing, ROI, leaderboard scoring.",
         "https://www.nba.com/games",
     ),
-    "game_logs": (
-        "A scheduled per-game results feed (finals arriving automatically, every night)",
-        "The 183 official finals from 2026-10-20 to 2026-11-13 are now committed under "
-        "data/raw/history/ and rebuild all 30 standings records exactly, so backtests, "
-        "out-of-sample splits and settlement ARE computable today. What is still missing is "
-        "an automated ingest that keeps the window current without a human capture.",
+    "live_ingest": (
+        "An automated feed that keeps the results history current without a human capture",
+        "The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under "
+        "data/raw/history/, and they rebuild every one of the 30 standings records exactly. "
+        "Backtests, out-of-sample splits and settlement therefore run today. What is missing "
+        "is a scheduled job that appends each night's results, so the history freezes between "
+        "manual captures and the window ages.",
         "https://www.nba.com/games?date=2026-11-13",
     ),
     "player_box": (

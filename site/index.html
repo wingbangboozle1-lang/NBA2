@@ -55,8 +55,8 @@ line and a lean; no game gets a stake, because no market price is connected to b
 </div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
-A bet needs a price to beat, and no odds feed is connected to this build — so the picks page withholds all
-27 games and prints the failing gate next to each. What is genuinely new is verification: every number
+A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
+lean and a trigger price for all 27 games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
 on this site was re-read from an official NBA page on 2026-11-14, and the identical claims from the previous
 build were cross-checked against it. <a href="verification.html">See the verification log</a>.</div>
 
@@ -191,8 +191,8 @@ official pages and shows where those rows now stand.</p>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
-<td>A scheduled per-game results feed (finals arriving automatically, every night)</td>
-<td>The 183 official finals from 2026-10-20 to 2026-11-13 are now committed under data/raw/history/ and rebuild all 30 standings records exactly, so backtests, out-of-sample splits and settlement ARE computable today. What is still missing is an automated ingest that keeps the window current without a human capture.</td>
+<td>An automated feed that keeps the results history current without a human capture</td>
+<td>The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night&#x27;s results, so the history freezes between manual captures and the window ages.</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
