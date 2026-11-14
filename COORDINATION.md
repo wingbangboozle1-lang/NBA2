@@ -800,3 +800,61 @@ than this session's own file, `requirements/**`, `suggestions/**`.
 | X-08 | Site: `backtest/` landing + category subpages, per-row source links | pending | `tools/verify_backtest.py` |
 | X-09 | Flagged-for-review for this tree; integration request to the merge session | pending | append-only |
 | X-10 | PR → `main`, merge, confirm Pages deploy | pending | recorded in the completion record below |
+
+### Completion record — `arena/f7477d5e-nba2` (measured skill)
+
+**Status: done.** All ten tasks X-01…X-10 complete except X-10 (PR/merge), recorded below once merged.
+
+**What was newly captured (the input every prior session was missing)**
+
+| Snapshot | Rows | Official source | Verification |
+|---|---|---|---|
+| `data/raw/history/games_*.json` | **155 final scores**, 2026-10-20 → 2026-11-12, 21 dates | `nba.com/games?date=…` + each game's own `nba.com/game/<slug>-<id>` | Every game keeps its own URL (enforced by `tools/verify_backtest.py`, 155/155) |
+| `data/raw/history/postgame_records_*.json` | **134 official post-game team W-L** rows | the W-L printed on each nba.com game card | used only as an independent check of the reconstruction |
+
+**Verification performed line by line**
+
+- **Check 1 (exact):** rebuilding team records from final scores alone reproduces **70/70** official post-game records exactly, for every card dated on or before 2026-11-05.
+- **Check 2 (bounded):** for later cards, **64/64** are consistent — no team ever shows more wins or losses than its official card, which is the required direction when games are missing.
+- **Check 3 (independent):** reconstruction vs `data/standings-2026-11-13.csv` — **0/30 exceed** the snapshot; the shortfalls equal the 19 games missing from 11/06 and 11/11. **This is the first mechanical corroboration of that standings row set by a second method** (prior sessions could only note a 28/30 vs 30/30 documentation conflict; A-05 in `analysis/audit-2c07c00b.md` remains open as a *wording* issue, not a data one).
+- **Transcription error found and corrected:** game `0022600159` was first keyed DAL@CHA; official card is **DET**@CHA. Correction recorded inside the snapshot (`correction` field), not silently edited.
+- **Leakage:** `assert_no_leakage` re-derives each team's pre-game game count from raw history on every build; it raises rather than warns. 46 unit tests cover it.
+
+**Measured results (139 graded games, point-in-time)**
+
+| Question | Result |
+|---|---|
+| Margin MAE vs constant line | 12.17 vs 13.27 pts — model better, **p = 0.35** (not significant) |
+| Straight-up accuracy | 62.6% (95% CI 54.3–70.2%) |
+| Winner AUROC | 0.702 |
+| vs "pick better point differential" | model **62.6% vs 64.0%** — model is **not** better (p = 0.90) |
+| Total MAE vs league-average constant | 15.78 vs **15.43** — model is **worse** |
+| r(margin, total) | **−0.009** (95% CI −0.17 to 0.15) — S-04's parlay premise unsupported |
+| Gate G-04 (beat both baselines by 0.30 MAE) | **FAIL** |
+| Gate G-07 (walk-forward, no lookahead) | **PASS** — now genuinely evaluable |
+| Gate G-01 (300 settled bets) | **FAIL** (139) |
+| Reward paid | **0 units** — withheld by gating, by design |
+
+**Irregularities published (do not block merge):** `backtest/pages/flagged-review.html`
+— FLAG-BT-01 (19 games on 11/06 & 11/11 rendered with empty score elements → **excluded, not guessed**),
+FLAG-BT-02 (DET@CHA correction, resolved), FLAG-BT-03 (neutral-site game 0022600189 carries an
+inapplicable home-court term), FLAG-BT-04 (pre-existing standings-snapshot caveat, cross-linked),
+FLAG-M-01…M-05 (method disclosures).
+
+**Integration request to the final integration session** — this session did **not** edit shared files:
+
+1. **Link `backtest/` from the canonical navigation.** Suggested one-line addition to the root
+   `index.html` nav and the `page()` NAV in `nba2/pipeline/build_site.py`; both are owned by
+   `arena/79e87c81-nba2` / the integration session, so they were not touched here.
+2. **Replace the standing claim "no game-level results history"** wherever it appears on the root
+   and `docs/` surfaces. It is now false: `data/raw/history/` holds 155 official finals. Suggested
+   wording: *"155 official final scores (2026-10-20 → 11-12) now back a leakage-tested walk-forward;
+   see `/backtest/`."*
+3. **Reconcile gate G-04's status** on the root site (it now has measured evidence and FAILS) and
+   mark G-07 evaluable.
+4. **Do not merge the leaderboard's provisional ordering into any headline.** The board ranks on a
+   deflated z and pays nothing until G-01 passes; presenting it as a result would undo the point.
+
+**Scope note:** files created are confined to `data/raw/history/**`, `backtest/**`,
+`tools/verify_backtest.py`, one added `backtest` job in `.github/workflows/ci.yml`, and this
+append-only board section. No file owned by another session was modified.
