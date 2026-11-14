@@ -872,7 +872,7 @@ def input_digest() -> str:
     import hashlib
     h = hashlib.sha256()
     names = [config.SNAPSHOT_SLATE, config.SNAPSHOT_RATINGS, config.SNAPSHOT_INJURY,
-             config.SNAPSHOT_CONTEXT, config.SNAPSHOT_LEADERS,
+             SNAPSHOT_INJURY_WINDOW, config.SNAPSHOT_CONTEXT, config.SNAPSHOT_LEADERS,
              "official_game_times_2026-11-13.json"]
     for n in names:
         f = RAW / n
