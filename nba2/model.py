@@ -130,7 +130,13 @@ def originate_line(away_team, home_team, away_injuries, home_injuries, records):
         "home": home_team,
         "model": "NBA2 originator",
         "predicted_margin": round(margin, 2),
-        "originated_spread": spread,          # home team perspective (- = home favored)
+        "originated_spread": spread,          # AWAY team's spread: - = away favored
+        # The label is built from the AWAY abbreviation, so it reads as the away
+        # line ("NYK -2.5" = NYK, the away team, favored by 2.5).  The away spread
+        # equals the home margin, so a positive value means the HOME team is favored
+        # (MIL @ ORL: margin +2.24, spread +2.0, label "MIL +2.0", favorite = home).
+        # NOTE: this comment previously said "home team perspective", which was
+        # false and is what let strategy S2 emit the wrong side of the line (S-26).
         "originated_spread_label": f"{away_team} {spread:+.1f}",  # e.g. "NYK -2.5" if away favored
         "predicted_total": round(total, 2),
         "originated_total_line": total_line,

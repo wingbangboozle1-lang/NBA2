@@ -1638,6 +1638,24 @@ Every hit-rate table on this site now prints both counts.</div>"""
                    "Hit rate", "p vs coin", "Verdict", "Source"], rows,
                   "Per-strategy grading — the p-value is the probability of this record from a fair coin")
 
+    _rg = gr.get("s2_sign_regrade", {}) or {}
+    rg_sweep = (f"{_rg.get('as_published_wins', 0)} of {_rg.get('n_graded', 0)} S2 rows, and the same count for the "
+                f"moneyline rows — {gr.get('recorded_signals_graded', 0)} rows in all"
+                if _rg else "nothing settled yet")
+    rg_intended = (f"{_rg.get('as_intended_wins', 0)}-{_rg.get('n_graded', 0) - _rg.get('as_intended_wins', 0)}"
+                   if _rg else "n/a")
+    def _rb(res):
+        return badge(res, "ok" if res == "WIN" else "bad" if res == "LOSS" else "warn")
+
+    _s2rows = [{"cells": [esc(r["game"]), f"<code>{esc(r['as_published'])}</code>", _rb(r["as_published_result"]),
+                          f"<code>{esc(r['as_intended'])}</code>", _rb(r["as_intended_result"]),
+                          esc(r["final"]), srclink(r["source"], "official final")]}
+               for r in _rg.get("rows", [])]
+    rows_s2 = (table(["Game", "Published selection (the favourite, given the dog's number)", "Result as published",
+                      "Selection the strategy means", "Result as intended", "Official final", "Source"],
+                     _s2rows, "Strategy S2 re-graded both ways — computed by nba2/v2/live.py from the committed "
+                              "official finals, never typed in")
+               if _s2rows else '<p class="lede">nothing graded yet (F-046)</p>')
     body += f"""<h2>5. Why no profit number appears anywhere</h2>
 <p class="lede">{esc(gr.get('pricing_note',''))}</p>
 <p>A PnL would require assuming a price, and the assumption would be doing all the work: at −110 a 4-0 record is
@@ -1650,11 +1668,19 @@ unanswered until a price exists.</p>
 <ul>
   <li><b>Against the model:</b> on nine games it named the winner no better than a naive net-rating baseline and worse
       than always picking the home team. No edge is demonstrated.</li>
-  <li><b>For the process:</b> the gate machinery did its job. Every graded pick won, and the site still refuses to rank
-      the strategy, because four games is not a sample. A system that can report 4-0 and simultaneously refuse to be
-      impressed by it is the only kind worth building.</li>
+  <li><b>For the process:</b> the gate machinery did its job — {rg_sweep} rows graded WIN as published, and the site
+      still refuses to rank the strategy, because four games is not a sample. A system that can report a clean sweep and
+      simultaneously refuse to be impressed by it is the only kind worth building.</li>
+  <li><b>And the correction that came with re-checking it:</b> the four spread rows won on the <em>wrong side of the
+      line</em> — the v1 generator attached the underdog's number to the favourite's name (S-26). The generator is
+      fixed and regression-tested; the historical file is left byte-identical, because its pre-tip provenance is worth
+      more than a tidy restatement. Re-graded on the side the strategy names, the record is {rg_intended}.</li>
 </ul>
-<h2>Reproduce this page</h2>
+<h2>3b. The same four games, graded twice</h2>
+<p class="lede">{esc(gr.get('s2_sign_regrade',{}).get('reading',''))}</p>
+{rows_s2}
+<p class="lede">Both columns are the same official final score. The difference is which side of the line the row
+claims, and only one of them is what the strategy says it bets.</p><h2>Reproduce this page</h2>
 <pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
 python3 -m nba2.v2              # rebuild this page
 python3 -m nba2.v2.check        # every row sourced, every blank explained</pre>"""

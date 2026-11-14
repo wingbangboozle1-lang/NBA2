@@ -507,16 +507,71 @@ Every hit-rate table on this site now prints both counts.</div><div class="scrol
 The site therefore reports what was measured — wins, losses, error — and says plainly that the money question is
 unanswered until a price exists.</p>
 <h2>6. The verdict this page supports</h2>
-<p>the first genuine out-of-sample forecast the repository has: every graded pick won, but only four distinct games were bet, the model called the winner in 5 of 9 games (a naive net-rating baseline also got 5, always-home gets 7), and no sample this small can separate skill from luck.</p>
+<p>the first genuine out-of-sample forecast the repository has: 8 of 8 graded signal rows won as published, across 4 distinct games. Those rows are double-counted by design - the moneyline and the spread fired on the same four games - and the spread half of them was published on the wrong side of the line (S-26): the same four rows read 4-0 as printed and 3-1 on the side the strategy names. The model called the winner in 5 of 9 games, a naive net-rating baseline also got 5 and always-home got more; no sample this small separates skill from luck, and no market price exists at all, so profit is not measurable.</p>
 <p>Two conclusions follow, and they point in opposite directions, which is why both are printed:</p>
 <ul>
   <li><b>Against the model:</b> on nine games it named the winner no better than a naive net-rating baseline and worse
       than always picking the home team. No edge is demonstrated.</li>
-  <li><b>For the process:</b> the gate machinery did its job. Every graded pick won, and the site still refuses to rank
-      the strategy, because four games is not a sample. A system that can report 4-0 and simultaneously refuse to be
-      impressed by it is the only kind worth building.</li>
+  <li><b>For the process:</b> the gate machinery did its job — 4 of 4 S2 rows, and the same count for the moneyline rows — 8 rows in all rows graded WIN as published, and the site
+      still refuses to rank the strategy, because four games is not a sample. A system that can report a clean sweep and
+      simultaneously refuse to be impressed by it is the only kind worth building.</li>
+  <li><b>And the correction that came with re-checking it:</b> the four spread rows won on the <em>wrong side of the
+      line</em> — the v1 generator attached the underdog's number to the favourite's name (S-26). The generator is
+      fixed and regression-tested; the historical file is left byte-identical, because its pre-tip provenance is worth
+      more than a tidy restatement. Re-graded on the side the strategy names, the record is 3-1.</li>
 </ul>
-<h2>Reproduce this page</h2>
+<h2>3b. The same four games, graded twice</h2>
+<p class="lede">the four settled S2 rows read 4-0 as the labels were published and 3-1 on the side the strategy names. n=4: neither number is evidence of anything, which is the point of publishing both.</p>
+<div class="scroll"><table>
+<caption>Strategy S2 re-graded both ways — computed by nba2/v2/live.py from the committed official finals, never typed in</caption>
+<thead><tr>
+<th scope="col">Game</th>
+<th scope="col">Published selection (the favourite, given the dog&#x27;s number)</th>
+<th scope="col">Result as published</th>
+<th scope="col">Selection the strategy means</th>
+<th scope="col">Result as intended</th>
+<th scope="col">Official final</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>CLE @ MIA</td>
+<td><code>MIA +6.5</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><code>MIA -6.5</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td>CLE 121 @ MIA 133</td>
+<td><a href="https://www.nba.com/game/cle-vs-mia-0022600036" rel="noopener" target="_blank">official final</a></td>
+</tr>
+<tr>
+<td>UTA @ HOU</td>
+<td><code>HOU +13.0</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><code>HOU -13.0</code></td>
+<td><span class="badge b-bad">LOSS</span></td>
+<td>UTA 118 @ HOU 125</td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039" rel="noopener" target="_blank">official final</a></td>
+</tr>
+<tr>
+<td>GSW @ SAS</td>
+<td><code>SAS +8.0</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><code>SAS -8.0</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td>GSW 85 @ SAS 123</td>
+<td><a href="https://www.nba.com/game/gsw-vs-sas-0022600040" rel="noopener" target="_blank">official final</a></td>
+</tr>
+<tr>
+<td>POR @ SAC</td>
+<td><code>POR +6.0</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><code>POR -6.0</code></td>
+<td><span class="badge b-ok">WIN</span></td>
+<td>POR 120 @ SAC 107</td>
+<td><a href="https://www.nba.com/game/por-vs-sac-0022600041" rel="noopener" target="_blank">official final</a></td>
+</tr>
+</tbody></table></div>
+<p class="lede">Both columns are the same official final score. The difference is which side of the line the row
+claims, and only one of them is what the strategy says it bets.</p><h2>Reproduce this page</h2>
 <pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
 python3 -m nba2.v2              # rebuild this page
 python3 -m nba2.v2.check        # every row sourced, every blank explained</pre><h2>Second-opinion re-verification, 2026-11-14 18:41–18:52 UTC</h2>

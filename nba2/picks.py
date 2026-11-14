@@ -25,6 +25,33 @@ def load(name):
         return json.load(f)
 
 
+def spread_selection(line):
+    """Return ``(selection, model_win_prob)`` for strategy S2.
+
+    S2 bets the model's **favourite to cover**, so the selection must name the
+    favourite and the favourite must be **laying** points (a negative number).
+
+    ``originated_spread`` is the **away** team's spread, because the label next
+    to it is built from the away abbreviation (``nba2/model.py``:
+    ``f"{away_team} {spread:+.1f}"``).  The away spread equals the home margin,
+    which is why a positive value means the home team is favoured:
+
+        MIL @ ORL  predicted_margin +2.24  originated_spread +2.0  label "MIL +2.0"
+        POR @ SAC  predicted_margin -6.07  originated_spread -6.0  label "POR -6.0"
+
+    The previous expression applied the away-side sign to whichever team the
+    branch had already picked, so it emitted the **underdog** side in all nine
+    strong-margin games of the committed slate (e.g. ``POR +6.0`` for a game
+    the same file labels ``POR -6.0``).  See suggestion S-26.
+    """
+    margin = line["predicted_margin"]
+    if margin > 0:
+        team, prob = line["home"], line["home_win_prob"]
+    else:
+        team, prob = line["away"], line["away_win_prob"]
+    return f"{team} {-abs(line['originated_spread']):+.1f}", prob
+
+
 def write(name, obj):
     with open(os.path.join(DATA, name), "w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2, ensure_ascii=False)
@@ -93,12 +120,7 @@ def main():
     for line in lines:
         margin = line["predicted_margin"]
         if abs(margin) >= STRONG_MARGIN:
-            if margin > 0:
-                sel = f"{line['home']} {line['originated_spread']:+.1f}"
-                prob = line["home_win_prob"]
-            else:
-                sel = f"{line['away']} {-line['originated_spread']:+.1f}"
-                prob = line["away_win_prob"]
+            sel, prob = spread_selection(line)
             signals_by_strategy["S2_SpreadValue"].append({
                 "strategy_id": "S2_SpreadValue", "game_id": line["game_id"],
                 "game": f"{line['away']} @ {line['home']}", "source": line["source"],

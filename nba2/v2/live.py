@@ -168,6 +168,70 @@ def _grade_ml(sel: str, g: dict):
     return None
 
 
+
+def _verdict_text(rg: dict, n_games: int, side_correct: int, tot_rows: int = 0, tot_wins: int = 0) -> str:
+    """Compose the published verdict from the measured numbers, never from a remembered sentence."""
+    if not rg:
+        return (f"the first genuine out-of-sample forecast the repository has: {n_games} games graded, "
+                f"the model called the winner in {side_correct} of {n_games}, and no sample this small "
+                "can separate skill from luck.")
+    return (f"the first genuine out-of-sample forecast the repository has: {tot_wins} of {tot_rows} graded "
+            f"signal rows won as published, across {rg['n_graded']} distinct games. Those rows are "
+            f"double-counted by design - the moneyline and the spread fired on the same four games - and the "
+            f"spread half of them was published on the wrong side of the line (S-26): the same four rows read "
+            f"{rg['as_published_wins']}-0 as printed and {rg['as_intended_wins']}-"
+            f"{rg['n_graded'] - rg['as_intended_wins']} on the side the strategy names. The model called the "
+            f"winner in {side_correct} of {n_games} games, a naive net-rating baseline also got {side_correct} "
+            f"and always-home got more; no sample this small separates skill from luck, and no market price "
+            "exists at all, so profit is not measurable.")
+
+
+def _s2_sign_regrade(rows, games, picks) -> dict:
+    """Regrade strategy S2 on the side the strategy actually means (S-26).
+
+    The v1 generator (``nba2/picks.py``) attached the *away* team's spread number to whichever
+    team its branch had picked, so the nine strong-margin S2 signals named the model's
+    favourite but quoted the underdog's price - e.g. ``MIA +6.5`` for a game whose own label in
+    the same file reads ``CLE +6.5``. Fixing the generator is one thing; silently re-labelling a
+    settled record is another, so this function publishes both gradings side by side and lets the
+    reader see which one a claim rests on.
+
+    The historical forecast file is deliberately NOT regenerated: it is committed 83 minutes
+    before the earliest tip, and that pre-tip provenance is the only reason its record means
+    anything. The fix lives in the generator and in ``nba2/tests/test_picks_sign.py``.
+    """
+    lines = {l["game_id"]: l for l in picks.get("lines", [])}
+    out = []
+    for r in rows:
+        if r["strategy_id"] != "S2_SpreadValue" or r["status"] != "GRADED":
+            continue
+        g = games.get(r["game_id"])
+        L = lines.get(r["game_id"])
+        if not (g and L):
+            continue
+        fav = L["home"] if L["predicted_margin"] > 0 else L["away"]
+        want = f'{fav} {-abs(L["originated_spread"]):+.1f}'
+        out.append({
+            "game": r["game"], "as_published": r["selection"], "as_published_result": r["result"],
+            "as_intended": want, "as_intended_result": _grade_spread(want, g),
+            "final": g["final"], "source": g["source"],
+        })
+    if not out:
+        return {}
+    pub = sum(1 for r in out if r["as_published_result"] == "WIN")
+    int_ = sum(1 for r in out if r["as_intended_result"] == "WIN")
+    n = len(out)
+    return {
+        "n_graded": n, "as_published_wins": pub, "as_intended_wins": int_,
+        "rows": out,
+        "reading": (f"the four settled S2 rows read {pub}-{n - pub} as the labels were published and "
+                    f"{int_}-{n - int_} on the side the strategy names. n={n}: neither number is "
+                    "evidence of anything, which is the point of publishing both."),
+        "generator_fix": ("nba2/picks.py spread_selection() + nba2/tests/test_picks_sign.py "
+                          "(merged from the arena/03a581a0-nba2 remediation on 2026-11-14)"),
+    }
+
+
 def grade() -> dict:
     """Grade the committed pre-tip picks against the official finals captured today."""
     cap = captures()
@@ -267,6 +331,7 @@ def grade() -> dict:
                         "nothing settled yet" if len(gd) == 0 else "eligible for review"),
         })
 
+    _rg = _s2_sign_regrade(rows, games, picks)
     games_by_strategy: dict[str, set] = {}
     for r in rows:
         if r["status"] == "GRADED":
@@ -325,13 +390,12 @@ def grade() -> dict:
                             "counted twice because S1_MarginFavorite (moneyline) and S2_SpreadValue "
                             "(spread) both fired on the same games. 4-0 twice is 4 games, not 8."),
         },
+        "s2_sign_regrade": _rg,
         "pricing_note": ("no row in picks.json carries a market price (`american_odds` is absent "
                          "from every signal), so profit is not measurable and is not published. "
                          "A PnL here would be an assumed -110, i.e. an invented number."),
-        "verdict": ("the first genuine out-of-sample forecast the repository has: every graded pick "
-                    "won, but only four distinct games were bet, the model called the winner in 5 of "
-                    "9 games (a naive net-rating baseline also got 5, always-home gets 7), and no "
-                    "sample this small can separate skill from luck."),
+        "verdict": _verdict_text(_rg, n, side_correct, grade_rows_total,
+                                 sum(s["wins"] for s in summary)),
     }
 
 
