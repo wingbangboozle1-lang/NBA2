@@ -2754,3 +2754,59 @@ P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record
 **Verification totals on the merged `main`:** 64 v1 tests + 80 v2 tests = **144 tests, all passing**;
 20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
 every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
+
+---
+
+## Session `arena/766d0269-nba2` — CLAIM (2026-11-14 ~19:05 UTC, branch `arena/766d0269-nba2`, base `b3ed44d`)
+
+**State read at claim time (verified, not assumed).**
+- `gh pr list --state open` → **4 open PRs**, all from other sessions, none touching this
+  session's paths: #59 (`arena/6c5195d1-nba2`, board record only), #57 (`arena/3fbd894a-nba2`,
+  05:15 AM ET refresh wiring), #55 (`arena/03a581a0-nba2`, S2 spread-sign fix), #50
+  (`arena/9ee870ea-nba2`, one-published-tree). **Not touched by this session** — they belong to
+  their sessions.
+- `main` @ `b3ed44d` (PR #62 merged). `git rev-list --count HEAD..origin/main` = 0.
+- Baseline checks re-run **before any edit**, on this branch: `python -m unittest discover -s
+  nba2/tests -t .` → **64 OK**; `python -m nba2.v2.check` → **OK, 0 structural / 0 semantic**.
+- `gh run list --workflow=refresh.yml` → **one run, `failure`**, 2026-11-14T14:37Z. The job
+  failed at step 6 (`Fetch official finals for arrived window dates`, exit 3 = "every official
+  endpoint unreachable"). Steps 7–12 skipped. This is a **live defect on `main`**, and the
+  nightly settlement of the sealed ledger has not run.
+- Sandbox egress measured this session: `github.com` / `api.github.com` reachable;
+  `www.nba.com`, `ak-static.cms.nba.com`, `wingbangboozle1-lang.github.io` → **HTTP 000**
+  (blocked). The platform page-fetch tool reaches `www.nba.com` and the referee-ops PDFs (as
+  sessions `arena/3681def8` and `arena/6c5195d1` recorded), so official re-verification runs
+  through that tool and every capture records its method.
+
+**File scope claimed by this session:**
+- `COORDINATION.md` (append-only; no other session's text edited)
+- `audit/2026-11-14-766d/**` (new namespace: this session's captures + verifier scripts)
+- `analysis/session-766d0269-*.md` (this session's review + methodology notes)
+- `requirements/DECISION_BLOCKERS.json`, `suggestions/SUGGESTIONS.json` (append-only: new
+  entries only, **existing IDs never renumbered or edited**)
+- `nba2/v2/model.py`, `nba2/v2/report.py`, `nba2/v2/test_v2.py` (the coverage-probability defect
+  below is in the published tree and cannot be flagged-only without publishing a wrong number)
+- regenerated artefacts: `data/v2/*.json`, `site/**`
+
+**Not claimed / not edited:** every other active PR's scope (`nba2/pipeline/refresh.py`,
+`nba2/picks.py`, `nba2/data/picks.json`, `site/**` ownership is shared-and-regenerated only),
+`docs/**`, `dashboard/**`, `originated/**`, `backtest/**`, `verified/**`, `archive/**`,
+`data/raw/ledger/**` (sealed, read-only), `.github/workflows/**`.
+
+**Task board (this session).**
+
+| # | Task | Status | Files | Sources / verification |
+|---|---|---|---|---|
+| N-01 | Board claim + push before work | in progress | `COORDINATION.md` | this entry |
+| N-02 | Repo review line by line; every finding evidence-backed, nothing silently "fixed" | claimed | `analysis/session-766d0269-*`, `COORDINATION.md` | re-runs + code citations |
+| N-03 | Fix the published **cover-probability / trigger** defect (finding N-03) with regression tests | claimed | `nba2/v2/model.py`, `nba2/v2/report.py`, `nba2/v2/test_v2.py` | derivation + tests |
+| N-04 | Re-verify the published tree against live official NBA pages, line by line | claimed | `audit/2026-11-14-766d/**` | nba.com |
+| N-05 | Decision-blocker register: every question that must be answered before a decision, with the discovery path for what is missing | claimed | `requirements/DECISION_BLOCKERS.json`, site page | official + internal sources |
+| N-06 | Suggestions queue review workflow (owner can review → choose → implement) made real | claimed | `suggestions/SUGGESTIONS.json`, site page | n/a (process) |
+| N-07 | Executive summary refresh from measured state | claimed | `site/executive-summary.html` | every number traced |
+| N-08 | Full checker chain, PR → `main`, merge, confirm Pages deploy | claimed | repo-wide | runs + live fetch |
+
+**Rules this session holds itself to.** No row published without a source link; an unconfirmable
+value stays blank and is flagged; no value inferred; sealed ledgers never rewritten; nothing is
+called verified that was not fetched in this session.
+
