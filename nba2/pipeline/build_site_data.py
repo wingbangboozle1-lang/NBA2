@@ -73,6 +73,28 @@ register_source(
     Src.OFFICIAL,
     "Game summary page for the 2026-11-17 repeat matchup; used to adjudicate FLAG-ANOM-01.")
 register_source(
+    "register_requirements",
+    "Requirements register (requirements/REQUIREMENTS.json)",
+    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/REQUIREMENTS.json",
+    Src.DERIVED,
+    "The requirements register as committed to the repository. Each published row is one entry of "
+    "this file, so a reviewer can diff the table against the register it was rendered from.")
+register_source(
+    "register_questions",
+    "Open-questions register (requirements/QUESTIONS.json)",
+    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json",
+    Src.DERIVED,
+    "The open-questions register as committed to the repository. Each published row is one entry "
+    "of this file.")
+register_source(
+    "register_suggestions",
+    "Suggestions register (suggestions/SUGGESTIONS.json)",
+    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json",
+    Src.DERIVED,
+    "The suggestions register as committed to the repository. Each published row is one entry of "
+    "this file, including its owner-decision state.")
+
+register_source(
     SRC_AUDIT,
     "Session verification artefacts (arena/72f9da58, arena/fc58f84f)",
     "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit",
@@ -1443,7 +1465,7 @@ def build() -> dict:
             [("id", "ID"), ("category", "Category"), ("requirement", "Requirement"),
              ("acceptance", "Acceptance criteria"), ("status", "Status"), ("owner", "Owner"),
              ("how", "How it is met / what blocks it"), ("priority", "P")],
-            "coordination", ["FLAG-REQ-01"],
+            "register_requirements", ["FLAG-REQ-01"],
             "Requirements register",
             "Every requirement in the brief, decomposed to something a reviewer can say yes/no to. "
             "Status is only 'met' when the artefact exists in the repository.",
@@ -1454,7 +1476,7 @@ def build() -> dict:
              ("have", "What we already have"), ("missing", "What we do not have"),
              ("how", "How to find out"), ("impact", "What changes once answered"),
              ("severity", "Blocking?")],
-            "coordination", ["FLAG-QUEST-01"],
+            "register_questions", ["FLAG-QUEST-01"],
             "Open questions — the decision list",
             "Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states "
             "what is already known so nobody re-asks it.", questions["source_note"]),
@@ -1464,7 +1486,7 @@ def build() -> dict:
              ("proposal", "Proposed change"), ("benefit", "Expected decision-quality gain"),
              ("effort", "Effort"), ("risk", "Risk / cost"), ("recommendation", "Recommendation"),
              ("status", "Owner decision")],
-            "coordination", ["FLAG-SUGG-01"],
+            "register_suggestions", ["FLAG-SUGG-01"],
             "Site-improvement suggestions — review queue",
             "Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject "
             "or defer it on its own merits, and the queue's state is the record of that decision.",
@@ -1592,6 +1614,18 @@ def main() -> None:
          "Tier-A conviction 0.20σ, trigger hurdle 1.5 pts, status→P(plays) weights) are our choices with no "
          "external source. They must be ratified by the owner before any money is risked.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py", "Owner decision, see Suggestions S-04.")
+    flag("FLAG-LIVE-08", "medium", "publishing",
+         "The repository's Pages setting is still \"build_type: legacy\" (deploy from the branch root). "
+         "The commit this site was published from cannot change it: the GitHub API answers 403 "
+         "\"Resource not accessible by integration\" (independently confirmed by two sessions). In "
+         "practice the Actions deployment wins — the classic build is cancelled when a newer "
+         "deployment is created — and the published tree is the one this workflow uploads. But the "
+         "setting and the workflow still disagree on paper, so a reader auditing the repository "
+         "settings would reach the wrong conclusion.",
+         "https://github.com/wingbangboozle1-lang/NBA2/settings/pages",
+         "One admin action: Settings -> Pages -> Build and deployment -> Source -> GitHub Actions. "
+         "See suggestion S-32. No code change is required, and nothing on the site changes if it is "
+         "not done.")
     flag("FLAG-LINE-01", "high", "lines", "Lines are built from a third-party standings snapshot of ~12 games "
          "per team; they are a research baseline, not a bookmaking number.",
          "https://www.basketball-reference.com/leagues/NBA_2027_standings.html", "Validate on 30 days of sealed predictions.")

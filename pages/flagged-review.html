@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="86">
+    <section class="card table-card" id="flags" data-rows="87">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -341,6 +341,16 @@
 <td>Store the broadcaster marks the page renders, as a list, rather than a prose label.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-07">FLAG-LIVE-07</a></td>
+</tr>
+<tr id="FLAG-LIVE-08">
+<td>FLAG-LIVE-08</td>
+<td>medium</td>
+<td>publishing</td>
+<td>The repository&#x27;s Pages setting is still &quot;build_type: legacy&quot; (deploy from the branch root). The commit this site was published from cannot change it: the GitHub API answers 403 &quot;Resource not accessible by integration&quot; (independently confirmed by two sessions). In practice the Actions deployment wins — the classic build is cancelled when a newer deployment is created — and the published tree is the one this workflow uploads. But the setting and the workflow still disagree on paper, so a reader auditing the repository settings would reach the wrong conclusion.</td>
+<td>https://github.com/wingbangboozle1-lang/NBA2/settings/pages</td>
+<td>One admin action: Settings -&gt; Pages -&gt; Build and deployment -&gt; Source -&gt; GitHub Actions. See suggestion S-32. No code change is required, and nothing on the site changes if it is not done.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LIVE-08">FLAG-LIVE-08</a></td>
 </tr>
 <tr id="FLAG-PARAM-01">
 <td>FLAG-PARAM-01</td>

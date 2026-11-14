@@ -38,10 +38,18 @@ css/ assets/ styles.css app.js   the styles and behaviour
 COORDINATION.md README.md        the board and the map of the repository
 ```
 
-The repository's Pages setting is `build_type: workflow`, so `.github/workflows/pages.yml`
-is the only thing that publishes: it rebuilds the tree from the committed snapshots, fails if
-the committed files differ from that rebuild, stages the publish list, and **fails the deploy
-if any internal link in the staged tree does not resolve**.
+`.github/workflows/pages.yml` is what publishes: it rebuilds the tree from the committed
+snapshots, fails if the committed files differ from that rebuild, stages the publish list, and
+**fails the deploy if any internal link in the staged tree does not resolve**.
+
+> **One repository setting could not be changed from this session.** The Pages setting is still
+> `build_type: legacy` (deploy from the branch root): the GitHub API answers **403 — "Resource
+> not accessible by integration"** for `PUT /repos/{owner}/{repo}/pages` from the token this
+> session has (independently confirmed by two earlier sessions). In practice the **Actions
+> deployment wins** — the classic branch build is cancelled when a newer deployment is created —
+> and the live site serves the named tree. The one-click fix is recorded as **S-32** and
+> **FLAG-LIVE-08**: *Settings → Pages → Build and deployment → Source → GitHub Actions*. No code
+> change is required, and nothing on the site changes if it is not done.
 
 Everything else that is in this repository (`site/`, `docs/`, `dashboard/`, `originated/`,
 `verified/`, `archive/`, the code, the data) stays in the repository as history and is linked
@@ -429,7 +437,10 @@ tree (F-027) — are **published, not silently fixed**.
 The repository's Pages setting said `build_type: legacy` (publish the branch root) while the
 committed `pages.yml` uploaded the `site/` tree. Both ran on every push to `main`, and the
 **most recent deployment wins** — so which dashboard a reader got depended on which build
-finished last. Probing the live site with a cache-busting query settled it:
+finished last. (The setting could not be changed from a token: the Pages API answers **403 —
+"Resource not accessible by integration"**, independently confirmed by two earlier sessions.
+The named-tree workflow wins in practice because the classic build is cancelled once a newer
+deployment exists; **S-32** records the one-click admin fix.) Probing the live site with a cache-busting query settled it:
 
 | URL | Result |
 |---|---|
@@ -456,9 +467,12 @@ the one being served.
    not resolve — so a broken link is a build failure, not a support ticket.
 3. `.github/workflows/pages.yml` publishes the staged tree; `ci.yml` and `publish-parity.yml` both
    stage it and check it before anything is deployed.
-4. The Pages setting is flipped to `build_type: workflow`, so the classic branch build stops
-   racing the workflow. The last successful deployment stays live if a build fails, so the
-   exposure is a stale site rather than a down one.
+4. The classic branch build stops racing the workflow: the Actions deployment is created last
+   and the classic build is cancelled once a newer deployment exists, so the named tree wins in
+   practice. The repository's Pages *setting* is still `build_type: legacy` and could not be
+   changed from a token (the API answers 403) — see **S-32 / FLAG-LIVE-08** for the one-click
+   admin fix. The last successful deployment stays live if a build fails, so the exposure is a
+   stale site rather than a down one.
 
 ### The re-verification (this is the part that is new)
 

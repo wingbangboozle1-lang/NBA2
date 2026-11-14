@@ -330,12 +330,12 @@
       "id": "S-30",
       "title": "Publish exactly one dashboard, from one named tree, with the link check in the build",
       "problem": "The repository grew six site trees from parallel sessions. For a while the committed pages.yml published the `site/` tree while the repository's Pages setting published the root tree, so a reader received a different dashboard from the one CI built, and two different dashboards answered 'what are the picks?' differently (27 sealed picks vs 0 published).",
-      "proposal": "Name the published tree explicitly in `nba2/pipeline/build_public.py` (dashboard + backtest + styles + board), stage it as a build artifact, check every internal link in it before upload, and point the Pages setting at the workflow. The other trees stay in the repository as history and are linked from the reconciliation page as source.",
+      "proposal": "Name the published tree explicitly in `nba2/pipeline/build_public.py` (dashboard + subpages + backtest + styles + board + data/site.json), stage it as a build artifact, check every internal link in it before upload, and let the Pages workflow publish that artifact. The other trees stay in the repository as history and are linked from the reconciliation page as source. The repository's Pages *setting* is a separate, one-click admin action (S-32) that this session's token could not make.",
       "benefit": "One site, one window, one answer to every question; the deploy can no longer drift from the committed tree; a broken link fails CI instead of reaching a reader.",
       "effort": "S — a named publish list, a staging step, one workflow edit, one repository setting.",
-      "risk": "Pages configured as 'GitHub Actions' stops the classic branch build. If the workflow fails, the last successful deployment stays live, so the exposure is a stale site rather than a down one — but the setting must be flipped deliberately.",
+      "risk": "The classic branch build still runs alongside the workflow. In practice the Actions deployment is created last and the classic build is cancelled once a newer deployment exists, so the named tree wins; but until the setting is flipped, the repository's configuration and the workflow still disagree on paper. If the workflow fails, the last successful deployment stays live, so the exposure is a stale site rather than a down one.",
       "recommendation": "Applied in this PR — see the Live Verification page and the merge record in COORDINATION.md. Revert the repository setting if the owner prefers the classic branch build.",
-      "status": "applied in this PR"
+      "status": "applied in this PR (tree named, staged, link-checked); Pages setting tracked in S-32"
     },
     {
       "id": "S-31",
@@ -346,6 +346,17 @@
       "effort": "S — one column-shape change in the capture and one in the renderer.",
       "risk": "None to the model: cup_group and broadcast are display-only fields (verified in nba2/models/lines.py).",
       "recommendation": "Accept, and fold into the next capture refresh rather than patching the old one.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-32",
+      "title": "Switch the Pages source to GitHub Actions (one admin action, no code)",
+      "problem": "The repository's Pages setting says 'deploy from the branch root' (build_type: legacy) while the workflow publishes a named, link-checked tree. The classic build is cancelled when a newer deployment is created, so the live site is right in practice, but the repository setting and the workflow still disagree on paper — and the setting cannot be changed from a token without admin rights (the API answers 403).",
+      "proposal": "In Settings -> Pages -> Build and deployment, set Source to 'GitHub Actions'. Nothing in the repository needs to change: .github/workflows/pages.yml already publishes the named tree and fails the build on a broken internal link.",
+      "benefit": "One source of truth for what is published; no second, silently-cancelled build; the repository setting matches what a reader actually gets.",
+      "effort": "S — one admin action, no code.",
+      "risk": "If the Actions workflow is later disabled or its permissions are removed, the site would have no publisher at all. The workflow is committed with the repository and is exercised on every push to main.",
+      "recommendation": "Accept. Until it is done, the published tree is still the named one and every internal link in it is checked before deploy.",
       "status": "awaiting owner decision"
     }
   ]

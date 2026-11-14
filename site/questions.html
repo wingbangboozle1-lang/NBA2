@@ -244,10 +244,10 @@ separately so a reviewer can see which questions the evidence produced and which
 <tr id="Q-27">
 <td>Q-27</td>
 <td>Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?</td>
-<td>A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.</td>
-<td>Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.</td>
-<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml&#x27;s parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.</td>
-<td><span class="badge b-warn">MEDIUM</span></td>
+<td>Answered on 2026-11-14 by session arena/9ee870ea-nba2. A cache-busted probe of the live site showed the v2 tree was served at the root and the v1 tree was not reachable (pages/session-audit.html and backtest/index.html both 404). The publish target was then reconciled the other way: the v1 tree is canonical because it carries the 27 sealed picks for 11-14 -&gt; 11-17 and the newer 19:30 ET injury release, while the v2 tree withholds every pick for want of a market price. The v1 tree is now published by a named, link-checked publish list; the v2 tree stays in the repository as a historical build, still rebuilt and checked by CI. Nothing is deleted. The Pages setting remains build_type=legacy (S-32 / FLAG-LIVE-08).</td>
+<td>Nothing blocking: the question is answered. What is still missing is the one-click admin action that points the repository&#x27;s Pages setting at the workflow (S-32), so the published tree is described by the repository configuration and not only by the deployment that happened to win.</td>
+<td>No action needed for the question itself. For the residual setting: Settings -&gt; Pages -&gt; Build and deployment -&gt; Source -&gt; GitHub Actions, then re-run the publish workflow and re-fetch the live root with a cache-busting query.</td>
+<td><span class="badge b-warn">LOW</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="Q-28">
