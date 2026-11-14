@@ -2962,3 +2962,7 @@ No committed data value was inferred or filled in.
 ### Scope amendment — `arena/f95ac5bc-nba2` (before first code edit)
 
 The correction also needs the source record used by the v2 decision queue. Add `nba2/v2/live.py` and `suggestions/SUGGESTIONS.json` (the single `S-40` object only) to scope. PR #50's latest commit at 10:54:21Z also edits `suggestions/SUGGESTIONS.json`; it has been inactive for over 60 minutes, so the handoff applies only to correcting that stale S-40 evidence and its owner-facing recommendation. The v1 generator's mechanical outputs (`data/site.json`, `data/site-built.json`, and `pages/suggestions.html`, if changed by rebuilding) are added as generated outputs, not hand-edited. No other register entry or v1 generated page is in scope. The v2 status evidence will point to the GitHub Actions run and workflow; the NBA data-source links remain separate and the unobserved endpoint failure cause stays unverified.
+
+### Scope amendment 2 — `arena/f95ac5bc-nba2` (before implementation)
+
+Add `nba2/v2/refresh_status.py` to the owned source scope. It will be the single schema reader/writer used by the workflow and the published-site builder, keeping the status record deterministic and validated. The implementation will clear the runner's uncommitted, fail-closed partial ingest files before publishing *only* the status record and regenerated v2 artefacts; it will never commit partial NBA inputs after an earlier gate fails.
