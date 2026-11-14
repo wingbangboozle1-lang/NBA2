@@ -1440,3 +1440,44 @@ instead of editing it.
   owners; v1 + v2 rebuild byte-parity OK.
 - **Flagged items do not block this merge** — they are published on both Flagged for Review
   pages with source links, as the protocol requires.
+
+---
+
+## Session `arena/ab8743d8-nba2` — live official re-verification, published-site consolidation, suggestions review path (claimed 2026-11-14 09:40 UTC)
+
+**Base:** `main` @ `1bfb44d` (PR #42 merged). **Branch:** `arena/ab8743d8-nba2` (platform-fixed).
+
+**State read at claim time (verified, not assumed):** open PRs = #21 only (`arena/79e87c81-nba2`,
+opened 2026-11-14 00:52 UTC, superseded by the refresh that landed as PR #38 — it rolls the same
+window forward); no other session has committed since `1bfb44d` (02:47 UTC, 6h+). GitHub Pages
+setting re-read from the API this session: `build_type: legacy`, `source: main /`, status `built`.
+That means the **published** tree is the root v1 build (`index.html` + `pages/**`), not `site/` (v2).
+
+**Environment re-probed this session (evidence matters for anything below):** direct `curl` to
+`nba.com`, `www.nba.com`, `ak-static.cms.nba.com`, `stats.nba.com` returns HTTP 000 (egress
+blocked); the platform page-fetch tool **does** reach `www.nba.com` (verified: `nba.com/standings`
+returned the live 2026-27 table). So official-source verification is possible this session, but
+only through the fetch tool — every capture below records which method was used.
+
+**Task board (this session):**
+
+| # | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| A-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section, append-only) | pushed immediately (this commit) |
+| A-02 | Re-verify the published slate, records and injury rows against **live** official sources (schedule, standings, injury PDFs, 11/13 finals) | claimed | `audit/2026-11-14/**` (new files only) | each row: value + official URL + retrieval timestamp; unconfirmed ⇒ blank + flag |
+| A-03 | Run the full repo checker chain and record any failure that is real (not pre-existing-and-logged) | claimed | `audit/2026-11-14/checker-run.txt` | paste actual command output, no paraphrase |
+| A-04 | Fix defects found in the **published** tree only (stale counts, wrong links, unreachable claims); never rewrite a sealed ledger | claimed | `nba2/pipeline/build_site_data.py`, `nba2/pipeline/build_site.py`, regenerated `data/site.json`, `index.html`, `pages/**` | rebuild must be byte-identical to CI rebuild; `lint` must pass |
+| A-05 | Landing page: one canonical entry point + explicit map of the historical trees still served from the same Pages site | claimed | `index.html`, `pages/**` (generated), `README.md` | every archived tree linked with its status; no dead links |
+| A-06 | Suggestions review path: add this session's decision-improvement suggestions **and** make the review/approve action explicit | claimed | `suggestions/SUGGESTIONS.json`, `pages/suggestions.html` (generated) | each suggestion: rationale, evidence link, effort, what changes if accepted |
+| A-07 | Questions register: add only what this session's evidence newly makes answerable/unanswerable | claimed | `requirements/QUESTIONS.json`, `pages/questions.html` (generated) | no restating of existing Q-01…Q-27 |
+| A-08 | Executive summary refresh to current state | claimed | `pages/executive-summary.html` (via build data) | every number traceable to a committed snapshot |
+| A-09 | Final integration: PR → `main`, merge, confirm Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` | no merge while a checker that passed at claim time fails |
+
+**Not claimed / not edited:** `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`site/**` (the v2 tree), and the other sessions' scripts under `tools/**` — I run them, I do not
+rewrite them. New scripts of mine live under `audit/2026-11-14/` so no scope overlaps.
+
+**Rules this session holds itself to:** a row is only "verified" if I fetched the official document
+in this session and can quote it; a blank stays blank; the two sealed ledgers
+(`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged/unverified items do not block the merge but
+must appear on the Flagged for Review page with their source link.
