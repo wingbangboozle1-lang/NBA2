@@ -1,0 +1,53 @@
+# S-03 checker run (arena/e77ce5ad-nba2) — 2026-11-14T10:19:48Z
+
+$ python3 -m unittest discover -s nba2/tests -t . -v
+test_deflated_sharpe_shrinks_with_trials (nba2.tests.test_stats.TestNormal.test_deflated_sharpe_shrinks_with_trials) ... ok
+test_holm (nba2.tests.test_stats.TestNormal.test_holm) ... ok
+test_inv_norm_cdf_known_quantiles (nba2.tests.test_stats.TestNormal.test_inv_norm_cdf_known_quantiles) ... ok
+test_scores (nba2.tests.test_stats.TestNormal.test_scores) ... ok
+test_combo_error_grows_with_rho (nba2.tests.test_stats.TestProps.test_combo_error_grows_with_rho) ... ok
+test_count_skew_moves_the_mean_line (nba2.tests.test_stats.TestProps.test_count_skew_moves_the_mean_line)
+Over-dispersed counts are right-skewed, so P(X >= mean) < 0.5 even though the mean ... ok
+test_minutes_floor (nba2.tests.test_stats.TestProps.test_minutes_floor) ... ok
+test_nb_pmf_normalises (nba2.tests.test_stats.TestProps.test_nb_pmf_normalises) ... ok
+test_p_over_monotone_decreasing_in_line (nba2.tests.test_stats.TestProps.test_p_over_monotone_decreasing_in_line) ... ok
+
+----------------------------------------------------------------------
+Ran 64 tests in 0.794s
+
+OK
+exit=0
+
+$ ledger verify (CI step 2)
+seal 22 cf7dedc689597cb8 VERIFIED
+  (data/raw/ledger/sealed-2026-11-13.json exit=0)
+seal 27 c841e8f396dae6ca VERIFIED
+  (data/raw/ledger/sealed-2026-11-14.json exit=0)
+
+$ python3 -m unittest discover -s backtest/tests -t . -v
+test_ratings_are_seeded_not_inherited (backtest.tests.test_backtest.TestWalkForward.test_ratings_are_seeded_not_inherited) ... ok
+test_shrink_approaches_raw_value (backtest.tests.test_backtest.TestWalkForward.test_shrink_approaches_raw_value) ... ok
+test_shrink_is_zero_with_no_evidence (backtest.tests.test_backtest.TestWalkForward.test_shrink_is_zero_with_no_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 49 tests in 0.888s
+
+OK
+
+$ python3 tools/verify_backtest.py
+PASS  expected at least 12 pages, found 12
+PASS  all 189 internal links resolve
+PASS  no placeholder text in published artefacts
+PASS  no table cell renders a null/NaN value
+PASS  validation-gates.html discloses 1 disputed gate(s)
+PASS  validation-gates.html names the strawman baseline
+PASS  every disputed gate is also a registered pass
+PASS  accuracy block computed on 139 graded games
+PASS  record-reconstruction check ran on 70 cards
+PASS  no team reconstruction exceeds its official post-game record
+PASS  rebuild from committed snapshots succeeds
+PASS  rebuild is deterministic (pages byte-identical)
+PASS  report.json is deterministic
+
+VERIFICATION PASSED — 12 pages, 155 sourced game rows, 189 internal links
+exit=0

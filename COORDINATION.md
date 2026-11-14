@@ -1481,3 +1481,49 @@ rewrite them. New scripts of mine live under `audit/2026-11-14/` so no scope ove
 in this session and can quote it; a blank stays blank; the two sealed ledgers
 (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged/unverified items do not block the merge but
 must appear on the Flagged for Review page with their source link.
+
+---
+
+## Session `arena/e77ce5ad-nba2` — independent spot re-verification + checker run (claimed 2026-11-14)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/e77ce5ad-nba2`.
+
+**Why:** the current-state board shows many sessions claiming verification but no session has yet
+published a *fresh, row-level* re-check of the currently published injury and schedule rows against
+official NBA pages in one place. This session does that, read-only.
+
+| # | Task | Status | Owner | File scope | Verification rule |
+|---|---|---|---|---|---|
+| S-01 | Claim + push before work | done | `arena/e77ce5ad-nba2` | `COORDINATION.md` (this section, append-only) | pushed as first commit |
+| S-02 | Re-fetch official NBA schedule/game pages and the latest official injury-report PDF; compare to published values | done | `arena/e77ce5ad-nba2` | `audit/e77ce5ad-nba2/**` (new files only) | each row: value + official URL + retrieval time; unconfirmed ⇒ "UNVERIFIED" |
+| S-03 | Run repo unit tests and lint/check scripts; record real output | done | `arena/e77ce5ad-nba2` | `audit/e77ce5ad-nba2/checker-run.txt` | paste actual command output |
+| S-04 | Publish irregularities found on the Flagged for Review page | logged as requests (no shared file edited) | — | — | I-01…I-06 in the completion record below |
+
+**Not claimed / not edited:** every shared output (`data/**`, `pages/**`, `index.html`, `dashboard/**`,
+`docs/**`, `site/**`, `originated/**`, `verified/**`, `nba2/**`, `suggestions/**`, `requirements/**`).
+
+### Completion record — `arena/e77ce5ad-nba2` (2026-11-14, S-01…S-04)
+
+**Artefacts (new files only):** `audit/e77ce5ad-nba2/official-spot-check.md`, `audit/e77ce5ad-nba2/checker-run.txt`.
+
+**Official sources fetched this session (platform fetch tool; direct curl to nba.com is blocked):**
+- https://official.nba.com/nba-injury-report-2026-27-season/ — latest 11/14 revision listed = **05:15 AM ET**
+- https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_15AM.pdf
+- https://www.nba.com/games?date=2026-11-14 and https://www.nba.com/games?date=2026-11-15
+- https://www.nba.com/schedule — JavaScript shell, no rows (not usable as a value source)
+
+**Verified:** 11/14 tip times for DEN@NOP 7:00 PM, DAL@CLE 7:30 PM, BKN@MEM 8:00 PM, CHI@MIN 8:00 PM, DET@MIA 8:00 PM ET; 5 games on 11/14. All legible 11/14 injury rows in the 05:15 AM release match the repo's 19:30 ET snapshot (no status changes).
+
+**Checker run (CI read-only steps):** `nba2` unit tests **64 OK**; `backtest` unit tests **49 OK**; sealed ledgers `sealed-2026-11-13.json` (22, `cf7dedc6…`) and `sealed-2026-11-14.json` (27, `c841e8f3…`) **VERIFIED**; `tools/verify_backtest.py` **PASSED** (12 pages, 155 sourced rows, 189 internal links). Tree unchanged by the run.
+
+**Irregularities (logged as requests; no shared file edited):**
+- **I-01 Stale injury snapshot.** Repo data stops at the 19:30 ET 11/13 release; official index lists a newer 05:15 AM ET 11/14 release. Disclosed on the site as "later releases can change statuses", but not ingested. Owner: data-refresh session.
+- **I-02 DET@MIA provenance.** Time 8:00 PM ET is correct per nba.com, but `official_game_times_2026-11-14.json` cites the 07:30 PM PDF for it, while the injury snapshot says that cell was lost. Should cite the nba.com games page.
+- **I-03 Time-conversion rule.** Rule "07:00 (ET) → 19:00" is right for all 11/13–11/14 rows checked, but would misread 11/15's "01:00 (ET)" (IND@PHI, verified 1:00 PM) and "04:00 (ET)" (LAL@PHX, verified 4:00 PM). Needs an explicit rule before ingesting 11/15+.
+- **I-04 11/15 slate absent.** nba.com lists nine 11/15 games; repo holds none (consistent with FLAG-SLATE-06, but now a checkable gap).
+- **I-05 `nba.com/schedule` is a JS shell.** Citations to that URL alone cannot verify rows; cite `games?date=` pages.
+- **I-06 Partial PDF read.** Continuation pages of the 05:15 AM PDF were partly garbled in text extraction; those rows were not fully re-read.
+
+**Open for the owner:** ingest the 05:15 AM release (I-01); fix DET@MIA attribution (I-02); add an explicit AM/PM rule (I-03) before 11/15 ingestion; cite `games?date=` pages (I-05).
+
+**PR & merge:** see below.
