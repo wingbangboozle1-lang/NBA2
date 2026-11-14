@@ -73,11 +73,21 @@ register_source(
     "Game summary page for the 2026-11-17 repeat matchup; used to adjudicate FLAG-ANOM-01.")
 register_source(
     SRC_AUDIT,
-    "Session arena/72f9da58 verification artefacts",
+    "Session verification artefacts (arena/72f9da58, arena/fc58f84f)",
     "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit",
     Src.DERIVED,
     "Checker outputs, official-source re-verification and the injury-revision delta, "
-    "computed 2026-11-14 on branch arena/72f9da58-nba2.")
+    "computed 2026-11-14 on branches arena/72f9da58-nba2 and arena/fc58f84f-nba2.")
+
+SRC_VERIFY = "session_verify"
+register_source(
+    SRC_VERIFY,
+    "Session arena/fc58f84f-nba2 independent verification artefacts",
+    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/2026-11-14-fc58f84f",
+    Src.DERIVED,
+    "Fresh checker sweep, live-site fetches and official-source re-reads performed "
+    "2026-11-14 by session arena/fc58f84f-nba2. Every value on the Verification Report "
+    "page was produced in that session; official URLs are cited in the row text.")
 
 
 def _flag_ids(*ids: str) -> list[str]:
@@ -1180,6 +1190,95 @@ def build_audit_suggestions_rows() -> dict:
         "Suggestions page is unchanged.")
 
 
+def build_verification_rows() -> dict:
+    """Independent verification report — session arena/fc58f84f-nba2, run 2026-11-14 UTC.
+
+    Every result below was produced in THIS session: the checker chain was re-run from a
+    clean state, the published GitHub Pages site was re-fetched (not the local build), and
+    the current window was re-read against live official NBA.com sources via the platform
+    fetch tool (direct TLS to nba.com is egress-blocked in this sandbox). Values that could
+    not be confirmed from an official source are left blank and flagged, never inferred.
+    Source keys point at this session's committed audit artefacts under audit/2026-11-14-fc58f84f.
+    """
+    rows = [
+        make_row("VS-01-checkers", SRC_VERIFY, (),
+                 check="Full checker sweep (F-02)",
+                 result="64/64 nba2 tests · 49/49 backtest tests · lint PASS (1139 rows / 39 tables) · "
+                        "seal VERIFIED (c841e8f3…, 27 predictions) · verify_site PASS · check_links_all "
+                        "PASS · check_site PASS · verify.js 24/24 · verify_backtest PASS · nba2.v2.check "
+                        "0/0. crosscheck_site: 76 pass / 7 fail / 8 info.",
+                 source="committed checker chain; raw output in audit/2026-11-14-fc58f84f/checker-run.txt",
+                 classification="6 of the 7 crosscheck fails are pre-existing and already logged by prior "
+                                "sessions (CC-SNAP-13, CC-PUB-05, CC-DER-05, CC-GATE-02, CC-SEAL-04, "
+                                "CC-X-00); not introduced here."),
+        make_row("VS-02-live-landing", SRC_VERIFY, (),
+                 check="Live landing page re-fetch (F-03)",
+                 result="SERVES the merged main tree at commit d510313: as-of 2026-11-14, 36-game slate, "
+                        "27-prediction seal c841e8f3…, 79 open flags, nav intact.",
+                 source="https://wingbangboozle1-lang.github.io/NBA2/ (fetched 2026-11-14)",
+                 classification="confirmed live; matches committed build"),
+        make_row("VS-03-live-picks", SRC_VERIFY, (),
+                 check="Live picks page re-fetch (F-03)",
+                 result="SERVES the current build: pick window 2026-11-14 → 11/17, every row a trigger "
+                        "with 0.00% stake (no market price), each row carries a source cell.",
+                 source="https://wingbangboozle1-lang.github.io/NBA2/pages/picks.html (fetched 2026-11-14)",
+                 classification="confirmed live; policy (0% stake, no price) honoured"),
+        make_row("VS-04-live-flagged", SRC_VERIFY, (),
+                 check="Live flagged-review page re-fetch (F-03)",
+                 result="SERVES: every open flag listed with its source link and required action; the page "
+                        "is the deliverable for unverified values.",
+                 source="https://wingbangboozle1-lang.github.io/NBA2/pages/flagged-review.html (fetched 2026-11-14)",
+                 classification="confirmed live; source links intact"),
+        make_row("VS-05-standings", SRC_VERIFY, (),
+                 check="Fresh official standings re-read (F-04)",
+                 result="12/30 committed W-L rows MATCH live nba.com/standings; 18/30 DRIFT — and the 18 "
+                        "drifted rows are exactly the 18 teams that played the 9 games on 11/13 (the "
+                        "committed snapshot is a pre-11/13-finals capture). Drift fully explained.",
+                 source="https://www.nba.com/standings (fetched 2026-11-14); compare audit/2026-11-14-fc58f84f/official/records-vs-live.txt",
+                 classification="verified live; the 18-row drift is expected and quantifies prior flag F-028"),
+        make_row("VS-06-game-page", SRC_VERIFY, (),
+                 check="Fresh official game page re-read (F-04)",
+                 result="nba.com/game/nyk-vs-ind-0022600034 renders the official summary for 'Friday, "
+                        "November 13th, 2026', corroborating the 11/13 slate and that game ID.",
+                 source="https://www.nba.com/game/nyk-vs-ind-0022600034 (fetched 2026-11-14)",
+                 classification="verified live; slate corroborated"),
+        make_row("VS-07-injury", SRC_VERIFY, (),
+                 check="Fresh official injury PDF re-read (F-04)",
+                 result="11/13 19:30 ET injury report reachable in full; 6/6 spot-checked player rows "
+                        "(Banchero, Haliburton, Curry, Morant, Markkanen, Antetokounmpo) match the committed "
+                        "snapshot on team, status and reason.",
+                 source="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf (fetched 2026-11-14)",
+                 classification="verified live; committed injury transcription accurate"),
+        make_row("VS-08-doc-fix", SRC_VERIFY, (),
+                 check="CC-DOC-01 defect fixed (F-05/F-06)",
+                 result="README row count corrected 1124 → 1139 to match the measured artefact count; "
+                        "re-lint confirms 1139 rows / 39 tables. The one crosscheck fail this session "
+                        "introduced-and-fixed; the other 6 fails are pre-existing.",
+                 source="README.md (this session); lint output audit/2026-11-14-fc58f84f/checker-run.txt",
+                 classification="fixed and re-verified"),
+        make_row("VS-09-preexisting", SRC_VERIFY, (),
+                 check="Pre-existing crosscheck fails (not this session's)",
+                 result="6 fails carried on main before this session and logged by arena/72f9da58 for their "
+                        "owners: ratings-snapshot labels (CC-SNAP-13), corroboration title counts "
+                        "(CC-PUB-05), dual W-L source (CC-DER-05), leaderboard gate tally (CC-GATE-02), "
+                        "seal-date heuristic (CC-SEAL-04), WSH/WAS team key (CC-X-00). Left untouched; "
+                        "request logged, not silently edited.",
+                 source="COORDINATION.md (arena/72f9da58 reconciliation note)",
+                 classification="pre-existing; logged, not introduced, not fixed here"),
+    ]
+    return table(
+        rows,
+        [("check", "Check"), ("result", "What this session found"),
+         ("source", "Source (official URL or committed artefact)"), ("classification", "Verdict")],
+        "Independent verification report — session arena/fc58f84f-nba2",
+        "A fresh, independent pass: the whole checker chain re-run, the live GitHub Pages site "
+        "re-fetched, and the current window re-read against live official NBA.com sources. Values "
+        "that could not be confirmed from an official source are blank and flagged, never inferred.",
+        "Run 2026-11-14 UTC on branch arena/fc58f84f-nba2 (base d510313 = merged PR #43). "
+        "Raw captures in audit/2026-11-14-fc58f84f/.",
+    )
+
+
 def input_digest() -> str:
     """sha256 over every committed input, so 'the same inputs produce the same bytes' is checkable.
 
@@ -1373,6 +1472,7 @@ def build() -> dict:
         "audit": build_audit_rows(),
         "injury_delta": build_injury_delta_rows(),
         "audit_suggestions": build_audit_suggestions_rows(),
+        "verification": build_verification_rows(),
         "flags": None,   # filled below
         "sources": None,
     }

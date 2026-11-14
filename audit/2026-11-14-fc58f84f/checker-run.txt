@@ -1,0 +1,77 @@
+# FINAL checker sweep — session arena/fc58f84f-nba2 — 2026-11-14T10:29:57Z
+# HEAD: af7ef7a
+
+===== 1. nba2 unit tests =====
+................................................................
+----------------------------------------------------------------------
+Ran 64 tests in 1.032s
+
+OK
+[exit=0]
+
+===== 2. backtest unit tests =====
+.................................................
+----------------------------------------------------------------------
+Ran 49 tests in 1.189s
+
+OK
+[exit=0]
+
+===== 3. lint =====
+LINT OK — 1149 rows across 40 tables, every row sourced, every blank explained
+[exit=0]
+
+===== 4. seal verify =====
+seal c841e8f396dae6ca… over 27 predictions: VERIFIED
+  site page prints the same digest the ledger recomputes
+[exit=0]
+
+===== 5. verify_site =====
+    "demo_cells": 0
+  }
+]
+
+SUMMARY: 13 pages | 249 data rows | 303 links
+VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
+[exit=0]
+
+===== 6. check_links_all =====
+scanned 108 HTML files | 4388 internal links checked | 4097 external links
+ALL INTERNAL LINKS OK
+[exit=0]
+
+===== 7. check_site =====
+pages=12 rows_checked=524
+PASS: all internal links resolve; all data rows source-linked; nav/footer present
+[exit=0]
+
+===== 8. verify.js =====
+PASS  css/js assets resolve on every page
+PASS  every slate row links to its official nba.com game page  [65 official game links for 23 games]
+==========================================================
+24/24 checks passed
+All checks passed.
+
+[exit=0]
+
+===== 9. verify_backtest =====
+PASS  no team reconstruction exceeds its official post-game record
+PASS  rebuild from committed snapshots succeeds
+PASS  rebuild is deterministic (pages byte-identical)
+PASS  report.json is deterministic
+
+VERIFICATION PASSED — 12 pages, 155 sourced game rows, 189 internal links
+[exit=0]
+
+===== 10. crosscheck_site =====
+        observed: the site prints the as-of date on every page
+[info] CC-FRESH-03    a scheduled ingestion exists, and it has actually run
+        observed: ci.yml: push,pull_request,workflow_dispatch; pages.yml: push,workflow_dispatch; publish-parity.yml: push,pull_request,workflow_dispatch; refresh.yml: schedule,workflow_dispatch; v2-verify.yml: push,pull_request,workflow_dispatch; ingest runs recorded: unknown (no runs reported or gh unavailable) — not a PASS: the schedule is armed but nothing has run, so the site's freshness still depends on a manual or first-scheduled ingest
+        note:     an active schedule with zero runs is not yet a refresh: the site is only as fresh as the last successful ingest run, so this check stays INFO until a run exists
+
+91 checks: 77 pass, 6 fail, 8 info, 0 n/a
+[exit=1]
+
+===== 11. nba2.v2.check =====
+OK — 0 structural, 0 semantic
+[exit=0]

@@ -1,0 +1,37 @@
+team   committed       live  verdict
+------------------------------------------
+ATL          7-5        7-6  DRIFT (11/13 finals played after commit)
+BKN          3-8        3-8  MATCH
+BOS         10-2       10-2  MATCH
+CHA          4-8        4-8  MATCH
+CHI          1-9        2-9  DRIFT (11/13 finals played after commit)
+CLE          6-6        6-7  DRIFT (11/13 finals played after commit)
+DAL          7-5        7-5  MATCH
+DEN          6-4        6-4  MATCH
+DET          8-3        8-3  MATCH
+GSW          8-4        8-5  DRIFT (11/13 finals played after commit)
+HOU          9-3       10-3  DRIFT (11/13 finals played after commit)
+IND          4-8        5-8  DRIFT (11/13 finals played after commit)
+LAC          2-8        3-8  DRIFT (11/13 finals played after commit)
+LAL         11-2       11-2  MATCH
+MEM          7-4        8-4  DRIFT (11/13 finals played after commit)
+MIA          5-6        6-6  DRIFT (11/13 finals played after commit)
+MIL         1-11       1-12  DRIFT (11/13 finals played after commit)
+MIN          9-3        9-3  MATCH
+NOP          4-8        4-9  DRIFT (11/13 finals played after commit)
+NYK          6-5        6-6  DRIFT (11/13 finals played after commit)
+OKC          8-4        8-5  DRIFT (11/13 finals played after commit)
+ORL          4-7        5-7  DRIFT (11/13 finals played after commit)
+PHI         10-3       10-3  MATCH
+PHX          5-6        5-6  MATCH
+POR          8-3        9-3  DRIFT (11/13 finals played after commit)
+SAC         1-10       1-11  DRIFT (11/13 finals played after commit)
+SAS         10-2       11-2  DRIFT (11/13 finals played after commit)
+TOR          5-7        5-7  MATCH
+UTA         1-11       1-12  DRIFT (11/13 finals played after commit)
+WAS          4-9        4-9  MATCH
+
+committed snapshot retrieved: 2026-11-13T22:2x:00Z
+committed description notes: pre-11/13-finals point-in-time capture
+total teams: committed=30 live=30
+rows that drifted: 18
