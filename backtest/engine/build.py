@@ -527,8 +527,12 @@ deflated z above 1.0, scaled by the fraction of gates passed.</li>
     grows = []
     for gid, g in report["gates"]["gates"].items():
         cls = {"PASS": "ok", "FAIL": "bad", "PARTIAL": "warn", "BLOCKED": "blocked"}.get(g["status"], "")
+        if g.get("disputed"):
+            cls, label = "warn", f'{g["status"]} &middot; DISPUTED'
+        else:
+            label = g["status"]
         grows.append([f'<strong>{esc(gid)}</strong>', esc(g["name"]),
-                      f'<span class="status status-{cls}">{esc(g["status"])}</span>',
+                      f'<span class="status status-{cls}">{label}</span>',
                       esc(g["measured"] or ""), esc(g["registered_rule"] or ""),
                       esc(g["why_it_matters"] or "")])
     body = f"""

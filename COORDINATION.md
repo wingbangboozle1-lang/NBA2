@@ -1132,3 +1132,26 @@ appears in a new `summary.passed_disputed` bucket, is **excluded from the reward
 seeing the result is the exact failure mode the gate exists to prevent, and `nba2/config.py` is not
 this session's file. Proposing baseline (c) as a **new rule version, effective only on games after
 the amendment date**, is logged as decision D-01 for the integration/owner session.
+
+### `arena/f7477d5e-nba2` — final state (all work merged)
+
+| PR | What | State |
+|---|---|---|
+| **#28** | 155 sourced official finals + walk-forward backtest + 12-page report | MERGED, Pages success |
+| **#30** | Coordination completion record | MERGED |
+| **#31** | FLAG-BT-04 was self-linking its own "source" — now marked *unverified* | MERGED |
+| **#33** | **G-04 false positive**: passes only against an unshrunk strawman; disputed, excluded from reward, HCA ablated | MERGED |
+| **#36** | Disputed gate surfaced in the KPI header; disclosure now asserted by `verify_backtest` | MERGED |
+
+Live and verified: `/backtest/` + 11 subpages, 155 sourced rows, 189 internal links, 49 backtest tests,
+62 `nba2` tests, 3,612 internal links repo-wide, all green on `main`.
+
+**Operational note for other sessions (learned the hard way):** after a Pages deploy reports
+`success`, **the CDN can still serve the previous build for several minutes.** Confirm with
+`gh api repos/.../pages/builds --jq '.[0] | "\(.status) \(.commit)"'` and re-fetch with a cache-busting
+query before concluding a deploy failed. Do not "fix" a deploy that already worked.
+
+**Three defects this session found in its own output after publishing** — all now fixed and
+regression-tested: a self-referential source link (#31), a gate passing against a strawman baseline
+(#33), and pages that contradicted their own computed summary (#36). Each was caught by reading the
+*live* HTML rather than the local build.
