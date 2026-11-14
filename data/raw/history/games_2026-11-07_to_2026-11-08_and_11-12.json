@@ -1,0 +1,233 @@
+{
+ "schema": "nba2.games-history.v1",
+ "meta": {
+  "captured_utc": "2026-11-14",
+  "source": "https://www.nba.com/games?date=YYYY-MM-DD (official final scores)",
+  "date_range": [
+   "2026-11-07",
+   "2026-11-12"
+  ],
+  "n_games": 18,
+  "note": "11/07 = 7 of 7 games; 11/08 = 7 of 7; 11/12 = 4 of 4. 11/11 rendered with no scores and is NOT included."
+ },
+ "games": [
+  {
+   "game_id": "0022600189",
+   "date": "2026-11-07",
+   "away": "DEN",
+   "home": "IND",
+   "away_pts": 114,
+   "home_pts": 102,
+   "periods": 4,
+   "neutral_site": true,
+   "source_url": "https://www.nba.com/game/den-vs-ind-0022600189",
+   "list_url": "https://www.nba.com/games?date=2026-11-07",
+   "note": "Neutral Site (NBA Mexico City Game)"
+  },
+  {
+   "game_id": "0022600190",
+   "date": "2026-11-07",
+   "away": "BKN",
+   "home": "ATL",
+   "away_pts": 121,
+   "home_pts": 124,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/bkn-vs-atl-0022600190",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600191",
+   "date": "2026-11-07",
+   "away": "NYK",
+   "home": "CLE",
+   "away_pts": 109,
+   "home_pts": 97,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/nyk-vs-cle-0022600191",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600192",
+   "date": "2026-11-07",
+   "away": "WAS",
+   "home": "OKC",
+   "away_pts": 75,
+   "home_pts": 114,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/was-vs-okc-0022600192",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600193",
+   "date": "2026-11-07",
+   "away": "ORL",
+   "home": "GSW",
+   "away_pts": 119,
+   "home_pts": 126,
+   "periods": 5,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/orl-vs-gsw-0022600193",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600194",
+   "date": "2026-11-07",
+   "away": "HOU",
+   "home": "PHX",
+   "away_pts": 99,
+   "home_pts": 102,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/hou-vs-phx-0022600194",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600195",
+   "date": "2026-11-07",
+   "away": "SAS",
+   "home": "POR",
+   "away_pts": 125,
+   "home_pts": 103,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/sas-vs-por-0022600195",
+   "list_url": "https://www.nba.com/games?date=2026-11-07"
+  },
+  {
+   "game_id": "0022600196",
+   "date": "2026-11-08",
+   "away": "PHI",
+   "home": "CHI",
+   "away_pts": 127,
+   "home_pts": 121,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/phi-vs-chi-0022600196",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600197",
+   "date": "2026-11-08",
+   "away": "LAL",
+   "home": "DET",
+   "away_pts": 121,
+   "home_pts": 116,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/lal-vs-det-0022600197",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600198",
+   "date": "2026-11-08",
+   "away": "UTA",
+   "home": "MIN",
+   "away_pts": 100,
+   "home_pts": 115,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/uta-vs-min-0022600198",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600199",
+   "date": "2026-11-08",
+   "away": "BKN",
+   "home": "DAL",
+   "away_pts": 93,
+   "home_pts": 130,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/bkn-vs-dal-0022600199",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600200",
+   "date": "2026-11-08",
+   "away": "BOS",
+   "home": "MIL",
+   "away_pts": 117,
+   "home_pts": 97,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/bos-vs-mil-0022600200",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600201",
+   "date": "2026-11-08",
+   "away": "NOP",
+   "home": "LAC",
+   "away_pts": 123,
+   "home_pts": 139,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/nop-vs-lac-0022600201",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600202",
+   "date": "2026-11-08",
+   "away": "MIA",
+   "home": "SAC",
+   "away_pts": 114,
+   "home_pts": 108,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/mia-vs-sac-0022600202",
+   "list_url": "https://www.nba.com/games?date=2026-11-08"
+  },
+  {
+   "game_id": "0022600227",
+   "date": "2026-11-12",
+   "away": "TOR",
+   "home": "PHI",
+   "away_pts": 112,
+   "home_pts": 123,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/tor-vs-phi-0022600227",
+   "list_url": "https://www.nba.com/games?date=2026-11-12"
+  },
+  {
+   "game_id": "0022600228",
+   "date": "2026-11-12",
+   "away": "DET",
+   "home": "WAS",
+   "away_pts": 144,
+   "home_pts": 140,
+   "periods": 6,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/det-vs-was-0022600228",
+   "list_url": "https://www.nba.com/games?date=2026-11-12",
+   "note": "Final/OT2 (double overtime)"
+  },
+  {
+   "game_id": "0022600229",
+   "date": "2026-11-12",
+   "away": "DAL",
+   "home": "MIN",
+   "away_pts": 94,
+   "home_pts": 133,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/dal-vs-min-0022600229",
+   "list_url": "https://www.nba.com/games?date=2026-11-12"
+  },
+  {
+   "game_id": "0022600230",
+   "date": "2026-11-12",
+   "away": "CHA",
+   "home": "PHX",
+   "away_pts": 96,
+   "home_pts": 101,
+   "periods": 4,
+   "neutral_site": false,
+   "source_url": "https://www.nba.com/game/cha-vs-phx-0022600230",
+   "list_url": "https://www.nba.com/games?date=2026-11-12"
+  }
+ ]
+}

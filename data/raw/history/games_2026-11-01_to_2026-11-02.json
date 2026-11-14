@@ -69,13 +69,14 @@
   {
    "game_id": "0022600159",
    "date": "2026-11-02",
-   "away": "DAL",
+   "away": "DET",
    "home": "CHA",
    "away_pts": 124,
    "home_pts": 91,
    "ot": false,
-   "source_url": "https://www.nba.com/game/dal-vs-cha-0022600159",
-   "list_url": "https://www.nba.com/games?date=2026-11-02"
+   "source_url": "https://www.nba.com/game/det-vs-cha-0022600159",
+   "list_url": "https://www.nba.com/games?date=2026-11-02",
+   "correction": "transcription fix 2026-11-14: away team mis-keyed as DAL; the official card slug is det-vs-cha-0022600159"
   },
   {
    "game_id": "0022600160",
