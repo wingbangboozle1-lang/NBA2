@@ -22,26 +22,44 @@ jobs:
   refresh-official:
     # This runner has open egress; the build sandbox does not. It is the only place in the
     # pipeline that can reach the official NBA endpoints, so the official player-statistics
-    # snapshot is fetched here and published as an artefact for review. It never commits:
-    # a snapshot reaches the repository only after a human has looked at it.
+    # snapshot is fetched here.
+    #
+    # The result is NOT committed by this job. It is pushed to a side branch
+    # `ci-data/official-snapshots`, from where a session can review it and merge it by hand.
+    # A snapshot therefore reaches the published site only after it has been looked at.
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Fetch the official player-statistics snapshot
         id: refresh
         continue-on-error: true
-        run: python tools/refresh_player_stats.py --out "data/raw/player_stats_$(date -u +%F).json"
-      - name: Upload whatever was obtained (empty is a valid, honest outcome)
-        uses: actions/upload-artifact@v4
-        with:
-          name: player-stats-snapshot
-          path: data/raw/player_stats_*.json
-          if-no-files-found: warn
+        run: |
+          set +e
+          python tools/refresh_player_stats.py --out "data/raw/player_stats_$(date -u +%F).json" \
+            2>&1 | tee data/raw/player_stats_fetch_log.txt
+          echo "exit=${PIPESTATUS[0]}" >> data/raw/player_stats_fetch_log.txt
+          exit 0
+      - name: Publish the snapshot to a review branch
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BR="ci-data/official-snapshots"
+          git checkout -B "$BR"
+          git add -f data/raw/player_stats_*.json data/raw/player_stats_fetch_log.txt || true
+          if git diff --cached --quiet; then
+            echo "nothing was fetched; nothing to publish"
+            exit 0
+          fi
+          git commit -m "ci: official player-statistics snapshot fetched $(date -u +%FT%TZ)"
+          git push --force origin "$BR"
 
   verify:
     runs-on: ubuntu-latest
