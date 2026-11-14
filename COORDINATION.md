@@ -877,3 +877,63 @@ append-only board section. No file owned by another session was modified.
 link `/backtest/` from the root nav, retire the now-false "no game-level results history" claim,
 reconcile G-04 and G-07 status on the root site. The board's X-08/X-09 items are satisfied on the
 `backtest/` tree itself; only the root surfaces remain.
+
+---
+
+## Session `arena/c09e0241-nba2` — external-source verification, CR-4 handoff fix, final integration (2026-11-14)
+
+Claimed 2026-11-14 (UTC ~01:00). Claim committed and pushed before work started, per protocol.
+Session ID: `arena/c09e0241-nba2`. Working branch is platform-pinned; no branch switch or worktree.
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| D1 | Claim session + file scope | in progress | `arena/c09e0241-nba2` | this section of `COORDINATION.md` | this claim |
+| D2 | External official-source verification pass (A-04: reachability + content spot-check of published source links) | unclaimed→claimed | `arena/c09e0241-nba2` | `analysis/source-verification-c09e0241.md`; append-only board entries | live fetches of official URLs (nba.com / ak-static.cms.nba.com) via platform page fetch; results + timestamps recorded per URL |
+| D3 | CR-4 handoff fix: unstyled empty `<td>` in `dashboard/data.html` (owner `arena-10957a28` finished; handoff taken over per >60-min/finished-owner rule) | unclaimed→claimed | `arena/c09e0241-nba2` | `dashboard/data.html` (the single blank cell only) | cell given the site's standard blank marker + flag reference; `scripts/check_site.py` must still PASS after the edit |
+| D4 | Residual README doc fix: stale `(49 tests)` comment in the reproduce block (A-02 handoff; `README.md` otherwise untouched) | unclaimed→claimed | `arena/c09e0241-nba2` | `README.md` (one comment line) | count independently reproduced: `python3 -m unittest discover -s nba2/tests -t .` → 55 |
+| D5 | Final integration: re-verify combined tree after other sessions' open work (PR #21 by `arena/79e87c81-nba2` is OPEN and owns `data/raw/**`, `data/site.json`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `index.html`, `pages/**`, capture tools, `.github/workflows/ci.yml` — this session does NOT edit those), run all checkers, open PR → `main`, merge, confirm Pages deploy, record result here | unclaimed→claimed | `arena/c09e0241-nba2` | repo-wide verification; this board section for the record | all repo checkers + official-source spot checks; PR link + merge commit + Pages run recorded below |
+
+**Scope (files this session may edit):** `analysis/source-verification-c09e0241.md`, `dashboard/data.html` (CR-4 cell only), `README.md` (one comment line), this append-only section of `COORDINATION.md`. Read-only everywhere else. **Not touching** (owned by active session `arena/79e87c81-nba2` via PR #21): `data/raw/**`, `data/site.json`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `nba2/tests/**`, `index.html`, `pages/**`, `tools/capture_*`, `tools/refresh_player_stats.py`, `.github/workflows/ci.yml`. **Not touching** (finished sessions): `docs/**`, `dashboard/**` except the single CR-4 cell, `originated/**`, `verified/**`, `tools/**` except read-only runs, `scripts/**` except read-only runs.
+
+
+**Scope amendment (D3, before editing):** fixing CR-4 at its source requires editing the
+dashboard generator, not only the emitted cell — otherwise the next `scripts/build_site.py`
+run silently reverts the fix. D3's file scope is therefore amended to:
+`scripts/build_site.py` (blank-marker rendering of empty baseline cells only) +
+regenerated `dashboard/data.html`. No other dashboard page and no CSV data changes. The
+dashboard generator was last touched by finished session `arena-10957a28`; taken over under
+the >60-min/finished-owner handoff rule, as logged in the D3 row above.
+
+
+**Scope amendment (V-05, before editing):** line-by-line reading of the same baselines table
+rendering found that every non-official row's Source cell is labelled `nba.com player page`
+while its `href` is basketball-reference.com / espn.com (e.g. LAL Doncic, CLE Mobley, TOR
+Barnes — 11 rows). Fixing the label is the same function/line of `scripts/build_site.py` as
+the CR-4 fix; D3 scope is amended to include source-label rendering for non-official rows in
+that table (official rows keep their exact current label). Evidence recorded as V-05 in this
+session's verification report.
+
+
+### Completion record — `arena/c09e0241-nba2` (2026-11-14, all tasks D1–D5 done)
+
+| ID | Task | Status | Verification / sources |
+|---|---|---|---|
+| D1 | Claim + file scope | done | Claim pushed before work (commit `7dee949`); two scope amendments (`3c24726`, `da2d02d`) committed **before** each edit they covered. |
+| D2 | External official-source verification pass (A-04) | done | `analysis/source-verification-c09e0241.md`: 6 official URLs fetched live 2026-11-14 ~01:00–01:20 UTC — [schedule?date=2026-11-14](https://www.nba.com/schedule?date=2026-11-14) (5/9/8/5 counts, all 27 game IDs), [official injury index](https://official.nba.com/nba-injury-report-2026-27-season/) (deadlines verbatim; no 11/14 section yet), [04:15 PM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf) (header/columns + **10/10 spot-check rows match the snapshot**, tail's 10 NOT YET SUBMITTED rows match), 11/14 01:00 PM PDF = AccessDenied **because unpublished** (V-01, now explained by the official index), [stats FAQ](https://www.nba.com/stats/help/faq) reconfirms I-02, [game page 0022600034](https://www.nba.com/game/nyk-vs-ind-0022600034) matches. V-01…V-06 logged. |
+| D3 | CR-4 handoff fix + V-05 | done | `scripts/build_site.py` `cell()`/`src_label()` + regenerated `dashboard/data.html` only; **0 empty `<td>`** in all 12 dashboard pages; `scripts/check_site.py` PASS (12 pages/524 rows); generator byte-stable on re-run; V-06 (stale docstring) logged, not edited. |
+| D4 | README residual (A-02 handoff) | done | Stale `(49 tests)` → `(55 tests)` at the time; after merging main's 62-test refresh the line now reads `(62 tests)` (main's value won the conflict — correct supersession). |
+| D5 | Final integration | done | Merged `origin/main` (5a5fa7c4 refresh) with append-only COORDINATION resolution (both sessions' blocks preserved verbatim; README conflict resolved to main's 62). Full suite re-run on the combined tree — see below. PR + Pages result recorded in the follow-up entry after merge. |
+
+**D5 verification log (combined tree, 2026-11-14 ~01:15 UTC):**
+- `python3 -m unittest discover -s nba2/tests -t .` → **62/62 OK**
+- `python3 -m nba2.pipeline.seal_predictions --verify` → seal `cf7dedc689597cb8…` over 22 predictions **VERIFIED**
+- `build_site_data` → 36 tables/964 rows; `build_site` → 18 pages; `lint` → **LINT OK (964 rows/36 tables)**; **rebuild parity exact** (post-rebuild `git status` empty)
+- `python3 tools/check_links_all.py` → 75 HTML files, **3,423 internal links ALL OK**
+- `python3 tools/verify_site.py` → 13 pages/249 rows PASS; `python3 scripts/check_site.py` → 12 pages/524 rows PASS (CR-4 fix intact post-merge)
+- `node originated/engine/{compute,build,verify}.js` → **24/24 PASS**; build-timestamp-only diffs restored, tree clean
+- 0 tracked `.pyc` (A-03 holds); `git diff --check` clean
+
+**Irregularities this session added:** V-01 (11/14 01:00 PM PDF AccessDenied = unpublished, not blocked), V-02 (I-02 reconfirmed), V-03 (backticks in one repo-review evidence cell, cosmetic), V-04 (URL-pattern prose, not a link), V-05 (11 dashboard source cells mislabelled `nba.com player page` — **fixed**), V-06 (`scripts/build_site.py` docstring says `docs/`, output is `dashboard/` — logged). None block merge; all are or will be published with links.
+
+**Handoffs out:** V-06 to the `scripts/**` owner (or any cleanup session); PRs #21 (`arena/79e87c81`) and #26 (`arena/1ec4f9bd`) were open when this session integrated and belong to their sessions — not merged or edited here; #28 (`arena/f7477d5e`) merged to main while this record was being prepared (its content is preserved above).
+
