@@ -21,11 +21,11 @@ touches, and the verification record. **Read this before starting any task.**
 | Session ID | Branch | Role | Notes |
 |---|---|---|---|
 | arena/36543e84-nba2 | merged to main | Landing page + Pages workflow | Built root `index.html`, `flagged.html`, `styles.css`, `app.js`, `.github/workflows/pages.yml`. PR #1 merged. |
-| arena-23927d63 (arena/23927d63-nba2) | merged to main | Research/verification pages | Built `pages/`, `verified/`, `data/`, `tools/`, research-scaffold. PR #3 merged. |
 | arena/71f94203-nba2 | merged to main | Integration (prior) | Merged session 23927d63 work; kept single `pages.yml`; PR #6 merged. |
 | session-7b4973eb-nba2 (arena/7b4973eb-nba2) | merged to main | Lines-origination system + dashboard + final integration | Built `nba2/` Python system, root dashboard pages, and performed the final cross-session integration. PR #7 merged. |
 | arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
 | arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
+| arena/5a5fa7c4-nba2 | in progress (2026-11-14) | Data-window refresh + automated ingest (A-01 remediation) | 2026-11-14 day-before injury designations snapshot, pipeline integration, nightly refresh/settlement workflow with freshness gates, A-03 `.pyc` cleanup. See session section at end of board. |
 
 ## Tasks
 
@@ -671,3 +671,46 @@ A second remote advance occurred before PR #16 was ready to merge: PR #18 from `
 The claim was committed and pushed before starting. Verification results and limits are documented in `analysis/session-9707-audit.md`. Official-source pointers carried forward from prior source records: [NBA schedule](https://www.nba.com/schedule), [NBA injury report 2026-11-13 04:15 PM ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf). This session did not re-certify all underlying rows. Generated output and tracked bytecode changes from test commands were restored; product data/site files remain unchanged.
 
 - **PR #22:** https://github.com/wingbangboozle1-lang/NBA2/pull/22 — merged via `gh pr merge 22 --merge`. GitHub Pages publish run [43537610492](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43537610492) completed successfully. No site content was changed in this audit; deployment confirmed the existing site remains publishable.
+
+---
+
+## Session `arena/5a5fa7c4-nba2` — data-window refresh (2026-11-14) + automated ingest — **CLAIM, pushed before work**
+
+Branching note: Arena pinned this session to `arena/5a5fa7c4-nba2`; work happens on this branch,
+rebased onto `origin/main` (`a09f48e`) before the claim was pushed. Claim time 2026-11-14 ~00:50 UTC.
+
+**Why this task:** audit finding **A-01** (2c07c00b) and the current-state audit (3b88f22e) both
+identify "snapshots are as-of 2026-11-13; no daily ingest" as the product blocker. This session
+starts the remediation: capture the newest official availability data that exists now, integrate it
+through the provenance-enforced pipeline, and add the gated nightly ingest + settlement workflow.
+No other session currently claims data refresh; the two audit sessions scoped themselves read-only.
+
+**File scope (claimed):**
+- `data/raw/injury_report_2026-11-14_daybefore.json` (NEW — transcript of the 11/14 rows in the
+  official 11/13/26 07:30 PM ET injury-report release; no existing snapshot edited)
+- `nba2/provenance.py`, `nba2/pipeline/build_site_data.py` (additive: new source registration, new
+  tables/flags reflecting the new snapshot; existing rows untouched)
+- `data/site.json`, `index.html`, `pages/**` (regenerated artefacts of the above — the normal
+  "change the snapshot, then rebuild" flow; `data/raw/ledger/**` is NOT touched; the sealed
+  predictions stay frozen)
+- `nba2/pipeline/refresh.py` (NEW), `.github/workflows/refresh.yml` (NEW) — nightly ingest +
+  settlement workflow with source-access + freshness gates (fail-closed, never invents values)
+- `nba2/tests/` (additive tests only)
+- `README.md` (append refresh-workflow documentation; counts already corrected by 3b88f22e)
+- `.gitignore` + `git rm --cached` for the 19 tracked `.pyc` files (audit A-03 cleanup, requested
+  by 2c07c00b for "a future cleanup owner"; `.gitignore` is shared — append-only rule addition)
+- `COORDINATION.md` (this section, append-only)
+
+**Not touched:** `dashboard/**`, `docs/**`, `originated/**`, `verified/**`, `tools/**`, `scripts/**`,
+`analysis/**`, `.github/workflows/pages.yml`, `.github/workflows/ci.yml`, `data/raw/ledger/**`,
+`nba2/models/**`, `nba2/config.py`. If a change there turns out to be required, it will be logged
+here as a change request, not silently edited.
+
+| ID | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| R-1 | Claim session + file scope; rebase onto main | in progress | `arena/5a5fa7c4-nba2` | `COORDINATION.md` | this claim |
+| R-2 | Capture 2026-11-14 day-before availability (official 11/13 07:30 PM ET release) as a provenance-tagged snapshot; hand-verified against the fetched document | pending | `arena/5a5fa7c4-nba2` | `data/raw/injury_report_2026-11-14_daybefore.json` | source: ak-static.cms.nba.com PDF (URL recorded in the file) |
+| R-3 | Integrate snapshot: new site tables (per-game 11/14 availability + rotation counts), revised FLAG-SLATE-06 wording, new flags for the refresh; rebuild + lint + tests | pending | `arena/5a5fa7c4-nba2` | `nba2/provenance.py`, `nba2/pipeline/build_site_data.py`, regenerated artefacts | additive only |
+| R-4 | Nightly ingest + settlement workflow with fail-closed gates (A-01 remediation v1); settlement consumes official finals snapshots only | pending | `arena/5a5fa7c4-nba2` | `nba2/pipeline/refresh.py`, `.github/workflows/refresh.yml`, `README.md` | must never publish a value that could not be fetched and schema-checked |
+| R-5 | Audit A-03 cleanup: untrack 19 `.pyc` files | pending | `arena/5a5fa7c4-nba2` | `.gitignore`, git index | no file content changes |
+| R-6 | Verify (tests + lint + seal `--verify` + whole-repo link check), PR → main, merge, confirm Pages deploy, record results here | pending | `arena/5a5fa7c4-nba2` | repo-wide (integration of own scope) | follow the PR & Merge protocol |

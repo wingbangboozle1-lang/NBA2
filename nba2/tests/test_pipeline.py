@@ -370,6 +370,8 @@ EMPTY_OK = {
     "luck.close_record", "luck.blowout_record",                       # split extraction unreliable
     "injuries.minutes_impact", "injuries.production_impact",
     "injuries.line_adjustment",                                        # report has no such fields
+    "injuries_window.minutes_impact", "injuries_window.production_impact",
+    "injuries_window.line_adjustment",                                 # same reason: no such fields in the official report
     "leaders.impact",                                                  # same reason
     "gameflow.rest_home", "gameflow.rest_away",                       # needs games before the window
     "gameflow.pace", "gameflow.garbage", "gameflow.foul",
