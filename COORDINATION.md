@@ -1526,3 +1526,65 @@ official source link; flagged/unverified items land on the Flagged for Review pa
 block the merge. Reconciliation note: PR #43's session (`arena/ab8743d8-nba2`) merged with
 A-02…A-09 evidenced in the PR body but never marked done on this board — Z-07/Z-09 will
 append the reconciliation with pointers rather than rewrite that section.
+
+---
+
+## Session `arena/3fbd894a-nba2` — COMPLETE (2026-11-14): Z-01…Z-09 done, PR opened
+
+**Final status of this session's board (all rows resolved):**
+
+| # | Task | Status | Evidence |
+|---|---|---|---|
+| Z-01 | coordinate (append-only board, no scope overlap) | done | this record; no other session's files edited except the two disclosed below |
+| Z-02 | capture the 11/14 05:15 AM ET release | done | `data/raw/injury_report_2026-11-14_0515AMET.json` (49 rows) + `audit/3fbd894a/raw_injury_2026-11-14_0515AM_chunk0.md` |
+| Z-03 | verify current tips + game IDs | done | `audit/3fbd894a/games_pages_2026-11-14_to_11-17.md` — all 36 window tips, 0 mismatches; per-row `nba.com/game/…` URLs in the capture |
+| Z-04 | capture provenance + revision diffs | done | both capture files' `provenance` blocks (retrieval method, timestamps, filing rules); `revision_note`: 0 status changes on 61 shared rows |
+| Z-05 | coverage documentation (11/17 in legacy surfaces) | done | **FLAG-SURF-01** (new, published on the Flagged page, attached to the five 11/17 slate rows): `data/{picks,our-lines,prop-lines,parlays}.csv` stop at 11/16, `nba2/data/schedule.json` stops at 11/15; authoritative surfaces hold all 36/27. Not backfilled — the CSVs are session-3's historical exports (FLAG-SLATE-03) |
+| Z-06 | regen + F-025 fix | done | `nba2/picks.py::s2_selection` fixed (favorite names itself with its own line: "MIA -6.5"); regen order `nba2/generate.py` → root `build_site.py` → pipeline (last); 66 tests OK |
+| Z-07 | checker chain | done | see `audit/3fbd894a/SESSION_AUDIT.md` (full run list). Crosscheck: 81 pass / 5 fail / 8 info — the 5 fails are the pre-existing product issues (CC-SNAP-13, CC-DER-05, CC-GATE-02, CC-SEAL-04, CC-X-00) owned by earlier sessions. **CC-PUB-05 (also pre-existing) is now fixed** — corroboration table, verdict classes and the checker's re-derivation agree; CC-DOC-01 clean |
+| Z-08 | Q/S updates | done | `suggestions/SUGGESTIONS.json` S-26 → applied, S-29…S-36 added (one per crosscheck INFO); `requirements/QUESTIONS.json` Q-30…Q-32 added |
+| Z-09 | integration | done | PR recorded below; Pages + run IDs appended after deploy |
+
+**Adjudications recorded this session (all published on the Flagged page):**
+
+- **I-02 (DET@MIA lost-cell overclaim) — closed with evidence:** the 11/13 19:30 ET capture's
+  `time_captured=true` for DET@MIA is an overclaim its own sibling transcription disproves
+  (`injury_report_2026-11-14_daybefore.json`, FLAG-INJ-06). A `corrections` adjudication in the
+  05:15 AM capture (`older_captured → false`) is honoured by the merge; the published verdict
+  now says the cell is unreadable in every extraction and the 8:00 PM tip rests on the
+  games-page recheck. CHI@MIN keeps the earlier release's genuine cell.
+- **I-03** closed by the explicit printed-tip rule (hour 1–11 → +12; 12:xx → noon).
+- **I-04 as stated ("11/15 slate absent") is factually wrong** — 11/15 is in every authoritative
+  surface. The real gap (11/17 absent from the legacy session-3 CSVs; `nba2/data/schedule.json`
+  stops at 11/15) is documented, not silently filled — FLAG-SURF-01.
+- **I-05** confirmed fixed (27/27 pick-window rechecks MATCH).
+- **I-06** superseded by the ledger work of PR #43/#41; both seals verify and stay byte-identical.
+
+**F-025 correction note (published numbers change):** the S2 selection bug meant the historical
+grades in `audit/2026-11-14/graded_picks.json` measured the mislabeled strings (that session's
+F-LIVE-02 flagged exactly this and graded what was published). Re-graded with corrected labels
+the four settled S2 rows are **3-1** (HOU -13.0 fails to cover a 7-point win), not 4-0; S1's 4-0
+(moneyline) is unaffected. The regenerated `site/live-verification.html` publishes the corrected
+grades.
+
+**Out-of-scope-file edits, disclosed per protocol (no session holds these files):**
+
+1. `nba2/v2/live.py` — one dispatch line: the spread/ML router sniffed for a "+" character and
+   misrouted every corrected "-N.N" favorite label to the ML grader (UNGRADABLE). Dispatch now
+   keys on the number's shape. (v2 output regenerated; `data/v2/*.json` byte-identical.)
+2. `tools/crosscheck_site.py` — CC-PUB-05 only: merges all times captures with the pipeline's
+   documented rule (incl. corrections) and recomputes the corroboration table's six title
+   counts. All other checks untouched.
+
+**Reconciliation of `arena/ab8743d8-nba2`'s A-02…A-09** (evidenced in PR #43's body, never marked
+on the board — recorded here rather than rewriting their section): A-02 (live re-verification) →
+done, `audit/2026-11-14/` captures + `graded_picks.json`; A-03 (checker chain) → done,
+`audit/2026-11-14/checker-run.txt`; A-04 (published-tree fixes) → done via PR #43's build fixes;
+A-05 (landing map) → done (published index + Archived Data & Pages page); A-06 (suggestions
+review path) → done (decision-queue + S-20/S-21… statuses); A-07 (questions) → done (Q-23…Q-29);
+A-08 (executive summary) → done via PR #43 build; A-09 (their integration) → PR #43 merged.
+
+**Rules this session held itself to:** every published value carries an official source link
+(lint enforces it on all 1131 rows); blanks stay blank with a flag; the two sealed ledgers were
+never rewritten (`git diff data/raw/ledger` empty at final run); flagged items published on the
+Flagged for Review page and did not block the merge.
