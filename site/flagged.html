@@ -61,20 +61,20 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr id="F-002">
-<td><span class="badge b-bad">F-002</span></td>
-<td><span class="badge b-bad">high</span></td>
+<td><span class="badge b-info">F-002</span></td>
+<td><span class="badge b-info">info</span></td>
 <td>Data</td>
-<td>Per-game results now exist for 155 of 174 games (2026-10-20 → 11-12), captured from nba.com by a parallel session; 19 games (11-06, 11-11) have no reachable score. Player box scores remain unreachable, so player-level settlement is still impossible.</td>
-<td>Gates G7, G8, G12 and the whole leaderboard are blocked.</td>
+<td>RESOLVED this session — per-game results now exist for all 183 games played (2026-10-20 → 2026-11-13); the 19 previously unreachable games were 11-06, 11-11 and 11-13 and were captured from nba.com/games. Player box scores remain unreachable, so player-level settlement is still impossible.</td>
+<td>G8 and G12 now pass. G7 still fails, but on sample size (167 settled bets against a 300 bar), not on absence of data.</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr id="F-003">
 <td><span class="badge b-warn">F-003</span></td>
 <td><span class="badge b-warn">medium</span></td>
 <td>Data</td>
-<td>The 2026-11-14 01:00 PM ET official injury report returns AccessDenied, so today&#x27;s game statuses could not be re-filed.</td>
-<td>The site uses the 11/13 04:15 PM ET report, which is dated one day before the 11/14 slate, and says so.</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>The 2026-11-14 05:30 AM ET official injury report returns AccessDenied, so the freshest reachable release is 04:30 AM ET. See F-032 for why days 11/15-11/17 have no rows at all.</td>
+<td>The site uses the 11/14 04:30 AM ET report and labels every not-yet-filed team explicitly.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 <tr id="F-004">
 <td><span class="badge b-warn">F-004</span></td>
@@ -285,6 +285,7 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/build_site_data.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
 </tr>
 <tr id="F-030">
+<<<<<<< HEAD
 <td><span class="badge b-bad">F-030</span></td>
 <td><span class="badge b-bad">high</span></td>
 <td>Verification</td>
@@ -323,6 +324,54 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. The nine 2026-11-13 games are kept as day-before context and graded against the official finals.</td>
 <td>The window is read from the committed slate snapshot, so it cannot drift from the brief&#x27;s three-day limit.</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+=======
+<td><span class="badge b-info">F-030</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Verification</td>
+<td>RESOLVED this session — the committed standings were a pre-finals snapshot. They agreed with the pre-11/13-finals state on 30 of 30 rows and with live official standings on only 12 of 30. Re-read from nba.com/standings on 2026-11-14: they now match live official standings on 30 of 30 rows, home and road splits included, and all 30 records rebuild exactly from the 183 committed official finals. The staleness measure that caught it is retained and inverted.</td>
+<td>Fixed, and the check that found it is now permanent.</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr id="F-031">
+<td><span class="badge b-info">F-031</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Data</td>
+<td>RESOLVED this session — the official results history was incomplete (155 of 183 games). The 28 missing finals (2026-11-06, 11-11 and 11-13) were captured from nba.com/games, taking the window to 183/183. The count is confirmed two independent ways: the standings imply exactly 183 games played, and all 30 team records now rebuild with zero mismatches.</td>
+<td>Fixed. Backtests, out-of-sample splits and settlement run on the full window.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr id="F-032">
+<td><span class="badge b-warn">F-032</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>No official injury row exists for any 11/16 or 11/17 game, and at capture time (11/14 04:30 AM ET) no team had filed for 11/15 either. This is the filing rule working as designed — a team files by 5 p.m. local the day before — so it is a property of the calendar, not a retrieval failure. The 05:30 AM ET 11/14 report returned AccessDenied, so 04:30 AM is the freshest reachable release.</td>
+<td>Those cells are blank and labelled with the filing rule. No value was inferred or carried forward.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="F-033">
+<td><span class="badge b-off">F-033</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Site</td>
+<td>The GitHub Pages setting on this repository is still build_type &#x27;legacy&#x27; (deploy from the main branch root), while the committed pages.yml workflow publishes the site/ (v2) tree. Whichever one is live, the other is a fully-built tree sitting in the repository that a reader can reach by URL.</td>
+<td>Logged for the owner: this is a one-setting change either way, and it changes what every reader sees.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/settings/pages" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/settings/pages</a></td>
+</tr>
+<tr id="F-034">
+<td><span class="badge b-off">F-034</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Model</td>
+<td>Strategy S4 (fade the home team when the model makes them a 3+ point underdog) went 7 for 7. The binomial p-value is 0.0156, which would pass a naive significance test, but at seven bets the 95% interval is wide enough to hold almost any true rate.</td>
+<td>The luck report records it as SAMPLE TOO SMALL TO CALL and the leaderboard refuses to rank it. It is shown deliberately, as an example of what luck looks like when it is winning.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-035">
+<td><span class="badge b-info">F-035</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Model</td>
+<td>Two matchups appear twice inside the 3-day window: NYK @ TOR (11/15 game 0022600241 and 11/17 game 0022600253) and POR @ MIN (11/16 game 0022600250 and 11/17 game 0022600254).</td>
+<td>Verified genuine by reading the official schedule block, not a duplication error in the slate capture. Both games are priced separately.</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+>>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
 </tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>

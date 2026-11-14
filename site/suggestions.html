@@ -37,11 +37,19 @@
 </aside>
 <main>
 <h1>Suggestions queue</h1>
+<<<<<<< HEAD
 <p class="lede">28 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. 11 items are already <code>IMPLEMENTED</code> and need no
 decision; 6 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+=======
+<p class="lede">30 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
+<code>ACCEPTED</code>.</p>
+<div class="note"><b>How to use it.</b> Read the state column. 10 items are already <code>IMPLEMENTED</code> and need no
+decision; 9 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+>>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
 dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
@@ -112,6 +120,16 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.</td>
 <td>Low</td>
 <td>Needs SG-1.</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-26">
+<td>SG-26</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Replace the fixed 300-bet gate bar (G7) with a power calculation per strategy.</td>
+<td>300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters depends on the strategy&#x27;s own correlation between bets: the parlay strategies need a different n than the side strategies. The lab already computes each strategy&#x27;s Wilson interval and its distance to the base rate, so the required n can be derived rather than asserted.</td>
+<td>Low — the intervals are already computed in nba2/v2/strategy_lab.py</td>
+<td>none — no dependency</td>
 <td><span class="badge b-warn">RECOMMENDED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -235,6 +253,36 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td><span class="badge b-off">QUEUED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
+<tr id="SG-27">
+<td>SG-27</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Stop publishing a single blended rating as the headline; publish the disagreement between the two estimators as the headline and the blend underneath.</td>
+<td>The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently printed as a small diagnostics column.</td>
+<td>Low</td>
+<td>none — no dependency</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-28">
+<td>SG-28</td>
+<td><span class="badge b-off">Parlays</span></td>
+<td>Price every parlay with the measured rho and print the naive product next to it, instead of withholding the price entirely.</td>
+<td>With rho now measured (and its interval published) the honest objection is no longer &#x27;we do not know the correlation&#x27; but &#x27;we do not know it precisely&#x27;. Printing both numbers, with the interval between them, is more useful than printing neither — and it makes the error bar visible instead of implied.</td>
+<td>Low — the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py</td>
+<td>None, but it should ship with the interval visible on the same row</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-29">
+<td>SG-29</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Make the picks page show the trigger price in the reader&#x27;s preferred format (decimal, American, or implied probability) rather than decimal only.</td>
+<td>The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format most readers will have to convert. This is a display change with no model consequence.</td>
+<td>Low</td>
+<td>none — no dependency</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
 <tr id="SG-7">
 <td>SG-7</td>
 <td><span class="badge b-off">Model</span></td>
@@ -298,6 +346,7 @@ dependency. The three highest-ranked recommended items are all data connections,
 <tr id="SG-25">
 <td>SG-25</td>
 <td><span class="badge b-off">Data plumbing</span></td>
+<<<<<<< HEAD
 <td>Re-read the three official team-stat pages (traditional, opponent, advanced) and re-cut the model inputs.</td>
 <td>The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the published lines therefore start from a slightly out-of-date level.</td>
 <td>Low — the three pages render for this client; the capture is a transcription plus a diff</td>
@@ -333,6 +382,23 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>Low — a move plus one banner per tree</td>
 <td>none</td>
 <td><span class="badge b-off">QUEUED — owner decision</span></td>
+=======
+<td>Schedule a nightly job that appends each night&#x27;s official finals to data/raw/history/ and asserts the per-date game count against the nba.com day-strip calendar.</td>
+<td>The history is complete today (183/183) precisely because the count is checkable: the standings imply 183 games and the calendar gives per-date counts. Automating the append with that assertion means the window can never silently fall behind again, which is the failure the pre-finals standings drift was.</td>
+<td>Low — the shape already exists in .github/workflows/refresh.yml</td>
+<td>A runner with normal internet egress (nba.com is TLS-blocked from this sandbox)</td>
+<td><span class="badge b-warn">RECOMMENDED — cheapest fix with the largest effect on trust</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-30">
+<td>SG-30</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Capture per-player game logs (minutes, points, rebounds, assists, and the opponent) for at least the players who appear on an injury report.</td>
+<td>This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.</td>
+<td>Medium — needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores</td>
+<td>A runner with normal internet egress</td>
+<td><span class="badge b-warn">RECOMMENDED — the last hard blocker</span></td>
+>>>>>>> c2101ee (v2: add session registers (6 suggestions SG-25..30, 5 questions Q-15..19, 6 flags F-030..035); resolve F-002/F-003)
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>

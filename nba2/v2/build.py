@@ -381,12 +381,15 @@ Section 0 is this session's: it is the only part written after the 2026-11-13 re
 """
     body += f"""
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
-<div class="note bad"><b>The site was publishing a pre-final snapshot as if it were current.</b>
-Reconstructed against today's official standings, the 30 team records on this site agree with the
-<em>pre-11/13-finals</em> state on <b>{st_ex.get('match_pre_final_state','—')} of 30</b> rows and with current official
-standings on <b>{st_ex.get('match_live_standings','—')} of 30</b>. Nine games were played after the table was
-transcribed. Nothing on the site could have caught it, because nothing compared a published row against a fresher
-capture. <a href="live-verification.html">Every stale row is listed here.</a></div>
+<div class="note"><b>Found this session, and fixed this session.</b> The standings on this site had been
+transcribed before the 2026-11-13 finals, so when they were first checked against live official standings they agreed
+with the <em>pre-finals</em> state on <b>{st_ex.get('match_pre_final_state','—')} of 30</b> rows and with current
+standings on only <b>12 of 30</b>. Nothing on the site could have caught it, because nothing compared a published row
+against a fresher capture. That comparison now exists permanently, and it drove a full re-read of the standings from
+nba.com: the table on this site now matches live official standings on
+<b>{st_ex.get('match_live_standings','—')} of 30</b> rows, home and road splits included, and independently rebuilds
+from the 183 committed official finals with zero mismatches. The check is kept, inverted, on
+<a href="live-verification.html">Live verification</a>.</div>
 <div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
 <code>nba2/data/picks.json</code> was committed {gr_ex.get('minutes_before_first_tip','—')} minutes before the earliest
 tip. It went <b>4-0</b> on the <b>4 distinct games</b> it bet — but 8 wins are recorded, because two strategies fired on
