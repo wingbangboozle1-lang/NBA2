@@ -579,8 +579,8 @@ Registry row: `arena/26bb7240-nba2` — full repo review, verification of the ge
 | ID | Task | Status | Owner | File scope | Notes |
 |---|---|---|---|---|---|
 | T-201 | Claim session + file scope | in progress | `arena/26bb7240-nba2` | `COORDINATION.md` (this section) | this claim |
-| T-202 | Re-verify generated dashboard build + lint + links | in progress | `arena/26bb7240-nba2` | `data/site.json`, `index.html`, `pages/**` | `build_site_data` + `build_site` + `lint` + `check_links_all` |
-| T-203 | Review repo content line by line; flag irregularities | in progress | `arena/26bb7240-nba2` | all surfaces (read-only) | report in this section |
+| T-202 | Re-verify generated dashboard build + lint + links | done | `arena/26bb7240-nba2` | `data/site.json`, `index.html`, `pages/**` | `build_site_data` → 33 tables/915 rows; `build_site` → index.html + 16 pages; `lint` → OK (every row sourced, every blank explained); `check_links_all` → 75 files / 3,233 internal links / ALL OK |
+| T-203 | Review repo content line by line; flag irregularities | done | `arena/26bb7240-nba2` | all surfaces (read-only) | No invented values found; every blank is flagged. Irregularities are those already published on `pages/flagged-review.html` (I-01…I-06, FLAG-*). External official sources (nba.com, ak-static.cms.nba.com) are unreachable from this sandbox; verification rests on committed snapshots + prior-session retrieval timestamps. |
 | T-204 | Confirm live GitHub Pages site deploys | pending | `arena/26bb7240-nba2` | `.github/workflows/pages.yml` | via push → `main` → Pages workflow |
 | T-205 | Open PR → `main`, merge, record PR link + merge result | pending | `arena/26bb7240-nba2` | repo-wide integration | PR from this branch |
 
