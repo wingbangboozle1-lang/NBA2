@@ -737,9 +737,20 @@ EXEC_BULLETS = [
     ("What is not possible yet",
      "No price exists, so nothing can be staked. The results history is now complete — 183 official finals, 2026-10-20 → 2026-11-13, with the count independently confirmed by the standings — so backtests, out-of-sample splits and settlement all run. Every game still gets a lean and a trigger price rather than a stake, because a stake needs a price to beat and 167 settled bets against a 300-bet bar."),
     ("The skill finding",
-     "A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists."),
+     "A walk-forward test on 167 official finals (2026-10-23 → 2026-11-13, every rating built only from strictly "
+     "earlier games) puts this rating method at 67.7% straight-up (95% CI 60.2-74.3%), margin MAE 11.96 against "
+     "13.36 for a zero baseline, Brier 0.2170 against 0.2500 for a coin flip. A paired bootstrap over 4,000 draws "
+     "puts P(MAE gain > 0) at 0.9998. That is real predictive signal. It is accuracy, NOT profit: there is still "
+     "no price to beat, so no ROI exists."),
     ("The compression finding",
-     "The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin."),
+     "The same test shows predicted margins are compressed to 32.6% of true dispersion (sd 5.44 vs 16.67) and "
+     "correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no "
+     "stake may ever be sized from a predicted margin."),
+    ("The luck finding",
+     "Of the seven candidate strategies in the lab, three are distinguishable from chance at 95% and three are "
+     "too small to call. The most eye-catching record on the site — S4 going 7 for 7 — is one of the three that "
+     "cannot be called, and the leaderboard refuses to rank it. Separating skill from variance is now a gate "
+     "(G9), not an opinion."),
     ("The luck finding",
      "Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story."),
     ("The correlation finding",

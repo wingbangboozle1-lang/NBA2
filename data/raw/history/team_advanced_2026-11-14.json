@@ -1,0 +1,288 @@
+{
+ "schema": "nba2.team-advanced.v1",
+ "meta": {
+  "captured_utc": "2026-11-14",
+  "season": "2026-27",
+  "season_type": "Regular Season",
+  "per_mode": "PerGame / Per100Possessions mix as displayed on the official page",
+  "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+  "list_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+  "notes": [
+   "OffRtg, DefRtg and NetRtg are points per 100 possessions; PACE is possessions per 48 minutes; PIE is a percentage. All are season-to-date as displayed at capture.",
+   "Captured in two chunks (rows 1-14 from the plain URL, rows 15-30 from the URL with &PerMode=PerGame appended then chunkIndex=1), because the plain URL returns only nav chrome for chunkIndex=1 in this tooling.",
+   "At capture the page's own GP matched the committed standings snapshot (e.g. DEN GP 10)."
+  ]
+ },
+ "rows": [
+  {
+   "team": "LAL",
+   "off_rating": 121.6,
+   "def_rating": 113.6,
+   "net_rating": 8.0,
+   "pace": 100.5,
+   "pie": 54.2,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "SAS",
+   "off_rating": 119.6,
+   "def_rating": 106.6,
+   "net_rating": 13.0,
+   "pace": 98.94,
+   "pie": 56.7,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "BOS",
+   "off_rating": 117.4,
+   "def_rating": 105.6,
+   "net_rating": 11.7,
+   "pace": 96.62,
+   "pie": 55.9,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "HOU",
+   "off_rating": 119.3,
+   "def_rating": 110.2,
+   "net_rating": 9.1,
+   "pace": 97.42,
+   "pie": 55.8,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "PHI",
+   "off_rating": 111.0,
+   "def_rating": 109.5,
+   "net_rating": 1.5,
+   "pace": 100.04,
+   "pie": 50.9,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "MIN",
+   "off_rating": 117.2,
+   "def_rating": 103.8,
+   "net_rating": 13.4,
+   "pace": 101.08,
+   "pie": 56.1,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "POR",
+   "off_rating": 118.8,
+   "def_rating": 111.1,
+   "net_rating": 7.7,
+   "pace": 100.67,
+   "pie": 53.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "DET",
+   "off_rating": 114.1,
+   "def_rating": 106.9,
+   "net_rating": 7.2,
+   "pace": 99.17,
+   "pie": 55.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "GSW",
+   "off_rating": 116.1,
+   "def_rating": 112.0,
+   "net_rating": 4.1,
+   "pace": 99.66,
+   "pie": 51.8,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "MEM",
+   "off_rating": 117.8,
+   "def_rating": 110.0,
+   "net_rating": 7.8,
+   "pace": 100.87,
+   "pie": 53.2,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "OKC",
+   "off_rating": 112.7,
+   "def_rating": 109.0,
+   "net_rating": 3.7,
+   "pace": 98.58,
+   "pie": 53.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "ATL",
+   "off_rating": 113.3,
+   "def_rating": 111.9,
+   "net_rating": 1.4,
+   "pace": 103.55,
+   "pie": 48.5,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "DAL",
+   "off_rating": 112.5,
+   "def_rating": 111.7,
+   "net_rating": 0.8,
+   "pace": 100.5,
+   "pie": 50.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "CLE",
+   "off_rating": 116.1,
+   "def_rating": 115.2,
+   "net_rating": 0.9,
+   "pace": 99.7,
+   "pie": 50.7,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "DEN",
+   "off_rating": 115.9,
+   "def_rating": 115.1,
+   "net_rating": 0.7,
+   "pace": 97.58,
+   "pie": 52.2,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "MIA",
+   "off_rating": 113.2,
+   "def_rating": 116.4,
+   "net_rating": -3.2,
+   "pace": 102.44,
+   "pie": 49.0,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "NYK",
+   "off_rating": 114.5,
+   "def_rating": 108.6,
+   "net_rating": 5.9,
+   "pace": 95.63,
+   "pie": 53.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "IND",
+   "off_rating": 110.1,
+   "def_rating": 111.7,
+   "net_rating": -1.5,
+   "pace": 101.15,
+   "pie": 49.6,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "ORL",
+   "off_rating": 109.7,
+   "def_rating": 113.4,
+   "net_rating": -3.7,
+   "pace": 98.23,
+   "pie": 47.6,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "PHX",
+   "off_rating": 113.8,
+   "def_rating": 117.6,
+   "net_rating": -3.8,
+   "pace": 98.45,
+   "pie": 48.1,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "TOR",
+   "off_rating": 114.5,
+   "def_rating": 112.8,
+   "net_rating": 1.7,
+   "pace": 99.88,
+   "pie": 49.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "CHA",
+   "off_rating": 101.8,
+   "def_rating": 113.0,
+   "net_rating": -11.2,
+   "pace": 96.92,
+   "pie": 42.9,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "NOP",
+   "off_rating": 111.4,
+   "def_rating": 120.2,
+   "net_rating": -8.8,
+   "pace": 102.08,
+   "pie": 46.2,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "WAS",
+   "off_rating": 108.7,
+   "def_rating": 114.3,
+   "net_rating": -5.5,
+   "pace": 99.63,
+   "pie": 47.1,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "BKN",
+   "off_rating": 109.3,
+   "def_rating": 114.4,
+   "net_rating": -5.2,
+   "pace": 99.83,
+   "pie": 47.0,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "LAC",
+   "off_rating": 110.7,
+   "def_rating": 115.8,
+   "net_rating": -5.1,
+   "pace": 100.55,
+   "pie": 47.4,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "CHI",
+   "off_rating": 109.0,
+   "def_rating": 122.0,
+   "net_rating": -12.9,
+   "pace": 103.83,
+   "pie": 44.0,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "MIL",
+   "off_rating": 105.7,
+   "def_rating": 120.0,
+   "net_rating": -14.2,
+   "pace": 100.31,
+   "pie": 42.0,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "SAC",
+   "off_rating": 107.3,
+   "def_rating": 119.5,
+   "net_rating": -12.2,
+   "pace": 101.0,
+   "pie": 42.8,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  },
+  {
+   "team": "UTA",
+   "off_rating": 105.0,
+   "def_rating": 116.4,
+   "net_rating": -11.3,
+   "pace": 100.5,
+   "pie": 45.3,
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season"
+  }
+ ]
+}

@@ -9,7 +9,7 @@
   "shrink_pseudo_games": 8.0,
   "home_court_pts": 2.0,
   "sigma_pts": 12.75,
-  "source": "data/raw/history/*.json \u2014 155 official finals, one nba.com/game URL per row",
+  "source": "data/raw/history/*.json \u2014 183 official finals, one nba.com/game URL per row",
   "leakage_rule": "ratings for a date use only games strictly before that date"
  },
  "headline": {
@@ -116,7 +116,7 @@
   "t": -0.17,
   "significant_at_5pct": false,
   "verdict": "no detectable relationship at this sample size",
-  "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 155"
+  "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 167"
  },
  "compression": {
   "predicted_margin_sd": 5.44,
