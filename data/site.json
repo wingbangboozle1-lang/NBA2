@@ -2,7 +2,7 @@
  "meta": {
   "generated_at_utc": "2026-11-14 09:49 UTC",
   "input_digest": "dc47a610f55f353db9d3e10a01049c42efe1dfd6c65eb734aaa7804ecc4f8897",
-  "build_is_idempotent": false,
+  "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
   "games": 36,

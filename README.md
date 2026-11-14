@@ -293,3 +293,53 @@ Two findings are published against the model's own interest:
   is neither proven nor rejected; ~780 games would be needed to detect r = 0.10.
 
 None of this is profit. There is no odds feed, so no ROI, no CLV, and no leaderboard rank can exist.
+
+---
+
+## v2.1 — live re-verification and the first graded forecast (session `arena/ab8743d8-nba2`, 2026-11-14)
+
+This session re-read the official pages **today** instead of trusting the transcription, and published what it
+found. Two new pages on the canonical site:
+
+* **[Live verification](https://wingbangboozle1-lang.github.io/NBA2/live-verification.html)** — the official pages
+  read this session with fetch times, where the published site no longer matches them, and the grading of the
+  repository's first genuine forecast.
+* **[Decision queue](https://wingbangboozle1-lang.github.io/NBA2/decision-queue.html)** — every suggestion with its
+  evidence, the change it would make, and an accept / reject / defer action. Nothing is implemented until the owner
+  chooses; this session never writes `accepted`.
+
+```bash
+python3 -m nba2.v2.live     # staleness test + grading, re-derived from audit/2026-11-14/
+python3 -m nba2.v2          # rebuild site/ (19 pages, was 17)
+python3 -m nba2.v2.check    # every row sourced, every blank explained
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 59 tests (was 43)
+```
+
+### What it found, with the numbers
+
+| Finding | Evidence | Source |
+|---|---|---|
+| The 30 published team records are a **pre-11/13-finals snapshot** | they match the pre-final reconstruction **30/30** and today's official standings **12/30**; 0 rows unexplained | [nba.com/standings](https://www.nba.com/standings) |
+| The site's "30/30 identical" cross-check was true when made and is no longer true of the same rows | relabelled *as transcribed 2026-11-14* (F-028) | [nba.com/standings](https://www.nba.com/standings) |
+| `nba2/data/picks.json` is the **first genuine out-of-sample forecast** in the repo | committed `d04bdc3` at 22:36:46 UTC, **83 min** before the earliest 11/13 tip; one commit ever | [nba.com/games](https://www.nba.com/games) |
+| It went **4-0** — on **4 distinct games**, not 8 | 8 recorded wins because S1 (ML) and S2 (spread) fired on the same four games | [nba.com/games](https://www.nba.com/games) |
+| The model shows **no winner-picking edge yet** | model **5/9**, naive net-rating baseline **5/9**, always-home **7/9** | [nba.com/games](https://www.nba.com/games) |
+| Margin MAE 11.46 vs 13.33 (predict a tie); **total MAE ties** the flat-224 baseline exactly at 16.44 | n = 9 — one result moves any of these | [nba.com/games](https://www.nba.com/games) |
+| **No profit is published anywhere** | `american_odds` is absent from all 21 signals; a PnL would be an assumed −110 | F-026 / Q-28 |
+
+Nine 11/13 finals were confirmed **identically on two official surfaces** ([schedule](https://www.nba.com/schedule)
+and [games](https://www.nba.com/games)). The `11/14 11:00 AM ET` injury report returned **AccessDenied**, so no newer
+official revision existed at fetch time — recorded, not worked around.
+
+### Why this mattered
+
+Every page printed an `as-of` date and no build failed when the date was old. A stale row and a correct row rendered
+identically, both saying MATCH. That is the silent failure mode this project exists to avoid, and it was live on the
+site. The fix is not a re-transcription (which reproduces the same failure on the next slate) but a **staleness gate**,
+now proposed as DG-02 / Q-23 and enforced ahead of merge by
+[`.github/workflows/publish-parity.yml`](.github/workflows/publish-parity.yml), which also closes a deploy hole: no
+workflow previously compared the committed `site/` tree against a rebuild, so the published artefact could drift from
+its own inputs and only break at deploy time on `main`.
+
+Nothing was invented. Two irregularities in another session's files — a spread-sign inversion in the S2 selections
+(F-025) and two dashboards both claiming to be the site (F-027) — are **published, not silently fixed**.

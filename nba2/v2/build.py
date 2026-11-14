@@ -355,8 +355,40 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
     built["index.html"] = page("index.html", "Dashboard", body, "index.html")
 
     # ------------------------------------------------------------------ executive summary
-    body = """<h1>Executive summary</h1>
-<p class="lede">Six things you need to know, in the order they affect a decision.</p>
+    # Refresh the counts that move every time a register changes, so this page cannot state a
+    # number the registers contradict (it did: '14 questions' / '18 suggestions' while the files
+    # held 22 / 20).
+    n_questions = len(json.loads((ROOT / "requirements" / "QUESTIONS.json").read_text())["questions"])
+    n_suggestions = len(json.loads((ROOT / "suggestions" / "SUGGESTIONS.json").read_text())["suggestions"])
+    n_flags = len(C.FLAGS)
+    chk = LV.checks()
+    st_ex = chk.get("staleness") or {}
+    gr_ex = chk.get("grade") or {}
+    body = f"""<h1>Executive summary</h1>
+<p class="lede">The state of the project in one screen, then the numbers behind it, then the single next decision.
+Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
+"""
+    body += f"""
+<h2>0. What the live re-check changed today (2026-11-14)</h2>
+<div class="note bad"><b>The site was publishing a pre-final snapshot as if it were current.</b>
+Reconstructed against today's official standings, the 30 team records on this site agree with the
+<em>pre-11/13-finals</em> state on <b>{st_ex.get('match_pre_final_state','—')} of 30</b> rows and with current official
+standings on <b>{st_ex.get('match_live_standings','—')} of 30</b>. Nine games were played after the table was
+transcribed. Nothing on the site could have caught it, because nothing compared a published row against a fresher
+capture. <a href="live-verification.html">Every stale row is listed here.</a></div>
+<div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
+<code>nba2/data/picks.json</code> was committed {gr_ex.get('minutes_before_first_tip','—')} minutes before the earliest
+tip. It went <b>4-0</b> on the <b>4 distinct games</b> it bet — but 8 wins are recorded, because two strategies fired on
+the same four games. On all {gr_ex.get('games_graded','—')} graded games the model named the winner
+<b>{gr_ex.get('side_accuracy',{}).get('model','—')}/{gr_ex.get('side_accuracy',{}).get('n','—')}</b>, the same as a naive
+net-rating baseline and <em>worse</em> than always picking the home team
+({gr_ex.get('side_accuracy',{}).get('always_home','—')}/{gr_ex.get('side_accuracy',{}).get('n','—')}). No profit is
+published, because no signal in the file carries a price.</div>
+<div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
+ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
+irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
+published on the Flagged page rather than fixed silently in someone else's file.</div>
+<h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
         body += f'<div class="note"><b>{esc(head)}.</b> {esc(txt)}</div>'
@@ -373,8 +405,10 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Picks published", "0 / 31", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
         {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["game_logs"][2])]},
-        {"cells": ["Open decision questions", "14", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Suggestions awaiting a decision", "18", "3 recommended first — see the queue page", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Open decision questions", f"{n_questions}", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the rest are explained by the nine 11/13 finals — see Live verification", srclink(O.SOURCES["standings"][1])]},
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
@@ -386,6 +420,21 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
   <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
+<h2>The single next decision</h2>
+<p><b>Decide which tree is the site.</b> The Pages API reports <code>source: main /</code>, which serves the repository
+root, while the workflow in this repository publishes the <code>site/</code> artefact and the live index is the v2
+dashboard. Both contain a full dashboard with different numbers. While that is true, no verification on either tree can
+be treated as authoritative — which is why it is ranked above the odds feed in the
+<a href="decision-queue.html">decision queue</a>, despite being a one-line settings change.</p>
+<div class="cards">
+  <div class="card"><h4><a href="decision-queue.html">Review the decision queue</a></h4><p>Seven numbered decisions,
+  each with its evidence, the change it would make, and an accept / reject / defer action. Nothing is implemented until
+  you choose.</p></div>
+  <div class="card"><h4><a href="live-verification.html">Check today's evidence</a></h4><p>The official pages read today,
+  what each one contradicted, and the grading of the repository's first real forecast.</p></div>
+  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>{n_flags} irregularities, each with a
+  source to check. None block publication; all block a promotion.</p></div>
+</div>
 """
     built["executive-summary.html"] = page("executive-summary.html", "Executive summary", body, "executive-summary.html")
 
@@ -1084,7 +1133,6 @@ third — expensive, but it unblocks the entire profit question, which nothing e
     built["decision-queue.html"] = page("decision-queue.html", "Decision queue", body, "decision-queue.html")
 
     # ------------------------------------------------------------------ live verification
-    chk = LV.checks()
     st = chk.get("staleness") or {}
     gr = chk.get("grade") or {}
     body = f"""<h1>Live verification — what today's official pages say</h1>

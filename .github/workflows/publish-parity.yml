@@ -1,0 +1,96 @@
+name: Verify the published tree (zero tolerance for drift)
+
+# ---------------------------------------------------------------------------------------------
+# WHY THIS WORKFLOW EXISTS  (added by session arena/ab8743d8-nba2, 2026-11-14)
+#
+# The site a reader actually gets is the `site/` artefact that pages.yml uploads. Before this
+# workflow, no automated job ever compared the committed `site/` tree against a rebuild of the
+# committed inputs:
+#
+#   * ci.yml rebuilt the v1 tree (data/site.json + root *.html) and asserted parity — good, but
+#     that is not the published tree;
+#   * v2-verify.yml rebuilt `site/` and checked provenance, but never diffed the result;
+#   * pages.yml does diff, but it only runs on a push to main — i.e. after the merge, and a
+#     failure there blocks the deploy rather than the pull request.
+#
+# So a change to nba2/v2 that was not accompanied by a regenerated site/ could be merged, and
+# would be discovered only when the deploy broke. That is exactly how a "verified" site drifts
+# from its own evidence. This workflow closes it at pull-request time, on every tree.
+# ---------------------------------------------------------------------------------------------
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-parity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rebuild every generated tree from the committed inputs
+        run: |
+          python -m nba2.pipeline.build_site_data
+          python -m nba2.pipeline.build_site
+          python -m backtest.engine.build
+          python -m nba2.v2
+
+      - name: The published tree (site/) must equal a rebuild
+        run: |
+          git add -A -- site data/v2
+          if ! git diff --cached --quiet -- site; then
+            echo "::error title=site/ differs from a rebuild::the published tree is stale — commit the rebuild of site/"
+            git diff --cached --stat -- site | tail -20
+            exit 1
+          fi
+          echo "site/ matches a rebuild of the committed inputs"
+
+      - name: The v1 tree must equal a rebuild
+        run: |
+          git add -A -- data/site.json '*.html' pages data/site-built.json
+          if ! git diff --cached --quiet -- data/site.json '*.html' pages data/site-built.json; then
+            echo "::error title=v1 tree differs from a rebuild::commit the rebuild, or delete the tree"
+            git diff --cached --stat -- data/site.json '*.html' pages data/site-built.json | tail -20
+            exit 1
+          fi
+          echo "the v1 tree matches a rebuild"
+
+      - name: The sealed prediction ledgers must be byte-identical
+        run: |
+          git add -A -- data/raw/ledger
+          if ! git diff --cached --quiet -- data/raw/ledger; then
+            echo "::error::a sealed ledger changed during verification — the seal must be immutable"
+            exit 1
+          fi
+          python -c "from nba2.models import ledger as LD; import glob, json, pathlib, sys
+ok = True
+for f in sorted(glob.glob('data/raw/ledger/sealed-*.json')):
+    p = pathlib.Path(f); okf, stored, recomp = LD.verify(p)
+    n = json.loads(p.read_text())['header']['n_predictions']
+    print(f'sealed {n:3d} predictions  {stored[:16]}…  {\"VERIFIED\" if okf else \"BROKEN\"}')
+    ok = ok and okf
+sys.exit(0 if ok else 1)"
+
+      - name: Provenance — every row sourced, every blank explained, no broken links
+        run: |
+          python -m nba2.v2.check
+          python -m nba2.pipeline.lint
+          python3 tools/check_links_all.py
+
+      - name: Live verification is reproducible
+        run: |
+          python -m nba2.v2.live
+          echo "the staleness test and the grading re-derive from the committed captures"
