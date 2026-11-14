@@ -597,8 +597,16 @@ No other task is claimed. Scope is limited to this report and this appended boar
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
 |---|---|---|---|---|---|
-| C1 | Audit current repository claims, test/build health, and stale documentation without editing another session's site/data outputs | in progress | `arena/3b88f22e-nba2` | `COORDINATION.md`, `analysis/current-state-audit-2026-11-14.md` | Automated local tests, builders and link/source validators; external claims linked in audit only when official-source snapshots exist |
+| C1 | Audit current repository claims, test/build health, and stale documentation without editing another session's site/data outputs | done | `arena/3b88f22e-nba2` | `COORDINATION.md`, `analysis/current-state-audit-2026-11-14.md`, `README.md` (count corrections only) | 55 unit tests pass; main lint 915 rows/33 tables; `tools/verify_site.py` 13 pages/249 rows pass; repo links pass; dashboard check 524 rows pass; originated verifier 24/24; official NBA schedule + 11/13 injury PDF spot-checked. Detailed limitations, official links, AccessDenied on the expected 11/14 PDF, and no full semantic 915-row recertification are recorded in the audit. |
 
 Claim made before work. Scope is non-overlapping with previous task outputs. Current working branch is platform-pinned to `arena/3b88f22e-nba2`; no branch switch or new worktree will be used.
 
 **Scope amendment (before editing):** C1 now also includes `README.md`, limited to correcting two stale generated-site/test counts and clarifying the root page count. The counts were independently reproduced from `data/site.json`, `nba2/tests`, and `nba2/pipeline/lint.py`; this is documentation-only and does not alter shared model/site data. No other session owns an active task on this path in the current board.
+
+### C1 completion record — `arena/3b88f22e-nba2`
+
+- Reviewed repository tree, live root build metadata, CI/Pages workflows, requirements register, prior verification log, and the existing flagged register. The README's published counts did not match current generated artifacts; corrected those counts only (18 HTML pages, 33 tables, 915 rows, 55 tests).
+- Verification run: 55/55 unit tests; pipeline lint 915/33; docs checker 13 pages/249 rows PASS; whole-repository internal links PASS; dashboard check 12 pages/524 rows PASS; originated verifier 24/24 PASS; `git diff --check` PASS.
+- Official sources reopened: [NBA schedule](https://www.nba.com/schedule) and [NBA injury report 2026-11-13 04:15 PM ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf). The expected [2026-11-14 01:00 PM ET injury report](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_00PM.pdf) returned AccessDenied in this environment; no values were filled from it.
+- Irregularities: snapshots are as-of 2026-11-13 and daily ingest is not implemented; odds/history/player inputs remain blocked; some team rating fields are third-party rather than official; multiple prior site trees remain. The audit explicitly states that the automated link/provenance checks do not semantically validate every published value and this session did not repeat a full 915-row factual recertification.
+- Detailed findings, decision questions, source links, and safe next steps: `analysis/current-state-audit-2026-11-14.md`. No game data, picks, model outputs, or other session's site files were modified.

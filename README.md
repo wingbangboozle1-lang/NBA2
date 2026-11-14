@@ -27,8 +27,9 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (17 pages, 31 tables, 870 rows) are rendered from
-[`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
+`index.html` + `pages/**` (18 HTML pages: 1 landing page + 17 subpages; 33 tables, 915 rows at
+this snapshot) are rendered from [`data/site.json`](data/site.json), which is itself generated
+only from committed snapshots:
 
 | Page | Contents |
 |---|---|
@@ -58,7 +59,7 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 49 standard-library tests: statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 55 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
