@@ -1495,3 +1495,35 @@ except `crosscheck_site.py` as scoped above.
 flag/blank; values are never inferred. The sealed ledger is never rewritten. Prior sessions'
 board sections are preserved verbatim (append-only). Flagged irregularities do not block the
 merge; they are published on the Flagged for Review page.
+
+### Scope amendment — `arena/6c5195d1-nba2`, 2026-11-14 ~10:05 UTC (before any edit)
+
+Investigation of the six crosscheck failures traced each to a concrete file. The following
+are added to this session's edit scope, all under the finished-owner handoff rule (no
+session holds an open claim on them) and each justified in the completion record:
+
+- `data/raw/team_ratings_2026-11-13.json` — **CR-3 only**: the two stale
+  `internal_consistency_checks` FAIL labels are corrected to the recomputed result with an
+  in-file `correction` record (precedent: `arena/f7477d5e-nba2`'s DET@CHA correction);
+  `flags[FLAG-RAT-02]` statement amended to describe the corrected state. No record value
+  changes.
+- `nba2/models/leaderboard.py` — **CR-5 only**: publish AT-RISK separately from BLOCKED in
+  the leaderboard tally (the gate matrix already distinguishes them).
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` — merge the published
+  queue fragment `analysis/queue-additions-5b80b88a.json` (S-21…S-31, Q-23…Q-27) into the
+  registers that feed the site, marking each item's status truthfully (several were
+  implemented by later sessions — kept for the record, marked applied).
+- `data/raw/history/games_2026-11-13.json`, `data/raw/finals_2026-11-13.json`,
+  `data/raw/finals_all.json` — **new captures only**: the nine 2026-11-13 official finals
+  fetched live from `nba.com/games?date=2026-11-13` this session (9/9 with per-game
+  `nba.com/game/{id}` URLs). Ledger games are 11/14+ so settlement stays PENDING — nothing
+  is imputed.
+- `nba2/pipeline/refresh.py` and `.github/workflows/refresh.yml` — settlement-window fix:
+  both hardcode `slate_2026-11-13_to_11-16.json`, so the five sealed 11/17 games in
+  `sealed-2026-11-14.json` would never be fetched by the nightly job; the window is
+  re-derived from the sealed ledgers themselves (the source of truth for what must be
+  settled). Plus **CR-7**: `tools/crosscheck_site.py` joins the refresh verify chain
+  (CR-7 said "once F1/F2 are fixed" — they are).
+- `nba2/tests/**` — only where a test asserts a fact one of the fixes above legitimately
+  changes (e.g., the flag-registry list); each such change recorded in the completion
+  record with its reason.
