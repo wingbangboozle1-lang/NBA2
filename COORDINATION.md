@@ -16,6 +16,8 @@ touches, and the verification record. **Read this before starting any task.**
 
 ## Session registry
 
+| `arena/9707c113-nba2` | active | audit current site/repo verification status | `analysis/session-9707-audit.md`, append-only `COORDINATION.md` |
+
 | Session ID | Branch | Role | Notes |
 |---|---|---|---|
 | arena/36543e84-nba2 | merged to main | Landing page + Pages workflow | Built root `index.html`, `flagged.html`, `styles.css`, `app.js`, `.github/workflows/pages.yml`. PR #1 merged. |
