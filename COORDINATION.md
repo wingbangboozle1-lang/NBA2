@@ -2942,3 +2942,19 @@ No committed data value was inferred or filled in.
 - Merged to main as commit 46bc33125fba5c775ac5ce3b49c1b47e74b7b4b3 at 2026-11-14T18:58:41Z via `gh pr merge 64 --merge` (no approval waited).
 - GitHub Pages: pages.yml run #58 triggered by the merge push (head 46bc331); Pages status `building` / run queued at record time — deploy confirmation pending the queued build; live re-fetch of the fixed verification.html (MATCH 30/30, no ERROR badge) follows once the build completes.
 
+
+---
+
+## Session `arena/f95ac5bc-nba2` — CLAIM (2026-11-14 UTC)
+
+**Task:** make the automated-refresh state visible and correct stale v2 site claims. The published decision queue currently says the scheduled workflow has "never run"; the GitHub Actions API shows it has run, but the latest run failed in the official-finals fetch step. This work will distinguish *workflow execution*, *workflow success*, and *freshness of the published v2 model*. It will not alter NBA facts, model inputs, originated lines, sealed picks, grades, or stakes.
+
+**Files in scope:** `.github/workflows/refresh.yml` (status publishing only); `nba2/v2/content.py`, `nba2/v2/build.py`, `nba2/v2/test_v2.py`; new `data/operations/refresh_status.json`; generated `data/v2/content.json` and `site/**` only by the v2 builder; new `analysis/session-f95ac5bc-refresh-status.md`; this append-only board section.
+
+**Non-overlap / handoff:** PR #63 (`arena/e17ff73a-nba2`) owns `tools/crosscheck_site.py`, the one-line README count, and an append-only board record; none are in this scope. PR #50 last committed at 2026-11-14 10:54:21Z and remains open; it contains a generated edit to `site/executive-summary.html`. More than 60 minutes have elapsed with no newer commit, so this session takes over only that generated page's refresh-status wording, regenerating it from `nba2/v2/build.py`; the rest of PR #50's scope remains untouched. The active `arena/9707c113-nba2` report/audit scope is also untouched.
+
+**Evidence already checked:** workflow run [43605830665](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665) was triggered on `main` at 2026-11-14T14:37:25Z and failed. The Actions API reports the injury-report archive step succeeded, `Fetch official finals for arrived window dates` failed, and downstream settlement/build/publish steps were skipped. The workflow source is [`.github/workflows/refresh.yml`](https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml). Downloading the detailed log returned EOF; the exact endpoint and failure cause are **not verified** and will not be inferred. The latest failed run is evidence of a failed attempt, not evidence that the v2 modeling inputs were refreshed.
+
+| Task | Status | Files | Verification |
+|---|---|---|---|
+| F95-01 — record run evidence, correct decision text, expose refresh result without overstating model freshness, add regression coverage | in progress | paths above | GitHub Actions API; generated-site parity; v2 tests/check; full CI after implementation |
