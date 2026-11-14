@@ -241,8 +241,8 @@
     {
       "id": "S-22",
       "title": "Publish the true sample size next to every hit rate, never the inflated one",
-      "problem": "The graded picks read as 8-0. They are 4-0: four games were each bet by two strategies, so a reader scanning the strategy tables sees double the evidence that exists.",
-      "proposal": "Every hit-rate table carries both numbers - 'signal rows graded' and 'distinct games' - and any strategy with fewer than the ratified minimum shows 'insufficient evidence' in place of a ranking.",
+      "problem": "The original grading display could read as 8-0 despite only 4 distinct games: S1 moneyline and S2 spread both signalled on the same games. More importantly, S2's published 4/4 was graded on inverted spread labels; on the model's intended favourite side it is 3/4 (one settled loss, five pending). These are per-market signal rows, not eight independent wins.",
+      "proposal": "Every hit-rate table carries both 'signal rows graded' and 'distinct games', separates markets/strategies, and shows 'insufficient evidence' below the minimum settlement gate. Preserve the original labels as historical evidence and display any regrade as a separate, explicitly corrected-side result.",
       "benefit": "Removes the single most common way a small sample is made to look like skill.",
       "effort": "S (implemented in nba2/v2/live.py)",
       "risk": "None; it can only reduce claims.",
@@ -285,13 +285,13 @@
     {
       "id": "S-26",
       "title": "Fix the spread-sign inversion in the S2 selections before any of it is graded by a human",
-      "problem": "S2_SpreadValue emits 'POR +6.0' for a game where the same file's label says 'POR -6.0' and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model's own number.",
-      "proposal": "Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).",
-      "benefit": "Removes a defect that silently inverts a published recommendation.",
+      "problem": "S2_SpreadValue emitted the underdog side in all nine strong-margin games because the code treated originated_spread as the home team's spread, while its label is for the away team. Example: the same file's POR-SAC line says POR -6.0 and calls POR a 6.07-point favourite, but the S2 selection said POR +6.0. The four settled published S2 signals show 4/4, while the model's own side is 3/4; five remain pending.",
+      "proposal": "Fix the generator so S2 selects the model favourite laying points; add a regression test that fails on the former sign logic. Do not regenerate or edit the pre-tip nba2/data/picks.json: preserve it byte-for-byte as historical out-of-sample evidence, disclose its inverted S2 labels, and publish a separate corrected-side regrade with official game links.",
+      "benefit": "Prevents future wrong-side selections while preserving the integrity of the historical forecast and accurately representing the evidence.",
       "effort": "S",
-      "risk": "picks.json is another session's artefact; the change is logged here for its owner rather than made unilaterally.",
-      "recommendation": "Accept and assign to the owner of nba2/picks.py.",
-      "status": "awaiting owner decision"
+      "risk": "The historical file remains wrong-side by design and must never be presented as a valid S2 recommendation. With only four settled signals, neither the 4/4 published nor 3/4 corrected-side result supports promotion or a reward.",
+      "recommendation": "Implemented this session: generator fixed and regression-tested; historical forecast deliberately frozen. Review the linked Flagged for Review entry and accept the documented no-regeneration disposition.",
+      "status": "implemented this session"
     },
     {
       "id": "S-27",
