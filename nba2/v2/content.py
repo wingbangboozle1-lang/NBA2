@@ -597,6 +597,7 @@ SESSION_AUDIT = [
 ]
 
 # --------------------------------------------------------------------------- executive summary bullets
+
 EXEC_BULLETS = [
     ("What was built",
      "A v2 line-origination model over the live three-day window (2026-11-14 → 2026-11-17, 27 games), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and — added in this build — a per-row link to the exact official game page behind every line."),
@@ -675,3 +676,30 @@ REQUIREMENTS = [
     ("R-14", "Coordinate parallel sessions without conflicts",
      "Delivered", "Claim committed and pushed before any edit; the whole session's work is confined to new paths (data/v2, nba2/v2, site/v2) plus one appended COORDINATION.md block."),
 ]
+
+
+# ---- appended by session arena/a7d4a562-nba2 (2026-11-14)
+_EXTRA_EXEC_BULLETS = [
+    ("What this build changed",
+     "The previous build shipped an expired window: it priced nine games that had already gone Final, "
+     "carried a stale 30-team record table from before that slate was played, and attached one shared "
+     "parameter page to all 27 line rows as if it were per-row provenance. All three are fixed and each "
+     "has a flag (F-023, F-025, F-024) and a regression test. The window now covers 2026-11-14 → 2026-11-17."),
+    ("The verification that found them",
+     "Every team row was re-read from nba.com/standings and cross-checked against three nba.com/stats "
+     "tables. 36 independent points-for/against deltas match the nine official 11/13 finals exactly, "
+     "league wins equal league losses (183 = 183), and home wins equal road losses (96 = 96). Those "
+     "identities are what turn a hand transcription into something a reviewer can trust."),
+    ("What is still stale, stated plainly",
+     "The newest readable official injury report is 11/14 04:15 AM ET; the 01:30 PM ET file returns "
+     "AccessDenied from this environment, so game-day availability - the input that decides a same-day "
+     "line - is not final here. 22 of its 48 rows are 'NOT YET SUBMITTED' and three slate teams are "
+     "absent from the report entirely; those are published as unknown, never as healthy."),
+    ("What has NOT changed",
+     "No pick is published. 0 of 27. Every strategy still fails G6 for the single reason that no price "
+     "exists to beat, so no ROI, no CLV and no leaderboard rank can be computed. 66.22% walk-forward "
+     "accuracy on 148 official finals is real predictive signal and it is still not a profit claim - "
+     "the probabilities are over-confident (calibration slope 0.27)."),
+]
+
+EXEC_BULLETS = EXEC_BULLETS + _EXTRA_EXEC_BULLETS
