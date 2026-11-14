@@ -1533,3 +1533,32 @@ official NBA pages in one place. This session does that, read-only.
 - **PR #44** (audit + board record): https://github.com/wingbangboozle1-lang/NBA2/pull/44 — merged with `gh pr merge 44 --merge` at merge commit `91aa68a`. Checks on the PR: `verify` pass, `backtest` pass, `parity` pass, `v2` pass.
 - **Pages:** run `43584944591` (`pages build and deployment`) **success** on `91aa68a`; Pages build API reports `built 91aa68a`.
 - **Live re-fetch:** https://wingbangboozle1-lang.github.io/NBA2/ serves the current build (as-of 2026-11-14, sealed ledger `c841e8f3…`). Note: the live landing page still shows `built 2026-11-14 01:05 UTC`, which is before the 05:15 AM ET injury release (I-01).
+## Session `arena/eae96d1e-nba2` — independent current-tree audit (claimed 2026-11-14 UTC)
+
+**Base:** `d5103130623b10a3367a398b375b0b606b08a4da` (`main`, PR #43 merged). **Scope:**
+`analysis/session-eae96d1e-audit.md` (new file only) and this append-only claim/result entry in
+`COORDINATION.md`. Existing model, generated site, source snapshots, and other task scopes are
+read-only. This session audits the current tree, runs the committed verification chain, and
+records actionable findings with source links; it will not rewrite data or alter the deployment
+configuration without an owner decision.
+
+| ID | Task | Status | Scope | Verification |
+|---|---|---|---|---|
+| EAE-01 | Current-tree independent audit and checker run | in progress | `analysis/session-eae96d1e-audit.md`, append-only `COORDINATION.md` | reproduce relevant tests/builds; identify any defect from current files; distinguish official facts from model-derived claims |
+
+
+### EAE-01 result — independent current-tree audit (2026-11-14)
+
+**Status: done; report is [`analysis/session-eae96d1e-audit.md`](analysis/session-eae96d1e-audit.md).**
+Verification performed: 64/64 `nba2/tests`, 49/49 `backtest/tests`, v2 rebuild/check (19 pages, 31 lines / 30 teams, 0 structural / semantic findings), v1 provenance lint (1139 rows / 39 tables), backtest verification (155 sourced game rows / 139 graded), `verify_site` (13 pages / 249 rows), and `check_links_all` (107 HTML files / 4342 internal links) all passed. Rebuilds left committed generated outputs unchanged.
+
+Findings, with file/source links and action proposals in the report:
+
+- **EAE-F01 (high):** GitHub Pages API is configured `build_type=legacy`, `main /`, while `.github/workflows/pages.yml` publishes `site/`; a live fetch confirmed the root response is the root/v1 content. Attempting to set `build_type=workflow` returned HTTP 403 `Resource not accessible by integration`; this session cannot change the Pages admin setting. Official GitHub docs specify selecting GitHub Actions as the source. Requires a repo admin action; no credentials requested or workaround attempted.
+- **EAE-F02 (high):** v2 schedule/team inputs are dated constants; current scheduled refresh does not acquire/refresh v2 schedule/team inputs or rebuild v2.
+- **EAE-F03 (high, retained legacy output):** independently reproduced the existing S-26 POR/SAC S2 sign inversion in `nba2/picks.py` and `nba2/data/picks.json`; not edited because the task scope was audit-only and the queue marks it awaiting owner review.
+- **EAE-F04 (medium):** the backtest's disputed baseline is explicitly disclosed; no rewards should be released.
+
+Limit: NBA schedule was fetched but rendered with no game rows in this client; no new current slate/injury numeric field is asserted. See report for official source links, verification limits, and decision-ready next steps.
+
+**Concurrent-session integration note:** PR #44 (`arena/e77ce5ad-nba2`) merged into `main` while PR #45 was being prepared, adding an independent official spot-check section to this same append-only board. The first PR #45 merge attempt was correctly blocked as non-fast-forward/conflicting. Rebased onto updated `origin/main`, preserved the complete E77 section and EAE report/claim/result, re-ran no destructive operations, and will update PR #45 from the rebased head.
