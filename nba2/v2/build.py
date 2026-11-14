@@ -407,19 +407,22 @@ published on the Flagged page rather than fixed silently in someone else's file.
 <h2>Numbers behind the summary</h2>
 """
     rows = [
-        {"cells": ["Games in window", f"{len(lines)}", "2026-11-13 → 2026-11-16", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Games verified against the official schedule", "31 / 31", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
-        {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Injury rows verified against the official PDF", "85 / 85 (+10 not-yet-submitted)", "11/13/26 04:15 PM ET", srclink(O.INJURY_PDF_URL)]},
-        {"cells": ["Measured correlations", "6", "computed from the official team, opponent and advanced tables", srclink(O.SOURCES["team_adv"][1])]},
-        {"cells": ["Correlations that cannot be measured", "6", "each names the missing dataset on the correlations page", srclink(O.BLOCKED["live_ingest"][2])]},
+        {"cells": ["Games in window", f"{len(lines)}", f"{O.WINDOW_START} → {O.WINDOW_END} (three days ahead)", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Games verified against the official schedule", f"{len(lines)} / {len(lines)}", "date, tip time, arena, game id", srclink(O.SOURCES["schedule"][1])]},
+        {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match, home and road splits included", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Official finals captured", f"{lab['meta']['n_games']} / {lab['meta']['n_games']}", "the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} player rows (+{len(O.NOT_SUBMITTED)} teams not yet filed)", "11/14/26 04:30 AM ET release", srclink(O.INJURY_PDF_URL)]},
+        {"cells": ["Measured correlations", f"{sum(1 for c in lab['correlations'] if c['status'] == 'MEASURED')}", "computed walk-forward from the official finals", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Correlations that cannot be measured", f"{sum(1 for c in lab['correlations'] if c['status'] == 'BLOCKED')}", "all three are player-level; each names the missing dataset", srclink(O.BLOCKED["player_box"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Picks published", "0 / 31", "every pick fails G6 (no market price exists to bet against)", srclink(O.BLOCKED["odds"][2])]},
-        {"cells": ["Strategies that may be ranked", "0 / 7", "all fail G6 (no price) and G7 (no settled results)", srclink(O.BLOCKED["live_ingest"][2])]},
+        {"cells": ["Leans published / games staked", f"{len(lines)} / 0", "every game gets an originated lean and a trigger price; no stake clears G6 and G7", srclink(O.BLOCKED["odds"][2])]},
+        {"cells": ["Gates passing / failing", f"{sum(1 for g in lab['gates'] if g['verdict'] == 'PASS')} / {sum(1 for g in lab['gates'] if g['verdict'] == 'FAIL')}", "evaluated from data, not asserted — see the strategy lab", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Strategies that may be ranked", "0 / 7", "G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data", srclink(O.BLOCKED["live_ingest"][2])]},
         {"cells": ["Open decision questions", f"{n_questions}", "each with a way to resolve it — see the questions page", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
-        {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the rest are explained by the nine 11/13 finals — see Live verification", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification", srclink(O.SOURCES["standings"][1])]},
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
@@ -504,7 +507,7 @@ error.</p>
         srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), esc(arena), esc(city), esc(tv or "—"), esc(cup or "—"),
                                srclink("https://www.nba.com/schedule?date=" + d)]})
     body += table(["Date", "ET", "Matchup", "Game ID", "Arena", "City", "National TV", "Cup group", "Source"],
-                  srows, "31 games on the official schedule", idcol=None)
+                  srows, f"{len(srows)} games on the official schedule", idcol=None)
     built["picks.html"] = page("picks.html", "Picks &amp; slate", body, "picks.html")
 
     # ------------------------------------------------------------------ lines

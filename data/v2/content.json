@@ -106,7 +106,7 @@
    "gates_that_can_pass_today": "G1,G2,G3,G4,G9",
    "gates_that_fail_today": "G6,G7,G8,G11,G12",
    "status": "PUBLISHABLE AS A PROJECTION ONLY",
-   "why": "The line itself is derivable from official data; the bet cannot be, because there is no price and no backtest.",
+   "why": "The line is derivable from official data and the method has been backtested walk-forward; the bet still cannot be staked, because there is no price to beat.",
    "src": "https://www.nba.com/stats/teams/advanced"
   },
   {
@@ -593,7 +593,7 @@
   [
    "Q-13",
    "Is the schedule data used here complete for the window?",
-   "Yes for 11/13\u201311/16: 31 games, matching the official schedule's per-day counts (9/5/9/8), and identical to the committed snapshot.",
+   "Yes for 11/14-11/17: 27 games, matching the official schedule's per-day counts (5/9/8/5), and identical to the committed snapshot.",
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
@@ -945,13 +945,13 @@
    "R-6",
    "Every strategy must pass validation gates",
    "Enforced",
-   "12 gates, and the picks page mechanically withholds any pick whose gates do not all pass (currently 27/27 window picks withheld)."
+   "12 gates, each evaluated from data with the number that decided it. The picks page publishes a lean and trigger for every game and holds every stake, printing the gates that did it."
   ],
   [
    "R-7",
    "Determine correlation values",
-   "Partial",
-   "6 correlations measured (all \u22650.93 where meaningful); 5 blocked with the exact missing dataset named; 1 stated as an assumption."
+   "Delivered for team level; blocked for player level",
+   "4 correlations measured from the 183 official finals with CIs and p-values, including the same-game-parlay correlation a two-leg price needs; 3 player-level correlations remain blocked and each names the dataset that would unblock it."
   ],
   [
    "R-8",
@@ -962,14 +962,14 @@
   [
    "R-9",
    "Generate picks for every upcoming slate, max 3 days ahead",
-   "Delivered (withheld)",
-   "27 games in the 11/14\u219211/17 pick window, every game covered, plus the nine day-before context games; picks are computed and then withheld with the failing gate printed."
+   "Delivered",
+   "27 games, 11/14\u219211/17 \u2014 the full three-day window. Every game gets an originated line, a lean, and the trigger price at which acting would be rational. No game gets a stake: G6 (no price) and G7 (167 settled of 300) both fail, and the page says so per row."
   ],
   [
    "R-10",
    "Track how injuries affect rotation minutes and production",
-   "Blocked",
-   "Statuses are official and complete for 11/13; minutes and production impact need player logs. Every impact cell is blank with a reason."
+   "Partially blocked",
+   "Statuses are official for 11/14 (26 player rows + 23 teams that had not yet filed, because the filing deadline for 11/15-11/17 has not passed). Minutes and production impact need player logs, so every impact cell is blank with a reason."
   ],
   [
    "R-11",
