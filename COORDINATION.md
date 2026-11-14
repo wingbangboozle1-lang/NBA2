@@ -1862,3 +1862,71 @@ a row is only "verified" if the official document was fetched in this session an
 blank stays blank and is flagged; the sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten;
 flagged and unverified items do not block the merge but are published on the Flagged for Review page
 with their source link.
+
+## Session `arena/03a581a0-nba2` — published-tree defect remediation + final integration (claimed 2026-11-14 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged). **Branch:** `arena/03a581a0-nba2`
+(platform-pinned; all work happens there). Claim committed and pushed **before** any file in the
+scope below is created or edited.
+
+**Parallel sessions read at claim time (so scopes stay non-overlapping):**
+
+| Session | PR | Claimed scope | Overlap with me |
+|---|---|---|---|
+| `arena/7f906d9d-nba2` | #47 (open) | **final integration: live GitHub Pages site** — `COORDINATION.md` + the repository Pages source setting (`build_type: workflow`) | none — I do **not** touch `.github/workflows/**` or the Pages admin setting, and I do not claim "final integration of the live site" |
+| `arena/eae96d1e-nba2` | #45 (open) | independent current-tree **audit** (read-only) — `analysis/session-eae96d1e-audit.md`, `COORDINATION.md` | none — audit only; it explicitly declines to edit the defects it finds |
+| `arena/e77ce5ad-nba2` | #44 merged, #46 open | official-source spot check + checker run — `audit/e77ce5ad-nba2/**`, `COORDINATION.md` | none |
+
+**Why this session exists.** Every committed checker passes, but `tools/crosscheck_site.py`
+(the independent re-derivation harness) reports **7 FAIL**, and a parallel audit independently
+reproduced a **published wrong-side pick** (its finding EAE-F03 / the repo's own suggestion
+**S-26**). Nobody had claimed the *fixes*. This session claims remediation of the defects that
+are inside nobody else's scope, then performs the PR → merge → Pages confirmation for its own
+branch.
+
+**File scope (this session may create/edit):**
+
+- `COORDINATION.md` — append-only (this section + completion record).
+- `nba2/picks.py` — **S2 spread-selection sign fix only** (S-26 / EAE-F03).
+- `nba2/tests/` — additive regression test(s) only.
+- `suggestions/SUGGESTIONS.json` — S-26 status transition only.
+- `nba2/models/leaderboard.py` — AT-RISK vs BLOCKED tally (crosscheck CC-GATE-02).
+- `nba2/pipeline/build_site_data.py` — the `W-L (official NBA.com)` column source
+  (CC-DER-05 / change request CR-4 already logged on this board), plus any new flag rows
+  needed to publish this session's corrections on the Flagged for Review page.
+- `README.md` — stale artefact count only (CC-DOC-01).
+- Regenerated artefacts of the above: `data/site.json`, `index.html`, `pages/**`.
+- `analysis/session-03a581a0-remediation.md` — new report.
+
+**Explicitly NOT touched (and why):**
+
+- **`nba2/data/picks.json` — left byte-identical on purpose.** It is the repository's only
+  genuine *out-of-sample* forecast (committed 83 minutes before the earliest 2026-11-13 tip).
+  Regenerating it now would restamp `generated_utc` with a post-hoc date and destroy the very
+  property that makes it evidence. S-26 proposes "regenerate"; this session rejects that half of
+  the proposal and records why — the generator is fixed, the historical artefact is sealed by
+  its commit, and the correction is published as a flag instead.
+- `data/raw/**`, `data/raw/ledger/**` (sealed ledgers, immutable by design), `site/**`,
+  `backtest/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `audit/**`,
+  `.github/workflows/**`, and the repository Pages admin setting.
+- `data/raw/team_ratings_2026-11-13.json` (CC-SNAP-13) — editing a provenance snapshot to make
+  a check pass is the opposite of what a snapshot is for; left flagged as CR-3 already logged.
+
+**Task board (this session):**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| N-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| N-02 | Reproduce every crosscheck FAIL and the S-26 defect from source, line by line | claimed | read-only | each reproduced by command output, not by reading another session's prose |
+| N-03 | Fix S2 spread-selection sign in `nba2/picks.py` + regression test | claimed | `nba2/picks.py`, `nba2/tests/` | test fails on the old expression and passes on the new one; `nba2/data/picks.json` unchanged (`git diff --exit-code`) |
+| N-04 | Fix CC-GATE-02 (AT-RISK published as BLOCKED) and CC-DER-05 (official column fed from a third-party field) | claimed | `nba2/models/leaderboard.py`, `nba2/pipeline/build_site_data.py` | `python3 tools/crosscheck_site.py` turns both to PASS; lint still OK |
+| N-05 | Fix CC-DOC-01 (stale README count) | claimed | `README.md` | crosscheck CC-DOC-01 PASS |
+| N-06 | Publish the S-26 correction on the Flagged for Review page + close S-26 | claimed | `suggestions/SUGGESTIONS.json`, `nba2/pipeline/build_site_data.py`, regenerated site | flag row carries its source link; S-26 status no longer "awaiting owner decision" |
+| N-07 | Full verification chain on the remediated tree | claimed | read-only | 64 `nba2` tests + 49 `backtest` tests + v2 check + lint + both seals + `check_links_all` + `verify_site` + `check_site` + `verify_backtest` + `crosscheck_site` |
+| N-08 | PR → `main`, merge, confirm GitHub Pages deploy, record run IDs + live re-fetch | claimed | `COORDINATION.md` (completion record) | PR merged; Pages run green; live URL re-fetched |
+
+**Rules this session holds itself to:** a row is only "verified" if this session reproduced it by
+running the named command or reading the named official source; a blank stays blank; nothing is
+inferred; the two sealed ledgers (`cf7dedc6…`, `c841e8f3…`) and the historical out-of-sample
+forecast are never rewritten; flagged/unverified items do not block the merge and must appear on
+the Flagged for Review page with their source link.
