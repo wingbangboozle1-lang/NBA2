@@ -1,0 +1,101 @@
+{
+ "dataset": "w_l_crosscheck_independent_source",
+ "as_of": "2026-11-14",
+ "purpose": "The team table was re-read from nba.com/standings. This is a second, independent read from a different nba.com surface (the game hub at nba.com/game/den-vs-nop-0022600231, which prints each club's current record next to its 11/14 fixture) so the table is not confirmed only by the page it came from.",
+ "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+ "retrieved_at_utc": "2026-11-14T00:00:00Z",
+ "session": "arena/a7d4a562-nba2",
+ "teams_compared": 22,
+ "mismatches": {},
+ "records": {
+  "DEN": [
+   6,
+   4
+  ],
+  "NOP": [
+   4,
+   9
+  ],
+  "DAL": [
+   7,
+   5
+  ],
+  "CLE": [
+   6,
+   7
+  ],
+  "DET": [
+   8,
+   3
+  ],
+  "MIA": [
+   6,
+   6
+  ],
+  "BKN": [
+   3,
+   8
+  ],
+  "MEM": [
+   8,
+   4
+  ],
+  "CHI": [
+   2,
+   9
+  ],
+  "MIN": [
+   9,
+   3
+  ],
+  "IND": [
+   5,
+   8
+  ],
+  "PHI": [
+   10,
+   3
+  ],
+  "LAL": [
+   11,
+   2
+  ],
+  "PHX": [
+   5,
+   6
+  ],
+  "CHA": [
+   4,
+   8
+  ],
+  "LAC": [
+   3,
+   8
+  ],
+  "SAS": [
+   11,
+   2
+  ],
+  "UTA": [
+   1,
+   12
+  ],
+  "BOS": [
+   10,
+   2
+  ],
+  "NYK": [
+   6,
+   6
+  ],
+  "TOR": [
+   5,
+   7
+  ],
+  "HOU": [
+   10,
+   3
+  ]
+ },
+ "note": "22 of 30 clubs are printed on that hub's 11/14-11/15 cards; the remaining 8 (ATL, GSW, MIL, ORL, POR, SAC, WAS and one more) do not appear on the visible portion of the page, so they are NOT cross-checked here and are left out rather than inferred."
+}

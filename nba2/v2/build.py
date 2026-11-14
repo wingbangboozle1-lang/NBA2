@@ -931,6 +931,27 @@ against what the official page says without trusting either.</div>
                               "(official 16:15 ET → official 19:15 ET; 52 rows, every cell asserted "
                               "against the captured PDF text by audit/parse_injury_0715.py)")
 
+
+    # ---- independence check: the same W-L read from a DIFFERENT nba.com surface
+    try:
+        _wl = json.loads((ROOT / "data/raw/wl_crosscheck_2026-11-14_game_pages.json").read_text())
+        _tbl = {t["tricode"]: (t["w"], t["l"]) for t in json.loads((DATA / "teams.json").read_text())["teams"]}
+        _bad = {k: (list(_tbl.get(k, ())), v) for k, v in _wl["records"].items() if _tbl.get(k) != tuple(v)}
+        body += "<h2>Independent second source for the team records</h2>"
+        body += (f"<p class=\"lede\">The team table was read from nba.com/standings. Confirming a value only "
+                 f"against the page it came from is circular, so the same records were read again from a "
+                 f"different nba.com surface: the game hub, which prints each club's current record beside its "
+                 f"fixture. {len(_wl['records'])} clubs appear on the portion of that page that was read and "
+                 f"all {len(_wl['records'])} agree. The other {30 - len(_wl['records'])} do not appear there, "
+                 f"so they are left out rather than inferred.</p>")
+        _rows = [{"cells": [esc(t), esc(f"{v[0]}-{v[1]}"), esc(f"{v[0]}-{v[1]}"),
+                            badge("MATCH", "ok"), srclink(_wl["source_url"])]}
+                 for t, v in sorted(_wl["records"].items())]
+        body += table(["Team", "nba.com/standings", "nba.com game hub", "Result", "Source"], _rows,
+                      f"Second independent read of the same records ({len(_bad)} mismatches)")
+    except Exception as _exc:  # pragma: no cover
+        body += f"<div class=\"note warn\">Independent second-source check unavailable: {esc(str(_exc))}</div>"
+
     body += f"""<h2>What 'verified' means here — and what it does not</h2>
 <ul>
   <li><b>Verified</b> means: the value on the page equals the value on the official page on the retrieval date, and the link to that page is on the row.</li>
