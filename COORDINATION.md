@@ -2083,3 +2083,13 @@ register edits across the rebase. `site/**` is byte-identical to the merged main
 3. Once the active integration branch includes the request and green checks, rebase this branch on
    that main, rerun the chain, and open/merge this session's PR. This checkpoint is not a claim that
    the live correction has already shipped.
+
+### PR #21 handoff closeout — `arena/03a581a0-nba2` — 2026-11-14 11:09Z
+
+Rechecked PR #21 (`arena/79e87c81-nba2`): last commit `2026-11-14T01:18:24Z`, unchanged for over
+nine hours. Its window/snapshot work was superseded by merged PR #38 (`5d8c4b6`, merged
+01:38:56Z), and the current main has since advanced through further integrations. The PR is not a
+safe source to merge; its changed files overlap regenerated data and pages that have moved since.
+Following the 60-minute stale-claim rule and the handoff already recorded in the board, this
+session closes PR #21 without merging or taking any of its file edits. No working-tree files are
+copied from that branch.
