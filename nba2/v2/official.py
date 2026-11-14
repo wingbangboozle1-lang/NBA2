@@ -172,6 +172,16 @@ TEAMS: dict[str, tuple] = {
     "WAS": (4, 9, 2, 3, 2, 6, 110.0, 115.8, 108.7, 114.3, -5.5, 99.63, 47.1),
 }
 
+# Official standings snapshot read from nba.com/standings on 2026-11-14 (live table: W/L and home/road
+# splits for all 30 teams). Re-expressed from TEAMS so the W-L cross-check in report.py can run against
+# a real module attribute instead of erroring with "module 'nba2.v2.official' has no attribute 'STANDINGS'".
+STANDINGS_SOURCE = SOURCES["standings"][1]
+STANDINGS_AS_OF = AS_OF
+STANDINGS = {
+    t: {"w": v[0], "l": v[1], "home": f"{v[2]}-{v[3]}", "road": f"{v[4]}-{v[5]}"}
+    for t, v in TEAMS.items()
+}
+
 NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",
     "CHA": "Charlotte Hornets", "CHI": "Chicago Bulls", "CLE": "Cleveland Cavaliers",

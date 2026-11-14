@@ -60,12 +60,12 @@
     "src": "https://www.nba.com/standings"
    },
    {
-    "id": "repo-wl",
-    "what": "W-L cross-check",
-    "repo_value": "n/a",
-    "live_value": "n/a",
-    "result": "ERROR",
-    "detail": "module 'nba2.v2.official' has no attribute 'STANDINGS'",
+    "id": "repo-wl-current",
+    "what": "The published team's official W-L column vs nba.com/standings read 2026-11-14",
+    "repo_value": "30/30 identical",
+    "live_value": "30 teams, official table read 2026-11-14",
+    "result": "MATCH",
+    "detail": "no differences found",
     "src": "https://www.nba.com/standings"
    }
   ],
