@@ -35,10 +35,10 @@
    {
     "id": "finals-reconstruction",
     "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
-    "repo_value": "155 finals, 155 wins assigned",
+    "repo_value": "164 finals, 164 wins assigned",
     "live_value": "183 official wins",
     "result": "CONSISTENT",
-    "detail": "no team exceeds its official record; the 28 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "detail": "no team exceeds its official record; the 19 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
     "src": "https://www.nba.com/games"
    },
    {

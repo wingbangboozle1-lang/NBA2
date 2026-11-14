@@ -1,0 +1,117 @@
+{
+ "schema": "nba2.games-history.v1",
+ "meta": {
+  "captured_utc": "2026-11-14",
+  "source": "https://www.nba.com/schedule (official finals, 11/13 slate)",
+  "date_range": [
+   "2026-11-13",
+   "2026-11-13"
+  ],
+  "n_games": 9,
+  "session": "arena/a7d4a562-nba2",
+  "retrieval_method": "markdown-rendering fetch client; sandbox has no direct HTTP egress to nba.com",
+  "note": "All nine 11/13 games read as Final on nba.com/schedule on 2026-11-14: NYK 104 IND 106, MIL 99 ORL 107, CLE 121 MIA 133, ATL 117 CHI 125 (OT), MEM 142 NOP 111, UTA 118 HOU 125, GSW 85 SAS 123, POR 120 SAC 107, OKC 112 LAC 113. Each row carries its own nba.com/game URL.",
+  "verification": "Sum of points scored equals sum of points allowed by construction (one row per game). The nine results also reconcile the previous night's W-L: e.g. IND 5-8, MIA 6-6, CHI 2-9, MEM 8-4 all match nba.com/standings read the same day."
+ },
+ "games": [
+  {
+   "game_id": "0022600034",
+   "date": "2026-11-13",
+   "away": "NYK",
+   "home": "IND",
+   "away_pts": 104,
+   "home_pts": 106,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600035",
+   "date": "2026-11-13",
+   "away": "MIL",
+   "home": "ORL",
+   "away_pts": 99,
+   "home_pts": 107,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/mil-vs-orl-0022600035",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600036",
+   "date": "2026-11-13",
+   "away": "CLE",
+   "home": "MIA",
+   "away_pts": 121,
+   "home_pts": 133,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/cle-vs-mia-0022600036",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600037",
+   "date": "2026-11-13",
+   "away": "ATL",
+   "home": "CHI",
+   "away_pts": 117,
+   "home_pts": 125,
+   "ot": true,
+   "source_url": "https://www.nba.com/game/atl-vs-chi-0022600037",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600038",
+   "date": "2026-11-13",
+   "away": "MEM",
+   "home": "NOP",
+   "away_pts": 142,
+   "home_pts": 111,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/mem-vs-nop-0022600038",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600039",
+   "date": "2026-11-13",
+   "away": "UTA",
+   "home": "HOU",
+   "away_pts": 118,
+   "home_pts": 125,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/uta-vs-hou-0022600039",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600040",
+   "date": "2026-11-13",
+   "away": "GSW",
+   "home": "SAS",
+   "away_pts": 85,
+   "home_pts": 123,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600041",
+   "date": "2026-11-13",
+   "away": "POR",
+   "home": "SAC",
+   "away_pts": 120,
+   "home_pts": 107,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/por-vs-sac-0022600041",
+   "list_url": "https://www.nba.com/schedule"
+  },
+  {
+   "game_id": "0022600042",
+   "date": "2026-11-13",
+   "away": "OKC",
+   "home": "LAC",
+   "away_pts": 112,
+   "home_pts": 113,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/okc-vs-lac-0022600042",
+   "list_url": "https://www.nba.com/schedule"
+  }
+ ]
+}

@@ -1,10 +1,10 @@
 {
  "meta": {
-  "n_games_scored": 139,
+  "n_games_scored": 148,
   "n_skipped_no_prior": 16,
   "first_date": "2026-10-23",
-  "last_date": "2026-11-12",
-  "n_dates": 18,
+  "last_date": "2026-11-13",
+  "n_dates": 19,
   "generated": "2026-11-14",
   "shrink_pseudo_games": 8.0,
   "home_court_pts": 2.0,
@@ -13,57 +13,57 @@
   "leakage_rule": "ratings for a date use only games strictly before that date"
  },
  "headline": {
-  "straight_up_accuracy": 0.6691,
-  "hits": 93,
-  "mae_margin": 11.912,
-  "rmse_margin": 15.15,
-  "mae_baseline_zero": 13.266,
-  "rmse_baseline_zero": 16.467,
-  "skill_vs_baseline_pct": 10.21,
-  "bias": 0.263,
-  "brier": 0.2184,
+  "straight_up_accuracy": 0.6622,
+  "hits": 98,
+  "mae_margin": 11.929,
+  "rmse_margin": 15.209,
+  "mae_baseline_zero": 13.27,
+  "rmse_baseline_zero": 16.561,
+  "skill_vs_baseline_pct": 10.11,
+  "bias": -0.031,
+  "brier": 0.2185,
   "brier_baseline": 0.25,
-  "brier_skill_pct": 12.64,
-  "auroc": 0.7177,
+  "brier_skill_pct": 12.6,
+  "auroc": 0.7083,
   "accuracy_ci95": [
-   0.5872,
-   0.7418
+   0.5827,
+   0.7334
   ],
-  "log_loss": 0.6275,
+  "log_loss": 0.6273,
   "log_loss_baseline": 0.6931,
-  "calibration_slope": 0.29,
-  "calibration_intercept": 0.443,
+  "calibration_slope": 0.266,
+  "calibration_intercept": 0.471,
   "calibration_read": "over-confident",
-  "games_to_prove_edge_vs_coinflip": 117
+  "games_to_prove_edge_vs_coinflip": 131
  },
  "significance": {
-  "observed_mae_gain": 1.354,
+  "observed_mae_gain": 1.341,
   "draws": 4000,
   "seed": 20261114,
-  "p_gain_positive": 0.9988,
+  "p_gain_positive": 0.9995,
   "significant_at_5pct": true
  },
  "calibration": [
   {
    "bin": "0%-45%",
-   "n": 38,
-   "hits": 12,
-   "mean_predicted": 0.3818,
-   "observed": 0.3158,
+   "n": 43,
+   "hits": 15,
+   "mean_predicted": 0.3738,
+   "observed": 0.3488,
    "ci95": [
-    0.1908,
-    0.4746
+    0.2242,
+    0.4983
    ]
   },
   {
    "bin": "45%-50%",
-   "n": 15,
-   "hits": 4,
-   "mean_predicted": 0.4729,
-   "observed": 0.2667,
+   "n": 16,
+   "hits": 5,
+   "mean_predicted": 0.4744,
+   "observed": 0.3125,
    "ci95": [
-    0.109,
-    0.5195
+    0.1416,
+    0.556
    ]
   },
   {
@@ -79,92 +79,92 @@
   },
   {
    "bin": "55%-65%",
-   "n": 32,
-   "hits": 16,
-   "mean_predicted": 0.5968,
-   "observed": 0.5,
+   "n": 33,
+   "hits": 17,
+   "mean_predicted": 0.5967,
+   "observed": 0.5152,
    "ci95": [
-    0.3363,
-    0.6637
+    0.3522,
+    0.675
    ]
   },
   {
    "bin": "65%-100%",
-   "n": 41,
-   "hits": 33,
-   "mean_predicted": 0.7311,
-   "observed": 0.8049,
+   "n": 43,
+   "hits": 35,
+   "mean_predicted": 0.7328,
+   "observed": 0.814,
    "ci95": [
-    0.6599,
-    0.8977
+    0.6738,
+    0.9026
    ]
   }
  ],
  "volatility": {
-  "margin_sd_actual": 16.434,
-  "total_sd_actual": 19.548,
+  "margin_sd_actual": 16.513,
+  "total_sd_actual": 19.468,
   "sigma_published": 12.75,
   "note": "The published sigma (12.75) is a *win-total* scale parameter, not the game-margin sd measured here. They are different quantities and must not be compared directly."
  },
  "margin_total": {
-  "n": 139,
-  "r": 0.0182,
+  "n": 148,
+  "r": -0.0088,
   "ci95": [
-   -0.1488,
-   0.1841
+   -0.1699,
+   0.1528
   ],
-  "t": 0.213,
+  "t": -0.106,
   "significant_at_5pct": false,
   "verdict": "no detectable relationship at this sample size",
   "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 155"
  },
  "compression": {
-  "predicted_margin_sd": 4.98,
-  "actual_margin_sd": 16.43,
-  "ratio": 0.303,
+  "predicted_margin_sd": 5.17,
+  "actual_margin_sd": 16.51,
+  "ratio": 0.313,
   "r_predicted_vs_actual": 0.3897,
-  "spearman_confidence_vs_bigwin": 0.1025,
+  "spearman_confidence_vs_bigwin": 0.0883,
   "read": "The model ranks games well but its margin estimates are compressed to about a third of true dispersion, so a predicted margin must not be read as an expected margin \u2014 and must never be used to size a stake."
  },
  "sensitivity": [
   {
    "shrink_pseudo_games": 0.0,
-   "n": 139,
-   "accuracy": 0.6331,
-   "mae": 14.909,
-   "pred_sd": 15.84,
+   "n": 148,
+   "accuracy": 0.6284,
+   "mae": 14.887,
+   "pred_sd": 15.69,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 2.0,
-   "n": 139,
-   "accuracy": 0.6547,
-   "mae": 12.204,
-   "pred_sd": 9.33,
+   "n": 148,
+   "accuracy": 0.6486,
+   "mae": 12.266,
+   "pred_sd": 9.47,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 4.0,
-   "n": 139,
-   "accuracy": 0.6547,
-   "mae": 11.795,
-   "pred_sd": 7.13,
+   "n": 148,
+   "accuracy": 0.6486,
+   "mae": 11.836,
+   "pred_sd": 7.32,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 8.0,
-   "n": 139,
-   "accuracy": 0.6691,
-   "mae": 11.912,
-   "pred_sd": 4.98,
+   "n": 148,
+   "accuracy": 0.6622,
+   "mae": 11.929,
+   "pred_sd": 5.17,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 16.0,
-   "n": 139,
-   "accuracy": 0.6331,
-   "mae": 12.244,
-   "pred_sd": 3.15,
+   "n": 148,
+   "accuracy": 0.6351,
+   "mae": 12.222,
+   "pred_sd": 3.32,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   }
  ],
@@ -294,6 +294,13 @@
    "hits": 4,
    "accuracy": 1.0,
    "mae": 10.834
+  },
+  {
+   "date": "2026-11-13",
+   "n": 9,
+   "hits": 5,
+   "accuracy": 0.5556,
+   "mae": 12.198
   }
  ],
  "rows": [
@@ -1825,6 +1832,105 @@
    "p_home": 0.6215,
    "correct": true,
    "source_url": "https://www.nba.com/game/cha-vs-phx-0022600230"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "NYK @ IND",
+   "neutral": false,
+   "pred_margin": -4.82,
+   "actual_margin": 2,
+   "err": -6.82,
+   "p_home": 0.3527,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/nyk-vs-ind-0022600034"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "MIL @ ORL",
+   "neutral": false,
+   "pred_margin": 6.11,
+   "actual_margin": 8,
+   "err": -1.89,
+   "p_home": 0.6841,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mil-vs-orl-0022600035"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "CLE @ MIA",
+   "neutral": false,
+   "pred_margin": -0.08,
+   "actual_margin": 12,
+   "err": -12.08,
+   "p_home": 0.4973,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/cle-vs-mia-0022600036"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "ATL @ CHI",
+   "neutral": false,
+   "pred_margin": -7.77,
+   "actual_margin": 8,
+   "err": -15.77,
+   "p_home": 0.2711,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/atl-vs-chi-0022600037"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "MEM @ NOP",
+   "neutral": false,
+   "pred_margin": -6.67,
+   "actual_margin": -31,
+   "err": 24.33,
+   "p_home": 0.3005,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/mem-vs-nop-0022600038"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "UTA @ HOU",
+   "neutral": false,
+   "pred_margin": 13.43,
+   "actual_margin": 7,
+   "err": 6.43,
+   "p_home": 0.8539,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/uta-vs-hou-0022600039"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "GSW @ SAS",
+   "neutral": false,
+   "pred_margin": 3.02,
+   "actual_margin": 38,
+   "err": -34.98,
+   "p_home": 0.5935,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/gsw-vs-sas-0022600040"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "POR @ SAC",
+   "neutral": false,
+   "pred_margin": -9.42,
+   "actual_margin": -13,
+   "err": 3.58,
+   "p_home": 0.2301,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/por-vs-sac-0022600041"
+  },
+  {
+   "date": "2026-11-13",
+   "matchup": "OKC @ LAC",
+   "neutral": false,
+   "pred_margin": -2.89,
+   "actual_margin": 1,
+   "err": -3.89,
+   "p_home": 0.4104,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/okc-vs-lac-0022600042"
   }
  ]
 }
