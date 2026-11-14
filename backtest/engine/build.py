@@ -212,7 +212,8 @@ No strategy is promoted and no reward is paid. That is the system working, not f
 {_kpi("straight-up", f"{acc['straight_up_accuracy']:.1%}", "95% CI " + f"{acc['straight_up_ci95'][0]:.1%}-{acc['straight_up_ci95'][1]:.1%}")}
 {_kpi("better-record rule", f"{naive['better_net_rating']['rate']:.1%}", "same games")}
 {_kpi("vs-baseline p", f"{gap['p_value']:.2f}", "permutation test")}
-{_kpi("gates passed", len(gs['passed']), f"of {gs['n']} registered")}
+{_kpi("gates passed", len(gs['passed_reliable']), f"of {gs['n']} registered, counted")}
+{_kpi("disputed", len(gs['passed_disputed']), ", ".join(gs['passed_disputed']) + " — excluded" if gs['passed_disputed'] else "none")}
 {_kpi("reward paid", "0", "withheld by gates")}
 </div></div>
 <section class="card"><h2>What changed in this session</h2>
@@ -536,7 +537,8 @@ deflated z above 1.0, scaled by the fraction of gates passed.</li>
 cannot relax a rule to make a strategy pass. What is new is the evidence column: before this
 session every gate read "blocked — no settled bets".</p></section>
 <div class="card"><div class="kpi-grid">
-{_kpi("passed", len(gs['passed']), ", ".join(gs['passed']) or "none")}
+{_kpi("passed", len(gs['passed_reliable']), ", ".join(gs['passed_reliable']) or "none")}
+{_kpi("disputed", len(gs['passed_disputed']), ", ".join(gs['passed_disputed']) or "none")}
 {_kpi("failed", len(gs['failed']), ", ".join(gs['failed']) or "none")}
 {_kpi("partial", len(gs['partial']), ", ".join(gs['partial']) or "none")}
 {_kpi("blocked", len(gs['blocked']), ", ".join(gs['blocked']) or "none")}
