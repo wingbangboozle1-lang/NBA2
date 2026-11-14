@@ -2083,3 +2083,73 @@ Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 che
 0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
 verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
 byte-identical across rebuilds.
+---
+
+
+---
+
+## Session `arena/3681def8-nba2` — first graded-settlement cycle, canonical site consolidation, and the full outstanding brief (claimed 2026-11-14 10:25 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged 09:55 UTC). **Branch:** `arena/3681def8-nba2` (platform-fixed).
+
+**State read at claim time (verified, not assumed).**
+- `gh pr list --state open` → **PR #21 only** (`arena/79e87c81-nba2`, opened 00:52 UTC, ~9.5 h ago,
+  no commits since; superseded in substance by PR #38's window refresh). **Not touched by this
+  session** — it belongs to that session. Every other PR is merged; no other session has committed
+  since `d510313`.
+- `gh api repos/…/pages` → `build_type: legacy`, `source: main /`, `status: built`. The **published**
+  tree is therefore the root v1 build (`index.html` + `pages/**`); `site/` (v2), `docs/`,
+  `dashboard/`, `originated/`, `backtest/`, `verified/` are all served from the same origin as
+  secondary trees. This session's consolidation work targets the **published** tree.
+- Sandbox: direct `curl` to `www.nba.com` / `ak-static.cms.nba.com` / `stats.nba.com` → HTTP 000
+  (egress blocked). The platform `fetch_page` tool **does** reach `www.nba.com` (verified live this
+  session: `https://www.nba.com/schedule?date=2026-11-14` returned the current Week-4 grid). Every
+  capture below records the method used.
+
+**Why this session exists.** Three things are true at claim time that were not true for any prior
+session, and the brief asks for all three:
+1. **The 2026-11-13 slate is now `Final` on NBA.com** (9 games, scores printed on the official
+   schedule page). The sealed ledger `cf7dedc6…` (22 predictions, 11/13) can therefore be **settled
+   for the first time** against official results — every prior session reported settlement as
+   PENDING for lack of a finals snapshot. This is the first real graded evidence in the repo.
+2. The published site is a working but **fragmented** surface (six trees on one origin). The brief
+   asks for *one* clean landing page with category subpages.
+3. The brief's content asks (strategies/leaderboard/correlations, ≤3-day picks, injury→rotation→game
+   flow, executive summary, questions register, suggestions review path) exist across those trees
+   but are not consolidated in the published one.
+
+**File scope claimed (this session):**
+- `COORDINATION.md` (this section, append-only — no other session's text edited)
+- `audit/2026-11-14-3681/**` (new namespace: live official captures + verifier scripts)
+- `data/raw/finals_2026-11-13.json` (new snapshot; official final scores, one game URL per row)
+- `nba2/pipeline/settle.py` (consume the new finals snapshot; never rewrite a sealed ledger)
+- `nba2/pipeline/build_site_data.py`, `nba2/pipeline/build_site.py` (published-tree tables/pages)
+- regenerated artefacts: `data/site.json`, `index.html`, `pages/**`
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` (registers feeding the generated
+  Suggestions and Questions pages)
+- `README.md`, `analysis/session-3681def8-*.md`
+
+**Not claimed / not edited (owned by other sessions; requests logged instead):** `docs/**`,
+`dashboard/**`, `originated/**`, `site/**` (v2), `verified/**`, `archive/**`, `backtest/**`,
+`tools/**`, `scripts/**`, `.github/workflows/**`, `data/raw/ledger/**` (sealed — read-only),
+`nba2/models/**` except where a defect found this session is published as a flag rather than a
+silent edit.
+
+**Task board (this session).**
+
+| # | Task | Status |
+|---|---|---|
+| G-01 | Board claim + push before work | in progress (this entry) |
+| G-02 | Live official capture: 2026-11-13 final scores (settle the `cf7dedc6…` ledger) | claimed |
+| G-03 | Live official capture: slate 11/14–11/17 + freshest official injury report, verified line by line | claimed |
+| G-04 | Settle the 11/13 ledger against official finals; publish graded results, no reward unless gates pass | claimed |
+| G-05 | Repo review line by line; irregularities flagged with evidence, never silently fixed | claimed |
+| G-06 | Published-tree consolidation: clean landing page + category subpages, every row source-linked | claimed |
+| G-07 | Content: strategies/leaderboard/correlations, ≤3-day picks, injury→rotation→game flow, executive summary | claimed |
+| G-08 | Questions register + suggestions review path (review-before-implement) | claimed |
+| G-09 | Full checker chain; PR → `main`, merge, confirm Pages deploy, record run IDs | claimed |
+
+**Rules this session holds itself to.** A row is "verified" only if the official document was
+fetched **in this session** and can be quoted; anything unconfirmable stays blank and is flagged;
+the two sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged items do not block
+the merge but must appear on the Flagged for Review page with their source link.
