@@ -1,0 +1,517 @@
+{
+  "schema": "nba2.injury-report.v1",
+  "release": "2026-11-14 05:00 AM ET",
+  "retrieved_at_utc": "2026-11-14T10:25:00Z",
+  "retrieval_method": "platform page-fetch tool (direct curl from the sandbox returns HTTP 000 for all nba.com hosts)",
+  "provenance": {
+    "publisher": "NBA (official)",
+    "official_nba_source": true,
+    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+    "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+    "document_header": "Injury Report: 11/14/26 05:00 AM",
+    "note": "Transcribed row by row from the official PDF. The PDF's Game Time column is a 12-hour ET clock printed without a meridiem: DEN@NOP '07:00 (ET)' is the 7:00 PM ET tip shown on the schedule.'NOT YET SUBMITTED' is the official state of a club that has filed nothing for that game."
+  },
+  "filing_rules_verbatim": [
+    "By 5 p.m. local time the day before a game (other than the second day of a back-to-back), teams must designate a participation status and identify a specific injury, illness, other medical condition, or other reason for any player whose participation in the game may be affected for any reason.",
+    "For the second game of a back-to-back, teams must report the above information by 1 p.m. local time on the day of the game.",
+    "In addition, teams are required to submit a game-day injury report between 11 a.m. and 1 p.m. local time (and between 8 and 10 a.m. for tip-offs 5 p.m. or earlier) on game days (besides the second game of a back-to-back).",
+    "Reports are updated on a continual basis throughout the day."
+  ],
+  "counts_check": {
+    "n_rows": 49,
+    "n_named_designations": 26,
+    "n_not_yet_submitted": 23
+  },
+  "records": [
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Holmes II, DaRon",
+      "current_status": "Out",
+      "reason": "G League - On Assignment",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Nembhard, Ryan",
+      "current_status": "Out",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Strawther, Julian",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Left Knee Sprain",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "Denver Nuggets",
+      "player": "Whitmore, Cam",
+      "current_status": "Out",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:00",
+      "matchup": "DEN@NOP",
+      "team": "New Orleans Pelicans",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Biberovic, Tarik",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Heel Bursitis",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Christie, Max",
+      "current_status": "Questionable",
+      "reason": "Injury/Illness - Left Ankle Sprain",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "de Larrea, Sergio",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Knee Sprain",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Johnson Jr., Morez",
+      "current_status": "Probable",
+      "reason": "Injury/Illness - Left Shin / Tibia Contusion",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Lively II, Dereck",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Foot Surgery",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Dallas Mavericks",
+      "player": "Martin, Caleb",
+      "current_status": "Available",
+      "reason": "Injury/Illness - Right Thumb Splint",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "07:30",
+      "matchup": "DAL@CLE",
+      "team": "Cleveland Cavaliers",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Bilodeau, Tyler",
+      "current_status": "Out",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Brown Jr., Mikel",
+      "current_status": "Questionable",
+      "reason": "Injury/Illness - Illness",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Jefferson, Joshua",
+      "current_status": "Out",
+      "reason": "G League - On Assignment",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Nelson, Grant",
+      "current_status": "Out",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Saraf, Ben",
+      "current_status": "Out",
+      "reason": "G League - On Assignment",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Brooklyn Nets",
+      "player": "Traore, Nolan",
+      "current_status": "Probable",
+      "reason": "Injury/Illness - Right Calf Tightness / Soreness",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "BKN@MEM",
+      "team": "Memphis Grizzlies",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Chicago Bulls",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Beringer, Joan",
+      "current_status": "Available",
+      "reason": "Injury/Illness - Face Mask",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "DiVincenzo, Donte",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "CHI@MIN",
+      "team": "Minnesota Timberwolves",
+      "player": "Edwards, Anthony",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Knee Arthroscopy",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Duren, Jalen",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Hamstring Strain",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Harkless, Elijah",
+      "current_status": "Questionable",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Joe, Isaiah",
+      "current_status": "Out",
+      "reason": "Injury/Illness - Right Hip Contusion",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Jones, Isaac",
+      "current_status": "Questionable",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Lanier, Chaz",
+      "current_status": "Out",
+      "reason": "G League - On Assignment",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Okorie, Ebuka",
+      "current_status": "Out",
+      "reason": "G League - On Assignment",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Detroit Pistons",
+      "player": "Onyenso, Ugonna",
+      "current_status": "Out",
+      "reason": "G League - Two-Way",
+      "not_yet_submitted": false
+    },
+    {
+      "game_date": "2026-11-14",
+      "game_time_et": "08:00",
+      "matchup": "DET@MIA",
+      "team": "Miami Heat",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "01:00",
+      "matchup": "IND@PHI",
+      "team": "Indiana Pacers",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "01:00",
+      "matchup": "IND@PHI",
+      "team": "Philadelphia 76ers",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "04:00",
+      "matchup": "LAL@PHX",
+      "team": "Los Angeles Lakers",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "04:00",
+      "matchup": "LAL@PHX",
+      "team": "Phoenix Suns",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "04:30",
+      "matchup": "CHA@LAC",
+      "team": "Charlotte Hornets",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "04:30",
+      "matchup": "CHA@LAC",
+      "team": "LA Clippers",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "05:00",
+      "matchup": "SAS@UTA",
+      "team": "San Antonio Spurs",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "05:00",
+      "matchup": "SAS@UTA",
+      "team": "Utah Jazz",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "06:00",
+      "matchup": "DAL@BOS",
+      "team": "Dallas Mavericks",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "06:00",
+      "matchup": "DAL@BOS",
+      "team": "Boston Celtics",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "06:00",
+      "matchup": "NYK@TOR",
+      "team": "New York Knicks",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "06:00",
+      "matchup": "NYK@TOR",
+      "team": "Toronto Raptors",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "07:00",
+      "matchup": "HOU@WAS",
+      "team": "Houston Rockets",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "07:00",
+      "matchup": "HOU@WAS",
+      "team": "Washington Wizards",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "08:00",
+      "matchup": "ATL@MIL",
+      "team": "Atlanta Hawks",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "08:00",
+      "matchup": "ATL@MIL",
+      "team": "Milwaukee Bucks",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "09:00",
+      "matchup": "OKC@SAC",
+      "team": "Oklahoma City Thunder",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    },
+    {
+      "game_date": "2026-11-15",
+      "game_time_et": "09:00",
+      "matchup": "OKC@SAC",
+      "team": "Sacramento Kings",
+      "player": null,
+      "current_status": null,
+      "reason": "NOT YET SUBMITTED",
+      "not_yet_submitted": true
+    }
+  ]
+}
