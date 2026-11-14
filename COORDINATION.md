@@ -749,3 +749,54 @@ here as a change request, not silently edited.
 - **New, from the refresh:** the nightly workflow automates ingestion and settlement only; line *re-origination* after game-day injury reports (S-10) still needs an owner decision, because re-deriving lines mid-window would diverge from the frozen seal — the board recommends "refresh availability, keep the seal, settle what plays" as the default policy.
 - 11/15–16 designations do not exist yet (FLAG-INJ-07); the workflow will archive releases as they are filed.
 
+
+## Session `arena/f7477d5e-nba2` — measured skill: official results history, walk-forward backtest, luck separation
+
+Claimed 2026-11-14 (UTC), branch `arena/f7477d5e-nba2` (platform-pinned), based on `main` @ `a09f48e`.
+Claim is committed and pushed **before** any file in the scope below is created or edited.
+
+### Why this session exists, and what it is *not* allowed to do
+
+Every prior session published a model but **no graded outcomes**: `0/90` gates passed, `0%` stake,
+reward pool `100%` unallocated. The reason given on the site is "no game-level results history, so
+σ/HCA/correlations cannot be re-fitted point-in-time; gate G-07 is AT-RISK by construction."
+That is the single largest gap in the brief ("remove luck from the equation", "pass validation
+gates", "determine correlation values", "leaderboard that rewards top performers").
+
+This session closes exactly that gap from **official NBA.com final scores**, and nothing else.
+
+`arena/79e87c81-nba2` holds an **open, active claim** (PR #21) on `pages/**`, `index.html`,
+`data/site.json`, `nba2/**`, `.github/workflows/ci.yml`, `README.md`. Per protocol this session
+**does not edit any of those**. It publishes in its own namespace and logs an integration request.
+
+### Scope claimed by this session (files this session may create/edit)
+
+- `data/raw/history/games_*.json` — **new** official final-score snapshots (one per game, own URL)
+- `backtest/**` — new tree: `backtest/engine/*.py`, `backtest/data/*.json`, `backtest/*.html`,
+  `backtest/pages/*.html`, `backtest/assets/*`
+- `analysis/backtest-f7477d5e.md` — this session's own report
+- `tools/verify_backtest.py` — new verifier (source-per-row, no broken links)
+- `COORDINATION.md` — append-only (this section, plus a completion record)
+- `.gitignore` — only if a new artefact type needs ignoring
+
+### Scope explicitly NOT touched (owned by others; requests logged instead)
+
+`pages/**`, `index.html`, `data/site.json`, `data/site-built.json`, `nba2/**`, `css/**`, `app.js`,
+`README.md`, `.github/workflows/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`,
+`data/*.csv`, `data/verified/**`, `data/raw/ledger/**` (sealed — immutable), `analysis/**` other
+than this session's own file, `requirements/**`, `suggestions/**`.
+
+### Tasks
+
+| ID | Task | Status | Verification / sources |
+|----|------|--------|------------------------|
+| X-01 | Claim scope, push before work | **done** | this section |
+| X-02 | Capture official final scores (nba.com/games?date=) for a completed-game window | in progress | one nba.com/game/{id} URL per row |
+| X-03 | Walk-forward (point-in-time, no leakage) backtest of the originated-line model | pending | `backtest/engine/walkforward.py`; leakage asserted by test |
+| X-04 | Luck separation: binomial CIs, bootstrap, permutation test vs baseline | pending | reproducibility seed fixed |
+| X-05 | Empirical correlation values from real results (margin↔total, same-game legs) | pending | `backtest/engine/correlation.py` |
+| X-06 | Validation gates re-run on measured evidence; promote/reject per strategy | pending | gate thresholds pre-registered in `backtest/data/gates.json` |
+| X-07 | Leaderboard ranked on measured out-of-sample skill, rewards gated on gates | pending | ranking + CI published |
+| X-08 | Site: `backtest/` landing + category subpages, per-row source links | pending | `tools/verify_backtest.py` |
+| X-09 | Flagged-for-review for this tree; integration request to the merge session | pending | append-only |
+| X-10 | PR → `main`, merge, confirm Pages deploy | pending | recorded in the completion record below |
