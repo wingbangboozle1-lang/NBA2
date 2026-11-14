@@ -217,7 +217,7 @@ def kpis() -> str:
     return "".join(parts)
 
 
-def graded_strip() -> str:
+def graded_strip(sub: bool = False) -> str:
     """The most decision-relevant block on the site: what the model has actually been
     measured to do against official results, and what that sample can support."""
     g = DATA["sections"].get("graded_summary")
@@ -241,13 +241,14 @@ def graded_strip() -> str:
         f'<div class="kpi-l">{html.escape(lbl)}</div>'
         f'<div class="kpi-n">{html.escape(note[:150])}</div></div>'
         for v, lbl, note in cells)
-    link = _href("pages/graded.html", False)
+    link = _href("pages/graded.html", sub)
+    flaglink = _href("pages/flagged-review.html", sub) + "#FLAG-GRADE-01"
     return ('<section class="card"><h2>Graded against official results</h2>'
             '<p class="blurb">The nine games of 2026-11-13, priced from the ratings snapshot that '
             'predates every tip and scored against the final scores on NBA.com. This is the only '
             'card in the repository measured against real outcomes rather than against itself. '
             'It is a walk-forward backtest, not a pre-registered ledger ('
-            '<a href="pages/flagged-review.html#FLAG-GRADE-01">FLAG-GRADE-01</a>).</p>'
+            f'<a href="{flaglink}">FLAG-GRADE-01</a>).</p>'
             f'<div class="kpi-grid">{body}</div>'
             f'<p class="blurb"><a href="{link}">Full card, every game, with source links &rarr;</a></p>'
             "</section>")
@@ -338,6 +339,8 @@ def _pages() -> dict[str, list[str]]:
     return {
         "pages/executive-summary.html": [
             '<div class="card">' + kpis() + "</div>",
+            graded_strip(True),
+            render_table(sec("graded_summary"), L),
             render_table({**sec("lines"),
                           "title": "Snapshot of the priced slate (first 8 rows)",
                           "rows": sec("lines")["rows"][:8],

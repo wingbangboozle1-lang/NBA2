@@ -2448,6 +2448,14 @@ def main() -> None:
          "official standings page orders by percentage, and this snapshot does the same.",
          "https://www.nba.com/standings",
          "No action; noted so nobody reads DEN's 6-4 as a shorter schedule bug.")
+    flag("FLAG-SEAL-05", "low", "ledger",
+         "Crosscheck CC-SEAL-04 reports five 2026-11-14 ledger predictions as not tipped "
+         "after the snapshot. It compares calendar dates, not timestamps, and is a false "
+         "positive: the ledger was sealed 2026-11-14T00:58:54Z and the earliest game in it "
+         "tips 2026-11-14 19:00 ET = 2026-11-15T00:00Z, a 23.02-hour lead. The minimum lead "
+         "across all 27 predictions is 23.02 hours.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
+         "Owner of tools/crosscheck_site.py compares datetimes instead of dates (RR-19).")
     flag("FLAG-INJ-08", "info", "injuries",
          "At the 2026-11-14 05:00 AM ET release, five of the ten clubs on the 11/14 slate had "
          "filed nothing (New Orleans, Cleveland, Memphis, Miami, Chicago) and all eighteen 11/15 "
