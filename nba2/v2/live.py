@@ -23,6 +23,7 @@ that cannot be confirmed against a captured official URL is left blank and flagg
 from __future__ import annotations
 
 import json
+import re
 import math
 from pathlib import Path
 
@@ -167,6 +168,47 @@ def _grade_ml(sel: str, g: dict):
         return "WIN" if g["home_margin"] < 0 else "LOSS"
     return None
 
+_NUM_TAIL = re.compile(r"^[+-]\d+(?:\.\d+)?$")
+
+
+def grade_selection(sel: str, g: dict, kind: str | None = None):
+    """Grade one selection string, dispatched on its STRUCTURE rather than on a substring.
+
+    The rule this replaces was ``"+" in sel and not sel.endswith("ML")``, which happened to work for
+    one card: the 2026-11-13 slate, whose spread rows all quoted the underdog with a plus. It fails
+    two ways measured against it (see ``test_grading.py``):
+
+      * ``HOU -13.0`` — the form the fixed generator now writes — contains no plus, so the old rule
+        routed it to the moneyline grader, which found no team match and returned ``None``: the row
+        reports UNGRADABLE and a spread strategy stops being gradable at all;
+      * a bare ``HOU`` with no market marker returned a moneyline ``WIN`` under the old rule, i.e. an
+        unmarked selection was silently resolved as a winner-pick.
+
+    Dispatch is therefore structural, and an unknown shape yields ``None`` rather than a guess:
+
+      * ``kind`` ("spread"/"ml") wins when the caller knows what it holds;
+      * otherwise a trailing signed number means against-the-spread, anything else means moneyline;
+      * a moneyline row must actually say ``ML``, and an unrecognised shape returns ``None`` so the
+        row reports UNGRADABLE with a reason instead of being guessed into a result.
+    """
+    sel = (sel or "").strip()
+    if not sel or not g:
+        return None
+    tail = sel.rsplit(" ", 1)[-1]
+    k = (kind or "").lower()
+    explicit = k in ("spread", "ml")
+    if not explicit:
+        k = "spread" if _NUM_TAIL.match(tail) else "ml"
+    if k == "spread":
+        return _grade_spread(sel, g)
+    # Inferred as a moneyline: the row has to say so, otherwise an unmarked selection would
+    # silently acquire a market. An explicit kind= is the caller taking responsibility instead.
+    if not explicit and not re.search(r"(?i)(^|\s)ML$", sel):
+        return None
+    return _grade_ml(sel, g)
+
+
+
 
 
 def _verdict_text(rg: dict, n_games: int, side_correct: int, tot_rows: int = 0, tot_wins: int = 0) -> str:
@@ -280,7 +322,7 @@ def grade() -> dict:
                 for gid, leg in zip(gids, sig["selection"].split("+")):
                     g = games.get(gid)
                     legs.append({"game_id": gid, "leg": leg.strip(),
-                                 "result": (_grade_ml(leg.strip(), g) if g else "PENDING")})
+                                 "result": (grade_selection(leg.strip(), g) if g else "PENDING")})
                 if any(l["result"] == "PENDING" for l in legs):
                     res = "PENDING"
                 else:
@@ -290,8 +332,11 @@ def grade() -> dict:
                 g = games.get(gids[0])
                 if g:
                     sel = sig["selection"]
-                    res = (_grade_spread(sel, g) if ("+" in sel and not sel.endswith("ML"))
-                           else _grade_ml(sel, g))
+                    # the strategy itself says which market it is in: S2 is a spread strategy, S1
+                    # and S4 pick winners. Kind wins over shape; shape is the fallback.
+                    _kind = "spread" if "Spread" in (s.get("name") or "") else \
+                            ("ml" if sig.get("bet_type") == "single" and not _NUM_TAIL.match(sel.rsplit(" ", 1)[-1]) else None)
+                    res = grade_selection(sel, g, _kind)
                 else:
                     # The game exists on the official 11/14-11/15 schedule and has simply not
                     # been played. That is the expected state, not a data problem.

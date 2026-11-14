@@ -108,6 +108,27 @@ tr:target td{background:rgba(122,167,255,.10)}
 """
 
 
+def _suite_counts() -> dict:
+    """Test counts measured from the suites, never remembered from a previous build.
+
+    Counts the ``def test_`` methods in each suite directory — the same rule
+    ``tools/crosscheck_site.py`` uses for its CC-DOC-01 README check, so the number printed on this
+    site and the number the checker enforces cannot drift apart. A hard-coded count in prose was the
+    most reliably stale figure on the repository (F-033 records three recurrences of the sibling
+    defect), which is why the prose now reads from here instead of carrying its own copy.
+    """
+    import re as _re
+    out = {}
+    for label, sub in (("v1", "nba2/tests"), ("v2", "nba2/v2"), ("backtest", "backtest/tests")):
+        d = ROOT / sub
+        n = 0
+        if d.is_dir():
+            for f in sorted(d.glob("test_*.py")):
+                n += len(_re.findall(r"^\s+def (test_\w+)", f.read_text(encoding="utf-8"), _re.M))
+        out[label] = n
+    return out
+
+
 def esc(x):
     if x is None:
         return ""
@@ -214,6 +235,7 @@ def validate(rows_by_table):
 
 # --------------------------------------------------------------------------- pages
 def build(run_backtest: bool = True):
+    sc = _suite_counts()   # test counts, measured once for every page that quotes them
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
     (SITE / "assets" / "site.css").write_text(CSS)
@@ -1319,7 +1341,13 @@ with both values shown.</p>
 <ul>
   <li>Consolidate to one published tree and redirect or delete the other five (needs an owner decision; see SG-18).</li>
   <li>Untrack the 19 committed <code>.pyc</code> files: <code>.gitignore</code> already excludes them, so they are pure noise in diffs.</li>
-  <li>Reconcile the README's claim of 49 tests with the 55 that actually run.</li>
+  <li><s>Reconcile the README&rsquo;s claim of 49 tests with the 55 that actually run.</s> Resolved by
+      measurement, not by picking a number: this build counts the three suites from their own files and prints
+      them in the Methodology page&rsquo;s reproduce block, and two scripts regenerate the prose figures —
+      <code>audit/2026-11-14-3681/sync_readme_counts.py</code> for pages/tables/rows and
+      <code>audit/2026-11-14-bc867bff/sync_readme_tests.py</code> for the test counts (both refuse to guess when
+      their pattern stops matching). No count on either tree is a memory any more, so the discrepancy cannot
+      recur silently.</li>
 </ul>"""
     built["repo-review.html"] = page("repo-review.html", "Repo review", body, "repo-review.html")
 
@@ -1841,7 +1869,11 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests</pre>"""
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # {sc["v2"]} tests, counted from the files
+python3 -m unittest discover -s nba2/tests -t .                # {sc["v1"]} tests
+python3 -m unittest discover -s backtest/tests                 # {sc["backtest"]} tests</pre>
+<p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
+message — a remembered count is the most reliably stale number on the site (F-033).</p>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.

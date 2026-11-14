@@ -89,7 +89,11 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests</pre>
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 89 tests, counted from the files
+python3 -m unittest discover -s nba2/tests -t .                # 70 tests
+python3 -m unittest discover -s backtest/tests                 # 49 tests</pre>
+<p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
+message — a remembered count is the most reliably stale number on the site (F-033).</p>
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.

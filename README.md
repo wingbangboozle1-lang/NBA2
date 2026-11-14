@@ -291,7 +291,7 @@ decision logged on the new site's Flagged page (F-011).
 python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (20 pages, includes the backtest)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 89 tests
 python3 -m unittest discover -s nba2/tests -t .                # 70 tests (6 added by the S-26 sign fix)
 ```
 
