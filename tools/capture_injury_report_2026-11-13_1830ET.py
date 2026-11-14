@@ -344,7 +344,7 @@ def main() -> None:
         },
         "flags": [
             {
-                "id": "FLAG-INJ-01",
+                "id": "FLAG-INJ-05",
                 "severity": "medium",
                 "field": "attribution=C rows",
                 "issue": ("The NBA injury-report PDF repeats team labels only once per block. When the table "
@@ -353,7 +353,7 @@ def main() -> None:
                 "action_required": "Confirm the attribution=C rows against the PDF image at the source URL.",
             },
             {
-                "id": "FLAG-INJ-02",
+                "id": "FLAG-INJ-06",
                 "severity": "high",
                 "field": "rotation_minutes_impact,production_impact,line_adjustment_pts",
                 "issue": ("No numeric injury impact is produced in this snapshot. Quantifying a status change "
@@ -363,7 +363,7 @@ def main() -> None:
                                     "(see requirements R-102) before any injury adjustment is applied to a line."),
             },
             {
-                "id": "FLAG-INJ-03",
+                "id": "FLAG-INJ-07",
                 "severity": "medium",
                 "field": "teams_not_present",
                 "issue": ("The report prints no rows at all for the New York Knicks or the Milwaukee Bucks, "
@@ -371,7 +371,7 @@ def main() -> None:
                 "action_required": "Treat a team with no printed roster as UNKNOWN, never as clean.",
             },
             {
-                "id": "FLAG-INJ-06",
+                "id": "FLAG-INJ-08",
                 "severity": "medium",
                 "field": "teams_not_present",
                 "issue": (
@@ -385,7 +385,7 @@ def main() -> None:
                 ),
             },
             {
-                "id": "FLAG-INJ-07",
+                "id": "FLAG-INJ-09",
                 "severity": "high",
                 "field": "game_date=2026-11-14 rows",
                 "issue": (

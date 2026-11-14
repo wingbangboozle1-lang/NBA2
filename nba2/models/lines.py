@@ -136,7 +136,7 @@ def price_game(model: RatingModel, game: dict, injury_by_team: dict[str, list[di
     if inj_home or inj_away:
         notes.append(
             f"Official report lists {len(inj_home)} Out/Doubtful for {home}, "
-            f"{len(inj_away)} for {away}. No numeric minutes impact is applied (see FLAG-INJ-02)."
+            f"{len(inj_away)} for {away}. No numeric minutes impact is applied (see FLAG-INJ-11)."
         )
     else:
         notes.append("No Out/Doubtful rows retrieved for either team in the snapshot on hand.")

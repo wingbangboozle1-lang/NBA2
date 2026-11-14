@@ -137,15 +137,48 @@ class Flag:
 
 
 _FLAGS: dict[str, Flag] = {}
+# Where each flag id was first registered, and whether that registration was a genuine
+# re-statement of the same flag or a *different* flag that happens to reuse the id.
+_FLAG_ORIGIN: dict[str, str] = {}
 
 
-def flag(id: str, severity: str, area: str, statement: str, source_url: str, action: str) -> Flag:  # noqa: A002
-    """Register a review flag. Idempotent: re-registering an id overwrites with the latest text."""
+class FlagIdCollision(RuntimeError):
+    """Raised when two unrelated flags claim the same id.
+
+    Two different findings must never share an id: the second registration silently replaces
+    the first, so one of them disappears from the Flagged-for-Review page without anyone
+    noticing. The ids are part of the published surface (rows link to them), so a reuse
+    is a correctness bug, not a style problem.
+    """
+
+
+def flag(id: str, severity: str, area: str, statement: str, source_url: str, action: str,  # noqa: A002
+         *, allow_replace: bool = False) -> Flag:
+    """Register a review flag.
+
+    Idempotent for the *same* statement: re-registering an id with identical text is a
+    no-op. Registering an id with different text is a collision and raises unless the
+    caller explicitly opts in with `allow_replace=True`.
+    """
     f = Flag(id, severity, area, statement, source_url, action)
-    if id in _FLAGS:
-        _FLAGS[id] = f
-    else:
-        _FLAGS[id] = f
+    prior = _FLAGS.get(id)
+    if prior is not None and not allow_replace:
+        same = (prior.severity == severity and prior.area == area
+                and prior.statement == statement and prior.source_url == source_url)
+        if not same:
+            raise FlagIdCollision(
+                f"flag id {id!r} is already registered with a different statement.\n"
+                f"  first: [{prior.area}] {prior.statement[:120]}\n"
+                f"  again: [{area}] {statement[:120]}\n"
+                "Give the second finding its own id, or pass allow_replace=True if it really "
+                "supersedes the first."
+            )
+        return prior
+    if prior is not None:
+        _FLAG_ORIGIN[id] = "replaced"
+    elif id not in _FLAG_ORIGIN:
+        _FLAG_ORIGIN[id] = "registered"
+    _FLAGS[id] = f
     return f
 
 

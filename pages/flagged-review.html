@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 00:49 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="71">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="flags" data-rows="77">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -122,65 +122,95 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
 </tr>
-<tr id="FLAG-INJ-01">
-<td>FLAG-INJ-01</td>
+<tr id="FLAG-INJ-05">
+<td>FLAG-INJ-05</td>
 <td>medium</td>
 <td>injuries</td>
 <td>The NBA injury-report PDF repeats team labels only once per block. When the table breaks across pages the continuation rows carry no team cell, so their team attribution comes from document order rather than an explicit label.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
 <td>Confirm the attribution=C rows against the PDF image at the source URL.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-01">FLAG-INJ-01</a></td>
-</tr>
-<tr id="FLAG-INJ-02">
-<td>FLAG-INJ-02</td>
-<td>high</td>
-<td>injuries</td>
-<td>No numeric injury impact is produced in this snapshot. Quantifying a status change requires player-level minutes and production data; the injury report contains neither. The impact columns are blank by design, not omitted.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
-<td>Attach official per-player minutes and production to the pipeline (see requirements R-102) before any injury adjustment is applied to a line.</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
-</tr>
-<tr id="FLAG-INJ-03">
-<td>FLAG-INJ-03</td>
-<td>medium</td>
-<td>injuries</td>
-<td>The report prints no rows at all for the New York Knicks or the Milwaukee Bucks, both of whom played on 2026-11-13. Absence of a row is NOT evidence of availability.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
-<td>Treat a team with no printed roster as UNKNOWN, never as clean.</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-03">FLAG-INJ-03</a></td>
-</tr>
-<tr id="FLAG-INJ-04">
-<td>FLAG-INJ-04</td>
-<td>info</td>
-<td>injuries</td>
-<td>Nov 14 rows are &#x27;NOT YET SUBMITTED&#x27; in the 11/13 16:15 ET release — injury-aware lines at T-3 are structurally impossible, and the site says so on the slate page.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
-<td>Re-run at game-day 13:00 ET.</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
 </tr>
 <tr id="FLAG-INJ-06">
 <td>FLAG-INJ-06</td>
-<td>medium</td>
+<td>high</td>
 <td>injuries</td>
-<td>The 18:30 ET revision still prints no rows at all for the New York Knicks or the Milwaukee Bucks, both of whom played on 2026-11-13. Absence of a row is not evidence of availability.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
-<td>Treat a team with no printed roster as UNKNOWN, never as clean. Re-check the next revision before any game-day use.</td>
+<td>No numeric injury impact is produced in this snapshot. Quantifying a status change requires player-level minutes and production data; the injury report contains neither. The impact columns are blank by design, not omitted.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Attach official per-player minutes and production to the pipeline (see requirements R-102) before any injury adjustment is applied to a line.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
 </tr>
 <tr id="FLAG-INJ-07">
 <td>FLAG-INJ-07</td>
-<td>high</td>
+<td>medium</td>
 <td>injuries</td>
-<td>Only 5 of the 10 teams playing on 2026-11-14 have submitted statuses in this revision (DEN, DAL, BKN, MIN, DET). The other 5 (NOP, CLE, MEM, CHI, MIA) are printed as &#x27;NOT YET SUBMITTED&#x27;. No report exists yet for the 2026-11-15, 11-16 or 11-17 games.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
-<td>A line for a game whose teams have not submitted is availability-blind by construction. Do not promote such a game above Tier B, and re-read the report on game day before acting.</td>
+<td>The report prints no rows at all for the New York Knicks or the Milwaukee Bucks, both of whom played on 2026-11-13. Absence of a row is NOT evidence of availability.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Treat a team with no printed roster as UNKNOWN, never as clean.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
+</tr>
+<tr id="FLAG-INJ-08">
+<td>FLAG-INJ-08</td>
+<td>medium</td>
+<td>injuries</td>
+<td>The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block: the Detroit continuation rows and the Miami placeholder row carry no time. Left blank rather than inferred.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Confirm against the PDF image, or leave blank; do not copy a time from another release.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-08">FLAG-INJ-08</a></td>
+</tr>
+<tr id="FLAG-INJ-09">
+<td>FLAG-INJ-09</td>
+<td>high</td>
+<td>injuries</td>
+<td>At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16/17. Statuses can change before tip-off.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-09">FLAG-INJ-09</a></td>
+</tr>
+<tr id="FLAG-INJ-10">
+<td>FLAG-INJ-10</td>
+<td>medium</td>
+<td>injuries</td>
+<td>28 of 122 rows inherit their team from the last team label printed in their game block because the PDF table breaks across pages; not individually confirmed.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Confirm against the PDF image.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-10">FLAG-INJ-10</a></td>
+</tr>
+<tr id="FLAG-INJ-11">
+<td>FLAG-INJ-11</td>
+<td>high</td>
+<td>injuries</td>
+<td>Minutes/production/line impact columns are blank for all 122 rows. The official report has no such fields and no player-level feed is connected.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Connect R-102.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-11">FLAG-INJ-11</a></td>
+</tr>
+<tr id="FLAG-INJ-12">
+<td>FLAG-INJ-12</td>
+<td>medium</td>
+<td>injuries</td>
+<td>&#x27;No rows for this team&#x27; is not &#x27;team is healthy&#x27;. A team that printed no rows may simply be outside what the report covers, so absence is recorded as UNKNOWN rather than as availability.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-parse the full report and record coverage explicitly.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-12">FLAG-INJ-12</a></td>
+</tr>
+<tr id="FLAG-INJ-13">
+<td>FLAG-INJ-13</td>
+<td>info</td>
+<td>injuries</td>
+<td>5 rows in the 2026-11-13 19:30 ET release are &#x27;NOT YET SUBMITTED&#x27; — injury-aware lines at T-3 are structurally impossible, and the site says so on the slate page.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-run at game-day 13:00 ET.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-13">FLAG-INJ-13</a></td>
 </tr>
 <tr id="FLAG-LB-01">
 <td>FLAG-LB-01</td>
@@ -376,7 +406,7 @@
 <td>FLAG-PRL-02</td>
 <td>medium</td>
 <td>parlays</td>
-<td>Only 10 of 31 games are quoted on the parlay page (highest conviction). The selection is a convenience filter, not a strategy claim.</td>
+<td>Only 10 of 27 games are quoted on the parlay page (highest conviction). The selection is a convenience filter, not a strategy claim.</td>
 <td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
 <td>Compute all games once prices exist.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
@@ -452,6 +482,16 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
 </tr>
+<tr id="FLAG-REFRESH-01">
+<td>FLAG-REFRESH-01</td>
+<td>low</td>
+<td>injuries</td>
+<td>The 2026-11-14 availability refresh is a point-in-time capture (11/13 19:30 ET official release, retrieved 2026-11-14 00:47 UTC). Later releases on 11/14 (continual updates, game-day reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest workflow fetches and archives them but does not rewrite sealed predictions.</td>
+<td>https://official.nba.com/nba-injury-report-2026-27-season/</td>
+<td>Let the nightly workflow ingest later releases; verify the archived PDF against the transcript.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REFRESH-01">FLAG-REFRESH-01</a></td>
+</tr>
 <tr id="FLAG-REPO-01">
 <td>FLAG-REPO-01</td>
 <td>low</td>
@@ -506,9 +546,9 @@
 <td>FLAG-SLATE-04</td>
 <td>medium</td>
 <td>slate</td>
-<td>Game ids are not monotonic with tip time on 2026-11-17: the page prints 0022600257 (UTA @ LAC, 10:30 PM ET) before 0022600256 (CHA @ LAL, 11:00 PM ET), and 0022600254 (POR @ MIN, 8:00 PM ET) repeats the same matchup and venue as 0022600250 on 2026-11-16. Any ingest that sorts by id, or that infers a date from an id range, will mis-join these rows.</td>
+<td>Tip times come from the rendered /schedule page, whose time list is not reliably aligned with the games beside it; they are published but NOT independently confirmed. Confirm on the game page before trusting anything time-sensitive (live/teaser/settlement windows).</td>
 <td>https://www.nba.com/schedule</td>
-<td>Always key on the id read from the page and sort by the printed tip time. The repeated POR @ MIN pairing was independently confirmed on the official New York Knicks and Minnesota Timberwolves team schedule pages on 2026-11-14, so it is a property of the published schedule, not a one-off rendering artefact.</td>
+<td>Confirm per game page; blank the column if any doubt remains.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
@@ -516,9 +556,9 @@
 <td>FLAG-SLATE-05</td>
 <td>medium</td>
 <td>slate</td>
-<td>The official schedule page prints the LEAGUE PASS logo as the broadcast mark for a game that is available on League Pass. That is what the page says, but &#x27;League Pass&#x27; is a viewing product, not a broadcaster, and it is recorded here exactly as printed.</td>
+<td>0 of 27 official game-page URLs are generated from a slug rule confirmed on 27 games, not verified one by one. The game IDs themselves are official; only the URL is a generalisation.</td>
 <td>https://www.nba.com/schedule</td>
-<td>Do not treat the broadcast column as a national-TV indicator. If a real broadcast signal is wanted, read the game&#x27;s own official page.</td>
+<td>Click-through verification, or ingest the official sitemap.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
 </tr>
@@ -526,11 +566,31 @@
 <td>FLAG-SLATE-06</td>
 <td>high</td>
 <td>slate</td>
-<td>No injury report exists yet for 2026-11-14/15/16, so the entire pick window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item; the 11/13 16:15 ET release lists all ten Nov-14 teams as NOT YET SUBMITTED.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
-<td>Re-issue lines after each game-day 13:00 ET report (suggestion S-10).</td>
+<td>Availability data for the pick window is incomplete: the injury report in use is stamped 2026-11-13 19:30 ET and carries day-before designations for 2 of the window&#x27;s game dates, of which 5 team-slots are still NOT YET SUBMITTED. Every game without a filed designation is priced without availability data. This is a structural property of publishing ahead of tip-off, not a to-do item.</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Re-issue availability after each later release (the nightly ingest workflow does this; see FLAG-REFRESH-01).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
+</tr>
+<tr id="FLAG-SLATE-07">
+<td>FLAG-SLATE-07</td>
+<td>medium</td>
+<td>slate</td>
+<td>Game ids are not monotonic with tip time on 2026-11-17: the page prints 0022600257 (UTA @ LAC, 10:30 PM ET) before 0022600256 (CHA @ LAL, 11:00 PM ET), and 0022600254 (POR @ MIN, 8:00 PM ET) repeats the same matchup and venue as 0022600250 on 2026-11-16. Any ingest that sorts by id, or that infers a date from an id range, will mis-join these rows.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Always key on the id read from the page and sort by the printed tip time. The repeated POR @ MIN pairing was independently confirmed on the official New York Knicks and Minnesota Timberwolves team schedule pages on 2026-11-14, so it is a property of the published schedule, not a one-off rendering artefact.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-07">FLAG-SLATE-07</a></td>
+</tr>
+<tr id="FLAG-SLATE-08">
+<td>FLAG-SLATE-08</td>
+<td>medium</td>
+<td>slate</td>
+<td>The official schedule page prints the LEAGUE PASS logo as the broadcast mark for a game that is available on League Pass. That is what the page says, but &#x27;League Pass&#x27; is a viewing product, not a broadcaster, and it is recorded here exactly as printed.</td>
+<td>https://www.nba.com/schedule</td>
+<td>Do not treat the broadcast column as a national-TV indicator. If a real broadcast signal is wanted, read the game&#x27;s own official page.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-08">FLAG-SLATE-08</a></td>
 </tr>
 <tr id="FLAG-SRC-01">
 <td>FLAG-SRC-01</td>

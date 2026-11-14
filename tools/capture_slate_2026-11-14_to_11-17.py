@@ -166,7 +166,7 @@ def main() -> None:
                 "action_required": "Always read game_id from the official page; never infer it.",
             },
             {
-                "id": "FLAG-SLATE-04",
+                "id": "FLAG-SLATE-07",
                 "severity": "medium",
                 "field": "game_id",
                 "issue": (
@@ -186,7 +186,7 @@ def main() -> None:
                 ),
             },
             {
-                "id": "FLAG-SLATE-05",
+                "id": "FLAG-SLATE-08",
                 "severity": "medium",
                 "field": "broadcast",
                 "issue": (

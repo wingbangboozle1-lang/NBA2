@@ -18,58 +18,346 @@
   {
    "id": "FLAG-INJ-05",
    "severity": "medium",
-   "field": "attribution=C rows (10 of 31)",
-   "issue": "Ten rows (4 Dallas Mavericks, 6 Detroit Pistons) carry no team/game cells in the text extraction because the PDF table breaks across pages. Their team attribution comes from document order (the last team label printed in that game block before the row), matching the convention of injury_report_2026-11-13.json.",
-   "action_required": "Confirm the 10 attribution=C rows against the PDF image at the source URL."
+   "field": "attribution=C rows",
+   "issue": "The NBA injury-report PDF repeats team labels only once per block. When the table breaks across pages the continuation rows carry no team cell, so their team attribution comes from document order rather than an explicit label.",
+   "action_required": "Confirm the attribution=C rows against the PDF image at the source URL."
   },
   {
-   "id": "FLAG-INJ-06",
+   "id": "FLAG-INJ-08",
    "severity": "medium",
-   "field": "time_et blank on the DET@MIA block (7 rows)",
-   "issue": "The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block (the Detroit player rows and the Miami placeholder row carry no time). Left blank rather than inferred. The tip time for DET@MIA is published elsewhere on this site from the official schedule snapshot.",
+   "field": "time_et blank on the DET@MIA block",
+   "issue": "The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block: the Detroit continuation rows and the Miami placeholder row carry no time. Left blank rather than inferred.",
    "action_required": "Confirm against the PDF image, or leave blank; do not copy a time from another release."
   },
   {
-   "id": "FLAG-INJ-07",
+   "id": "FLAG-INJ-09",
    "severity": "high",
    "field": "day-before designations are partial",
-   "issue": "At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).",
+   "issue": "At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16/17. Statuses can change before tip-off.",
    "action_required": "Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this."
   }
  ],
- "columns": ["game_date", "time_et", "matchup", "team", "player", "status", "reason", "attribution"],
+ "columns": [
+  "game_date",
+  "time_et",
+  "matchup",
+  "team",
+  "player",
+  "status",
+  "reason",
+  "attribution"
+ ],
  "records": [
-  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Holmes II, DaRon", "Out", "G League - On Assignment", "E"],
-  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Nembhard, Ryan", "Out", "G League - Two-Way", "E"],
-  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Strawther, Julian", "Out", "Injury/Illness - Left Knee Sprain", "E"],
-  ["2026-11-14", "07:00", "DEN@NOP", "Denver Nuggets", "Whitmore, Cam", "Out", "G League - Two-Way", "E"],
-  ["2026-11-14", "07:00", "DEN@NOP", "New Orleans Pelicans", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Biberovic, Tarik", "Out", "Injury/Illness - Right Heel Bursitis", "E"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Christie, Max", "Questionable", "Injury/Illness - Left Ankle Sprain", "E"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "de Larrea, Sergio", "Out", "Injury/Illness - Right Knee Sprain", "C"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Johnson Jr., Morez", "Probable", "Injury/Illness - Left Shin / Tibia Contusion", "C"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Lively II, Dereck", "Out", "Injury/Illness - Right Foot Surgery", "C"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Dallas Mavericks", "Martin, Caleb", "Available", "Injury/Illness - Right Thumb Splint", "C"],
-  ["2026-11-14", "07:30", "DAL@CLE", "Cleveland Cavaliers", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Bilodeau, Tyler", "Out", "G League - Two-Way", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Brown Jr., Mikel", "Questionable", "Injury/Illness - Illness", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Jefferson, Joshua", "Out", "G League - On Assignment", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Nelson, Grant", "Out", "G League - Two-Way", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Saraf, Ben", "Out", "G League - On Assignment", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Brooklyn Nets", "Traore, Nolan", "Probable", "Injury/Illness - Right Calf Tightness / Soreness", "E"],
-  ["2026-11-14", "08:00", "BKN@MEM", "Memphis Grizzlies", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
-  ["2026-11-14", "08:00", "CHI@MIN", "Chicago Bulls", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"],
-  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Beringer, Joan", "Available", "Injury/Illness - Face Mask", "E"],
-  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "DiVincenzo, Donte", "Out", "Injury/Illness - Right Achilles Tendon Repair / Surgery", "E"],
-  ["2026-11-14", "08:00", "CHI@MIN", "Minnesota Timberwolves", "Edwards, Anthony", "Out", "Injury/Illness - Right Knee Arthroscopy", "E"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Duren, Jalen", "Out", "Injury/Illness - Right Hamstring Strain", "E"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Harkless, Elijah", "Questionable", "G League - Two-Way", "C"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Joe, Isaiah", "Out", "Injury/Illness - Right Hip Contusion", "C"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Jones, Isaac", "Questionable", "G League - Two-Way", "C"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Lanier, Chaz", "Out", "G League - On Assignment", "C"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Okorie, Ebuka", "Out", "G League - On Assignment", "C"],
-  ["2026-11-14", "", "DET@MIA", "Detroit Pistons", "Onyenso, Ugonna", "Out", "G League - Two-Way", "C"],
-  ["2026-11-14", "", "DET@MIA", "Miami Heat", "", "NOT YET SUBMITTED", "Team submission outstanding at report time", "E"]
+  [
+   "2026-11-14",
+   "07:00",
+   "DEN@NOP",
+   "Denver Nuggets",
+   "Holmes II, DaRon",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:00",
+   "DEN@NOP",
+   "Denver Nuggets",
+   "Nembhard, Ryan",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:00",
+   "DEN@NOP",
+   "Denver Nuggets",
+   "Strawther, Julian",
+   "Out",
+   "Injury/Illness - Left Knee Sprain",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:00",
+   "DEN@NOP",
+   "Denver Nuggets",
+   "Whitmore, Cam",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:00",
+   "DEN@NOP",
+   "New Orleans Pelicans",
+   "",
+   "NOT YET SUBMITTED",
+   "Team submission outstanding at report time",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "Biberovic, Tarik",
+   "Out",
+   "Injury/Illness - Right Heel Bursitis",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "Christie, Max",
+   "Questionable",
+   "Injury/Illness - Left Ankle Sprain",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "de Larrea, Sergio",
+   "Out",
+   "Injury/Illness - Right Knee Sprain",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "Johnson Jr., Morez",
+   "Probable",
+   "Injury/Illness - Left Shin / Tibia Contusion",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "Lively II, Dereck",
+   "Out",
+   "Injury/Illness - Right Foot Surgery",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Dallas Mavericks",
+   "Martin, Caleb",
+   "Available",
+   "Injury/Illness - Right Thumb Splint",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "07:30",
+   "DAL@CLE",
+   "Cleveland Cavaliers",
+   "",
+   "NOT YET SUBMITTED",
+   "Team submission outstanding at report time",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Bilodeau, Tyler",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Brown Jr., Mikel",
+   "Questionable",
+   "Injury/Illness - Illness",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Jefferson, Joshua",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Nelson, Grant",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Saraf, Ben",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Brooklyn Nets",
+   "Traore, Nolan",
+   "Probable",
+   "Injury/Illness - Right Calf Tightness / Soreness",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "BKN@MEM",
+   "Memphis Grizzlies",
+   "",
+   "NOT YET SUBMITTED",
+   "Team submission outstanding at report time",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "CHI@MIN",
+   "Chicago Bulls",
+   "",
+   "NOT YET SUBMITTED",
+   "Team submission outstanding at report time",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "CHI@MIN",
+   "Minnesota Timberwolves",
+   "Beringer, Joan",
+   "Available",
+   "Injury/Illness - Face Mask",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "CHI@MIN",
+   "Minnesota Timberwolves",
+   "DiVincenzo, Donte",
+   "Out",
+   "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "08:00",
+   "CHI@MIN",
+   "Minnesota Timberwolves",
+   "Edwards, Anthony",
+   "Out",
+   "Injury/Illness - Right Knee Arthroscopy",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Duren, Jalen",
+   "Out",
+   "Injury/Illness - Right Hamstring Strain",
+   "E"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Harkless, Elijah",
+   "Questionable",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Joe, Isaiah",
+   "Out",
+   "Injury/Illness - Right Hip Contusion",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Jones, Isaac",
+   "Questionable",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Lanier, Chaz",
+   "Out",
+   "G League - On Assignment",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Okorie, Ebuka",
+   "Out",
+   "G League - On Assignment",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Detroit Pistons",
+   "Onyenso, Ugonna",
+   "Out",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-14",
+   "",
+   "DET@MIA",
+   "Miami Heat",
+   "",
+   "NOT YET SUBMITTED",
+   "Team submission outstanding at report time",
+   "E"
+  ]
  ],
  "record_counts": {
   "total_rows": 31,
@@ -79,5 +367,14 @@
   "attribution_continuation": 10,
   "games_covered": 5,
   "games_covered_note": "DEN@NOP 07:00, DAL@CLE 07:30, BKN@MEM 08:00, CHI@MIN 08:00, DET@MIA (tip time cell lost in extraction; official schedule snapshot carries it). Counts computed from the records array at write time."
+ },
+ "subset_of": {
+  "snapshot": "injury_report_2026-11-13_1930ET.json",
+  "note": "This file transcribes only the 2026-11-14 rows of the 19:30 ET release. The full release (both game dates) is captured separately; the flag ids below are shared with it, because they describe the same findings about the same document. The counts below are this subset's own.",
+  "subset_counts": {
+   "rows": 31,
+   "attribution_continuation": 10,
+   "not_yet_submitted": 5
+  }
  }
 }

@@ -218,7 +218,7 @@ def build_corroboration_rows(games: list[dict], corrob: dict) -> dict:
                  "Injury-Report_2026-11-13_01_00PM.pdf")
 
 
-def build_slate_rows(games: list[dict]) -> dict:
+def build_slate_rows(games: list[dict], games_meta: dict | None = None) -> dict:
     rows = []
     corrob = load_time_corroboration()
     for g in games:
@@ -251,15 +251,21 @@ def build_slate_rows(games: list[dict]) -> dict:
             preview_status="confirmed in retrieved page text" if g["game_id"] in PREVIEW_VERIFIED
                           else "rule-generated, URL not verified — open it to check",
         ))
+    win = games_meta.get("window", {})
+    per_date = games_meta.get("counts_check", {})
+    retrieved = games_meta.get("retrieved_at_utc", "")
+    first, last = win.get("first_game_date", "?"), win.get("last_game_date", "?")
+    n = len(rows)
+    counts_txt = " / ".join(str(per_date[k]) for k in sorted(per_date)) if per_date else "not recorded"
     return table(rows, [("date", "Date"), ("time_et", "Tip (ET)"), ("matchup", "Matchup (away @ home)"),
                         ("game_id", "Official game ID"), ("arena", "Arena"), ("location", "City"),
                         ("broadcast", "Broadcast"), ("cup", "Emirates NBA Cup"),
                         ("time_status", "Tip-time provenance"),
                         ("preview", "Official game page"), ("preview_status", "Link status")],
-                 "Verified slate — 2026-11-13 → 2026-11-16 (31 games)",
+                 f"Verified slate — {first} → {last} ({n} games)",
                  "Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA's "
-                 "own; per-date game counts (9 / 5 / 9 / 8) match the calendar grid on the same page.",
-                 "https://www.nba.com/schedule retrieved 2026-11-13 22:33 UTC.")
+                 f"own; per-date game counts ({counts_txt}) match the calendar grid on the same page.",
+                 f"https://www.nba.com/schedule retrieved {retrieved}.")
 
 
 def build_lines_rows(model: RT.RatingModel, lines: list[LN.GameLine]) -> dict:
@@ -339,10 +345,10 @@ def build_injury_tables(rows: list[INJ.InjuryRow], raw: dict) -> tuple[dict, dic
     for i, r in enumerate(rows):
         fl = []
         if r.attribution == "C":
-            fl.append("FLAG-INJ-01")
-        fl.append("FLAG-INJ-02")
+            fl.append("FLAG-INJ-10")
+        fl.append("FLAG-INJ-11")
         if r.status == "NOT YET SUBMITTED":
-            fl.append("FLAG-INJ-04")
+            fl.append("FLAG-INJ-13")
         detail.append(make_row(
             f"inj-{i}", SRC_INJ, _flag_ids(*fl),
             game_date=r.game_date, time_et=r.time_et, matchup=r.matchup, team=r.team,
@@ -368,7 +374,7 @@ def build_injury_tables(rows: list[INJ.InjuryRow], raw: dict) -> tuple[dict, dic
     for tri in sorted(rot):
         d = rot[tri]
         rrows.append(make_row(
-            f"rot-{tri}", SRC_INJ, _flag_ids("FLAG-INJ-02", "FLAG-INJ-03"),
+            f"rot-{tri}", SRC_INJ, _flag_ids("FLAG-INJ-11", "FLAG-INJ-12"),
             team=d["team"], out=d["out"], doubtful=d["doubtful"], questionable=d["questionable"],
             probable=d["probable"], available=d["available_listed"],
             two_way_or_susp=d["gleague_or_suspension"], not_submitted=d["not_yet_submitted"],
@@ -397,18 +403,18 @@ def build_window_injury_tables() -> tuple[dict, dict]:
     Kept in separate tables from the 16:15 ET capture: different release, different source
     URL, so mixing them under one title would misstate what a reviewer is looking at. The
     impact columns stay blank for the same reason as the 16:15 table: the official report
-    carries no minutes, usage or production data (FLAG-INJ-02).
+    carries no minutes, usage or production data (FLAG-INJ-11).
     """
     rows_w, _raw_w = INJ.load(RAW / SNAPSHOT_INJURY_WINDOW)
     detail = []
     for i, r in enumerate(rows_w):
-        fl = ["FLAG-INJ-02"]
+        fl = ["FLAG-INJ-11"]
         if r.attribution == "C":
             fl.append("FLAG-INJ-05")
         if not r.time_et:
             fl.append("FLAG-INJ-06")
         if r.status == "NOT YET SUBMITTED":
-            fl.append("FLAG-INJ-04")
+            fl.append("FLAG-INJ-13")
         detail.append(make_row(
             f"injw-{i}", SRC_INJ_W, _flag_ids(*fl),
             game_date=r.game_date, time_et=r.time_et or None, matchup=r.matchup, team=r.team,
@@ -435,7 +441,7 @@ def build_window_injury_tables() -> tuple[dict, dict]:
     for tri in sorted(rot):
         d = rot[tri]
         rrows.append(make_row(
-            f"rotw-{tri}", SRC_INJ_W, _flag_ids("FLAG-INJ-02", "FLAG-INJ-07"),
+            f"rotw-{tri}", SRC_INJ_W, _flag_ids("FLAG-INJ-11", "FLAG-INJ-08"),
             team=d["team"], out=d["out"], doubtful=d["doubtful"], questionable=d["questionable"],
             probable=d["probable"], available=d["available_listed"],
             two_way_or_susp=d["gleague_or_suspension"], not_submitted=d["not_yet_submitted"],
@@ -600,13 +606,18 @@ def build_correlation_rows(model: RT.RatingModel, lines: list[LN.GameLine]) -> d
                  "Derived in nba2/models/correlation.py; inputs from the verified ratings snapshot.")
 
 
+# How many games the parlay page quotes. It is a convenience filter, not a strategy claim,
+# and the flag below quotes both numbers so the page cannot drift from the flag.
+PARLAY_QUOTE_COUNT = 10
+
+
 def build_parlay_rows(model: RT.RatingModel, lines: list[LN.GameLine]) -> dict:
     rows = []
     sd_total = float(config.PARAMS["total_sd"].value)
     band = tuple(config.PARAMS["rho_band"].value)
     ranked = [l for l in lines if l.margin is not None and l.spread_home is not None and l.total_line is not None]
     ranked.sort(key=lambda l: -abs(l.margin))
-    for l in ranked[:10]:
+    for l in ranked[:PARLAY_QUOTE_COUNT]:
         q = corr.quote_pair(l.margin, model.cal.margin_sd,
                             l.total, sd_total, l.spread_home, l.total_line, band)
         ratios = list(q.ratio.values())
@@ -821,7 +832,7 @@ def build_leader_rows(inj_rows: list[INJ.InjuryRow], leaders_path: Path) -> dict
     rows = []
     for j in joined:
         rows.append(make_row(
-            f"lead-{j['tricode']}", SRC_INJ, _flag_ids("FLAG-INJ-03", "FLAG-INJ-02"),
+            f"lead-{j['tricode']}", SRC_INJ, _flag_ids("FLAG-INJ-12", "FLAG-INJ-11"),
             team=j["team"], leader=j["leader_player"],
             ppg=f"{j['ppg']:.1f}" if j["ppg"] is not None else None,
             rpg=f"{j['rpg']:.1f}" if j["rpg"] is not None else None,
@@ -961,7 +972,7 @@ def build() -> dict:
         "ratings": build_ratings_rows(model),
         "calibration": build_calibration_rows(model),
         "luck": build_luck_rows(model),
-        "slate": build_slate_rows(games),
+        "slate": build_slate_rows(games, slate_raw),
         "lines": build_lines_rows(model, lines),
         "picks": build_picks_rows(lines),
         "injuries": build_injury_tables(inj_rows, inj_raw)[0],
@@ -1085,6 +1096,10 @@ def build() -> dict:
 
 
 def main() -> None:
+    # The window size and the injury rows, read from the snapshots in use, so every flag
+    # that quotes a count quotes the count of the revision that is actually published.
+    n_games = len(json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["records"])
+    inj_rows, inj_raw = INJ.load(RAW / config.SNAPSHOT_INJURY)
     # register the extra flags referenced above before tables are built
     # every parameter that is not verified/derived gets its own flag, so the Flagged page is a
     # complete list of "numbers nobody ratified" rather than a curated subset
@@ -1148,7 +1163,8 @@ def main() -> None:
          "the mechanism, not of any market.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py",
          "Recompute with captured closing prices (R-101).")
-    flag("FLAG-PRL-02", "medium", "parlays", "Only 10 of 31 games are quoted on the parlay page (highest "
+    flag("FLAG-PRL-02", "medium", "parlays",
+         f"Only {PARLAY_QUOTE_COUNT} of {n_games} games are quoted on the parlay page (highest "
          "conviction). The selection is a convenience filter, not a strategy claim.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py", "Compute all games once prices exist.")
     flag("FLAG-LB-01", "high", "leaderboard", "The leaderboard is empty by design: no strategy has settled bets, "
@@ -1185,18 +1201,26 @@ def main() -> None:
     flag("FLAG-SRC-01", "low", "sourcing", "Rows sourced to a third party, to derivation, or to a blocked "
          "endpoint are flagged even when the value looks fine.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md", "No action; disclosure by design.")
-    flag("FLAG-INJ-01", "medium", "injuries", "17 rows inherit their team from the last team label printed in "
+    # The counts in these flags are computed from the snapshot in use, so the page can never
+    # quote a row count that belongs to a different official revision.
+    n_cont = sum(1 for r in inj_rows if r.attribution == "C")
+    n_nys = sum(1 for r in inj_rows if r.status == "NOT YET SUBMITTED")
+    flag("FLAG-INJ-10", "medium", "injuries",
+         f"{n_cont} of {len(inj_rows)} rows inherit their team from the last team label printed in "
          "their game block because the PDF table breaks across pages; not individually confirmed.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", "Confirm against the PDF image.")
-    flag("FLAG-INJ-02", "high", "injuries", "Minutes/production/line impact columns are blank for all 91 rows. "
+         SOURCES["nba_injury_pdf"].url, "Confirm against the PDF image.")
+    flag("FLAG-INJ-11", "high", "injuries",
+         f"Minutes/production/line impact columns are blank for all {len(inj_rows)} rows. "
          "The official report has no such fields and no player-level feed is connected.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", "Connect R-102.")
-    flag("FLAG-INJ-03", "medium", "injuries", "'No rows for this team' is not 'team is healthy'. Pages 3,5,7 of "
-         "the report were not all parsed, and teams with no listed players may simply be outside what we read.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", "Re-parse the full 7 pages.")
-    flag("FLAG-INJ-04", "info", "injuries", "Nov 14 rows are 'NOT YET SUBMITTED' in the 11/13 16:15 ET release — "
+         SOURCES["nba_injury_pdf"].url, "Connect R-102.")
+    flag("FLAG-INJ-12", "medium", "injuries",
+         "'No rows for this team' is not 'team is healthy'. A team that printed no rows may simply be "
+         "outside what the report covers, so absence is recorded as UNKNOWN rather than as availability.",
+         SOURCES["nba_injury_pdf"].url, "Re-parse the full report and record coverage explicitly.")
+    flag("FLAG-INJ-13", "info", "injuries",
+         f"{n_nys} rows in the {inj_raw.get('report_stamp_et', 'current')} release are 'NOT YET SUBMITTED' — "
          "injury-aware lines at T-3 are structurally impossible, and the site says so on the slate page.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf", "Re-run at game-day 13:00 ET.")
+         SOURCES["nba_injury_pdf"].url, "Re-run at game-day 13:00 ET.")
     flag("FLAG-PROC-01", "high", "process", "A patch script in this session overwrote "
          "data/raw/injury_report_2026-11-13.json with source code (a reused variable name in a throwaway "
          "editing script). Detected on the next build when the JSON failed to parse; restored from commit "
@@ -1208,16 +1232,23 @@ def main() -> None:
          "is not reliably aligned with the games beside it; they are published but NOT independently confirmed. "
          "Confirm on the game page before trusting anything time-sensitive (live/teaser/settlement windows).",
          "https://www.nba.com/schedule", "Confirm per game page; blank the column if any doubt remains.")
-    flag("FLAG-SLATE-05", "medium", "slate", "19 of 31 official game-page URLs are generated from a slug rule "
-         "confirmed on 12 games, not verified one by one. The game IDs themselves are official; only the URL "
-         "is a generalisation.",
+    n_verified_urls = len(PREVIEW_VERIFIED)
+    flag("FLAG-SLATE-05", "medium", "slate",
+         f"{n_games - n_verified_urls} of {n_games} official game-page URLs are generated from a slug "
+         f"rule confirmed on {n_verified_urls} games, not verified one by one. The game IDs themselves are "
+         "official; only the URL is a generalisation.",
          "https://www.nba.com/schedule", "Click-through verification, or ingest the official sitemap.")
-    flag("FLAG-SLATE-06", "high", "slate", "Availability data for the pick window is still incomplete: the "
-         "11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots "
-         "filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15–16, so most of the window is priced "
-         "without availability data. This is a structural property of publishing at T-3, not a to-do item.",
-         "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
-         "Re-issue availability after each later release (the nightly ingest workflow now does this; see FLAG-REFRESH-01).")
+    n_win_placeholder = sum(1 for r in inj_rows if r.status == "NOT YET SUBMITTED")
+    n_win_games = len({r.game_date for r in inj_rows})
+    flag("FLAG-SLATE-06", "high", "slate",
+         f"Availability data for the pick window is incomplete: the injury report in use is stamped "
+         f"{inj_raw.get('report_stamp_et', 'unknown')} and carries day-before designations for "
+         f"{n_win_games} of the window's game dates, of which {n_win_placeholder} team-slots are still "
+         "NOT YET SUBMITTED. Every game without a filed designation is priced without availability "
+         "data. This is a structural property of publishing ahead of tip-off, not a to-do item.",
+         SOURCES["nba_injury_pdf"].url,
+         "Re-issue availability after each later release (the nightly ingest workflow does this; "
+         "see FLAG-REFRESH-01).")
     flag("FLAG-REPO-01", "low", "repo review", "Repo-review findings are point-in-time (main @ 7fa2a24). Later "
          "commits may fix or reintroduce them.",
          "https://github.com/wingbangboozle1-lang/NBA2/commits/main", "Re-run review on each merge.")

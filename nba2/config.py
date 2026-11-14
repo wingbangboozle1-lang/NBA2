@@ -467,6 +467,22 @@ SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
 
 
+_STAMP_RE = __import__("re").compile(r"(\d{4}-\d{2}-\d{2})[ T](\d{1,2}):(\d{2})")
+
+
+def _stamp_key(stamp: str) -> tuple:
+    """Sortable key for an official report stamp such as '2026-11-13 19:30 ET'.
+
+    Two captures of the same release may write the stamp with or without the ' ET'
+    suffix, so the stamp is parsed rather than compared as a string: string ordering
+    would rank '2026-11-13 19:30' and '2026-11-13 19:30 ET' differently for no reason.
+    """
+    m = _STAMP_RE.search(stamp or "")
+    if not m:
+        return (0, 0, 0)
+    return (int(m.group(1).replace("-", "")), int(m.group(2)), int(m.group(3)))
+
+
 def _snapshot_ranking(kind: str) -> list[tuple[tuple, str]]:
     """Rank the committed snapshots of one kind, newest first.
 
@@ -475,9 +491,13 @@ def _snapshot_ranking(kind: str) -> list[tuple[tuple, str]]:
     reproducible. So the ranking key is read out of the snapshot itself:
 
       * slate  -> (window.first_game_date, retrieved_at_utc)
-      * injury -> (report_stamp_et, retrieved_at_utc)
+      * injury -> (report_stamp_et, number of game dates covered, retrieved_at_utc)
 
-    Ties are broken by file name, so the order never depends on directory order.
+    The injury tiebreak matters: two captures can read the *same* official release, one
+    of them transcribing every game date in it and one only the day-before rows. The
+    fuller capture is the primary snapshot; the narrower one stays available as a
+    dedicated view of the same release. Everything else is broken by file name, so the
+    order never depends on directory order.
     """
     out: list[tuple[tuple, str]] = []
     pattern = "slate_*.json" if kind == "slate" else "injury_report_*.json"
@@ -489,7 +509,10 @@ def _snapshot_ranking(kind: str) -> list[tuple[tuple, str]]:
             if kind == "slate":
                 key = (doc["window"]["first_game_date"], doc.get("retrieved_at_utc", ""), p.name)
             else:
-                key = (doc["report_stamp_et"], doc.get("retrieved_at_utc", ""), p.name)
+                dates = {r[0] for r in doc.get("records", []) if r}
+                key = (_stamp_key(doc.get("report_stamp_et", "")),
+                       len(dates),
+                       doc.get("retrieved_at_utc", ""), p.name)
         except Exception:
             continue
         out.append((key, p.name))
@@ -504,8 +527,33 @@ _I = _snapshot_ranking("injury")
 # between two official revisions instead of only the latest one.
 SNAPSHOT_SLATE = _S[0][1] if _S else "slate_2026-11-13_to_11-16.json"
 SNAPSHOT_PREVIOUS_SLATE = _S[1][1] if len(_S) > 1 else None
-SNAPSHOT_INJURY = _I[0][1] if _I else "injury_report_2026-11-13.json"
-SNAPSHOT_PREVIOUS_INJURY = _I[1][1] if len(_I) > 1 else None
+
+
+def _full_release_injury() -> tuple[str | None, str | None]:
+    """The active injury snapshot, and the previous *full release* to diff it against.
+
+    A snapshot qualifies as a full release when it covers more than one game date - that
+    is, when it transcribed the whole official document rather than only one day's rows
+    out of it. Two captures can read the same release (one transcribing every date, one
+    only the day-before rows); the narrower one is a useful dedicated view of that
+    release, but it is not a revision to diff against.
+
+    The previous revision is therefore the newest full release with a *strictly earlier*
+    stamp, so a diff always compares two different official releases rather than two
+    transcriptions of the same one.
+    """
+    if not _I:
+        return "injury_report_2026-11-13.json", None
+    active_key, active_name = _I[0]
+    active_stamp, active_dates = active_key[0], active_key[1]
+    full = [(k, n) for k, n in _I if k[1] >= 2]
+    if not full:
+        return active_name, (_I[1][1] if len(_I) > 1 else None)
+    previous = next((n for k, n in full if k[0] < active_stamp), None)
+    return active_name, previous
+
+
+SNAPSHOT_INJURY, SNAPSHOT_PREVIOUS_INJURY = _full_release_injury()
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

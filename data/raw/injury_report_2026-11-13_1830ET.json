@@ -18,35 +18,35 @@
  },
  "flags": [
   {
-   "id": "FLAG-INJ-01",
+   "id": "FLAG-INJ-05",
    "severity": "medium",
    "field": "attribution=C rows",
    "issue": "The NBA injury-report PDF repeats team labels only once per block. When the table breaks across pages the continuation rows carry no team cell, so their team attribution comes from document order rather than an explicit label.",
    "action_required": "Confirm the attribution=C rows against the PDF image at the source URL."
   },
   {
-   "id": "FLAG-INJ-02",
+   "id": "FLAG-INJ-06",
    "severity": "high",
    "field": "rotation_minutes_impact,production_impact,line_adjustment_pts",
    "issue": "No numeric injury impact is produced in this snapshot. Quantifying a status change requires player-level minutes and production data; the injury report contains neither. The impact columns are blank by design, not omitted.",
    "action_required": "Attach official per-player minutes and production to the pipeline (see requirements R-102) before any injury adjustment is applied to a line."
   },
   {
-   "id": "FLAG-INJ-03",
+   "id": "FLAG-INJ-07",
    "severity": "medium",
    "field": "teams_not_present",
    "issue": "The report prints no rows at all for the New York Knicks or the Milwaukee Bucks, both of whom played on 2026-11-13. Absence of a row is NOT evidence of availability.",
    "action_required": "Treat a team with no printed roster as UNKNOWN, never as clean."
   },
   {
-   "id": "FLAG-INJ-06",
+   "id": "FLAG-INJ-08",
    "severity": "medium",
    "field": "teams_not_present",
    "issue": "The 18:30 ET revision still prints no rows at all for the New York Knicks or the Milwaukee Bucks, both of whom played on 2026-11-13. Absence of a row is not evidence of availability.",
    "action_required": "Treat a team with no printed roster as UNKNOWN, never as clean. Re-check the next revision before any game-day use."
   },
   {
-   "id": "FLAG-INJ-07",
+   "id": "FLAG-INJ-09",
    "severity": "high",
    "field": "game_date=2026-11-14 rows",
    "issue": "Only 5 of the 10 teams playing on 2026-11-14 have submitted statuses in this revision (DEN, DAL, BKN, MIN, DET). The other 5 (NOP, CLE, MEM, CHI, MIA) are printed as 'NOT YET SUBMITTED'. No report exists yet for the 2026-11-15, 11-16 or 11-17 games.",

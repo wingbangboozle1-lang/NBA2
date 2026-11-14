@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Reconciliation</h2><p>Same official documents, two sessions, two answers. Every disagreement is listed rather than averaged.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 00:49 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="surfaces" data-rows="8">
 <h2>Everything published in this repository, and who made it</h2>
 <p class="blurb">Six independent site layers now exist in one repo because six sessions worked in parallel, three of them merged while this page was being written. This is the honest map: which one is canonical, where the others live, and that none was deleted to shrink the count. The durable fix is structural — own a directory and a data namespace, as `originated/**` did — not a stricter merge rule.</p>
@@ -1158,10 +1158,10 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/raw snapshots → nba2/models/lines.py · theirs: nba2/data/picks.json → nba2/picks.py</p>
-</section><section class="card table-card" id="xadjudicate" data-rows="11">
-<h2>Status conflicts, adjudicated against a third official revision — 5 of 11 resolved in favour of the latest read</h2>
+</section><section class="card table-card" id="xadjudicate" data-rows="15">
+<h2>Status conflicts, adjudicated against a third official revision — 6 of 15 resolved in favour of the latest read</h2>
 <p class="blurb">Two sessions disagreed on six statuses and both believed they had read the same document correctly. A third session had ingested the 17:15 ET revision, which is later than ours, so the disagreement is now testable instead of a matter of trust. This is what &#x27;verify against official sources&#x27; is actually worth: not a claim of care, but a second and third copy to compare against.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Status conflicts, adjudicated against a third official revision — 5 of 11 resolved in favour of the latest read</caption><thead><tr>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Status conflicts, adjudicated against a third official revision — 6 of 15 resolved in favour of the latest read</caption><thead><tr>
 <th scope="col">Game date</th>
 <th scope="col">Team</th>
 <th scope="col">Player</th>
@@ -1206,6 +1206,30 @@
 <td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
+<tr id="2026-11-13|CHI|powell">
+<td>2026-11-13</td>
+<td>Chicago Bulls</td>
+<td>Powell, Norman</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Questionable</td>
+<td>-</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="2026-11-13|CHI|swain">
+<td>2026-11-13</td>
+<td>Chicago Bulls</td>
+<td>Swain, Dailyn</td>
+<td>Questionable</td>
+<td>Out</td>
+<td>Questionable</td>
+<td>Injury/Illness - Right Disc Irritation</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
 </tr>
 <tr id="2026-11-13|IND|mcconnell">
 <td>2026-11-13</td>
@@ -1267,6 +1291,30 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
 </tr>
+<tr id="2026-11-13|NOP|mathurin">
+<td>2026-11-13</td>
+<td>New Orleans Pelicans</td>
+<td>Mathurin, Bennedict</td>
+<td>Questionable</td>
+<td>Available</td>
+<td>Questionable</td>
+<td>Injury/Illness - Right Thumb Sprain</td>
+<td>17:15 ET revision matches the PRIOR capture — our 16:15 read should be re-checked</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
+</tr>
+<tr id="2026-11-13|NOP|murray">
+<td>2026-11-13</td>
+<td>New Orleans Pelicans</td>
+<td>Murray, Dejounte</td>
+<td>Doubtful</td>
+<td>Out</td>
+<td>Out</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
+<td>17:15 ET revision matches OUR capture — the later official state supersedes the 13:00 read</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">Third session&#x27;s ingest of the 17:15 ET official report</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
+</tr>
 <tr id="2026-11-13|ORL|cain">
 <td>2026-11-13</td>
 <td>Orlando Magic</td>
@@ -1306,9 +1354,9 @@
 </tbody></table></div>
 <p class="tablenote">Injury-Report_2026-11-13_01_00PM.pdf / _04_15PM.pdf / _05_15PM.pdf</p>
 </section><section class="card table-card" id="xinjuries" data-rows="130">
-<h2>Injury rows: 83 in both captures (11 status conflicts), 9 only theirs, 38 only ours</h2>
+<h2>Injury rows: 83 in both captures (15 status conflicts), 9 only theirs, 38 only ours</h2>
 <p class="blurb">Two sessions read two different revisions of the same official PDF. Where they differ, the report — not the model — changed underneath us, which is exactly why an injury-aware line must be re-issued at game time rather than sealed three days early.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Injury rows: 83 in both captures (11 status conflicts), 9 only theirs, 38 only ours</caption><thead><tr>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Injury rows: 83 in both captures (15 status conflicts), 9 only theirs, 38 only ours</caption><thead><tr>
 <th scope="col">Game date</th>
 <th scope="col">Team</th>
 <th scope="col">Player</th>
@@ -1431,12 +1479,12 @@
 <td>CHI</td>
 <td>Powell, Norman</td>
 <td>Questionable</td>
-<td>Questionable</td>
-<td>Injury/Illness - Low Back Spasms</td>
-<td>corroborated</td>
+<td>Available</td>
+<td>-</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|CHI|sellers">
 <td>2026-11-13</td>
@@ -1455,12 +1503,12 @@
 <td>CHI</td>
 <td>Swain, Dailyn</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Out</td>
 <td>Injury/Illness - Right Disc Irritation</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|CHI|wilson">
 <td>2026-11-13</td>
@@ -1983,12 +2031,12 @@
 <td>NOP</td>
 <td>Mathurin, Bennedict</td>
 <td>Questionable</td>
-<td>Questionable</td>
+<td>Available</td>
 <td>Injury/Illness - Right Thumb Sprain</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|NOP|mcgowens">
 <td>2026-11-13</td>
@@ -2031,12 +2079,12 @@
 <td>NOP</td>
 <td>Murray, Dejounte</td>
 <td>Doubtful</td>
-<td>Doubtful</td>
+<td>Out</td>
 <td>Injury/Illness - Left Ankle Sprain</td>
-<td>corroborated</td>
+<td>STATUS DISAGREES</td>
 <td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'>—</td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
 </tr>
 <tr id="2026-11-13|NOP|pierre jr.">
 <td>2026-11-13</td>
@@ -2056,7 +2104,7 @@
 <td>Watford, Trendon</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Right Ankle Sprain</td>
+<td>Injury/Illness - Left Ankle Sprain</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
@@ -2248,7 +2296,7 @@
 <td>Morant, Ja</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Left Hamstring Strain</td>
+<td>Injury/Illness - Right Hamstring Strain</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/por-vs-sac-0022600041</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
@@ -2476,7 +2524,7 @@
 <td>Nurkic, Jusuf</td>
 <td>Out</td>
 <td>Out</td>
-<td>Injury/Illness - Right 2nd Plantar Plate Tear</td>
+<td>Injury/Illness - Left 2nd Plantar Plate Tear</td>
 <td>corroborated</td>
 <td>https://www.nba.com/game/uta-vs-hou-0022600039</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>

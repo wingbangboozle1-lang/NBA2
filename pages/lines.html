@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Lines</h2><p>Our numbers, one row per game, with the disagreement between the two base ratings printed next to the line.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 00:49 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="lines" data-rows="27">
 <h2>Originated lines for every game in the window</h2>
 <p class="blurb">Spread/total are our numbers, quoted in half-point increments so nothing pushes. Positive consensus margin = home team favoured. No column here is a market price: with no odds feed these lines cannot be compared to a book, and we do not pretend otherwise.</p>
@@ -557,9 +557,9 @@
 </tbody></table></div>
 <p class="tablenote">Reproduce: python -m nba2.pipeline.build_site_data</p>
 </section><section class="card table-card" id="slate" data-rows="27">
-<h2>Verified slate — 2026-11-13 → 2026-11-16 (31 games)</h2>
-<p class="blurb">Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA&#x27;s own; per-date game counts (9 / 5 / 9 / 8) match the calendar grid on the same page.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Verified slate — 2026-11-13 → 2026-11-16 (31 games)</caption><thead><tr>
+<h2>Verified slate — 2026-11-14 → 2026-11-17 (27 games)</h2>
+<p class="blurb">Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA&#x27;s own; per-date game counts (5 / 9 / 8 / 5) match the calendar grid on the same page.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Verified slate — 2026-11-14 → 2026-11-17 (27 games)</caption><thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Tip (ET)</th>
 <th scope="col">Matchup (away @ home)</th>
@@ -978,7 +978,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">https://www.nba.com/schedule retrieved 2026-11-13 22:33 UTC.</p>
+<p class="tablenote">https://www.nba.com/schedule retrieved 2026-11-14T01:05:00Z.</p>
 </section><section class="card table-card" id="corroboration" data-rows="27">
 <h2>Cross-document corroboration: 4 of 27 games confirmed twice, 1 matchups confirmed with the time cell unreadable, 0 mismatches, 22 outside that report</h2>
 <p class="blurb">The schedule page is the only source for most of this slate, and its times are printed as a loose list — the reason FLAG-SLATE-04 was raised. The injury report repeats each matchup with its own time cell, so where the two agree the time is no longer a single-source claim. Every one of the 11 readable pairs agrees, and no pair disagrees.</p>
@@ -997,7 +997,7 @@
 <td>19:00</td>
 <td>19:00</td>
 <td>MATCHUP + TIP TIME corroborated by a second official document</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="0022600232">
@@ -1007,7 +1007,7 @@
 <td>19:30</td>
 <td>19:30</td>
 <td>MATCHUP + TIP TIME corroborated by a second official document</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="0022600233">
@@ -1017,7 +1017,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>matchup corroborated; the report&#x27;s time cell was lost to a page break</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600234">
@@ -1027,7 +1027,7 @@
 <td>20:00</td>
 <td>20:00</td>
 <td>MATCHUP + TIP TIME corroborated by a second official document</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="0022600235">
@@ -1037,7 +1037,7 @@
 <td>20:00</td>
 <td>20:00</td>
 <td>MATCHUP + TIP TIME corroborated by a second official document</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="0022600236">
@@ -1047,7 +1047,7 @@
 <td>13:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600237">
@@ -1057,7 +1057,7 @@
 <td>16:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600238">
@@ -1067,7 +1067,7 @@
 <td>16:30</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600239">
@@ -1077,7 +1077,7 @@
 <td>17:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600240">
@@ -1087,7 +1087,7 @@
 <td>18:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600241">
@@ -1097,7 +1097,7 @@
 <td>18:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600242">
@@ -1107,7 +1107,7 @@
 <td>19:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600243">
@@ -1117,7 +1117,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600244">
@@ -1127,7 +1127,7 @@
 <td>21:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600245">
@@ -1137,7 +1137,7 @@
 <td>19:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600246">
@@ -1147,7 +1147,7 @@
 <td>19:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600247">
@@ -1157,7 +1157,7 @@
 <td>19:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600248">
@@ -1167,7 +1167,7 @@
 <td>19:30</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600249">
@@ -1177,7 +1177,7 @@
 <td>19:30</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600250">
@@ -1187,7 +1187,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600251">
@@ -1197,7 +1197,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600252">
@@ -1207,7 +1207,7 @@
 <td>21:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600253">
@@ -1217,7 +1217,7 @@
 <td>19:30</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600254">
@@ -1227,7 +1227,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600255">
@@ -1237,7 +1237,7 @@
 <td>20:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600257">
@@ -1247,7 +1247,7 @@
 <td>22:30</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 <tr id="0022600256">
@@ -1257,7 +1257,7 @@
 <td>23:00</td>
 <td><span class="blank" title="blank because: FLAG-SLATE-04">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>not in the 11/13 report (that release lists 11/13 + 11/14 only)</td>
-<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 18:30 ET (official)</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
 </tr>
 </tbody></table></div>

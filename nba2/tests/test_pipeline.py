@@ -64,13 +64,37 @@ class TestProvenanceRules(unittest.TestCase):
 
 class TestRegistry(unittest.TestCase):
     def test_flag_registration_is_idempotent_and_sorted(self):
+        """Registering the same flag twice with the same text is a no-op.
+
+        Registering an id with *different* text used to silently replace the first
+        registration, which is how two unrelated findings ended up sharing an id and one
+        of them vanished from the Flagged-for-Review page. That is now a hard error.
+        """
         before = len(all_flags())
         flag("FLAG-TEST-Z", "low", "test", "x", "https://www.nba.com/", "y")
-        flag("FLAG-TEST-Z", "low", "test", "x2", "https://www.nba.com/", "y")
+        flag("FLAG-TEST-Z", "low", "test", "x", "https://www.nba.com/", "y")
         after = [f.id for f in all_flags()]
         self.assertEqual(after.count("FLAG-TEST-Z"), 1)
         self.assertEqual(after, sorted(after))
         self.assertGreaterEqual(len(after), before)
+
+    def test_two_different_findings_cannot_share_a_flag_id(self):
+        """The collision guard: one id means one finding."""
+        from nba2.provenance import FlagIdCollision
+        flag("FLAG-TEST-COLLIDE", "low", "test", "first finding", "https://www.nba.com/", "a")
+        with self.assertRaises(FlagIdCollision):
+            flag("FLAG-TEST-COLLIDE", "high", "test", "second finding", "https://www.nba.com/", "b")
+        # the original survives the failed attempt
+        found = [f for f in all_flags() if f.id == "FLAG-TEST-COLLIDE"]
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0].statement, "first finding")
+
+    def test_every_published_flag_has_a_distinct_id(self):
+        """Two published flags sharing an id would mean one finding is published twice."""
+        site = json.loads((ROOT / "data" / "site.json").read_text())
+        ids = [r["values"]["id"] for r in site["sections"]["flags"]["rows"]]
+        self.assertEqual(len(ids), len(set(ids)),
+                         "a flag id appears more than once on the Flagged-for-Review page")
 
     def test_every_snapshot_flag_is_registered(self):
         """Nothing in the committed data may reference a flag the site does not publish.

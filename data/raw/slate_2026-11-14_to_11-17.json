@@ -73,14 +73,14 @@
    "action_required": "Always read game_id from the official page; never infer it."
   },
   {
-   "id": "FLAG-SLATE-04",
+   "id": "FLAG-SLATE-07",
    "severity": "medium",
    "field": "game_id",
    "issue": "Game ids are not monotonic with tip time on 2026-11-17: the page prints 0022600257 (UTA @ LAC, 10:30 PM ET) before 0022600256 (CHA @ LAL, 11:00 PM ET), and 0022600254 (POR @ MIN, 8:00 PM ET) repeats the same matchup and venue as 0022600250 on 2026-11-16. Any ingest that sorts by id, or that infers a date from an id range, will mis-join these rows.",
    "action_required": "Always key on the id read from the page and sort by the printed tip time. The repeated POR @ MIN pairing was independently confirmed on the official New York Knicks and Minnesota Timberwolves team schedule pages on 2026-11-14, so it is a property of the published schedule, not a one-off rendering artefact."
   },
   {
-   "id": "FLAG-SLATE-05",
+   "id": "FLAG-SLATE-08",
    "severity": "medium",
    "field": "broadcast",
    "issue": "The official schedule page prints the LEAGUE PASS logo as the broadcast mark for a game that is available on League Pass. That is what the page says, but 'League Pass' is a viewing product, not a broadcaster, and it is recorded here exactly as printed.",

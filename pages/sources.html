@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Sources</h2><p>What we read, when, and what we could not read at all.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 00:49 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="sources" data-rows="17">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:14 UTC</strong></span><span>window <strong>2026-11-14 → 2026-11-17 (today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="sources" data-rows="18">
 <h2>Source register + verification log</h2>
 <p class="blurb">Retrieval times are UTC. Anything marked &#x27;no — blocked&#x27; contributed no value to any table on this site.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Source register + verification log</caption><thead><tr>
@@ -62,10 +62,20 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
 <td class='flagcell'>—</td>
 </tr>
+<tr id="nba_injury_pdf_1114">
+<td>nba_injury_pdf_1114</td>
+<td>NBA Official Injury Report 11/13 19:30 ET — 11/14 day-before designations (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td>Official NBA.com / NBA CDN</td>
+<td>yes</td>
+<td>Later release of the same referee-operations series: first document carrying 2026-11-14 participation designations (five teams filed; five NOT YET SUBMITTED). Retrieved 2026-11-14 00:47 UTC; transcript at data/raw/injury_report_2026-11-14_daybefore.json.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/provenance.py" target="_blank" rel="noopener">nba2/provenance.py SOURCES registry</a></td>
+<td class='flagcell'>—</td>
+</tr>
 <tr id="nba_injury_pdf">
 <td>nba_injury_pdf</td>
-<td>NBA Official Injury Report 2026-11-13 18:30 ET (official)</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
+<td>NBA Official Injury Report 2026-11-13 19:30 ET ET (official)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
 <td>Referee-operations PDF; columns: Game Date, Game Time, Matchup, Team, Player, Status, Reason. The URL is read from the active snapshot, so it always names the revision the site used.</td>
@@ -74,8 +84,8 @@
 </tr>
 <tr id="nba_injury_pdf_prev">
 <td>nba_injury_pdf_prev</td>
-<td>NBA Official Injury Report 2026-11-13 16:15 ET (official, earlier revision)</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf</td>
+<td>NBA Official Injury Report 2026-11-13 18:30 ET (official, earlier revision)</td>
+<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_06_30PM.pdf</td>
 <td>Official NBA.com / NBA CDN</td>
 <td>yes</td>
 <td>The previous official revision, kept so the status churn between two revisions can be published instead of only the latest state.</td>
