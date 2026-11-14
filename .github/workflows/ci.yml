@@ -19,6 +19,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  refresh-official:
+    # This runner has open egress; the build sandbox does not. It is the only place in the
+    # pipeline that can reach the official NBA endpoints, so the official player-statistics
+    # snapshot is fetched here and published as an artefact for review. It never commits:
+    # a snapshot reaches the repository only after a human has looked at it.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch the official player-statistics snapshot
+        id: refresh
+        continue-on-error: true
+        run: python tools/refresh_player_stats.py --out "data/raw/player_stats_$(date -u +%F).json"
+      - name: Upload whatever was obtained (empty is a valid, honest outcome)
+        uses: actions/upload-artifact@v4
+        with:
+          name: player-stats-snapshot
+          path: data/raw/player_stats_*.json
+          if-no-files-found: warn
+
   verify:
     runs-on: ubuntu-latest
     steps:
