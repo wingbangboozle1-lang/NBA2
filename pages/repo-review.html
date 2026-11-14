@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html" class="active">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li class="nav-group"><span class="nav-cat">Decide</span><ul><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="graded.html">Graded Results</a></li></ul></li><li class="nav-group"><span class="nav-cat">Measure</span><ul><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li></ul></li><li class="nav-group"><span class="nav-cat">Inputs</span><ul><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li></ul></li><li class="nav-group"><span class="nav-cat">Governance</span><ul><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li><li><a href="verification-report.html">Verification Report</a></li></ul></li><li class="nav-group"><span class="nav-cat">Project</span><ul><li><a href="requirements.html">Requirements</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="repo-review.html" class="active">Repo Review</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li></ul></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Repo Review</h2><p>Line-by-line review of the repository, including work already merged by other sessions.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="repo_review" data-rows="18">
+    <section class="card table-card" id="repo_review" data-rows="28">
 <h2>Repository review</h2>
 <p class="blurb">Reviewed from the git history and the working tree, not from a summary of it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Repository review</caption><thead><tr>
@@ -190,6 +190,96 @@
 <td>The published slate had rolled past its snapshot window (audit A-01): picks were sealed for 11/14-16 while the freshest injury rows said NOT YET SUBMITTED for every 11/14 team.</td>
 <td>audit-2c07c00b.md; data/raw/slate_2026-11-13_to_11-16.json as_of 2026-11-13.</td>
 <td>Refreshed in this session: new official slate capture (36 games, 11/13 context + 11/14-17), freshest injury release (11/13 19:30 ET, 122 rows incl. first 11/14 statuses), ratings re-check (30/30 identical), new sealed ledger of 27 picks for 11/14-17 with a refuse-to-seal guard under 6h to tip. Still a point-in-time capture, not a live feed.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-19">
+<td>RR-19</td>
+<td>Verification checker</td>
+<td>crosscheck CC-SEAL-04 reports five sealed predictions as &#x27;not tipped after the snapshot&#x27;. It compares calendar dates, not timestamps, and it is wrong: the 2026-11-14 ledger was sealed 2026-11-14T00:58:54Z and the earliest game in it tips 2026-11-14 19:00 ET = 2026-11-15T00:00Z. The true minimum lead time across all 27 predictions is 23.02 hours.</td>
+<td>`python3` over data/raw/ledger/sealed-2026-11-14.json: header.sealed_at_utc = 2026-11-14T00:58:54Z; min over predictions of (date+time_et at UTC-5) - seal = 23.02 h (0022600231), 23.52 h (0022600232), 24.02 h (0022600233/34).</td>
+<td>Logged, not fixed: tools/crosscheck_site.py is owned by session arena/5b80b88a. The check should compare datetimes (tip_utc &gt; seal_utc), not dates. This also answers Q-31&#x27;s underlying worry in the affirmative for this ledger — it really was sealed before every tip.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SEAL-05">FLAG-SEAL-05</a></td>
+</tr>
+<tr id="RR-20">
+<td>RR-20</td>
+<td>Snapshot schema</td>
+<td>tools/crosscheck_site.py globs data/raw/injury_report_*.json and indexes every file it finds by [&#x27;columns&#x27;] + list-of-list [&#x27;records&#x27;] + [&#x27;record_counts&#x27;]. A snapshot written in any other shape crashes the whole checker with KeyError, which silently removes 94 semantic checks from the repo&#x27;s verification surface.</td>
+<td>tools/crosscheck_site.py:249 raises KeyError: &#x27;columns&#x27; on data/raw/injury_report_2026-11-14_0500AM.json, which was first written this session as list-of-dicts with a &#x27;counts_check&#x27; key.</td>
+<td>Fixed on the data side rather than by editing another session&#x27;s tool: the new snapshot is now written in the established schema (columns, list records, record_counts, attribution), so the checker runs again — 94 checks.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-21">
+<td>RR-21</td>
+<td>Data provenance</td>
+<td>Two independent transcriptions of the same official injury release disagree on the wording, and only the wording, of the not-yet-submitted Reason cell: one records the PDF&#x27;s literal &#x27;NOT YET SUBMITTED&#x27;, the other a descriptive sentence &#x27;Team submission outstanding at report time&#x27;. Status values agree on all 31 rows.</td>
+<td>audit/2026-11-14-3681/verify_live.py check C3-C: after normalising the two spellings, 31 rows vs 31 rows, 0 rows only in one, 0 value differences. Before normalising it reported 5 &#x27;differences&#x27;, all of them this wording.</td>
+<td>Both spellings are legitimate renderings of the same cell; the comparison now normalises them and says so in the code. No value on the site changed.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-22">
+<td>RR-22</td>
+<td>Published site</td>
+<td>Six site trees are served from one Pages origin: the root v1 tree (index.html + pages/), site/ (v2), docs/, dashboard/, originated/ and backtest/. They overlap in content and were built at different times, so the same question has several answers depending on which URL a reader lands on.</td>
+<td>`gh api repos/wingbangboozle1-lang/NBA2/pages` -&gt; build_type &#x27;legacy&#x27;, source main / — so root v1 is what visitors get; the other five are reachable at /NBA2/&lt;tree&gt;/. Raised as Q-34 and S-32 for the owner.</td>
+<td>Not changed: switching the canonical tree changes every page a reader sees. Logged for an owner decision; the root tree carries all of this session&#x27;s tables.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-23">
+<td>RR-23</td>
+<td>Derived counts</td>
+<td>The availability-coverage column computed &#x27;no rows yet&#x27; as slots - filed - not_yet_submitted, but filed and not_yet_submitted are not disjoint: a club can file in one release and still read NOT YET SUBMITTED in another. The result can go negative, and a value of -5 was live on the site for 2026-11-14.</td>
+<td>Raised as finding F1 / CR-1 by session arena/5b80b88a against nba2/pipeline/build_site_data.py:487-491; reproduced again this session as crosscheck CC-DER-12 once the 11/15 date entered the window.</td>
+<td>Fixed: the club is counted as not-submitted only when it has no designation in any committed release, so the three count columns are disjoint and sum to the team-slot count exactly. CC-DER-12 now passes.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-24">
+<td>RR-24</td>
+<td>Mislabelled column</td>
+<td>The ratings table&#x27;s column labelled &#x27;W-L (official NBA.com)&#x27; was populated from the same third-party field as the neighbouring &#x27;W-L (ratings source)&#x27; column, so the table&#x27;s own guard — &#x27;if they ever disagree, the table is wrong&#x27; — could never fire.</td>
+<td>nba2/pipeline/build_site_data.py set both `wl` and `wl_official` to f&quot;{t.wins}-{t.losses}&quot; from the basketball-reference snapshot. Measured by crosscheck CC-DER-05 and logged as CR-4 by session arena/5b80b88a.</td>
+<td>Fixed with a genuinely independent source: the official column now reads data/raw/standings_2026-11-14_official.json (nba.com/standings, captured this session). A new Difference column shows that the two differ by exactly the 2026-11-13 result for every club that played that night. CC-DER-05 now passes.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-25">
+<td>RR-25</td>
+<td>Hard-coded coverage</td>
+<td>The corroboration table&#x27;s verdict for uncorroborated games hard-coded the claimed coverage window as &#x27;11/13 + 11/14&#x27;. The sentence is currently true but was written by hand, so it would keep asserting a coverage window that had moved the moment another release was ingested.</td>
+<td>nba2/pipeline/build_site_data.py, build_corroboration_rows: the not-covered verdict was a literal string; crosscheck CC-PUB-05 flagged the 11/15 rows.</td>
+<td>Fixed: the coverage dates are now derived from the corroborating snapshots themselves and rendered into the verdict. CC-PUB-05 now passes.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-26">
+<td>RR-26</td>
+<td>Coordination</td>
+<td>Pull request #21 (arena/79e87c81-nba2, &#x27;Roll the pick window forward to 2026-11-14..11-17 and refresh the official snapshots&#x27;) has been open since 2026-11-14 00:52 UTC with no commits for roughly ten hours, and its substance was delivered by PR #38.</td>
+<td>`gh pr list --state open` at 2026-11-14 ~10:20 UTC -&gt; PR #21 only, opened 2026-11-14T00:52:16Z; the window it asks for is the one currently published.</td>
+<td>Left open: the branch belongs to another session and the coordination rules say a stale claim may be taken over, not that a PR may be closed out from under someone. Flagged so the owner can close it as superseded.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-27">
+<td>RR-27</td>
+<td>Documentation drift</td>
+<td>README.md hand-copies the artefact counts (pages, tables, rows), and they go stale on essentially every build: this session found 19 pages / 39 tables / 1124 rows claimed against 20 / 43 / 1223 on disk.</td>
+<td>crosscheck CC-DOC-01: &#x27;3 stale figure(s)&#x27;. The same class of drift was logged as finding F2 / CR-2 / S-27 by session arena/5b80b88a.</td>
+<td>Corrected again for this build, and S-27 (generate the block instead of copying it) is re-recommended. A recurring manual correction is not a fix.</td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
+</tr>
+<tr id="RR-28">
+<td>RR-28</td>
+<td>Environment</td>
+<td>Direct HTTP egress from this workspace to every nba.com host fails (curl returns HTTP 000 for www.nba.com, ak-static.cms.nba.com and stats.nba.com), while the platform page-fetch tool reaches www.nba.com and the referee-operations PDFs. Prior sessions recorded the official sources as simply &#x27;unreachable&#x27;.</td>
+<td>`curl -s -o /dev/null -w &#x27;%{http_code}&#x27; --max-time 8 https://www.nba.com/` -&gt; 000 (github.com -&gt; 200 in the same run); fetch of https://www.nba.com/schedule?date=2026-11-14 returned the live Week 4 grid, and Injury-Report_2026-11-14_05_00AM.pdf returned its full table.</td>
+<td>Used the working path: every value added this session was read from a document fetched in this session, and each snapshot records the retrieval method as well as the URL and time. The &#x27;blocked&#x27; labels on stats.nba.com and cdn.nba.com are still correct — those remain unreachable either way.</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2" target="_blank" rel="noopener">This repository (git history)</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
 </tr>

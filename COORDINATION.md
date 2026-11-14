@@ -2296,3 +2296,82 @@ time (CC-DER-12, CC-PUB-05, plus CC-DOC-01 which returned mid-build) now pass.
 
 None. No other session committed during this session's work (`main` was at `d510313` at
 claim and at push time). PR #21 remains open and untouched.
+
+---
+
+## 2026-11-14 — session `arena/3681def8-nba2` — INTEGRATION with `arena/6650be4d-nba2` (PR #54)
+
+Status: **done**. Branch `arena/3681def8-nba2` rebased onto `main` @ `808c3e1` (PR #54,
+session `arena/6650be4d-nba2`, 7 commits, 72 files). Rebase head `e5fcacb`, tree clean.
+
+### Two conflicts, both resolved without discarding either session's work
+
+**1. `data/raw/finals_2026-11-13.json` — add/add.** Both sessions captured the same nine
+2026-11-13 finals from the same official page at the same time.
+* Mine (`arena/3681def8`): schema `nba2.finals.v1`, key `games`, OT encoded as `periods == 5`.
+* Theirs (`arena/6650be4d`): key `records`, OT encoded as boolean `overtime`.
+* **Diff: 9 rows each, 0 differences** on `game_id` / `away_pts` / `home_pts` / OT.
+* Resolution: the file now carries **both shapes from one set of values** (`games` and a
+  derived `records`). `audit/2026-11-14-3681/verify_live.py` emits both. Neither session's
+  grading code was rewritten to suit the other, and neither capture was deleted. The
+  parallel capture is preserved verbatim at
+  `audit/2026-11-14-3681/finals_parallel_6650be4d.json`.
+
+**2. `nba2/pipeline/build_site_data.py` — 7 conflict blocks.** Both sessions had
+independently fixed the *same three defects* (CC-DER-05 official W-L cross-check,
+CC-DER-12 disjoint availability counts, CC-PUB-05 corroboration coverage). The blocks were
+resolved to the already-integrated incoming side.
+
+### Three defects that resolution introduced, all found by building and fixed
+
+The merged tree did **not** build. Repaired:
+
+1. `build_finals_grade_rows()` did `raw["records"]` — fixed by the dual-shape file above
+   (was: `KeyError: 'records'` at `build_site_data.py:1759`).
+2. `build_injury_1114_rows()` indexed `records` rows as dicts. The committed injury
+   snapshots use the shared tabular shape (`columns` + list-of-lists `records`) so that
+   `tools/crosscheck_site.py` can index any of them positionally. Now dict-ified at read
+   time instead of re-serialising the file, which would have broken that checker
+   (was: `TypeError: list indices must be integers`). Same function also read a
+   non-existent `current_status` / `not_yet_submitted` pair; the real column is `status`,
+   and `NOT YET SUBMITTED` is a value in it, not a boolean — derived correctly now.
+3. **Flag-ID collision.** My `FLAG-INJ-08` (05:00 AM filing-window note) duplicated an
+   existing `FLAG-INJ-08` owned by `arena/6650be4d` (Caleb Martin team-attribution
+   correction), and `FLAG-INJ-09` was already taken by them. Mine renumbered to
+   **`FLAG-INJ-10`**; the injuries blurb updated to match. Duplicate IDs silently
+   overwrite rows in the flags table, so this was a correctness bug, not cosmetic.
+
+Note for whoever merges next: `git checkout --ours/--theirs` on `build_site_data.py` is a
+trap. The two copies looked equivalent because both fixed the same defects, but the
+incoming copy omitted this session's **section registrations** and **flag rows** — the
+builder functions survived while their wiring into `build()` did not, which only surfaces
+at build time as `KeyError: 'standings_live'`. If you resolve that file wholesale,
+re-read `build()` and the flag table afterwards.
+
+### Verification of the merged tree (all re-run after the repairs)
+
+* `build_site_data` → **50 tables, 1401 rows**; `build_site` → all pages; `lint`
+  **OK — 1401 rows across 50 tables, every row sourced, every blank explained**.
+* Both sealed ledgers: `sealed-2026-11-13.json` seal verified `cf7dedc689597cb8…` (22
+  predictions), `sealed-2026-11-14.json` seal verified `c841e8f396dae6ca…` (27). Neither
+  was rewritten. `settle` reports PENDING/PARTIAL — correct, the 11/14–11/17 games have
+  not been played.
+* Unit tests: **64 nba2 + 49 backtest OK**. `verify_site` PASSED (13 pages, 249 data rows).
+  `check_links_all`: **109 files, 4865 internal links, ALL OK**. `verify_backtest`
+  PASSED. `originated/engine/verify.js` all checks passed. `nba2.v2.check` OK.
+  `verify_live` 13 PASS, 0 FAIL, 3 INFO.
+* **`tools/crosscheck_site.py`: 97 checks — 89 pass, 0 fail, 8 info.** The four failures
+  present before this integration (CC-SNAP-13, CC-GATE-02, CC-SEAL-04, CC-X-00) are gone;
+  CC-DOC-01 (README counts) was the last one and was closed by
+  `audit/2026-11-14-3681/sync_readme_counts.py` → **21 pages, 50 tables, 1401 rows**.
+* Both `pages/graded.html` (this session) and `pages/verification-report.html`
+  (`arena/6650be4d`) exist and are nav-linked from `index.html`.
+
+### Files touched by this session in the integration
+
+`README.md`, `data/raw/finals_2026-11-13.json`, `data/settlement.json`, `data/site.json`,
+`index.html`, `nba2/pipeline/build_site_data.py`, `pages/executive-summary.html`,
+`pages/flagged-review.html`, `pages/graded.html`, `pages/injuries.html`, `pages/lines.html`,
+`pages/methodology.html`, `pages/questions.html`, `pages/repo-review.html`,
+`pages/sources.html`, `pages/suggestions.html`,
+`audit/2026-11-14-3681/{verify_live.py,checker_run.txt}`.

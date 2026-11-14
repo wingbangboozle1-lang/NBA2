@@ -1544,19 +1544,30 @@ def build_injury_1114_rows() -> dict | None:
         return None
     snap = json.loads(p.read_text())
     pdf = snap["provenance"]["url"]
+    # The committed injury snapshots use the shared tabular shape — `columns` plus
+    # list-of-lists `records` — so that tools/crosscheck_site.py can index any of them
+    # positionally. Dict-ify here rather than re-serialising the file, which would break
+    # that checker.
+    rows_raw = snap["records"]
+    if rows_raw and isinstance(rows_raw[0], list):
+        cols = snap["columns"]
+        rows_raw = [dict(zip(cols, r)) for r in rows_raw]
     by_game: dict[tuple[str, str], list[dict]] = {}
-    for r in snap["records"]:
+    for r in rows_raw:
         by_game.setdefault((r["game_date"], r["matchup"]), []).append(r)
 
     rows = []
     for (date, matchup), recs in sorted(by_game.items()):
         clubs = sorted({r["team"] for r in recs})
-        filed = [r for r in recs if not r["not_yet_submitted"]]
-        nys = [r["team"] for r in recs if r["not_yet_submitted"]]
-        out = sum(1 for r in filed if r["current_status"] == "Out")
-        ques = sum(1 for r in filed if r["current_status"] == "Questionable")
-        prob = sum(1 for r in filed if r["current_status"] == "Probable")
-        avail = sum(1 for r in filed if r["current_status"] == "Available")
+        nys = [r["team"] for r in recs if r["status"] == "NOT YET SUBMITTED"]
+        # A club that has filed nothing still occupies a row — with the document's own
+        # NOT YET SUBMITTED wording in the status column. Only rows naming a player are
+        # designations, so the counts below are player counts, never club counts.
+        filed = [r for r in recs if r["status"] != "NOT YET SUBMITTED"]
+        out = sum(1 for r in filed if r["status"] == "Out")
+        ques = sum(1 for r in filed if r["status"] == "Questionable")
+        prob = sum(1 for r in filed if r["status"] == "Probable")
+        avail = sum(1 for r in filed if r["status"] == "Available")
         rows.append(make_row(
             f"{date}-{matchup}", SRC_INJ_1114_AM, (),
             date=date, matchup=matchup,
@@ -1576,7 +1587,7 @@ def build_injury_1114_rows() -> dict | None:
         "Read straight from the official referee-operations PDF. 'NOT YET SUBMITTED' is the "
         "document's own wording for a club that has filed nothing for that game — at this "
         "release the 11 a.m.-1 p.m. local game-day window had not yet opened for the 11/14 "
-        "games, and the 11/15 filings were not yet due (FLAG-INJ-08). Counts are filing counts, "
+        "games, and the 11/15 filings were not yet due (FLAG-INJ-10). Counts are filing counts, "
         "not injury impact: no minutes or production figure is asserted anywhere on this site.")
 
 
@@ -2456,7 +2467,7 @@ def main() -> None:
          "across all 27 predictions is 23.02 hours.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
          "Owner of tools/crosscheck_site.py compares datetimes instead of dates (RR-19).")
-    flag("FLAG-INJ-08", "info", "injuries",
+    flag("FLAG-INJ-10", "info", "injuries",
          "At the 2026-11-14 05:00 AM ET release, five of the ten clubs on the 11/14 slate had "
          "filed nothing (New Orleans, Cleveland, Memphis, Miami, Chicago) and all eighteen 11/15 "
          "club entries read NOT YET SUBMITTED. This is the official state of the document, not a "

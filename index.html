@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="index.html" class="active">Dashboard</a></li><li><a href="pages/executive-summary.html">Executive Summary</a></li><li><a href="pages/picks.html">Picks (3-day slate)</a></li><li><a href="pages/lines.html">Originated Lines</a></li><li><a href="pages/strategies.html">Strategy Leaderboard</a></li><li><a href="backtest/index.html" class="active">Measured-Skill Backtest</a></li><li><a href="pages/parlays.html">Correlation &amp; Parlays</a></li><li><a href="pages/props.html">Player Props &amp; Combos</a></li><li><a href="pages/injuries.html">Injuries &amp; Rotation</a></li><li><a href="pages/game-flow.html">Game Flow</a></li><li><a href="pages/research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="pages/methodology.html">Methodology &amp; Parameters</a></li><li><a href="pages/requirements.html">Requirements</a></li><li><a href="pages/repo-review.html">Repo Review</a></li><li><a href="pages/questions.html">Open Questions</a></li><li><a href="pages/suggestions.html">Suggestions Queue</a></li><li><a href="pages/reconciliation.html">Cross-session Reconciliation</a></li><li><a href="pages/session-audit.html">Session Audit</a></li><li><a href="pages/verification-report.html">Verification Report</a></li><li><a href="pages/flagged-review.html">Flagged for Review</a></li><li><a href="pages/sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="index.html" class="active">Dashboard</a></li><li class="nav-group"><span class="nav-cat">Decide</span><ul><li><a href="pages/picks.html">Picks (3-day slate)</a></li><li><a href="pages/lines.html">Originated Lines</a></li><li><a href="pages/graded.html">Graded Results</a></li></ul></li><li class="nav-group"><span class="nav-cat">Measure</span><ul><li><a href="pages/strategies.html">Strategy Leaderboard</a></li><li><a href="backtest/index.html" class="active">Measured-Skill Backtest</a></li><li><a href="pages/parlays.html">Correlation &amp; Parlays</a></li><li><a href="pages/props.html">Player Props &amp; Combos</a></li></ul></li><li class="nav-group"><span class="nav-cat">Inputs</span><ul><li><a href="pages/injuries.html">Injuries &amp; Rotation</a></li><li><a href="pages/game-flow.html">Game Flow</a></li></ul></li><li class="nav-group"><span class="nav-cat">Governance</span><ul><li><a href="pages/executive-summary.html">Executive Summary</a></li><li><a href="pages/questions.html">Open Questions</a></li><li><a href="pages/suggestions.html">Suggestions Queue</a></li><li><a href="pages/flagged-review.html">Flagged for Review</a></li><li><a href="pages/sources.html">Sources &amp; Verification</a></li><li><a href="pages/verification-report.html">Verification Report</a></li></ul></li><li class="nav-group"><span class="nav-cat">Project</span><ul><li><a href="pages/requirements.html">Requirements</a></li><li><a href="pages/methodology.html">Methodology &amp; Parameters</a></li><li><a href="pages/repo-review.html">Repo Review</a></li><li><a href="pages/reconciliation.html">Cross-session Reconciliation</a></li><li><a href="pages/session-audit.html">Session Audit</a></li><li><a href="pages/research-scaffold.html">Research Blueprint (session 1)</a></li></ul></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -21,7 +21,568 @@
   <main class="main">
     <section class="hero"><h2>NBA2 — originated lines &amp; gated strategies</h2><p>A line-origination desk that publishes what it can prove and flags what it cannot.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="pages/flagged-review.html">See every open flag</a>.</div>
-    <div class="card"><div class="kpi-grid"><div class="kpi"><div class="kpi-v">36</div><div class="kpi-l">games priced in window</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Tier A lines</div></div><div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Tier B lines</div></div><div class="kpi"><div class="kpi-v">19</div><div class="kpi-l">Tier C (do-not-bet)</div></div><div class="kpi"><div class="kpi-v">122</div><div class="kpi-l">official injury rows (117 status + 5 pending)</div></div><div class="kpi"><div class="kpi-v">13.58</div><div class="kpi-l">σ margin (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">1.53</div><div class="kpi-l">home-court adv (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">0/90</div><div class="kpi-l">gates passed</div></div><div class="kpi"><div class="kpi-v">100</div><div class="kpi-l">reward units unallocated</div></div><div class="kpi"><div class="kpi-v">87</div><div class="kpi-l">open flags</div></div></div></div><section class="card"><h2>Sections</h2><p class="blurb">Ordered so a reader meets the data before the opinion: what we know, what we price, what is blocked.</p><div class="cat-grid"><a class="cat-card" href="pages/executive-summary.html"><h3>Executive Summary</h3></a><a class="cat-card" href="pages/picks.html"><h3>Picks (3-day slate)</h3></a><a class="cat-card" href="pages/lines.html"><h3>Originated Lines</h3></a><a class="cat-card" href="pages/strategies.html"><h3>Strategy Leaderboard</h3></a><a class="cat-card" href="backtest/index.html"><h3>Measured-Skill Backtest</h3></a><a class="cat-card" href="pages/parlays.html"><h3>Correlation &amp; Parlays</h3></a><a class="cat-card" href="pages/props.html"><h3>Player Props &amp; Combos</h3></a><a class="cat-card" href="pages/injuries.html"><h3>Injuries &amp; Rotation</h3></a><a class="cat-card" href="pages/game-flow.html"><h3>Game Flow</h3></a><a class="cat-card" href="pages/research-scaffold.html"><h3>Research Blueprint (session 1)</h3></a><a class="cat-card" href="pages/methodology.html"><h3>Methodology &amp; Parameters</h3></a><a class="cat-card" href="pages/requirements.html"><h3>Requirements</h3></a><a class="cat-card" href="pages/repo-review.html"><h3>Repo Review</h3></a><a class="cat-card" href="pages/questions.html"><h3>Open Questions</h3></a><a class="cat-card" href="pages/suggestions.html"><h3>Suggestions Queue</h3></a><a class="cat-card" href="pages/reconciliation.html"><h3>Cross-session Reconciliation</h3></a><a class="cat-card" href="pages/session-audit.html"><h3>Session Audit</h3></a><a class="cat-card" href="pages/verification-report.html"><h3>Verification Report</h3></a><a class="cat-card" href="pages/flagged-review.html"><h3>Flagged for Review</h3></a><a class="cat-card" href="pages/sources.html"><h3>Sources &amp; Verification</h3></a></div></section><section class="card table-card" id="anomalies" data-rows="4">
+    <div class="card"><div class="kpi-grid"><div class="kpi"><div class="kpi-v">36</div><div class="kpi-l">games priced in window</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Tier A lines</div></div><div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Tier B lines</div></div><div class="kpi"><div class="kpi-v">19</div><div class="kpi-l">Tier C (do-not-bet)</div></div><div class="kpi"><div class="kpi-v">122</div><div class="kpi-l">official injury rows (117 status + 5 pending)</div></div><div class="kpi"><div class="kpi-v">13.58</div><div class="kpi-l">σ margin (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">1.53</div><div class="kpi-l">home-court adv (fitted, pts)</div></div><div class="kpi"><div class="kpi-v">0/90</div><div class="kpi-l">gates passed</div></div><div class="kpi"><div class="kpi-v">100</div><div class="kpi-l">reward units unallocated</div></div><div class="kpi"><div class="kpi-v">91</div><div class="kpi-l">open flags</div></div></div></div><section class="card"><h2>Graded against official results</h2><p class="blurb">The nine games of 2026-11-13, priced from the ratings snapshot that predates every tip and scored against the final scores on NBA.com. This is the only card in the repository measured against real outcomes rather than against itself. It is a walk-forward backtest, not a pre-registered ledger (<a href="pages/flagged-review.html#FLAG-GRADE-01">FLAG-GRADE-01</a>).</p><div class="kpi-grid"><div class="kpi"><div class="kpi-v">12.97</div><div class="kpi-l">margin MAE (pts)</div><div class="kpi-n">Baseline is &#x27;predict a 0-point home margin&#x27; — the no-information rule. Improvement 0.363 pts/game, permutation p = 0.952.</div></div><div class="kpi"><div class="kpi-v">12.9</div><div class="kpi-l">total MAE (pts)</div><div class="kpi-n">Baseline is the league-mean total with no team information. Improvement 3.298 pts/game, permutation p = 0.4018 — the largest effect on the card, still</div></div><div class="kpi"><div class="kpi-v">5/9 = 55.6%</div><div class="kpi-l">winner calls</div><div class="kpi-n">Wilson 95% CI [26.7%, 81.1%] spans 50%, so chance is not ruled out.</div></div><div class="kpi"><div class="kpi-v">1565</div><div class="kpi-l">games needed for power</div><div class="kpi-n">At 5% significance. Nine games cannot establish a 55% hit rate, and no gate or reward may be released on it.</div></div></div><p class="blurb"><a href="pages/graded.html">Full card, every game, with source links &rarr;</a></p></section><section class="card"><h2>Sections</h2><p class="blurb">Grouped by the decision each one supports, so the site reads as a dashboard rather than a file listing.</p><div class="cat-block"><h3 class="cat-head">Decide</h3><p class="cat-desc">What the desk would act on today, and what has actually been proven.</p><div class="cat-grid"><a class="cat-card" href="pages/picks.html"><h4>Picks (3-day slate)</h4></a><a class="cat-card" href="pages/lines.html"><h4>Originated Lines</h4></a><a class="cat-card" href="pages/graded.html"><h4>Graded Results</h4></a></div></div><div class="cat-block"><h3 class="cat-head">Measure</h3><p class="cat-desc">Whether any of it is skill rather than luck.</p><div class="cat-grid"><a class="cat-card" href="pages/strategies.html"><h4>Strategy Leaderboard</h4></a><a class="cat-card" href="backtest/index.html"><h4>Measured-Skill Backtest</h4></a><a class="cat-card" href="pages/parlays.html"><h4>Correlation &amp; Parlays</h4></a><a class="cat-card" href="pages/props.html"><h4>Player Props &amp; Combos</h4></a></div></div><div class="cat-block"><h3 class="cat-head">Inputs</h3><p class="cat-desc">The verified facts every number is built from.</p><div class="cat-grid"><a class="cat-card" href="pages/injuries.html"><h4>Injuries &amp; Rotation</h4></a><a class="cat-card" href="pages/game-flow.html"><h4>Game Flow</h4></a></div></div><div class="cat-block"><h3 class="cat-head">Governance</h3><p class="cat-desc">What we know, what we do not, and what needs your decision.</p><div class="cat-grid"><a class="cat-card" href="pages/executive-summary.html"><h4>Executive Summary</h4></a><a class="cat-card" href="pages/questions.html"><h4>Open Questions</h4></a><a class="cat-card" href="pages/suggestions.html"><h4>Suggestions Queue</h4></a><a class="cat-card" href="pages/flagged-review.html"><h4>Flagged for Review</h4></a><a class="cat-card" href="pages/sources.html"><h4>Sources &amp; Verification</h4></a><a class="cat-card" href="pages/verification-report.html"><h4>Verification Report</h4></a></div></div><div class="cat-block"><h3 class="cat-head">Project</h3><p class="cat-desc">How the repository got here, and what it still owes the brief.</p><div class="cat-grid"><a class="cat-card" href="pages/requirements.html"><h4>Requirements</h4></a><a class="cat-card" href="pages/methodology.html"><h4>Methodology &amp; Parameters</h4></a><a class="cat-card" href="pages/repo-review.html"><h4>Repo Review</h4></a><a class="cat-card" href="pages/reconciliation.html"><h4>Cross-session Reconciliation</h4></a><a class="cat-card" href="pages/session-audit.html"><h4>Session Audit</h4></a><a class="cat-card" href="pages/research-scaffold.html"><h4>Research Blueprint (session 1)</h4></a></div></div></section><section class="card table-card" id="standings_live" data-rows="30">
+<h2>Official standings — NBA.com, read live 2026-11-14</h2>
+<p class="blurb">The first win-loss capture in this repository taken from an official NBA page; every earlier snapshot used basketball-reference for W-L (FLAG-RAT-01). Includes the completed 2026-11-13 games. Clubs have played 10-14 games, so win counts are not comparable across rows — the order is by win percentage, as on the official page.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Official standings — NBA.com, read live 2026-11-14</caption><thead><tr>
+<th scope="col">Team</th>
+<th scope="col">Conf</th>
+<th scope="col">#</th>
+<th scope="col">W</th>
+<th scope="col">L</th>
+<th scope="col">WIN%</th>
+<th scope="col">GB</th>
+<th scope="col">Conf rec</th>
+<th scope="col">Div rec</th>
+<th scope="col">Home</th>
+<th scope="col">Road</th>
+<th scope="col">L10</th>
+<th scope="col">Streak</th>
+<th scope="col">Official team page</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="BOS">
+<td>BOS</td>
+<td>East</td>
+<td>1</td>
+<td>10</td>
+<td>2</td>
+<td>.833</td>
+<td>--</td>
+<td>10-1</td>
+<td>4-0</td>
+<td>5-0</td>
+<td>5-2</td>
+<td>9-1</td>
+<td>W 5</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612738/celtics" target="_blank" rel="noopener">https://www.nba.com/team/1610612738/celtics</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="PHI">
+<td>PHI</td>
+<td>East</td>
+<td>2</td>
+<td>10</td>
+<td>3</td>
+<td>.769</td>
+<td>0.5</td>
+<td>10-3</td>
+<td>3-1</td>
+<td>5-2</td>
+<td>5-1</td>
+<td>7-3</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612755/sixers" target="_blank" rel="noopener">https://www.nba.com/team/1610612755/sixers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="DET">
+<td>DET</td>
+<td>East</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>.727</td>
+<td>1.5</td>
+<td>8-2</td>
+<td>0-0</td>
+<td>3-2</td>
+<td>5-1</td>
+<td>7-3</td>
+<td>W 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612765/pistons" target="_blank" rel="noopener">https://www.nba.com/team/1610612765/pistons</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="ATL">
+<td>ATL</td>
+<td>East</td>
+<td>4</td>
+<td>7</td>
+<td>6</td>
+<td>.538</td>
+<td>3.5</td>
+<td>7-2</td>
+<td>4-1</td>
+<td>3-3</td>
+<td>4-3</td>
+<td>5-5</td>
+<td>L 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612737/hawks" target="_blank" rel="noopener">https://www.nba.com/team/1610612737/hawks</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="MIA">
+<td>MIA</td>
+<td>East</td>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>.500</td>
+<td>4</td>
+<td>3-2</td>
+<td>1-1</td>
+<td>2-3</td>
+<td>4-3</td>
+<td>6-4</td>
+<td>W 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612748/heat" target="_blank" rel="noopener">https://www.nba.com/team/1610612748/heat</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="NYK">
+<td>NYK</td>
+<td>East</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>.500</td>
+<td>4</td>
+<td>6-6</td>
+<td>1-3</td>
+<td>4-3</td>
+<td>2-3</td>
+<td>6-4</td>
+<td>L 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612752/knicks" target="_blank" rel="noopener">https://www.nba.com/team/1610612752/knicks</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="CLE">
+<td>CLE</td>
+<td>East</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>.462</td>
+<td>4.5</td>
+<td>5-5</td>
+<td>1-0</td>
+<td>4-2</td>
+<td>2-5</td>
+<td>4-6</td>
+<td>L 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612739/cavaliers" target="_blank" rel="noopener">https://www.nba.com/team/1610612739/cavaliers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="TOR">
+<td>TOR</td>
+<td>East</td>
+<td>8</td>
+<td>5</td>
+<td>7</td>
+<td>.417</td>
+<td>5</td>
+<td>4-3</td>
+<td>0-2</td>
+<td>2-3</td>
+<td>3-4</td>
+<td>3-7</td>
+<td>L 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612761/raptors" target="_blank" rel="noopener">https://www.nba.com/team/1610612761/raptors</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="ORL">
+<td>ORL</td>
+<td>East</td>
+<td>9</td>
+<td>5</td>
+<td>7</td>
+<td>.417</td>
+<td>5</td>
+<td>3-4</td>
+<td>0-2</td>
+<td>1-4</td>
+<td>4-3</td>
+<td>5-5</td>
+<td>W 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612753/magic" target="_blank" rel="noopener">https://www.nba.com/team/1610612753/magic</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="IND">
+<td>IND</td>
+<td>East</td>
+<td>10</td>
+<td>5</td>
+<td>8</td>
+<td>.385</td>
+<td>5.5</td>
+<td>3-5</td>
+<td>0-1</td>
+<td>2-4</td>
+<td>3-3</td>
+<td>3-7</td>
+<td>W 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612754/pacers" target="_blank" rel="noopener">https://www.nba.com/team/1610612754/pacers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="CHA">
+<td>CHA</td>
+<td>East</td>
+<td>11</td>
+<td>4</td>
+<td>8</td>
+<td>.333</td>
+<td>6</td>
+<td>4-7</td>
+<td>2-2</td>
+<td>3-4</td>
+<td>1-4</td>
+<td>3-7</td>
+<td>L 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612766/hornets" target="_blank" rel="noopener">https://www.nba.com/team/1610612766/hornets</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="WAS">
+<td>WAS</td>
+<td>East</td>
+<td>12</td>
+<td>4</td>
+<td>9</td>
+<td>.308</td>
+<td>6.5</td>
+<td>4-8</td>
+<td>2-3</td>
+<td>2-3</td>
+<td>2-6</td>
+<td>2-8</td>
+<td>L 6</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612764/wizards" target="_blank" rel="noopener">https://www.nba.com/team/1610612764/wizards</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="BKN">
+<td>BKN</td>
+<td>East</td>
+<td>13</td>
+<td>3</td>
+<td>8</td>
+<td>.273</td>
+<td>6.5</td>
+<td>2-7</td>
+<td>0-2</td>
+<td>1-3</td>
+<td>2-5</td>
+<td>3-7</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612751/nets" target="_blank" rel="noopener">https://www.nba.com/team/1610612751/nets</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="CHI">
+<td>CHI</td>
+<td>East</td>
+<td>14</td>
+<td>2</td>
+<td>9</td>
+<td>.182</td>
+<td>7.5</td>
+<td>2-8</td>
+<td>1-0</td>
+<td>1-4</td>
+<td>1-5</td>
+<td>2-8</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612741/bulls" target="_blank" rel="noopener">https://www.nba.com/team/1610612741/bulls</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="MIL">
+<td>MIL</td>
+<td>East</td>
+<td>15</td>
+<td>1</td>
+<td>12</td>
+<td>.077</td>
+<td>9.5</td>
+<td>1-9</td>
+<td>1-2</td>
+<td>1-6</td>
+<td>0-6</td>
+<td>1-9</td>
+<td>L 9</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612749/bucks" target="_blank" rel="noopener">https://www.nba.com/team/1610612749/bucks</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="SAS">
+<td>SAS</td>
+<td>West</td>
+<td>1</td>
+<td>11</td>
+<td>2</td>
+<td>.846</td>
+<td>--</td>
+<td>10-2</td>
+<td>2-1</td>
+<td>5-2</td>
+<td>6-0</td>
+<td>10-0</td>
+<td>W 11</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612759/spurs" target="_blank" rel="noopener">https://www.nba.com/team/1610612759/spurs</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="LAL">
+<td>LAL</td>
+<td>West</td>
+<td>2</td>
+<td>11</td>
+<td>2</td>
+<td>.846</td>
+<td>--</td>
+<td>6-2</td>
+<td>4-1</td>
+<td>5-1</td>
+<td>6-1</td>
+<td>8-2</td>
+<td>W 7</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612747/lakers" target="_blank" rel="noopener">https://www.nba.com/team/1610612747/lakers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="HOU">
+<td>HOU</td>
+<td>West</td>
+<td>3</td>
+<td>10</td>
+<td>3</td>
+<td>.769</td>
+<td>1</td>
+<td>6-3</td>
+<td>2-1</td>
+<td>7-1</td>
+<td>3-2</td>
+<td>7-3</td>
+<td>W 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612745/rockets" target="_blank" rel="noopener">https://www.nba.com/team/1610612745/rockets</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="POR">
+<td>POR</td>
+<td>West</td>
+<td>4</td>
+<td>9</td>
+<td>3</td>
+<td>.750</td>
+<td>1.5</td>
+<td>9-3</td>
+<td>4-0</td>
+<td>3-2</td>
+<td>6-1</td>
+<td>7-3</td>
+<td>W 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612757/blazers" target="_blank" rel="noopener">https://www.nba.com/team/1610612757/blazers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="MIN">
+<td>MIN</td>
+<td>West</td>
+<td>5</td>
+<td>9</td>
+<td>3</td>
+<td>.750</td>
+<td>1.5</td>
+<td>5-2</td>
+<td>1-0</td>
+<td>5-1</td>
+<td>4-2</td>
+<td>7-3</td>
+<td>W 5</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612750/timberwolves" target="_blank" rel="noopener">https://www.nba.com/team/1610612750/timberwolves</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="MEM">
+<td>MEM</td>
+<td>West</td>
+<td>6</td>
+<td>8</td>
+<td>4</td>
+<td>.667</td>
+<td>2.5</td>
+<td>7-3</td>
+<td>1-1</td>
+<td>2-4</td>
+<td>6-0</td>
+<td>6-4</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612763/grizzlies" target="_blank" rel="noopener">https://www.nba.com/team/1610612763/grizzlies</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="GSW">
+<td>GSW</td>
+<td>West</td>
+<td>7</td>
+<td>8</td>
+<td>5</td>
+<td>.615</td>
+<td>3</td>
+<td>6-5</td>
+<td>3-2</td>
+<td>6-1</td>
+<td>2-4</td>
+<td>8-2</td>
+<td>L 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612744/warriors" target="_blank" rel="noopener">https://www.nba.com/team/1610612744/warriors</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="OKC">
+<td>OKC</td>
+<td>West</td>
+<td>8</td>
+<td>8</td>
+<td>5</td>
+<td>.615</td>
+<td>3</td>
+<td>5-5</td>
+<td>1-2</td>
+<td>5-0</td>
+<td>3-5</td>
+<td>5-5</td>
+<td>L 3</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612760/thunder" target="_blank" rel="noopener">https://www.nba.com/team/1610612760/thunder</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="DEN">
+<td>DEN</td>
+<td>West</td>
+<td>9</td>
+<td>6</td>
+<td>4</td>
+<td>.600</td>
+<td>3.5</td>
+<td>4-4</td>
+<td>0-2</td>
+<td>2-2</td>
+<td>3-2</td>
+<td>6-4</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612743/nuggets" target="_blank" rel="noopener">https://www.nba.com/team/1610612743/nuggets</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="DAL">
+<td>DAL</td>
+<td>West</td>
+<td>10</td>
+<td>7</td>
+<td>5</td>
+<td>.583</td>
+<td>3.5</td>
+<td>3-5</td>
+<td>1-3</td>
+<td>5-2</td>
+<td>2-3</td>
+<td>6-4</td>
+<td>L 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612742/mavericks" target="_blank" rel="noopener">https://www.nba.com/team/1610612742/mavericks</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="PHX">
+<td>PHX</td>
+<td>West</td>
+<td>11</td>
+<td>5</td>
+<td>6</td>
+<td>.455</td>
+<td>5</td>
+<td>3-6</td>
+<td>2-1</td>
+<td>5-3</td>
+<td>0-3</td>
+<td>5-5</td>
+<td>W 2</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612756/suns" target="_blank" rel="noopener">https://www.nba.com/team/1610612756/suns</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="NOP">
+<td>NOP</td>
+<td>West</td>
+<td>12</td>
+<td>4</td>
+<td>9</td>
+<td>.308</td>
+<td>7</td>
+<td>3-7</td>
+<td>1-1</td>
+<td>3-5</td>
+<td>1-4</td>
+<td>4-6</td>
+<td>L 5</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612740/pelicans" target="_blank" rel="noopener">https://www.nba.com/team/1610612740/pelicans</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="LAC">
+<td>LAC</td>
+<td>West</td>
+<td>13</td>
+<td>3</td>
+<td>8</td>
+<td>.273</td>
+<td>7</td>
+<td>3-6</td>
+<td>1-4</td>
+<td>3-3</td>
+<td>0-5</td>
+<td>2-8</td>
+<td>W 1</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612746/clippers" target="_blank" rel="noopener">https://www.nba.com/team/1610612746/clippers</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="SAC">
+<td>SAC</td>
+<td>West</td>
+<td>14</td>
+<td>1</td>
+<td>11</td>
+<td>.083</td>
+<td>9.5</td>
+<td>1-9</td>
+<td>0-2</td>
+<td>0-7</td>
+<td>1-4</td>
+<td>1-9</td>
+<td>L 5</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612758/kings" target="_blank" rel="noopener">https://www.nba.com/team/1610612758/kings</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+<tr id="UTA">
+<td>UTA</td>
+<td>West</td>
+<td>15</td>
+<td>1</td>
+<td>12</td>
+<td>.077</td>
+<td>10</td>
+<td>1-10</td>
+<td>0-2</td>
+<td>1-6</td>
+<td>0-6</td>
+<td>0-10</td>
+<td>L 11</td>
+<td><a class="cell-link" href="https://www.nba.com/team/1610612762/jazz" target="_blank" rel="noopener">https://www.nba.com/team/1610612762/jazz</a></td>
+<td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">NBA.com Standings 2026-11-14 (official)</a></td>
+<td class='flagcell'>—</td>
+</tr>
+</tbody></table></div>
+<p class="tablenote"></p>
+</section><section class="card table-card" id="anomalies" data-rows="4">
 <h2>Slate irregularities found while transcribing</h2>
 <p class="blurb">Recorded, not fixed. Each of these would corrupt an automated pipeline that trusted the pattern instead of the value.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Slate irregularities found while transcribing</caption><thead><tr>
@@ -100,7 +661,7 @@
 <td>Prime Video</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/nyk-vs-ind-0022600034</td>
+<td><a class="cell-link" href="https://www.nba.com/game/nyk-vs-ind-0022600034" target="_blank" rel="noopener">https://www.nba.com/game/nyk-vs-ind-0022600034</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -115,7 +676,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/mil-vs-orl-0022600035</td>
+<td><a class="cell-link" href="https://www.nba.com/game/mil-vs-orl-0022600035" target="_blank" rel="noopener">https://www.nba.com/game/mil-vs-orl-0022600035</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -130,7 +691,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/cle-vs-mia-0022600036</td>
+<td><a class="cell-link" href="https://www.nba.com/game/cle-vs-mia-0022600036" target="_blank" rel="noopener">https://www.nba.com/game/cle-vs-mia-0022600036</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -145,7 +706,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/atl-vs-chi-0022600037</td>
+<td><a class="cell-link" href="https://www.nba.com/game/atl-vs-chi-0022600037" target="_blank" rel="noopener">https://www.nba.com/game/atl-vs-chi-0022600037</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -160,7 +721,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/mem-vs-nop-0022600038</td>
+<td><a class="cell-link" href="https://www.nba.com/game/mem-vs-nop-0022600038" target="_blank" rel="noopener">https://www.nba.com/game/mem-vs-nop-0022600038</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -175,7 +736,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/uta-vs-hou-0022600039</td>
+<td><a class="cell-link" href="https://www.nba.com/game/uta-vs-hou-0022600039" target="_blank" rel="noopener">https://www.nba.com/game/uta-vs-hou-0022600039</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -190,7 +751,7 @@
 <td>Prime Video</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/gsw-vs-sas-0022600040</td>
+<td><a class="cell-link" href="https://www.nba.com/game/gsw-vs-sas-0022600040" target="_blank" rel="noopener">https://www.nba.com/game/gsw-vs-sas-0022600040</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -205,7 +766,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/por-vs-sac-0022600041</td>
+<td><a class="cell-link" href="https://www.nba.com/game/por-vs-sac-0022600041" target="_blank" rel="noopener">https://www.nba.com/game/por-vs-sac-0022600041</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -220,7 +781,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/okc-vs-lac-0022600042</td>
+<td><a class="cell-link" href="https://www.nba.com/game/okc-vs-lac-0022600042" target="_blank" rel="noopener">https://www.nba.com/game/okc-vs-lac-0022600042</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -235,7 +796,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/den-vs-nop-0022600231</td>
+<td><a class="cell-link" href="https://www.nba.com/game/den-vs-nop-0022600231" target="_blank" rel="noopener">https://www.nba.com/game/den-vs-nop-0022600231</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -250,7 +811,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/dal-vs-cle-0022600232</td>
+<td><a class="cell-link" href="https://www.nba.com/game/dal-vs-cle-0022600232" target="_blank" rel="noopener">https://www.nba.com/game/dal-vs-cle-0022600232</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -265,7 +826,7 @@
 <td>NBA TV / League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/det-vs-mia-0022600233</td>
+<td><a class="cell-link" href="https://www.nba.com/game/det-vs-mia-0022600233" target="_blank" rel="noopener">https://www.nba.com/game/det-vs-mia-0022600233</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -280,7 +841,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/bkn-vs-mem-0022600234</td>
+<td><a class="cell-link" href="https://www.nba.com/game/bkn-vs-mem-0022600234" target="_blank" rel="noopener">https://www.nba.com/game/bkn-vs-mem-0022600234</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -295,7 +856,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>corroborated (injury report, official)</td>
-<td>https://www.nba.com/game/chi-vs-min-0022600235</td>
+<td><a class="cell-link" href="https://www.nba.com/game/chi-vs-min-0022600235" target="_blank" rel="noopener">https://www.nba.com/game/chi-vs-min-0022600235</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
@@ -310,7 +871,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/ind-vs-phi-0022600236</td>
+<td><a class="cell-link" href="https://www.nba.com/game/ind-vs-phi-0022600236" target="_blank" rel="noopener">https://www.nba.com/game/ind-vs-phi-0022600236</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -325,7 +886,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/lal-vs-phx-0022600237</td>
+<td><a class="cell-link" href="https://www.nba.com/game/lal-vs-phx-0022600237" target="_blank" rel="noopener">https://www.nba.com/game/lal-vs-phx-0022600237</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -340,7 +901,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/cha-vs-lac-0022600238</td>
+<td><a class="cell-link" href="https://www.nba.com/game/cha-vs-lac-0022600238" target="_blank" rel="noopener">https://www.nba.com/game/cha-vs-lac-0022600238</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -355,7 +916,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/sas-vs-uta-0022600239</td>
+<td><a class="cell-link" href="https://www.nba.com/game/sas-vs-uta-0022600239" target="_blank" rel="noopener">https://www.nba.com/game/sas-vs-uta-0022600239</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -370,7 +931,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/dal-vs-bos-0022600240</td>
+<td><a class="cell-link" href="https://www.nba.com/game/dal-vs-bos-0022600240" target="_blank" rel="noopener">https://www.nba.com/game/dal-vs-bos-0022600240</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -385,7 +946,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/nyk-vs-tor-0022600241</td>
+<td><a class="cell-link" href="https://www.nba.com/game/nyk-vs-tor-0022600241" target="_blank" rel="noopener">https://www.nba.com/game/nyk-vs-tor-0022600241</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -400,7 +961,7 @@
 <td>League Pass / MNMT</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/hou-vs-was-0022600242</td>
+<td><a class="cell-link" href="https://www.nba.com/game/hou-vs-was-0022600242" target="_blank" rel="noopener">https://www.nba.com/game/hou-vs-was-0022600242</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -415,7 +976,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/atl-vs-mil-0022600243</td>
+<td><a class="cell-link" href="https://www.nba.com/game/atl-vs-mil-0022600243" target="_blank" rel="noopener">https://www.nba.com/game/atl-vs-mil-0022600243</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -430,7 +991,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/okc-vs-sac-0022600244</td>
+<td><a class="cell-link" href="https://www.nba.com/game/okc-vs-sac-0022600244" target="_blank" rel="noopener">https://www.nba.com/game/okc-vs-sac-0022600244</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -445,7 +1006,7 @@
 <td>Peacock / NBC Sports Network</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/orl-vs-bos-0022600245</td>
+<td><a class="cell-link" href="https://www.nba.com/game/orl-vs-bos-0022600245" target="_blank" rel="noopener">https://www.nba.com/game/orl-vs-bos-0022600245</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -460,7 +1021,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/chi-vs-cle-0022600246</td>
+<td><a class="cell-link" href="https://www.nba.com/game/chi-vs-cle-0022600246" target="_blank" rel="noopener">https://www.nba.com/game/chi-vs-cle-0022600246</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -475,7 +1036,7 @@
 <td>League Pass / MNMT</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/mem-vs-was-0022600247</td>
+<td><a class="cell-link" href="https://www.nba.com/game/mem-vs-was-0022600247" target="_blank" rel="noopener">https://www.nba.com/game/mem-vs-was-0022600247</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -490,7 +1051,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/phi-vs-bkn-0022600248</td>
+<td><a class="cell-link" href="https://www.nba.com/game/phi-vs-bkn-0022600248" target="_blank" rel="noopener">https://www.nba.com/game/phi-vs-bkn-0022600248</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -505,7 +1066,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/hou-vs-mia-0022600249</td>
+<td><a class="cell-link" href="https://www.nba.com/game/hou-vs-mia-0022600249" target="_blank" rel="noopener">https://www.nba.com/game/hou-vs-mia-0022600249</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -520,7 +1081,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/por-vs-min-0022600250</td>
+<td><a class="cell-link" href="https://www.nba.com/game/por-vs-min-0022600250" target="_blank" rel="noopener">https://www.nba.com/game/por-vs-min-0022600250</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -535,7 +1096,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/gsw-vs-nop-0022600251</td>
+<td><a class="cell-link" href="https://www.nba.com/game/gsw-vs-nop-0022600251" target="_blank" rel="noopener">https://www.nba.com/game/gsw-vs-nop-0022600251</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -550,7 +1111,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/phx-vs-den-0022600252</td>
+<td><a class="cell-link" href="https://www.nba.com/game/phx-vs-den-0022600252" target="_blank" rel="noopener">https://www.nba.com/game/phx-vs-den-0022600252</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -565,7 +1126,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/nyk-vs-tor-0022600253</td>
+<td><a class="cell-link" href="https://www.nba.com/game/nyk-vs-tor-0022600253" target="_blank" rel="noopener">https://www.nba.com/game/nyk-vs-tor-0022600253</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -580,7 +1141,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/por-vs-min-0022600254</td>
+<td><a class="cell-link" href="https://www.nba.com/game/por-vs-min-0022600254" target="_blank" rel="noopener">https://www.nba.com/game/por-vs-min-0022600254</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -595,7 +1156,7 @@
 <td>Peacock / NBC</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/det-vs-sas-0022600255</td>
+<td><a class="cell-link" href="https://www.nba.com/game/det-vs-sas-0022600255" target="_blank" rel="noopener">https://www.nba.com/game/det-vs-sas-0022600255</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -610,7 +1171,7 @@
 <td>League Pass</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/uta-vs-lac-0022600257</td>
+<td><a class="cell-link" href="https://www.nba.com/game/uta-vs-lac-0022600257" target="_blank" rel="noopener">https://www.nba.com/game/uta-vs-lac-0022600257</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -625,7 +1186,7 @@
 <td>Peacock</td>
 <td>—</td>
 <td>outside the second document&#x27;s coverage — single-source</td>
-<td>https://www.nba.com/game/cha-vs-lal-0022600256</td>
+<td><a class="cell-link" href="https://www.nba.com/game/cha-vs-lal-0022600256" target="_blank" rel="noopener">https://www.nba.com/game/cha-vs-lal-0022600256</a></td>
 <td>confirmed in retrieved page text</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'><a class="flagchip" href="pages/flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>

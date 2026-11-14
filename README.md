@@ -32,7 +32,23 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
 returns 404. The repository still holds the earlier trees — they are kept for history and for
 review, and they are **not** published. Nothing was deleted to get here; moving the rest under
-`archive/` is suggestion S-27/Q-27, waiting on an owner decision.
+`archive/` is suggestion SG-28, waiting on an owner decision.
+
+| Tree | Published | Built by | What it is |
+|---|---|---|---|
+| `site/` | **yes** — the Pages root | `python -m nba2.v2` | the canonical dashboard: landing page, category subpages, per-row sourced tables, the questions register, the suggestions queue, the Flagged-for-review page and the live-verification log |
+| `index.html`, `pages/**` | no | `nba2/pipeline/build_site_data` → `build_site` | the earlier (v1) dashboard; still built and linted by CI, still the home of the sealed-ledger machinery, the reconciliation page and the 1,296-row provenance-linted table set |
+| `backtest/**` | no | `backtest/engine/build.py` | the walk-forward measured-skill report over official history |
+| `docs/**`, `verified/**`, `dashboard/**`, `originated/**`, `archive/**` | no | earlier sessions | history and review material |
+
+## The v1 dashboard tree (retained, not published)
+
+**One tree reaches a reader: [`site/`](site/), published at the repository root by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
+site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
+returns 404. The repository still holds the earlier trees — they are kept for history and for
+review, and they are **not** published. Nothing was deleted to get here; moving the rest under
+`archive/` is suggestion SG-28, waiting on an owner decision.
 
 | Tree | Published | Built by | What it is |
 |---|---|---|---|
@@ -43,7 +59,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-`index.html` + `pages/**` (20 pages, 46 tables, 1325 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 50 tables, 1401 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -272,11 +288,11 @@ dashboards with different numbers is worse than one, and the reconciliation of a
 decision logged on the new site's Flagged page (F-011).
 
 ```bash
-python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (19 pages: the dashboard, the live-verification log and the decision queue)
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 59 tests
-python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work + integration fixes)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
+python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work, unchanged)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

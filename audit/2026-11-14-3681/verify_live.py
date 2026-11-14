@@ -276,6 +276,17 @@ def emit() -> None:
     for g in finals["games"]:
         if g["away"] == "UTA" and g["home"] == "LAC":
             pass
+    # Session arena/6650be4d-nba2 captured the same nine games independently from the same
+    # official page at the same time and its grading code reads this file as
+    # `raw["records"]` (game_id / away_pts / home_pts / overtime / source). This session's
+    # grading code reads `raw["games"]`. The two captures were diffed and are identical
+    # 9/9, so the file carries BOTH shapes from one set of values rather than either
+    # session's code being rewritten to suit the other.
+    finals["records"] = [
+        {"game_id": g["game_id"], "away_pts": g["away_pts"], "home_pts": g["home_pts"],
+         "overtime": g["periods"] == 5, "source": g["source_url"]}
+        for g in finals["games"]
+    ]
     p = RAW / "finals_2026-11-13.json"
     p.write_text(json.dumps(finals, indent=2) + "\n")
     NEW_FILES.append(str(p.relative_to(ROOT)))
