@@ -2966,3 +2966,59 @@ The correction also needs the source record used by the v2 decision queue. Add `
 ### Scope amendment 2 — `arena/f95ac5bc-nba2` (before implementation)
 
 Add `nba2/v2/refresh_status.py` to the owned source scope. It will be the single schema reader/writer used by the workflow and the published-site builder, keeping the status record deterministic and validated. The implementation will clear the runner's uncommitted, fail-closed partial ingest files before publishing *only* the status record and regenerated v2 artefacts; it will never commit partial NBA inputs after an earlier gate fails.
+
+---
+
+## Session `arena/f95ac5bc-nba2` — implementation and validation record (2026-11-14 UTC)
+
+**Outcome:** F95-01 is implemented and locally validated on the current branch, rebased through
+`main` at `d7c19ec` (PRs #65 and #66 included). This record is not a deployment claim. The F95 PR,
+its hosted checks, merge, and post-merge Pages build remain to be completed/confirmed.
+
+**Run evidence, source links, implementation details, full validation commands/results, and limits:**
+[`analysis/session-f95ac5bc-refresh-status.md`](analysis/session-f95ac5bc-refresh-status.md).
+The observed scheduled run was [43605830665](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43605830665):
+window-date selection and injury archive succeeded, official-finals fetch failed, and later stages
+were skipped. The exact endpoint/error remains unverified (failed-log retrieval returned EOF).
+The new published record separates the run's creation/update timestamps from its capture time and
+marks `v2_model_inputs_refreshed: false`.
+
+**Scope held:** `.github/workflows/refresh.yml` records per-step outcomes and publishes only the
+status JSON plus rebuilt `data/v2` and `site`. Before doing so it resets to the remote branch and
+cleans runner-local partial files; an unpushed local ingest commit cannot be carried into the
+status-only push. It never stages `data/raw` or changes sealed picks/ledgers. The v2 copy, dashboard,
+executive summary, dated pick-snapshot warning, decision queue, and S-40/S-1/S-2/S-31 wording now
+link to observed workflow evidence without claiming v2 model-input freshness. `SUGGESTIONS.json`
+was changed only for F95's assigned S-40 item; changes from other merged sessions were retained.
+No NBA input values or originated betting/model outputs were changed.
+
+**Integration/conflict log (preserve these boundaries):**
+- PR #50 remains open at its unchanged old head; its checks were passing when rechecked. The
+  previously recorded inactivity handoff still covers only the outdated generated status prose
+  and `S-40`; no unrelated PR #50 work was taken.
+- PR #57 remains open. Its pipeline and S2 spread-dispatch changes were preserved; this session's
+  `nba2/v2/live.py` change is limited to refresh evidence for the decision queue. PR #57's changed
+  file list did not include `.github/workflows/refresh.yml`.
+- PR #65 merged as `de495fe`; PR #66 merged as `d7c19ec`. Rebase conflicts were resolved by keeping
+  their board entries and code. A subsequent stash integration had conflicts in `build.py`,
+  `SUGGESTIONS.json`, and generated pages/data: the PR #65 additions were kept, only the F95 status
+  display and S-40 edits were applied, and the v1/v2 trees were regenerated and checked afterward.
+- Other open scopes (#55 and #59) were not edited. Their status is not inferred from this record.
+
+**Verification after PR #65 integration:** v1 64 tests, backtest 49 tests, v2 94 tests passed;
+27-prediction seal verified; 1,415 sourced v1 rows across 50 tables; v2 build 22 pages / 27 lines /
+30 teams, with 0 structural and 0 semantic issues; all listed site/backtest/link checks passed;
+97 cross-checks reported 90 pass, 0 fail, 7 informational. See report for exact commands and
+informational findings. The workflow YAML files parsed locally; no hosted run of the modified
+refresh workflow was triggered.
+
+**Pages state at last check:** the PR #65 Pages run was cancelled after a newer main push. The
+PR #66 Pages run [43630673079](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43630673079)
+was still queued, while the Pages API reported `errored` and the latest Pages build reported
+`building`. Therefore deployment and live-site health were **not confirmed**; re-check the run and
+Pages API before claiming a deploy. Do not treat the API's transient state as proof that the
+published content is broken.
+
+| Task | Status | Verification / handoff |
+|---|---|---|
+| F95-01 — record scheduled refresh outcomes, correct stale v2 workflow claims, distinguish run status from model freshness, add regression tests | implementation and full local validation complete; PR/hosted checks/merge/deployment pending | full record: `analysis/session-f95ac5bc-refresh-status.md`; preserve other sessions' published content and re-run Pages verification after this PR |
