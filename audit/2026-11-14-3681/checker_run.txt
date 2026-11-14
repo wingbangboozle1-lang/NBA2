@@ -1,0 +1,46 @@
+### 2026-11-14T10:51:36Z — session arena/3681def8-nba2 final sweep
+
+== nba2 unit tests ==
+Ran 64 tests in 0.880s
+
+OK
+== backtest tests ==
+Ran 49 tests in 1.178s
+
+OK
+== v2 tests ==
+Ran 59 tests in 26.678s
+
+OK
+== rebuild + lint ==
+wrote data/site.json — 43 tables, 1234 rows
+wrote pages/suggestions.html
+LINT OK — 1234 rows across 43 tables, every row sourced, every blank explained
+== seal verify ==
+seal c841e8f396dae6ca… over 27 predictions: VERIFIED
+  site page prints the same digest the ledger recomputes
+== settle ==
+sealed-2026-11-13.json: seal verified cf7dedc689597cb8… (22 predictions)
+== links ==
+scanned 108 HTML files | 4501 internal links checked | 4598 external links
+ALL INTERNAL LINKS OK
+== verify_site (docs) ==
+SUMMARY: 13 pages | 249 data rows | 303 links
+VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
+== check_site (dashboard) ==
+pages=12 rows_checked=524
+PASS: all internal links resolve; all data rows source-linked; nav/footer present
+== verify_backtest ==
+
+VERIFICATION PASSED — 12 pages, 155 sourced game rows, 189 internal links
+== originated ==
+All checks passed.
+
+== crosscheck ==
+
+94 checks: 81 pass, 5 fail, 8 info, 0 n/a
+== live verifier ==
+SUMMARY: 13 PASS, 0 FAIL, 3 INFO
+New files written: data/raw/finals_2026-11-13.json, data/raw/standings_2026-11-14_official.json, data/raw/injury_report_2026-11-14_0500AM.json, audit/2026-11-14-3681/slate_live_2026-11-14_to_11-17.json
+== v2 check ==
+OK — 0 structural, 0 semantic

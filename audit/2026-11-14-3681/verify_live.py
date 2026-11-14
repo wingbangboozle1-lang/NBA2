@@ -189,6 +189,55 @@ def check_injury() -> None:
 # --------------------------------------------------------------------------
 # Emit new official snapshots
 # --------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 4b. Second-document corroboration of the nine finals and the visible records.
+# Source: https://www.nba.com/game/gsw-vs-sas-0022600040 — the game summary page for one
+#         of the nine games. Its left rail renders every 2026-11-13 game as a finished card
+#         (team, score) and every 11/14-11/16 game with both clubs' W-L. It is therefore an
+#         independent official document for both the finals AND the standings capture.
+#         Retrieved 2026-11-14 ~10:50 UTC via the platform page-fetch tool.
+# ---------------------------------------------------------------------------
+GAMEPAGE_URL = "https://www.nba.com/game/gsw-vs-sas-0022600040"
+
+# (away, home, away_pts, home_pts) exactly as rendered on the game page's 11/13 rail
+GAMEPAGE_FINALS = [
+    ("NYK", "IND", 104, 106), ("MIL", "ORL",  99, 107), ("CLE", "MIA", 121, 133),
+    ("ATL", "CHI", 117, 125), ("MEM", "NOP", 142, 111), ("UTA", "HOU", 118, 125),
+    ("GSW", "SAS",  85, 123), ("POR", "SAC", 120, 107), ("OKC", "LAC", 112, 113),
+]
+
+# W-L printed on that page's 11/14-11/16 game cards, in render order
+GAMEPAGE_RECORDS = [
+    ("DEN", 6, 4), ("NOP", 4, 9), ("DAL", 7, 5), ("CLE", 6, 7), ("DET", 8, 3),
+    ("MIA", 6, 6), ("BKN", 3, 8), ("MEM", 8, 4), ("CHI", 2, 9), ("MIN", 9, 3),
+    ("IND", 5, 8), ("PHI", 10, 3), ("LAL", 11, 2), ("PHX", 5, 6), ("CHA", 4, 8),
+    ("LAC", 3, 8), ("SAS", 11, 2), ("UTA", 1, 12), ("DAL", 7, 5), ("BOS", 10, 2),
+    ("NYK", 6, 6), ("TOR", 5, 7),
+]
+
+
+def check_second_document() -> None:
+    print("\n== C4. Second official document: the game summary page ==")
+    mine = {(g[2], g[3]): (g[4], g[5]) for g in LC.FINALS_2026_11_13}
+    bad = []
+    for away, home, ap, hp in GAMEPAGE_FINALS:
+        if mine.get((away, home)) != (ap, hp):
+            bad.append(f"{away}@{home}: game page {ap}-{hp} vs snapshot "
+                       f"{mine.get((away, home))}")
+    record("C4-A", not bad,
+           f"{len(GAMEPAGE_FINALS)}/9 final scores agree with an independent official page "
+           f"({GAMEPAGE_URL}); {len(bad)} mismatches"
+           + ("" if not bad else " -> " + "; ".join(bad)))
+
+    stand = {s[0]: (s[3], s[4]) for s in LC.STANDINGS_2026_11_14}
+    rbad = [f"{t}: page {w}-{l} vs standings {stand.get(t)}"
+            for t, w, l in GAMEPAGE_RECORDS if stand.get(t) != (w, l)]
+    record("C4-B", not rbad,
+           f"{len(GAMEPAGE_RECORDS)} team W-L readings on that page match the official "
+           f"standings capture; {len(rbad)} mismatches"
+           + ("" if not rbad else " -> " + "; ".join(rbad[:5])))
+
+
 def emit() -> None:
     print("\n== Emitting new official snapshots ==")
 
@@ -349,6 +398,7 @@ def main() -> int:
     check_slate()
     check_finals()
     check_injury()
+    check_second_document()
     emit()
     n_fail = sum(1 for _c, v, _d in REPORT if v == "FAIL")
     print(f"\nSUMMARY: {sum(1 for _c, v, _d in REPORT if v == 'PASS')} PASS, "

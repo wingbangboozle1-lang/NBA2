@@ -52,6 +52,7 @@
    },
    {
     "id": "repo-wl",
+<<<<<<< HEAD
     "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
     "repo_value": "12/30 identical",
     "live_value": "30 teams",
@@ -66,6 +67,13 @@
     "live_value": "30 teams, official table read 2026-11-14",
     "result": "MATCH",
     "detail": "no differences found",
+=======
+    "what": "Committed W-L (as published on the previous site build) vs live nba.com/standings",
+    "repo_value": "12/30 identical",
+    "live_value": "30 teams",
+    "result": "MISMATCH",
+    "detail": "{'ATL': ('7-6', '7-5'), 'CHI': ('2-9', '1-9'), 'CLE': ('6-7', '6-6'), 'GSW': ('8-5', '8-4'), 'HOU': ('10-3', '9-3'), 'IND': ('5-8', '4-8'), 'LAC': ('3-8', '2-8'), 'MEM': ('8-4', '7-4'), 'MIA': ('6-6', '5-6'), 'MIL': ('1-12', '1-11'), 'NOP': ('4-9', '4-8'), 'NYK': ('6-6', '6-5'), 'OKC': ('8-5', '8-4'), 'ORL': ('5-7', '4-7'), 'POR': ('9-3', '8-3'), 'SAC': ('1-11', '1-10'), 'SAS': ('11-2', '10-2'), 'UTA': ('1-12', '1-11')}",
+>>>>>>> 7910e2c (verify: second-document corroboration (9/9 finals, 22/22 records); generate README counts instead of hand-copying)
     "src": "https://www.nba.com/standings"
    }
   ],
