@@ -32,6 +32,7 @@ NAV = [
     ("strategies.html", "Strategies &amp; leaderboard"),
     ("backtest.html", "Backtest &amp; skill"),
     ("strategy-lab.html", "Strategy lab"),
+    ("skill-attribution.html", "Skill vs luck"),
     ("correlations.html", "Correlations &amp; parlays"),
     ("props.html", "Player props"),
     ("injuries.html", "Injuries &amp; rotation"),
@@ -42,6 +43,7 @@ NAV = [
     ("questions.html", "Open questions"),
     ("suggestions.html", "Suggestions queue"),
     ("decision-queue.html", "Decision queue"),
+    ("decisions-needed.html", "Decisions needed"),
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
@@ -465,6 +467,13 @@ that the edge is not a coin flip that happened to land, and this repository has 
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
 <em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
+<div class="note bad"><b>Two markets, two probabilities — read the right trigger.</b> The lean is a
+<em>spread</em> at our own number, so the probability that prices it is the probability of <em>covering</em> that
+number (<b>P(cover)</b>), not the probability of winning the game (<b>P(win)</b>). Our line is the median of our own
+distribution, so P(cover) is close to 0.50 on every game by construction while P(win) ranges widely. Pricing a
+spread bet off P(win) — as an earlier build of this page did — produces a trigger of, say, −1246 on a moneyline-shaped
+probability, which no sportsbook offers on a spread. Both numbers are now printed, each with its own break-even
+trigger, so the arithmetic can be checked against whichever market is actually being considered.</div>
 <div class="note bad"><b>0 of 27 games are staked.</b> Not because the model failed, but because gate G6 (no market
 price) and gate G7 (167 settled bets against a 300-bet bar) both fail. Publishing a stake anyway is the one thing this
 build refuses to do.</div>
@@ -475,17 +484,19 @@ build refuses to do.</div>
         rows.append({"id": r["src"] + r["matchup"], "cells": [
             esc(r["date"]), esc(r["time_et"]), esc(r["matchup"]),
             badge(r["grade"], {"A": "ok", "B": "warn", "C": "bad"}[r["grade"]]),
-            esc(r["our_spread"]), esc(r["our_total"]), esc(r["p_home"]),
-            "<b>" + esc(r["lean"]) + "</b>", esc(r["lean_prob"]),
+            esc(r["our_spread"]), esc(r["our_total"]),
+            "<b>" + esc(r["lean"]) + "</b>", esc(r["lean_prob_ml"]), esc(r["lean_prob_cover"]),
             esc(r["trigger_decimal"]), "<b>" + esc(r["trigger_american"]) + "</b>",
+            esc(r["trigger_ml_decimal"]), esc(r["trigger_ml_american"]),
             esc(r["stake"]), esc(r["gates_passed"]), esc(r["blocked_by"]),
             srclink(f"https://www.nba.com/game/{r['matchup'].split(' @ ')[0].lower()}"
                     f"-vs-{r['matchup'].split(' @ ')[1].lower()}-{r['date']}"),
         ]})
-    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total", "P(home)",
-                   "Lean", "P(lean)", "Trigger dec", "Trigger US", "Stake", "Gates", "Blocked by", "Game page"],
-                  rows, "All 27 games: originated line, lean, trigger price and gate status",
-                  num_cols=(4, 5, 6, 8, 9), idcol=None)
+    body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total",
+                   "Lean", "P(lean) win", "P(lean) cover", "Spread trigger dec", "Spread trigger US",
+                   "ML trigger dec", "ML trigger US", "Stake", "Gates", "Blocked by", "Game page"],
+                  rows, "All 27 games: originated line, lean, both probabilities and both trigger prices, with gate status",
+                  num_cols=(4, 5, 7, 8, 9), idcol=None)
 
     body += """<h2>Why the stake is withheld</h2>
 <p class="lede">Each gate below is evaluated from data, not asserted. The verdict column is what the build
@@ -910,6 +921,176 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 </ol>
 """
     built["strategy-lab.html"] = page("strategy-lab.html", "Strategy lab", body, "strategy-lab.html")
+
+    # ------------------------------------------------------------------ skill vs luck
+    sb = lab["baselines"]
+    at = lab["skill_attribution"]
+    wp = at["headline_vs_win_pct_baseline"]
+    pd_ = at["headline_vs_margin_baseline"]
+    s1 = next((r for r in lab["strategies"] if r["sid"] == "S1"), {})
+    body = f"""<h1>Skill vs luck — is any of this better than backing the favourite?</h1>
+<p class="lede">Every accuracy figure elsewhere on this site answers the wrong question. "Our side hit
+{100 * s1.get('hit_rate', 0):.1f}% of {s1.get('n', 0)} games" sounds like skill until you ask whether the side we picked
+was simply the better team. This page answers the right question with a paired test on exactly the games
+where our model and the naive rule disagree — because those are the only games that carry any information
+about skill at all.</p>
+
+<div class="note bad"><b>The result, before the detail.</b> Backing the team with the better prior win record
+scored <b>{100 * (wp['baseline_hit_rate'] or 0):.1f}%</b> on {wp['baseline_n']} of the same
+{wp['model_n']} games. Our model scored <b>{100 * (wp['model_hit_rate_same_games'] or 0):.1f}%</b>.
+On the <b>{wp['discordant_games']}</b> games where the two disagreed, the naive rule was right
+<b>{wp['baseline_won_those']}</b> times and the model <b>{wp['model_won_those']}</b> times
+(exact McNemar p = <b>{wp['mcnemar_exact_p']}</b>). The model has therefore demonstrated <b>no skill that is
+separable from the favourite's win rate</b> at this sample size. That is a finding, not a bug, and it is exactly
+what the brief's "remove luck from the equation" step is for.</div>
+
+<h2>1. The naive baselines, measured on the same games</h2>
+<p class="lede">Each baseline consumes only information that existed before its game tipped — prior results, nothing
+else — and is scored on the identical set of regular-season games the walk-forward model scored. Ties are skipped and
+the skipped count is published rather than hidden.</p>
+"""
+    brows = []
+    for b in sb["baselines"]:
+        lo, hi = (b["wilson95"] + [None, None])[:2]
+        brows.append({"cells": [
+            esc(b["baseline"]), esc(b["n"]), esc(b["hits"]), esc(b["ties_skipped"]),
+            f"<b>{100 * b['hit_rate']:.1f}%</b>" if b["hit_rate"] else "—",
+            f"{100 * lo:.1f}% – {100 * hi:.1f}%" if lo is not None else "—",
+            esc(b["p_vs_coinflip"]), esc(b["note"]), srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["Baseline rule", "Games scored", "Correct", "Ties skipped", "Hit rate",
+                   "Wilson 95% CI", "p vs coin flip", "What it uses", "Source"],
+                  brows, "Naive baselines for winner selection, walk-forward, same games",
+                  num_cols=(1, 2, 3, 4, 6))
+
+    body += f"""<h2>2. The paired test — McNemar on the disagreements</h2>
+<p class="lede">A paired comparison does not need 300 games, because only the <em>discordant</em> games
+carry information: if our model and the naive rule pick the same side, that game tells us nothing about which is
+better. McNemar's exact test asks whether the split of the discordant games is consistent with a coin flip.</p>
+"""
+    prow = []
+    for h in (wp, pd_):
+        prow.append({"cells": [
+            esc(h["baseline"]),
+            f"{100 * h['baseline_hit_rate']:.1f}% ({h['baseline_n']})" if h["baseline_hit_rate"] else "—",
+            esc(h["discordant_games"]), esc(h["model_won_those"]), esc(h["baseline_won_those"]),
+            f"<b>{h['mcnemar_exact_p']}</b>",
+            badge("NO SEPARABLE SKILL" if (h["mcnemar_exact_p"] or 1) >= 0.05 else "SKILL DETECTED",
+                  "bad" if (h["mcnemar_exact_p"] or 1) >= 0.05 else "ok"),
+            esc(h["verdict"]), srclink(O.SOURCES["games"][1]),
+        ]})
+    body += table(["Baseline", "Baseline rate (n)", "Discordant games", "Model right", "Baseline right",
+                   "Exact p", "Reading", "Verdict", "Source"],
+                  prow, "Paired comparison on the games where model and baseline disagree",
+                  num_cols=(2, 3, 4, 5))
+    body += f"""<div class="note"><b>{esc(at['why_this_matters'])}</b></div>
+
+<h2>3. Why the headline hit rate is high, and why that is not the same as skill</h2>
+<p>The model's side is the side its own ratings favour, and those ratings are built from the same box scores a
+reader can look at. Naturally it picks the better team most of the time, and naturally the better team wins more than
+half the time. The high hit rate is <em>inherited</em> from the favourite's base rate; the discordant test above
+subtracts that inheritance and finds nothing left over.</p>
+<p>This is why the site refuses to promote a strategy on accuracy alone. Two further measurements tell the same
+story:</p>
+<ul>
+  <li><b>Sample size.</b> The largest strategy has {s1.get('n', 0)} settled bets against a 300-bet promotion bar
+  (gate G7).</li>
+  <li><b>Confidence intervals.</b> Every rate on this site is published with a Wilson interval, and every interval
+  here is wide enough to contain the base rate. A wide interval is not a verdict; it is the honest absence of one.</li>
+</ul>
+
+<h2>4. What measurement would settle it</h2>
+<p class="lede">The route out is arithmetic, not opinion: more discordant games, and a market price to test against.</p>
+"""
+    roads = [
+        ("More graded games", "The discordant sample grows roughly linearly with graded games — about one discordant game in five. To take a 13-of-33 split to significance at 5% needs on the order of 100+ discordant games, i.e. roughly 500 graded games.",
+         "No new data source needed; the nightly settlement already grades every finished game.", O.SOURCES["games"][1]),
+        ("A market price", "Skill in betting is measured against the line, not against a naive rule. With a closing price, the question becomes the right one: does our number beat the market's?",
+         "Requires a licensed odds feed. Blocked; see the decision register.", O.BLOCKED["odds"][2]),
+        ("Player-level data", "Props, prop combos and per-player correlations cannot be measured at all without per-game player box scores.",
+         "Requires a per-game player feed. Blocked.", O.BLOCKED["player_box"][2]),
+    ]
+    rrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), esc(c), srclink(d)]} for (a, b, c, d) in roads]
+    body += table(["Path", "What it would take", "Status", "Source"], rrows,
+                  "What measurement would turn this from an open question into an answered one")
+    body += """
+<div class="note info"><b>What this page does not say.</b> It does not say the model is worse than a naive rule —
+the point estimate is that the naive rule is ahead on the disagreement set, with a p of 0.30 on 33 games, which is
+not evidence either way. It says the model has not yet <em>earned</em> the claim, and that publishing the claim without
+this test would be the hallucination the brief forbids.</div>
+"""
+    built["skill-attribution.html"] = page("skill-attribution.html", "Skill vs luck", body, "skill-attribution.html")
+
+    # ------------------------------------------------------------------ decisions needed
+    dec = json.loads((ROOT / "requirements" / "DECISIONS.json").read_text())
+    body = f"""<h1>Decisions needed before anything else is built</h1>
+<p class="lede">{esc(dec['source_note'])}</p>
+<div class="note"><b>How to use this page.</b> Read the <em>What we have</em> column first — it is the
+measurement, not an opinion. The <em>What is missing</em> column is the specific gap. The <em>How to close it</em>
+column is the route. A decision can be recorded against any row without touching code; until one is, the row stands
+as <b>OPEN</b> and no work depending on it should start.</div>
+"""
+    drows = []
+    for d in dec["decisions"]:
+        drows.append({"id": d["id"], "cells": [
+            esc(d["id"]),
+            badge(d["severity"], {"BLOCKING": "bad", "HIGH": "warn", "MEDIUM": "info"}.get(d["severity"], "info")),
+            esc(d["topic"]),
+            "<b>" + esc(d["question"]) + "</b>",
+            esc(d["have"]), esc(d["missing"]), esc(d["how_to_find_out"]),
+            esc(d["impact"]), esc(d["blocks"]), esc(d["who_decides"]),
+            badge("OPEN", "warn"),
+            srclink(d["source"]),
+        ]})
+    body += table(["ID", "Severity", "Topic", "Question", "What we have", "What is missing",
+                   "How to close it", "What it decides", "Blocks", "Who decides", "Status", "Source"],
+                  drows, "Decision register — what must be answered before the next build step",
+                  idcol="id")
+    body += """
+<h2>What is missing, and how to go and get it</h2>
+<p class="lede">Three of the eight decisions above are blocked on the same thing: data this repository does not
+hold. This is the shortest honest version of that list.</p>
+"""
+    missing = [
+        ("Licensed odds, opening and closing",
+         "Every edge, CLV and ROI figure on this site; gates G6 and G7",
+         "A vendor contract plus storage rights. Until it exists, no price is published and none is estimated.",
+         "D-01", O.BLOCKED["odds"][2]),
+        ("Per-game player box scores with minutes",
+         "Player props, prop combos, same-player correlations, the production half of injury impact",
+         "A per-game player feed. Until it exists, those tables stay blank — a blank is published, not a guess.",
+         "D-02", O.BLOCKED["player_box"][2]),
+        ("A pre-registered evidence rule",
+         "Any statement that a strategy has skill",
+         "Decide the test and the threshold BEFORE the next games are graded. The test is already written.",
+         "D-05", "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py"),
+        ("Play-by-play",
+         "In-game flow analysis, if that is what the brief meant",
+         "A play-by-play feed, or a decision that schedule-spot analysis is the intended scope.",
+         "D-08", O.SOURCES["games"][1]),
+        ("A named reward and submission model",
+         "Whether the leaderboard needs real anti-gaming controls",
+         "An owner answer to three questions: who submits, is the reward money, in which jurisdiction.",
+         "D-04", O.SOURCES["games"][1]),
+    ]
+    mrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), esc(c), esc(d), srclink(e)]}
+             for (a, b, c, d, e) in missing]
+    body += table(["What is missing", "What it blocks", "How to obtain it", "Decision it closes", "Source"],
+                  mrows, "The gap list: what we do not have and what it would take to get it")
+    body += """
+<h2>What we already have, so nobody re-decides it</h2>
+<div class="cards">
+  <div class="card"><h4>The whole 3-day slate</h4><p>27 games, 2026-11-14 → 11-17, each verified field by field
+  against the official NBA.com schedule this session (27/27 identical).</p></div>
+  <div class="card"><h4>Official team records</h4><p>All 30 clubs re-read from the official standings this session
+  and matching the published table exactly (30/30).</p></div>
+  <div class="card"><h4>An originated line for every game</h4><p>Spread, total, win probability and both break-even
+  triggers, from two independent estimators, with their disagreement published beside every number.</p></div>
+  <div class="card"><h4>An honest skill measurement</h4><p>A paired test against naive rules, which found no
+  separable skill at 167 games. That is a result, and it is published rather than buried.</p></div>
+</div>
+"""
+    built["decisions-needed.html"] = page("decisions-needed.html", "Decisions needed", body, "decisions-needed.html")
 
     # ------------------------------------------------------------------ correlations
     body = """<h1>Correlations &amp; parlay pricing</h1>

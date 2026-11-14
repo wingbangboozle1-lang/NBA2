@@ -288,3 +288,86 @@ class TestPublishedSite(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPicksProbabilityIsTheRightMarket(unittest.TestCase):
+    """A spread bet is priced by P(cover), not P(win).
+
+    Regression for the defect this session published and fixed: the picks table priced a
+    spread lean with the moneyline probability, which overstated P(lean) on every game and
+    produced a break-even trigger (e.g. -1246) that no sportsbook offers on a spread. These
+    tests fail if the two are ever conflated again.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        teams, cal = M.build_teams()
+        cls.lines = M.originated_lines(teams, cal)
+        cls.rows = R.t_picks(cls.lines)
+
+    def test_every_row_publishes_both_probabilities(self):
+        for r in self.rows:
+            self.assertIn("lean_prob_ml", r, r["matchup"])
+            self.assertIn("lean_prob_cover", r, r["matchup"])
+
+    def test_spread_trigger_is_one_over_the_cover_probability(self):
+        for r in self.rows:
+            p = float(r["lean_prob_cover"])
+            self.assertAlmostEqual(float(r["trigger_decimal"]), round(1.0 / p, 3), places=2,
+                                   msg=f"{r['matchup']}: trigger {r['trigger_decimal']} "
+                                       f"vs 1/P(cover) {1/p:.3f}")
+
+    def test_moneyline_trigger_is_one_over_the_win_probability(self):
+        for r in self.rows:
+            p = float(r["lean_prob_ml"])
+            self.assertAlmostEqual(float(r["trigger_ml_decimal"]), round(1.0 / p, 3), places=2,
+                                   msg=r["matchup"])
+
+    def test_cover_probability_is_near_a_half_at_our_own_number(self):
+        # Our spread IS the median of our own distribution, so covering it is ~50% by
+        # construction. A row whose cover probability is far from 0.5 means the line and the
+        # probability have been decoupled.
+        for r in self.rows:
+            self.assertAlmostEqual(float(r["lean_prob_cover"]), 0.5, delta=0.02,
+                                   msg=f"{r['matchup']}: {r['lean_prob_cover']}")
+
+    def test_win_probability_is_not_silently_used_as_the_spread_probability(self):
+        # At least one game must have a lean whose win probability differs from its cover
+        # probability by more than the rounding of the half-point line. If this ever fails,
+        # the two columns have collapsed back into one.
+        diffs = [abs(float(r["lean_prob_ml"]) - float(r["lean_prob_cover"])) for r in self.rows]
+        self.assertGreater(max(diffs), 0.05)
+
+
+class TestSkillAttribution(unittest.TestCase):
+    """The brief's luck-removal requirement, checked as arithmetic rather than prose."""
+
+    @classmethod
+    def setUpClass(cls):
+        from . import strategy_lab as SL
+        cls.games = SL.load_games()
+        cls.preds = SL.walk_forward(cls.games)
+        cls.base = SL.naive_baselines(cls.preds, cls.games)
+        cls.attr = SL.skill_attribution(SL.build_strategies(cls.preds), cls.base,
+                                        {"preds": cls.preds, "games": cls.games})
+
+    def test_baselines_are_scored_on_the_same_game_set(self):
+        for b in self.base["baselines"]:
+            self.assertLessEqual(b["n"], len(self.preds))
+            self.assertGreater(b["n"], 0)
+
+    def test_every_baseline_rate_is_its_own_hits_over_its_own_n(self):
+        for b in self.base["baselines"]:
+            if b["n"]:
+                self.assertAlmostEqual(b["hit_rate"], round(b["hits"] / b["n"], 4), places=4)
+
+    def test_discordant_games_sum_to_the_reported_total(self):
+        for key in ("headline_vs_win_pct_baseline", "headline_vs_margin_baseline"):
+            h = self.attr[key]
+            self.assertEqual(h["model_won_those"] + h["baseline_won_those"],
+                             h["discordant_games"], key)
+
+    def test_a_verdict_is_always_published_with_the_test(self):
+        for key in ("headline_vs_win_pct_baseline", "headline_vs_margin_baseline"):
+            self.assertTrue(self.attr[key]["verdict"])
+            self.assertTrue(self.attr[key]["baseline"])

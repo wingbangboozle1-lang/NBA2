@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skill vs luck · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html" class="on">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Skill vs luck — is any of this better than backing the favourite?</h1>
+<p class="lede">Every accuracy figure elsewhere on this site answers the wrong question. "Our side hit
+64.7% of 167 games" sounds like skill until you ask whether the side we picked
+was simply the better team. This page answers the right question with a paired test on exactly the games
+where our model and the naive rule disagree — because those are the only games that carry any information
+about skill at all.</p>
+
+<div class="note bad"><b>The result, before the detail.</b> Backing the team with the better prior win record
+scored <b>70.3%</b> on 148 of the same
+167 games. Our model scored <b>64.7%</b>.
+On the <b>33</b> games where the two disagreed, the naive rule was right
+<b>20</b> times and the model <b>13</b> times
+(exact McNemar p = <b>0.2962</b>). The model has therefore demonstrated <b>no skill that is
+separable from the favourite's win rate</b> at this sample size. That is a finding, not a bug, and it is exactly
+what the brief's "remove luck from the equation" step is for.</div>
+
+<h2>1. The naive baselines, measured on the same games</h2>
+<p class="lede">Each baseline consumes only information that existed before its game tipped — prior results, nothing
+else — and is scored on the identical set of regular-season games the walk-forward model scored. Ties are skipped and
+the skipped count is published rather than hidden.</p>
+<div class="scroll"><table>
+<caption>Naive baselines for winner selection, walk-forward, same games</caption>
+<thead><tr>
+<th scope="col">Baseline rule</th>
+<th scope="col" class="n">Games scored</th>
+<th scope="col" class="n">Correct</th>
+<th scope="col" class="n">Ties skipped</th>
+<th scope="col" class="n">Hit rate</th>
+<th scope="col">Wilson 95% CI</th>
+<th scope="col" class="n">p vs coin flip</th>
+<th scope="col">What it uses</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>always back the home team</td>
+<td class="n">167</td>
+<td class="n">86</td>
+<td class="n">0</td>
+<td class="n"><b>51.5%</b></td>
+<td>44.0% – 59.0%</td>
+<td class="n">0.757</td>
+<td>the home-court prior, nothing else</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td>back the better prior win percentage</td>
+<td class="n">148</td>
+<td class="n">104</td>
+<td class="n">19</td>
+<td class="n"><b>70.3%</b></td>
+<td>62.5% – 77.0%</td>
+<td class="n">0.0</td>
+<td>ties in prior W-L are skipped, not guessed</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td>back the better prior average point differential</td>
+<td class="n">165</td>
+<td class="n">104</td>
+<td class="n">2</td>
+<td class="n"><b>63.0%</b></td>
+<td>55.5% – 70.0%</td>
+<td class="n">0.001</td>
+<td>a scoring-margin prior, the strongest of the three</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+</tbody></table></div><h2>2. The paired test — McNemar on the disagreements</h2>
+<p class="lede">A paired comparison does not need 300 games, because only the <em>discordant</em> games
+carry information: if our model and the naive rule pick the same side, that game tells us nothing about which is
+better. McNemar's exact test asks whether the split of the discordant games is consistent with a coin flip.</p>
+<div class="scroll"><table>
+<caption>Paired comparison on the games where model and baseline disagree</caption>
+<thead><tr>
+<th scope="col">Baseline</th>
+<th scope="col">Baseline rate (n)</th>
+<th scope="col" class="n">Discordant games</th>
+<th scope="col" class="n">Model right</th>
+<th scope="col" class="n">Baseline right</th>
+<th scope="col" class="n">Exact p</th>
+<th scope="col">Reading</th>
+<th scope="col">Verdict</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>back the better prior win percentage</td>
+<td>70.3% (148)</td>
+<td class="n">33</td>
+<td class="n">13</td>
+<td class="n">20</td>
+<td class="n"><b>0.2962</b></td>
+<td><span class="badge b-bad">NO SEPARABLE SKILL</span></td>
+<td>the model&#x27;s accuracy is not distinguishable from the favourite prior on the games where they disagree</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td>back the better prior average point differential</td>
+<td>63.0% (165)</td>
+<td class="n">42</td>
+<td class="n">23</td>
+<td class="n">19</td>
+<td class="n"><b>0.644</b></td>
+<td><span class="badge b-bad">NO SEPARABLE SKILL</span></td>
+<td>the model&#x27;s accuracy is not distinguishable from the scoring-margin prior on the games where they disagree</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+</tbody></table></div><div class="note"><b>S1 backs the side its own ratings favour, and its ratings are built from the same results a reader can see. So the honest question is not &#x27;is 64.7% better than 50%&#x27; - of course it is, favourites win - but &#x27;is it better than simply backing the favourite&#x27;. The discordant-game test answers that, and it needs far fewer games than the 300-bet bar because only the disagreements carry information.</b></div>
+
+<h2>3. Why the headline hit rate is high, and why that is not the same as skill</h2>
+<p>The model's side is the side its own ratings favour, and those ratings are built from the same box scores a
+reader can look at. Naturally it picks the better team most of the time, and naturally the better team wins more than
+half the time. The high hit rate is <em>inherited</em> from the favourite's base rate; the discordant test above
+subtracts that inheritance and finds nothing left over.</p>
+<p>This is why the site refuses to promote a strategy on accuracy alone. Two further measurements tell the same
+story:</p>
+<ul>
+  <li><b>Sample size.</b> The largest strategy has 167 settled bets against a 300-bet promotion bar
+  (gate G7).</li>
+  <li><b>Confidence intervals.</b> Every rate on this site is published with a Wilson interval, and every interval
+  here is wide enough to contain the base rate. A wide interval is not a verdict; it is the honest absence of one.</li>
+</ul>
+
+<h2>4. What measurement would settle it</h2>
+<p class="lede">The route out is arithmetic, not opinion: more discordant games, and a market price to test against.</p>
+<div class="scroll"><table>
+<caption>What measurement would turn this from an open question into an answered one</caption>
+<thead><tr>
+<th scope="col">Path</th>
+<th scope="col">What it would take</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>More graded games</b></td>
+<td>The discordant sample grows roughly linearly with graded games — about one discordant game in five. To take a 13-of-33 split to significance at 5% needs on the order of 100+ discordant games, i.e. roughly 500 graded games.</td>
+<td>No new data source needed; the nightly settlement already grades every finished game.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td><b>A market price</b></td>
+<td>Skill in betting is measured against the line, not against a naive rule. With a closing price, the question becomes the right one: does our number beat the market&#x27;s?</td>
+<td>Requires a licensed odds feed. Blocked; see the decision register.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td><b>Player-level data</b></td>
+<td>Props, prop combos and per-player correlations cannot be measured at all without per-game player box scores.</td>
+<td>Requires a per-game player feed. Blocked.</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+</tbody></table></div>
+<div class="note info"><b>What this page does not say.</b> It does not say the model is worse than a naive rule —
+the point estimate is that the naive rule is ahead on the disagreement set, with a p of 0.30 on 33 games, which is
+not evidence either way. It says the model has not yet <em>earned</em> the claim, and that publishing the claim without
+this test would be the hallucination the brief forbids.</div>
+
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

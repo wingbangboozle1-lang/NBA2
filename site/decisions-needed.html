@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decisions needed · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html" class="on">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Decisions needed before anything else is built</h1>
+<p class="lede">Written 2026-11-14 by session arena/766d0269-nba2. Every row separates what we HAVE, what we are MISSING, how the gap could be closed, and who must decide. Nothing in this file has been implemented; a decision is recorded here only when the owner records it.</p>
+<div class="note"><b>How to use this page.</b> Read the <em>What we have</em> column first — it is the
+measurement, not an opinion. The <em>What is missing</em> column is the specific gap. The <em>How to close it</em>
+column is the route. A decision can be recorded against any row without touching code; until one is, the row stands
+as <b>OPEN</b> and no work depending on it should start.</div>
+<div class="scroll"><table>
+<caption>Decision register — what must be answered before the next build step</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Severity</th>
+<th scope="col">Topic</th>
+<th scope="col">Question</th>
+<th scope="col">What we have</th>
+<th scope="col">What is missing</th>
+<th scope="col">How to close it</th>
+<th scope="col">What it decides</th>
+<th scope="col">Blocks</th>
+<th scope="col">Who decides</th>
+<th scope="col">Status</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="D-01">
+<td>D-01</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Market price</td>
+<td><b>Which licensed odds source do we measure against, and may we store its closing prices?</b></td>
+<td>Nothing. No price of any kind exists in the repository. Confirmed again this session: no odds field in any committed snapshot, and every pick publishes &#x27;0.00 u&#x27; with gate G6 named.</td>
+<td>A licensed feed (opening + closing), its terms of use for storage, and the exact timestamp policy (which price is &#x27;the&#x27; price).</td>
+<td>Pick a vendor, obtain written confirmation that historical storage is permitted, then add one ingest path writing dated snapshots. Until then every ROI/CLV/edge figure must stay blank.</td>
+<td>Decides whether this is a betting system at all. Without a price, every output is a projection and the leaderboard cannot rank on money.</td>
+<td>Gates G6 and G7; every ROI, CLV and stake figure; same-game-parlay pricing against a market.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="D-02">
+<td>D-02</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Player-level data</td>
+<td><b>Do we obtain a per-game player box-score feed, and if so which one?</b></td>
+<td>Team-level totals only. Every player-level table on this site is blank by policy, and the three player correlations are marked BLOCKED.</td>
+<td>Per-game player lines with minutes, so props, prop combos, same-player correlation and the minutes half of injury impact can be computed at all.</td>
+<td>A stats vendor, or the league&#x27;s stats endpoints if the licence permits. Check the retention clause before committing data to the repository. Then extend the injury page from &#x27;who is out&#x27; to &#x27;what it costs, in points&#x27;.</td>
+<td>Blocks three of the four content areas the brief asks for: player props, prop combos, and injury-to-production impact.</td>
+<td>S7 (player props/combos), the props page, three of the correlation rows, the production half of injuries.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr id="D-03">
+<td>D-03</td>
+<td><span class="badge b-bad">BLOCKING</span></td>
+<td>Evidence standard</td>
+<td><b>Is the 300-settled-bet bar (gate G7) the promotion standard, or should it be replaced by a per-strategy power calculation?</b></td>
+<td>A flat 300-bet bar is registered. The largest strategy here has 167 settled bets. A paired discordant-game test (this session) needs roughly an order of magnitude fewer games to detect the same effect.</td>
+<td>An explicit choice of evidence standard, and the false-positive rate the owner is willing to accept across a leaderboard of N strategies.</td>
+<td>Decide the effect size worth detecting (e.g. 55% vs 50%), then compute the required n per strategy; publish it next to each strategy instead of one global bar.</td>
+<td>Decides when — if ever — a reward is paid. Also decides whether the competition will be won by luck: testing many strategies without a multiplicity correction guarantees a false winner.</td>
+<td>Reward allocation, leaderboard ranking, the meaning of &#x27;passed all gates&#x27;.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="D-04">
+<td>D-04</td>
+<td><span class="badge b-warn">HIGH</span></td>
+<td>Competition design</td>
+<td><b>Who may submit strategies, and is the reward real money, a score, or neither?</b></td>
+<td>A leaderboard design with anti-gaming rules and an unfunded 100-unit pool exists as a proposal.</td>
+<td>Whether submissions are public; whether the reward has monetary value; the jurisdiction and legal basis if it does.</td>
+<td>Answer the three sub-questions in order; they cascade. If the pool is real money, the anti-gaming rules, audit trail and (in the Netherlands) the Kansspelautoriteit rules all become load-bearing before launch.</td>
+<td>Changes the entire anti-gaming design. A solo, unranked research desk needs none of it.</td>
+<td>Leaderboard promotion, reward rules, submission review workflow.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://kansspelautoriteit.nl/" rel="noopener" target="_blank">kansspelautoriteit.nl/</a></td>
+</tr>
+<tr id="D-05">
+<td>D-05</td>
+<td><span class="badge b-warn">HIGH</span></td>
+<td>Model evidence</td>
+<td><b>Given that the model&#x27;s accuracy is not separable from &#x27;back the better team&#x27; (p = 0.30 on 33 discordant games), what would count as enough evidence of skill to publish a stake?</b></td>
+<td>A paired McNemar test on 33 discordant games: naive rule 20, model 13, p = 0.2962. Wilson intervals on every rate. A 167-game walk-forward with no look-ahead.</td>
+<td>A pre-registered decision rule: which test, on which games, with what threshold, decided before the next slate is graded.</td>
+<td>Pre-register the discordant-game test now (it is already implemented), fix the significance threshold and the multiplicity correction, then let the nightly settlement accumulate games. Do not change the rule once results arrive.</td>
+<td>Determines whether the model can ever be said to add information beyond the standings. Also protects against the most common failure: choosing the test after seeing the answer.</td>
+<td>Any claim of skill; any stake above zero; S1..S6 promotion.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/site/skill-attribution.html" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/site…</a></td>
+</tr>
+<tr id="D-06">
+<td>D-06</td>
+<td><span class="badge b-warn">HIGH</span></td>
+<td>Which surface is the product</td>
+<td><b>Which of the published trees is the authoritative site, and should the rest be archived?</b></td>
+<td>One tree is published (site/, confirmed by probing the live URLs). Four older trees remain in the repository and are not published.</td>
+<td>An explicit decision to archive or delete the superseded trees. Until then a reader who opens a repository file rather than the live URL can see a number that disagrees.</td>
+<td>A single decision; the published tree is already the only one Pages serves. This session adds a page that says so plainly.</td>
+<td>Lower than it looks — the live site is already unambiguous — but it is the difference between &#x27;messy repository&#x27; and &#x27;this repository contradicts itself&#x27;.</td>
+<td>Nothing operationally. It is a clarity decision.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/README.md" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/READ…</a></td>
+</tr>
+<tr id="D-07">
+<td>D-07</td>
+<td><span class="badge b-info">MEDIUM</span></td>
+<td>Rotation minutes</td>
+<td><b>Is there a defensible way to convert &#x27;player X is Out&#x27; into a points adjustment without player-level data?</b></td>
+<td>Official statuses and reasons for every game in the window, refreshed from the official PDF. No minutes data.</td>
+<td>Per-player minutes and usage, and a measured relationship between a player&#x27;s absence and team scoring.</td>
+<td>Either obtain player box scores (D-02) and measure the historical on/off effect, or state explicitly that no adjustment is made and that the model is availability-blind. The second is honest and free; the first is the real fix.</td>
+<td>Right now injuries are tracked accurately but not priced. A reader must not infer that they are in the number.</td>
+<td>The injury-to-production half of the brief; any &#x27;injury-adjusted line&#x27;.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="D-08">
+<td>D-08</td>
+<td><span class="badge b-info">MEDIUM</span></td>
+<td>Game flow</td>
+<td><b>What is &#x27;game flow analysis&#x27; supposed to mean here — pre-game schedule spots, or in-game runs and pace?</b></td>
+<td>Schedule-density and rest-day analysis from official dates. No play-by-play.</td>
+<td>Play-by-play data for in-game flow (runs, pace changes, garbage time), or a decision that schedule-spot analysis is what was meant.</td>
+<td>A one-line answer settles the scope. If in-game flow is meant, a play-by-play feed is required and should be added to D-02&#x27;s scope.</td>
+<td>Decides whether the existing game-flow page is complete or a placeholder.</td>
+<td>Nothing. It is a scope clarification.</td>
+<td>Owner</td>
+<td><span class="badge b-warn">OPEN</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div>
+<h2>What is missing, and how to go and get it</h2>
+<p class="lede">Three of the eight decisions above are blocked on the same thing: data this repository does not
+hold. This is the shortest honest version of that list.</p>
+<div class="scroll"><table>
+<caption>The gap list: what we do not have and what it would take to get it</caption>
+<thead><tr>
+<th scope="col">What is missing</th>
+<th scope="col">What it blocks</th>
+<th scope="col">How to obtain it</th>
+<th scope="col">Decision it closes</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>Licensed odds, opening and closing</b></td>
+<td>Every edge, CLV and ROI figure on this site; gates G6 and G7</td>
+<td>A vendor contract plus storage rights. Until it exists, no price is published and none is estimated.</td>
+<td>D-01</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td><b>Per-game player box scores with minutes</b></td>
+<td>Player props, prop combos, same-player correlations, the production half of injury impact</td>
+<td>A per-game player feed. Until it exists, those tables stay blank — a blank is published, not a guess.</td>
+<td>D-02</td>
+<td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td><b>A pre-registered evidence rule</b></td>
+<td>Any statement that a strategy has skill</td>
+<td>Decide the test and the threshold BEFORE the next games are graded. The test is already written.</td>
+<td>D-05</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr>
+<td><b>Play-by-play</b></td>
+<td>In-game flow analysis, if that is what the brief meant</td>
+<td>A play-by-play feed, or a decision that schedule-spot analysis is the intended scope.</td>
+<td>D-08</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+<tr>
+<td><b>A named reward and submission model</b></td>
+<td>Whether the leaderboard needs real anti-gaming controls</td>
+<td>An owner answer to three questions: who submits, is the reward money, in which jurisdiction.</td>
+<td>D-04</td>
+<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+</tr>
+</tbody></table></div>
+<h2>What we already have, so nobody re-decides it</h2>
+<div class="cards">
+  <div class="card"><h4>The whole 3-day slate</h4><p>27 games, 2026-11-14 → 11-17, each verified field by field
+  against the official NBA.com schedule this session (27/27 identical).</p></div>
+  <div class="card"><h4>Official team records</h4><p>All 30 clubs re-read from the official standings this session
+  and matching the published table exactly (30/30).</p></div>
+  <div class="card"><h4>An originated line for every game</h4><p>Spread, total, win probability and both break-even
+  triggers, from two independent estimators, with their disagreement published beside every number.</p></div>
+  <div class="card"><h4>An honest skill measurement</h4><p>A paired test against naive rules, which found no
+  separable skill at 167 games. That is a result, and it is published rather than buried.</p></div>
+</div>
+
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

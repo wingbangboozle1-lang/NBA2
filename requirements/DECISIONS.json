@@ -1,0 +1,123 @@
+{
+ "title": "Decisions needed before anything further is built",
+ "source_note": "Written 2026-11-14 by session arena/766d0269-nba2. Every row separates what we HAVE, what we are MISSING, how the gap could be closed, and who must decide. Nothing in this file has been implemented; a decision is recorded here only when the owner records it.",
+ "status_values": [
+  "OPEN \u2014 no decision recorded",
+  "DECIDED \u2014 owner recorded a choice",
+  "DEFERRED \u2014 owner parked it"
+ ],
+ "decisions": [
+  {
+   "id": "D-01",
+   "severity": "BLOCKING",
+   "topic": "Market price",
+   "question": "Which licensed odds source do we measure against, and may we store its closing prices?",
+   "have": "Nothing. No price of any kind exists in the repository. Confirmed again this session: no odds field in any committed snapshot, and every pick publishes '0.00 u' with gate G6 named.",
+   "missing": "A licensed feed (opening + closing), its terms of use for storage, and the exact timestamp policy (which price is 'the' price).",
+   "how_to_find_out": "Pick a vendor, obtain written confirmation that historical storage is permitted, then add one ingest path writing dated snapshots. Until then every ROI/CLV/edge figure must stay blank.",
+   "impact": "Decides whether this is a betting system at all. Without a price, every output is a projection and the leaderboard cannot rank on money.",
+   "blocks": "Gates G6 and G7; every ROI, CLV and stake figure; same-game-parlay pricing against a market.",
+   "source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "source_note": "NBA's own site publishes no prices; the official pages supply schedule, standings and injuries only. This is why the gap is structural rather than an oversight.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-02",
+   "severity": "BLOCKING",
+   "topic": "Player-level data",
+   "question": "Do we obtain a per-game player box-score feed, and if so which one?",
+   "have": "Team-level totals only. Every player-level table on this site is blank by policy, and the three player correlations are marked BLOCKED.",
+   "missing": "Per-game player lines with minutes, so props, prop combos, same-player correlation and the minutes half of injury impact can be computed at all.",
+   "how_to_find_out": "A stats vendor, or the league's stats endpoints if the licence permits. Check the retention clause before committing data to the repository. Then extend the injury page from 'who is out' to 'what it costs, in points'.",
+   "impact": "Blocks three of the four content areas the brief asks for: player props, prop combos, and injury-to-production impact.",
+   "blocks": "S7 (player props/combos), the props page, three of the correlation rows, the production half of injuries.",
+   "source": "https://www.nba.com/stats/players/traditional",
+   "source_note": "Official player stats exist as a page; the repository has no captured player-level snapshot and the sandbox cannot reach stats.nba.com (HTTP 000).",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-03",
+   "severity": "BLOCKING",
+   "topic": "Evidence standard",
+   "question": "Is the 300-settled-bet bar (gate G7) the promotion standard, or should it be replaced by a per-strategy power calculation?",
+   "have": "A flat 300-bet bar is registered. The largest strategy here has 167 settled bets. A paired discordant-game test (this session) needs roughly an order of magnitude fewer games to detect the same effect.",
+   "missing": "An explicit choice of evidence standard, and the false-positive rate the owner is willing to accept across a leaderboard of N strategies.",
+   "how_to_find_out": "Decide the effect size worth detecting (e.g. 55% vs 50%), then compute the required n per strategy; publish it next to each strategy instead of one global bar.",
+   "impact": "Decides when \u2014 if ever \u2014 a reward is paid. Also decides whether the competition will be won by luck: testing many strategies without a multiplicity correction guarantees a false winner.",
+   "blocks": "Reward allocation, leaderboard ranking, the meaning of 'passed all gates'.",
+   "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py",
+   "source_note": "The bar is defined in MIN_BETS_RANK in this repository's own code; there is no external authority for it, which is precisely why it needs an owner decision.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-04",
+   "severity": "HIGH",
+   "topic": "Competition design",
+   "question": "Who may submit strategies, and is the reward real money, a score, or neither?",
+   "have": "A leaderboard design with anti-gaming rules and an unfunded 100-unit pool exists as a proposal.",
+   "missing": "Whether submissions are public; whether the reward has monetary value; the jurisdiction and legal basis if it does.",
+   "how_to_find_out": "Answer the three sub-questions in order; they cascade. If the pool is real money, the anti-gaming rules, audit trail and (in the Netherlands) the Kansspelautoriteit rules all become load-bearing before launch.",
+   "impact": "Changes the entire anti-gaming design. A solo, unranked research desk needs none of it.",
+   "blocks": "Leaderboard promotion, reward rules, submission review workflow.",
+   "source": "https://kansspelautoriteit.nl/",
+   "source_note": "NL gambling authority as the relevant regulator for the owner's jurisdiction; no claim is made here about whether this project falls under its remit.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-05",
+   "severity": "HIGH",
+   "topic": "Model evidence",
+   "question": "Given that the model's accuracy is not separable from 'back the better team' (p = 0.30 on 33 discordant games), what would count as enough evidence of skill to publish a stake?",
+   "have": "A paired McNemar test on 33 discordant games: naive rule 20, model 13, p = 0.2962. Wilson intervals on every rate. A 167-game walk-forward with no look-ahead.",
+   "missing": "A pre-registered decision rule: which test, on which games, with what threshold, decided before the next slate is graded.",
+   "how_to_find_out": "Pre-register the discordant-game test now (it is already implemented), fix the significance threshold and the multiplicity correction, then let the nightly settlement accumulate games. Do not change the rule once results arrive.",
+   "impact": "Determines whether the model can ever be said to add information beyond the standings. Also protects against the most common failure: choosing the test after seeing the answer.",
+   "blocks": "Any claim of skill; any stake above zero; S1..S6 promotion.",
+   "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/site/skill-attribution.html",
+   "source_note": "The measured result is published on this site with its arithmetic; the decision rule is not yet fixed.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-06",
+   "severity": "HIGH",
+   "topic": "Which surface is the product",
+   "question": "Which of the published trees is the authoritative site, and should the rest be archived?",
+   "have": "One tree is published (site/, confirmed by probing the live URLs). Four older trees remain in the repository and are not published.",
+   "missing": "An explicit decision to archive or delete the superseded trees. Until then a reader who opens a repository file rather than the live URL can see a number that disagrees.",
+   "how_to_find_out": "A single decision; the published tree is already the only one Pages serves. This session adds a page that says so plainly.",
+   "impact": "Lower than it looks \u2014 the live site is already unambiguous \u2014 but it is the difference between 'messy repository' and 'this repository contradicts itself'.",
+   "blocks": "Nothing operationally. It is a clarity decision.",
+   "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/README.md",
+   "source_note": "The README already names site/ as the published tree; the decision outstanding is archiving the others.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-07",
+   "severity": "MEDIUM",
+   "topic": "Rotation minutes",
+   "question": "Is there a defensible way to convert 'player X is Out' into a points adjustment without player-level data?",
+   "have": "Official statuses and reasons for every game in the window, refreshed from the official PDF. No minutes data.",
+   "missing": "Per-player minutes and usage, and a measured relationship between a player's absence and team scoring.",
+   "how_to_find_out": "Either obtain player box scores (D-02) and measure the historical on/off effect, or state explicitly that no adjustment is made and that the model is availability-blind. The second is honest and free; the first is the real fix.",
+   "impact": "Right now injuries are tracked accurately but not priced. A reader must not infer that they are in the number.",
+   "blocks": "The injury-to-production half of the brief; any 'injury-adjusted line'.",
+   "source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "source_note": "The filing rules and the reports themselves are official; the mapping from absence to points is not published by anyone and must be measured.",
+   "who_decides": "Owner"
+  },
+  {
+   "id": "D-08",
+   "severity": "MEDIUM",
+   "topic": "Game flow",
+   "question": "What is 'game flow analysis' supposed to mean here \u2014 pre-game schedule spots, or in-game runs and pace?",
+   "have": "Schedule-density and rest-day analysis from official dates. No play-by-play.",
+   "missing": "Play-by-play data for in-game flow (runs, pace changes, garbage time), or a decision that schedule-spot analysis is what was meant.",
+   "how_to_find_out": "A one-line answer settles the scope. If in-game flow is meant, a play-by-play feed is required and should be added to D-02's scope.",
+   "impact": "Decides whether the existing game-flow page is complete or a placeholder.",
+   "blocks": "Nothing. It is a scope clarification.",
+   "source": "https://www.nba.com/games",
+   "source_note": "Official game pages carry the schedule and results; play-by-play is a separate data product.",
+   "who_decides": "Owner"
+  }
+ ]
+}
