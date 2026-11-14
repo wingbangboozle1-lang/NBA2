@@ -50,8 +50,8 @@
       "id": "FLAG-RAT-02",
       "severity": "low",
       "field": "close_w,close_l,blowout_w,blowout_l",
-      "issue": "CORRECTED 2026-11-14 (CR-3): the original claim that the close/blowout split columns 'do not balance league-wide' was wrong — recomputation over this file's own records shows sum(close_w)=sum(close_l)=99 and sum(blowout_w)=sum(blowout_l)=88, and the two internal_consistency_checks labels are corrected to PASS (see provenance.correction). The columns remain NOT used for any model parameter, because the model inputs and the sealed prediction ledger were fixed before this correction and must not move under a seal; re-admitting the splits is a model change, tracked as suggestion S-26.",
-      "action_required": "Owner decides S-26: re-admit close/blowout splits as model inputs (new seal for future slates) or keep them as published luck-diagnostics only. The balancing objection is withdrawn."
+      "issue": "CORRECTED 2026-11-14 (CR-3): the original claim that the close/blowout split columns 'do not balance league-wide' was wrong — recomputation over this file's own records shows sum(close_w)=sum(close_l)=99 and sum(blowout_w)=sum(blowout_l)=88, and the two internal_consistency_checks labels are corrected to PASS (see provenance.correction). The columns remain NOT used for any model parameter, because the model inputs and the sealed prediction ledger were fixed before this correction and must not move under a seal; re-admitting the splits is a model change, tracked as suggestion S-34 (renumbered from S-26 in the queue-fragment numbering).",
+      "action_required": "Owner decides S-34 (formerly S-26 in the queue fragment): re-admit close/blowout splits as model inputs (new seal for future slates) or keep them as published luck-diagnostics only. The balancing objection is withdrawn."
     }
   ],
   "records": [

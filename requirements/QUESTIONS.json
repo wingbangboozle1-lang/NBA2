@@ -1,6 +1,6 @@
 {
  "title": "NBA2 — questions that must be answered before a decision is reasonable",
- "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. 2026-11-14 (arena/6c5195d1-nba2): Q-23…Q-27 from the cross-check queue fragment analysis/queue-additions-5b80b88a.json are merged in (severity labels normalised to this register's vocabulary).",
+ "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. Queue-fragment questions Q-23…Q-27 (analysis/queue-additions-5b80b88a.json) renumbered Q-30…Q-34 on 2026-11-14 (arena/6c5195d1-nba2) because arena/ab8743d8-nba2's Q-23…Q-29 landed first; texts unchanged except their internal S-numbers follow the same renumbering.",
  "questions": [
   {
    "id": "Q-01",
@@ -202,6 +202,83 @@
   },
   {
    "id": "Q-23",
+   "question": "When a published snapshot goes stale, should the site keep showing it (labelled) or withhold the page entirely?",
+   "have": "Proof of the failure mode, measured today: the v2 team table matches the pre-11/13-finals state 30/30 and current official standings only 12/30, while the page still advertises a 30/30 live match. The nine 11/13 finals were played while the table was frozen.",
+   "missing": "A rule. Nothing in the build currently compares a published row against a fresher official capture, so staleness can only be caught by a human reading two pages.",
+   "how": "Set a maximum snapshot age per table (records: 1 day; prices: 15 minutes; injuries: to the next official filing). Add a staleness gate to nba2/v2/check.py that fails when a row is older than its limit, and render stale rows with an explicit 'as of' badge instead of a MATCH badge.",
+   "impact": "Without it the site can show a table it calls verified that is provably wrong the next morning. This is the single highest-cost defect found this session because it is silent.",
+   "severity": "BLOCKING",
+   "source": "https://www.nba.com/standings",
+   "evidence": "nba2/v2/live.py::staleness()"
+  },
+  {
+   "id": "Q-24",
+   "question": "Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?",
+   "have": "The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.",
+   "missing": "The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.",
+   "how": "Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.",
+   "impact": "4-0 is exactly the result that would get a bettor to increase stakes. Publishing it without the n=4 context would make the site a machine for manufacturing false confidence.",
+   "severity": "HIGH",
+   "source": "https://www.nba.com/games",
+   "evidence": "nba2/v2/live.py::grade()"
+  },
+  {
+   "id": "Q-25",
+   "question": "Should a per-strategy win rate be allowed to count the same game twice when two strategies fire on it?",
+   "have": "The measured overlap: of 4 graded games, all 4 were bet by both S1_MarginFavorite and S2_SpreadValue. Per-strategy hit rates stay valid; any portfolio or leaderboard return that sums them double-counts the games.",
+   "missing": "A portfolio accounting rule: whether the leaderboard scores strategies independently (as now) or scores the union of positions actually held.",
+   "how": "Owner decision. Independent scoring is simpler and correct for ranking hypotheses; union scoring is correct for describing what a bankroll would have done. They answer different questions and the site currently only implements one.",
+   "impact": "If rewards are paid on summed per-strategy results, two correlated strategies split one result twice and the reward pool systematically overpays correlation, which is the thing the project exists to price.",
+   "severity": "HIGH",
+   "source": "https://www.nba.com/games",
+   "evidence": "nba2/v2/live.py::grade()['duplicate_accounting']"
+  },
+  {
+   "id": "Q-26",
+   "question": "Does a team rating that is computed from a frozen standings table need to be re-fitted per slate, or is a same-day snapshot accurate enough?",
+   "have": "A measured comparison on 9 graded games: the model's margin MAE was 11.46 against 13.33 for predicting a tie, but its winner accuracy (5/9) was no better than a naive net-rating baseline computed from the same frozen table (5/9).",
+   "missing": "A rebuilt rating on post-11/13 data. That requires re-running the whole pipeline against today's official standings, which is a data refresh, not a code change.",
+   "how": "Refresh data/raw with the 30 current records captured today (already in audit/2026-11-14/official_inputs_2026-11-14.json), rebuild, re-seal a new ledger, and compare. Until then no claim about which estimator is better is supported.",
+   "impact": "Decides whether the daily cadence is a real requirement or a nicety: if a one-day-old table costs accuracy, the nightly job is load-bearing.",
+   "severity": "HIGH",
+   "source": "https://www.nba.com/standings",
+   "evidence": "nba2/v2/live.py::grade()['side_accuracy']"
+  },
+  {
+   "id": "Q-27",
+   "question": "Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?",
+   "have": "A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.",
+   "missing": "Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.",
+   "how": "Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml's parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.",
+   "impact": "Every minute spent verifying the v1 tree is spent on a surface nobody reads, and its stale numbers keep appearing in repo-wide audits and confusing later sessions.",
+   "severity": "MEDIUM",
+   "source": "https://github.com/wingbangboozle1-lang/NBA2",
+   "evidence": "audit/2026-11-14/deploy_probe.json"
+  },
+  {
+   "id": "Q-28",
+   "question": "How is a pick's price recorded if no odds feed will ever be licensed?",
+   "have": "Every graded signal in nba2/data/picks.json lacks a price field entirely, so win/loss is measurable and profit is not. Reported -110 would make every number in this project an assumption about a book.",
+   "missing": "Either a licensed feed, or a decision to accept manual price entry, or a decision that the project only ever publishes winners and never PnL.",
+   "how": "Owner picks one of three. Option three is viable and cheap: publish hit rates and CLV-free triggers, and never claim a return.",
+   "impact": "Decides whether the leaderboard competition can ever have a cash-relevant reward, or is permanently an accuracy contest.",
+   "severity": "BLOCKING",
+   "source": "https://www.nba.com/games",
+   "evidence": "nba2/data/picks.json: no american_odds field on any of 21 signals"
+  },
+  {
+   "id": "Q-29",
+   "question": "Who is allowed to move the build stamp, and how should a refresh be recorded?",
+   "have": "The stamp is now derived from the newest retrieved_at_utc inside the committed snapshots (2026-11-14 01:05 UTC as of this build), so it cannot drift on a rebuild. An explicit NBA2_BUILD_STAMP override exists but nothing in CI sets it.",
+   "missing": "A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.",
+   "how": "Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.",
+   "impact": "Without it 'as of' is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.",
+   "severity": "MEDIUM",
+   "source": "https://www.nba.com/schedule",
+   "evidence": "nba2/pipeline/build_site_data.py::_content_stamp"
+  },
+  {
+   "id": "Q-30",
    "question": "Which execution environment can reach the official NBA endpoints, and under what policy?",
    "have": "A dated, reproducible measurement from the sandbox: four endpoints, none answering at TLS. Plus the same result from three prior sessions. The `nba-ingest.yml` probe measures it from a GitHub-hosted runner and prints the table.",
    "missing": "The runner's answer (recorded by the probe run), and the owner's decision about whether automated fetching of nba.com properties is in policy for this project at any cadence.",
@@ -210,7 +287,7 @@
    "severity": "HIGH"
   },
   {
-   "id": "Q-24",
+   "id": "Q-31",
    "question": "Is the 13:00 ET referee PDF the authority for availability, and do we keep the bytes?",
    "have": "Three different stamps of the same day's report are cited across surfaces (01:00 PM, 04:15 PM, 05:15 PM ET) and the reconciliation table already adjudicates 10 status changes between them. The capture tool archives the PDF with a sha256 of the response body.",
    "missing": "A policy: which stamp is canonical for a published line, and whether archived PDFs (or only their hashes) are kept in-repo.",
@@ -219,7 +296,7 @@
    "severity": "MEDIUM"
   },
   {
-   "id": "Q-25",
+   "id": "Q-32",
    "question": "Which surface is canonical, and what happens to the other four?",
    "have": "Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.",
    "missing": "An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.",
@@ -228,7 +305,7 @@
    "severity": "MEDIUM"
   },
   {
-   "id": "Q-26",
+   "id": "Q-33",
    "question": "What does a strategy have to survive before it can be paid?",
    "have": "Nine gates per strategy defined and applied to 9 strategies (90 gate results, all BLOCKED/AT-RISK); a pre-registered sealed ledger (22 predictions, digest on every page); a tier ladder with reward weights; and a stated minimum sample of 300 settled bets.",
    "missing": "Owner sign-off on the promotion rule as a *policy*, not a design: minimum sample, holdout window, vig treatment, drawdown cap, multiple-comparison correction across nine strategies, and what happens to the seal when the window rolls forward daily.",
@@ -237,11 +314,11 @@
    "severity": "HIGH"
   },
   {
-   "id": "Q-27",
+   "id": "Q-34",
    "question": "Who reviews a commit that the nightly ingest pushes to `main`?",
    "have": "`refresh.yml` runs with `contents: write`, rebuilds the site, and pushes `HEAD:${GITHUB_REF_NAME}` directly, gated by its own verify chain (unit tests, seal verification, provenance lint) and an explicit guard that the sealed ledger is untouched. That is a sound fail-closed design for a bot.",
    "missing": "A stated policy on what a bot commit may change on `main` without a human: the pipeline today also carries F1's negative-count bug, which such a commit would happily re-publish with a green tick.",
-   "how": "Add the cross-check to the ingest verify chain (S-21/S-30) so a bot cannot push a build that fails semantic review, and record the bot's allowed paths in the requirements register.",
+   "how": "Add the cross-check to the ingest verify chain (S-29/S-38) so a bot cannot push a build that fails semantic review, and record the bot's allowed paths in the requirements register.",
    "impact": "Determines whether automated refresh is trustworthy end-to-end. Right now it can only fail loudly, not fail subtly — which is good — but 'loudly' is scoped to what CI checks today.",
    "severity": "MEDIUM"
   }

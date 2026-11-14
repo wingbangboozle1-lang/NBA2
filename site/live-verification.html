@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live verification · NBA2 Lines Lab v2</title>
+<meta name="description" content="NBA2 v2 — originated NBA lines from official sources, with every row sourced and every blank flagged.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v2 · originated lines from official sources</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html" class="on">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+  </nav>
+</aside>
+<main>
+<h1>Live verification — what today's official pages say</h1>
+<p class="lede">Every other page on this site renders a snapshot captured on 2026-11-14. This page is different: it is built
+from pages this session read <b>today</b>, records the exact URL and fetch time of each, and reports where the published
+site no longer matches. It also grades the first genuine forecast the repository ever made.</p>
+<div class="note"><b>Why this page had to exist.</b> Nothing on the site compared a published row against a fresher
+official capture, so a stale row and a correct row rendered identically — both said MATCH. This session found 18 such
+rows by hand. A page is cheaper than vigilance.</div>
+<div class="kpis">
+  <div class="kpi"><b>12/30</b><small>published team records that still match today's official standings</small></div>
+  <div class="kpi"><b>30/30</b><small>that match the pre-11/13-finals reconstruction</small></div>
+  <div class="kpi"><b>9</b><small>11/13 games with official finals</small></div>
+  <div class="kpi"><b>4</b><small>distinct games the committed picks actually bet</small></div>
+  <div class="kpi"><b>5/9</b><small>games where the model named the winner</small></div>
+  <div class="kpi"><b>7/9</b><small>where "always pick home" would have</small></div>
+</div>
+
+<h2>0. Which tree is actually published (probed, not assumed)</h2>
+<p class="lede">A correction to this session's own first draft. It claimed two dashboards both reach a reader. That was
+wrong, and the probe below is why. On 2026-11-14 the live site was fetched at three paths:</p>
+<div class="scroll"><table>
+<caption>One tree is served. The Pages API&#x27;s build_type=legacy / source=main is stale metadata that does not describe what readers get, which the 404s above prove.</caption>
+<thead><tr>
+<th scope="col">Path probed</th>
+<th scope="col">HTTP</th>
+<th scope="col">What came back</th>
+<th scope="col">URL</th>
+</tr></thead><tbody>
+<tr>
+<td>/NBA2/</td>
+<td><span class="badge b-ok">200</span></td>
+<td>v2 dashboard — title &#x27;Dashboard · NBA2 Lines Lab v2&#x27;</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/</a></td>
+</tr>
+<tr>
+<td>/NBA2/data/teams.json</td>
+<td><span class="badge b-ok">200</span></td>
+<td>v2 artefact: as_of, calibration.margin_sd 12.75, 30 teams with reliability and luck_z</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/data/teams.json" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/data/teams.json</a></td>
+</tr>
+<tr>
+<td>/NBA2/pages/session-audit.html</td>
+<td><span class="badge b-bad">404</span></td>
+<td>this file exists in the repository (v1 tree) — site/ has no pages/ directory</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/pages/session-audit.html" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/pages/session-a…</a></td>
+</tr>
+<tr>
+<td>/NBA2/pages/executive-summary.html</td>
+<td><span class="badge b-bad">404</span></td>
+<td>also exists in the repository (v1 tree) and is also unreachable</td>
+<td><a href="https://wingbangboozle1-lang.github.io/NBA2/pages/executive-summary.html" rel="noopener" target="_blank">wingbangboozle1-lang.github.io/NBA2/pages/executive…</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>What that means.</b> Only the <code>site/</code> artefact built by
+<code>pages.yml</code> reaches a reader. The v1 tree at the repository root — root <code>index.html</code>,
+<code>pages/**</code>, <code>flagged.html</code>, <code>data/site.json</code> — is <b>unreachable</b>, yet CI still
+regenerates, lints and parity-checks it on every push, and it carries records that have been stale since the 11/13
+finals. The defect is unreachable maintenance debt, not a live fork: the recommendation (DG-01 / S-27) is to move it
+under <code>archive/</code> with dated notes, deleting nothing.</div>
+
+<h2>1. Official pages read this session</h2>
+<div class="scroll"><table>
+<caption>Read at 2026-11-14T09:56:00Z; nba.com is unreachable by direct HTTPS from the build sandbox, so these were fetched through the platform page-reader. The method is stated because it is part of the evidence.</caption>
+<thead><tr>
+<th scope="col">Official page</th>
+<th scope="col">Outcome</th>
+<th scope="col">What it proved</th>
+<th scope="col">URL</th>
+</tr></thead><tbody>
+<tr>
+<td>Official schedule</td>
+<td><span class="badge b-ok">read</span></td>
+<td>nine 11/13 finals; the 11/14-11/17 slate and tip times</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Official games / scores</td>
+<td><span class="badge b-ok">read</span></td>
+<td>independent second confirmation of all nine finals</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Official standings</td>
+<td><span class="badge b-ok">read</span></td>
+<td>current 30-team W-L and last-10 for the 2026-27 season</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Injury report 11/13 19:30 ET</td>
+<td><span class="badge b-ok">read</span></td>
+<td>the revision already published is still the served revision</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>Injury report 11/14 11:00 AM ET</td>
+<td><span class="badge b-bad">AccessDenied</span></td>
+<td>no newer official revision existed at fetch time</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_11_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+</tbody></table></div><h2>2. The published team table has aged</h2>
+<p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on 2026-11-14
+before the nine 2026-11-13 games had official results. Nine games change eighteen records. To prove that rather than
+assert it, the pre-final state is reconstructed from today's official standings by subtracting those nine results, and
+the published table is compared with both.</p>
+<div class="scroll"><table>
+<caption>Staleness measured, not assumed</caption>
+<thead><tr>
+<th scope="col">Comparison</th>
+<th scope="col">Result</th>
+<th scope="col">Reading</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Published table vs today&#x27;s official standings</td>
+<td>12 of 30</td>
+<td><span class="badge b-bad">STALE</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Published table vs the pre-11/13-finals reconstruction</td>
+<td>30 of 30</td>
+<td><span class="badge b-warn">EXPLAINS THE GAP</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Rows whose staleness the nine finals do not explain</td>
+<td>0</td>
+<td><span class="badge b-ok">NONE</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises &#x27;Committed W-L ... vs live nba.com/standings | 30/30 identical | MATCH&#x27; - that comparison was true when it was made, and it is no longer true of the same rows.
+The comparison was true when it was made. The rows are the same rows, the standings are not the same standings, and
+until today nothing on the site could tell the difference. <b>Every stale row, with both values:</b></div>
+<div class="scroll"><table>
+<caption>18 stale team records, every one explained by the 11/13 finals</caption>
+<thead><tr>
+<th scope="col">Team</th>
+<th scope="col">Published on this site</th>
+<th scope="col">Today&#x27;s official W-L</th>
+<th scope="col">Pre-11/13 reconstruction</th>
+<th scope="col">Cause</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>ATL</td>
+<td>7-5</td>
+<td>7-6</td>
+<td>7-5</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CHI</td>
+<td>1-9</td>
+<td>2-9</td>
+<td>1-9</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CLE</td>
+<td>6-6</td>
+<td>6-7</td>
+<td>6-6</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>GSW</td>
+<td>8-4</td>
+<td>8-5</td>
+<td>8-4</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>HOU</td>
+<td>9-3</td>
+<td>10-3</td>
+<td>9-3</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>IND</td>
+<td>4-8</td>
+<td>5-8</td>
+<td>4-8</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>LAC</td>
+<td>2-8</td>
+<td>3-8</td>
+<td>2-8</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MEM</td>
+<td>7-4</td>
+<td>8-4</td>
+<td>7-4</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIA</td>
+<td>5-6</td>
+<td>6-6</td>
+<td>5-6</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIL</td>
+<td>1-11</td>
+<td>1-12</td>
+<td>1-11</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NOP</td>
+<td>4-8</td>
+<td>4-9</td>
+<td>4-8</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NYK</td>
+<td>6-5</td>
+<td>6-6</td>
+<td>6-5</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>OKC</td>
+<td>8-4</td>
+<td>8-5</td>
+<td>8-4</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>ORL</td>
+<td>4-7</td>
+<td>5-7</td>
+<td>4-7</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>POR</td>
+<td>8-3</td>
+<td>9-3</td>
+<td>8-3</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>SAC</td>
+<td>1-10</td>
+<td>1-11</td>
+<td>1-10</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>SAS</td>
+<td>10-2</td>
+<td>11-2</td>
+<td>10-2</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>UTA</td>
+<td>1-11</td>
+<td>1-12</td>
+<td>1-11</td>
+<td><span class="badge b-warn">PRE_FINALS</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div><h2>3. The first real out-of-sample test the repository has</h2>
+<p class="lede"><code>nba2/data/picks.json</code> was committed at <b>2026-11-13T22:36:46Z</b> (commit
+<code>d04bdc3</code>, its only commit ever) and the earliest 11/13 tip was
+<b>2026-11-14T00:00:00Z</b> — 83 minutes later. Nothing in that file could
+have seen a result. That makes it a forecast, not a backtest, and it is the first one this repository has ever been able
+to grade.</p>
+<div class="note"><b>Where this is graded, and where it is not.</b> Both sealed ledgers
+(<code>cf7dedc6…</code>, <code>c841e8f3…</code>) start on 2026-11-14, so the eleven 13ths they do not cover correctly
+leave them PENDING. The graded file is <em>not</em> sealed — the claim rests on a git commit timestamp and a one-commit
+history, which is weaker than a seal and is stated as weaker.</div>
+<div class="scroll"><table>
+<caption>Nine games. Every one of these numbers would move on a single result — read them as a demonstration, not evidence.</caption>
+<thead><tr>
+<th scope="col">Measure</th>
+<th scope="col">Model (9 games)</th>
+<th scope="col">Free baseline</th>
+<th scope="col">Verdict</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>Spread — mean absolute error</td>
+<td>11.461 pts</td>
+<td>13.333 pts (predict a tie)</td>
+<td><span class="badge b-ok">BEATS BASELINE</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Total — mean absolute error</td>
+<td>16.444 pts</td>
+<td>16.444 pts (224 every game)</td>
+<td><span class="badge b-warn">TIES BASELINE</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Brier score</td>
+<td>0.190662</td>
+<td>0.25 (coin flip)</td>
+<td><span class="badge b-ok">BEATS COIN</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>Winner accuracy</td>
+<td>5/9</td>
+<td>5/9 naive net rating, 7/9 always home</td>
+<td><span class="badge b-bad">NO EDGE SHOWN</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>4. Every pick the committed file made, and what happened</h2><p class="lede">The repository's own strategies, graded game by game. Note the two right-hand columns before the
+result: there is no price anywhere in the file, so <b>no profit can be computed</b> and none is shown.</p><div class="scroll"><table>
+<caption>Committed picks graded against the official box scores</caption>
+<thead><tr>
+<th scope="col">Strategy</th>
+<th scope="col">Game</th>
+<th scope="col">Committed selection</th>
+<th scope="col">Official result</th>
+<th scope="col">Result</th>
+<th scope="col">Price</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>CLE @ MIA</td>
+<td>MIA ML</td>
+<td>CLE 121 @ MIA 133</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/cle-vs-mia-0022600036" rel="noopener" target="_blank">nba.com/game/cle-vs-mia-0022600036</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>UTA @ HOU</td>
+<td>HOU ML</td>
+<td>UTA 118 @ HOU 125</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039" rel="noopener" target="_blank">nba.com/game/uta-vs-hou-0022600039</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>GSW @ SAS</td>
+<td>SAS ML</td>
+<td>GSW 85 @ SAS 123</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-sas-0022600040" rel="noopener" target="_blank">nba.com/game/gsw-vs-sas-0022600040</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>POR @ SAC</td>
+<td>POR ML</td>
+<td>POR 120 @ SAC 107</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/por-vs-sac-0022600041" rel="noopener" target="_blank">nba.com/game/por-vs-sac-0022600041</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>BKN @ MEM</td>
+<td>MEM ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>CHI @ MIN</td>
+<td>MIN ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>IND @ PHI</td>
+<td>PHI ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>SAS @ UTA</td>
+<td>SAS ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>DAL @ BOS</td>
+<td>BOS ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>ATL @ MIL</td>
+<td>ATL ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>OKC @ SAC</td>
+<td>OKC ML</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>CLE @ MIA</td>
+<td>MIA +6.5</td>
+<td>CLE 121 @ MIA 133</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/cle-vs-mia-0022600036" rel="noopener" target="_blank">nba.com/game/cle-vs-mia-0022600036</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>UTA @ HOU</td>
+<td>HOU +13.0</td>
+<td>UTA 118 @ HOU 125</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039" rel="noopener" target="_blank">nba.com/game/uta-vs-hou-0022600039</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>GSW @ SAS</td>
+<td>SAS +8.0</td>
+<td>GSW 85 @ SAS 123</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-sas-0022600040" rel="noopener" target="_blank">nba.com/game/gsw-vs-sas-0022600040</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>POR @ SAC</td>
+<td>POR +6.0</td>
+<td>POR 120 @ SAC 107</td>
+<td><span class="badge b-ok">WIN</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/game/por-vs-sac-0022600041" rel="noopener" target="_blank">nba.com/game/por-vs-sac-0022600041</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>BKN @ MEM</td>
+<td>MEM +8.0</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>CHI @ MIN</td>
+<td>MIN +12.0</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>IND @ PHI</td>
+<td>PHI +9.0</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>SAS @ UTA</td>
+<td>SAS +6.0</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>DAL @ BOS</td>
+<td>BOS +7.0</td>
+<td>not yet played — on the official 11/14-11/15 slate</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>S4_LeanParlay</td>
+<td>Parlay (0022600039, 0022600235, 0022600236)</td>
+<td>HOU ML + MIN ML + PHI ML</td>
+<td>not graded</td>
+<td><span class="badge b-off">PENDING</span></td>
+<td><span class="badge b-warn">no price — PnL impossible</span></td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+</tbody></table></div><div class="note bad"><b>The sample is half the size it looks.</b> 8 strategy-signal rows recorded, but only 4 distinct games produced them: the same four wins are counted twice because S1_MarginFavorite (moneyline) and S2_SpreadValue (spread) both fired on the same games. 4-0 twice is 4 games, not 8.
+Every hit-rate table on this site now prints both counts.</div><div class="scroll"><table>
+<caption>Per-strategy grading — the p-value is the probability of this record from a fair coin</caption>
+<thead><tr>
+<th scope="col">Strategy</th>
+<th scope="col">Name</th>
+<th scope="col">Signals committed</th>
+<th scope="col">Graded</th>
+<th scope="col">Pending</th>
+<th scope="col">W-L</th>
+<th scope="col">Hit rate</th>
+<th scope="col">p vs coin</th>
+<th scope="col">Verdict</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>S1_MarginFavorite</td>
+<td>Margin Favorite (Single)</td>
+<td>11</td>
+<td>4</td>
+<td>7</td>
+<td>4-0</td>
+<td>1.0</td>
+<td>0.0625</td>
+<td><span class="badge b-warn">INSUFFICIENT EVIDENCE</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>S2_SpreadValue</td>
+<td>Spread Value (Single)</td>
+<td>9</td>
+<td>4</td>
+<td>5</td>
+<td>4-0</td>
+<td>1.0</td>
+<td>0.0625</td>
+<td><span class="badge b-warn">INSUFFICIENT EVIDENCE</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>S3_Totals</td>
+<td>Totals (Single)</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0-0</td>
+<td>—</td>
+<td>—</td>
+<td><span class="badge b-off">NOTHING SETTLED YET</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>S4_LeanParlay</td>
+<td>Lean Parlay (Combo)</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0-0</td>
+<td>—</td>
+<td>—</td>
+<td><span class="badge b-off">NOTHING SETTLED YET</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>S5_PlayerPropCombo</td>
+<td>Player Prop Combo</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0-0</td>
+<td>—</td>
+<td>—</td>
+<td><span class="badge b-off">NOTHING SETTLED YET</span></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div><h2>5. Why no profit number appears anywhere</h2>
+<p class="lede">no row in picks.json carries a market price (`american_odds` is absent from every signal), so profit is not measurable and is not published. A PnL here would be an assumed -110, i.e. an invented number.</p>
+<p>A PnL would require assuming a price, and the assumption would be doing all the work: at −110 a 4-0 record is
+3.64 units, at +150 it is 6.00. Publishing either would be publishing the assumption, not the model.
+The site therefore reports what was measured — wins, losses, error — and says plainly that the money question is
+unanswered until a price exists.</p>
+<h2>6. The verdict this page supports</h2>
+<p>the first genuine out-of-sample forecast the repository has: every graded pick won, but only four distinct games were bet, the model called the winner in 5 of 9 games (a naive net-rating baseline also got 5, always-home gets 7), and no sample this small can separate skill from luck.</p>
+<p>Two conclusions follow, and they point in opposite directions, which is why both are printed:</p>
+<ul>
+  <li><b>Against the model:</b> on nine games it named the winner no better than a naive net-rating baseline and worse
+      than always picking the home team. No edge is demonstrated.</li>
+  <li><b>For the process:</b> the gate machinery did its job. Every graded pick won, and the site still refuses to rank
+      the strategy, because four games is not a sample. A system that can report 4-0 and simultaneously refuse to be
+      impressed by it is the only kind worth building.</li>
+</ul>
+<h2>Reproduce this page</h2>
+<pre>python3 -m nba2.v2.live        # re-run the staleness test and the grading from audit/2026-11-14/
+python3 -m nba2.v2              # rebuild this page
+python3 -m nba2.v2.check        # every row sourced, every blank explained</pre>
+<footer>
+  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
+  This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

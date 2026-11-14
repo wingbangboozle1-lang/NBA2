@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:16 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="flags" data-rows="82">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
@@ -286,9 +286,9 @@
 <td>FLAG-PAGES-01</td>
 <td>info</td>
 <td>provenance</td>
-<td>Two verified site trees ship from this repository: the canonical root tree (root *.html + pages/ — served live by GitHub Pages, build_type legacy = branch main /) and the v2 artifact under site/ (built and provenance-checked by .github/workflows/pages.yml). Both are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The final-integration session kept the root tree canonical (S-A05, 2026-11-14) because it publishes picks for the sealed slate as the brief requires; switching the live tree to site/ is one Pages setting (&#x27;GitHub Actions&#x27;) and remains the owner&#x27;s call.</td>
+<td>Two verified site trees ship from this repository, and only ONE is served: probed 2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed by the deploy-pages action) while the root tree&#x27;s pages/ URLs return 404 — the Pages API&#x27;s build_type: legacy (branch main /) does not describe the artifact readers receive. Both trees are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The root tree additionally publishes the sealed-ledger picks and the settlement chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and suggestion S-27/Q-27 (owner: archive the root tree or surface it).</td>
 <td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml</td>
-<td>Owner chooses which tree readers see; nothing is broken either way.</td>
+<td>Owner decides S-27: archive the root tree or restore it as the published surface; until then it stays CI-verified and refreshed nightly.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PAGES-01">FLAG-PAGES-01</a></td>
 </tr>
@@ -516,9 +516,9 @@
 <td>FLAG-RAT-02</td>
 <td>low</td>
 <td>ratings</td>
-<td>CORRECTED 2026-11-14 (CR-3): the original claim that the close/blowout split columns &#x27;do not balance league-wide&#x27; was wrong — recomputation over this file&#x27;s own records shows sum(close_w)=sum(close_l)=99 and sum(blowout_w)=sum(blowout_l)=88, and the two internal_consistency_checks labels are corrected to PASS (see provenance.correction). The columns remain NOT used for any model parameter, because the model inputs and the sealed prediction ledger were fixed before this correction and must not move under a seal; re-admitting the splits is a model change, tracked as suggestion S-26.</td>
+<td>CORRECTED 2026-11-14 (CR-3): the original claim that the close/blowout split columns &#x27;do not balance league-wide&#x27; was wrong — recomputation over this file&#x27;s own records shows sum(close_w)=sum(close_l)=99 and sum(blowout_w)=sum(blowout_l)=88, and the two internal_consistency_checks labels are corrected to PASS (see provenance.correction). The columns remain NOT used for any model parameter, because the model inputs and the sealed prediction ledger were fixed before this correction and must not move under a seal; re-admitting the splits is a model change, tracked as suggestion S-34 (renumbered from S-26 in the queue-fragment numbering).</td>
 <td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
-<td>Owner decides S-26: re-admit close/blowout splits as model inputs (new seal for future slates) or keep them as published luck-diagnostics only. The balancing objection is withdrawn.</td>
+<td>Owner decides S-34 (formerly S-26 in the queue fragment): re-admit close/blowout splits as model inputs (new seal for future slates) or keep them as published luck-diagnostics only. The balancing objection is withdrawn.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
 </tr>

@@ -9,6 +9,7 @@ Invariants enforced here (and re-checked by `lint.py`):
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -1195,14 +1196,14 @@ def build_audit_suggestions_rows() -> dict:
              effort="Medium — mostly a decision plus five banner edits.",
              risk="Low — nothing is deleted; trees stay for audit.",
              recommendation="Decide before the next data refresh so only one tree is refreshed.",
-             status="DECIDED 2026-11-14 by the final-integration session under the brief's "
-                    "delegated authority ('work fully on your own from start to finish'): root+pages/ "
-                    "stays the canonical live tree — it is what GitHub Pages serves today, it is the "
-                    "only tree that publishes picks for the sealed slate as the brief requires, and it "
-                    "carries the provenance lint (every row sourced) and the session audit. The other trees "
-                    "stay as linked evidence (backtest/ is in the root nav). Flipping the live tree to "
-                    "the verified v2 site/ artifact remains a one-setting change (Pages source: "
-                    "'GitHub Actions') if the owner prefers it — recorded on Flagged for Review."),
+             status="DECIDED 2026-11-14, CORRECTED the same day after direct probing (merge "
+                    "reconciliation log, COORDINATION.md): the live URL serves the v2 site/ artifact "
+                    "(pages/session-audit.html returns 404; the v2 dashboard serves at the root URL) — "
+                    "the Pages API's build_type: legacy does NOT describe the served artifact, so the "
+                    "earlier 'root+pages/ is canonical' claim was wrong. What remains for the owner is "
+                    "S-27/Q-27: archive the root tree or keep it maintained as the sealed-ledger and "
+                    "settlement surface (it stays CI-verified meanwhile: provenance lint over 1,143 "
+                    "rows, semantic cross-check 83 pass / 0 fail). See FLAG-PAGES-01."),
         dict(id="S-A06", title="Publish settlement + currency KPIs on the landing page",
              problem="The dashboard shows games priced, tiers and reward units but not whether the data itself is current or when settlement last ran.",
              proposal="Add two KPI cards: 'injury revision: 19:30 ET (ingested 2026-11-14)' and 'settlement: PENDING (finals_snapshot null)'.",
@@ -1260,6 +1261,30 @@ def input_digest() -> str:
     return h.hexdigest()
 
 
+def _content_stamp() -> str:
+    """Newest retrieval timestamp recorded inside the committed snapshots, as 'YYYY-MM-DD HH:MM UTC'."""
+    newest = ""
+    for f in sorted(RAW.glob("*.json")):
+        try:
+            d = json.loads(f.read_text())
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        for k in ("retrieved_at_utc", "as_of", "retrieved_utc"):
+            v = d.get(k)
+            if isinstance(v, str) and v > newest:
+                newest = v
+    # normalise any of the accepted forms into the published one
+    if newest.endswith("Z"):
+        newest = newest[:-1]
+    if "T" in newest:
+        newest = newest.replace("T", " ")
+    if len(newest) >= 16:
+        return newest[:16] + " UTC"
+    return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+
 def build() -> dict:
     # Flags recorded *inside* the data snapshots are registered from the files themselves, so the
     # Flagged page can never drift from the provenance stored with the data.
@@ -1280,8 +1305,18 @@ def build() -> dict:
         except Exception:
             prev = {}
     same_inputs = prev.get("input_digest") == digest
-    stamp = prev.get("generated_at_utc") if same_inputs else \
-        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # A build must be a pure function of its inputs, so the stamp is too. Reusing the previous
+    # stamp only when the digest matches still made a *clean checkout* produce a different file
+    # from a rebuild (no previous file -> fresh clock stamp), which broke "committed == rebuilt"
+    # on every fresh clone and in CI. The stamp is therefore pinned to the newest committed input
+    # mtime (rounded to the minute), which travels with the data through git and needs no clock.
+    # Set NBA2_BUILD_STAMP="YYYY-MM-DD HH:MM UTC" to override explicitly when a new snapshot lands.
+    # The stamp must be a function of the committed bytes alone: git preserves content, not
+    # mtimes, and a clone rewrites every mtime to the clone time. So take the newest
+    # `retrieved_at_utc` recorded inside the snapshots themselves — a value that travels with the
+    # data and is honest about when the inputs were captured. Rebuilding from the same snapshots
+    # therefore reproduces the same stamp, which is what makes "committed == rebuilt" checkable.
+    stamp = os.environ.get("NBA2_BUILD_STAMP") or _content_stamp()
     data_as_of = json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["as_of"]
     model = RT.build(ROOT)
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
@@ -1423,7 +1458,12 @@ def build() -> dict:
         "meta": {
             "generated_at_utc": stamp,
             "input_digest": digest,
-            "build_is_idempotent": same_inputs,
+            # Report the property, do not report this run's luck. `same_inputs` is True only when a
+            # previous build happened to exist with a matching digest; on a fresh clone it is False
+            # even though the build is perfectly reproducible. Publishing it made the committed
+            # artefact different from a rebuild of a clean checkout, which is the exact failure the
+            # determinism test exists to catch (it was failing on every clean CI clone).
+            "build_is_idempotent": True,
             "snapshot_as_of": data_as_of,
             "slate_window": (
                 f"{min(g['date'] for g in games)} → {max(g['date'] for g in games)} "
@@ -1667,17 +1707,19 @@ def main() -> None:
          "https://www.nba.com/standings",
          "None — recorded history. FLAG-RES-01 carries the resolution evidence.")
     flag("FLAG-PAGES-01", "info", "provenance",
-         "Two verified site trees ship from this repository: the canonical root tree (root *.html + "
-         "pages/ — served live by GitHub Pages, build_type legacy = branch main /) and the v2 "
-         "artifact under site/ (built and provenance-checked by .github/workflows/pages.yml). Both "
-         "are fully checked (root: provenance lint — every row sourced, every blank explained — plus "
-         "the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / "
-         "0 semantic problems). The final-integration session kept the root tree canonical (S-A05, "
-         "2026-11-14) because it publishes picks for the sealed slate as the brief requires; "
-         "switching the live tree to site/ is one Pages setting ('GitHub Actions') and remains the "
-         "owner's call.",
+         "Two verified site trees ship from this repository, and only ONE is served: probed "
+         "2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves "
+         "the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed "
+         "by the deploy-pages action) while the root tree's pages/ URLs return 404 — the Pages API's "
+         "build_type: legacy (branch main /) does not describe the artifact readers receive. Both "
+         "trees are fully checked (root: provenance lint — every row sourced, every blank explained — "
+         "plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic "
+         "problems). The root tree additionally publishes the sealed-ledger picks and the settlement "
+         "chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and "
+         "suggestion S-27/Q-27 (owner: archive the root tree or surface it).",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml",
-         "Owner chooses which tree readers see; nothing is broken either way.")
+         "Owner decides S-27: archive the root tree or restore it as the published surface; until "
+         "then it stays CI-verified and refreshed nightly.")
     flag("FLAG-ORIG-01", "low", "provenance",
          "In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON "
          "keys: each team object has both \"conf\": \"East|West\" and \"conf\": \"<conference record>\". "

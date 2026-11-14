@@ -24,9 +24,11 @@
 <a href="injuries.html">Injuries &amp; rotation</a>
 <a href="gameflow.html">Game flow</a>
 <a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
 <a href="repo-review.html">Repo review</a>
 <a href="questions.html">Open questions</a>
 <a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
@@ -34,7 +36,29 @@
 </aside>
 <main>
 <h1>Executive summary</h1>
-<p class="lede">Six things you need to know, in the order they affect a decision.</p>
+<p class="lede">The state of the project in one screen, then the numbers behind it, then the single next decision.
+Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
+
+<h2>0. What the live re-check changed today (2026-11-14)</h2>
+<div class="note bad"><b>The site was publishing a pre-final snapshot as if it were current.</b>
+Reconstructed against today's official standings, the 30 team records on this site agree with the
+<em>pre-11/13-finals</em> state on <b>30 of 30</b> rows and with current official
+standings on <b>12 of 30</b>. Nine games were played after the table was
+transcribed. Nothing on the site could have caught it, because nothing compared a published row against a fresher
+capture. <a href="live-verification.html">Every stale row is listed here.</a></div>
+<div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
+<code>nba2/data/picks.json</code> was committed 83 minutes before the earliest
+tip. It went <b>4-0</b> on the <b>4 distinct games</b> it bet — but 8 wins are recorded, because two strategies fired on
+the same four games. On all 9 graded games the model named the winner
+<b>5/9</b>, the same as a naive
+net-rating baseline and <em>worse</em> than always picking the home team
+(7/9). No profit is
+published, because no signal in the file carries a price.</div>
+<div class="note"><b>What did not change.</b> Zero picks are stakable, because no market price exists. The two sealed
+ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
+irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
+published on the Flagged page rather than fixed silently in someone else's file.</div>
+<h2>1. Six things you need to know, in the order they affect a decision</h2>
 <div class="note"><b>What was built.</b> A v2 line-origination model over a 31-game, three-day window (2026-11-13 → 2026-11-16), originated only from official NBA inputs, with two independent ratings estimators, a fitted market-agnostic total model, published formulas, and a per-row source link on every table.</div><div class="note"><b>What is verified.</b> 31/31 games match the official schedule; all 30 team records match live nba.com/standings exactly; 85 injury rows match the official 11/13 04:15 PM ET PDF row for row; team scoring, opponent scoring and advanced ratings are official nba.com/stats tables.</div><div class="note"><b>What is not possible yet.</b> No price exists, so no pick can be staked. Official per-game finals now exist for 155 of 174 games (captured from nba.com by a parallel session, with 19 games unreachable), so the method CAN be backtested — and it has been. All 31 picks remain withheld because a pick needs a price, not because the method is unknown.</div><div class="note"><b>The skill finding.</b> A walk-forward test on 139 official finals puts this rating method at 66.9% straight-up (95% CI 58.7-74.2%), margin MAE 11.91 against 13.27 for a zero baseline, Brier 0.2184 against 0.2500 for a coin flip. That is real predictive signal - the first measured in this repository. It is accuracy, NOT profit: there is still no price to beat, so no ROI exists.</div><div class="note"><b>The compression finding.</b> The same test shows predicted margins are compressed to 30% of true dispersion (sd 4.98 vs 16.43) and correlate with the real margin at only +0.39. The model ranks games; it does not forecast blowouts, and no stake may ever be sized from a predicted margin.</div><div class="note"><b>The luck finding.</b> Across 30 teams, zero are outside the |z| ≤ 1.96 luck band. No team in this window can honestly be called over- or under-performing its underlying scoring level, so no strategy may lean on that story.</div><div class="note"><b>The correlation finding.</b> Measured on 30 teams: net points vs NetRtg r = +0.999; either vs win% r ≈ +0.93. Measured on 155 finals: spread vs total r = +0.018 (95% CI -0.15 to +0.18), i.e. indistinguishable from zero. Still unmeasurable: every player prop correlation, because no player box scores are reachable.</div><div class="note"><b>The recommended path.</b> Licensed odds remain the only hard blocker for anything involving money. Scheduled ingestion keeps the snapshot fresh; per-game results are now partially available (19 games still missing). With odds plus 300 settled bets the leaderboard becomes computable; until then the honest product is a projection desk that grades its own lines.</div>
 <h2>Numbers behind the summary</h2>
 <div class="scroll"><table>
@@ -101,15 +125,27 @@
 </tr>
 <tr>
 <td>Open decision questions</td>
-<td>14</td>
+<td>34</td>
 <td>each with a way to resolve it — see the questions page</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
-<td>Suggestions awaiting a decision</td>
-<td>18</td>
-<td>3 recommended first — see the queue page</td>
+<td>Suggestions in the register</td>
+<td>39</td>
+<td>7 of them are the numbered decision queue — see the decision queue page</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr>
+<td>Flagged irregularities</td>
+<td>29</td>
+<td>all on the Flagged for review page with a source to check</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>Published team records that still match today's official standings</td>
+<td>12 / 30</td>
+<td>the rest are explained by the nine 11/13 finals — see Live verification</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div>
 <h2>Recommended sequence</h2>
@@ -120,6 +156,23 @@
   <li><b>Then</b> measure the six missing correlations and re-price parlays; <b>then</b> pre-register strategies and start the competition.</li>
 </ol>
 <p class="lede">Everything else on this site — gates, leaderboard rules, injury tracking, game flow — is designed to be ready when those three feeds land.</p>
+<h2>The single next decision</h2>
+<p><b>Retire the tree nobody can reach, then decide what a pick is worth.</b> Probing the live site settles which tree is
+published: <code>/NBA2/pages/session-audit.html</code> and <code>/NBA2/pages/executive-summary.html</code> both return
+<b>404</b> while <code>/NBA2/data/teams.json</code> returns <b>200</b> with v2 content. So exactly one tree — the
+<code>site/</code> artefact — reaches a reader, and the v1 tree at the repository root is unreachable maintenance debt
+that CI still rebuilds and lints on every push. Retiring it is cheap and removes a stale record set from the audit
+surface. The expensive decision remains the price: with no odds feed, nothing on this site can ever become a bet.
+<a href="decision-queue.html">The queue ranks both.</a></p>
+<div class="cards">
+  <div class="card"><h4><a href="decision-queue.html">Review the decision queue</a></h4><p>Seven numbered decisions,
+  each with its evidence, the change it would make, and an accept / reject / defer action. Nothing is implemented until
+  you choose.</p></div>
+  <div class="card"><h4><a href="live-verification.html">Check today's evidence</a></h4><p>The official pages read today,
+  what each one contradicted, and the grading of the repository's first real forecast.</p></div>
+  <div class="card"><h4><a href="flagged.html">Read what is still wrong</a></h4><p>29 irregularities, each with a
+  source to check. None block publication; all block a promotion.</p></div>
+</div>
 
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
