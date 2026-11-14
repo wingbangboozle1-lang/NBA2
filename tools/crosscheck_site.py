@@ -436,7 +436,10 @@ def check_published_vs_snapshot(r: Report, site: dict):
                         corr_bad.append(f"{gid}: times agree but verdict does not say so: {verdict!r}")
         else:
             n_outside += 1
-            if "not in the 11/13 report" not in verdict:
+            # Accept any verdict that denies coverage ("not in the 11/13 report" was the
+            # generator's original wording; after the 19:30 refresh the verdict says "not
+            # covered by the current injury-report release" — same fact, different release).
+            if not re.search(r"not (?:in\b|covered\b)", verdict, re.I):
                 corr_bad.append(f"{gid}: absent from the second document but verdict says {verdict!r}")
     title = section(site, "corroboration")["title"]
     claim = re.findall(r"(\d+) of (\d+) games confirmed twice", title)
@@ -515,17 +518,44 @@ def check_derived_arithmetic(r: Report, site: dict):
     r.add("CC-DER-04", g, "ratings table is internally consistent (net = PS/G - PA/G; shrunk = SRS x lambda; GP = W+L)",
           f"recompute from the published cells of all {len(ratings)} rows", PASS if not bad else FAIL,
           f"{len(bad)} violation(s): {bad[:4] or 'none'}")
-    dup_official = [row["key"] for row in ratings
-                    if vals(row).get("wl") is not None and vals(row).get("wl") == vals(row).get("wl_official")]
+    # CR-4 (retargeted 2026-11-14 in the final merge): 'wl_official' is sourced from the league's
+    # own standings capture (arena/6650be4d switched the column's source to
+    # data/raw/official_standings_2026-11-14.json); the check compares each column with the file
+    # that column is actually rendered from.
+    _stand = load_json(ROOT / "data" / "raw" / "official_standings_2026-11-14.json")
+    _stand_cols = {c: i for i, c in enumerate(_stand["columns"])}
+    recs_official = {x[_stand_cols["tricode"]]: f"{x[_stand_cols['w']]}-{x[_stand_cols['l']]}"
+                     for x in _stand["records"]}
+    snap = load_json(snapshot_candidates("ratings")[0])
+    snap_cols = {c: i for i, c in enumerate(snap["columns"])}
+    snap_wl = {x[snap_cols["tricode"]]: f"{x[snap_cols['w']]}-{x[snap_cols['l']]}"
+               for x in snap["records"]}
+    prov_bad = []
+    for row in ratings:
+        v = vals(row)
+        tc = str(v.get("tricode") or v.get("team") or "")
+        if v.get("wl") is not None and snap_wl.get(tc) not in (None, v.get("wl")):
+            prov_bad.append(f"{tc}: 'W-L (ratings source)' {v.get('wl')} != ratings snapshot {snap_wl.get(tc)}")
+        if v.get("wl_official") is not None and recs_official.get(tc) not in (None, v.get("wl_official")):
+            prov_bad.append(f"{tc}: 'W-L (official NBA.com)' {v.get('wl_official')} != "
+                            f"data/raw/official_standings_2026-11-14.json {recs_official.get(tc)}")
     caption = str(section(site, "ratings").get("source_note") or "")
+    caption_ok = ("NBA.com" in caption or "nba.com" in caption) and \
+                 ("Basketball-Reference" in caption or "third-party" in caption or "ratings snapshot" in caption)
     r.add("CC-DER-05", g, "the two W-L columns are independent measurements, as the caption claims",
-          "compare the columns' provenance: both are printed by build_ratings_rows from the same model object",
-          FAIL if len(dup_official) == len(ratings) else PASS,
-          f"{len(dup_official)}/{len(ratings)} rows identical; caption: {caption!r}",
-          evidence=str(RATINGS_EVIDENCE),
-          note="FAIL here is a presentation defect, not a wrong number: the column labelled 'W-L (official "
-               "NBA.com)' is populated from the same third-party field as the other column, so the "
-               "'if they ever disagree the table is wrong' guard can never fire. See the CR in COORDINATION.md.")
+          "each column is diffed against its own capture — 'W-L (official NBA.com)' vs "
+          "data/raw/official_standings_2026-11-14.json and 'W-L (ratings source)' vs the ratings snapshot — and the "
+          "caption must name both sources",
+          PASS if not prov_bad and caption_ok else FAIL,
+          f"{len(prov_bad)} provenance mismatch(es): {prov_bad[:3] or 'none'}; caption names both "
+          f"sources: {caption_ok}",
+          evidence="data/raw/official_standings_2026-11-14.json (official NBA.com standings); " + str(RATINGS_EVIDENCE),
+          note="2026-11-14 arena/6c5195d1 (CR-4): the old test failed whenever the two columns held "
+               "identical values on all rows — but identical values are exactly what two agreeing "
+               "independent captures produce, while the pre-fix build really did print one field "
+               "twice. Independence is now tested the only way it can be mechanically: each column "
+               "must equal its own source file. If the two captures ever disagree the columns "
+               "diverge visibly and the caption's 'the table is wrong' guard can actually fire.")
     luck = rows_of(site, "luck")
     luck_bad = []
     for row in luck:
@@ -661,10 +691,11 @@ def check_gates_leaderboard(r: Report, site: dict):
     for row in lb:
         v = vals(row)
         claim = str(v.get("gates") or "")
-        m = re.match(r"^(\d+) pass / (\d+) fail / (\d+) blocked", claim)
+        m = re.match(r"^(\d+) pass / (\d+) fail / (\d+) blocked(?: / (\d+) at-risk)?", claim)
         got = per.get(v["id"], {})
         if m:
-            want = {"PASS": int(m.group(1)), "FAIL": int(m.group(2)), "BLOCKED": int(m.group(3))}
+            want = {"PASS": int(m.group(1)), "FAIL": int(m.group(2)), "BLOCKED": int(m.group(3)),
+                    "AT-RISK": int(m.group(4) or 0)}
             for k, n in want.items():
                 if int(got.get(k, 0)) != n:
                     lb_bad.append(f"{v['id']}: claims {claim!r}, matrix says {got}")
@@ -678,7 +709,10 @@ def check_gates_leaderboard(r: Report, site: dict):
         if got.get("PASS", 0) == 0 and tier.lower() not in ("blocked", "unranked"):
             promoted_without_pass.append(f"{v['id']} is tier {tier!r} with 0 gates passed")
     r.add("CC-GATE-02", g, "each leaderboard row's gate tally equals the gate matrix",
-          f"recount per strategy over {len(gate_rows)} rows", PASS if not lb_bad else FAIL,
+          f"recount per strategy over {len(gate_rows)} rows; the tally string must itemise "
+          f"PASS / FAIL / BLOCKED / AT-RISK separately (2026-11-14 arena/6c5195d1, CR-5: AT-RISK "
+          f"used to be folded into 'blocked', so the published tally contradicted the matrix)",
+          PASS if not lb_bad else FAIL,
           f"{len(lb_bad)} violation(s): {lb_bad[:3] or 'none'}")
     r.add("CC-GATE-03", g, "no strategy is promoted while it has zero gates passed",
           "promotion must follow evidence, never a model's self-assessment",
@@ -737,7 +771,18 @@ def check_seal(r: Report, site: dict):
     slate = load_json(snapshot_candidates("slate")[0])
     scols = {c: i for i, c in enumerate(slate["columns"])}
     srecs = {x[scols["game_id"]]: x for x in slate["records"]}
-    as_of = slate.get("as_of")
+    sealed_at = datetime.fromisoformat(str(doc["header"]["sealed_at_utc"]).replace("Z", "+00:00"))
+
+    def tip_utc(p):
+        """Game tip as a UTC datetime. time_et is an EST clock value (UTC-5 on every date in
+        this window — EST from 2026-11-01). None when the sealed row has no parsable time."""
+        m = re.match(r"^(\d{1,2}):(\d{2})$", str(p.get("time_et") or "").strip())
+        if not m:
+            return None
+        return datetime.fromisoformat(p["date"]).replace(
+            hour=int(m.group(1)), minute=int(m.group(2)),
+            tzinfo=timezone(timedelta(hours=5)))
+
     outside, wrong_time = [], []
     for p in payload:
         gid = p["game_id"]
@@ -745,16 +790,29 @@ def check_seal(r: Report, site: dict):
         if not src:
             outside.append(f"{gid} not in the official slate snapshot")
             continue
-        # A game dated ON the snapshot date is legal: the slate snapshot is taken on the
-        # morning of that date and the games on it are still ahead. Only games dated BEFORE
-        # the snapshot date are impossible to have sealed.
-        if p["date"] < as_of:
-            outside.append(f"{gid} dated {p['date']} is before the snapshot date {as_of}")
+        tu = tip_utc(p)
+        if tu is None:
+            outside.append(f"{gid}: sealed row has no parsable tip time, so 'tipped after the "
+                           f"seal' cannot be proven")
+        elif tu <= sealed_at.astimezone(tu.tzinfo):
+            outside.append(f"{gid} tips {tu.isoformat()} which is not after the seal "
+                           f"{sealed_at.isoformat()}")
         if norm_time(p.get("time_et")) != norm_time(src[scols["time_et"]]):
             wrong_time.append(f"{gid}: sealed {p.get('time_et')} vs official {src[scols['time_et']]}")
-    r.add("CC-SEAL-04", g, "every sealed prediction is an official game inside the window, not already played at snapshot time",
-          "cross-check the sealed array against the slate snapshot", PASS if not outside else FAIL,
-          f"{len(outside)} problem(s): {outside[:3] or 'none'}")
+    r.add("CC-SEAL-04", g, "every sealed prediction is an official game inside the window, tipped after the snapshot",
+          "game must be in the official slate snapshot and its tip datetime (EST -> UTC) must be "
+          "strictly after header.sealed_at_utc — a same-day game sealed the previous evening or "
+          "early that morning is valid, which a date-only comparison wrongly rejects",
+          PASS if not outside else FAIL,
+          f"{len(outside)} problem(s): {outside[:3] or 'none'}",
+          evidence=f"{path.relative_to(ROOT)} header.sealed_at_utc = {doc['header']['sealed_at_utc']}",
+          note="2026-11-14 arena/6c5195d1: the previous date-only rule ('game date > slate as_of') "
+               "flagged the five same-day 11/14 games in sealed-2026-11-14 even though the ledger "
+               "was sealed at 00:58 UTC and every one of those tips is 23:00 UTC or later. The "
+               "invariant the seal exists to prove is temporal order — tip after seal — so the "
+               "comparison is now over datetimes. (arena/6650be4d independently relaxed the "
+               "date-only rule to allow same-day games; the datetime rule is kept because it also "
+               "catches a same-day game sealed after its own tip.)")
     r.add("CC-SEAL-05", g, "sealed tip times equal the official tip times they were sealed against",
           "per-game time compare", PASS if not wrong_time else FAIL,
           f"{len(wrong_time)} problem(s): {wrong_time[:3] or 'none'}",

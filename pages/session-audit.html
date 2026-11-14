@@ -136,8 +136,8 @@
 </tr>
 <tr id="E-04-settle">
 <td>E-04 sealed-ledger settlement status</td>
-<td>PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against a real official finals snapshot (data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the loader reports 0 of 22 and 0 of 27 games settled: the nine played games are day-before context that neither sealed ledger covers, so the sealed games of 11/14–17 still have no official final scores. Metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published</td>
-<td>python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed</td>
+<td>PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:02:53+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published</td>
+<td>python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">NBA.com Schedule — 2026-11-13 final scores (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -785,13 +785,13 @@
 <tr id="S-A04">
 <td>S-A04</td>
 <td>Settle the sealed ledger as soon as finals exist</td>
-<td>Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.</td>
+<td>At proposal time settlement had run but measured nothing: data/settlement.json carried settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell was blank and the gates stayed blocked — correctly, because the sealed games of 11/14–17 had not finished.</td>
 <td>After each game day, commit data/raw/finals_&lt;date&gt;.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.</td>
 <td>First real measurement of line error and calibration — the &#x27;remove luck&#x27; step becomes data, not design.</td>
 <td>Low — settle.py is written, tested, and already produces the pending record.</td>
 <td>None if finals come from official box scores; never impute a score.</td>
 <td>Run it after 11/14&#x27;s games are final, then after each subsequent game day.</td>
-<td>partially done — settle runs; awaiting official finals</td>
+<td>partially done — the finals ingest chain is live and verified (finals_all.json carries the nine official 11/13 finals; 0 of 49 sealed games have been played as of 2026-11-14); the nightly ingest job now fetches, merges and settles each game day automatically</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
@@ -804,7 +804,7 @@
 <td>Medium — mostly a decision plus five banner edits.</td>
 <td>Low — nothing is deleted; trees stay for audit.</td>
 <td>Decide before the next data refresh so only one tree is refreshed.</td>
-<td>owner decision</td>
+<td>DECIDED 2026-11-14, CORRECTED the same day after direct probing (merge reconciliation log, COORDINATION.md): the live URL serves the v2 site/ artifact (pages/session-audit.html returns 404; the v2 dashboard serves at the root URL) — the Pages API&#x27;s build_type: legacy does NOT describe the served artifact, so the earlier &#x27;root+pages/ is canonical&#x27; claim was wrong. What remains for the owner is S-27/Q-27: archive the root tree or keep it maintained as the sealed-ledger and settlement surface (it stays CI-verified meanwhile: provenance lint over 1,143 rows, semantic cross-check 83 pass / 0 fail). See FLAG-PAGES-01.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

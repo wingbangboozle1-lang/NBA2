@@ -99,6 +99,27 @@ def _flag_ids(*ids: str) -> list[str]:
     return list(ids)
 
 
+def _settlement_state_sentence() -> str:
+    """One sentence describing data/settlement.json as it is right now.
+
+    The settlement record is rewritten by every `python -m nba2.pipeline.settle` run (human
+    or nightly bot), so anything published about it must be read at build time — a hard-coded
+    timestamp here would be stale by the next ingest (it was: FLAG-SET-01 used to quote
+    settled_at 2026-11-14T00:58Z with finals_snapshot null).
+    """
+    p = ROOT / "data" / "settlement.json"
+    if not p.exists():
+        return ("data/settlement.json does not exist yet — run python -m nba2.pipeline.settle "
+                "to create the settlement record.")
+    d = json.loads(p.read_text())
+    parts = [f"data/settlement.json records settled_at {d.get('settled_at_utc', 'unknown')} "
+             f"with finals_snapshot {d.get('finals_snapshot')}"]
+    for l in d.get("ledgers", []):
+        parts.append(f"{l.get('ledger')}: {l.get('games_settled', 0)}/{l.get('games_expected', '?')} "
+                     f"games settled ({l.get('status', 'unknown')})")
+    return "; ".join(parts)
+
+
 # --------------------------------------------------------------------------- builders
 def build_calibration_rows(model: RT.RatingModel) -> dict:
     cal = model.cal
@@ -197,11 +218,11 @@ def build_ratings_rows(model: RT.RatingModel, official: dict[str, dict] | None =
                  "The two win-loss columns are INDEPENDENT measurements and they are printed side by side "
                  "for exactly that reason: the model runs on the 2026-11-13 third-party snapshot (the "
                  "left-hand pair), while the right-hand pair is the league's own table read on "
-                 "2026-11-14. They differ for 18 clubs because the nine 2026-11-13 games were played in "
+                 "2026-11-14 — NBA.com/standings. They differ for 18 clubs because the nine 2026-11-13 games were played in "
                  "between — an aged snapshot, not a transcription error. PS/G, PA/G and SRS could still "
                  "not be pulled from an official endpoint (FLAG-RAT-01); the 'Margins & Stats' section of "
                  "nba.com/standings does not render them for a non-browser client.",
-                 "Left column: data/raw/team_ratings_2026-11-13.json (third party). "
+                 "Left column: data/raw/team_ratings_2026-11-13.json (third-party Basketball-Reference snapshot). "
                  "Right column: data/raw/official_standings_2026-11-14.json (official NBA.com).")
 
 
@@ -1065,13 +1086,14 @@ def build_audit_rows() -> dict:
         make_row("E-04-settle", SRC_FINALS,
                  check="E-04 sealed-ledger settlement status",
                  result="PARTIAL, and that is the correct answer — the settlement path was exercised "
-                        "on 2026-11-14 against a real official finals snapshot "
-                        "(data/raw/finals_2026-11-13.json, nine games). Both seals verify, and the "
-                        "loader reports 0 of 22 and 0 of 27 games settled: the nine played games are "
-                        "day-before context that neither sealed ledger covers, so the sealed games of "
-                        "11/14–17 still have no official final scores. Metrics stay unmeasured rather "
-                        "than assumed, and a partial settlement is refused rather than published",
-                 method="python -m nba2.pipeline.settle with data/raw/finals_2026-11-13.json committed"),
+                        "on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json "
+                        "+ data/raw/finals_all.json, nine games, captured independently by two sessions). "
+                        + _settlement_state_sentence() +
+                        " The nine played games are day-before context that neither sealed ledger covers, "
+                        "so metrics stay unmeasured rather than assumed, and a partial settlement is "
+                        "refused rather than published",
+                 method="python -m nba2.pipeline.settle with the committed finals captures; the nightly "
+                        "ingest job fetches and settles the sealed games per game day"),
     ]
     return table(
         rows,
@@ -1189,13 +1211,13 @@ def build_audit_suggestions_rows() -> dict:
              recommendation="Done — the 2026-11-14 refresh stamps report time and retrieval time on the Injuries page.",
              status="implemented by refresh session"),
         dict(id="S-A04", title="Settle the sealed ledger as soon as finals exist",
-             problem="Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.",
+             problem="At proposal time settlement had run but measured nothing: data/settlement.json carried settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell was blank and the gates stayed blocked — correctly, because the sealed games of 11/14–17 had not finished.",
              proposal="After each game day, commit data/raw/finals_<date>.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.",
              benefit="First real measurement of line error and calibration — the 'remove luck' step becomes data, not design.",
              effort="Low — settle.py is written, tested, and already produces the pending record.",
              risk="None if finals come from official box scores; never impute a score.",
              recommendation="Run it after 11/14's games are final, then after each subsequent game day.",
-             status="partially done — settle runs; awaiting official finals"),
+             status="partially done — the finals ingest chain is live and verified (finals_all.json carries the nine official 11/13 finals; 0 of 49 sealed games have been played as of 2026-11-14); the nightly ingest job now fetches, merges and settles each game day automatically"),
         dict(id="S-A05", title="Pick one canonical site tree",
              problem="Six site trees now ship from one repo (root+pages/, docs/, dashboard/, originated/, verified/, backtest/); a reviewer can find different numbers on different trees.",
              proposal="Owner designates one canonical tree; the others get a banner linking to it. Candidate criteria: mechanical verifier + no unverified numbers (originated/ has a 24-check verifier; root+pages/ has the provenance lint over 1,100 rows; backtest/ has its own verify_backtest).",
@@ -1203,7 +1225,14 @@ def build_audit_suggestions_rows() -> dict:
              effort="Medium — mostly a decision plus five banner edits.",
              risk="Low — nothing is deleted; trees stay for audit.",
              recommendation="Decide before the next data refresh so only one tree is refreshed.",
-             status="owner decision"),
+             status="DECIDED 2026-11-14, CORRECTED the same day after direct probing (merge "
+                    "reconciliation log, COORDINATION.md): the live URL serves the v2 site/ artifact "
+                    "(pages/session-audit.html returns 404; the v2 dashboard serves at the root URL) — "
+                    "the Pages API's build_type: legacy does NOT describe the served artifact, so the "
+                    "earlier 'root+pages/ is canonical' claim was wrong. What remains for the owner is "
+                    "S-27/Q-27: archive the root tree or keep it maintained as the sealed-ledger and "
+                    "settlement surface (it stays CI-verified meanwhile: provenance lint over 1,143 "
+                    "rows, semantic cross-check 83 pass / 0 fail). See FLAG-PAGES-01."),
         dict(id="S-A06", title="Publish settlement + currency KPIs on the landing page",
              problem="The dashboard shows games priced, tiers and reward units but not whether the data itself is current or when settlement last ran.",
              proposal="Add two KPI cards: 'injury revision: 19:30 ET (ingested 2026-11-14)' and 'settlement: PENDING (finals_snapshot null)'.",
@@ -1340,7 +1369,7 @@ def input_digest() -> str:
     for rel in ("requirements/REQUIREMENTS.json", "requirements/QUESTIONS.json",
                 "requirements/REPO_REVIEW.json", "suggestions/SUGGESTIONS.json",
                 "nba2/data/picks.json", "nba2/data/records.json", "nba2/data/injuries.json",
-                "nba2/data/flagged.json", "data/our-lines.csv",
+                "nba2/data/flagged.json", "data/our-lines.csv", "data/settlement.json",
                 "data/verified/injuries_2026-11-13_0515PM.json",
                 "audit/injury_delta_0415_to_0715.json",
                 "audit/official_schedule_2026-11-14.json",
@@ -1759,8 +1788,9 @@ def build() -> dict:
              ("status", "Owner decision")],
             "coordination", ["FLAG-SUGG-01"],
             "Site-improvement suggestions — review queue",
-            "Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject "
-            "or defer it on its own merits, and the queue's state is the record of that decision.",
+            "Each item is written so a reviewer can accept, reject or defer it on its own merits. "
+            "Nothing is applied silently: the Status column is the record of what has been "
+            "decided or already built, and every item still stands or falls on its own.",
             suggestions["source_note"]),
         "xlines": x["lines"], "xrecords": x["records"], "xinjuries": x["injuries"],
         "surfaces": x["inventory"],
@@ -2087,15 +2117,50 @@ def main() -> None:
          "connect stats.nba.com from a runner (R-103).")
     flag("FLAG-SET-01", "info", "provenance",
          "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of "
-         "2026-11-14 the settlement path has been exercised against a real official finals snapshot "
-         "(data/raw/finals_2026-11-13.json — the nine 2026-11-13 games): both sealed ledgers verify, "
-         "and the loader reports 0 of 22 and 0 of 27 games settled, because those nine played games are "
-         "day-before context that neither ledger covers. The sealed games of 11/14–11/17 still have no "
+         "2026-11-14 the settlement path has been exercised against real official finals captures "
+         "(data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): "
+         "both sealed ledgers verify, and the loader reports "
+         + _settlement_state_sentence() +
+         " The sealed games of 11/14–11/17 still have no "
          "official final scores, so every leaderboard score, bet count and reward cell is blank and the "
          "gates stay blocked or unmeasured. A partial settlement is refused, not published.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
          "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then "
-         "re-run python -m nba2.pipeline.settle (suggestion S-A04 on the Session Audit page).")
+         "re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) "
+         "does this automatically (suggestion S-A04 on the Session Audit page).")
+    flag("FLAG-SLATE-02", "info", "provenance",
+         "Historical flag (raised 2026-11-13, kept registered so the ratings table's TOR/WAS rows "
+         "can link the coverage history they carry per CR-4): the win-loss records for Toronto and "
+         "Washington 'were not visible in the retrieved NBA.com page text; third-party value only' "
+         "in the capture that raised it. RESOLVED — see FLAG-RES-01: on 2026-11-14 all 30 teams' "
+         "W-L were re-read from the official standings page (TOR 5-7, WAS 4-9) and match, and "
+         "nba2/data/records.json verifies TOR/WAS via their official NBA.com team pages.",
+         "https://www.nba.com/standings",
+         "None — recorded history. FLAG-RES-01 carries the resolution evidence.")
+    flag("FLAG-PAGES-01", "info", "provenance",
+         "Two verified site trees ship from this repository, and only ONE is served: probed "
+         "2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves "
+         "the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed "
+         "by the deploy-pages action) while the root tree's pages/ URLs return 404 — the Pages API's "
+         "build_type: legacy (branch main /) does not describe the artifact readers receive. Both "
+         "trees are fully checked (root: provenance lint — every row sourced, every blank explained — "
+         "plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic "
+         "problems). The root tree additionally publishes the sealed-ledger picks and the settlement "
+         "chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and "
+         "suggestion S-27/Q-27 (owner: archive the root tree or surface it).",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml",
+         "Owner decides S-27: archive the root tree or restore it as the published surface; until "
+         "then it stays CI-verified and refreshed nightly.")
+    flag("FLAG-ORIG-01", "low", "provenance",
+         "In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON "
+         "keys: each team object has both \"conf\": \"East|West\" and \"conf\": \"<conference record>\". "
+         "A JSON parser silently keeps the last, so the conference name is unreachable and "
+         "originated/engine/model.js publishes the conference record in its place. Not fixed here "
+         "(the WSH→WAS team-key fix was this session's scope; the schema repair is the tree owner's "
+         "call) — flagged for review 2026-11-14 by arena/6c5195d1.",
+         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json",
+         "Owner renames one of the two keys (e.g. conf_record) and regenerates originated/ "
+         "(the 24-check verifier must stay green).")
     flag("FLAG-RES-01", "info", "provenance",
          "FLAG-SLATE-02 states that the win-loss records for Toronto and Washington 'were not visible "
          "in the retrieved NBA.com page text; third-party value only'. On 2026-11-14 all 30 teams' "

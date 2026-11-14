@@ -577,7 +577,7 @@
 <p class="tablenote">https://www.nba.com/standings</p>
 </section><section class="card table-card" id="ratings" data-rows="30">
 <h2>Team ratings table (the model&#x27;s only inputs)</h2>
-<p class="blurb">The two win-loss columns are INDEPENDENT measurements and they are printed side by side for exactly that reason: the model runs on the 2026-11-13 third-party snapshot (the left-hand pair), while the right-hand pair is the league&#x27;s own table read on 2026-11-14. They differ for 18 clubs because the nine 2026-11-13 games were played in between — an aged snapshot, not a transcription error. PS/G, PA/G and SRS could still not be pulled from an official endpoint (FLAG-RAT-01); the &#x27;Margins &amp; Stats&#x27; section of nba.com/standings does not render them for a non-browser client.</p>
+<p class="blurb">The two win-loss columns are INDEPENDENT measurements and they are printed side by side for exactly that reason: the model runs on the 2026-11-13 third-party snapshot (the left-hand pair), while the right-hand pair is the league&#x27;s own table read on 2026-11-14 — NBA.com/standings. They differ for 18 clubs because the nine 2026-11-13 games were played in between — an aged snapshot, not a transcription error. PS/G, PA/G and SRS could still not be pulled from an official endpoint (FLAG-RAT-01); the &#x27;Margins &amp; Stats&#x27; section of nba.com/standings does not render them for a non-browser client.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Team ratings table (the model&#x27;s only inputs)</caption><thead><tr>
 <th scope="col">Team</th>
 <th scope="col">W-L (official NBA.com, 11/14)</th>
@@ -1073,7 +1073,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">Left column: data/raw/team_ratings_2026-11-13.json (third party). Right column: data/raw/official_standings_2026-11-14.json (official NBA.com).</p>
+<p class="tablenote">Left column: data/raw/team_ratings_2026-11-13.json (third-party Basketball-Reference snapshot). Right column: data/raw/official_standings_2026-11-14.json (official NBA.com).</p>
 </section><section class="card table-card" id="ratings_selfcheck" data-rows="4">
 <h2>Source self-check — the ratings snapshot&#x27;s own labels, recomputed</h2>
 <p class="blurb">A capture that checks itself is only useful if the check is right. These four checks are recomputed from the snapshot&#x27;s own 30 rows and compared with the labels it carries. Two labels were wrong (the league-wide sums DO balance) and one was wrong in the other direction (the per-team bound does NOT hold). The snapshot&#x27;s correction block records the original text verbatim.</p>

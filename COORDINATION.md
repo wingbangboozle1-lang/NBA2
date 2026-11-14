@@ -1443,6 +1443,7 @@ instead of editing it.
 
 ---
 
+
 ## Session `arena/ab8743d8-nba2` — live official re-verification, published-site consolidation, suggestions review path (claimed 2026-11-14 09:40 UTC)
 
 **Base:** `main` @ `1bfb44d` (PR #42 merged). **Branch:** `arena/ab8743d8-nba2` (platform-fixed).
@@ -1599,6 +1600,7 @@ GitHub API), recorded here and verified by a live re-fetch.
 **Rules this session holds itself to:** a row is only "verified" if checked against an official source or already
 source-linked in committed data; a blank stays blank; nothing is inferred; sealed ledgers never rewritten;
 flagged/unverified items appear on the Flagged for Review page with source links and do not block the merge.
+
 
 ### Completion record — `arena/7f906d9d-nba2` (2026-11-14, I-01…I-04)
 
@@ -1862,3 +1864,222 @@ a row is only "verified" if the official document was fetched in this session an
 blank stays blank and is flagged; the sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten;
 flagged and unverified items do not block the merge but are published on the Flagged for Review page
 with their source link.
+
+
+## Session `arena/6c5195d1-nba2` — task claim (2026-11-14 UTC ~09:45)
+
+Registry row: `arena/6c5195d1-nba2` — final-integration session: resolve the six open
+crosscheck failures, capture 11/13 official finals + settle the sealed ledgers where games
+have completed, apply the still-open root-surface integration requests from
+`arena/f7477d5e-nba2`, re-verify against live official sources, full checker sweep, then
+PR → main → merge → Pages confirm. Branch pinned by Arena to `arena/6c5195d1-nba2`
+(base `1bfb44d` = current `main` HEAD). Claim committed and pushed **before** any file edit,
+per protocol. No other session holds an open claim in the board above; all prior sessions
+are recorded complete.
+
+### File scope (this session)
+
+- `COORDINATION.md` — append-only (this section + completion record).
+- `nba2/pipeline/**`, `nba2/config.py`, `nba2/provenance.py` — only where required for the
+  crosscheck fixes (gate-tally derivation, corroboration verdicts, W-L provenance column)
+  and settlement ingestion; every change must keep `ci.yml` green and rebuild byte-parity.
+- `data/site.json`, root `index.html`, `pages/**` — regenerated outputs of the pipeline only
+  (never hand-edited), as the final integration session per the board protocol.
+- `data/raw/**` — additive captures only (11/13 finals snapshot); existing snapshots only
+  via explicit in-file `correction` records (precedent: f7477d5e's DET@CHA fix); the sealed
+  ledger `data/raw/ledger/**` remains immutable.
+- `originated/data/teams.json` + regenerated `originated/` artifacts — CC-X-00 team-key fix
+  only (WSH → WAS), owner sessions finished (handoff rule).
+- `tools/crosscheck_site.py` — only where a check is factually wrong (CC-SEAL-04 date vs
+  datetime comparison under review); every such change documented with evidence below.
+- `audit/**` — new session audit files (finals capture, verification log, checker runs).
+- `README.md` — only stale counts/claims (e.g., retired "no game-level results history"
+  wording) as part of the integration requests.
+
+Owned by others and NOT touched: `data/raw/ledger/**` (sealed, immutable), `nba2/v2/**`,
+`site/**`, `data/v2/**`, `.github/workflows/**`, `docs/**`, `dashboard/**`, `verified/**`,
+`backtest/**`, `originated/**` except the single team-key field, `archive/**`, `tools/**`
+except `crosscheck_site.py` as scoped above.
+
+### Task board — arena/6c5195d1 (F-01…F-08)
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| F-01 | Claim session + file scope; push before work | done | `arena/6c5195d1-nba2` | `COORDINATION.md` (this section) | this claim |
+| F-02 | Resolve the six open crosscheck failures (CC-SNAP-13, CC-PUB-05, CC-DER-05, CC-GATE-02, CC-SEAL-04, CC-X-00) without inventing values | in progress | `arena/6c5195d1-nba2` | see scope above | `python3 tools/crosscheck_site.py` must end 0 fail; any checker change justified with committed evidence |
+| F-03 | Live official-source re-verification + capture of 2026-11-13 final scores from nba.com/games (platform fetcher reaches nba.com; re-verified 09:40 UTC) | in progress | `arena/6c5195d1-nba2` | `data/raw/history/games_2026-11-13.json` (new), `audit/**` | one `nba.com/game/<id>` URL per row; no row without a fetched source |
+| F-04 | Settle sealed-ledger games whose finals are now official; refresh site metrics | in progress | `arena/6c5195d1-nba2` | `data/settlement.json` (via `nba2.pipeline.settle`), regenerated site | seal re-verified before and after; unsettled games stay PENDING |
+| F-05 | Root-surface integration requests from `arena/f7477d5e-nba2`: link `/backtest/` from root nav, retire the false "no game-level results history" claim, reconcile G-04 (measured FAIL) / G-07 (evaluable) | in progress | `arena/6c5195d1-nba2` | `nba2/pipeline/build_site.py` (content), regenerated `pages/**`, `README.md` | `tools/check_links_all.py` + `ci.yml` lint must pass |
+| F-06 | Executive summary / questions / suggestions refresh to current measured state | in progress | `arena/6c5195d1-nba2` | `nba2/pipeline/build_site_data.py` (content), regenerated site | every new claim carries a source; nothing unverified |
+| F-07 | Full checker sweep (all test suites, lint, link check, rebuild parity, both site trees) | in progress | `arena/6c5195d1-nba2` | `audit/**` | command output recorded per checker |
+| F-08 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR + run IDs here | unclaimed→claimed | `arena/6c5195d1-nba2` | `COORDINATION.md` (append-only) | `gh pr merge`, `gh run list`, live fetch |
+
+**Rule for this session:** every row published carries an official source link or a
+flag/blank; values are never inferred. The sealed ledger is never rewritten. Prior sessions'
+board sections are preserved verbatim (append-only). Flagged irregularities do not block the
+merge; they are published on the Flagged for Review page.
+
+### Scope amendment — `arena/6c5195d1-nba2`, 2026-11-14 ~10:05 UTC (before any edit)
+
+Investigation of the six crosscheck failures traced each to a concrete file. The following
+are added to this session's edit scope, all under the finished-owner handoff rule (no
+session holds an open claim on them) and each justified in the completion record:
+
+- `data/raw/team_ratings_2026-11-13.json` — **CR-3 only**: the two stale
+  `internal_consistency_checks` FAIL labels are corrected to the recomputed result with an
+  in-file `correction` record (precedent: `arena/f7477d5e-nba2`'s DET@CHA correction);
+  `flags[FLAG-RAT-02]` statement amended to describe the corrected state. No record value
+  changes.
+- `nba2/models/leaderboard.py` — **CR-5 only**: publish AT-RISK separately from BLOCKED in
+  the leaderboard tally (the gate matrix already distinguishes them).
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` — merge the published
+  queue fragment `analysis/queue-additions-5b80b88a.json` (S-21…S-31, Q-23…Q-27) into the
+  registers that feed the site, marking each item's status truthfully (several were
+  implemented by later sessions — kept for the record, marked applied).
+- `data/raw/history/games_2026-11-13.json`, `data/raw/finals_2026-11-13.json`,
+  `data/raw/finals_all.json` — **new captures only**: the nine 2026-11-13 official finals
+  fetched live from `nba.com/games?date=2026-11-13` this session (9/9 with per-game
+  `nba.com/game/{id}` URLs). Ledger games are 11/14+ so settlement stays PENDING — nothing
+  is imputed.
+- `nba2/pipeline/refresh.py` and `.github/workflows/refresh.yml` — settlement-window fix:
+  both hardcode `slate_2026-11-13_to_11-16.json`, so the five sealed 11/17 games in
+  `sealed-2026-11-14.json` would never be fetched by the nightly job; the window is
+  re-derived from the sealed ledgers themselves (the source of truth for what must be
+  settled). Plus **CR-7**: `tools/crosscheck_site.py` joins the refresh verify chain
+  (CR-7 said "once F1/F2 are fixed" — they are).
+- `nba2/tests/**` — only where a test asserts a fact one of the fixes above legitimately
+  changes (e.g., the flag-registry list); each such change recorded in the completion
+  record with its reason.
+
+### Completion record — `arena/6c5195d1-nba2` (2026-11-14, F-01…F-07 complete)
+
+Full evidence log: `audit/session-6c5195d1-2026-11-14.md`.
+
+| ID | Task | Status | Verification / sources |
+|---|---|---|---|
+| F-01 | Claim + scope | done | pushed before work (`11717c1`, `1008e1f`) |
+| F-02 | Six open crosscheck failures resolved | done | `tools/crosscheck_site.py` now **91 checks: 83 pass, 0 fail** (was 77/6). CR-3 (stale FAIL labels — sums recompute 99=99, 88=88 — corrected with in-file `correction` record), CR-4 (`wl_official` from `nba2/data/records.json`, TOR/WAS flagged), CR-5 (AT-RISK itemised: "0 pass / 0 fail / 8 blocked / 2 at-risk"), CC-SEAL-04 (tip **datetime** vs seal — the date-only rule wrongly rejected the five same-day 11/14 seals), CC-PUB-05 (accepts equivalent coverage-denial wording), CC-X-00 (WSH→WAS in `originated/data/{teams,slate}.json`; `verify.js` 24/24). Every checker change is recorded inside the check itself and in the audit doc; no check weakened (two strengthened). |
+| F-03 | Live official re-verification + 11/13 finals capture | done | `https://www.nba.com/games?date=2026-11-13` fetched live 09:41 UTC: **9 of 9 finals**, one `nba.com/game/{id}` URL per row → `data/raw/finals_2026-11-13.json` + merged `data/raw/finals_all.json`. Deliberately NOT added to `data/raw/history/` (both backtest pipelines glob it and CI enforces rebuild parity — re-grading 155→164 finals is an owner-visible model action, logged as a handoff). |
+| F-04 | Settlement | done | both seals VERIFIED; `settle` runs clean: 0/22 + 0/27 — every sealed game tips 11/14 19:00 ET or later and none had tipped; no score imputed. `data/settlement.json` now records `finals_snapshot: finals_all.json` (was `null`); FLAG-SET-01 interpolates it at build time (its hard-coded predecessor had gone stale). Nightly `refresh.yml` will settle each arrived game day. |
+| F-05 | f7477d5e integration requests | done (re-verified) | `arena/1ec4f9bd-nba2` had implemented all four (backtest in root NAV; G-04 "FAILS on measured data" in config; G-07 measured; "no game-level results history" retired from published content). Confirmed in the current tree by grep + read; no further edit needed. |
+| F-06 | Registers + decisions | done | queue fragment merged: `suggestions/SUGGESTIONS.json` S-21…S-31 (truthful statuses: 5 applied, 6 awaiting owner), `requirements/QUESTIONS.json` Q-23…Q-27 (severities normalised). **S-A05 decided** under the brief's delegated authority: root+pages/ stays the canonical live tree (the only tree publishing picks, as the brief requires); v2 `site/` remains a one-setting Pages switch — published as FLAG-PAGES-01. Suggestions blurb no longer contradicts the status column. FLAG-SLATE-02 re-registered (historical/resolved) so CR-4's TOR/WAS coverage links resolve. FLAG-ORIG-01 added (duplicate `conf` keys in `originated/data/teams.json`, left for the tree owner). |
+| F-07 | Full checker sweep | done | nba2 **64/64**, backtest **49/49**, v2 **43/43**; lint OK (1,143 rows / 39 tables); crosscheck 83/0; verify_site PASS; check_site PASS; check_links_all 105 files / 4,259 links ALL OK; verify_backtest PASS (155 rows); originated verify.js 24/24; seals VERIFIED; `nba2.v2.check` 0/0 and `site/`+`data/v2/` byte-identical after rebuild; `git diff --check` clean. |
+
+**Fixes applied to shared inputs by this session (all logged above):**
+`data/settlement.json` (regenerated by settle), `data/site.json` + root HTML (regenerated by
+the pipeline), `data/raw/team_ratings_2026-11-13.json` (CR-3 labels + `correction` record +
+FLAG-RAT-02 text), `nba2/models/leaderboard.py` (CR-5), `nba2/pipeline/build_site_data.py`
+(CR-4, dynamic settlement state, blurb/flag updates), `nba2/pipeline/refresh.py` +
+`.github/workflows/refresh.yml` (settlement-window derived from the sealed ledgers — the
+hardcoded `slate_2026-11-13_to_11-16.json` window would have silently never settled the five
+11/17 games in `sealed-2026-11-14.json`; plus CR-7: the semantic cross-check now blocks the
+nightly commit, excluding CC-FRESH-01 whose snapshot-age verdict the bot cannot fix),
+`originated/data/{teams,slate}.json` (CC-X-00) + regenerated `originated/` artifacts,
+`tools/crosscheck_site.py` (three checks corrected, documented per-check),
+`suggestions/SUGGESTIONS.json` + `requirements/QUESTIONS.json` (queue merge),
+`README.md` (stale counts only), `audit/session-6c5195d1-2026-11-14.md` (new).
+
+**Handoffs for the owner (all published on the site's Flagged for Review / Suggestions /
+Questions pages):**
+1. Re-grading the walk-forward over the 164-final history (the 11/13 slate now sits in
+   `data/raw/finals_all.json`) is a mechanical, CI-enforced rebuild of `backtest/` + `site/`
+   when the owner wants the measurements extended.
+2. S-26: re-admit or keep excluding the close/blowout splits (the balancing objection is
+   withdrawn; the decision changes model inputs under a seal).
+3. FLAG-ORIG-01: duplicate `conf` keys in `originated/data/teams.json`.
+4. FLAG-PAGES-01 / S-A05: which tree readers see (root tree decided; the flip is one setting).
+5. Q-23…Q-27 remain decision-blocking where noted; CC-FRESH-03 becomes measurable after
+   tonight's first scheduled `refresh.yml` runs (14:05 / 18:35 UTC).
+
+---
+
+## Session `arena/6c5195d1-nba2` — merge reconciliation log (2026-11-14 ~12:00 UTC, F-08)
+
+`git merge origin/main` brought in PRs #43 (`arena/ab8743d8-nba2`), #44/#46 (`arena/e77ce5ad-nba2`),
+#45 (`arena/eae96d1e-nba2`), #48 (`arena/7f906d9d-nba2`) — all landed while this session's F-01…F-07
+work was in flight. Per protocol the merge keeps **both** sides; nothing of either session was
+discarded. What the merge resolved, thread by thread:
+
+1. **Live-site reality (a factual correction to my own record).** The Pages API reports
+   `build_type: legacy, source: main /` — I trusted that field and claimed in F-06/S-A05 that the
+   root `pages/**` tree is the canonical live surface. **That claim is wrong and is corrected
+   here.** Probed directly this session (2026-11-14, `fetch_page` against the live URL):
+   `https://wingbangboozle1-lang.github.io/NBA2/pages/session-audit.html` → **404** (GitHub Pages
+   "File not found"), while `https://wingbangboozle1-lang.github.io/NBA2/` serves the **v2 `site/`
+   tree** ("Dashboard · NBA2 Lines Lab v2", with `live-verification.html` + `decision-queue.html`).
+   The `actions/deploy-pages` artifact supersedes the legacy branch build; `build_type` does not
+   describe what readers receive. `arena/ab8743d8-nba2`'s S-27/Q-27 claims ("exactly one tree is
+   published (site/); the root v1 tree 404s") are **confirmed by this probe**. FLAG-PAGES-01 and the
+   S-A05 status are rewritten accordingly in the merged tree.
+2. **Register ID collision (both sessions numbered from S-21/Q-23 independently).** Their
+   S-21…S-28 and Q-23…Q-29 landed on `main` first and keep their IDs. The `5b80b88a` queue fragment
+   merged earlier this session is **renumbered**: suggestions S-21…S-31 → **S-29…S-39** in order
+   (queue S-21 "Run the cross-check in CI" = S-29 … queue S-31 "beats-naive-baseline gate" = S-39);
+   questions Q-23…Q-27 → **Q-30…Q-34** in order. Cross-references updated (FLAG-RAT-02's
+   "suggestion S-26" → S-34; queue Q-27's internal refs S-21/S-30 → S-29/S-38). All 11 + 5 items
+   survive with their original texts and truth statuses; `status_key` now also explains
+   "implemented this session".
+3. **`nba2/pipeline/build_site_data.py`** auto-merged: their determinism fix
+   (`_content_stamp()` — the build stamp derives from committed snapshot metadata, `build_is_idempotent`
+   reported as a property) plus this session's CR-3/CR-4/CR-5/FLAG-SET-01/S-A05 changes coexist;
+   syntax + full suite verified after the merge.
+4. **Generated files** (`data/site*.json`, `index.html`, `pages/**`) conflicted by construction —
+   resolved by rebuilding from the merged inputs; the rebuild is the merged truth.
+
+### Change requests carried out of the merge (for the live v2 tree — its sessions' scope)
+
+- **CR-LIVE-01 (material).** The live v2 site prices a **31-game Nov 13 → Nov 16** window, of which
+  the nine Nov-13 games are already official finals (captured this session in
+  `data/raw/finals_2026-11-13.json` + `data/raw/finals_all.json`, one `nba.com/game/{id}` URL per
+  row). The current window is **Nov 14 → Nov 17** (36 games; the root tree prices it in
+  `originated/data/slate.json` + `data/raw/slate_2026-11-14_to_11-17.json`). The v2 tree should
+  refresh its slate window and re-grade; its own `live-verification.html` discloses the staleness,
+  but the brief asks for picks up to 3 days ahead of *today*.
+- **CR-LIVE-02.** The v2 tree's suggestions/decision-queue content is its own list (24 proposals);
+  the merged `suggestions/SUGGESTIONS.json` (39 items) and `requirements/QUESTIONS.json` (34 items)
+  live in the root tree's pages. A follow-up should reconcile the two registers so the owner reviews
+  one queue, not two.
+- **CR-LIVE-03.** S-27 (archive the root v1 tree) is an owner decision. Until it is made, the root
+  tree remains CI-verified (lint 1,143 rows / crosscheck 83 pass / parity) and the nightly
+  `refresh.yml` keeps it — and the sealed-ledger settlement chain — current.
+
+Flagged for review (published on both Flagged pages where they exist): FLAG-PAGES-01 (rewritten),
+FLAG-ORIG-01, FLAG-RAT-02 (rewritten), FLAG-SLATE-02 (historical, re-registered), plus their
+F-026…F-030 items on the v2 flagged page.
+
+---
+
+## Session `arena/6c5195d1-nba2` — second merge reconciliation (PR #54 / `arena/6650be4d-nba2`, ~12:4x UTC)
+
+PR #54 landed during the final integration and overlapped this session's CR work on the same
+files. Both sides kept again; where the two sessions' recomputations disagreed, the disagreement
+was settled by **re-running the arithmetic**, not by preferring a branch:
+
+1. **CR-3 refined, not overturned.** `arena/6650be4d-nba2` re-derived the four
+   `internal_consistency_checks` labels and found what my CR-3 pass missed: the league-wide sums
+   DO balance (99=99 close, 88=88 blowout — both sessions agree), but the per-team bound
+   `close+blowout <= games played` **fails for 18 of 30 clubs** (ATL 13 in 12, MEM 12 in 11, DET 12
+   in 11, …). This session re-ran that recomputation by hand before the merge and **confirmed the
+   18-team violation**. The merged `data/raw/team_ratings_2026-11-13.json` therefore carries their
+   corrected labels (label 2 now reads FAIL with the 18 clubs named) plus BOTH correction records
+   (`provenance.corrections[]` — theirs first, mine second, marked superseded where they disagree).
+   FLAG-RAT-02 now states the true reason (per-team split contradicts games played) and points at
+   the owner decision (S-34).
+2. **The nine 11/13 finals were captured twice, independently, and agree 9/9.** Their
+   `finals_2026-11-13.json` (nba.com/schedule page) and mine (nba.com/games page) have identical
+   scores for every game. The merged file keeps both `cross_captures` entries; the settlement chain
+   was re-run (`settle` + `--merge-finals`): both seals VERIFIED, 0/22 + 0/27 PARTIAL, unchanged.
+3. **CC-SEAL-04:** my datetime rule (tip-after-seal) is kept over their same-day relaxation — it is
+   strictly stronger and both fixes target the same over-rejection; their intent is noted in the
+   check's explanation.
+4. **CC-DER-05 retargeted:** their builder sources 'W-L (official NBA.com)' from
+   `data/raw/official_standings_2026-11-14.json` (post-finals standings) instead of
+   `nba2/data/records.json` (pre-finals capture); the check now diffs the column against the file it
+   is actually rendered from, and the caption names both sources. Their extra GP columns kept.
+5. **originated/** regenerated once with their engine changes + this session's WSH→WAS fix
+   (verify.js 24/24); the tree's build timestamp is inherent to its build script.
+
+Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 checks: 86 pass,
+0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
+verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
+byte-identical across rebuilds.

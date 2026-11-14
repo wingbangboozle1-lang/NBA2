@@ -49,31 +49,28 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Window dates from the committed slate snapshot
+      - name: Window dates from the sealed ledgers
         id: dates
         run: |
           python3 - <<'PY'
-          import json, datetime as dt
-          s = json.load(open('data/raw/slate_2026-11-13_to_11-16.json'))
-          a = dt.date.fromisoformat(s['as_of'])
-          w = int(s['window'].get('days_in_advance', 3))
-          print(f"dates={(a + dt.timedelta(days=1)).isoformat()}..{(a + dt.timedelta(days=w)).isoformat()}")
-          print(f"asof={s['as_of']}")
+          from nba2.pipeline import refresh as RF
+          ds = RF.sealed_window_dates()
+          print(f"dates={ds[0]}..{ds[-1]} ({len(ds)} game dates, from the sealed ledgers)")
           PY
 
       - name: Archive newest official injury reports for window dates
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import datetime as dt, json, sys
+          import sys
           from nba2.pipeline import refresh as RF
-          s = json.load(open('data/raw/slate_2026-11-13_to_11-16.json'))
-          a = dt.date.fromisoformat(s['as_of'])
-          w = int(s['window'].get('days_in_advance', 3))
-          for i in range(1, w + 1):
-              rc = RF.cmd_injuries((a + dt.timedelta(days=i)).isoformat(), RF.RAW / 'pdf')
+          # Window = every game date any sealed ledger predicted (arena/6c5195d1, 2026-11-14:
+          # previously hardcoded to slate_2026-11-13_to_11-16.json, which silently skipped
+          # the 11/17 games sealed in sealed-2026-11-14.json).
+          for d in RF.sealed_window_dates():
+              rc = RF.cmd_injuries(d, RF.RAW / 'pdf')
               if rc not in (0,):
-                  print(f"ingest gate failed for {(a + dt.timedelta(days=i)).isoformat()} (exit {rc})")
+                  print(f"ingest gate failed for {d} (exit {rc})")
                   sys.exit(rc)
           PY
 
@@ -119,6 +116,19 @@ jobs:
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site
           python3 -m nba2.pipeline.lint
+
+      - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
+        run: |
+          set -uo pipefail
+          python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || true
+          cat /tmp/crosscheck.txt
+          if grep '^\[fail\]' /tmp/crosscheck.txt | grep -v 'CC-FRESH-01'; then
+            echo "::error::semantic cross-check failed (failures above) — refusing to commit (CR-7)"
+            exit 1
+          fi
+          echo "cross-check clean. CC-FRESH-01 (snapshot age) is excluded by design: the bot"
+          echo "cannot refresh the third-party ratings snapshot, and blocking settlement on it"
+          echo "would freeze the ledger's metrics whenever the ratings capture ages."
 
       - name: Commit refreshed snapshots (only when something changed)
         run: |

@@ -318,20 +318,39 @@ def cmd_verify_transcript(path: Path) -> int:
     return 0 if res["pass"] else 4
 
 
-def window_game_ids_by_date() -> dict[str, list[str]]:
-    """Official game ids for sealed-window games whose date has already arrived."""
-    from ..models import lines as LN  # local import: models import chain is heavy
+def sealed_window_dates() -> list[str]:
+    """Every game date covered by any sealed ledger (what must eventually be settled).
 
-    games, slate = LN.load_slate(RAW / "slate_2026-11-13_to_11-16.json")
-    as_of = slate["as_of"]
-    today = dt.datetime.now(dt.timezone.utc).date()
+    Derived from data/raw/ledger/sealed-*.json — the immutable record of what was
+    predicted — rather than from a slate snapshot file, so a new ledger is covered
+    automatically and a stale snapshot filename cannot silently shrink the window.
+    """
+    dates: set[str] = set()
+    for ledg in sorted((RAW / "ledger").glob("sealed-*.json")):
+        for p in json.loads(ledg.read_text()).get("predictions", []):
+            if p.get("date"):
+                dates.add(p["date"])
+    return sorted(dates)
+
+
+def window_game_ids_by_date() -> dict[str, list[str]]:
+    """Official game ids for sealed-window games whose date has already arrived.
+
+    The window is derived from the sealed ledgers themselves (see sealed_window_dates).
+    An earlier version hardcoded data/raw/slate_2026-11-13_to_11-16.json, whose window
+    ends 11/16 and would silently never fetch the five 11/17 games sealed in
+    sealed-2026-11-14.json (arena/6c5195d1, 2026-11-14).
+    """
+    today = dt.datetime.now(dt.timezone.utc).date().isoformat()
     out: dict[str, list[str]] = {}
-    for g in games:
-        d = g["date"]
-        if d <= as_of or d > today.isoformat():
-            continue
-        out.setdefault(d, []).append(g["game_id"])
-    return out
+    for ledg in sorted((RAW / "ledger").glob("sealed-*.json")):
+        doc = json.loads(ledg.read_text())
+        for p in doc.get("predictions", []):
+            d = p.get("date")
+            if not d or d > today:
+                continue
+            out.setdefault(d, []).append(p["game_id"])
+    return {d: sorted(set(gids)) for d, gids in sorted(out.items())}
 
 
 def cmd_merge_finals() -> int:
