@@ -31,8 +31,19 @@ jobs:
       - name: Model + pipeline tests (stdlib unittest, no dependencies)
         run: python -m unittest discover -s nba2/tests -t . -v
 
-      - name: Verify the sealed prediction ledger (never rewrite it)
-        run: python -m nba2.pipeline.seal_predictions --verify
+      - name: Verify the sealed prediction ledgers (never rewrite them)
+        run: |
+          for f in data/raw/ledger/sealed-*.json; do
+            python -c "
+import json, pathlib, sys
+from nba2.models import ledger as LD
+p = pathlib.Path('$f')
+ok, stored, recomp = LD.verify(p)
+d = json.loads(p.read_text())
+print('seal', d['header']['n_predictions'], stored[:16])
+sys.exit(0 if ok else 1)
+"
+          done
 
       - name: Rebuild site data and HTML
         run: python -m nba2.pipeline.build_site_data && python -m nba2.pipeline.build_site
@@ -55,4 +66,7 @@ jobs:
           echo "published artefacts match the pipeline"
 
       - name: Sealed predictions digest
-        run: python -c "import json,pathlib; d=json.loads(pathlib.Path('data/raw/ledger/sealed-2026-11-13.json').read_text()); print('sealed', d['header']['n_predictions'], d['header']['sha256'])"
+        run: |
+          for f in data/raw/ledger/sealed-*.json; do
+            python -c "import json,pathlib; d=json.loads(pathlib.Path('$f').read_text()); print('sealed', d['header']['n_predictions'], d['header']['sha256'])"
+          done

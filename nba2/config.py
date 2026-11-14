@@ -203,7 +203,7 @@ GATES: list[dict[str, Any]] = [
         ),
         "source": "derived from the binomial standard error at p=0.55 — see research/05-skill-vs-luck.md",
         "status": "blocked",
-        "blocking_reason": "No settled bets yet. Ledger opens with the 2026-11-13 slate.",
+        "blocking_reason": "No settled bets yet. The ledger opened with the 2026-11-13 slate and was re-sealed for 2026-11-14..17.",
     },
     {
         "id": "G-02",
@@ -457,11 +457,18 @@ REWARD_WEIGHTS = {
 }
 
 DATA_DIR = "data/raw"
-SNAPSHOT_SLATE = "slate_2026-11-13_to_11-16.json"
+# 2026-11-14 refresh (session arena/1ec4f9bd-nba2): the slate window moved to
+# 2026-11-13 (context) .. 2026-11-17, the injury snapshot to the freshest official
+# release at build time (11/13 19:30 ET), and the ratings snapshot was re-checked
+# (30/30 identical) rather than rewritten. The 2026-11-13 snapshots stay committed
+# as the audit trail.
+SNAPSHOT_SLATE = "slate_2026-11-14_to_11-17.json"
 SNAPSHOT_CONTEXT = "slate_context_2026-11-17.json"
 SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
-SNAPSHOT_INJURY = "injury_report_2026-11-13.json"
+SNAPSHOT_INJURY = "injury_report_2026-11-13_1930ET.json"
+SNAPSHOT_TIMES = "official_game_times_2026-11-14.json"
+SNAPSHOT_TIMES_PRIOR = "official_game_times_2026-11-13.json"
 
 TEAM_NAMES = {
     "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",

@@ -42,8 +42,9 @@ class Spot:
 def schedule_spots(games: list[dict], window_start: str, window_end: str) -> dict[str, Spot]:
     """Build per-team schedule load from the slate we hold.
 
-    IMPORTANT: `window` is only 2026-11-13..2026-11-16 (plus a peek at 11/17-18 that the
-    schedule page rendered). A back-to-back whose first game is outside the window is
+    IMPORTANT: `window` is 2026-11-13..2026-11-17 in the current snapshot (11/13 exists as
+    day-before context so back-to-backs into 11/14 are detected). A back-to-back whose first
+    game is outside the window is
     invisible here, so `caveats` says exactly that and every spot row is marked partial.
     """
     per: dict[str, list[dict]] = {}
