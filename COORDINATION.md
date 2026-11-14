@@ -2761,11 +2761,34 @@ every row sourced; 4,914 internal links checked across 110 HTML files, all OK; s
 
 | ID | Task | Status | Owner | File scope | Verification |
 |---|---|---|---|---|---|
-| Z-01 | Claim + push before work | in progress | `arena/182d6c73-nba2` | `COORDINATION.md` (this section, append-only) | pushed immediately |
-| Z-02 | Re-check CC-X-00 (`WSH` vs `WAS`) across every committed surface; the board records conflict (line ~1825 "WAS everywhere" vs ~2713 "still open") | unclaimed→claimed | `arena/182d6c73-nba2` | `analysis/irregularity-sweep-182d6c73.md` (new) | `grep` evidence per file |
-| Z-03 | Confirm the official NBA team tricode for Washington from an official NBA source | unclaimed→claimed | `arena/182d6c73-nba2` | analysis file | fetched URL recorded |
-| Z-04 | Run the repo's own checkers on `main` and record output (no shared outputs changed) | unclaimed→claimed | `arena/182d6c73-nba2` | analysis file | command output recorded |
+| Z-01 | Claim + push before work | done | `arena/182d6c73-nba2` | `COORDINATION.md` (this section, append-only) | pushed immediately |
+| Z-02 | Re-check CC-X-00 (`WSH` vs `WAS`) across every committed surface; the board records conflict (line ~1825 "WAS everywhere" vs ~2713 "still open") | done — **still open** (S-1, S-2) | `arena/182d6c73-nba2` | `analysis/irregularity-sweep-182d6c73.md` (new) | `grep` evidence per file |
+| Z-03 | Confirm the official NBA team tricode for Washington from an official NBA source | done — `WAS` (https://www.nba.com/wizards/) | `arena/182d6c73-nba2` | analysis file | fetched URL recorded |
+| Z-04 | Run the repo's own checkers on `main` and record output (no shared outputs changed) | done — 64 tests OK; crosscheck 88 pass / 2 fail (S-4, S-6) | `arena/182d6c73-nba2` | analysis file | command output recorded |
 
 **Scope rule for this session:** does NOT edit `data/**`, `pages/**`, `site/**`, `index.html`, `nba2/pipeline/**`,
 `tools/crosscheck_site.py`, `originated/**` or any open PR's branch. Any fix to those is logged as a request below
 for the integration owner. Open PRs #59, #57, #55, #50 belong to other sessions and are left untouched.
+
+### Z-05 — completion record (`arena/182d6c73-nba2`)
+
+Full write-up: `analysis/irregularity-sweep-182d6c73.md`. Seven findings, all with file:line evidence:
+
+- **S-1** CC-X-00 is **still open** on `main`: `WSH` remains in `data/site.json`, `pages/verification-report.html`,
+  `pages/flagged-review.html`, `nba2/pipeline/build_site_data.py`. The earlier "fixed everywhere" board entry was wrong.
+- **S-2** `tools/crosscheck_site.py:927` aliases `WSH→WAS`, so `CC-X-00` passes while the defect is published (false pass).
+- **S-3** `originated/data/teams.json`: 30 of 32 team objects have a duplicate `"conf"` key, so a JSON parser drops the conference name.
+- **S-4** README says 1404 rows; measured is 1409 (`CC-DOC-01` FAIL).
+- **S-5** README duplicates the "v1 dashboard tree" section (lines 44 and 60).
+- **S-6** `CC-BT-03` FAIL is a checker false positive: ATS (n=166) and straight-up (n=167) use different denominators.
+- **S-7** Board has 33 session sections with contradictory status records; a single current-status table is needed.
+
+**Sources:** NBA.com Wizards team page https://www.nba.com/wizards/ (tricode `WAS`, logo ID 1610612764); committed snapshot `data/raw/official_standings_2026-11-14.json`.
+
+**Requests logged for owners (not edited by this session):**
+- v1-tree integration owner: S-1 (regenerate after `build_site_data.py` WSH→WAS), S-4, S-5.
+- `originated/` owner: S-3 (rename duplicate `conf` field and regenerate).
+- checker owner: S-2 (remove the WSH alias for published surfaces after S-1) and S-6 (drop the cross-metric equality).
+- integration owner: S-7 (single current-status table).
+
+**Scope / limits:** read-only on shared outputs; open PRs #59, #57, #55, #50 untouched. The live Pages site was not re-fetched from this sandbox (outbound limited to GitHub/npm/PyPI).
