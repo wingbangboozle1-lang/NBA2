@@ -25,7 +25,7 @@ touches, and the verification record. **Read this before starting any task.**
 | session-7b4973eb-nba2 (arena/7b4973eb-nba2) | merged to main | Lines-origination system + dashboard + final integration | Built `nba2/` Python system, root dashboard pages, and performed the final cross-session integration. PR #7 merged. |
 | arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
 | arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
-| arena/5a5fa7c4-nba2 | in progress (2026-11-14) | Data-window refresh + automated ingest (A-01 remediation) | 2026-11-14 day-before injury designations snapshot, pipeline integration, nightly refresh/settlement workflow with freshness gates, A-03 `.pyc` cleanup. See session section at end of board. |
+| arena/5a5fa7c4-nba2 | done (PRs #24/#25) | Data-window refresh + automated ingest (A-01 remediation) | 2026-11-14 day-before injury designations snapshot, pipeline integration, nightly refresh/settlement workflow with freshness gates, A-03 `.pyc` cleanup. See session section at end of board. |
 
 ## Tasks
 
@@ -714,3 +714,38 @@ here as a change request, not silently edited.
 | R-4 | Nightly ingest + settlement workflow with fail-closed gates (A-01 remediation v1); settlement consumes official finals snapshots only | pending | `arena/5a5fa7c4-nba2` | `nba2/pipeline/refresh.py`, `.github/workflows/refresh.yml`, `README.md` | must never publish a value that could not be fetched and schema-checked |
 | R-5 | Audit A-03 cleanup: untrack 19 `.pyc` files | pending | `arena/5a5fa7c4-nba2` | `.gitignore`, git index | no file content changes |
 | R-6 | Verify (tests + lint + seal `--verify` + whole-repo link check), PR → main, merge, confirm Pages deploy, record results here | pending | `arena/5a5fa7c4-nba2` | repo-wide (integration of own scope) | follow the PR & Merge protocol |
+
+---
+
+## Session `arena/5a5fa7c4-nba2` — **COMPLETION RECORD** (2026-11-14, all claimed tasks done)
+
+| ID | Task | Status | Verification / sources |
+|---|---|---|---|
+| R-1 | Claim + scope; rebase/merge onto main | done | Claim pushed before work (commit `eee4e92`); later merged `origin/main` (PR #22/#23 content) with an append-only COORDINATION resolution, see conflict log below. |
+| R-2 | 2026-11-14 day-before availability snapshot | done | `data/raw/injury_report_2026-11-14_daybefore.json` — 31 rows (26 designations + 5 NOT YET SUBMITTED placeholders, 5 games) hand-transcribed from the official [11/13/26 07:30 PM ET release](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf) (retrieved 2026-11-14 00:47 UTC via the session page-fetch tool, two chunks, cross-read during transcription). Cadence rules quoted from [official.nba.com injury-report index](https://official.nba.com/nba-injury-report-2026-27-season/). Row counts machine-checked for self-consistency at write time. |
+| R-3 | Pipeline + site integration | done | New source `nba_injury_pdf_1114`; three new tables (`injuries_window`, `rotation_window`, `availability_window`) on `pages/injuries.html`; `FLAG-SLATE-06` revised; `FLAG-INJ-05/06/07` + `FLAG-REFRESH-01` registered. Build: **36 tables / 964 rows** (was 33/915); `lint` OK; `test_no_unintended_all_empty_columns` allow-list extended with justification. `input_digest()` now covers the new snapshot (fix shipped in PR #25 so published build timestamps stay honest). |
+| R-4 | Nightly ingest + settlement workflow | done | `nba2/pipeline/refresh.py` + `.github/workflows/refresh.yml` (09:05/13:35 ET + dispatch). Fail-closed gates: unreachable official endpoint → exit 3, schema drift → exit 4, transcript cross-check recall < 0.9 → exit 4, sealed-ledger byte-identity guard, verify chain (tests + seal + lint) before any commit. Missing future-date release / not-yet-final scoreboard = expected state (exit 0). Smoke-tested from the sandbox: `--finals` exit 3, nothing written. 7 new unit tests (`nba2/tests/test_refresh.py`). Settlement input merged into `data/raw/finals_all.json` so `settle.py`'s newest-file rule cannot regress metrics. Never writes picks, lines or stakes; never touches `data/raw/ledger/`. |
+| R-5 | Audit A-03 cleanup | done | 19 tracked `.pyc` files untracked via `git rm --cached` (`.gitignore` already ignored them); no file contents changed. |
+| R-6 | Verify, PR, merge, confirm Pages, record | done | See "PR & merge results" below. |
+
+### Verification log (this session)
+- `python -m unittest discover -s nba2/tests -t .` → **62/62 OK** (55 prior + 7 new), re-run green 3× and after the merge.
+- `python -m nba2.pipeline.build_site_data` → 36 tables / 964 rows; `build_site` → 18 HTML pages; `lint` → OK (every row sourced, every blank explained).
+- `python -m nba2.pipeline.seal_predictions --verify` → seal `cf7dedc689597cb8…` VERIFIED; `git diff` on `data/raw/ledger/` empty at every step.
+- `python3 tools/check_links_all.py` → 75 HTML files, 3,423 internal links, ALL OK.
+- Live-site verification by fetching the deployed URLs (not just the green tick): `pages/injuries.html` serves the three new tables with the new source link; root page header shows `built 2026-11-14 01:07 UTC`; seal digest printed unchanged.
+
+### PR & merge results (this session)
+- **PR #24:** https://github.com/wingbangboozle1-lang/NBA2/pull/24 — CI `verify` run [43538435898](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538435898) passed; merged 2026-11-14T01:05:57Z, merge commit `43ba42d2f3e12e4569d66d83932cd52bd146543c`. Pages: "Publish GitHub Pages" run [43538488782](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538488782) **success**, CI run [43538488668](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538488668) **success**, dynamic "pages build and deployment" run [43538487802](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538487802) **success**.
+- **PR #25** (build-metadata fix: digest covers the new snapshot): CI `verify` run [43538784440](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538784440) passed; merged, commit `cb70921f04475d83c5696881d15ae6698f3776b4`. Pages run [43538841463](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538841463) **success**; CI [43538841340](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43538841340) **success**. Live URL re-fetched post-deploy: https://wingbangboozle1-lang.github.io/NBA2/ serves the 2026-11-14 build.
+- This record is added in a follow-up coordination-only PR, per the precedent of prior sessions.
+
+### Conflict / handoff log (this session)
+- **2026-11-14 ~00:57 UTC — `git pull --rebase origin main` conflicted on `COORDINATION.md`** (PR #22/#23 by `arena/9707c113` had appended at EOF while my claim was mid-rebase). Rebase **aborted safely**; resolved by a **merge** with both sessions' sections preserved verbatim (theirs first, ours after a divider) — same resolution prior sessions recorded for this failure mode. 62 tests re-run after the merge. A push executed during the conflicted-rebase window sent the pre-rebase branch tip; superseded by the subsequent fast-forward pushes (no force push, no history rewritten).
+- Scope note (logged, not silent): `nba2/pipeline/build_site.py` received a two-line additive edit (two `render_table` entries) so the new sections render on the injuries page; that file was not in the original claim list and is hereby recorded as part of this session's scope for the refresh task.
+
+### Open for the owner (unchanged + new)
+- Ratify the 11 unratified parameters (S-04) and the odds-feed decision (R-101/Q-01): still the blockers for any gate beyond G-01/G-08/G-10, nonzero stakes, and leaderboard allocation.
+- **New, from the refresh:** the nightly workflow automates ingestion and settlement only; line *re-origination* after game-day injury reports (S-10) still needs an owner decision, because re-deriving lines mid-window would diverge from the frozen seal — the board recommends "refresh availability, keep the seal, settle what plays" as the default policy.
+- 11/15–16 designations do not exist yet (FLAG-INJ-07); the workflow will archive releases as they are filed.
+
