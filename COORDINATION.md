@@ -570,7 +570,7 @@ step.
   sessions now own, this session renamed its whole tree into `originated/`.
 
 
-## Session `arena/26bb7240-nba2` — status: in progress
+## Session `arena/26bb7240-nba2` — status: done
 
 Registry row: `arena/26bb7240-nba2` — full repo review, verification of the generated dashboard, and integration/PR/Pages-deploy confirmation. Branching note: Arena pinned this session to `arena/26bb7240-nba2`; work happens on this branch.
 
@@ -581,8 +581,8 @@ Registry row: `arena/26bb7240-nba2` — full repo review, verification of the ge
 | T-201 | Claim session + file scope | in progress | `arena/26bb7240-nba2` | `COORDINATION.md` (this section) | this claim |
 | T-202 | Re-verify generated dashboard build + lint + links | done | `arena/26bb7240-nba2` | `data/site.json`, `index.html`, `pages/**` | `build_site_data` → 33 tables/915 rows; `build_site` → index.html + 16 pages; `lint` → OK (every row sourced, every blank explained); `check_links_all` → 75 files / 3,233 internal links / ALL OK |
 | T-203 | Review repo content line by line; flag irregularities | done | `arena/26bb7240-nba2` | all surfaces (read-only) | No invented values found; every blank is flagged. Irregularities are those already published on `pages/flagged-review.html` (I-01…I-06, FLAG-*). External official sources (nba.com, ak-static.cms.nba.com) are unreachable from this sandbox; verification rests on committed snapshots + prior-session retrieval timestamps. |
-| T-204 | Confirm live GitHub Pages site deploys | pending | `arena/26bb7240-nba2` | `.github/workflows/pages.yml` | via push → `main` → Pages workflow |
-| T-205 | Open PR → `main`, merge, record PR link + merge result | pending | `arena/26bb7240-nba2` | repo-wide integration | PR from this branch |
+| T-204 | Confirm live GitHub Pages site deploys | done | `arena/26bb7240-nba2` | `.github/workflows/pages.yml` | Pages deploy run 43535980104 (deploy job `deploy` in 13s, all steps passed) on push → `main` @ `9d10f0d`. Live URL: https://wingbangboozle1-lang.github.io/NBA2/ . Direct `curl` from this sandbox failed at TLS; deployment success confirmed by the GitHub Actions deploy job. |
+| T-205 | Open PR → `main`, merge, record PR link + merge result | done | `arena/26bb7240-nba2` | repo-wide integration | PR #17 https://github.com/wingbangboozle1-lang/NBA2/pull/17 — merged via `gh pr merge 17 --merge`, merge commit `9d10f0d7811a4980abf0a4a17507b81eff721198`. CI "Verify data, model and site" run 43535980054: success. |
 
 **Verification log (as of this claim):**
 - `python3 -m unittest discover -s nba2/tests -t .` → 55 tests OK
@@ -596,6 +596,8 @@ Registry row: `arena/26bb7240-nba2` — full repo review, verification of the ge
 **Irregularities / blockers found in this review:** none beyond those already published on `pages/flagged-review.html`. No invented values; every blank is explained by a flag.
 
 **Handoff log:** none.
+
+**Integration result:** PR #17 (arena/26bb7240-nba2 → main) merged `9d10f0d7811a4980abf0a4a17507b81eff721198`; GitHub Pages deploy run 43535980104 success; CI verify run 43535980054 success. Live site: https://wingbangboozle1-lang.github.io/NBA2/ . Session complete.
 
 ---
 
