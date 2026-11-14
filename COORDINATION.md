@@ -1,5 +1,11 @@
 # COORDINATION.md — NBA2 Shared Task Board
 
+## Session `arena/954443e1-nba2` — claim (2026-11-14 UTC)
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| V2 | Independent current-tree verification of published outputs, workflows, and outstanding brief gaps; documentation only | in progress | `arena/954443e1-nba2` | `analysis/session-954443e1-audit.md`, append-only `COORDINATION.md` | Claim pushed before work. No product/site/data changes. |
+
 Shared task board for the NBA2 project. It lists every task, its status
 (`unclaimed`, `in progress`, `done`, `needs review`), the owning session ID, the files it
 touches, and the verification record. **Read this before starting any task.**
