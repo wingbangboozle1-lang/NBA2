@@ -1546,3 +1546,17 @@ configuration without an owner decision.
 |---|---|---|---|---|
 | EAE-01 | Current-tree independent audit and checker run | in progress | `analysis/session-eae96d1e-audit.md`, append-only `COORDINATION.md` | reproduce relevant tests/builds; identify any defect from current files; distinguish official facts from model-derived claims |
 
+
+### EAE-01 result — independent current-tree audit (2026-11-14)
+
+**Status: done; report is [`analysis/session-eae96d1e-audit.md`](analysis/session-eae96d1e-audit.md).**
+Verification performed: 64/64 `nba2/tests`, 49/49 `backtest/tests`, v2 rebuild/check (19 pages, 31 lines / 30 teams, 0 structural / semantic findings), v1 provenance lint (1139 rows / 39 tables), backtest verification (155 sourced game rows / 139 graded), `verify_site` (13 pages / 249 rows), and `check_links_all` (107 HTML files / 4342 internal links) all passed. Rebuilds left committed generated outputs unchanged.
+
+Findings, with file/source links and action proposals in the report:
+
+- **EAE-F01 (high):** GitHub Pages API is configured `build_type=legacy`, `main /`, while `.github/workflows/pages.yml` publishes `site/`; a live fetch confirmed the root response is the root/v1 content. Attempting to set `build_type=workflow` returned HTTP 403 `Resource not accessible by integration`; this session cannot change the Pages admin setting. Official GitHub docs specify selecting GitHub Actions as the source. Requires a repo admin action; no credentials requested or workaround attempted.
+- **EAE-F02 (high):** v2 schedule/team inputs are dated constants; current scheduled refresh does not acquire/refresh v2 schedule/team inputs or rebuild v2.
+- **EAE-F03 (high, retained legacy output):** independently reproduced the existing S-26 POR/SAC S2 sign inversion in `nba2/picks.py` and `nba2/data/picks.json`; not edited because the task scope was audit-only and the queue marks it awaiting owner review.
+- **EAE-F04 (medium):** the backtest's disputed baseline is explicitly disclosed; no rewards should be released.
+
+Limit: NBA schedule was fetched but rendered with no game rows in this client; no new current slate/injury numeric field is asserted. See report for official source links, verification limits, and decision-ready next steps.
