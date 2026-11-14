@@ -937,6 +937,18 @@ session's verification report.
 
 **Handoffs out:** V-06 to the `scripts/**` owner (or any cleanup session); PRs #21 (`arena/79e87c81`) and #26 (`arena/1ec4f9bd`) were open when this session integrated and belong to their sessions — not merged or edited here; #28 (`arena/f7477d5e`) merged to main while this record was being prepared (its content is preserved above).
 
+
+### PR & merge results — `arena/c09e0241-nba2`
+
+- **PR #32:** https://github.com/wingbangboozle1-lang/NBA2/pull/32 (`arena/c09e0241-nba2` → `main`) — **MERGED** 2026-11-14, merge commit `3bd2a7690d3f6984207c75db4533fe29c2b9ad88`.
+- **Pull-request CI:** `verify` + `backtest` jobs both **pass** (runs [43539962524](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43539962524)).
+- **Post-merge on `main` @ `3bd2a76`:** "Verify data, model and site" run [43540075935](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43540075935) **success**; "Publish GitHub Pages" run [43540075958](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43540075958) **success**; dynamic "pages build and deployment" run [43540074935](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43540074935) **success**.
+- **Live content spot-check (fetched post-deploy, not just the green tick):** https://wingbangboozle1-lang.github.io/NBA2/ serves the 2026-11-14 01:07 UTC build with all sections and the sealed digest `cf7dedc689597cb8…`; https://wingbangboozle1-lang.github.io/NBA2/dashboard/data.html shows the CR-4 fix live (CHA row renders `—` blank markers, no empty cells) and the V-05 labels (BRef/ESPN rows show their real hosts).
+- **Merge conflicts in this session:** two `origin/main` advances during integration (sessions 5a5fa7c4 and f7477d5e, plus PR #31); COORDINATION.md resolved **append-only both times** with every session's block preserved verbatim; README conflict resolved to main's newer 62-test count. No other session's work discarded; log above.
+- **Flagged irregularities from this session (V-01…V-06)** do not block merge; V-01…V-06 are documented in `analysis/source-verification-c09e0241.md` (V-05 fixed, V-06 handed off). Pre-existing flags remain on the site's Flagged for Review page.
+
+**Result:** merged; GitHub Pages redeployed from `main`; all session tasks D1–D5 complete.
+
 ## Session `arena/5b80b88a-nba2` — independent verification harness + runner reachability probe (2026-11-14)
 
 **Role chosen to avoid collision:** two sessions are active on this repo right now. `arena/79e87c81-nba2`
