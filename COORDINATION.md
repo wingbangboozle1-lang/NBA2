@@ -2754,3 +2754,61 @@ P-11 (flagged page) and P-12 (integration, merge, deploy) each have their record
 **Verification totals on the merged `main`:** 64 v1 tests + 80 v2 tests = **144 tests, all passing**;
 20 published pages; `nba2.v2.check` → 0 structural / 0 semantic; pipeline lint → 1,409 rows across 50 tables,
 every row sourced; 4,914 internal links checked across 110 HTML files, all OK; sealed ledgers byte-identical.
+
+---
+
+## Session `arena/bc867bff-nba2` — CLAIM (2026-11-14 18:42 UTC, branch `arena/bc867bff-nba2`, base `b3ed44d` = `main` @ PR #62 merge)
+
+**Read at claim time (verified, not assumed).**
+* `git fetch origin` → `main` = `b3ed44d839b77f071592cd10d3dc734bc7958b23`; this branch is at the same
+  commit, working tree clean. No other branch is checked out locally.
+* `gh pr list --state open` → result recorded in the claim log below.
+* Checkers re-run on this tree before any edit (output in `audit/2026-11-14-bc867bff/baseline.txt`):
+  64 v1 tests + 80 v2 tests + 49 backtest tests **all pass**; `nba2.v2` rebuild produces **zero diff**;
+  `nba2.v2.check` 0/0; `nba2.pipeline.lint` 1,409 rows / 50 tables OK; `tools/check_links_all.py`
+  4,914 internal links OK; `tools/crosscheck_site.py` **97 checks: 88 pass, 2 FAIL, 7 info**.
+* The two FAILs are this session's starting defect list: **CC-BT-03** (the backtest checker asserts
+  `ats.hit_rate == accuracy.straight_up_accuracy`, which cannot hold while a push is excluded from the
+  ATS denominator — 105/166 vs 105/167) and **CC-DOC-01** (README states 1,404 rows; disk holds 1,409).
+
+**Why this session exists.** The board says three things block the brief — no market price (S-01),
+no player game logs (S-41), and sample size (S-43) — and two checkers on `main` are red. This session
+(a) re-verifies the published data against a **fresh live official capture taken in this session**,
+(b) makes a documented, reproducible attempt to close the player-level gap from an official endpoint,
+(c) repairs the two red checkers with evidence, and (d) publishes an owner-facing decision/missing-info
+register update. Nothing already sealed is rewritten.
+
+**File scope claimed (this session):**
+* `COORDINATION.md` (this section + completion records, append-only — no other session's text edited)
+* `audit/2026-11-14-bc867bff/**` (new namespace: live official captures, capture verifiers, checker logs)
+* `data/raw/injury_report_2026-11-14_*` , `data/raw/slate_2026-11-15_to_11-18*`, `data/raw/players_2026-11-14*`
+  (new snapshot files only; existing snapshots are never edited, only superseded by new dated files)
+* `nba2/v2/official.py`, `nba2/v2/build.py`, `nba2/v2/content.py`, `nba2/v2/check.py`, `nba2/v2/live.py`
+  (+ `nba2/v2/test_v2.py`, `nba2/v2/test_live.py`, `nba2/v2/test_lab.py`) — the published-tree generator
+* `site/**`, `data/v2/**` — regenerated artefacts of the generator above (never hand-edited)
+* `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json`, `requirements/REPO_REVIEW*`,
+  `README.md` (count sync via `audit/2026-11-14-3681/sync_readme_counts.py`, prose preserved),
+  `tools/crosscheck_site.py` (CC-BT-03 predicate only, with the reasoning recorded here)
+* `backtest/**` only if a defect found by this session requires it (none claimed yet)
+
+**Not claimed / not edited (owned elsewhere; change requests logged instead):** `docs/**`,
+`dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `nba2/models/**`, `nba2/pipeline/**`,
+`nba2/config.py`, `.github/workflows/**`, `data/raw/ledger/**` (sealed — read-only),
+`data/site.json`, root `*.html`, `pages/**` (v1 tree).
+
+**Task board — `arena/bc867bff-nba2` (B-01…B-08)**
+
+| # | Task | Status |
+|---|---|---|
+| B-01 | Board claim + push before any edit | in progress (this entry) |
+| B-02 | Fresh live official capture (standings, slate window, newest injury-report PDFs) + line-by-line verifier | claimed |
+| B-03 | Player-level official data probe: attempt `www.nba.com/stats/players/**`; capture or document unreachability | claimed |
+| B-04 | Repair CC-BT-03 (push-denominator predicate) with evidence; no number on the site changes | claimed |
+| B-05 | Repair CC-DOC-01 (README counts generated, not remembered) | claimed |
+| B-06 | Rotate the pick window if the official slate moves; publish the delta vs the 11/14 snapshot | claimed |
+| B-07 | Owner-facing registers: missing-information discovery plan, questions, suggestions + decision queue | claimed |
+| B-08 | Full checker chain → PR → merge → confirm Pages deploy → record run IDs | claimed |
+
+**Rules held:** a row is *verified* only if the official document was fetched in this session and can be
+quoted; anything unconfirmable stays blank and is flagged on the Flagged-for-Review page; sealed ledgers
+are never rewritten; flagged items do not block the merge.
