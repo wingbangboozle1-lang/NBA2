@@ -266,6 +266,16 @@ def _pages() -> dict[str, list[str]]:
     return {
         "pages/executive-summary.html": [
             '<div class="card">' + kpis() + "</div>",
+            render_table({**sec("live_capture_check"),
+                          "title": "Verified against NBA.com on 2026-11-14 at 10:15 UTC",
+                          "rows": sec("live_capture_check")["rows"],
+                          "anchor": "summary-live-verification"}, L),
+            render_table({**sec("staleness_summary"),
+                          "title": "The one thing a reader must know about the inputs",
+                          "rows": sec("staleness_summary")["rows"][:4],
+                          "anchor": "summary-staleness",
+                          "blurb": "Truncated here; the full table, and the per-game movement, are on the "
+                                   "Ratings Staleness page."}, L),
             render_table({**sec("lines"),
                           "title": "Snapshot of the priced slate (first 8 rows)",
                           "rows": sec("lines")["rows"][:8],

@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="29">
+    <section class="card table-card" id="questions" data-rows="31">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -348,6 +348,28 @@
 <td>A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.</td>
 <td>Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.</td>
 <td>Without it &#x27;as of&#x27; is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-30">
+<td>Q-30</td>
+<td>How stale may a ratings snapshot be before a line is published, and what do we do about it?</td>
+<td>A measured answer for the current window: the committed snapshot is one slate behind the official standings (19 of 30 teams moved), the published lines would move by at most 2.0 pts of spread with one lean flipping in 27 games, and the fitted home-court term changes sign. All of it is published on the Ratings Staleness page.</td>
+<td>A policy. Nothing in the repository says whether a snapshot may be one, two or three slates old, and no gate tests it, so the answer is currently decided by when the refresh happens to run.</td>
+<td>Owner sets a maximum snapshot age (in completed slates) and whether the line is published with the staleness disclosed or suppressed until the snapshot is re-anchored. Then either implement S-29 (re-anchor after each slate) or add a gate that blocks publication when the snapshot age exceeds the policy.</td>
+<td>Decides whether a reader of a line needs to know that the underlying records are one game old. It also decides whether the fitted home-court advantage — whose sign flips on a one-slate refresh — can ever be treated as identified.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-31">
+<td>Q-31</td>
+<td>Which build of the dashboard is the product, and what happens to the other five?</td>
+<td>A working answer applied in this session: one named published tree (dashboard + measured-skill backtest + styles + board), staged as a build artifact, link-checked before upload, with the other trees kept in the repository and linked from the reconciliation page.</td>
+<td>An owner decision on whether the superseded trees should be archived in the repository or deleted, and on whether the `site/` (v2) tree — which is one window behind and publishes no picks — should be kept as a historical build or refreshed and made canonical.</td>
+<td>Confirm the published tree, then archive or delete the rest; the history is in git either way.</td>
+<td>Low for the numbers, high for trust: two dashboards on one domain is how a reader learns not to believe either.</td>
 <td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>

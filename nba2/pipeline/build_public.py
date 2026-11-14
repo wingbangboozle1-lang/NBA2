@@ -25,7 +25,9 @@ The published set is deliberately small and explicit:
 * ``pages/**`` — the category subpages of that dashboard;
 * ``backtest/**`` — the measured-skill backtest, linked from the dashboard (its own pages);
 * ``css/**``, ``assets/**``, ``styles.css``, ``app.js`` — the styles and behaviour;
-* ``COORDINATION.md``, ``README.md`` — the board and the map of the repository.
+* ``COORDINATION.md``, ``README.md`` — the board and the map of the repository;
+* ``data/site.json`` — the machine-readable mirror of every published table, so a reviewer can
+  diff the data without trusting the rendering.
 
 Everything else in the repository (``site/``, ``docs/``, ``dashboard/``, ``originated/``,
 ``verified/``, ``archive/``, the code and the data) stays in the repository and is linked as
@@ -56,6 +58,7 @@ PUBLISH_TREE: list[tuple[str, bool, tuple[str, ...]]] = [
     ("app.js", False, ()),
     ("COORDINATION.md", False, ()),
     ("README.md", False, ()),
+    ("data/site.json", False, ()),   # the machine-readable mirror of every published table
 ]
 
 # Never copied, even if they appear inside a published directory.

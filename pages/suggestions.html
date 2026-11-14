@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:15 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="28">
+    <section class="card table-card" id="suggestions" data-rows="31">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -395,6 +395,45 @@
 <td>S</td>
 <td>Adds ~30s of CI; no production risk.</td>
 <td>Accept — this is the check that found F-029.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-29">
+<td>S-29</td>
+<td>Re-anchor the ratings snapshot after every slate completes, and seal the next window from the re-anchored snapshot</td>
+<td>The committed ratings snapshot (retrieved 2026-11-13 22:35 UTC, while the 2026-11-13 slate was still in progress) is one full slate behind the official standings. A live re-read on 2026-11-14 10:15 UTC found 19 of 30 teams had moved. The published lines are therefore computed from records that are already one game old, and the fitted home-court term flips sign (+1.53 to -0.29 pts) on that single refresh.</td>
+<td>Add a post-slate step to the refresh workflow: after the last game of a date is final, re-read the official standings, write a new dated snapshot to data/raw, and build the NEXT window&#x27;s lines from it. The current window&#x27;s sealed predictions stay untouched — a seal that moves after the fact is not a seal. The measured effect of the lag is already published on the Ratings Staleness page, so the decision can be made with numbers rather than intuition.</td>
+<td>Lines that use records through yesterday instead of through two days ago; a home-court term that is not decided by one slate; and a published, continuous measure of how stale the inputs are, which is itself a quality metric for the desk.</td>
+<td>M — one ingest step, one dated snapshot, one build wiring change.</td>
+<td>Re-anchoring changes published numbers between windows, which makes the backtest series less comparable unless the snapshot date is recorded on every row. It also means a line&#x27;s provenance is &#x27;snapshot as of X&#x27;, not &#x27;live&#x27;.</td>
+<td>Accept. The published staleness effect is bounded (max 2.0 pts of spread movement across the whole window, one lean flip in 27 games), so this is a precision improvement rather than a correctness emergency — but the HCA sign flip is a strong argument that no parameter should be promoted on ~12 games of data.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-30">
+<td>S-30</td>
+<td>Publish exactly one dashboard, from one named tree, with the link check in the build</td>
+<td>The repository grew six site trees from parallel sessions. For a while the committed pages.yml published the `site/` tree while the repository&#x27;s Pages setting published the root tree, so a reader received a different dashboard from the one CI built, and two different dashboards answered &#x27;what are the picks?&#x27; differently (27 sealed picks vs 0 published).</td>
+<td>Name the published tree explicitly in `nba2/pipeline/build_public.py` (dashboard + backtest + styles + board), stage it as a build artifact, check every internal link in it before upload, and point the Pages setting at the workflow. The other trees stay in the repository as history and are linked from the reconciliation page as source.</td>
+<td>One site, one window, one answer to every question; the deploy can no longer drift from the committed tree; a broken link fails CI instead of reaching a reader.</td>
+<td>S — a named publish list, a staging step, one workflow edit, one repository setting.</td>
+<td>Pages configured as &#x27;GitHub Actions&#x27; stops the classic branch build. If the workflow fails, the last successful deployment stays live, so the exposure is a stale site rather than a down one — but the setting must be flipped deliberately.</td>
+<td>Applied in this PR — see the Live Verification page and the merge record in COORDINATION.md. Revert the repository setting if the owner prefers the classic branch build.</td>
+<td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-31">
+<td>S-31</td>
+<td>Store the broadcaster marks the page renders, and the cup group, rather than a prose label</td>
+<td>The live re-read found the committed capture leaves the Emirates NBA Cup group empty for all nine 2026-11-13 group games (so the published slate table shows an empty Cup cell with no explanation), and stores a single prose broadcaster label that does not match the marks the official page renders for two games — one names a feed the page does not show, one omits a feed it does.</td>
+<td>Capture the broadcaster as the list of marks rendered on the page, and fill the cup group from the same read. Neither field feeds a line, so this changes no published number; it changes what a reader sees on the Verified slate table.</td>
+<td>The flagship slate table stops showing a dash where the league published a group label.</td>
+<td>S — one column-shape change in the capture and one in the renderer.</td>
+<td>None to the model: cup_group and broadcast are display-only fields (verified in nba2/models/lines.py).</td>
+<td>Accept, and fold into the next capture refresh rather than patching the old one.</td>
 <td>awaiting owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
