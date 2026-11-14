@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li class="nav-group"><span class="nav-cat">Decide</span><ul><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="graded.html">Graded Results</a></li></ul></li><li class="nav-group"><span class="nav-cat">Measure</span><ul><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li></ul></li><li class="nav-group"><span class="nav-cat">Inputs</span><ul><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li></ul></li><li class="nav-group"><span class="nav-cat">Governance</span><ul><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html" class="active">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li><li><a href="verification-report.html">Verification Report</a></li></ul></li><li class="nav-group"><span class="nav-cat">Project</span><ul><li><a href="requirements.html">Requirements</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li></ul></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Flagged Review</h2><p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="flags" data-rows="87">
+    <section class="card table-card" id="flags" data-rows="94">
 <h2>Flagged for review — every unverified value on this site</h2>
 <p class="blurb">This page is the deliverable. If a number is not here and not blank, it was confirmed against an official source; if you find otherwise, that is a bug.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Flagged for review — every unverified value on this site</caption><thead><tr>
@@ -37,7 +37,7 @@
 <td>low</td>
 <td>slate</td>
 <td>The official schedule lists POR @ MIN on 2026-11-16 AND 2026-11-17 (0022600250, 0022600254, both Target Center), and NYK @ TOR on 2026-11-15 AND 2026-11-17 (0022600241, 0022600253, both Scotiabank Arena). The 2026-11-14 capture renders both pairs as distinct official game entries with distinct game IDs, resolving the earlier &#x27;duplicate card?&#x27; question: these are genuine schedule entries. Unusual, but real.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Game flow already prices the POR@MIN pair as a same-venue back-to-back; no model change needed. Keep monitoring for postponements.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ANOM-01">FLAG-ANOM-01</a></td>
@@ -47,7 +47,7 @@
 <td>low</td>
 <td>provenance</td>
 <td>The slate table&#x27;s &#x27;Official game page&#x27; column prints the verified URLs as plain text rather than clickable links — 36 rows in the current window — which makes manual review slower than it needs to be. No data is affected.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Wrap the cell in an anchor at build time (suggestion S-A02 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-AUD-01">FLAG-AUD-01</a></td>
@@ -57,7 +57,7 @@
 <td>low</td>
 <td>correlation</td>
 <td>r(SRS, margin/G) is computed on 30 team-season points from one snapshot; it is a descriptive statistic, not a stable parameter.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Recompute each week; store the series.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-01">FLAG-CORR-01</a></td>
@@ -67,7 +67,7 @@
 <td>high</td>
 <td>correlation</td>
 <td>The margin/total correlation that drives same-game parlays is now measured in the backtest tree (139 official finals, point-in-time): r = -0.009 (95% CI -0.17 to 0.15) — the S-04 same-game parlay premise is unsupported by the data so far. Root-site parlay figures remain a band, not a price.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</a></td>
 <td>Ingest game-level results (R-103).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-02">FLAG-CORR-02</a></td>
@@ -77,7 +77,7 @@
 <td>high</td>
 <td>correlation</td>
 <td>Same-player prop correlations are unmeasured; prop combos cannot be priced honestly today.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</a></td>
 <td>Ingest player box scores.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-03">FLAG-CORR-03</a></td>
@@ -87,7 +87,7 @@
 <td>low</td>
 <td>correlation</td>
 <td>Exclusion rule for same-team consecutive games is a design rule, not a measurement.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</a></td>
 <td>No action.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-04">FLAG-CORR-04</a></td>
@@ -97,7 +97,7 @@
 <td>medium</td>
 <td>correlation</td>
 <td>Cross-game near-independence is assumed. It is usually fine and occasionally badly wrong (same-arena doubleheaders, shared travel).</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</a></td>
 <td>Test once a bet ledger exists.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-05">FLAG-CORR-05</a></td>
@@ -107,7 +107,7 @@
 <td>low</td>
 <td>provenance</td>
 <td>Currency history worth keeping on the record: the first published injury rows (official 16:15 ET release) were superseded three times the same evening — 17:15, 18:15 and 19:15 ET — by 12 status changes and 32 added rows (complete line-by-line delta on the Session Audit page). The site now publishes the official 19:30 ET release, ingested by the 2026-11-14 refresh; later game-day releases can still change statuses before tip-off (FLAG-REFRESH-01), and no rows exist yet for 11/15–17 (FLAG-SLATE-06).</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf</a></td>
 <td>Nightly ingest now covers later releases (refresh workflow); the delta table stays as the audit trail of what changed between revisions (suggestion S-A01 — implemented).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CUR-01">FLAG-CUR-01</a></td>
@@ -117,7 +117,7 @@
 <td>medium</td>
 <td>provenance</td>
 <td>In the official 19:15 ET revision, the team label for Martin, Caleb is dropped at a page break, leaving his entry ambiguous between the Cleveland Cavaliers and the Dallas Mavericks block; that revision also printed a contradictory &#x27;Cleveland Cavaliers — NOT YET SUBMITTED&#x27; placeholder. The 17:15, 18:15 and 19:30 ET releases all print &#x27;Cleveland Cavaliers&#x27; explicitly on his row, which is how his team is attributed in the published snapshot.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf</a></td>
 <td>Owner check against the next official revision; keep the Cleveland attribution only for as long as the later revisions keep printing it.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CUR-02">FLAG-CUR-02</a></td>
@@ -127,7 +127,7 @@
 <td>high</td>
 <td>game flow</td>
 <td>Rest days, pace, garbage time, foul trouble and closing lineups are blank because the needed data (prior game dates outside the window, PBP, lineups) is not in the repo.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Extend snapshot window to the full season (R-103).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-01">FLAG-FLOW-01</a></td>
@@ -137,7 +137,7 @@
 <td>medium</td>
 <td>game flow</td>
 <td>Back-to-back detection only sees inside 2026-11-13..17; a team playing Nov 12 is invisible, so &#x27;not in window&#x27; does not mean &#x27;rested&#x27;.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Same as R-103.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-02">FLAG-FLOW-02</a></td>
@@ -147,7 +147,7 @@
 <td>medium</td>
 <td>game flow</td>
 <td>FIXED 2026-11-14 (COORDINATION.md I-07): the B2B/3-in-4 flags used substring matching against the pair/sequence strings, so the FIRST night of a consecutive pair was also flagged (e.g. DAL on 11/14 before its 11/15 game). Detection now anchors on the second/third night; a regression test pins it. Rows published before 2026-11-14 carry the inflated values.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/gameflow.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/gameflow.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/gameflow.py</a></td>
 <td>No action for the current build; treat pre-refresh game-flow B2B values as over-counted.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-FLOW-03">FLAG-FLOW-03</a></td>
@@ -157,17 +157,57 @@
 <td>high</td>
 <td>gates</td>
 <td>All ten gate thresholds are PROPOSED by this repo; none is sourced from a published standard, and 7 of 10 cannot currently be evaluated.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</a></td>
 <td>Owner ratifies thresholds (S-04).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GATE-01">FLAG-GATE-01</a></td>
+</tr>
+<tr id="FLAG-GRADE-01">
+<td>FLAG-GRADE-01</td>
+<td>high</td>
+<td>graded</td>
+<td>The 2026-11-13 graded card is a walk-forward backtest, NOT a pre-registered forward test. No sealed ledger covers 2026-11-13: sealed-2026-11-13.json predicts 11/14-11/16 and sealed-2026-11-14.json predicts 11/14-11/17. The project began on the evening of 2026-11-13 when that slate was already live, so nothing was sealed for it. The inputs are strictly point-in-time (the ratings snapshot was retrieved 2026-11-13 22:35 UTC; the first tip was 2026-11-14 00:00 UTC, and the identity ratings+results==official standings holds for 30/30 clubs), but the predictions were not published before the games. Treat the result as evidence about the model, not as a betting record.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-3681/grade_1113.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-3681/grade_1113.py</a></td>
+<td>Seal every slate before its first tip from now on; the 11/14-11/17 ledger already does.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GRADE-01">FLAG-GRADE-01</a></td>
+</tr>
+<tr id="FLAG-GRADE-02">
+<td>FLAG-GRADE-02</td>
+<td>high</td>
+<td>graded</td>
+<td>n = 9 games. Neither improvement on the graded card is statistically significant: permutation p = 0.952 for margin error and p = 0.402 for total error. Detecting a 55% hit rate at 5% significance with 80% power needs about 1,565 graded games. The card does not establish skill and does not unblock any gate.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/graded_2026-11-13.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/graded_2026-11-13.json</a></td>
+<td>Keep grading every completed slate; re-test only when the sample supports it.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GRADE-02">FLAG-GRADE-02</a></td>
+</tr>
+<tr id="FLAG-GRADE-03">
+<td>FLAG-GRADE-03</td>
+<td>high</td>
+<td>graded</td>
+<td>No market price exists in this repository, so the graded card cannot report ROI, CLV or stake. &#x27;Covering our own line&#x27; is self-consistency only, not a market test — the cover column is published with that caveat attached.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/settle.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/settle.py</a></td>
+<td>Connect a licensed odds feed (R-101) before any betting claim.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GRADE-03">FLAG-GRADE-03</a></td>
+</tr>
+<tr id="FLAG-GRADE-04">
+<td>FLAG-GRADE-04</td>
+<td>info</td>
+<td>graded</td>
+<td>Two of the nine games missed by more than 20 points on the margin (GSW@SAS: predicted SAS +3.2, actual SAS +38; MEM@NOP: predicted MEM by 8.3, actual MEM by 31). Both are reported, not smoothed — they are the main drivers of the margin MAE.</td>
+<td><a class="cell-link" href="https://www.nba.com/game/gsw-vs-sas-0022600040" target="_blank" rel="noopener">https://www.nba.com/game/gsw-vs-sas-0022600040</a></td>
+<td>Investigate whether the early-season ratings over-shrink large true gaps (S-31).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-GRADE-04">FLAG-GRADE-04</a></td>
 </tr>
 <tr id="FLAG-INJ-01">
 <td>FLAG-INJ-01</td>
 <td>medium</td>
 <td>injuries</td>
 <td>27 of 122 rows carry no team cell in the PDF text extraction (table continuation across page breaks). Team attribution follows the documented convention in attribution_key; one row (DAL@CLE Martin, Caleb) uses cross-release evidence from the same document instead of the convention.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Spot-check the continuation rows against the PDF rendering at the source URL.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-01">FLAG-INJ-01</a></td>
@@ -177,7 +217,7 @@
 <td>high</td>
 <td>injuries</td>
 <td>No numeric injury impact can be produced. Quantifying a status change requires player-level minutes, usage and on/off data plus a replacement-availability model; the official NBA stats endpoints that serve those tables remain unreachable in this session. Impact columns are blank by design, not omitted.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Grant the pipeline access to official player-level box score / minute data (requirements R-102) before any injury adjustment is applied to lines.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-02">FLAG-INJ-02</a></td>
@@ -187,7 +227,7 @@
 <td>info</td>
 <td>injuries</td>
 <td>No rows carry an explicit team label for Milwaukee or New York in this release (their 11/13 game blocks list only the opponent&#x27;s players). Absence of a row is NOT evidence that a player is available.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Do not treat MIL/NYK as clean; re-read the game-day report before tip.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-03">FLAG-INJ-03</a></td>
@@ -197,7 +237,7 @@
 <td>medium</td>
 <td>injuries</td>
 <td>Five of the ten teams in the 2026-11-14 window (NOP, CLE, MEM, CHI, MIA) had still not submitted their injury report at 19:30 ET on 2026-11-13. Their lines carry no availability information; the game-day report (11 a.m.-1 p.m. local on 2026-11-14) is the next mandatory filing.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Re-run the refresh after the 2026-11-14 game-day report is published.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-04">FLAG-INJ-04</a></td>
@@ -207,7 +247,7 @@
 <td>medium</td>
 <td>injuries</td>
 <td>Ten rows (4 Dallas Mavericks, 6 Detroit Pistons) carry no team/game cells in the text extraction because the PDF table breaks across pages. Their team attribution comes from document order (the last team label printed in that game block before the row), matching the convention of injury_report_2026-11-13.json.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Confirm the 10 attribution=C rows against the PDF image at the source URL.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-05">FLAG-INJ-05</a></td>
@@ -217,7 +257,7 @@
 <td>medium</td>
 <td>injuries</td>
 <td>The text extraction dropped the tip-time cell for the 2026-11-14 DET@MIA block (the Detroit player rows and the Miami placeholder row carry no time). Left blank rather than inferred. The tip time for DET@MIA is published elsewhere on this site from the official schedule snapshot.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Confirm against the PDF image, or leave blank; do not copy a time from another release.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-06">FLAG-INJ-06</a></td>
@@ -227,7 +267,7 @@
 <td>high</td>
 <td>injuries</td>
 <td>At the 19:30 ET release five teams (New Orleans, Cleveland, Memphis, Chicago, Miami) were still NOT YET SUBMITTED for 2026-11-14, and no designations exist yet for 2026-11-15/16. Statuses can change before tip-off (game-day reports are due 11 a.m.-1 p.m. local on 11/14 per the official cadence rule).</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Re-capture at each later release; the nightly ingest workflow (nba2/pipeline/refresh.py) exists for exactly this.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-07">FLAG-INJ-07</a></td>
@@ -237,7 +277,7 @@
 <td>medium</td>
 <td>injuries</td>
 <td>CORRECTION (2026-11-14, session arena/6650be4d-nba2): the 11/13 19:30 ET release was transcribed with Caleb Martin under the CLEVELAND Cavaliers. The PDF breaks across pages with the Team column blank on the continuation rows, and Martin&#x27;s row falls in that gap, immediately before the &#x27;Cleveland Cavaliers | NOT YET SUBMITTED&#x27; line - so the team was inferred from the wrong side of the break. The 11/14 05:00 a.m ET release repeats the team on every row and prints Martin under the DALLAS Mavericks. The published window rows now come from that release, so the corrected attribution is what the site shows; the row-level diff is published on the Injuries page.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</a></td>
 <td>Re-read every continuation row of any future release against a rendering that repeats the team, or wait for the next same-day revision.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-08">FLAG-INJ-08</a></td>
@@ -247,17 +287,27 @@
 <td>low</td>
 <td>injuries</td>
 <td>An injury report is re-issued repeatedly and a status can move between releases. The delta between the two releases this session compared is published on the Injuries page; as of the 05:00 a.m ET release none of the 26 rows shared with the 19:30 ET release had changed status or reason.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</a></td>
 <td>Re-run the delta on every new release; a status change is a different bet.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-09">FLAG-INJ-09</a></td>
+</tr>
+<tr id="FLAG-INJ-10">
+<td>FLAG-INJ-10</td>
+<td>info</td>
+<td>injuries</td>
+<td>At the 2026-11-14 05:00 AM ET release, five of the ten clubs on the 11/14 slate had filed nothing (New Orleans, Cleveland, Memphis, Miami, Chicago) and all eighteen 11/15 club entries read NOT YET SUBMITTED. This is the official state of the document, not a parsing failure — the 11 a.m.-1 p.m. local game-day filing window had not opened.</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf</a></td>
+<td>Re-fetch after 1 p.m. ET for a complete 11/14 card, and after 5 p.m. ET for 11/15.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-INJ-10">FLAG-INJ-10</a></td>
 </tr>
 <tr id="FLAG-LB-01">
 <td>FLAG-LB-01</td>
 <td>high</td>
 <td>leaderboard</td>
 <td>The leaderboard is empty by design: no strategy has settled bets, so no score exists. Reward pool is 100% unallocated.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/leaderboard.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/leaderboard.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/leaderboard.py</a></td>
 <td>Settle the sealed ledger.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LB-01">FLAG-LB-01</a></td>
@@ -267,7 +317,7 @@
 <td>high</td>
 <td>lines</td>
 <td>Lines are built from a third-party standings snapshot of ~12 games per team; they are a research baseline, not a bookmaking number.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Validate on 30 days of sealed predictions.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-01">FLAG-LINE-01</a></td>
@@ -277,7 +327,7 @@
 <td>medium</td>
 <td>lines</td>
 <td>Games marked Tier C are those where the two base ratings disagree beyond tolerance; they are still shown because the slate must be complete, but they must not be bet.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py</a></td>
 <td>Keep excluded from staking.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-02">FLAG-LINE-02</a></td>
@@ -287,7 +337,7 @@
 <td>medium</td>
 <td>picks</td>
 <td>The 1.5-pt trigger hurdle is arbitrary and untested; it decides which games are actionable, so it is a money decision dressed as a parameter.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py</a></td>
 <td>Optimise on settled data, not intuition.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-LINE-03">FLAG-LINE-03</a></td>
@@ -297,7 +347,7 @@
 <td>low</td>
 <td>provenance</td>
 <td>In the originated/ evidence tree, originated/data/teams.json rows carry duplicate JSON keys: each team object has both &quot;conf&quot;: &quot;East|West&quot; and &quot;conf&quot;: &quot;&lt;conference record&gt;&quot;. A JSON parser silently keeps the last, so the conference name is unreachable and originated/engine/model.js publishes the conference record in its place. Not fixed here (the WSH→WAS team-key fix was this session&#x27;s scope; the schema repair is the tree owner&#x27;s call) — flagged for review 2026-11-14 by arena/6c5195d1.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/originated/data/teams.json</a></td>
 <td>Owner renames one of the two keys (e.g. conf_record) and regenerates originated/ (the 24-check verifier must stay green).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-ORIG-01">FLAG-ORIG-01</a></td>
@@ -307,7 +357,7 @@
 <td>info</td>
 <td>provenance</td>
 <td>Two verified site trees ship from this repository, and only ONE is served: probed 2026-11-14 (final-integration session), https://wingbangboozle1-lang.github.io/NBA2/ serves the v2 site/ artifact (built and provenance-checked by .github/workflows/pages.yml, deployed by the deploy-pages action) while the root tree&#x27;s pages/ URLs return 404 — the Pages API&#x27;s build_type: legacy (branch main /) does not describe the artifact readers receive. Both trees are fully checked (root: provenance lint — every row sourced, every blank explained — plus the semantic cross-check, 83 pass / 0 fail on 2026-11-14; v2: 0 structural / 0 semantic problems). The root tree additionally publishes the sealed-ledger picks and the settlement chain the brief asks for but is NOT currently reachable from the live URL; see S-A05 and suggestion S-27/Q-27 (owner: archive the root tree or surface it).</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/pages.yml</a></td>
 <td>Owner decides S-27: archive the root tree or restore it as the published surface; until then it stays CI-verified and refreshed nightly.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PAGES-01">FLAG-PAGES-01</a></td>
@@ -317,7 +367,7 @@
 <td>low</td>
 <td>model</td>
 <td>σ (margin sd) is fitted from a third-party ratings table, not measured from game-level margins; a ±10% change in σ moves every win probability on the site.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Re-fit σ once official game results are ingested (R-103).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-01">FLAG-PARAM-01</a></td>
@@ -327,7 +377,7 @@
 <td>medium</td>
 <td>model</td>
 <td>Home-court advantage is weakly identified by the current fit: the joint fit returns 1.53 pts while the verified league home win rate of 51.15% implies ≈0.4 pts. The two disagree, so HCA is published with a ±(0.5, 2.0) band and feeds the sensitivity check.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Fit HCA from game-level home/away margins; do not adopt a literature constant.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-02">FLAG-PARAM-02</a></td>
@@ -337,7 +387,7 @@
 <td>low</td>
 <td>model</td>
 <td>Reliability shrinkage assumes each team plays half its games at home and that schedule difficulty is fully captured by SRS. Neither is exact at 12 games.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py</a></td>
 <td>Use the real schedule once it is ingested.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-03">FLAG-PARAM-03</a></td>
@@ -347,7 +397,7 @@
 <td>high</td>
 <td>model</td>
 <td>The total-line SD is a placeholder (20.0) — no game-level totals existed when it was set. Official finals history now exists (backtest tree, 155 games), but a re-fit changes published numbers and is an owner decision (S-04). It affects parlay levels, not the ratio comparisons.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</a></td>
 <td>Estimate from settled games before publishing any parlay price.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-04">FLAG-PARAM-04</a></td>
@@ -357,7 +407,7 @@
 <td>medium</td>
 <td>model</td>
 <td>Thresholds marked unratified (disagreement tolerance 2.0 pts, Tier-A conviction 0.20σ, trigger hurdle 1.5 pts, status→P(plays) weights) are our choices with no external source. They must be ratified by the owner before any money is risked.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</a></td>
 <td>Owner decision, see Suggestions S-04.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PARAM-05">FLAG-PARAM-05</a></td>
@@ -457,7 +507,7 @@
 <td>high</td>
 <td>parlays</td>
 <td>ρ band [-0.20, +0.40] is our own ratified-for-now guess at the margin/total correlation, and the total SD is a placeholder.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</a></td>
 <td>Replace both before quoting prices.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a></td>
@@ -467,7 +517,7 @@
 <td>medium</td>
 <td>parlays</td>
 <td>Only 10 of 36 slate games are quoted on the parlay page (highest conviction). The selection is a convenience filter, not a strategy claim.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py</a></td>
 <td>Compute all games once prices exist.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-02">FLAG-PRL-02</a></td>
@@ -477,7 +527,7 @@
 <td>medium</td>
 <td>parlays</td>
 <td>Cost tables use the -110 reference price, which is a labelled placeholder: no real book price was available to this build, so hold percentages are illustrative of the mechanism, not of any market.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/config.py</a></td>
 <td>Recompute with captured closing prices (R-101).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
@@ -487,7 +537,7 @@
 <td>high</td>
 <td>process</td>
 <td>A patch script in this session overwrote data/raw/injury_report_2026-11-13.json with source code (a reused variable name in a throwaway editing script). Detected on the next build when the JSON failed to parse; restored from commit 638b369 and re-patched correctly. No data was lost because every snapshot is committed before use.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/commit/638b369</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/commit/638b369" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/commit/638b369</a></td>
 <td>Keep the rule that raw snapshots are committed before the pipeline reads them, and re-verify after every scripted edit (git diff on data/raw must be empty except intended changes).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROC-01">FLAG-PROC-01</a></td>
@@ -497,7 +547,7 @@
 <td>high</td>
 <td>props</td>
 <td>Player-prop pricing has no input data: no official minutes, usage or prop lines exist in this repository.</td>
-<td>https://stats.nba.com/stats/leaguestandingsv3</td>
+<td><a class="cell-link" href="https://stats.nba.com/stats/leaguestandingsv3" target="_blank" rel="noopener">https://stats.nba.com/stats/leaguestandingsv3</a></td>
 <td>Connect official player data + prop feed (R-102, R-101).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-01">FLAG-PROP-01</a></td>
@@ -507,7 +557,7 @@
 <td>low</td>
 <td>props</td>
 <td>The mechanism demo uses assumed parameters (p=0.55, ρ=0.40) to show the size of the independence error; it is not a projection for any player.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/props.py</a></td>
 <td>No action; labelled in-table.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PROP-02">FLAG-PROP-02</a></td>
@@ -517,7 +567,7 @@
 <td>low</td>
 <td>questions</td>
 <td>Answers marked &#x27;unknown&#x27; are unknown to the data we could reach; another tool with an odds/player feed may already know them.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</a></td>
 <td>Route to data vendor answers.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
@@ -527,7 +577,7 @@
 <td>medium</td>
 <td>ratings</td>
 <td>Point-level season rates (PS/G, PA/G, SRS) could not be retrieved from an official NBA.com endpoint in this session: stats.nba.com is unreachable from the tooling and nba.com/stats tables are client-rendered. Values are third-party sourced and require one-time manual confirmation against the official NBA.com standings &#x27;Margins &amp; Stats&#x27; section.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Confirm PS/G, PA/G and rating values at https://www.nba.com/standings (Section: Margins &amp; Stats) and at https://www.nba.com/stats/team/&lt;team_id&gt;.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-01">FLAG-RAT-01</a></td>
@@ -537,7 +587,7 @@
 <td>low</td>
 <td>ratings</td>
 <td>The close-game and blowout-game split columns are internally inconsistent AT THE TEAM LEVEL: for 18 of the 30 clubs the close and blowout rows together account for more games than the club has played (ATL shows 13 close+blowout games in a 12-game record, MEM 12 in 11, DET 12 in 11). The league-wide sums DO balance (close 99=99, blowout 88=88), so a league-level check alone would have passed - the check has to be per team. These columns are therefore NOT used for any model parameter and are left blank in the luck table: a split that contradicts the games played cannot support a per-team luck claim. The cause is the text extraction of the source table (blank/merged cells), not necessarily the source itself.</td>
-<td>https://www.basketball-reference.com/leagues/NBA_2027_standings.html</td>
+<td><a class="cell-link" href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" target="_blank" rel="noopener">https://www.basketball-reference.com/leagues/NBA_2027_standings.html</a></td>
 <td>Re-extract the close/blowout columns from the source table row by row, or drop them from the snapshot. Do not publish them until every club satisfies close+blowout &lt;= games played (owner decision tracked as suggestion S-34, renumbered from the queue-fragment S-26).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-02">FLAG-RAT-02</a></td>
@@ -547,7 +597,7 @@
 <td>low</td>
 <td>ratings</td>
 <td>The official standings table (nba.com/standings) now supplies every club&#x27;s W-L plus HOME/ROAD/CONF/DIV splits and is published on the Methodology page — but its &#x27;Margins &amp; Stats&#x27; section does NOT render PS/G, PA/G or SRS for a non-browser client, so those three model inputs are still third-party (FLAG-RAT-01). The official game pages do carry the win-loss records on their cards, which is a second independent official read.</td>
-<td>https://www.nba.com/standings</td>
+<td><a class="cell-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">https://www.nba.com/standings</a></td>
 <td>Confirm PS/G, PA/G and SRS once against the official standings page in a browser, or connect stats.nba.com from a runner (R-103).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RAT-03">FLAG-RAT-03</a></td>
@@ -557,7 +607,7 @@
 <td>low</td>
 <td>injuries</td>
 <td>The 2026-11-14 availability refresh is a point-in-time capture (11/13 19:30 ET official release, retrieved 2026-11-14 00:47 UTC). Later releases on 11/14 (continual updates, game-day reports 11 a.m.-1 p.m. local) can change statuses before tip-off; the nightly ingest workflow fetches and archives them but does not rewrite sealed predictions.</td>
-<td>https://official.nba.com/nba-injury-report-2026-27-season/</td>
+<td><a class="cell-link" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">https://official.nba.com/nba-injury-report-2026-27-season/</a></td>
 <td>Let the nightly workflow ingest later releases; verify the archived PDF against the transcript.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REFRESH-01">FLAG-REFRESH-01</a></td>
@@ -567,7 +617,7 @@
 <td>low</td>
 <td>repo review</td>
 <td>Repo-review findings are point-in-time (main @ 7fa2a24). Later commits may fix or reintroduce them.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/commits/main</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/commits/main" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/commits/main</a></td>
 <td>Re-run review on each merge.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REPO-01">FLAG-REPO-01</a></td>
@@ -577,7 +627,7 @@
 <td>low</td>
 <td>requirements</td>
 <td>Requirement statuses are this session&#x27;s self-assessment against the repo contents, not an external audit.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</a></td>
 <td>Owner review.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -587,17 +637,27 @@
 <td>info</td>
 <td>provenance</td>
 <td>FLAG-SLATE-02 states that the win-loss records for Toronto and Washington &#x27;were not visible in the retrieved NBA.com page text; third-party value only&#x27;. On 2026-11-14 all 30 teams&#x27; W-L were re-read from the official standings page and match the snapshot exactly, including TOR 5-7 and WAS 4-9 — the two records the flag was raised for.</td>
-<td>https://www.nba.com/standings</td>
+<td><a class="cell-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">https://www.nba.com/standings</a></td>
 <td>Owner closes FLAG-SLATE-02; no value changed — the third-party rows are now official too.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-RES-01">FLAG-RES-01</a></td>
+</tr>
+<tr id="FLAG-SEAL-05">
+<td>FLAG-SEAL-05</td>
+<td>low</td>
+<td>ledger</td>
+<td>Crosscheck CC-SEAL-04 reports five 2026-11-14 ledger predictions as not tipped after the snapshot. It compares calendar dates, not timestamps, and is a false positive: the ledger was sealed 2026-11-14T00:58:54Z and the earliest game in it tips 2026-11-14 19:00 ET = 2026-11-15T00:00Z, a 23.02-hour lead. The minimum lead across all 27 predictions is 23.02 hours.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json</a></td>
+<td>Owner of tools/crosscheck_site.py compares datetimes instead of dates (RR-19).</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SEAL-05">FLAG-SEAL-05</a></td>
 </tr>
 <tr id="FLAG-SET-01">
 <td>FLAG-SET-01</td>
 <td>info</td>
 <td>provenance</td>
-<td>Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:02:53+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json</td>
+<td>Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json</a></td>
 <td>Commit data/raw/finals_&lt;date&gt;.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-01">FLAG-SET-01</a></td>
@@ -607,7 +667,7 @@
 <td>info</td>
 <td>provenance</td>
 <td>Official final scores for the nine 2026-11-13 games are now committed (data/raw/finals_2026-11-13.json, read from the official schedule page). Those nine games are day-before CONTEXT: neither sealed ledger covers them, so the published grade is a model check and NOT a settled registered forecast. Settlement of the sealed windows (11/14-11/17) stays PENDING because those games have not been played.</td>
-<td>https://www.nba.com/schedule?date=2026-11-14</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">https://www.nba.com/schedule?date=2026-11-14</a></td>
 <td>Keep re-running python -m nba2.pipeline.settle after each game day; never publish a settlement number that the sealed ledger does not cover.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SET-02">FLAG-SET-02</a></td>
@@ -617,7 +677,7 @@
 <td>high</td>
 <td>slate</td>
 <td>No market price data was retrievable in any session so far. NBA.com renders odds client-side behind a &#x27;HIDE ODDS&#x27; toggle and the official picks.nba.com product exposes no lines. Every &#x27;edge&#x27; figure on this site is measured against our own baseline model, NOT against a vig-adjusted market price.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Connect a licensed odds feed (see requirements R-101 and the Questions page, Q-04).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-01">FLAG-SLATE-01</a></td>
@@ -627,7 +687,7 @@
 <td>info</td>
 <td>provenance</td>
 <td>Historical flag (raised 2026-11-13, kept registered so the ratings table&#x27;s TOR/WAS rows can link the coverage history they carry per CR-4): the win-loss records for Toronto and Washington &#x27;were not visible in the retrieved NBA.com page text; third-party value only&#x27; in the capture that raised it. RESOLVED — see FLAG-RES-01: on 2026-11-14 all 30 teams&#x27; W-L were re-read from the official standings page (TOR 5-7, WAS 4-9) and match, and nba2/data/records.json verifies TOR/WAS via their official NBA.com team pages.</td>
-<td>https://www.nba.com/standings</td>
+<td><a class="cell-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">https://www.nba.com/standings</a></td>
 <td>None — recorded history. FLAG-RES-01 carries the resolution evidence.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-02">FLAG-SLATE-02</a></td>
@@ -637,7 +697,7 @@
 <td>info</td>
 <td>slate</td>
 <td>2026-27 game IDs are not monotonic with date: Nov 13 runs 0022600034-0022600042 (Emirates NBA Cup group play) and Nov 14 resumes at 0022600231 - a gap of 188 IDs between consecutive game days, re-confirmed in the 2026-11-14 capture. Any pipeline that guesses IDs by sequence will corrupt joins.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Always read game_id from the schedule payload; never derive it.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-03">FLAG-SLATE-03</a></td>
@@ -647,7 +707,7 @@
 <td>medium</td>
 <td>slate</td>
 <td>Tip times come from the rendered /schedule page, whose time list is not reliably aligned with the games beside it; they are published but NOT independently confirmed. Confirm on the game page before trusting anything time-sensitive (live/teaser/settlement windows).</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>CONFIRMED 2026-11-14 (session arena/72f9da58): all 31 tips of the original window now carry at least two official sources — the schedule page and the game rail on nba.com/game/den-vs-nop-0022600231; the nine 11/13 tips additionally match the official injury report&#x27;s Game Time column. No time remains single-source. See the Session Audit page.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-04">FLAG-SLATE-04</a></td>
@@ -657,7 +717,7 @@
 <td>info</td>
 <td>slate</td>
 <td>RESOLVED BY THE 2026-11-14 REFRESH for this window: all 36 official game-page URLs rendered verbatim in the retrieved page text (previously a slug rule confirmed on 12 of 31). Future slates need the same click-through before the flag can stay closed.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Independently re-confirmed 2026-11-14 by session arena/72f9da58: every one of the original 31 slugs was read back from links nba.com itself prints (schedule previews + the game rail) and matched 31/31. Keep the click-through habit for each new slate. See the Session Audit page.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-05">FLAG-SLATE-05</a></td>
@@ -667,7 +727,7 @@
 <td>high</td>
 <td>slate</td>
 <td>Availability data for the pick window is still incomplete: the 11/13 19:30 ET release carries day-before designations for 2026-11-14 only (5 of 10 team-slots filed, 5 NOT YET SUBMITTED), and nothing exists yet for 11/15-17, so most of the window is priced without availability data. This is a structural property of publishing at T-3, not a to-do item.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf</a></td>
 <td>Re-issue availability after each later release (the nightly ingest workflow now does this; see FLAG-REFRESH-01).</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-06">FLAG-SLATE-06</a></td>
@@ -677,7 +737,7 @@
 <td>low</td>
 <td>slate</td>
 <td>The nine 2026-11-13 games were LIVE or completed at retrieval time; their records are carried forward byte-identically from the verified 2026-11-13 capture and re-checked field by field. Tip times for the two live games (0022600034, 0022600035) come from that capture, not from the live clock.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>None - context rows only, never sealed or staked.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-07">FLAG-SLATE-07</a></td>
@@ -687,7 +747,7 @@
 <td>low</td>
 <td>slate</td>
 <td>Two official pages disagree on the tip time of one game in the window: the /schedule card for 0022600249 (HOU @ MIA, 2026-11-16) rendered &#x27;8:00 PM ET&#x27;, while the game&#x27;s own page (https://www.nba.com/game/hou-vs-mia-0022600249) renders &#x27;7:30 PM ET&#x27; in both its game rail and its header line &#x27;Monday, November 16th, 2026 7:30 PM ET&#x27;. The published value follows the game&#x27;s own page. The other 35 games in the window were re-read in this session and match the committed snapshot exactly.</td>
-<td>https://www.nba.com/game/hou-vs-mia-0022600249</td>
+<td><a class="cell-link" href="https://www.nba.com/game/hou-vs-mia-0022600249" target="_blank" rel="noopener">https://www.nba.com/game/hou-vs-mia-0022600249</a></td>
 <td>Treat the game&#x27;s own page as authoritative for its tip time; re-check this game before anything time-sensitive (live betting window, settlement) is built on it.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SLATE-09">FLAG-SLATE-09</a></td>
@@ -697,17 +757,27 @@
 <td>low</td>
 <td>sourcing</td>
 <td>Rows sourced to a third party, to derivation, or to a blocked endpoint are flagged even when the value looks fine.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</a></td>
 <td>No action; disclosure by design.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SRC-01">FLAG-SRC-01</a></td>
+</tr>
+<tr id="FLAG-STAND-01">
+<td>FLAG-STAND-01</td>
+<td>low</td>
+<td>standings</td>
+<td>Games played are uneven this early in the season: Denver has played 10 games while Utah, Milwaukee, Boston, Detroit, Brooklyn and Philadelphia have played 12-14. Win-percentage ordering and SRS both handle this, but raw win counts do not — the official standings page orders by percentage, and this snapshot does the same.</td>
+<td><a class="cell-link" href="https://www.nba.com/standings" target="_blank" rel="noopener">https://www.nba.com/standings</a></td>
+<td>No action; noted so nobody reads DEN&#x27;s 6-4 as a shorter schedule bug.</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-STAND-01">FLAG-STAND-01</a></td>
 </tr>
 <tr id="FLAG-SUGG-01">
 <td>FLAG-SUGG-01</td>
 <td>info</td>
 <td>suggestions</td>
 <td>Suggestions are not implemented. The queue exists so an owner chooses; treating them as done would be exactly the failure mode this project is about.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md</a></td>
 <td>Owner decides.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
@@ -717,7 +787,7 @@
 <td>high</td>
 <td>cross-session</td>
 <td>A status conflict where the latest official revision agrees with neither capture, or with the older one: our snapshot would be stale or wrong. Each such row is listed and must be re-read from the PDF before it influences anything.</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_05_15PM.pdf</a></td>
 <td>Re-parse the newest revision; do not trust any cached snapshot past tip-off.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-01">FLAG-XADJ-01</a></td>
@@ -727,7 +797,7 @@
 <td>medium</td>
 <td>cross-session</td>
 <td>The third session&#x27;s ingest does not contain a row for a disputed player, so the conflict cannot be adjudicated from it. Absence in that file is not absence from the report — their parse is partial by their own note.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</a></td>
 <td>Read the 17:15 PDF directly for these rows.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-02">FLAG-XADJ-02</a></td>
@@ -737,7 +807,7 @@
 <td>low</td>
 <td>cross-session</td>
 <td>Rows where the 17:15 ET revision corroborates our 16:15 capture. Recorded so the corroboration is auditable rather than asserted in prose.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</a></td>
 <td>None; keep the three timestamps side by side when the next revision lands.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XADJ-03">FLAG-XADJ-03</a></td>
@@ -747,7 +817,7 @@
 <td>medium</td>
 <td>cross-session</td>
 <td>Two independent models priced the same games and disagree by more than 1.5 points on the spread for some games. Neither has a market to check against, so the disagreement is the best available estimate of model uncertainty.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</a></td>
 <td>Treat the spread delta as an uncertainty band; widen triggers until an odds feed exists.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
@@ -757,7 +827,7 @@
 <td>low</td>
 <td>cross-session</td>
 <td>Some games exist in only one session&#x27;s slate because the two captures covered different date ranges (11/13–15 vs 11/13–16).</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/schedule.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/schedule.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/schedule.json</a></td>
 <td>Use the union of dates when scheduling the next build.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
@@ -767,7 +837,7 @@
 <td>high</td>
 <td>cross-session</td>
 <td>A win-loss record disagrees between two sessions that each claim to have read NBA.com. One of the two retrievals is wrong; until it is re-checked on the official page, neither record may be used for pricing.</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Re-confirm the specific team page; correct whichever snapshot is wrong.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-03">FLAG-XSESS-03</a></td>
@@ -777,7 +847,7 @@
 <td>low</td>
 <td>cross-session</td>
 <td>RESOLVED — the same player carried different statuses in the two sessions&#x27; captures. Adjudicated by a third document: the 17:15 ET revision, ingested independently by session arena-71f94203, matches our 16:15 read on all 6 disputed rows (Wilson Doubtful→Out, Antetokounmpo Probable→Available, Larsson Questionable→Doubtful, Thompson Questionable→Probable, Murray Doubtful→Out, Achiuwa Questionable→Out). Neither session misread anything: the report was republished between the two retrievals, and the newer one agrees with us.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/verified/injuries_2026-11-13_0515PM.json</a></td>
 <td>Keep the revision timestamp with every row (S-09). Re-check 30 min before tip; a status is only ever true as-of a minute, not a date.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-04">FLAG-XSESS-04</a></td>
@@ -787,7 +857,7 @@
 <td>medium</td>
 <td>cross-session</td>
 <td>Players appear in one session&#x27;s injury capture but not the other&#x27;s, because the two captures cover different games and different report revisions. This is a coverage difference, not a correction.</td>
-<td>https://www.nba.com/</td>
+<td><a class="cell-link" href="https://www.nba.com/" target="_blank" rel="noopener">https://www.nba.com/</a></td>
 <td>Take the union of revisions; mark which rows are unreconciled.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-05">FLAG-XSESS-05</a></td>
@@ -797,7 +867,7 @@
 <td>high</td>
 <td>cross-session</td>
 <td>Two models built from the same official inputs disagree on 21 of 23 matched spreads (median |Δ| 6.0 pts) — a spread difference larger than the entire edge any model can plausibly have. This is the strongest argument on the site for never betting a single model&#x27;s number without a market check.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json</a></td>
 <td>Ensemble or abstain: require the two models to agree before a trigger is armed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-06">FLAG-XSESS-06</a></td>
@@ -807,7 +877,7 @@
 <td>high</td>
 <td>cross-session</td>
 <td>Three models, one slate: mean absolute spread disagreement is 2.9 pts, and 2.7 pts after removing session 3&#x27;s own injury adjustment from its line. Most of the apparent model disagreement is unratified convention, not a difference in the evidence — which is why every convention on this site is labelled and none is treated as a fact.</td>
-<td>https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py</td>
+<td><a class="cell-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py" target="_blank" rel="noopener">https://github.com/wingbangboozle1-lang/NBA2/blob/main/scripts/model.py</a></td>
 <td>Ratify one injury/rest convention (or none) before any trigger is armed; see S-04.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
@@ -817,7 +887,7 @@
 <td>medium</td>
 <td>cross-session (prior)</td>
 <td>Predicted totals use an unverified league-average baseline for 23 of 23 games — Predicted totals equal the model baseline (224.0) with no verified pace adjustment because verified PPG/OPPG were not available for both teams in those games. Game-level detail is on the Picks page; each row there links to its official NBA.com game page. [prior-session value: unverified baseline (224.0)]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F1">FLAG-XSESS-F1</a></td>
@@ -827,7 +897,7 @@
 <td>medium</td>
 <td>cross-session (prior)</td>
 <td>Injury impact weights (Out/Doubtful/Questionable -&gt; points) — Per-player impact weights are transparent model estimates of rotation-minute/production impact, not verified importance values (which require player-level usage/box-score data). [prior-session value: model estimate (unverified importance)]</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F2">FLAG-XSESS-F2</a></td>
@@ -837,7 +907,7 @@
 <td>high</td>
 <td>cross-session (prior)</td>
 <td>Player prop values (S5_PlayerPropCombo) — No verified player-level production data available; prop values are intentionally left blank/unverified rather than inferred. [prior-session value: blank / unverified]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F3">FLAG-XSESS-F3</a></td>
@@ -847,7 +917,7 @@
 <td>medium</td>
 <td>cross-session (prior)</td>
 <td>PPG/OPPG unverified for 28 of 30 teams — PPG/OPPG verified only for TOR and WAS (official team pages). Left blank (unverified) for all other teams; never inferred. [prior-session value: 28 teams unverified]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F4">FLAG-XSESS-F4</a></td>
@@ -857,7 +927,7 @@
 <td>low</td>
 <td>cross-session (prior)</td>
 <td>Correlation win% vs PPG — PPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required. [prior-session value: pending historical dataset]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F5">FLAG-XSESS-F5</a></td>
@@ -867,7 +937,7 @@
 <td>low</td>
 <td>cross-session (prior)</td>
 <td>Correlation win% vs OPPG — OPPG verified for only 2 team(s); n&lt;2 is not statistically meaningful. Historical dataset required. [prior-session value: pending historical dataset]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F6">FLAG-XSESS-F6</a></td>
@@ -877,7 +947,7 @@
 <td>low</td>
 <td>cross-session (prior)</td>
 <td>Correlation PPG vs OPPG — Requires verified PPG/OPPG for all teams + historical sample. [prior-session value: pending historical dataset]</td>
-<td>https://www.nba.com/stats</td>
+<td><a class="cell-link" href="https://www.nba.com/stats" target="_blank" rel="noopener">https://www.nba.com/stats</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F7">FLAG-XSESS-F7</a></td>
@@ -887,7 +957,7 @@
 <td>low</td>
 <td>cross-session (prior)</td>
 <td>Injury reports for 11/14 and 11/15 games not yet submitted — The league&#x27;s official injury report lists these games as &#x27;NOT YET SUBMITTED&#x27;. Injury data for those games will be populated when the league publishes updated reports. [prior-session value: not yet submitted]</td>
-<td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</td>
+<td><a class="cell-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf" target="_blank" rel="noopener">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F8">FLAG-XSESS-F8</a></td>
@@ -897,7 +967,7 @@
 <td>low</td>
 <td>cross-session (prior)</td>
 <td>All strategies are provisional (no tracked results) — The leaderboard rewards top-performing strategies, but no games have been tracked to completion yet. Strategies remain provisional until results are recorded. [prior-session value: provisional]</td>
-<td>https://www.nba.com/schedule</td>
+<td><a class="cell-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">https://www.nba.com/schedule</a></td>
 <td>Carried over unchanged from nba2/data/flagged.json; re-check before it is closed.</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-F9">FLAG-XSESS-F9</a></td>

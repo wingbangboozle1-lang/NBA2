@@ -2083,3 +2083,352 @@ Post-merge sweep (all green): lint 1,325 rows / 46 tables · crosscheck **94 che
 0 fail, 8 info** · nba2 64/64 · backtest OK · v2 OK · v2.check 0/0 · check_links_all ·
 verify_site · check_site · verify_backtest · seals VERIFIED · all four generated trees
 byte-identical across rebuilds.
+---
+
+
+---
+
+## Session `arena/3681def8-nba2` — first graded-settlement cycle, canonical site consolidation, and the full outstanding brief (claimed 2026-11-14 10:25 UTC)
+
+**Base:** `main` @ `d510313` (PR #43 merged 09:55 UTC). **Branch:** `arena/3681def8-nba2` (platform-fixed).
+
+**State read at claim time (verified, not assumed).**
+- `gh pr list --state open` → **PR #21 only** (`arena/79e87c81-nba2`, opened 00:52 UTC, ~9.5 h ago,
+  no commits since; superseded in substance by PR #38's window refresh). **Not touched by this
+  session** — it belongs to that session. Every other PR is merged; no other session has committed
+  since `d510313`.
+- `gh api repos/…/pages` → `build_type: legacy`, `source: main /`, `status: built`. The **published**
+  tree is therefore the root v1 build (`index.html` + `pages/**`); `site/` (v2), `docs/`,
+  `dashboard/`, `originated/`, `backtest/`, `verified/` are all served from the same origin as
+  secondary trees. This session's consolidation work targets the **published** tree.
+- Sandbox: direct `curl` to `www.nba.com` / `ak-static.cms.nba.com` / `stats.nba.com` → HTTP 000
+  (egress blocked). The platform `fetch_page` tool **does** reach `www.nba.com` (verified live this
+  session: `https://www.nba.com/schedule?date=2026-11-14` returned the current Week-4 grid). Every
+  capture below records the method used.
+
+**Why this session exists.** Three things are true at claim time that were not true for any prior
+session, and the brief asks for all three:
+1. **The 2026-11-13 slate is now `Final` on NBA.com** (9 games, scores printed on the official
+   schedule page). The sealed ledger `cf7dedc6…` (22 predictions, 11/13) can therefore be **settled
+   for the first time** against official results — every prior session reported settlement as
+   PENDING for lack of a finals snapshot. This is the first real graded evidence in the repo.
+2. The published site is a working but **fragmented** surface (six trees on one origin). The brief
+   asks for *one* clean landing page with category subpages.
+3. The brief's content asks (strategies/leaderboard/correlations, ≤3-day picks, injury→rotation→game
+   flow, executive summary, questions register, suggestions review path) exist across those trees
+   but are not consolidated in the published one.
+
+**File scope claimed (this session):**
+- `COORDINATION.md` (this section, append-only — no other session's text edited)
+- `audit/2026-11-14-3681/**` (new namespace: live official captures + verifier scripts)
+- `data/raw/finals_2026-11-13.json` (new snapshot; official final scores, one game URL per row)
+- `nba2/pipeline/settle.py` (consume the new finals snapshot; never rewrite a sealed ledger)
+- `nba2/pipeline/build_site_data.py`, `nba2/pipeline/build_site.py` (published-tree tables/pages)
+- regenerated artefacts: `data/site.json`, `index.html`, `pages/**`
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` (registers feeding the generated
+  Suggestions and Questions pages)
+- `README.md`, `analysis/session-3681def8-*.md`
+
+**Not claimed / not edited (owned by other sessions; requests logged instead):** `docs/**`,
+`dashboard/**`, `originated/**`, `site/**` (v2), `verified/**`, `archive/**`, `backtest/**`,
+`tools/**`, `scripts/**`, `.github/workflows/**`, `data/raw/ledger/**` (sealed — read-only),
+`nba2/models/**` except where a defect found this session is published as a flag rather than a
+silent edit.
+
+**Task board (this session).**
+
+| # | Task | Status |
+|---|---|---|
+| G-01 | Board claim + push before work | in progress (this entry) |
+| G-02 | Live official capture: 2026-11-13 final scores (settle the `cf7dedc6…` ledger) | claimed |
+| G-03 | Live official capture: slate 11/14–11/17 + freshest official injury report, verified line by line | claimed |
+| G-04 | Settle the 11/13 ledger against official finals; publish graded results, no reward unless gates pass | claimed |
+| G-05 | Repo review line by line; irregularities flagged with evidence, never silently fixed | claimed |
+| G-06 | Published-tree consolidation: clean landing page + category subpages, every row source-linked | claimed |
+| G-07 | Content: strategies/leaderboard/correlations, ≤3-day picks, injury→rotation→game flow, executive summary | claimed |
+| G-08 | Questions register + suggestions review path (review-before-implement) | claimed |
+| G-09 | Full checker chain; PR → `main`, merge, confirm Pages deploy, record run IDs | claimed |
+
+**Rules this session holds itself to.** A row is "verified" only if the official document was
+fetched **in this session** and can be quoted; anything unconfirmable stays blank and is flagged;
+the two sealed ledgers (`cf7dedc6…`, `c841e8f3…`) are never rewritten; flagged items do not block
+the merge but must appear on the Flagged for Review page with their source link.
+
+### Completion record — `arena/3681def8-nba2` (2026-11-14 10:25–11:05 UTC)
+
+**Headline.** This session produced the **first card in the repository graded against
+official results**, verified the published data against live NBA.com, fixed three defects
+that were live on the site, and reorganised the published tree into category-grouped
+subpages. Nothing was merged until every checker in the repository passed.
+
+#### G-02/G-03 — live official capture (all four documents fetched in this session)
+
+| Artefact | Rows | Official source | Method |
+|---|---|---|---|
+| `data/raw/finals_2026-11-13.json` | **9 final scores** | [nba.com/schedule?date=2026-11-14](https://www.nba.com/schedule?date=2026-11-14) (Week-4 grid, each card rendered `Final`; ATL@CHI `Final/OT`) + one `nba.com/game/<slug>-<id>` URL per row | platform page-fetch tool, 10:20 UTC |
+| `data/raw/standings_2026-11-14_official.json` | **30 clubs** | [nba.com/standings](https://www.nba.com/standings) (`NBA 2026-27 Regular Season Standings`) | same, 10:29 UTC |
+| `data/raw/injury_report_2026-11-14_0500AM.json` | **49 rows** (26 designations + 23 not-yet-submitted) | [Injury-Report_2026-11-14_05_00AM.pdf](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf), header `Injury Report: 11/14/26 05:00 AM` | same, 10:29 UTC |
+| `audit/2026-11-14-3681/slate_live_2026-11-14_to_11-17.json` | **27 games** | [nba.com/schedule?date=2026-11-14](https://www.nba.com/schedule?date=2026-11-14) (Weeks 4–5) | same, 10:20–10:28 UTC |
+
+**Method note (matters for anyone repeating this).** Direct HTTP egress from this workspace
+to every nba.com host fails: `curl` returns **HTTP 000** for `www.nba.com`,
+`ak-static.cms.nba.com` and `stats.nba.com`, while `github.com` returns 200 in the same
+run. The platform page-fetch tool **does** reach `www.nba.com` and the referee-operations
+PDFs. Prior sessions recorded these sources as unreachable; they are reachable, by a
+different path. Every snapshot records the method next to the URL and time.
+
+**Verification performed on the captures — 13 PASS, 0 FAIL, 3 INFO** (`audit/2026-11-14-3681/verify_live.py`, output in `audit/2026-11-14-3681/checker_run.txt`):
+
+- **C1** 27 upcoming games × 7 fields vs the committed slate: **0 mismatches**; game-ID sets identical.
+- **C2-B (the strong one)** `(committed ratings W-L as of 11/13) + (the nine 11/13 results)
+  = the official NBA.com standings` — **30/30 clubs, 0 mismatches**. This simultaneously
+  proves the snapshot contains no 11/13 game (so the grade below has no lookahead) and
+  that my transcription of the finals is correct.
+- **C2-C** league wins 183 = league losses 183 (internal balance).
+- **C3-C** two independent transcriptions of the same 11/14 designations, ~9 h apart:
+  31 rows vs 31, **0 value differences** after normalising the two renderings of the
+  not-yet-submitted Reason cell (a wording difference, not a data conflict — RR-21).
+- **C4-A / C4-B** a *third* official document, the game summary page
+  [gsw-vs-sas-0022600040](https://www.nba.com/game/gsw-vs-sas-0022600040), independently
+  confirms **9/9 final scores** and **22/22 team W-L readings**.
+
+#### G-04 — the graded card (the substantive result)
+
+`data/graded_2026-11-13.json`, built by `audit/2026-11-14-3681/grade_1113.py`:
+
+| Measurement | Model | Baseline | Verdict |
+|---|---|---|---|
+| Margin MAE | 12.97 | 13.33 (predict a 0-pt home margin) | closer, **not significant** (permutation p = 0.952) |
+| Total MAE | **12.90** | 16.20 (league-mean total) | closer by 3.30 pts/game, **not significant** (p = 0.402) |
+| Winner calls | 5/9 = 55.6% | 50% | Wilson 95% CI **[26.7%, 81.1%]** — a coin flip is **not** excluded |
+| Winner AUROC | 0.929 | 0.500 | above chance |
+| Brier | 0.243 | 0.250 | marginally better |
+| ROI / CLV / stake | — | — | **not computable**: no market price exists in this repository |
+| Games needed for 80% power at a 55% hit rate | 9 have been graded | **1,565** | sample is three orders of magnitude short |
+
+**What it is and is not.** Point-in-time with no lookahead — the only rating input is
+`data/raw/team_ratings_2026-11-13.json` (retrieved 2026-11-13 22:35 UTC; first tip
+2026-11-14 00:00 UTC), and no parameter is fitted on the nine games. It is **not** a
+pre-registered forward test: `sealed-2026-11-13.json` covers 11/14–11/16 and
+`sealed-2026-11-14.json` covers 11/14–11/17, so **no ledger contains any 11/13 game** —
+the project began that evening. It is published as a walk-forward backtest and flagged
+**FLAG-GRADE-01** (high) so nobody reads it as a betting record. **No gate is unblocked
+and no reward is paid**; gate G-01 requires 300 settled bets and the card has 9.
+
+Two games drove most of the margin error and are named rather than smoothed
+(FLAG-GRADE-04): GSW@SAS (predicted SAS +3.2, actual SAS +38) and MEM@NOP (predicted MEM
+by 8.3, actual by 31).
+
+#### G-05 — repo review: three defects fixed, seven logged
+
+Fixed, all three of which were **live on the published site**:
+
+| ID | Defect | Evidence | Fix |
+|---|---|---|---|
+| RR-23 | Availability-coverage column computed `slots − filed − not_yet_submitted` over **non-disjoint** sets, so the count could go negative; **−5 was live** for 11/14 (finding F1 / CR-1 from arena/5b80b88a, never applied) | `nba2/pipeline/build_site_data.py`, crosscheck CC-DER-12 | a club counts as not-submitted only if it has no designation in **any** release; the three count columns are now disjoint and sum to slots exactly. **CC-DER-12 PASS** |
+| RR-24 | The column labelled **"W-L (official NBA.com)"** was populated from the same third-party field as its neighbour, so the table's own "if they ever disagree, the table is wrong" guard could never fire (CR-4) | both columns set from `t.wins/t.losses`; CC-DER-05 | the official column now reads the new `standings_2026-11-14_official.json`; a Difference column shows the two differ by exactly the 11/13 result for every club that played. **CC-DER-05 PASS** |
+| RR-25 | Corroboration verdict hard-coded its coverage window as "11/13 + 11/14" | CC-PUB-05 | coverage dates are now derived from the corroborating snapshots. **CC-PUB-05 PASS** |
+
+Also fixed here: **RR-20**, a crash I caused — `tools/crosscheck_site.py` globs
+`injury_report_*.json` and indexes `["columns"]`, so my first snapshot (list-of-dicts)
+killed **all 94 semantic checks**. Fixed on the data side, without editing another
+session's tool, by conforming the snapshot to the established schema. **RR-27**: README's
+hand-copied counts were stale for the third time, so they are now *generated* by
+`audit/2026-11-14-3681/sync_readme_counts.py` instead of corrected again.
+
+Logged, not fixed (outside this session's claimed scope): **RR-19** — crosscheck
+CC-SEAL-04 compares calendar dates, not timestamps, and is a **false positive**: the
+2026-11-14 ledger was sealed `2026-11-14T00:58:54Z` and its earliest game tips
+`2026-11-14 19:00 ET = 2026-11-15T00:00Z`, a measured **23.02-hour minimum lead**
+(FLAG-SEAL-05). **RR-22** six site trees on one Pages origin (Q-34 / S-32). **RR-26**
+PR #21 open ~10 h with no commits, superseded by PR #38 — left open, it belongs to
+another session. **RR-28** the nba.com egress/reachability finding above.
+
+#### G-06/G-07 — published-tree changes
+
+- **New page `pages/graded.html`** — the graded card, its measurements, the official
+  standings, and the 11/14 filing state. 61 rows, every row source-linked.
+- **Landing page** now opens with a "Graded against official results" block before the
+  parameter KPIs, and the Executive Summary carries the same block plus the measurement
+  table.
+- **Navigation regrouped** into Decide / Measure / Inputs / Governance / Project with a
+  one-line description per category, mirrored as category cards on the dashboard
+  (suggestion S-35).
+- **Every URL-valued cell now renders as a link** (S-30), which closes FLAG-AUD-01: 89
+  cells became clickable without touching a single value.
+- Build: **20 pages, 43 tables, 1,234 rows** (was 19 / 39 / 1,124).
+
+#### G-08 — registers
+
++6 questions **Q-30…Q-35** (is the model any good; seal every slate; the 11/17 repeat
+matchups; totals vs margins; which tree is canonical; retire the third-party W-L) and
++7 suggestions **S-29…S-35** (graded card on the dashboard, link URL cells, seal nightly,
+one canonical tree, shrinkage sweep, official ingest, categorised nav). Three are marked
+implemented by this session; the rest sit at `awaiting owner decision`. Nothing was
+auto-applied.
+
+#### Verification at completion — every checker in the repository, executed
+
+| Checker | Result |
+|---|---|
+| `nba2/tests` | **64 OK** |
+| `backtest/tests` | **49 OK** |
+| `nba2/v2` tests | **59 OK** |
+| rebuild + `nba2.pipeline.lint` | 43 tables / **1,234 rows**, every row sourced, every blank explained |
+| `seal_predictions --verify` | `cf7dedc6…` (22) and `c841e8f3…` (27) **both VERIFIED** |
+| `tools/check_links_all.py` | 108 files, **4,501 internal links, ALL OK** |
+| `tools/verify_site.py` (docs) | 13 pages / 249 rows PASS |
+| `scripts/check_site.py` (dashboard) | 12 pages / 524 rows PASS |
+| `tools/verify_backtest.py` | 12 pages / 155 sourced game rows PASS |
+| `node originated/engine/verify.js` | **24/24** |
+| `tools/crosscheck_site.py` | **94 checks: 82 pass, 4 fail, 8 info** |
+| `audit/2026-11-14-3681/verify_live.py` | **13 PASS, 0 FAIL, 3 INFO** |
+| `python -m nba2.v2.check` | OK — 0 structural, 0 semantic |
+
+The **4 remaining crosscheck failures are pre-existing and outside this session's scope**,
+each verified as such: `CC-SNAP-13` (ratings snapshot's own PASS/FAIL labels — snapshot
+owner), `CC-GATE-02` (leaderboard tally vs matrix — `nba2/models/leaderboard.py`),
+`CC-SEAL-04` (tool's date-granularity false positive — evidence in RR-19), `CC-X-00`
+(`WSH` vs `WAS` in `originated/data/teams.json` — another tree). Two that failed at claim
+time (CC-DER-12, CC-PUB-05, plus CC-DOC-01 which returned mid-build) now pass.
+
+#### Handoff
+
+None. No other session committed during this session's work (`main` was at `d510313` at
+claim and at push time). PR #21 remains open and untouched.
+
+---
+
+## 2026-11-14 — session `arena/3681def8-nba2` — INTEGRATION with `arena/6650be4d-nba2` (PR #54)
+
+Status: **done**. Branch `arena/3681def8-nba2` rebased onto `main` @ `808c3e1` (PR #54,
+session `arena/6650be4d-nba2`, 7 commits, 72 files). Rebase head `e5fcacb`, tree clean.
+
+### Two conflicts, both resolved without discarding either session's work
+
+**1. `data/raw/finals_2026-11-13.json` — add/add.** Both sessions captured the same nine
+2026-11-13 finals from the same official page at the same time.
+* Mine (`arena/3681def8`): schema `nba2.finals.v1`, key `games`, OT encoded as `periods == 5`.
+* Theirs (`arena/6650be4d`): key `records`, OT encoded as boolean `overtime`.
+* **Diff: 9 rows each, 0 differences** on `game_id` / `away_pts` / `home_pts` / OT.
+* Resolution: the file now carries **both shapes from one set of values** (`games` and a
+  derived `records`). `audit/2026-11-14-3681/verify_live.py` emits both. Neither session's
+  grading code was rewritten to suit the other, and neither capture was deleted. The
+  parallel capture is preserved verbatim at
+  `audit/2026-11-14-3681/finals_parallel_6650be4d.json`.
+
+**2. `nba2/pipeline/build_site_data.py` — 7 conflict blocks.** Both sessions had
+independently fixed the *same three defects* (CC-DER-05 official W-L cross-check,
+CC-DER-12 disjoint availability counts, CC-PUB-05 corroboration coverage). The blocks were
+resolved to the already-integrated incoming side.
+
+### Three defects that resolution introduced, all found by building and fixed
+
+The merged tree did **not** build. Repaired:
+
+1. `build_finals_grade_rows()` did `raw["records"]` — fixed by the dual-shape file above
+   (was: `KeyError: 'records'` at `build_site_data.py:1759`).
+2. `build_injury_1114_rows()` indexed `records` rows as dicts. The committed injury
+   snapshots use the shared tabular shape (`columns` + list-of-lists `records`) so that
+   `tools/crosscheck_site.py` can index any of them positionally. Now dict-ified at read
+   time instead of re-serialising the file, which would have broken that checker
+   (was: `TypeError: list indices must be integers`). Same function also read a
+   non-existent `current_status` / `not_yet_submitted` pair; the real column is `status`,
+   and `NOT YET SUBMITTED` is a value in it, not a boolean — derived correctly now.
+3. **Flag-ID collision.** My `FLAG-INJ-08` (05:00 AM filing-window note) duplicated an
+   existing `FLAG-INJ-08` owned by `arena/6650be4d` (Caleb Martin team-attribution
+   correction), and `FLAG-INJ-09` was already taken by them. Mine renumbered to
+   **`FLAG-INJ-10`**; the injuries blurb updated to match. Duplicate IDs silently
+   overwrite rows in the flags table, so this was a correctness bug, not cosmetic.
+
+Note for whoever merges next: `git checkout --ours/--theirs` on `build_site_data.py` is a
+trap. The two copies looked equivalent because both fixed the same defects, but the
+incoming copy omitted this session's **section registrations** and **flag rows** — the
+builder functions survived while their wiring into `build()` did not, which only surfaces
+at build time as `KeyError: 'standings_live'`. If you resolve that file wholesale,
+re-read `build()` and the flag table afterwards.
+
+### Verification of the merged tree (all re-run after the repairs)
+
+* `build_site_data` → **50 tables, 1401 rows**; `build_site` → all pages; `lint`
+  **OK — 1401 rows across 50 tables, every row sourced, every blank explained**.
+* Both sealed ledgers: `sealed-2026-11-13.json` seal verified `cf7dedc689597cb8…` (22
+  predictions), `sealed-2026-11-14.json` seal verified `c841e8f396dae6ca…` (27). Neither
+  was rewritten. `settle` reports PENDING/PARTIAL — correct, the 11/14–11/17 games have
+  not been played.
+* Unit tests: **64 nba2 + 49 backtest OK**. `verify_site` PASSED (13 pages, 249 data rows).
+  `check_links_all`: **109 files, 4865 internal links, ALL OK**. `verify_backtest`
+  PASSED. `originated/engine/verify.js` all checks passed. `nba2.v2.check` OK.
+  `verify_live` 13 PASS, 0 FAIL, 3 INFO.
+* **`tools/crosscheck_site.py`: 97 checks — 89 pass, 0 fail, 8 info.** The four failures
+  present before this integration (CC-SNAP-13, CC-GATE-02, CC-SEAL-04, CC-X-00) are gone;
+  CC-DOC-01 (README counts) was the last one and was closed by
+  `audit/2026-11-14-3681/sync_readme_counts.py` → **21 pages, 50 tables, 1401 rows**.
+* Both `pages/graded.html` (this session) and `pages/verification-report.html`
+  (`arena/6650be4d`) exist and are nav-linked from `index.html`.
+
+### Files touched by this session in the integration
+
+`README.md`, `data/raw/finals_2026-11-13.json`, `data/settlement.json`, `data/site.json`,
+`index.html`, `nba2/pipeline/build_site_data.py`, `pages/executive-summary.html`,
+`pages/flagged-review.html`, `pages/graded.html`, `pages/injuries.html`, `pages/lines.html`,
+`pages/methodology.html`, `pages/questions.html`, `pages/repo-review.html`,
+`pages/sources.html`, `pages/suggestions.html`,
+`audit/2026-11-14-3681/{verify_live.py,checker_run.txt}`.
+
+---
+
+## 2026-11-14 — session `arena/3681def8-nba2` — SECOND INTEGRATION (main advanced 176 commits)
+
+Status: **done**. While PR #56 was open, `main` advanced 176 commits (to `7be403d`) —
+session `arena/6c5195d1-nba2` ran its own final integration (PR #49), merging PRs #43–#54
+together and resolving CR-3/CR-4/CR-5. Branch rebased onto that `main`; head `69502ca`,
+then one regeneration commit.
+
+Verified after the rebase: no conflict markers anywhere in tracked files (excluding two
+`audit/*.txt` logs, which quote markers deliberately as evidence), all four of this
+session's builder functions present **and** registered in `build()`, all seven flag IDs
+(`FLAG-GRADE-01..04`, `FLAG-STAND-01`, `FLAG-SEAL-05`, `FLAG-INJ-10`) registered with no
+duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html` routed.
+
+### Rebase conflict policy used
+
+* `COORDINATION.md` — append-only by protocol: every conflict block resolved by keeping
+  **both** sides, in order. Nothing from either session was dropped.
+* Generated trees (`data/site.json`, `pages/*.html`, `index.html`, `site/**`,
+  `data/v2/**`, `README.md`) — resolved to **this branch's** version and then
+  **regenerated from source**, because main's integration had changed blurbs, source notes
+  and the settlement record. The stale committed artefacts were the whole of the conflict;
+  regenerating *is* the resolution, and none of those files is hand-authored.
+* No source module (`nba2/**`, `tools/**`) conflicted.
+
+### Two findings worth carrying forward
+
+1. **`data/v2/verification.json` had been committed with literal conflict markers and was
+   not valid JSON at all** (marker at line 55). Found because the `publish-parity`
+   workflow failed on PR #56 — no local checker caught it, since `nba2.v2.check` reads the
+   rebuilt tree, not the committed one. `nba2/v2/report.py` was clean and already carried
+   both halves of the disputed check, so regenerating resolved it with nothing lost.
+   **Lesson: after any rebase, grep the tree for `^<<<<<<<` and `^>>>>>>>`, and
+   `json.load` every committed `.json`.** Reading the diff is not enough — the markers were
+   inside a generated file that no one opens.
+2. **`python -m nba2.pipeline.settle` invalidates the next rebuild.** `settle` stamps a new
+   `settled_at` into `data/settlement.json`, which is part of the build's input digest, so
+   the first `build_site_data` afterwards produces different bytes and
+   `nba2/tests/test_pipeline.py::test_rebuild_produces_identical_rows` fails. It self-heals
+   on the following build and is not a defect in the model — but the rule is: **run
+   `settle`, then rebuild, then commit.** Committing a `settle` output without rebuilding
+   will fail the parity workflow.
+
+### Verification after the second rebase
+
+* **50 tables / 1404 rows** (+3 rows from main's own integration); `lint` OK — every row
+  sourced, every blank explained.
+* **`tools/crosscheck_site.py`: 97 checks — 89 pass, 0 fail, 8 info.**
+* **172 unit tests OK** (64 nba2 + 49 backtest + 59 v2).
+* Both seals verified, neither rewritten: `cf7dedc689597cb8…` (22), `c841e8f396dae6ca…` (27).
+* `verify_site` PASSED; `check_links_all` ALL OK; `nba2.v2.check` OK — 0 structural,
+  0 semantic.
+* **All four trees are fixed points**: a second full rebuild produces an empty `git diff`,
+  which is exactly what the `publish-parity` workflow asserts and what fixed the failure
+  above.

@@ -1,0 +1,537 @@
+{
+  "dataset": "nba_official_injury_report",
+  "report_stamp_et": "2026-11-14 05:00 AM",
+  "retrieved_at_utc": "2026-11-14T10:25:00Z",
+  "retrieval_method": "platform page-fetch tool (direct curl from the sandbox returns HTTP 000 for all nba.com hosts)",
+  "provenance": {
+    "publisher": "NBA (official)",
+    "official_nba_source": true,
+    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+    "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+    "document_header": "Injury Report: 11/14/26 05:00 AM",
+    "note": "Transcribed row by row from the official PDF. The PDF's Game Time column is a 12-hour ET clock printed without a meridiem: DEN@NOP '07:00 (ET)' is the 7:00 PM ET tip shown on the schedule. 'NOT YET SUBMITTED' is the official state of a club that has filed nothing for that game; the player cell is left empty, as the document leaves it."
+  },
+  "attribution_key": {
+    "E": "the PDF printed this row's Game Date cell (or the block's first date)",
+    "C": "date and time cells were blank on a continuation page; carried down from above"
+  },
+  "columns": [
+    "game_date",
+    "time_et",
+    "matchup",
+    "team",
+    "player",
+    "status",
+    "reason",
+    "attribution"
+  ],
+  "record_counts": {
+    "total_rows": 49,
+    "rows_2026_11_14": 31,
+    "rows_2026_11_15": 18,
+    "rows_with_status": 26,
+    "not_yet_submitted_placeholders": 23,
+    "attribution_explicit": 20,
+    "attribution_continuation": 29,
+    "games_covered": 14,
+    "note": "counts computed from the records array at write time"
+  },
+  "filing_rules_verbatim": [
+    "By 5 p.m. local time the day before a game (other than the second day of a back-to-back), teams must designate a participation status and identify a specific injury, illness, other medical condition, or other reason for any player whose participation in the game may be affected for any reason.",
+    "For the second game of a back-to-back, teams must report the above information by 1 p.m. local time on the day of the game.",
+    "In addition, teams are required to submit a game-day injury report between 11 a.m. and 1 p.m. local time (and between 8 and 10 a.m. for tip-offs 5 p.m. or earlier) on game days (besides the second game of a back-to-back).",
+    "Reports are updated on a continual basis throughout the day."
+  ],
+  "records": [
+    [
+      "2026-11-14",
+      "07:00",
+      "DEN@NOP",
+      "Denver Nuggets",
+      "Holmes II, DaRon",
+      "Out",
+      "G League - On Assignment",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:00",
+      "DEN@NOP",
+      "Denver Nuggets",
+      "Nembhard, Ryan",
+      "Out",
+      "G League - Two-Way",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:00",
+      "DEN@NOP",
+      "Denver Nuggets",
+      "Strawther, Julian",
+      "Out",
+      "Injury/Illness - Left Knee Sprain",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:00",
+      "DEN@NOP",
+      "Denver Nuggets",
+      "Whitmore, Cam",
+      "Out",
+      "G League - Two-Way",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:00",
+      "DEN@NOP",
+      "New Orleans Pelicans",
+      "",
+      "NOT YET SUBMITTED",
+      "NOT YET SUBMITTED",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "Biberovic, Tarik",
+      "Out",
+      "Injury/Illness - Right Heel Bursitis",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "Christie, Max",
+      "Questionable",
+      "Injury/Illness - Left Ankle Sprain",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "de Larrea, Sergio",
+      "Out",
+      "Injury/Illness - Right Knee Sprain",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "Johnson Jr., Morez",
+      "Probable",
+      "Injury/Illness - Left Shin / Tibia Contusion",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "Lively II, Dereck",
+      "Out",
+      "Injury/Illness - Right Foot Surgery",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Dallas Mavericks",
+      "Martin, Caleb",
+      "Available",
+      "Injury/Illness - Right Thumb Splint",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "07:30",
+      "DAL@CLE",
+      "Cleveland Cavaliers",
+      "",
+      "NOT YET SUBMITTED",
+      "NOT YET SUBMITTED",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Bilodeau, Tyler",
+      "Out",
+      "G League - Two-Way",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Brown Jr., Mikel",
+      "Questionable",
+      "Injury/Illness - Illness",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Jefferson, Joshua",
+      "Out",
+      "G League - On Assignment",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Nelson, Grant",
+      "Out",
+      "G League - Two-Way",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Saraf, Ben",
+      "Out",
+      "G League - On Assignment",
+      "E"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Brooklyn Nets",
+      "Traore, Nolan",
+      "Probable",
+      "Injury/Illness - Right Calf Tightness / Soreness",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "BKN@MEM",
+      "Memphis Grizzlies",
+      "",
+      "NOT YET SUBMITTED",
+      "NOT YET SUBMITTED",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "CHI@MIN",
+      "Chicago Bulls",
+      "",
+      "NOT YET SUBMITTED",
+      "NOT YET SUBMITTED",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "CHI@MIN",
+      "Minnesota Timberwolves",
+      "Beringer, Joan",
+      "Available",
+      "Injury/Illness - Face Mask",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "CHI@MIN",
+      "Minnesota Timberwolves",
+      "DiVincenzo, Donte",
+      "Out",
+      "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "CHI@MIN",
+      "Minnesota Timberwolves",
+      "Edwards, Anthony",
+      "Out",
+      "Injury/Illness - Right Knee Arthroscopy",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Duren, Jalen",
+      "Out",
+      "Injury/Illness - Right Hamstring Strain",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Harkless, Elijah",
+      "Questionable",
+      "G League - Two-Way",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Joe, Isaiah",
+      "Out",
+      "Injury/Illness - Right Hip Contusion",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Jones, Isaac",
+      "Questionable",
+      "G League - Two-Way",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Lanier, Chaz",
+      "Out",
+      "G League - On Assignment",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Okorie, Ebuka",
+      "Out",
+      "G League - On Assignment",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Detroit Pistons",
+      "Onyenso, Ugonna",
+      "Out",
+      "G League - Two-Way",
+      "C"
+    ],
+    [
+      "2026-11-14",
+      "08:00",
+      "DET@MIA",
+      "Miami Heat",
+      "",
+      "NOT YET SUBMITTED",
+      "NOT YET SUBMITTED",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "01:00",
+      "IND@PHI",
+      "Indiana Pacers",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "E"
+    ],
+    [
+      "2026-11-15",
+      "01:00",
+      "IND@PHI",
+      "Philadelphia 76ers",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "E"
+    ],
+    [
+      "2026-11-15",
+      "04:00",
+      "LAL@PHX",
+      "Los Angeles Lakers",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "E"
+    ],
+    [
+      "2026-11-15",
+      "04:00",
+      "LAL@PHX",
+      "Phoenix Suns",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "04:30",
+      "CHA@LAC",
+      "Charlotte Hornets",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "04:30",
+      "CHA@LAC",
+      "LA Clippers",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "05:00",
+      "SAS@UTA",
+      "San Antonio Spurs",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "05:00",
+      "SAS@UTA",
+      "Utah Jazz",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "06:00",
+      "DAL@BOS",
+      "Dallas Mavericks",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "06:00",
+      "DAL@BOS",
+      "Boston Celtics",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "06:00",
+      "NYK@TOR",
+      "New York Knicks",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "06:00",
+      "NYK@TOR",
+      "Toronto Raptors",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "07:00",
+      "HOU@WAS",
+      "Houston Rockets",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "07:00",
+      "HOU@WAS",
+      "Washington Wizards",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "08:00",
+      "ATL@MIL",
+      "Atlanta Hawks",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "08:00",
+      "ATL@MIL",
+      "Milwaukee Bucks",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "09:00",
+      "OKC@SAC",
+      "Oklahoma City Thunder",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ],
+    [
+      "2026-11-15",
+      "09:00",
+      "OKC@SAC",
+      "Sacramento Kings",
+      "",
+      "NOT YET SUBMITTED",
+      "Team submission outstanding at report time",
+      "C"
+    ]
+  ]
+}

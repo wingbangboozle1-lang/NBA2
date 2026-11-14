@@ -13,7 +13,7 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html" class="active">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="verification-report.html">Verification Report</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li class="nav-group"><span class="nav-cat">Decide</span><ul><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="graded.html">Graded Results</a></li></ul></li><li class="nav-group"><span class="nav-cat">Measure</span><ul><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li></ul></li><li class="nav-group"><span class="nav-cat">Inputs</span><ul><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li></ul></li><li class="nav-group"><span class="nav-cat">Governance</span><ul><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="questions.html" class="active">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li><li><a href="verification-report.html">Verification Report</a></li></ul></li><li class="nav-group"><span class="nav-cat">Project</span><ul><li><a href="requirements.html">Requirements</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li></ul></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="34">
+    <section class="card table-card" id="questions" data-rows="35">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -354,61 +354,72 @@
 </tr>
 <tr id="Q-30">
 <td>Q-30</td>
-<td>Which execution environment can reach the official NBA endpoints, and under what policy?</td>
-<td>A dated, reproducible measurement from the sandbox: four endpoints, none answering at TLS. Plus the same result from three prior sessions. The `nba-ingest.yml` probe measures it from a GitHub-hosted runner and prints the table.</td>
-<td>The runner&#x27;s answer (recorded by the probe run), and the owner&#x27;s decision about whether automated fetching of nba.com properties is in policy for this project at any cadence.</td>
-<td>Dispatch the probe from main; read the run summary; if reachable, confirm terms of use before enabling a schedule; if unreachable, mark ingestion &#x27;blocked by source policy&#x27; in the requirements register instead of &#x27;not started&#x27;.</td>
-<td>Decides whether the daily-refresh requirement is an engineering task, a licensing task, or a manual one. Nothing downstream (CLV, settled ledger, promoted strategies) can start without it.</td>
-<td>HIGH</td>
+<td>Is the model any good? We now have nine games graded against official results — is that an answer?</td>
+<td>A graded card for 2026-11-13 (data/graded_2026-11-13.json): margin MAE 12.97 vs 13.33 for a no-information baseline, total MAE 12.90 vs 16.20, winner calls 5/9, AUROC 0.93. The inputs are strictly point-in-time, proven by the identity (committed ratings W-L) + (the nine results) = official NBA.com standings, 30/30.</td>
+<td>Statistical significance. Permutation p = 0.95 (margin) and p = 0.40 (total); the Wilson 95% CI on the hit rate is 26.7%-81.1%. About 1,565 graded games are needed to detect a 55% hit rate at 5% significance with 80% power.</td>
+<td>Keep grading every completed slate with the same script and re-test when the sample supports it. Do not promote a strategy or pay a reward before then — gate G-01 requires 300 settled bets and nothing changes that.</td>
+<td>Decides whether the originated lines are worth the effort at all. The honest answer today is: unproven, directionally mildly positive on totals, untested on margins.</td>
+<td>BLOCKING</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
 <tr id="Q-31">
 <td>Q-31</td>
-<td>Is the 13:00 ET referee PDF the authority for availability, and do we keep the bytes?</td>
-<td>Three different stamps of the same day&#x27;s report are cited across surfaces (01:00 PM, 04:15 PM, 05:15 PM ET) and the reconciliation table already adjudicates 10 status changes between them. The capture tool archives the PDF with a sha256 of the response body.</td>
-<td>A policy: which stamp is canonical for a published line, and whether archived PDFs (or only their hashes) are kept in-repo.</td>
-<td>Owner picks &#x27;latest release before tip, with the previous two retained&#x27;; then the ingest stores the PDF, its hash, and its stamp with every snapshot.</td>
-<td>Without a canonical stamp, two honest sessions will keep disagreeing about who is Out, and the disagreement will look like a model difference.</td>
-<td>MEDIUM</td>
+<td>Should every slate be sealed before its first tip, automatically, from now on?</td>
+<td>Two ledgers (22 and 27 predictions) covering 2026-11-14..11-17, both verified. A nightly refresh workflow (refresh.yml) already exists but does not seal.</td>
+<td>Any sealed ledger for 2026-11-13. That slate was already live when the project started, so its nine games — the only ones with official results — can only ever be graded as a backtest, never as a forward test. That gap is permanent for 11/13.</td>
+<td>Add a seal step to the nightly workflow so each day&#x27;s card is committed before the first tip, and assert the seal date strictly precedes the earliest tip in the set.</td>
+<td>High. Without pre-registration every future result is a backtest, and a backtest can be tuned after the fact. This is the difference between evidence and a story.</td>
+<td>BLOCKING</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
 <tr id="Q-32">
 <td>Q-32</td>
-<td>Which surface is canonical, and what happens to the other four?</td>
-<td>Six published surfaces now: the root generated site (36 tables / 964 rows), `docs/`, `dashboard/`, `originated/`, `verified/`, and `backtest/**` added by PR #28 with its own engine, report JSON, pages and verifier. Each has a passing checker for itself; none is subordinate to another.</td>
-<td>An owner decision: which surface is canonical, whether backtest/** is integrated into data/site.json or kept as an annex, and a rule for what a new session may write into — because a session that wants to publish measured results currently has no option except a new tree.</td>
-<td>Pick one; move the others to `archive/` with a redirect note on each landing, or keep them and put the surface inventory (already a published table) at the top of the landing page.</td>
-<td>Five surfaces means five answers to &#x27;what is our line for DEN@NOP&#x27;, all defensible, none canonical. That is the failure mode a leaderboard project cannot afford.</td>
+<td>The 2026-11-17 slate repeats two matchups from the two days before (NYK@TOR also on 11/15, POR@MIN also on 11/16). Is that real, and what does it do to the model?</td>
+<td>Confirmed real: the official game page for 0022600253 reads &#x27;Tuesday, November 17th, 2026 7:30 PM ET&#x27; for NYK@TOR. Both pairs appear in the official schedule with distinct game IDs.</td>
+<td>Whether the model should treat the second meeting differently (rest, preparation, confidence) — we have no evidence either way and no settled games to test it on.</td>
+<td>Leave the games priced normally and flag them (FLAG-ANOM-01 already does); revisit when there is a sample of repeat-matchup results.</td>
+<td>Two of the five 11/17 games are affected. If repeat matchups behave differently, our lines for them are wrong in a systematic, correctable way.</td>
 <td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
 <tr id="Q-33">
 <td>Q-33</td>
-<td>What does a strategy have to survive before it can be paid?</td>
-<td>Nine gates per strategy defined and applied to 9 strategies (90 gate results, all BLOCKED/AT-RISK); a pre-registered sealed ledger (22 predictions, digest on every page); a tier ladder with reward weights; and a stated minimum sample of 300 settled bets.</td>
-<td>Owner sign-off on the promotion rule as a *policy*, not a design: minimum sample, holdout window, vig treatment, drawdown cap, multiple-comparison correction across nine strategies, and what happens to the seal when the window rolls forward daily.</td>
-<td>Write it into the requirements register as acceptance criteria, then let the gate code enforce it; anything not enforced is a poster.</td>
-<td>Until this exists, &#x27;top performing strategies&#x27; has no definition, so the competition cannot start — and the honest answer today is that the leaderboard is empty by design.</td>
-<td>HIGH</td>
+<td>Do we trust the totals more than the margins? The graded card says the totals improvement is nine times larger.</td>
+<td>On nine games: totals beat the league-mean baseline by 3.30 pts/game, margins beat a zero baseline by 0.36 pts/game. Two &gt;20-point margin misses (GSW@SAS predicted SAS +3.2, actual +38; MEM@NOP predicted MEM by 8.3, actual by 31) drive most of the margin error.</td>
+<td>Any statistical support (p = 0.40 and p = 0.95), and any idea whether the early-season shrinkage is over-compressing large true team gaps.</td>
+<td>Grade more slates; separately, test the shrinkage weight by re-running the card with lambda swept and see whether the two big misses shrink.</td>
+<td>If the totals edge is real it is the single most valuable thing found so far, because a total is a market we can price without a win-probability model.</td>
+<td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
 <tr id="Q-34">
 <td>Q-34</td>
-<td>Who reviews a commit that the nightly ingest pushes to `main`?</td>
-<td>`refresh.yml` runs with `contents: write`, rebuilds the site, and pushes `HEAD:${GITHUB_REF_NAME}` directly, gated by its own verify chain (unit tests, seal verification, provenance lint) and an explicit guard that the sealed ledger is untouched. That is a sound fail-closed design for a bot.</td>
-<td>A stated policy on what a bot commit may change on `main` without a human: the pipeline today also carries F1&#x27;s negative-count bug, which such a commit would happily re-publish with a green tick.</td>
-<td>Add the cross-check to the ingest verify chain (S-29/S-38) so a bot cannot push a build that fails semantic review, and record the bot&#x27;s allowed paths in the requirements register.</td>
-<td>Determines whether automated refresh is trustworthy end-to-end. Right now it can only fail loudly, not fail subtly — which is good — but &#x27;loudly&#x27; is scoped to what CI checks today.</td>
+<td>Which site tree is the product? Six are published from one origin and the Pages setting picks one.</td>
+<td>GitHub Pages is set to build_type &#x27;legacy&#x27; from main /, so visitors get the root v1 tree (index.html + pages/). The v2 tree (site/), docs/, dashboard/, originated/, backtest/ and verified/ are all served from the same origin as secondary trees with overlapping content.</td>
+<td>An owner decision on which is canonical. Prior sessions logged this rather than deciding it, because switching changes every page a reader sees.</td>
+<td>One setting: flip Pages to &#x27;GitHub Actions&#x27; to publish the v2 artifact, or keep legacy and retire the others into an archive folder with an index.</td>
+<td>Until it is decided, a reviewer cannot tell which numbers are current. The root tree now carries every table added this session.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-35">
+<td>Q-35</td>
+<td>Official NBA.com standings are now reachable through the page fetcher. Should the third-party ratings source be retired?</td>
+<td>All 30 clubs&#x27; W-L read live from nba.com/standings on 2026-11-14, matching the committed snapshot exactly once the 11/13 results are applied. Snapshot: data/raw/standings_2026-11-14_official.json.</td>
+<td>Official per-game point rates (PS/G, PA/G). nba.com/standings renders the &#x27;Margins &amp; Stats&#x27; section, but stats.nba.com endpoints remain unreachable, so the SRS column still comes from basketball-reference and stays flagged FLAG-RAT-01.</td>
+<td>Point the ratings loader at the official standings for W-L (done) and keep the third-party column only for point rates, labelled.</td>
+<td>Removes the last unverified W-L in the model input. Does not remove FLAG-RAT-01, which is about point rates, not records.</td>
 <td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. Queue-fragment questions Q-23…Q-27 (analysis/queue-additions-5b80b88a.json) renumbered Q-30…Q-34 on 2026-11-14 (arena/6c5195d1-nba2) because arena/ab8743d8-nba2&#x27;s Q-23…Q-29 landed first; texts unchanged except their internal S-numbers follow the same renumbering.</p>
+<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;
