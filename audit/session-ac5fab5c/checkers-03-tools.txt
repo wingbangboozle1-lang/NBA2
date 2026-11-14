@@ -1,0 +1,71 @@
+########## python3 tools/verify_data.py ##########
+checks run: 5186; html pages scanned: 34; errors: 0
+[exit 0]
+
+########## python3 tools/verify_site.py ##########
+    "rows_without_link": 0,
+    "links": 22,
+    "unverified_cells": 0,
+    "demo_cells": 0
+  },
+  {
+    "page": "validation-gates.html",
+    "title": "NBA2 \u2014 Validation Gates",
+    "data_rows": 21,
+    "rows_without_link": 0,
+    "links": 23,
+    "unverified_cells": 0,
+    "demo_cells": 0
+  }
+]
+
+SUMMARY: 13 pages | 249 data rows | 303 links
+VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
+[exit 0]
+
+########## python3 tools/crosscheck_site.py ##########
+[info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
+        observed: this session's input digest 154224e0322a71cf… vs meta.input_digest 52f4d4eadb00cda8…
+        note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
+[ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
+[ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
+[ ok ] CC-HTML-03     every row in the data file is rendered on some page
+[info] CC-HTML-03b    the literal em-dash is only ever used for “not applicable”, never for “not verified”
+        observed: anomalies: 1; gate_matrix: 9; gates: 3; injuries: 5; injuries_window: 5; params: 8; props: 4; slate: 36; xinjuries: 2
+[ ok ] CC-HTML-04     every navigation target on the landing page exists
+[ ok ] CC-HTML-05     no published page is unreachable from the landing page
+[ ok ] CC-FRESH-01    the snapshot is within one day of the run date (the freshness SLA the brief implies)
+[info] CC-FRESH-02    a stale snapshot is disclosed, not hidden
+        observed: the site prints the as-of date on every page
+[info] CC-FRESH-03    a scheduled ingestion exists, and it has actually run
+        observed: ci.yml: push,pull_request,workflow_dispatch; pages.yml: push,workflow_dispatch; publish-parity.yml: push,pull_request,workflow_dispatch; refresh.yml: schedule,workflow_dispatch; v2-verify.yml: push,pull_request,workflow_dispatch; ingest runs recorded: unknown (no runs reported or gh unavailable) — not a PASS: the schedule is armed but nothing has run, so the site's freshness still depends on a manual or first-scheduled ingest
+        note:     an active schedule with zero runs is not yet a refresh: the site is only as fresh as the last successful ingest run, so this check stays INFO until a run exists
+
+91 checks: 75 pass, 8 fail, 8 info, 0 n/a
+[exit 1]
+
+########## python3 tools/verify_backtest.py ##########
+PASS  no placeholder text in published artefacts
+PASS  no table cell renders a null/NaN value
+PASS  validation-gates.html discloses 1 disputed gate(s)
+PASS  validation-gates.html names the strawman baseline
+PASS  every disputed gate is also a registered pass
+PASS  accuracy block computed on 139 graded games
+PASS  record-reconstruction check ran on 70 cards
+PASS  no team reconstruction exceeds its official post-game record
+PASS  rebuild from committed snapshots succeeds
+FAIL  rebuild is deterministic (pages byte-identical)
+      non-deterministic output: backtest/index.html
+      non-deterministic output: backtest/pages/correlation.html
+      non-deterministic output: backtest/pages/flagged-review.html
+      non-deterministic output: backtest/pages/game-flow.html
+      non-deterministic output: backtest/pages/leaderboard.html
+FAIL  report.json is deterministic
+
+VERIFICATION FAILED — 7 problem(s)
+[exit 1]
+
+########## python3 tools/build_verified.py ##########
+pages written: ['audit.html', 'flagged-review.html', 'index.html', 'injuries.html', 'picks.html', 'schedule.html', 'strategy-gates.html']
+[exit 0]
+

@@ -11,7 +11,7 @@
 <div class="app">
 <header class="header">
   <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
-  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 183 games · as of 2026-11-13</div>
 </header>
 <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html" class="active">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
   <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
@@ -29,10 +29,10 @@ on official dates and reports the strength of the evidence rather than the direc
 <li>Margin in each situation, and a permutation test between back-to-backs and rested teams.</li>
 </ul></div>
 <div class="card"><h2>Measured</h2>
-<div class="table-wrap"><table class="data"><caption>Margin by rest situation</caption><thead><tr><th scope="col">Situation</th><th scope="col">Team-games</th><th scope="col">Mean margin</th><th scope="col">Reading</th></tr></thead><tbody><tr><td>Back-to-back</td><td>46</td><td>-1.543</td><td>negative, consistent with fatigue</td></tr><tr><td>3+ days rest</td><td>70</td><td>1.271</td><td>reference group</td></tr><tr><td>3 games in 4 days</td><td>67</td><td>-0.284</td><td>the densest spot in the window</td></tr></tbody></table></div>
+<div class="table-wrap"><table class="data"><caption>Margin by rest situation</caption><thead><tr><th scope="col">Situation</th><th scope="col">Team-games</th><th scope="col">Mean margin</th><th scope="col">Reading</th></tr></thead><tbody><tr><td>Back-to-back</td><td>61</td><td>-1.787</td><td>negative, consistent with fatigue</td></tr><tr><td>3+ days rest</td><td>59</td><td>1.831</td><td>reference group</td></tr><tr><td>3 games in 4 days</td><td>93</td><td>-1.387</td><td>the densest spot in the window</td></tr></tbody></table></div>
 <p class="blurb">Difference (back-to-back minus rested):
-<strong>-2.81 points</strong>, permutation p =
-0.38. Not significant: the sign is right but the sample is too small to claim the effect.</p></div>
+<strong>-3.62 points</strong>, permutation p =
+0.24. Not significant: the sign is right but the sample is too small to claim the effect.</p></div>
 <div class="card"><h2>Travel, altitude and motivation</h2>
 <p>These are the flow factors that appear on the other surfaces of this repo. They are
 <strong>not</strong> measured here, because doing so honestly needs per-team travel schedules and
@@ -41,7 +41,7 @@ venue metadata that this snapshot does not carry in machine-readable form:</p>
 <li><strong>Travel distance</strong> — the schedule gives venues, not itineraries. Distance could be
 geocoded from the arena list; that is a defined next step, not a current result.</li>
 <li><strong>Altitude</strong> — Denver/Utah home games are identifiable from the venue string, but the
-effect needs a much larger sample than 139 games.</li>
+effect needs a much larger sample than 167 games.</li>
 <li><strong>Motivation</strong> (Cup group standings, seeding, back-half of a road trip) — not
 quantified, and not claimed.</li>
 <li><strong>In-game flow</strong> (pace, runs, garbage time) — needs play-by-play, which this
