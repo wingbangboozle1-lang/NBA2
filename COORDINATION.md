@@ -2958,3 +2958,7 @@ No committed data value was inferred or filled in.
 | Task | Status | Files | Verification |
 |---|---|---|---|
 | F95-01 — record run evidence, correct decision text, expose refresh result without overstating model freshness, add regression coverage | in progress | paths above | GitHub Actions API; generated-site parity; v2 tests/check; full CI after implementation |
+
+### Scope amendment — `arena/f95ac5bc-nba2` (before first code edit)
+
+The correction also needs the source record used by the v2 decision queue. Add `nba2/v2/live.py` and `suggestions/SUGGESTIONS.json` (the single `S-40` object only) to scope. PR #50's latest commit at 10:54:21Z also edits `suggestions/SUGGESTIONS.json`; it has been inactive for over 60 minutes, so the handoff applies only to correcting that stale S-40 evidence and its owner-facing recommendation. The v1 generator's mechanical outputs (`data/site.json`, `data/site-built.json`, and `pages/suggestions.html`, if changed by rebuilding) are added as generated outputs, not hand-edited. No other register entry or v1 generated page is in scope. The v2 status evidence will point to the GitHub Actions run and workflow; the NBA data-source links remain separate and the unobserved endpoint failure cause stays unverified.
