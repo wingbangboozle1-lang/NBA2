@@ -283,6 +283,27 @@ line and a lean; no game gets a stake, because no market price is connected to b
   <div class="kpi"><b>{blocked}</b><small>inputs blocked</small></div>
 </div>
 
+<div class="note bad"><b>2026-11-14, this session: the model's accuracy is not yet separable from
+"back the better team".</b> A paired test on the 33 games where our model and that naive rule disagreed found the
+naive rule right 20 times and the model 13 (exact p = 0.2962). The headline
+<a href="backtest.html">walk-forward accuracy</a> is high because favourites win, not because the model adds
+information. That is published as a finding, with its arithmetic, on
+<a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
+
+<div class="note ok"><b>Verified against the live official pages this session.</b> All 30 club records re-read from
+<a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30 identical. All 27
+window games re-checked field by field (date, tip time, away, home, game id, venue) against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a>: 27/27
+identical. Both checks are reproducible from <code>audit/2026-11-14-766d/</code>.</div>
+
+<div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
+The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
+later releases up to <b>01:30 PM ET</b>, and a player-by-player diff shows <b>4 status changes</b> and
+<b>24 additional rows</b> (Cleveland and Chicago filed after 04:30). None of it changes an originated line, because
+the model is availability-blind — but a reader must not treat the table as current.
+See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the raw capture in
+<code>audit/2026-11-14-766d/</code>.</div>
+
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
 lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. What is genuinely new is verification: every number
@@ -296,6 +317,8 @@ build were cross-checked against it. <a href="verification.html">See the verific
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
   <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
+  <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
   <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} official status rows from the 11/14 release, the teams that had not filed, and what cannot be quantified.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>Fourteen questions that block decisions, each with how to find the answer.</p></div>
@@ -404,6 +427,29 @@ published, because no signal in the file carries a price.</div>
 ledgers still start on 2026-11-14 and correctly remain PENDING. Nothing was invented to fill a gap, and the two
 irregularities found (a sign inversion in the spread selections, and two dashboards claiming to be the site) are
 published on the Flagged page rather than fixed silently in someone else's file.</div>
+<h2>0b. What this session (arena/766d0269-nba2) added, 2026-11-14 evening</h2>
+<div class="note ok"><b>Live re-verification passed on every row that was checked.</b> The 30 club records on this
+site were re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
+and matched exactly (30/30). The 27 window games were re-checked field by field against
+<a href="https://www.nba.com/schedule?date=2026-11-14" target="_blank" rel="noopener">nba.com/schedule</a> — date,
+tip time, away, home, game id and venue — and matched on every field (27/27). The scripts and the raw captures are in
+<code>audit/2026-11-14-766d/</code> so the check can be repeated without trusting this page.</div>
+<div class="note bad"><b>A published number was wrong, and is now fixed with a test that fails if it returns.</b> The
+picks table priced a <em>spread</em> lean with the <em>moneyline</em> probability. Our spread is the median of our own
+distribution, so the probability of covering it is ~0.50 on every game, while the probability of winning the game
+ranges from 0.07 to 0.95. Pricing one with the other produced break-even triggers like −1246 — a price no sportsbook
+offers on a spread. Both probabilities and both triggers are now published side by side, and four regression tests
+pin the arithmetic.</div>
+<div class="note warn"><b>The skill claim does not survive its own test — and that is the most useful result here.</b>
+The model's 64.7% accuracy on 167 graded games is not distinguishable from the naive rule "back the team with the
+better record", which scored 70.3% on the same games. On the 33 games where they disagreed, the naive rule won 20 and
+the model 13 (exact McNemar p = 0.2962). Full arithmetic on
+<a href="skill-attribution.html">Skill vs luck</a>. The consequence for decisions is direct: any promotion rule that
+accepts accuracy alone would promote a strategy that has demonstrated nothing.</div>
+<div class="note"><b>Eight decisions are now listed in one place</b>, each with what we have, what is missing, how the
+gap could be closed and who must decide: <a href="decisions-needed.html">Decisions needed</a>. Three of them are
+blocked on data this repository does not hold, and the routes to obtain it are named.</div>
+
 <h2>1. Six things you need to know, in the order they affect a decision</h2>
 """
     for head, txt in C.EXEC_BULLETS:
@@ -428,6 +474,10 @@ published on the Flagged page rather than fixed silently in someone else's file.
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Published team records that still match today's official standings", f"{st_ex.get('match_live_standings','—')} / 30", "the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification", srclink(O.SOURCES["standings"][1])]},
+        {"cells": ["Club records re-read live on 2026-11-14 19:40Z (this session)", "30 / 30 identical", "field-by-field comparison against nba.com/standings; script and capture committed", srclink("https://www.nba.com/standings")]},
+        {"cells": ["Window games re-checked live on 2026-11-14 19:45Z (this session)", "27 / 27 identical", "date, tip time, away, home, game id, venue; script and capture committed", srclink("https://www.nba.com/schedule?date=2026-11-14")]},
+        {"cells": ["Model accuracy vs the naive 'better record' rule", f"{100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['model_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}% vs {100 * (lab['skill_attribution']['headline_vs_win_pct_baseline']['baseline_won_those'] or 0) / max(1, lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']):.0f}%", f"on the {lab['skill_attribution']['headline_vs_win_pct_baseline']['discordant_games']} discordant games; exact McNemar p = {lab['skill_attribution']['headline_vs_win_pct_baseline']['mcnemar_exact_p']}", srclink(O.SOURCES["games"][1])]},
+        {"cells": ["Decisions that must be answered before further build", "8", "each with owner, evidence and discovery path — see Decisions needed", srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/DECISIONS.json")]},
     ]
     body += table(["Item", "Value", "Basis", "Source"], rows, "Summary figures")
     body += f"""
@@ -1175,6 +1225,19 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
     built["props.html"] = page("props.html", "Player props", body, "props.html")
 
     # ------------------------------------------------------------------ injuries
+    movement = [
+        ("Brown Jr., Mikel", "Brooklyn Nets", "Questionable", "Probable"),
+        ("Christie, Max", "Dallas Mavericks", "Questionable", "Doubtful"),
+        ("Harkless, Elijah", "Detroit Pistons", "Questionable", "Available"),
+        ("Jones, Isaac", "Detroit Pistons", "Questionable", "Available"),
+    ]
+    _mrows = [{"cells": [f"<b>{esc(a)}</b>", esc(b), badge(c, "warn"),
+                         badge(d, "ok" if d == "Available" else "bad"),
+                         srclink("https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf")]}
+              for (a, b, c, d) in movement]
+    movement_block = table(["Player", "Team", "04:30 AM ET (published here)",
+                            "01:30 PM ET (official, later)", "Source"], _mrows,
+                           "Every status that moved between the published release and the 01:30 PM ET release")
     inj_rows, counts = R.t_injuries(teams)
     body = f"""<h1>Injuries &amp; rotation</h1>
 <p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/14/26 04:30 AM ET report, plus the
@@ -1182,13 +1245,20 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> The 11/14 05:30 AM ET report returned
-AccessDenied at retrieval time, so the freshest reachable release is 04:30 AM ET. More importantly: a team files for a
-game by 5 p.m. local <em>the day before</em>, so for the 11/15, 11/16 and 11/17 games the deadline has not yet passed and
-no official row exists to read. Those cells are blank by policy, never estimated. Nothing was filled in from an
-unavailable or non-existent file.</div>
+<div class="note bad"><b>This table is six releases stale. A fresher official release is now published, and it
+moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
+<b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
+player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
 """
-    body += "<h2>Per-team exposure</h2>"
+    body += """"
+<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
+the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
+blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
+it, which is why 04:30 AM ET was that build's ceiling; the 01:30 PM release is reachable now, as the capture above
+shows.)</div>
+
+<h2>Per-team exposure</h2>
+"""
     rows = []
     for r in R.t_rotation(counts):
         rows.append({"cells": [esc(r["team"]), esc(r["out"]), esc(r["doubtful"]), esc(r["questionable"]),
