@@ -1357,7 +1357,7 @@ Owned by others and NOT touched unless a change request is logged first: `origin
 | E-04 | Spot-verification of published table rows vs official sources | **done 2026-11-14** | `audit/**` | Records: **30/30 W-L match** official standings (TOR 5-7, WAS 4-9 now official → resolves FLAG-SLATE-02, logged as FLAG-RES-01); tips: **31/31 confirmed** by ≥2 official sources (rail + schedule; 11/13 nine also match injury-report Game Time) → FLAG-SLATE-04 confirmed; URLs: **31/31 slugs match** links nba.com itself prints → FLAG-SLATE-05 resolved; FLAG-ANOM-01 adjudicated genuine via official game page `nyk-vs-tor-0022600253` (Tue Nov 17 7:30 PM ET) |
 | E-05 | Publish findings: new flags on the canonical Flagged for Review page + audit tables on the site | **done 2026-11-14** | `nba2/pipeline/build_site_data.py`, `build_site.py`, regenerated site | New flags: **FLAG-CUR-01** (high — injury rows are 16:15 ET vs official 19:15 ET), **FLAG-CUR-02** (medium — Martin page-break label drop + contradictory Cleveland pending row), **FLAG-AUD-01** (low — 31 game URLs printed as plain text), **FLAG-SET-01** (info — settlement pending by design), **FLAG-RES-01** (info — FLAG-SLATE-02 evidence now official); FLAG-SLATE-04/05/ANOM-01 statements amended in place with confirmation evidence; new page **`pages/session-audit.html`** (Session Audit nav entry) carrying tables: verification results (16 rows), injury revision delta (52 rows), suggestions for review S-A01…S-A06 (6 rows, owner decision); `audit/injury_delta_0415_to_0715.json` added to `input_digest` |
 | E-06 | Site integrity: full internal-link check, build parity, landing-page/nav verification | **done 2026-11-14** | regenerated `index.html`, `pages/**` | check_links_all ALL OK after rebuild; `build_site_data` byte-parity confirmed (rebuild == committed); 55/55 tests incl. determinism test; new page reachable from landing cat-grid + every page's nav; lint OK |
-| E-07 | Final integration: PR → main, merge, confirm GitHub Pages deploy, record here | claimed (this session) | `COORDINATION.md` | protocol: no waiting for owner approval; next step after E-01…E-06 push |
+| E-07 | Final integration: PR → main, merge, confirm GitHub Pages deploy, record here | **done 2026-11-14** | `COORDINATION.md` | PR #40 (findings + integration fixes) merged `faf5775` 02:28Z; PR #41 (Pages parity fix) merged `83a34a0` 02:39Z — both without approval per brief; CI verify+backtest+v2 all green on both; Publish GitHub Pages green after the fix; Pages build `83a34a0` status **built**; live site re-fetched — Session Audit page serving with all tables; details below |
 
 **E-01…E-06 verification summary (2026-11-14, session arena/72f9da58):** every number above
 was produced this session by running the named command or reading the named official page —
@@ -1401,3 +1401,42 @@ onto it and reconciled — both sessions' work kept, nothing discarded:
 cannot confirm from an official source is left blank and flagged. The sealed ledger is never
 rewritten. If a parallel session claims any file in my scope first, I log the request here
 instead of editing it.
+
+### E-07 integration result (2026-11-14, session arena/72f9da58) — COMPLETE
+
+- **PR #40** — *Session audit: official-source re-verification, findings publication, integration
+  fixes (E-01…E-07)*: https://github.com/wingbangboozle1-lang/NBA2/pull/40 — merged with merge
+  commit `faf5775afae6444b6a926f226c173b0dae562744` at 2026-01…2026-11-14 02:28:22 UTC, no
+  approval wait per brief. CI on the merge: verify ✔, backtest ✔, v2 ✔.
+- **PR #41** — *fix(pages): deterministic league_offset serialisation*:
+  https://github.com/wingbangboozle1-lang/NBA2/pull/41 — merged `83a34a0ff26a10044cda60703db68b29d0da592f`
+  at 02:39 UTC. Root cause of the Pages-build failure on every v2-era merge (#34/#39/#40):
+  `calibration.league_offset` was the only published float at full precision, fitted through a
+  bisection over `math.erf` whose last ulp differs between the GitHub runner's libm and the
+  arena sandbox, so `site/data/lines.json` + `site/data/teams.json` could never byte-match in
+  CI. Fixed by rounding to 6 dp in `Calibration.as_dict()` only (computation untouched).
+- **GitHub Pages:** `Publish GitHub Pages` run
+  [43547520597](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43547520597) —
+  **success** (first green v2-era publish); platform run `pages-build-deployment`
+  [43547519758](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43547519758)
+  **success**; Pages build API: commit `83a34a0`, status **built**, site
+  https://wingbangboozle1-lang.github.io/NBA2/.
+- **Live content re-fetched (not assumed):** the root landing page serves the merged main tree
+  (nav includes **Session Audit**, 79 open flags, 36-game slate, seal `c841e8f3…`), and
+  `pages/session-audit.html` serves all three tables (verification results, 52-row injury
+  delta, suggestions) with source links intact.
+- **Owner decision logged (not actioned here):** the repo's Pages setting is
+  `build_type: legacy` (deploy from branch `main` root — the v1 tree), while the committed
+  `pages.yml` intends to publish the `site/` (v2) artifact. Both trees are fully verified and
+  carry this session's findings (v1: FLAG-CUR/AUD/SET/RES + session-audit page; v2: F-019…F-022
+  + SG-19…SG-24 + verification-log audit/delta tables). Switching the live tree = flip the
+  Pages source to "GitHub Actions" — one setting, but it changes every page a reader sees, so
+  it is an owner choice, recorded here with the evidence either way.
+- **Final checker sweep on merged main:** 64/64 nba2 + 49/49 backtest + 43/43 v2 tests; lint OK
+  (1124 rows / 39 tables); both seals VERIFIED; `check_links_all` 105 files / 4240 internal
+  links ALL OK; `verify_site` / `check_site` / `verify.js` / `verify_backtest` /
+  `nba2.v2.check` (0/0) all PASS; `crosscheck_site` 77 pass / 6 fail — the 6 are pre-existing
+  on main (verified in a clean worktree), listed in the reconciliation note above for their
+  owners; v1 + v2 rebuild byte-parity OK.
+- **Flagged items do not block this merge** — they are published on both Flagged for Review
+  pages with source links, as the protocol requires.
