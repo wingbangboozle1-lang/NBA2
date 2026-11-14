@@ -1,0 +1,165 @@
+{
+ "captured_utc": "2026-11-14T19:50Z",
+ "official_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf",
+ "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+ "document_header": "Injury Report: 11/14/26 01:30 PM",
+ "method": "platform page-fetch tool; index page fetched the same session to confirm the URL",
+ "player_status_rows_later_release": 50,
+ "by_status": {
+  "Out": 31,
+  "Probable": 6,
+  "Doubtful": 2,
+  "Available": 4,
+  "Questionable": 7
+ },
+ "teams_with_a_filing": 9,
+ "teams_not_yet_submitted": 19,
+ "not_yet_submitted_club_slots": 19,
+ "dates_covered": [
+  "11/14/2026"
+ ],
+ "published_snapshot_release": "11/14/26 04:30 AM ET",
+ "published_player_rows": 26,
+ "players_only_in_published_snapshot": [],
+ "players_only_in_later_release": [
+  [
+   "Chicago Bulls",
+   "Awaka, Tobe"
+  ],
+  [
+   "Chicago Bulls",
+   "Claxton, Nic"
+  ],
+  [
+   "Chicago Bulls",
+   "Powell, Norman"
+  ],
+  [
+   "Chicago Bulls",
+   "Sellers, Jaylin"
+  ],
+  [
+   "Chicago Bulls",
+   "Smith, Jalen"
+  ],
+  [
+   "Chicago Bulls",
+   "Swain, Dailyn"
+  ],
+  [
+   "Chicago Bulls",
+   "Wilson, Caleb"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Allen, Jarrett"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Harden, James"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Merrill, Sam"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Mitchell, Donovan"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Mobley, Evan"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Tomlin, Nae'Qwan"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Udeh, Jr., Ernest"
+  ],
+  [
+   "Cleveland Cavaliers",
+   "Watson, Peyton"
+  ],
+  [
+   "Miami Heat",
+   "Antetokounmpo, Giannis"
+  ],
+  [
+   "Miami Heat",
+   "Goldin, Vladislav"
+  ],
+  [
+   "Miami Heat",
+   "Larsson, Pelle"
+  ],
+  [
+   "Miami Heat",
+   "Thompson, Klay"
+  ],
+  [
+   "New Orleans Pelicans",
+   "McGowens, Bryce"
+  ],
+  [
+   "New Orleans Pelicans",
+   "Missi, Yves"
+  ],
+  [
+   "New Orleans Pelicans",
+   "Murphy III, Trey"
+  ],
+  [
+   "New Orleans Pelicans",
+   "Murray, Dejounte"
+  ],
+  [
+   "New Orleans Pelicans",
+   "Watford, Trendon"
+  ]
+ ],
+ "players_with_different_status": [
+  {
+   "team": "Brooklyn Nets",
+   "player": "Brown Jr., Mikel",
+   "published": [
+    "Questionable"
+   ],
+   "later_release": [
+    "Probable"
+   ]
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Christie, Max",
+   "published": [
+    "Questionable"
+   ],
+   "later_release": [
+    "Doubtful"
+   ]
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Harkless, Elijah",
+   "published": [
+    "Questionable"
+   ],
+   "later_release": [
+    "Available"
+   ]
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Jones, Isaac",
+   "published": [
+    "Questionable"
+   ],
+   "later_release": [
+    "Available"
+   ]
+  }
+ ],
+ "verdict": "4 status change(s) on shared rows"
+}
