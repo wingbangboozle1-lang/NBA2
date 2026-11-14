@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="22">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="questions" data-rows="29">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -271,6 +271,83 @@
 <td>Your decision threshold — currently the model assumes ±10% matters, and suppresses a pick when it does.</td>
 <td>Owner states a threshold; encode in G-08.</td>
 <td>This is the difference between a research dashboard and a betting system.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-23">
+<td>Q-23</td>
+<td>When a published snapshot goes stale, should the site keep showing it (labelled) or withhold the page entirely?</td>
+<td>Proof of the failure mode, measured today: the v2 team table matches the pre-11/13-finals state 30/30 and current official standings only 12/30, while the page still advertises a 30/30 live match. The nine 11/13 finals were played while the table was frozen.</td>
+<td>A rule. Nothing in the build currently compares a published row against a fresher official capture, so staleness can only be caught by a human reading two pages.</td>
+<td>Set a maximum snapshot age per table (records: 1 day; prices: 15 minutes; injuries: to the next official filing). Add a staleness gate to nba2/v2/check.py that fails when a row is older than its limit, and render stale rows with an explicit &#x27;as of&#x27; badge instead of a MATCH badge.</td>
+<td>Without it the site can show a table it calls verified that is provably wrong the next morning. This is the single highest-cost defect found this session because it is silent.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-24">
+<td>Q-24</td>
+<td>Is a 4-game, 0-loss forecast worth publishing at all, and what is the minimum n before a strategy may be ranked?</td>
+<td>The first real out-of-sample result in the repository: nba2/data/picks.json committed 83 minutes before tip, 4 distinct games bet, all 4 won (S1 moneyline and S2 spread fired on the same games, so 8 recorded wins are 4 games). Model called the winner in 5 of 9 games; always-home would have got 7.</td>
+<td>The promotion threshold. Existing gates want 30 settled bets, which is the right order of magnitude but has never been ratified as a number the owner will accept waiting for.</td>
+<td>Owner ratifies: minimum n (proposal: 100 settled, to have power to detect a 3-point edge), and whether a 4-0 start is allowed to be displayed at all once n is known to be inadequate.</td>
+<td>4-0 is exactly the result that would get a bettor to increase stakes. Publishing it without the n=4 context would make the site a machine for manufacturing false confidence.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-25">
+<td>Q-25</td>
+<td>Should a per-strategy win rate be allowed to count the same game twice when two strategies fire on it?</td>
+<td>The measured overlap: of 4 graded games, all 4 were bet by both S1_MarginFavorite and S2_SpreadValue. Per-strategy hit rates stay valid; any portfolio or leaderboard return that sums them double-counts the games.</td>
+<td>A portfolio accounting rule: whether the leaderboard scores strategies independently (as now) or scores the union of positions actually held.</td>
+<td>Owner decision. Independent scoring is simpler and correct for ranking hypotheses; union scoring is correct for describing what a bankroll would have done. They answer different questions and the site currently only implements one.</td>
+<td>If rewards are paid on summed per-strategy results, two correlated strategies split one result twice and the reward pool systematically overpays correlation, which is the thing the project exists to price.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-26">
+<td>Q-26</td>
+<td>Does a team rating that is computed from a frozen standings table need to be re-fitted per slate, or is a same-day snapshot accurate enough?</td>
+<td>A measured comparison on 9 graded games: the model&#x27;s margin MAE was 11.46 against 13.33 for predicting a tie, but its winner accuracy (5/9) was no better than a naive net-rating baseline computed from the same frozen table (5/9).</td>
+<td>A rebuilt rating on post-11/13 data. That requires re-running the whole pipeline against today&#x27;s official standings, which is a data refresh, not a code change.</td>
+<td>Refresh data/raw with the 30 current records captured today (already in audit/2026-11-14/official_inputs_2026-11-14.json), rebuild, re-seal a new ledger, and compare. Until then no claim about which estimator is better is supported.</td>
+<td>Decides whether the daily cadence is a real requirement or a nicety: if a one-day-old table costs accuracy, the nightly job is load-bearing.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-27">
+<td>Q-27</td>
+<td>Should the unreachable v1 tree be retired, and who signs off on deleting a published surface?</td>
+<td>A direct probe of the live site on 2026-11-14: pages/executive-summary.html and pages/session-audit.html both return HTTP 404, while site/-only data/teams.json returns 200 with v2 content. Exactly one tree is served — site/. The Pages API still reports build_type=legacy, source=main/, which does not describe what is served.</td>
+<td>Permission to retire the v1 tree. It is regenerated, linted and parity-checked on every push and contains records that were true only before the 11/13 finals, but no reader can reach it.</td>
+<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note, drop them from ci.yml&#x27;s parity step, and keep the v2 build as the only generator. Deleting nothing is also a valid answer if the archive is clearly labelled.</td>
+<td>Every minute spent verifying the v1 tree is spent on a surface nobody reads, and its stale numbers keep appearing in repo-wide audits and confusing later sessions.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-28">
+<td>Q-28</td>
+<td>How is a pick&#x27;s price recorded if no odds feed will ever be licensed?</td>
+<td>Every graded signal in nba2/data/picks.json lacks a price field entirely, so win/loss is measurable and profit is not. Reported -110 would make every number in this project an assumption about a book.</td>
+<td>Either a licensed feed, or a decision to accept manual price entry, or a decision that the project only ever publishes winners and never PnL.</td>
+<td>Owner picks one of three. Option three is viable and cheap: publish hit rates and CLV-free triggers, and never claim a return.</td>
+<td>Decides whether the leaderboard competition can ever have a cash-relevant reward, or is permanently an accuracy contest.</td>
+<td>BLOCKING</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-29">
+<td>Q-29</td>
+<td>Who is allowed to move the build stamp, and how should a refresh be recorded?</td>
+<td>The stamp is now derived from the newest retrieved_at_utc inside the committed snapshots (2026-11-14 01:05 UTC as of this build), so it cannot drift on a rebuild. An explicit NBA2_BUILD_STAMP override exists but nothing in CI sets it.</td>
+<td>A refresh procedure. Today a snapshot is refreshed by a human or a workflow writing a new file under data/raw with a new retrieved_at_utc; nothing records who authorised the refresh or which official page it came from at run time.</td>
+<td>Make the nightly refresh the only writer of data/raw, have it write retrieved_at_utc plus the exact source URL per file, and forbid hand edits in CI by checking that every new snapshot carries a retrieval record. The override then never needs to be used.</td>
+<td>Without it &#x27;as of&#x27; is only as trustworthy as the last hand edit, which is the class of problem F-029 came from.</td>
 <td>MEDIUM</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>

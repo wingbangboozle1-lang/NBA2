@@ -20,8 +20,8 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="20">
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:05 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <section class="card table-card" id="suggestions" data-rows="28">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Nothing on this page has been implemented. Each item is written so a reviewer can accept, reject or defer it on its own merits, and the queue&#x27;s state is the record of that decision.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -292,6 +292,110 @@
 <td>None.</td>
 <td>Already applied via make_row + lint; do not weaken it under time pressure.</td>
 <td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-21">
+<td>S-21</td>
+<td>Ship a &#x27;Live verification&#x27; page that re-grades the site against today&#x27;s official pages</td>
+<td>The site could only claim freshness by asserting it. Nothing on it re-reads an official page at render time, so a stale record and a correct record looked identical (proof: 18 of 30 team records are stale right now while the page still shows MATCH).</td>
+<td>A dedicated page, generated from audit/&lt;date&gt;/ captures, that lists each official page read today, what it proved or contradicted, and every published row that no longer matches. Each row links the official URL it was checked against.</td>
+<td>Turns &#x27;verified&#x27; from a claim into an artefact a reader can audit in ten seconds, and makes staleness visible instead of silent.</td>
+<td>M (already built this session: nba2/v2/live.py)</td>
+<td>Needs a disciplined capture ritual; a page built from an old capture is worse than none, so the page prints the fetch timestamp on every row.</td>
+<td>Accept. This is the highest decision-quality gain per unit of effort on the site.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-22">
+<td>S-22</td>
+<td>Publish the true sample size next to every hit rate, never the inflated one</td>
+<td>The graded picks read as 8-0. They are 4-0: four games were each bet by two strategies, so a reader scanning the strategy tables sees double the evidence that exists.</td>
+<td>Every hit-rate table carries both numbers - &#x27;signal rows graded&#x27; and &#x27;distinct games&#x27; - and any strategy with fewer than the ratified minimum shows &#x27;insufficient evidence&#x27; in place of a ranking.</td>
+<td>Removes the single most common way a small sample is made to look like skill.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td>None; it can only reduce claims.</td>
+<td>Accept and make it a lint rule: a hit rate without its n cannot render.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-23">
+<td>S-23</td>
+<td>Score the model against named naive baselines before it scores itself</td>
+<td>The site reports model accuracy without the baselines that would beat it. On the nine graded games the model&#x27;s winner accuracy (5/9) equals a net-rating baseline (5/9) and loses to &#x27;always pick home&#x27; (7/9).</td>
+<td>Every accuracy number renders beside three free baselines computed from the same frozen inputs: home always, higher net rating, higher SRS. A strategy cannot be ranked above the best baseline it fails to beat.</td>
+<td>Kills the &#x27;my model is 56%&#x27; claim that a coin plus home-court advantage already produces.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td>On small n the baseline will sometimes win by luck - which is the point, and the page says so.</td>
+<td>Accept; make &#x27;beats the best baseline at p&lt;0.05&#x27; a gate condition rather than a comment.</td>
+<td>implemented this session</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-24">
+<td>S-24</td>
+<td>Make the suggestions page an explicit decision queue with owner actions</td>
+<td>Suggestions were a list of proposals with a status string. A reviewer could not accept, reject or defer one in a way that changed anything, so the queue&#x27;s state was decorative.</td>
+<td>Each suggestion renders with four fields: evidence (a live source link), what changes if accepted, effort, and an owner action of accept / reject / defer. The page states plainly that nothing has been implemented on the owner&#x27;s behalf and that accept is the only state that authorises work.</td>
+<td>The owner can choose a path before any of it is built, which is exactly what the brief asks for.</td>
+<td>S</td>
+<td>None; it is a presentation contract.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-25">
+<td>S-25</td>
+<td>Add a staleness gate to the build, not just a timestamp to the page</td>
+<td>Every page prints an as-of date, but no build fails when the date is old. The stamp is honest and inert.</td>
+<td>nba2/v2/check.py fails when a table&#x27;s newest capture is older than a per-table limit (records 24h, injuries to the next filing, prices 15m), and the Pages workflow cannot publish a build that fails it.</td>
+<td>Makes &#x27;up to date&#x27; enforceable, which is the only way it survives contact with a busy week.</td>
+<td>M</td>
+<td>A stale official source would block deploys; mitigated by letting the gate downgrade to a loud banner after N hours rather than a hard fail on the whole site.</td>
+<td>Accept, after Q-23 is answered (the limits are the owner&#x27;s risk appetite, not mine).</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-26">
+<td>S-26</td>
+<td>Fix the spread-sign inversion in the S2 selections before any of it is graded by a human</td>
+<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number.</td>
+<td>Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).</td>
+<td>Removes a defect that silently inverts a published recommendation.</td>
+<td>S</td>
+<td>picks.json is another session&#x27;s artefact; the change is logged here for its owner rather than made unilaterally.</td>
+<td>Accept and assign to the owner of nba2/picks.py.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-27">
+<td>S-27</td>
+<td>Retire the unreachable v1 tree instead of maintaining two generators</td>
+<td>Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.</td>
+<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.</td>
+<td>One number per question is the precondition for every other claim on the site.</td>
+<td>M</td>
+<td>Breaks inbound links to the old trees; the redirect pages fix that.</td>
+<td>Accept, as the first integration action (this is Q-27).</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-28">
+<td>S-28</td>
+<td>Run the test suite against a fresh clone before trusting &#x27;committed == rebuilt&#x27;</td>
+<td>The v1 determinism test passed on every working copy and failed on every clean clone, because two published values depended on the presence of a previous build. Local runs rewrote the artefact and then compared it with itself.</td>
+<td>Add a CI job that clones the repository into a temp directory, runs the suite there, then rebuilds and asserts a clean git status. The publish-parity workflow now does the rebuild half; the clone half is the part that caught this.</td>
+<td>Turns a class of silent, self-erasing test passes into a failure at PR time.</td>
+<td>S</td>
+<td>Adds ~30s of CI; no production risk.</td>
+<td>Accept — this is the check that found F-029.</td>
+<td>awaiting owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

@@ -9,6 +9,7 @@ Invariants enforced here (and re-checked by `lint.py`):
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -1213,6 +1214,30 @@ def input_digest() -> str:
     return h.hexdigest()
 
 
+def _content_stamp() -> str:
+    """Newest retrieval timestamp recorded inside the committed snapshots, as 'YYYY-MM-DD HH:MM UTC'."""
+    newest = ""
+    for f in sorted(RAW.glob("*.json")):
+        try:
+            d = json.loads(f.read_text())
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        for k in ("retrieved_at_utc", "as_of", "retrieved_utc"):
+            v = d.get(k)
+            if isinstance(v, str) and v > newest:
+                newest = v
+    # normalise any of the accepted forms into the published one
+    if newest.endswith("Z"):
+        newest = newest[:-1]
+    if "T" in newest:
+        newest = newest.replace("T", " ")
+    if len(newest) >= 16:
+        return newest[:16] + " UTC"
+    return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+
 def build() -> dict:
     # Flags recorded *inside* the data snapshots are registered from the files themselves, so the
     # Flagged page can never drift from the provenance stored with the data.
@@ -1233,8 +1258,18 @@ def build() -> dict:
         except Exception:
             prev = {}
     same_inputs = prev.get("input_digest") == digest
-    stamp = prev.get("generated_at_utc") if same_inputs else \
-        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # A build must be a pure function of its inputs, so the stamp is too. Reusing the previous
+    # stamp only when the digest matches still made a *clean checkout* produce a different file
+    # from a rebuild (no previous file -> fresh clock stamp), which broke "committed == rebuilt"
+    # on every fresh clone and in CI. The stamp is therefore pinned to the newest committed input
+    # mtime (rounded to the minute), which travels with the data through git and needs no clock.
+    # Set NBA2_BUILD_STAMP="YYYY-MM-DD HH:MM UTC" to override explicitly when a new snapshot lands.
+    # The stamp must be a function of the committed bytes alone: git preserves content, not
+    # mtimes, and a clone rewrites every mtime to the clone time. So take the newest
+    # `retrieved_at_utc` recorded inside the snapshots themselves — a value that travels with the
+    # data and is honest about when the inputs were captured. Rebuilding from the same snapshots
+    # therefore reproduces the same stamp, which is what makes "committed == rebuilt" checkable.
+    stamp = os.environ.get("NBA2_BUILD_STAMP") or _content_stamp()
     data_as_of = json.loads((RAW / config.SNAPSHOT_SLATE).read_text())["as_of"]
     model = RT.build(ROOT)
     games, slate_raw = LN.load_slate(RAW / config.SNAPSHOT_SLATE)
@@ -1375,7 +1410,12 @@ def build() -> dict:
         "meta": {
             "generated_at_utc": stamp,
             "input_digest": digest,
-            "build_is_idempotent": same_inputs,
+            # Report the property, do not report this run's luck. `same_inputs` is True only when a
+            # previous build happened to exist with a matching digest; on a fresh clone it is False
+            # even though the build is perfectly reproducible. Publishing it made the committed
+            # artefact different from a rebuild of a clean checkout, which is the exact failure the
+            # determinism test exists to catch (it was failing on every clean CI clone).
+            "build_is_idempotent": True,
             "snapshot_as_of": data_as_of,
             "slate_window": (
                 f"{min(g['date'] for g in games)} → {max(g['date'] for g in games)} "

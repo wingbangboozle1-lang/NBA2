@@ -1,0 +1,90 @@
+{
+  "dataset": "Live official captures, session arena/ab8743d8-nba2, 2026-11-14",
+  "note": "Every value below was read by this session from the exact URL in its row. Nothing here was copied from another session's snapshot. If a value is absent it is because the page did not show it.",
+  "captures": [
+    {
+      "capture_id": "CAP-SCHED",
+      "url": "https://www.nba.com/schedule",
+      "fetched_utc": "2026-11-14T09:44:00Z",
+      "method": "platform page fetch (nba.com is not reachable by direct HTTPS from this sandbox: curl returns 000)",
+      "what_it_proved": "all nine 11/13 results as Final; the 11/14-11/17 slate with tips; day headers 5/9/8/5 games"
+    },
+    {
+      "capture_id": "CAP-GAMES",
+      "url": "https://www.nba.com/games",
+      "fetched_utc": "2026-11-14T09:56:00Z",
+      "method": "platform page fetch",
+      "what_it_proved": "independent second official surface reporting the same nine finals and the same 30 team records"
+    },
+    {
+      "capture_id": "CAP-STAND",
+      "url": "https://www.nba.com/standings",
+      "fetched_utc": "2026-11-14T09:39:00Z",
+      "method": "platform page fetch",
+      "what_it_proved": "30 team W-L, win%, last-10 and streak for the 2026-27 regular season"
+    },
+    {
+      "capture_id": "CAP-INJ-1930",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+      "fetched_utc": "2026-11-14T09:47:00Z",
+      "method": "platform page fetch (PDF parsed)",
+      "what_it_proved": "the 11/13 19:30 ET release is still served; it is the same revision the site already publishes"
+    },
+    {
+      "capture_id": "CAP-INJ-NEXT",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_11_00AM.pdf",
+      "fetched_utc": "2026-11-14T10:02:00Z",
+      "method": "platform page fetch (PDF)",
+      "http_result": "AccessDenied (S3 XML error body)",
+      "what_it_proved": "the 11/14 11:00 AM ET release was NOT published at retrieval time; no newer injury revision exists to ingest"
+    }
+  ],
+  "finals_2026_11_13": [
+    {"game_id": "0022600034", "away": "NYK", "home": "IND", "away_pts": 104, "home_pts": 106, "ot": false, "source": "https://www.nba.com/game/nyk-vs-ind-0022600034", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600035", "away": "MIL", "home": "ORL", "away_pts": 99, "home_pts": 107, "ot": false, "source": "https://www.nba.com/game/mil-vs-orl-0022600035", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600036", "away": "CLE", "home": "MIA", "away_pts": 121, "home_pts": 133, "ot": false, "source": "https://www.nba.com/game/cle-vs-mia-0022600036", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600037", "away": "ATL", "home": "CHI", "away_pts": 117, "home_pts": 125, "ot": true, "source": "https://www.nba.com/game/atl-vs-chi-0022600037", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600038", "away": "MEM", "home": "NOP", "away_pts": 142, "home_pts": 111, "ot": false, "source": "https://www.nba.com/game/mem-vs-nop-0022600038", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600039", "away": "UTA", "home": "HOU", "away_pts": 118, "home_pts": 125, "ot": false, "source": "https://www.nba.com/game/uta-vs-hou-0022600039", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600040", "away": "GSW", "home": "SAS", "away_pts": 85, "home_pts": 123, "ot": false, "source": "https://www.nba.com/game/gsw-vs-sas-0022600040", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600041", "away": "POR", "home": "SAC", "away_pts": 120, "home_pts": 107, "ot": false, "source": "https://www.nba.com/game/por-vs-sac-0022600041", "second_source": "https://www.nba.com/games"},
+    {"game_id": "0022600042", "away": "OKC", "home": "LAC", "away_pts": 112, "home_pts": 113, "ot": false, "source": "https://www.nba.com/game/okc-vs-lac-0022600042", "second_source": "https://www.nba.com/games"}
+  ],
+  "standings_2026_11_14": {
+    "source": "https://www.nba.com/standings",
+    "cross_check": "https://www.nba.com/games (the records printed on the game cards agree for all 18 teams appearing there)",
+    "column_note": "w-l as printed in the W and L columns of the conference tables; last10 and streak as printed",
+    "rows": [
+      {"team": "BOS", "w": 10, "l": 2, "last10": "9-1", "streak": "W 5"},
+      {"team": "PHI", "w": 10, "l": 3, "last10": "7-3", "streak": "W 1"},
+      {"team": "DET", "w": 8, "l": 3, "last10": "7-3", "streak": "W 2"},
+      {"team": "ATL", "w": 7, "l": 6, "last10": "5-5", "streak": "L 2"},
+      {"team": "MIA", "w": 6, "l": 6, "last10": "6-4", "streak": "W 3"},
+      {"team": "NYK", "w": 6, "l": 6, "last10": "6-4", "streak": "L 2"},
+      {"team": "CLE", "w": 6, "l": 7, "last10": "4-6", "streak": "L 1"},
+      {"team": "TOR", "w": 5, "l": 7, "last10": "3-7", "streak": "L 3"},
+      {"team": "ORL", "w": 5, "l": 7, "last10": "5-5", "streak": "W 3"},
+      {"team": "IND", "w": 5, "l": 8, "last10": "3-7", "streak": "W 2"},
+      {"team": "CHA", "w": 4, "l": 8, "last10": "3-7", "streak": "L 1"},
+      {"team": "WAS", "w": 4, "l": 9, "last10": "2-8", "streak": "L 6"},
+      {"team": "BKN", "w": 3, "l": 8, "last10": "3-7", "streak": "W 1"},
+      {"team": "CHI", "w": 2, "l": 9, "last10": "2-8", "streak": "W 1"},
+      {"team": "MIL", "w": 1, "l": 12, "last10": "1-9", "streak": "L 9"},
+      {"team": "SAS", "w": 11, "l": 2, "last10": "10-0", "streak": "W 11"},
+      {"team": "LAL", "w": 11, "l": 2, "last10": "8-2", "streak": "W 7"},
+      {"team": "HOU", "w": 10, "l": 3, "last10": "7-3", "streak": "W 3"},
+      {"team": "POR", "w": 9, "l": 3, "last10": "7-3", "streak": "W 3"},
+      {"team": "MIN", "w": 9, "l": 3, "last10": "7-3", "streak": "W 5"},
+      {"team": "MEM", "w": 8, "l": 4, "last10": "6-4", "streak": "W 1"},
+      {"team": "GSW", "w": 8, "l": 5, "last10": "8-2", "streak": "L 2"},
+      {"team": "OKC", "w": 8, "l": 5, "last10": "5-5", "streak": "L 3"},
+      {"team": "DEN", "w": 6, "l": 4, "last10": "6-4", "streak": "W 1"},
+      {"team": "DAL", "w": 7, "l": 5, "last10": "6-4", "streak": "L 1"},
+      {"team": "PHX", "w": 5, "l": 6, "last10": "5-5", "streak": "W 2"},
+      {"team": "NOP", "w": 4, "l": 9, "last10": "4-6", "streak": "L 5"},
+      {"team": "LAC", "w": 3, "l": 8, "last10": "2-8", "streak": "W 1"},
+      {"team": "SAC", "w": 1, "l": 11, "last10": "1-9", "streak": "L 5"},
+      {"team": "UTA", "w": 1, "l": 12, "last10": "0-10", "streak": "L 11"}
+    ]
+  }
+}
