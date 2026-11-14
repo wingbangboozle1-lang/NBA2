@@ -32,7 +32,7 @@ The live site is built from **one named tree**, listed explicitly in
 
 ```
 index.html + flagged.html        the canonical dashboard
-pages/**                         its 20 category subpages
+pages/**                         its 21 category subpages
 backtest/**                      the measured-skill backtest the dashboard links to
 css/ assets/ styles.css app.js   the styles and behaviour
 COORDINATION.md README.md        the board and the map of the repository
@@ -63,7 +63,7 @@ as *source*. It is not shipped as a second dashboard — see
 
 ## The dashboard this session generates
 
-`index.html` + `pages/**` (21 pages, 45 tables, 1275 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 46 tables, 1290 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -108,7 +108,7 @@ one of them is published:
 
 | Surface | Built by | Published? | Notes |
 |---|---|---|---|
-| root `*.html` + `pages/**` | `nba2/pipeline/build_site.py` from `data/site.json` | **yes — this is the live site** | the canonical dashboard; 21 pages, 45 tables, 1275 rows, every row sourced |
+| root `*.html` + `pages/**` | `nba2/pipeline/build_site.py` from `data/site.json` | **yes — this is the live site** | the canonical dashboard; 21 pages, 46 tables, 1290 rows, every row sourced |
 | `backtest/**` | session arena-f7477d5e | **yes** | the measured-skill backtest the dashboard links to; 155 official finals, leakage-tested |
 | `site/**` (v2 "Lines Lab") | session arena-6e7afc65 | no — repository only | a second dashboard built one window earlier (31 games, 11-13 → 11-16) that publishes no picks; kept for the record, reconciled on [the reconciliation page](pages/reconciliation.html) |
 | root `picks.html`, `strategies.html`, … (the arena-7b4973eb set) | `build_site.py` + `nba2/generate.py` | no — superseded | its own originated lines; reconciled against ours on the reconciliation page |
