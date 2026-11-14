@@ -79,7 +79,7 @@ honest map rather than a claim that there is one generator:
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (49 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (55 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
