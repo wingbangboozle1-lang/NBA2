@@ -1323,3 +1323,43 @@ trees are not edited, so no other session's output is destroyed.
 ### Merge record
 
 Filled in immediately after the PR below is merged.
+---
+
+## Session `arena/72f9da58-nba2` — task claim (2026-11-14 UTC)
+
+Registry row: `arena/72f9da58-nba2` — line-by-line repo review + official-source
+re-verification, checker sweep, findings publication, final integration (PR → main → merge →
+Pages confirm). Branching note: Arena pinned this session to `arena/72f9da58-nba2`; all work
+happens there. Claim pushed **before** work started, per protocol.
+
+### File scope (this session)
+
+- `COORDINATION.md` — append-only (this board).
+- `audit/**` — new: line-by-line verification report, source log, checker-run logs.
+- `nba2/pipeline/build_site_data.py` — only if new flags/rows must be registered for
+  publication on the Flagged for Review page (the site is generated; flags live here).
+- Shared integration outputs (only at final-integration time, per protocol): root
+  `index.html`, regenerated `pages/*.html`, `data/site.json`, `flagged.html`, `README.md`.
+- Regenerated outputs of any checker/generator this session runs (byte-parity enforced by CI).
+
+Owned by others and NOT touched unless a change request is logged first: `originated/**`,
+`dashboard/**`, `docs/**`, `verified/**`, `pages/` content owned by other generators
+(`tools/`, `scripts/`), `data/raw/**` snapshots (read-only), sealed ledger
+`data/raw/ledger/**` (immutable by design), `.github/workflows/**`.
+
+### Task board — arena/72f9da58 (E-01…E-07)
+
+| ID | Task | Status | File scope | Notes |
+|---|---|---|---|---|
+| E-01 | Line-by-line repo review: run every committed checker/test/lint and record results | in progress | `audit/**` | nba2 tests (55), seal verify, lint already pass; remaining checkers to run |
+| E-02 | Re-verify the 3-day slate (2026-11-14 → 11-16) row by row against NBA.com official schedule | in progress | `audit/**` | fetch official schedule; compare game IDs, tips, matchups, counts |
+| E-03 | Official injury-report currency check (latest revision + 11/14 submission state) | in progress | `audit/**` | official PDF on ak-static.cms.nba.com; no value inferred |
+| E-04 | Spot-verification of published table rows vs official sources (records, lines inputs, injury rows) | in progress | `audit/**` | sample + targeted checks; mismatches → flags, never silent fixes |
+| E-05 | Publish findings: new flags on the canonical Flagged for Review page + audit tables on the site | unclaimed | `nba2/pipeline/build_site_data.py`, regenerated site | after E-01…E-04 produce findings |
+| E-06 | Site integrity: full internal-link check, build parity, landing-page/nav verification | unclaimed | regenerated `index.html`, `pages/**` | tools/check_links_all.py + rebuild parity |
+| E-07 | Final integration: PR → main, merge, confirm GitHub Pages deploy, record here | unclaimed | `COORDINATION.md` | protocol: no waiting for owner approval |
+
+**Rule for this session:** every row I publish carries an official source link; anything I
+cannot confirm from an official source is left blank and flagged. The sealed ledger is never
+rewritten. If a parallel session claims any file in my scope first, I log the request here
+instead of editing it.
