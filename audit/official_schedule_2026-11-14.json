@@ -1,0 +1,298 @@
+{
+ "provenance": {
+  "url": "https://www.nba.com/schedule",
+  "retrieved_at_utc": "2026-11-14T01:55:00+00:00",
+  "method": "fetch_page chunks 0-2 (9 total); parsed from official page text by session arena/72f9da58",
+  "note": "time_et is None where the page displayed a LIVE game status instead of a tip time (six 11/13 games already under way at retrieval); their tips were verified earlier in this session from the schedule capture of ~00:40 UTC plus the official injury report Game Time column."
+ },
+ "rows": [
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "NYK",
+   "home": "IND",
+   "game_id": "0022600034",
+   "page_time_text": "LIVE 3rd Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "MIL",
+   "home": "ORL",
+   "game_id": "0022600035",
+   "page_time_text": "LIVE End of 3rd Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "CLE",
+   "home": "MIA",
+   "game_id": "0022600036",
+   "page_time_text": "LIVE 2nd Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "ATL",
+   "home": "CHI",
+   "game_id": "0022600037",
+   "page_time_text": "LIVE 2nd Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "MEM",
+   "home": "NOP",
+   "game_id": "0022600038",
+   "page_time_text": "LIVE 2nd Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "away": "UTA",
+   "home": "HOU",
+   "game_id": "0022600039",
+   "page_time_text": "LIVE 1st Qtr"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": "21:30",
+   "away": "GSW",
+   "home": "SAS",
+   "game_id": "0022600040",
+   "page_time_text": "9:30 PM ET"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": "22:00",
+   "away": "POR",
+   "home": "SAC",
+   "game_id": "0022600041",
+   "page_time_text": "10:00 PM ET"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": "22:30",
+   "away": "OKC",
+   "home": "LAC",
+   "game_id": "0022600042",
+   "page_time_text": "10:30 PM ET"
+  },
+  {
+   "date": "2026-11-14",
+   "time_et": "19:00",
+   "away": "DEN",
+   "home": "NOP",
+   "game_id": "0022600231",
+   "page_time_text": "7:00 PM ET"
+  },
+  {
+   "date": "2026-11-14",
+   "time_et": "19:30",
+   "away": "DAL",
+   "home": "CLE",
+   "game_id": "0022600232",
+   "page_time_text": "7:30 PM ET"
+  },
+  {
+   "date": "2026-11-14",
+   "time_et": "20:00",
+   "away": "DET",
+   "home": "MIA",
+   "game_id": "0022600233",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-14",
+   "time_et": "20:00",
+   "away": "BKN",
+   "home": "MEM",
+   "game_id": "0022600234",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-14",
+   "time_et": "20:00",
+   "away": "CHI",
+   "home": "MIN",
+   "game_id": "0022600235",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "13:00",
+   "away": "IND",
+   "home": "PHI",
+   "game_id": "0022600236",
+   "page_time_text": "1:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "16:00",
+   "away": "LAL",
+   "home": "PHX",
+   "game_id": "0022600237",
+   "page_time_text": "4:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "16:30",
+   "away": "CHA",
+   "home": "LAC",
+   "game_id": "0022600238",
+   "page_time_text": "4:30 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "17:00",
+   "away": "SAS",
+   "home": "UTA",
+   "game_id": "0022600239",
+   "page_time_text": "5:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "18:00",
+   "away": "DAL",
+   "home": "BOS",
+   "game_id": "0022600240",
+   "page_time_text": "6:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "18:00",
+   "away": "NYK",
+   "home": "TOR",
+   "game_id": "0022600241",
+   "page_time_text": "6:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "19:00",
+   "away": "HOU",
+   "home": "WAS",
+   "game_id": "0022600242",
+   "page_time_text": "7:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "20:00",
+   "away": "ATL",
+   "home": "MIL",
+   "game_id": "0022600243",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "21:00",
+   "away": "OKC",
+   "home": "SAC",
+   "game_id": "0022600244",
+   "page_time_text": "9:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "19:00",
+   "away": "ORL",
+   "home": "BOS",
+   "game_id": "0022600245",
+   "page_time_text": "7:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "19:00",
+   "away": "CHI",
+   "home": "CLE",
+   "game_id": "0022600246",
+   "page_time_text": "7:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "19:00",
+   "away": "MEM",
+   "home": "WAS",
+   "game_id": "0022600247",
+   "page_time_text": "7:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "19:30",
+   "away": "PHI",
+   "home": "BKN",
+   "game_id": "0022600248",
+   "page_time_text": "7:30 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "19:30",
+   "away": "HOU",
+   "home": "MIA",
+   "game_id": "0022600249",
+   "page_time_text": "7:30 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "20:00",
+   "away": "POR",
+   "home": "MIN",
+   "game_id": "0022600250",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "20:00",
+   "away": "GSW",
+   "home": "NOP",
+   "game_id": "0022600251",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "21:00",
+   "away": "PHX",
+   "home": "DEN",
+   "game_id": "0022600252",
+   "page_time_text": "9:00 PM ET"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "19:30",
+   "away": "NYK",
+   "home": "TOR",
+   "game_id": "0022600253",
+   "page_time_text": "7:30 PM ET"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "20:00",
+   "away": "POR",
+   "home": "MIN",
+   "game_id": "0022600254",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "20:00",
+   "away": "DET",
+   "home": "SAS",
+   "game_id": "0022600255",
+   "page_time_text": "8:00 PM ET"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "22:30",
+   "away": "UTA",
+   "home": "LAC",
+   "game_id": "0022600257",
+   "page_time_text": "10:30 PM ET"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "23:00",
+   "away": "CHA",
+   "home": "LAL",
+   "game_id": "0022600256",
+   "page_time_text": "11:00 PM ET"
+  }
+ ]
+}

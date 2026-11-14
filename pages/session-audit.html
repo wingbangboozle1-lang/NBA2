@@ -13,14 +13,14 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html" class="active">Session Audit</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html" class="active">Session Audit</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Session Audit</h2><p>What the 2026-11-14 verification session re-checked and found: the whole checker suite re-run end to end, the slate re-diffed against the official schedule, team records re-read from the official standings, the injury-report currency delta line by line, and six suggestions put up for review before implementation. Nothing on this page is an implemented change.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-13</strong></span><span>built <strong>2026-11-14 01:36 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-16 (today + 3 days)</strong></span><span>sealed ledger: 22 predictions, sha256 <code>cf7dedc689597cb8…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="audit" data-rows="16">
 <h2>Session audit — line-by-line verification (2026-11-14, session arena/72f9da58)</h2>
 <p class="blurb">Every checker in the repository re-run, and every published slate/records/injury claim re-read against the official source, during this session. Results are what the commands printed and what the official pages contained — not what a previous session recorded.</p>
@@ -31,8 +31,8 @@
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
 <tr id="E-01-tests">
 <td>E-01 model + pipeline tests</td>
-<td>PASS — 55/55 tests</td>
-<td>python -m unittest discover -s nba2/tests -t . (stdlib, no deps)</td>
+<td>PASS — 64/64 nba2 tests and 49/49 backtest tests (re-run after the 2026-11-14 refresh merge)</td>
+<td>python -m unittest discover -s nba2/tests -t . and -s backtest/tests -t .</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -80,29 +80,29 @@
 </tr>
 <tr id="E-02-slate">
 <td>E-02 slate vs official schedule</td>
-<td>31/31 games match on game ID and matchup; per-date counts 9/5/9/8 match the official day headers</td>
-<td>nba.com/schedule fetched 2026-11-14, diffed row-by-row against data/raw/slate_2026-11-13_to_11-16.json</td>
+<td>36/36 rows of the current slate (11/13 context + 11/14–17 pick window) match the official page on game ID, date and matchup — 0 mismatches; per-date counts 9/5/9/8/5 match the official day headers</td>
+<td>nba.com/schedule fetched 2026-11-14 ~01:55 UTC (capture: audit/official_schedule_2026-11-14.json), diffed row-by-row against data/raw/slate_2026-11-14_to_11-17.json</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-02-tips">
 <td>E-02 tip times</td>
-<td>31/31 tips confirmed by at least two official sources; the nine 11/13 tips also match the official injury report&#x27;s Game Time column</td>
-<td>nba.com/schedule + game rail on nba.com/game/den-vs-nop-0022600231 + official injury PDF</td>
+<td>30/30 displayed tips match (the six 11/13 games were already live at retrieval, so the page showed scores instead of times — their tips were confirmed earlier in this session from the schedule capture plus the official injury report&#x27;s Game Time column, i.e. 36/36 with two sources each)</td>
+<td>official schedule page text vs slate snapshot; injury PDF Game Time column for the live games</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-02-urls">
 <td>E-02 game-page URLs</td>
-<td>31/31 slugs match links printed by nba.com itself (schedule previews + game rail) — upgrades FLAG-SLATE-05 from &#x27;rule-generated&#x27; to verified</td>
+<td>36/36 game IDs appear as links nba.com itself prints (schedule previews + game rail); the original 31-row window was additionally re-read slug by slug — upgrades FLAG-SLATE-05 from &#x27;rule-generated&#x27; to verified</td>
 <td>every https://www.nba.com/game/… link observed on official pages compared to the published slate table</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA.com Schedule (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
 <tr id="E-03-rev">
 <td>E-03 latest official injury revision</td>
-<td>19:15 ET revision exists and was fetched in full; a 20:15 ET revision does not exist (CDN AccessDenied)</td>
-<td>fetch of Injury-Report_2026-11-13_07_15PM.pdf (2 chunks, 122 rows parsed with round-trip validation)</td>
+<td>This session fetched the 19:15 ET revision in full (a 20:15 ET revision does not exist — CDN AccessDenied); the 2026-11-14 refresh subsequently ingested the official 19:30 ET release, which the site now publishes</td>
+<td>fetch of Injury-Report_2026-11-13_07_15PM.pdf (2 chunks, 122 rows parsed with round-trip validation); published rows sourced to the _07_30PM release</td>
 <td class="srccell"><span class="badge badge-official">official</span><a class="source-link" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_15PM.pdf" target="_blank" rel="noopener">NBA Official Injury Report 11/13 19:15 ET (official)</a></td>
 <td class='flagcell'>—</td>
 </tr>
@@ -136,23 +136,23 @@
 </tr>
 <tr id="E-04-settle">
 <td>E-04 sealed-ledger settlement status</td>
-<td>PENDING by design — the sealed games are 11/14–16 and none has a final score yet; metrics stay unmeasured rather than assumed</td>
-<td>python -m nba2.pipeline.settle (no data/raw/finals_*.json exists)</td>
+<td>PENDING by design — data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null; the sealed games of 11/14–17 have no official final scores yet, so metrics stay unmeasured rather than assumed</td>
+<td>python -m nba2.pipeline.settle (no official finals snapshot covers the ledger&#x27;s games)</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit" target="_blank" rel="noopener">Session arena/72f9da58 verification artefacts</a></td>
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>
 <p class="tablenote">Commands re-run and official pages re-fetched 2026-11-14 UTC on branch arena/72f9da58-nba2; artefacts in audit/.</p>
 </section><section class="card table-card" id="injury_delta" data-rows="52">
-<h2>Injury-report currency delta: published 16:15 ET vs official 19:15 ET</h2>
-<p class="blurb">The site publishes the 16:15 ET snapshot because that is the adjudicated, committed input. The official report was revised three more times the same evening. This table is the complete line-by-line difference — every row sourced to the official PDFs.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Injury-report currency delta: published 16:15 ET vs official 19:15 ET</caption><thead><tr>
+<h2>Injury-report currency delta: first published 16:15 ET vs official 19:15 ET</h2>
+<p class="blurb">What changed between the injury rows this site first published (the adjudicated 16:15 ET snapshot) and the official 19:15 ET revision. The site now publishes the official 19:30 ET release (2026-11-14 refresh), so this table is the audit trail of the evening&#x27;s supersessions — every row sourced to the official PDFs.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Injury-report currency delta: first published 16:15 ET vs official 19:15 ET</caption><thead><tr>
 <th scope="col">Change type</th>
 <th scope="col">Matchup</th>
 <th scope="col">Team</th>
 <th scope="col">Player</th>
-<th scope="col">Published (16:15 ET)</th>
-<th scope="col">Latest official (19:15 ET)</th>
+<th scope="col">Then-published (16:15 ET)</th>
+<th scope="col">Official (19:15 ET)</th>
 <th scope="col">Note</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
 <tr id="delta-status-001">
@@ -728,7 +728,7 @@
 <td class='flagcell'>—</td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">Published side: Injury-Report_2026-11-13_04_15PM.pdf (data/raw). Latest side: Injury-Report_2026-11-13_07_15PM.pdf, captured 2026-11-14; delta computed by audit/parse_injury_0715.py with round-trip validation.</p>
+<p class="tablenote">Then-published side: Injury-Report_2026-11-13_04_15PM.pdf (data/raw). Official side: Injury-Report_2026-11-13_07_15PM.pdf, captured 2026-11-14; delta computed by audit/parse_injury_0715.py with round-trip validation. The currently published rows come from the 19:30 ET release (data/raw/injury_report_2026-11-13_1930ET.json).</p>
 </section><section class="card table-card" id="audit_suggestions" data-rows="6">
 <h2>Suggestions from session arena/72f9da58 — review before implementing</h2>
 <p class="blurb">Same review-before-implement rules as the main Suggestions Queue: nothing here has been implemented; each item stands or falls on its own.</p>
@@ -751,8 +751,8 @@
 <td>Lines and rotation notes stop being priced off a superseded designation list; the currency flag closes.</td>
 <td>Low — the parser and delta already exist (audit/parse_injury_0715.py).</td>
 <td>Low — snapshots stay immutable; each revision becomes its own committed capture.</td>
-<td>Do it before the next slate is published.</td>
-<td>owner decision</td>
+<td>Done for the nightly cycle by the 2026-11-14 refresh (nba2/pipeline/refresh.py + .github/workflows/refresh.yml); keep this item as the reminder for the game-day 13:00 ET report.</td>
+<td>implemented by refresh session (nightly); game-day cadence open</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
@@ -777,31 +777,31 @@
 <td>Currency is visible at a glance; stale data is self-announcing.</td>
 <td>Low — both fields already exist in the snapshot.</td>
 <td>None.</td>
-<td>Do it with S-A01.</td>
-<td>owner decision</td>
+<td>Done — the 2026-11-14 refresh stamps report time and retrieval time on the Injuries page.</td>
+<td>implemented by refresh session</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
 <tr id="S-A04">
 <td>S-A04</td>
-<td>Settle the sealed ledger as soon as 11/14 finals exist</td>
-<td>The leaderboard, gates and reward allocation are all blocked on the first graded results; the pipeline already supports settlement.</td>
-<td>After each game day, commit data/raw/finals_&lt;date&gt;.json (official final scores, source-linked) and run python -m nba2.pipeline.settle.</td>
+<td>Settle the sealed ledger as soon as finals exist</td>
+<td>Settlement has run but measured nothing: data/settlement.json carries settled_at 2026-11-14T00:58Z with finals_snapshot null, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked — correctly, because the sealed games of 11/14–17 have not finished.</td>
+<td>After each game day, commit data/raw/finals_&lt;date&gt;.json (official final scores, source-linked) and re-run python -m nba2.pipeline.settle.</td>
 <td>First real measurement of line error and calibration — the &#x27;remove luck&#x27; step becomes data, not design.</td>
-<td>Low — settle.py is written and tested for the pending case.</td>
+<td>Low — settle.py is written, tested, and already produces the pending record.</td>
 <td>None if finals come from official box scores; never impute a score.</td>
-<td>Run it on 11/14 once the night&#x27;s games are final.</td>
-<td>owner decision</td>
+<td>Run it after 11/14&#x27;s games are final, then after each subsequent game day.</td>
+<td>partially done — settle runs; awaiting official finals</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
 <tr id="S-A05">
 <td>S-A05</td>
 <td>Pick one canonical site tree</td>
-<td>Five site trees ship from one repo (root+pages/, docs/, dashboard/, originated/, verified/); a reviewer can find different numbers on different trees.</td>
-<td>Owner designates one canonical tree; the others get a banner linking to it. Candidate criteria: mechanical verifier + no unverified numbers (originated/ has a 24-check verifier; root+pages/ has the provenance lint over 900+ rows).</td>
+<td>Six site trees now ship from one repo (root+pages/, docs/, dashboard/, originated/, verified/, backtest/); a reviewer can find different numbers on different trees.</td>
+<td>Owner designates one canonical tree; the others get a banner linking to it. Candidate criteria: mechanical verifier + no unverified numbers (originated/ has a 24-check verifier; root+pages/ has the provenance lint over 1,100 rows; backtest/ has its own verify_backtest).</td>
 <td>One truth surface; removes the reconciliation burden from every future session.</td>
-<td>Medium — mostly a decision plus four banner edits.</td>
+<td>Medium — mostly a decision plus five banner edits.</td>
 <td>Low — nothing is deleted; trees stay for audit.</td>
 <td>Decide before the next data refresh so only one tree is refreshed.</td>
 <td>owner decision</td>
@@ -811,12 +811,12 @@
 <tr id="S-A06">
 <td>S-A06</td>
 <td>Publish settlement + currency KPIs on the landing page</td>
-<td>The dashboard shows gates 0/90 and 100 reward units unallocated but not whether the data itself is current or when settlement last ran.</td>
-<td>Add two KPI cards: &#x27;injury revision: 19:15 ET (published 16:15 ET)&#x27; and &#x27;settlement: PENDING (0/22 finals)&#x27;.</td>
+<td>The dashboard shows games priced, tiers and reward units but not whether the data itself is current or when settlement last ran.</td>
+<td>Add two KPI cards: &#x27;injury revision: 19:30 ET (ingested 2026-11-14)&#x27; and &#x27;settlement: PENDING (finals_snapshot null)&#x27;.</td>
 <td>Decision-makers see data currency and grading progress without opening a page.</td>
-<td>Low — both values are already in site.json meta once S-A01/S-A04 run.</td>
+<td>Low — both values already exist in data/settlement.json and the injury snapshot metadata.</td>
 <td>None.</td>
-<td>Bundle with S-A01 and S-A04.</td>
+<td>Bundle with S-A04 once the first finals land.</td>
 <td>owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>

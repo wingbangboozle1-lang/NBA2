@@ -13,14 +13,14 @@
     <h1><a class="homelink" href="../index.html">NBA2 · Lines Lab</a></h1>
     <div class="subtitle">Originated lines · gated strategies · verified slate data · nothing invented</div>
   </header>
-  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html" class="active">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
+  <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Dashboard</a></li><li><a href="executive-summary.html">Executive Summary</a></li><li><a href="picks.html">Picks (3-day slate)</a></li><li><a href="lines.html">Originated Lines</a></li><li><a href="strategies.html">Strategy Leaderboard</a></li><li><a href="../backtest/index.html">Measured-Skill Backtest</a></li><li><a href="parlays.html" class="active">Correlation &amp; Parlays</a></li><li><a href="props.html">Player Props &amp; Combos</a></li><li><a href="injuries.html">Injuries &amp; Rotation</a></li><li><a href="game-flow.html">Game Flow</a></li><li><a href="research-scaffold.html">Research Blueprint (session 1)</a></li><li><a href="methodology.html">Methodology &amp; Parameters</a></li><li><a href="requirements.html">Requirements</a></li><li><a href="repo-review.html">Repo Review</a></li><li><a href="questions.html">Open Questions</a></li><li><a href="suggestions.html">Suggestions Queue</a></li><li><a href="reconciliation.html">Cross-session Reconciliation</a></li><li><a href="session-audit.html">Session Audit</a></li><li><a href="flagged-review.html">Flagged for Review</a></li><li><a href="sources.html">Sources &amp; Verification</a></li></ul></nav>
     <div class="side-note">Rebuilt from committed snapshots only.<br>Reproduce:<br>
       <code>python -m nba2.pipeline.build_site_data &amp;&amp; python -m nba2.pipeline.build_site</code>
     </div>
   </aside>
   <main class="main">
     <section class="hero"><h2>Parlays</h2><p>Joint probabilities under an explicit correlation sweep, and what changes when legs are not independent.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 01:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 02:00 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="correlation" data-rows="5">
 <h2>Correlation register</h2>
 <p class="blurb">One of these five is measurable today. The other four are the difference between a parlay desk and a parlay hobby, and all four need the same thing: game-level and player-level data. Any site that prints correlation numbers for those pairs without that data made them up.</p>
@@ -258,6 +258,108 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">nba2/models/correlation.py::quote_pair; ρ band unratified (FLAG-PRL-01).</p>
+</section><section class="card table-card" id="parlays_xg" data-rows="2">
+<h2>Cross-game parlays, and what stacking costs</h2>
+<p class="blurb">Two different games: the product rule is nearly right, so cross-game parlays are the safe place to express multiple views. Same game: the product rule is off by 13–26% on the ten quoted games above, which is larger than the entire edge a good model earns. And every leg you add multiplies the book&#x27;s hold — arithmetic that needs no data to check.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Cross-game parlays, and what stacking costs</caption><thead><tr>
+<th scope="col">Structure</th>
+<th scope="col">Legs</th>
+<th scope="col">P(leg A)</th>
+<th scope="col">P(leg B)</th>
+<th scope="col">Product of legs</th>
+<th scope="col">Joint under ρ band</th>
+<th scope="col">Error band</th>
+<th scope="col">Verdict</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="xg-0022600235-0022600039">
+<td>cross-game (2 legs, different dates, no shared team)</td>
+<td>MIN ML  +  HOU ML</td>
+<td>0.956</td>
+<td>0.900</td>
+<td>0.8601</td>
+<td>0.8594 … 0.8610</td>
+<td>×0.999 … ×1.001</td>
+<td>product rule is within ~2% — usable once prices exist</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-05">FLAG-CORR-05</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a></td>
+</tr>
+<tr id="xg-0022600256-0022600239">
+<td>cross-game (2 legs, different dates, no shared team)</td>
+<td>LAL ML  +  SAS ML</td>
+<td>0.897</td>
+<td>0.860</td>
+<td>0.7712</td>
+<td>0.7693 … 0.7733</td>
+<td>×0.998 … ×1.003</td>
+<td>product rule is within ~2% — usable once prices exist</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/correlation.py" target="_blank" rel="noopener">Derived: nba2.models.correlation</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-CORR-05">FLAG-CORR-05</a> <a class="flagchip" href="flagged-review.html#FLAG-PRL-01">FLAG-PRL-01</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">ρ = 0 assumed for cross-game (FLAG-CORR-05); -110 is a labelled placeholder price, not a quote.</p>
+</section><section class="card table-card" id="parlay_costs" data-rows="5">
+<h2>Cost of stacking (pure arithmetic — no data needed to verify)</h2>
+<p class="blurb">Every column here is reproducible with a calculator: price = 1.909^n, break-even = 1/price. This is why &#x27;parlays are more fun&#x27; and &#x27;parlays are worse&#x27; are both true at once.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Cost of stacking (pure arithmetic — no data needed to verify)</caption><thead><tr>
+<th scope="col">Legs</th>
+<th scope="col">Decimal price</th>
+<th scope="col">Break-even P</th>
+<th scope="col">Product of fair legs</th>
+<th scope="col">Extra edge needed</th>
+<th scope="col">Note</th>
+<th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
+<tr id="hold-1">
+<td>1</td>
+<td>1.91</td>
+<td>0.5238</td>
+<td>0.5240</td>
+<td>-0.03%</td>
+<td>the price a book would quote if it simply multiplied our fair odds</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
+</tr>
+<tr id="hold-2">
+<td>2</td>
+<td>3.64</td>
+<td>0.2744</td>
+<td>0.2746</td>
+<td>-0.06%</td>
+<td>at a symmetric -110 reference price, a same-game 2-leg parlay must beat the product rule by 13–26% AND clear this hold</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
+</tr>
+<tr id="hold-3">
+<td>3</td>
+<td>6.96</td>
+<td>0.1437</td>
+<td>0.1439</td>
+<td>-0.09%</td>
+<td>the price a book would quote if it simply multiplied our fair odds</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
+</tr>
+<tr id="hold-4">
+<td>4</td>
+<td>13.28</td>
+<td>0.0753</td>
+<td>0.0754</td>
+<td>-0.13%</td>
+<td>the price a book would quote if it simply multiplied our fair odds</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
+</tr>
+<tr id="hold-6">
+<td>6</td>
+<td>48.40</td>
+<td>0.0207</td>
+<td>0.0207</td>
+<td>-0.19%</td>
+<td>the price a book would quote if it simply multiplied our fair odds</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/lines.py" target="_blank" rel="noopener">Derived: nba2.models.lines</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-PRL-03">FLAG-PRL-03</a></td>
+</tr>
+</tbody></table></div>
+<p class="tablenote">REFERENCE_PRICE −110 is a placeholder; recompute against a real feed when one exists.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;
