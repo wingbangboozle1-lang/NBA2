@@ -11,7 +11,7 @@
 <div class="app">
 <header class="header">
   <h1><a class="homelink" href="index.html">NBA2 · Measured Skill</a></h1>
-  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 164 games · as of 2026-11-13</div>
 </header>
 <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="index.html" class="active">Overview</a></li><li><a href="pages/sample-integrity.html">Sample &amp; Integrity</a></li><li><a href="pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="pages/correlation.html">Correlation</a></li><li><a href="pages/leaderboard.html">Leaderboard</a></li><li><a href="pages/validation-gates.html">Validation Gates</a></li><li><a href="pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="pages/questions.html">Open Questions</a></li><li><a href="pages/suggestions.html">Suggestions</a></li><li><a href="pages/flagged-review.html">Flagged for Review</a></li><li><a href="pages/sources.html">Sources</a></li></ul></nav>
   <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
@@ -22,29 +22,29 @@
   <h2>What is actually proven</h2>
   <p>Every earlier version of this repository published a model and a leaderboard but
   <strong>zero graded outcomes</strong>. This report grades the model against
-  <strong>155 official NBA.com final scores</strong>, point-in-time, and reports what survives.</p>
+  <strong>164 official NBA.com final scores</strong>, point-in-time, and reports what survives.</p>
 </section>
 <div class="notice notice-warning"><strong>The honest headline:</strong>
 the originated line beats a constant line on margin error, but it is
 <strong>statistically indistinguishable from the trivial "pick the team with the better point
-differential" rule</strong> (model 62.6% vs
-better-record 64.0%, difference
--1.44%, p = 0.90).
+differential" rule</strong> (model 62.8% vs
+better-record 63.5%, difference
+-0.68%, p = 1.00).
 No strategy is promoted and no reward is paid. That is the system working, not failing.</div>
 <div class="card"><div class="kpi-grid">
-<div class="kpi"><div class="kpi-v">139</div><div class="kpi-l">games graded</div><div class="kpi-s">of 155 captured</div></div>
-<div class="kpi"><div class="kpi-v">12.17</div><div class="kpi-l">margin MAE</div><div class="kpi-s">naive 0-line 13.27</div></div>
-<div class="kpi"><div class="kpi-v">0.702</div><div class="kpi-l">winner AUROC</div><div class="kpi-s">0.50 = coin flip</div></div>
-<div class="kpi"><div class="kpi-v">62.6%</div><div class="kpi-l">straight-up</div><div class="kpi-s">95% CI 54.3%-70.2%</div></div>
-<div class="kpi"><div class="kpi-v">64.0%</div><div class="kpi-l">better-record rule</div><div class="kpi-s">same games</div></div>
-<div class="kpi"><div class="kpi-v">0.35</div><div class="kpi-l">vs-baseline p</div><div class="kpi-s">permutation test</div></div>
+<div class="kpi"><div class="kpi-v">148</div><div class="kpi-l">games graded</div><div class="kpi-s">of 164 captured</div></div>
+<div class="kpi"><div class="kpi-v">12.15</div><div class="kpi-l">margin MAE</div><div class="kpi-s">naive 0-line 13.27</div></div>
+<div class="kpi"><div class="kpi-v">0.698</div><div class="kpi-l">winner AUROC</div><div class="kpi-s">0.50 = coin flip</div></div>
+<div class="kpi"><div class="kpi-v">62.8%</div><div class="kpi-l">straight-up</div><div class="kpi-s">95% CI 54.8%-70.2%</div></div>
+<div class="kpi"><div class="kpi-v">63.5%</div><div class="kpi-l">better-record rule</div><div class="kpi-s">same games</div></div>
+<div class="kpi"><div class="kpi-v">0.33</div><div class="kpi-l">vs-baseline p</div><div class="kpi-s">permutation test</div></div>
 <div class="kpi"><div class="kpi-v">1</div><div class="kpi-l">gates passed</div><div class="kpi-s">of 10 registered, counted</div></div>
 <div class="kpi"><div class="kpi-v">1</div><div class="kpi-l">disputed</div><div class="kpi-s">G-04 — excluded</div></div>
 <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">reward paid</div><div class="kpi-s">withheld by gates</div></div>
 </div></div>
 <section class="card"><h2>What changed in this session</h2>
 <ul class="tight">
-<li><strong>Official results history captured.</strong> 155 games, 2026-10-20 → 2026-11-12,
+<li><strong>Official results history captured.</strong> 164 games, 2026-10-20 → 2026-11-13,
 each with its own <code>nba.com/game/&lt;id&gt;</code> URL. This is the missing input every prior page cited.</li>
 <li><strong>Records reconstructed and checked.</strong> Team W-L rebuilt from final scores alone matches
 70/70 official post-game records exactly.</li>
@@ -53,8 +53,8 @@ The check is automated, not asserted.</li>
 <li><strong>Luck separated from skill.</strong> Wilson intervals, a permutation test, a naive-rule
 control and an explicit power calculation — so "not enough data" is a number, not an excuse.</li>
 <li><strong>Correlations measured, not assumed.</strong> The margin↔total premise behind the same-game
-parlay strategy is <strong>not supported</strong>: r = -0.0089 (95% CI
--0.1663 to 0.149).</li>
+parlay strategy is <strong>not supported</strong>: r = -0.0317 (95% CI
+-0.1841 to 0.1221).</li>
 <li><strong>Gates re-run on evidence.</strong> G-04 (accuracy vs baselines) passes its
 registered wording only against an unshrunk strawman and is <strong>disputed</strong>;
 G-07 (walk-forward) now has real numbers and <strong>PASSES</strong>.</li>

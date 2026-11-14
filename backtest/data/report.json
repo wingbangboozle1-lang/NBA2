@@ -1,11 +1,11 @@
 {
  "schema": "nba2.backtest-report.v1",
  "meta": {
-  "n_games": 155,
-  "n_graded": 139,
+  "n_games": 164,
+  "n_graded": 148,
   "first_date": "2026-10-20",
-  "last_date": "2026-11-12",
-  "n_dates": 21,
+  "last_date": "2026-11-13",
+  "n_dates": 22,
   "generated": "2026-11-14"
  },
  "integrity": {
@@ -323,78 +323,78 @@
   "reconstruction_note": "All 30 teams sit at or below the snapshot, which is the expected direction when 19 games are missing from the captured history. 0 teams exceed their snapshot, which would indicate a transcription error somewhere."
  },
  "accuracy": {
-  "n": 139,
-  "margin_mae_model": 12.173,
-  "margin_rmse_model": 15.399,
-  "margin_mae_baseline_zero": 13.266,
-  "margin_rmse_baseline_zero": 16.467,
-  "margin_bias": -0.616,
-  "total_mae_model": 15.78,
-  "total_rmse_model": 20.337,
-  "total_mae_baseline_mean": 15.432,
-  "total_bias": 0.966,
-  "auroc_winner": 0.7015,
-  "brier": 0.2266,
+  "n": 148,
+  "margin_mae_model": 12.153,
+  "margin_rmse_model": 15.438,
+  "margin_mae_baseline_zero": 13.27,
+  "margin_rmse_baseline_zero": 16.561,
+  "margin_bias": -0.831,
+  "total_mae_model": 15.6,
+  "total_rmse_model": 20.043,
+  "total_mae_baseline_mean": 15.462,
+  "total_bias": 0.826,
+  "auroc_winner": 0.6979,
+  "brier": 0.2257,
   "brier_baseline_50pct": 0.25,
-  "straight_up_accuracy": 0.6259,
+  "straight_up_accuracy": 0.6284,
   "straight_up_ci95": [
-   0.5431,
-   0.7019
+   0.5482,
+   0.7021
   ]
  },
  "ats": {
-  "n": 139,
-  "hits": 87,
+  "n": 148,
+  "hits": 93,
   "pushes_reported": 0,
-  "hit_rate": 0.6259,
+  "hit_rate": 0.6284,
   "ci95": [
-   0.5431,
-   0.7019
+   0.5482,
+   0.7021
   ],
   "note": "Self-consistency only: the line is ours, so this is not a market test. No odds feed exists, so no ROI or CLV can be computed and none is shown."
  },
  "baseline_gap": {
-  "n": 139,
-  "mean_abs_error_model": 12.173,
-  "mean_abs_error_baseline": 13.266,
-  "observed_diff": -1.094,
-  "p_value": 0.3483,
+  "n": 148,
+  "mean_abs_error_model": 12.153,
+  "mean_abs_error_baseline": 13.27,
+  "observed_diff": -1.117,
+  "p_value": 0.3266,
   "draws": 10000,
   "seed": 20261114,
   "model_better": true,
   "significant_at_5pct": false
  },
  "naive_baselines": {
-  "n_games": 139,
+  "n_games": 148,
   "always_home": {
-   "hits": 72,
-   "rate": 0.518,
+   "hits": 79,
+   "rate": 0.5338,
    "ci95": [
-    0.4356,
-    0.5994
+    0.4536,
+    0.6123
    ]
   },
   "better_net_rating": {
-   "n": 139,
-   "hits": 89,
-   "rate": 0.6403,
+   "n": 148,
+   "hits": 94,
+   "rate": 0.6351,
    "ci95": [
-    0.5577,
-    0.7153
+    0.5551,
+    0.7084
    ]
   },
   "originated_model": {
-   "n": 139,
-   "hits": 87,
-   "rate": 0.6259,
+   "n": 148,
+   "hits": 93,
+   "rate": 0.6284,
    "ci95": [
-    0.5431,
-    0.7019
+    0.5482,
+    0.7021
    ]
   },
   "model_vs_better_net": {
-   "observed_diff": -0.0144,
-   "p_value": 0.9024,
+   "observed_diff": -0.0068,
+   "p_value": 1.0,
    "model_better": false,
    "significant_at_5pct": false,
    "note": "difference in hit rate on the same games; paired values are not independent, so treat p as indicative"
@@ -403,78 +403,78 @@
  "calibration": [
   {
    "bin": "30%-40%",
-   "n": 8,
-   "mean_predicted": 0.3596,
-   "observed_home_win_rate": 0.25,
-   "ci95_low": 0.0715,
-   "ci95_high": 0.5907,
-   "gap_pp": -10.96
+   "n": 11,
+   "mean_predicted": 0.3597,
+   "observed_home_win_rate": 0.2727,
+   "ci95_low": 0.0975,
+   "ci95_high": 0.5656,
+   "gap_pp": -8.7
   },
   {
    "bin": "40%-50%",
-   "n": 47,
-   "mean_predicted": 0.4506,
-   "observed_home_win_rate": 0.383,
-   "ci95_low": 0.2579,
-   "ci95_high": 0.5257,
-   "gap_pp": -6.76
+   "n": 49,
+   "mean_predicted": 0.4492,
+   "observed_home_win_rate": 0.4082,
+   "ci95_low": 0.2822,
+   "ci95_high": 0.5475,
+   "gap_pp": -4.11
   },
   {
    "bin": "50%-60%",
-   "n": 57,
-   "mean_predicted": 0.5483,
-   "observed_home_win_rate": 0.5439,
-   "ci95_low": 0.4159,
-   "ci95_high": 0.6663,
-   "gap_pp": -0.44
+   "n": 59,
+   "mean_predicted": 0.5479,
+   "observed_home_win_rate": 0.5593,
+   "ci95_low": 0.4329,
+   "ci95_high": 0.6785,
+   "gap_pp": 1.14
   },
   {
    "bin": "60%-70%",
-   "n": 23,
-   "mean_predicted": 0.6463,
-   "observed_home_win_rate": 0.7391,
-   "ci95_low": 0.5353,
-   "ci95_high": 0.8745,
-   "gap_pp": 9.29
+   "n": 24,
+   "mean_predicted": 0.6454,
+   "observed_home_win_rate": 0.75,
+   "ci95_low": 0.551,
+   "ci95_high": 0.88,
+   "gap_pp": 10.46
   },
   {
    "bin": "70%-80%",
-   "n": 4,
-   "mean_predicted": 0.7253,
+   "n": 5,
+   "mean_predicted": 0.7301,
    "observed_home_win_rate": 1.0,
-   "ci95_low": 0.5101,
+   "ci95_low": 0.5655,
    "ci95_high": 1.0,
-   "gap_pp": 27.47
+   "gap_pp": 26.99
   }
  ],
  "tiers": [
   {
    "tier": "A",
-   "n": 65,
-   "mean_abs_margin_error": 11.813,
-   "auroc_winner": 0.7466,
-   "straight_up_accuracy": 0.7692,
+   "n": 71,
+   "mean_abs_margin_error": 11.634,
+   "auroc_winner": 0.7467,
+   "straight_up_accuracy": 0.7606,
    "ci95": [
-    0.6536,
-    0.8549
+    0.6496,
+    0.8448
    ]
   },
   {
    "tier": "B",
-   "n": 36,
-   "mean_abs_margin_error": 14.453,
-   "auroc_winner": 0.534,
-   "straight_up_accuracy": 0.5,
+   "n": 39,
+   "mean_abs_margin_error": 14.589,
+   "auroc_winner": 0.5447,
+   "straight_up_accuracy": 0.5128,
    "ci95": [
-    0.3447,
-    0.6553
+    0.362,
+    0.6613
    ]
   },
   {
    "tier": "C",
    "n": 38,
-   "mean_abs_margin_error": 10.628,
-   "auroc_winner": 0.5653,
+   "mean_abs_margin_error": 10.624,
+   "auroc_winner": 0.5616,
    "straight_up_accuracy": 0.5,
    "ci95": [
     0.3485,
@@ -516,58 +516,58 @@
  ],
  "correlation": {
   "margin_total": {
-   "n": 155,
-   "r": -0.0089,
+   "n": 164,
+   "r": -0.0317,
    "ci95": [
-    -0.1663,
-    0.149
+    -0.1841,
+    0.1221
    ],
-   "r_squared": 0.0001,
-   "total_sd": 19.39,
-   "margin_sd": 16.79,
+   "r_squared": 0.001,
+   "total_sd": 19.33,
+   "margin_sd": 16.83,
    "verdict": "no detectable relationship at this sample size"
   },
   "legs": {
-   "n": 139,
+   "n": 148,
    "cells": {
-    "home_cover_over": 33,
-    "home_cover_under": 33,
-    "away_cover_over": 34,
-    "away_cover_under": 39
+    "home_cover_over": 36,
+    "home_cover_under": 36,
+    "away_cover_over": 36,
+    "away_cover_under": 40
    },
-   "p_home_covers": 0.4748,
-   "p_over": 0.482,
-   "joint_observed": 0.2374,
-   "joint_if_independent": 0.2289,
-   "difference": 0.0085,
-   "difference_pp": 0.85,
-   "z": 0.24,
+   "p_home_covers": 0.4865,
+   "p_over": 0.4865,
+   "joint_observed": 0.2432,
+   "joint_if_independent": 0.2367,
+   "difference": 0.0066,
+   "difference_pp": 0.66,
+   "z": 0.188,
    "interpretation": "The two legs are treated as independent by naive parlay pricing. The observed difference is what a same-game parlay would be mispriced by BEFORE any vig; a z below about 2 means this sample cannot yet separate it from noise.",
    "note": "Pushes are impossible on these numbers only if the line is a half point; half-point increments are enforced by the line builder, so no push handling is needed here."
   },
   "cross_game": {
-   "n_pairs": 645,
-   "r": 0.0235,
+   "n_pairs": 681,
+   "r": 0.0148,
    "verdict": "no evidence of within-night dependence",
    "note": "Pairs within the same date only. Overlapping pairs are not independent, so this r is indicative."
   },
   "rest": {
-   "n_team_games_with_rest_known": 183,
+   "n_team_games_with_rest_known": 201,
    "b2b": {
     "n": 46,
     "mean_margin": -1.543
    },
    "rested_3plus_days": {
-    "n": 70,
-    "mean_margin": 1.271
+    "n": 88,
+    "mean_margin": 1.011
    },
    "three_games_in_four_days": {
     "n": 67,
     "mean_margin": -0.284
    },
    "b2b_vs_rested": {
-    "difference": -2.815,
-    "p_value": 0.3829,
+    "difference": -2.555,
+    "p_value": 0.4214,
     "significant_at_5pct": false
    },
    "note": "Rest is derived from official game dates only. A negative b2b margin would support the fatigue story; the p-value says whether this sample can see it."
@@ -581,9 +581,9 @@
     "registered_rule": ">= 300 settled bets for team markets; >= 500 for player props.",
     "registered_threshold": 300,
     "status": "FAIL",
-    "measured": "139 graded games",
+    "measured": "148 graded games",
     "required": ">= 300 settled bets for team markets",
-    "arithmetic": "139 / 300 = 46% of the required sample",
+    "arithmetic": "148 / 300 = 49% of the required sample",
     "why_it_matters": "At this sample a 63% hit rate and a 52% hit rate cannot be told apart. The leaderboard ranks noise until this gate passes."
    },
    "G-02": {
@@ -602,53 +602,53 @@
     "registered_rule": "Brier score <= 0.245 on settled games AND calibration slope in [0.85, 1.15] AND intercept in [-0.10, 0.10].",
     "registered_threshold": 0.245,
     "status": "PARTIAL",
-    "measured": "Brier 0.2266 vs 0.245 threshold; baseline (always 50%) 0.2500",
-    "sample": "139 games (gate needs >= 100: met)",
+    "measured": "Brier 0.2257 vs 0.245 threshold; baseline (always 50%) 0.2500",
+    "sample": "148 games (gate needs >= 100: met)",
     "calibration_bins": [
      {
       "bin": "30%-40%",
-      "n": 8,
-      "mean_predicted": 0.3596,
-      "observed_home_win_rate": 0.25,
-      "ci95_low": 0.0715,
-      "ci95_high": 0.5907,
-      "gap_pp": -10.96
+      "n": 11,
+      "mean_predicted": 0.3597,
+      "observed_home_win_rate": 0.2727,
+      "ci95_low": 0.0975,
+      "ci95_high": 0.5656,
+      "gap_pp": -8.7
      },
      {
       "bin": "40%-50%",
-      "n": 47,
-      "mean_predicted": 0.4506,
-      "observed_home_win_rate": 0.383,
-      "ci95_low": 0.2579,
-      "ci95_high": 0.5257,
-      "gap_pp": -6.76
+      "n": 49,
+      "mean_predicted": 0.4492,
+      "observed_home_win_rate": 0.4082,
+      "ci95_low": 0.2822,
+      "ci95_high": 0.5475,
+      "gap_pp": -4.11
      },
      {
       "bin": "50%-60%",
-      "n": 57,
-      "mean_predicted": 0.5483,
-      "observed_home_win_rate": 0.5439,
-      "ci95_low": 0.4159,
-      "ci95_high": 0.6663,
-      "gap_pp": -0.44
+      "n": 59,
+      "mean_predicted": 0.5479,
+      "observed_home_win_rate": 0.5593,
+      "ci95_low": 0.4329,
+      "ci95_high": 0.6785,
+      "gap_pp": 1.14
      },
      {
       "bin": "60%-70%",
-      "n": 23,
-      "mean_predicted": 0.6463,
-      "observed_home_win_rate": 0.7391,
-      "ci95_low": 0.5353,
-      "ci95_high": 0.8745,
-      "gap_pp": 9.29
+      "n": 24,
+      "mean_predicted": 0.6454,
+      "observed_home_win_rate": 0.75,
+      "ci95_low": 0.551,
+      "ci95_high": 0.88,
+      "gap_pp": 10.46
      },
      {
       "bin": "70%-80%",
-      "n": 4,
-      "mean_predicted": 0.7253,
+      "n": 5,
+      "mean_predicted": 0.7301,
       "observed_home_win_rate": 1.0,
-      "ci95_low": 0.5101,
+      "ci95_low": 0.5655,
       "ci95_high": 1.0,
-      "gap_pp": 27.47
+      "gap_pp": 26.99
      }
     ],
     "calibration_shape": "monotone: observed rises with predicted",
@@ -660,21 +660,21 @@
     "registered_rule": "Mean absolute error of our spread must beat BOTH baselines: (a) 0.0 spread, (b) raw point-differential-per-game, by >= 0.30 points.",
     "registered_threshold": 0.3,
     "status": "PASS",
-    "measured": "our MAE 12.17 pts vs baseline (a) 0.0-spread 13.27 (gain +1.09) and baseline (b) raw point differential 15.19 (gain +3.02)",
+    "measured": "our MAE 12.15 pts vs baseline (a) 0.0-spread 13.27 (gain +1.12) and baseline (b) raw point differential 15.20 (gain +3.04)",
     "required": "beat BOTH baselines by >= 0.30 points of MAE",
-    "baseline_c_shrunk_net_no_hca": 12.093,
-    "gain_from_shrinkage": 1.173,
-    "gain_from_home_court": -0.08,
+    "baseline_c_shrunk_net_no_hca": 12.127,
+    "gain_from_shrinkage": 1.143,
+    "gain_from_home_court": -0.026,
     "disputed": true,
-    "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.09 vs 12.17 MAE (home-court gain -0.08 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
-    "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.08 pts. Passing this gate on baseline (b) alone would be a false positive.",
+    "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.13 vs 12.15 MAE (home-court gain -0.03 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
+    "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.03 pts. Passing this gate on baseline (b) alone would be a false positive.",
     "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. NOTE: this baseline is unshrunk and is a strawman -- see baseline (c) and the disputed flag below.",
     "gap_test": {
-     "n": 139,
-     "mean_abs_error_model": 12.173,
-     "mean_abs_error_baseline": 13.266,
-     "observed_diff": -1.094,
-     "p_value": 0.3483,
+     "n": 148,
+     "mean_abs_error_model": 12.153,
+     "mean_abs_error_baseline": 13.27,
+     "observed_diff": -1.117,
+     "p_value": 0.3266,
      "draws": 10000,
      "seed": 20261114,
      "model_better": true,
@@ -687,7 +687,7 @@
     "registered_rule": "Bootstrap (10,000 resamples, fixed seed) 95% CI of ROI excludes 0; t-stat >= 2.0; and the luck-adjusted PnL (each bet replaced by its model-expected PnL, variance kept) must not reverse the sign.",
     "registered_threshold": 2.0,
     "status": "PARTIAL",
-    "measured": "permutation test of the margin-error difference: diff -1.094, p 0.3483. ROI half is BLOCKED (no prices).",
+    "measured": "permutation test of the margin-error difference: diff -1.117, p 0.3266. ROI half is BLOCKED (no prices).",
     "required": "bootstrap 95% CI of ROI excludes 0 and t >= 2.0",
     "why_it_matters": "The luck question splits in two. Whether the *forecast* is better than naive can be answered without prices (done here, and the answer is 'not significantly'). Whether a *strategy* makes money needs prices (blocked)."
    },
@@ -707,7 +707,7 @@
     "registered_rule": "Every feature timestamped at or before tip-off; train on the first 70% of the window, test on the final 30%; test MAE must not exceed full-window MAE by more than 25%.",
     "registered_threshold": 0.25,
     "status": "PASS",
-    "measured": "train (first 70%) MAE 11.97; test (final 30%) MAE 12.63; degradation 3.8%",
+    "measured": "train (first 70%) MAE 11.79; test (final 30%) MAE 12.98; degradation 6.8%",
     "required": "test MAE not more than 25% worse than full-window MAE",
     "why_it_matters": "This gate was 'AT RISK by construction' on the old site because the only snapshot was a single as-of table that leaks the future. The backtest rebuilds every rating from games strictly before tip-off, and `assert_no_leakage` re-checks it, so the gate is now genuinely evaluable.",
     "leakage_check": "PASS (every graded game used only earlier games)"
@@ -724,32 +724,32 @@
     "sweep": [
      {
       "line_scale": 0.8,
-      "mae": 12.321,
-      "accuracy": 0.6259,
+      "mae": 12.292,
+      "accuracy": 0.6284,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 0.9,
-      "mae": 12.24,
-      "accuracy": 0.6259,
+      "mae": 12.216,
+      "accuracy": 0.6284,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.0,
-      "mae": 12.173,
-      "accuracy": 0.6259,
+      "mae": 12.153,
+      "accuracy": 0.6284,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.1,
-      "mae": 12.115,
-      "accuracy": 0.6259,
+      "mae": 12.1,
+      "accuracy": 0.6284,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.2,
-      "mae": 12.064,
-      "accuracy": 0.6259,
+      "mae": 12.052,
+      "accuracy": 0.6284,
       "note": "scale 1.0 is the published model"
      }
     ]
@@ -810,14 +810,14 @@
    "description": "Reliability-Shrunk Spread: bet only the highest-confidence tier",
    "tier_used": "A",
    "tier_definition": "model edge >= 3.0 pts over a neutral line",
-   "n_games": 65,
-   "straight_up_accuracy": 0.7692,
+   "n_games": 71,
+   "straight_up_accuracy": 0.7606,
    "coin_flip": 0.5,
-   "se": 0.062,
-   "z_vs_coinflip": 4.341,
-   "z_deflated_for_search": 2.17,
-   "auroc_winner": 0.7466,
-   "mean_abs_margin_error": 11.813,
+   "se": 0.0593,
+   "z_vs_coinflip": 4.392,
+   "z_deflated_for_search": 2.196,
+   "auroc_winner": 0.7467,
+   "mean_abs_margin_error": 11.634,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -835,14 +835,14 @@
    "description": "Two-Rating Agreement Filter: mid-confidence tier",
    "tier_used": "B",
    "tier_definition": "model edge 1.5 - 3.0 pts",
-   "n_games": 36,
-   "straight_up_accuracy": 0.5,
+   "n_games": 39,
+   "straight_up_accuracy": 0.5128,
    "coin_flip": 0.5,
-   "se": 0.0833,
-   "z_vs_coinflip": 0.0,
-   "z_deflated_for_search": 0.0,
-   "auroc_winner": 0.534,
-   "mean_abs_margin_error": 14.453,
+   "se": 0.0801,
+   "z_vs_coinflip": 0.16,
+   "z_deflated_for_search": 0.08,
+   "auroc_winner": 0.5447,
+   "mean_abs_margin_error": 14.589,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -866,8 +866,8 @@
    "se": 0.0811,
    "z_vs_coinflip": 0.0,
    "z_deflated_for_search": 0.0,
-   "auroc_winner": 0.5653,
-   "mean_abs_margin_error": 10.628,
+   "auroc_winner": 0.5616,
+   "mean_abs_margin_error": 10.624,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -891,8 +891,8 @@
    "se": 0.0811,
    "z_vs_coinflip": 0.0,
    "z_deflated_for_search": 0.0,
-   "auroc_winner": 0.5653,
-   "mean_abs_margin_error": 10.628,
+   "auroc_winner": 0.5616,
+   "mean_abs_margin_error": 10.624,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -907,7 +907,7 @@
   }
  ],
  "leaderboard_notes": [
-  "Ranked on deflated z, not on win rate. 155 graded games is far below the G-01 floor of 300 settled bets, so the ordering is provisional by construction.",
+  "Ranked on deflated z, not on win rate. 164 graded games is far below the G-01 floor of 300 settled bets, so the ordering is provisional by construction.",
   "Reward units are 0 for every strategy while any validation gate is FAILED. That is the gate doing its job, not a missing feature.",
   "Strategies are mapped to confidence tiers before outcomes are seen, so a strategy cannot be re-labelled onto whichever tier happened to perform.",
   "Every strategy here shares one model. Their results are therefore highly correlated and the leaderboard compares *filters on the same forecasts*, not independent systems."
@@ -935,7 +935,8 @@
    "actual_margin_home": 8,
    "actual_total": 234,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600002",
@@ -959,7 +960,8 @@
    "actual_margin_home": -6,
    "actual_total": 206,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600003",
@@ -983,7 +985,8 @@
    "actual_margin_home": -12,
    "actual_total": 220,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600004",
@@ -1007,7 +1010,8 @@
    "actual_margin_home": -25,
    "actual_total": 237,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600005",
@@ -1031,7 +1035,8 @@
    "actual_margin_home": 22,
    "actual_total": 232,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600085",
@@ -1055,7 +1060,8 @@
    "actual_margin_home": -7,
    "actual_total": 257,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600086",
@@ -1079,7 +1085,8 @@
    "actual_margin_home": 12,
    "actual_total": 244,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600087",
@@ -1103,7 +1110,8 @@
    "actual_margin_home": -7,
    "actual_total": 213,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600088",
@@ -1127,7 +1135,8 @@
    "actual_margin_home": 43,
    "actual_total": 227,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600089",
@@ -1151,7 +1160,8 @@
    "actual_margin_home": 20,
    "actual_total": 226,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600090",
@@ -1175,7 +1185,8 @@
    "actual_margin_home": -3,
    "actual_total": 243,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600091",
@@ -1199,7 +1210,8 @@
    "actual_margin_home": 18,
    "actual_total": 238,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600092",
@@ -1223,7 +1235,8 @@
    "actual_margin_home": 41,
    "actual_total": 207,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600093",
@@ -1247,7 +1260,8 @@
    "actual_margin_home": 25,
    "actual_total": 217,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600006",
@@ -1271,7 +1285,8 @@
    "actual_margin_home": 8,
    "actual_total": 220,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600007",
@@ -1295,7 +1310,8 @@
    "actual_margin_home": 12,
    "actual_total": 180,
    "margin_error": null,
-   "total_error": null
+   "total_error": null,
+   "neutral": false
   },
   {
    "game_id": "0022600008",
@@ -1319,7 +1335,8 @@
    "actual_margin_home": 4,
    "actual_total": 210,
    "margin_error": -1.49,
-   "total_error": 10.0
+   "total_error": 10.0,
+   "neutral": false
   },
   {
    "game_id": "0022600009",
@@ -1343,7 +1360,8 @@
    "actual_margin_home": -4,
    "actual_total": 224,
    "margin_error": 4.35,
-   "total_error": 5.0
+   "total_error": 5.0,
+   "neutral": false
   },
   {
    "game_id": "0022600094",
@@ -1367,7 +1385,8 @@
    "actual_margin_home": -47,
    "actual_total": 209,
    "margin_error": 49.66,
-   "total_error": 26.0
+   "total_error": 26.0,
+   "neutral": false
   },
   {
    "game_id": "0022600095",
@@ -1391,7 +1410,8 @@
    "actual_margin_home": -16,
    "actual_total": 226,
    "margin_error": 20.28,
-   "total_error": 14.5
+   "total_error": 14.5,
+   "neutral": false
   },
   {
    "game_id": "0022600096",
@@ -1415,7 +1435,8 @@
    "actual_margin_home": -22,
    "actual_total": 208,
    "margin_error": 22.2,
-   "total_error": 39.0
+   "total_error": 39.0,
+   "neutral": false
   },
   {
    "game_id": "0022600097",
@@ -1439,7 +1460,8 @@
    "actual_margin_home": -10,
    "actual_total": 214,
    "margin_error": 10.28,
-   "total_error": 21.5
+   "total_error": 21.5,
+   "neutral": false
   },
   {
    "game_id": "0022600098",
@@ -1463,7 +1485,8 @@
    "actual_margin_home": -17,
    "actual_total": 239,
    "margin_error": 17.12,
-   "total_error": -3.5
+   "total_error": -3.5,
+   "neutral": false
   },
   {
    "game_id": "0022600099",
@@ -1487,7 +1510,8 @@
    "actual_margin_home": -7,
    "actual_total": 257,
    "margin_error": 12.05,
-   "total_error": -21.5
+   "total_error": -21.5,
+   "neutral": false
   },
   {
    "game_id": "0022600100",
@@ -1511,7 +1535,8 @@
    "actual_margin_home": 1,
    "actual_total": 239,
    "margin_error": 0.35,
-   "total_error": -4.5
+   "total_error": -4.5,
+   "neutral": false
   },
   {
    "game_id": "0022600101",
@@ -1535,7 +1560,8 @@
    "actual_margin_home": -3,
    "actual_total": 219,
    "margin_error": 2.43,
-   "total_error": 10.0
+   "total_error": 10.0,
+   "neutral": false
   },
   {
    "game_id": "0022600102",
@@ -1559,7 +1585,8 @@
    "actual_margin_home": 8,
    "actual_total": 242,
    "margin_error": -5.57,
-   "total_error": -17.5
+   "total_error": -17.5,
+   "neutral": false
   },
   {
    "game_id": "0022600103",
@@ -1583,7 +1610,8 @@
    "actual_margin_home": -8,
    "actual_total": 248,
    "margin_error": 5.58,
-   "total_error": -36.0
+   "total_error": -36.0,
+   "neutral": false
   },
   {
    "game_id": "0022600104",
@@ -1607,7 +1635,8 @@
    "actual_margin_home": 5,
    "actual_total": 225,
    "margin_error": -4.45,
-   "total_error": -0.5
+   "total_error": -0.5,
+   "neutral": false
   },
   {
    "game_id": "0022600105",
@@ -1631,7 +1660,8 @@
    "actual_margin_home": 4,
    "actual_total": 246,
    "margin_error": -3.67,
-   "total_error": -29.5
+   "total_error": -29.5,
+   "neutral": false
   },
   {
    "game_id": "0022600106",
@@ -1655,7 +1685,8 @@
    "actual_margin_home": 11,
    "actual_total": 243,
    "margin_error": -8.23,
-   "total_error": -11.25
+   "total_error": -11.25,
+   "neutral": false
   },
   {
    "game_id": "0022600107",
@@ -1679,7 +1710,8 @@
    "actual_margin_home": -7,
    "actual_total": 235,
    "margin_error": 9.7,
-   "total_error": -3.0
+   "total_error": -3.0,
+   "neutral": false
   },
   {
    "game_id": "0022600108",
@@ -1703,7 +1735,8 @@
    "actual_margin_home": -4,
    "actual_total": 244,
    "margin_error": 1.7,
-   "total_error": -8.5
+   "total_error": -8.5,
+   "neutral": false
   },
   {
    "game_id": "0022600109",
@@ -1727,7 +1760,8 @@
    "actual_margin_home": -16,
    "actual_total": 228,
    "margin_error": 17.41,
-   "total_error": -1.0
+   "total_error": -1.0,
+   "neutral": false
   },
   {
    "game_id": "0022600110",
@@ -1751,7 +1785,8 @@
    "actual_margin_home": 6,
    "actual_total": 276,
    "margin_error": -6.23,
-   "total_error": -65.5
+   "total_error": -65.5,
+   "neutral": false
   },
   {
    "game_id": "0022600111",
@@ -1775,7 +1810,8 @@
    "actual_margin_home": 9,
    "actual_total": 253,
    "margin_error": -9.96,
-   "total_error": -36.75
+   "total_error": -36.75,
+   "neutral": false
   },
   {
    "game_id": "0022600112",
@@ -1799,7 +1835,8 @@
    "actual_margin_home": -9,
    "actual_total": 255,
    "margin_error": 5.97,
-   "total_error": -20.25
+   "total_error": -20.25,
+   "neutral": false
   },
   {
    "game_id": "0022600113",
@@ -1823,7 +1860,8 @@
    "actual_margin_home": -27,
    "actual_total": 245,
    "margin_error": 27.62,
-   "total_error": -13.0
+   "total_error": -13.0,
+   "neutral": false
   },
   {
    "game_id": "0022600114",
@@ -1847,7 +1885,8 @@
    "actual_margin_home": -9,
    "actual_total": 213,
    "margin_error": 10.83,
-   "total_error": 7.25
+   "total_error": 7.25,
+   "neutral": false
   },
   {
    "game_id": "0022600115",
@@ -1871,7 +1910,8 @@
    "actual_margin_home": 23,
    "actual_total": 211,
    "margin_error": -22.95,
-   "total_error": 10.5
+   "total_error": 10.5,
+   "neutral": false
   },
   {
    "game_id": "0022600116",
@@ -1895,7 +1935,8 @@
    "actual_margin_home": 7,
    "actual_total": 209,
    "margin_error": -6.03,
-   "total_error": 5.75
+   "total_error": 5.75,
+   "neutral": false
   },
   {
    "game_id": "0022600117",
@@ -1919,7 +1960,8 @@
    "actual_margin_home": -13,
    "actual_total": 199,
    "margin_error": 13.35,
-   "total_error": 30.75
+   "total_error": 30.75,
+   "neutral": false
   },
   {
    "game_id": "0022600118",
@@ -1943,7 +1985,8 @@
    "actual_margin_home": -11,
    "actual_total": 235,
    "margin_error": 7.47,
-   "total_error": -7.5
+   "total_error": -7.5,
+   "neutral": false
   },
   {
    "game_id": "0022600119",
@@ -1967,7 +2010,8 @@
    "actual_margin_home": 7,
    "actual_total": 213,
    "margin_error": -9.77,
-   "total_error": 11.83
+   "total_error": 11.83,
+   "neutral": false
   },
   {
    "game_id": "0022600120",
@@ -1991,7 +2035,8 @@
    "actual_margin_home": 2,
    "actual_total": 252,
    "margin_error": -6.99,
-   "total_error": -26.17
+   "total_error": -26.17,
+   "neutral": false
   },
   {
    "game_id": "0022600121",
@@ -2015,7 +2060,8 @@
    "actual_margin_home": 35,
    "actual_total": 233,
    "margin_error": -32.66,
-   "total_error": -0.67
+   "total_error": -0.67,
+   "neutral": false
   },
   {
    "game_id": "0022600122",
@@ -2039,7 +2085,8 @@
    "actual_margin_home": -4,
    "actual_total": 222,
    "margin_error": 2.03,
-   "total_error": 10.17
+   "total_error": 10.17,
+   "neutral": false
   },
   {
    "game_id": "0022600123",
@@ -2063,7 +2110,8 @@
    "actual_margin_home": 8,
    "actual_total": 212,
    "margin_error": -10.97,
-   "total_error": 31.0
+   "total_error": 31.0,
+   "neutral": false
   },
   {
    "game_id": "0022600124",
@@ -2087,7 +2135,8 @@
    "actual_margin_home": 11,
    "actual_total": 239,
    "margin_error": -6.68,
-   "total_error": -22.5
+   "total_error": -22.5,
+   "neutral": false
   },
   {
    "game_id": "0022600125",
@@ -2111,7 +2160,8 @@
    "actual_margin_home": 10,
    "actual_total": 230,
    "margin_error": -11.24,
-   "total_error": 3.0
+   "total_error": 3.0,
+   "neutral": false
   },
   {
    "game_id": "0022600126",
@@ -2135,7 +2185,8 @@
    "actual_margin_home": -5,
    "actual_total": 215,
    "margin_error": 0.83,
-   "total_error": 18.33
+   "total_error": 18.33,
+   "neutral": false
   },
   {
    "game_id": "0022600127",
@@ -2159,7 +2210,8 @@
    "actual_margin_home": -20,
    "actual_total": 248,
    "margin_error": 21.8,
-   "total_error": -16.67
+   "total_error": -16.67,
+   "neutral": false
   },
   {
    "game_id": "0022600128",
@@ -2183,7 +2235,8 @@
    "actual_margin_home": 1,
    "actual_total": 249,
    "margin_error": 4.05,
-   "total_error": -18.83
+   "total_error": -18.83,
+   "neutral": false
   },
   {
    "game_id": "0022600129",
@@ -2207,7 +2260,8 @@
    "actual_margin_home": 14,
    "actual_total": 208,
    "margin_error": -17.35,
-   "total_error": 8.83
+   "total_error": 8.83,
+   "neutral": false
   },
   {
    "game_id": "0022600130",
@@ -2231,7 +2285,8 @@
    "actual_margin_home": 27,
    "actual_total": 233,
    "margin_error": -23.62,
-   "total_error": -4.33
+   "total_error": -4.33,
+   "neutral": false
   },
   {
    "game_id": "0022600131",
@@ -2255,7 +2310,8 @@
    "actual_margin_home": -7,
    "actual_total": 265,
    "margin_error": 6.55,
-   "total_error": -29.75
+   "total_error": -29.75,
+   "neutral": false
   },
   {
    "game_id": "0022600132",
@@ -2279,7 +2335,8 @@
    "actual_margin_home": -12,
    "actual_total": 246,
    "margin_error": 18.29,
-   "total_error": -14.25
+   "total_error": -14.25,
+   "neutral": false
   },
   {
    "game_id": "0022600133",
@@ -2303,7 +2360,8 @@
    "actual_margin_home": 10,
    "actual_total": 232,
    "margin_error": -9.28,
-   "total_error": 2.04
+   "total_error": 2.04,
+   "neutral": false
   },
   {
    "game_id": "0022600134",
@@ -2327,7 +2385,8 @@
    "actual_margin_home": 8,
    "actual_total": 186,
    "margin_error": -3.96,
-   "total_error": 31.5
+   "total_error": 31.5,
+   "neutral": false
   },
   {
    "game_id": "0022600135",
@@ -2351,7 +2410,8 @@
    "actual_margin_home": -5,
    "actual_total": 223,
    "margin_error": 5.42,
-   "total_error": 1.25
+   "total_error": 1.25,
+   "neutral": false
   },
   {
    "game_id": "0022600136",
@@ -2375,7 +2435,8 @@
    "actual_margin_home": 30,
    "actual_total": 228,
    "margin_error": -25.88,
-   "total_error": -6.33
+   "total_error": -6.33,
+   "neutral": false
   },
   {
    "game_id": "0022600137",
@@ -2399,7 +2460,8 @@
    "actual_margin_home": -6,
    "actual_total": 260,
    "margin_error": 2.42,
-   "total_error": -35.25
+   "total_error": -35.25,
+   "neutral": false
   },
   {
    "game_id": "0022600138",
@@ -2423,7 +2485,8 @@
    "actual_margin_home": -32,
    "actual_total": 232,
    "margin_error": 28.98,
-   "total_error": 3.38
+   "total_error": 3.38,
+   "neutral": false
   },
   {
    "game_id": "0022600139",
@@ -2447,7 +2510,8 @@
    "actual_margin_home": -5,
    "actual_total": 233,
    "margin_error": 10.92,
-   "total_error": -0.5
+   "total_error": -0.5,
+   "neutral": false
   },
   {
    "game_id": "0022600140",
@@ -2471,7 +2535,8 @@
    "actual_margin_home": -13,
    "actual_total": 195,
    "margin_error": 14.86,
-   "total_error": 48.67
+   "total_error": 48.67,
+   "neutral": false
   },
   {
    "game_id": "0022600141",
@@ -2495,7 +2560,8 @@
    "actual_margin_home": -6,
    "actual_total": 228,
    "margin_error": 3.04,
-   "total_error": 2.0
+   "total_error": 2.0,
+   "neutral": false
   },
   {
    "game_id": "0022600142",
@@ -2519,7 +2585,8 @@
    "actual_margin_home": 24,
    "actual_total": 216,
    "margin_error": -26.71,
-   "total_error": 4.25
+   "total_error": 4.25,
+   "neutral": false
   },
   {
    "game_id": "0022600143",
@@ -2543,7 +2610,8 @@
    "actual_margin_home": -16,
    "actual_total": 190,
    "margin_error": 15.46,
-   "total_error": 45.58
+   "total_error": 45.58,
+   "neutral": false
   },
   {
    "game_id": "0022600144",
@@ -2567,7 +2635,8 @@
    "actual_margin_home": 3,
    "actual_total": 225,
    "margin_error": -1.54,
-   "total_error": 11.45
+   "total_error": 11.45,
+   "neutral": false
   },
   {
    "game_id": "0022600145",
@@ -2591,7 +2660,8 @@
    "actual_margin_home": 12,
    "actual_total": 252,
    "margin_error": -8.51,
-   "total_error": -16.25
+   "total_error": -16.25,
+   "neutral": false
   },
   {
    "game_id": "0022600146",
@@ -2615,7 +2685,8 @@
    "actual_margin_home": -21,
    "actual_total": 227,
    "margin_error": 22.79,
-   "total_error": 4.88
+   "total_error": 4.88,
+   "neutral": false
   },
   {
    "game_id": "0022600015",
@@ -2639,7 +2710,8 @@
    "actual_margin_home": 16,
    "actual_total": 174,
    "margin_error": -14.11,
-   "total_error": 45.3
+   "total_error": 45.3,
+   "neutral": false
   },
   {
    "game_id": "0022600016",
@@ -2663,7 +2735,8 @@
    "actual_margin_home": 14,
    "actual_total": 236,
    "margin_error": -6.81,
-   "total_error": 1.85
+   "total_error": 1.85,
+   "neutral": false
   },
   {
    "game_id": "0022600017",
@@ -2687,7 +2760,8 @@
    "actual_margin_home": -16,
    "actual_total": 204,
    "margin_error": 12.1,
-   "total_error": 21.73
+   "total_error": 21.73,
+   "neutral": false
   },
   {
    "game_id": "0022600018",
@@ -2711,7 +2785,8 @@
    "actual_margin_home": 5,
    "actual_total": 191,
    "margin_error": -3.64,
-   "total_error": 27.8
+   "total_error": 27.8,
+   "neutral": false
   },
   {
    "game_id": "0022600019",
@@ -2735,7 +2810,8 @@
    "actual_margin_home": -7,
    "actual_total": 235,
    "margin_error": 14.3,
-   "total_error": -11.75
+   "total_error": -11.75,
+   "neutral": false
   },
   {
    "game_id": "0022600020",
@@ -2759,7 +2835,8 @@
    "actual_margin_home": 20,
    "actual_total": 270,
    "margin_error": -21.93,
-   "total_error": -38.2
+   "total_error": -38.2,
+   "neutral": false
   },
   {
    "game_id": "0022600021",
@@ -2783,7 +2860,8 @@
    "actual_margin_home": 5,
    "actual_total": 227,
    "margin_error": -8.16,
-   "total_error": 1.9
+   "total_error": 1.9,
+   "neutral": false
   },
   {
    "game_id": "0022600022",
@@ -2807,7 +2885,8 @@
    "actual_margin_home": 26,
    "actual_total": 228,
    "margin_error": -21.5,
-   "total_error": -6.65
+   "total_error": -6.65,
+   "neutral": false
   },
   {
    "game_id": "0022600023",
@@ -2831,7 +2910,8 @@
    "actual_margin_home": 17,
    "actual_total": 207,
    "margin_error": -19.93,
-   "total_error": 29.9
+   "total_error": 29.9,
+   "neutral": false
   },
   {
    "game_id": "0022600024",
@@ -2855,7 +2935,8 @@
    "actual_margin_home": -7,
    "actual_total": 247,
    "margin_error": 5.37,
-   "total_error": -18.12
+   "total_error": -18.12,
+   "neutral": false
   },
   {
    "game_id": "0022600147",
@@ -2879,7 +2960,8 @@
    "actual_margin_home": -22,
    "actual_total": 202,
    "margin_error": 18.51,
-   "total_error": 32.68
+   "total_error": 32.68,
+   "neutral": false
   },
   {
    "game_id": "0022600148",
@@ -2903,7 +2985,8 @@
    "actual_margin_home": -5,
    "actual_total": 213,
    "margin_error": 1.88,
-   "total_error": -4.5
+   "total_error": -4.5,
+   "neutral": false
   },
   {
    "game_id": "0022600149",
@@ -2927,7 +3010,8 @@
    "actual_margin_home": 22,
    "actual_total": 220,
    "margin_error": -23.21,
-   "total_error": 17.33
+   "total_error": 17.33,
+   "neutral": false
   },
   {
    "game_id": "0022600150",
@@ -2951,7 +3035,8 @@
    "actual_margin_home": 31,
    "actual_total": 241,
    "margin_error": -21.6,
-   "total_error": -10.3
+   "total_error": -10.3,
+   "neutral": false
   },
   {
    "game_id": "0022600151",
@@ -2975,7 +3060,8 @@
    "actual_margin_home": -25,
    "actual_total": 247,
    "margin_error": 22.52,
-   "total_error": -10.7
+   "total_error": -10.7,
+   "neutral": false
   },
   {
    "game_id": "0022600152",
@@ -2999,7 +3085,8 @@
    "actual_margin_home": 10,
    "actual_total": 232,
    "margin_error": -12.01,
-   "total_error": -4.62
+   "total_error": -4.62,
+   "neutral": false
   },
   {
    "game_id": "0022600153",
@@ -3023,7 +3110,8 @@
    "actual_margin_home": 21,
    "actual_total": 217,
    "margin_error": -17.4,
-   "total_error": 4.9
+   "total_error": 4.9,
+   "neutral": false
   },
   {
    "game_id": "0022600154",
@@ -3047,7 +3135,8 @@
    "actual_margin_home": -11,
    "actual_total": 205,
    "margin_error": 6.95,
-   "total_error": 25.3
+   "total_error": 25.3,
+   "neutral": false
   },
   {
    "game_id": "0022600155",
@@ -3071,7 +3160,8 @@
    "actual_margin_home": -8,
    "actual_total": 188,
    "margin_error": 11.37,
-   "total_error": 45.95
+   "total_error": 45.95,
+   "neutral": false
   },
   {
    "game_id": "0022600156",
@@ -3095,7 +3185,8 @@
    "actual_margin_home": 12,
    "actual_total": 236,
    "margin_error": -8.49,
-   "total_error": -11.4
+   "total_error": -11.4,
+   "neutral": false
   },
   {
    "game_id": "0022600157",
@@ -3119,7 +3210,8 @@
    "actual_margin_home": 6,
    "actual_total": 256,
    "margin_error": -6.21,
-   "total_error": -28.58
+   "total_error": -28.58,
+   "neutral": false
   },
   {
    "game_id": "0022600158",
@@ -3143,7 +3235,8 @@
    "actual_margin_home": -5,
    "actual_total": 229,
    "margin_error": 7.98,
-   "total_error": -3.75
+   "total_error": -3.75,
+   "neutral": false
   },
   {
    "game_id": "0022600159",
@@ -3167,7 +3260,8 @@
    "actual_margin_home": -33,
    "actual_total": 215,
    "margin_error": 28.48,
-   "total_error": -6.81
+   "total_error": -6.81,
+   "neutral": false
   },
   {
    "game_id": "0022600160",
@@ -3191,7 +3285,8 @@
    "actual_margin_home": -4,
    "actual_total": 212,
    "margin_error": 3.41,
-   "total_error": 18.64
+   "total_error": 18.64,
+   "neutral": false
   },
   {
    "game_id": "0022600161",
@@ -3215,7 +3310,8 @@
    "actual_margin_home": 13,
    "actual_total": 193,
    "margin_error": -9.47,
-   "total_error": 26.42
+   "total_error": 26.42,
+   "neutral": false
   },
   {
    "game_id": "0022600162",
@@ -3239,7 +3335,8 @@
    "actual_margin_home": -9,
    "actual_total": 197,
    "margin_error": 6.87,
-   "total_error": 25.25
+   "total_error": 25.25,
+   "neutral": false
   },
   {
    "game_id": "0022600163",
@@ -3263,7 +3360,8 @@
    "actual_margin_home": 19,
    "actual_total": 233,
    "margin_error": -11.16,
-   "total_error": -4.8
+   "total_error": -4.8,
+   "neutral": false
   },
   {
    "game_id": "0022600164",
@@ -3287,7 +3385,8 @@
    "actual_margin_home": -15,
    "actual_total": 215,
    "margin_error": 23.31,
-   "total_error": 16.92
+   "total_error": 16.92,
+   "neutral": false
   },
   {
    "game_id": "0022600165",
@@ -3311,7 +3410,8 @@
    "actual_margin_home": -1,
    "actual_total": 269,
    "margin_error": 6.59,
-   "total_error": -36.67
+   "total_error": -36.67,
+   "neutral": false
   },
   {
    "game_id": "0022600166",
@@ -3335,7 +3435,8 @@
    "actual_margin_home": 12,
    "actual_total": 212,
    "margin_error": -2.31,
-   "total_error": 21.94
+   "total_error": 21.94,
+   "neutral": false
   },
   {
    "game_id": "0022600167",
@@ -3359,7 +3460,8 @@
    "actual_margin_home": 16,
    "actual_total": 202,
    "margin_error": -13.44,
-   "total_error": 26.42
+   "total_error": 26.42,
+   "neutral": false
   },
   {
    "game_id": "0022600168",
@@ -3383,7 +3485,8 @@
    "actual_margin_home": 22,
    "actual_total": 216,
    "margin_error": -15.08,
-   "total_error": 11.5
+   "total_error": 11.5,
+   "neutral": false
   },
   {
    "game_id": "0022600169",
@@ -3407,7 +3510,8 @@
    "actual_margin_home": -8,
    "actual_total": 228,
    "margin_error": 5.44,
-   "total_error": 1.5
+   "total_error": 1.5,
+   "neutral": false
   },
   {
    "game_id": "0022600170",
@@ -3431,7 +3535,8 @@
    "actual_margin_home": 3,
    "actual_total": 229,
    "margin_error": 2.32,
-   "total_error": 5.54
+   "total_error": 5.54,
+   "neutral": false
   },
   {
    "game_id": "0022600171",
@@ -3455,7 +3560,8 @@
    "actual_margin_home": -7,
    "actual_total": 243,
    "margin_error": 3.09,
-   "total_error": -18.58
+   "total_error": -18.58,
+   "neutral": false
   },
   {
    "game_id": "0022600172",
@@ -3479,7 +3585,8 @@
    "actual_margin_home": 21,
    "actual_total": 255,
    "margin_error": -16.85,
-   "total_error": -17.44
+   "total_error": -17.44,
+   "neutral": false
   },
   {
    "game_id": "0022600173",
@@ -3503,7 +3610,8 @@
    "actual_margin_home": -6,
    "actual_total": 218,
    "margin_error": 9.15,
-   "total_error": -3.93
+   "total_error": -3.93,
+   "neutral": false
   },
   {
    "game_id": "0022600174",
@@ -3527,7 +3635,8 @@
    "actual_margin_home": -15,
    "actual_total": 225,
    "margin_error": 16.43,
-   "total_error": -1.95
+   "total_error": -1.95,
+   "neutral": false
   },
   {
    "game_id": "0022600175",
@@ -3551,7 +3660,8 @@
    "actual_margin_home": 7,
    "actual_total": 211,
    "margin_error": 1.14,
-   "total_error": 18.71
+   "total_error": 18.71,
+   "neutral": false
   },
   {
    "game_id": "0022600176",
@@ -3575,7 +3685,8 @@
    "actual_margin_home": 10,
    "actual_total": 218,
    "margin_error": -7.47,
-   "total_error": -5.14
+   "total_error": -5.14,
+   "neutral": false
   },
   {
    "game_id": "0022600177",
@@ -3599,7 +3710,8 @@
    "actual_margin_home": 30,
    "actual_total": 240,
    "margin_error": -22.34,
-   "total_error": -13.5
+   "total_error": -13.5,
+   "neutral": false
   },
   {
    "game_id": "0022600178",
@@ -3623,7 +3735,8 @@
    "actual_margin_home": -4,
    "actual_total": 210,
    "margin_error": 11.48,
-   "total_error": 20.26
+   "total_error": 20.26,
+   "neutral": false
   },
   {
    "game_id": "0022600179",
@@ -3647,7 +3760,8 @@
    "actual_margin_home": 7,
    "actual_total": 233,
    "margin_error": -0.81,
-   "total_error": 0.93
+   "total_error": 0.93,
+   "neutral": false
   },
   {
    "game_id": "0022600180",
@@ -3671,7 +3785,8 @@
    "actual_margin_home": 8,
    "actual_total": 240,
    "margin_error": -8.02,
-   "total_error": -14.21
+   "total_error": -14.21,
+   "neutral": false
   },
   {
    "game_id": "0022600181",
@@ -3695,7 +3810,8 @@
    "actual_margin_home": -10,
    "actual_total": 224,
    "margin_error": 11.79,
-   "total_error": 2.12
+   "total_error": 2.12,
+   "neutral": false
   },
   {
    "game_id": "0022600182",
@@ -3719,7 +3835,8 @@
    "actual_margin_home": 19,
    "actual_total": 237,
    "margin_error": -21.43,
-   "total_error": -7.21
+   "total_error": -7.21,
+   "neutral": false
   },
   {
    "game_id": "0022600183",
@@ -3743,7 +3860,8 @@
    "actual_margin_home": -13,
    "actual_total": 251,
    "margin_error": 7.46,
-   "total_error": -18.75
+   "total_error": -18.75,
+   "neutral": false
   },
   {
    "game_id": "0022600184",
@@ -3767,7 +3885,8 @@
    "actual_margin_home": 1,
    "actual_total": 223,
    "margin_error": 3.61,
-   "total_error": 2.21
+   "total_error": 2.21,
+   "neutral": false
   },
   {
    "game_id": "0022600185",
@@ -3791,7 +3910,8 @@
    "actual_margin_home": -13,
    "actual_total": 219,
    "margin_error": 6.08,
-   "total_error": 17.09
+   "total_error": 17.09,
+   "neutral": false
   },
   {
    "game_id": "0022600186",
@@ -3815,7 +3935,8 @@
    "actual_margin_home": -1,
    "actual_total": 233,
    "margin_error": 1.61,
-   "total_error": -0.21
+   "total_error": -0.21,
+   "neutral": false
   },
   {
    "game_id": "0022600187",
@@ -3839,7 +3960,8 @@
    "actual_margin_home": 13,
    "actual_total": 221,
    "margin_error": -12.14,
-   "total_error": 8.05
+   "total_error": 8.05,
+   "neutral": false
   },
   {
    "game_id": "0022600188",
@@ -3863,7 +3985,8 @@
    "actual_margin_home": 20,
    "actual_total": 220,
    "margin_error": -15.69,
-   "total_error": 16.5
+   "total_error": 16.5,
+   "neutral": false
   },
   {
    "game_id": "0022600189",
@@ -3878,16 +4001,17 @@
    "home_games_before": 9,
    "league_mean_pts": 113.4,
    "sigma": 16.027,
-   "hca": 1.399,
-   "pred_margin_home": -0.15,
+   "hca": 0.0,
+   "pred_margin_home": -1.55,
    "pred_margin_net_only": -3.71,
    "pred_total": 227.79,
-   "p_home": 0.4963,
-   "tier": "C",
+   "p_home": 0.4615,
+   "tier": "B",
    "actual_margin_home": -12,
    "actual_total": 216,
-   "margin_error": 11.85,
-   "total_error": 11.79
+   "margin_error": 10.45,
+   "total_error": 11.79,
+   "neutral": true
   },
   {
    "game_id": "0022600190",
@@ -3911,7 +4035,8 @@
    "actual_margin_home": 3,
    "actual_total": 245,
    "margin_error": 2.09,
-   "total_error": -20.86
+   "total_error": -20.86,
+   "neutral": false
   },
   {
    "game_id": "0022600191",
@@ -3935,7 +4060,8 @@
    "actual_margin_home": -12,
    "actual_total": 206,
    "margin_error": 12.3,
-   "total_error": 19.75
+   "total_error": 19.75,
+   "neutral": false
   },
   {
    "game_id": "0022600192",
@@ -3959,7 +4085,8 @@
    "actual_margin_home": 39,
    "actual_total": 189,
    "margin_error": -37.05,
-   "total_error": 29.31
+   "total_error": 29.31,
+   "neutral": false
   },
   {
    "game_id": "0022600193",
@@ -3983,7 +4110,8 @@
    "actual_margin_home": 7,
    "actual_total": 245,
    "margin_error": 0.25,
-   "total_error": -19.36
+   "total_error": -19.36,
+   "neutral": false
   },
   {
    "game_id": "0022600194",
@@ -4007,7 +4135,8 @@
    "actual_margin_home": 3,
    "actual_total": 201,
    "margin_error": -8.82,
-   "total_error": 29.37
+   "total_error": 29.37,
+   "neutral": false
   },
   {
    "game_id": "0022600195",
@@ -4031,7 +4160,8 @@
    "actual_margin_home": -22,
    "actual_total": 228,
    "margin_error": 24.2,
-   "total_error": 1.04
+   "total_error": 1.04,
+   "neutral": false
   },
   {
    "game_id": "0022600196",
@@ -4055,7 +4185,8 @@
    "actual_margin_home": -6,
    "actual_total": 248,
    "margin_error": -2.3,
-   "total_error": -19.26
+   "total_error": -19.26,
+   "neutral": false
   },
   {
    "game_id": "0022600197",
@@ -4079,7 +4210,8 @@
    "actual_margin_home": -5,
    "actual_total": 237,
    "margin_error": 6.75,
-   "total_error": -12.73
+   "total_error": -12.73,
+   "neutral": false
   },
   {
    "game_id": "0022600198",
@@ -4103,7 +4235,8 @@
    "actual_margin_home": 15,
    "actual_total": 215,
    "margin_error": -4.31,
-   "total_error": 11.54
+   "total_error": 11.54,
+   "neutral": false
   },
   {
    "game_id": "0022600199",
@@ -4127,7 +4260,8 @@
    "actual_margin_home": 37,
    "actual_total": 223,
    "margin_error": -33.15,
-   "total_error": 0.35
+   "total_error": 0.35,
+   "neutral": false
   },
   {
    "game_id": "0022600200",
@@ -4151,7 +4285,8 @@
    "actual_margin_home": -20,
    "actual_total": 214,
    "margin_error": 14.08,
-   "total_error": 13.38
+   "total_error": 13.38,
+   "neutral": false
   },
   {
    "game_id": "0022600201",
@@ -4175,7 +4310,8 @@
    "actual_margin_home": 16,
    "actual_total": 262,
    "margin_error": -18.17,
-   "total_error": -29.19
+   "total_error": -29.19,
+   "neutral": false
   },
   {
    "game_id": "0022600202",
@@ -4199,7 +4335,8 @@
    "actual_margin_home": -6,
    "actual_total": 222,
    "margin_error": 4.59,
-   "total_error": 13.53
+   "total_error": 13.53,
+   "neutral": false
   },
   {
    "game_id": "0022600203",
@@ -4223,7 +4360,8 @@
    "actual_margin_home": -10,
    "actual_total": 238,
    "margin_error": 9.32,
-   "total_error": -4.9
+   "total_error": -4.9,
+   "neutral": false
   },
   {
    "game_id": "0022600204",
@@ -4247,7 +4385,8 @@
    "actual_margin_home": 12,
    "actual_total": 236,
    "margin_error": -15.5,
-   "total_error": -15.83
+   "total_error": -15.83,
+   "neutral": false
   },
   {
    "game_id": "0022600205",
@@ -4271,7 +4410,8 @@
    "actual_margin_home": 11,
    "actual_total": 233,
    "margin_error": -4.26,
-   "total_error": -17.89
+   "total_error": -17.89,
+   "neutral": false
   },
   {
    "game_id": "0022600206",
@@ -4295,7 +4435,8 @@
    "actual_margin_home": -16,
    "actual_total": 220,
    "margin_error": 14.95,
-   "total_error": 10.81
+   "total_error": 10.81,
+   "neutral": false
   },
   {
    "game_id": "0022600207",
@@ -4319,7 +4460,8 @@
    "actual_margin_home": 3,
    "actual_total": 247,
    "margin_error": 1.98,
-   "total_error": -22.64
+   "total_error": -22.64,
+   "neutral": false
   },
   {
    "game_id": "0022600208",
@@ -4343,7 +4485,8 @@
    "actual_margin_home": 10,
    "actual_total": 210,
    "margin_error": -5.26,
-   "total_error": 15.69
+   "total_error": 15.69,
+   "neutral": false
   },
   {
    "game_id": "0022600209",
@@ -4367,7 +4510,8 @@
    "actual_margin_home": -26,
    "actual_total": 218,
    "margin_error": 20.81,
-   "total_error": 10.39
+   "total_error": 10.39,
+   "neutral": false
   },
   {
    "game_id": "0022600210",
@@ -4391,7 +4535,8 @@
    "actual_margin_home": 51,
    "actual_total": 225,
    "margin_error": -47.37,
-   "total_error": 12.71
+   "total_error": 12.71,
+   "neutral": false
   },
   {
    "game_id": "0022600211",
@@ -4415,7 +4560,8 @@
    "actual_margin_home": 32,
    "actual_total": 202,
    "margin_error": -22.33,
-   "total_error": 20.17
+   "total_error": 20.17,
+   "neutral": false
   },
   {
    "game_id": "0022600212",
@@ -4439,7 +4585,8 @@
    "actual_margin_home": -22,
    "actual_total": 224,
    "margin_error": 23.02,
-   "total_error": -3.52
+   "total_error": -3.52,
+   "neutral": false
   },
   {
    "game_id": "0022600213",
@@ -4463,7 +4610,8 @@
    "actual_margin_home": 23,
    "actual_total": 243,
    "margin_error": -23.28,
-   "total_error": -13.78
+   "total_error": -13.78,
+   "neutral": false
   },
   {
    "game_id": "0022600214",
@@ -4487,7 +4635,8 @@
    "actual_margin_home": -6,
    "actual_total": 224,
    "margin_error": 5.03,
-   "total_error": 7.17
+   "total_error": 7.17,
+   "neutral": false
   },
   {
    "game_id": "0022600215",
@@ -4511,7 +4660,8 @@
    "actual_margin_home": -7,
    "actual_total": 207,
    "margin_error": 6.95,
-   "total_error": 20.28
+   "total_error": 20.28,
+   "neutral": false
   },
   {
    "game_id": "0022600216",
@@ -4535,7 +4685,8 @@
    "actual_margin_home": 20,
    "actual_total": 226,
    "margin_error": -17.91,
-   "total_error": -2.28
+   "total_error": -2.28,
+   "neutral": false
   },
   {
    "game_id": "0022600227",
@@ -4559,7 +4710,8 @@
    "actual_margin_home": 11,
    "actual_total": 235,
    "margin_error": -8.56,
-   "total_error": -10.04
+   "total_error": -10.04,
+   "neutral": false
   },
   {
    "game_id": "0022600228",
@@ -4583,7 +4735,8 @@
    "actual_margin_home": -4,
    "actual_total": 284,
    "margin_error": -0.22,
-   "total_error": -67.1
+   "total_error": -67.1,
+   "neutral": false
   },
   {
    "game_id": "0022600229",
@@ -4607,7 +4760,8 @@
    "actual_margin_home": 39,
    "actual_total": 227,
    "margin_error": -33.72,
-   "total_error": -1.15
+   "total_error": -1.15,
+   "neutral": false
   },
   {
    "game_id": "0022600230",
@@ -4631,7 +4785,233 @@
    "actual_margin_home": 5,
    "actual_total": 197,
    "margin_error": -1.63,
-   "total_error": 23.55
+   "total_error": 23.55,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600034",
+   "date": "2026-11-13",
+   "away": "NYK",
+   "home": "IND",
+   "away_pts": 104,
+   "home_pts": 106,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+   "away_games_before": 10,
+   "home_games_before": 11,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": -3.59,
+   "pred_margin_net_only": -12.12,
+   "pred_total": 219.72,
+   "p_home": 0.416,
+   "tier": "A",
+   "actual_margin_home": 2,
+   "actual_total": 210,
+   "margin_error": -5.59,
+   "total_error": 9.72,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600035",
+   "date": "2026-11-13",
+   "away": "MIL",
+   "home": "ORL",
+   "away_pts": 99,
+   "home_pts": 107,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/mil-vs-orl-0022600035",
+   "away_games_before": 10,
+   "home_games_before": 10,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": 5.37,
+   "pred_margin_net_only": 7.4,
+   "pred_total": 224.5,
+   "p_home": 0.6243,
+   "tier": "A",
+   "actual_margin_home": 8,
+   "actual_total": 206,
+   "margin_error": -2.63,
+   "total_error": 18.5,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600036",
+   "date": "2026-11-13",
+   "away": "CLE",
+   "home": "MIA",
+   "away_pts": 121,
+   "home_pts": 133,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/cle-vs-mia-0022600036",
+   "away_games_before": 10,
+   "home_games_before": 11,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": 0.28,
+   "pred_margin_net_only": -3.57,
+   "pred_total": 234.51,
+   "p_home": 0.5066,
+   "tier": "C",
+   "actual_margin_home": 12,
+   "actual_total": 254,
+   "margin_error": -11.72,
+   "total_error": -19.49,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600037",
+   "date": "2026-11-13",
+   "away": "ATL",
+   "home": "CHI",
+   "away_pts": 117,
+   "home_pts": 125,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/atl-vs-chi-0022600037",
+   "away_games_before": 11,
+   "home_games_before": 9,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": -5.92,
+   "pred_margin_net_only": -18.3,
+   "pred_total": 236.55,
+   "p_home": 0.3634,
+   "tier": "A",
+   "actual_margin_home": 8,
+   "actual_total": 242,
+   "margin_error": -13.92,
+   "total_error": -5.45,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600038",
+   "date": "2026-11-13",
+   "away": "MEM",
+   "home": "NOP",
+   "away_pts": 142,
+   "home_pts": 111,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/mem-vs-nop-0022600038",
+   "away_games_before": 9,
+   "home_games_before": 10,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": -5.03,
+   "pred_margin_net_only": -16.13,
+   "pred_total": 235.26,
+   "p_home": 0.3832,
+   "tier": "A",
+   "actual_margin_home": -31,
+   "actual_total": 253,
+   "margin_error": 25.97,
+   "total_error": -17.74,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600039",
+   "date": "2026-11-13",
+   "away": "UTA",
+   "home": "HOU",
+   "away_pts": 118,
+   "home_pts": 125,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/uta-vs-hou-0022600039",
+   "away_games_before": 10,
+   "home_games_before": 11,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": 11.4,
+   "pred_margin_net_only": 20.19,
+   "pred_total": 223.56,
+   "p_home": 0.7494,
+   "tier": "A",
+   "actual_margin_home": 7,
+   "actual_total": 243,
+   "margin_error": 4.4,
+   "total_error": -19.44,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600040",
+   "date": "2026-11-13",
+   "away": "GSW",
+   "home": "SAS",
+   "away_pts": 85,
+   "home_pts": 123,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+   "away_games_before": 11,
+   "home_games_before": 10,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": 2.8,
+   "pred_margin_net_only": 2.22,
+   "pred_total": 228.27,
+   "p_home": 0.5655,
+   "tier": "B",
+   "actual_margin_home": 38,
+   "actual_total": 208,
+   "margin_error": -35.2,
+   "total_error": 20.27,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600041",
+   "date": "2026-11-13",
+   "away": "POR",
+   "home": "SAC",
+   "away_pts": 120,
+   "home_pts": 107,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/por-vs-sac-0022600041",
+   "away_games_before": 9,
+   "home_games_before": 10,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": -7.3,
+   "pred_margin_net_only": -20.94,
+   "pred_total": 230.12,
+   "p_home": 0.3334,
+   "tier": "A",
+   "actual_margin_home": -13,
+   "actual_total": 227,
+   "margin_error": 5.7,
+   "total_error": 3.12,
+   "neutral": false
+  },
+  {
+   "game_id": "0022600042",
+   "date": "2026-11-13",
+   "away": "OKC",
+   "home": "LAC",
+   "away_pts": 112,
+   "home_pts": 113,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/okc-vs-lac-0022600042",
+   "away_games_before": 10,
+   "home_games_before": 10,
+   "league_mean_pts": 113.37,
+   "sigma": 16.949,
+   "hca": 2.005,
+   "pred_margin_home": -1.99,
+   "pred_margin_net_only": -8.8,
+   "pred_total": 223.4,
+   "p_home": 0.4532,
+   "tier": "B",
+   "actual_margin_home": 1,
+   "actual_total": 225,
+   "margin_error": -2.99,
+   "total_error": -1.6,
+   "neutral": false
   }
  ]
 }

@@ -159,6 +159,7 @@ class Prediction:
     actual_total: int = 0
     margin_error: float | None = None   # pred - actual (signed)
     total_error: float | None = None
+    neutral: bool = False
 
     def as_dict(self) -> dict:
         return self.__dict__.copy()
@@ -177,8 +178,11 @@ def predict(models: dict, states: dict[str, TeamState], g: dict, mean_pts: float
     if a and h and a.played and h.played:
         a_net = shrink(a.net or 0.0, a.played)
         h_net = shrink(h.net or 0.0, h.played)
-        # margin for home minus away, plus home court
-        pred_margin = (h_net - a_net) + hca
+        # margin for home minus away, plus home court. A neutral-site game carries NO home-court
+        # term: the snapshot marks those rows with neutral_site, and applying hca to them was a
+        # silent error (flag FLAG-BT-03 named it but nothing implemented the fix).
+        this_hca = 0.0 if g.get("neutral_site") else hca
+        pred_margin = (h_net - a_net) + this_hca
         pred_margin_net_only = (h.net or 0.0) - (a.net or 0.0)
         a_off = a.ppg or mean_pts
         h_off = h.ppg or mean_pts
@@ -210,7 +214,9 @@ def predict(models: dict, states: dict[str, TeamState], g: dict, mean_pts: float
         away_pts=g["away_pts"], home_pts=g["home_pts"],
         periods=g.get("periods", 4), source_url=g["source_url"],
         away_games_before=(a.played if a else 0), home_games_before=(h.played if h else 0),
-        league_mean_pts=round(mean_pts, 2), sigma=round(sigma, 3), hca=round(hca, 3),
+        league_mean_pts=round(mean_pts, 2), sigma=round(sigma, 3),
+        hca=(0.0 if g.get("neutral_site") else round(hca, 3)),
+        neutral=bool(g.get("neutral_site")),
         pred_margin_home=(round(pred_margin, 2) if pred_margin is not None else None),
         pred_margin_net_only=(round(pred_margin_net_only, 2) if pred_margin_net_only is not None else None),
         pred_total=(round(pred_total, 2) if pred_total is not None else None),

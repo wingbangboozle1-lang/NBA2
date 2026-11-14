@@ -11,7 +11,7 @@
 <div class="app">
 <header class="header">
   <h1><a class="homelink" href="../index.html">NBA2 · Measured Skill</a></h1>
-  <div class="subtitle">Every number graded against official NBA.com final scores · 155 games · as of 2026-11-12</div>
+  <div class="subtitle">Every number graded against official NBA.com final scores · 164 games · as of 2026-11-13</div>
 </header>
 <aside class="sidebar"><nav aria-label="Sections"><ul><li><a href="../index.html">Overview</a></li><li><a href="../pages/sample-integrity.html" class="active">Sample &amp; Integrity</a></li><li><a href="../pages/walk-forward.html">Walk-Forward Results</a></li><li><a href="../pages/luck-vs-skill.html">Luck vs Skill</a></li><li><a href="../pages/correlation.html">Correlation</a></li><li><a href="../pages/leaderboard.html">Leaderboard</a></li><li><a href="../pages/validation-gates.html">Validation Gates</a></li><li><a href="../pages/game-flow.html">Game Flow &amp; Rest</a></li><li><a href="../pages/questions.html">Open Questions</a></li><li><a href="../pages/suggestions.html">Suggestions</a></li><li><a href="../pages/flagged-review.html">Flagged for Review</a></li><li><a href="../pages/sources.html">Sources</a></li></ul></nav>
   <div class="side-note">Rebuild:<br><code>python3 -m backtest.engine.build</code></div>
@@ -24,7 +24,7 @@ outcomes are checked first, and the checks are shown.</p></section>
 <div class="card"><h2>How the sample was captured</h2>
 <ul class="tight">
 <li>Source: <a href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a> date pages, read one day at a time.</li>
-<li>155 games across 21 dates (2026-10-20 → 2026-11-12).</li>
+<li>164 games across 22 dates (2026-10-20 → 2026-11-13).</li>
 <li>Each game keeps its own <code>nba.com/game/&lt;slug&gt;-&lt;id&gt;</code> URL, so any row can be re-checked by hand.</li>
 <li>Overtime is stored as a period count (4 = regulation), because two games in this window went to
 double overtime and a boolean would have silently flattened them.</li>
@@ -50,7 +50,7 @@ difference is exactly the number of unverified games on 11/06 and 11/11.</p>
 <p class="blurb">All 30 teams sit at or below the snapshot, which is the expected direction when 19 games are missing from the captured history. 0 teams exceed their snapshot, which would indicate a transcription error somewhere.</p></div>
 <div class="card"><h2>What this sample is not</h2>
 <ul class="tight">
-<li><strong>Not complete.</strong> 21 dates, not the full season; the two excluded dates are listed above.</li>
+<li><strong>Not complete.</strong> 22 dates, not the full season; the two excluded dates are listed above.</li>
 <li><strong>Not a market sample.</strong> No prices were captured, so nothing here is an ROI.</li>
 <li><strong>Not injury-adjusted.</strong> The results snapshot carries no player data.</li>
 <li><strong>Not point-in-time for injuries.</strong> Availability is ignored, which is a documented
