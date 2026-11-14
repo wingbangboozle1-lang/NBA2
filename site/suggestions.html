@@ -424,7 +424,611 @@ dependency. The three highest-ranked recommended items are all data connections,
       by a distributional assumption is indistinguishable from a bad pick.</li>
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
-</ul>
+</ul><h2>Review register — 2026-11-14 (46 items)</h2>
+<p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
+change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
+below has been applied on the owner's behalf. The machine-readable copy is
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json">suggestions/SUGGESTIONS.json</a>,
+which is what should be edited when a decision is recorded.</p>
+<div class="scroll"><table>
+<caption>Decision-state totals for the review register</caption>
+<thead><tr>
+<th scope="col">State</th>
+<th scope="col">Items</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td>applied in this PR</td>
+<td>2</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>awaiting owner decision</td>
+<td>34</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>implemented 2026-11-14 by arena/3681def8-nba2</td>
+<td>3</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>implemented this session</td>
+<td>7</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+</tbody></table></div><div class="scroll"><table>
+<caption>Every proposal, with the evidence for it and the decision it needs</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Suggestion</th>
+<th scope="col">Problem today (measured)</th>
+<th scope="col">What changes if accepted</th>
+<th scope="col">Benefit</th>
+<th scope="col">Effort</th>
+<th scope="col">Risk</th>
+<th scope="col">Recommendation</th>
+<th scope="col">State</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr id="S-01">
+<td>S-01</td>
+<td><b>Connect a licensed odds feed before anything else</b></td>
+<td>Without prices there is no edge, no CLV, no ROI and no way to know whether our line is good; the site can only publish projections and triggers.</td>
+<td>Add `nba2/ingest/odds.py` writing dated snapshots to data/raw with book, market, line, price and timestamp; keep closing prices permanently.</td>
+<td>Unblocks gates G-02, G-05 on real PnL, G-09, and converts every table from &#x27;projection&#x27; to &#x27;decision&#x27;.</td>
+<td>M — ingest + storage + retention policy</td>
+<td>Vendor cost; storing closing lines needs storage rights (Q-18 style check).</td>
+<td>Accept first; nothing else on this list pays as well.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-02">
+<td>S-02</td>
+<td><b>Ingest official game-level results daily</b></td>
+<td>σ, HCA, margin/total correlation, prop rates and every backtest all wait on game-level results; today they are fitted from a standings table instead.</td>
+<td>Nightly snapshot of final scores by official game ID into data/raw; extend to ≥2 seasons for fitting.</td>
+<td>Turns the two fitted constants into measured ones and kills the circularity in G-04.</td>
+<td>M</td>
+<td>Needs network access from a runner (unavailable in this sandbox).</td>
+<td>Accept with S-01 in the same sprint.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-03">
+<td>S-03</td>
+<td><b>Store point-in-time snapshots, not &#x27;latest&#x27; tables</b></td>
+<td>An as-of standings table contains future information for games early in its window, which silently inflates any backtest (G-07 currently AT-RISK for exactly this).</td>
+<td>Key every snapshot by (as_of_date, game_date) and make the model read only rows with as_of &lt; tip-off.</td>
+<td>Makes historical results believable at all; the single most common way a betting model dies.</td>
+<td>M</td>
+<td>Storage growth; mitigation: parquet or compressed CSV in a data branch.</td>
+<td>Accept before any backtest is quoted on the site.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-04">
+<td>S-04</td>
+<td><b>Ratify thresholds in one sitting</b></td>
+<td>Eleven numbers decide which games are actionable and who wins the leaderboard, and all eleven are currently mine.</td>
+<td>Owner reviews the Parameters page and signs off (or edits) in a single commit; status flips from &#x27;unratified&#x27; to &#x27;ratified&#x27; in config.</td>
+<td>Makes accountability real instead of implied; a one-hour task that removes a whole class of silent bias.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept now — it blocks &#x27;is this site trustworthy&#x27; more than any data purchase.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-05">
+<td>S-05</td>
+<td><b>Preregister strategy trials with a counter</b></td>
+<td>G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.</td>
+<td>Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.</td>
+<td>Makes the leaderboard a science instead of a search result; costs ~20 lines.</td>
+<td>S</td>
+<td>Requires discipline to log failed attempts too — that is the point.</td>
+<td>Accept; pair with a rule &#x27;no evaluation without registration&#x27;.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-06">
+<td>S-06</td>
+<td><b>Render &#x27;why is this blank&#x27; on every empty cell</b></td>
+<td>A blank cell reads as &#x27;no data&#x27; but not as &#x27;which missing input, and what would fill it&#x27;.</td>
+<td>The generator already attaches flag ids to blanks (see the strict rule in nba2/provenance.py::make_row): render the flag id as a tooltip on each blank cell, linking to its entry on the Flagged page.</td>
+<td>Turns every gap into a one-click work item for the reviewer instead of a mystery.</td>
+<td>S</td>
+<td>Adds ~40 lines of build logic; must stay in sync with the flag registry.</td>
+<td>Accept — cheap and it is what the Flagged page exists for.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-07">
+<td>S-07</td>
+<td><b>Staleness banner with an explicit expiry</b></td>
+<td>Lines published from a 3-day-old snapshot look identical to fresh ones; nothing on the page says &#x27;stop&#x27;.</td>
+<td>Header banner computing age of snapshot vs a policy max age (e.g. 24h), turning red past expiry and disabling the picks tab.</td>
+<td>Prevents the most expensive realistic failure: betting yesterday&#x27;s number today.</td>
+<td>S</td>
+<td>Needs the scheduled rebuild (S-16) to be meaningful.</td>
+<td>Accept with S-16.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-08">
+<td>S-08</td>
+<td><b>Replace third-party ratings with an official snapshot</b></td>
+<td>Every line currently derives from Basketball-Reference values (PS/G, PA/G, SRS) because the official endpoint was unreachable here; that is flagged (FLAG-RAT-01) but it is the load-bearing wall.</td>
+<td>When R-104 is possible, ingest official team stats at a fixed daily time and delete the third-party file; keep both during a parallel period to measure drift.</td>
+<td>Removes the largest single caveat on the site and satisfies the &#x27;official source&#x27; rule literally.</td>
+<td>M</td>
+<td>Official endpoint access/licensing (see Q-18&#x27;s twin problem).</td>
+<td>Accept after S-02.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-09">
+<td>S-09</td>
+<td><b>Structured injury-PDF parser instead of text extraction</b></td>
+<td>17 of 91 rows needed team attribution from block continuation because the PDF table breaks across pages (FLAG-INJ-01).</td>
+<td>Parse the report with a table-aware reader keyed on the Game Date column, and store page/row coordinates for each record.</td>
+<td>Kills the attribution caveat and lets the site assert completeness (&#x27;all 7 pages parsed&#x27;).</td>
+<td>M</td>
+<td>PDF layout changes without notice mid-season.</td>
+<td>Accept; it is a correctness fix, not polish.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-10">
+<td>S-10</td>
+<td><b>Add a game-day re-issue build (T-0) alongside the T-3 build</b></td>
+<td>Injury reports for future days are &#x27;NOT YET SUBMITTED&#x27; — proven this session — so a 3-day-ahead line is structurally injury-blind.</td>
+<td>Publish two sealed snapshots per day (T-3 and T-0 after the 13:00 ET report) and show the delta between them as the injury signal.</td>
+<td>Converts a weakness into a measurable quantity: how much our line moves on availability news, which is a strategy family of its own.</td>
+<td>M</td>
+<td>Doubles storage of sealed ledgers (small).</td>
+<td>Accept — the best idea on this list for model quality per unit of data.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-11">
+<td>S-11</td>
+<td><b>Show per-line contribution of every input</b></td>
+<td>&#x27;San Antonio -4.5&#x27; is opaque: nobody can see how much is rating gap, shrinkage, HCA or injury-blindness.</td>
+<td>Add a decomposition column (SRS gap ×λ, raw-margin gap ×λ, HCA, injury adj) per line, computed not asserted.</td>
+<td>Reviewers can disagree with a component instead of the whole number; that is how a model gets better.</td>
+<td>S</td>
+<td>Wider tables on mobile.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-12">
+<td>S-12</td>
+<td><b>Bankroll/staking page with the actual policy applied</b></td>
+<td>Stakes are pinned to 0% by rule until prices exist, which is correct but explains nothing to a reviewer.</td>
+<td>A page showing the staking maths with the current caps and what a bet would look like at each available price once S-01 lands.</td>
+<td>Makes the 0% legible as a policy rather than a gap.</td>
+<td>S</td>
+<td>Must not become a calculator that implies a recommendation.</td>
+<td>Accept with a disclaimer requirement.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-13">
+<td>S-13</td>
+<td><b>Per-game chart: rating gap vs line, with the disagreement band</b></td>
+<td>Tables answer &#x27;what number&#x27; but not &#x27;how near the decision boundary is this game&#x27;.</td>
+<td>Small multiples drawn client-side from site.json; the band is the sensitivity box, so a narrow bar = fragile line.</td>
+<td>Fragile picks become visible without reading the stability column.</td>
+<td>M</td>
+<td>Chart code must render the same numbers as the table or we get two truths; generate from the same JSON.</td>
+<td>Defer until S-01/S-02 so there is something worth drawing.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-14">
+<td>S-14</td>
+<td><b>Table ergonomics: sticky headers, density toggle, CSV export</b></td>
+<td>The 31-row lines table and 91-row injury table are the working surface; today they scroll freely and cannot be exported.</td>
+<td>Sticky thead, a compact-density class, and a per-table &#x27;download CSV&#x27; that includes the source column.</td>
+<td>Reviewers can work offline without losing provenance — export keeps the source link per row.</td>
+<td>S</td>
+<td>None material.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-15">
+<td>S-15</td>
+<td><b>Accessibility and print path</b></td>
+<td>A dense analytical dashboard with no ARIA table semantics and no print stylesheet is hard to review with colleagues.</td>
+<td>scope=headers, caption elements, focus styles, and a print stylesheet that keeps source URLs.</td>
+<td>Reviewable in a meeting, which is where decisions actually happen.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-16">
+<td>S-16</td>
+<td><b>Scheduled rebuild with a freshness gate</b></td>
+<td>The site updates only when a session commits; the numbers are a frozen 2026-11-13 snapshot.</td>
+<td>Daily Actions workflow that re-ingests, rebuilds, re-seals, and fails (not publishes) if any official source is unreachable.</td>
+<td>Ends the &#x27;is this current?&#x27; question. Failure to fetch becomes visible instead of silent staleness.</td>
+<td>M</td>
+<td>Runner needs network to the official endpoints; a failing schedule must not publish a stale site.</td>
+<td>Accept once S-02 exists.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-17">
+<td>S-17</td>
+<td><b>Compliance framing on the front page</b></td>
+<td>A public page that prints spreads, parlays and staking language reads as betting advice; today the notice is a footer line.</td>
+<td>Front-page notice: research tool, no guarantees, 21+/jurisdiction responsibility, links to problem-gambling help.</td>
+<td>Reduces real-world harm and the risk of the site being read as a tipster service.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-18">
+<td>S-18</td>
+<td><b>Keep the sealed ledger in git, not a database</b></td>
+<td>A leaderboard is only credible if predictions cannot be edited after the fact.</td>
+<td>Keep the current design: canonical JSON + sha256, committed with the site build; never rewrite history.</td>
+<td>Auditable by anyone with the repo, with no infrastructure to trust.</td>
+<td>S (already built)</td>
+<td>Git history bloat over a season; mitigate with monthly squash archives.</td>
+<td>Already applied; keep unless a DB is required for scale.</td>
+<td><span class="badge b-ok">applied in this PR</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-19">
+<td>S-19</td>
+<td><b>Publish from a build directory instead of the repository root</b></td>
+<td>`path: &#x27;.&#x27;` makes every committed file public, including data snapshots and anything a future session commits by mistake.</td>
+<td>Build to `site/` (HTML + assets + data/site.json) and publish that directory only.</td>
+<td>Reduces accidental disclosure; keeps the public surface explicit.</td>
+<td>M (changes every relative link + breaks current live URLs unless redirected)</td>
+<td>URL churn; needs a redirect plan for the already-live root pages.</td>
+<td>Defer — real improvement, but it breaks existing links and none of the currently committed files are sensitive.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-20">
+<td>S-20</td>
+<td><b>Stop writing narrative into empty analysis columns</b></td>
+<td>The temptation this site is built to resist: a &#x27;game flow&#x27; page with adjectives where pace numbers should be.</td>
+<td>Keep policy as code (blank + flag is the only permitted empty state) and add a lint rule that fails any prose-only analysis column.</td>
+<td>The property that makes everything else on the site usable as evidence.</td>
+<td>S (already partly enforced)</td>
+<td>None.</td>
+<td>Already applied via make_row + lint; do not weaken it under time pressure.</td>
+<td><span class="badge b-ok">applied in this PR</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-21">
+<td>S-21</td>
+<td><b>Ship a &#x27;Live verification&#x27; page that re-grades the site against today&#x27;s official pages</b></td>
+<td>The site could only claim freshness by asserting it. Nothing on it re-reads an official page at render time, so a stale record and a correct record looked identical (proof: 18 of 30 team records are stale right now while the page still shows MATCH).</td>
+<td>A dedicated page, generated from audit/&lt;date&gt;/ captures, that lists each official page read today, what it proved or contradicted, and every published row that no longer matches. Each row links the official URL it was checked against.</td>
+<td>Turns &#x27;verified&#x27; from a claim into an artefact a reader can audit in ten seconds, and makes staleness visible instead of silent.</td>
+<td>M (already built this session: nba2/v2/live.py)</td>
+<td>Needs a disciplined capture ritual; a page built from an old capture is worse than none, so the page prints the fetch timestamp on every row.</td>
+<td>Accept. This is the highest decision-quality gain per unit of effort on the site.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-22">
+<td>S-22</td>
+<td><b>Publish the true sample size next to every hit rate, never the inflated one</b></td>
+<td>The graded picks read as 8-0. They are 4-0: four games were each bet by two strategies, so a reader scanning the strategy tables sees double the evidence that exists.</td>
+<td>Every hit-rate table carries both numbers - &#x27;signal rows graded&#x27; and &#x27;distinct games&#x27; - and any strategy with fewer than the ratified minimum shows &#x27;insufficient evidence&#x27; in place of a ranking.</td>
+<td>Removes the single most common way a small sample is made to look like skill.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td>None; it can only reduce claims.</td>
+<td>Accept and make it a lint rule: a hit rate without its n cannot render.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-23">
+<td>S-23</td>
+<td><b>Score the model against named naive baselines before it scores itself</b></td>
+<td>The site reports model accuracy without the baselines that would beat it. On the nine graded games the model&#x27;s winner accuracy (5/9) equals a net-rating baseline (5/9) and loses to &#x27;always pick home&#x27; (7/9).</td>
+<td>Every accuracy number renders beside three free baselines computed from the same frozen inputs: home always, higher net rating, higher SRS. A strategy cannot be ranked above the best baseline it fails to beat.</td>
+<td>Kills the &#x27;my model is 56%&#x27; claim that a coin plus home-court advantage already produces.</td>
+<td>S (implemented in nba2/v2/live.py)</td>
+<td>On small n the baseline will sometimes win by luck - which is the point, and the page says so.</td>
+<td>Accept; make &#x27;beats the best baseline at p&lt;0.05&#x27; a gate condition rather than a comment.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-24">
+<td>S-24</td>
+<td><b>Make the suggestions page an explicit decision queue with owner actions</b></td>
+<td>Suggestions were a list of proposals with a status string. A reviewer could not accept, reject or defer one in a way that changed anything, so the queue&#x27;s state was decorative.</td>
+<td>Each suggestion renders with four fields: evidence (a live source link), what changes if accepted, effort, and an owner action of accept / reject / defer. The page states plainly that nothing has been implemented on the owner&#x27;s behalf and that accept is the only state that authorises work.</td>
+<td>The owner can choose a path before any of it is built, which is exactly what the brief asks for.</td>
+<td>S</td>
+<td>None; it is a presentation contract.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-25">
+<td>S-25</td>
+<td><b>Add a staleness gate to the build, not just a timestamp to the page</b></td>
+<td>Every page prints an as-of date, but no build fails when the date is old. The stamp is honest and inert.</td>
+<td>nba2/v2/check.py fails when a table&#x27;s newest capture is older than a per-table limit (records 24h, injuries to the next filing, prices 15m), and the Pages workflow cannot publish a build that fails it.</td>
+<td>Makes &#x27;up to date&#x27; enforceable, which is the only way it survives contact with a busy week.</td>
+<td>M</td>
+<td>A stale official source would block deploys; mitigated by letting the gate downgrade to a loud banner after N hours rather than a hard fail on the whole site.</td>
+<td>Accept, after Q-23 is answered (the limits are the owner&#x27;s risk appetite, not mine).</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-26">
+<td>S-26</td>
+<td><b>Fix the spread-sign inversion in the S2 selections before any of it is graded by a human</b></td>
+<td>S2_SpreadValue emits &#x27;POR +6.0&#x27; for a game where the same file&#x27;s label says &#x27;POR -6.0&#x27; and the model has POR as a 6.07-point favourite. A reader taking that at face value takes the wrong side of the model&#x27;s own number.</td>
+<td>Correct the away-side sign in nba2/picks.py so a selection always names the side with the points. Regenerate picks.json. Do not touch data/raw/ledger (the sealed ledgers are immutable).</td>
+<td>Removes a defect that silently inverts a published recommendation.</td>
+<td>S</td>
+<td>picks.json is another session&#x27;s artefact; the change is logged here for its owner rather than made unilaterally.</td>
+<td>Accept and assign to the owner of nba2/picks.py.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-27">
+<td>S-27</td>
+<td><b>Retire the unreachable v1 tree instead of maintaining two generators</b></td>
+<td>Probed on 2026-11-14: exactly one tree is published (site/). The root v1 tree returns 404 for every page — pages/session-audit.html and pages/executive-summary.html were both checked — yet ci.yml still regenerates, lints and parity-checks it on every push, and it carries records that are stale since the 11/13 finals.</td>
+<td>Move root index.html, pages/**, flagged.html and data/site.json under archive/ with a dated note explaining what each was, drop the v1 parity step from ci.yml, and delete nothing.</td>
+<td>One number per question is the precondition for every other claim on the site.</td>
+<td>M</td>
+<td>Breaks inbound links to the old trees; the redirect pages fix that.</td>
+<td>Accept, as the first integration action (this is Q-27).</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-28">
+<td>S-28</td>
+<td><b>Run the test suite against a fresh clone before trusting &#x27;committed == rebuilt&#x27;</b></td>
+<td>The v1 determinism test passed on every working copy and failed on every clean clone, because two published values depended on the presence of a previous build. Local runs rewrote the artefact and then compared it with itself.</td>
+<td>Add a CI job that clones the repository into a temp directory, runs the suite there, then rebuilds and asserts a clean git status. The publish-parity workflow now does the rebuild half; the clone half is the part that caught this.</td>
+<td>Turns a class of silent, self-erasing test passes into a failure at PR time.</td>
+<td>S</td>
+<td>Adds ~30s of CI; no production risk.</td>
+<td>Accept — this is the check that found F-029.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-29">
+<td>S-29</td>
+<td><b>Put the graded-results card on the landing page, above the category grid</b></td>
+<td>The landing page opened with model parameters (sigma, HCA) and tier counts, which are the least decision-relevant numbers on the site. The one measurement against real outcomes was buried.</td>
+<td>Render a &#x27;Graded against official results&#x27; block at the top of the dashboard with the four numbers that matter (margin MAE, total MAE, winner calls, games needed for power) and a link to the full card.</td>
+<td>A reader learns in five seconds what the model has been proven to do, and what the sample can support, before meeting any parameter.</td>
+<td>S — one build-time section</td>
+<td>None; the block is generated from the same graded JSON.</td>
+<td>Accept — implemented this session (session arena/3681def8-nba2).</td>
+<td><span class="badge b-ok">implemented 2026-11-14 by arena/3681def8-nba2</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-30">
+<td>S-30</td>
+<td><b>Render every URL-valued table cell as a clickable link</b></td>
+<td>The slate table&#x27;s official-game-page column and the graded card&#x27;s source column printed verified URLs as plain text, so a reviewer had to copy-paste them. Raised earlier as FLAG-AUD-01 and left open.</td>
+<td>In the table renderer, detect a cell whose entire value is an http(s) URL and emit an anchor. The value, the provenance badge and the row&#x27;s own source column are unchanged.</td>
+<td>Manual verification becomes one click. 89 cells across the slate and graded tables become clickable without touching a single value.</td>
+<td>S — one helper in build_site.py</td>
+<td>None to data; external links already open with rel=noopener.</td>
+<td>Accept — implemented this session; FLAG-AUD-01 can now be closed.</td>
+<td><span class="badge b-ok">implemented 2026-11-14 by arena/3681def8-nba2</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-31">
+<td>S-31</td>
+<td><b>Seal every slate before its first tip, in the nightly job</b></td>
+<td>Nothing was sealed for 2026-11-13, the only slate with official results, so the first graded card is a backtest and can never become a forward test (FLAG-GRADE-01, Q-31).</td>
+<td>Add a seal step to .github/workflows/refresh.yml that commits a ledger for the next slate, and make seal_predictions assert that the seal timestamp strictly precedes the earliest tip in the set.</td>
+<td>Every future result becomes pre-registered evidence instead of a story that can be revised after the fact. This is the cheapest real improvement available.</td>
+<td>M — workflow step + assertion</td>
+<td>Low; fails closed (no seal, no published picks) which is the correct behaviour.</td>
+<td>Accept first among the open items — it is the only one that makes future evidence trustworthy.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-32">
+<td>S-32</td>
+<td><b>Decide on one canonical site tree and archive the other five</b></td>
+<td>Six trees (root/pages, site/, docs/, dashboard/, originated/, backtest/) publish from one origin with overlapping and sometimes conflicting numbers. A reviewer cannot tell which is current (Q-34).</td>
+<td>Keep the root v1 tree, move the others under a single /archive/ path with an index that states each tree&#x27;s as-of date and why it was kept, and link them from one place on the dashboard.</td>
+<td>One current answer per question, with the history one click away instead of mixed into the navigation.</td>
+<td>M — moves plus an index page</td>
+<td>Breaks inbound links to the moved trees; needs redirects or a clear index.</td>
+<td>Accept, but as an owner decision — it changes what every visitor sees.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-33">
+<td>S-33</td>
+<td><b>Investigate rating shrinkage after two &gt;20-point margin misses</b></td>
+<td>GSW@SAS (predicted SAS +3.2, actual +38) and MEM@NOP (predicted MEM by 8.3, actual by 31) contributed 57 of the 117 total margin error on nine games.</td>
+<td>Re-run the 2026-11-13 card with the shrinkage weight swept across a grid and publish the resulting MAE curve, so the choice is measured rather than assumed.</td>
+<td>Either confirms the current weight or finds a cheap accuracy gain; either way it retires one of the unratified parameters.</td>
+<td>S — the grading script already exists; add a sweep</td>
+<td>Fitting shrinkage on the same nine games would be overfitting; report the curve, do not pick the minimum from it.</td>
+<td>Accept, with the explicit rule that no parameter is chosen from these nine games.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-34">
+<td>S-34</td>
+<td><b>Make the nightly refresh ingest official standings and final scores</b></td>
+<td>The refresh workflow fetches the slate and injury report but not the official standings or completed-game scores, so ratings and settlement stay manual.</td>
+<td>Add two steps: nba.com/standings -&gt; data/raw/standings_&lt;date&gt;_official.json, and nba.com/schedule finals -&gt; data/raw/finals_&lt;date&gt;.json, then run settle.</td>
+<td>Closes the loop unattended: official records in, graded cards out, every morning.</td>
+<td>M — two ingest functions plus the settle step</td>
+<td>The page fetcher is the only working retrieval path in this environment; the workflow runner may reach the same hosts directly, which should be probed first.</td>
+<td>Accept after the reachability probe in CC-FRESH-03 confirms the runner can reach nba.com.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-35">
+<td>S-35</td>
+<td><b>Group the navigation by the decision each page supports</b></td>
+<td>Twenty flat sidebar links in file order gave no signal about what to read first.</td>
+<td>Group into Decide / Measure / Inputs / Governance / Project, with a one-line description per category, and mirror the grouping on the dashboard.</td>
+<td>The site reads as a dashboard with an order of operations rather than a listing.</td>
+<td>S — data structure in the builder plus CSS</td>
+<td>None; every existing page keeps its URL.</td>
+<td>Accept — implemented this session.</td>
+<td><span class="badge b-ok">implemented 2026-11-14 by arena/3681def8-nba2</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-40">
+<td>S-40</td>
+<td><b>Make the existing nightly ingest actually run, and extend it to the v2 results history</b></td>
+<td>A nightly ingest workflow already exists (.github/workflows/refresh.yml, on a cron schedule) and has NEVER executed — gh run list for it is empty, which is why the repo&#x27;s own freshness check (CC-FRESH-03) reports &#x27;the schedule is armed but nothing has run&#x27;. It also targets the v1 pipeline (sealed-window injury PDFs, data/raw/finals_*.json, v1 settlement), not the v2 results history in data/raw/history/. The consequence is visible: the results log was 28 games short for a day and the published standings were a full day stale, with nothing on the site able to detect either.</td>
+<td>Confirm the cron schedule is enabled on the default branch (a scheduled workflow only starts firing after it is merged to the default branch once), then extend the job to append each completed date to data/raw/history/ and assert the per-date game count against the nba.com day-strip calendar and the game count implied by the standings. Fail the run on any disagreement.</td>
+<td>Makes the window impossible to fall behind silently, and turns the standings into a permanent cross-check on the results log.</td>
+<td>S</td>
+<td>Low. The workflow is already written and fail-closed; only the extension to data/raw/history/ is new.</td>
+<td>Accept — the schedule is already armed, so the cheapest possible fix is confirming it fires.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-41">
+<td>S-41</td>
+<td><b>Capture per-player game logs so the last hard blocker can close</b></td>
+<td>Every player-level correlation on the site is BLOCKED, the player-props page cannot price anything, the minutes-and-production half of the injuries page cannot be filled, and strategy S7 has never generated a bet. All four fail for the same missing input.</td>
+<td>Ingest per-player game logs (minutes, points, rebounds, assists, opponent) for at least the players who appear on an injury report. Start with the injury-report population to bound the cost.</td>
+<td>Unblocks the last data dependency in the brief. Everything else on the site can be built, measured and settled with what is already committed.</td>
+<td>M</td>
+<td>Needs a licensed feed or a scheduled scrape; player-level data is rate-limited more aggressively.</td>
+<td>Accept — it is the only remaining hard blocker (mirrors v2 suggestion SG-30).</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-42">
+<td>S-42</td>
+<td><b>Decide which tree GitHub Pages serves, and retire the other</b></td>
+<td>RESOLVED by measurement, 2026-11-14. The GitHub Pages API reports build_type &#x27;legacy&#x27; with source &#x27;main&#x27; path &#x27;/&#x27;, which reads as if the v1 root tree were live. Fetching the live URL shows otherwise: /strategy-lab.html resolves with full v2 content, and that file exists only under site/. So the live site already IS the single clean v2 tree, and no setting change is needed. The API field and the served tree disagree, which is itself worth recording.</td>
+<td>Pick the v2 tree as the single published site, point Pages at the pages.yml workflow, and move the root-level v1 pages under archive/ with a dated note.</td>
+<td>One site, one set of numbers, no chance of a reader landing on the stale one.</td>
+<td>S</td>
+<td>Low, but it is a repository setting change that only the owner can make — this session cannot push it and should not guess.</td>
+<td>No action required — measured, not assumed: the live URL already serves the v2 site/ tree, proven because /strategy-lab.html resolves and that file exists only under site/. Do NOT &#x27;fix&#x27; the Pages setting on the strength of the API&#x27;s build_type field alone; it contradicts what is actually served.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-43">
+<td>S-43</td>
+<td><b>Replace the flat 300-bet gate with a power calculation per strategy</b></td>
+<td>Gate G7 applies one round number to all seven strategies. But the parlay strategies have far more variance per bet than the side strategies, so the same n gives them a much wider interval — the bar is not equally strict across types, and 300 was chosen before any data existed to check it.</td>
+<td>Simulate each strategy&#x27;s own settled bet stream to get its bet-to-bet correlation, then set the required n per strategy. The lab already computes every Wilson interval and distance to base rate needed to do this.</td>
+<td>Makes the gate a measurement instead of a round number, and tells each strategy how far it has to go.</td>
+<td>S</td>
+<td>Low. Changes when strategies become rank-eligible, so it should be published with its derivation.</td>
+<td>Accept (mirrors v2 suggestion SG-26).</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-44">
+<td>S-44</td>
+<td><b>Publish the parlay price with its measured correlation, and print the naive product beside it</b></td>
+<td>The same-game correlation is now measured (+0.0393, 95% CI -0.113 to +0.190, n=167), but the site still withholds a parlay price entirely. The honest position is no longer &#x27;we do not know the correlation&#x27; but &#x27;we do not know it precisely&#x27; — and withholding the price hides the error bar rather than showing it.</td>
+<td>Price every parlay with the measured rho using the bivariate-normal pricer already implemented and tested in nba2/v2/strategy_lab.py, and print the naive product on the same row with the interval between them.</td>
+<td>Turns an unpriced section into a priced one, with the uncertainty visible instead of implied.</td>
+<td>S</td>
+<td>The interval is wide, so the price must ship with the interval on the same row or it will be read as more precise than it is.</td>
+<td>Defer until S-29 has grown the sample past ~500 games, then accept (mirrors SG-28).</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-45">
+<td>S-45</td>
+<td><b>Publish the paired (discordant-game) test next to every accuracy figure</b></td>
+<td>A headline accuracy number cannot distinguish skill from &#x27;back the favourite&#x27;. This session measured the difference: on the 33 games where the model and the naive rule disagreed, the naive rule was right 20 times and the model 13 (p = 0.2962). Before this session the site had no such test, so a reader could only conclude the opposite.</td>
+<td>Make the McNemar discordant-game test (already implemented in nba2/v2/strategy_lab.py::skill_attribution) a required column on the leaderboard, the backtest page and the executive summary, and pre-register the threshold before more games are graded.</td>
+<td>Stops the site promoting luck. The test needs roughly an order of magnitude fewer games than the flat 300-bet bar to detect a real effect, so it also shortens the time to a defensible result.</td>
+<td>S — the test exists and its output is published; this is wiring it into the three pages</td>
+<td>None to accuracy; the risk of *not* doing it is publishing a false skill claim.</td>
+<td>Accept. This is the brief&#x27;s &#x27;remove luck from the equation&#x27; requirement, measured rather than asserted.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-46">
+<td>S-46</td>
+<td><b>Wire the official 01:30 PM ET injury release into the build instead of the 04:30 AM snapshot</b></td>
+<td>The published injuries page is built from the 04:30 AM ET release while the league published hourly releases up to at least 01:30 PM ET. A player-by-player diff this session found 4 status changes and 24 additional rows. A reader of the page sees a six-release-stale picture.</td>
+<td>Make the injury snapshot a dated input the build refreshes from the league&#x27;s index (the index URL and PDF pattern are already parsed by nba2/pipeline/refresh.py), and stamp every row with the release it came from. Where the build cannot refresh, publish the diff as this session did.</td>
+<td>Availability is the one input that changes within hours of tip-off; publishing it six releases stale is the single most user-visible staleness on the site.</td>
+<td>M — the fetcher exists for the v1 pipeline; the v2 build needs a snapshot file and a provenance stamp</td>
+<td>The parity check compares the committed site against a rebuild; a moving injury input makes that check time-dependent. Mitigation: key the snapshot by release timestamp and commit it, as the standings already are.</td>
+<td>Accept after S-01/S-02; it is the highest-value item that needs no new vendor.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-47">
+<td>S-47</td>
+<td><b>Split the picks table into two markets: the spread trigger and the moneyline trigger</b></td>
+<td>The picks table published a spread lean priced with the moneyline probability, producing break-even triggers like -1246 that no sportsbook offers on a spread. Found and fixed this session.</td>
+<td>Publish P(win) and P(cover) as separate columns, each with its own break-even trigger, and label which market each trigger belongs to. Four regression tests now fail if the two are conflated again.</td>
+<td>The trigger is the only actionable number on the page for anyone with a price. A wrong trigger is worse than no trigger.</td>
+<td>S — done this session</td>
+<td>None identified.</td>
+<td>Accept (already implemented); keep the regression tests.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-48">
+<td>S-48</td>
+<td><b>Fix the nightly ingest, or stop publishing it as working</b></td>
+<td>The scheduled &#x27;Nightly ingest + settlement&#x27; workflow failed on 2026-11-14 at 14:37Z. It aborted at the &#x27;Fetch official finals&#x27; step with exit 3 (every official endpoint unreachable), so settlement and the site rebuild were skipped; every later step was cancelled. The README describes this workflow as running at 09:05/13:35 ET.</td>
+<td>Either give the job a reachable official endpoint (the sandbox measurement in audit/2026-11-14-766d/README-like notes shows direct egress to nba.com and cdn.nba.com fails while the page-fetch path succeeds), or downgrade the workflow to a clearly-labelled &#x27;manual capture + verify&#x27; job and remove the claim that settlement is automatic.</td>
+<td>A published automation that fails silently is worse than none: it means the sealed ledger stops being settled and nobody is told.</td>
+<td>S for the disclosure, M for a working endpoint</td>
+<td>Changing the workflow is a CI change and belongs to the session that owns .github/workflows/**; this item is a request, not an edit.</td>
+<td>Accept the disclosure now; treat the endpoint as part of S-01/S-02.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-49">
+<td>S-49</td>
+<td><b>Add a &#x27;Decisions needed&#x27; register with an explicit discovery path per item</b></td>
+<td>Questions were spread across three pages (open questions, decision queue, flagged) with no single place that says what must be answered before work continues, what is missing, and who decides.</td>
+<td>A single register (requirements/DECISIONS.json, rendered as the Decisions needed page) listing each decision with what we have, what is missing, how to close it, what it blocks, and who decides.</td>
+<td>Makes the brief&#x27;s &#x27;questions that must be addressed before a decision can be made&#x27; answerable in one screen, and makes missing information discoverable rather than implicit.</td>
+<td>S — done this session</td>
+<td>None; it adds no claim.</td>
+<td>Accept (already implemented). Keep it as the single source of truth and add to it rather than to new pages.</td>
+<td><span class="badge b-ok">implemented this session</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-50">
+<td>S-50</td>
+<td><b>Adopt a versioned &#x27;verification ledger&#x27;: one row per live check, with the script and the capture committed</b></td>
+<td>Verification on this project has been described in prose on several pages. Prose cannot be re-run, and this session found two published claims that a re-run disproved (the trigger arithmetic; the injury release ceiling).</td>
+<td>Every live check ships as (script, raw capture, result JSON) under audit/&lt;date&gt;-&lt;session&gt;/ and the site renders the results from the JSON, never from hand-written text.</td>
+<td>A reviewer can re-run any claim in one command. It also makes &#x27;flagged for review&#x27; self-updating rather than a manual list.</td>
+<td>M — the pattern exists (audit/2026-11-14-766d is an example) but needs to be one convention with a renderer</td>
+<td>Adds files to the repository; keep captures small and text-only.</td>
+<td>Accept. This is the cheapest durable fix for hallucination risk.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+</tbody></table></div>
+<div class="note"><b>How a decision is recorded.</b> Edit the item's <code>status</code> in
+<code>suggestions/SUGGESTIONS.json</code> to <code>accepted — OWNER, date</code> or
+<code>rejected — OWNER, date, reason</code>, commit, and the next build renders it. The build never writes
+<code>accepted</code> itself: a proposal and a decision must not look the same.</div>
+
 <footer>
   <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.

@@ -1249,8 +1249,7 @@ by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURC
 moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
 <b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
 player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
-"""
-    body += """"
+{movement_block}
 <div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
 the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
 blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
@@ -1582,6 +1581,42 @@ dependency. The three highest-ranked recommended items are all data connections,
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
 </ul>"""
+    # The register file (suggestions/SUGGESTIONS.json) is what an owner reviews and decides on;
+    # the page renders it so the decision can be made against the record rather than the prose.
+    reg = json.loads((ROOT / "suggestions" / "SUGGESTIONS.json").read_text())
+    from collections import Counter as _C
+    _states = _C(x.get("status", "?") for x in reg["suggestions"])
+    body += f"""<h2>Review register — 2026-11-14 ({len(reg['suggestions'])} items)</h2>
+<p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
+change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
+below has been applied on the owner's behalf. The machine-readable copy is
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json">suggestions/SUGGESTIONS.json</a>,
+which is what should be edited when a decision is recorded.</p>
+"""
+    body += table(["State", "Items", "Source"],
+                  [[esc(k), esc(v), srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json")]
+                   for k, v in sorted(_states.items())],
+                  "Decision-state totals for the review register")
+    rrows = []
+    for x in reg["suggestions"]:
+        st = x.get("status", "")
+        kind = "ok" if st.startswith("implemented") or st.startswith("applied") else "warn"
+        rrows.append({"id": x["id"], "cells": [
+            esc(x["id"]), "<b>" + esc(x["title"]) + "</b>", esc(x["problem"]), esc(x["proposal"]),
+            esc(x["benefit"]), esc(x["effort"]), esc(x["risk"]), esc(x["recommendation"]),
+            badge(st, kind),
+            srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json"),
+        ]})
+    body += table(["ID", "Suggestion", "Problem today (measured)", "What changes if accepted",
+                   "Benefit", "Effort", "Risk", "Recommendation", "State", "Source"],
+                  rrows, "Every proposal, with the evidence for it and the decision it needs",
+                  idcol="id")
+    body += """
+<div class="note"><b>How a decision is recorded.</b> Edit the item's <code>status</code> in
+<code>suggestions/SUGGESTIONS.json</code> to <code>accepted — OWNER, date</code> or
+<code>rejected — OWNER, date, reason</code>, commit, and the next build renders it. The build never writes
+<code>accepted</code> itself: a proposal and a decision must not look the same.</div>
+"""
     built["suggestions.html"] = page("suggestions.html", "Suggestions queue", body, "suggestions.html")
 
     # ------------------------------------------------------------------ decision queue

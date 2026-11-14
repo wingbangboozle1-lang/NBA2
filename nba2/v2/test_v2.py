@@ -259,8 +259,12 @@ class TestPublishedSite(unittest.TestCase):
         pages = sorted(site.glob("*.html"))
         # 17 pages at the 2026-11-14 build; session arena/ab8743d8 added live-verification.html
         # (live official re-verification) and decision-queue.html (suggestions review path);
-        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation).
-        self.assertEqual(len(pages), 20)
+        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation);
+        # session arena/766d0269-nba2 added skill-attribution.html (naive baselines + paired
+        # McNemar test) and decisions-needed.html (the decision register). The assertion pins the
+        # NAV to the emitted file set in both directions, so an unlisted page fails here.
+        self.assertEqual(len(pages), 22)
+        self.assertEqual({p.name for p in pages}, {href for href, _ in NAV})
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

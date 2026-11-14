@@ -48,7 +48,44 @@ by 1 p.m. local on game day. Reports are updated continuously. <a href="https://
 moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
 <b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
 player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
-"
+<div class="scroll"><table>
+<caption>Every status that moved between the published release and the 01:30 PM ET release</caption>
+<thead><tr>
+<th scope="col">Player</th>
+<th scope="col">Team</th>
+<th scope="col">04:30 AM ET (published here)</th>
+<th scope="col">01:30 PM ET (official, later)</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>Brown Jr., Mikel</b></td>
+<td>Brooklyn Nets</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-bad">Probable</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Christie, Max</b></td>
+<td>Dallas Mavericks</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-bad">Doubtful</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Harkless, Elijah</b></td>
+<td>Detroit Pistons</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-ok">Available</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td><b>Jones, Isaac</b></td>
+<td>Detroit Pistons</td>
+<td><span class="badge b-warn">Questionable</span></td>
+<td><span class="badge b-ok">Available</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+</tbody></table></div>
 <div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
 the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
 blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
