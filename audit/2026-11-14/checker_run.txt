@@ -1,0 +1,67 @@
+### python3 -m unittest discover -s nba2/tests -t .
+----------------------------------------------------------------------
+Ran 64 tests in 0.843s
+
+OK
+rc=0
+
+### python3 -m unittest discover -s backtest/tests -t .
+----------------------------------------------------------------------
+Ran 49 tests in 1.132s
+
+OK
+rc=0
+
+### python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
+----------------------------------------------------------------------
+Ran 43 tests in 26.299s
+
+OK
+rc=0
+
+### python3 -m nba2.pipeline.lint
+LINT OK — 1124 rows across 39 tables, every row sourced, every blank explained
+rc=0
+
+### python3 -m nba2.v2.check
+OK — 0 structural, 0 semantic
+rc=0
+
+### python3 tools/verify_backtest.py
+PASS  rebuild is deterministic (pages byte-identical)
+PASS  report.json is deterministic
+
+VERIFICATION PASSED — 12 pages, 155 sourced game rows, 189 internal links
+rc=0
+
+### python3 tools/verify_site.py
+]
+
+SUMMARY: 13 pages | 249 data rows | 303 links
+VERIFICATION PASSED: every data row has a source link; no broken internal links; no placeholders; nav complete on all pages.
+rc=0
+
+### python3 tools/check_links_all.py
+scanned 105 HTML files | 4240 internal links checked | 3980 external links
+ALL INTERNAL LINKS OK
+rc=0
+
+### python3 scripts/check_site.py
+pages=12 rows_checked=524
+PASS: all internal links resolve; all data rows source-linked; nav/footer present
+rc=0
+
+### node originated/engine/verify.js
+==========================================================
+24/24 checks passed
+All checks passed.
+
+rc=0
+
+### python3 tools/crosscheck_site.py
+        observed: ci.yml: push,pull_request,workflow_dispatch; pages.yml: push,workflow_dispatch; refresh.yml: schedule,workflow_dispatch; v2-verify.yml: push,pull_request,workflow_dispatch; ingest runs recorded: unknown (no runs reported or gh unavailable) — not a PASS: the schedule is armed but nothing has run, so the site's freshness still depends on a manual or first-scheduled ingest
+        note:     an active schedule with zero runs is not yet a refresh: the site is only as fresh as the last successful ingest run, so this check stays INFO until a run exists
+
+91 checks: 77 pass, 6 fail, 8 info, 0 n/a
+rc=0
+
