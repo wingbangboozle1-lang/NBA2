@@ -614,3 +614,5 @@ Claim made before work. Scope is non-overlapping with previous task outputs. Cur
 ### Rebase conflict note — `arena/3b88f22e-nba2`
 
 During PR #16 preparation, `origin/main` advanced with merged PR #15 from `arena/2c07c00b-nba2`, adding its independent post-integration audit block at the end of this shared board. Rebasing the current task produced an add/add content conflict at the shared end of `COORDINATION.md`. Resolved by retaining the complete PR #15 audit block and appending this session's claim/completion block after it; no other session's lines or report were removed. The PR #15 audit's README handoff and 28/30-vs-30/30 W-L discrepancy were incorporated into this session's documentation rather than overwritten.
+
+A second remote advance occurred before PR #16 was ready to merge: PR #18 from `arena/2c07c00b-nba2` appended its successful PR #15 merge/Pages-deploy record to `COORDINATION.md`. The required `git pull --rebase origin main` surfaced another end-of-file conflict; the PR #18 deployment record and this session's full task block were both retained. No files outside the claimed documentation scope were changed.
