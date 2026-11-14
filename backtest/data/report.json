@@ -668,7 +668,7 @@
     "disputed": true,
     "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.09 vs 12.17 MAE (home-court gain -0.08 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
     "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.08 pts. Passing this gate on baseline (b) alone would be a false positive.",
-    "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. This gate is the one that failed.",
+    "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. NOTE: this baseline is unshrunk and is a strawman -- see baseline (c) and the disputed flag below.",
     "gap_test": {
      "n": 139,
      "mean_abs_error_model": 12.173,

@@ -135,7 +135,8 @@ def evaluate(rows: Sequence[dict], corr: dict) -> dict:
                 "alone would be a false positive." if hca_gain is not None else ""),
             "why_it_matters": ("Baseline (b) is the important one: if shrinkage and the "
                                "home-court term do not beat a raw point differential, the "
-                               "model is decoration. This gate is the one that failed."),
+                               "model is decoration. NOTE: this baseline is unshrunk and is a "
+                               "strawman -- see baseline (c) and the disputed flag below."),
             "gap_test": gap,
         }
 

@@ -118,6 +118,26 @@ def main() -> int:
     for l in leaks[:5]:
         failures.append(f"      {l}")
 
+    # ------------------------------------- 3c. no page may contradict its own computed summary
+    gate_report = report["gates"]
+    if "gates" in gate_report:
+        summary = gate_report["summary"]
+        reliable = set(summary.get("passed_reliable", summary["passed"]))
+        # a gate marked disputed must never be counted in the "passed" KPI
+        vg = (BT / "pages" / "validation-gates.html").read_text()
+        for gid in summary.get("passed_disputed", []):
+            if f'<div class="kpi-v">{len(summary["passed"])}</div>' in vg:
+                failures.append(f"FAIL  validation-gates.html still counts disputed {gid} "
+                                f"as plainly passed")
+                break
+        check(not summary.get("passed_disputed") or "DISPUTED" in vg,
+              f"validation-gates.html discloses {len(summary.get('passed_disputed', []))} "
+              f"disputed gate(s)")
+        check('strawman' in vg.lower(), "validation-gates.html names the strawman baseline")
+        # and the report JSON itself must be coherent
+        check(set(summary.get("passed_disputed", [])) <= set(summary["passed"]),
+              "every disputed gate is also a registered pass")
+
     # ---------------------------------------------------------- 4. headline numbers sourced
     acc = report["accuracy"]
     check(acc.get("n", 0) > 0, f"accuracy block computed on {acc.get('n')} graded games")
