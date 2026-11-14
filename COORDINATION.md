@@ -1088,3 +1088,32 @@ further `COORDINATION.md` end-of-file conflict, again resolved append-only with 
 5. `Q-25` (which surface is canonical) was updated with the measured fact: the count is now **six**,
    and a session that wants to publish measured results currently has no option except adding
    another tree — which is how F7 came to exist.
+
+## Session `arena/6e7afc65-nba2` — fresh official re-verification + v2 site (2026-11-14)
+
+Claimed 2026-11-14 (UTC). Working branch is platform-pinned to `arena/6e7afc65-nba2`
+(base `a09f48e`, `main`). Claim pushed before any file edit.
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| V1 | Fresh, line-by-line re-verification of the committed schedule/W-L/injury/line outputs against **nba.com fetched live from this session** | in progress | `arena/6e7afc65-nba2` | `data/v2/**`, `analysis/verify-2026-11-14.md`, `nba2/verify/` | Live fetch of `nba.com/schedule` + `nba.com/games`; per-row source URLs committed in `data/v2/verification.json` |
+| V2 | Answers to the product/model decision gaps (correlation values, independence, luck-vs-skill separation, validation gates, parlay/SGP math) | in progress | `arena/6e7afc65-nba2` | `data/v2/answers.json`, `analysis/answers-2026-11-14.md` | Honest labelling: DERIVED vs SOURCED vs UNANSWERABLE |
+| V3 | v2 static site: clean landing page + category subpages, all tables with per-row official source links, dedicated **Suggestions** review section, **Questions** register, **Flagged for Review** | in progress | `arena/6e7afc65-nba2` | `site/**`, `tools/build_v2_site.py`, `.github/workflows/pages.yml` | Every row carries `source_url`; blanks carry a reason; internal link check must pass |
+| V4 | Integration: merge to `main`, confirm Pages deploy, record PR + run IDs | unclaimed | — | `COORDINATION.md` (append-only) | `gh pr merge`, `gh run list` |
+
+**Explicitly not touched by this session** (owned by prior sessions, left byte-identical):
+root `index.html`, `flagged.html`, `styles.css`, `app.js`, `build_site.py`, `picks.html`,
+`strategies.html`, `injuries.html`, `questions.html`, `suggestions.html`,
+`executive-summary.html`, `correlations.html`, `pages/**`, `docs/**`, `dashboard/**`,
+`verified/**`, `originated/**`, `archive/**`, and every existing `data/*.json|csv` and
+`nba2/**` module. New work lands only in the paths listed above. Where a value had to be
+corrected, the correction is published on the new `site/` tree and logged here — the prior
+trees are not edited, so no other session's output is destroyed.
+
+### Environment note (verification-relevant)
+
+- `curl`/`urllib` from this sandbox **cannot** open TLS to `nba.com` (`SSL_ERROR_SYSCALL`).
+- The agent's page-fetch tool **can** read `www.nba.com`; it was used for every official
+  fetch recorded in this session. `ak-static.cms.nba.com` PDFs are reachable but today's
+  2026-11-14 01:00 PM ET injury report returns `AccessDenied`, same as session
+  `arena/3b88f22e-nba2` reported. No injury value was re-filled from an unavailable file.
