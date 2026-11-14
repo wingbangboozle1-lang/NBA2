@@ -32,9 +32,13 @@ jobs:
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2
-          if ! git diff --cached --quiet -- site; then
-            echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
-            git diff --cached --stat -- site | tail -40
+          git diff --cached --name-only -- site > /tmp/changed.txt || true
+          echo "changed files:"; cat /tmp/changed.txt
+          if [ -s /tmp/changed.txt ]; then
+            for f in $(cat /tmp/changed.txt | head -2); do
+              D=$(git diff --cached -- "$f" | sed -n '5,14p' | tr '\n' '~' | cut -c1-500)
+              echo "::error title=diff-in-${f}::$D"
+            done
             exit 1
           fi
           echo "published artefacts match the v2 model"
