@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="35">
+    <section class="card table-card" id="questions" data-rows="38">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -415,6 +415,39 @@
 <td>Point the ratings loader at the official standings for W-L (done) and keep the third-party column only for point rates, labelled.</td>
 <td>Removes the last unverified W-L in the model input. Does not remove FLAG-RAT-01, which is about point rates, not records.</td>
 <td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-36">
+<td>Q-36</td>
+<td>Does the injury table on the published site reflect the newest official release, and how would anyone know?</td>
+<td>Measured on 2026-11-14 rather than assumed: the site&#x27;s injury section was built from the 11/14 04:30 AM ET PDF because the 05:30 AM file returned AccessDenied at that moment. The official index publishes a release every 15 minutes; the 01:30 PM release read at 18:41 UTC carries 50 designation rows — 24 more than the site published — and moves 4 statuses (Mobley to Out, Christie Questionable→Doubtful, two to Available). Both releases are now on the v2 site in a superseding section, and the capture with its verifier lives in audit/2026-11-14-bc867bff/. Source: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf and https://official.nba.com/nba-injury-report-2026-27-season/</td>
+<td>A build-time rule, not a dataset: the build stamps which release it used but never asks the index what the newest release is, so a 5.5-hour gap is invisible on the page.</td>
+<td>Fetch the index, take the newest timestamped PDF, diff it against the published rows, and surface the gap in hours on the page (S-46 / v2 SG-38). The parser and the diff already exist in nba2/v2/capture.py::delta_vs_morning.</td>
+<td>Decides whether an injury-driven lean can be published at all on a game day, or only the night before. A reader who trusts a 6-hour-old availability table is making bets on a roster the league already changed.</td>
+<td>MEDIUM</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-37">
+<td>Q-37</td>
+<td>Is the official per-club season table enough to make player props actionable, or only to size a risk?</td>
+<td>The per-club traditional table at nba.com/stats/players/traditional?TeamID=&lt;id&gt; is reachable and renders server-side — the opposite of what earlier sessions recorded. Three clubs were captured (Denver, Cleveland, Minnesota): 24 player rows with GP, MPG, PPG, each with its own source link. That is enough to publish production-at-risk: Minnesota loses 33.3 PPG and 33.7 minutes with Edwards out, which is 27.9% of its season scoring rate; Cleveland has 53.8% of its scoring rate in the game-time bucket. It is also enough to show the page sorts by points, not minutes (rank order re-derived: V12).</td>
+<td>Anything distribution-shaped. The per-player game log prints &#x27;No data available&#x27; at https://www.nba.com/stats/player/1630162/gamelog (verified 2026-11-14), so there is still no median, no variance, no minutes floor; and with no market line (Q-1 / S-01) there is nothing to compare a projection to. On/off splits are likewise not published anywhere reachable.</td>
+<td>Two independent routes: capture all 30 per-club tables for the season-average half (S-45 / v2 SG-37), and build game-level rows from the per-game box-score pages of the settled slate for the distribution half. A licensed feed would do both and is still the only route to a price.</td>
+<td>Decides whether the props page stays a baseline table with P(over) blank, or becomes an input to a strategy at all. Nothing that writes a stake depends on the season average alone, and the site should keep saying so.</td>
+<td>HIGH</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-38">
+<td>Q-38</td>
+<td>Which side of the line did strategy S2 actually bet, and does its settled record change?</td>
+<td>Both, published side by side. The v1 generator attached the away-side spread number to whichever team its branch had picked, so all nine strong-margin signals named the model favourite and quoted the underdog&#x27;s price (first row: &#x27;MIA +6.5&#x27; on CLE @ MIA, a game the same file labels &#x27;CLE +6.5&#x27;). The generator is fixed and pinned by nba2/tests/test_picks_sign.py (6 tests; suite 64→70). Re-graded on the side the strategy means, the four settled rows read 3-1, not 4-0 — computed by nba2/v2/live.py::_s2_sign_regrade from the committed official finals, and printed on the v2 live verification page.</td>
+<td>Only an owner acknowledgement that settled history is not restated: nba2/data/picks.json is committed byte-identical (sha256 2f527ecbe60a0e25…), stamped 2026-11-13T22:30:00Z — 83 minutes before the earliest tip. Regenerating it would &#x27;fix&#x27; the labels by destroying the pre-tip provenance that is the only reason its record means anything.</td>
+<td>Accept the rule: the generator and the verifiers change, the sealed artefact never does; corrections ship as a second column, not as an edit. Already the convention for the ledger (data/raw/ledger, 2/2 verify).</td>
+<td>Decides whether a &#x27;4-0&#x27; headline may appear anywhere on a public page. It may not: the same four rows on the intended side are 3-1, and n=4 grades nothing either way.</td>
+<td>LOW</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>

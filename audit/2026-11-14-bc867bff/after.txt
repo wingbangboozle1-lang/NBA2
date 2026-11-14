@@ -1,0 +1,180 @@
+NBA2 gate run — session arena/bc867bff-nba2
+commit b2beb1f on arena/bc867bff-nba2
+run at 2026-11-14T19:12:11Z
+tree dirty files at start: 14
+
+===== v1 unit tests =====
+$ python3 -m unittest discover -s nba2/tests -t .
+
+[exit 0]
+
+===== v2 unit tests =====
+$ python3 -m unittest discover -s nba2/v2 -t . -p test_*.py
+
+[exit 0]
+
+===== backtest unit tests =====
+$ python3 -m unittest discover -s backtest/tests
+
+[exit 0]
+
+===== capture verifier =====
+$ python3 audit/2026-11-14-bc867bff/verify_captures.py
+n
+        observed: 29 clubs compared, 0 mismatch(es) []
+[PASS] V5     league balance closes: 29 live clubs + the published GSW row equal the published league totals
+        evidence: site implies 183 wins / 183 losses = 91 games
+        observed: strip 175-178, GSW 8-5, totals 183/183; one missed transcription would break this identity
+[PASS] V6     every game re-read from the official schedule matches the published window (id, matchup, date, tip)
+        evidence: https://www.nba.com/schedule?date=2026-11-14 vs data/v2/lines.json
+        observed: 20 of 27 games re-read this session, 0 mismatch(es) []
+[INFO] V7     the games NOT re-read this session are declared, not quietly credited
+        evidence: difference of the two id sets
+        observed: 7 published games (11/16 tail + all 11/17) were not independently re-read in this session: ['0022600251', '0022600252', '0022600253', '0022600254', '0022600255', '0022600256', '0022600257']
+[PASS] V8     the 11/15 games on the injury report are exactly the 11/15 games on the schedule
+        evidence: two independent official documents, no shared transcription
+        observed: report ['ATL@MIL', 'CHA@LAC', 'DAL@BOS', 'HOU@WAS', 'IND@PHI', 'LAL@PHX', 'NYK@TOR', 'OKC@SAC', 'SAS@UTA'] | schedule ['ATL@MIL', 'CHA@LAC', 'DAL@BOS', 'HOU@WAS', 'IND@PHI', 'LAL@PHX', 'NYK@TOR', 'OKC@SAC', 'SAS@UTA']
+[PASS] V9     the injury report's own ET tip times agree with the schedule's tips for every 11/14 game
+        evidence: PDF 'Game Time (ET)' column (12-hour dial) vs the schedule's ET tips (24-hour), offset by 12 h
+        observed: 5 games cross-checked, 0 disagreement(s) []
+[PASS] V10    each player row is internally consistent: the club's W-L in the games he played equals GP
+        evidence: official per-club traditional table, columns age/gp/w/l/min/pts
+        observed: 24 rows checked, 0 inconsistent []
+[PASS] V11    the most-used player on each club carries exactly the club's own record - the two tables agree
+        evidence: nba.com/stats/players/traditional?TeamID=... vs nba.com/standings as published in data/v2/teams.json
+        observed: 3 clubs, 0 disagreement(s) []
+[PASS] V12    the page's own rank column is a points sort, not a minutes sort - so the site must re-order
+        evidence: rank column vs PTS column and vs Min column in each captured block
+        observed: PTS monotone in rank for all 3 clubs; minutes NOT monotone for 3 (['Denver Nuggets', 'Cleveland Cavaliers', 'Minnesota Timberwolves']) - the capture claims the sort is by points and re-orders by minutes
+[PASS] V13    injury status joins to the rotation by name for the three captured clubs
+        evidence: 24 rotation rows x 50 designation rows, matched on (team, player)
+        observed: 2 ruled-out rotation players, 4 game-status players
+        impact: {"club": "Cleveland Cavaliers", "n_missing_from_rotation": 1, "ppg_at_risk": 16.9, "pct_of_team_ppg": 14.5, "mpg_vacated": 32.0, "next_man_up": "Meleek Thomas 22.5 mpg"}
+        impact: {"club": "Denver Nuggets", "n_missing_from_rotation": 0, "ppg_at_risk": 0, "pct_of_team_ppg": 0.0, "mpg_vacated": 0, "next_man_up": "Jamal Murray 36.4 mpg"}
+        impact: {"club": "Minnesota Timberwolves", "n_missing_from_rotation": 1, "ppg_at_risk": 33.3, "pct_of_team_ppg": 27.9, "mpg_vacated": 33.7, "next_man_up": "Jaden McDaniels 33.1 mpg"}
+[PASS] V14    production-at-risk is computable from the join for the captured clubs, and only for them
+        evidence: sum of official PPG of Out/Doubtful rotation players over the club's official PF/G from the standings table
+        observed: 3 clubs quantified; 27 clubs stay blank + flagged because their per-club table was not captured in this session
+[PASS] V15    everything still missing is recorded with the URL that was tried and what it returned
+        evidence: still_blocked entries
+        observed: per-game player logs (minutes floor, prop medians, player-level correlation); market prices
+
+15 checks: 13 pass, 0 fail, 2 info
+[exit 0]
+
+===== v1 site data build =====
+$ python3 -m nba2.pipeline.build_site_data
+
+[exit 0]
+
+===== v1 site build =====
+$ python3 -m nba2.pipeline.build_site
+
+[exit 0]
+
+===== v1 lint =====
+$ python3 -m nba2.pipeline.lint
+
+[exit 0]
+
+===== backtest engine rebuild =====
+$ python3 -m backtest.engine.build
+
+[exit 0]
+
+===== backtest verify =====
+$ python3 tools/verify_backtest.py
+
+[exit 0]
+
+===== v2 build (idempotence) =====
+$ python3 -m nba2.v2
+
+[exit 0]
+
+===== v2 structural+semantic =====
+$ python3 -m nba2.v2.check
+
+[exit 0]
+
+===== internal link graph =====
+$ python3 tools/check_links_all.py
+
+[exit 0]
+
+===== live verifier =====
+$ python3 -m nba2.v2.live
+
+[exit 0]
+
+===== crosscheck (97) =====
+$ python3 tools/crosscheck_site.py
+capture comparison covers, and the ones it does not
+        observed: uncovered by nba2/data/records.json: none
+[ ok ] CC-X-04        the two sessions' independent reads of the official tip times agree
+[ ok ] CC-X-05        a third surface's tip times agree with the canonical slate
+[ ok ] CC-X-06        the cross-session line-delta column is arithmetically right
+[ ok ] CC-X-07        the other session's line file is the actual referent of the comparison table
+[ ok ] CC-X-08        the cross-session record-agreement claim equals its own table
+[ ok ] CC-X-09        the cross-session comparison does not silently compare a value with itself
+[ ok ] CC-BT-01       the report's headline counts equal a recount of the committed game rows
+[ ok ] CC-BT-02       a 'final scores' set contains only games that precede the snapshot it is graded against
+[ ok ] CC-BT-03       every published rate equals its own numerator over its own denominator
+[ ok ] CC-BT-04       the tier and calibration breakdowns partition the graded sample, and each bin reports its own range
+[ ok ] CC-BT-05       the gate summary is a true index of the per-gate statuses
+[ ok ] CC-BT-06       every gate verdict follows from the numbers printed beside it
+[ ok ] CC-BT-07       the provisional leaderboard ranks by the metric it names, and pays nobody while a gate fails
+[info] CC-BT-08       the two surfaces tell one story about what has been measured
+        observed: the two are not contradictory — the site's gates are stated in settled bets against a price, the backtest's in graded games against outcomes — but a reader of the canonical page cannot see that 167 games have been graded at all, and the vocabulary differs (PASS/FAIL/BLOCKED/AT-RISK vs PASS/FAIL/BLOCKED/PARTIAL)
+        note:     filed as finding F8: the measured result exists, but only on a second surface
+[ ok ] CC-DOC-01      README's published counts match the artefacts on disk
+[ ok ] CC-DOC-02      meta.games / meta.teams / meta.injury_rows equal the sections they describe
+[ ok ] CC-DOC-03      meta.tiers equals a recount of the line table
+[ ok ] CC-DOC-04      the site reports which snapshot it is built from
+[ ok ] CC-DOC-05      generated_at_utc is a real timestamp and the build declares itself idempotent
+[info] CC-DOC-06      the verification line quoted on the coordination board matches the current build
+        observed: INFO when a refresh is in flight: the board is a historical record of the run that made it, and this session must not rewrite another session's log
+[info] CC-DOC-07      the committed inputs are unambiguous (digest over every raw snapshot recorded)
+        observed: this session's input digest 36d4c88782d8f566… vs meta.input_digest 2bb76cc571986fe8…
+        note:     the two digests are computed over different file sets by design (the build hashes a fixed list, plus requirements/ledger inputs); they are reported side by side rather than compared as equal
+[ ok ] CC-HTML-01     every rendered table row on the site carries a source cell
+[ ok ] CC-HTML-02     every internal link and every flag anchor resolves to a real target
+[ ok ] CC-HTML-03     every row in the data file is rendered on some page
+[info] CC-HTML-03b    the literal em-dash is only ever used for “not applicable”, never for “not verified”
+        observed: anomalies: 1; gate_matrix: 9; gates: 3; injuries: 5; injuries_latest: 23; injuries_window: 5; injury_delta_release: 5; params: 8; props: 4; slate: 36; xinjuries: 2
+[ ok ] CC-HTML-04     every navigation target on the landing page exists
+[ ok ] CC-HTML-05     no published page is unreachable from the landing page
+[ ok ] CC-FRESH-01    the snapshot is within one day of the run date (the freshness SLA the brief implies)
+[info] CC-FRESH-02    a stale snapshot is disclosed, not hidden
+        observed: the site prints the as-of date on every page
+[ ok ] CC-FRESH-03    a scheduled ingestion exists, and it has actually run
+
+97 checks: 90 pass, 0 fail, 7 info, 0 n/a
+[exit 0]
+
+===== generated artefacts are a pure function of the inputs =====
+changed by the rebuild (expected if this run follows an edit; must be empty on a re-run):
+M data/v2/content.json
+M site/data/content.json
+M site/executive-summary.html
+M site/flagged.html
+M site/index.html
+M site/questions.html
+M site/suggestions.html
+M site/verification.html
+
+===== sealed artefacts untouched =====
+nba2/data/picks.json: UNTOUCHED (git reports 0 changes)
+data/raw/ledger: UNTOUCHED (git reports 0 changes)
+ledger immutability (nba2.models.ledger.verify): 2/2 ledgers verify
+
+===== capture provenance =====
+captured_utc 2026-11-14T18:52:00Z  method: platform page-fetch tool (fetch_page). Direct TLS egress from this wor…
+  injury_report     50 units  https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.
+  records_strip     29 units  https://www.nba.com/game/okc-vs-lac-0022600042/box-score
+  slate_reread      20 units  https://www.nba.com/schedule?date=2026-11-14
+  player_rotation   24 units  https://www.nba.com/stats/players/traditional?TeamID=<club id>
+  still_blocked    2 documented failures
+
+===== summary =====
+ALL GATES PASSED (0 failing steps)

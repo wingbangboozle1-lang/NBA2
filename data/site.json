@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "2bb76cc571986fe835b5cbc8be436c404f7ddf0119d1580ecb817434f5f9edde",
+  "input_digest": "a74b0f534942cc81cb7a493b7465c1dd7198e76ec90633b18fcaceaf9c36f9e3",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -30762,9 +30762,102 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-36",
+     "values": {
+      "id": "Q-36",
+      "question": "Does the injury table on the published site reflect the newest official release, and how would anyone know?",
+      "have": "Measured on 2026-11-14 rather than assumed: the site's injury section was built from the 11/14 04:30 AM ET PDF because the 05:30 AM file returned AccessDenied at that moment. The official index publishes a release every 15 minutes; the 01:30 PM release read at 18:41 UTC carries 50 designation rows — 24 more than the site published — and moves 4 statuses (Mobley to Out, Christie Questionable→Doubtful, two to Available). Both releases are now on the v2 site in a superseding section, and the capture with its verifier lives in audit/2026-11-14-bc867bff/. Source: https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf and https://official.nba.com/nba-injury-report-2026-27-season/",
+      "missing": "A build-time rule, not a dataset: the build stamps which release it used but never asks the index what the newest release is, so a 5.5-hour gap is invisible on the page.",
+      "how": "Fetch the index, take the newest timestamped PDF, diff it against the published rows, and surface the gap in hours on the page (S-46 / v2 SG-38). The parser and the diff already exist in nba2/v2/capture.py::delta_vs_morning.",
+      "impact": "Decides whether an injury-driven lean can be published at all on a game day, or only the night before. A reader who trusts a 6-hour-old availability table is making bets on a roster the league already changed.",
+      "severity": "MEDIUM"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-37",
+     "values": {
+      "id": "Q-37",
+      "question": "Is the official per-club season table enough to make player props actionable, or only to size a risk?",
+      "have": "The per-club traditional table at nba.com/stats/players/traditional?TeamID=<id> is reachable and renders server-side — the opposite of what earlier sessions recorded. Three clubs were captured (Denver, Cleveland, Minnesota): 24 player rows with GP, MPG, PPG, each with its own source link. That is enough to publish production-at-risk: Minnesota loses 33.3 PPG and 33.7 minutes with Edwards out, which is 27.9% of its season scoring rate; Cleveland has 53.8% of its scoring rate in the game-time bucket. It is also enough to show the page sorts by points, not minutes (rank order re-derived: V12).",
+      "missing": "Anything distribution-shaped. The per-player game log prints 'No data available' at https://www.nba.com/stats/player/1630162/gamelog (verified 2026-11-14), so there is still no median, no variance, no minutes floor; and with no market line (Q-1 / S-01) there is nothing to compare a projection to. On/off splits are likewise not published anywhere reachable.",
+      "how": "Two independent routes: capture all 30 per-club tables for the season-average half (S-45 / v2 SG-37), and build game-level rows from the per-game box-score pages of the settled slate for the distribution half. A licensed feed would do both and is still the only route to a price.",
+      "impact": "Decides whether the props page stays a baseline table with P(over) blank, or becomes an input to a strategy at all. Nothing that writes a stake depends on the season average alone, and the site should keep saying so.",
+      "severity": "HIGH"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-38",
+     "values": {
+      "id": "Q-38",
+      "question": "Which side of the line did strategy S2 actually bet, and does its settled record change?",
+      "have": "Both, published side by side. The v1 generator attached the away-side spread number to whichever team its branch had picked, so all nine strong-margin signals named the model favourite and quoted the underdog's price (first row: 'MIA +6.5' on CLE @ MIA, a game the same file labels 'CLE +6.5'). The generator is fixed and pinned by nba2/tests/test_picks_sign.py (6 tests; suite 64→70). Re-graded on the side the strategy means, the four settled rows read 3-1, not 4-0 — computed by nba2/v2/live.py::_s2_sign_regrade from the committed official finals, and printed on the v2 live verification page.",
+      "missing": "Only an owner acknowledgement that settled history is not restated: nba2/data/picks.json is committed byte-identical (sha256 2f527ecbe60a0e25…), stamped 2026-11-13T22:30:00Z — 83 minutes before the earliest tip. Regenerating it would 'fix' the labels by destroying the pre-tip provenance that is the only reason its record means anything.",
+      "how": "Accept the rule: the generator and the verifiers change, the sealed artefact never does; corrections ship as a second column, not as an edit. Already the convention for the ledger (data/raw/ledger, 2/2 verify).",
+      "impact": "Decides whether a '4-0' headline may appear anywhere on a public page. It may not: the same four rows on the intended side are 3-1, and n=4 grades nothing either way.",
+      "severity": "LOW"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -32094,9 +32187,141 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-45",
+     "values": {
+      "id": "S-45",
+      "title": "Capture the 30 per-club season tables now; chase game logs through box-score pages, not /gamelog",
+      "problem": "S-41 and the props page both assume the official player domain is unreachable. It is not: nba.com/stats/players/traditional?TeamID=<id> rendered three clubs for this session in one fetch each. The genuinely blocked half is per-game granularity, and the route tried for it (/gamelog) prints 'No data available'.",
+      "proposal": "One dated snapshot per club per day in data/raw/players_<date>.json, parsed from the same table this session captured by hand; game-level rows built from per-game box-score pages over the settled slate. The three captured clubs and the parser conventions are already written down in audit/2026-11-14-bc867bff/make_captures.py.",
+      "benefit": "Fills the 27 blank clubs on the rotation and production-at-risk tables, turns 'needs per-player minutes' into a measured number, and gives the props page a defensible baseline for every player who appears on an injury report.",
+      "effort": "M — 30 page reads plus one parser for the season tables; L for the game-level route once the box-score shape is pinned",
+      "risk": "Roster moves make club labels disagree between sources in the same week (Lonzo Ball is listed on Chicago's report while the club table shows LaMelo on Minnesota); attribution must stay per-document.",
+      "recommendation": "Accept the season-table half immediately — it needs no vendor and no new permission.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-46",
+     "values": {
+      "id": "S-46",
+      "title": "Make 'what is the newest official release?' a build step, and print the age of the input on the page",
+      "problem": "The build knows which PDF it read but not what the league has published since. The result measured: a 5.5-hour-stale injury table, 24 rows short, presented as the site's injury section on a game day.",
+      "proposal": "At build time, read the injury index, take the newest timestamped release, diff it against the published rows, and print 'built from HH:MM release; newest available HH:MM; +N rows / M statuses' on the injuries page. Fail the build on a game day when the gap exceeds one hour and the fetch did not even try.",
+      "benefit": "Converts a silent freshness failure into a visible number, and makes 'the data is stale' a measured field rather than an apology in prose.",
+      "effort": "L — the index is one fetch, and delta_vs_morning() already computes the diff",
+      "risk": "Needs the fetch to run in the same environment as the build; today the build sandbox cannot reach nba.com directly.",
+      "recommendation": "Accept. It is the cheapest real improvement to trust on the site.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-47",
+     "values": {
+      "id": "S-47",
+      "title": "Namespace the two question/suggestion registers before the next cross-reference breaks",
+      "problem": "requirements/QUESTIONS.json runs Q-1…Q-38 and nba2/v2/content.py runs Q-1…Q-27; both render bare IDs. A v2 sentence cited 'Q-28', which exists only in the other register, and read as a dangling reference (logged as F-042). This very append creates more cross-namespace references.",
+      "proposal": "Prefix the v2 IDs (Q2-nn / SG-nn stay as-is) or stamp every cross-reference with its file, e.g. 'Q-28 (requirements/QUESTIONS.json)'. Keep old IDs as anchors so existing flag chips resolve.",
+      "benefit": "Removes a class of defect where a citation is right in the repo and wrong on the page — the hardest kind to notice.",
+      "effort": "S for the convention; M to rewrite published anchors",
+      "risk": "Renumbering published anchors breaks inbound links; the alias rule is what contains it.",
+      "recommendation": "Accept the convention now (documentation only), defer the renumbering.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-48",
+     "values": {
+      "id": "S-48",
+      "title": "Close or annotate the idle pull requests so the board stops describing work that has landed elsewhere",
+      "problem": "Four PRs (#50, #55, #57, #59) sat open and idle for 6+ hours. Two carried work that has since landed by another route, one was a coordination record, and one (#55) carried the S-26 generator fix that this session verified line by line and then carried in, with the author's commit message and tests intact.",
+      "proposal": "For each: a comment naming the commit that supersedes it or the decision that defers it, then close. Never silently.",
+      "benefit": "Stops duplicate effort and makes 'what is live' answerable from the PR list alone.",
+      "effort": "S",
+      "risk": "Closing someone else's PR without credit reads as a grab; the comment is the fix.",
+      "recommendation": "Applied by the integration session as part of this merge, with attribution in both the PR body and COORDINATION.md.",
+      "status": "applied in this PR"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

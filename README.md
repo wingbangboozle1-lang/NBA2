@@ -59,7 +59,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-`index.html` + `pages/**` (21 pages, 50 tables, 1404 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 50 tables, 1416 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -110,7 +110,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (64 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (70 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -132,7 +132,7 @@ injury-report PDFs for the window dates under `data/raw/pdf/`, fetches official 
 arrived window dates into `data/raw/finals_*.json`, merges them into the settlement input, settles
 the sealed ledger, and rebuilds the site — **only if** the full verify chain (unit tests, seal
 verification, provenance lint) passes and `data/raw/ledger/` is byte-identical. It is fail-closed
-(`nba2/pipeline/refresh.py`, covered by the 64-test suite): an unreachable official endpoint or a
+(`nba2/pipeline/refresh.py`, covered by the 70-test suite): an unreachable official endpoint or a
 schema drift aborts the
 job before anything is committed, and a missing future-date release or a not-yet-final scoreboard is
 reported as the expected pre-deadline state, not an error. What it never does: rewrite sealed
@@ -288,11 +288,11 @@ dashboards with different numbers is worse than one, and the reconciliation of a
 decision logged on the new site's Flagged page (F-011).
 
 ```bash
-python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (20 pages, includes the backtest)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests
-python3 -m unittest discover -s nba2/tests -t .                # 64 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 80 tests
+python3 -m unittest discover -s nba2/tests -t .                # 70 tests (6 added by the S-26 sign fix)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

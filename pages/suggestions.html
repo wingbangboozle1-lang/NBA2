@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="40">
+    <section class="card table-card" id="suggestions" data-rows="44">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -552,6 +552,58 @@
 <td>The interval is wide, so the price must ship with the interval on the same row or it will be read as more precise than it is.</td>
 <td>Defer until S-29 has grown the sample past ~500 games, then accept (mirrors SG-28).</td>
 <td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-45">
+<td>S-45</td>
+<td>Capture the 30 per-club season tables now; chase game logs through box-score pages, not /gamelog</td>
+<td>S-41 and the props page both assume the official player domain is unreachable. It is not: nba.com/stats/players/traditional?TeamID=&lt;id&gt; rendered three clubs for this session in one fetch each. The genuinely blocked half is per-game granularity, and the route tried for it (/gamelog) prints &#x27;No data available&#x27;.</td>
+<td>One dated snapshot per club per day in data/raw/players_&lt;date&gt;.json, parsed from the same table this session captured by hand; game-level rows built from per-game box-score pages over the settled slate. The three captured clubs and the parser conventions are already written down in audit/2026-11-14-bc867bff/make_captures.py.</td>
+<td>Fills the 27 blank clubs on the rotation and production-at-risk tables, turns &#x27;needs per-player minutes&#x27; into a measured number, and gives the props page a defensible baseline for every player who appears on an injury report.</td>
+<td>M — 30 page reads plus one parser for the season tables; L for the game-level route once the box-score shape is pinned</td>
+<td>Roster moves make club labels disagree between sources in the same week (Lonzo Ball is listed on Chicago&#x27;s report while the club table shows LaMelo on Minnesota); attribution must stay per-document.</td>
+<td>Accept the season-table half immediately — it needs no vendor and no new permission.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-46">
+<td>S-46</td>
+<td>Make &#x27;what is the newest official release?&#x27; a build step, and print the age of the input on the page</td>
+<td>The build knows which PDF it read but not what the league has published since. The result measured: a 5.5-hour-stale injury table, 24 rows short, presented as the site&#x27;s injury section on a game day.</td>
+<td>At build time, read the injury index, take the newest timestamped release, diff it against the published rows, and print &#x27;built from HH:MM release; newest available HH:MM; +N rows / M statuses&#x27; on the injuries page. Fail the build on a game day when the gap exceeds one hour and the fetch did not even try.</td>
+<td>Converts a silent freshness failure into a visible number, and makes &#x27;the data is stale&#x27; a measured field rather than an apology in prose.</td>
+<td>L — the index is one fetch, and delta_vs_morning() already computes the diff</td>
+<td>Needs the fetch to run in the same environment as the build; today the build sandbox cannot reach nba.com directly.</td>
+<td>Accept. It is the cheapest real improvement to trust on the site.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-47">
+<td>S-47</td>
+<td>Namespace the two question/suggestion registers before the next cross-reference breaks</td>
+<td>requirements/QUESTIONS.json runs Q-1…Q-38 and nba2/v2/content.py runs Q-1…Q-27; both render bare IDs. A v2 sentence cited &#x27;Q-28&#x27;, which exists only in the other register, and read as a dangling reference (logged as F-042). This very append creates more cross-namespace references.</td>
+<td>Prefix the v2 IDs (Q2-nn / SG-nn stay as-is) or stamp every cross-reference with its file, e.g. &#x27;Q-28 (requirements/QUESTIONS.json)&#x27;. Keep old IDs as anchors so existing flag chips resolve.</td>
+<td>Removes a class of defect where a citation is right in the repo and wrong on the page — the hardest kind to notice.</td>
+<td>S for the convention; M to rewrite published anchors</td>
+<td>Renumbering published anchors breaks inbound links; the alias rule is what contains it.</td>
+<td>Accept the convention now (documentation only), defer the renumbering.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-48">
+<td>S-48</td>
+<td>Close or annotate the idle pull requests so the board stops describing work that has landed elsewhere</td>
+<td>Four PRs (#50, #55, #57, #59) sat open and idle for 6+ hours. Two carried work that has since landed by another route, one was a coordination record, and one (#55) carried the S-26 generator fix that this session verified line by line and then carried in, with the author&#x27;s commit message and tests intact.</td>
+<td>For each: a comment naming the commit that supersedes it or the decision that defers it, then close. Never silently.</td>
+<td>Stops duplicate effort and makes &#x27;what is live&#x27; answerable from the PR list alone.</td>
+<td>S</td>
+<td>Closing someone else&#x27;s PR without credit reads as a grab; the comment is the fix.</td>
+<td>Applied by the integration session as part of this merge, with attribution in both the PR body and COORDINATION.md.</td>
+<td>applied in this PR</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

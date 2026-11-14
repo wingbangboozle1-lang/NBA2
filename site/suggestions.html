@@ -37,11 +37,11 @@
 </aside>
 <main>
 <h1>Suggestions queue</h1>
-<p class="lede">34 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
+<p class="lede">39 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
 <div class="note"><b>How to use it.</b> Read the state column. 11 items are already <code>IMPLEMENTED</code> and need no
-decision; 9 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+decision; 13 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
 dependency. The three highest-ranked recommended items are all data connections, in this order: odds, results, scheduled ingestion.</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
@@ -122,6 +122,36 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters depends on the strategy&#x27;s own correlation between bets: the parlay strategies need a different n than the side strategies. The lab already computes each strategy&#x27;s Wilson interval and its distance to the base rate, so the required n can be derived rather than asserted.</td>
 <td>Low — the intervals are already computed in nba2/v2/strategy_lab.py</td>
 <td>none — no dependency</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-38">
+<td>SG-38</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Make a &#x27;freshest release&#x27; capture part of every build, not part of a session&#x27;s goodwill.</td>
+<td>The published injury section came from the 04:30 AM release because that is what the build session read at 05:30 ET. Five and a half hours later the 01:30 PM release carried 24 more rows and moved 4 statuses — the most decision-relevant data on the site, and the build had no way to notice. A build that stamps &quot;as of 04:30 AM&quot; is honest but not useful; it should also state what the newest release on the index is and whether it was read.</td>
+<td>Low — the index page is one fetch and lists every release with its timestamp</td>
+<td>none — no dependency</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-39">
+<td>SG-39</td>
+<td><span class="badge b-off">Process</span></td>
+<td>Close or annotate the four stale open pull requests (#50, #55, #57, #59).</td>
+<td>All four sat idle for more than six hours with no commits. Two contain work that has since landed by another route, one is a coordination-record-only PR, and one (#55) carries the S-26 generator fix that this session carried in by hand. A reader of the PR list cannot tell which work is live and which is history, which is how duplicate effort starts.</td>
+<td>Trivial — a comment and a close on each</td>
+<td>none</td>
+<td><span class="badge b-warn">RECOMMENDED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-41">
+<td>SG-41</td>
+<td><span class="badge b-off">Process</span></td>
+<td>Namespace the two question registers so ‘Q-28’ cannot mean two documents.</td>
+<td>requirements/QUESTIONS.json runs Q-1 to Q-35 and nba2/v2/content.py runs Q-1 to Q-27, both rendered as bare ‘Q-nn’ chips — one register on the v1 tree, one on the v2 tree. A sentence in v2 content already cited a v1 ID and looked broken (F-042); the next such citation will be silently wrong rather than visibly dangling.</td>
+<td>Low — prefix one register (v2 becomes ‘Q2-nn’) in the data and its prose references, keeping the old IDs as aliases so existing flag chips still resolve</td>
+<td>owner sign-off, because it changes published anchors</td>
 <td><span class="badge b-warn">RECOMMENDED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -275,6 +305,16 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td><span class="badge b-off">QUEUED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
+<tr id="SG-40">
+<td>SG-40</td>
+<td><span class="badge b-off">Site</span></td>
+<td>Put rotation availability on the picks page as its own column.</td>
+<td>Availability is the only input a reader can act on while no price exists. Today it lives on the injuries page and the picks page shows none of it, so reading a lean against Minnesota without knowing that the club is missing 27.9% of its scoring means joining two pages by hand.</td>
+<td>Low — the join is already computed in nba2/v2/capture.py</td>
+<td>none — no dependency</td>
+<td><span class="badge b-off">QUEUED</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
 <tr id="SG-7">
 <td>SG-7</td>
 <td><span class="badge b-off">Model</span></td>
@@ -392,7 +432,17 @@ dependency. The three highest-ranked recommended items are all data connections,
 <td>This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.</td>
 <td>Medium — needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores</td>
 <td>A runner with normal internet egress</td>
-<td><span class="badge b-warn">RECOMMENDED — the last hard blocker</span></td>
+<td><span class="badge b-warn">RECOMMENDED — the last hard blocker, with its first half now measured as reachable (see SG-37)</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-37">
+<td>SG-37</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Split SG-36 in two: capture the 30 per-club season tables now, and go after game logs through per-game box-score pages instead of the player /gamelog tab.</td>
+<td>Measured this session: nba.com/stats/players/traditional?TeamID=&lt;id&gt; renders server-side and gave Denver, Cleveland and Minnesota in one fetch each, which is everything the rotation and production-at-risk table needs. The /gamelog tab is a different story — it answers but prints &quot;No data available&quot;. So one half of SG-36 is a 30-fetch job, not a licensing problem, and the other half needs a different route. SG-36&#x27;s effort estimate was written against an assumption that the whole player domain was blocked.</td>
+<td>Low for the season tables (30 page reads, one parser); Medium for game logs (box-score pages, ~183 games)</td>
+<td>nothing external for the season tables</td>
+<td><span class="badge b-warn">RECOMMENDED — unblocks 27 of 30 clubs on the injuries page</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>

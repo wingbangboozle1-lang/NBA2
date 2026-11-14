@@ -1,0 +1,88 @@
+Baseline — checker state BEFORE any edit by session arena/bc867bff-nba2
+========================================================================
+Branch arena/bc867bff-nba2 at 43c3cf1, whose tree is main @ b3ed44d839b77f071592cd10d3dc734bc7958b23
+(the merge of PR #62) plus this session's COORDINATION.md claim section. Captured 2026-11-14 18:36-18:41 UTC,
+before the first content edit, so the "after" state at the bottom is comparable to it.
+
+Commands and results (verbatim tails)
+-------------------------------------
+$ python3 -m unittest discover -s nba2/tests -t .
+  Ran 64 tests ... OK
+
+$ python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
+  Ran 80 tests ... OK
+
+$ python3 -m unittest discover -s backtest/tests
+  Ran 49 tests ... OK
+
+$ python3 -m nba2.v2
+  built 20 pages: index.html, executive-summary.html, picks.html, lines.html, strategies.html, backtest.html,
+  strategy-lab.html, correlations.html, props.html, injuries.html, gameflow.html, verification.html,
+  repo-review.html, questions.html, suggestions.html, decision-queue.html, live-verification.html, flagged.html,
+  sources.html, methodology.html
+  27 lines, 30 teams
+  -> git diff --stat over site/ data/v2/ : EMPTY (the rebuild is idempotent; the committed tree is current)
+
+$ python3 -m nba2.v2.check
+  OK — 0 structural, 0 semantic
+
+$ python3 -m nba2.pipeline.lint
+  LINT OK — 1409 rows across 50 tables, every row sourced, every blank explained
+
+$ python3 tools/check_links_all.py
+  scanned 110 HTML files | 4914 internal links checked | 5016 external links
+  ALL INTERNAL LINKS OK
+
+$ python3 -m nba2.v2.live
+  staleness: 30/30 match today, 12/30 match the pre-final state, 0 unexplained
+  graded:    9 games, 8 signal rows, 4 distinct games
+  winners:   model 5/9  net-rating 5/9  always-home 7/9
+  decisions: 12 queued, 8 awaiting owner, 4 implemented, 4 blocking
+
+$ python3 tools/crosscheck_site.py
+  97 checks: 88 pass, 2 FAIL, 7 info, 0 n/a
+
+The two FAILs, verbatim
+-----------------------
+[FAIL] CC-BT-03       every published rate equals its own numerator over its own denominator
+        observed: 1 violation(s): ['ats.hit_rate and accuracy.straight_up_accuracy disagree']
+[FAIL] CC-DOC-01      README's published counts match the artefacts on disk
+        observed: 1 stale figure(s): ['README row count: text 1404 vs measured 1409']
+
+Root cause of CC-BT-03, from the artefacts it reads (not from the message)
+-------------------------------------------------------------------------
+backtest/data/report.json:
+  "ats":      { "n": 166, "hits": 105, "hit_rate": 0.6325, "pushes_reported": 1 }
+  "accuracy": { "n": 167, "straight_up_accuracy": 0.6287 }
+
+105/166 = 0.63253 and 105/167 = 0.62874: both rates are correct for their own sample. They differ
+because a push is a no-decision against the spread and is excluded from ats.n, while the same game
+remains in the straight-up sample. The predicate required the two rates to be equal, so it can only
+ever fail a table that contains a push. This is a checker bug, not a data bug: no published number
+is wrong, and no number was changed to make it pass.
+
+Root cause of CC-DOC-01
+-----------------------
+README.md line 62 states "(21 pages, 50 tables, 1404 rows)"; data/site.json and pages/*.html measure
+1409 rows. The figure was remembered from an earlier tree instead of regenerated. The repository
+already carries the sanctioned fix for exactly this recurrence (recorded in F-033 as the mechanism
+that prevents it): audit/2026-11-14-3681/sync_readme_counts.py.
+
+Other things checked at baseline, recorded so "nothing else broke" is a claim with evidence
+-------------------------------------------------------------------------------------------
+* nba2/data/picks.json (sealed pre-tip forecast, must stay byte-identical through this session):
+  sha256 2f527ecbe60a0e25…  |  973 lines  |  23 games in lines[]  |  5 strategies, signals per strategy:
+  S1_MarginFavorite=11 ; S2_SpreadValue=9 ; S3_Totals=0 ; S4_LeanParlay=1 ; S5_PlayerPropCombo=0
+  generated_utc 2026-11-13T22:30:00Z  |  last touched by commit b3ed44d, i.e. by no session on this branch
+  the first S2 signal is "MIA +6.5" on CLE @ MIA (0022600036) — the defect S-26 is about, quoted from the file
+* git status --porcelain: only COORDINATION.md (the claim section) was dirty.
+* Known defect carried into this session's list, from an independent re-derivation of the S2 sign:
+  the v1 generator's strong-margin branch attached the away-side spread number to whichever team it
+  had picked, so all nine S2 signals name the model favourite with the underdog's price. Four are
+  settled: 4-0 as published, 3-1 on the side the strategy means. PR #55 (branch arena/03a581a0-nba2,
+  idle 6+ h) carries the generator fix and its regression tests; this session verified it line by
+  line against model.py/picks.json before using it.
+
+AFTER — the same commands at the end of this session's work (2026-11-14 ~19:35 UTC)
+------------------------------------------------------------------------------------
+See audit/2026-11-14-bc867bff/after.txt for the closing run, produced by run_gates.sh in this directory.

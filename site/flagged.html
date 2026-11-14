@@ -257,7 +257,7 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><span class="badge b-warn">medium</span></td>
 <td>Verification</td>
 <td>No signal in nba2/data/picks.json carries a price: `american_odds` is absent from all 21 signals. Win/loss is therefore measurable and profit is not, and any PnL on this site would be an assumed -110 rather than a measurement.</td>
-<td>PnL is null on every row and the reason is printed beside it. Q-28 asks the owner to choose between a licensed feed, manual entry, or a permanent no-PnL policy.</td>
+<td>PnL is null on every row and the reason is printed beside it. The owner&#x27;s choice — a licensed feed, manual entry, or a permanent no-PnL policy — is already on the record: as Q-28 of the v1 register (requirements/QUESTIONS.json, rendered at pages/questions.html#Q-28) and as Q-1 of this register from the data side. Cited by register rather than by a bare ID, because the two registers share an ID space and a bare &#x27;Q-28&#x27; does not resolve on this page (F-042).</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr id="F-027">
@@ -373,12 +373,76 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr id="F-042">
-<td><span class="badge b-off">F-042</span></td>
+<td><span class="badge b-info">F-042</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Site</td>
+<td>RESOLVED, and not for the reason first logged. The v2 register never contained a Q-28 — but the repository has TWO question registers, and Q-28 is real in the other one (requirements/QUESTIONS.json, 35 questions, rendered at pages/questions.html#Q-28). The sentence was pointing at a live question through an ID namespace this page does not own: dangling on the page, correct in the repo. The registers colliding on a bare &#x27;Q-nn&#x27; is the actual hazard, and naming the file is what fixes it.</td>
+<td>The citation was rewritten to name the register it means — no v1 page edited, no published ID renumbered. The collision itself is raised as SG-41 for owner sign-off, because re-prefixing a published anchor is a cross-tree change.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/requ…</a></td>
+</tr>
+<tr id="F-043">
+<td><span class="badge b-warn">F-043</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>A prior session recorded the official per-club player table as blocked and built the whole props page, the minutes column and three player-level correlations on that premise. It is reachable: nba.com/stats/players/traditional?TeamID=&lt;id&gt; renders server-side and was read for three clubs this session. The claim was probably true of the sandbox it was made in — direct TLS egress from this workspace to nba.com is blocked and everything here went through the platform page-reader — but &quot;the endpoint refuses&quot; and &quot;this shell cannot reach it&quot; were recorded as the same fact.</td>
+<td>The three clubs that were read are now published with their numbers. The other 27 are still blank, and the blank now says &quot;not captured in this session&quot; rather than &quot;unavailable&quot; (SG-37). No prior session&#x27;s work was overwritten: official.py keeps its frozen 04:30 AM transcription and the new data lives in a superseding section.</td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">nba.com/stats/players/traditional?TeamID=1610612743</a></td>
+</tr>
+<tr id="F-044">
+<td><span class="badge b-off">F-044</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>The production-at-risk table shows Denver with 0 players sitting, 0 points at risk and 0.0% of club scoring — while the same official report lists four Denver designations. Nothing is missing from the report; the four names (Strawther, Holmes II, Nembhard, Whitmore) are outside the eight-row block captured for the club, so they have no season-average row to attach to.</td>
+<td>A zero on this table is labelled &quot;needs a wider capture (F-044)&quot; instead of being read as &quot;no injuries&quot;. Widening the block from top-8 to all rows is the next fetch, not a caveat to argue with.</td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612743" rel="noopener" target="_blank">nba.com/stats/players/traditional?TeamID=1610612743</a></td>
+</tr>
+<tr id="F-045">
+<td><span class="badge b-warn">F-045</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Props</td>
+<td>The props page still publishes no probability, and the reason changed. It is no longer &quot;the player table is unreachable&quot; — season averages are now captured for three clubs and printed. The remaining blocker is granularity: the official per-player game log at nba.com/stats/player/&lt;id&gt;/gamelog renders its header and then &quot;No data available&quot;, so there is still no distribution, no median and no minutes floor.</td>
+<td>A naive baseline line (average to the nearest half point) is now published for every captured player, with P(over) blank and the reason named on the cell. A baseline is not a price and cannot be staked.</td>
+<td><a href="https://www.nba.com/stats/player/1630162/gamelog" rel="noopener" target="_blank">nba.com/stats/player/1630162/gamelog</a></td>
+</tr>
+<tr id="F-046">
+<td><span class="badge b-off">F-046</span></td>
 <td><span class="badge b-off">low</span></td>
 <td>Site</td>
-<td>A published paragraph on the site cites an open question by the ID &#x27;Q-28&#x27;, but the question register only runs to Q-24, so the reference resolves to nothing. The cross-reference was inherited from the 2026-11-14 refresh on main and is not this session&#x27;s to edit silently.</td>
-<td>Logged, not edited: the sentence is left verbatim and this flag records the defect.</td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+<td>The picks page carries no availability column, so the one action the site supports — read the lean, note the trigger price — is missing the input a reader can actually use while no market price exists.</td>
+<td>Recorded as SG-40 rather than shipped, because it changes a published table layout that another session owns.</td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612739" rel="noopener" target="_blank">nba.com/stats/players/traditional?TeamID=1610612739</a></td>
+</tr>
+<tr id="F-047">
+<td><span class="badge b-info">F-047</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Model</td>
+<td>RESOLVED this session, with the artefact left alone deliberately. Strategy S2 published nine strong-margin signals naming the model favourite with the underdog&#x27;s number, so all four settled rows graded WIN on a selection the generator never intended. The generator is fixed and tested (nba2/picks.py spread_selection() + nba2/tests/test_picks_sign.py, 3 new tests, 70 pass in nba2/tests). Re-graded on the side the strategy names the record is 3-1, not 4-0.</td>
+<td>nba2/data/picks.json is committed byte-identical: its 2026-11-13T22:30:00Z stamp is 83 minutes before the earliest tip, and regenerating it would destroy the only out-of-sample provenance the repository has. The published live page now shows both gradings side by side and the verdict text no longer claims &quot;every graded pick won&quot; without qualification.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/pull/55" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/pull/55</a></td>
+</tr>
+<tr id="F-048">
+<td><span class="badge b-info">F-048</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Site</td>
+<td>The two published tables disagree about the same player, and both are right: the official injury report labels Lonzo Ball &quot;Chicago Bulls&quot; and the official club table shows LaMelo Ball on Minnesota. Two Balls, two genuinely different inputs, one roster-move week.</td>
+<td>Nothing was reconciled or carried across. Rows are attributed to the document that printed them, and the capture notes say so, so a reader can see which source each line came from.</td>
+<td><a href="https://www.nba.com/stats/players/traditional?TeamID=1610612750" rel="noopener" target="_blank">nba.com/stats/players/traditional?TeamID=1610612750</a></td>
+</tr>
+<tr id="F-049">
+<td><span class="badge b-info">F-049</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Data</td>
+<td>B-06 asked whether the published 3-day window still matches the league schedule, or whether it has to be rotated. Re-read live at 18:47 UTC on 2026-11-14: 20 of the 27 published games (all five 11/14 games, all nine 11/15 games, six of eight 11/16 games) match on game id, matchup, date and tip time, and tonight’s five games had not tipped when the strip was read — the scoreboard still printed pre-game W-L for all of them. The window is therefore current and was NOT rotated.</td>
+<td>The seven games not re-read (two 11/16, all five 11/17) are listed by id in the capture verifier rather than assumed correct, and the 11/14–11/16 records are unchanged, so no line, pick or input moved. One consequence of the same read: Dallas appears on both 11/14 (at Cleveland) and 11/15 (at Boston), which the schedule confirms is a genuine back-to-back and not a duplicated capture (F-041 stands).</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
+</tr>
+<tr id="F-050">
+<td><span class="badge b-warn">F-050</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Site</td>
+<td>The repository tells readers that its gates are enforced by CI. They are not, for the one checker that catches cross-tree drift: .github/workflows/refresh.yml pipes tools/crosscheck_site.py into grep for the literal string ‘[fail]’, but the checker prints ‘[FAIL]’, so two red checks (CC-BT-03, CC-DOC-01) sat on main through five merges while every job reported green. ci.yml, v2-verify.yml and pages.yml do not run the crosscheck at all.</td>
+<td>Not fixed here because .github/workflows/** is another session’s scope and a workflow change alters what every future push does. The reasoning behind both halves is now published: this session repaired the two checkers themselves (90/97 pass, 0 fail), and the wiring is raised as a change request on the board with the exact one-character edit. Until it lands, the honest statement is that the site is verified locally and not by CI.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.git…</a></td>
 </tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
