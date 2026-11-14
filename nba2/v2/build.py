@@ -243,12 +243,6 @@ def build(run_backtest: bool = True):
         "gates": C.GATES, "strategies": C.STRATEGIES, "leaderboard": C.LEADERBOARD_RULES,
         "suggestions": C.SUGGESTIONS, "questions": C.QUESTIONS, "flags": C.FLAGS,
         "requirements": C.REQUIREMENTS, "repo_facts": C.REPO_FACTS}, indent=1))
-    # the same artefacts are served with the site, so a reviewer can diff data against rendering
-    site_data = SITE / "data"
-    site_data.mkdir(parents=True, exist_ok=True)
-    for f in DATA.glob("*.json"):
-        (site_data / f.name).write_text(f.read_text())
-
     built = {}
 
     # ------------------------------------------------------------------ index
@@ -1067,9 +1061,19 @@ That means no team's record in this window is distinguishable from its underlyin
   <li>More games narrow σ and h, which are currently identified loosely against a single season.</li>
 </ul>
 <h2>8. Reproduce it</h2>
-<pre>python3 -m nba2.v2.build      # rebuilds data/v2/*.json and site/
-python3 -m nba2.tests.test_v2 # model invariants + source completeness</pre>"""
+<pre>python3 -m nba2.v2             # rebuilds data/v2/*.json and site/ (17 pages)
+python3 -m nba2.v2.check       # every row sourced, every blank explained
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 42 tests</pre>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
+
+    # The same artefacts are served with the site so a reviewer can diff data against rendering.
+    # This MUST run last: backtest.json and the other JSON files are written earlier in this
+    # function, and copying before they are final publishes a stale file — which is exactly what
+    # broke the Pages deploy on 2026-11-14 (site/data/lines.json, site/data/teams.json).
+    site_data = SITE / "data"
+    site_data.mkdir(parents=True, exist_ok=True)
+    for f in sorted(DATA.glob("*.json")):
+        (site_data / f.name).write_text(f.read_text())
 
     return built, {
         "lines": lines_d, "teams": [t.as_dict() for t in teams.values()],

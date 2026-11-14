@@ -262,6 +262,14 @@ class TestPublishedSite(unittest.TestCase):
             self.assertNotIn("guaranteed", text)
             self.assertNotIn("sure thing", text)
 
+    def test_site_data_is_an_exact_mirror(self):
+        """site/data must never drift from data/v2 — a stale copy broke the deploy on 2026-11-14."""
+        for f in sorted((ROOT / "data" / "v2").glob("*.json")):
+            mirror = ROOT / "site" / "data" / f.name
+            self.assertTrue(mirror.exists(), f"site/data/{f.name} missing")
+            self.assertEqual(mirror.read_text(), f.read_text(),
+                             f"site/data/{f.name} is stale — copy it after the build, not before")
+
     def test_json_artefacts_are_published(self):
         for name in ("teams.json", "lines.json", "verification.json", "content.json"):
             self.assertTrue((ROOT / "data" / "v2" / name).exists(), name)
