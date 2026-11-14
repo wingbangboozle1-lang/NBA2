@@ -1,136 +1,154 @@
 # NBA2 — executive summary and integration notes (session `arena/5b80b88a-nba2`, 2026-11-14)
 
-Read with: [`analysis/crosscheck-5b80b88a.md`](crosscheck-5b80b88a.md) (the 76 checks this session
-ran and their evidence) and [`queue-additions-5b80b88a.json`](queue-additions-5b80b88a.json)
-(the suggestions/questions written so an integration session can splice them into the published
-queues verbatim).
+Read with: [`analysis/crosscheck-5b80b88a.md`](crosscheck-5b80b88a.md) — the 80 checks this
+session ran, each with its recomputation — and
+[`queue-additions-5b80b88a.json`](queue-additions-5b80b88a.json), the merge-ready queue rows.
+
+Baseline for every number below: `main` at `ed017f5` (PR #27 merged 2026-11-14 ~01:07 UTC), which
+includes the data-window refresh from session `arena/5a5fa7c4-nba2`. If `main` moves again, the
+counts move with it — which is finding F2 below, in another form.
 
 ## 1. What the system is, in one paragraph
 
-Committed official snapshots (NBA.com schedule, the referee-operations injury PDF, a
-third-party ratings table) feed a Python pipeline that calibrates team ratings, originates a
-spread / total / moneyline per game, prices parlays under an explicit correlation sweep, converts
-the injury report into rotation-body arithmetic, runs nine validation gates per strategy, and
-renders everything into a static GitHub Pages site — where a row with no source is a build error
-and an unconfirmed value is blank plus a flag rather than a guess. Forward picks are
-pre-registered in a sealed, hashed ledger so nothing can be quietly re-fitted after tip-off.
+Committed official snapshots (NBA.com schedule, the referee-operations injury PDFs, a third-party
+ratings table) feed a Python pipeline that calibrates team ratings, originates a spread / total /
+moneyline per game, prices parlays under an explicit correlation sweep, turns the injury report
+into rotation-body arithmetic, runs ten validation gates per strategy, and renders all of it into
+a static GitHub Pages site where a row with no source is a build error and an unconfirmed value is
+blank plus a flag instead of a guess. Forward picks are pre-registered in a sealed, hashed ledger
+so nothing can be re-fitted after tip-off, and a nightly workflow (`nba2/pipeline/refresh.py`,
+`refresh.yml`) now exists to archive the official injury releases, fetch finals, settle the ledger
+and rebuild — failing closed if any gate or endpoint fails.
 
 | What | Number | Measured by |
 |---|---|---|
-| Published tables / rows | 33 tables, 915 rows | `python3 -m nba2.pipeline.lint` |
-| Pages on the canonical surface | 18 (landing + 17 subpages) | file count, `CC-DOC-01` |
-| Games in the pick window | 31 (2026-11-13 → 11-16, as-of 11-13) | `CC-SNAP-04/06/07` |
-| Injury rows transcribed | 95 (85 with a status, 10 `NOT YET SUBMITTED`) | `CC-SNAP-08` |
-| Strategies × gates | 9 × 10 = 90 gate results, 0 passed | `CC-GATE-04` |
-| Sealed forward predictions | 22, digest `cf7dedc689597cb8…` printed on every page | `CC-SEAL-01..06` |
-| Reward pool | 100 units, 0 allocated | `CC-GATE-05` |
-| Tests | 55, all passing | `python3 -m unittest discover -s nba2/tests -t .` |
-| This session's independent checks | 76: 64 pass, 6 fail, 6 info | `tools/crosscheck_site.py` |
+| Published tables / rows | 36 tables, 964 rows | `python3 -m nba2.pipeline.lint` + `CC-DOC-01` |
+| Canonical pages | 18 (landing + 17 subpages), every nav link and flag anchor resolving | `CC-HTML-02/04/05` |
+| Games in the pick window | 31 (2026-11-13 → 11-16; as-of 11-13) | `CC-SNAP-04/06/07` |
+| Injury rows | 95 from the 11/13 16:15 ET release + 31 window rows from the 11/13 19:30 ET release | `CC-SNAP-08:*`, `CC-PUB-02` |
+| Strategies × gates | 9 × 10 = 90 results, 0 passed | `CC-GATE-04` |
+| Sealed forward predictions | 22, digest `cf7dedc689597cb8…` printed on every page; equals the displayed line table | `CC-SEAL-01…06` |
+| Reward pool | 100 units, 0 allocated, no strategy promoted | `CC-GATE-03/05` |
+| Tests | 62, all passing | `python3 -m unittest discover -s nba2/tests -t .` |
+| This session's independent checks | 80: 65 pass, 8 fail, 7 info | `tools/crosscheck_site.py` |
 
 ## 2. What is real, what is derived, and what is deliberately empty
 
 **Real (read from an official document, verifiable at the cited URL):** the slate — dates, tip
 times, arenas, broadcasts, Emirates NBA Cup groups, official game IDs; win-loss records; the
-injury report's seven columns (date, time, matchup, team, player, status, reason); the
-two-document corroboration (11 of 31 games confirmed twice, 3 matchups confirmed with the time
-cell lost to a page break, 0 mismatches, 17 outside that report — verified by recomputation,
-`CC-PUB-05`).
+injury report's seven columns for two releases; the two-document corroboration (11 of 31 games
+confirmed twice, 3 with the time cell lost to a page break, 0 mismatches, 17 outside that report —
+all verified by recomputation in `CC-PUB-05`, not taken from the caption).
 
-**Derived (ours, reproducible, and the point of the project):** ratings with reliability shrinkage,
-spread / total / moneyline and our own fair prices, P(cover) / P(over), correlation sweeps and
-parlay joint intervals, rotation-body counts and expected missing bodies, game-flow factors that
-the schedule alone supports (rest, back-to-back, 3-in-4, home/away load), luck/z-scores, tiers,
-gate verdicts. The identity checks that keep these honest all pass: margin↔spread sign,
-total↔projected scores, P(home)↔fair price, net = PS/G − PA/G, shrunk = SRS × λ, GP = W+L,
-rotation counts = a recount of the injury rows, sealed ledger = the published line table.
+**Derived (ours, reproducible, the actual product):** ratings with reliability shrinkage; spread /
+total / moneyline and our own fair prices; P(cover) / P(over); correlation sweeps and parlay joint
+intervals; rotation-body counts, expected missing bodies and rotation floors; schedule-supported
+game-flow factors (rest, back-to-back, 3-in-4, home/away load); luck/z-scores; tiers; gate
+verdicts. The identities that keep these honest all pass: margin↔spread sign, total↔projected
+scores, P(home)↔our fair price, net = PS/G − PA/G, shrunk = SRS × λ, GP = W+L, rotation counts = a
+recount of the injury rows, sealed ledger = the published line table.
 
-**Empty by policy (and that is the correct answer, not a gap to fill):** every minutes-impact,
-production-impact and line-adjustment cell for all 95 injury rows (the official report has no such
-field and no player-level feed is connected); every player-prop line and projection; all nine
-strategy scores and every reward amount (nothing has settled, so a score would be noise dressed as
-skill); every stake percentage (there is no market price to size against); the four in-game
-game-flow columns (no play-by-play, lineups or foul data). A number in those cells would be the
-exact failure mode this project is supposed to avoid — three of them were fabricated by an earlier
-session and were deleted in review (irregularities I-01…I-03 on the Flagged for Review page).
+**Empty by policy — and that is the right answer, not a gap:** every minutes-impact,
+production-impact and line-adjustment cell for all injury rows; every player-prop line and
+projection; all nine strategy scores and every reward amount; every stake percentage; the four
+in-game game-flow columns. Three of those cells were fabricated by an earlier session and deleted
+in review (irregularities I-01…I-03 on the Flagged for Review page). A number there would be the
+failure mode this project exists to avoid.
 
-## 3. What this session verified, and the six defects it found
+## 3. The eight failing checks, as seven findings
 
-`tools/crosscheck_site.py` re-derives published claims from the committed snapshots with its own
-arithmetic — deliberately not by importing the model, because re-running the model is what the
-build already does. First run: **64 pass, 6 fail**. Each failure is a documentation, presentation
-or keying defect; **none of them changes a published line, pick, or model input.**
+Each was reproduced by recomputing from the committed files; **none of them changes a published
+line, pick, or model input**, and two of them are defects in code merged an hour before this
+report was written.
 
-| # | Finding | Evidence | Consequence if left |
+| # | Finding | Evidence | Why it matters |
 |---|---|---|---|
-| 1 | The ratings snapshot publishes two false self-diagnosed FAILs (league-wide close/blowout balance). `sum(close_w)=99=sum(close_l)`, `sum(blowout_w)=88=sum(blowout_l)` | `data/raw/team_ratings_2026-11-13.json` → `provenance.internal_consistency_checks` vs a recount of its own `records`; `CC-SNAP-13` | `FLAG-RAT-02` accuses the site of a defect its data does not have, and is the stated reason those four columns are excluded from the model |
-| 2 | The column labelled "W-L (official NBA.com)" is filled from the third-party source, so the advertised cross-check cannot ever fire | `build_site_data.py:111` (`wl_official=f"{t.wins}-{t.losses}"` — same object as `wl`); 30/30 identical; `CC-DER-05` | A guard that reads like verification and is a copy. Readers will trust the wrong thing |
-| 3 | AT-RISK gates are reported as "blocked" on the leaderboard | `leaderboard.py:149` folds `"AT-RISK"` into `gates_blocked`; the matrix says 8 blocked + 2 at-risk, the row says "10 blocked"; `CC-GATE-02` | The one number that shows *what a data change could unlock* is hidden |
-| 4 | Washington is keyed `WSH` on one surface and `WAS` on four others | `originated/data/teams.json` vs `nba2/data/records.json`, `data/standings-2026-11-13.csv`, the ratings snapshot, the published table; `CC-X-00` | Any join drops the club silently — invisible row loss, and a plausible root cause of "28 of 30" being read as a data defect |
-| 5 | README publishes two different test counts (49 in the commands block, 55 in the table) | `README.md:82` vs `README.md:62` vs the measured 55; `CC-DOC-01` | Hand-copied counts drift; this is the third session to trip on it |
-| 6 | 7 published rows are rendered on no page | `build_site_data.py:852-853` builds `parlays_xg` + `parlay_costs`; `build_site.py:260` renders only `correlation` + `parlays`; `CC-HTML-03` | Cross-game and stacking-cost analysis — both explicitly requested — is invisible while being counted in every total |
+| **F1** | **A negative count is published on the live site.** `availability_window` shows `no_rows_yet = -5` for 2026-11-14, and `not_yet_submitted = 10` where the true figure is 5. `build_site_data.py:487-491` computes `slots − filed − nys` from two *overlapping* team sets: a team that filed in the 19:30 release is still counted as "not yet submitted" from the 16:15 release | `CC-DER-11`, `CC-DER-12`; recomputed: slots 10 − filed 5 − not-submitted-only 5 = **0**, not −5 | A reader cannot tell a coverage statement from an arithmetic slip; the number that answers "how blind is this slate?" is wrong, and the lint cannot see it because the cell is a number with a source |
+| **F2** | README's generated-site counts are already stale: it says 33 tables / 915 rows, the build now emits 36 / 964 | `CC-DOC-01` vs `python3 -m nba2.pipeline.lint` | Fourth session to hit hand-copied counts; the fix is to stop copying them (S-27), not to re-copy them |
+| **F3** | The ratings snapshot publishes two false self-diagnosed FAILs; recomputing its own 30 records gives `sum(close_w)=99=sum(close_l)`, `sum(blowout_w)=88=sum(blowout_l)` — balanced | `CC-SNAP-13` vs `data/raw/team_ratings_2026-11-13.json` → `provenance.internal_consistency_checks` | `FLAG-RAT-02` accuses the site of a defect its data does not have, and is the stated reason those four columns are excluded from the model |
+| **F4** | The column labelled "W-L (official NBA.com)" is filled from the third-party source, so the advertised disagreement guard cannot fire | `build_site_data.py:111` (`wl_official` from the same object as `wl`); 30/30 identical; `CC-DER-05` | It reads as verification and is a copy |
+| **F5** | AT-RISK gates are reported as "blocked" on all nine leaderboard rows | `leaderboard.py:149` folds `"AT-RISK"` into `gates_blocked`; matrix says 8 blocked + 2 at-risk; `CC-GATE-02` | At-risk gates are the ones a single data change can move — the roadmap is hidden by the flattening |
+| **F6** | Washington is keyed `WSH` on one surface and `WAS` on four others | `originated/data/teams.json` vs `nba2/data/records.json`, `data/standings-2026-11-13.csv`, the ratings snapshot, the published table; `CC-X-00` | Any join drops the club *silently*; it is also how a coverage figure gets misread as a data conflict |
+| **F7** | 7 published rows are rendered on no page (`parlays_xg`, `parlay_costs`) | `build_site_data.py:852-853` vs `build_site.py:260`; `CC-HTML-03` | Cross-game parlays and stacking cost — both explicitly requested — are invisible while being counted in every total |
 
-Everything else the harness could decide, it confirmed: no invented value anywhere in the published
-data (no value on any blocked-source row; every blank carries a flag or note; every `official`
-label points at an NBA host; no flag references nothing and nothing references a missing flag;
-tip times agree across three independent surfaces; every sealed prediction is an official game in
-window and equals the displayed line; every rendered row carries a source cell; every landing-page
-link and every flag anchor resolves).
+What the harness *confirmed*, because a verification log that only lists faults is not a
+verification: no value on any blocked-source row; every blank carrying a flag or a note; every
+`official` label pointing at an NBA-official host; no dangling flag reference and no orphan flag;
+tip times agreeing across three independent surfaces; the sealed ledger matching the displayed
+lines exactly; every rendered row carrying a source cell; every internal link and every flag
+anchor resolving.
 
-## 4. The `28/30` vs `30/30` dispute, resolved from row-level evidence
+## 4. The `28/30` vs `30/30` dispute, closed with row-level evidence
 
-Two audits left this open: `data/raw/team_ratings_2026-11-13.json` says all 30 win-loss records
-match the official source, while the published ratings table says the NBA.com cross-check covers
-28 of 30. Both are true, because they count different things, and the evidence now sits in one
-table (Appendix 1 of `crosscheck-5b80b88a.md`):
+Appendix 1 of the cross-check report is a 30-row matrix of every committed capture. Reading it:
 
-* **Agreement:** for every club that any pair of captures both contains, the W-L is identical —
-  30 of 30 clubs agree across five committed captures, zero disagreements.
-* **Coverage:** the "28 of 30" figure is *visibility inside one retrieved page text* — Toronto and
-  Washington were not in the captured `nba.com/games` text (the caption says so), which is a
-  property of that one capture, not a disagreement about any record.
-* **Closure:** both clubs are covered by a second official capture — `nba2/data/records.json`
-  records them from their official team pages, and `data/standings-2026-11-13.csv` cites
-  `nba.com/games?date=…` rows for them. `CC-X-03` confirms no club is uncovered once both official
-  captures are combined.
-* **The trap that made it look like a defect:** the `WSH`/`WAS` alias (finding 4). A comparison
-  that joins on tricode reports Washington as "missing" from one side, which is exactly how a
-  coverage gap gets misread as a data conflict.
+* **Agreement is 30/30.** For every club that any two captures both contain, the W-L is identical.
+  Zero disagreements, across five independent captures (ratings snapshot, `nba2/data/records.json`,
+  `originated/data/teams.json`, `data/standings-2026-11-13.csv`, the published table).
+* **Coverage was the 28.** "28 of 30" is *visibility inside one retrieved page text* — the
+  2026-11-13 22:26 UTC `nba.com/games` capture did not show Toronto and Washington. That is a
+  property of that capture, not a dispute about any record.
+* **The gap is closed by a second official capture.** `nba2/data/records.json` records TOR and WAS
+  from their official team pages; the standings CSV cites `nba.com/games?date=…` for both
+  (`CC-X-03`: no club is uncovered once the official captures are unioned).
+* **And the trap that made it look like a defect:** the `WSH`/`WAS` alias (F6). A tricode join
+  reports Washington as "missing" from one side, which is exactly how a coverage number turns into
+  an apparent conflict.
 
-**Recommended wording for the site:** "30/30 clubs agree; 28/30 were visible in the 2026-11-13
-22:26 UTC game-card capture; TOR and WAS are confirmed by a second official capture." Never a bare
-"28/30", which reads as a failure.
+**Recommended site wording:** "30/30 clubs agree; 28/30 were visible in the 11/13 22:26 UTC
+game-card capture; TOR and WAS are confirmed by a second official capture." Never a bare "28/30".
 
-## 5. Luck removal: where it honestly stands
+## 5. Luck removal and the leaderboard: where it honestly stands
 
-The machinery for separating skill from luck is built and enforced: pre-registration with a hash
-committed in the same change as the site, so a line cannot be re-fitted after tip-off
-(`CC-SEAL-01..06`); a 300-bet minimum sample and holdout requirement in the gate set; clustering
-so nine near-identical strategies cannot win five prizes at once; reward pool 100 units,
-**allocated 0.0**; and no strategy is promoted (`CC-GATE-03`) while its gates are unmeasured. The
-luck column itself is computed and self-consistent (`CC-DER-06`): win totals versus Pythagorean
-expectation, with close/blowout records inside the season.
+The machinery that separates skill from luck is built and enforced: pre-registration with the
+digest committed in the same change as the site, so a published line cannot be re-fitted after
+tip-off; a 300-settled-bet minimum and holdout requirement inside the gate set; clustering so nine
+near-identical strategies cannot take five prizes; the reward pool at 100 units with **0
+allocated**; and no promotion while gates are unmeasured. The luck columns themselves are
+arithmetically sound (`CC-DER-06`).
 
-What is missing is not design but **history and prices**: there is no settled bet in the ledger and
-no market price to settle against, so no strategy can be ranked, and the site says so instead of
-showing a placeholder ranking. That is the correct state for a prototype, and the honest limit of
-what this repository can claim today.
+What is missing is history and price. Two things changed this week: `refresh.py --finals` now
+fetches official final scores into the shape `settle` expects, so the ledger can start accruing
+graded results without a human in the loop — **if** the endpoint answers from a runner; and there
+is still no market price, so CLV, ROI and stake sizing stay empty, and every "edge" on the site
+remains measured against our own baseline. `CC-GATE-06` verifies the discipline that matters most:
+no score is published while nothing has settled. That is the whole difference between a leaderboard
+and a lottery.
 
-## 6. The decision path, in order
+## 6. Runner reachability: what was measured, and what was not
 
-1. **Read the runner probe result** (`nba-ingest.yml`, section 7 below). It decides whether the
-   staleness blocker is solvable in-repo at all, and it costs one workflow run.
-2. **Answer Q-23/Q-24** (source policy; which injury stamp is canonical). Everything about daily
-   picks depends on these two; neither is a code problem.
-3. **Fix the six findings** (S-21…S-27 are one-line to low-effort). Do S-25 (key alias) *before*
-   any ingestion automation, or the automation will drop rows forever.
-4. **Answer Q-26** (promotion policy) so that when settled bets exist, paying a reward is a
-   mechanical step and not an argument.
-5. **Decide the canonical surface (Q-25).** Five published surfaces with five models is the second
-   biggest usability risk on this site after staleness.
-6. **Only then** enable the schedule trigger and talk about props or stakes: they need a
-   player-level feed and a price feed, and no amount of modelling inside this repo can substitute
-   for inputs it does not have.
+- **Measured here (this sandbox):** `python3 tools/ingest_official.py --probe` at 01:13 UTC,
+  2026-11-14 — `cdn.nba.com`, `stats.nba.com`, `ak-static.cms.nba.com` (today's 13:00 ET injury
+  PDF URL) and `www.nba.com/schedule` all fail at TLS
+  (`URLError: TLS/SSL connection has been closed`). Four endpoints, four identical failures,
+  no values filled, nothing inferred.
+- **Not measured:** the same probe from a GitHub-hosted runner. This session cannot dispatch a
+  workflow with the credentials it has (`gh workflow run` → `HTTP 403: Resource not accessible by
+  integration`, 01:15 UTC), so the answer has to come from the first scheduled run of the
+  `Nightly ingest + settlement` workflow (14:05 and 18:35 UTC), which is active with **zero runs so
+  far** — the honest status `CC-FRESH-03` publishes as INFO rather than PASS.
+- **One duplicate avoided:** this session had built its own scheduled probe workflow; on rebase it
+  collided with the shipped `refresh.yml` at the *same* 18:35 UTC cron, so the workflow was deleted
+  and only the probe/capture tool remains. Two nightly jobs racing the same endpoints is how you
+  end up with two "official" snapshots thirty seconds apart.
 
-## 7. Runner reachability probe
+Read: the blocker is now an *infrastructure policy* question (can our runner reach the league's
+CDN, and are we allowed to poll it), not an ambiguity about whether the data exists.
 
-_(recorded after the probe run; see `COORDINATION.md` → this session's completion record.)_
+## 7. Decision path, in order
+
+1. **Fix F1 today** — it is live on the deployed site, it is three lines (`nys -= filed` before the
+   subtraction, or recompute both counts from the union), and it is the only finding here that is a
+   wrong *number* rather than a wrong *label*. Add the "no negative counts" assertion (S-21) so the
+   class dies with it.
+2. **Read the first `Nightly ingest + settlement` run** (14:05 UTC). It answers reachability, and it
+   decides whether the site can ever be self-refreshing.
+3. **Answer Q-23/Q-24** (source policy; which injury stamp is canonical). Then F6's alias table goes
+   in *before* ingestion is trusted, or every join keeps losing Washington quietly.
+4. **Answer Q-26** (promotion policy) so a reward can be paid mechanically the moment bets settle.
+5. **Then the labels** — F2 through F5, F7: low effort, no model change, all of them things a
+   reviewer will otherwise keep re-discovering.
+6. **Decide the canonical surface (Q-25).** Five published surfaces with five models is the biggest
+   remaining usability risk after staleness.
+7. **Only after 1-4** talk about props and stakes: they need player-level and price feeds, and no
+   modelling inside this repository can substitute for inputs it does not have.

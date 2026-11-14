@@ -963,3 +963,88 @@ edited, per the board protocol.
 (PR #23). Verified the previous branch tip `a09f48e` (PR #20) is fully contained in `main`:
 `git diff --stat a09f48e origin/main` → only `COORDINATION.md` (+14) and
 `analysis/session-9707-audit.md` (+27), no deletions, so nothing was discarded by the rebase.
+
+---
+
+## Session `arena/5b80b88a-nba2` — independent cross-check + official-source probe (2026-11-14)
+
+Registry row: `arena/5b80b88a-nba2` — semantic verification harness, `28/30`-vs-`30/30`
+reconciliation, and a fail-closed reachability probe for the official endpoints.
+Branch: pinned by Arena to `arena/5b80b88a-nba2`; rebased onto `origin/main` **twice** during the
+session (`18ebaf5` at claim, `ed017f5` after PRs #24/#25/#27 merged).
+
+**File scope actually used (nothing outside it was edited):** `tools/crosscheck_site.py` (new),
+`tools/ingest_official.py` (new), `analysis/crosscheck-5b80b88a.md` (new, generated),
+`analysis/executive-summary-5b80b88a.md` (new), `analysis/queue-additions-5b80b88a.json` (new),
+this file (append-only). `.github/workflows/nba-ingest.yml` was built, then **deleted before
+merge** — see conflict log.
+
+| ID | Task | Status | Verification |
+|---|---|---|---|
+| X-01 | Independent re-derivation of the published site against the committed snapshots | **done** | `tools/crosscheck_site.py` — 80 checks, stdlib only, read-only, does not import `nba2.models` (re-running the model is what the build already does). **65 PASS · 8 FAIL · 7 INFO.** Report: `analysis/crosscheck-5b80b88a.md` |
+| X-02 | Close the `28/30` vs `30/30` win-loss documentation conflict with row-level evidence | **done** | Appendix 1 of the report: 30-club × 5-capture matrix. Agreement **30/30**; the 28 was *visibility* in the 11/13 22:26 UTC `nba.com/games` capture (TOR, WAS absent from the page text); both closed by a second official capture (`nba2/data/records.json`, `data/standings-2026-11-13.csv`); and `WSH`/`WAS` aliasing (F6) is how a coverage count gets misread as a conflict |
+| X-03 | Settle whether the official-endpoint outage is the sandbox or the sources | **done, with the residual named** | Sandbox, measured: `python3 tools/ingest_official.py --probe` at 01:13 UTC → `cdn.nba.com`, `stats.nba.com`, `ak-static.cms.nba.com` (the 2026-11-14 13:00 ET PDF URL) and `www.nba.com/schedule` all fail `TLS/SSL connection has been closed`. **Runner: NOT measured** — this session's credentials cannot dispatch a workflow (`gh workflow run` → HTTP 403 `Resource not accessible by integration`, 01:15 UTC). The answer is delegated to the first scheduled run of `refresh.yml` (active, 0 runs so far); `CC-FRESH-03` reports INFO, not PASS, for exactly that reason |
+| X-04 | Findings, merge-ready queue rows and change requests — without touching anything another session claimed | **done** | 7 findings (below), 10 suggestions `S-21…S-30` and 5 questions `Q-23…Q-27` in `analysis/queue-additions-5b80b88a.json`, matching the published schemas field for field. Deliberately **not** appended into `suggestions/SUGGESTIONS.json` / `requirements/QUESTIONS.json`: those feed `data/site.json` and the generated pages that PRs #21 and #26 were rebuilding at the time |
+
+### Findings this session published (none changes a line, a pick, or a model input)
+
+| ID | Finding | Evidence | Disposition |
+|---|---|---|---|
+| F1 | **A negative count is live on the deployed site**: `availability_window.no_rows_yet = -5` (and `not_yet_submitted = 10` where 5 is true) for 2026-11-14 | `nba2/pipeline/build_site_data.py:487-491` subtracts two **non-disjoint** team sets across the 16:15 and 19:30 ET releases; recomputation in `CC-DER-11`/`CC-DER-12` gives slots 10 − filed 5 − not-submitted-only 5 = 0 | CR-1 below + S-30. Introduced by PR #24 (merged ~01:07 UTC, an hour before this check ran); the provenance lint cannot see it because the cell is a sourced number |
+| F2 | README's hand-copied counts stale: 33 tables / 915 rows published vs 36 / 964 built | `CC-DOC-01` vs `python3 -m nba2.pipeline.lint` | CR-2 + S-27 (generate them or drop them) |
+| F3 | The ratings snapshot publishes two **false** self-diagnosed FAILs; recomputing its own records gives `close 99=99`, `blowout 88=88` | `data/raw/team_ratings_2026-11-13.json` → `internal_consistency_checks` vs `CC-SNAP-13`; `FLAG-RAT-02` repeats it on the site as the reason those columns are excluded from the model | CR-3 + S-26 (re-earn or retire) |
+| F4 | "W-L (official NBA.com)" is filled from the third-party source, so its disagreement guard can never fire | `build_site_data.py:111`; 30/30 identical columns; `CC-DER-05` | CR-4 + S-23 |
+| F5 | AT-RISK gates published as "blocked" on all nine leaderboard rows (matrix: 8 blocked + 2 at-risk) | `nba2/models/leaderboard.py:149`; `CC-GATE-02` | CR-5 + S-24 |
+| F6 | Washington keyed `WSH` on one surface, `WAS` on four — joins drop the club silently | `CC-X-00`; `originated/data/teams.json` vs the four others | S-25, before any ingest automation is trusted |
+| F7 | 7 published rows are rendered on no page (`parlays_xg` 2 rows, `parlay_costs` 5 rows) | `build_site_data.py:852-853` vs `build_site.py:260`; `CC-HTML-03` | CR-6 + S-22. Checked, not assumed: the missing `hold-5` key is **intentional** (`build_cost_rows` iterates `(1,2,3,4,6)`) — reported so nobody "fixes" a design choice |
+
+### Change requests (files owned elsewhere; logged here rather than edited)
+
+| # | File | Request | Blocked by |
+|---|---|---|---|
+| CR-1 | `nba2/pipeline/build_site_data.py:487-491` | Recompute the availability columns from disjoint sets: `nys_only = len(nys - filed)`; `no_rows_yet = slots - filed - nys_only`. Rebuild + re-lint | PRs #21/#26 rebuild the same artefact — **highest priority** |
+| CR-2 | `README.md:30` | Stop hand-copying table/row counts; generate the block from the same measurement `CC-DOC-01` uses | PR #21 |
+| CR-3 | `data/raw/team_ratings_2026-11-13.json` + `FLAG-RAT-02` | Either show where the imbalance actually is (which would mean the committed snapshot is not the file that was checked — itself a finding) or set the two labels to PASS, retire the flag, and re-admit the close/blowout columns with a fresh seal | snapshot owner |
+| CR-4 | `build_site_data.py:111` | Populate `wl_official` from `nba2/data/records.json` (the official capture) instead of the ratings model object; flag TOR/WAS rows with the coverage flag | PRs #21/#26 |
+| CR-5 | `nba2/models/leaderboard.py:149` | Publish AT-RISK separately from BLOCKED | owner of `nba2/models/**` |
+| CR-6 | `nba2/pipeline/build_site.py:260` | Add `render_table(sec("parlays_xg"), L), render_table(sec("parlay_costs"), L)` to `pages/parlays.html` | PRs #21/#26 |
+| CR-7 | `.github/workflows/refresh.yml` | Add `python3 tools/crosscheck_site.py` to the verify chain once F1/F2 are fixed, so a bot commit cannot re-publish a build that fails semantic review | owner of the workflow |
+
+### Verification performed by this session
+
+- `python3 -m unittest discover -s nba2/tests -t .` → **62 tests OK** (55 at claim time; PR #24 added 7).
+- `python3 -m nba2.pipeline.lint` → **LINT OK — 964 rows across 36 tables, every row sourced, every blank explained** (915/33 at claim time).
+- `python3 -m nba2.pipeline.seal_predictions --verify` → **seal `cf7dedc689597cb8…` over 22 predictions: VERIFIED**; the site prints the same digest the ledger recomputes.
+- `python3 -m nba2.pipeline.build_site_data` → byte-identical rebuild; **this session changed no artefact** (`git status` clean apart from its own new files).
+- `python3 tools/verify_site.py` → PASS (13 pages / 249 rows) · `python3 tools/check_links_all.py` → PASS (75 files / 3,233 internal links) · `python3 scripts/check_site.py` → PASS · `node originated/engine/verify.js` → 24/24.
+- `python3 tools/crosscheck_site.py` → 65 pass / 8 fail; the 8 failures are F1–F7 above (F1 trips two checks).
+- `python3 tools/ingest_official.py --probe` → 4 official endpoints, all TLS-blocked from this sandbox (recorded, not worked around). No value in this PR was obtained from the network.
+- Official sources cited by the data re-opened for manual review: [schedule](https://www.nba.com/schedule), [games](https://www.nba.com/games), [injury report 11/13 16:15 ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf), [injury report 11/13 19:30 ET](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf), [BRef 2026-27 standings](https://www.basketball-reference.com/leagues/NBA_2027_standings.html). **This session did not re-read any of them** — it verified the published artefacts against the committed snapshots that cite them.
+
+### Conflict / handoff log
+
+- 2026-11-14 ~00:59 UTC — branch was at `a09f48e` (PR #20) while `main` had advanced to `18ebaf5`;
+  `git rebase origin/main` initially failed on the merge commit, so the branch was reset to
+  `origin/main` **after verifying nothing was lost** (`git diff --stat a09f48e origin/main` =
+  COORDINATION.md +14 and `analysis/session-9707-audit.md` +27, no deletions).
+- 2026-11-14 01:14 UTC — `main` advanced again (PRs #24/#25/#27: the injury refresh, `refresh.py`,
+  `refresh.yml`, the `.pyc` untrack, 62 tests). Rebase produced **one** conflict, `COORDINATION.md`
+  (both sessions appended at EOF). Resolved append-only: their `arena/5a5fa7c4-nba2` section kept
+  verbatim, this section after it. No file of theirs was edited.
+- 2026-11-14 01:15 UTC — **near-duplicate automation avoided:** this session had written
+  `.github/workflows/nba-ingest.yml` with a `35 18 * * *` schedule; `refresh.yml` had merged with
+  the same cron and a broader remit. Two nightly jobs polling the same endpoints produce two
+  "official" snapshots thirty seconds apart, so the workflow was deleted (`faf51ee`) and only the
+  probe/capture tool was kept, with its docstring saying who owns what. **Request to the refresh
+  owner:** `refresh.py` fetches injury PDFs and finals; nothing fetches the *forward* slate —
+  `tools/ingest_official.py --capture` does, fail-closed, and can be called from your job if wanted.
+- 2026-11-14 01:15 UTC — **handoff note:** PR #21 (`arena/79e87c81-nba2`) and PR #26
+  (`arena/1ec4f9bd-nba2`) were both open and both rolling the same window forward. Not this
+  session's task; recorded so the duplication is visible, and it is why this session published
+  queue rows as a fragment instead of editing the shared JSON.
+- Force-push to this session's own branch was used once, after the second rebase (`git push
+  --force-with-lease`), with the pre-rebase tip verified to contain no work by any other session.
+
+### PR & merge result
+
+- **PR #29:** https://github.com/wingbangboozle1-lang/NBA2/pull/29 — `arena/5b80b88a-nba2` → `main` (files added only; no shared artefact touched). Recorded here after the merge and Pages confirmation, per protocol.

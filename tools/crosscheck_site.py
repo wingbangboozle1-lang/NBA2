@@ -1154,10 +1154,18 @@ def check_freshness(r: Report, site: dict):
           "grep the emitted landing page for a staleness statement",
           INFO, "the site prints the as-of date on every page" if "as-of" in (ROOT / "index.html").read_text().lower()
                 else "no explicit stale-state banner found on index.html")
-    r.add("CC-FRESH-03", g, "no automated ingestion exists that could keep the snapshot current",
-          "list the workflows in .github/workflows and look for a schedule trigger",
-          INFO, _workflow_summary(),
-          note="recorded so the gap is visible on the report rather than assumed away")
+    sched = _workflow_summary()
+    has_ingest = "schedule" in sched
+    runs_today = _refresh_run_count()
+    r.add("CC-FRESH-03", g, "a scheduled ingestion exists, and it has actually run",
+          "list the workflows and their triggers; then record whether any ingest run exists yet",
+          PASS if (has_ingest and runs_today.isdigit() and int(runs_today) > 0) else INFO,
+          f"{sched}; ingest runs recorded: {runs_today}"
+          + ("" if runs_today.isdigit() and int(runs_today) > 0
+             else " \u2014 not a PASS: the schedule is armed but nothing has run, so the site's "
+                  "freshness still depends on a manual or first-scheduled ingest"),
+          note="an active schedule with zero runs is not yet a refresh: the site is only as fresh as the "
+               "last successful ingest run, so this check stays INFO until a run exists")
 
 
 # --------------------------------------------------------------------------- helpers used above
@@ -1188,6 +1196,22 @@ def _wl_reconciliation_line(captures: dict[str, dict[str, str]]) -> str:
     for name, d in captures.items():
         parts.append(f"{name}: {len(d)}/30")
     return "; ".join(parts)
+
+
+def _refresh_run_count() -> str:
+    """Number of ingest runs, read from a local `gh` call when one is available.
+
+    Deliberately not an assertion: if the CLI is missing or the API is unreachable, the answer is
+    'unknown', and the check reports that instead of guessing a zero.
+    """
+    import subprocess
+    try:
+        out = subprocess.run(["gh", "run", "list", "--workflow", "Nightly ingest + settlement", "--limit", "5"],
+                             capture_output=True, text=True, timeout=25, cwd=str(ROOT))
+        lines = [x for x in out.stdout.strip().splitlines() if x.strip()]
+        return str(len(lines)) if out.returncode == 0 and lines else "unknown (no runs reported or gh unavailable)"
+    except Exception:
+        return "unknown (gh not reachable from this environment)"
 
 
 def _workflow_summary() -> str:
@@ -1236,7 +1260,9 @@ def to_markdown(r: Report, out_path: str) -> str:
              "both. This report re-derives each published claim from the committed snapshot files with its own "
              "arithmetic. A **PASS** means the published artefact agrees with the committed snapshot and with the "
              "other surfaces in this repository; it is never a claim that the official source was re-read today, "
-             "because this environment has no route to `nba.com` (see `CC-FRESH-03`). A **FAIL** is a defect worth "
+             "because this environment has no route to `nba.com` \u2014 measured, not assumed: "
+             "`python3 tools/ingest_official.py --probe` returns a TLS failure for all four official "
+             "endpoints from the sandbox that produced this report. A **FAIL** is a defect worth "
              "a change request. An **N/A** means the claim's referent is not computable from committed evidence, and "
              "no plausible number was substituted for it.")
     L.append("")
