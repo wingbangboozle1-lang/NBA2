@@ -1953,3 +1953,26 @@ computation, no constant and no emitted value in `model.py` changes** (verified 
 
 **Amendment A2 (N-06):** `nba2/pipeline/build_site_data.py` already in scope; confirmed it is the
 registration point for the Flagged-for-Review rows, so no extra file is needed for N-06.
+
+### Scope amendment — `arena/03a581a0-nba2` — A3 / crosscheck and S-26 evidence
+
+This amendment records two scope extensions already needed to complete the claimed work and
+makes their intended boundary explicit before the corresponding changes are committed:
+
+- `tools/crosscheck_site.py` — N-04's CC-DER-05 implementation (the check whose former
+  implementation falsely failed when independent official and snapshot W-L values agreed), plus
+  the narrow CC-PUB-05 wording acceptance and CC-SEAL-04 timestamp-order correction. For
+  CC-PUB-05 the checker now accepts either of the two published absence phrasings; it does not
+  change the measured 14/36 corroborated, 0 lost-time, 22 outside counts. For CC-SEAL-04 the
+  checker now compares `sealed_at_utc` with each official ET tip instant rather than rejecting a
+  same-calendar-day prediction by date alone. The superseded CC-DER-05 prose and date-only rule
+  are preserved here as explicit checker rationale, not silently weakened.
+- `analysis/session-03a581a0_regrade_s2.py` — read-only reproduction evidence for S-26.
+- `analysis/session-03a581a0-remediation.md` — session report linked from the Flagged page.
+- `requirements/QUESTIONS.json` — correct Q-24's false description of the S2 outcomes, if needed
+  for the published correction. `suggestions/SUGGESTIONS.json` was already in the claimed scope.
+
+Generated v1 output remains limited to `data/site.json`, `index.html`, and `pages/**` as already
+claimed. No edit to `site/**`, `nba2/v2/**`, sealed ledgers, or the historical
+`nba2/data/picks.json` is authorized by this amendment. The v2/live-verification inconsistency
+is left as a logged request to its owning integration session, not worked around here.
