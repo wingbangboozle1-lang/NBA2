@@ -3167,3 +3167,51 @@ Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables*
 2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
 same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
 untouched and 2/2 ledgers verifying.
+
+---
+
+## Session `arena/a1fddb57-nba2` — v3 claim (2026-11-15 UTC)
+
+**Claimed at 2026-11-15T11:35Z, before any work.** Base commit `fc88652`. Branch
+`arena/a1fddb57-nba2` (platform-fixed; not renamed).
+
+**Scope (files this session may create/edit):** `nba2/v3/**` (new package), `data/v3/**` (new
+snapshots + artefacts), `site/*.html` **only as generator output** of `python -m nba2.v2` +
+`nba2/v3`, `nba2/v2/build.py` (NAV registration + the single `v3.build_pages()` call at the end
+of `build()` — the minimum needed to publish the new pages), `.github/workflows/v3-refresh.yml`
+(new), `requirements/V3_*.json` (new registers), `analysis/session-a1fddb57-*.md`,
+`README.md` (v3 section appended), `.gitignore` only if needed, and this board (append-only).
+
+**Not touched:** `nba2/models/**`, `nba2/pipeline/**`, `nba2/v2/*` other than the two NAV/call
+edits, `backtest/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`data/raw/**` (read-only), `data/raw/ledger/**` (immutable), root v1 `*.html`, `pages/**`.
+
+**Tasks (this session owns all of them; each is verified or explicitly blank-and-flagged):**
+
+| ID | Task | Status |
+|---|---|---|
+| V3-01 | Session claim recorded and pushed before work | done |
+| V3-02 | Fresh official capture: standings, 3 team-stat pages (traditional/opponent/advanced), rolling 3-day schedule, official finals with quarter scores, consecutive injury PDFs | in progress |
+| V3-03 | Official per-game result feed: one row per game (date, teams, final score, quarter scores), settle only on verified finals | unclaimed → this session |
+| V3-04 | Injury PDF archive with retrieval timestamps + consecutive-report diff of status changes | unclaimed → this session |
+| V3-05 | Per-strategy pre-registration file frozen before first bet (signal, thresholds, universe, settlement rule) | unclaimed → this session |
+| V3-06 | Tamper-evident ledger: hash each published pick, publish hash before tip, verify after settlement | unclaimed → this session |
+| V3-07 | Projection vs Bet surface split (never mixed) | unclaimed → this session |
+| V3-08 | Two independent estimators; disagreement as the headline confidence | unclaimed → this session |
+| V3-09 | HCA pinned to the measured home-win rate | unclaimed → this session |
+| V3-10 | Luck as a per-team z-score; strategies leaning outside the noise band refused | unclaimed → this session |
+| V3-11 | Rest / back-to-back / 3-in-4 from the official schedule + travel distance from a sourced arena-coordinate table | unclaimed → this session |
+| V3-12 | Minutes redistribution: top-8 shares + replacement shares when a player is out | unclaimed → this session |
+| V3-13 | Parlay pricing with measured rho, naive product printed beside it | unclaimed → this session |
+| V3-14 | Rotation availability as its own column on the picks page | unclaimed → this session |
+| V3-15 | Market-anchored prior: blend model line with closing line, weighted by measured out-of-sample log-loss | unclaimed → this session |
+| V3-16 | Total = possessions × points-per-possession | unclaimed → this session |
+| V3-17 | Injury banner: report revision time + retrieval time | unclaimed → this session |
+| V3-18 | Settle the sealed ledger from official finals after each game day ends; keep the settlement stamp visible | unclaimed → this session |
+| V3-19 | Per-player game logs (minutes/points/rebounds/assists/opponent) for at least injury-report players | unclaimed → this session |
+| V3-20 | Scheduled refresh job with freshness + provenance gates before any rebuild | unclaimed → this session |
+| V3-21 | Executive summary, suggestions section, questions register (v3) | unclaimed → this session |
+| V3-22 | Independent verification, PR, merge, Pages deploy confirmation | unclaimed → this session |
+
+**Conflict rule for parallel sessions:** I edit only the scope above. Any other session landing
+during this window must not edit `site/**` (mine as generator output) or `nba2/v2/build.py`.
