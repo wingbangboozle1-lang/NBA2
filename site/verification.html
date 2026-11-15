@@ -267,20 +267,20 @@
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>193 pass: 64 v1 + 80 v2 + 49 backtest</td>
+<td>229 pass: 82 v1 + 98 v2 + 49 backtest</td>
 <td>`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p &#x27;test_*.py&#x27;`; `-s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>1,410 rows across 50 tables, every row sourced and every blank explained</td>
+<td>1423 rows across 50 tables, every row sourced and every blank explained</td>
 <td>`python -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Repository cross-checker</td>
-<td>97 checks: 90 pass, 0 fail, 7 informational</td>
-<td>`python3 tools/crosscheck_site.py`</td>
+<td>100 checks: 93 pass, 0 fail, 7 informational</td>
+<td>`python3 tools/crosscheck_site.py` (count as of this build; the gate in CI blocks on any [FAIL])</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>

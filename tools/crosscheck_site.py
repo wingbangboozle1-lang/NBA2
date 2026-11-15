@@ -435,7 +435,7 @@ def check_published_vs_snapshot(r: Report, site: dict):
           PASS if not mismatches and not extra_pub and not missing_pub else FAIL,
           f"{len(mismatches)} cell mismatch(es): {mismatches[:4]}; published-not-in-snapshot={sorted(extra_pub)}; "
           f"snapshot-not-published={sorted(missing_pub)}",
-          evidence=str(snapshot_candidates('slate')[0].relative_to(ROOT)))
+          evidence=str(sel[0].relative_to(ROOT)))
 
     inj_rows = rows_of(site, "injuries")
     inj_file = _matching_injury_snapshot(site)
@@ -454,7 +454,7 @@ def check_published_vs_snapshot(r: Report, site: dict):
           "recount over published injury rows", PASS if not p_bad else FAIL,
           f"{len(p0)} rows; Out rows with p_play != 0.00: {len(p_bad)}")
 
-    times = load_json(snapshot_candidates("times")[0])
+    times = load_json(_matching_times_snapshot(site))
     tmap = {}
     for rec in times["records"]:
         d, mu, tm, present = rec[0], rec[1], rec[2], rec[3]
@@ -1358,11 +1358,13 @@ def check_docs(r: Report, site: dict):
     r.add("CC-DOC-03", g, "meta.tiers equals a recount of the line table",
           f"count tier letters: {counted}", PASS if tier_ok else FAIL,
           f"meta {tiers}")
+    sel4 = slate_snapshot(site)
+    as_of4 = str(sel4[1].get('as_of')) if sel4 else None
     r.add("CC-DOC-04", g, "the site reports which snapshot it is built from",
-          "meta.snapshot_as_of must equal the slate snapshot's own as_of",
-          PASS if str(meta.get("snapshot_as_of")) == str(load_json(snapshot_candidates('slate')[0]).get('as_of')) else FAIL,
-          f"meta {meta.get('snapshot_as_of')!r} vs snapshot "
-          f"{load_json(snapshot_candidates('slate')[0]).get('as_of')!r}")
+          "meta.snapshot_as_of must equal the as_of of the slate snapshot the published table matches",
+          PASS if sel4 and str(meta.get("snapshot_as_of")) == as_of4 else FAIL,
+          f"meta {meta.get('snapshot_as_of')!r} vs snapshot {as_of4!r}"
+          + ("" if sel4 else " (no slate snapshot matches the published table)"))
     gen = str(meta.get("generated_at_utc") or "")
     try:
         dt = datetime.strptime(gen, "%Y-%m-%d %H:%M UTC")
@@ -1571,6 +1573,31 @@ def _workflow_summary() -> str:
         trig = re.findall(r"^\s{2}(\w+):", text.split("on:", 1)[-1].split("\njobs")[0], re.M)
         out.append(f"{p.name}: {','.join(t for t in trig if t in ('push', 'pull_request', 'schedule', 'workflow_dispatch')) or '?'}")
     return "; ".join(out)
+
+
+def _matching_times_snapshot(site: dict) -> Path:
+    """The times snapshot the published corroboration table was built from.
+
+    Same defect class as slate selection: "newest first" is not "the one the
+    published rows cite". The corroboration section names the release its build
+    used (11/13 19:30 ET, `Injury-Report_2026-11-13_07_30PM.pdf`), while a later
+    capture — e.g. the 05:15 AM ET game-times file salvaged from PR #57 — sorts
+    newer and would silently become "the second document", changing the
+    recomputed counts and failing CC-PUB-05 for a reason that has nothing to do
+    with the published rows. Anchor on the citation; fall back to the newest
+    candidate only when no citation matches (the pre-existing behaviour).
+    """
+    urls = {s.get("url") for s in section(site, "corroboration").get("sources", [])
+            if isinstance(s, dict) and s.get("url")}
+    cands = snapshot_candidates("times")
+    for p in cands:
+        try:
+            src = load_json(p).get("source") or ""
+        except Exception:
+            continue
+        if isinstance(src, str) and src in urls:
+            return p
+    return cands[0]
 
 
 def _matching_injury_snapshot(site: dict) -> Path:

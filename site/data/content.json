@@ -1384,20 +1384,20 @@
   ],
   [
    "Python unit tests",
-   "193 pass: 64 v1 + 80 v2 + 49 backtest",
+   "229 pass: 82 v1 + 98 v2 + 49 backtest",
    "`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p 'test_*.py'`; `-s backtest/tests`",
    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests"
   ],
   [
    "Provenance lint",
-   "1,410 rows across 50 tables, every row sourced and every blank explained",
+   "1423 rows across 50 tables, every row sourced and every blank explained",
    "`python -m nba2.pipeline.lint`",
    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline"
   ],
   [
    "Repository cross-checker",
-   "97 checks: 90 pass, 0 fail, 7 informational",
-   "`python3 tools/crosscheck_site.py`",
+   "100 checks: 93 pass, 0 fail, 7 informational",
+   "`python3 tools/crosscheck_site.py` (count as of this build; the gate in CI blocks on any [FAIL])",
    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py"
   ],
   [
