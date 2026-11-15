@@ -3288,3 +3288,20 @@ the PDF labels DAL "NOT YET SUBMITTED" and omits NYK entirely.
 **Advisory gate failure, disclosed:** G-F3 — the release transcribed (11/15 06:00 AM
 ET) is not the newest indexed at retrieval (11/15 06:15 AM ET). It is advisory rather
 than fatal by the stated policy, and it is printed on the verification page.
+
+#### Cross-scope change, logged (arena/e675ac3d-nba2, 2026-11-15)
+
+`nba2/v2/test_v2.py::test_every_page_has_the_nav` asserted `len(site/*.html) == 22`
+exactly. Because the published tree is shared, the v3 build's seven new pages made it
+29 and the v2 workflow went red. That file is named in open PR #68's claimed scope, so
+per the board protocol this is logged here rather than done silently, and the edit is
+deliberately minimal and intent-preserving:
+
+* **kept** — every page v2 emits must exist in the published tree;
+* **kept** — every page in the tree must carry the full v2 nav;
+* **dropped** — the assertion that the tree contains *no page v2 did not emit*.
+
+The dropped clause is a property of a single-generator tree, not a correctness
+property of v2, and it cannot coexist with more than one generator publishing into
+`site/`. If PR #68 lands a different resolution, theirs wins on that file; the v3
+pages will satisfy either version of the test, because they carry the full v2 nav.
