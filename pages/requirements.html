@@ -65,7 +65,7 @@
 <td>Named strategies with hypothesis, inputs, edge origin and correlation consequence</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>9 strategies registered in nba2/config.py::STRATEGIES; usefulness is unproven until gates can be measured</td>
+<td>9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -137,7 +137,7 @@
 <td>Correlations computed where data exists; band + sign-stability where it does not</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>1 of 5 relevant correlations computable today (r(SRS, margin/G)); the other 4 need game/player level data</td>
+<td>2 of 5 relevant correlations now measured and published: parlay rho 0.00942 (n=172 games) and r(SRS, margin/G) = -0.346 (30 teams); the rest need settled per-strategy results</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -149,7 +149,7 @@
 <td>Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>Implemented in gates/leaderboard; cannot be evaluated until bets settle</td>
+<td>luck z-scores published per team with the noise-band band; stake gates refuse strategies leaning on team-luck components; full luck removal from the leaderboard needs settled results</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -197,7 +197,7 @@
 <td>Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>nba2/models/gameflow.py: B2B/3-in-4/load computed; pace, garbage time, foul trouble, closing lineups = None</td>
+<td>rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open</td>
 <td>P1</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -485,7 +485,7 @@
 <td>Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>ledger.settle implemented and unit-tested on fixtures; no finals file in repo yet</td>
+<td>official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -555,9 +555,9 @@
 <td>Data</td>
 <td>Player-level minutes, usage and production</td>
 <td>Per-player per-game box score with minutes, plus on/off</td>
-<td>blocked</td>
+<td>partial</td>
 <td>data vendor / owner</td>
-<td>stats.nba.com unreachable from this environment (F-02)</td>
+<td>per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -569,7 +569,7 @@
 <td>&gt;=2 seasons of final scores with game IDs</td>
 <td>partial</td>
 <td>data vendor / owner</td>
-<td>PARTIALLY in repo as of 2026-11-14: 155 official final scores (2026-10-20 to 11-12) captured from nba.com game cards with per-game source URLs (data/raw/history/, backtest tree), verified against official post-game records; the &gt;=2-seasons acceptance bar is still open. Re-fitting sigma/HCA/correlations from it is an owner decision (S-04), not a silent change.</td>
+<td>188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
