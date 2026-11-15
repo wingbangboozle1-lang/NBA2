@@ -3416,9 +3416,46 @@ finals. Those conditions make valid refreshes fail closed for the wrong reason. 
 will correct only those gate semantics and add focused regression tests.
 
 **Claimed scope:** `nba2/v2/refresh.py`, new `nba2/v2/test_refresh_gates.py`, append-only
-`COORDINATION.md`. No generated site/data, workflow, sealed ledger, or other session-owned
-files will be edited.
+`COORDINATION.md`. No generated site/data artifacts will be hand-edited, and no workflow,
+sealed ledger, or other session-owned files will be changed. The build may regenerate the
+methodology test-count line after adding regression tests.
 
 **Verification plan:** unit-test expected completed-game counts (including a no-game day),
 missing finals and uniqueness; validate cumulative standings internally rather than against a
 partial finals window; run the focused tests, v2/v3 structural checks and site-link checks.
+
+**Scope amendment (2026-11-15):** the existing `nba2/v2/test_session2.py` contains two
+assertions for the invalid old gate semantics (requiring a final on every date and deriving
+full-season records from a partial finals window). The full v2 test suite exposed these as
+failures. This session will make the minimal cross-test update to assert the corrected
+contract; no production files outside the original claim are added. This is not an active
+other-session claim (the previous session's claim is recorded complete above).
+
+### Completion record — session `arena/f611c128-nba2` (2026-11-15)
+
+**Status:** refresh-gate correction complete; no live NBA endpoint request was made in this
+session. The code's configured official sources for this path are the NBA Stats scoreboard
+endpoint (`https://stats.nba.com/stats/scoreboardv3?GameDate={date}&LeagueID=00`), league
+standings endpoint (`https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=2026-27&SeasonType=Regular+Season`),
+and public standings page (`https://www.nba.com/standings`). Values were not transcribed or
+claimed verified from a live source by this correction.
+
+**Changes:** the finals gate now checks every requested completed-date scoreboard response,
+compares scheduled rows against final rows, accepts off-days, excludes the current unfinalized
+date, and fails for missing coverage, non-final games, duplicate/invalid ids, or out-of-window
+finals. The standings gate now validates a fresh, unique 30-club season-to-date snapshot and
+its league-wide W/L balance instead of incorrectly comparing season totals with a seven-day
+finals fragment. `nba2/v2/test_refresh_gates.py` adds seven synthetic regression tests;
+two stale assertions in `test_session2.py` were updated to the corrected contract.
+
+**Verification:** focused refresh-gate tests: 12 passed; full v2 suite: 136 passed; v1 and
+backtest suites: 70 and 49 passed; v2 and v3 structural/semantic checks: 0/0; v3 tests: 33
+passed. `tools/check_links_all.py`: 121 HTML files and 5,547 internal links, all OK.
+`tools/crosscheck_site.py`: 97 checks (90 pass, 0 fail, 7 info). `git diff --check`: clean.
+Builds regenerated the methodology page's test count (136); no other site/data artefacts changed.
+
+**Irregularities for review:** the v2 suite emits existing `ResourceWarning`s for unclosed
+JSON file handles in `nba2/v2/model.py` and `nba2/v2/travel.py`; these are outside this task's
+scope. The current v3 gate summary still reports one advisory failed gate while
+`publishable=True` (newer indexed injury-report release); that condition is disclosed on the
+published verification/flagged surfaces. Live refresh execution remains unverified here.
