@@ -40,6 +40,20 @@ cat "$LOG"
 
 if ! grep -q 'checks:' "$LOG"; then
     echo "::error::crosscheck did not produce its summary line (exit $rc) — refusing to proceed"
+    # This sandbox cannot download Actions console logs (the results blob host is
+    # outside its egress allowlist — the same EOF the F-043 audit hit), so surface
+    # the captured log through annotations, which ARE readable via `gh run view`.
+    # One annotation, chunked to stay inside GitHub's annotation size limit.
+    python3 - "$LOG" <<'PYEOF'
+import pathlib, sys
+text = pathlib.Path(sys.argv[1]).read_text(errors="replace")
+lines = text.splitlines()
+tail = lines[-60:] if len(lines) > 60 else lines
+blob = " ⏎ ".join(tail)
+while blob:
+    print(f"::error::crosscheck log: {blob[:3500]}")
+    blob = blob[3500:]
+PYEOF
     exit 1
 fi
 
