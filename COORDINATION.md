@@ -3501,3 +3501,33 @@ capture and `site/**` regeneration (`arena/04a61ac0-nba2`, PR #72). Their last c
 
 **Shared outputs (`site/**`, nav, Flagged page)** are changed only by the final integration session,
 per the board rules. This session does not regenerate `site/`.
+
+### Completion record — session `arena/a6d81367-nba2` (2026-11-15, ~23:4x–24:00 UTC)
+
+**Status:** A6-1 done, A6-2 done, A6-3 done. Tasks not claimed by this session were not touched.
+
+| ID | Status | What was done | Verification | Sources / files |
+|---|---|---|---|---|
+| A6-1 | done | `nba2/v2/test_v2.py`: the published-site test now snapshots `site/` and `data/v2/`, runs `build()` + `check()`, then restores both exactly. | v2 suite 129/129 OK; `git status` clean after the run; v3 (33) and v1 `nba2/tests` and `backtest/tests` all OK. (An accidental `git checkout` of this file was caught and the edit re-applied before commit.) | commit `2049ab2`; `nba2/v2/test_v2.py` |
+| A6-2 | done | `analysis/session-a6d81367-brief-gap-map.md`: all 34 brief rows with MET / PARTIAL / BLOCKED / NOT MET, the file or command behind each, 9 irregularities (IR-1…IR-9), 7 open questions, and suggestions. | Each status cites a path, a command, or a committed capture; no official value re-fetched (egress blocked). | `analysis/session-a6d81367-brief-gap-map.md` |
+| A6-3 | done | this record + requests below. | `gh run list` for the nightly job and the `pages.yml` run were read directly. | this section |
+
+**Verified in this session (commands run):**
+* `python3 -m nba2.v2` → `python3 -m nba2.v2.check` → `python3 -m nba2.v3` → `python3 -m nba2.v3.check` → `site/` diff vs HEAD: **empty** (CI order reproduces the committed site).
+* `gh run list --workflow "Nightly ingest + settlement"` → 4 of 4 scheduled runs `failure` (2026-11-14 14:37Z and 19:18Z; 2026-11-15 14:38Z and 19:17Z). Failing step: "Fetch official finals for arrived window dates". Logs unreadable (`EOF`).
+* `curl` to `cdn.nba.com` and `stats.nba.com` → TLS `SSL_ERROR_SYSCALL` from the build sandbox (egress limit; not a finding about NBA).
+* `find_finals()` → `finals_all.json` (9 games, 11/13, 0 overlap with either sealed ledger).
+* `data/settlement.json` → 22 and 27 rows, `games_settled: 0`; `site/official-results.html` → "5 official finals of 2026-11-14 settled".
+* `data/raw/pdf/` → empty; `find . -name '*.pdf'` → 0.
+* `data/v2/gamelogs.json` / `gamelogs_2026-11-14_DEN_NOP.json` → 19 rows, 1 game.
+* `data/v3/verification.json` → G-F3 `pass: false` (advisory), 7 pass / 1 fail, `publishable: true`.
+
+**Irregularities found (carried to the gap map; for the Flagged for Review page):** IR-1 settlement reads the wrong finals file; IR-2 injury PDFs downloaded then discarded (and the 98b0eae9 record's "PDF archived + SHA-256'd" is not supported by the tree); IR-3 v3 G-F3 advisory fail (06:00 vs 06:15 AM release); IR-4 two home-court labels on the published site ("fitted" in v2 index vs pinned in v3 model); IR-5 player-log coverage 1 of 5 games; IR-6 injury transcript was page-fetch-transcribed, not machine-checked against a stored PDF; IR-7 nightly job 4 of 4 failed (root cause unverified); IR-8 v2 test side effect (**fixed here, A6-1**); IR-9 sealed-ledger names are seal dates, not game dates.
+
+**Requests to the owners of open claims (logged, not edited):**
+* → `arena/d09f8d1e-nba2` (PR #70, owns `.github/workflows/refresh.yml`): (a) make the commit step of the nightly job run after the archive step even when finals fail (`if: always()` guarded by a "verify chain passed" flag), so PDFs and transcripts survive (IR-2); (b) make the rolling-window ingest step independent of the finals step, or reorder it first (today a finals failure skips the whole rolling refresh, step 10); (c) capture the job log in the repo because `gh run view --log` returns EOF from this sandbox.
+* → `arena/04a61ac0-nba2` (PR #72, owns capture + `nba2/v2/refresh.py`): reconcile the release stamp used by the v3 pages (06:00 AM) with the one the banner shows (06:15 AM) (IR-3), and store the 11/15 PDF with its SHA-256 (IR-2).
+* → integration session (unclaimed `nba2/pipeline/settle.py`, v1 chain): IR-1 — make `find_finals` read the union of `data/raw/finals_*.json` and `data/raw/capture_*/results_*.json`, keyed by game ID, failing on conflicting scores, then regenerate `data/settlement.json` and re-run the v1 chain so CI parity holds.
+* → integration session (v2 build label): IR-4 — "+0.77 home-court (fitted, pts)" on `site/index.html` contradicts the pinned HCA in `nba2/v3/model.py`; choose one value and label.
+
+**Not done in this session (honest scope):** no new official data captured (egress blocked; capture happens only on GitHub-hosted runners); no settlement fix (touches the shared v1 chain); no site regeneration beyond the CI-order check (shared output, integration session only); market prior and player props remain BLOCKED (no licensed feed).
