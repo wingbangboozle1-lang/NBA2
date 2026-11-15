@@ -3508,7 +3508,7 @@ per the board rules. This session does not regenerate `site/`.
 
 | ID | Status | What was done | Verification | Sources / files |
 |---|---|---|---|---|
-| A6-1 | done | `nba2/v2/test_v2.py`: the published-site test now snapshots `site/` and `data/v2/`, runs `build()` + `check()`, then restores both exactly. | v2 suite 129/129 OK; `git status` clean after the run; v3 (33) and v1 `nba2/tests` and `backtest/tests` all OK. (An accidental `git checkout` of this file was caught and the edit re-applied before commit.) | commit `2049ab2`; `nba2/v2/test_v2.py` |
+| A6-1 | done | `nba2/v2/test_v2.py`: the published-site test now snapshots `site/` and `data/v2/`, runs `build()` + `check()`, then restores both exactly. | v2 suite 129/129 OK; `git status` clean after the run; v3 (33) and v1 `nba2/tests` and `backtest/tests` all OK. (An accidental `git checkout` of this file was caught and the edit re-applied before commit.) | commit `8f4aabc` (rebased onto main @ 87d556b); `nba2/v2/test_v2.py` |
 | A6-2 | done | `analysis/session-a6d81367-brief-gap-map.md`: all 34 brief rows with MET / PARTIAL / BLOCKED / NOT MET, the file or command behind each, 9 irregularities (IR-1…IR-9), 7 open questions, and suggestions. | Each status cites a path, a command, or a committed capture; no official value re-fetched (egress blocked). | `analysis/session-a6d81367-brief-gap-map.md` |
 | A6-3 | done | this record + requests below. | `gh run list` for the nightly job and the `pages.yml` run were read directly. | this section |
 
