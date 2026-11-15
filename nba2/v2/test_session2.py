@@ -261,32 +261,34 @@ if __name__ == "__main__":
 class TestRefreshGates(unittest.TestCase):
     """Fixture-based tests of the scheduled job's gate logic (no network in tests)."""
 
-    def test_finals_gate_fails_on_missing_date(self):
+    def test_finals_gate_accepts_off_days_and_rejects_missing_coverage(self):
         from . import refresh as RF
-        finals = {"records": [{"date": "2026-11-14", "game_id": "x", "home": "BOS", "away": "DET",
-                               "home_pts": 1, "away_pts": 0, "source_url": "https://www.nba.com/game/x"}]}
-        ok = RF.gate_finals(["2026-11-14"], finals)
-        self.assertTrue(ok["ok"])
-        bad = RF.gate_finals(["2026-11-13", "2026-11-14"], finals)
+        finals = {
+            "games_seen_by_date": {"2026-11-13": 0, "2026-11-14": 1},
+            "finals_by_date": {"2026-11-13": 0, "2026-11-14": 1},
+            "records": [{"date": "2026-11-14", "game_id": "0022600101", "home": "BOS", "away": "DET",
+                         "home_pts": 1, "away_pts": 0, "source_url": "https://www.nba.com/game/example"}],
+        }
+        ok = RF.gate_finals(["2026-11-13", "2026-11-14"], finals)
+        self.assertTrue(ok["ok"], ok["detail"])
+        bad = RF.gate_finals(["2026-11-12", "2026-11-13", "2026-11-14"], finals)
         self.assertFalse(bad["ok"])
-        self.assertIn("2026-11-13", bad["detail"])
+        self.assertIn("2026-11-12", bad["detail"])
 
-    def test_standings_gate_detects_drift(self):
+    def test_standings_gate_validates_cumulative_arithmetic_not_partial_window(self):
         from . import refresh as RF
+        from datetime import datetime, timezone
         finals = {"records": [
-            {"date": "2026-11-14", "game_id": "a", "home": "BOS", "away": "DET", "home_pts": 10, "away_pts": 9,
-             "source_url": "https://www.nba.com/game/a"},
-            {"date": "2026-11-14", "game_id": "b", "home": "MIN", "away": "CHI", "home_pts": 8, "away_pts": 11,
-             "source_url": "https://www.nba.com/game/b"},
+            {"date": "2026-11-14", "game_id": "0022600101", "home": "BOS", "away": "DET", "home_pts": 10, "away_pts": 9,
+             "source_url": "https://www.nba.com/game/example"},
         ]}
-        standings = {"rows": [
-            {"tri": "BOS", "w": 1, "l": 0, "source_url": "https://www.nba.com/standings"},
-            {"tri": "DET", "w": 0, "l": 1, "source_url": "https://www.nba.com/standings"},
-            {"tri": "CHI", "w": 1, "l": 0, "source_url": "https://www.nba.com/standings"},
-            {"tri": "MIN", "w": 0, "l": 1, "source_url": "https://www.nba.com/standings"},
+        standings = {"fetched_at_utc": datetime.now(timezone.utc).isoformat(), "rows": [
+            {"tri": f"T{i:02d}", "w": 1, "l": 1, "source_url": "https://www.nba.com/standings"}
+            for i in range(30)
         ]}
+        # Season-to-date records must not be compared with a one-day finals fragment.
         self.assertTrue(RF.gate_standings(standings, finals)["ok"])
-        standings["rows"][0] = {"tri": "BOS", "w": 0, "l": 1, "source_url": "https://www.nba.com/standings"}
+        standings["rows"][0]["w"] += 1
         self.assertFalse(RF.gate_standings(standings, finals)["ok"])
 
     def test_injury_gate_requires_both_stamps(self):

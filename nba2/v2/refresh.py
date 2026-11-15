@@ -6,8 +6,10 @@ Runs in GitHub Actions (see ``.github/workflows/refresh.yml``). Every step is fa
   rejects default agents), recording retrieval timestamps,
 * **gate** before anything is written or the site is rebuilt:
 
-  1. ``freshness/finals``   — every completed game through yesterday has an official final
-  2. ``freshness/standings``— standings rebuild from the finals feed exactly (W/L per club)
+  1. ``freshness/finals``   — scoreboard coverage exists for each lookback date and every
+      scheduled game through yesterday is final; calendar off-days are valid
+  2. ``freshness/standings``— the fresh 30-club season-to-date W/L snapshot is complete,
+      unique, nonnegative, and internally balanced (the finals feed is only a partial window)
   3. ``freshness/injuries`` — the newest injury release on the league index is at least as
       recent as the most recent game day's release window, and its stamp + retrieval time
       are both recorded
@@ -126,15 +128,21 @@ def fetch_slate(dates: list[str]) -> dict:
 
 
 def fetch_finals(dates: list[str]) -> dict:
-    """Official finals with quarter scores for any date whose game is complete."""
+    """Official finals plus per-date scoreboard counts for completed-date checks."""
     recs = []
+    games_seen_by_date = {}
+    finals_by_date = {}
     for d in dates:
         doc = http_json(URLS["scoreboard"].format(date=d))
         headers = doc["resultSets"][0]["headers"]
         idx = {h: i for i, h in enumerate(headers)}
-        for g in doc["resultSets"][0]["rowSet"]:
+        games = doc["resultSets"][0]["rowSet"]
+        games_seen_by_date[d] = len(games)
+        finals_by_date[d] = 0
+        for g in games:
             if (g[idx["gameStatus"]] if "gameStatus" in idx else 0) != 3:
                 continue
+            finals_by_date[d] += 1
             recs.append({
                 "date": d,
                 "game_id": g[idx["gameId"]],
@@ -143,6 +151,7 @@ def fetch_finals(dates: list[str]) -> dict:
                 "source_url": f"https://www.nba.com/game/{(g[idx['awayTeamTricode']] + '-vs-' + g[idx['homeTeamTricode']] + '-' + g[idx['gameId']]).lower()}",
             })
     return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "games_seen_by_date": games_seen_by_date, "finals_by_date": finals_by_date,
             "records": recs}
 
 
@@ -172,35 +181,69 @@ def fetch_newest_injury_release() -> dict:
 
 # --------------------------------------------------------------------------- gates
 def gate_finals(dates: list[str], finals: dict) -> dict:
-    """Every completed game date must have finals; a missing final FAILS the gate."""
-    missing = [d for d in dates if not any(r["date"] == d for r in finals["records"])]
-    ok = not missing
+    """Require complete scoreboard coverage, not a game on every calendar date."""
+    rows = finals.get("records", [])
+    seen = finals.get("games_seen_by_date", {})
+    completed = finals.get("finals_by_date", {})
+    missing_coverage = [d for d in dates if d not in seen or d not in completed]
+    incomplete = [d for d in dates if d in seen and d in completed and seen[d] != completed[d]]
+    game_ids = [str(r.get("game_id", "")) for r in rows]
+    duplicate_ids = sorted({gid for gid in game_ids if gid and game_ids.count(gid) > 1})
+    invalid_ids = sorted({gid for gid in game_ids if len(gid) != 10 or not gid.startswith("002") or not gid.isdigit()})
+    out_of_window = sorted({r.get("date") for r in rows if r.get("date") not in dates})
+    ok = bool(rows) and not missing_coverage and not incomplete and not duplicate_ids and not invalid_ids and not out_of_window
+    issues = []
+    if not rows:
+        issues.append("no official finals returned")
+    if missing_coverage:
+        issues.append(f"dates without scoreboard coverage: {missing_coverage}")
+    if incomplete:
+        issues.append(f"dates with non-final games: {incomplete}")
+    if duplicate_ids:
+        issues.append(f"duplicate game ids: {duplicate_ids}")
+    if invalid_ids:
+        issues.append(f"invalid official game ids: {invalid_ids}")
+    if out_of_window:
+        issues.append(f"finals outside requested dates: {out_of_window}")
     return {"gate": "freshness/finals", "ok": ok,
-            "measured": f"{len(finals['records'])} finals over {len(dates)} dates",
-            "detail": f"dates without finals: {missing}" if missing else "every completed date has finals"}
+            "measured": f"{len(rows)} finals across {len(dates)} calendar dates",
+            "detail": "; ".join(issues) if issues else "all scheduled games on covered dates are final; off-days are valid"}
 
 
 def gate_standings(standings: dict, finals: dict) -> dict:
-    """Standings W/L must rebuild exactly from the finals feed (no transcription drift)."""
-    w, l = {}, {}
-    for r in finals["records"]:
-        hw = r["home_pts"] > r["away_pts"]
-        win, lose = (r["home"], r["away"]) if hw else (r["away"], r["home"])
-        w[win] = w.get(win, 0) + 1
-        l[lose] = l.get(lose, 0) + 1
-    bad = []
-    for row in standings["rows"]:
-        tri = row.get("tri")
-        if tri is None:
-            continue
-        if (w.get(tri, 0), l.get(tri, 0)) != (row["w"], row["l"]):
-            # only enforce when the feed covers every game the standings include; partial
-            # feeds are reported as INFO, never silently passed
-            bad.append(tri)
-    ok = not bad
+    """Validate a season-to-date standings snapshot internally, not against a partial feed."""
+    rows = standings.get("rows", [])
+    tris = [r.get("tri") for r in rows]
+    malformed = [r.get("tri") for r in rows if
+                 not r.get("tri") or not isinstance(r.get("w"), int) or
+                 not isinstance(r.get("l"), int) or r["w"] < 0 or r["l"] < 0]
+    unique_clubs = len(set(tris)) == len(tris) and None not in tris
+    wins = sum(r["w"] for r in rows if isinstance(r.get("w"), int))
+    losses = sum(r["l"] for r in rows if isinstance(r.get("l"), int))
+    fresh = False
+    retrieved = standings.get("fetched_at_utc")
+    if retrieved:
+        try:
+            stamp = dt.datetime.fromisoformat(retrieved.replace("Z", "+00:00"))
+            age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
+            fresh = -300 <= age <= 24 * 60 * 60
+        except (TypeError, ValueError):
+            pass
+    ok = len(rows) == 30 and unique_clubs and not malformed and wins == losses and fresh
+    issues = []
+    if len(rows) != 30:
+        issues.append(f"expected 30 official clubs, got {len(rows)}")
+    if not unique_clubs:
+        issues.append("club abbreviations are missing or duplicated")
+    if malformed:
+        issues.append(f"invalid W/L values: {malformed}")
+    if wins != losses:
+        issues.append(f"season wins ({wins}) do not equal losses ({losses})")
+    if not fresh:
+        issues.append("retrieval timestamp is missing, invalid, in the future, or older than 24h")
     return {"gate": "freshness/standings", "ok": ok,
-            "measured": f"{len(standings['rows'])} rows vs rebuilt records",
-            "detail": f"rows that do not rebuild from finals: {bad}" if bad else "every row rebuilds exactly"}
+            "measured": f"{len(rows)} clubs; {wins} wins / {losses} losses; retrieved {retrieved or 'unstamped'}",
+            "detail": "; ".join(issues) if issues else "fresh 30-club season record is internally balanced"}
 
 
 def gate_injuries(inj: dict, most_recent_game_date: str) -> dict:
@@ -248,8 +291,9 @@ def gate_provenance(docs: dict) -> dict:
 
 def run_gates(docs: dict, dates: list[str], today: str) -> list[dict]:
     finals = docs["finals"]
+    completed_dates = [d for d in dates if d < today]
     return [
-        gate_finals(dates, finals),
+        gate_finals(completed_dates, finals),
         gate_standings(docs["standings"], finals),
         gate_injuries(docs["injuries"], dates[-1] if dates else today),
         gate_slate(docs["slate"], today),
