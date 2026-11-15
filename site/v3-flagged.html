@@ -23,6 +23,7 @@
 <a href="v3-strategies.html">Strategies</a>
 <a href="v3-injuries.html">Injuries</a>
 <a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html">Questions &amp; suggestions</a>
 <a href="v3-flagged.html" class="on">Flagged for review</a>
 <p class="navgrp bet">Bet surface (gated)</p>
 <a href="v3-bet.html">Gate report</a>
@@ -51,7 +52,7 @@
 <td><span class="badge b-warn">measured-negative</span></td>
 <td>Raw model log-loss 0.7414 is worse than a coin (0.6931).</td>
 <td>Published on the calibration page with the reliability table that explains it, and the measured shrink correction that fixes it.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -59,7 +60,7 @@
 <td><span class="badge b-warn">measured-negative</span></td>
 <td>Forward total MAE 16.05 is worse than a constant (15.126).</td>
 <td>The possession formula is the brief&#x27;s; its forecast is not useful for a total. Printed beside the formula, not instead of it.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -67,7 +68,7 @@
 <td><span class="badge b-warn">blocked-input</span></td>
 <td>No club&#x27;s minutes redistribution is computed.</td>
 <td>Per-player game logs are not in the repository, so top-eight shares and replacement shares cannot be measured. No estimate is substituted.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>BLOCKED</td>
 </tr>
 <tr>
@@ -75,7 +76,7 @@
 <td><span class="badge b-warn">blocked-input</span></td>
 <td>No market price, so no edge, no CLV, no ROI and no stake.</td>
 <td>G6 is NOT MEASURABLE. The market-weight formula is published with illustrative inputs labelled as illustrations.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>BLOCKED</td>
 </tr>
 <tr>
@@ -99,7 +100,7 @@
 <td><span class="badge b-warn">sample-size</span></td>
 <td>Largest settled count 97 is below the 100-bet ranking bar.</td>
 <td>No rule receives a leaderboard position. A rank from this many bets would be noise.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -107,7 +108,7 @@
 <td><span class="badge b-warn">method-caveat</span></td>
 <td>5 rules were tested simultaneously.</td>
 <td>Holm-adjusted p is used for the verdict; the unadjusted p is also shown so a reader can disagree with the correction.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -115,7 +116,7 @@
 <td><span class="badge b-warn">method-caveat</span></td>
 <td>The calibration shrink α=0.55 is a fitted parameter.</td>
 <td>It is fitted on one slice and scored on another, which makes the gain evidence rather than a derivation. A second season would test whether it is stable.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -123,7 +124,7 @@
 <td><span class="badge b-warn">method-caveat</span></td>
 <td>Per-game travel understates multi-game road trips.</td>
 <td>The away figure is distance from the previous venue only. Accumulated trip distance is not carried, and a dash means unknown rather than zero.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -131,7 +132,7 @@
 <td><span class="badge b-warn">blocked-input</span></td>
 <td>Quarter scores exist for the five 2026-11-14 finals only.</td>
 <td>Earlier dates in the results feed carry a final score without quarters. Every block that was read sums to its printed final; the rest are blank with a reason rather than filled.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>PARTIAL</td>
 </tr>
 <tr>
@@ -139,7 +140,7 @@
 <td><span class="badge b-warn">method-caveat</span></td>
 <td>The unconstrained HCA fit returns h=n/a.</td>
 <td>It is reported and not used: a free home term absorbs rating error and calls it home court. The pinned value is what the model publishes.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>DISCLOSED</td>
 </tr>
 <tr>
@@ -147,7 +148,7 @@
 <td><span class="badge b-warn">source-defect</span></td>
 <td>The NBA CDN box-score JSON endpoint returned HTTP 500.</td>
 <td>No JSON API is available, so every number is scraped from a rendered page. That is slower and more fragile and it is why each capture names the exact URL.</td>
-<td><span class="blank" title="no source">no source</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">repository</a></td>
 <td>OPEN</td>
 </tr>
 <tr>

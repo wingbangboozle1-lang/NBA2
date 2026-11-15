@@ -643,6 +643,24 @@ if __name__ == "__main__":
     print(_json.dumps({k: v for k, v in r.items() if k != "predictions"}, indent=1)[:4000])
 
 
+def _reliability_reading(rows, mean_abs_claim, mean_abs_outcome) -> str:
+    """Build the sentence from the table, so it cannot claim a pattern the table does not show."""
+    sig = [r for r in rows if r["p_two_sided"] < 0.05]
+    big = [r for r in rows if r["n"] >= 20 and r["p_two_sided"] < 0.05]
+    if not sig:
+        return (f"The model's average distance from a coin flip is {mean_abs_claim:.3f}; reality's is "
+                f"{mean_abs_outcome:.3f}. No individual band departs from its forecast by more than "
+                f"sampling noise explains, which is what a table with this many thin bands looks "
+                f"like. The aggregate log-loss, not any single band, is the evidence.")
+    parts = [f"{r['band']} claims {r['forecast']:.3f} and delivers {r['observed']:.3f} "
+             f"(p={r['p_two_sided']:.3f})" for r in big]
+    return (f"The model's average distance from a coin flip is {mean_abs_claim:.3f}; reality's is "
+            f"{mean_abs_outcome:.3f}. "
+            + ("The bands with enough games to test are wrong in a consistent direction: "
+               + "; ".join(parts) + "." if big else
+               "Bands deviate, but none with 20+ games does so beyond noise."))
+
+
 def reliability_table(preds: list[Prediction], probs: str = "p_home_a") -> dict:
     """Forecast-vs-outcome by probability band — the table that explains the log-loss failure.
 
@@ -660,11 +678,23 @@ def reliability_table(preds: list[Prediction], probs: str = "p_home_a") -> dict:
             continue
         f = mean([getattr(p, probs) for p in sel])
         obs = sum(p.home_won for p in sel) / len(sel)
+        # Is the gap inside sampling noise? A band with 3 games can miss by 0.25 and mean nothing;
+        # a band with 73 games missing by 0.19 means something. A flat 0.10 threshold gets both
+        # wrong, so the label comes from a two-sided binomial test against the band's own forecast.
+        se = math.sqrt(max(f * (1 - f), 1e-12) / len(sel))
+        z = (obs - f) / se
+        p_two = 2 * (1 - phi(abs(z)))
+        if p_two >= 0.05:
+            kind = "inside noise"
+        elif obs > f:
+            kind = "too low (model under-confident)"
+        else:
+            kind = "too high (model over-confident)"
         rows.append({
             "band": f"{lo:.2f}–{hi if hi <= 1 else 1.00:.2f}",
             "n": len(sel), "forecast": round(f, 3), "observed": round(obs, 3),
-            "gap": round(obs - f, 3),
-            "kind": "over-confident" if abs(obs - f) > 0.10 else "calibrated",
+            "gap": round(obs - f, 3), "z": round(z, 2), "p_two_sided": round(p_two, 4),
+            "kind": kind,
         })
     mean_abs_claim = mean([abs(getattr(p, probs) - 0.5) for p in preds])
     mean_abs_outcome = mean([abs(int(p.home_won) - 0.5) for p in preds])
@@ -672,11 +702,7 @@ def reliability_table(preds: list[Prediction], probs: str = "p_home_a") -> dict:
         "rows": rows,
         "mean_abs_claim": round(mean_abs_claim, 4),
         "mean_abs_outcome": round(mean_abs_outcome, 4),
-        "reading": (
-            f"The model's average distance from a coin flip is {mean_abs_claim:.3f}; reality's is "
-            f"{mean_abs_outcome:.3f}. Every band at the extremes is over-confident: the lowest band "
-            f"claims 0.195 and delivers 0.384."
-        ),
+        "reading": _reliability_reading(rows, mean_abs_claim, mean_abs_outcome),
         "p_home_range": [round(min(getattr(p, probs) for p in preds), 4),
                          round(max(getattr(p, probs) for p in preds), 4)],
     }

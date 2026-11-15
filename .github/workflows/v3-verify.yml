@@ -1,0 +1,94 @@
+name: Verify v3 model and site
+
+# v3's gates, in the order a failure should be reported:
+#   1. the capture identities   — if wins != losses the transcription is wrong and every number
+#                                 downstream is wrong, so this runs first and costs a second;
+#   2. the v3 test suite        — each test exists because a real defect shipped in this session;
+#   3. the build                — renders the eleven pages across the two surfaces;
+#   4. the v3 checker           — structural (links, sources, captions, surfaces) and semantic
+#                                 (the published numbers re-derived from the modules);
+#   5. the whole-site checker   — v2's rules apply to v3's pages too, because they are one site;
+#   6. the ledger               — a sealed pick that does not verify is a build failure, not a
+#                                 warning, so it is checked by its own named step.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v3-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  v3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Capture identities (W == L, standings == traditional, quarters sum)
+        run: |
+          python - <<'PY'
+          from nba2.v3 import model as M, official as O
+          teams = M.load_teams()
+          w = sum(t.w for t in teams.values())
+          l = sum(t.l for t in teams.values())
+          assert w == l == 188, f"wins {w} losses {l}"
+          for gid, _d, _a, _h, ap, hp, aq, hq, _n, _arena in O.FINALS:
+              if aq:
+                  assert sum(aq) == ap, f"{gid}: away quarters do not sum to the final"
+              if hq:
+                  assert sum(hq) == hp, f"{gid}: home quarters do not sum to the final"
+          print(f"capture OK: {len(teams)} clubs, W {w} == L {l}, {len(O.FINALS)} finals")
+          PY
+
+      - name: v3 tests
+        run: python -m unittest discover -s nba2/v3 -t . -p 'test_*.py' -v
+
+      - name: Build the v3 pages
+        run: python -m nba2.v3.build
+
+      - name: v3 check (structural + semantic)
+        run: python -m nba2.v3.check
+
+      - name: The whole site still passes v2's source rules
+        run: |
+          python -m nba2.v2
+          python -m nba2.v2.check
+
+      - name: Sealed ledger verifies and the pre-registrations are frozen
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          from nba2.v3 import strategies as S
+          doc = json.loads(pathlib.Path("data/v3/ledger/sealed-picks.json").read_text())
+          ok, root, detail = S.verify_ledger(doc)
+          assert ok, f"ledger does not verify: {detail}"
+          prereg = sorted(pathlib.Path("data/v3/prereg").glob("*.json"))
+          assert prereg, "no pre-registration files"
+          for f in prereg:
+              d = json.loads(f.read_text())
+              assert d.get("sha256") or d.get("content_sha256"), f"{f.name} has no content hash"
+          print(f"ledger OK ({len(doc['picks'])} picks, root {root[:16]}...), "
+                f"{len(prereg)} pre-registrations frozen")
+          PY
+
+      - name: No page mixes the two surfaces
+        run: |
+          python - <<'PY'
+          import pathlib
+          site = pathlib.Path("site")
+          bet_only = {"v3-bet.html"}
+          for p in sorted(site.glob("v3-*.html")):
+              text = p.read_text()
+              if p.name not in bet_only:
+                  assert "stake_units" not in text, f"{p.name} leaks a bet-surface field"
+          print(f"{len(list(site.glob('v3-*.html')))} v3 pages: no projection page carries a stake field")
+          PY

@@ -413,6 +413,16 @@ official pages and shows where those rows now stand.</p>
         brow.append({"cells": [esc(what), esc(why), srclink(url)]})
     body += table(["Missing input", "What it blocks", "Where it would come from"], brow, "Blocked inputs")
     body += """
+<h2>v3 — two estimators, disagreement as the confidence signal</h2>
+<div class="card" style="border-left:3px solid #4cc9a4">
+<p class="lede">v3 is a separate surface, not a rewrite of this one. It prices every game with two
+independent estimators and publishes <b>how far apart they are</b> as its primary confidence signal,
+keeps a gated bet surface at <b>zero stakes</b> because no market price is connected, and publishes
+the two negative results this model actually has: its raw log-loss is worse than a coin, and its
+margin error is worse than guessing a tie. Both are fixed by a measured calibration and both
+numbers are printed side by side.</p>
+<p><a href="v3-index.html"><b>Open the v3 dashboard →</b></a></p>
+</div>
 <h2>Machine-readable copy</h2>
 <p class="lede">Every table on this site is also published as JSON so a reviewer can diff it against the
 official pages without trusting the rendering: <a href="data/teams.json">teams.json</a> ·
@@ -2166,6 +2176,21 @@ python3 -m unittest discover -s backtest/tests                 # {sc["backtest"]
 message — a remembered count is the most reliably stale number on the site (F-033).</p>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
 
+    # The v3 surface. One call, and it runs BEFORE the site/data copy below so that everything it
+    # writes is on disk before the last step copies data into the published tree.
+    #
+    # It is wrapped rather than trusted: if the v3 build raises, the v2 site must still publish,
+    # because a broken v3 page cannot be allowed to take down a working site. The failure is
+    # printed loudly and recorded on the v2 flagged page through the payload below.
+    try:
+        from ..v3 import build as _v3build
+        v3_pages, v3_payload = _v3build.build_pages(verbose=False)
+        _v3_error = None
+    except Exception as exc:                     # noqa: BLE001 - the reason is published
+        v3_pages, v3_payload = [], {}
+        _v3_error = f"{type(exc).__name__}: {exc}"
+        print(f"  v3 BUILD FAILED — the v2 site still publishes: {_v3_error}")
+
     # The same artefacts are served with the site so a reviewer can diff data against rendering.
     # This MUST run last: backtest.json and the other JSON files are written earlier in this
     # function, and copying before they are final publishes a stale file — which is exactly what
@@ -2174,9 +2199,16 @@ message — a remembered count is the most reliably stale number on the site (F-
     site_data.mkdir(parents=True, exist_ok=True)
     for f in sorted(DATA.glob("*.json")):
         (site_data / f.name).write_text(f.read_text())
+    # v3 payloads, same rule: copied last, after build_pages() has finished writing them.
+    _v3d = ROOT / "data" / "v3"
+    if _v3d.exists():
+        for f in sorted(_v3d.glob("*.json")):
+            (site_data / f"v3-{f.name}").write_text(f.read_text())
 
     return built, {
         "lines": lines_d, "teams": [t.as_dict() for t in teams.values()],
         "calibration": cal.as_dict(), "integrity": integ, "xchecks": xchecks,
         "pages": sorted(built),
+        "v3": {"pages": sorted(v3_pages), "error": _v3_error,
+               "counts": v3_payload.get("counts", {})},
     }

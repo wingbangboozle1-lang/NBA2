@@ -1,0 +1,175 @@
+{
+ "title": "NBA2 v3 requirements register",
+ "source_note": "Decomposed from the project brief plus the engineering requirements v3 needs to satisfy it. Each row names a file that can be read and a check that can be run, because a status a reviewer cannot verify is a claim, not a measurement. Statuses reflect this session (arena/a1fddb57-nba2); blocked rows name the missing input rather than a missing implementation.",
+ "status_key": {
+  "met": "the artefact exists, runs, and a named check exercises it",
+  "partial": "built and running, but a required input or measurement is missing",
+  "blocked": "cannot be completed until a data source exists; the code path is written",
+  "not started": "identified as required, deliberately not attempted"
+ },
+ "requirements": [
+  {
+   "id": "V3-01",
+   "category": "Surface separation",
+   "requirement": "Split the site into a projection surface and a gated bet surface and never mix them.",
+   "acceptance": "Each page declares exactly one surface; the build fails if a page renders as a surface other than the one it was scheduled under; a projection page contains no stake field.",
+   "status": "met",
+   "evidence": "nba2/v3/build.py SURFACES + build_pages() surface assertion; nba2/v3/check.py check_structure() rule 4",
+   "check": "python3 -m nba2.v3.check"
+  },
+  {
+   "id": "V3-02",
+   "category": "Estimators",
+   "requirement": "Two independent estimators, with their disagreement published as the primary confidence signal and any blend underneath.",
+   "acceptance": "Estimator A (running point differential) and B (constrained least-squares strength) computed from the same games; disagreement on every line; the blend labelled fallback and never shown as a headline.",
+   "status": "met",
+   "evidence": "nba2/v3/backtest.py _ratings_diff/_ratings_lsq; nba2/v3/model.py two_estimators; lines page 'Disagree' column",
+   "check": "python3 -m nba2.v3.test_v3.TestEstimators"
+  },
+  {
+   "id": "V3-03",
+   "category": "Home advantage",
+   "requirement": "Pin home-court advantage to the measured home-win rate; do not fit it freely.",
+   "acceptance": "h = sigma * Phi^-1(measured home rate), and Phi(h/sigma) returns that rate exactly. The unconstrained fit is reported, its implied home rate shown, and it is not the published number.",
+   "status": "met",
+   "evidence": "nba2/v3/model.py _fit_sigma_pinned + free_fit_note",
+   "check": "python3 -m nba2.v3.test_v3.TestEstimators.test_pinned_hca_reproduces_the_measured_home_rate"
+  },
+  {
+   "id": "V3-04",
+   "category": "Totals",
+   "requirement": "Total = possessions x points-per-possession, not an average of team scoring averages.",
+   "acceptance": "Possession total computed per game from official POSS and per-game scoring; the average-of-averages printed beside it on every row; the measured error of both published.",
+   "status": "partial",
+   "evidence": "nba2/v3/model.py total_from_possessions; nba2/v3/pages.py totals_page",
+   "note": "The formula is implemented and correct. Its forecast is worse than a constant on MAE (16.05 vs 15.13), which is published as a finding rather than hidden. Improving it needs per-game possession distributions the repository does not hold."
+  },
+  {
+   "id": "V3-05",
+   "category": "Correlation",
+   "requirement": "Price every parlay with a measured rho and print the naive product beside it.",
+   "acceptance": "Bivariate-normal copula price with the naive product on every leg; rho measured with n and a Fisher-z interval; a rho measured against a constant is rejected as not a measurement.",
+   "status": "met",
+   "evidence": "nba2/v3/strategies.py parlay_price_sgp; nba2/v3/backtest.py correlation_register",
+   "check": "python3 -m nba2.v3.test_v3.TestBivariateNormal"
+  },
+  {
+   "id": "V3-06",
+   "category": "Luck",
+   "requirement": "Report luck as a z-score per club and refuse to publish a strategy leaning on a club outside the noise band.",
+   "acceptance": "Luck z per club with a band label; a refusal gate that blocks a pick touching a club outside |z|>1.96; the share of picks refused stated.",
+   "status": "met",
+   "evidence": "nba2/v3/model.py calibrate() luck block; nba2/v3/strategies.py luck_gate",
+   "note": "0 of 30 clubs are outside the band today, so the gate refuses nothing. Stated as such rather than presented as a clean bill of health.",
+   "check": "python3 -m nba2.v3.test_v3.TestStrategies.test_luck_gate_refuses_when_a_club_is_outside"
+  },
+  {
+   "id": "V3-07",
+   "category": "Pre-registration",
+   "requirement": "Freeze a pre-registration file per strategy before its first bet: signal, thresholds, universe, exact settlement rule.",
+   "acceptance": "One hashed JSON per rule containing all four fields; the hash bound into every pick the rule produced; a rule edited after the fact fails verification.",
+   "status": "met",
+   "evidence": "data/v3/prereg/S3-01..06.json; nba2/v3/strategies.py seal_ledger",
+   "check": "python3 -m nba2.v3.test_v3.TestLedger"
+  },
+  {
+   "id": "V3-08",
+   "category": "Ledger",
+   "requirement": "Tamper-evident ledger: hash each published pick, publish the hash before tip, verify after settlement.",
+   "acceptance": "Per-pick canonical-JSON hash with the rule's prereg hash bound in; a chained root; editing a result, editing a hash, deleting a pick and reordering all break verification.",
+   "status": "met",
+   "evidence": "data/v3/ledger/sealed-picks.json; nba2/v3/strategies.py verify_ledger",
+   "check": "python3 -m nba2.v3.test_v3.TestLedger (5 tamper tests)"
+  },
+  {
+   "id": "V3-09",
+   "category": "Market prior",
+   "requirement": "Blend the model line with the closing line, weighted by measured out-of-sample log-loss.",
+   "acceptance": "w_model = L_market/(L_model+L_market) with both log-losses measured out of sample.",
+   "status": "blocked",
+   "evidence": "nba2/v3/model.py market_prior; nba2/v3/backtest.py holdout_weights",
+   "note": "No odds feed is connected, so L_market does not exist. The model's own out-of-sample log-loss is measured (0.7082 raw, 0.6398 calibrated) and the formula is published with two inputs explicitly labelled as illustrations."
+  },
+  {
+   "id": "V3-10",
+   "category": "Injuries",
+   "requirement": "Store every injury PDF with a timestamp and diff consecutive reports for status changes.",
+   "acceptance": "Archive of every revision with its revision time and its retrieval time; a diff producing added/dropped/status-change/date-move counts; a banner showing both timestamps and the lag.",
+   "status": "partial",
+   "evidence": "nba2/v3/injuries.py archive/banner/diff_reports; data/v3 injury payload",
+   "note": "The banner and the diff work. Only 2 of the 29 listed revisions were fetched, so the within-day diff is NOT MEASURED and the cross-release diff compares different slates (0 shared players). Both limits are stated on the page."
+  },
+  {
+   "id": "V3-11",
+   "category": "Schedule",
+   "requirement": "Compute rest, back-to-back and 3-in-4 from the official schedule, and travel distance from a sourced arena-coordinate table.",
+   "acceptance": "Rest/B2B/3-in-4 per club per game; great-circle travel from a 30-row arena table; the home club's travel defined as 0 and the away club's as distance from the previous venue.",
+   "status": "partial",
+   "evidence": "nba2/v3/model.py rest_travel/travel_km/haversine_km; nba2/v3/official.py ARENAS",
+   "note": "Implemented and spot-checked (NYK->BKN 7.7 km, BOS->LAL 4171.7 km). Multi-game road-trip accumulation is not carried and the page says so. Three of eight checked clubs had no prior road venue, so travel is legitimately 0 or blank."
+  },
+  {
+   "id": "V3-12",
+   "category": "Minutes",
+   "requirement": "Model minutes redistribution explicitly: top-8 minutes shares plus replacement shares when a player is out.",
+   "acceptance": "A per-club top-8 share table and a replacement share, driven by per-player game logs.",
+   "status": "blocked",
+   "evidence": "nba2/v3/model.py minutes_shares",
+   "note": "Per-player game logs are not in the repository. No redistribution is estimated from season averages, because a season average is the quantity an absence changes. Every affected line carries FLAG-V3-ROTATION-UNFILED."
+  },
+  {
+   "id": "V3-13",
+   "category": "Lines",
+   "requirement": "Originate own NBA lines for every upcoming slate up to 3 days ahead.",
+   "acceptance": "One line per game in the window with both estimators, disagreement, total, conditions and availability.",
+   "status": "met",
+   "evidence": "nba2/v3/build.py originated_lines (22 lines over 11/15-11/17)",
+   "check": "python3 -m nba2.v3.check (semantic: p_home == Phi(m/sigma) per row)"
+  },
+  {
+   "id": "V3-14",
+   "category": "Strategies",
+   "requirement": "Research and develop signal strategies with validation gates, remove luck, and be selective about skill.",
+   "acceptance": "Six pre-registered rules scored against their own base rates; a multiplicity correction; a ranking bar; a gate report with pass/fail/not-measurable per gate.",
+   "status": "partial",
+   "evidence": "nba2/v3/strategies.py STRATEGIES, evaluate_gates G1-G12",
+   "note": "Six rules run and none is ranked (largest settled count 97 < the 100-bet bar). After Holm correction across the family, one rule clears its base rate and four do not; the winner is published with three reasons it is still not a recommendation."
+  },
+  {
+   "id": "V3-15",
+   "category": "Settlement",
+   "requirement": "Settle the sealed ledger from official finals when each game day ends, keeping the settlement stamp visible.",
+   "acceptance": "Settlement only from a verified final whose quarter scores sum to the printed total; open picks excluded from every rate.",
+   "status": "partial",
+   "evidence": "nba2/v3/strategies.py settlement_rule per pick; nba2/v3/official.py FINALS",
+   "note": "All five 2026-11-14 finals are captured with quarter scores that sum. No pick has yet reached a settled state in this build, so the settlement path is written and its rule is sealed per pick but has no settled rows to show."
+  },
+  {
+   "id": "V3-16",
+   "category": "Leakage",
+   "requirement": "Prove the walk-forward cannot see its own targets.",
+   "acceptance": "Same-date isolation, no in-sample term, and a future-only edit, all passing, plus the rejected naive test documented.",
+   "status": "met",
+   "evidence": "nba2/v3/backtest.py leakage_audit",
+   "check": "python3 -m nba2.v3.test_v3.TestLeakage"
+  },
+  {
+   "id": "V3-17",
+   "category": "Honesty",
+   "requirement": "Publish results that contradict the model's own headline.",
+   "acceptance": "Raw log-loss worse than a coin, margin error worse than a tie, and the possession total worse than a constant all appear on the pages beside the numbers that beat their baselines.",
+   "status": "met",
+   "evidence": "site/v3-calibration.html, site/v3-backtest.html, site/v3-totals.html; 14 flags on site/v3-flagged.html",
+   "check": "python3 -m nba2.v3.check (semantic: every flag must appear on the flagged page)"
+  },
+  {
+   "id": "V3-18",
+   "category": "Provenance",
+   "requirement": "Every number on the site traces to an official page, and every blank carries a reason.",
+   "acceptance": "Every data row carries a source URL; no empty cell; the v2 whole-site checker passes on the v3 pages too.",
+   "status": "met",
+   "evidence": "nba2/v3/check.py rules 5-6; nba2/v2/check.py",
+   "check": "python3 -m nba2.v2.check (226 -> 0 problems after the v3 source columns were added)"
+  }
+ ]
+}

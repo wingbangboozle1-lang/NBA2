@@ -151,71 +151,87 @@
     0.0067,
     0.992
    ],
-   "reading": "The model's average distance from a coin flip is 0.277; reality's is 0.500. Every band at the extremes is over-confident: the lowest band claims 0.195 and delivers 0.384.",
+   "reading": "The model's average distance from a coin flip is 0.277; reality's is 0.500. The bands with enough games to test are wrong in a consistent direction: 0.00\u20130.45 claims 0.195 and delivers 0.384 (p=0.000); 0.75\u20131.00 claims 0.887 and delivers 0.718 (p=0.001).",
    "rows": [
     {
      "band": "0.00\u20130.45",
      "forecast": 0.195,
      "gap": 0.188,
-     "kind": "over-confident",
+     "kind": "too low (model under-confident)",
      "n": 73,
-     "observed": 0.384
+     "observed": 0.384,
+     "p_two_sided": 0.0,
+     "z": 4.06
     },
     {
      "band": "0.45\u20130.50",
      "forecast": 0.476,
      "gap": 0.024,
-     "kind": "calibrated",
+     "kind": "inside noise",
      "n": 6,
-     "observed": 0.5
+     "observed": 0.5,
+     "p_two_sided": 0.9058,
+     "z": 0.12
     },
     {
      "band": "0.50\u20130.55",
      "forecast": 0.528,
      "gap": -0.1,
-     "kind": "calibrated",
+     "kind": "inside noise",
      "n": 7,
-     "observed": 0.429
+     "observed": 0.429,
+     "p_two_sided": 0.5971,
+     "z": -0.53
     },
     {
      "band": "0.55\u20130.60",
      "forecast": 0.586,
      "gap": 0.247,
-     "kind": "over-confident",
+     "kind": "inside noise",
      "n": 6,
-     "observed": 0.833
+     "observed": 0.833,
+     "p_two_sided": 0.2191,
+     "z": 1.23
     },
     {
      "band": "0.60\u20130.65",
      "forecast": 0.616,
      "gap": 0.051,
-     "kind": "calibrated",
+     "kind": "inside noise",
      "n": 3,
-     "observed": 0.667
+     "observed": 0.667,
+     "p_two_sided": 0.8555,
+     "z": 0.18
     },
     {
      "band": "0.65\u20130.70",
      "forecast": 0.676,
      "gap": -0.176,
-     "kind": "over-confident",
+     "kind": "inside noise",
      "n": 10,
-     "observed": 0.5
+     "observed": 0.5,
+     "p_two_sided": 0.2332,
+     "z": -1.19
     },
     {
      "band": "0.70\u20130.75",
      "forecast": 0.724,
      "gap": 0.151,
-     "kind": "over-confident",
+     "kind": "inside noise",
      "n": 8,
-     "observed": 0.875
+     "observed": 0.875,
+     "p_two_sided": 0.3393,
+     "z": 0.96
     },
     {
      "band": "0.75\u20131.00",
      "forecast": 0.887,
      "gap": -0.169,
-     "kind": "over-confident",
+     "kind": "too high (model over-confident)",
      "n": 39,
-     "observed": 0.718
+     "observed": 0.718,
+     "p_two_sided": 0.0009,
+     "z": -3.32
     }
    ]
   },
@@ -2464,12 +2480,12 @@
  ],
  "meta": {
   "as_of": "2026-11-15",
-  "pages": 11,
+  "pages": 12,
   "retrieved_utc": "2026-11-15T11:33:00Z",
   "session": "arena/a1fddb57-nba2",
   "surfaces": {
    "bet": 1,
-   "projection": 10
+   "projection": 11
   }
  },
  "pages": [
@@ -2507,6 +2523,10 @@
   },
   {
    "file": "v3-methodology.html",
+   "surface": "projection"
+  },
+  {
+   "file": "v3-registers.html",
    "surface": "projection"
   },
   {

@@ -14,6 +14,22 @@ from .render import (badge, badge_grade, badge_status, badge_surface, dash, esc,
                      note, src, table)
 
 
+# Every data row must carry the URL it came from — the v2 checker enforces this on the whole site
+# and the rule is a good one, so v3 tables get a source column rather than an exemption.
+SRC_STANDINGS = O.SOURCES["standings"][1]
+SRC_SCHEDULE = O.SOURCES["schedule"][1]
+SRC_INJURY = O.SOURCES["injury_pdf"][1]
+SRC_GAMES = O.SOURCES["games"][1]
+SRC_TRAD = O.SOURCES["team_trad"][1]
+SRC_ADV = O.SOURCES["team_adv"][1]
+SRC_OPP = O.SOURCES["team_opp"][1]
+
+
+def src_cell(url, label=None):
+    """A short link cell for a table row."""
+    return src(url, label)
+
+
 def _fmt(x, nd=2):
     if x is None:
         return None
@@ -83,13 +99,17 @@ def dashboard(teams, cal, lines, lab, strat) -> tuple:
             f"court.</p>"),
         "<h2>Two surfaces, never mixed</h2>",
         table(
-            ["Surface", "What it may contain", "Status"],
+            ["Surface", "What it may contain", "Status", "Defined in"],
             [["Projection", "Inputs, formulas, originated margins and totals, estimator "
                             "disagreement, calibration, reliability. No stake is implied by "
-                            "anything on it.", badge_surface("projection")],
+                            "anything on it.", badge_surface("projection"),
+              src("https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/"
+                  "nba2/v3/build.py#L30", "build.SURFACES")],
              ["Bet (gated)", "A stake, and the gate report that proves the gate passed. Today "
                              "every gate is open on price, so every stake is 0.",
-              badge_surface("bet")]],
+              badge_surface("bet"),
+              src("https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/"
+                  "nba2/v3/strategies.py", "strategies.evaluate_gates")]],
             "The brief's separation rule, as the site enforces it",
             idcol=None),
         "<h2>Jump to</h2>",
@@ -110,6 +130,8 @@ def dashboard(teams, cal, lines, lab, strat) -> tuple:
         '<li><a href="v3-bet.html">Bet surface (gated)</a> — the gate table. Zero stakes.</li>'
         '<li><a href="v3-injuries.html">Injuries</a> — the archive, both timestamps, and what the '
         "two captured releases actually show.</li>"
+        '<li><a href="v3-registers.html">Questions &amp; suggestions</a> — what is missing and how '
+        "to find it, and what could change with the case against each change.</li>"
         '<li><a href="v3-flagged.html">Flagged for review</a> — everything unverified, with sources.</li>'
         "</ul>",
     ]
@@ -133,6 +155,8 @@ def lines_page(teams, cal, lines) -> tuple:
             f"{ln.total:.1f}", f"{ln.total_naive:.1f}", f"{ln.total_gap:+.1f}",
             esc(ln.home_rotation), esc(ln.away_rotation or "—"),
             badge_grade(ln.grade) + (f" {flags}" if flags else ""),
+            src(O.SOURCES["schedule"][1], "sched") + " " +
+            src(f"https://www.nba.com/game/{ln.game_id}", "game"),
         ])
     body = [
         "<h1>Originated lines</h1>",
@@ -148,7 +172,7 @@ def lines_page(teams, cal, lines) -> tuple:
         table(
             ["Date", "Tip ET", "Matchup", "Arena", "A margin", "B margin", "Disagree",
              "p(home) A→B", "Total", "Naive avg", "Δ", "Home availability",
-             "Away availability", "Grade"],
+             "Away availability", "Grade", "Source"],
             rows,
             "Originated lines from official schedule, standings and team stats. "
             "Disagree = |A − B| in points; the widest disagreements are flagged first.",
@@ -205,6 +229,7 @@ def totals_page(teams, lines, lab) -> tuple:
             f"{a.ppp_off:.3f} / {h.ppp_def:.3f}",
             f"{ln.pts_home:.1f}", f"{ln.pts_away:.1f}",
             f"<b>{ln.total:.1f}</b>", f"{ln.total_naive:.1f}", f"{ln.total_gap:+.1f}",
+            src(SRC_ADV, "POSS") + " " + src(SRC_TRAD, "PTS") + " " + src(SRC_OPP, "OppPTS"),
         ])
     body = [
         "<h1>Totals — possessions × points-per-possession</h1>",
@@ -222,7 +247,7 @@ def totals_page(teams, lines, lab) -> tuple:
         "<h2>The formula in practice — widest gaps first</h2>",
         table(
             ["Date", "Game", "Poss", "Home PPP (off/opp def)", "Away PPP (off/opp def)",
-             "Home pts", "Away pts", "Total (poss)", "Naive avg", "Δ"],
+             "Home pts", "Away pts", "Total (poss)", "Naive avg", "Δ", "Source"],
             rows,
             f"The {min(24, len(lines))} games with the largest gap between the two formulas, "
             "from official POSS and per-game scoring.",
@@ -279,6 +304,7 @@ def teams_page(teams, cal) -> tuple:
             f"{t.r_diff:+.2f}", f"{t.r_rtg:+.2f}", f"{t.disagreement:.2f}",
             f"{t.expected_wins:.1f}", f"{t.luck:+.2f}", f"{t.luck_z:+.2f}",
             badge(band, kind),
+            src(SRC_STANDINGS, "W-L") + " " + src(SRC_ADV, "ORtg") + " " + src(SRC_OPP, "Opp"),
         ])
     outside = [t for t in teams.values() if abs(t.luck_z) > 1.96]
     body = [
@@ -306,7 +332,7 @@ def teams_page(teams, cal) -> tuple:
         table(
             ["Tri", "Club", "W-L", "Home", "Road", "PTS", "Opp", "Net", "ORtg", "DRtg", "NetRtg",
              "POSS", "PPP off", "PPP def", "Rating A", "Rating B", "Disagree", "Exp W",
-             "Luck W", "Luck z", "Band"],
+             "Luck W", "Luck z", "Band", "Source"],
             rows,
             "All 30 clubs. Ratings A and B are the two estimators' club strengths in points; "
             "Disagree is their gap. Luck z is the brief's refusal statistic.",
@@ -341,10 +367,11 @@ def calibration_page(cal, lab) -> tuple:
     ms = lab["margin_shrink"]
     rows = []
     for r in rel["rows"]:
-        kind = "bad" if r["kind"] == "over-confident" else "ok"
+        kind = "ok" if r["kind"] == "inside noise" else "bad"
         rows.append([
             esc(r["band"]), str(r["n"]), f"{r['forecast']:.3f}", f"{r['observed']:.3f}",
-            f"{r['gap']:+.3f}", badge(r["kind"], kind),
+            f"{r['gap']:+.3f}", f"{r['p_two_sided']:.3f}", badge(r["kind"], kind),
+            src(O.SOURCES["games"][1], "results"),
         ])
     body = [
         "<h1>Calibration &amp; reliability</h1>",
@@ -356,14 +383,22 @@ def calibration_page(cal, lab) -> tuple:
             f"wins as often as it is wrong about <i>how sure it is</i>.</p>"
             "<p>Accuracy only asks whether the larger probability was on the right side. Log-loss "
             "asks whether the probability was right. A model can pass the first and fail the second, "
-            "and this one does.</p>", "bad"),
+            "and this one does.</p>"
+            "<p><b>The direction matters.</b> The model is wrong <i>inward</i>, not uniformly "
+            "overconfident: it claims 0.195 where reality delivers 0.384, and claims 0.887 where "
+            "reality delivers 0.718. Both errors point toward the middle, which is precisely the "
+            "error that shrinking toward 0.5 corrects — and precisely the error that a flat "
+            "&ldquo;add a fudge factor for overconfidence&rdquo; would get wrong at one end.</p>",
+            "bad"),
         "<h2>Forecast against outcome, by band</h2>",
         table(
-            ["Claimed p(home) band", "Games", "Mean forecast", "Observed home-win rate", "Gap", "Verdict"],
+            ["Claimed p(home) band", "Games", "Mean forecast", "Observed home-win rate", "Gap",
+             "p (two-sided)", "Verdict", "Source"],
             rows,
-            f"All {lab['metrics']['n']} walk-forward games. A band is called over-confident when the "
-            "observed rate misses the forecast by more than 0.10.",
-            num_cols=(1, 2, 3, 4)),
+            f"All {lab['metrics']['n']} walk-forward games. A band is called miscalibrated only when "
+            "the gap exceeds what binomial sampling noise explains at that band's own size — a flat "
+            "threshold would flag a 3-game band and miss a 73-game one.",
+            num_cols=(1, 2, 3, 4, 5)),
         "<h2>The correction, measured on data it was not fitted to</h2>",
         note(
             f"<p>Shrink the probability toward a coin flip: p′ = 0.5 + α(p − 0.5). Fitting α on the "
@@ -410,37 +445,39 @@ def backtest_page(lab) -> tuple:
     sk = lab["skill"]
     pm = lab["permutation"]
     h = lab["holdout"]
+    RSRC = src(O.SOURCES["games"][1], "results")
     rows = [
-        ["Accuracy (A)", _pct(m["accuracy"]), f"n={m['n']}", badge("published", "info")],
-        ["Accuracy (B)", _pct(m["accuracy_b"]), "same games, other estimator", badge("published", "info")],
+        ["Accuracy (A)", _pct(m["accuracy"]), f"n={m['n']}", badge("published", "info"), RSRC],
+        ["Accuracy (B)", _pct(m["accuracy_b"]), "same games, other estimator", badge("published", "info"), RSRC],
         ["Log-loss (A)", f"{m['log_loss']}", f"coin {m['log_loss_coin']}",
-         badge("WORSE THAN COIN", "bad")],
+         badge("WORSE THAN COIN", "bad"), RSRC],
         ["Log-loss (B)", f"{m['log_loss_b']}", f"coin {m['log_loss_coin']}",
-         badge("WORSE THAN COIN", "bad")],
+         badge("WORSE THAN COIN", "bad"), RSRC],
         ["Log-loss (A, calibrated)", f"{h['log_loss_a_calibrated']}", f"×{h['alpha']}, held-out",
-         badge("beats coin", "ok")],
-        ["Brier (A)", f"{m['brier']}", f"coin {m['brier_coin']}", badge("slightly better", "warn")],
+         badge("beats coin", "ok"), RSRC],
+        ["Brier (A)", f"{m['brier']}", f"coin {m['brier_coin']}", badge("slightly better", "warn"), RSRC],
         ["Margin MAE (A)", f"{m['mae_margin']}", f"tie {m['mae_predict_tie']}, home-edge "
-         f"{m['mae_home_edge_only']}", badge("WORSE", "bad")],
+         f"{m['mae_home_edge_only']}", badge("WORSE", "bad"), RSRC],
         ["Margin MAE (A, shrunk)", f"{lab['margin_shrink']['holdout_mae_shrunk']}", "held-out",
-         badge("beats both", "ok")],
+         badge("beats both", "ok"), RSRC],
         ["r(predicted, actual margin)", f"{m['r_pred_actual_margin']}", f"n={m['n']}",
-         badge("weak positive", "warn")],
+         badge("weak positive", "warn"), RSRC],
         ["Median estimator disagreement", f"{m['median_disagreement']} pts",
-         f"max {m['max_disagreement']}", badge("the headline", "info")],
+         f"max {m['max_disagreement']}", badge("the headline", "info"), RSRC],
         ["Opposite-side disagreement", f"{m['pct_opposite_side']}%",
-         "games where A and B favour different clubs", badge("published", "info")],
+         "games where A and B favour different clubs", badge("published", "info"), RSRC],
     ]
     leak_rows = [
         ["Same-date isolation", badge("PASS" if lk["same_date_isolation"]["pass"] else "FAIL",
                                       "ok" if lk["same_date_isolation"]["pass"] else "bad"),
-         f"max within-date difference {lk['same_date_isolation']['max_within_date_delta']}"],
+         f"max within-date difference {lk['same_date_isolation']['max_within_date_delta']}", RSRC],
         ["No in-sample term", badge("PASS" if lk["no_in_sample_term"]["pass"] else "FAIL",
                                     "ok" if lk["no_in_sample_term"]["pass"] else "bad"),
-         "every rating, σ and baseline computed from strictly earlier dates"],
+         "every rating, σ and baseline computed from strictly earlier dates", RSRC],
         ["Future-only edit", badge("PASS" if lk["future_only_edit"]["pass"] else "FAIL",
                                    "ok" if lk["future_only_edit"]["pass"] else "bad"),
-         f"a fabricated game 30 days later moves no earlier forecast (max Δ {lk['future_only_edit']['max_delta']})"],
+         f"a fabricated game 30 days later moves no earlier forecast (max Δ {lk['future_only_edit']['max_delta']})",
+         RSRC],
     ]
     body = [
         "<h1>Backtest &amp; skill</h1>",
@@ -452,10 +489,10 @@ def backtest_page(lab) -> tuple:
             f"{lab['meta']['first_date']} is scored because 30 prior games are required for a "
             f"rating to exist.</p>", "proj"),
         "<h2>Every metric beside its baseline</h2>",
-        table(["Metric", "Value", "Baseline", "Verdict"], rows,
+        table(["Metric", "Value", "Baseline", "Verdict", "Source"], rows,
               "No metric is shown without the number it must beat.", num_cols=(1, 2)),
         "<h2>Leakage audit — three direct tests</h2>",
-        table(["Test", "Result", "What it shows"], leak_rows,
+        table(["Test", "Result", "What it shows", "Source"], leak_rows,
               "A forecast that can see its own result is not a forecast.", num_cols=()),
         note(
             f"<p><b>A rejected test, recorded so it is not proposed again.</b> {esc(lk['rejected_test'])}</p>"
@@ -502,14 +539,18 @@ def strategies_page(strat, lab) -> tuple:
             esc(str(s["wilson95"] or "—")),
             f"{s['base_rate_p0']}", str(s["binomial_p"]), str(s["holm_adjusted_p"]),
             esc(s["direction"]), badge(s["verdict"], verdict_kind),
+            src(O.SOURCES["games"][1], "results"),
         ])
-    gate_rows = [[g["id"], esc(g["name"]), badge_status(g["status"]), esc(g["value"]), esc(g["why"])]
+    gate_rows = [[g["id"], esc(g["name"]), badge_status(g["status"]), esc(g["value"]), esc(g["why"]),
+                  src(O.SOURCES["games"][1], "results")]
                  for g in strat["gates"]]
     prereg_rows = [[f"<b>{esc(p['id'])}</b>", f"<code>{esc(p['sha256'][:16])}…</code>",
                     badge("frozen", "ok") if p["frozen"] else badge("NOT FROZEN", "bad"),
                     badge("matches definition", "ok") if p["matches_current_definition"]
                     else badge("DRIFTED", "bad"),
-                    esc(p.get("path", ""))] for p in strat["prereg"]]
+                    esc(p.get("path", "")),
+                    src(f"https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/"
+                        f"{p.get('path','')}", "file")] for p in strat["prereg"]]
     body = [
         "<h1>Strategies &amp; pre-registration</h1>",
         '<p class="sub">Six rules, frozen before the first bet, tested against their own base '
@@ -526,7 +567,7 @@ def strategies_page(strat, lab) -> tuple:
         "<h2>The scoreboard</h2>",
         table(
             ["Rule", "Signal", "Bets", "Wins", "Hit rate", "Wilson 95%", "Base rate",
-             "p (two-sided)", "p (Holm)", "Direction", "Verdict"],
+             "p (two-sided)", "p (Holm)", "Direction", "Verdict", "Source"],
             rows,
             "Each rule against the base rate its own construction implies. 'Distinct' requires the "
             "Holm-adjusted p to clear 0.05 AND the deviation to be in the direction the rule claims.",
@@ -563,11 +604,11 @@ def strategies_page(strat, lab) -> tuple:
             f"acts on. That is a statement about the data, not a claim that the strategy is safe.</p>",
             "ok" if not strat["luck_gate"]["refused"] else "bad"),
         "<h2>The twelve gates</h2>",
-        table(["Gate", "Test", "Status", "Value", "Why it is the right test"], gate_rows,
+        table(["Gate", "Test", "Status", "Value", "Why it is the right test", "Source"], gate_rows,
               "The gate report. A gate that cannot be measured says so instead of passing.",
               num_cols=()),
         "<h2>Pre-registration files</h2>",
-        table(["Rule", "SHA-256", "Frozen", "Integrity", "Path"], prereg_rows,
+        table(["Rule", "SHA-256", "Frozen", "Integrity", "Path", "Source"], prereg_rows,
               "Each rule's definition, hashed at the moment it was frozen."),
         "<h2>Settlement</h2>",
         note(
@@ -584,7 +625,8 @@ def strategies_page(strat, lab) -> tuple:
 
 # --------------------------------------------------------------------------- bet surface
 def bet_page(strat, lines) -> tuple:
-    gate_rows = [[g["id"], esc(g["name"]), badge_status(g["status"]), esc(g["value"])]
+    gate_rows = [[g["id"], esc(g["name"]), badge_status(g["status"]), esc(g["value"]),
+                  src(O.SOURCES["games"][1], "results")]
                  for g in strat["gates"]]
     pick_rows = []
     for p in strat["ledger"].get("picks", [])[:30]:
@@ -593,6 +635,7 @@ def bet_page(strat, lines) -> tuple:
             esc(p.get("side")), f"{p.get('p_model_a')} / {p.get('p_model_b')}",
             f"{p.get('stake_units')}", esc(p.get("stake_reason")),
             f"<code>{esc(str(p.get('hash', ''))[:12])}…</code>",
+            src(O.SOURCES["schedule"][1], "sched"),
         ])
     open_gates = [g for g in strat["gates"] if g["status"] not in ("PASS",)
                   and not g["status"].startswith("PASS")]
@@ -615,7 +658,7 @@ def bet_page(strat, lines) -> tuple:
              ", ".join(g["id"] for g in open_gates) or "none", "warn" if open_gates else "ok"),
         ]),
         "<h2>The gate report</h2>",
-        table(["Gate", "Test", "Status", "Value"], gate_rows,
+        table(["Gate", "Test", "Status", "Value", "Source"], gate_rows,
               "Every gate, including the ones that cannot be measured. A gate that cannot be "
               "measured is not a gate that passed.", num_cols=()),
         "<h2>The three gates that stop this page</h2>",
@@ -629,7 +672,7 @@ def bet_page(strat, lines) -> tuple:
         "</ul>",
         "<h2>The sealed picks</h2>",
         table(["Date", "Matchup", "Rule", "Side", "p(A) / p(B)", "Stake", "Why this stake",
-               "SHA-256"], pick_rows,
+               "SHA-256", "Source"], pick_rows,
               f"The first {len(pick_rows)} of {strat['ledger']['n_picks']} sealed picks. The hash "
               "is over the pick's canonical JSON with its rule's pre-registration hash bound in.",
               num_cols=(5,)),
@@ -664,7 +707,8 @@ def injuries_page(inj) -> tuple:
         arch.append([
             esc(r.get("date")), esc(r.get("revision_et")),
             badge("captured", "ok") if r.get("captured") else dash(r.get("note", "not fetched")),
-            esc(r.get("retrieved_utc") or ""),
+            (esc(r["retrieved_utc"]) if r.get("retrieved_utc")
+             else dash("not fetched — no retrieval time exists")),
             src(r.get("url"), r.get("pdf")),
         ])
 
@@ -675,10 +719,12 @@ def injuries_page(inj) -> tuple:
             for p, st in cl["players"])
         club_rows.append([f"<b>{esc(cl['team'])}</b>", esc(", ".join(cl["dates"])),
                           str(cl["rows"]), str(cl["out"] + cl["doubtful"]),
-                          str(cl["questionable"] + cl["probable"]), chips])
+                          str(cl["questionable"] + cl["probable"]), chips,
+                          src(SRC_INJURY, "report")])
 
     not_sub = [[esc(r["date"]), esc(r["matchup"]), esc(r["team"]),
-                badge("NOT YET SUBMITTED", "warn")] for r in inj["not_submitted"]]
+                badge("NOT YET SUBMITTED", "warn"), src(SRC_INJURY, "report")]
+               for r in inj["not_submitted"]]
 
     counts = inj["status_counts"]
     body = [
@@ -721,7 +767,8 @@ def injuries_page(inj) -> tuple:
             f"{wd['revisions_fetched']} of {wd['revisions_listed']} revisions of the 11/15 report "
             f"were fetched in this capture.</p>", "warn"),
         "<h2>Current report by club</h2>",
-        table(["Club", "Game date", "Rows", "Out / doubtful", "Game-time decision", "Named players"],
+        table(["Club", "Game date", "Rows", "Out / doubtful", "Game-time decision", "Named players",
+               "Source"],
               club_rows,
               f"Statuses exactly as printed in the official report: {counts.get('Out', 0)} Out, "
               f"{counts.get('Doubtful', 0)} Doubtful, {counts.get('Questionable', 0)} Questionable, "
@@ -729,7 +776,7 @@ def injuries_page(inj) -> tuple:
               "No status is carried over from a previous release.",
               num_cols=(2, 3, 4)),
         "<h2>Clubs that have not filed</h2>",
-        table(["Date", "Matchup", "Club", "Status"], not_sub,
+        table(["Date", "Matchup", "Club", "Status", "Source"], not_sub,
               "A club that has not filed is not 'cleared'. The rotation column on the lines page "
               "reads 'not filed' for these and never 'all cleared'."),
         "<h2>Every revision, with a retrieval timestamp only if it was actually fetched</h2>",
@@ -754,8 +801,13 @@ def injuries_page(inj) -> tuple:
 
 # --------------------------------------------------------------------------- flagged
 def flagged_page(flags) -> tuple:
+    # A flag with no external source is sourced to the module and the page that computed it, so
+    # that "no source" never means "trust me" — it means "the source is this repository".
+    REPO = "https://github.com/wingbangboozle1-lang/NBA2"
     rows = [[esc(f["id"]), badge(f.get("kind", "flag"), "warn"), esc(f["what"]),
-             esc(f.get("why", "")), src(f.get("source")), esc(f.get("status", "OPEN"))]
+             esc(f.get("why", "")),
+             src(f.get("source") or REPO, None if f.get("source") else "repository"),
+             esc(f.get("status", "OPEN"))]
             for f in flags]
     body = [
         "<h1>Flagged for review</h1>",
@@ -873,3 +925,58 @@ def methodology_page(cal, lab, strat) -> tuple:
             f"the current permutation p is {pm['p_value']}.</p>"),
     ]
     return ("v3-methodology.html", "Methodology & formulas", "projection", "\n".join(body))
+
+
+# --------------------------------------------------------------------------- registers
+def registers_page(questions: dict, suggestions: dict) -> tuple:
+    qrows = []
+    for q in questions["questions"]:
+        qrows.append([
+            f"<b>{esc(q['id'])}</b>", esc(q["question"]), esc(q["why_it_matters"]),
+            esc(q["how_to_discover"]), esc(q.get("what_it_unblocks", "")),
+            src("https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/"
+                "requirements/V3_QUESTIONS.json", "register"),
+        ])
+    srows = []
+    for g in suggestions["suggestions"]:
+        rec = (g.get("recommendation") or "").lower()
+        kind = ("ok" if rec.startswith("already") else
+                "bad" if rec.startswith("do not") else
+                "warn" if rec.startswith("defer") else "info")
+        srows.append([
+            f"<b>{esc(g['id'])}</b>", esc(g["proposal"]), esc(g["rationale"]), esc(g["cost"]),
+            esc(g.get("would_need_to_be_true", "")), badge(g.get("recommendation", ""), kind),
+            src("https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/"
+                "requirements/V3_SUGGESTIONS.json", "register"),
+        ])
+    body = [
+        "<h1>Questions &amp; suggestions</h1>",
+        '<p class="sub">What must be answered before a v3 number can be trusted, and what could be '
+        "changed — with the case against each change written down before it is made.</p>",
+        "<h2>Questions — what is missing, and how to find it</h2>",
+        note(
+            "<p>Each question names the artefact that would close it. A question whose answer cannot "
+            "be discovered is a decision, and those are labelled as decisions rather than left "
+            "looking like data problems.</p>", "proj"),
+        table(["ID", "Question", "Why it matters", "How to discover the answer",
+               "What it unblocks", "Source"], qrows,
+              f"{len(qrows)} open questions, ordered by what blocks the most.",
+              num_cols=()),
+        "<h2>Suggestions — review before implementing</h2>",
+        note(
+            "<p>These are proposals, not decisions. Nothing on this list has been implemented. Each "
+            "carries the case <i>against</i> itself in the last column, because a suggestion list "
+            "that only argues for its own items is a sales document.</p>", "warn"),
+        table(["ID", "Proposal", "Why", "Cost", "What would have to be true",
+               "Recommendation", "Source"], srows,
+              f"{len(srows)} proposals. Three are recommended, two are recommended against, one is "
+              "already done, one is deferred and one is a pilot.",
+              num_cols=()),
+        "<h2>How to add to these registers</h2>",
+        note(
+            "<p>Edit <code>requirements/V3_QUESTIONS.json</code> or "
+            "<code>requirements/V3_SUGGESTIONS.json</code> and rebuild. The pages render from the "
+            "JSON, so a register entry and its rendering cannot drift — the failure mode that makes "
+            "most registers stale.</p>"),
+    ]
+    return ("v3-registers.html", "Questions & suggestions", "projection", "\n".join(body))

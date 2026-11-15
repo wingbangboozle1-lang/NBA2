@@ -23,6 +23,7 @@
 <a href="v3-strategies.html">Strategies</a>
 <a href="v3-injuries.html">Injuries</a>
 <a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html">Questions &amp; suggestions</a>
 <a href="v3-flagged.html">Flagged for review</a>
 <p class="navgrp bet">Bet surface (gated)</p>
 <a href="v3-bet.html">Gate report</a>
@@ -35,17 +36,19 @@
 
 <div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Calibration &amp; reliability</h1>
 <p class="sub">Why 64.5% accuracy and a log-loss worse than a coin are the same fact about the same model.</p>
-<div class="card bad"><p>The model's average distance from a coin flip is <b>0.277</b>. Reality's is <b>0.500</b>. The model is not wrong about who wins as often as it is wrong about <i>how sure it is</i>.</p><p>Accuracy only asks whether the larger probability was on the right side. Log-loss asks whether the probability was right. A model can pass the first and fail the second, and this one does.</p></div>
+<div class="card bad"><p>The model's average distance from a coin flip is <b>0.277</b>. Reality's is <b>0.500</b>. The model is not wrong about who wins as often as it is wrong about <i>how sure it is</i>.</p><p>Accuracy only asks whether the larger probability was on the right side. Log-loss asks whether the probability was right. A model can pass the first and fail the second, and this one does.</p><p><b>The direction matters.</b> The model is wrong <i>inward</i>, not uniformly overconfident: it claims 0.195 where reality delivers 0.384, and claims 0.887 where reality delivers 0.718. Both errors point toward the middle, which is precisely the error that shrinking toward 0.5 corrects — and precisely the error that a flat &ldquo;add a fudge factor for overconfidence&rdquo; would get wrong at one end.</p></div>
 <h2>Forecast against outcome, by band</h2>
 <div class="scroll"><table>
-<caption>All 152 walk-forward games. A band is called over-confident when the observed rate misses the forecast by more than 0.10.</caption>
+<caption>All 152 walk-forward games. A band is called miscalibrated only when the gap exceeds what binomial sampling noise explains at that band&#x27;s own size — a flat threshold would flag a 3-game band and miss a 73-game one.</caption>
 <thead><tr>
 <th scope="col">Claimed p(home) band</th>
 <th scope="col" class="n">Games</th>
 <th scope="col" class="n">Mean forecast</th>
 <th scope="col" class="n">Observed home-win rate</th>
 <th scope="col" class="n">Gap</th>
+<th scope="col" class="n">p (two-sided)</th>
 <th scope="col">Verdict</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td>0.00–0.45</td>
@@ -53,7 +56,9 @@
 <td class="n">0.195</td>
 <td class="n">0.384</td>
 <td class="n">+0.188</td>
-<td><span class="badge b-bad">over-confident</span></td>
+<td class="n">0.000</td>
+<td><span class="badge b-bad">too low (model under-confident)</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.45–0.50</td>
@@ -61,7 +66,9 @@
 <td class="n">0.476</td>
 <td class="n">0.500</td>
 <td class="n">+0.024</td>
-<td><span class="badge b-ok">calibrated</span></td>
+<td class="n">0.906</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.50–0.55</td>
@@ -69,7 +76,9 @@
 <td class="n">0.528</td>
 <td class="n">0.429</td>
 <td class="n">-0.100</td>
-<td><span class="badge b-ok">calibrated</span></td>
+<td class="n">0.597</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.55–0.60</td>
@@ -77,7 +86,9 @@
 <td class="n">0.586</td>
 <td class="n">0.833</td>
 <td class="n">+0.247</td>
-<td><span class="badge b-bad">over-confident</span></td>
+<td class="n">0.219</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.60–0.65</td>
@@ -85,7 +96,9 @@
 <td class="n">0.616</td>
 <td class="n">0.667</td>
 <td class="n">+0.051</td>
-<td><span class="badge b-ok">calibrated</span></td>
+<td class="n">0.856</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.65–0.70</td>
@@ -93,7 +106,9 @@
 <td class="n">0.676</td>
 <td class="n">0.500</td>
 <td class="n">-0.176</td>
-<td><span class="badge b-bad">over-confident</span></td>
+<td class="n">0.233</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.70–0.75</td>
@@ -101,7 +116,9 @@
 <td class="n">0.724</td>
 <td class="n">0.875</td>
 <td class="n">+0.151</td>
-<td><span class="badge b-bad">over-confident</span></td>
+<td class="n">0.339</td>
+<td><span class="badge b-ok">inside noise</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>0.75–1.00</td>
@@ -109,7 +126,9 @@
 <td class="n">0.887</td>
 <td class="n">0.718</td>
 <td class="n">-0.169</td>
-<td><span class="badge b-bad">over-confident</span></td>
+<td class="n">0.001</td>
+<td><span class="badge b-bad">too high (model over-confident)</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 </tbody></table></div>
 <h2>The correction, measured on data it was not fitted to</h2>

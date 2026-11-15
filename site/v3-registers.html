@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Questions &amp; suggestions · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html" class="on">Questions &amp; suggestions</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Questions &amp; suggestions</h1>
+<p class="sub">What must be answered before a v3 number can be trusted, and what could be changed — with the case against each change written down before it is made.</p>
+<h2>Questions — what is missing, and how to find it</h2>
+<div class="card proj"><p>Each question names the artefact that would close it. A question whose answer cannot be discovered is a decision, and those are labelled as decisions rather than left looking like data problems.</p></div>
+<div class="scroll"><table>
+<caption>8 open questions, ordered by what blocks the most.</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Question</th>
+<th scope="col">Why it matters</th>
+<th scope="col">How to discover the answer</th>
+<th scope="col">What it unblocks</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>V3Q-01</b></td>
+<td>Which odds source may be used, and at what timestamp?</td>
+<td>Gate G6 is NOT MEASURABLE and every stake is 0 without a price. The blend weight w_model = L_market/(L_model+L_market) needs a measured L_market.</td>
+<td>Any feed with pre-tip prices: a licensed API, a manual capture of closing lines with a timestamp, or a published historical odds file. The only requirement is that the price&#x27;s capture time precedes the tip and is recorded.</td>
+<td>G6, the market blend, stake sizing, ROI and CLV — i.e. the entire bet surface</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-02</b></td>
+<td>Where do per-player game logs come from?</td>
+<td>The model is availability-blind. Injuries appear in a column but not in the price, and FLAG-V3-ROTATION-UNFILED records that.</td>
+<td>Player box scores for at least the injury-report players: MIN/PTS/REB/AST/opponent per game. The official player game-log pages carry all of it; a repo cannot hold the future, so the requirement is a fetch path, not a file.</td>
+<td>V3-12, the rotation column becoming an input rather than a warning</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-03</b></td>
+<td>Can the remaining 25 of 26 daily injury revisions be fetched at their own times?</td>
+<td>The brief asks to diff consecutive reports for status changes. The two releases captured so far cover different slates and share zero players, so the diff measures slate turnover, not status change.</td>
+<td>The index lists every revision with its filename. Fetching each PDF as it appears, and transcribing its rows, turns the diff on. archive() already returns all 29 rows with captured: false.</td>
+<td>V3-04 in full; the first honest status-change count</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-04</b></td>
+<td>Is per-game possession (or FGA/FTA/TOV) available?</td>
+<td>The possession total is correct and its error is worse than a constant (16.05 vs 15.13) because averaging season rates cancels the game-to-game variation that IS the total.</td>
+<td>Play-by-play or per-game team stats. With a per-game possession series, the total model can carry a game-level variance term instead of a mean.</td>
+<td>V3-16 from &#x27;formula correct, forecast useless&#x27; to a testable total</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-05</b></td>
+<td>Will the calibration shrink hold on a second season?</td>
+<td>alpha is fitted on one slice and scored on another, which makes the gain evidence rather than a derivation. It moves held-out log-loss from 0.7082 to 0.6398.</td>
+<td>Re-run shrink_gain() and margin_shrink() after another 150+ games. If alpha drifts substantially, it is a property of the month and must be re-fitted per window rather than fixed.</td>
+<td>confidence in the only number on this site that beats a coin</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-06</b></td>
+<td>Is the A-vs-B gap real, or chance?</td>
+<td>A is right 6 times and B 13 times on the 19 disputed games; exact McNemar p = 0.167. Publishing &#x27;B is better&#x27; would be publishing noise.</td>
+<td>More disputed games. At the current rate (~12.5% of games), roughly 60 more games would give the test a fair chance of resolving it either way.</td>
+<td>a defensible choice between the two estimators, or the finding that there is none</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-07</b></td>
+<td>What sample size justifies a rank?</td>
+<td>No rule is ranked because the largest settled count is 97 against a 100-bet bar (v2 used 300; the change is disclosed). Below the bar a rank is noise.</td>
+<td>This is an owner decision, not a data question. Options: keep 100, return to 300, or replace the rank with a confidence interval that is shown regardless of n.</td>
+<td>V3-14&#x27;s selectivity claim having a scoreboard to be selective about</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3Q-08</b></td>
+<td>Should settlement require a second independent source for each final?</td>
+<td>A pick settles only on an official final whose quarters sum to the printed total. That is one source, checked internally.</td>
+<td>The schedule page and the game page both carry finals. Requiring them to agree would make a transcription error in one surface detectable.</td>
+<td>V3-18 from &#x27;rule written&#x27; to &#x27;rule demonstrated&#x27;</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_QUESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+</tbody></table></div>
+<h2>Suggestions — review before implementing</h2>
+<div class="card warn"><p>These are proposals, not decisions. Nothing on this list has been implemented. Each carries the case <i>against</i> itself in the last column, because a suggestion list that only argues for its own items is a sales document.</p></div>
+<div class="scroll"><table>
+<caption>8 proposals. Three are recommended, two are recommended against, one is already done, one is deferred and one is a pilot.</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Proposal</th>
+<th scope="col">Why</th>
+<th scope="col">Cost</th>
+<th scope="col">What would have to be true</th>
+<th scope="col">Recommendation</th>
+<th scope="col">Source</th>
+</tr></thead><tbody>
+<tr>
+<td><b>V3S-01</b></td>
+<td>Ship the calibrated probability as the default published number, with the raw one beside it.</td>
+<td>The shrink beats a coin out of sample (0.6398 vs 0.6931) while the raw model loses to one (0.7082). Publishing the losing number as the headline, even with the fix visible, invites a reader to stop at the first figure.</td>
+<td>Low. alpha is already fitted and disclosed; this is a default, not a calculation.</td>
+<td>alpha must be stable across seasons. See V3Q-05 — if it is not, the default would need re-fitting per window, which is a different risk.</td>
+<td><span class="badge b-info">implement, after V3Q-05</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-02</b></td>
+<td>Replace the letter grade (A/B/C) with the disagreement number alone.</td>
+<td>The grade collapses a continuous signal into three buckets with hand-set thresholds (≤1.0 pts and |margin| ≥ 0.75σ), and a reader cannot see where a B line sits inside the B bucket.</td>
+<td>Low, but it removes a scanning aid that the picks page relies on.</td>
+<td>Readable at a glance without the letter. A sorted table plus a colour ramp on the disagreement cell would probably do it.</td>
+<td><span class="badge b-info">pilot on the lines page only</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-03</b></td>
+<td>Add a second, independent estimate of sigma (e.g. from quarter-level scoring) and publish the gap.</td>
+<td>sigma is a single number fitted from whole-game residuals and drives both p_home and every total. If it is wrong, every probability is wrong in the same direction and no backtest on the same data can reveal it.</td>
+<td>Medium — needs quarter data, which exists for only five games today.</td>
+<td>Quarter scores for a meaningful number of games. Currently 5 of 188, so this is blocked on the same capture gap as V3Q-03.</td>
+<td><span class="badge b-warn">defer until quarter capture is routine</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-04</b></td>
+<td>Publish a per-club &#x27;rating stability&#x27; series showing how much each club&#x27;s rating moved date to date.</td>
+<td>A club whose rating swings 6 points a week is not measurable by a season-average model, and the site currently gives no way to see that.</td>
+<td>Low — the walk-forward already computes every date&#x27;s ratings; it discards them.</td>
+<td>Nothing. This is a display of an intermediate that already exists.</td>
+<td><span class="badge b-info">implement</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-05</b></td>
+<td>Stop publishing the totals page&#x27;s naive average column once the possession total is fixed.</td>
+<td>The brief asks for the comparison. If the possession total ever beats a constant, the naive figure becomes historical debt.</td>
+<td>Zero.</td>
+<td>The brief&#x27;s requirement to show the comparison would have to be judged satisfied. Currently it is NOT — the possession total loses, so the comparison is still doing work.</td>
+<td><span class="badge b-bad">do not implement</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-06</b></td>
+<td>Make the ledger&#x27;s verification a required check on every PR, not only on a schedule.</td>
+<td>A ledger that is verified nightly but not on the change that broke it lets a bad pick publish for a day.</td>
+<td>One workflow step; already written in v3-verify.yml.</td>
+<td>Nothing. This is already the case for the v3 workflow and should stay that way.</td>
+<td><span class="badge b-ok">already implemented</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-07</b></td>
+<td>Add a &#x27;what changed since yesterday&#x27; page generated by diffing consecutive payloads.</td>
+<td>Every number on this site moves. A reader returning the next day cannot tell whether a line moved because a game was played or because a capture changed.</td>
+<td>Medium — needs the previous payload kept, which means committing data/v3/payload.json history.</td>
+<td>A retention decision on payload size (currently ~250 KB/day). Trimming to the summary fields would make it trivial.</td>
+<td><span class="badge b-info">implement with a trimmed payload</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+<tr>
+<td><b>V3S-08</b></td>
+<td>Retire v2 entirely once v3&#x27;s blocked inputs are resolved.</td>
+<td>Two sites publishing overlapping projections is the confusion the surface split exists to prevent. Today they disagree about h (v2 uses a free-ish 2.0 constant; v3 pins 0.963).</td>
+<td>High — v2 carries 60 flags, 25 questions and the audit history.</td>
+<td>v3 would need to carry forward every open v2 flag. Until then, v2 is the audit record and v3 is the model, and the dashboard link between them is honest about which is which.</td>
+<td><span class="badge b-bad">do not implement yet</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/requirements/V3_SUGGESTIONS.json" rel="noopener" target="_blank">register</a></td>
+</tr>
+</tbody></table></div>
+<h2>How to add to these registers</h2>
+<div class="card"><p>Edit <code>requirements/V3_QUESTIONS.json</code> or <code>requirements/V3_SUGGESTIONS.json</code> and rebuild. The pages render from the JSON, so a register entry and its rendering cannot drift — the failure mode that makes most registers stale.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

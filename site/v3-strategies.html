@@ -23,6 +23,7 @@
 <a href="v3-strategies.html" class="on">Strategies</a>
 <a href="v3-injuries.html">Injuries</a>
 <a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html">Questions &amp; suggestions</a>
 <a href="v3-flagged.html">Flagged for review</a>
 <p class="navgrp bet">Bet surface (gated)</p>
 <a href="v3-bet.html">Gate report</a>
@@ -51,6 +52,7 @@
 <th scope="col" class="n">p (Holm)</th>
 <th scope="col">Direction</th>
 <th scope="col">Verdict</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td><b>S3-01</b></td>
@@ -64,6 +66,7 @@
 <td class="n">0.0948</td>
 <td>better than base rate</td>
 <td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td><b>S3-02</b></td>
@@ -77,6 +80,7 @@
 <td class="n">0.0948</td>
 <td>better than base rate</td>
 <td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td><b>S3-03</b></td>
@@ -90,6 +94,7 @@
 <td class="n">1.0</td>
 <td>better than base rate</td>
 <td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td><b>S3-04</b></td>
@@ -103,6 +108,7 @@
 <td class="n">1.0</td>
 <td>better than base rate</td>
 <td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td><b>S3-05</b></td>
@@ -116,6 +122,7 @@
 <td class="n">0.01</td>
 <td>better than base rate</td>
 <td><span class="badge b-ok">better than base rate after family correction</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 </tbody></table></div>
 <h2>The one rule that clears its base rate — and why it still is not a recommendation</h2>
@@ -133,6 +140,7 @@
 <th scope="col">Status</th>
 <th scope="col">Value</th>
 <th scope="col">Why it is the right test</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td>G1</td>
@@ -140,6 +148,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>seed 20261115</td>
 <td>every published number re-derives from committed inputs; the permutation test is seeded</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G2</td>
@@ -147,6 +156,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>same-date isolation, no in-sample term, future-only edit</td>
 <td>three direct tests of the leakage property; the naive deletion test is explained and rejected in backtest.leakage_audit</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G3</td>
@@ -154,6 +164,7 @@
 <td><span class="badge b-ok">PASS (calibrated only)</span></td>
 <td>raw A 0.7082 — LOSES to coin 0.6931; A×0.55 shrink 0.6398 — beats coin, on 42 held-out games</td>
 <td>The raw model does not beat a coin and is published saying so. Its probabilities are over-confident (reliability table: lowest band claims 0.195, delivers 0.384). Shrinking toward 0.5 by a factor fitted on the earlier dates does beat a coin out of sample. Both numbers are shown; neither is allowed to stand in for the other.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G4</td>
@@ -161,6 +172,7 @@
 <td><span class="badge b-ok">PASS (shrunk only)</span></td>
 <td>raw MAE 14.108 — worse than a tie (13.75) and worse than the league mean (13.658); ×0.45 shrunk held-out MAE 13.51 — better than both</td>
 <td>The model&#x27;s margins are over-dispersed: it predicts a 13.4-pt spread where the truth spreads 16.8. Shrinking by a factor fitted on the earlier dates fixes the error but shrinking is not forecasting, and the shrunk number is not allowed to hide the raw one.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G5</td>
@@ -168,6 +180,7 @@
 <td><span class="badge b-info">MEASURED PER STRATEGY</span></td>
 <td>1 of 5 (+0 reliably worse)</td>
 <td>two-sided p, Holm-adjusted across the family, and the verdict also requires the deviation to be in the direction the rule predicts</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G6</td>
@@ -175,6 +188,7 @@
 <td><span class="badge b-warn">NOT MEASURABLE</span></td>
 <td>no odds feed</td>
 <td>no edge, no CLV, no ROI, no stake can be computed — BLOCKED input &#x27;odds&#x27;</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G7</td>
@@ -182,6 +196,7 @@
 <td><span class="badge b-warn">NOT MEASURABLE</span></td>
 <td>largest settled count 97 &lt; 100</td>
 <td>a leaderboard position below this bar is noise wearing a rank</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G8</td>
@@ -189,6 +204,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>0 clubs outside |z|&gt;1.96, 0% of picks touch one</td>
 <td>passes: no club outside the noise band carries the rule</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G9</td>
@@ -196,6 +212,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>data/v3/prereg/*.json with content hashes</td>
 <td>signal, thresholds, universe and settlement are hashed before any bet is recorded</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G10</td>
@@ -203,6 +220,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>data/v3/ledger/*.json</td>
 <td>each pick&#x27;s hash is published before tip and re-verified after</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G11</td>
@@ -210,6 +228,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>r(margin,total)=-0.0779 CI [-0.2342, 0.0823] n=152</td>
 <td>same-game parlays use the measured rho and print the naive product beside it</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>G12</td>
@@ -217,6 +236,7 @@
 <td><span class="badge b-ok">PASS</span></td>
 <td>12.5% of games the two disagree on the side; median gap 3.73 pts</td>
 <td>the disagreement is the headline confidence number, not a blend</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 </tbody></table></div>
 <h2>Pre-registration files</h2>
@@ -228,6 +248,7 @@
 <th scope="col">Frozen</th>
 <th scope="col">Integrity</th>
 <th scope="col">Path</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td><b>S3-01</b></td>
@@ -235,6 +256,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-01.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-01.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 <tr>
 <td><b>S3-02</b></td>
@@ -242,6 +264,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-02.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-02.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 <tr>
 <td><b>S3-03</b></td>
@@ -249,6 +272,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-03.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-03.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 <tr>
 <td><b>S3-04</b></td>
@@ -256,6 +280,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-04.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-04.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 <tr>
 <td><b>S3-05</b></td>
@@ -263,6 +288,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-05.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-05.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 <tr>
 <td><b>S3-06</b></td>
@@ -270,6 +296,7 @@
 <td><span class="badge b-ok">frozen</span></td>
 <td><span class="badge b-ok">matches definition</span></td>
 <td>data/v3/prereg/S3-06.json</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/data/v3/prereg/S3-06.json" rel="noopener" target="_blank">file</a></td>
 </tr>
 </tbody></table></div>
 <h2>Settlement</h2>

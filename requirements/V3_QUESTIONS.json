@@ -1,0 +1,78 @@
+{
+ "title": "NBA2 v3 questions register",
+ "source_note": "Every question that must be answered before a v3 number can be trusted or a stake can be sized, with how to discover the missing information. Ordered by what blocks the most. A question here is not an excuse: each names the exact artefact that would close it.",
+ "questions": [
+  {
+   "id": "V3Q-01",
+   "blocks": "every stake, the market-anchored prior, ROI, CLV",
+   "question": "Which odds source may be used, and at what timestamp?",
+   "why_it_matters": "Gate G6 is NOT MEASURABLE and every stake is 0 without a price. The blend weight w_model = L_market/(L_model+L_market) needs a measured L_market.",
+   "how_to_discover": "Any feed with pre-tip prices: a licensed API, a manual capture of closing lines with a timestamp, or a published historical odds file. The only requirement is that the price's capture time precedes the tip and is recorded.",
+   "what_it_unblocks": "G6, the market blend, stake sizing, ROI and CLV \u2014 i.e. the entire bet surface",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-02",
+   "blocks": "minutes redistribution, top-8 shares, replacement shares",
+   "question": "Where do per-player game logs come from?",
+   "why_it_matters": "The model is availability-blind. Injuries appear in a column but not in the price, and FLAG-V3-ROTATION-UNFILED records that.",
+   "how_to_discover": "Player box scores for at least the injury-report players: MIN/PTS/REB/AST/opponent per game. The official player game-log pages carry all of it; a repo cannot hold the future, so the requirement is a fetch path, not a file.",
+   "what_it_unblocks": "V3-12, the rotation column becoming an input rather than a warning",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-03",
+   "blocks": "the within-day injury diff",
+   "question": "Can the remaining 25 of 26 daily injury revisions be fetched at their own times?",
+   "why_it_matters": "The brief asks to diff consecutive reports for status changes. The two releases captured so far cover different slates and share zero players, so the diff measures slate turnover, not status change.",
+   "how_to_discover": "The index lists every revision with its filename. Fetching each PDF as it appears, and transcribing its rows, turns the diff on. archive() already returns all 29 rows with captured: false.",
+   "what_it_unblocks": "V3-04 in full; the first honest status-change count",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-04",
+   "blocks": "a total forecast with usable variance",
+   "question": "Is per-game possession (or FGA/FTA/TOV) available?",
+   "why_it_matters": "The possession total is correct and its error is worse than a constant (16.05 vs 15.13) because averaging season rates cancels the game-to-game variation that IS the total.",
+   "how_to_discover": "Play-by-play or per-game team stats. With a per-game possession series, the total model can carry a game-level variance term instead of a mean.",
+   "what_it_unblocks": "V3-16 from 'formula correct, forecast useless' to a testable total",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-05",
+   "blocks": "whether alpha = 0.55 is a property of the model or of this month",
+   "question": "Will the calibration shrink hold on a second season?",
+   "why_it_matters": "alpha is fitted on one slice and scored on another, which makes the gain evidence rather than a derivation. It moves held-out log-loss from 0.7082 to 0.6398.",
+   "how_to_discover": "Re-run shrink_gain() and margin_shrink() after another 150+ games. If alpha drifts substantially, it is a property of the month and must be re-fitted per window rather than fixed.",
+   "what_it_unblocks": "confidence in the only number on this site that beats a coin",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-06",
+   "blocks": "any claim that the two estimators differ in skill",
+   "question": "Is the A-vs-B gap real, or chance?",
+   "why_it_matters": "A is right 6 times and B 13 times on the 19 disputed games; exact McNemar p = 0.167. Publishing 'B is better' would be publishing noise.",
+   "how_to_discover": "More disputed games. At the current rate (~12.5% of games), roughly 60 more games would give the test a fair chance of resolving it either way.",
+   "what_it_unblocks": "a defensible choice between the two estimators, or the finding that there is none",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-07",
+   "blocks": "the leaderboard",
+   "question": "What sample size justifies a rank?",
+   "why_it_matters": "No rule is ranked because the largest settled count is 97 against a 100-bet bar (v2 used 300; the change is disclosed). Below the bar a rank is noise.",
+   "how_to_discover": "This is an owner decision, not a data question. Options: keep 100, return to 300, or replace the rank with a confidence interval that is shown regardless of n.",
+   "what_it_unblocks": "V3-14's selectivity claim having a scoreboard to be selective about",
+   "status": "open"
+  },
+  {
+   "id": "V3Q-08",
+   "blocks": "whether settlement is trustworthy end to end",
+   "question": "Should settlement require a second independent source for each final?",
+   "why_it_matters": "A pick settles only on an official final whose quarters sum to the printed total. That is one source, checked internally.",
+   "how_to_discover": "The schedule page and the game page both carry finals. Requiring them to agree would make a transcription error in one surface detectable.",
+   "what_it_unblocks": "V3-18 from 'rule written' to 'rule demonstrated'",
+   "status": "open"
+  }
+ ]
+}

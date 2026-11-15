@@ -237,6 +237,16 @@ official pages and shows where those rows now stand.</p>
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
 </tbody></table></div>
+<h2>v3 — two estimators, disagreement as the confidence signal</h2>
+<div class="card" style="border-left:3px solid #4cc9a4">
+<p class="lede">v3 is a separate surface, not a rewrite of this one. It prices every game with two
+independent estimators and publishes <b>how far apart they are</b> as its primary confidence signal,
+keeps a gated bet surface at <b>zero stakes</b> because no market price is connected, and publishes
+the two negative results this model actually has: its raw log-loss is worse than a coin, and its
+margin error is worse than guessing a tie. Both are fixed by a measured calibration and both
+numbers are printed side by side.</p>
+<p><a href="v3-index.html"><b>Open the v3 dashboard →</b></a></p>
+</div>
 <h2>Machine-readable copy</h2>
 <p class="lede">Every table on this site is also published as JSON so a reviewer can diff it against the
 official pages without trusting the rendering: <a href="data/teams.json">teams.json</a> ·

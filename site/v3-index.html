@@ -23,6 +23,7 @@
 <a href="v3-strategies.html">Strategies</a>
 <a href="v3-injuries.html">Injuries</a>
 <a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html">Questions &amp; suggestions</a>
 <a href="v3-flagged.html">Flagged for review</a>
 <p class="navgrp bet">Bet surface (gated)</p>
 <a href="v3-bet.html">Gate report</a>
@@ -53,20 +54,23 @@
 <th scope="col">Surface</th>
 <th scope="col">What it may contain</th>
 <th scope="col">Status</th>
+<th scope="col">Defined in</th>
 </tr></thead><tbody>
 <tr>
 <td>Projection</td>
 <td>Inputs, formulas, originated margins and totals, estimator disagreement, calibration, reliability. No stake is implied by anything on it.</td>
 <td><span class="badge b-proj">projection</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/nba2/v3/build.py#L30" rel="noopener" target="_blank">build.SURFACES</a></td>
 </tr>
 <tr>
 <td>Bet (gated)</td>
 <td>A stake, and the gate report that proves the gate passed. Today every gate is open on price, so every stake is 0.</td>
 <td><span class="badge b-bet">bet</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/arena/a1fddb57-nba2/nba2/v3/strategies.py" rel="noopener" target="_blank">strategies.evaluate_gates</a></td>
 </tr>
 </tbody></table></div>
 <h2>Jump to</h2>
-<ul><li><a href="v3-lines.html">Originated lines</a> — every game in the 3-day window, both estimators, the disagreement, and the possession-based total.</li><li><a href="v3-totals.html">Totals</a> — possessions × points-per-possession beside the average-of-averages it replaces, and the finding that the forward total does not beat a constant.</li><li><a href="v3-teams.html">Teams &amp; luck</a> — all 30 clubs, and the luck z-score that decides whether a strategy may lean on one.</li><li><a href="v3-calibration.html">Calibration &amp; reliability</a> — the table that explains why 64.5% accuracy coexists with a log-loss worse than a coin.</li><li><a href="v3-backtest.html">Backtest &amp; skill</a> — walk-forward, leakage audit, McNemar, permutation.</li><li><a href="v3-strategies.html">Strategies</a> — the six rules, their pre-registrations, and the family correction.</li><li><a href="v3-bet.html">Bet surface (gated)</a> — the gate table. Zero stakes.</li><li><a href="v3-injuries.html">Injuries</a> — the archive, both timestamps, and what the two captured releases actually show.</li><li><a href="v3-flagged.html">Flagged for review</a> — everything unverified, with sources.</li></ul>
+<ul><li><a href="v3-lines.html">Originated lines</a> — every game in the 3-day window, both estimators, the disagreement, and the possession-based total.</li><li><a href="v3-totals.html">Totals</a> — possessions × points-per-possession beside the average-of-averages it replaces, and the finding that the forward total does not beat a constant.</li><li><a href="v3-teams.html">Teams &amp; luck</a> — all 30 clubs, and the luck z-score that decides whether a strategy may lean on one.</li><li><a href="v3-calibration.html">Calibration &amp; reliability</a> — the table that explains why 64.5% accuracy coexists with a log-loss worse than a coin.</li><li><a href="v3-backtest.html">Backtest &amp; skill</a> — walk-forward, leakage audit, McNemar, permutation.</li><li><a href="v3-strategies.html">Strategies</a> — the six rules, their pre-registrations, and the family correction.</li><li><a href="v3-bet.html">Bet surface (gated)</a> — the gate table. Zero stakes.</li><li><a href="v3-injuries.html">Injuries</a> — the archive, both timestamps, and what the two captured releases actually show.</li><li><a href="v3-registers.html">Questions &amp; suggestions</a> — what is missing and how to find it, and what could change with the case against each change.</li><li><a href="v3-flagged.html">Flagged for review</a> — everything unverified, with sources.</li></ul>
 <footer>
   <p>Snapshot as of <b>2026-11-15</b>,
   retrieved <code>2026-11-15T11:33:00Z</code>.

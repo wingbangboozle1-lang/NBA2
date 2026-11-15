@@ -256,19 +256,30 @@ class TestPublishedSite(unittest.TestCase):
     def test_every_page_has_the_nav(self):
         from .build import NAV
         site = ROOT / "site"
-        pages = sorted(site.glob("*.html"))
+        # The v3 surface is its own page set with its own grouped navigation (it must be able to
+        # mark which pages are projection and which are gated), so it is excluded here and checked
+        # by nba2.v3.check instead. Excluding by prefix keeps this test's real guarantee intact:
+        # every page NOT on the v3 surface must be listed in the v2 NAV, in both directions.
+        pages = sorted(p for p in site.glob("*.html") if not p.name.startswith("v3-"))
         # 17 pages at the 2026-11-14 build; session arena/ab8743d8 added live-verification.html
-        # (live official re-verification) and decision-queue.html (suggestions review path);
-        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation);
-        # session arena/766d0269-nba2 added skill-attribution.html (naive baselines + paired
-        # McNemar test) and decisions-needed.html (the decision register). The assertion pins the
-        # NAV to the emitted file set in both directions, so an unlisted page fails here.
+        # and decision-queue.html; session arena/ac5fab5c-nba2 added strategy-lab.html;
+        # session arena/766d0269-nba2 added skill-attribution.html and decisions-needed.html;
+        # session arena/a1fddb57-nba2 added the v3 entry point to NAV. The assertion pins the NAV
+        # to the emitted file set in both directions, so an unlisted page fails here.
         self.assertEqual(len(pages), 22)
         self.assertEqual({p.name for p in pages}, {href for href, _ in NAV})
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:
                 self.assertIn(f'href="{href}"', doc, f"{p.name} missing nav link {href}")
+        # The v3 surface is reachable from every v2 page through the dashboard's link block, so
+        # a reader is never stranded on the v2 site without a route to the newer one.
+        self.assertIn('href="v3-index.html"', (site / "index.html").read_text())
+        v3 = sorted(site.glob("v3-*.html"))
+        self.assertEqual(len(v3), 12, "v3 surface changed size; update nba2.v3.check.V3_PAGES")
+        for p in v3:
+            self.assertIn('href="v3-index.html"', p.read_text(),
+                          f"{p.name} cannot reach the v3 dashboard")
 
     def test_no_page_claims_a_pick_is_stakable(self):
         site = ROOT / "site"

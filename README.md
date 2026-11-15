@@ -382,3 +382,96 @@ two dashboards both reach a reader. Probing the live site disproved it — `/NBA
 `site/` artefact) is published; the v1 tree is unreachable debt that CI still rebuilds (F-027, corrected). Two
 irregularities in another session's files — a spread-sign inversion in the S2 selections (F-025) and that unreachable
 tree (F-027) — are **published, not silently fixed**.
+
+## v3 — two estimators, disagreement as the confidence signal (session `arena/a1fddb57-nba2`, 2026-11-15)
+
+v3 is a **separate surface**, not a rewrite of v2. It keeps v2's two rules (every row sourced, every
+blank flagged) and changes the question: instead of one blended number, every game is priced by **two
+independent estimators** and the site publishes **how far apart they are** as its primary confidence
+signal. The blend exists, is labelled *fallback only*, and is never the headline.
+
+Live at **[v3-index.html](https://wingbangboozle1-lang.github.io/NBA2/v3-index.html)**.
+
+### The two surfaces
+
+| Surface | Pages | What it may contain |
+|---|---|---|
+| **Projection** | `v3-index`, `v3-lines`, `v3-totals`, `v3-teams`, `v3-calibration`, `v3-backtest`, `v3-strategies`, `v3-injuries`, `v3-methodology`, `v3-flagged` | Inputs, formulas, originated margins and totals, disagreement, calibration, reliability. No stake is implied by anything on it. |
+| **Bet (gated)** | `v3-bet` | A stake, and the gate report that proves it passed. Every stake today is **0**, by gate. |
+
+The separation is enforced by construction, not by convention: each page declares a surface, and
+`build_pages()` raises if a page renders as a surface other than the one it was scheduled under. A CI
+step asserts that no projection page carries a stake field.
+
+### The four results that matter, including the two that go against the model
+
+| Finding | Number | Where |
+|---|---|---|
+| Raw out-of-sample log-loss is **worse than a coin** | 0.7082 vs 0.6931 on 42 held-out games | [calibration](https://wingbangboozle1-lang.github.io/NBA2/v3-calibration.html) |
+| ...and the **measured calibration fixes it** | shrink ×0.55 → **0.6398**, beats the coin out of sample | same page |
+| Raw margin error is **worse than guessing a tie** | MAE 14.108 vs 13.75 | [backtest](https://wingbangboozle1-lang.github.io/NBA2/v3-backtest.html) |
+| ...and the shrink fixes that too | ×0.45 → **13.51** on the holdout, beating both baselines | same page |
+| The possession total **does not beat a constant** | MAE 16.05 vs 15.13 | [totals](https://wingbangboozle1-lang.github.io/NBA2/v3-totals.html) |
+| Two estimators disagree — the actual signal | median **3.73 pts**, opposite side on **12.5%** of games | [lines](https://wingbangboozle1-lang.github.io/NBA2/v3-lines.html) |
+
+Why the raw model fails while accuracy looks fine (64.5%): it is miscalibrated **inward**. It claims
+`p=0.195` where reality delivers `0.384`, and `p=0.887` where reality delivers `0.718`. Accuracy asks
+only which side of 0.5 the larger number fell on; log-loss asks whether the probability was right. The
+reliability table on the calibration page is the evidence, band by band, with a binomial p per band so a
+3-game band is not treated like a 73-game one.
+
+### Home advantage is pinned, not fitted
+
+`h = σ·Φ⁻¹(measured home-win rate)`, so `Φ(h/σ)` returns the measured rate **exactly** rather than
+approximately. The free fit is reported and not used: it buys an RMSE gain of **0.0021** by claiming an
+**83% home-win rate** against the measured **52.9%**. That trade — a negligible gain for an implausible
+quantity — is the whole argument for pinning, and it is printed on the page.
+
+A test caught the original implementation using the linear shortcut `σ(2p−1)`, which is the tangent at
+`p=0.5` and is stale everywhere else: the published `h` reproduced 0.5234 against the 0.5294 it claimed
+to be pinned to. See `nba2/v3/test_v3.py::TestEstimators`.
+
+### Strategies, and why nothing is ranked
+
+Six rules are pre-registered in `data/v3/prereg/*.json` (signal, thresholds, universe, settlement rule,
+hashed before the first bet) and scored against the base rate each rule's own construction implies. Two
+corrections were necessary and both are visible on the page:
+
+* **Multiplicity.** Six rules were tested; the chance at least one clears `p<0.05` by luck alone is
+  `1 − 0.95⁶ = 26.5%`. The verdict uses a **Holm-adjusted** p, with the raw p printed beside it.
+* **Direction.** A two-sided p can make a rule that is reliably *worse* look "significant". A verdict
+  now requires significance **and** deviation in the direction the rule claims.
+
+No rule receives a leaderboard rank: the largest settled count is **97**, below the 100-bet bar
+(disclosed as lower than v2's 300). A rank from 97 bets is noise wearing a rank.
+
+### Tamper-evident ledger
+
+`data/v3/ledger/sealed-picks.json` chains per-pick canonical-JSON hashes with each rule's
+pre-registration hash bound into its picks. Four attacks are tested and all are detected: editing a
+result, editing a hash, deleting a pick, and reordering picks.
+
+### What is blocked, and stays blocked
+
+| Missing input | Blocks | Consequence on the site |
+|---|---|---|
+| **Odds feed** | the market-anchored prior, any stake, ROI, CLV | Gate G6 `NOT MEASURABLE`; every stake is **0**. The weight formula is published with two inputs explicitly labelled *illustrations*. |
+| **Per-player game logs** | minutes redistribution (top-8 shares + replacement shares) | `FLAG-V3-ROTATION-UNFILED` on every affected line. No redistribution is estimated from season averages, because a season average is exactly what an absence changes. |
+| **More injury revisions** | the within-day status diff | **NOT MEASURED** — 1 of 26 revisions of the 11/15 report was fetched. The two captured releases share **zero players** (different slates), so their diff is labelled slate turnover, not status change. |
+| **Per-game possession data** | a total forecast with real variance | The possession total is correct and its error is worse than a constant; stated beside the formula. |
+
+### Reproduce it
+
+```bash
+python3 -m nba2.v3.build          # 11 pages across 2 surfaces
+python3 -m nba2.v3.check          # structural + semantic
+python3 -m nba2.v3.backtest       # every metric, with its baseline
+python3 -m nba2.v3.strategies     # scoreboard, gates, ledger verification
+python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 50 tests
+```
+
+Requirements: [`requirements/V3_REQUIREMENTS.json`](requirements/V3_REQUIREMENTS.json) — 18 rows,
+11 met, 5 partial, 2 blocked, each naming a file and a check.
+
+Full session write-up with the decision log and the defects found:
+[`analysis/session-a1fddb57-v3.md`](analysis/session-a1fddb57-v3.md).

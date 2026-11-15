@@ -188,6 +188,7 @@ NAV_GROUPS = (
         ("v3-strategies.html", "Strategies"),
         ("v3-injuries.html", "Injuries"),
         ("v3-methodology.html", "Methodology"),
+        ("v3-registers.html", "Questions &amp; suggestions"),
         ("v3-flagged.html", "Flagged for review"),
     ]),
     ("bet", "Bet surface (gated)", [
@@ -237,6 +238,15 @@ def build_pages(verbose: bool = True) -> tuple:
     (SITE / "assets").mkdir(exist_ok=True)
     (SITE / "assets" / "v3.css").write_text(R.CSS)
 
+    def _reg(name: str) -> dict:
+        path = ROOT / "requirements" / name
+        if not path.exists():
+            # A missing register is a build failure: a page that silently renders zero rows would
+            # look like "no open questions", which is the opposite of the truth.
+            raise SystemExit(f"v3 build: {path} is missing — the registers page cannot be honest "
+                             f"without it")
+        return json.loads(path.read_text())
+
     flags = collect_flags(lab, strat, inj)
     built = []
 
@@ -250,6 +260,7 @@ def build_pages(verbose: bool = True) -> tuple:
         ("projection", lambda: P.strategies_page(strat, lab)),
         ("projection", lambda: P.injuries_page(inj)),
         ("projection", lambda: P.methodology_page(cal, lab, strat)),
+        ("projection", lambda: P.registers_page(_reg("V3_QUESTIONS.json"), _reg("V3_SUGGESTIONS.json"))),
         ("projection", lambda: P.flagged_page(flags)),
         ("bet", lambda: P.bet_page(strat, lines)),
     ]
@@ -382,3 +393,10 @@ def collect_flags(lab: dict, strat: dict, inj: dict) -> list[dict]:
         "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml",
         "OPEN")
     return f
+
+
+if __name__ == "__main__":
+    _built, _payload = build_pages()
+    print()
+    print(f"built {len(_built)} v3 pages across {len(SURFACES)} surfaces")
+    print(f"  counts: {_payload['counts']}")

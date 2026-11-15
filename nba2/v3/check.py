@@ -34,7 +34,7 @@ DATA = ROOT / "data" / "v3"
 V3_PAGES = [
     "v3-index.html", "v3-lines.html", "v3-totals.html", "v3-teams.html",
     "v3-calibration.html", "v3-backtest.html", "v3-strategies.html", "v3-injuries.html",
-    "v3-methodology.html", "v3-flagged.html", "v3-bet.html",
+    "v3-methodology.html", "v3-registers.html", "v3-flagged.html", "v3-bet.html",
 ]
 
 
@@ -158,7 +158,27 @@ def check_structure() -> list[str]:
         if surface == "projection" and "stake_units" in html:
             problems.append(f"{name}: projection page leaks a bet-surface field")
 
-        # 5. no page may be empty or truncated
+        # 5. every data row carries the URL it came from. This is the v2 site's oldest rule and
+        #    the v3 pages must meet it too: a row with no source is a number the reader has to
+        #    take on faith, and the whole point of the site is that they do not have to.
+        for m in re.finditer(r"<tr[^>]*>(.*?)</tr>", html, re.S):
+            row = m.group(1)
+            if "<th" in row:
+                continue                     # header row
+            if not re.search(r'href="https?://', row):
+                frag = re.sub(r"<[^>]+>", " ", row)
+                frag = re.sub(r"\s+", " ", frag).strip()[:80]
+                problems.append(f"{name}: table row without a source link -> {frag!r}")
+
+        # 6. a blank cell must carry its reason, not be empty
+        for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S):
+            if "<th" in row:
+                continue
+            for cell in re.findall(r"<td[^>]*>(.*?)</td>", row, re.S):
+                if cell.strip() == "":
+                    problems.append(f"{name}: empty <td> with no reason")
+
+        # 7. no page may be empty or truncated
         if len(html) < 2000:
             problems.append(f"{name}: only {len(html)} bytes — truncated build?")
         if "</html>" not in html:

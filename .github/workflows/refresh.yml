@@ -130,6 +130,80 @@ jobs:
           echo "cannot refresh the third-party ratings snapshot, and blocking settlement on it"
           echo "would freeze the ledger's metrics whenever the ratings capture ages."
 
+      # v3 freshness + provenance gates. The brief requires the rebuild to happen only after
+      # these pass, so they run as a separate blocking step immediately before the commit step
+      # rather than being folded into the cross-check above (whose purpose is different: it
+      # compares the site against its committed data, not the data against the official pages).
+      #
+      # Each gate is a check on the CAPTURE, not on the model. A model result cannot be "stale";
+      # a capture can, and a stale capture silently changes every number downstream.
+      - name: v3 freshness + provenance gates (blocking, before any rebuild)
+        run: |
+          set -uo pipefail
+          python3 - <<'PY' || { echo "::error::v3 freshness/provenance gate failed — refusing to rebuild or commit"; exit 1; }
+          import datetime as dt
+          import sys
+          from nba2.v3 import official as O
+          from nba2.v3 import model as M
+
+          problems = []
+
+          # G-FRESH: the capture must be from today (the job runs twice a day, so a capture more
+          # than a day old means the ingest silently stopped working).
+          run_date = dt.datetime.now(dt.timezone.utc).date()
+          cap_date = dt.date.fromisoformat(O.AS_OF)
+          age_days = (run_date - cap_date).days
+          print(f"capture AS_OF {O.AS_OF}, retrieved {O.RETRIEVED_UTC}, age {age_days}d")
+          if age_days > 1:
+              problems.append(f"capture is {age_days} days old — the ingestion path is broken")
+
+          # G-PROVENANCE: every captured surface must name the URL it came from.
+          for key, val in O.SOURCES.items():
+              url = val[1] if isinstance(val, (list, tuple)) and len(val) > 1 else val
+              if not (isinstance(url, str) and url.startswith("https://")):
+                  problems.append(f"SOURCE {key} has no https URL: {url!r}")
+
+          # G-ARITHMETIC: the transcription identities. If a capture were mis-transcribed, one of
+          # these breaks — which is why they run before the site is rebuilt from it.
+          teams = M.load_teams()
+          w, l = sum(t.w for t in teams.values()), sum(t.l for t in teams.values())
+          if w != l:
+              problems.append(f"wins {w} != losses {l}")
+          if w != 188:
+              problems.append(f"wins {w} != 188 (the season total the capture claims)")
+          for tri, t in teams.items():
+              if t.gp != t.w + t.l:
+                  problems.append(f"{tri}: GP {t.gp} != W+L {t.w + t.l}")
+          for gid, _d, _a, _h, ap, hp, aq, hq, _n, _arena in O.FINALS:
+              if aq and sum(aq) != ap:
+                  problems.append(f"{gid}: away quarters {sum(aq)} != final {ap}")
+              if hq and sum(hq) != hp:
+                  problems.append(f"{gid}: home quarters {sum(hq)} != final {hp}")
+
+          # G-BLOCKED-SURFACE: with no odds feed, nothing on the bet surface may carry a stake.
+          # This is the one gate that must fail the job if it ever stops being true.
+          try:
+              import json, pathlib
+              led = json.loads(pathlib.Path("data/v3/ledger/sealed-picks.json").read_text())
+              staked = [p for p in led.get("picks", []) if (p.get("stake_units") or 0) > 0]
+              if staked:
+                  problems.append(f"{len(staked)} sealed picks carry a stake but G6 reports no market")
+          except FileNotFoundError:
+              problems.append("data/v3/ledger/sealed-picks.json is missing")
+
+          if problems:
+              for p in problems:
+                  print(f"  FAIL {p}", file=sys.stderr)
+              sys.exit(1)
+          print(f"  OK  {len(O.SOURCES)} sources with https URLs, W==L=={w}, "
+                f"{len(O.FINALS)} finals sum to their quarters, 0 staked picks")
+          PY
+
+      - name: Rebuild the v3 surface (only after the gates above passed)
+        run: |
+          python3 -m nba2.v3.build
+          python3 -m nba2.v3.check
+
       - name: Commit refreshed snapshots (only when something changed)
         run: |
           set -euo pipefail

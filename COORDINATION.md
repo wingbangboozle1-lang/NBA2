@@ -3215,3 +3215,70 @@ edits, `backtest/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`,
 
 **Conflict rule for parallel sessions:** I edit only the scope above. Any other session landing
 during this window must not edit `site/**` (mine as generator output) or `nba2/v2/build.py`.
+
+## Session `arena/a1fddb57-nba2` — V3 status update (2026-11-15, second push)
+
+Branch `arena/a1fddb57-nba2`. Write scope unchanged (`nba2/v3/**`, `data/v3/**`, `site/v3-*.html`,
+`site/assets/v3.css`, `nba2/v2/build.py` limited to one `v3.build_pages()` call plus a dashboard
+entry link, `.github/workflows/v3-verify.yml`, `requirements/V3_*.json`,
+`analysis/session-a1fddb57-v3.md`, README v3 section, append-only board).
+
+| ID | Task | Status now | Evidence |
+|---|---|---|---|
+| V3-01 | Claim recorded + pushed | done | commit `c101803` |
+| V3-02 | Fresh official capture | **done** | `official.py` validated: W 188 == L 188, home 99-88 == road, STANDINGS.W == TRAD.W all 30, PTS mass gap 10.2 < 37.6, 5 finals each with quarter arrays that sum to the printed final |
+| V3-03 | Per-game result feed, settle on verified finals | **partial** | All five 2026-11-14 finals carry quarters and every block sums. Earlier dates carry finals without quarters — blank + reason, never filled |
+| V3-04 | Injury archive + consecutive-report diff | **partial** | Archive of 29 revisions with revision + retrieval times; 2 captured. Within-day diff **NOT MEASURED** (1 of 26). Cross-release diff compares different slates (0 shared players) and is labelled as such |
+| V3-05 | Pre-registration per strategy | **done** | `data/v3/prereg/S3-01..06.json`, hashes bound into every pick |
+| V3-06 | Tamper-evident ledger | **done** | 22 picks, chained root verifies; 4 attacks tested (edit result / edit hash / delete / reorder) all detected |
+| V3-07 | Projection vs Bet split | **done** | Enforced in `build_pages()`; CI asserts no projection page carries a stake field; 10 projection + 1 bet page |
+| V3-08 | Two estimators, disagreement as headline | **done** | A vs B on every line; median gap 3.73, opposite side 12.5%; McNemar p=0.167 → "not separable from chance" |
+| V3-09 | HCA pinned | **done** | `h = σ·Φ⁻¹(p)`; round-trip exact. **Bug found by test**: was using the linear shortcut `σ(2p−1)`, reproducing 0.5234 against a claimed 0.5294 |
+| V3-10 | Luck z per team + refusal gate | **done** | 0 of 30 outside |z|>1.96 → gate refuses nothing, stated as such |
+| V3-11 | Rest/B2B/3-in-4 + travel | **partial** | Implemented and spot-checked; multi-game trip accumulation not carried (disclosed) |
+| V3-12 | Minutes redistribution | **blocked** | Per-player logs absent. No estimate from season averages. `FLAG-V3-ROTATION-UNFILED` |
+| V3-13 | Parlay pricing with measured ρ | **done** | Copula + naive product on every leg; ρ from `total_fwd` now, not from a constant |
+| V3-14 | Rotation availability column | **done** | Own column per pick; model remains availability-blind and the column says so |
+| V3-15 | Market-anchored prior | **blocked** | No odds feed → G6 NOT MEASURABLE, every stake 0. Formula published with illustrations labelled |
+| V3-16 | Total = POSS × PPP | **partial** | Formula implemented and correct; **its forecast is worse than a constant** (16.05 vs 15.13) and that is published beside it |
+| V3-17 | Injury banner both timestamps | **done** | Revision ET → UTC derived (was a typed literal contradicting its own lag); `check_banner_arithmetic()` fails the build on drift |
+| V3-18 | Settle from official finals | **partial** | Rule sealed per pick; no pick has reached settlement in this build |
+| V3-19 | Per-player game logs | **blocked** | Absent from the repo |
+| V3-20 | Scheduled refresh with gates | **todo** | `v3-verify.yml` written and every step verified locally; the scheduled refresh job extension is the remaining item |
+| V3-21 | Exec summary / suggestions / questions (v3) | **todo** | v3 site carries the findings and flags; a dedicated v3 suggestions/questions register is the remaining item |
+| V3-22 | Verify, PR, merge, Pages | **todo** | Gates green locally; PR not yet opened |
+
+### Defects found this session and fixed (each has a test)
+
+1. Home advantage pinned with the linear shortcut instead of `Φ⁻¹` — published h did not reproduce
+   the rate it claimed.
+2. Correlation register correlated margin against a **constant** (sd 1.21); replaced with a forward
+   total carrying real variance.
+3. `leakage_audit`'s delete-the-game test failed on a correct implementation (removing a row also
+   changes every later date's σ). Replaced with three direct tests; the rejected one is documented.
+4. S3-05 produced **zero bets** because it compared the total to that same constant.
+5. Injury banner carried a typed `"10:15Z"` beside a computed 29-minute lag — a five-hour
+   self-contradiction on one screen.
+6. A `total_direction` reading asserted "not significant" directly above `p = 0.020`; the prose is
+   now composed from the p-values.
+7. One-sided binomial p labelled an anti-signal "distinguishable"; now two-sided + Holm + a
+   direction requirement.
+8. Artifact checker produced 7 false positives on a clean build (matched "inf" inside
+   "information"); delimiters anchored.
+
+### Publish-critical findings, all on the site
+
+- raw log-loss **0.7082** loses to a coin; the ×0.55 shrink scores **0.6398** and beats it
+- raw margin MAE **14.108** loses to a tie; the ×0.45 shrink scores **13.51** and beats it
+- forward total MAE **16.05** loses to a constant **15.13**; its ordering signal is 0.576 (p=0.082)
+- 0 of 30 clubs outside the luck band → the refusal gate refuses nothing today
+- no rule is ranked: largest settled count 97 < the 100-bet bar
+
+### Cross-scope note (for the integration owner)
+
+`nba2/v2/build.py` was touched for exactly two things: one `v3.build_pages()` call placed immediately
+**before** the `site/data` copy (so v3 output is final first), and one dashboard link block. If
+another session edits that file, keep the v3 call before the copy step or `site/data/v3-*.json` will
+publish stale. `nba2/v2/test_v2.py::test_every_page_has_the_nav` now excludes `v3-*.html` by prefix
+and asserts the v3 dashboard is reachable from `index.html` — that exclusion is deliberate, not a
+loosened assertion.

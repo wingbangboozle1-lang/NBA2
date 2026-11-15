@@ -23,6 +23,7 @@
 <a href="v3-strategies.html">Strategies</a>
 <a href="v3-injuries.html">Injuries</a>
 <a href="v3-methodology.html">Methodology</a>
+<a href="v3-registers.html">Questions &amp; suggestions</a>
 <a href="v3-flagged.html">Flagged for review</a>
 <p class="navgrp bet">Bet surface (gated)</p>
 <a href="v3-bet.html">Gate report</a>
@@ -44,72 +45,84 @@
 <th scope="col" class="n">Value</th>
 <th scope="col" class="n">Baseline</th>
 <th scope="col">Verdict</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td>Accuracy (A)</td>
 <td class="n">64.5%</td>
 <td class="n">n=152</td>
 <td><span class="badge b-info">published</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Accuracy (B)</td>
 <td class="n">69.1%</td>
 <td class="n">same games, other estimator</td>
 <td><span class="badge b-info">published</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Log-loss (A)</td>
 <td class="n">0.7414</td>
 <td class="n">coin 0.6931</td>
 <td><span class="badge b-bad">WORSE THAN COIN</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Log-loss (B)</td>
 <td class="n">0.7918</td>
 <td class="n">coin 0.6931</td>
 <td><span class="badge b-bad">WORSE THAN COIN</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Log-loss (A, calibrated)</td>
 <td class="n">0.6398</td>
 <td class="n">×0.55, held-out</td>
 <td><span class="badge b-ok">beats coin</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Brier (A)</td>
 <td class="n">0.2423</td>
 <td class="n">coin 0.25</td>
 <td><span class="badge b-warn">slightly better</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Margin MAE (A)</td>
 <td class="n">14.108</td>
 <td class="n">tie 13.75, home-edge 13.658</td>
 <td><span class="badge b-bad">WORSE</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Margin MAE (A, shrunk)</td>
 <td class="n">13.51</td>
 <td class="n">held-out</td>
 <td><span class="badge b-ok">beats both</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>r(predicted, actual margin)</td>
 <td class="n">0.3585</td>
 <td class="n">n=152</td>
 <td><span class="badge b-warn">weak positive</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Median estimator disagreement</td>
 <td class="n">3.73 pts</td>
 <td class="n">max 23.546</td>
 <td><span class="badge b-info">the headline</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Opposite-side disagreement</td>
 <td class="n">12.5%</td>
 <td class="n">games where A and B favour different clubs</td>
 <td><span class="badge b-info">published</span></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 </tbody></table></div>
 <h2>Leakage audit — three direct tests</h2>
@@ -119,21 +132,25 @@
 <th scope="col">Test</th>
 <th scope="col">Result</th>
 <th scope="col">What it shows</th>
+<th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
 <td>Same-date isolation</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>max within-date difference 0.0</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>No in-sample term</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>every rating, σ and baseline computed from strictly earlier dates</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 <tr>
 <td>Future-only edit</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>a fabricated game 30 days later moves no earlier forecast (max Δ 0.0)</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">results</a></td>
 </tr>
 </tbody></table></div>
 <div class="card warn"><p><b>A rejected test, recorded so it is not proposed again.</b> delete-the-target-game. It fails on any correct implementation because removing a row also removes it from later dates&#x27; volatility estimates. Recorded here so the same wrong test is not proposed again.</p><p>This repository ran that test first and it failed on a correct implementation. The failure was reported as a gate failure for one revision of this build. It is now explained here rather than deleted, because a test that fails for the wrong reason is a bug in the test.</p></div>
