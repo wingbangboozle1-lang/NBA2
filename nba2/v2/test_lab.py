@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class TestHistoryCompleteness(unittest.TestCase):
-    """The 183 official finals must rebuild every standings record exactly."""
+    """The committed official finals must rebuild every standings record exactly."""
 
     @classmethod
     def setUpClass(cls):
@@ -34,8 +34,13 @@ class TestHistoryCompleteness(unittest.TestCase):
         ids = [g["game_id"] for g in self.games]
         self.assertEqual(len(ids), len(set(ids)), "a duplicated game id would double-count")
 
-    def test_history_is_183_games(self):
-        self.assertEqual(len(self.games), 183)
+    def test_history_is_complete_against_the_committed_finals(self):
+        # 188 finals through 2026-11-14 (183 at the 2026-11-14 snapshot + the five 11/14
+        # results captured by session arena/673acec0-nba2). Counted from the artefact, not
+        # remembered, so adding a night of results cannot fail this gate spuriously.
+        snap = sorted((ROOT / "data" / "raw").glob("official_standings_*.json"))[-1]
+        self.assertEqual(sum(r["w"] for r in json.loads(snap.read_text())["records"]),
+                         len(self.games))
 
     def test_rebuilt_records_equal_official_standings(self):
         w, l = Counter(), Counter()
@@ -78,8 +83,21 @@ class TestNoLookAhead(unittest.TestCase):
         self.assertEqual(audit["n_violations"], 0, audit["offending_game_ids"])
 
     def test_predictions_cover_every_game_after_the_first_date(self):
-        # 183 games minus the 16 played on the first date (no prior data exists for those)
-        self.assertEqual(len(self.preds), 167)
+        # A game is predictable only once BOTH of its clubs appear in a strictly earlier
+        # game; before that there is no rating to difference. That is the exact rule the
+        # walk-forward applies, so it is recomputed here rather than quoted.
+        dates = sorted({g["date"] for g in self.games})
+        expected = 0
+        for d in dates:
+            seen = {t for g in self.games if g["date"] < d for t in (g["away"], g["home"])}
+            expected += sum(1 for g in self.games
+                            if g["date"] == d and g["away"] in seen and g["home"] in seen)
+        self.assertEqual(len(self.preds), expected)
+        # and the skipped games are skipped for that reason alone: every one of them sits
+        # on a date before the league has been fully seen
+        skipped = len(self.games) - len(self.preds)
+        first_date_games = sum(1 for g in self.games if g["date"] == dates[0])
+        self.assertLessEqual(first_date_games, skipped)
 
 
 class TestParlayMath(unittest.TestCase):

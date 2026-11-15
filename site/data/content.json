@@ -77,7 +77,7 @@
    "Correlation honesty",
    "No parlay priced by multiplying legs unless the leg correlation is measured or bounded.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/schedule?date=2026-11-15",
+   "https://www.nba.com/schedule?date=2026-11-17",
    "Same-game legs are not independent; the error is one-sided and expensive."
   ],
   [
@@ -129,7 +129,7 @@
    "gates_that_fail_today": "G6,G7",
    "status": "BLOCKED \u2014 legs have no price",
    "why": "Cross-game independence is a stated assumption, not a measurement; and the compounded hold makes it worse than two singles at equal edge.",
-   "src": "https://www.nba.com/schedule?date=2026-11-15"
+   "src": "https://www.nba.com/schedule?date=2026-11-17"
   },
   {
    "id": "S4",
@@ -173,7 +173,7 @@
    "gates_that_fail_today": "G2,G7,G9",
    "status": "BLOCKED \u2014 no on/off or usage data",
    "why": "Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.",
-   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   }
  ],
  "leaderboard": [
@@ -203,7 +203,7 @@
    "A pick must be published before tip and be sealed with a hash",
    "Prevents back-filling a winning pick after the result is known.",
    "PROPOSED",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "Unit accounting",
@@ -588,7 +588,7 @@
    "The covariance of (margin, total) over settled games.",
    "Pull per-game final scores (SG-2) and compute Pearson/Spearman on \u2265300 games, per team and league-wide.",
    "Blocks every same-game parlay (S4) and gate G10.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "Q-2",
@@ -606,7 +606,7 @@
    "Whether shared slate conditions (travel, referee crews, league-wide pace nights) induce any correlation.",
    "Regression of leg A's result on leg B's across \u22651,000 parlays with no shared team.",
    "Blocks S3 pricing being more than an assumption.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "Q-4",
@@ -615,7 +615,7 @@
    "The empirical play rate conditional on each status label, and whether it varies by team or by body part.",
    "Join report history to box scores: for each status label, count appearances (SG-11).",
    "Makes the current p(play) column unusable as evidence.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   ],
   [
    "Q-5",
@@ -678,7 +678,7 @@
    "Archival storage of the exact page (a hash of the raw bytes), not just the transcription.",
    "Store the raw fetched HTML/PDF bytes as a content-addressed artefact in the pipeline (SG-1 + SG-17).",
    "Needed before any third party trusts a published record.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "Q-12",
@@ -696,7 +696,7 @@
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "Q-14",
@@ -741,7 +741,7 @@
    "A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.",
    "Keep appending official finals (SG-31) and recompute; the interval will narrow as 1/sqrt(n).",
    "Decides whether SG-34 (publish the parlay price) is safe to ship.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Q-21",
@@ -750,7 +750,7 @@
    "Each strategy's own bet-to-bet correlation, which the lab can now simulate from settled history.",
    "Run a power simulation per strategy on its own settled stream and set n per type (SG-32).",
    "Sets when each strategy becomes rank-eligible on the leaderboard.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Q-22",
@@ -759,7 +759,7 @@
    "Strength of schedule per team, computed from the same committed finals.",
    "Add an opponent-adjusted rating (already two estimators deep) and re-run the walk-forward.",
    "Decides whether the signal is real skill or a schedule artefact \u2014 the single most important open question on the site.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Q-23",
@@ -878,7 +878,7 @@
    "Verification",
    "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
    "Marked 'continuation' in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   ],
   [
    "F-010",
@@ -894,7 +894,7 @@
    "Product",
    "The repository contains five earlier site trees (root, pages/, docs/, dashboard/, verified/, originated/) with different data.",
    "This build does not edit them; the new tree is self-contained under /site. A consolidation decision is logged on the Suggestions page.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-17"
   ],
   [
    "F-012",

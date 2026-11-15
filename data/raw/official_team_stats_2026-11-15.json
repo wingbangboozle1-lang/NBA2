@@ -1,0 +1,261 @@
+{
+ "schema": "nba2.official-team-stats.v1",
+ "session": "arena/673acec0-nba2",
+ "retrieved_at_utc": "2026-11-15T11:50:00Z",
+ "advanced_url": "https://www.nba.com/stats/teams/advanced",
+ "traditional_url": "https://www.nba.com/stats/teams/traditional",
+ "opponent_url": "https://www.nba.com/stats/teams/opponent",
+ "note": "OffRtg/DefRtg/NetRtg/PACE/PIE read off the advanced page. The traditional page's PTS/G column was read for the 8 clubs whose rows rendered in this session and matches the finals-derived PF/G to the printed decimal for all 8; the opponent page was not re-read this session because the quantity it carries (opponent points per game) is exactly reproduced by the complete set of official finals the repository holds (188 games), and re-reading it would add a transcription where an exact reconstruction already exists.",
+ "advanced": {
+  "ATL": {
+   "off_rtg": 113.3,
+   "def_rtg": 111.9,
+   "net_rtg": 1.4,
+   "pace": 103.55,
+   "pie": 48.5,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "BKN": {
+   "off_rtg": 109.8,
+   "def_rtg": 116.0,
+   "net_rtg": -6.2,
+   "pace": 99.47,
+   "pie": 46.1,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "BOS": {
+   "off_rtg": 117.4,
+   "def_rtg": 105.6,
+   "net_rtg": 11.7,
+   "pace": 96.62,
+   "pie": 55.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "CHA": {
+   "off_rtg": 101.9,
+   "def_rtg": 113.1,
+   "net_rtg": -11.2,
+   "pace": 96.83,
+   "pie": 42.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "CHI": {
+   "off_rtg": 109.4,
+   "def_rtg": 120.3,
+   "net_rtg": -10.9,
+   "pace": 103.81,
+   "pie": 44.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "CLE": {
+   "off_rtg": 116.9,
+   "def_rtg": 115.4,
+   "net_rtg": 1.6,
+   "pace": 99.72,
+   "pie": 51.2,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "DAL": {
+   "off_rtg": 112.8,
+   "def_rtg": 112.8,
+   "net_rtg": 0.0,
+   "pace": 100.54,
+   "pie": 49.7,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "DEN": {
+   "off_rtg": 116.0,
+   "def_rtg": 114.7,
+   "net_rtg": 1.3,
+   "pace": 97.67,
+   "pie": 52.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "DET": {
+   "off_rtg": 114.1,
+   "def_rtg": 109.2,
+   "net_rtg": 4.9,
+   "pace": 99.48,
+   "pie": 53.7,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "GSW": {
+   "off_rtg": 116.1,
+   "def_rtg": 112.0,
+   "net_rtg": 4.1,
+   "pace": 99.66,
+   "pie": 51.8,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "HOU": {
+   "off_rtg": 119.3,
+   "def_rtg": 110.2,
+   "net_rtg": 9.1,
+   "pace": 97.42,
+   "pie": 55.8,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "IND": {
+   "off_rtg": 110.1,
+   "def_rtg": 111.7,
+   "net_rtg": -1.5,
+   "pace": 101.15,
+   "pie": 49.6,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "LAC": {
+   "off_rtg": 110.7,
+   "def_rtg": 115.8,
+   "net_rtg": -5.1,
+   "pace": 100.55,
+   "pie": 47.4,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "LAL": {
+   "off_rtg": 121.6,
+   "def_rtg": 113.6,
+   "net_rtg": 8.0,
+   "pace": 100.5,
+   "pie": 54.2,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "MEM": {
+   "off_rtg": 119.0,
+   "def_rtg": 110.4,
+   "net_rtg": 8.5,
+   "pace": 100.46,
+   "pie": 53.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "MIA": {
+   "off_rtg": 114.7,
+   "def_rtg": 116.2,
+   "net_rtg": -1.5,
+   "pace": 102.49,
+   "pie": 50.0,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "MIL": {
+   "off_rtg": 105.7,
+   "def_rtg": 120.0,
+   "net_rtg": -14.2,
+   "pace": 100.31,
+   "pie": 42.0,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "MIN": {
+   "off_rtg": 116.0,
+   "def_rtg": 104.5,
+   "net_rtg": 11.5,
+   "pace": 101.27,
+   "pie": 55.2,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "NOP": {
+   "off_rtg": 111.3,
+   "def_rtg": 120.0,
+   "net_rtg": -8.6,
+   "pace": 101.83,
+   "pie": 45.7,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "NYK": {
+   "off_rtg": 114.5,
+   "def_rtg": 108.6,
+   "net_rtg": 5.9,
+   "pace": 95.63,
+   "pie": 53.3,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "OKC": {
+   "off_rtg": 112.7,
+   "def_rtg": 109.0,
+   "net_rtg": 3.7,
+   "pace": 98.58,
+   "pie": 53.3,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "ORL": {
+   "off_rtg": 109.7,
+   "def_rtg": 113.4,
+   "net_rtg": -3.7,
+   "pace": 98.23,
+   "pie": 47.6,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "PHI": {
+   "off_rtg": 111.0,
+   "def_rtg": 109.5,
+   "net_rtg": 1.5,
+   "pace": 100.04,
+   "pie": 50.9,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "PHX": {
+   "off_rtg": 113.8,
+   "def_rtg": 117.6,
+   "net_rtg": -3.8,
+   "pace": 98.45,
+   "pie": 48.1,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "POR": {
+   "off_rtg": 118.8,
+   "def_rtg": 111.1,
+   "net_rtg": 7.7,
+   "pace": 100.67,
+   "pie": 53.3,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "SAC": {
+   "off_rtg": 107.3,
+   "def_rtg": 119.5,
+   "net_rtg": -12.2,
+   "pace": 101.0,
+   "pie": 42.8,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "SAS": {
+   "off_rtg": 119.6,
+   "def_rtg": 106.6,
+   "net_rtg": 13.0,
+   "pace": 98.94,
+   "pie": 56.7,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "TOR": {
+   "off_rtg": 114.5,
+   "def_rtg": 112.8,
+   "net_rtg": 1.7,
+   "pace": 99.88,
+   "pie": 49.3,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "UTA": {
+   "off_rtg": 105.0,
+   "def_rtg": 116.4,
+   "net_rtg": -11.3,
+   "pace": 100.5,
+   "pie": 45.3,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  },
+  "WAS": {
+   "off_rtg": 108.7,
+   "def_rtg": 114.3,
+   "net_rtg": -5.5,
+   "pace": 99.63,
+   "pie": 47.1,
+   "source": "https://www.nba.com/stats/teams/advanced"
+  }
+ },
+ "traditional_pts_read": {
+  "HOU": 116.2,
+  "PHI": 111.2,
+  "POR": 119.6,
+  "MEM": 120.6,
+  "MIN": 118.3,
+  "DET": 115.7,
+  "DEN": 114.6,
+  "GSW": 116.7
+ }
+}

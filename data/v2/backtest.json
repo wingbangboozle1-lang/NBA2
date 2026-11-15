@@ -1,43 +1,43 @@
 {
  "meta": {
-  "n_games_scored": 167,
+  "n_games_scored": 172,
   "n_skipped_no_prior": 16,
   "first_date": "2026-10-23",
-  "last_date": "2026-11-13",
-  "n_dates": 21,
+  "last_date": "2026-11-14",
+  "n_dates": 22,
   "generated": "2026-11-14",
   "shrink_pseudo_games": 8.0,
   "home_court_pts": 2.0,
   "sigma_pts": 12.75,
-  "source": "data/raw/history/*.json \u2014 183 official finals, one nba.com/game URL per row",
+  "source": "data/raw/history/*.json \u2014 188 official finals, one nba.com/game URL per row",
   "leakage_rule": "ratings for a date use only games strictly before that date"
  },
  "headline": {
-  "straight_up_accuracy": 0.6766,
-  "hits": 113,
-  "mae_margin": 11.962,
-  "rmse_margin": 15.377,
-  "mae_baseline_zero": 13.359,
-  "rmse_baseline_zero": 16.65,
-  "skill_vs_baseline_pct": 10.46,
-  "bias": 0.548,
-  "brier": 0.217,
+  "straight_up_accuracy": 0.6744,
+  "hits": 116,
+  "mae_margin": 12.043,
+  "rmse_margin": 15.451,
+  "mae_baseline_zero": 13.366,
+  "rmse_baseline_zero": 16.59,
+  "skill_vs_baseline_pct": 9.9,
+  "bias": 0.48,
+  "brier": 0.2201,
   "brier_baseline": 0.25,
-  "brier_skill_pct": 13.21,
-  "auroc": 0.714,
+  "brier_skill_pct": 11.97,
+  "auroc": 0.7052,
   "accuracy_ci95": [
-   0.6024,
-   0.7429
+   0.6012,
+   0.74
   ],
-  "log_loss": 0.6234,
+  "log_loss": 0.6331,
   "log_loss_baseline": 0.6931,
-  "calibration_slope": 0.266,
-  "calibration_intercept": 0.463,
+  "calibration_slope": 0.237,
+  "calibration_intercept": 0.468,
   "calibration_read": "over-confident",
-  "games_to_prove_edge_vs_coinflip": 104
+  "games_to_prove_edge_vs_coinflip": 108
  },
  "significance": {
-  "observed_mae_gain": 1.398,
+  "observed_mae_gain": 1.323,
   "draws": 4000,
   "seed": 20261114,
   "p_gain_positive": 0.9998,
@@ -46,13 +46,13 @@
  "calibration": [
   {
    "bin": "0%-45%",
-   "n": 53,
-   "hits": 16,
-   "mean_predicted": 0.3637,
-   "observed": 0.3019,
+   "n": 55,
+   "hits": 17,
+   "mean_predicted": 0.3639,
+   "observed": 0.3091,
    "ci95": [
-    0.1952,
-    0.4354
+    0.2028,
+    0.4403
    ]
   },
   {
@@ -79,92 +79,92 @@
   },
   {
    "bin": "55%-65%",
-   "n": 36,
-   "hits": 17,
-   "mean_predicted": 0.5944,
-   "observed": 0.4722,
+   "n": 37,
+   "hits": 18,
+   "mean_predicted": 0.5935,
+   "observed": 0.4865,
    "ci95": [
-    0.3199,
-    0.6299
+    0.3345,
+    0.6411
    ]
   },
   {
    "bin": "65%-100%",
-   "n": 49,
-   "hits": 38,
-   "mean_predicted": 0.7287,
-   "observed": 0.7755,
+   "n": 51,
+   "hits": 39,
+   "mean_predicted": 0.7334,
+   "observed": 0.7647,
    "ci95": [
-    0.6412,
-    0.8698
+    0.6324,
+    0.86
    ]
   }
  ],
  "volatility": {
-  "margin_sd_actual": 16.67,
-  "total_sd_actual": 19.319,
+  "margin_sd_actual": 16.6,
+  "total_sd_actual": 19.211,
   "sigma_published": 12.75,
   "note": "The published sigma (12.75) is a *win-total* scale parameter, not the game-margin sd measured here. They are different quantities and must not be compared directly."
  },
  "margin_total": {
-  "n": 167,
-  "r": -0.0132,
+  "n": 172,
+  "r": 0.0044,
   "ci95": [
-   -0.1648,
-   0.1389
+   -0.1454,
+   0.1539
   ],
-  "t": -0.17,
+  "t": 0.057,
   "significant_at_5pct": false,
   "verdict": "no detectable relationship at this sample size",
-  "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 167"
+  "power_note": "detecting a true r of 0.10 at 80% power needs about 780 games; this sample has 172"
  },
  "compression": {
-  "predicted_margin_sd": 5.44,
-  "actual_margin_sd": 16.67,
-  "ratio": 0.326,
-  "r_predicted_vs_actual": 0.3855,
-  "spearman_confidence_vs_bigwin": 0.0898,
+  "predicted_margin_sd": 5.58,
+  "actual_margin_sd": 16.6,
+  "ratio": 0.336,
+  "r_predicted_vs_actual": 0.3605,
+  "spearman_confidence_vs_bigwin": 0.0978,
   "read": "The model ranks games well but its margin estimates are compressed to about a third of true dispersion, so a predicted margin must not be read as an expected margin \u2014 and must never be used to size a stake."
  },
  "sensitivity": [
   {
    "shrink_pseudo_games": 0.0,
-   "n": 167,
-   "accuracy": 0.6228,
-   "mae": 14.706,
+   "n": 172,
+   "accuracy": 0.6221,
+   "mae": 14.747,
    "pred_sd": 15.33,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 2.0,
-   "n": 167,
-   "accuracy": 0.6407,
-   "mae": 12.296,
-   "pred_sd": 9.58,
+   "n": 172,
+   "accuracy": 0.6395,
+   "mae": 12.39,
+   "pred_sd": 9.7,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 4.0,
-   "n": 167,
-   "accuracy": 0.6587,
-   "mae": 11.895,
-   "pred_sd": 7.54,
+   "n": 172,
+   "accuracy": 0.657,
+   "mae": 11.992,
+   "pred_sd": 7.68,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 8.0,
-   "n": 167,
-   "accuracy": 0.6766,
-   "mae": 11.962,
-   "pred_sd": 5.44,
+   "n": 172,
+   "accuracy": 0.6744,
+   "mae": 12.043,
+   "pred_sd": 5.58,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   },
   {
    "shrink_pseudo_games": 16.0,
-   "n": 167,
-   "accuracy": 0.6407,
-   "mae": 12.271,
-   "pred_sd": 3.56,
+   "n": 172,
+   "accuracy": 0.6395,
+   "mae": 12.329,
+   "pred_sd": 3.67,
    "note": "in-sample sensitivity; not used to pick the headline configuration"
   }
  ],
@@ -315,6 +315,13 @@
    "hits": 5,
    "accuracy": 0.5556,
    "mae": 12.224
+  },
+  {
+   "date": "2026-11-14",
+   "n": 5,
+   "hits": 3,
+   "accuracy": 0.6,
+   "mae": 14.772
   }
  ],
  "rows": [
@@ -2154,6 +2161,61 @@
    "p_home": 0.3835,
    "correct": false,
    "source_url": "https://www.nba.com/game/okc-vs-lac-0022600042"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "DEN @ NOP",
+   "neutral": false,
+   "pred_margin": -4.33,
+   "actual_margin": -8,
+   "err": 3.67,
+   "p_home": 0.367,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "DAL @ CLE",
+   "neutral": false,
+   "pred_margin": 2.02,
+   "actual_margin": 10,
+   "err": -7.98,
+   "p_home": 0.5629,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "DET @ MIA",
+   "neutral": false,
+   "pred_margin": -4.22,
+   "actual_margin": 20,
+   "err": -24.22,
+   "p_home": 0.3702,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "BKN @ MEM",
+   "neutral": false,
+   "pred_margin": 9.8,
+   "actual_margin": 19,
+   "err": -9.2,
+   "p_home": 0.7789,
+   "correct": true,
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+  },
+  {
+   "date": "2026-11-14",
+   "matchup": "CHI @ MIN",
+   "neutral": false,
+   "pred_margin": 17.79,
+   "actual_margin": -11,
+   "err": 28.79,
+   "p_home": 0.9185,
+   "correct": false,
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235"
   }
  ]
 }

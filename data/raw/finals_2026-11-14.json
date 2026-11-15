@@ -1,0 +1,94 @@
+{
+ "schema": "nba2.finals-v1",
+ "season": "2026-27",
+ "date": "2026-11-14",
+ "retrieved_at_utc": "2026-11-15T11:41:02+00:00",
+ "retrieval_method": "platform page fetch of nba.com/games?date=2026-11-14 (official scoreboard)",
+ "provenance": {
+  "url": "https://www.nba.com/games?date=2026-11-14",
+  "class": "official"
+ },
+ "counts_check": {
+  "games_on_official_date_page": 5,
+  "captured": 5
+ },
+ "games": [
+  "0022600231",
+  "0022600232",
+  "0022600233",
+  "0022600234",
+  "0022600235"
+ ],
+ "records": [
+  {
+   "game_id": "0022600231",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "overtime": false,
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "source": "https://www.nba.com/game/den-vs-nop-0022600231"
+  },
+  {
+   "game_id": "0022600232",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "overtime": false,
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "source": "https://www.nba.com/game/dal-vs-cle-0022600232"
+  },
+  {
+   "game_id": "0022600233",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "overtime": false,
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "source": "https://www.nba.com/game/det-vs-mia-0022600233"
+  },
+  {
+   "game_id": "0022600234",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "overtime": false,
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "source": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+  },
+  {
+   "game_id": "0022600235",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "overtime": false,
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "source": "https://www.nba.com/game/chi-vs-min-0022600235"
+  }
+ ]
+}

@@ -71,28 +71,53 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17_v2.json").read_text())
     from . import official as O
-    n_slate = 27          # the 3-day window 2026-11-14 -> 2026-11-17
+
+    # The slate snapshot the check compares against is the newest committed one, and the
+    # expected game count is read from that file rather than remembered: a hard-coded 27
+    # silently failed the whole gate the moment the rolling window moved to 11/15 -> 11/18
+    # (session arena/673acec0-nba2). Deriving both from the artefact is what makes the
+    # check survive the next refresh.
+    slate_files = sorted((ROOT / "data" / "raw").glob("official_schedule_*.json"))
+    if not slate_files:
+        return ["no committed official slate snapshot under data/raw/"]
+    raw = json.loads(slate_files[-1].read_text())
+    n_slate = len(raw["games"])
+    if raw["window"] != [O.WINDOW_START, O.WINDOW_END]:
+        problems.append(f"slate snapshot window {raw['window']} != official.py window "
+                        f"{[O.WINDOW_START, O.WINDOW_END]}")
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
-    if len(raw["records"]) != n_slate:
-        problems.append(f"committed raw snapshot has {len(raw['records'])} games, expected {n_slate}")
+    if n_slate == 0:
+        problems.append("committed raw slate snapshot has no games")
     lines = json.loads((ROOT / "data/v2/lines.json").read_text())
     if len(lines["lines"]) != n_slate:
         problems.append(f"lines.json has {len(lines['lines'])} lines, expected {n_slate}")
     # every published line must be a game in the committed slate, with the same game id
-    by_id = {r["game_id"]: r for r in raw["records"]}
+    by_id = {r["game_id"]: r for r in raw["games"]}
     for ln in lines["lines"]:
         gid = ln.get("game_id")
         if gid not in by_id:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (183 games played)
-    from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 183:
-        problems.append("official team table no longer sums to 183 wins")
+    # Published W/L must equal the league win total implied by the committed official finals.
+    # The count is reconstructed from data/raw/history (so it moves when results are added),
+    # and the standings capture is checked against it as a second, independent document.
+    n_finals = 0
+    for hp in (ROOT / "data" / "raw" / "history").glob("games_*.json"):
+        n_finals += len(json.loads(hp.read_text())["games"])
+    wins = sum(v[0] for v in O.TEAMS.values())
+    if wins != n_finals:
+        problems.append(f"official team table sums to {wins} wins but {n_finals} official "
+                        f"finals are committed")
+    std_files = sorted((ROOT / "data" / "raw").glob("official_standings_*.json"))
+    if std_files:
+        std = json.loads(std_files[-1].read_text())
+        if {r["tricode"]: (r["w"], r["l"]) for r in std["records"]} != \
+           {t: (v[0], v[1]) for t, v in O.TEAMS.items()}:
+            problems.append(f"official.py TEAMS disagrees with the newest committed standings "
+                            f"capture {std_files[-1].name}")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

@@ -41,11 +41,11 @@
 <h1>Backtest &amp; measured skill</h1>
 <p class="lede">The one question every other page depends on: if this rating method had been run before each game, would it
 have been right? This is a walk-forward test on official finals only, with no leakage and no future information.</p>
-<div class="note"><b>How the test works.</b> 167 games
-(2026-10-23 → 2026-11-13) are scored one at a time. For each game the ratings are rebuilt from
+<div class="note"><b>How the test works.</b> 172 games
+(2026-10-23 → 2026-11-14) are scored one at a time. For each game the ratings are rebuilt from
 <em>only</em> the games strictly before that date — no same-day leakage, no future leakage — with the same shrinkage the
 published model uses. 16 games are skipped because a team had never played. Sources:
-<a href="https://www.nba.com/schedule?date=2026-11-15">nba.com/schedule</a> for the slate and one
+<a href="https://www.nba.com/schedule?date=2026-11-17">nba.com/schedule</a> for the slate and one
 <code>nba.com/game/&lt;slug&gt;-&lt;id&gt;</code> URL per final score.</div><div class="scroll"><table>
 <caption>Walk-forward skill against honest baselines</caption>
 <thead><tr>
@@ -57,66 +57,66 @@ published model uses. 16 games are skipped because a team had never played. Sour
 </tr></thead><tbody>
 <tr>
 <td>Straight-up accuracy</td>
-<td class="n">67.66%</td>
-<td>113 of 167</td>
-<td>95% CI 60.2–74.3%</td>
+<td class="n">67.44%</td>
+<td>116 of 172</td>
+<td>95% CI 60.1–74.0%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Margin MAE (points)</td>
-<td class="n">11.96</td>
-<td>zero-margin baseline 13.36</td>
-<td>skill +10.5%</td>
+<td class="n">12.04</td>
+<td>zero-margin baseline 13.37</td>
+<td>skill +9.9%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Margin RMSE (points)</td>
-<td class="n">15.38</td>
-<td>baseline 16.65</td>
+<td class="n">15.45</td>
+<td>baseline 16.59</td>
 <td>root mean squared error</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Brier score (probability)</td>
-<td class="n">0.2170</td>
+<td class="n">0.2201</td>
 <td>0.5000 coin-flip baseline is 0.2500</td>
-<td>skill +13.2%</td>
+<td>skill +12.0%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Log loss</td>
-<td class="n">0.6234</td>
+<td class="n">0.6331</td>
 <td>0.6931 coin-flip baseline</td>
 <td>lower is better</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>AUROC (winner ranking)</td>
-<td class="n">0.7140</td>
+<td class="n">0.7052</td>
 <td>0.5 = no ranking information</td>
 <td>how often a winner is ranked above a loser</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Mean bias</td>
-<td class="n">+0.55 pts</td>
+<td class="n">+0.48 pts</td>
 <td>predicted minus actual margin</td>
 <td>near zero means no systematic tilt</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Paired bootstrap on the MAE gain</td>
-<td class="n">+1.40 pts</td>
+<td class="n">+1.32 pts</td>
 <td>P(gain &gt; 0) = 1.000 over 4,000 draws (seed 20261114)</td>
 <td>significant at 5%</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>The uncomfortable part: the model is compressed</h2>
 <div class="note bad"><b>Do not read a predicted margin as an expected margin.</b> The model's predicted margins have a
-standard deviation of <b>5.44 pts</b> against an actual <b>16.67 pts</b>
-— a ratio of <b>0.33</b>. Its correlation with the real margin is only <b>+0.386</b>,
+standard deviation of <b>5.58 pts</b> against an actual <b>16.60 pts</b>
+— a ratio of <b>0.34</b>. Its correlation with the real margin is only <b>+0.360</b>,
 and a bigger predicted margin says almost nothing about how big the real win will be
-(Spearman +0.090). The ratings rank teams usefully; they do not forecast blowouts.
+(Spearman +0.098). The ratings rank teams usefully; they do not forecast blowouts.
 Anything on this site that turned a predicted margin into a stake size would be misusing the model.</div><h2>Calibration: are the probabilities right?</h2>
 <p class="lede">A model can rank well and still be badly calibrated. These bins compare predicted win probability with the
 observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
@@ -134,12 +134,12 @@ observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
 </tr></thead><tbody>
 <tr>
 <td>0%-45%</td>
-<td class="n">53</td>
+<td class="n">55</td>
 <td class="n">36.4%</td>
-<td class="n">30.2%</td>
-<td>n = 16 wins</td>
-<td>19.5–43.5%</td>
-<td class="n">-6.2 pp</td>
+<td class="n">30.9%</td>
+<td>n = 17 wins</td>
+<td>20.3–44.0%</td>
+<td class="n">-5.5 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
@@ -164,29 +164,29 @@ observed rate, with a Wilson 95% interval so a small bin is not over-read.</p>
 </tr>
 <tr>
 <td>55%-65%</td>
-<td class="n">36</td>
+<td class="n">37</td>
 <td class="n">59.4%</td>
-<td class="n">47.2%</td>
-<td>n = 17 wins</td>
-<td>32.0–63.0%</td>
-<td class="n">-12.2 pp</td>
+<td class="n">48.6%</td>
+<td>n = 18 wins</td>
+<td>33.5–64.1%</td>
+<td class="n">-10.7 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>65%-100%</td>
-<td class="n">49</td>
-<td class="n">72.9%</td>
-<td class="n">77.5%</td>
-<td>n = 38 wins</td>
-<td>64.1–87.0%</td>
-<td class="n">+4.7 pp</td>
+<td class="n">51</td>
+<td class="n">73.3%</td>
+<td class="n">76.5%</td>
+<td>n = 39 wins</td>
+<td>63.2–86.0%</td>
+<td class="n">+3.1 pp</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
-</tbody></table></div><div class="note warn"><b>Calibration slope 0.27.</b> A perfectly calibrated
+</tbody></table></div><div class="note warn"><b>Calibration slope 0.24.</b> A perfectly calibrated
 model has a slope of 1.00; below 1 means it is <em>over-confident</em> in the sense that its probabilities spread wider than
 reality, above 1 means under-confident. The slope here is pulled down by the compression above: the model's margins are too
 small-scaled, so its probabilities bunch near 50% and must be rescaled before they mean anything.
-<b>104</b> more games at this accuracy would be needed to prove an edge over a 54.2% coin-flip.</div><h2>Does the shrinkage setting change the answer?</h2>
+<b>108</b> more games at this accuracy would be needed to prove an edge over a 54.2% coin-flip.</div><h2>Does the shrinkage setting change the answer?</h2>
 <p class="lede">Reported for transparency. The headline numbers above use the shipped configuration and were
 <b>not</b> chosen by reading these rows — that would be fitting to the test set.</p>
 <div class="scroll"><table>
@@ -202,56 +202,56 @@ small-scaled, so its probabilities bunch near 50% and must be rescaled before th
 </tr></thead><tbody>
 <tr>
 <td class="n">0</td>
-<td class="n">167</td>
-<td class="n">62.28%</td>
-<td class="n">14.71</td>
+<td class="n">172</td>
+<td class="n">62.21%</td>
+<td class="n">14.75</td>
 <td class="n">15.33</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">2</td>
-<td class="n">167</td>
-<td class="n">64.07%</td>
-<td class="n">12.30</td>
-<td class="n">9.58</td>
+<td class="n">172</td>
+<td class="n">63.95%</td>
+<td class="n">12.39</td>
+<td class="n">9.70</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">4</td>
-<td class="n">167</td>
-<td class="n">65.87%</td>
-<td class="n">11.89</td>
-<td class="n">7.54</td>
+<td class="n">172</td>
+<td class="n">65.70%</td>
+<td class="n">11.99</td>
+<td class="n">7.68</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">8</td>
-<td class="n">167</td>
-<td class="n">67.66%</td>
-<td class="n">11.96</td>
-<td class="n">5.44</td>
+<td class="n">172</td>
+<td class="n">67.44%</td>
+<td class="n">12.04</td>
+<td class="n">5.58</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td class="n">16</td>
-<td class="n">167</td>
-<td class="n">64.07%</td>
-<td class="n">12.27</td>
-<td class="n">3.56</td>
+<td class="n">172</td>
+<td class="n">63.95%</td>
+<td class="n">12.33</td>
+<td class="n">3.67</td>
 <td>in-sample sensitivity; not used to pick the headline configuration</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>Does a bigger predicted margin mean a bigger real win?</h2>
 <p class="lede">Only weakly. Rank correlation between |predicted margin| and |actual margin| is
-<b>+0.090</b> — essentially no relationship. The model's confidence is a ranking device,
-not a magnitude forecast.</p><div class="note"><b>Bottom line.</b> On 167 official finals this method is
-67.7% accurate straight up (CI 60.2–74.3%),
-beats a zero-margin baseline by 10.5% on MAE, and its probabilities score a Brier of
-0.2170 against 0.2500 for a coin flip. That is real signal. It is <b>not</b> profit: there is no price to beat in
+<b>+0.098</b> — essentially no relationship. The model's confidence is a ranking device,
+not a magnitude forecast.</p><div class="note"><b>Bottom line.</b> On 172 official finals this method is
+67.4% accurate straight up (CI 60.1–74.0%),
+beats a zero-margin baseline by 9.9% on MAE, and its probabilities score a Brier of
+0.2201 against 0.2500 for a coin flip. That is real signal. It is <b>not</b> profit: there is no price to beat in
 this repository, so no ROI, no CLV, and no rank on the leaderboard can be produced from it. The leaderboard stays empty
 until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored game</h2>
 <p class="lede">The full row-by-row output, so any single number above can be checked against its game.</p>
@@ -2105,9 +2105,64 @@ until an odds feed and 300 settled bets exist (G1, G6).</div><h2>Every scored ga
 <td><span class="badge b-bad">wrong</span></td>
 <td><a href="https://www.nba.com/game/okc-vs-lac-0022600042" rel="noopener" target="_blank">nba.com/game/okc-vs-lac-0022600042</a></td>
 </tr>
+<tr>
+<td>2026-11-14</td>
+<td>DEN @ NOP</td>
+<td>—</td>
+<td class="n">-4.33</td>
+<td class="n">-8</td>
+<td class="n">+3.67</td>
+<td class="n">36.7%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/den-vs-nop-0022600231" rel="noopener" target="_blank">nba.com/game/den-vs-nop-0022600231</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>DAL @ CLE</td>
+<td>—</td>
+<td class="n">+2.02</td>
+<td class="n">+10</td>
+<td class="n">-7.98</td>
+<td class="n">56.3%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/dal-vs-cle-0022600232" rel="noopener" target="_blank">nba.com/game/dal-vs-cle-0022600232</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>DET @ MIA</td>
+<td>—</td>
+<td class="n">-4.22</td>
+<td class="n">+20</td>
+<td class="n">-24.22</td>
+<td class="n">37.0%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/det-vs-mia-0022600233" rel="noopener" target="_blank">nba.com/game/det-vs-mia-0022600233</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>BKN @ MEM</td>
+<td>—</td>
+<td class="n">+9.80</td>
+<td class="n">+19</td>
+<td class="n">-9.20</td>
+<td class="n">77.9%</td>
+<td><span class="badge b-ok">correct</span></td>
+<td><a href="https://www.nba.com/game/bkn-vs-mem-0022600234" rel="noopener" target="_blank">nba.com/game/bkn-vs-mem-0022600234</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>CHI @ MIN</td>
+<td>—</td>
+<td class="n">+17.79</td>
+<td class="n">-11</td>
+<td class="n">+28.79</td>
+<td class="n">91.8%</td>
+<td><span class="badge b-bad">wrong</span></td>
+<td><a href="https://www.nba.com/game/chi-vs-min-0022600235" rel="noopener" target="_blank">nba.com/game/chi-vs-min-0022600235</a></td>
+</tr>
 </tbody></table></div>
 <footer>
-  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

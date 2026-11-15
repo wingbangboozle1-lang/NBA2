@@ -53,6 +53,44 @@ def captures() -> dict:
     return _load(AUDIT / "official_inputs_2026-11-14.json")
 
 
+def newest_capture() -> dict:
+    """The NEWEST committed official standings capture, plus the finals that produced it.
+
+    ``captures()`` stays pinned to the 2026-11-14 audit file because ``grade()`` needs that
+    file's 11/13 finals to grade the sealed card — an immutable historical artefact, which
+    must never silently move. ``staleness()`` is the opposite question: it asks whether the
+    *published* table still matches the newest official page, so it has to follow the newest
+    capture or the measure stops measuring anything.
+
+    Shape returned: date, standings rows (team/w/l), the finals of the last game date before
+    the capture (which is what makes the published table "post-final"), and provenance.
+    """
+    cands = sorted((ROOT / "data" / "raw").glob("official_standings_*.json"))
+    if cands:
+        path = cands[-1]
+        doc = _load(path)
+        date = path.name[len("official_standings_"):-len(".json")]
+        rows = [{"team": r["tricode"], "w": r["w"], "l": r["l"]} for r in doc["records"]]
+        # the finals whose results are already inside those standings = the newest game date
+        games: list[dict] = []
+        for hp in sorted((ROOT / "data" / "raw" / "history").glob("games_*.json")):
+            for g in _load(hp)["games"]:
+                games.append(g)
+        last_date = max(g["date"] for g in games) if games else None
+        finals = [g for g in games if g["date"] == last_date]
+        return {"date": date, "captured_utc": doc.get("retrieved_at_utc", ""),
+                "source": doc.get("url", CAPTURES["standings"]),
+                "standings_rows": rows, "finals": finals, "finals_date": last_date}
+    cap = captures()
+    if not cap:
+        return {}
+    rows = [{"team": r["team"], "w": r["w"], "l": r["l"]}
+            for r in cap["standings_2026_11_14"]["rows"]]
+    return {"date": "2026-11-14", "captured_utc": FETCHED_UTC,
+            "source": CAPTURES["standings"], "standings_rows": rows,
+            "finals": cap["finals_2026_11_13"], "finals_date": "2026-11-13"}
+
+
 # --------------------------------------------------------------------------- 1. staleness
 def staleness() -> dict:
     """Is the published v2 team table still true after the 11/13 finals became official?
@@ -64,12 +102,12 @@ def staleness() -> dict:
     """
     from .official import TEAMS
 
-    cap = captures()
+    cap = newest_capture()
     if not cap:
         return {}
-    live = {r["team"]: (r["w"], r["l"]) for r in cap["standings_2026_11_14"]["rows"]}
+    live = {r["team"]: (r["w"], r["l"]) for r in cap["standings_rows"]}
     pre = dict(live)
-    for f in cap["finals_2026_11_13"]:
+    for f in cap["finals"]:
         a, h = f["away"], f["home"]
         wa, la = pre[a]
         wh, lh = pre[h]
@@ -106,24 +144,32 @@ def staleness() -> dict:
         # The verdict is computed, never hard-coded. This measure existed to detect a table
         # transcribed before the 11/13 finals; the 2026-11-14 refresh made the table current,
         # which flips the direction of the finding rather than removing the check.
+        "capture_date": cap.get("date", ""),
+        "finals_date": cap.get("finals_date", ""),
+        "captured_utc": cap.get("captured_utc", ""),
         "verdict": (
-            ("the published team table is CURRENT: it agrees with live nba.com/standings on "
-             "%d of %d rows and with the pre-11/13-finals reconstruction on only %d - the "
-             "staleness this measure was written to detect was resolved by the 2026-11-14 "
-             "refresh (session arena/ac5fab5c-nba2)"
-             % (match_live, len(TEAMS), match_pre))
+            ("the published team table is CURRENT: it agrees with the newest committed "
+             "official capture (nba.com/standings read %s, results through %s) on %d of %d "
+             "rows, and with the pre-%s-finals reconstruction on only %d - the staleness this "
+             "measure was written to detect is resolved at this capture"
+             % (cap.get("date", "?"), cap.get("finals_date", "?"), match_live, len(TEAMS),
+                cap.get("finals_date", "?"), match_pre))
             if match_live > match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
-             "pre-11/13-finals reconstruction on %d of %d rows and with today's standings "
-             "on only %d" % (match_pre, len(TEAMS), match_live))
+             "pre-%s-finals reconstruction on %d of %d rows and with the newest official "
+             "standings capture (%s) on only %d"
+             % (cap.get("finals_date", "?"), match_pre, len(TEAMS), cap.get("date", "?"),
+                match_live))
         ),
         "published_claim": ("the built site advertises 'Committed W-L ... vs live "
-                            "nba.com/standings | 30/30 identical | MATCH' - re-checked on "
-                            "2026-11-14 by session arena/ac5fab5c-nba2 and true again: the "
-                            "committed table matches live standings 30/30"),
-        "source": CAPTURES["standings"],
+                            "nba.com/standings | 30/30 identical | MATCH' - re-checked "
+                            "against the newest committed capture (read %s) and true again "
+                            "at that capture: the committed table matches the official "
+                            "standings page on %d of %d rows"
+                            % (cap.get("captured_utc", "?"), match_live, len(TEAMS))),
+        "source": cap.get("source", CAPTURES["standings"]),
         "source_second": CAPTURES["games"],
-        "fetched_utc": FETCHED_UTC,
+        "fetched_utc": cap.get("captured_utc", FETCHED_UTC),
     }
 
 

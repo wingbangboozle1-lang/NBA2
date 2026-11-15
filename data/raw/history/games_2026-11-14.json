@@ -1,0 +1,107 @@
+{
+ "schema": "nba2.games-history.v1",
+ "meta": {
+  "captured_utc": "2026-11-15T11:41:02+00:00",
+  "source": "https://www.nba.com/games?date=2026-11-14 (official final scores)",
+  "transcription": "read from the rendered date page in session arena/673acec0-nba2; away/home taken from the official game slug and the arena printed on the schedule page; quarter scores not printed on the date page, so the quarters arrays are empty and flagged (see FLAG-K-04)",
+  "n": 5,
+  "session": "arena/673acec0-nba2"
+ },
+ "games": [
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "ot": false,
+   "arena": "Smoothie King Center",
+   "city": "New Orleans, LA",
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "quarters_missing_reason": "the official date page prints the final score only; period scores live on the per-game box-score page, which this session captured for a subset of games only",
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "ot": false,
+   "arena": "Rocket Arena",
+   "city": "Cleveland, OH",
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "quarters_missing_reason": "the official date page prints the final score only; period scores live on the per-game box-score page, which this session captured for a subset of games only",
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "ot": false,
+   "arena": "Kaseya Center",
+   "city": "Miami, FL",
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "quarters_missing_reason": "the official date page prints the final score only; period scores live on the per-game box-score page, which this session captured for a subset of games only",
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "ot": false,
+   "arena": "FedExForum",
+   "city": "Memphis, TN",
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "quarters_missing_reason": "the official date page prints the final score only; period scores live on the per-game box-score page, which this session captured for a subset of games only",
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "ot": false,
+   "arena": "Target Center",
+   "city": "Minneapolis, MN",
+   "quarters": {
+    "away": [],
+    "home": []
+   },
+   "quarters_captured": false,
+   "quarters_missing_reason": "the official date page prints the final score only; period scores live on the per-game box-score page, which this session captured for a subset of games only",
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  }
+ ]
+}
