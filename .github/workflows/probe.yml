@@ -20,6 +20,13 @@ name: Probe official sources (read-only)
 
 on:
   workflow_dispatch:
+  # Registered workflows dispatch from the default branch only, so until this file
+  # lands on main the same probe runs at pull-request time when it (or the script)
+  # changes — that is how the F-043 evidence in this session's record was gathered.
+  pull_request:
+    paths:
+      - 'tools/probe_official.py'
+      - '.github/workflows/probe.yml'
 
 permissions:
   contents: read
