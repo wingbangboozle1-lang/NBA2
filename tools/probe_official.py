@@ -160,6 +160,17 @@ def main(argv: list[str] | None = None) -> int:
             )
             if res["sniff"]:
                 print(f"        sniff: {res['sniff'][:160]}")
+            # Also emit an annotation: this sandbox cannot download Actions console
+            # logs or artifacts (the results blob host is outside its egress
+            # allowlist — the EOF the F-043 audit hit), but annotations ARE readable
+            # via api.github.com. One line per probe keeps the evidence fetchable.
+            print(
+                f"::notice title=probe {label} ({ua_name})::"
+                f"status={res['status']} bytes={res['bytes']} "
+                f"sha256={res['sha256'][:16]} {res['elapsed_s']}s "
+                f"ctype={res['ctype'][:60]} err={res['error'][:120]} "
+                f"sniff={res['sniff'][:120]}"
+            )
 
     (out / "report.json").write_text(json.dumps(report, indent=1) + "\n")
     print(f"wrote {out / 'report.json'} ({len(report['results'])} probes)")
