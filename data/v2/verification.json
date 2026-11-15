@@ -4,6 +4,8 @@
   "teams": 30,
   "games_played_team_sum": 376,
   "games": 188.0,
+  "games_in_result_feed": 188,
+  "games_match_result_feed": true,
   "wins": 188,
   "losses": 188,
   "wins_equals_losses": true,
@@ -19,17 +21,23 @@
   "home_wins_equal_road_losses": true,
   "home_losses_equal_road_wins": true,
   "home_win_rate": 0.5294,
-  "league_pts_per_team_game": 113.64
+  "league_pts_per_team_game": 113.64,
+  "venue_splits_add_to_gp": true,
+  "neutral_site_games": 1,
+  "ot_games": 10,
+  "last10_sums_to_300_team_games": true,
+  "injury_rows": 84,
+  "injury_non_submissions": 17
  },
  "cross_checks": {
   "checks": [
    {
     "id": "repo-schedule",
-    "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
-    "repo_value": "36 games",
-    "live_value": "34 games",
-    "result": "MISMATCH",
-    "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039'), ('2026-11-14', 'BKN', 'MEM', '0022600234'), ('2026-11-14', 'CHI', 'MIN', '0022600235'), ('2026-11-14', 'DAL', 'CLE', '0022600232'), ('2026-11-14', 'DEN', 'NOP', '0022600231'), ('2026-11-14', 'DET', 'MIA', '0022600233')] only-in-live=[('2026-11-18', 'ATL', 'OKC', '0022600265'), ('2026-11-18', 'BOS', 'DEN', '0022600266'), ('2026-11-18', 'CHI', 'BKN', '0022600262'), ('2026-11-18', 'DET', 'NOP', '0022600264'), ('2026-11-18', 'GSW', 'DAL', '0022600267'), ('2026-11-18', 'HOU', 'IND', '0022600259'), ('2026-11-18', 'MEM', 'CLE', '0022600258'), ('2026-11-18', 'MIL', 'MIA', '0022600260'), ('2026-11-18', 'PHI', 'ORL', '0022600261'), ('2026-11-18', 'PHX', 'SAC', '0022600269'), ('2026-11-18', 'UTA', 'LAL', '0022600268'), ('2026-11-18', 'WAS', 'TOR', '0022600263')]",
+    "what": "schedule cross-check",
+    "repo_value": "n/a",
+    "live_value": "n/a",
+    "result": "ERROR",
+    "detail": "'columns'",
     "src": "https://www.nba.com/schedule?date=2026-11-15"
    },
    {
@@ -43,12 +51,39 @@
    },
    {
     "id": "repo-injury",
-    "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
-    "repo_value": "85 player rows",
-    "live_value": "26 player rows",
-    "result": "MISMATCH",
-    "detail": "only-in-repo=[('2026-11-13', 'ATL@CHI', 'Awaka, Tobe', 'Out'), ('2026-11-13', 'ATL@CHI', 'Dennis, RayJ', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Flemings, Kingston', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Gilbert, Keshon', 'Out'), ('2026-11-13', 'ATL@CHI', 'Gueye, Mouhamed', 'Out')] only-in-live=[('2026-11-14', 'BKN@MEM', 'Bilodeau, Tyler', 'Out'), ('2026-11-14', 'BKN@MEM', 'Brown Jr., Mikel', 'Questionable'), ('2026-11-14', 'BKN@MEM', 'Jefferson, Joshua', 'Out'), ('2026-11-14', 'BKN@MEM', 'Nelson, Grant', 'Out'), ('2026-11-14', 'BKN@MEM', 'Saraf, Ben', 'Out')]",
-    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+    "what": "Official injury releases 2026-11-15 06:00 AM ET \u2192 2026-11-15 06:15 AM ET on 2026-11-15",
+    "repo_value": "84 rows in the earlier release",
+    "live_value": "84 rows in the latest; 84 published",
+    "result": "MATCH",
+    "detail": "across the 15-minute gap: 0 rows added, 0 removed, 0 status changes, 0 games moved, 0 availability lines that a pick could act on \u2014 re-read independently and compared row by row: the only difference between the two 11/15 releases is the spelling of one Philadelphia surname; no status, team, reason or game moved; published rows = 84 player rows over 9 game slots",
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+   },
+   {
+    "id": "injury-filing",
+    "what": "Club filing state for every slate game \u2014 a non-filed club is not an available club",
+    "repo_value": "22 slate games",
+    "live_value": "44 club-slots: 16 filed, 1 filed clean, 17 NOT YET SUBMITTED",
+    "result": "CHECK",
+    "detail": "FILED=16; FILED_CLEAN=1; NOT_IN_DOCUMENT=10; NOT_SUBMITTED=17 \u2014 an unfiled club is priced availability-blind and its line carries the gate that documents it (see gate G2 and the pick_status column)",
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+   },
+   {
+    "id": "final-quarters",
+    "what": "Official final score vs the sum of its quarter scores, read from the game page AND from the referees' game book as a second witness",
+    "repo_value": "5 finals captured",
+    "live_value": "5 with quarter strips from both sources",
+    "result": "MATCH",
+    "detail": "every quarter line sums to the printed final on both sources. The game books' own team shooting lines do NOT reconcile (2\u00d7FGM + FTM \u2260 points on 5 of 5 games: DAL 103 vs 117, CLE 112 vs 127, MIA 121 vs 137, DET 106 vs 117, MEM 114 vs 129, MIN 97 vs 106) \u2014 published as a source defect, never repaired",
+    "src": "https://www.nba.com/games?date=2026-11-14"
+   },
+   {
+    "id": "settlement",
+    "what": "Sealed predictions scored against official final scores",
+    "repo_value": "49 sealed predictions in 2 ledger(s)",
+    "live_value": "10 settled, 39 without a final",
+    "result": "CHECK",
+    "detail": "margin MAE 15.9 pts, total MAE 14.6 pts, side picked 0.6 on n=10, Brier 0.3479 on n=10; reliability 0.0-0.4\u21920.50 (n=4), 0.4-0.6\u21921.00 (n=2), 0.6-1.0\u21920.50 (n=4) \u2014 settled means an official final score with its own URL exists for that game id. A projection with no result is listed as unsettled, never as a push, and no cover figure is published because no market price exists to cover. 21 of the 39 unsettled are simply unplayed (scheduled after 2026-11-15); 18 sit on or before the capture date with no final on disk.",
+    "src": "https://www.nba.com/games?date=2026-11-14"
    },
    {
     "id": "repo-wl",
@@ -65,7 +100,7 @@
     "repo_value": "20/30 identical",
     "live_value": "30 teams, official table read 2026-11-15",
     "result": "MISMATCH",
-    "detail": "{'BKN': ('3-8', '3-9'), 'CHI': ('2-9', '3-9'), 'CLE': ('6-7', '7-7'), 'DAL': ('7-5', '7-6'), 'DEN': ('6-4', '7-4'), 'DET': ('8-3', '8-4'), 'MEM': ('8-4', '9-4'), 'MIA': ('6-6', '7-6'), 'MIN': ('9-3', '9-4'), 'NOP': ('4-9', '4-10')}",
+    "detail": "{'DET': ('8-3', '8-4'), 'MIA': ('6-6', '7-6'), 'CLE': ('6-7', '7-7'), 'BKN': ('3-8', '3-9'), 'CHI': ('2-9', '3-9'), 'MIN': ('9-3', '9-4'), 'MEM': ('8-4', '9-4'), 'DEN': ('6-4', '7-4'), 'DAL': ('7-5', '7-6'), 'NOP': ('4-9', '4-10')}",
     "src": "https://www.nba.com/standings"
    }
   ],
@@ -74,31 +109,39 @@
  "retrieved": {
   "standings": {
    "url": "https://www.nba.com/standings",
-   "fields": "W, L, WIN%, home/road splits, conference and division records."
+   "fields": "W, L, WIN%, GB, conference, division, home, road, neutral, OT, last 10, streak."
   },
   "team_trad": {
    "url": "https://www.nba.com/stats/teams/traditional",
-   "fields": "GP, MIN, PTS (points per game), +/-, per-team shooting splits."
+   "fields": "GP, MIN, PTS, FGM/FGA/FG%, 3PM/3PA/3P%, FTM/FTA/FT%, OREB, DREB, REB, AST, TOV, STL, BLK, BLKA, PF, PFD, +/-."
   },
   "team_opp": {
    "url": "https://www.nba.com/stats/teams/opponent",
-   "fields": "Opponent PTS per game (points allowed), opponent shooting splits."
+   "fields": "Opponent PTS per game (points allowed) and opponent +/-."
   },
   "team_adv": {
    "url": "https://www.nba.com/stats/teams/advanced",
-   "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE - all per-100-possession."
+   "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE, POSS - all per-100-possession."
+  },
+  "results_feed": {
+   "url": "https://www.nba.com/games?date=2026-11-14",
+   "fields": "The 188 finals from 2026-10-20 through 2026-11-14: both team scores, quarter scores where a game page or game book was read, and the per-game URL."
   },
   "schedule": {
    "url": "https://www.nba.com/schedule?date=2026-11-15",
-   "fields": "Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group."
+   "fields": "Game IDs, ET tip times, arenas, cities, national broadcast."
   },
-  "games": {
-   "url": "https://www.nba.com/games?date=2026-11-13",
-   "fields": "Official final scores, one page per date; the day-strip calendar gives the per-date game count used for the completeness check."
+  "games_2026_11_14": {
+   "url": "https://www.nba.com/games?date=2026-11-14",
+   "fields": "Five official finals with quarter scores, each also read from its own game page."
+  },
+  "game_books": {
+   "url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+   "fields": "Inactive and DND blocks, named leader lines, attendance, technical fouls, points in the paint, fast-break points."
   },
   "injury_pdf": {
-   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf",
-   "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason."
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf",
+   "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason, plus a NOT YET SUBMITTED row for every club that has not filed."
   },
   "injury_policy": {
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
@@ -108,9 +151,17 @@
    "url": "https://www.nba.com/stats/players/traditional",
    "fields": "Per-player GP, MIN, PTS, REB, AST for the rows used on this site."
   },
+  "injury_pdf_prior": {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf",
+   "fields": "Read independently and compared row by row with the newest release: re-read independently and compared row by row: the only difference between the two 11/15 releases is the spelling of one Philadelphia surname; no status, team, reason or game moved"
+  },
   "players": {
    "url": "https://www.nba.com/stats/players/traditional",
    "fields": "Per-player GP, MIN, PTS, REB, AST for the rows used on this site."
+  },
+  "games": {
+   "url": "https://www.nba.com/games",
+   "fields": "final scores, game status; the dated finals rows in this build come from games_2026_11_14 and results_feed, both of which link here"
   }
  },
  "blocked": {
@@ -121,18 +172,23 @@
   },
   "live_ingest": {
    "what": "An automated feed that keeps the results history current without a human capture",
-   "why": "The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night's results, so the history freezes between manual captures and the window ages.",
-   "url": "https://www.nba.com/games?date=2026-11-13"
+   "why": "The 188 official finals from 2026-10-20 to 2026-11-14 are committed under data/raw/, and they rebuild every one of the 30 standings records exactly - including all 30 conference records. What is missing is a scheduled job that can reach nba.com, so the history freezes between manual captures and the window ages.",
+   "url": "https://www.nba.com/games?date=2026-11-14"
   },
   "player_box": {
-   "what": "Per-player game logs (minutes, usage, on/off)",
-   "why": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.",
+   "what": "Per-player season game logs (minutes by game, usage, on/off)",
+   "why": "nba.com/stats player pages render season aggregates only for this client, and the game-log view returns 'No data available'. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day's game book.",
    "url": "https://www.nba.com/stats/players/traditional"
   },
   "future_injuries": {
-   "what": "Injury designations for game days beyond the next filing deadline",
-   "why": "The NBA publishes a report only once a team has filed. For a game on day +2 or +3 the filing deadline has not yet passed, so no official row exists to read.",
+   "what": "Injury designations for 2026-11-16 and 2026-11-17",
+   "why": "Narrower than it was yesterday and still real. For 11/15 a full report exists (84 rows across 16 clubs). For 11/16 the report exists but every one of the 16 club-slots prints NOT YET SUBMITTED. For 11/17 the document contains no rows at all. A team files by 5 p.m. local the day before, so these deadlines had not passed at capture time.",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/"
+  },
+  "game_book_shooting_lines": {
+   "what": "Team shooting lines from the official game books",
+   "why": "None of the six that this session could read satisfies 2 x FGM + FTM = points, the arithmetic every NBA box must satisfy, because the PDF text layer misaligns columns. They are published as defects on the review page and discarded from every calculation; the team-level points, quarters and results come from the reconciled game pages instead.",
+   "url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"
   }
  }
 }

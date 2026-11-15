@@ -28,7 +28,11 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
-from . import official as O
+from . import gate_eval, official as O
+
+# The gate board is a property of the capture, not of a line: measure once per build and reuse it,
+# so every line on the slate is withheld for the same documented reasons.
+_BLOCKERS: dict[str, list[dict]] = {}
 
 
 def phi(x: float) -> float:
@@ -291,16 +295,6 @@ class Line:
     pts_home_b: float = 0.0
     pts_away_b: float = 0.0
     total_gap: float = 0.0
-    poss: float = 0.0
-    ppp_home: float = 0.0
-    ppp_away: float = 0.0
-    total_method: str = ""
-    trigger_total_dec: float = 0.0
-    trigger_total_american: str = ""
-    trigger_total_note: str = ""
-    market_line: float | None = None
-    market_blended: float | None = None
-    market_note: str = ""
     sigma_used: float = 0.0
     conviction: float = 0.0
     est_a: float = 0.0          # home spread implied by the points-differential rating
@@ -308,7 +302,8 @@ class Line:
     agreement: float = 0.0
     grade: str = "C"
     grade_reason: str = ""
-    pick_status: str = "WITHHELD"
+    pick_status: str = "WITHHELD"   # set from gate_eval.pick_blockers(), never typed in
+    gate_blockers: tuple = ()       # the gates that stopped this exact line, with their numbers
     flags: list = field(default_factory=list)
 
     @property
@@ -330,15 +325,6 @@ class Line:
             "total_b": round(self.total_b, 1),
             "pts_home_b": round(self.pts_home_b, 1), "pts_away_b": round(self.pts_away_b, 1),
             "total_gap": round(self.total_gap, 2),
-            "poss": round(self.poss, 1),
-            "ppp_home": round(self.ppp_home, 4), "ppp_away": round(self.ppp_away, 4),
-            "total_method": self.total_method,
-            "trigger_total_dec": round(self.trigger_total_dec, 3),
-            "trigger_total_american": self.trigger_total_american,
-            "trigger_total_note": self.trigger_total_note,
-            "market_line": self.market_line,
-            "market_blended": self.market_blended,
-            "market_note": self.market_note,
             "sigma": round(self.sigma_used, 2), "conviction": round(self.conviction, 2),
             "est_a": round(self.est_a, 1), "est_b": round(self.est_b, 1),
             "agreement": round(self.agreement, 2),
@@ -354,6 +340,10 @@ def _half(x: float) -> float:
 
 def originated_lines(teams, cal) -> list[Line]:
     out = []
+    global _BLOCKERS
+    if not _BLOCKERS:
+        m = gate_eval.measurements()
+        _BLOCKERS = {str(g[4]): gate_eval.pick_blockers(m, str(g[4]), g[0]) for g in O.SLATE}
     lg = O.integrity()["league_pts_per_team_game"]
     for (date, time_et, away, home, gid, arena, city, tv, cup) in sorted(O.SLATE):
         a, h = teams[away], teams[home]
@@ -371,23 +361,14 @@ def originated_lines(teams, cal) -> list[Line]:
         ln.est_a = -_half((h.r_diff + cal.hca) - a.r_diff)
         ln.est_b = -_half((h.r_rtg + cal.hca) - a.r_rtg)
         ln.agreement = abs(ln.est_a - ln.est_b)
-        # ---- total, HEADLINE (SG-8): possessions x points-per-possession.
-        #      NOT an average of team scoring averages. poss = mean of the two official
-        #      paces (possessions per 48 min ≈ one game); PPP blends each side's official
-        #      per-100 ratings: ppp_h = (OffRtg_h/100 + DefRtg_a/100)/2, pts = poss x ppp.
-        poss = (h.pace + a.pace) / 2.0
-        ppp_home = (h.netrtg_off + a.netrtg_def) / 200.0
-        ppp_away = (a.netrtg_off + h.netrtg_def) / 200.0
-        ln.poss = poss
-        ln.ppp_home = ppp_home
-        ln.ppp_away = ppp_away
-        ln.pts_home = poss * ppp_home
-        ln.pts_away = poss * ppp_away
+        # ---- total, estimator A: per-game scoring averages, league level preserved
+        ln.pts_home = (h.pf + a.pa) / 2.0 + ((h.pf - h.pa) - (a.pf - a.pa)) / 2.0
+        ln.pts_away = (a.pf + h.pa) / 2.0 + ((a.pf - a.pa) - (h.pf - h.pa)) / 2.0
         ln.total = ln.pts_home + ln.pts_away
-        ln.total_method = f"poss x PPP: {poss:.1f} poss x ({ppp_home:.3f}+{ppp_away:.3f}) PPP"
-        # ---- total, SECONDARY estimator: per-game scoring averages, league level preserved
-        ln.pts_home_b = (h.pf + a.pa) / 2.0 + ((h.pf - h.pa) - (a.pf - a.pa)) / 2.0
-        ln.pts_away_b = (a.pf + h.pa) / 2.0 + ((a.pf - a.pa) - (h.pf - h.pa)) / 2.0
+        # ---- total, estimator B: official per-100 ratings × official pace
+        poss = (h.pace + a.pace) / 2.0
+        ln.pts_home_b = (h.netrtg_off + a.netrtg_def) / 2.0 * poss / 100.0
+        ln.pts_away_b = (a.netrtg_off + h.netrtg_def) / 2.0 * poss / 100.0
         ln.total_b = ln.pts_home_b + ln.pts_away_b
         # Both estimators are calibrated to the league level only if they reproduce it; report the gap.
         ln.total_gap = ln.total - ln.total_b
@@ -407,28 +388,12 @@ def originated_lines(teams, cal) -> list[Line]:
         else:
             ln.grade = "B"
             ln.grade_reason = "passes minimum gates; below the A bar"
-        # ---- totals trigger (SG-35): fair price on the Over at our own projected total is
-        #      +100 by construction (the model is indifferent at its own number). With a
-        #      market total T the price moves as 1-Φ((T-proj)/σ_tot); σ_tot is MEASURED from
-        #      the official finals, never assumed. Published in both quote formats.
-        ln.trigger_total_dec = 2.000
-        ln.trigger_total_american = "+100"
-        ln.trigger_total_note = (
-            f"fair at our own total (P=0.5); measured σ of game totals = {measured_total_sd():.1f} pts "
-            f"over {n_finals_for_sd()} official finals — a market total T prices as "
-            f"P(Over)=1-Φ((T-{ln.total:.1f})/{measured_total_sd():.1f})")
-        # ---- market-anchored prior (SG-7): framework published, value blank until a
-        #      licensed closing line exists (gate G6). Weighting rule is frozen below.
-        ln.market_line = None
-        ln.market_blended = None
-        ln.market_note = ("model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/"
-                          "(1/LL_mkt + 1/LL_model)); closing line not available — flagged FLAG-V2-NO-MARKET-PRICE, "
-                          "never filled")
-        # A projection grade is NOT a bet grade. G6 (market price) and G7 (backtest) cannot pass.
-        ln.pick_status = "WITHHELD (gate G6 no market price, G7 no settlement data)"
-        ln.flags = ["FLAG-V2-NO-MARKET-PRICE", "FLAG-V2-NO-BACKTEST"]
-        if ln.agreement >= 2.0:
-            ln.flags.append("FLAG-V2-ESTIMATOR-CONFLICT")
+        # A projection grade is NOT a bet grade. Which gates actually stop this line is measured
+        # per game by gate_eval — no typed-in verdict string.
+        blockers = _BLOCKERS.get(ln.game_id, [])
+        ln.pick_status = gate_eval.pick_status(blockers)
+        ln.gate_blockers = tuple(blockers)
+        ln.flags = [f"FLAG-V2-{b['gate']}" for b in blockers] or ["FLAG-V2-PUBLISHABLE"]
         out.append(ln)
     return out
 
@@ -461,99 +426,3 @@ def swing_cost(delta_p):
     probability error is p_ind·δ. We publish the mapping from δ to required extra edge.
     """
     return delta_p
-
-
-# --------------------------------------------------------------------------- quote formats (SG-35)
-def to_american(dec: float) -> str:
-    """Decimal price -> American string (+150 / -200)."""
-    if dec <= 1.0:
-        return "n/a"
-    if dec >= 2.0:
-        return f"+{round((dec - 1.0) * 100)}"
-    return f"{round(-100.0 / (dec - 1.0))}"
-
-
-def american_to_dec(am) -> float | None:
-    """American string/number -> decimal price. None when unparseable (never guessed)."""
-    try:
-        a = float(str(am).replace("+", ""))
-    except ValueError:
-        return None
-    return 1.0 + a / 100.0 if a > 0 else 1.0 + 100.0 / abs(a)
-
-
-# --------------------------------------------------------------------------- measured totals dispersion
-_TOTALS_CACHE: list[float] | None = None
-
-
-def _game_totals() -> list[float]:
-    """Every official final's combined score: 188 verified finals (history + 11/14)."""
-    global _TOTALS_CACHE
-    if _TOTALS_CACHE is not None:
-        return _TOTALS_CACHE
-    import glob
-    import json
-    from pathlib import Path
-
-    root = Path(__file__).resolve().parents[2]
-    totals = []
-    for f in sorted(glob.glob(str(root / "data" / "raw" / "history" / "games_*.json"))):
-        for g in json.load(open(f))["games"]:
-            totals.append(g["home_pts"] + g["away_pts"])
-    from . import capture2 as C2
-    for g in C2.results_rows():
-        totals.append(g["home_pts"] + g["away_pts"])
-    _TOTALS_CACHE = totals
-    return totals
-
-
-def n_finals_for_sd() -> int:
-    return len(_game_totals())
-
-
-def measured_total_sd() -> float:
-    """σ of game totals, measured from the official finals (population sd)."""
-    xs = _game_totals()
-    m = sum(xs) / len(xs)
-    return math.sqrt(sum((x - m) ** 2 for x in xs) / len(xs))
-
-
-# --------------------------------------------------------------------------- market-anchored prior (SG-7)
-def market_prior(model_line: float, market_line: float | None,
-                 oos_ll_model: float | None, oos_ll_market: float | None) -> dict:
-    """Model line + closing line weighted by out-of-sample log-loss.
-
-    Weights are frozen here: w_i = (1 / LL_i) normalized over {model, market}, so the
-    *better-calibrated* forecaster (smaller OOS log-loss) gets more weight. Returns the
-    blended line and both weights; with no market or no OOS scores every output is None
-    and the reason string says which input is missing — nothing is filled."""
-    if market_line is None:
-        return {"blended": None, "w_model": None, "w_market": None,
-                "reason": "no licensed closing line (G6) — value blank, framework only"}
-    if oos_ll_model is None or oos_ll_market is None or (oos_ll_model <= 0 or oos_ll_market <= 0):
-        return {"blended": None, "w_model": None, "w_market": None,
-                "reason": "OOS log-loss not yet measured on settled games — weights undefined"}
-    inv_m, inv_k = 1.0 / oos_ll_model, 1.0 / oos_ll_market
-    w_model, w_market = inv_m / (inv_m + inv_k), inv_k / (inv_m + inv_k)
-    return {"blended": round(w_model * model_line + w_market * market_line, 2),
-            "w_model": round(w_model, 4), "w_market": round(w_market, 4),
-            "reason": "blended = w_model·model + w_market·closing, w from OOS log-loss"}
-
-
-# --------------------------------------------------------------------------- parlay rho interval (SG-34)
-def parlay_rho_interval(rho: float, n: int, z: float = 1.96) -> dict:
-    """Fisher-z 95% interval for a measured same-game correlation.
-
-    SE(z) = 1/sqrt(n-3) — the textbook interval, published beside rho so the width of
-    the uncertainty is visible on the same row as the parlay math."""
-    if n <= 3:
-        return {"rho": rho, "ci95": (None, None), "note": "n <= 3, interval undefined"}
-    zz = 0.5 * math.log((1 + rho) / (1 - rho)) if abs(rho) < 1 else (float("inf") if rho > 0 else float("-inf"))
-    se = 1.0 / math.sqrt(n - 3)
-    lo, hi = zz - z * se, zz + z * se
-
-    def back(t):
-        return (math.exp(2 * t) - 1) / (math.exp(2 * t) + 1)
-
-    return {"rho": rho, "ci95": (round(back(lo), 4), round(back(hi), 4)),
-            "note": "Fisher z, SE=1/√(n−3), 95%"}

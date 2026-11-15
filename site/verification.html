@@ -17,8 +17,6 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
-<a href="teams.html">Teams &amp; estimators</a>
-<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -37,14 +35,7 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-  <a href="slate.html">Slate &amp; disagreement</a>
-<a href="projections.html">Projection surface</a>
-<a href="rotation.html">Rotation &amp; minutes</a>
-<a href="travel.html">Rest &amp; travel</a>
-<a href="results.html">Result feed</a>
-<a href="ledger.html">Sealed ledger</a>
-<a href="verification-v3.html">v3 verification</a>
-</nav>
+  </nav>
 </aside>
 <main>
 <h1>Verification log</h1>
@@ -65,7 +56,7 @@
 <td>NBA.com Standings (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>W, L, WIN%, home/road splits, conference and division records.</td>
+<td>W, L, WIN%, GB, conference, division, home, road, neutral, OT, last 10, streak.</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
@@ -73,7 +64,7 @@
 <td>NBA.com Stats - Teams Traditional (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>GP, MIN, PTS (points per game), +/-, per-team shooting splits.</td>
+<td>GP, MIN, PTS, FGM/FGA/FG%, 3PM/3PA/3P%, FTM/FTA/FT%, OREB, DREB, REB, AST, TOV, STL, BLK, BLKA, PF, PFD, +/-.</td>
 <td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
 </tr>
 <tr>
@@ -81,7 +72,7 @@
 <td>NBA.com Stats - Teams Opponent (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>Opponent PTS per game (points allowed), opponent shooting splits.</td>
+<td>Opponent PTS per game (points allowed) and opponent +/-.</td>
 <td><a href="https://www.nba.com/stats/teams/opponent" rel="noopener" target="_blank">nba.com/stats/teams/opponent</a></td>
 </tr>
 <tr>
@@ -89,32 +80,48 @@
 <td>NBA.com Stats - Teams Advanced (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>OffRtg, DefRtg, NetRtg, PACE, PIE - all per-100-possession.</td>
+<td>OffRtg, DefRtg, NetRtg, PACE, PIE, POSS - all per-100-possession.</td>
 <td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
+</tr>
+<tr>
+<td>results_feed</td>
+<td>Official final scores, one row per game (rebuilt from committed captures)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>The 188 finals from 2026-10-20 through 2026-11-14: both team scores, quarter scores where a game page or game book was read, and the per-game URL.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
 <td>schedule</td>
 <td>NBA.com Schedule (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group.</td>
+<td>Game IDs, ET tip times, arenas, cities, national broadcast.</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
-<td>games</td>
-<td>NBA.com Games &amp; Scores (official)</td>
+<td>games_2026_11_14</td>
+<td>NBA.com Games &amp; Scores for 2026-11-14 (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>Official final scores, one page per date; the day-strip calendar gives the per-date game count used for the completeness check.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td>Five official finals with quarter scores, each also read from its own game page.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
+</tr>
+<tr>
+<td>game_books</td>
+<td>Official NBA game books for 2026-11-14 (official PDFs)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Inactive and DND blocks, named leader lines, attendance, technical fouls, points in the paint, fast-break points.</td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book…</a></td>
 </tr>
 <tr>
 <td>injury_pdf</td>
-<td>NBA Official Injury Report 11/14/26 04:30 AM ET (official PDF)</td>
+<td>NBA Official Injury Report - 2026-11-15 06:15 AM ET (official PDF)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
-<td>Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason.</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason, plus a NOT YET SUBMITTED row for every club that has not filed.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 <tr>
 <td>injury_policy</td>
@@ -133,12 +140,28 @@
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
+<td>injury_pdf_prior</td>
+<td>NBA Official Injury Report - the release this one supersedes (official PDF)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>Read independently and compared row by row with the newest release: re-read independently and compared row by row: the only difference between the two 11/15 releases is the spelling of one P</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
 <td>players</td>
 <td>NBA.com Stats - Players Traditional (official)</td>
 <td><span class="badge b-ok">official</span></td>
 <td><span class="badge b-ok">OK</span></td>
 <td>Per-player GP, MIN, PTS, REB, AST for the rows used on this site.</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
+</tr>
+<tr>
+<td>games</td>
+<td>NBA.com Games index (live scores / finals for a given date)</td>
+<td><span class="badge b-ok">official</span></td>
+<td><span class="badge b-ok">OK</span></td>
+<td>final scores, game status; the dated finals rows in this build come from games_2026_11_14 and results_feed, both of which link here</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>injury_1114</td>
@@ -177,24 +200,32 @@
 <td>An automated feed that keeps the results history current without a human capture</td>
 <td><span class="badge b-bad">blocked</span></td>
 <td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
-<td>The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits a</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td>The 188 official finals from 2026-10-20 to 2026-11-14 are committed under data/raw/, and they rebuild every one of the 30 standings records exactly - including all 30 conference records. Wha</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
 <td>blocked_player_box</td>
-<td>Per-player game logs (minutes, usage, on/off)</td>
+<td>Per-player season game logs (minutes by game, usage, on/off)</td>
 <td><span class="badge b-bad">blocked</span></td>
 <td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
-<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td>nba.com/stats player pages render season aggregates only for this client, and the game-log view returns &#x27;No data available&#x27;. Required for: minutes distributions, prop probabilities</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
 <td>blocked_future_injuries</td>
-<td>Injury designations for game days beyond the next filing deadline</td>
+<td>Injury designations for 2026-11-16 and 2026-11-17</td>
 <td><span class="badge b-bad">blocked</span></td>
 <td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
-<td>The NBA publishes a report only once a team has filed. For a game on day +2 or +3 the filing deadline has not yet passed, so no official row exists to read.</td>
+<td>Narrower than it was yesterday and still real. For 11/15 a full report exists (84 rows across 16 clubs). For 11/16 the report exists but every one of the 16 club-slots prints NOT YET SUBMITT</td>
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr>
+<td>blocked_game_book_shooting_lines</td>
+<td>Team shooting lines from the official game books</td>
+<td><span class="badge b-bad">blocked</span></td>
+<td><span class="badge b-bad">no source obtainable — the page attempted is l</span></td>
+<td>None of the six that this session could read satisfies 2 x FGM + FTM = points, the arithmetic every NBA box must satisfy, because the PDF text layer misaligns columns. They are published as </td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book…</a></td>
 </tr>
 <tr>
 <td>odds</td>
@@ -217,11 +248,11 @@
 </tr></thead><tbody>
 <tr>
 <td>repo-schedule</td>
-<td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
-<td>36 games</td>
-<td>34 games</td>
-<td><span class="badge b-bad">MISMATCH</span></td>
-<td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;0022600037&#x27;), (&#x27;2026-11-13&#x27;, &#x27;CLE&#x27;, &#x27;MIA&#x27;, &#x27;0022600036&#x27;), (&#x27;2026-11-13&</td>
+<td>schedule cross-check</td>
+<td>n/a</td>
+<td>n/a</td>
+<td><span class="badge b-bad">ERROR</span></td>
+<td>&#x27;columns&#x27;</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
 </tr>
 <tr>
@@ -235,12 +266,39 @@
 </tr>
 <tr>
 <td>repo-injury</td>
-<td>Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF</td>
-<td>85 player rows</td>
-<td>26 player rows</td>
-<td><span class="badge b-bad">MISMATCH</span></td>
-<td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Awaka, Tobe&#x27;, &#x27;Out&#x27;), (&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Dennis, RayJ&#x27;, &#x27;Questionable&#x27;)</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+<td>Official injury releases 2026-11-15 06:00 AM ET → 2026-11-15 06:15 AM ET on 2026-11-15</td>
+<td>84 rows in the earlier release</td>
+<td>84 rows in the latest; 84 published</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>across the 15-minute gap: 0 rows added, 0 removed, 0 status changes, 0 games moved, 0 availability lines that a pick could act on — re-read independently and compared row by row: the only difference b</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>injury-filing</td>
+<td>Club filing state for every slate game — a non-filed club is not an available club</td>
+<td>22 slate games</td>
+<td>44 club-slots: 16 filed, 1 filed clean, 17 NOT YET SUBMITTED</td>
+<td><span class="badge b-bad">CHECK</span></td>
+<td>FILED=16; FILED_CLEAN=1; NOT_IN_DOCUMENT=10; NOT_SUBMITTED=17 — an unfiled club is priced availability-blind and its line carries the gate that documents it (see gate G2 and the pick_status column)</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr>
+<td>final-quarters</td>
+<td>Official final score vs the sum of its quarter scores, read from the game page AND from the referees&#x27; game book as a second witness</td>
+<td>5 finals captured</td>
+<td>5 with quarter strips from both sources</td>
+<td><span class="badge b-ok">MATCH</span></td>
+<td>every quarter line sums to the printed final on both sources. The game books&#x27; own team shooting lines do NOT reconcile (2×FGM + FTM ≠ points on 5 of 5 games: DAL 103 vs 117, CLE 112 vs 127, MIA 1</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
+</tr>
+<tr>
+<td>settlement</td>
+<td>Sealed predictions scored against official final scores</td>
+<td>49 sealed predictions in 2 ledger(s)</td>
+<td>10 settled, 39 without a final</td>
+<td><span class="badge b-bad">CHECK</span></td>
+<td>margin MAE 15.9 pts, total MAE 14.6 pts, side picked 0.6 on n=10, Brier 0.3479 on n=10; reliability 0.0-0.4→0.50 (n=4), 0.4-0.6→1.00 (n=2), 0.6-1.0→0.50 (n=4) — settled means an official final score w</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
 <td>repo-wl</td>
@@ -257,7 +315,7 @@
 <td>20/30 identical</td>
 <td>30 teams, official table read 2026-11-15</td>
 <td><span class="badge b-bad">MISMATCH</span></td>
-<td>{&#x27;BKN&#x27;: (&#x27;3-8&#x27;, &#x27;3-9&#x27;), &#x27;CHI&#x27;: (&#x27;2-9&#x27;, &#x27;3-9&#x27;), &#x27;CLE&#x27;: (&#x27;6-7&#x27;, &#x27;7-7&#x27;), &#x27;DAL&#x27;: (&#x27;7-5&#x27;, &#x27</td>
+<td>{&#x27;DET&#x27;: (&#x27;8-3&#x27;, &#x27;8-4&#x27;), &#x27;MIA&#x27;: (&#x27;6-6&#x27;, &#x27;7-6&#x27;), &#x27;CLE&#x27;: (&#x27;6-7&#x27;, &#x27;7-7&#x27;), &#x27;BKN&#x27;: (&#x27;3-8&#x27;, &#x27</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
@@ -916,7 +974,7 @@
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

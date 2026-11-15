@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "87ca2991ad16e6cf0bbd6c481788ebc6612d5ae926a80fec74cb8ed30aeb7fbb",
+  "generated_at_utc": "2026-11-15 11:45 UTC",
+  "input_digest": "e50a40f7fbb394b7c9cfc5b9408f9bc1aefab3119c6b56b8963693354abdfa63",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27816,7 +27816,7 @@
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results",
+      "how": "9 strategies registered in nba2/config.py::STRATEGIES; usefulness is unproven until gates can be measured",
       "priority": "P0"
      },
      "source": {
@@ -27966,7 +27966,7 @@
       "acceptance": "Correlations computed where data exists; band + sign-stability where it does not",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "2 of 5 relevant correlations now measured and published: parlay rho 0.00942 (n=172 games) and r(SRS, margin/G) = -0.346 (30 teams); the rest need settled per-strategy results",
+      "how": "1 of 5 relevant correlations computable today (r(SRS, margin/G)); the other 4 need game/player level data",
       "priority": "P0"
      },
      "source": {
@@ -27991,7 +27991,7 @@
       "acceptance": "Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "luck z-scores published per team with the noise-band band; stake gates refuse strategies leaning on team-luck components; full luck removal from the leaderboard needs settled results",
+      "how": "Implemented in gates/leaderboard; cannot be evaluated until bets settle",
       "priority": "P0"
      },
      "source": {
@@ -28091,7 +28091,7 @@
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open",
+      "how": "nba2/models/gameflow.py: B2B/3-in-4/load computed; pace, garbage time, foul trouble, closing lineups = None",
       "priority": "P1"
      },
      "source": {
@@ -28691,7 +28691,7 @@
       "acceptance": "Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job",
+      "how": "ledger.settle implemented and unit-tested on fixtures; no finals file in repo yet",
       "priority": "P0"
      },
      "source": {
@@ -28839,9 +28839,9 @@
       "category": "Data",
       "requirement": "Player-level minutes, usage and production",
       "acceptance": "Per-player per-game box score with minutes, plus on/off",
-      "status": "partial",
+      "status": "blocked",
       "owner": "data vendor / owner",
-      "how": "per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured",
+      "how": "stats.nba.com unreachable from this environment (F-02)",
       "priority": "P0"
      },
      "source": {
@@ -28866,7 +28866,7 @@
       "acceptance": ">=2 seasons of final scores with game IDs",
       "status": "partial",
       "owner": "data vendor / owner",
-      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day",
+      "how": "PARTIALLY in repo as of 2026-11-14: 155 official final scores (2026-10-20 to 11-12) captured from nba.com game cards with per-game source URLs (data/raw/history/, backtest tree), verified against official post-game records; the >=2-seasons acceptance bar is still open. Re-fitting sigma/HCA/correlations from it is an owner decision (S-04), not a silent change.",
       "priority": "P0"
      },
      "source": {
@@ -43184,7 +43184,7 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-15T12:09:11+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 5/22 games settled (PARTIAL — 17 game(s) have no official final score); sealed-2026-11-14.json: 5/27 games settled (PARTIAL — 22 game(s) have no official final score) 10 ledger-game settlements have been scored against official finals from finals_all.json; the games still without a final are listed as missing rather than imputed, and a partial settlement is reported as PARTIAL, never promoted to a pass",
       "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
@@ -46832,7 +46832,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are unmeasured or under-measured by design. The settlement path runs against real official finals captures (finals_2026-11-13.json: 9 game(s), finals_2026-11-14.json: 5 game(s), finals_2026-11-15_from_feed.json: 188 game(s), finals_all.json: 188 game(s)), both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-15T12:09:11+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 5/22 games settled (PARTIAL — 17 game(s) have no official final score); sealed-2026-11-14.json: 5/27 games settled (PARTIAL — 22 game(s) have no official final score) 10 ledger-game settlements have been scored against official finals from finals_all.json; the games still without a final are listed as missing rather than imputed, and a partial settlement is reported as PARTIAL, never promoted to a pass. Every number a gate needs beyond that is still missing, so the gates stay blocked or unmeasured and no reward is allocated. A partial settlement is reported, not promoted.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },

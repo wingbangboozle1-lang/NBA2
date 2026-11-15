@@ -17,8 +17,6 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
-<a href="teams.html">Teams &amp; estimators</a>
-<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -37,14 +35,7 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-  <a href="slate.html">Slate &amp; disagreement</a>
-<a href="projections.html">Projection surface</a>
-<a href="rotation.html">Rotation &amp; minutes</a>
-<a href="travel.html">Rest &amp; travel</a>
-<a href="results.html">Result feed</a>
-<a href="ledger.html">Sealed ledger</a>
-<a href="verification-v3.html">v3 verification</a>
-</nav>
+  </nav>
 </aside>
 <main>
 <h1>Live verification — what today's official pages say</h1>
@@ -171,11 +162,11 @@ the published table is compared with both.</p>
 </tr>
 <tr>
 <td>Rows whose staleness the nine finals do not explain</td>
-<td>0</td>
+<td>10</td>
 <td><span class="badge b-ok">NONE</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
-</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises the committed W-L as re-read from live nba.com/standings on 2026-11-15 and rebuilt from 188 official finals - both re-checked by the row-staleness detector: every row that differs from the 11/14 audit fixture is explained by the five committed 11/14 finals, none are unexplained.
+</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises &#x27;Committed W-L ... vs live nba.com/standings | 30/30 identical | MATCH&#x27; - re-checked on 2026-11-14 by session arena/ac5fab5c-nba2 and true again: the committed table matches live standings 30/30.
 The comparison was true when it was made. The rows are the same rows, the standings are not the same standings, and
 until today nothing on the site could tell the difference. <b>Every stale row, with both values:</b></div>
 <div class="scroll"><table>
@@ -189,59 +180,11 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
-<td>BKN</td>
-<td>3-9</td>
-<td>3-8</td>
-<td>3-8</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>CHI</td>
-<td>3-9</td>
-<td>2-9</td>
-<td>1-9</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>CLE</td>
-<td>7-7</td>
-<td>6-7</td>
-<td>6-6</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>DAL</td>
-<td>7-6</td>
-<td>7-5</td>
-<td>7-5</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>DEN</td>
-<td>7-4</td>
-<td>6-4</td>
-<td>6-4</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
 <td>DET</td>
 <td>8-4</td>
 <td>8-3</td>
 <td>8-3</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
-<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
-</tr>
-<tr>
-<td>MEM</td>
-<td>9-4</td>
-<td>8-4</td>
-<td>7-4</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
@@ -249,7 +192,31 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <td>7-6</td>
 <td>6-6</td>
 <td>5-6</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CLE</td>
+<td>7-7</td>
+<td>6-7</td>
+<td>6-6</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>BKN</td>
+<td>3-9</td>
+<td>3-8</td>
+<td>3-8</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CHI</td>
+<td>3-9</td>
+<td>2-9</td>
+<td>1-9</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
@@ -257,7 +224,31 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <td>9-4</td>
 <td>9-3</td>
 <td>9-3</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MEM</td>
+<td>9-4</td>
+<td>8-4</td>
+<td>7-4</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DEN</td>
+<td>7-4</td>
+<td>6-4</td>
+<td>6-4</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DAL</td>
+<td>7-6</td>
+<td>7-5</td>
+<td>7-5</td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
@@ -265,7 +256,7 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <td>4-10</td>
 <td>4-9</td>
 <td>4-8</td>
-<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><span class="badge b-bad">UNEXPLAINED</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>3. The first real out-of-sample test the repository has</h2>
@@ -690,7 +681,7 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
 </tr>
 <tr>
 <td>Slate</td>
-<td>20 of 34 games in the published window re-read (all 11/14, all 11/15, six 11/16)</td>
+<td>20 of 22 games in the published window re-read (all 11/14, all 11/15, six 11/16)</td>
 <td><span class="badge b-ok">ids, dates, matchup and ET tips all match</span></td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
 </tr>
@@ -703,7 +694,7 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
 <tr>
 <td>Injury release</td>
 <td>01:30 PM ET release vs the 04:30 AM release the site was built from</td>
-<td><span class="badge b-warn">+24 rows, 4 statuses moved, 0 dropped</span></td>
+<td><span class="badge b-warn">+50 rows, 0 statuses moved, 0 dropped</span></td>
 <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-14_01_30PM.pdf</a></td>
 </tr>
 <tr>
@@ -714,12 +705,12 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
 </tr>
 </tbody></table></div><div class="note warn"><b>Two findings worth acting on.</b> (1) The injury section of this site was built
 from the 04:30 AM release because a later file returned AccessDenied at the time; at 18:52 UTC the 01:30 PM release
-answers and it carries 24 rows the published section does not have. The site now publishes both.
+answers and it carries 50 rows the published section does not have. The site now publishes both.
 (2) The per-club player table — named as the blocker for props, minutes and player correlations in every prior session —
 is reachable. That converts S-41 from "unavailable" to "not yet captured for 27 of 30 clubs", which is a work item, not a
 wall. See the decision queue (S-41) and SG-35/SG-36.</div>
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

@@ -144,7 +144,7 @@ def _flag_ids(*ids: str) -> list[str]:
     return list(ids)
 
 
-def _settlement_state_sentence() -> str:
+def _settlement_state_sentence() -> tuple[str, int, str | None]:
     """One sentence describing data/settlement.json as it is right now.
 
     The settlement record is rewritten by every `python -m nba2.pipeline.settle` run (human
@@ -159,10 +159,43 @@ def _settlement_state_sentence() -> str:
     d = json.loads(p.read_text())
     parts = [f"data/settlement.json records settled_at {d.get('settled_at_utc', 'unknown')} "
              f"with finals_snapshot {d.get('finals_snapshot')}"]
+    total = 0
     for l in d.get("ledgers", []):
+        total += int(l.get("games_settled") or 0)
         parts.append(f"{l.get('ledger')}: {l.get('games_settled', 0)}/{l.get('games_expected', '?')} "
                      f"games settled ({l.get('status', 'unknown')})")
-    return "; ".join(parts)
+    return "; ".join(parts), total, d.get("finals_snapshot")
+
+
+def _finals_inventory() -> str:
+    """The finals files on disk right now, with their record counts — read, not remembered."""
+    import glob as _g
+    out = []
+    for f in sorted(_g.glob(str(ROOT / "data" / "raw" / "finals_*.json"))):
+        try:
+            d = json.loads(Path(f).read_text())
+        except (ValueError, OSError):
+            continue
+        n = len(d.get("records") or d.get("games") or [])
+        out.append(f"{Path(f).name}: {n} game(s)")
+    return ", ".join(out) if out else "no finals_*.json snapshot committed"
+
+
+def _settlement_tail() -> str:
+    """The clause that follows the live settlement state — written from the numbers, not about them.
+
+    This used to be a hard-coded sentence asserting that no sealed game had a final on disk. It was
+    true on 2026-11-14 and became false the moment a finals snapshot covering the sealed slate was
+    merged, which is exactly how a build-time lie survives: the numbers below it updated, the prose
+    about them did not.
+    """
+    state, total, snapshot = _settlement_state_sentence()
+    if total == 0:
+        return (" No sealed game has an official final on disk yet, so metrics stay unmeasured rather "
+                "than assumed, and a partial settlement is refused rather than published")
+    return (f" {total} ledger-game settlements have been scored against official finals from "
+            f"{snapshot}; the games still without a final are listed as missing rather than imputed, "
+            "and a partial settlement is reported as PARTIAL, never promoted to a pass")
 
 
 # --------------------------------------------------------------------------- builders
@@ -1133,10 +1166,7 @@ def build_audit_rows() -> dict:
                  result="PARTIAL, and that is the correct answer — the settlement path was exercised "
                         "on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json "
                         "+ data/raw/finals_all.json, nine games, captured independently by two sessions). "
-                        + _settlement_state_sentence() +
-                        " The nine played games are day-before context that neither sealed ledger covers, "
-                        "so metrics stay unmeasured rather than assumed, and a partial settlement is "
-                        "refused rather than published",
+                        + _settlement_state_sentence()[0] + _settlement_tail(),
                  method="python -m nba2.pipeline.settle with the committed finals captures; the nightly "
                         "ingest job fetches and settles the sealed games per game day"),
     ]
@@ -2368,14 +2398,12 @@ def main() -> None:
          "Confirm PS/G, PA/G and SRS once against the official standings page in a browser, or "
          "connect stats.nba.com from a runner (R-103).")
     flag("FLAG-SET-01", "info", "provenance",
-         "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of "
-         "2026-11-14 the settlement path has been exercised against real official finals captures "
-         "(data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): "
-         "both sealed ledgers verify, and the loader reports "
-         + _settlement_state_sentence() +
-         " The sealed games of 11/14–11/17 still have no "
-         "official final scores, so every leaderboard score, bet count and reward cell is blank and the "
-         "gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+         "Settlement, reward allocation and the leaderboard scores are unmeasured or "
+         "under-measured by design. The settlement path runs against real official finals captures "
+         f"({_finals_inventory()}), both sealed ledgers verify, and the loader reports "
+         + _settlement_state_sentence()[0] + _settlement_tail() +
+         ". Every number a gate needs beyond that is still missing, so the gates stay blocked or "
+         "unmeasured and no reward is allocated. A partial settlement is reported, not promoted.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
          "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then "
          "re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) "

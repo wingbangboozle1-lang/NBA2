@@ -1,5 +1,5 @@
 {
-  "settled_at_utc": "2026-11-14T11:46:27+00:00",
+  "settled_at_utc": "2026-11-15T12:09:11+00:00",
   "finals_snapshot": "finals_all.json",
   "ledgers": [
     {
@@ -8,11 +8,100 @@
         "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
         "n_predictions": 22
       },
-      "status": "PARTIAL \u2014 22 game(s) have no official final score",
-      "games_settled": 0,
+      "status": "PARTIAL \u2014 17 game(s) have no official final score",
+      "games_settled": 5,
       "games_expected": 22,
-      "metrics": {},
-      "gate_measurements": {}
+      "metrics": {
+        "n_settled": 5,
+        "missing_games": 17,
+        "spread_mae": 15.9,
+        "total_mae": 14.6,
+        "total_pushes": 0,
+        "brier": 0.3479,
+        "log_loss": 1.1017,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gate_measurements": {
+        "settled_bets": 5,
+        "line_mae": 15.9,
+        "baseline_mae": null,
+        "brier": 0.3479,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gates": [
+        {
+          "gate_id": "G-01",
+          "name": "Sample size",
+          "result": "BLOCKED",
+          "measured": "5 settled bets (need 300)",
+          "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
+        },
+        {
+          "gate_id": "G-02",
+          "name": "Closing line value",
+          "result": "BLOCKED",
+          "measured": "no market prices captured",
+          "reason": "CLV cannot be computed without an odds feed (R-101). This blocks promotion."
+        },
+        {
+          "gate_id": "G-03",
+          "name": "Probability calibration",
+          "result": "BLOCKED",
+          "measured": "slope=not measured; intercept=not measured",
+          "reason": "Needs >= 100 settled games with official outcomes."
+        },
+        {
+          "gate_id": "G-04",
+          "name": "Line accuracy vs baselines",
+          "result": "BLOCKED",
+          "measured": "no settled games",
+          "reason": "Requires official final scores for games in the sealed ledger."
+        },
+        {
+          "gate_id": "G-05",
+          "name": "Luck removal",
+          "result": "BLOCKED",
+          "measured": "no settled bets",
+          "reason": "Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment."
+        },
+        {
+          "gate_id": "G-06",
+          "name": "Multiple-testing control",
+          "result": "BLOCKED",
+          "measured": "no trial ledger",
+          "reason": "Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless."
+        },
+        {
+          "gate_id": "G-07",
+          "name": "Walk-forward, no lookahead",
+          "result": "BLOCKED",
+          "measured": "no holdout",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-08",
+          "name": "Parameter robustness",
+          "result": "BLOCKED",
+          "measured": "not computed",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-09",
+          "name": "Cost and capacity",
+          "result": "BLOCKED",
+          "measured": "reference price 1.9091 is a placeholder, not a quote",
+          "reason": "Cannot net out vig we have never seen."
+        },
+        {
+          "gate_id": "G-10",
+          "name": "Availability-adjustment guardrail",
+          "result": "BLOCKED",
+          "measured": "no injury join",
+          "reason": ""
+        }
+      ]
     },
     {
       "ledger": "sealed-2026-11-14.json",
@@ -20,11 +109,100 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PARTIAL \u2014 27 game(s) have no official final score",
-      "games_settled": 0,
+      "status": "PARTIAL \u2014 22 game(s) have no official final score",
+      "games_settled": 5,
       "games_expected": 27,
-      "metrics": {},
-      "gate_measurements": {}
+      "metrics": {
+        "n_settled": 5,
+        "missing_games": 22,
+        "spread_mae": 15.9,
+        "total_mae": 14.6,
+        "total_pushes": 0,
+        "brier": 0.3479,
+        "log_loss": 1.1017,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gate_measurements": {
+        "settled_bets": 5,
+        "line_mae": 15.9,
+        "baseline_mae": null,
+        "brier": 0.3479,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gates": [
+        {
+          "gate_id": "G-01",
+          "name": "Sample size",
+          "result": "BLOCKED",
+          "measured": "5 settled bets (need 300)",
+          "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
+        },
+        {
+          "gate_id": "G-02",
+          "name": "Closing line value",
+          "result": "BLOCKED",
+          "measured": "no market prices captured",
+          "reason": "CLV cannot be computed without an odds feed (R-101). This blocks promotion."
+        },
+        {
+          "gate_id": "G-03",
+          "name": "Probability calibration",
+          "result": "BLOCKED",
+          "measured": "slope=not measured; intercept=not measured",
+          "reason": "Needs >= 100 settled games with official outcomes."
+        },
+        {
+          "gate_id": "G-04",
+          "name": "Line accuracy vs baselines",
+          "result": "BLOCKED",
+          "measured": "no settled games",
+          "reason": "Requires official final scores for games in the sealed ledger."
+        },
+        {
+          "gate_id": "G-05",
+          "name": "Luck removal",
+          "result": "BLOCKED",
+          "measured": "no settled bets",
+          "reason": "Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment."
+        },
+        {
+          "gate_id": "G-06",
+          "name": "Multiple-testing control",
+          "result": "BLOCKED",
+          "measured": "no trial ledger",
+          "reason": "Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless."
+        },
+        {
+          "gate_id": "G-07",
+          "name": "Walk-forward, no lookahead",
+          "result": "BLOCKED",
+          "measured": "no holdout",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-08",
+          "name": "Parameter robustness",
+          "result": "BLOCKED",
+          "measured": "not computed",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-09",
+          "name": "Cost and capacity",
+          "result": "BLOCKED",
+          "measured": "reference price 1.9091 is a placeholder, not a quote",
+          "reason": "Cannot net out vig we have never seen."
+        },
+        {
+          "gate_id": "G-10",
+          "name": "Availability-adjustment guardrail",
+          "result": "BLOCKED",
+          "measured": "no injury join",
+          "reason": ""
+        }
+      ]
     }
   ],
   "note": "PENDING where no official final-score snapshot covers the ledger's games. Metrics stay unmeasured rather than assumed."
