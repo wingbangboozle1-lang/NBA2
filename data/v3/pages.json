@@ -1,0 +1,28 @@
+{
+ "built": [
+  "v3-index.html",
+  "v3-lines.html",
+  "v3-totals.html",
+  "v3-teams.html",
+  "v3-calibration.html",
+  "v3-backtest.html",
+  "v3-strategies.html",
+  "v3-injuries.html",
+  "v3-methodology.html",
+  "v3-flagged.html",
+  "v3-bet.html"
+ ],
+ "surface_of": {
+  "v3-backtest.html": "projection",
+  "v3-bet.html": "bet",
+  "v3-calibration.html": "projection",
+  "v3-flagged.html": "projection",
+  "v3-index.html": "projection",
+  "v3-injuries.html": "projection",
+  "v3-lines.html": "projection",
+  "v3-methodology.html": "projection",
+  "v3-strategies.html": "projection",
+  "v3-teams.html": "projection",
+  "v3-totals.html": "projection"
+ }
+}

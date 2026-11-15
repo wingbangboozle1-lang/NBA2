@@ -1,0 +1,20 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "single",
+ "levers": {
+  "max_disagreement": 2.0,
+  "min_abs_margin": 3.0
+ },
+ "name": "Two-estimator agreement side",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "side correct if the picked club's final score is higher. Push impossible: a moneyline has no line.",
+ "sha256": "5dd086ac4c95041a3323ad68178d29756c6481d23b10b45288eec3790f79097a",
+ "signal": "sign(margin_a) where |margin_a \u2212 margin_b| \u2264 2.0 pts",
+ "strategy_id": "S3-01",
+ "thesis": "When two independent estimators agree on a side and the edge is not tiny, the pick is not an artefact of one model's scaling.",
+ "threshold": "|margin_a \u2212 margin_b| \u2264 2.0 and |margin_a| \u2265 3.0",
+ "universe": "every game in the results feed with \u226530 prior games (walk-forward)"
+}

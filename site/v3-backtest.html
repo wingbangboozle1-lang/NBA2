@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtest &amp; skill · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html" class="on">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Backtest &amp; skill</h1>
+<p class="sub">Walk-forward from the first date with 30 prior games, every metric printed with the baseline it has to beat.</p>
+<div class="card proj"><p>Scored <b>152</b> of 188 games, from 2026-10-25 to 2026-11-14. Nothing before 2026-10-25 is scored because 30 prior games are required for a rating to exist.</p></div>
+<h2>Every metric beside its baseline</h2>
+<div class="scroll"><table>
+<caption>No metric is shown without the number it must beat.</caption>
+<thead><tr>
+<th scope="col">Metric</th>
+<th scope="col" class="n">Value</th>
+<th scope="col" class="n">Baseline</th>
+<th scope="col">Verdict</th>
+</tr></thead><tbody>
+<tr>
+<td>Accuracy (A)</td>
+<td class="n">64.5%</td>
+<td class="n">n=152</td>
+<td><span class="badge b-info">published</span></td>
+</tr>
+<tr>
+<td>Accuracy (B)</td>
+<td class="n">69.1%</td>
+<td class="n">same games, other estimator</td>
+<td><span class="badge b-info">published</span></td>
+</tr>
+<tr>
+<td>Log-loss (A)</td>
+<td class="n">0.7414</td>
+<td class="n">coin 0.6931</td>
+<td><span class="badge b-bad">WORSE THAN COIN</span></td>
+</tr>
+<tr>
+<td>Log-loss (B)</td>
+<td class="n">0.7918</td>
+<td class="n">coin 0.6931</td>
+<td><span class="badge b-bad">WORSE THAN COIN</span></td>
+</tr>
+<tr>
+<td>Log-loss (A, calibrated)</td>
+<td class="n">0.6398</td>
+<td class="n">×0.55, held-out</td>
+<td><span class="badge b-ok">beats coin</span></td>
+</tr>
+<tr>
+<td>Brier (A)</td>
+<td class="n">0.2423</td>
+<td class="n">coin 0.25</td>
+<td><span class="badge b-warn">slightly better</span></td>
+</tr>
+<tr>
+<td>Margin MAE (A)</td>
+<td class="n">14.108</td>
+<td class="n">tie 13.75, home-edge 13.658</td>
+<td><span class="badge b-bad">WORSE</span></td>
+</tr>
+<tr>
+<td>Margin MAE (A, shrunk)</td>
+<td class="n">13.51</td>
+<td class="n">held-out</td>
+<td><span class="badge b-ok">beats both</span></td>
+</tr>
+<tr>
+<td>r(predicted, actual margin)</td>
+<td class="n">0.3585</td>
+<td class="n">n=152</td>
+<td><span class="badge b-warn">weak positive</span></td>
+</tr>
+<tr>
+<td>Median estimator disagreement</td>
+<td class="n">3.73 pts</td>
+<td class="n">max 23.546</td>
+<td><span class="badge b-info">the headline</span></td>
+</tr>
+<tr>
+<td>Opposite-side disagreement</td>
+<td class="n">12.5%</td>
+<td class="n">games where A and B favour different clubs</td>
+<td><span class="badge b-info">published</span></td>
+</tr>
+</tbody></table></div>
+<h2>Leakage audit — three direct tests</h2>
+<div class="scroll"><table>
+<caption>A forecast that can see its own result is not a forecast.</caption>
+<thead><tr>
+<th scope="col">Test</th>
+<th scope="col">Result</th>
+<th scope="col">What it shows</th>
+</tr></thead><tbody>
+<tr>
+<td>Same-date isolation</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>max within-date difference 0.0</td>
+</tr>
+<tr>
+<td>No in-sample term</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>every rating, σ and baseline computed from strictly earlier dates</td>
+</tr>
+<tr>
+<td>Future-only edit</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>a fabricated game 30 days later moves no earlier forecast (max Δ 0.0)</td>
+</tr>
+</tbody></table></div>
+<div class="card warn"><p><b>A rejected test, recorded so it is not proposed again.</b> delete-the-target-game. It fails on any correct implementation because removing a row also removes it from later dates&#x27; volatility estimates. Recorded here so the same wrong test is not proposed again.</p><p>This repository ran that test first and it failed on a correct implementation. The failure was reported as a gate failure for one revision of this build. It is now explained here rather than deleted, because a test that fails for the wrong reason is a bug in the test.</p></div>
+<h2>Skill attribution — the two estimators, where they disagree</h2>
+<div class="card warn"><p>On the <b>19</b> games where A and B favour <i>different</i> clubs: A was right <b>6</b> times, B was right <b>13</b> times. An exact McNemar test gives p = <b>0.1671</b>.</p><p>the second estimator is not separable from the first</p></div>
+<h2>Permutation test on the margin error</h2>
+<div class="card bad"><p>the model&#x27;s margin error is distinguishable from a tie guess (see the sign of observed_mae_gain: negative means WORSE than predicting a tie)</p><p>p = <b>0.0002</b> over 4000 permutations, seed 20261115. The sign matters: the gain is <b>-0.358</b>, so a small p here means the model is reliably <i>worse</i> than a tie, not better.</p></div>
+<h2>The holdout slice</h2>
+<div class="card warn"><p>Split at <b>2026-11-09</b> — the last 30% of dates, 42 games, used to fit nothing. Raw A 0.7082, B 0.7194, coin 0.6931, calibrated A 0.6398.</p><p>The market weight that the brief asks for cannot be computed: BLOCKED input &#x27;odds&#x27;: no market probability exists to measure a log-loss for. The formula is on the methodology page with its two illustrative inputs explicitly labelled as illustrations.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

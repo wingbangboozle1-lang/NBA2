@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Originated lines · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html" class="on">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Originated lines</h1>
+<p class="sub">Every game in the window, priced from official inputs. The disagreement column is the confidence signal; the blend is not shown as a headline.</p>
+<div class="card proj"><b>22 lines</b> over 2026-11-15 → 2026-11-17. The margin columns are the two estimators' <i>home</i> margins in points. A positive number means the home club is favoured. The probability interval is the pair of the two estimators' own probabilities — it is a <b>disagreement interval, not a confidence interval</b>: it says how far apart two models are, not how uncertain the truth is. Both are wider than the truth's uncertainty, which the calibration page quantifies.</div>
+<div class="scroll"><table>
+<caption>Originated lines from official schedule, standings and team stats. Disagree = |A − B| in points; the widest disagreements are flagged first.</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Tip ET</th>
+<th scope="col">Matchup</th>
+<th scope="col">Arena</th>
+<th scope="col" class="n">A margin</th>
+<th scope="col" class="n">B margin</th>
+<th scope="col" class="n">Disagree</th>
+<th scope="col" class="n">p(home) A→B</th>
+<th scope="col" class="n">Total</th>
+<th scope="col" class="n">Naive avg</th>
+<th scope="col" class="n">Δ</th>
+<th scope="col">Home availability</th>
+<th scope="col">Away availability</th>
+<th scope="col">Grade</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-15</td>
+<td>13:00</td>
+<td><b>PHI</b> v IND</td>
+<td>Xfinity Mobile Arena</td>
+<td class="n">+3.9</td>
+<td class="n">+3.3</td>
+<td class="n"><b>0.61</b></td>
+<td class="n">0.601–0.619</td>
+<td class="n">222.5</td>
+<td class="n">222.4</td>
+<td class="n">+0.1</td>
+<td>4 out/doubtful</td>
+<td>3 out/doubtful, 3 game-time decision</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>16:00</td>
+<td><b>PHX</b> v LAL</td>
+<td>Mortgage Matchup Center</td>
+<td class="n">-8.6</td>
+<td class="n">-8.2</td>
+<td class="n"><b>0.47</b></td>
+<td class="n">0.254–0.265</td>
+<td class="n">232.1</td>
+<td class="n">233.9</td>
+<td class="n">-1.8</td>
+<td>1 out/doubtful, 2 game-time decision</td>
+<td>2 out/doubtful, 1 game-time decision</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>16:30</td>
+<td><b>LAC</b> v CHA</td>
+<td>Intuit Dome</td>
+<td class="n">+5.5</td>
+<td class="n">+5.5</td>
+<td class="n"><b>0.07</b></td>
+<td class="n">0.662–0.664</td>
+<td class="n">218.9</td>
+<td class="n">210.9</td>
+<td class="n">+8.0</td>
+<td>4 out/doubtful</td>
+<td>5 out/doubtful</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>17:00</td>
+<td><b>UTA</b> v SAS</td>
+<td>Delta Center</td>
+<td class="n">-18.2</td>
+<td class="n">-18.0</td>
+<td class="n"><b>0.14</b></td>
+<td class="n">0.082–0.083</td>
+<td class="n">225.9</td>
+<td class="n">227.0</td>
+<td class="n">-1.1</td>
+<td>7 out/doubtful</td>
+<td>4 out/doubtful</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>18:00</td>
+<td><b>BOS</b> v DAL</td>
+<td>TD Garden</td>
+<td class="n">+9.4</td>
+<td class="n">+9.7</td>
+<td class="n"><b>0.24</b></td>
+<td class="n">0.765–0.771</td>
+<td class="n">222.1</td>
+<td class="n">227.8</td>
+<td class="n">-5.7</td>
+<td>4 game-time decision</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>18:00</td>
+<td><b>TOR</b> v NYK</td>
+<td>Scotiabank Arena</td>
+<td class="n">-2.6</td>
+<td class="n">-2.1</td>
+<td class="n"><b>0.51</b></td>
+<td class="n">0.421–0.437</td>
+<td class="n">220.3</td>
+<td class="n">224.1</td>
+<td class="n">-3.8</td>
+<td>4 out/doubtful, 1 game-time decision</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>19:00</td>
+<td><b>WAS</b> v HOU</td>
+<td>Capital One Arena</td>
+<td class="n">-10.5</td>
+<td class="n">-10.3</td>
+<td class="n"><b>0.20</b></td>
+<td class="n">0.211–0.215</td>
+<td class="n">224.8</td>
+<td class="n">226.2</td>
+<td class="n">-1.4</td>
+<td>4 out/doubtful, 4 game-time decision</td>
+<td>5 out/doubtful, 1 game-time decision</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>20:00</td>
+<td><b>MIL</b> v ATL</td>
+<td>Fiserv Forum</td>
+<td class="n">-11.1</td>
+<td class="n">-11.4</td>
+<td class="n"><b>0.23</b></td>
+<td class="n">0.192–0.197</td>
+<td class="n">230.7</td>
+<td class="n">224.4</td>
+<td class="n">+6.3</td>
+<td>5 out/doubtful</td>
+<td>7 out/doubtful</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>21:00</td>
+<td><b>SAC</b> v OKC</td>
+<td>Golden 1 Center</td>
+<td class="n">-11.8</td>
+<td class="n">-11.4</td>
+<td class="n"><b>0.41</b></td>
+<td class="n">0.183–0.191</td>
+<td class="n">223.8</td>
+<td class="n">219.4</td>
+<td class="n">+4.4</td>
+<td>3 out/doubtful, 2 game-time decision</td>
+<td>5 out/doubtful, 1 game-time decision</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>19:00</td>
+<td><b>BOS</b> v ORL</td>
+<td>TD Garden</td>
+<td class="n">+13.1</td>
+<td class="n">+12.5</td>
+<td class="n"><b>0.59</b></td>
+<td class="n">0.831–0.842</td>
+<td class="n">219.2</td>
+<td class="n">222.6</td>
+<td class="n">-3.4</td>
+<td>4 game-time decision</td>
+<td>no report</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>19:00</td>
+<td><b>CLE</b> v CHI</td>
+<td>Rocket Arena</td>
+<td class="n">+11.0</td>
+<td class="n">+11.0</td>
+<td class="n"><b>0.01</b></td>
+<td class="n">0.799–0.800</td>
+<td class="n">237.0</td>
+<td class="n">232.1</td>
+<td class="n">+4.9</td>
+<td>no report</td>
+<td>no report</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>19:00</td>
+<td><b>WAS</b> v MEM</td>
+<td>Capital One Arena</td>
+<td class="n">-10.6</td>
+<td class="n">-10.0</td>
+<td class="n"><b>0.53</b></td>
+<td class="n">0.209–0.221</td>
+<td class="n">229.0</td>
+<td class="n">230.6</td>
+<td class="n">-1.6</td>
+<td>4 out/doubtful, 4 game-time decision</td>
+<td>no report</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>19:30</td>
+<td><b>BKN</b> v PHI</td>
+<td>Barclays Center</td>
+<td class="n">-5.2</td>
+<td class="n">-5.0</td>
+<td class="n"><b>0.26</b></td>
+<td class="n">0.344–0.352</td>
+<td class="n">223.6</td>
+<td class="n">221.4</td>
+<td class="n">+2.2</td>
+<td>no report</td>
+<td>4 out/doubtful</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>19:30</td>
+<td><b>MIA</b> v HOU</td>
+<td>Kaseya Center</td>
+<td class="n">-6.8</td>
+<td class="n">-7.2</td>
+<td class="n"><b>0.39</b></td>
+<td class="n">0.290–0.301</td>
+<td class="n">231.0</td>
+<td class="n">234.9</td>
+<td class="n">-3.9</td>
+<td>no report</td>
+<td>5 out/doubtful, 1 game-time decision</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>20:00</td>
+<td><b>MIN</b> v POR</td>
+<td>Target Center</td>
+<td class="n">+4.0</td>
+<td class="n">+4.1</td>
+<td class="n"><b>0.15</b></td>
+<td class="n">0.620–0.624</td>
+<td class="n">228.3</td>
+<td class="n">237.9</td>
+<td class="n">-9.6</td>
+<td>no report</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>20:00</td>
+<td><b>NOP</b> v GSW</td>
+<td>Smoothie King Center</td>
+<td class="n">-9.6</td>
+<td class="n">-9.2</td>
+<td class="n"><b>0.36</b></td>
+<td class="n">0.231–0.240</td>
+<td class="n">234.9</td>
+<td class="n">232.6</td>
+<td class="n">+2.3</td>
+<td>no report</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>21:00</td>
+<td><b>DEN</b> v PHX</td>
+<td>Ball Arena</td>
+<td class="n">+5.6</td>
+<td class="n">+4.7</td>
+<td class="n"><b>0.90</b></td>
+<td class="n">0.642–0.667</td>
+<td class="n">227.6</td>
+<td class="n">226.3</td>
+<td class="n">+1.3</td>
+<td>no report</td>
+<td>1 out/doubtful, 2 game-time decision</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>19:30</td>
+<td><b>TOR</b> v NYK</td>
+<td>Scotiabank Arena</td>
+<td class="n">-2.6</td>
+<td class="n">-2.1</td>
+<td class="n"><b>0.51</b></td>
+<td class="n">0.421–0.437</td>
+<td class="n">220.3</td>
+<td class="n">224.1</td>
+<td class="n">-3.8</td>
+<td>4 out/doubtful, 1 game-time decision</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>20:00</td>
+<td><b>MIN</b> v POR</td>
+<td>Target Center</td>
+<td class="n">+4.0</td>
+<td class="n">+4.1</td>
+<td class="n"><b>0.15</b></td>
+<td class="n">0.620–0.624</td>
+<td class="n">228.3</td>
+<td class="n">237.9</td>
+<td class="n">-9.6</td>
+<td>no report</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>20:00</td>
+<td><b>SAS</b> v DET</td>
+<td>Frost Bank Center</td>
+<td class="n">+7.2</td>
+<td class="n">+7.3</td>
+<td class="n"><b>0.06</b></td>
+<td class="n">0.710–0.712</td>
+<td class="n">225.9</td>
+<td class="n">235.2</td>
+<td class="n">-9.3</td>
+<td>4 out/doubtful</td>
+<td>no report</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>22:30</td>
+<td><b>LAC</b> v UTA</td>
+<td>Intuit Dome</td>
+<td class="n">+5.7</td>
+<td class="n">+6.0</td>
+<td class="n"><b>0.26</b></td>
+<td class="n">0.670–0.677</td>
+<td class="n">228.0</td>
+<td class="n">219.8</td>
+<td class="n">+8.2</td>
+<td>4 out/doubtful</td>
+<td>7 out/doubtful</td>
+<td><span class="badge b-info">B</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>23:00</td>
+<td><b>LAL</b> v CHA</td>
+<td>Crypto.com Arena</td>
+<td class="n">+15.7</td>
+<td class="n">+15.6</td>
+<td class="n"><b>0.09</b></td>
+<td class="n">0.885–0.886</td>
+<td class="n">222.1</td>
+<td class="n">220.8</td>
+<td class="n">+1.3</td>
+<td>2 out/doubtful, 1 game-time decision</td>
+<td>5 out/doubtful</td>
+<td><span class="badge b-ok">A</span> <span class="badge b-warn">FLAG-V3-NO-MARKET-PRICE</span> <span class="badge b-warn">FLAG-V3-NO-PROP-LINES</span></td>
+</tr>
+</tbody></table></div>
+<h2>How to read the columns</h2>
+<div class="card"><ul><li><b>A margin / B margin</b> — the same game priced by two estimators that share no assumptions beyond the official results. If they differ by more than 2 points the row is graded C and the reason says so.</li><li><b>Disagree</b> — the absolute gap. This is the primary confidence output: a wide gap means the line is an artefact of the method, not a reading of the game.</li><li><b>Total vs Naive avg</b> — possessions × points-per-possession against the average-of-the-two-clubs'-scoring-averages. They are printed side by side because the brief asks for the second to be visible, not removed.</li><li><b>Availability</b> — a count from the official injury report, disclosed on the row. The model is availability-blind: it prices the season-average club. An absence changes the number only through the minutes model, which is <b>not filed</b> for these clubs (FLAG-V3-ROTATION-UNFILED), so the column is a warning, not an input.</li><li><b>Grade</b> — describes estimator stability only. A is the tight bar, B passes the minimum, C names a specific problem. It is <b>not</b> a confidence that the line wins.</li></ul></div>
+<h2>Travel: what the number means and what it does not</h2>
+<div class="card"><p>The away club's travel is the great-circle distance from the venue of its <b>previous game</b> to this one, using the arena coordinate table. The home club's figure is <b>0</b> because it is at its own arena — not because it did not travel this week.</p><p>A club on a four-game road trip has accumulated travel that this per-game figure does not carry, so the column <b>understates</b> fatigue for long trips. A dash means the club has no prior game in the feed, which is unknown rather than zero.</p></div>
+<h2>What is withheld from this page</h2>
+<div class="card warn"><p><b>The market-anchored blend is withheld.</b> The brief asks for the model line to be blended with the closing line, weighted by measured out-of-sample log-loss. No odds feed is connected, so there is no closing line to measure and no blend to compute. The weight formula is published on the methodology page with the two illustrative values a real market would produce; they are labelled illustrations and are not used here.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

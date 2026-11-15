@@ -1,0 +1,20 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "parlay",
+ "levers": {
+  "min_abs_margin": 4.0,
+  "min_total_gap": 3.0
+ },
+ "name": "Same-game side+total parlay",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "both legs win. Priced with the MEASURED margin/total rho from the backtest, and the naive product printed next to it.",
+ "sha256": "307025d18a456f65b174feaf17f12dfae1895683737ea54ed4f32d9678344e00",
+ "signal": "same game: side under A and an over/under read from the possession total",
+ "strategy_id": "S3-05",
+ "thesis": "The brief asks for the measured rho beside the naive product rather than withholding the price. v3 measures r on 152 finals and publishes the interval.",
+ "threshold": "|margin_a| \u2265 4.0 and |model total \u2212 league total| \u2265 3.0",
+ "universe": "same-game pairs only"
+}

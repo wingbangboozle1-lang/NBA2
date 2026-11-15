@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calibration &amp; reliability · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html" class="on">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Calibration &amp; reliability</h1>
+<p class="sub">Why 64.5% accuracy and a log-loss worse than a coin are the same fact about the same model.</p>
+<div class="card bad"><p>The model's average distance from a coin flip is <b>0.277</b>. Reality's is <b>0.500</b>. The model is not wrong about who wins as often as it is wrong about <i>how sure it is</i>.</p><p>Accuracy only asks whether the larger probability was on the right side. Log-loss asks whether the probability was right. A model can pass the first and fail the second, and this one does.</p></div>
+<h2>Forecast against outcome, by band</h2>
+<div class="scroll"><table>
+<caption>All 152 walk-forward games. A band is called over-confident when the observed rate misses the forecast by more than 0.10.</caption>
+<thead><tr>
+<th scope="col">Claimed p(home) band</th>
+<th scope="col" class="n">Games</th>
+<th scope="col" class="n">Mean forecast</th>
+<th scope="col" class="n">Observed home-win rate</th>
+<th scope="col" class="n">Gap</th>
+<th scope="col">Verdict</th>
+</tr></thead><tbody>
+<tr>
+<td>0.00–0.45</td>
+<td class="n">73</td>
+<td class="n">0.195</td>
+<td class="n">0.384</td>
+<td class="n">+0.188</td>
+<td><span class="badge b-bad">over-confident</span></td>
+</tr>
+<tr>
+<td>0.45–0.50</td>
+<td class="n">6</td>
+<td class="n">0.476</td>
+<td class="n">0.500</td>
+<td class="n">+0.024</td>
+<td><span class="badge b-ok">calibrated</span></td>
+</tr>
+<tr>
+<td>0.50–0.55</td>
+<td class="n">7</td>
+<td class="n">0.528</td>
+<td class="n">0.429</td>
+<td class="n">-0.100</td>
+<td><span class="badge b-ok">calibrated</span></td>
+</tr>
+<tr>
+<td>0.55–0.60</td>
+<td class="n">6</td>
+<td class="n">0.586</td>
+<td class="n">0.833</td>
+<td class="n">+0.247</td>
+<td><span class="badge b-bad">over-confident</span></td>
+</tr>
+<tr>
+<td>0.60–0.65</td>
+<td class="n">3</td>
+<td class="n">0.616</td>
+<td class="n">0.667</td>
+<td class="n">+0.051</td>
+<td><span class="badge b-ok">calibrated</span></td>
+</tr>
+<tr>
+<td>0.65–0.70</td>
+<td class="n">10</td>
+<td class="n">0.676</td>
+<td class="n">0.500</td>
+<td class="n">-0.176</td>
+<td><span class="badge b-bad">over-confident</span></td>
+</tr>
+<tr>
+<td>0.70–0.75</td>
+<td class="n">8</td>
+<td class="n">0.724</td>
+<td class="n">0.875</td>
+<td class="n">+0.151</td>
+<td><span class="badge b-bad">over-confident</span></td>
+</tr>
+<tr>
+<td>0.75–1.00</td>
+<td class="n">39</td>
+<td class="n">0.887</td>
+<td class="n">0.718</td>
+<td class="n">-0.169</td>
+<td><span class="badge b-bad">over-confident</span></td>
+</tr>
+</tbody></table></div>
+<h2>The correction, measured on data it was not fitted to</h2>
+<div class="card ok"><p>Shrink the probability toward a coin flip: p′ = 0.5 + α(p − 0.5). Fitting α on the first 110 games (2026-10-25..2026-11-09) picks <b>α = 0.55</b>. On the untouched 42 held-out games that moves log-loss from <b>0.7082</b> to <b>0.6398</b> — a gain of +0.0684 and, for the first time, a score better than a coin (0.6931).</p><p>The gain is not a spike in the grid: every α from 0.30 to 0.80 beats a coin on the holdout. A correction that only worked at one value would be a fitted artefact.</p><p><b>Caveat, stated on the page rather than in a footnote.</b> α is itself a fitted parameter. It is fitted on a different slice from the one it is scored on, which is what makes the gain evidence, but it is not a derivation. A second season would test whether 0.55 is a property of this model or of this month.</p></div>
+<h2>The same correction on the margin</h2>
+<div class="card ok"><p>Margins are over-dispersed too: the model's forecast spread is 13.389 points where the truth's is 16.788. Shrinking the margin by <b>α = 0.45</b>, fitted on the first 110 games, moves held-out MAE from <b>14.764</b> to <b>13.51</b> against a tie guess at 14.5.</p><p>So the raw forecast is worse than guessing a tie and the shrunk forecast is better than it. Both sentences are true and the site prints both, because publishing only the second would overstate the model and publishing only the first would understate it.</p></div>
+<h2>What this does and does not license</h2>
+<div class="card warn"><p>It licenses the projection surface: published probabilities are shipped shrunk, with the raw number beside them.</p><p>It does <b>not</b> license a bet. Beating a coin on log-loss is not beating a price; the price is absent, so the bet surface stays at zero stakes.</p></div>
+<h2>Reliability, machine-readable</h2>
+<div class="card"><p>The same table is written to <code>data/v3/reliability.json</code> so a reader can check the arithmetic instead of trusting the page.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strategies · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html" class="on">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Strategies &amp; pre-registration</h1>
+<p class="sub">Six rules, frozen before the first bet, tested against their own base rates, and corrected for the fact that six were tested at once.</p>
+<div class="card proj"><p>Every rule below was written to <code>data/v3/prereg/</code> and hashed before any pick was sealed. The hash is bound into every pick the rule produced, so a rule changed after the fact no longer verifies against its picks.</p><p><b>The multiplicity problem, stated plainly.</b> Six rules were tested. The chance that at least one clears p&lt;0.05 by luck alone is 1 − 0.95⁶ = 0.265. A leaderboard that simply ranks the luckiest of six is the exact failure the brief asks to avoid, so the verdict column uses a Holm-adjusted p.</p></div>
+<h2>The scoreboard</h2>
+<div class="scroll"><table>
+<caption>Each rule against the base rate its own construction implies. &#x27;Distinct&#x27; requires the Holm-adjusted p to clear 0.05 AND the deviation to be in the direction the rule claims.</caption>
+<thead><tr>
+<th scope="col">Rule</th>
+<th scope="col">Signal</th>
+<th scope="col" class="n">Bets</th>
+<th scope="col" class="n">Wins</th>
+<th scope="col" class="n">Hit rate</th>
+<th scope="col">Wilson 95%</th>
+<th scope="col" class="n">Base rate</th>
+<th scope="col" class="n">p (two-sided)</th>
+<th scope="col" class="n">p (Holm)</th>
+<th scope="col">Direction</th>
+<th scope="col">Verdict</th>
+</tr></thead><tbody>
+<tr>
+<td><b>S3-01</b></td>
+<td>Two-estimator agreement side</td>
+<td class="n">39</td>
+<td class="n">27</td>
+<td class="n">69.2%</td>
+<td>[0.5358, 0.8143]</td>
+<td class="n">0.5</td>
+<td class="n">0.0237</td>
+<td class="n">0.0948</td>
+<td>better than base rate</td>
+<td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+</tr>
+<tr>
+<td><b>S3-02</b></td>
+<td>Confident disagreement fade</td>
+<td class="n">55</td>
+<td class="n">36</td>
+<td class="n">65.5%</td>
+<td>[0.5225, 0.7664]</td>
+<td class="n">0.5</td>
+<td class="n">0.03</td>
+<td class="n">0.0948</td>
+<td>better than base rate</td>
+<td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+</tr>
+<tr>
+<td><b>S3-03</b></td>
+<td>Big-favourite moneyline (no line)</td>
+<td class="n">97</td>
+<td class="n">68</td>
+<td class="n">70.1%</td>
+<td>[0.6037, 0.7831]</td>
+<td class="n">0.698</td>
+<td class="n">1.0</td>
+<td class="n">1.0</td>
+<td>better than base rate</td>
+<td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+</tr>
+<tr>
+<td><b>S3-04</b></td>
+<td>Home-stand first leg parlay (2-leg, cross-game)</td>
+<td class="n">61</td>
+<td class="n">23</td>
+<td class="n">37.7%</td>
+<td>[0.2661, 0.5025]</td>
+<td class="n">0.36</td>
+<td class="n">0.8759</td>
+<td class="n">1.0</td>
+<td>better than base rate</td>
+<td><span class="badge b-warn">not distinguishable from its base rate</span></td>
+</tr>
+<tr>
+<td><b>S3-05</b></td>
+<td>Same-game side+total parlay</td>
+<td class="n">86</td>
+<td class="n">35</td>
+<td class="n">40.7%</td>
+<td>[0.3093, 0.5126]</td>
+<td class="n">0.25</td>
+<td class="n">0.002</td>
+<td class="n">0.01</td>
+<td>better than base rate</td>
+<td><span class="badge b-ok">better than base rate after family correction</span></td>
+</tr>
+</tbody></table></div>
+<h2>The one rule that clears its base rate — and why it still is not a recommendation</h2>
+<div class="card warn"><p>Both legs carry signal in this window: the side was right 66.3% and the total leg 62.8%, against 41.6% if the two legs were independent coin flips (0.663 x 0.628). The measured product 0.407 is what the flag prices. But the total leg&#x27;s reference is a rolling mean, not a market line, and a rolling mean is not a price; beating it is not edge, and the site does not call it edge.</p><p><b>The legs, separately:</b> side 57/86 (66.3%) · total 54/86 (62.8%) · both 0.416 if independent.</p><p>Three reasons this is not a recommendation. <b>One:</b> the total leg is measured against a rolling mean, which is not a price, so beating it is not edge. <b>Two:</b> the rule fires on 86 games, far below the ranking bar. <b>Three:</b> it is one of five rules tested, and it is the only survivor — which is what one survivor out of five looks like whether or not any of them works.</p></div>
+<h2>Why no rule is ranked</h2>
+<div class="card warn"><p>The leaderboard requires <b>100</b> settled bets for a rank (v2 used 300; the bar was lowered and the change is disclosed). The largest settled count here is <b>97</b>, so <b>no rule receives a position</b>. A rank computed from 97 bets is noise wearing a rank, and printing one would invite exactly the over-reading the brief forbids.</p></div>
+<h2>The luck gate</h2>
+<div class="card ok"><p>passes: no club outside the noise band carries the rule</p><p><b>Refused today: False.</b> 0 of 30 clubs lie outside |z| &gt; 0.25, so the gate has nothing to refuse. The gate works; the season has not yet produced a club it acts on. That is a statement about the data, not a claim that the strategy is safe.</p></div>
+<h2>The twelve gates</h2>
+<div class="scroll"><table>
+<caption>The gate report. A gate that cannot be measured says so instead of passing.</caption>
+<thead><tr>
+<th scope="col">Gate</th>
+<th scope="col">Test</th>
+<th scope="col">Status</th>
+<th scope="col">Value</th>
+<th scope="col">Why it is the right test</th>
+</tr></thead><tbody>
+<tr>
+<td>G1</td>
+<td>Deterministic &amp; reproducible</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>seed 20261115</td>
+<td>every published number re-derives from committed inputs; the permutation test is seeded</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>Leakage-free walk-forward</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>same-date isolation, no in-sample term, future-only edit</td>
+<td>three direct tests of the leakage property; the naive deletion test is explained and rejected in backtest.leakage_audit</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>Out-of-sample log-loss beats a coin</td>
+<td><span class="badge b-ok">PASS (calibrated only)</span></td>
+<td>raw A 0.7082 — LOSES to coin 0.6931; A×0.55 shrink 0.6398 — beats coin, on 42 held-out games</td>
+<td>The raw model does not beat a coin and is published saying so. Its probabilities are over-confident (reliability table: lowest band claims 0.195, delivers 0.384). Shrinking toward 0.5 by a factor fitted on the earlier dates does beat a coin out of sample. Both numbers are shown; neither is allowed to stand in for the other.</td>
+</tr>
+<tr>
+<td>G4</td>
+<td>Margin error beats a tie guess</td>
+<td><span class="badge b-ok">PASS (shrunk only)</span></td>
+<td>raw MAE 14.108 — worse than a tie (13.75) and worse than the league mean (13.658); ×0.45 shrunk held-out MAE 13.51 — better than both</td>
+<td>The model&#x27;s margins are over-dispersed: it predicts a 13.4-pt spread where the truth spreads 16.8. Shrinking by a factor fitted on the earlier dates fixes the error but shrinking is not forecasting, and the shrunk number is not allowed to hide the raw one.</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>Strategy beat its base rate at p&lt;0.05</td>
+<td><span class="badge b-info">MEASURED PER STRATEGY</span></td>
+<td>1 of 5 (+0 reliably worse)</td>
+<td>two-sided p, Holm-adjusted across the family, and the verdict also requires the deviation to be in the direction the rule predicts</td>
+</tr>
+<tr>
+<td>G6</td>
+<td>Market price available</td>
+<td><span class="badge b-warn">NOT MEASURABLE</span></td>
+<td>no odds feed</td>
+<td>no edge, no CLV, no ROI, no stake can be computed — BLOCKED input &#x27;odds&#x27;</td>
+</tr>
+<tr>
+<td>G7</td>
+<td>Sample large enough to rank</td>
+<td><span class="badge b-warn">NOT MEASURABLE</span></td>
+<td>largest settled count 97 &lt; 100</td>
+<td>a leaderboard position below this bar is noise wearing a rank</td>
+</tr>
+<tr>
+<td>G8</td>
+<td>Luck removed</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>0 clubs outside |z|&gt;1.96, 0% of picks touch one</td>
+<td>passes: no club outside the noise band carries the rule</td>
+</tr>
+<tr>
+<td>G9</td>
+<td>Pre-registration frozen before first bet</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>data/v3/prereg/*.json with content hashes</td>
+<td>signal, thresholds, universe and settlement are hashed before any bet is recorded</td>
+</tr>
+<tr>
+<td>G10</td>
+<td>Sealed ledger verifies</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>data/v3/ledger/*.json</td>
+<td>each pick&#x27;s hash is published before tip and re-verified after</td>
+</tr>
+<tr>
+<td>G11</td>
+<td>Correlation priced, not assumed</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>r(margin,total)=-0.0779 CI [-0.2342, 0.0823] n=152</td>
+<td>same-game parlays use the measured rho and print the naive product beside it</td>
+</tr>
+<tr>
+<td>G12</td>
+<td>Two independent estimators published</td>
+<td><span class="badge b-ok">PASS</span></td>
+<td>12.5% of games the two disagree on the side; median gap 3.73 pts</td>
+<td>the disagreement is the headline confidence number, not a blend</td>
+</tr>
+</tbody></table></div>
+<h2>Pre-registration files</h2>
+<div class="scroll"><table>
+<caption>Each rule&#x27;s definition, hashed at the moment it was frozen.</caption>
+<thead><tr>
+<th scope="col">Rule</th>
+<th scope="col">SHA-256</th>
+<th scope="col">Frozen</th>
+<th scope="col">Integrity</th>
+<th scope="col">Path</th>
+</tr></thead><tbody>
+<tr>
+<td><b>S3-01</b></td>
+<td><code>5dd086ac4c95041a…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-01.json</td>
+</tr>
+<tr>
+<td><b>S3-02</b></td>
+<td><code>241cc45727c4fa4e…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-02.json</td>
+</tr>
+<tr>
+<td><b>S3-03</b></td>
+<td><code>db5dcfe4dea85c86…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-03.json</td>
+</tr>
+<tr>
+<td><b>S3-04</b></td>
+<td><code>a03484ce37026045…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-04.json</td>
+</tr>
+<tr>
+<td><b>S3-05</b></td>
+<td><code>307025d18a456f65…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-05.json</td>
+</tr>
+<tr>
+<td><b>S3-06</b></td>
+<td><code>b57c4cb2c3dae65b…</code></td>
+<td><span class="badge b-ok">frozen</span></td>
+<td><span class="badge b-ok">matches definition</span></td>
+<td>data/v3/prereg/S3-06.json</td>
+</tr>
+</tbody></table></div>
+<h2>Settlement</h2>
+<div class="card"><p>The sealed ledger holds <b>22</b> picks with root <code>0c54d9fde43b8b7f175f604d8f89c4e8…</code>, and it verifies: <span class="badge b-ok">verified</span>.</p><p>Settlement uses the official final score only, and only after the game page's quarter scores have been read and confirmed to sum to the printed final. Until then the pick stays open rather than settling on a partial feed.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

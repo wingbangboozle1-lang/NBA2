@@ -1,0 +1,19 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "single",
+ "levers": {
+  "p_edge": 0.22
+ },
+ "name": "Big-favourite moneyline (no line)",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "side correct if the picked club wins.",
+ "sha256": "db5dcfe4dea85c86cbde285358fb7d87f6fb1a3abf2dfb535fcbf761ee1dca7f",
+ "signal": "P(home) \u2265 0.72 or \u2264 0.28 under estimator A",
+ "strategy_id": "S3-03",
+ "thesis": "High-conviction projections are where a probabilistic model should be most accurate; if it is not, the probability scale is wrong.",
+ "threshold": "|p \u2212 0.5| \u2265 0.22",
+ "universe": "same walk-forward set"
+}

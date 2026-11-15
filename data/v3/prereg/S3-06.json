@@ -1,0 +1,19 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "prop_combo",
+ "levers": {
+  "min_replacement_share": 0.12
+ },
+ "name": "Injury-rotation over (shape only)",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "requires a player prop line to settle; NO prop line exists, so this strategy is NOT MEASURABLE and is registered for completeness only.",
+ "sha256": "b57c4cb2c3dae65baa7c3cd9fed4dd53218cd736ab00549a10433d51af661844",
+ "signal": "club has a top-8 minute earner OUT, so the replacement share is > 12%",
+ "strategy_id": "S3-06",
+ "thesis": "Minutes redistribution is the mechanism by which an absence changes a total. The gate that stops it is a missing price, not a missing model.",
+ "threshold": "replacement share \u2265 0.12 on the club's own box score",
+ "universe": "clubs with a transcribed box score only (1 club-game in this capture)"
+}

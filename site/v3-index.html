@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html" class="on">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>NBA2 v3 — projections from two estimators</h1>
+<p class="sub">Originated lines from official NBA sources, with the disagreement between two independent estimators as the primary confidence signal, and a bet surface that stays empty until its gates pass.</p>
+<div class="card bad"><b>Read this first.</b> The v2 site's headline was its accuracy. This site's headline is <b>how much the two estimators disagree</b>, and the accuracy is printed underneath with the number that contradicts it. On the held-out slice the raw model's log-loss (0.7082) is <b>worse than a coin</b> (0.6931); the same model with its over-confidence removed (×0.55) scores 0.6398 and beats a coin. Both numbers are published; neither replaces the other.</div>
+<h2>The five numbers that decide whether any of this is worth reading</h2>
+<div class="grid"><div class="kpi"><div class="l">Walk-forward accuracy (A)</div><div class="v">64.5%</div><div class="n">n=152 scored games from 2026-10-25</div></div>
+<div class="kpi bad"><div class="l">Log-loss vs a coin</div><div class="v">0.7414 vs 0.6931</div><div class="n">raw model is WORSE than a coin; calibrated is better</div></div>
+<div class="kpi ok"><div class="l">Calibrated log-loss, holdout</div><div class="v">0.6398</div><div class="n">×0.55 shrink fitted on earlier dates only; coin 0.6931</div></div>
+<div class="kpi bad"><div class="l">Margin MAE vs a tie</div><div class="v">14.108 vs 13.75</div><div class="n">raw is worse; ×0.45 shrunk is 13.51 on holdout</div></div>
+<div class="kpi warn"><div class="l">Two estimators disagree</div><div class="v">3.73 pts (median)</div><div class="n">opposite side on 12.5% of games</div></div></div>
+<h2>What the two estimators do</h2>
+<div class="card"><p><b>A — running point differential.</b> Each club's rating is the mean of its home and road scoring margins, shrunk toward the league mean. It reads only the scoreboard.</p><p><b>B — least-squares strength with home court absorbed.</b> An exact constrained least-squares fit (ridge 0.5, ratings summing to zero) on the same games, where home advantage is a fitted term rather than a constant added afterwards.</p><p>The two are deliberately built from different assumptions. Where they agree, the line is as confident as this model gets; where they disagree, the disagreement is printed and the line's grade drops. The blend is <i>not</i> the headline: it appears on the lines page in a column headed “fallback only” for the case where a reader needs one number.</p></div>
+<h2>Calibration — home advantage pinned, not fitted</h2>
+<div class="card"><p>Home-court advantage is <b>pinned to the measured home-win rate</b>, as the brief requires: 0.5294 home win rate over 187 games gives h = σ·Φ⁻¹(p) = +0.963 points with σ=13.05 (SE 0.0366). The unconstrained fit is also reported — σ=8.74, h=+8.38, RMSE 1.0529 vs 1.055 — and it is <i>not</i> the published number, because a free h would absorb whatever the ratings get wrong and call it home court.</p></div>
+<h2>Two surfaces, never mixed</h2>
+<div class="scroll"><table>
+<caption>The brief&#x27;s separation rule, as the site enforces it</caption>
+<thead><tr>
+<th scope="col">Surface</th>
+<th scope="col">What it may contain</th>
+<th scope="col">Status</th>
+</tr></thead><tbody>
+<tr>
+<td>Projection</td>
+<td>Inputs, formulas, originated margins and totals, estimator disagreement, calibration, reliability. No stake is implied by anything on it.</td>
+<td><span class="badge b-proj">projection</span></td>
+</tr>
+<tr>
+<td>Bet (gated)</td>
+<td>A stake, and the gate report that proves the gate passed. Today every gate is open on price, so every stake is 0.</td>
+<td><span class="badge b-bet">bet</span></td>
+</tr>
+</tbody></table></div>
+<h2>Jump to</h2>
+<ul><li><a href="v3-lines.html">Originated lines</a> — every game in the 3-day window, both estimators, the disagreement, and the possession-based total.</li><li><a href="v3-totals.html">Totals</a> — possessions × points-per-possession beside the average-of-averages it replaces, and the finding that the forward total does not beat a constant.</li><li><a href="v3-teams.html">Teams &amp; luck</a> — all 30 clubs, and the luck z-score that decides whether a strategy may lean on one.</li><li><a href="v3-calibration.html">Calibration &amp; reliability</a> — the table that explains why 64.5% accuracy coexists with a log-loss worse than a coin.</li><li><a href="v3-backtest.html">Backtest &amp; skill</a> — walk-forward, leakage audit, McNemar, permutation.</li><li><a href="v3-strategies.html">Strategies</a> — the six rules, their pre-registrations, and the family correction.</li><li><a href="v3-bet.html">Bet surface (gated)</a> — the gate table. Zero stakes.</li><li><a href="v3-injuries.html">Injuries</a> — the archive, both timestamps, and what the two captured releases actually show.</li><li><a href="v3-flagged.html">Flagged for review</a> — everything unverified, with sources.</li></ul>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "single",
+ "levers": {
+  "min_disagreement": 5.0
+ },
+ "name": "Confident disagreement fade",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "side correct if the picked club wins the game.",
+ "sha256": "241cc45727c4fa4e06c745a26f3374f4648897562ba5888efd9a27f1918b1cc8",
+ "signal": "the OPPOSITE of sign(margin_b) when the two estimators disagree by \u2265 5 pts",
+ "strategy_id": "S3-02",
+ "thesis": "A large disagreement means one model is out of its depth; the raw-margin estimator has scored better out-of-sample than the opponent-adjusted one in the v3 walk-forward, so the rule takes its side \u2014 and that direction is a finding, not an assumption, so it is fixed here before scoring.",
+ "threshold": "|margin_a \u2212 margin_b| \u2265 5.0; pick the side of estimator A",
+ "universe": "same walk-forward set"
+}

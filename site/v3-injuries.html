@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Injuries &amp; rotation · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html" class="on">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Injuries &amp; rotation</h1>
+<p class="sub">Both timestamps on every report, the diff of the two captured releases, and an explicit statement of what that diff can and cannot measure.</p>
+<h2>The banner the brief asks for</h2>
+<div class="grid"><div class="kpi"><div class="l">Report revision</div><div class="v">06:15 AM ET</div><div class="n">= 11:15Z UTC, computed not typed</div></div>
+<div class="kpi"><div class="l">Retrieved</div><div class="v">2026-11-15T11:44:00Z</div><div class="n">index list retrieved 2026-11-15T11:41:00Z</div></div>
+<div class="kpi ok"><div class="l">Lag</div><div class="v">29 min</div><div class="n">between the league revising the report and this site fetching it</div></div>
+<div class="kpi"><div class="l">Revisions listed for 11/15</div><div class="v">26</div><div class="n">latest on the index: 06:15 AM ET</div></div></div>
+<div class="card proj"><p>The league publishes its filing policy on the same index page: reports are submitted by 5 p.m. local time the day before a game (other than the second of a back-to-back) for the next day's game, 1 p.m. local time on the day of the game, and between 11 a.m. and 1 p.m. local time, and &ldquo;Reports are updated on a continual basis throughout the day.&rdquo;</p><p>Both URLs: <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">the PDF this page was built from</a> · <a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">the index listing every revision</a></p></div>
+<h2>What the two captured releases actually show</h2>
+<div class="grid"><div class="kpi"><div class="l">Players added</div><div class="v">84</div><div class="n">previous release had 26 rows</div></div>
+<div class="kpi"><div class="l">Players dropped</div><div class="v">26</div><div class="n">this release has 84 rows</div></div>
+<div class="kpi warn"><div class="l">Status changes</div><div class="v">0</div><div class="n">same player, same date, new status</div></div>
+<div class="kpi"><div class="l">Game-date moves</div><div class="v">0</div><div class="n">same player, different game date</div></div></div>
+<div class="card bad"><p><b>DIFFERENT SLATES: the two reports describe different game dates and share no (team, player) pair, so this diff measures slate turnover, not status change. It is published because a reader is entitled to see the arithmetic, and it is labelled because a percentage without this sentence would be a false claim.</b></p></div>
+<div class="card"><p>A row is &#x27;added&#x27; or &#x27;dropped&#x27; only against the same (game date, team, player) key. A player who appears on a different game date is reported as a date move, not as a status change, because the two reports cover different slates.</p></div>
+<h2>Within-day diff — the brief's actual requirement</h2>
+<div class="card warn"><p><b>NOT MEASURED.</b> only 1 of 26 revisions of the 11/15 report were fetched in this capture, so a consecutive-revision diff across the day cannot be computed from it. The URLs and revision timestamps of all 26 are listed, and diff_reports() computes the delta the moment a second revision&#x27;s rows are supplied.</p><p><b>How it gets measured:</b> fetch each PDF in archive(), transcribe its rows into the same shape as O.INJURIES, and call diff_reports(earlier_rows, later_rows). 1 of 26 revisions of the 11/15 report were fetched in this capture.</p></div>
+<h2>Current report by club</h2>
+<div class="scroll"><table>
+<caption>Statuses exactly as printed in the official report: 62 Out, 1 Doubtful, 17 Questionable, 2 Probable, 2 Available. No status is carried over from a previous release.</caption>
+<thead><tr>
+<th scope="col">Club</th>
+<th scope="col">Game date</th>
+<th scope="col" class="n">Rows</th>
+<th scope="col" class="n">Out / doubtful</th>
+<th scope="col" class="n">Game-time decision</th>
+<th scope="col">Named players</th>
+</tr></thead><tbody>
+<tr>
+<td><b>Utah Jazz</b></td>
+<td>2026-11-15</td>
+<td class="n">7</td>
+<td class="n">7</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Alexander, Trey — Out</span> <span class="badge b-bad">Bufkin, Kobe — Out</span> <span class="badge b-bad">Hayes, Jaxson — Out</span> <span class="badge b-bad">Ingram, Harrison — Out</span> <span class="badge b-bad">Jackson Jr., Jaren — Out</span> <span class="badge b-bad">Markkanen, Lauri — Out</span> <span class="badge b-bad">Nurkic, Jusuf — Out</span></td>
+</tr>
+<tr>
+<td><b>Atlanta Hawks</b></td>
+<td>2026-11-15</td>
+<td class="n">8</td>
+<td class="n">7</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Flemings, Kingston — Out</span> <span class="badge b-bad">Gilbert, Keshon — Out</span> <span class="badge b-bad">Gueye, Mouhamed — Out</span> <span class="badge b-warn">Landale, Jock — Available</span> <span class="badge b-bad">Newell, Asa — Out</span> <span class="badge b-bad">Veesaar, Henri — Out</span> <span class="badge b-bad">Wilson, Jalen — Doubtful</span> <span class="badge b-bad">Simmons, Ben — Out</span></td>
+</tr>
+<tr>
+<td><b>Charlotte Hornets</b></td>
+<td>2026-11-15</td>
+<td class="n">5</td>
+<td class="n">5</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Ajayi, Michael — Out</span> <span class="badge b-bad">Boswell, Kylan — Out</span> <span class="badge b-bad">Knueppel, Kon — Out</span> <span class="badge b-bad">Schroder, Dennis — Out</span> <span class="badge b-bad">Steinbach, Hannes — Out</span></td>
+</tr>
+<tr>
+<td><b>Houston Rockets</b></td>
+<td>2026-11-15</td>
+<td class="n">6</td>
+<td class="n">5</td>
+<td class="n">1</td>
+<td><span class="badge b-warn">Adams, Steven — Probable</span> <span class="badge b-bad">Capela, Clint — Out</span> <span class="badge b-bad">Copeland, Quadir — Out</span> <span class="badge b-bad">Phillips, Julian — Out</span> <span class="badge b-bad">Smart, Marcus — Out</span> <span class="badge b-bad">VanVleet, Fred — Out</span></td>
+</tr>
+<tr>
+<td><b>Milwaukee Bucks</b></td>
+<td>2026-11-15</td>
+<td class="n">5</td>
+<td class="n">5</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Dieng, Ousmane — Out</span> <span class="badge b-bad">Jones, Kam — Out</span> <span class="badge b-bad">Markovic, Bogoljub — Out</span> <span class="badge b-bad">Nance, Pete — Out</span> <span class="badge b-bad">Ryan, Cormac — Out</span></td>
+</tr>
+<tr>
+<td><b>Oklahoma City Thunder</b></td>
+<td>2026-11-15</td>
+<td class="n">6</td>
+<td class="n">5</td>
+<td class="n">1</td>
+<td><span class="badge b-bad">Holmgren, Chet — Out</span> <span class="badge b-warn">Mitchell, Ajay — Questionable</span> <span class="badge b-bad">Sorber, Thomas — Out</span> <span class="badge b-bad">Wallace, Cason — Out</span> <span class="badge b-bad">Williams, Jalen — Out</span> <span class="badge b-bad">Williams, Jaylin — Out</span></td>
+</tr>
+<tr>
+<td><b>LA Clippers</b></td>
+<td>2026-11-15</td>
+<td class="n">4</td>
+<td class="n">4</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Beal, Bradley — Out</span> <span class="badge b-bad">Ingram, Brandon — Out</span> <span class="badge b-bad">Miller, Jordan — Out</span> <span class="badge b-bad">Niederhauser, Yanic Konan — Out</span></td>
+</tr>
+<tr>
+<td><b>Philadelphia 76ers</b></td>
+<td>2026-11-15</td>
+<td class="n">4</td>
+<td class="n">4</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Barlow, Dominick — Out</span> <span class="badge b-bad">Bona, Adem — Out</span> <span class="badge b-bad">Embid, Joel — Out</span> <span class="badge b-bad">Hukporti, Ariel — Out</span></td>
+</tr>
+<tr>
+<td><b>San Antonio Spurs</b></td>
+<td>2026-11-15</td>
+<td class="n">4</td>
+<td class="n">4</td>
+<td class="n">0</td>
+<td><span class="badge b-bad">Brown, Maliq — Out</span> <span class="badge b-bad">Gillespie, Ja&#x27;Kobi — Out</span> <span class="badge b-bad">Harris, Tobias — Out</span> <span class="badge b-bad">Quaintance, Jayden — Out</span></td>
+</tr>
+<tr>
+<td><b>Toronto Raptors</b></td>
+<td>2026-11-15</td>
+<td class="n">5</td>
+<td class="n">4</td>
+<td class="n">1</td>
+<td><span class="badge b-warn">Barnes, Scottie — Questionable</span> <span class="badge b-bad">Bittle, Nate — Out</span> <span class="badge b-bad">Leonard, Kawhi — Out</span> <span class="badge b-bad">McCullar Jr., Kevin — Out</span> <span class="badge b-bad">Smith, Malachi — Out</span></td>
+</tr>
+<tr>
+<td><b>Washington Wizards</b></td>
+<td>2026-11-15</td>
+<td class="n">8</td>
+<td class="n">4</td>
+<td class="n">4</td>
+<td><span class="badge b-bad">Beekman, Reece — Out</span> <span class="badge b-warn">Carrington, Bub — Questionable</span> <span class="badge b-bad">Champagne, Justin — Out</span> <span class="badge b-warn">Johnson, Tre — Questionable</span> <span class="badge b-warn">Okpara, Felix — Questionable</span> <span class="badge b-warn">Sarr, Alex — Questionable</span> <span class="badge b-bad">Vukcevic, Tristan — Out</span> <span class="badge b-bad">Watkins, Jamir — Out</span></td>
+</tr>
+<tr>
+<td><b>Indiana Pacers</b></td>
+<td>2026-11-15</td>
+<td class="n">6</td>
+<td class="n">3</td>
+<td class="n">3</td>
+<td><span class="badge b-bad">Furphy, Johnny — Out</span> <span class="badge b-bad">Haliburton, Tyrese — Out</span> <span class="badge b-warn">McConnell, T.J. — Probable</span> <span class="badge b-warn">Nembhard, Andrew — Questionable</span> <span class="badge b-warn">Nesmith, Aaron — Questionable</span> <span class="badge b-bad">Sheppard, Ben — Out</span></td>
+</tr>
+<tr>
+<td><b>Sacramento Kings</b></td>
+<td>2026-11-15</td>
+<td class="n">5</td>
+<td class="n">3</td>
+<td class="n">2</td>
+<td><span class="badge b-warn">Achiuwa, Precious — Questionable</span> <span class="badge b-bad">Mogbo, Jonathan — Out</span> <span class="badge b-warn">Murray, Keegan — Questionable</span> <span class="badge b-bad">Pedulla, Sean — Out</span> <span class="badge b-bad">Raynaud, Maxime — Out</span></td>
+</tr>
+<tr>
+<td><b>Los Angeles Lakers</b></td>
+<td>2026-11-15</td>
+<td class="n">4</td>
+<td class="n">2</td>
+<td class="n">1</td>
+<td><span class="badge b-bad">Carr, Cameron — Out</span> <span class="badge b-warn">Grimes, Quentin — Available</span> <span class="badge b-warn">James, Bronny — Questionable</span> <span class="badge b-bad">Reaves, Austin — Out</span></td>
+</tr>
+<tr>
+<td><b>Phoenix Suns</b></td>
+<td>2026-11-15</td>
+<td class="n">3</td>
+<td class="n">1</td>
+<td class="n">2</td>
+<td><span class="badge b-warn">Sexton, Collin — Questionable</span> <span class="badge b-warn">Thiero, Adou — Questionable</span> <span class="badge b-bad">Williams, Mark — Out</span></td>
+</tr>
+<tr>
+<td><b>Boston Celtics</b></td>
+<td>2026-11-15</td>
+<td class="n">4</td>
+<td class="n">0</td>
+<td class="n">4</td>
+<td><span class="badge b-warn">Carter, Devin — Questionable</span> <span class="badge b-warn">Cenac Jr., Christopher — Questionable</span> <span class="badge b-warn">Mitchell, Dillon — Questionable</span> <span class="badge b-warn">Williams, Amari — Questionable</span></td>
+</tr>
+</tbody></table></div>
+<h2>Clubs that have not filed</h2>
+<div class="scroll"><table>
+<caption>A club that has not filed is not &#x27;cleared&#x27;. The rotation column on the lines page reads &#x27;not filed&#x27; for these and never &#x27;all cleared&#x27;.</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Matchup</th>
+<th scope="col">Club</th>
+<th scope="col">Status</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-15</td>
+<td>DAL@BOS</td>
+<td>Dallas Mavericks</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>CHI@CLE</td>
+<td>Chicago Bulls</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>CHI@CLE</td>
+<td>Cleveland Cavaliers</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>MEM@WAS</td>
+<td>Memphis Grizzlies</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>MEM@WAS</td>
+<td>Washington Wizards</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>ORL@BOS</td>
+<td>Orlando Magic</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>ORL@BOS</td>
+<td>Boston Celtics</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>HOU@MIA</td>
+<td>Houston Rockets</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>HOU@MIA</td>
+<td>Miami Heat</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHI@BKN</td>
+<td>Philadelphia 76ers</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHI@BKN</td>
+<td>Brooklyn Nets</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>GSW@NOP</td>
+<td>Golden State Warriors</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>GSW@NOP</td>
+<td>New Orleans Pelicans</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>POR@MIN</td>
+<td>Portland Trail Blazers</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>POR@MIN</td>
+<td>Minnesota Timberwolves</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHX@DEN</td>
+<td>Phoenix Suns</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHX@DEN</td>
+<td>Denver Nuggets</td>
+<td><span class="badge b-warn">NOT YET SUBMITTED</span></td>
+</tr>
+</tbody></table></div>
+<h2>Every revision, with a retrieval timestamp only if it was actually fetched</h2>
+<div class="scroll"><table>
+<caption>29 revisions listed on the official index. A row that was never fetched says so rather than borrowing a timestamp from a different file.</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Revision (ET)</th>
+<th scope="col">Captured</th>
+<th scope="col">Retrieved (UTC)</th>
+<th scope="col">PDF</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-15</td>
+<td>00:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_00_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_00_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>00:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_00_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_00_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>00:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_00_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_00_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>00:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_00_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_00_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>01:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_01_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_01_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>01:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_01_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_01_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>01:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_01_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_01_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>01:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_01_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_01_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>02:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_02_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_02_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>02:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_02_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_02_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>02:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_02_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_02_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>02:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_02_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_02_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>03:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_03_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_03_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>03:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_03_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_03_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>03:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_03_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_03_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>03:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_03_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_03_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>04:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_04_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_04_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>04:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_04_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_04_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>04:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_04_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_04_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>04:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_04_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_04_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>05:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_05_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_05_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>05:15 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_05_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_05_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>05:30 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_05_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_05_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>05:45 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_05_45AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_05_45AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>06:00 ET</td>
+<td><span class="blank" title="listed on the official index; not fetched in this capture">listed on the official index; not fetched in this capture</span></td>
+<td></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_06_00AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>06:15 ET</td>
+<td><span class="badge b-ok">captured</span></td>
+<td>2026-11-15T11:44:00Z</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-15_06_15AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>04:30 AM ET</td>
+<td><span class="badge b-ok">captured</span></td>
+<td>2026-11-14T09:40:00Z</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">Injury-Report_2026-11-14_04_30AM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>01:30 PM ET</td>
+<td><span class="blank" title="a later 11/14 release; its rows are held in audit/2026-11-14-bc867bff/captures.json (1:30 PM) and were not re-read here">a later 11/14 release; its rows are held in audit/2026-11-14-bc867bff/captures.json (1:30 PM) and were not re-read here</span></td>
+<td></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">Injury-Report_2026-11-14_01_30 PMPM.pdf</a></td>
+</tr>
+<tr>
+<td>2026-11-14</td>
+<td>07:15 PM ET</td>
+<td><span class="blank" title="a later 11/14 release; its rows are held in audit/2026-11-14-bc867bff/captures.json (1:30 PM) and were not re-read here">a later 11/14 release; its rows are held in audit/2026-11-14-bc867bff/captures.json (1:30 PM) and were not re-read here</span></td>
+<td></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">Injury-Report_2026-11-14_07_15 PMPM.pdf</a></td>
+</tr>
+</tbody></table></div>
+<h2>Minutes redistribution — filed or not</h2>
+<div class="card warn"><p>The brief asks for top-eight minutes shares plus replacement shares when a player is out. The <b>method</b> is written (<code>model.minutes_shares</code>) and described on the methodology page.</p><p>The <b>inputs are not in the repository</b>: per-player game logs for at least the injury-report players are absent, so no club's rotation has been filed and no replacement share has been computed. Every affected line carries <b>FLAG-V3-ROTATION-UNFILED</b>. The page does not estimate redistribution from season averages, because a season average is precisely the quantity an absence changes.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

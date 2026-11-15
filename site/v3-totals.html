@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Totals · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html" class="on">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Totals — possessions × points-per-possession</h1>
+<p class="sub">The brief's formula, the average-of-averages it replaces, and the measured result that the forward total does not beat a constant.</p>
+<div class="card proj"><p><b>Formula.</b> One possession count for the game (the mean of the two clubs' official possessions per game), and a points-per-possession rate per side that is half its own offence and half the opponent's defence. Total = possessions × (PPP_home + PPP_away).</p><p><b>What it replaces.</b> Adding the two clubs' scoring averages. That number is anchored to the league mean by construction, so it cannot express a game between two above-average offences. Both are printed on every row below.</p></div>
+<h2>The formula in practice — widest gaps first</h2>
+<div class="scroll"><table>
+<caption>The 22 games with the largest gap between the two formulas, from official POSS and per-game scoring.</caption>
+<thead><tr>
+<th scope="col">Date</th>
+<th scope="col">Game</th>
+<th scope="col" class="n">Poss</th>
+<th scope="col">Home PPP (off/opp def)</th>
+<th scope="col">Away PPP (off/opp def)</th>
+<th scope="col" class="n">Home pts</th>
+<th scope="col" class="n">Away pts</th>
+<th scope="col" class="n">Total (poss)</th>
+<th scope="col" class="n">Naive avg</th>
+<th scope="col" class="n">Δ</th>
+</tr></thead><tbody>
+<tr>
+<td>2026-11-16</td>
+<td>POR @ MIN</td>
+<td class="n">101.33</td>
+<td>1.160 / 1.111</td>
+<td>1.188 / 1.047</td>
+<td class="n">115.0</td>
+<td class="n">113.2</td>
+<td class="n"><b>228.3</b></td>
+<td class="n">237.9</td>
+<td class="n">-9.6</td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>POR @ MIN</td>
+<td class="n">101.33</td>
+<td>1.160 / 1.111</td>
+<td>1.188 / 1.047</td>
+<td class="n">115.0</td>
+<td class="n">113.2</td>
+<td class="n"><b>228.3</b></td>
+<td class="n">237.9</td>
+<td class="n">-9.6</td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>DET @ SAS</td>
+<td class="n">100.63</td>
+<td>1.197 / 1.088</td>
+<td>1.141 / 1.064</td>
+<td class="n">114.9</td>
+<td class="n">110.9</td>
+<td class="n"><b>225.9</b></td>
+<td class="n">235.2</td>
+<td class="n">-9.3</td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>UTA @ LAC</td>
+<td class="n">101.88</td>
+<td>1.107 / 1.159</td>
+<td>1.051 / 1.158</td>
+<td class="n">115.4</td>
+<td class="n">112.5</td>
+<td class="n"><b>228.0</b></td>
+<td class="n">219.8</td>
+<td class="n">+8.2</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>CHA @ LAC</td>
+<td class="n">99.10</td>
+<td>1.107 / 1.133</td>
+<td>1.019 / 1.158</td>
+<td class="n">111.0</td>
+<td class="n">107.9</td>
+<td class="n"><b>218.9</b></td>
+<td class="n">210.9</td>
+<td class="n">+8.0</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>ATL @ MIL</td>
+<td class="n">102.35</td>
+<td>1.058 / 1.120</td>
+<td>1.133 / 1.197</td>
+<td class="n">111.4</td>
+<td class="n">119.3</td>
+<td class="n"><b>230.7</b></td>
+<td class="n">224.4</td>
+<td class="n">+6.3</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>DAL @ BOS</td>
+<td class="n">98.97</td>
+<td>1.174 / 1.126</td>
+<td>1.128 / 1.059</td>
+<td class="n">113.8</td>
+<td class="n">108.2</td>
+<td class="n"><b>222.1</b></td>
+<td class="n">227.8</td>
+<td class="n">-5.7</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>CHI @ CLE</td>
+<td class="n">102.62</td>
+<td>1.169 / 1.202</td>
+<td>1.094 / 1.153</td>
+<td class="n">121.7</td>
+<td class="n">115.3</td>
+<td class="n"><b>237.0</b></td>
+<td class="n">232.1</td>
+<td class="n">+4.9</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>OKC @ SAC</td>
+<td class="n">99.72</td>
+<td>1.073 / 1.089</td>
+<td>1.128 / 1.199</td>
+<td class="n">107.8</td>
+<td class="n">116.0</td>
+<td class="n"><b>223.8</b></td>
+<td class="n">219.4</td>
+<td class="n">+4.4</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>HOU @ MIA</td>
+<td class="n">100.42</td>
+<td>1.147 / 1.103</td>
+<td>1.193 / 1.158</td>
+<td class="n">113.0</td>
+<td class="n">118.1</td>
+<td class="n"><b>231.0</b></td>
+<td class="n">234.9</td>
+<td class="n">-3.9</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>NYK @ TOR</td>
+<td class="n">97.79</td>
+<td>1.146 / 1.082</td>
+<td>1.146 / 1.131</td>
+<td class="n">108.9</td>
+<td class="n">111.3</td>
+<td class="n"><b>220.3</b></td>
+<td class="n">224.1</td>
+<td class="n">-3.8</td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>NYK @ TOR</td>
+<td class="n">97.79</td>
+<td>1.146 / 1.082</td>
+<td>1.146 / 1.131</td>
+<td class="n">108.9</td>
+<td class="n">111.3</td>
+<td class="n"><b>220.3</b></td>
+<td class="n">224.1</td>
+<td class="n">-3.8</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>ORL @ BOS</td>
+<td class="n">98.04</td>
+<td>1.174 / 1.142</td>
+<td>1.097 / 1.059</td>
+<td class="n">113.6</td>
+<td class="n">105.7</td>
+<td class="n"><b>219.2</b></td>
+<td class="n">222.6</td>
+<td class="n">-3.4</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>GSW @ NOP</td>
+<td class="n">102.30</td>
+<td>1.114 / 1.118</td>
+<td>1.161 / 1.200</td>
+<td class="n">114.2</td>
+<td class="n">120.8</td>
+<td class="n"><b>234.9</b></td>
+<td class="n">232.6</td>
+<td class="n">+2.3</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHI @ BKN</td>
+<td class="n">100.24</td>
+<td>1.098 / 1.092</td>
+<td>1.110 / 1.160</td>
+<td class="n">109.8</td>
+<td class="n">113.8</td>
+<td class="n"><b>223.6</b></td>
+<td class="n">221.4</td>
+<td class="n">+2.2</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>LAL @ PHX</td>
+<td class="n">99.32</td>
+<td>1.138 / 1.137</td>
+<td>1.216 / 1.182</td>
+<td class="n">113.0</td>
+<td class="n">119.1</td>
+<td class="n"><b>232.1</b></td>
+<td class="n">233.9</td>
+<td class="n">-1.8</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>MEM @ WAS</td>
+<td class="n">101.27</td>
+<td>1.087 / 1.102</td>
+<td>1.190 / 1.145</td>
+<td class="n">110.8</td>
+<td class="n">118.2</td>
+<td class="n"><b>229.0</b></td>
+<td class="n">230.6</td>
+<td class="n">-1.6</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>HOU @ WAS</td>
+<td class="n">99.27</td>
+<td>1.087 / 1.103</td>
+<td>1.193 / 1.145</td>
+<td class="n">108.7</td>
+<td class="n">116.0</td>
+<td class="n"><b>224.8</b></td>
+<td class="n">226.2</td>
+<td class="n">-1.4</td>
+</tr>
+<tr>
+<td>2026-11-17</td>
+<td>CHA @ LAL</td>
+<td class="n">98.61</td>
+<td>1.216 / 1.133</td>
+<td>1.019 / 1.137</td>
+<td class="n">115.8</td>
+<td class="n">106.3</td>
+<td class="n"><b>222.1</b></td>
+<td class="n">220.8</td>
+<td class="n">+1.3</td>
+</tr>
+<tr>
+<td>2026-11-16</td>
+<td>PHX @ DEN</td>
+<td class="n">98.50</td>
+<td>1.160 / 1.182</td>
+<td>1.138 / 1.141</td>
+<td class="n">115.4</td>
+<td class="n">112.2</td>
+<td class="n"><b>227.6</b></td>
+<td class="n">226.3</td>
+<td class="n">+1.3</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>SAS @ UTA</td>
+<td class="n">101.08</td>
+<td>1.051 / 1.064</td>
+<td>1.197 / 1.159</td>
+<td class="n">106.9</td>
+<td class="n">119.1</td>
+<td class="n"><b>225.9</b></td>
+<td class="n">227.0</td>
+<td class="n">-1.1</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>IND @ PHI</td>
+<td class="n">100.54</td>
+<td>1.110 / 1.122</td>
+<td>1.102 / 1.092</td>
+<td class="n">112.2</td>
+<td class="n">110.3</td>
+<td class="n"><b>222.5</b></td>
+<td class="n">222.4</td>
+<td class="n">+0.1</td>
+</tr>
+</tbody></table></div>
+<h2>The finding that has to be printed next to the formula</h2>
+<div class="card bad"><p>On the walk-forward, the forward total scores a mean absolute error of <b>16.05</b> — <b>worse</b> than always predicting the league mean (15.126) and worse than the running league average (15.139). Its correlation with the actual total is 0.2352, and its spread (sd 12.491) is much narrower than the truth's (sd 19.257).</p><p>So the formula is correct and, measured on absolute error, the forecast it produces is <b>worse than a constant</b>. It is worth publishing for two reasons: it is the formula the brief specifies, and the naive average it replaces was never a forecast either. A reader should not mistake the possession construction for evidence of total-prediction skill, and the site does not present it as one.</p></div>
+<h2>Level versus order — two different questions</h2>
+<div class="card warn"><p>Direction against a rolling mean over every scored game: 76/132 = 0.576 (z=+1.74, p=0.082) — not significant. On the subset where the forecast commits to at least a 3-point view: 65/106 = 0.613 (z=+2.33, p=0.020) — significant. The subset result is a threshold-selected subset of the same data, so it is reported as a subset and not as the headline; the whole-sample number is the one to trust, and the two together say the total&#x27;s ordering signal is promising and unproven. Neither licenses a stake: a rolling mean is not a price.</p><p>Both numbers are here because they are easy to confuse and the first version of this page published only the second one's favourable half. A forecast can be well-ordered and too tightly dispersed at the same time: it ranks games in the right order more often than not, while its absolute error is still worse than saying &ldquo;the league average&rdquo; every night.</p></div>
+<h2>Why the spread is too narrow</h2>
+<div class="card"><p>The inputs are season-to-date club averages. Averaging two clubs' rates cancels their game-to-game variation, so the output is a <i>central</i> estimate: it knows that both clubs are good, and it cannot know that tonight one of them shoots 9/38 from three. The actual totals range 174–284; the forward total spans a fraction of that.</p><p>The honest fix is a variance term the brief's data does not supply (per-game possession and shooting distributions). It is listed on the questions page as a blocked input rather than patched with a fudge factor.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

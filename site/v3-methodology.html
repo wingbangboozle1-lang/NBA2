@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Methodology &amp; formulas · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html" class="on">Methodology</a>
+<a href="v3-flagged.html">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Methodology &amp; formulas</h1>
+<p class="sub">Every formula this site uses, written as a formula, with the choice that would have been easier and is deliberately not taken.</p>
+<h2>Two estimators, and why the disagreement is the headline</h2>
+<div class="card"><p>Estimator <b>A</b>: rating = shrunk mean of a club's home and road scoring margins; the forecast margin is r_home − r_away + h.</p><p>Estimator <b>B</b>: an exact constrained least-squares fit of strengths and a home term to the same game margins, with a ridge penalty of 0.5 and the constraint that strengths sum to zero, solved by Gaussian elimination with a Lagrange row.</p><p><b>Why not just average them?</b> The brief asks for the disagreement to be the primary confidence signal and the blend to sit underneath. A single blended headline hides the one piece of information a reader can actually act on: whether the two methods agree about tonight's game. The blend appears only as a labelled fallback.</p></div>
+<h2>Home court pinned to the measured rate</h2>
+<div class="card"><p>p_home is measured from the results, not fitted: 0.5294 over 187 games (SE 0.0366). With the margin distribution assumed normal, h = σ·Φ⁻¹(p) = <b>+0.963</b> at σ = 13.05.</p><p><b>The unconstrained fit buys an RMSE of 1.0529 against the pinned 1.055 — a gain of 0.0022 — by claiming a home-win rate of 0.8312 against the measured 0.5294. That is the whole argument for pinning: the free parameter spends its freedom on a home rate no season has ever produced, and the RMSE gain is too small to distinguish from noise.</b></p><p>An unconstrained fit gives h = +8.38 at σ = 8.74. It is reported and not used. A free home term absorbs every systematic error in the ratings and calls the sum 'home court'.</p></div>
+<h2>Totals: possessions × points-per-possession</h2>
+<div class="card"><p>Total = POSS × (PPP_home + PPP_away), where POSS is the game's possession count and each side's PPP is the mean of its own offensive rate and the opponent's defensive rate.</p><p><b>The average-of-averages is printed beside it</b> on every row, because the brief asks for the comparison rather than the replacement. The measured result is on the totals page: the possession total does not beat a constant.</p></div>
+<h2>Correlations and the parlay price</h2>
+<div class="card warn"><p>A same-game parlay is priced with the measured correlation: P = Φ₂(Φ⁻¹p₁, Φ⁻¹p₂; ρ), with the naive product p₁p₂ printed beside it on every leg.</p><p>The register: r(model margin, model total) = <b>-0.0779</b> [-0.2342, 0.0823] over 152 games; the actual correlation is -0.0224. Near zero is what justifies multiplying the legs; a correlation far from zero is what would forbid it.</p><p><b>What is withheld.</b> The register's earlier version correlated margin against a total that was a single league-mean constant (sd 1.21). A near-zero correlation between a variable and a constant is not a measurement, so that number is not shown; the forward total with real variance is used instead.</p></div>
+<h2>Market-anchored prior</h2>
+<div class="card warn"><p>w_model = L_market / (L_model + L_market), where each L is an out-of-sample log-loss. The model's held-out L is <b>0.6398</b> (calibrated) against 0.7082 raw.</p><p><b>Not computed.</b> L_market requires a market, and no odds feed is connected. The methodology page shows the formula and two illustrative weights (0.4586 at a market log-loss of 0.60, 0.4786 at 0.65) explicitly labelled as illustrations — they are not inputs to anything on this site.</p></div>
+<h2>Minutes redistribution</h2>
+<div class="card warn"><p>The method: take each club's top-eight players by minutes share, compute what fraction of the top-eight minutes a missing player carried, and redistribute it across the remaining seven and a replacement share proportional to the club's bench usage. The replacement share is a parameter, published rather than buried.</p><p><b>Not filed.</b> The inputs (per-player game logs) are absent, so no club has a computed redistribution. Every line touching an affected club carries <b>FLAG-V3-ROTATION-UNFILED</b>.</p></div>
+<h2>Leakage, and the test this repository got wrong</h2>
+<div class="card warn"><p>Three direct tests replace the naive one: same-date isolation, no in-sample term, and a future-only edit. All three pass.</p><p>delete-the-target-game. It fails on any correct implementation because removing a row also removes it from later dates&#x27; volatility estimates. Recorded here so the same wrong test is not proposed again.</p></div>
+<h2>Settlement rules</h2>
+<div class="card"><p>A pick settles on the official final score only, after the game page's quarter scores have been read and verified to sum to the printed final. Until both exist the pick is open and is excluded from every rate.</p><p>The ledger is a chained hash: each pick hashes its canonical JSON with its rule's pre-registration hash bound in, and the root hashes the ordered pick hashes. Editing a pick, editing a hash, or deleting a pick all break verification — each was tested.</p></div>
+<h2>Reproducing any number on this site</h2>
+<div class="card"><p><code>python3 -m nba2.v3.backtest</code> prints every metric above. <code>python3 -m nba2.v3.strategies</code> re-runs the scoreboard and re-verifies the ledger. <code>python3 -m nba2.v3.check</code> re-checks the published pages. The seed is 20261115 and the permutation count is 4000; the current permutation p is 0.0002.</p></div>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

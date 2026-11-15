@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flagged for review · NBA2 v3</title>
+<meta name="description" content="NBA2 v3 — two independent estimators, disagreement as the confidence signal, projection and bet surfaces kept apart.">
+<link rel="stylesheet" href="assets/v3.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>v3</span></div>
+  <p class="tag">disagreement is the confidence signal</p>
+  <nav>
+<p class="navgrp proj">Projection surface</p>
+<a href="v3-index.html">Dashboard</a>
+<a href="v3-lines.html">Originated lines</a>
+<a href="v3-totals.html">Totals</a>
+<a href="v3-teams.html">Teams &amp; luck</a>
+<a href="v3-calibration.html">Calibration</a>
+<a href="v3-backtest.html">Backtest &amp; skill</a>
+<a href="v3-strategies.html">Strategies</a>
+<a href="v3-injuries.html">Injuries</a>
+<a href="v3-methodology.html">Methodology</a>
+<a href="v3-flagged.html" class="on">Flagged for review</a>
+<p class="navgrp bet">Bet surface (gated)</p>
+<a href="v3-bet.html">Gate report</a>
+<p class="navgrp">Elsewhere</p>
+<a href="index.html">v2 site</a>
+<a href="flagged.html">v2 flags</a>
+  </nav>
+</aside>
+<main>
+
+<div class="card proj"><b>Projection surface.</b> Safe to publish now: inputs, formulas, originated numbers, and the confidence gap. No stake is implied by anything here. <span class="badge b-proj">projection</span></div><h1>Flagged for review</h1>
+<p class="sub">Everything this build could not verify, could not measure, or measured and found wanting. None of these are hidden in a footnote.</p>
+<div class="card warn"><p>A flag is not a failure of the build. It is a statement that a number is missing or a claim is unverified, with the reason and, where one exists, the source a reviewer should read. Flagged items do not block publication; concealing them would.</p></div>
+<div class="scroll"><table>
+<caption>14 open items.</caption>
+<thead><tr>
+<th scope="col">ID</th>
+<th scope="col">Kind</th>
+<th scope="col">What</th>
+<th scope="col">Why it matters</th>
+<th scope="col">Source</th>
+<th scope="col">Status</th>
+</tr></thead><tbody>
+<tr>
+<td>FLAG-V3-LOGLOSS</td>
+<td><span class="badge b-warn">measured-negative</span></td>
+<td>Raw model log-loss 0.7414 is worse than a coin (0.6931).</td>
+<td>Published on the calibration page with the reliability table that explains it, and the measured shrink correction that fixes it.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-TOTAL-CONSTANT</td>
+<td><span class="badge b-warn">measured-negative</span></td>
+<td>Forward total MAE 16.05 is worse than a constant (15.126).</td>
+<td>The possession formula is the brief&#x27;s; its forecast is not useful for a total. Printed beside the formula, not instead of it.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-ROTATION-UNFILED</td>
+<td><span class="badge b-warn">blocked-input</span></td>
+<td>No club&#x27;s minutes redistribution is computed.</td>
+<td>Per-player game logs are not in the repository, so top-eight shares and replacement shares cannot be measured. No estimate is substituted.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>BLOCKED</td>
+</tr>
+<tr>
+<td>FLAG-V3-ODDS-BLOCKED</td>
+<td><span class="badge b-warn">blocked-input</span></td>
+<td>No market price, so no edge, no CLV, no ROI and no stake.</td>
+<td>G6 is NOT MEASURABLE. The market-weight formula is published with illustrative inputs labelled as illustrations.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>BLOCKED</td>
+</tr>
+<tr>
+<td>FLAG-V3-WITHIN-DAY</td>
+<td><span class="badge b-warn">not-measured</span></td>
+<td>Within-day injury diff is NOT MEASURED.</td>
+<td>1 of 26 revisions fetched.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>FLAG-V3-SLATE-TURNOVER</td>
+<td><span class="badge b-warn">method-caveat</span></td>
+<td>The two captured injury releases share zero players.</td>
+<td>Their diff measures slate turnover, not status change. 0 status changes must not be read as &#x27;nothing changed today&#x27;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Repor…</a></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-RANK-WITHHELD</td>
+<td><span class="badge b-warn">sample-size</span></td>
+<td>Largest settled count 97 is below the 100-bet ranking bar.</td>
+<td>No rule receives a leaderboard position. A rank from this many bets would be noise.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-MULTIPLICITY</td>
+<td><span class="badge b-warn">method-caveat</span></td>
+<td>5 rules were tested simultaneously.</td>
+<td>Holm-adjusted p is used for the verdict; the unadjusted p is also shown so a reader can disagree with the correction.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-ALPHA-FITTED</td>
+<td><span class="badge b-warn">method-caveat</span></td>
+<td>The calibration shrink α=0.55 is a fitted parameter.</td>
+<td>It is fitted on one slice and scored on another, which makes the gain evidence rather than a derivation. A second season would test whether it is stable.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-TRAVEL-UNDERSTATE</td>
+<td><span class="badge b-warn">method-caveat</span></td>
+<td>Per-game travel understates multi-game road trips.</td>
+<td>The away figure is distance from the previous venue only. Accumulated trip distance is not carried, and a dash means unknown rather than zero.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-QUARTERS</td>
+<td><span class="badge b-warn">blocked-input</span></td>
+<td>Quarter scores exist for the five 2026-11-14 finals only.</td>
+<td>Earlier dates in the results feed carry a final score without quarters. Every block that was read sums to its printed final; the rest are blank with a reason rather than filled.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>PARTIAL</td>
+</tr>
+<tr>
+<td>FLAG-V3-FREE-HCA</td>
+<td><span class="badge b-warn">method-caveat</span></td>
+<td>The unconstrained HCA fit returns h=n/a.</td>
+<td>It is reported and not used: a free home term absorbs rating error and calls it home court. The pinned value is what the model publishes.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>DISCLOSED</td>
+</tr>
+<tr>
+<td>FLAG-V3-CDN-500</td>
+<td><span class="badge b-warn">source-defect</span></td>
+<td>The NBA CDN box-score JSON endpoint returned HTTP 500.</td>
+<td>No JSON API is available, so every number is scraped from a rendered page. That is slower and more fragile and it is why each capture names the exact URL.</td>
+<td><span class="blank" title="no source">no source</span></td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>FLAG-V3-V2-INHERITED</td>
+<td><span class="badge b-warn">pre-existing</span></td>
+<td>Two defects carried over from v2, untouched because they are outside this session&#x27;s scope.</td>
+<td>README has a duplicated &#x27;Which tree is published&#x27; block, and refresh.yml greps &#x27;^[fail]&#x27; where the tool prints &#x27;[FAIL]&#x27;. Both are flagged, not fixed.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/refresh.yml" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/.g…</a></td>
+<td>OPEN</td>
+</tr>
+</tbody></table></div>
+<h2>The three that most affect how a number should be read</h2>
+<ol><li><b>The raw model loses to a coin on log-loss.</b> The calibrated model wins. Both are published; the calibration page shows the table that explains the gap.</li><li><b>The forward total does not beat a constant.</b> The possession formula is correct and its forecast is not useful for predicting a total.</li><li><b>No rotation has been filed.</b> Injury effects are disclosed on every line but are not in the price, because per-player game logs are not in the repository.</li></ol>
+<footer>
+  <p>Snapshot as of <b>2026-11-15</b>,
+  retrieved <code>2026-11-15T11:33:00Z</code>.
+  Built by session <code>arena/a1fddb57-nba2</code>.
+  Every table row links to the official page it came from; a blank cell is a missing measurement,
+  never a zero.</p>
+  <p>This site publishes projections, not betting advice. No market price is connected, so no pick
+  on the bet surface carries a stake: every stake there is <b>0</b> by gate, not by judgement.</p>
+  <p><a href="v3-flagged.html">Flagged for review</a> ·
+     <a href="v3-methodology.html">Methodology &amp; formulas</a> ·
+     <a href="v3-injuries.html">Injury archive</a> ·
+     <a href="index.html">v2 site</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

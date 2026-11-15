@@ -1,0 +1,20 @@
+{
+ "data_as_of": "2026-11-15",
+ "kind": "parlay",
+ "levers": {
+  "cross_game_rho": 0.0,
+  "leg_p": 0.6
+ },
+ "name": "Home-stand first leg parlay (2-leg, cross-game)",
+ "registered_by": "arena/a1fddb57-nba2",
+ "registered_utc": "2026-11-15T11:33:00Z",
+ "rule": "Frozen before the first bet. Any change to signal, threshold, universe or settlement is a NEW strategy with a NEW id and a new hash; the old record is never edited, so a reader can always tell whether the rule moved.",
+ "schema": "nba2.v3.prereg.v1",
+ "settlement_rule": "parlay wins if BOTH legs win. Priced with the measured cross-game correlation (assumed 0 across different games \u2014 a disclosed assumption, not a measurement) and printed beside the naive product.",
+ "sha256": "a03484ce370260455aa5180b1bd065b6a0af355f29bcdc042c68a44010c4f1f3",
+ "signal": "two independent games where each pick clears P \u2265 0.60 under estimator A",
+ "strategy_id": "S3-04",
+ "thesis": "Cross-game legs are close to independent; the naive product is therefore close to right, and the print-both rule shows by how much.",
+ "threshold": "both legs p \u2265 0.60; legs from different games",
+ "universe": "pairs of games on the same date"
+}
