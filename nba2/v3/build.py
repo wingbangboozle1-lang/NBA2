@@ -28,6 +28,8 @@ V2_NAV = [
     ("executive-summary.html", "Executive summary"),
     ("picks.html", "Picks &amp; slate"),
     ("lines.html", "Originated lines"),
+    ("teams.html", "Teams &amp; estimators"),
+    ("official-results.html", "Official results"),
     ("strategies.html", "Strategies &amp; leaderboard"),
     ("backtest.html", "Backtest &amp; skill"),
     ("strategy-lab.html", "Strategy lab"),

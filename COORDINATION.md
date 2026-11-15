@@ -3386,3 +3386,19 @@ nightly job's first scheduled run is pending (F-043 diagnosis still open).
 (`arena/04a61ac0-nba2`, official capture + gates) were left untouched — both belong to active
 parallel sessions. If both land, the ingest pieces overlap (`refresh.yml`); whoever merges second
 should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, keeping both sides.
+
+**Rebase conflict resolution (2026-11-15, integrating origin/main @ 54d61e4 / PR #71
+`arena/e675ac3d-nba2` v3 rolling-slate):** kept both sides everywhere, nothing discarded.
+* `COORDINATION.md` — union of main's new sections and this session's claim/records.
+* `nba2/v2/test_v2.py` — kept arena/e675ac3d's shared-tree assertion (v2 NAV ⊆ published tree +
+  nav coverage) and merged in this session's comment naming teams.html / official-results.html.
+* `site/results.html` — filename collision between this session's v2 results page and the v3
+  "Result feed" page. Resolution: the v3 page keeps `results.html` (its build runs last in
+  `pages.yml` and would overwrite any v2 output there anyway); the v2 page is renamed
+  `official-results.html` across nav, builder and tests. Both pages are published.
+* `nba2/v3/build.py` — additive one-line-pair edit to the shared V2_NAV list so every published
+  page (v3 pages included) links to `teams.html` and `official-results.html`; without it the
+  cross-tree nav-coverage assertion fails and v3 readers cannot reach the new pages. Logged
+  here as a cross-surface edit to `arena/e675ac3d-nba2`'s file scope.
+* Post-rebase full chain re-run exactly as `pages.yml`: `nba2.v2` → `nba2.v2.check` → `nba2.v3`
+  → `nba2.v3.check` → 33 v3 + 129 v2 + 70 v1 + 49 backtest tests — all green.
