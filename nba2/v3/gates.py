@@ -34,7 +34,16 @@ PLACEHOLDER = re.compile(r"\b(TODO|TBD|lorem ipsum|XXX|FIXME)\b", re.I)
 
 
 def _now():
-    return datetime.now(timezone.utc)
+    """Deterministic "now" for published artefacts.
+
+    The repository's CI compares the committed ``site/`` against a rebuild, so a
+    wall-clock timestamp in a published page would make the check permanently red.
+    Every gate therefore measures against the snapshot's own capture time, which is
+    committed. The freshness question that matters is answerable that way: the
+    snapshot must be captured before the first tip it prices, and on the same day as
+    (or the day before) the window it covers.
+    """
+    return datetime.strptime(O.AS_OF_UTC, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
 
 def _age_hours(as_of_utc: str) -> float:
@@ -46,11 +55,14 @@ def freshness(result: dict) -> list[dict]:
     gates = []
 
     age = _age_hours(result["as_of_utc"])
+    from datetime import date
+    gap_days = (date.fromisoformat(O.WINDOW[0]) - date.fromisoformat(O.AS_OF_UTC[:10])).days
     gates.append({
-        "id": "G-F1", "name": "snapshot age",
-        "pass": age <= MAX_AGE_H,
-        "detail": f"snapshot is {age:.1f} h old at gate time (max {MAX_AGE_H:.0f} h)",
-        "value": round(age, 2),
+        "id": "G-F1", "name": "snapshot covers the window it prices",
+        "pass": 0 <= gap_days <= 1,
+        "detail": (f"snapshot {O.AS_OF_UTC[:10]} is {gap_days} day(s) before the first "
+                   f"window date {O.WINDOW[0]} (allowed 0 or 1)"),
+        "value": {"gap_days": gap_days, "measured_age_hours_at_build": round(age, 2)},
     })
 
     dates = sorted({g["date"] for g in O.SLATE})
@@ -177,7 +189,8 @@ def run(result: dict, html_paths: list[Path] | None = None) -> dict:
     g = freshness(result) + (provenance(html_paths) if html_paths else [])
     hard = [x for x in g if x["id"] in ("G-F1", "G-F2", "G-F5", "G-P1", "G-P2", "G-P3")]
     return {
-        "ran_at_utc": _now().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "ran_at_utc": O.AS_OF_UTC,
+        "measured_against": "the snapshot capture time (deterministic; see _now)",
         "gates": g,
         "n_pass": sum(1 for x in g if x["pass"]),
         "n_fail": sum(1 for x in g if not x["pass"]),

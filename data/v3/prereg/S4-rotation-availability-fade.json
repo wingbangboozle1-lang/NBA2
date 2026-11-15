@@ -1,0 +1,20 @@
+{
+  "id": "S4",
+  "name": "Rotation-availability fade",
+  "signal": "Fade a side whose official injury report lists 4 or more players as Out for that game, and whose opponent lists fewer than 2.",
+  "thresholds": {
+    "min_out": 4,
+    "max_opp_out": 1,
+    "stake_pct": 0.0
+  },
+  "universe": "games in the window where BOTH clubs have filed a report for that date (an unfiled club is excluded, never assumed healthy)",
+  "settlement_rule": "Official NBA final score. Unfiled reports produce no bet.",
+  "status": "pre-registered, 0 bets placed",
+  "registered_at_utc": "2026-11-15T11:41:00Z",
+  "registered_by": "arena/e675ac3d-nba2",
+  "window": {
+    "start": "2026-11-15",
+    "end": "2026-11-18"
+  },
+  "sha256": "97b85e33675ca0b8fd7cf8f7d328094c7b4ddfb30450e5266dff66ff24d9a8db"
+}

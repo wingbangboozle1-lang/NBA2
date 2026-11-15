@@ -312,6 +312,7 @@ def price_game(game: dict, teams: dict, hca: float, sigma: float) -> dict:
     spread_home = -(e1 + e2) / 2.0  # home spread: negative => home favoured
     return {
         "game_id": game["game_id"], "date": game["date"], "matchup": game["matchup"],
+        "away": game["away"], "home": game["home"],
         "time_et": game["time_et"], "arena": game["arena"],
         "city": game["city"], "state": game["state"],
         "possessions": round(poss, 2),

@@ -100,6 +100,13 @@ STRATEGIES = [
 ]
 
 
+def _rel(p: Path) -> str:
+    try:
+        return str(p.relative_to(ROOT))
+    except ValueError:
+        return str(p)
+
+
 def canonical(obj) -> str:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
@@ -120,7 +127,7 @@ def write_prereg() -> list[dict]:
         body["sha256"] = digest
         path = PREREG_DIR / f"{s['id']}-{s['name'].lower().replace(' ', '-')[:40]}.json"
         path.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n")
-        out.append({"id": s["id"], "name": s["name"], "file": str(path.relative_to(ROOT)),
+        out.append({"id": s["id"], "name": s["name"], "file": _rel(path),
                     "sha256": digest, "status": s["status"]})
     return out
 
@@ -179,7 +186,7 @@ def seal(result: dict) -> dict:
         body["sha256_after_settlement"] = sha256(
             {"window": body["window"], "picks": picks, "settlement": settled})
     path.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n")
-    return {"file": str(path.relative_to(ROOT)), "digest": digest, "n": len(picks),
+    return {"file": _rel(path), "digest": digest, "n": len(picks),
             "settled": bool(settled)}
 
 
@@ -214,8 +221,15 @@ def settle(result: dict, finals: list[dict]) -> dict | None:
             "winner_correct": (home_margin > 0) == (p["consensus_margin"] > 0),
             "source_url": f["source_url"],
         })
+    # Deterministic stamp: the end of the latest game day that was actually graded,
+    # not the wall clock, because CI compares a rebuild against the committed artefact.
+    graded_dates = [f["date"] for f in finals if f["game_id"] in {p["game_id"] for p in d["picks"]}]
+    settled_at = (max(graded_dates) + "T23:59:59Z") if graded_dates else None
+    if not graded_dates:
+        return None
     stamp = {
-        "settled_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "settled_at_utc": settled_at,
+        "settled_from": "official finals committed under data/raw/history + this session's capture",
         "n_graded": len(graded), "n_ungraded": len(ungraded),
         "ungraded_game_ids": ungraded,
         "margin_mae": round(sum(abs(g["margin_error"]) for g in graded) / len(graded), 3)
@@ -225,7 +239,8 @@ def settle(result: dict, finals: list[dict]) -> dict | None:
         "winner_hit_rate": round(sum(1 for g in graded if g["winner_correct"]) / len(graded), 4)
         if graded else None,
         "note": "Graded against official finals only. A game with no official final "
-                "stays UNGRADED and never counts as a loss.",
+                "stays UNGRADED and never counts as a loss. The stamp is the end of the "
+                "latest graded game day, not a wall-clock time, so a rebuild reproduces it.",
     }
     d["settlement"] = stamp
     d["sha256_after_settlement"] = sha256(
