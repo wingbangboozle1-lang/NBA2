@@ -3472,3 +3472,32 @@ rejected the non-fast-forward update. The remote branch contains only this sessi
 claim; the rebased tree includes that claim and all implementation changes. Update will use
 `--force-with-lease` on this branch only, after another pull/rebase, so an unexpected remote
 advance is not overwritten.
+## Session `arena/984a242f-nba2` — CLAIM (2026-11-15 ~23:40 UTC, branch `arena/984a242f-nba2`, base `8ab2476` = `main` @ PR #74 merge)
+
+**State read at claim time.** `main` = `8ab2476` (PR #74 merge), working tree clean, this branch at the same
+commit. Two pull requests from parallel sessions are open against `main`: **#70** (`arena/d09f8d1e-nba2`,
+nightly-ingest repair, last commit 13:03 UTC — 10.5 h idle) and **#72** (`arena/04a61ac0-nba2`, official
+capture + measured gates, draft, last commit 12:33 UTC — 11 h idle). Both are far beyond the board's
+60-minute handoff window with no commits, so per the handoff rule this session takes over their
+**integration** (not their authorship): their content is merged as-is, conflicts resolved keeping both
+sides, and every handoff/merge step is logged here.
+
+**Tasks claimed by this session:**
+
+| ID | Task | Owner | File scope | Status |
+|---|---|---|---|---|
+| I-1 | Handoff integration of PRs #70 + #72 into `main` (merge each, reconcile conflicts keeping both sides, re-run the full build + check chain afterwards) | arena/984a242f-nba2 | PR branches `arena/d09f8d1e-nba2`, `arena/04a61ac0-nba2` (conflict resolution pushes only); shared trees rebuilt after merge | in progress |
+| I-2 | SG-37 completion: capture the remaining official per-club season tables (nba.com/stats/players/traditional?TeamID=…) and store as dated snapshots | arena/984a242f-nba2 | `data/raw/capture_2026-11-15_984a/**` (new paths only) | in progress |
+| I-3 | Load the per-club capture in the v2 build (new module only), regenerate `data/v2/**` + `site/**` from the merged tree | arena/984a242f-nba2 | `nba2/v2/clubs.py` (new), `nba2/v2/test_clubs.py` (new), minimal wiring edit in `nba2/v2/content.py`/`build.py`, regenerated `data/v2/**`, `site/**` | in progress |
+| I-4 | Final integration verification: v1+v2+v3 builds, all test suites, crosscheck, whole-repo link check, then PR → merge → Pages deploy confirmation | arena/984a242f-nba2 | `COORDINATION.md` (append-only), `README.md` (count sync), integration PR | in progress |
+
+**Not claimed / not edited:** anything inside PR #70's or PR #72's functional scope beyond conflict
+resolution required to land both (no functional rewrites of their modules); `docs/**`, `dashboard/**`,
+`verified/**`, `originated/**`, `backtest/**`, `archive/**`, root `*.html` beyond what a rebuild
+regenerates. If another active session reappears and reclaims its PR, this session stops touching that
+branch immediately and logs the handoff-back here.
+
+**Rules (unchanged):** claims pushed before work; small frequent commits; `git pull --rebase` before every
+push; no value inferred — anything not confirmable from an official source stays blank and is published on
+the Flagged for Review page; sealed ledgers under `data/raw/ledger/**` are never rewritten; the site is
+never merged in a broken state.
