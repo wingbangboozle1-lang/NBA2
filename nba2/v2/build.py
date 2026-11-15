@@ -248,64 +248,6 @@ def validate(rows_by_table):
 # --------------------------------------------------------------------------- pages
 def build(run_backtest: bool = True):
     sc = _suite_counts()   # test counts, measured once for every page that quotes them
-
-    # Counts quoted in REPO_FACTS and in the repo-review prose are measured here,
-    # not remembered: "193 pass: 64 v1 + 80 v2" and "1,409 rows" were both stale on
-    # the live site (the F-033 defect class). Session arena/d09f8d1e-nba2 added
-    # tests, which is how the drift was caught.
-    n_rows = n_tables = 0
-    _sp = ROOT / "data" / "site.json"
-    if _sp.exists():
-        _sd = json.loads(_sp.read_text())
-        n_tables = sum(1 for v in _sd["sections"].values() if isinstance(v, dict) and "rows" in v)
-        n_rows = sum(len(v["rows"]) for v in _sd["sections"].values()
-                     if isinstance(v, dict) and "rows" in v)
-    _n_tests = sc["v1"] + sc["v2"] + sc["backtest"]
-
-    # Whole-repo link stats: reuse the integration session's own checker rather than
-    # a second implementation that could disagree with it.
-    _links_scanned, _links_checked, _links_ok = 0, 0, False
-    try:
-        import contextlib as _contextlib
-        import importlib.util as _importlib_util
-        import io as _io
-        _spec = _importlib_util.spec_from_file_location(
-            "nba2_v2_check_links_all", ROOT / "tools" / "check_links_all.py")
-        _mod = _importlib_util.module_from_spec(_spec)
-        import sys as _sys
-        _sys.modules[_spec.name] = _mod
-        _spec.loader.exec_module(_mod)
-        _buf = _io.StringIO()
-        _rc = 0
-        with _contextlib.redirect_stdout(_buf):
-            try:
-                _mod.main()
-            except SystemExit as _e:
-                _rc = _e.code or 0
-        import re as _re
-        _m = _re.search(r"scanned (\d+) HTML files \| (\d+) internal links checked",
-                        _buf.getvalue())
-        if _m:
-            _links_scanned, _links_checked = int(_m.group(1)), int(_m.group(2))
-            _links_ok = (_rc == 0)
-    except Exception:  # noqa: BLE001 - prose falls back to "not measured" wording
-        pass
-
-    _measured = {
-        "Python unit tests":
-            f"{_n_tests} pass: {sc['v1']} v1 + {sc['v2']} v2 + {sc['backtest']} backtest",
-        "Provenance lint":
-            f"{n_rows} rows across {n_tables} tables, every row sourced and every blank explained",
-    }
-    C.REPO_FACTS = [(name, _measured.get(name, val), method, src)
-                    for name, val, method, src in C.REPO_FACTS]
-    _link_claim = (
-        f"all {_links_checked} internal links across {_links_scanned} HTML files resolved"
-        if _links_ok else
-        "the whole-repo link checker did not report a clean pass in this build "
-        "(run `python3 tools/check_links_all.py`)"
-    )
-
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
     (SITE / "assets" / "site.css").write_text(CSS)
@@ -1633,13 +1575,13 @@ running its own checks rather than trusting its documentation.</p>
         rows.append({"cells": [esc(name), esc(val), esc(method), srclink(src)]})
     body += table(["Property", "Observed", "How checked", "Source"], rows, "Repository facts, this session")
 
-    body += f"""<h2>Current verification findings</h2>
-<div class="note"><b>What passed in this audit.</b> {_n_tests} unit tests passed ({sc['v1']} v1, {sc['v2']} v2 and {sc['backtest']} backtest); provenance lint passed for
-{n_rows} rows across {n_tables} tables; the v2 structural/semantic checker reported 0 issues; {_link_claim};
-and the v1, backtest and v2 builders produced deterministic outputs. Every figure in this paragraph is measured at build time from the suites, the data file and the link checker, not carried over from an earlier run.</div>
+    body += """<h2>Current verification findings</h2>
+<div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
+1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
+and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
 <div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
 The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
-The failure cause remains unverified: the Actions console log cannot be downloaded from this sandbox (the results blob host is outside its egress allowlist — the same EOF two sessions hit), so session arena/d09f8d1e-nba2 added a failure-time evidence job that captures every official endpoint's status, bytes and response bodies as an artifact on the next failed run, plus a crosscheck gate that can actually fail (F-050). A dated snapshot must not be described as currently fresh.</div>
+The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
 <div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
 Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
 also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>

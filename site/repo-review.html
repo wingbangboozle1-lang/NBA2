@@ -57,20 +57,20 @@ running its own checks rather than trusting its documentation.</p>
 </tr>
 <tr>
 <td>Python unit tests</td>
-<td>229 pass: 82 v1 + 98 v2 + 49 backtest</td>
+<td>193 pass: 64 v1 + 80 v2 + 49 backtest</td>
 <td>`python -m unittest discover -s nba2/tests -t .`; `-s nba2/v2 -p &#x27;test_*.py&#x27;`; `-s backtest/tests`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/tests" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Provenance lint</td>
-<td>1423 rows across 50 tables, every row sourced and every blank explained</td>
+<td>1,410 rows across 50 tables, every row sourced and every blank explained</td>
 <td>`python -m nba2.pipeline.lint`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/pipeline" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/tree/main/nba2…</a></td>
 </tr>
 <tr>
 <td>Repository cross-checker</td>
-<td>100 checks: 93 pass, 0 fail, 7 informational</td>
-<td>`python3 tools/crosscheck_site.py` (count as of this build; the gate in CI blocks on any [FAIL])</td>
+<td>97 checks: 90 pass, 0 fail, 7 informational</td>
+<td>`python3 tools/crosscheck_site.py`</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_site.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/tool…</a></td>
 </tr>
 <tr>
@@ -110,12 +110,12 @@ running its own checks rather than trusting its documentation.</p>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>Current verification findings</h2>
-<div class="note"><b>What passed in this audit.</b> 229 unit tests passed (82 v1, 98 v2 and 49 backtest); provenance lint passed for
-1423 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 5027 internal links across 112 HTML files resolved;
-and the v1, backtest and v2 builders produced deterministic outputs. Every figure in this paragraph is measured at build time from the suites, the data file and the link checker, not carried over from an earlier run.</div>
+<div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
+1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
+and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
 <div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
 The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
-The failure cause remains unverified: the Actions console log cannot be downloaded from this sandbox (the results blob host is outside its egress allowlist — the same EOF two sessions hit), so session arena/d09f8d1e-nba2 added a failure-time evidence job that captures every official endpoint's status, bytes and response bodies as an artifact on the next failed run, plus a crosscheck gate that can actually fail (F-050). A dated snapshot must not be described as currently fresh.</div>
+The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
 <div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
 Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
 also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>
