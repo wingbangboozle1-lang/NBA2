@@ -118,16 +118,27 @@ jobs:
           python3 -m nba2.pipeline.lint
 
       - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
+        # F-050 (change request from arena/bc867bff-nba2, 2026-11-14): the gate used to
+        # grep '^\[fail\]' while tools/crosscheck_site.py prints '[FAIL]' (uppercase), so
+        # the pattern could never match and a red crosscheck could never block a commit.
+        # It also used '|| true' + no completion check, so a checker crash (exit 2) was
+        # indistinguishable from a clean run. Now: a missing summary line blocks, any
+        # [FAIL] line except the by-design CC-FRESH-01 blocks, and the case matches.
         run: |
           set -uo pipefail
-          python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || true
+          rc=0
+          python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || rc=$?
           cat /tmp/crosscheck.txt
-          if grep '^\[fail\]' /tmp/crosscheck.txt | grep -v 'CC-FRESH-01'; then
-            echo "::error::semantic cross-check failed (failures above) — refusing to commit (CR-7)"
+          if ! grep -q 'checks:' /tmp/crosscheck.txt; then
+            echo "::error::crosscheck did not produce its summary line (exit $rc) — refusing to commit"
             exit 1
           fi
-          echo "cross-check clean. CC-FRESH-01 (snapshot age) is excluded by design: the bot"
-          echo "cannot refresh the third-party ratings snapshot, and blocking settlement on it"
+          if grep '^\[FAIL\]' /tmp/crosscheck.txt | grep -v 'CC-FRESH-01' | grep -q .; then
+            echo "::error::semantic cross-check failed ([FAIL] lines above) — refusing to commit (CR-7)"
+            exit 1
+          fi
+          echo "cross-check clean (checker exit $rc). CC-FRESH-01 (snapshot age) is excluded by design:"
+          echo "the bot cannot refresh the third-party ratings snapshot, and blocking settlement on it"
           echo "would freeze the ledger's metrics whenever the ratings capture ages."
 
       - name: Commit refreshed snapshots (only when something changed)
@@ -142,3 +153,33 @@ jobs:
           fi
           git commit -m "ingest(bot): nightly refresh — official injury releases archived, finals fetched; sealed ledger untouched (verify chain passed)"
           git push origin HEAD:${GITHUB_REF_NAME}
+
+  # F-043 remediation ("preserve the failure details ... alert on any unsuccessful fetch"):
+  # when the ingest job fails, collect read-only evidence about every official endpoint it
+  # depends on — status, bytes, content hash, and the response bodies themselves — so the
+  # failure cause is a captured document rather than an unverified note. This job cannot
+  # write to the repository (contents: read) and never invents a value.
+  diagnostics:
+    if: failure()
+    needs: ingest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe the official endpoints the failed step depends on
+        run: python3 tools/probe_official.py --out probe_out
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ingest-failure-evidence
+          path: probe_out/
+          retention-days: 30
