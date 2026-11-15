@@ -43,6 +43,12 @@ jobs:
       - name: Provenance gate (every row sourced, every blank flagged, no broken links)
         run: python -m nba2.pipeline.lint
 
+      - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
+        # Added by session arena/d09f8d1e-nba2 (F-050 second half): this gate ran
+        # only inside the nightly workflow — where its grep could never fire — and
+        # never at pull-request time. Shared logic + regression test as cited above.
+        run: tools/crosscheck_gate.sh
+
       - name: Fail if the committed site does not match a rebuild of the committed data
         run: |
           git add -A
