@@ -3459,3 +3459,9 @@ JSON file handles in `nba2/v2/model.py` and `nba2/v2/travel.py`; these are outsi
 scope. The current v3 gate summary still reports one advisory failed gate while
 `publishable=True` (newer indexed injury-report release); that condition is disclosed on the
 published verification/flagged surfaces. Live refresh execution remains unverified here.
+
+**Rebase note (2026-11-15):** before pushing this work, `git pull --rebase origin main`
+advanced to PR #75 (`arena/56b96bf0-nba2`) and found an append-only conflict in
+`COORDINATION.md`. The upstream session's verification record was retained unchanged; this
+session's claim and completion record were appended after it. No production-code conflict or
+discarded work.
