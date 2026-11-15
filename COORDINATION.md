@@ -3531,3 +3531,77 @@ per the board rules. This session does not regenerate `site/`.
 * → integration session (v2 build label): IR-4 — "+0.77 home-court (fitted, pts)" on `site/index.html` contradicts the pinned HCA in `nba2/v3/model.py`; choose one value and label.
 
 **Not done in this session (honest scope):** no new official data captured (egress blocked; capture happens only on GitHub-hosted runners); no settlement fix (touches the shared v1 chain); no site regeneration beyond the CI-order check (shared output, integration session only); market prior and player props remain BLOCKED (no licensed feed).
+
+---
+
+---
+
+## Session `arena/f8f8f2b8-nba2` — CLAIM (2026-11-15, branch `arena/f8f8f2b8-nba2`, base `8ab2476` = `main` @ PR #74 merge)
+
+**State read at claim time.** `main` = `8ab2476354366751347c33d423f1033376175447`; working tree
+clean; this branch is at the same commit. Two PRs are still open from parallel sessions and are
+left untouched: **#70** `arena/d09f8d1e-nba2` (nightly-ingest repair — `.github/workflows/ci.yml`,
+`.github/workflows/probe.yml`, `data/site.json`, `index.html`, `pages/**`, `nba2/tests/**`) and
+**#72** `arena/04a61ac0-nba2` (DRAFT — `.github/workflows/refresh.yml`, `data/raw/finals_*.json`,
+`data/v2/*.json`, `nba2/v2/{official,model,build,check,report,results,gate_eval}.py`,
+`nba2/v2/test_v2.py`). This session avoids every file in those two lists; where a shared file must
+move, the request is logged here instead of being made.
+
+**Why this session exists.** The 2026-11-15 brief's remaining gaps are all *measurement* gaps, not
+design gaps, and they are reachable this session with the platform page-fetch:
+* R-044 / brief-21 — per-player game logs (minutes, points, rebounds, assists, opponent) exist for
+  **1** game (`0022600231`). The brief asks for "at least the players who appear on an injury
+  report". Reachability probe (logged below): `stats.nba.com/stats/*` and
+  `cdn.nba.com/static/json/liveData/**` both return HTTP 500 to this session, but the **official
+  gamebook PDF** `https://statsdmz.nba.com/pdfs/YYYYMMDD/YYYYMMDD_{AWAY}{HOME}_book.pdf` fetches
+  cleanly and its first chunk carries the complete official box score (POS/MIN/PTS/REB/AST per
+  player, DNP rows, inactives, and SCORE BY PERIOD). That makes a per-game capture affordable.
+* R-013 / brief-12 — minutes redistribution is currently a *mechanical rule*. With real box scores
+  the top-8 minutes shares and the replacement shares become *measured*, which is what the brief
+  asks for.
+* brief-3 / brief-17 / R-038 — the newest official injury release indexed at claim time is
+  **2026-11-15 06:15 PM ET**; the repo holds 06:15 **AM** ET. Twelve hours of releases are
+  uncaptured, so the consecutive-report diff has nothing to diff against for today.
+* R-038 / brief-18 — `IND@PHI` (gid `0022600236`) is already **Final** (124–131) on the 2026-11-15
+  slate at claim time, so one same-day official final can enter the results feed and the settlement
+  stamp today.
+
+**Reachability probe (2026-11-15, this session — recorded so the next session does not re-test):**
+
+| Endpoint | Result |
+|---|---|
+| `https://official.nba.com/nba-injury-report-2026-27-season/` | **OK** — indexes every 15-minute release |
+| `https://www.nba.com/games?date=YYYY-MM-DD` | **OK** — live status, quarter, score per game |
+| `https://www.nba.com/game/<away>-vs-<home>-<gid>/box-score` | **OK** (6 chunks — expensive) |
+| `https://statsdmz.nba.com/pdfs/<YYYYMMDD>/<YYYYMMDD>_<AWAY><HOME>_book.pdf` | **OK** (chunk 0 = full box score) |
+| `https://stats.nba.com/stats/leaguedashplayerstats?...` | **HTTP 500 / unreachable** |
+| `https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json` | **HTTP 500** |
+| `https://cdn.nba.com/static/json/liveData/boxscore/boxscore_<gid>.json` | **HTTP 500** |
+
+**File scope claimed (this session) — new files only, nothing owned elsewhere is edited:**
+* `data/raw/capture_2026-11-15/` — **new files only**: `injury_report_2026-11-15_0615PM.json`,
+  `pdf/Injury-Report_2026-11-15_06_15PM.pdf` (+ `.sha256`), `injury_delta_0615AM_to_0615PM.json`,
+  `gamebooks_2026-11-13.json`, `gamebooks_2026-11-14.json`, `gamebooks_2026-11-15.json`,
+  `gamelogs_2026-11-13_to_11-15.json`, `results_2026-11-15_partial.json`. Existing capture files are
+  **never edited**.
+* `nba2/v2/capture3.py` — **new** loader for the above (mirrors `capture2.py`'s fail-closed style).
+* `nba2/v2/minutes.py` — **new** measured minutes-redistribution module (shares from real box
+  scores; the mechanical rule stays as the labelled fallback).
+* `nba2/v2/correlations_measured.py` — **new** measured-correlation module (R-009).
+* `site/**`, `data/v2/**` — regenerated artefacts of the v2/v3 generators (never hand-edited).
+* `requirements/REQUIREMENTS.json`, `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`,
+  `analysis/session-f8f8f2b8-*` (new), `README.md` (count sync, prose preserved),
+  `COORDINATION.md` (this section + completion record, append-only).
+
+**Not claimed / not edited:** `docs/**`, `dashboard/**`, `pages/**`, `verified/**`,
+`originated/**`, `backtest/**`, `archive/**`, `audit/**`, root `*.html`, `nba2/pipeline/**`,
+`nba2/models/**`, `data/site.json`, `index.html`, `data/raw/finals_*.json`,
+`data/raw/injury_report_2026-11-1[45]_*.json` (existing), `data/raw/ledger/**` (frozen seals),
+`nba2/v2/{official,model,build,check,report,results,gate_eval}.py`, `nba2/v2/test_v2.py`,
+`.github/workflows/{ci,probe,refresh}.yml`, `nba2/tests/**`. Any change needed in those is a
+logged request, not an edit.
+
+**Rules for this session (the board's).** Claims pushed before work; small frequent commits;
+`git pull --rebase` before every push; no committed value inferred or filled in — anything not
+confirmable from an official source is left blank and published on the Flagged for Review page;
+the sealed ledgers are never rewritten; the site is never merged in a broken state.
