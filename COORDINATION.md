@@ -3472,3 +3472,32 @@ rejected the non-fast-forward update. The remote branch contains only this sessi
 claim; the rebased tree includes that claim and all implementation changes. Update will use
 `--force-with-lease` on this branch only, after another pull/rebase, so an unexpected remote
 advance is not overwritten.
+## Session `arena/a6d81367-nba2` — CLAIM (2026-11-15 ~23:40 UTC, branch `arena/a6d81367-nba2`, base `8ab2476` = `main` @ PR #74 merge)
+
+**Brief received:** the full NBA2 brief (rolling-slate refresh, results feed, injury PDF store + diff,
+pre-registration, hashed ledger, projection/bet split, estimator disagreement, HCA pin, luck z-scores,
+rest/travel, minutes redistribution, parlay pricing, market prior, poss×PPP total, settlement stamp,
+per-player game logs, originated lines, exec summary, suggestions + questions registers, Flagged page,
+GitHub Pages).
+
+**Honest constraint found in this sandbox:** egress is limited to github.com / api.github.com /
+codeload / registry.npmjs.org / pypi.org / files.pythonhosted.org. `cdn.nba.com` and `stats.nba.com`
+return TLS SYSCALL errors from here (verified with `curl`, 2026-11-15 23:3x UTC), and `gh run
+view --log*` / `gh run download` artifact fetches return `EOF` from the blob host. No new official
+NBA data can be captured from this session; capture only happens on GitHub-hosted runners.
+
+**Task claimed by this session (file scope):**
+
+| ID | Task | Owner | File scope |
+|---|---|---|---|
+| A6-1 | Stop the v2 unit test suite from rewriting the published `site/` tree (test side effect found while verifying; it strips the v3 nav links so `git status` shows drift after `python -m unittest` on v2) | `arena/a6d81367-nba2` | `nba2/v2/test_v2.py` (test body only) |
+| A6-2 | Line-by-line gap map of the 2026-11-15 brief against the repo, with the evidence command for each row and the open blockers (no claims beyond what the repo shows) | `arena/a6d81367-nba2` | `analysis/session-a6d81367-brief-gap-map.md` (new) |
+| A6-3 | Coordination record: irregularities + requests to the owners of the open claims (no edits to their files) | `arena/a6d81367-nba2` | `COORDINATION.md` (append-only) |
+
+**NOT claimed / NOT edited (owned by open sessions):** `.github/workflows/refresh.yml` and
+`tools/probe_official.py` (`arena/d09f8d1e-nba2`, PR #70); `nba2/v2/refresh.py`, `data/raw/**`
+capture and `site/**` regeneration (`arena/04a61ac0-nba2`, PR #72). Their last commits are 12:33 and
+13:03 UTC today, so the 60-minute takeover rule does not apply. Requests are logged in A6-3 instead.
+
+**Shared outputs (`site/**`, nav, Flagged page)** are changed only by the final integration session,
+per the board rules. This session does not regenerate `site/`.
