@@ -3531,3 +3531,26 @@ per the board rules. This session does not regenerate `site/`.
 * → integration session (v2 build label): IR-4 — "+0.77 home-court (fitted, pts)" on `site/index.html` contradicts the pinned HCA in `nba2/v3/model.py`; choose one value and label.
 
 **Not done in this session (honest scope):** no new official data captured (egress blocked; capture happens only on GitHub-hosted runners); no settlement fix (touches the shared v1 chain); no site regeneration beyond the CI-order check (shared output, integration session only); market prior and player props remain BLOCKED (no licensed feed).
+
+## Session `arena/0429aad7-nba2` — CLAIM (2026-11-15 UTC)
+
+**Objective:** independently audit the current merged tree and live-published site against the
+brief, run the repository's verification chain, and report any reproducible gaps or irregularities.
+This is a review-only task; it does not duplicate the in-flight ingestion/source-capture work in
+PRs #70 and #72.
+
+**Claimed scope:** `analysis/session-0429aad7-audit.md` (new file only) and this file (`COORDINATION.md`,
+append-only). No generated site, model, official snapshots, source data, or workflow file will be
+edited by this session. Any production change request discovered during the audit will be logged here
+for the owning session instead of being applied across another session's scope.
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| A429-01 | Record review-only claim before work | in progress | `arena/0429aad7-nba2` | `COORDINATION.md` |
+| A429-02 | Run the published build/check/test/link/provenance chain | in progress | `arena/0429aad7-nba2` | no edits |
+| A429-03 | Independently inspect source links, timestamps, and flagged items for the merged site | in progress | `arena/0429aad7-nba2` | no edits |
+| A429-04 | Record reproducible results, open questions, and file-scoped change requests | unclaimed | `arena/0429aad7-nba2` | `analysis/session-0429aad7-audit.md`, `COORDINATION.md` |
+
+### Rebase conflict resolution — session `arena/0429aad7-nba2` (2026-11-15 UTC)
+
+During the required `git pull --rebase origin main` after the claim extension, `origin/main` advanced from `8ab2476` to `2d63974` (PR #75). This append/append conflict in `COORDINATION.md` was resolved by retaining both the newly merged `arena/56b96bf0-nba2` session record and this session's claim. The merged block had literal `\n` escape sequences instead of line breaks; only those separators were decoded to restore readable Markdown. No session content was dropped.
