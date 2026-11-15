@@ -1,0 +1,109 @@
+# Official-source reachability probe (session arena/d09f8d1e-nba2, D9-03 / F-043).
+#
+# WHY: the scheduled "Nightly ingest + settlement" job failed twice at
+# "Fetch official finals for arrived window dates" with exit code 3, which
+# nba2/pipeline/refresh.py defines as "every official endpoint unreachable
+# (network-level failure)". F-043 records that the failure cause is unverified
+# because the run-log download returned EOF during the prior audit.
+#
+# This workflow is READ-ONLY evidence: it requests each official URL the
+# pipeline depends on, with both the pipeline's User-Agent and a browser
+# User-Agent, and records per URL: HTTP status, byte length, sha256 prefix,
+# content type, and a short content sniff. It never writes to the repository,
+# never commits, and never invents a value. It runs only on manual dispatch,
+# on whatever ref you point it at.
+
+name: Probe official sources (read-only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe every official endpoint the ingest depends on
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, hashlib, json, ssl, sys, time, urllib.request, urllib.error
+
+          PIPELINE_UA = ("NBA2-research-desk/1.0 (repository ingestion; "
+                         "contact: repo owner)")
+          BROWSER_UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
+
+          # (label, url). Sealed-window game id from data/raw/ledger/sealed-2026-11-14.json.
+          GID = "0022600231"  # NOP vs DEN, 2026-11-14, first sealed-window game
+          URLS = [
+              ("injury_index", "https://official.nba.com/nba-injury-report-2026-27-season/"),
+              ("cdn_todays_scoreboard", "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json"),
+              ("stats_scoreboardv2_1114", "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=2026-11-14&DayOffset=0"),
+              ("stats_scoreboardv2_1113", "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=2026-11-13&DayOffset=0"),
+              ("cdn_game_boxscore", f"https://cdn.nba.com/static/json/liveData/game/{GID}_boxscore.json"),
+              ("cdn_game_pbp", f"https://cdn.nba.com/static/json/liveData/playbyplay/{GID}_full.json"),
+              ("nba_com_game_page", "https://www.nba.com/game/nyk-vs-ind-0022600034"),
+              ("stats_team_traditional", "https://stats.nba.com/stats/teamyearyearstatsmeasure?LeagueID=00&Season=2026-27&SeasonType=Regular%20Season&TeamID=1610612743&MeasureType=Base&PerMode=PerGame"),
+              ("stats_league_leaders", "https://stats.nba.com/stats/leagueleaders?LeagueID=00&Season=2026-27&SeasonType=Regular%20Season&PerMode=PerGame"),
+          ]
+
+          def fetch(url, ua, timeout=30):
+              req = urllib.request.Request(url, headers={
+                  "User-Agent": ua, "Accept": "*/*",
+                  "Referer": "https://www.nba.com/",
+                  "Accept-Language": "en-US,en;q=0.9",
+              })
+              t0 = time.time()
+              try:
+                  with urllib.request.urlopen(req, timeout=timeout) as r:
+                      body = r.read()
+                      return {"status": r.status, "bytes": len(body),
+                              "sha256": hashlib.sha256(body).hexdigest()[:16],
+                              "ctype": r.headers.get("Content-Type", ""),
+                              "sniff": body[:160].decode("utf-8", "replace").replace("\n", " "),
+                              "elapsed_s": round(time.time() - t0, 2), "error": ""}
+              except urllib.error.HTTPError as e:
+                  body = e.read() if hasattr(e, "read") else b""
+                  return {"status": e.code, "bytes": len(body),
+                          "sha256": hashlib.sha256(body).hexdigest()[:16] if body else "",
+                          "ctype": e.headers.get("Content-Type", "") if e.headers else "",
+                          "sniff": body[:160].decode("utf-8", "replace").replace("\n", " ") if body else "",
+                          "elapsed_s": round(time.time() - t0, 2), "error": f"HTTPError {e.code}"}
+              except Exception as e:  # noqa: BLE001
+                  return {"status": None, "bytes": 0, "sha256": "", "ctype": "",
+                          "sniff": "", "elapsed_s": round(time.time() - t0, 2),
+                          "error": f"{type(e).__name__}: {e}"}
+
+          report = {"probed_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                    "runner": "ubuntu-latest (GitHub-hosted)", "results": []}
+          print(f"probe start {report['probed_at_utc']}")
+          for label, url in URLS:
+              for ua_name, ua in (("pipeline_ua", PIPELINE_UA), ("browser_ua", BROWSER_UA)):
+                  res = fetch(url, ua)
+                  row = {"label": label, "url": url, "ua": ua_name, **res}
+                  report["results"].append(row)
+                  print(f"[{res['status']}] {label:24s} {ua_name:11s} "
+                        f"bytes={res['bytes']:<8} sha={res['sha256']:<16} "
+                        f"{res['elapsed_s']}s {res['error']}")
+                  if res["sniff"]:
+                      print(f"        sniff: {res['sniff'][:140]}")
+          with open("probe_report.json", "w") as f:
+              json.dump(report, f, indent=1)
+          print("wrote probe_report.json")
+          PY
+
+      - name: Upload probe report as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-source-probe
+          path: probe_report.json
+          retention-days: 30
