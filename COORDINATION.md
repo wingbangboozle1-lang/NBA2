@@ -3407,3 +3407,18 @@ should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, k
 | L-04 | Confirm the site builds, all gates pass, and the live GitHub Pages site is reachable | unclaimed | `nba2/`, `site/`, workflows (read-only) | every checker green; live fetch returns content |
 | L-05 | Final integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result here | unclaimed | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
 
+## Session `arena/f611c128-nba2` — CLAIM (2026-11-15)
+
+**Finding under review:** the v2 scheduled refresh's `gate_finals` requires at least one final
+on every calendar date (including off-days and today's not-yet-final games), while the
+standings gate compares full-season cumulative W/L against only the prior seven days of
+finals. Those conditions make valid refreshes fail closed for the wrong reason. This session
+will correct only those gate semantics and add focused regression tests.
+
+**Claimed scope:** `nba2/v2/refresh.py`, new `nba2/v2/test_refresh_gates.py`, append-only
+`COORDINATION.md`. No generated site/data, workflow, sealed ledger, or other session-owned
+files will be edited.
+
+**Verification plan:** unit-test expected completed-game counts (including a no-game day),
+missing finals and uniqueness; validate cumulative standings internally rather than against a
+partial finals window; run the focused tests, v2/v3 structural checks and site-link checks.
