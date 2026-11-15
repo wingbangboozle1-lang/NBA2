@@ -3226,3 +3226,65 @@ to be clean on every file except the append-only board. Nothing from those branc
 | E-15 | New site pages + nav wiring; every row sourced | in progress | `arena/e675ac3d-nba2` | `site/*.html` (new names) |
 | E-16 | Repo review line by line, flag irregularities | in progress | `arena/e675ac3d-nba2` | `analysis/session-e675ac3d-repo-review.md` |
 | E-17 | PR → merge → Pages deploy confirmed → record | unclaimed→in progress | `arena/e675ac3d-nba2` | `COORDINATION.md` |
+
+### Session `arena/e675ac3d-nba2` — completion record (2026-11-15)
+
+**Status:** done. All 17 tasks (E-01…E-17) are complete; the one failing gate is
+advisory by design and is published, not suppressed.
+
+**What was captured live from official pages (2026-11-15, 11:33–11:41 UTC):**
+
+| Source | What was taken |
+|---|---|
+| `https://www.nba.com/schedule` (chunks 0-2) | the rolling slate 2026-11-15 → 2026-11-18 (34 games, official ids, ET times, arena/city/state) and the five official 11/14 finals |
+| `https://www.nba.com/standings` (chunks 0-1) | 30 clubs: W/L, home/road/neutral splits |
+| `https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame` | 30 rows: GP, MIN, OffRtg, DefRtg, NetRtg, PACE, POSS, eFG%, TS%, TOV%, OREB%, DREB% |
+| `https://www.nba.com/stats/teams/opponent?…` | 30 rows: official Opp PTS (points allowed) |
+| `https://www.nba.com/stats/teams/traditional?…` (chunks 1, 3) | PTS per game read for 16 of 30 clubs, used as an independent cross-check |
+| `https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf` | 102 rows: 84 player rows for the nine 11/15 games + 18 not-yet-submitted team rows |
+| `https://official.nba.com/nba-injury-report-2026-27-season/` | the release index; newest indexed at retrieval was 11/15 06:15 AM ET |
+| `https://www.nba.com/game/den-vs-nop-0022600231` | the official LINESCORES table — the quarter-score schema proof |
+
+**What was built** — `nba2/v3/` (new package, 9 modules), `data/v3/**`, and seven new
+pages in the published tree: `slate.html`, `projections.html`, `rotation.html`,
+`travel.html`, `results.html`, `ledger.html`, `verification-v3.html`, plus an
+idempotent navigation injection into the existing generated pages.
+
+**Measured results, each reproducible from the committed snapshot:**
+
+* 188 official finals (183 committed + 5 captured this session). 187 non-neutral.
+* Home-win rate **99/187 = 0.5294**; home-margin sd **16.914**; **pinned HCA 1.248
+  pts** = sd × Φ⁻¹(home win rate). Not fitted.
+* Estimator disagreement (E1 efficiency vs E2 Pythagorean/log5) is the published
+  headline; median 2.6 pts, max 4.19.
+* Luck z-scores for all 30 clubs (Pythagorean exponent 13.91, with 13.5 and 16.5
+  published as a sensitivity); the noise band is |z| ≤ 2.0 and a strategy leaning on
+  a club outside it is refused, not downgraded.
+* Measured rho(margin, total) = **−0.0209** on n = 187, 95% CI [−0.164, +0.123].
+* Totals are possessions × points-per-possession, never an average of two averages.
+* Rest, back-to-back and 3-in-4 derive from official dates. Travel distance is
+  **blank** because no official coordinate source exists (F-306).
+* Rotation minutes shares are **blank** (F-307); the redistribution arithmetic is
+  implemented and tested on a synthetic roster.
+
+**Verification:** `nba2/v3/official.py` selftest clean; v3 structural + semantic check
+0/0; v2 check 0/0; `tools/check_links_all.py` 119 files / 5 417 internal links ALL OK;
+`nba2/tests` 70 OK; `nba2/v3` tests 33 OK; two consecutive builds produce byte-identical
+`site/` and `data/v3/` (determinism, so the CI parity diff holds).
+
+**Irregularities published rather than fixed** — full detail in
+[`analysis/session-e675ac3d-repo-review.md`](analysis/session-e675ac3d-repo-review.md):
+I-E675-01 the published v2 tree is one day stale (183 wins vs today's official 188;
+exactly the ten clubs that played 11/14 differ) — `nba2/v2/official.py` is owned by
+open PRs #57/#68 so it is flagged, not edited; I-E675-02 the standing "player data
+unreachable" claim is wrong (469 rows reachable) — converted to F-307 "not yet
+captured"; I-E675-03 pinned HCA 1.248 vs v2's fitted 1.53 (different questions, both
+published, not averaged); I-E675-04 four open PRs past the handoff window; I-E675-05
+two official pages disagree on points allowed by up to 0.82 pts/game (both published,
+not averaged) while derived points-for matches the 16 read rows to 0.09; I-E675-06
+POR@MIN on consecutive days; I-E675-07 game ids not monotonic in tip order; I-E675-08
+the PDF labels DAL "NOT YET SUBMITTED" and omits NYK entirely.
+
+**Advisory gate failure, disclosed:** G-F3 — the release transcribed (11/15 06:00 AM
+ET) is not the newest indexed at retrieval (11/15 06:15 AM ET). It is advisory rather
+than fatal by the stated policy, and it is printed on the verification page.
