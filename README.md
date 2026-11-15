@@ -287,8 +287,17 @@ fetched live during that session. The earlier trees (root `*.html`, `pages/`, `d
 dashboards with different numbers is worse than one, and the reconciliation of all six is an owner
 decision logged on the new site's Flagged page (F-011).
 
+As of the 2026-11-15 capture the site adds **`teams.html`** (every team's two estimators with their
+disagreement as the headline confidence column) and **`results.html`** (official results feed with
+quarter scores, the settlement stamp, per-pick ledger hashes and the pre-registration files), and the
+Injuries page carries release-to-release deltas, the revision + retrieval stamps and the explicit
+minutes-redistribution table. The rolling ingest job (`python3 -m nba2.v2.refresh`, wired into
+`refresh.yml`) refreshes the schedule, standings, team statistics and injury report per slate and
+rebuilds only after the freshness + provenance gates pass.
+
 ```bash
-python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (17 pages, includes the backtest)
+python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (24 pages, includes the backtest)
+python3 -m nba2.v2.refresh    # rolling ingest with freshness/provenance gates (scheduled nightly)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 98 tests

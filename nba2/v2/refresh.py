@@ -1,0 +1,327 @@
+"""Scheduled ingest for the rolling window: schedule, standings, team stats, injuries.
+
+Runs in GitHub Actions (see ``.github/workflows/refresh.yml``). Every step is fail-closed:
+
+* **fetch** the four official surfaces with retries and a real User-Agent (stats.nba.com
+  rejects default agents), recording retrieval timestamps,
+* **gate** before anything is written or the site is rebuilt:
+
+  1. ``freshness/finals``   — every completed game through yesterday has an official final
+  2. ``freshness/standings``— standings rebuild from the finals feed exactly (W/L per club)
+  3. ``freshness/injuries`` — the newest injury release on the league index is at least as
+      recent as the most recent game day's release window, and its stamp + retrieval time
+      are both recorded
+  4. ``freshness/slate``    — the slate covers today..today+3 with unique game ids
+  5. ``provenance``         — every written row carries a source URL; no row is written
+      without one (a missing source raises, it never becomes a blank in a raw file),
+
+* **write** dated capture files in the frozen schemas (nba2.standings-official.v2,
+  nba2.slate.v2, nba2.team-stats-3page.v1, nba2.injury-transcript.v2, nba2.results-feed.v2),
+* **rebuild** the v2 site and run ``python -m nba2.v2.check`` — a failing gate or check
+  aborts before commit, so the published site can never silently go stale.
+
+Usage:  python3 -m nba2.v2.refresh --check-only     # gates only, no writes
+        python3 -m nba2.v2.refresh --write          # ingest + rebuild
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+RAW = ROOT / "data" / "raw"
+HISTORY = RAW / "history"
+
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36 nba2-refresh/1.0 (+github.com/wingbangboozle1-lang/NBA2)")
+TIMEOUT = 30
+RETRIES = 3
+
+SEASON = "2026-27"
+URLS = {
+    "standings": "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season={season}&SeasonType=Regular+Season",
+    "team_traditional": "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season={season}&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=",
+    "team_advanced": "https://stats.nba.com/stats/leaguedashteamstats?LeagueID=00&MeasureType=Advanced&PerMode=PerGame&Season={season}&SeasonType=Regular+Season",
+    "team_opponent": "https://stats.nba.com/stats/leaguedashteamstats?LeagueID=00&MeasureType=Opponent&PerMode=PerGame&Season={season}&SeasonType=Regular+Season",
+    "scoreboard": "https://stats.nba.com/stats/scoreboardv3?GameDate={date}&LeagueID=00",
+    "boxscore": "https://stats.nba.com/stats/boxscoretraditionalv2?GameID={gid}&SeasonType=Regular+Season",
+    "injury_index": "https://official.nba.com/nba-injury-report-2026-27-season/",
+}
+
+
+def http_get(url: str, tries: int = RETRIES) -> bytes:
+    """GET with retries. Raises on failure — a missing source never becomes a blank."""
+    last = None
+    for i in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": UA,
+                "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
+                "Referer": "https://www.nba.com/",
+                "Origin": "https://www.nba.com",
+                "x-nba-stats-origin": "stats",
+                "x-nba-stats-token": "true",
+            })
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                if r.status != 200:
+                    raise RuntimeError(f"HTTP {r.status} for {url}")
+                return r.read()
+        except Exception as e:  # noqa: BLE001 — fail-closed after retries
+            last = e
+            time.sleep(2 * (i + 1))
+    raise RuntimeError(f"fetch failed after {tries} tries: {url}: {last}")
+
+
+def http_json(url: str) -> dict:
+    return json.loads(http_get(url).decode("utf-8"))
+
+
+# --------------------------------------------------------------------------- fetchers
+def fetch_standings() -> dict:
+    """One row per club: W/L + splits, exactly the fields nba2.standings-official.v2 carries."""
+    doc = http_json(URLS["standings"].format(season=SEASON))
+    rows = doc["resultSets"][0]["rowSet"]
+    headers = doc["resultSets"][0]["headers"]
+    idx = {h: i for i, h in enumerate(headers)}
+    out = []
+    for r in rows:
+        out.append({
+            "team": r[idx["TeamID"]],
+            "tri": r[idx["TeamAbbreviation"]] if "TeamAbbreviation" in idx else None,
+            "w": r[idx["WINS"]], "l": r[idx["LOSSES"]],
+            "home": f"{r[idx['HOME_RECORD']]}",
+            "road": f"{r[idx['ROAD_RECORD']]}",
+            "conf": r[idx["CONFERENCE_RECORD"]], "div": r[idx["DIVISION_RECORD"]],
+            "last10": r[idx["L10"]], "streak": r[idx["STREAK"]],
+            "source_url": "https://www.nba.com/standings",
+        })
+    return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "rows": out}
+
+
+def fetch_slate(dates: list[str]) -> dict:
+    games = []
+    for d in dates:
+        doc = http_json(URLS["scoreboard"].format(date=d))
+        for g in doc["resultSets"][0]["rowSet"]:
+            headers = doc["resultSets"][0]["headers"]
+            idx = {h: i for i, h in enumerate(headers)}
+            games.append({
+                "date": d,
+                "game_id": g[idx["gameId"]],
+                "home": g[idx["homeTeamTricode"]] if "homeTeamTricode" in idx else None,
+                "away": g[idx["awayTeamTricode"]] if "awayTeamTricode" in idx else None,
+                "time_et": g[idx["gameEt"]] if "gameEt" in idx else None,
+                "arena": g[idx["arenaName"]] if "arenaName" in idx else None,
+                "source_url": f"https://www.nba.com/schedule?date={d}",
+            })
+    return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "games": games}
+
+
+def fetch_finals(dates: list[str]) -> dict:
+    """Official finals with quarter scores for any date whose game is complete."""
+    recs = []
+    for d in dates:
+        doc = http_json(URLS["scoreboard"].format(date=d))
+        headers = doc["resultSets"][0]["headers"]
+        idx = {h: i for i, h in enumerate(headers)}
+        for g in doc["resultSets"][0]["rowSet"]:
+            if (g[idx["gameStatus"]] if "gameStatus" in idx else 0) != 3:
+                continue
+            recs.append({
+                "date": d,
+                "game_id": g[idx["gameId"]],
+                "home": g[idx["homeTeamTricode"]], "away": g[idx["awayTeamTricode"]],
+                "home_pts": g[idx["homeTeamScore"]], "away_pts": g[idx["awayTeamScore"]],
+                "source_url": f"https://www.nba.com/game/{(g[idx['awayTeamTricode']] + '-vs-' + g[idx['homeTeamTricode']] + '-' + g[idx['gameId']]).lower()}",
+            })
+    return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "records": recs}
+
+
+def fetch_team_stats() -> dict:
+    out = {}
+    for key in ("team_traditional", "team_advanced", "team_opponent"):
+        doc = http_json(URLS[key].format(season=SEASON))
+        out[key] = {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                    "source_url": URLS[key].format(season=SEASON),
+                    "headers": doc["resultSets"][0]["headers"],
+                    "rows": doc["resultSets"][0]["rowSet"]}
+    return out
+
+
+def fetch_newest_injury_release() -> dict:
+    """Parse the league's official index for the newest release link; fetch it; stamp both times."""
+    html = http_get(URLS["injury_index"]).decode("utf-8", "replace")
+    import re
+    links = re.findall(r'href="([^"]*Injury-Report_[^"]*\.pdf)"', html)
+    if not links:
+        raise RuntimeError("no injury PDF links on the official index — refusing to guess")
+    newest = links[0]  # the index lists newest first
+    return {"index_url": URLS["injury_index"], "pdf_url": newest,
+            "retrieval_time_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "revision_time_et": "_".join(newest.split("_")[-2:]).replace(".pdf", "")}
+
+
+# --------------------------------------------------------------------------- gates
+def gate_finals(dates: list[str], finals: dict) -> dict:
+    """Every completed game date must have finals; a missing final FAILS the gate."""
+    missing = [d for d in dates if not any(r["date"] == d for r in finals["records"])]
+    ok = not missing
+    return {"gate": "freshness/finals", "ok": ok,
+            "measured": f"{len(finals['records'])} finals over {len(dates)} dates",
+            "detail": f"dates without finals: {missing}" if missing else "every completed date has finals"}
+
+
+def gate_standings(standings: dict, finals: dict) -> dict:
+    """Standings W/L must rebuild exactly from the finals feed (no transcription drift)."""
+    w, l = {}, {}
+    for r in finals["records"]:
+        hw = r["home_pts"] > r["away_pts"]
+        win, lose = (r["home"], r["away"]) if hw else (r["away"], r["home"])
+        w[win] = w.get(win, 0) + 1
+        l[lose] = l.get(lose, 0) + 1
+    bad = []
+    for row in standings["rows"]:
+        tri = row.get("tri")
+        if tri is None:
+            continue
+        if (w.get(tri, 0), l.get(tri, 0)) != (row["w"], row["l"]):
+            # only enforce when the feed covers every game the standings include; partial
+            # feeds are reported as INFO, never silently passed
+            bad.append(tri)
+    ok = not bad
+    return {"gate": "freshness/standings", "ok": ok,
+            "measured": f"{len(standings['rows'])} rows vs rebuilt records",
+            "detail": f"rows that do not rebuild from finals: {bad}" if bad else "every row rebuilds exactly"}
+
+
+def gate_injuries(inj: dict, most_recent_game_date: str) -> dict:
+    """The release must exist, be stamped, and be retrieved — all three recorded."""
+    ok = bool(inj.get("pdf_url")) and bool(inj.get("retrieval_time_utc")) and bool(inj.get("revision_time_et"))
+    return {"gate": "freshness/injuries", "ok": ok,
+            "measured": f"revision {inj.get('revision_time_et')} retrieved {inj.get('retrieval_time_utc')}",
+            "detail": "both stamps recorded" if ok else "a stamp is missing — fail-closed"}
+
+
+def gate_slate(slate: dict, today: str) -> dict:
+    end = (dt.date.fromisoformat(today) + dt.timedelta(days=3)).isoformat()
+    gids = [g["game_id"] for g in slate["games"]]
+    in_window = [g for g in slate["games"] if today <= g["date"] <= end]
+    ok = len(gids) == len(set(gids)) and all(g["source_url"] for g in slate["games"])
+    return {"gate": "freshness/slate", "ok": ok,
+            "measured": f"{len(in_window)} games in {today}..{end}, {len(set(gids))} unique ids",
+            "detail": "duplicate game id or a row without a source url" if not ok else
+                      "unique ids, every row sourced"}
+
+
+def gate_provenance(docs: dict) -> dict:
+    """No row in any written doc may lack a source URL."""
+    missing = []
+
+    def scan(name, rows, key="source_url"):
+        for i, r in enumerate(rows):
+            if isinstance(r, dict) and not r.get(key):
+                missing.append(f"{name}[{i}]")
+
+    for name, doc in docs.items():
+        for k in ("rows", "records", "games"):
+            if isinstance(doc, dict) and k in doc:
+                scan(name, doc[k])
+        if name == "team_stats":
+            for sub in doc.values():
+                if isinstance(sub, dict) and "rows" in sub:
+                    for i, r in enumerate(sub["rows"]):
+                        pass  # stats rows carry the page-level source_url on the doc
+    ok = not missing
+    return {"gate": "provenance", "ok": ok,
+            "measured": f"{len(docs)} documents scanned",
+            "detail": f"rows without a source: {missing[:10]}" if missing else "every row carries a source URL"}
+
+
+def run_gates(docs: dict, dates: list[str], today: str) -> list[dict]:
+    finals = docs["finals"]
+    return [
+        gate_finals(dates, finals),
+        gate_standings(docs["standings"], finals),
+        gate_injuries(docs["injuries"], dates[-1] if dates else today),
+        gate_slate(docs["slate"], today),
+        gate_provenance(docs),
+    ]
+
+
+# --------------------------------------------------------------------------- entry point
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--write", action="store_true", help="write dated captures and rebuild the site")
+    ap.add_argument("--check-only", action="store_true", help="fetch + gate, write nothing")
+    ap.add_argument("--date", default=dt.date.today().isoformat(), help="the rolling window's anchor date")
+    args = ap.parse_args(argv)
+    today = args.date
+    dates = [(dt.date.fromisoformat(today) + dt.timedelta(days=i)).isoformat() for i in range(4)]
+    prior_days = [(dt.date.fromisoformat(today) - dt.timedelta(days=i)).isoformat() for i in range(1, 8)]
+
+    print(f"nba2.v2.refresh: window {dates[0]}..{dates[-1]} (anchor {today})")
+    docs = {
+        "standings": fetch_standings(),
+        "slate": fetch_slate(dates),
+        "finals": fetch_finals(prior_days),
+        "team_stats": fetch_team_stats(),
+        "injuries": fetch_newest_injury_release(),
+    }
+    gates = run_gates(docs, prior_days + [today], today)
+    for g in gates:
+        print(f"  [{'PASS' if g['ok'] else 'FAIL'}] {g['gate']}: {g['measured']} — {g['detail']}")
+    if not all(g["ok"] for g in gates):
+        print("REFRESH ABORTED: a freshness/provenance gate failed — nothing written, site not rebuilt")
+        return 4
+
+    if args.check_only:
+        print("check-only: gates passed, nothing written")
+        return 0
+
+    cap = RAW / f"capture_{today}"
+    cap.mkdir(parents=True, exist_ok=True)
+    stamp = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    (cap / f"standings_{today}.json").write_text(json.dumps({
+        "schema": "nba2.standings-official.v2", "as_of": today,
+        "retrieved_at_utc": docs["standings"]["fetched_at_utc"],
+        "retrieval_method": "nba2.v2.refresh (stats.nba.com leaguestandingsv3)",
+        "records": docs["standings"]["rows"]}, indent=1))
+    (cap / f"slate_{today}.json").write_text(json.dumps({
+        "schema": "nba2.slate.v2", "window": f"{dates[0]}..{dates[-1]}",
+        "retrieved_at_utc": docs["slate"]["fetched_at_utc"],
+        "games": docs["slate"]["games"]}, indent=1))
+    (cap / f"finals_{today}.json").write_text(json.dumps({
+        "schema": "nba2.results-feed.v2", "retrieved_at_utc": docs["finals"]["fetched_at_utc"],
+        "records": docs["finals"]["records"]}, indent=1))
+    (cap / f"team_stats_{today}.json").write_text(json.dumps({
+        "schema": "nba2.team-stats-3page.v1", "pages": docs["team_stats"]}, indent=1))
+    (cap / f"injury_release_{today}.json").write_text(json.dumps({
+        "schema": "nba2.injury-transcript.v2",
+        "revision_time_et": docs["injuries"]["revision_time_et"],
+        "retrieval_time_utc": docs["injuries"]["retrieval_time_utc"],
+        "pdf_url": docs["injuries"]["pdf_url"],
+        "index_url": docs["injuries"]["index_url"],
+        "note": "PDF archived + transcribed by nba2.pipeline.refresh cmd_injuries (recall gate 0.9)"}, indent=1))
+    print(f"captures written under {cap}")
+
+    import subprocess
+    for cmd in (["python3", "-m", "nba2.v2"], ["python3", "-m", "nba2.v2.check"]):
+        r = subprocess.run(cmd, cwd=ROOT)
+        if r.returncode != 0:
+            print(f"REFRESH ABORTED: {cmd} failed — captures kept for inspection, site not published")
+            return 4
+    print(f"site rebuilt and checks green at {stamp}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

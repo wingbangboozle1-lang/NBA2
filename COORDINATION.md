@@ -3348,3 +3348,41 @@ commits; `git pull --rebase` before every push; no committed value inferred or f
 anything not confirmable from an official source is left blank and published on the Flagged
 for Review page; the sealed ledgers (`data/raw/ledger/**`) are never rewritten; the site is
 never merged in a broken state.
+
+### Completion record — session `arena/98b0eae9-nba2` (2026-11-15 brief line items)
+
+*Status: complete; PR opened and merged to `main`; Pages deploy confirmed (see final PR note below).*
+
+**Data captured 2026-11-15 (all under `data/raw/capture_2026-11-15/`, source links on every row):**
+* `results_2026-11-14.json` — 5 official finals with quarter scores + gamebook PDF URLs (nba2.results-feed.v2; quarter sums asserted = finals at load).
+* `injury_report_2026-11-15_0615AM.json` — newest official release, 101 rows, revision + retrieval stamps, PDF archived + SHA-256'd (nba2.injury-transcript.v2).
+* `standings_2026-11-15.json` — 30 clubs (nba2.standings-official.v2).
+* `team_stats_2026-11-15.json` — the three official team-stat pages re-read; 21 published cross-checks, all within stated tolerances.
+* `slate_2026-11-15_to_11-18.json` — 34 games (nba2.slate.v2).
+* `arenas_2026-11-15.json` — 30/30 arena coordinates with provenance; geocodes labelled THIRD-PARTY (official sources publish none).
+* `gamelogs_2026-11-14_DEN_NOP.json` — per-player game logs for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent), capture gates asserted.
+
+**Implemented (see the Suggestions page statuses for the SG map):** results feed + visible settlement
+stamp; per-pick sha256 ledger hashes committed pre-tip (tamper test); 7 hashed pre-registration files;
+estimator disagreement as the headline (teams.html); headline total = possessions × PPP with the
+scoring average demoted to Total B; market-anchored prior framework (OOS log-loss weights, blank until
+a licensed line); parlay rows with naive product + measured ρ + Fisher-z interval; trigger prices in
+American + decimal; minutes redistribution (top-8 + replacement shares, mechanical rule); rest/B2B/
+3-in-4 + travel distance from sourced coordinates; injury revision + retrieval stamps + release-to-
+release deltas; rotation availability column on picks; landing KPIs (data currency); rolling ingest
+job `nba2/v2.refresh` wired into `refresh.yml` with 5 freshness/provenance gates (fail-closed rebuild).
+
+**Verified:** `python -m nba2.v2.check` = OK (0 structural, 0 semantic); 129 v2 + 70 v1 + 49 backtest
+tests green; `tools/crosscheck_site.py` 97 checks (89 pass / 8 info / 0 fail); `tools/check_links_all.py`
+ALL INTERNAL LINKS OK.
+
+**Flagged, carried to the Flagged page (nothing inferred):** 27/30 clubs' per-club season tables not
+captured (SG-37 partial); official page coordinates are not published (THIRD-PARTY geocodes used and
+labelled); two capture quirks I-98B-01/02 (matchup column on row 73; 'Utah Jazz' rows printed under
+the LAL@PHX heading); no licensed odds feed (G6) so market_prior values and prices stay blank; the
+nightly job's first scheduled run is pending (F-043 diagnosis still open).
+
+**Cross-session note:** PRs #70 (`arena/d09f8d1e-nba2`, nightly-ingest repair) and #72
+(`arena/04a61ac0-nba2`, official capture + gates) were left untouched — both belong to active
+parallel sessions. If both land, the ingest pieces overlap (`refresh.yml`); whoever merges second
+should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, keeping both sides.

@@ -108,10 +108,17 @@ jobs:
       - name: Settle sealed predictions (PENDING until official finals exist)
         run: python3 -m nba2.pipeline.settle
 
+      - name: Rolling-window ingest — schedule, standings, team stats, injuries (freshness + provenance gates)
+        # Per the brief: refresh the four official surfaces for the rolling slate and rebuild the
+        # v2 site ONLY if every freshness/provenance gate passes. A failing gate aborts the job
+        # before any commit, so the published site can never silently go stale (fail-closed).
+        run: python3 -m nba2.v2.refresh --write
+
       - name: Verify (unit tests + seal + provenance lint)
         run: |
           set -euo pipefail
           python3 -m unittest discover -s nba2/tests -t .
+          python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
           python3 -m nba2.pipeline.seal_predictions --verify
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site

@@ -42,18 +42,18 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_is_27_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 27)
+    def test_slate_is_34_games_and_window_is_three_days(self):
+        self.assertEqual(len(O.SLATE), 34)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-14")
-        self.assertEqual(dates[-1], "2026-11-17")
+        self.assertEqual(dates[0], "2026-11-15")
+        self.assertEqual(dates[-1], "2026-11-18")
         self.assertEqual(len(dates), 4)
 
     def test_per_day_counts_match_official_grid(self):
-        # counts read off the official day-strip calendar on nba.com/games
+        # counts read off the official schedule pages (nba.com/schedule, day-strip cross-check)
         from collections import Counter
         c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5})
+        self.assertEqual(dict(c), {"2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5, "2026-11-18": 12})
 
     def test_window_is_exactly_three_days_ahead(self):
         import datetime as _dt
@@ -111,9 +111,16 @@ class TestModel(unittest.TestCase):
             self.assertLessEqual(t.reliability, 1.0)
 
     def test_ratings_are_shrunk_towards_mean(self):
+        # Each estimator must be shrunk toward its own mean: the reliability λ ≤ 1 moves
+        # the raw observation part-way to the mean (the fitted league intercept shifts every
+        # team equally and is subtracted out here). The consensus `rating` averages the two
+        # estimators (slightly different scales), so the guarantee is asserted per estimator.
         mean_pts = sum(t.net_pts for t in self.teams.values()) / 30
+        mean_rtg = sum(t.netrtg * t.pace / 100.0 for t in self.teams.values()) / 30
+        mu = self.cal.league_offset
         for t in self.teams.values():
-            self.assertLessEqual(abs(t.rating), abs(t.net_pts - mean_pts) + 1e-9)
+            self.assertLessEqual(abs(t.r_diff - mean_pts - mu), abs(t.net_pts - mean_pts) + 1e-9)
+            self.assertLessEqual(abs(t.r_rtg - mean_rtg - mu), abs(t.netrtg * t.pace / 100.0 - mean_rtg) + 1e-9)
 
     def test_expected_wins_sum_to_total_wins(self):
         """A win-consistent model must reproduce the league's win total exactly, so luck sums to zero."""
@@ -261,7 +268,10 @@ class TestPublishedSite(unittest.TestCase):
         # (live official re-verification) and decision-queue.html (suggestions review path);
         # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation);
         # session arena/766d0269-nba2 added skill-attribution.html (naive baselines + paired
-        # McNemar test) and decisions-needed.html (the decision register).
+        # McNemar test) and decisions-needed.html (the decision register); session
+        # arena/98b0eae9-nba2 added teams.html (estimator disagreement as the headline) and
+        # official-results.html (results feed, settlement stamp, per-pick ledger hashes —
+        # renamed from results.html because the v3 surface owns that filename).
         #
         # Changed 2026-11-15 by session arena/e675ac3d-nba2, minimally and for a stated
         # reason: the published tree is shared, and the v3 rolling-slate build writes seven

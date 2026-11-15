@@ -17,6 +17,8 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="results.html">Results &amp; settlement</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -47,17 +49,17 @@
 <main>
 <h1>Skill vs luck — is any of this better than backing the favourite?</h1>
 <p class="lede">Every accuracy figure elsewhere on this site answers the wrong question. "Our side hit
-64.7% of 167 games" sounds like skill until you ask whether the side we picked
+64.5% of 172 games" sounds like skill until you ask whether the side we picked
 was simply the better team. This page answers the right question with a paired test on exactly the games
 where our model and the naive rule disagree — because those are the only games that carry any information
 about skill at all.</p>
 
 <div class="note bad"><b>The result, before the detail.</b> Backing the team with the better prior win record
-scored <b>70.3%</b> on 148 of the same
-167 games. Our model scored <b>64.7%</b>.
-On the <b>33</b> games where the two disagreed, the naive rule was right
-<b>20</b> times and the model <b>13</b> times
-(exact McNemar p = <b>0.2962</b>). The model has therefore demonstrated <b>no skill that is
+scored <b>69.3%</b> on 153 of the same
+172 games. Our model scored <b>64.5%</b>.
+On the <b>34</b> games where the two disagreed, the naive rule was right
+<b>20</b> times and the model <b>14</b> times
+(exact McNemar p = <b>0.3915</b>). The model has therefore demonstrated <b>no skill that is
 separable from the favourite's win rate</b> at this sample size. That is a finding, not a bug, and it is exactly
 what the brief's "remove luck from the equation" step is for.</div>
 
@@ -80,34 +82,34 @@ the skipped count is published rather than hidden.</p>
 </tr></thead><tbody>
 <tr>
 <td>always back the home team</td>
-<td class="n">167</td>
-<td class="n">86</td>
+<td class="n">172</td>
+<td class="n">89</td>
 <td class="n">0</td>
-<td class="n"><b>51.5%</b></td>
-<td>44.0% – 59.0%</td>
-<td class="n">0.757</td>
+<td class="n"><b>51.7%</b></td>
+<td>44.3% – 59.1%</td>
+<td class="n">0.7031</td>
 <td>the home-court prior, nothing else</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>back the better prior win percentage</td>
-<td class="n">148</td>
-<td class="n">104</td>
+<td class="n">153</td>
+<td class="n">106</td>
 <td class="n">19</td>
-<td class="n"><b>70.3%</b></td>
-<td>62.5% – 77.0%</td>
+<td class="n"><b>69.3%</b></td>
+<td>61.6% – 76.0%</td>
 <td class="n">0.0</td>
 <td>ties in prior W-L are skipped, not guessed</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>back the better prior average point differential</td>
-<td class="n">165</td>
-<td class="n">104</td>
-<td class="n">2</td>
-<td class="n"><b>63.0%</b></td>
-<td>55.5% – 70.0%</td>
-<td class="n">0.001</td>
+<td class="n">169</td>
+<td class="n">106</td>
+<td class="n">3</td>
+<td class="n"><b>62.7%</b></td>
+<td>55.2% – 69.7%</td>
+<td class="n">0.0012</td>
 <td>a scoring-margin prior, the strongest of the three</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
@@ -130,18 +132,18 @@ better. McNemar's exact test asks whether the split of the discordant games is c
 </tr></thead><tbody>
 <tr>
 <td>back the better prior win percentage</td>
-<td>70.3% (148)</td>
-<td class="n">33</td>
-<td class="n">13</td>
+<td>69.3% (153)</td>
+<td class="n">34</td>
+<td class="n">14</td>
 <td class="n">20</td>
-<td class="n"><b>0.2962</b></td>
+<td class="n"><b>0.3915</b></td>
 <td><span class="badge b-bad">NO SEPARABLE SKILL</span></td>
 <td>the model&#x27;s accuracy is not distinguishable from the favourite prior on the games where they disagree</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>back the better prior average point differential</td>
-<td>63.0% (165)</td>
+<td>62.7% (169)</td>
 <td class="n">42</td>
 <td class="n">23</td>
 <td class="n">19</td>
@@ -160,7 +162,7 @@ subtracts that inheritance and finds nothing left over.</p>
 <p>This is why the site refuses to promote a strategy on accuracy alone. Two further measurements tell the same
 story:</p>
 <ul>
-  <li><b>Sample size.</b> The largest strategy has 167 settled bets against a 300-bet promotion bar
+  <li><b>Sample size.</b> The largest strategy has 172 settled bets against a 300-bet promotion bar
   (gate G7).</li>
   <li><b>Confidence intervals.</b> Every rate on this site is published with a Wilson interval, and every interval
   here is wide enough to contain the base rate. A wide interval is not a verdict; it is the honest absence of one.</li>
@@ -201,7 +203,7 @@ not evidence either way. It says the model has not yet <em>earned</em> the claim
 this test would be the hallucination the brief forbids.</div>
 
 <footer>
-  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

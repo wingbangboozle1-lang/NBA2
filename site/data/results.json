@@ -1,0 +1,159 @@
+{
+ "schema": "nba2.results-feed.v2",
+ "settlement_stamp": {
+  "settled_date": "2026-11-14",
+  "games_settled": 5,
+  "official_results_url": "https://www.nba.com/games?date=2026-11-14",
+  "retrieved_at_utc": "2026-11-15T12:00:00Z",
+  "stamp_text": "5 official finals of 2026-11-14 settled from the official results feed, read 2026-11-15T12:00:00Z"
+ },
+ "policy": "only games whose final score is published on an official NBA page are settled; a game without an official page result stays UNSETTLED, never estimated",
+ "rows": [
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "away_quarters": [
+    29,
+    27,
+    30,
+    30
+   ],
+   "home_quarters": [
+    23,
+    28,
+    31,
+    26
+   ],
+   "ot_periods": 0,
+   "arena": "Smoothie King Center",
+   "city": "New Orleans, LA",
+   "attendance": "15,721",
+   "status": "final",
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+   "verified": "LINESCORE table on the official game-summary page read 2026-11-15; quarter sums equal the official final score (asserted at capture)"
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "away_quarters": [
+    33,
+    20,
+    38,
+    26
+   ],
+   "home_quarters": [
+    33,
+    38,
+    34,
+    22
+   ],
+   "ot_periods": 0,
+   "arena": "Rocket Arena",
+   "city": "Cleveland, OH",
+   "attendance": "19,432",
+   "status": "final",
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+   "verified": "LINESCORE table on the official game-summary page read 2026-11-15; quarter sums equal the official final score (asserted at capture)"
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "away_quarters": [
+    39,
+    21,
+    26,
+    31
+   ],
+   "home_quarters": [
+    37,
+    31,
+    35,
+    34
+   ],
+   "ot_periods": 0,
+   "arena": "Kaseya Center",
+   "city": "Miami, FL",
+   "attendance": "19,658",
+   "status": "final",
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+   "verified": "LINESCORE table on the official game-summary page read 2026-11-15; quarter sums equal the official final score (asserted at capture)"
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "away_quarters": [
+    23,
+    31,
+    30,
+    26
+   ],
+   "home_quarters": [
+    38,
+    33,
+    32,
+    26
+   ],
+   "ot_periods": 0,
+   "arena": "FedExForum",
+   "city": "Memphis, TN",
+   "attendance": "15,103",
+   "status": "final",
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+   "verified": "LINESCORE table on the official game-summary page read 2026-11-15; quarter sums equal the official final score (asserted at capture)"
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "away_quarters": [
+    29,
+    29,
+    30,
+    29
+   ],
+   "home_quarters": [
+    17,
+    28,
+    35,
+    26
+   ],
+   "ot_periods": 0,
+   "arena": "Target Center",
+   "city": "Minneapolis, MN",
+   "attendance": "18,054",
+   "status": "final",
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+   "verified": "LINESCORE table on the official game-summary page read 2026-11-15; quarter sums equal the official final score (asserted at capture)"
+  }
+ ],
+ "meta": {
+  "retrieved_at_utc": "2026-11-15T12:00:00Z",
+  "retrieval_method": "platform page-fetch tool (fetch_page) against www.nba.com game-summary pages",
+  "source_page": "https://www.nba.com/games?date=2026-11-14",
+  "note": "One row per game: date, teams, final score, quarter scores. Quarter scores are per the official LINESCORE table on each game's summary page. Games before 2026-11-13 carry no quarter scores in this feed yet (backfill queued to the scheduled job); those cells stay blank and are flagged on the site."
+ }
+}

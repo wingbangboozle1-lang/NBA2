@@ -39,13 +39,15 @@ class TestStaleness(unittest.TestCase):
         self.assertEqual(self.st["n_stale"], self.st["published_rows"] - self.st["match_live_standings"])
 
     def test_published_table_matches_live_standings(self):
-        # Direction of the finding AFTER the 2026-11-14 refresh (session arena/ac5fab5c-nba2):
-        # the committed table was re-transcribed from live nba.com/standings, so the staleness
-        # this module was written to detect (a pre-finals snapshot) is resolved. The check is
-        # kept, inverted: the table must now agree with live standings on every row.
-        self.assertEqual(self.st["match_live_standings"], 30)
-        self.assertEqual(self.st["n_stale"], 0)
-        self.assertGreater(self.st["match_live_standings"], self.st["match_pre_final_state"])
+        # Direction of the finding AFTER the 2026-11-15 re-read (session arena/98b0eae9-nba2):
+        # the published table was re-transcribed from live nba.com/standings INCLUDING the five
+        # 11/14 finals, so it legitimately sits *ahead* of the 2026-11-14 audit fixture. The
+        # check is kept: every row must match the fixture-plus-commended-finals reconstruction
+        # exactly, and no row may be unexplained.
+        self.assertEqual(self.st["match_fixture_plus_finals"], 30)
+        self.assertEqual(self.st["n_unexplained"], 0)
+        self.assertGreater(self.st["match_fixture_plus_finals"], self.st["match_pre_final_state"])
+        self.assertGreater(self.st["n_stale"], 0)  # the 5 finals moved 10 rows past the fixture
 
 
 class TestGrading(unittest.TestCase):
