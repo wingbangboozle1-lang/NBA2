@@ -3305,3 +3305,46 @@ The dropped clause is a property of a single-generator tree, not a correctness
 property of v2, and it cannot coexist with more than one generator publishing into
 `site/`. If PR #68 lands a different resolution, theirs wins on that file; the v3
 pages will satisfy either version of the test, because they carry the full v2 nav.
+## Session `arena/98b0eae9-nba2` — CLAIM (2026-11-15, branch `arena/98b0eae9-nba2`, base `fc88652` = `main` @ PR #69 merge)
+
+**State read at claim time.** `main` = `fc88652985915ca5a60fe326225af40f99199887`; working tree clean;
+this branch is at the same commit. All prior session claims on the board are complete or
+superseded (last commits 2026-11-14); no other session holds an open claim, so there is no
+live scope to avoid beyond the standing non-overlap rules. Open items inherited from the
+board and the 2026-11-15 brief: SG-1/SG-2/SG-7/SG-8/SG-10/SG-12/SG-13/SG-16/SG-17/SG-22/SG-24/SG-25/SG-26/SG-33/SG-34/SG-35/SG-36/SG-37/SG-38.
+
+**Why this session exists.** The 2026-11-15 brief restates the requirement list line by line:
+refresh the rolling slate from official sources and re-cut the model inputs; keep a per-game
+result feed with quarter scores and settle from verified finals; store and diff injury PDFs;
+freeze pre-registrations; extend the tamper-evident ledger; keep the projection/bet split;
+two estimators with the disagreement as the headline; pin HCA to the measured home-win rate;
+luck z-scores with a noise-band refusal rule; rest/B2B/3-in-4 plus travel distance from a
+sourced arena-coordinate table; explicit minutes redistribution; measured-rho parlay prices
+with the naive product printed beside them; rotation availability column on picks; a
+market-anchored prior framework; totals as possessions x PPP; injury revision/retrieval
+stamps; settlement stamps; per-player game logs for at least the players on an injury
+report. Platform page-fetch **can** reach nba.com (verified live this session), so the
+"reachable but not captured" items can move from QUEUED to measured.
+
+**File scope claimed (this session):**
+* `nba2/v2/**` — the published-tree generator (official.py snapshot, model.py, build.py,
+  content.py registers, new `refresh.py` / `prereg.py` modules and tests)
+* `site/**`, `data/v2/**` — regenerated artefacts of that generator (never hand-edved)
+* `data/raw/**` — **new dated snapshot files only** (finals+quarters, team-stat pages,
+  standings, injury PDFs + diffs, player season tables, player game logs, arena table);
+  existing snapshots are never edited
+* `.github/workflows/refresh.yml` — extend the scheduled job (SG-1/SG-26/SG-31)
+* `requirements/REQUIREMENTS.json`, `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`,
+  `analysis/session-98b0eae9-*` (new analysis notes), `README.md` (count sync, prose preserved),
+  `COORDINATION.md` (this section + completion record, append-only)
+* `tools/crosscheck_site.py` only if a new published field needs a parity check
+
+**Not claimed / not edited:** `docs/**`, `dashboard/**`, `pages/**`, root `*.html`,
+`verified/**`, `originated/**`, `backtest/**`, `nba2/pipeline/**` (v1), `nba2/models/**` (v1),
+`archive/**`. If one of these needs a change, the request is logged here instead.
+
+**Rules for this session (same as the board's).** Claims pushed before work; small frequent
+commits; `git pull --rebase` before every push; no committed value inferred or filled in —
+anything not confirmable from an official source is left blank and published on the Flagged
+for Review page; the sealed ledgers (`data/raw/ledger/**`) are never rewritten; the site is
+never merged in a broken state.
