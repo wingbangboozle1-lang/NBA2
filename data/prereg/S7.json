@@ -1,0 +1,46 @@
+{
+ "schema": "nba2.prereg.v1",
+ "context": {
+  "n_games_in_feed_at_freeze": 188,
+  "feed_first_date": "2026-10-20",
+  "feed_last_date": "2026-11-14"
+ },
+ "sid": "S7",
+ "name": "Player prop / prop combo",
+ "kind": "player prop combo",
+ "signal": "Price a player's points, rebounds and assists, and their combos, against a posted line. Requires a per-game minutes distribution and a within-player correlation; neither is reachable, so no bet is ever generated.",
+ "thresholds": {
+  "MIN_BETS_RANK (gate G7)": 300,
+  "HOLDOUT_FRAC (gate G8)": 0.3,
+  "PERMUTATION_SEED": 20261114
+ },
+ "thresholds_note": "every value is a module constant in nba2/v2/strategy_lab.py, not a fitted-on-the-test-set number; the file's own sha256 is recorded below so a change to any of them breaks this hash",
+ "universe": {
+  "games": "every official regular-season game in the committed results feed",
+  "window": "every official regular-season game in the committed results feed. The feed grows as results are ingested; the rule does not change with it.",
+  "eligibility": "a game is eligible once BOTH clubs have appeared in a strictly earlier game, so every rating is built only from prior results",
+  "exclusions": {
+   "no_prior_data": "games on the first date of the feed (no rating exists yet)",
+   "neutral_site": "excluded from S4 only, where the home-fade signal is meaningless without a home team",
+   "S3": "games whose |predicted margin| is below 5 pts",
+   "S4": "games the model does not make the home side an underdog of 3+ pts, and neutral-site games",
+   "S6": "dates with fewer than two eligible games (a parlay needs two legs)",
+   "S7": "every game: no per-player data exists, so no bet is ever generated"
+  },
+  "no_cherry_picking": "the universe is defined by the rule, not by the results; no game is added or removed after its outcome is known"
+ },
+ "settlement": {
+  "market": "player_prop",
+  "rules": {
+   "win": "the player's official box-score figure is strictly on the side taken",
+   "loss": "the figure is strictly on the other side",
+   "push": "the figure equals the line exactly, OR the player does not appear in the official box score for that game (a non-appearance voids the bet)",
+   "source": "official box score, nba.com/game/<slug>/box-score"
+  },
+  "grading_time": "a bet is graded after the game's official status is FINAL and the result has been read off two official surfaces; a game with only one captured surface is not settled"
+ },
+ "code_sha256": "d34d62ed140682625fd4f2badb672f03557728fa851a788093a68df102436152",
+ "first_bet_date": null,
+ "status": "FROZEN (pre-first-bet)",
+ "sha256": "b775e3c589af442f049011c194f13a796b146fee8f1c7caad4c967ef51c40fbd"
+}

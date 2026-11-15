@@ -1,0 +1,34 @@
+{
+ "from_revision_et": "2026-11-13T19:15",
+ "to_revision_et": "2026-11-13T19:30",
+ "from_file": "audit/injury_report_2026-11-13_0715PM.json",
+ "to_file": "data/raw/injury_report_2026-11-13_1930ET.json",
+ "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+ "n_before": 117,
+ "n_after": 117,
+ "n_added": 1,
+ "n_dropped": 1,
+ "n_changed": 0,
+ "added": [
+  {
+   "game_date": "2026-11-14",
+   "team": "Cleveland Cavaliers",
+   "player": "Martin, Caleb",
+   "status": "Available",
+   "reason": "Injury/Illness - Right Thumb Splint",
+   "matchup": "DAL@CLE"
+  }
+ ],
+ "dropped": [
+  {
+   "game_date": "2026-11-14",
+   "team": "Dallas Mavericks",
+   "player": "Martin, Caleb",
+   "status": "Available",
+   "reason": "Injury/Illness - Right Thumb Splint",
+   "matchup": "DAL@CLE"
+  }
+ ],
+ "changed": [],
+ "dropped_is_not_healthy": "a designation that disappears from the report is not a clearance: the club may have stopped listing the player, the game may have passed, or the club may not have filed. Removal is reported as removal, never as availability."
+}

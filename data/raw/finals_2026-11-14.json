@@ -5,12 +5,13 @@
  "retrieved_at_utc": "2026-11-15T11:41:02+00:00",
  "retrieval_method": "platform page fetch of nba.com/games?date=2026-11-14 (official scoreboard)",
  "provenance": {
-  "url": "https://www.nba.com/games?date=2026-11-14",
-  "class": "official"
+  "publisher": "NBA.com (official)",
+  "official_nba_source": true,
+  "list_url": "https://www.nba.com/games?date=2026-11-14",
+  "note": "Final scores read from the official NBA.com games page for the date; every game card rendered 'Final' with both club scores. Each row carries its own game page as the per-row source link."
  },
  "counts_check": {
-  "games_on_official_date_page": 5,
-  "captured": 5
+  "n_games": 5
  },
  "games": [
   "0022600231",

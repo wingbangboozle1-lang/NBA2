@@ -1,0 +1,49 @@
+{
+ "schema": "nba2.prereg.v1",
+ "context": {
+  "n_games_in_feed_at_freeze": 188,
+  "feed_first_date": "2026-10-20",
+  "feed_last_date": "2026-11-14"
+ },
+ "sid": "S3",
+ "name": "Model side, |margin| >= 5 pts",
+ "kind": "single bet",
+ "signal": "S1 restricted to games where the two ratings disagree by at least 5 points, i.e. where the signal is loudest.",
+ "thresholds": {
+  "K_SHRINK_pseudo_games": 8.0,
+  "HCA_points": 2.0,
+  "CONFIDENT_PTS": 5.0,
+  "MIN_BETS_RANK (gate G7)": 300,
+  "HOLDOUT_FRAC (gate G8)": 0.3,
+  "PERMUTATION_SEED": 20261114
+ },
+ "thresholds_note": "every value is a module constant in nba2/v2/strategy_lab.py, not a fitted-on-the-test-set number; the file's own sha256 is recorded below so a change to any of them breaks this hash",
+ "universe": {
+  "games": "every official regular-season game in the committed results feed",
+  "window": "every official regular-season game in the committed results feed. The feed grows as results are ingested; the rule does not change with it.",
+  "eligibility": "a game is eligible once BOTH clubs have appeared in a strictly earlier game, so every rating is built only from prior results",
+  "exclusions": {
+   "no_prior_data": "games on the first date of the feed (no rating exists yet)",
+   "neutral_site": "excluded from S4 only, where the home-fade signal is meaningless without a home team",
+   "S3": "games whose |predicted margin| is below 5 pts",
+   "S4": "games the model does not make the home side an underdog of 3+ pts, and neutral-site games",
+   "S6": "dates with fewer than two eligible games (a parlay needs two legs)",
+   "S7": "every game: no per-player data exists, so no bet is ever generated"
+  },
+  "no_cherry_picking": "the universe is defined by the rule, not by the results; no game is added or removed after its outcome is known"
+ },
+ "settlement": {
+  "market": "moneyline",
+  "rules": {
+   "win": "the selected club has more points in the official final score",
+   "loss": "the other club has more points in the official final score",
+   "push": "impossible; an official final score is never tied (games go to overtime)",
+   "source": "official final score, nba.com/game/<slug>"
+  },
+  "grading_time": "a bet is graded after the game's official status is FINAL and the result has been read off two official surfaces; a game with only one captured surface is not settled"
+ },
+ "code_sha256": "d34d62ed140682625fd4f2badb672f03557728fa851a788093a68df102436152",
+ "first_bet_date": null,
+ "status": "FROZEN (pre-first-bet)",
+ "sha256": "73abeb309925b0306aa124072b0d5ec8793484d829b20ee062d78b6acaac1157"
+}

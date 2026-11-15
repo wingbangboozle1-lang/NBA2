@@ -1,0 +1,16 @@
+{
+ "from_revision_et": "2026-11-14T04:30",
+ "to_revision_et": "2026-11-14T05:00",
+ "from_file": "data/raw/history/injury_report_2026-11-14_0430AM.json",
+ "to_file": "data/raw/injury_report_2026-11-14_0500AM.json",
+ "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_00AM.pdf",
+ "n_before": 26,
+ "n_after": 26,
+ "n_added": 0,
+ "n_dropped": 0,
+ "n_changed": 0,
+ "added": [],
+ "dropped": [],
+ "changed": [],
+ "dropped_is_not_healthy": "a designation that disappears from the report is not a clearance: the club may have stopped listing the player, the game may have passed, or the club may not have filed. Removal is reported as removal, never as availability."
+}

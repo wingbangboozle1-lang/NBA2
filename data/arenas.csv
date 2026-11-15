@@ -1,0 +1,23 @@
+team,arena,city,region,lat,lon,coord_class,coord_source,official_source
+BKN,Barclays Center,Brooklyn,NY,40.69402,-73.99034,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/phi-vs-bkn-0022600248
+BOS,TD Garden,Boston,MA,42.3576,-71.06843,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/dal-vs-bos-0022600240
+CLE,Rocket Arena,Cleveland,OH,41.4918,-81.6757,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/chi-vs-cle-0022600246
+DAL,American Airlines Center,Dallas,TX,32.99685,-96.79211,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/gsw-vs-dal-0022600267
+DEN,Ball Arena,Denver,CO,39.84056,-105.00799,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/phx-vs-den-0022600252
+IND,Gainbridge Fieldhouse,Indianapolis,IN,39.93842,-86.13894,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/hou-vs-ind-0022600259
+LAC,Intuit Dome,Inglewood,CA,33.95505,-118.35558,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/cha-vs-lac-0022600238
+LAL,Crypto.com Arena,Los Angeles,CA,33.97309,-118.2479,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/cha-vs-lal-0022600256
+MEM,FedExForum,Memphis,TN,35.0337,-89.9343,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/mem-vs-was-0022600247
+MIA,Kaseya Center,Miami,FL,25.779,-80.1982,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/hou-vs-mia-0022600249
+MIL,Fiserv Forum,Milwaukee,WI,43.0343,-87.9151,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/atl-vs-mil-0022600243
+MIN,Target Center,Minneapolis,MN,45.04958,-93.24609,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/por-vs-min-0022600250
+NOP,Smoothie King Center,New Orleans,LA,29.96307,-90.16095,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/gsw-vs-nop-0022600251
+OKC,Paycom Center,Oklahoma City,OK,35.3337,-97.4922,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/atl-vs-okc-0022600265
+ORL,Kia Center,Orlando,FL,28.49882,-80.58248,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/phi-vs-orl-0022600261
+PHI,Xfinity Mobile Arena,Philadelphia,PA,39.865,-75.2752,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/ind-vs-phi-0022600236
+PHX,Mortgage Matchup Center,Phoenix,AZ,33.451,-112.0685,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/lal-vs-phx-0022600237
+SAC,Golden 1 Center,Sacramento,CA,38.5816,-121.4933,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/okc-vs-sac-0022600244
+SAS,Frost Bank Center,San Antonio,TX,29.46852,-98.52635,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/det-vs-sas-0022600255
+TOR,Scotiabank Arena,Toronto,ON,43.70011,-79.4163,third_party,https://github.com/dr5hn/countries-states-cities-database/blob/master/json/countries+states+cities.json,https://www.nba.com/game/nyk-vs-tor-0022600241
+UTA,Delta Center,Salt Lake City,UT,40.75585,-111.89666,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/sas-vs-uta-0022600239
+WAS,Capital One Arena,Washington,DC,38.91222,-77.01769,third_party,https://github.com/kelvins/US-Cities-Database/blob/master/csv/us_cities.csv,https://www.nba.com/game/hou-vs-was-0022600242
