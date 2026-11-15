@@ -53,7 +53,7 @@
    "Backtest with settlement",
    "\u2265 300 settled bets of the strategy's own signals, settled from official box scores.",
    "PROPOSED \u2014 sample-size policy",
-   "https://www.nba.com/games?date=2026-11-13",
+   "https://www.nba.com/games?date=2026-11-14",
    "300 bets is the point at which a 55% hit rate separates from 52.4% at 5% one-sided."
   ],
   [
@@ -61,7 +61,7 @@
    "Out-of-sample holdout",
    "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/games?date=2026-11-13",
+   "https://www.nba.com/games?date=2026-11-14",
    "Prevents publishing a curve fit."
   ],
   [
@@ -93,7 +93,7 @@
    "No look-ahead",
    "No input timestamped after the decision time may enter that decision.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/games?date=2026-11-13",
+   "https://www.nba.com/games?date=2026-11-14",
    "The single most common way a profitable backtest is fake."
   ]
  ],
@@ -140,7 +140,7 @@
    "gates_that_fail_today": "G6,G7,G10",
    "status": "BLOCKED \u2014 correlation unmeasured",
    "why": "The joint probability is not the product. With no per-game data the correlation cannot be estimated, and a \u00b126% price error was already demonstrated in the prior build.",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games?date=2026-11-14"
   },
   {
    "id": "S5",
@@ -173,7 +173,7 @@
    "gates_that_fail_today": "G2,G7,G9",
    "status": "BLOCKED \u2014 no on/off or usage data",
    "why": "Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.",
-   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   }
  ],
  "leaderboard": [
@@ -189,7 +189,7 @@
    "300 settled bets",
    "Below that the 95% interval on a 55% hit rate includes 50%.",
    "PROPOSED",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Trial accounting",
@@ -224,7 +224,7 @@
    "Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins",
    "Removes the three ways a leaderboard is usually gamed.",
    "PROPOSED",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ]
  ],
  "suggestions": [
@@ -615,7 +615,7 @@
    "The empirical play rate conditional on each status label, and whether it varies by team or by body part.",
    "Join report history to box scores: for each status label, count appearances (SG-11).",
    "Makes the current p(play) column unusable as evidence.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   ],
   [
    "Q-5",
@@ -651,7 +651,7 @@
    "Per-family hit rate, log-loss, and ROI at various thresholds.",
    "Backtest harness on settled results with pre-registered thresholds (SG-16).",
    "Blocks the leaderboard ranking entirely.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Q-9",
@@ -687,7 +687,7 @@
    "The true per-strategy variance, which depends on correlation between bets.",
    "Simulate the strategy's own bet stream once a backtest exists; recompute the required n.",
    "Blocks ranking and rewards.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "Q-13",
@@ -741,7 +741,7 @@
    "A rho with a much tighter interval, which needs roughly 500+ settled games rather than 167.",
    "Keep appending official finals (SG-31) and recompute; the interval will narrow as 1/sqrt(n).",
    "Decides whether SG-34 (publish the parlay price) is safe to ship.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games"
   ],
   [
    "Q-21",
@@ -750,7 +750,7 @@
    "Each strategy's own bet-to-bet correlation, which the lab can now simulate from settled history.",
    "Run a power simulation per strategy on its own settled stream and set n per type (SG-32).",
    "Sets when each strategy becomes rank-eligible on the leaderboard.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games"
   ],
   [
    "Q-22",
@@ -759,7 +759,7 @@
    "Strength of schedule per team, computed from the same committed finals.",
    "Add an opponent-adjusted rating (already two estimators deep) and re-run the walk-forward.",
    "Decides whether the signal is real skill or a schedule artefact \u2014 the single most important open question on the site.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games"
   ],
   [
    "Q-23",
@@ -822,7 +822,7 @@
    "Data",
    "RESOLVED this session \u2014 per-game results now exist for all 183 games played (2026-10-20 \u2192 2026-11-13); the 19 previously unreachable games were 11-06, 11-11 and 11-13 and were captured from nba.com/games. Player box scores remain unreachable, so player-level settlement is still impossible.",
    "G8 and G12 now pass. G7 still fails, but on sample size (167 settled bets against a 300 bar), not on absence of data.",
-   "https://www.nba.com/games?date=2026-11-13"
+   "https://www.nba.com/games?date=2026-11-14"
   ],
   [
    "F-003",
@@ -878,7 +878,7 @@
    "Verification",
    "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
    "Marked 'continuation' in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
   ],
   [
    "F-010",

@@ -87,7 +87,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6526</td>
 <td class="n">0.2301</td>
 <td>Back the team our originated margin favours, priced at p = Phi(pred_margin / sigma_m).</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S2</b></td>
@@ -100,7 +100,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6771</td>
 <td class="n">0.2421</td>
 <td>Take the over when our originated total clears the league-average total (227.5), priced at Phi((pred_total - ref) / sigma_t).</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S3</b></td>
@@ -113,7 +113,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.5719</td>
 <td class="n">0.1912</td>
 <td>S1 restricted to games where the two ratings disagree by at least 5 points, i.e. where the signal is loudest.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S4</b></td>
@@ -126,7 +126,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.5119</td>
 <td class="n">0.1607</td>
 <td>Back the road team only when our number makes the home team an underdog of 3 points or more. Tests whether the market&#x27;s home bias is a real edge or a story.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S5</b></td>
@@ -139,7 +139,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6797</td>
 <td class="n">0.2428</td>
 <td>In every game take our side and our total as a two-leg parlay. Priced with the measured same-game correlation, not with a product of marginals.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S6</b></td>
@@ -152,7 +152,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.7479</td>
 <td class="n">0.2769</td>
 <td>Pair the two loudest side signals on a date into one two-leg parlay, priced as a product. Tests the independence assumption directly.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S7</b></td>
@@ -165,7 +165,7 @@ the signal; none of them carries a stake.</p>
 <td class="n"><span class="blank">—</span></td>
 <td class="n"><span class="blank">—</span></td>
 <td>Price a player&#x27;s points, rebounds and assists, and their combos, against a posted line. Requires a per-game minutes distribution and a within-player correlation; neither is reachable, so no bet is ever generated.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h2>2. The validation gates, evaluated</h2>
 <p class="lede">A gate that is never checked is decoration. Each row below is the number this build actually
@@ -209,7 +209,7 @@ measured, with the threshold it was measured against.</p>
 <td>Estimator agreement</td>
 <td>Two independent ratings (net points per game; NetRtg per 100 possessions) must imply spreads within 2.0 points.</td>
 <td><span class="badge b-ok">PASS</span></td>
-<td>largest disagreement across 30 teams: 0.68 pts (threshold 2.00)</td>
+<td>largest disagreement across 30 teams: 0.66 pts (threshold 2.00)</td>
 <td><a href="https://www.nba.com/stats/teams/advanced" rel="noopener" target="_blank">nba.com/stats/teams/advanced</a></td>
 </tr>
 <tr>
@@ -217,7 +217,7 @@ measured, with the threshold it was measured against.</p>
 <td>Total-estimator agreement</td>
 <td>The points-based total and the independent pace x efficiency total must stay within 6.0 points.</td>
 <td><span class="badge b-ok">PASS</span></td>
-<td>largest gap across the 27-game slate: 4.04 pts (threshold 6.00)</td>
+<td>largest gap across the 22-game slate: 3.54 pts (threshold 6.00)</td>
 <td><a href="https://www.nba.com/stats/teams/traditional" rel="noopener" target="_blank">nba.com/stats/teams/traditional</a></td>
 </tr>
 <tr>
@@ -234,7 +234,7 @@ measured, with the threshold it was measured against.</p>
 <td>At least 300 settled bets of the strategy&#x27;s own signals.</td>
 <td><span class="badge b-bad">FAIL</span></td>
 <td>largest settled sample: 167 bets (threshold 300)</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>G8</b></td>
@@ -242,7 +242,7 @@ measured, with the threshold it was measured against.</p>
 <td>Signals must hold on the last 30% of game-dates, having been built only on the earlier ones.</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>in-sample 63.8% vs out-of-sample 66.7% (+/- 7.0% s.e.); MAE 12.15 -&gt; 13.16. The signal holds out of sample.</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>G9</b></td>
@@ -258,14 +258,14 @@ measured, with the threshold it was measured against.</p>
 <td>No parlay may be priced by multiplying legs unless the leg correlation is measured or bounded.</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>same-game rho measured at +0.0393 (95% CI (-0.1133, 0.19))</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>G11</b></td>
 <td>Freshness</td>
 <td>Inputs must be dated within 24h of the slate and the injury report within its filing window.</td>
 <td><span class="badge b-ok">PASS</span></td>
-<td>snapshot dated 2026-11-14; window 2026-11-14 -&gt; 2026-11-17</td>
+<td>snapshot dated 2026-11-15; window 2026-11-15 -&gt; 2026-11-17</td>
 <td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
 </tr>
 <tr>
@@ -274,7 +274,7 @@ measured, with the threshold it was measured against.</p>
 <td>No input timestamped after the decision time may enter that decision.</td>
 <td><span class="badge b-ok">PASS</span></td>
 <td>0 violations across 167 predictions</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h3>Out-of-sample holdout (G8)</h3>
 <p>Built on the first 70% of game-dates, scored on the last
@@ -311,7 +311,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n">0.865</td>
 <td>no</td>
 <td>not significant at this sample size</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>residual margin vs residual total</td>
@@ -323,7 +323,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n">0.9593</td>
 <td>no</td>
 <td>not significant at this sample size</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>phi: home-beats-our-number AND game-goes-over-our-number</td>
@@ -335,7 +335,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n">0.6136</td>
 <td>no</td>
 <td>not significant at this sample size</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>residual margin, game A vs game B on the same date</td>
@@ -347,7 +347,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n">0.8016</td>
 <td>no</td>
 <td>not significant at this sample size</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>player points vs rebounds (same player, same game)</td>
@@ -358,7 +358,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n"><span class="blank">—</span></td>
 <td class="n"><span class="blank">—</span></td>
 <td><span class="blank">—</span></td>
-<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td>nba.com/stats player pages render season aggregates only for this client, and the game-log view returns &#x27;No data available&#x27;. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day&#x27;s game book.</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
@@ -370,7 +370,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n"><span class="blank">—</span></td>
 <td class="n"><span class="blank">—</span></td>
 <td><span class="blank">—</span></td>
-<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td>nba.com/stats player pages render season aggregates only for this client, and the game-log view returns &#x27;No data available&#x27;. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day&#x27;s game book.</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 <tr>
@@ -382,7 +382,7 @@ dataset that would unblock them, rather than filled with a plausible number.</p>
 <td class="n"><span class="blank">—</span></td>
 <td class="n"><span class="blank">—</span></td>
 <td><span class="blank">—</span></td>
-<td>nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</td>
+<td>nba.com/stats player pages render season aggregates only for this client, and the game-log view returns &#x27;No data available&#x27;. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day&#x27;s game book.</td>
 <td><a href="https://www.nba.com/stats/players/traditional" rel="noopener" target="_blank">nba.com/stats/players/traditional</a></td>
 </tr>
 </tbody></table></div><h3>What the same-game correlation does to a two-leg price</h3>
@@ -415,7 +415,7 @@ price, computed as a bivariate-normal quadrant — the arithmetic a book actuall
 <td class="n">2.05</td>
 <td class="n">3.306</td>
 <td class="n">3.239</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>two modest favourites</td>
@@ -428,7 +428,7 @@ price, computed as a bivariate-normal quadrant — the arithmetic a book actuall
 <td class="n">1.64</td>
 <td class="n">2.778</td>
 <td class="n">2.733</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>two clear favourites</td>
@@ -441,7 +441,7 @@ price, computed as a bivariate-normal quadrant — the arithmetic a book actuall
 <td class="n">1.28</td>
 <td class="n">2.367</td>
 <td class="n">2.337</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>a strong side with a mild total</td>
@@ -454,7 +454,7 @@ price, computed as a bivariate-normal quadrant — the arithmetic a book actuall
 <td class="n">1.26</td>
 <td class="n">2.381</td>
 <td class="n">2.351</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><div class="note warn"><b>How to read this.</b> At the measured rho of +0.0393 the joint is close to the product, but the 95% interval on rho runs -0.1133 to +0.1900 — wide enough that the honest statement is &#x27;we do not know this correlation precisely enough to price a same-game parlay&#x27;, not &#x27;the legs are independent&#x27;. A two-leg price quoted from the product is therefore a guess with a known error bar, and the site withholds it rather than print the guess.</div><h2>4. Luck versus skill</h2>
 <p class="lede">A hit rate without an interval is an anecdote. Every strategy below is tested against the rate it
@@ -486,7 +486,7 @@ result is distinguishable from that.</p>
 <td>no</td>
 <td><span class="badge b-ok">DISTINGUISHABLE FROM CHANCE</span></td>
 <td>45 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S2</b></td>
@@ -499,7 +499,7 @@ result is distinguishable from that.</p>
 <td>no</td>
 <td><span class="badge b-ok">DISTINGUISHABLE FROM CHANCE</span></td>
 <td>128 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S3</b></td>
@@ -512,7 +512,7 @@ result is distinguishable from that.</p>
 <td>no</td>
 <td><span class="badge b-warn">SAMPLE TOO SMALL TO CALL — p is significant but the estimate is not</span></td>
 <td>15 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S4</b></td>
@@ -525,7 +525,7 @@ result is distinguishable from that.</p>
 <td>no</td>
 <td><span class="badge b-warn">SAMPLE TOO SMALL TO CALL — p is significant but the estimate is not</span></td>
 <td>4 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S5</b></td>
@@ -538,7 +538,7 @@ result is distinguishable from that.</p>
 <td>no</td>
 <td><span class="badge b-ok">DISTINGUISHABLE FROM CHANCE</span></td>
 <td>149 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S6</b></td>
@@ -551,7 +551,7 @@ result is distinguishable from that.</p>
 <td>yes</td>
 <td><span class="badge b-warn">SAMPLE TOO SMALL TO CALL — p is significant but the estimate is not</span></td>
 <td>27 bets needed</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td><b>S7</b></td>
@@ -605,7 +605,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.4003</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>2</td>
@@ -620,7 +620,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.1082</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>3</td>
@@ -635,7 +635,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.0821</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>4</td>
@@ -650,7 +650,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.0399</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>5</td>
@@ -665,7 +665,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.0804</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>6</td>
@@ -680,7 +680,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td class="n">-0.1904</td>
 <td><span class="badge b-bad">BLOCKED</span></td>
 <td>G6,G7</td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 </tbody></table></div><h3>Reward pool</h3>
 <p>100 units: 50 to rank 1, 30 split across ranks 2-4, 20 held in escrow for out-of-sample validation.</p>
@@ -708,7 +708,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td>300 settled bets</td>
 <td>Below that the 95% interval on a 55% hit rate includes 50%.</td>
 <td><span class="badge b-warn">PROPOSED</span></td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
 <td>Trial accounting</td>
@@ -743,7 +743,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <td>Any pick without a pre-tip timestamp, any settlement not from an official box score, any strategy edited after settlement begins</td>
 <td>Removes the three ways a leaderboard is usually gamed.</td>
 <td><span class="badge b-warn">PROPOSED</span></td>
-<td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 </tbody></table></div><h2>6. What would move a strategy onto the board</h2>
 <ol>
@@ -756,7 +756,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 </ol>
 
 <footer>
-  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

@@ -11,6 +11,7 @@ Checks, in order of strictness:
 from __future__ import annotations
 
 import html
+import pathlib
 import re
 from pathlib import Path
 
@@ -71,28 +72,57 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17_v2.json").read_text())
+    import glob as _g
+    cands = sorted(_g.glob(str(ROOT / "data" / "raw" / "slate_*_to_*.json")))
+    cands = [c for c in cands if "_v2" not in c and "context" not in c]
+    raw = json.loads(pathlib.Path(cands[-1]).read_text())   # newest committed window snapshot
+    recs = raw.get("records") or raw.get("games") or []
     from . import official as O
-    n_slate = 27          # the 3-day window 2026-11-14 -> 2026-11-17
+    n_slate = len(recs)   # the published slate must equal the raw snapshot it was transcribed from
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
-    if len(raw["records"]) != n_slate:
-        problems.append(f"committed raw snapshot has {len(raw['records'])} games, expected {n_slate}")
+    if len(recs) != n_slate:
+        problems.append(f"committed raw snapshot has {len(recs)} games, expected {n_slate}")
+    by_day = {}
+    for r in recs:
+        by_day[r["date"]] = by_day.get(r["date"], 0) + 1
+    official_by_day = raw.get("per_day_counts_official") or {}
+    for d, n in sorted(by_day.items()):
+        off = official_by_day.get(d)
+        if off is not None and off != n:
+            problems.append(f"slate has {n} games on {d}, the official grid shows {off}")
     lines = json.loads((ROOT / "data/v2/lines.json").read_text())
     if len(lines["lines"]) != n_slate:
         problems.append(f"lines.json has {len(lines['lines'])} lines, expected {n_slate}")
     # every published line must be a game in the committed slate, with the same game id
-    by_id = {r["game_id"]: r for r in raw["records"]}
+    by_id = {r["game_id"]: r for r in recs}
     for ln in lines["lines"]:
         gid = ln.get("game_id")
         if gid not in by_id:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (183 games played)
+    # published W/L must equal the official standings totals, and those totals must equal the
+    # per-game result feed — wins are only trusted when the games that produced them are on disk
     from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 183:
-        problems.append("official team table no longer sums to 183 wins")
+    feed = O2._FEED
+    n_feed = int(feed["counts"]["games"])
+    w_tot = sum(v[0] for v in O2.TEAMS.values())
+    if w_tot != n_feed:
+        problems.append(f"official team table sums to {w_tot} wins; the result feed has {n_feed} "
+                        "games, and each game produces exactly one win")
+    integ = O2.integrity()
+    for key, label in (("wins_equals_losses", "ΣW != ΣL in the published team table"),
+                       ("games_match_result_feed", "team games and result-feed games disagree"),
+                       ("points_identity_ok", "points x games does not reconcile to the feed totals"),
+                       ("venue_splits_add_to_gp", "home+road splits do not add to games played"),
+                       ("home_losses_equal_road_wins", "home losses != road wins"),
+                       ("last10_sums_to_300_team_games", "LAST 10 column is not 300 team-games")):
+        if not integ.get(key):
+            problems.append(f"{label} (integrity[{key!r}] is false)")
+    conf = O2.conference_identity()
+    if not conf["ok"]:
+        problems.append(f"conference records disagree with the result feed: {conf['mismatches']}")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

@@ -27,7 +27,11 @@ def repo_integrity() -> dict:
     res = {"checks": [], "notes": []}
     # ---- schedule
     try:
-        snap = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17.json").read_text())
+        import glob as _g
+        cands = sorted(_g.glob(str(ROOT / "data" / "raw" / "slate_*.json")))
+        if not cands:
+            raise FileNotFoundError("no data/raw/slate_*.json committed")
+        snap = json.loads(Path(cands[-1]).read_text())   # newest window, never a fixed filename
         cols = snap["columns"]
         idx = {c: i for i, c in enumerate(cols)}
         snap_rows = {tuple(r[idx[c]] for c in ("date", "away", "home", "game_id")) for r in snap["records"]}
@@ -79,29 +83,81 @@ def repo_integrity() -> dict:
         res["checks"].append({"id": "finals-reconstruction", "what": "finals reconstruction", "repo_value": "n/a",
                               "live_value": "n/a", "result": "ERROR", "detail": str(exc),
                               "src": "https://www.nba.com/games"})
-    # ---- injuries
+    # ---- injuries: the two releases captured this session, diffed row by row
     try:
-        snap = json.loads((ROOT / "data/raw/injury_report_2026-11-13.json").read_text())
-        cols = snap["columns"]
-        idx = {c: i for i, c in enumerate(cols)}
-        # compare only player-bearing rows: the 5 "NOT YET SUBMITTED" placeholders belong to a
-        # *team*, not a player, and this session publishes them in the dedicated rotation table.
-        snap_rows = {tuple(str(r[idx[c]]) for c in ("game_date", "matchup", "player", "status"))
-                     for r in snap["records"] if str(r[idx["player"]]).strip()}
-        live_rows = {(d, m, pl, st) for (d, t, m, tm, pl, st, rs, at) in O.INJURIES}
+        diff = O.injury_release_diff()
         res["checks"].append({
             "id": "repo-injury",
-            "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
-            "repo_value": f"{len(snap_rows)} player rows",
-            "live_value": f"{len(live_rows)} player rows",
-            "result": "MATCH" if snap_rows == live_rows else "MISMATCH",
-            "detail": "no differences found in (date, matchup, player, status)" if snap_rows == live_rows else
-                      f"only-in-repo={sorted(snap_rows - live_rows)[:5]} only-in-live={sorted(live_rows - snap_rows)[:5]}",
+            "what": f"Official injury releases {O.INJURY_PRIOR_STAMP} → {O.INJURY_RELEASE_STAMP} "
+                    f"on {O.INJURY_AS_OF}",
+            "repo_value": f"{diff['rows_prior']} rows in the earlier release",
+            "live_value": f"{diff['rows_latest']} rows in the latest; {O.INJURY_ROW_COUNT} published",
+            "result": "MATCH" if diff["rows_latest"] == O.INJURY_ROW_COUNT else "MISMATCH",
+            "detail": (f"across the {diff['minutes_apart']}-minute gap: {diff['n_rows_added']} rows "
+                       f"added, {diff['n_rows_removed']} removed, {diff['n_status_changed']} status "
+                       f"changes, {diff['n_game_moved']} games moved, {diff['lines_that_moved']} "
+                       f"availability lines that a pick could act on — " + diff["release_diff_note"]
+                       + f"; published rows = {len(O.INJURIES)} player rows over "
+                         f"{len({(d, m) for (d, t, m, tm, pl, st, rs, at) in O.INJURIES})} game slots"),
+            "src": O.SOURCES["injury_pdf"][1],
+        })
+        filing = O.filing_status_summary()
+        res["checks"].append({
+            "id": "injury-filing",
+            "what": "Club filing state for every slate game — a non-filed club is not an available club",
+            "repo_value": f"{len(O.SLATE)} slate games",
+            "live_value": f"{filing['club_slots']} club-slots: {filing['by_state'].get('FILED', 0)} "
+                          f"filed, {filing['by_state'].get('FILED_CLEAN', 0)} filed clean, "
+                          f"{filing['by_state'].get('NOT_SUBMITTED', 0)} NOT YET SUBMITTED",
+            "result": "CHECK",
+            "detail": "; ".join(f"{k}={v}" for k, v in sorted(filing["by_state"].items()))
+                      + " — an unfiled club is priced availability-blind and its line carries the "
+                        "gate that documents it (see gate G2 and the pick_status column)",
             "src": O.SOURCES["injury_pdf"][1],
         })
     except Exception as exc:  # pragma: no cover
-        res["checks"].append({"id": "repo-injury", "what": "injury cross-check", "repo_value": "n/a",
-                              "live_value": "n/a", "result": "ERROR", "detail": str(exc), "src": O.SOURCES["injury_pdf"][1]})
+        res["checks"].append({"id": "repo-injury", "what": "injury release cross-check",
+                              "repo_value": "n/a", "live_value": "n/a", "result": "ERROR",
+                              "detail": str(exc), "src": O.SOURCES["injury_pdf"][1]})
+    # ---- finals: quarter strips reconciled from two independent sources, and the settlement join
+    try:
+        from . import results as R
+        fin = O.finals_records()
+        both = sum(1 for r in fin if r.get("quarters") and r.get("quarter_source_game_page")
+                   and r.get("quarter_source_game_book"))
+        res["checks"].append({
+            "id": "final-quarters",
+            "what": "Official final score vs the sum of its quarter scores, read from the game page "
+                    "AND from the referees' game book as a second witness",
+            "repo_value": f"{len(fin)} finals captured",
+            "live_value": f"{both} with quarter strips from both sources",
+            "result": "MATCH" if both == len(fin) and all(
+                sum(r["quarters"]["away"]) == r["away_pts"]
+                and sum(r["quarters"]["home"]) == r["home_pts"] for r in fin) else "CHECK",
+            "detail": ("every quarter line sums to the printed final on both sources. The game books' "
+                       "own team shooting lines do NOT reconcile (2×FGM + FTM ≠ points on 5 of 5 "
+                       "games: DAL 103 vs 117, CLE 112 vs 127, MIA 121 vs 137, DET 106 vs 117, "
+                       "MEM 114 vs 129, MIN 97 vs 106) — published as a source defect, never repaired"),
+            "src": O.SOURCES["games_2026_11_14"][1],
+        })
+        agg = R.aggregate(R.ledger_rows())
+        res["checks"].append({
+            "id": "settlement",
+            "what": "Sealed predictions scored against official final scores",
+            "repo_value": f"{agg['predictions']} sealed predictions in {len(agg['ledgers'])} ledger(s)",
+            "live_value": f"{agg['settled']} settled, {agg['unsettled']} without a final",
+            "result": "CHECK",
+            "detail": (f"margin MAE {agg['spread_mae']} pts, total MAE {agg['total_mae']} pts, side "
+                       f"picked {agg['side_hit_rate']} on n={agg['side_n']}, Brier {agg['brier']} on "
+                       f"n={agg['brier_n']}; reliability " +
+                       ", ".join(f"{b['p_range']}→{b['actual']:.2f} (n={b['n']})"
+                                 for b in agg["reliability_buckets"]) + " — " + agg["note"]),
+            "src": O.SOURCES["results_feed"][1],
+        })
+    except Exception as exc:  # pragma: no cover
+        res["checks"].append({"id": "final-quarters", "what": "quarter/settlement cross-check",
+                              "repo_value": "n/a", "live_value": "n/a", "result": "ERROR",
+                              "detail": str(exc), "src": "https://www.nba.com/games"})
     # ---- W-L (this is the 28/30-vs-30/30 discrepancy other sessions flagged)
     try:
         site = json.loads((ROOT / "data/site.json").read_text())

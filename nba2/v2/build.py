@@ -275,7 +275,7 @@ def build(run_backtest: bool = True):
         "calibration": cal.as_dict(),
         "teams": [t.as_dict() for t in teams.values()]}, indent=1))
     (DATA / "lines.json").write_text(json.dumps({
-        "as_of": O.AS_OF, "window": "2026-11-13 → 2026-11-16",
+        "as_of": O.AS_OF, "window": f"{O.WINDOW_START} → {O.WINDOW_END}",
         "formula": "margin = (rating_home + h) − rating_away; rating = mean of two shrunk estimators; "
                    "p_home = Φ(margin/σ); spread = −round_0.5(margin); total = sum of two scoring estimators",
         "calibration": cal.as_dict(), "lines": lines_d}, indent=1))
@@ -283,6 +283,24 @@ def build(run_backtest: bool = True):
         "as_of": O.AS_OF, "integrity": integ, "cross_checks": xchecks,
         "retrieved": {k: {"url": v[1], "fields": v[2]} for k, v in O.SOURCES.items()},
         "blocked": {k: {"what": v[0], "why": v[1], "url": v[2]} for k, v in O.BLOCKED.items()}}, indent=1))
+    # results + gates: the measured side of the build, written from the same artefacts the pages read
+    from . import results as RES, gate_eval as GE
+    _meas = GE.measurements()
+    _board = GE.board(_meas, lab)
+    RES.write_results(DATA / "results.json")
+    (DATA / "gates.json").write_text(json.dumps({
+        "as_of": O.AS_OF, "board": _board,
+        "pass": sum(1 for r in _board if r["verdict"] == "PASS"),
+        "fail": sum(1 for r in _board if r["verdict"] == "FAIL"),
+        "not_measurable": sum(1 for r in _board if r["verdict"] == "NOT-MEASURABLE"),
+        "measurements": {k: v for k, v in _meas.items()
+                         if k in ("prices", "lookahead", "freshness", "source_class", "capture")},
+        "availability": _meas["availability"]["per_date"],
+        "settled_bets": _meas["settlement"]["settled_bets"],
+        "delegated_to_lab": [r["id"] for r in _board if r["id"] in ("G4", "G5", "G7", "G8", "G9", "G10")],
+        "note": "every verdict on this board is a comparison against a committed file, not an "
+                "assertion; a gate with no measurement is NOT-MEASURABLE, which is neither a pass "
+                "nor a zero"}, indent=1))
     (DATA / "content.json").write_text(json.dumps({
         "gates": C.GATES, "strategies": C.STRATEGIES, "leaderboard": C.LEADERBOARD_RULES,
         "suggestions": C.SUGGESTIONS, "questions": C.QUESTIONS, "flags": C.FLAGS,
@@ -300,7 +318,7 @@ def build(run_backtest: bool = True):
     _nleans = len(R.t_picks(lines))
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 27-game window (Nov 14 → Nov 17) priced from official NBA data only: two independent
+<p class="lede">A {len(lines)}-game window ({O.WINDOW_START} → {O.WINDOW_END}) priced from official NBA data only: two independent
 ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 

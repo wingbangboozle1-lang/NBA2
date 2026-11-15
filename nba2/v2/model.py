@@ -28,7 +28,11 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
-from . import official as O
+from . import gate_eval, official as O
+
+# The gate board is a property of the capture, not of a line: measure once per build and reuse it,
+# so every line on the slate is withheld for the same documented reasons.
+_BLOCKERS: dict[str, list[dict]] = {}
 
 
 def phi(x: float) -> float:
@@ -298,7 +302,8 @@ class Line:
     agreement: float = 0.0
     grade: str = "C"
     grade_reason: str = ""
-    pick_status: str = "WITHHELD"
+    pick_status: str = "WITHHELD"   # set from gate_eval.pick_blockers(), never typed in
+    gate_blockers: tuple = ()       # the gates that stopped this exact line, with their numbers
     flags: list = field(default_factory=list)
 
     @property
@@ -335,6 +340,10 @@ def _half(x: float) -> float:
 
 def originated_lines(teams, cal) -> list[Line]:
     out = []
+    global _BLOCKERS
+    if not _BLOCKERS:
+        m = gate_eval.measurements()
+        _BLOCKERS = {str(g[4]): gate_eval.pick_blockers(m, str(g[4]), g[0]) for g in O.SLATE}
     lg = O.integrity()["league_pts_per_team_game"]
     for (date, time_et, away, home, gid, arena, city, tv, cup) in sorted(O.SLATE):
         a, h = teams[away], teams[home]
@@ -379,9 +388,12 @@ def originated_lines(teams, cal) -> list[Line]:
         else:
             ln.grade = "B"
             ln.grade_reason = "passes minimum gates; below the A bar"
-        # A projection grade is NOT a bet grade. G6 (market price) and G7 (backtest) cannot pass.
-        ln.pick_status = "WITHHELD (gate G6 no market price, G7 no settlement data)"
-        ln.flags = ["FLAG-V2-NO-MARKET-PRICE", "FLAG-V2-NO-BACKTEST"]
+        # A projection grade is NOT a bet grade. Which gates actually stop this line is measured
+        # per game by gate_eval — no typed-in verdict string.
+        blockers = _BLOCKERS.get(ln.game_id, [])
+        ln.pick_status = gate_eval.pick_status(blockers)
+        ln.gate_blockers = tuple(blockers)
+        ln.flags = [f"FLAG-V2-{b['gate']}" for b in blockers] or ["FLAG-V2-PUBLISHABLE"]
         out.append(ln)
     return out
 

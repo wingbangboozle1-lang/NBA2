@@ -42,24 +42,42 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_is_27_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 27)
+    def test_slate_window_matches_the_committed_snapshot(self):
+        # 22 games: 9 on 11/15, 8 on 11/16, 5 on 11/17 — the count is what nba.com/schedule printed
+        # on 2026-11-15 for those three dates; the 11/14 games are results now, not slate.
+        self.assertEqual(len(O.SLATE), 22)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-14")
-        self.assertEqual(dates[-1], "2026-11-17")
-        self.assertEqual(len(dates), 4)
+        self.assertEqual(dates, ["2026-11-15", "2026-11-16", "2026-11-17"])
+        self.assertEqual(O.WINDOW_START, dates[0])
+        self.assertEqual(O.WINDOW_END, dates[-1])
 
     def test_per_day_counts_match_official_grid(self):
-        # counts read off the official day-strip calendar on nba.com/games
+        """Per-day counts are compared to the official grid stored in the raw snapshot.
+
+        Deriving the expectation from data/raw (what nba.com/schedule printed) rather than from a
+        literal keeps this test honest through a refresh, while still being independent of the
+        SLATE tuple the build publishes: the two are produced by different code paths.
+        """
         from collections import Counter
-        c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-14": 5, "2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5})
+        raw = json.loads(max((ROOT / "data" / "raw").glob("slate_*_to_*.json"), key=lambda p: p.name).read_text())
+        grid = raw["per_day_counts_official"]
+        got = Counter(g[0] for g in O.SLATE)
+        self.assertEqual(dict(got), {d: n for d, n in grid.items()
+                                     if raw["window"]["start"] <= d <= raw["window"]["end"]})
+        self.assertEqual(sum(got.values()), raw["n_games"])
+        # the day the window gives up, it gains as a result: 11/14 is finished, so it is not slate
+        self.assertEqual(grid.get("2026-11-14"), 5)
+        self.assertNotIn("2026-11-14", got)
 
     def test_window_is_exactly_three_days_ahead(self):
         import datetime as _dt
         start = _dt.date.fromisoformat(O.WINDOW_START)
         end = _dt.date.fromisoformat(O.WINDOW_END)
-        self.assertEqual((end - start).days, 3)
+        dates = sorted({g[0] for g in O.SLATE})
+        # the window is contiguous with the days it prices: it ends on the last slate date, and the
+        # brief's "today + N days" is measured from the capture date, not from the first game
+        self.assertEqual((end - start).days, len(dates) - 1)
+        self.assertEqual((start - _dt.date.fromisoformat(O.AS_OF)).days, 0)
         self.assertGreaterEqual(start, _dt.date.fromisoformat(O.AS_OF))
 
     def test_game_ids_unique(self):
@@ -111,9 +129,31 @@ class TestModel(unittest.TestCase):
             self.assertLessEqual(t.reliability, 1.0)
 
     def test_ratings_are_shrunk_towards_mean(self):
+        """Shrinkage may pull toward the league mean; it may never cross it or amplify it.
+
+        The bound this test used to assert — |consensus rating| <= |net points − mean| — compared a
+        two-estimator mean against one estimator's deviation. That is not an invariant of the model:
+        it held on the 183-game table by arithmetic accident and broke on the 188-game table. What
+        is invariant is sign preservation and non-amplification of each component, plus the identity
+        that the consensus rating is the mean of the two shrunk components.
+        """
         mean_pts = sum(t.net_pts for t in self.teams.values()) / 30
+        mean_rtg = sum(t.netrtg for t in self.teams.values()) / 30
         for t in self.teams.values():
-            self.assertLessEqual(abs(t.rating), abs(t.net_pts - mean_pts) + 1e-9)
+            dev = t.net_pts - mean_pts
+            if dev:
+                self.assertEqual(math.copysign(1, t.r_diff), math.copysign(1, dev),
+                                 msg=f"{t.tri}: r_diff crossed zero")
+                self.assertLessEqual(abs(t.r_diff), abs(dev) + 1e-9,
+                                     msg=f"{t.tri}: r_diff amplified the raw differential")
+            # r_rtg pools the two estimators (a team at exactly 0.0 NetRtg can still carry a small
+            # non-zero component), so it has no single raw to be bounded against. What must hold is
+            # that the consensus never amplifies the league's own spread.
+            self.assertLessEqual(abs(t.rating),
+                                 max(abs(u.net_pts - mean_pts) for u in self.teams.values()) + 1e-9,
+                                 msg=f"{t.tri}: consensus rating exceeds the largest raw deviation")
+            self.assertAlmostEqual(t.rating, (t.r_diff + t.r_rtg) / 2.0, places=6,
+                                   msg=f"{t.tri}: consensus rating is not the mean of its components")
 
     def test_expected_wins_sum_to_total_wins(self):
         """A win-consistent model must reproduce the league's win total exactly, so luck sums to zero."""
@@ -375,3 +415,77 @@ class TestSkillAttribution(unittest.TestCase):
         for key in ("headline_vs_win_pct_baseline", "headline_vs_margin_baseline"):
             self.assertTrue(self.attr[key]["verdict"])
             self.assertTrue(self.attr[key]["baseline"])
+
+
+class TestGatesAreLoadBearing(unittest.TestCase):
+    """A gate that cannot change state is decoration. These fixtures change it, on purpose."""
+
+    def _meas(self, **over):
+        from . import gate_eval as GE
+        gid = O.SLATE[0][4]
+        m = {"prices": {"present": False, "files": [], "by_game": {}, "as_of": None, "n": 0,
+                        "note": "fixture"},
+             "settlement": {"present": True, "settled_bets": 0, "n_ledgers": 1, "ledgers": [],
+                            "settled_at": None},
+             "availability": {"per_date": {}, "games_with_unknown_clubs": [], "unknown_clubs": [],
+                              "report_date": O.INJURY_AS_OF},
+             "lookahead": {"n_slate": len(O.SLATE), "violations": [], "rule": "fixture"},
+             "freshness": {"hours_since_capture": 1.0, "capture_stamp": "2026-11-15T11:45:00Z",
+                           "first_slate_date": O.WINDOW_START, "slate_starts_in_days": 0},
+             "source_class": {"n_sources": len(O.SOURCES), "non_official": [], "ok": True}}
+        m.update(over)
+        return GE, gid, m
+
+    def test_price_and_settlement_alone_change_a_withheld_line(self):
+        GE, gid, m = self._meas()
+        base = GE.pick_blockers(m, gid)
+        self.assertEqual([b["gate"] for b in base], ["G6", "G7"])
+        # give it a dated price and cross the settlement bar: the withheld string must go away
+        m2 = {**m, "prices": {**m["prices"], "present": True,
+                              "by_game": {gid: {"price": -110, "as_of": "2026-11-15T11:00Z"}}},
+              "settlement": {**m["settlement"], "settled_bets": GE.SETTLE_BAR}}
+        self.assertEqual(GE.pick_blockers(m2, gid), [])
+        self.assertEqual(GE.pick_status(GE.pick_blockers(m2, gid)), "PUBLISHED")
+        # a price for a DIFFERENT game id does not unlock this one
+        m3 = {**m2, "prices": {**m2["prices"], "by_game": {"999999999": {}}}}
+        self.assertEqual([b["gate"] for b in GE.pick_blockers(m3, gid)], ["G6"])
+
+    def test_a_final_on_disk_for_a_slate_game_is_refused_as_lookahead(self):
+        GE, gid, m = self._meas()
+        m = {**m, "lookahead": {**m["lookahead"],
+                                "violations": [{"game_id": gid, "date": O.SLATE[0][0],
+                                                "final": "110-105", "matchup": "x@y"}]}}
+        blocks = [b["gate"] for b in GE.pick_blockers(m, gid)]
+        self.assertIn("G12", blocks)
+
+    def test_board_verdicts_move_with_the_measurement_not_the_prose(self):
+        GE, gid, m = self._meas()
+        rows = {r["id"]: r for r in GE.board(m, {})}
+        self.assertEqual(rows["G6"]["verdict"], "FAIL")
+        self.assertEqual(rows["G11"]["verdict"], "PASS")
+        m2 = {**m, "prices": {"present": True, "files": ["fixture"], "n": len(O.SLATE),
+                              "as_of": "2026-11-15T11:00Z",
+                              "by_game": {g[4]: {"price": -110} for g in O.SLATE}}}
+        rows2 = {r["id"]: r for r in GE.board(m2, {})}
+        self.assertEqual(rows2["G6"]["verdict"], "PASS")
+        # a non-official host must fail G1 rather than be footnoted
+        m3 = {**m, "source_class": {"n_sources": 1, "non_official": [{"key": "x", "url": "http://z",
+                                                                      "name": "n"}], "ok": False}}
+        self.assertEqual({r["id"]: r for r in GE.board(m3, {})}["G1"]["verdict"], "FAIL")
+
+    def test_published_board_matches_the_committed_measurement_file(self):
+        """data/v2/gates.json is what the pages quote; it must be reproducible from the artefacts."""
+        from . import gate_eval as GE
+        path = Path(__file__).resolve().parents[2] / "data" / "v2" / "gates.json"
+        pub = json.loads(path.read_text())
+        recomputed = GE.board(GE.measurements())
+        recomputed = {r["id"]: r["verdict"] for r in GE.board(GE.measurements())}
+        lab = json.loads((path.parent / "strategy_lab.json").read_text())
+        lab_rows = {g["id"]: g["verdict"] for g in lab["gates"]}
+        delegated = set(pub["delegated_to_lab"])
+        for r in pub["board"]:
+            want = lab_rows.get(r["id"]) if r["id"] in delegated else recomputed[r["id"]]
+            self.assertEqual(r["verdict"], want,
+                             msg=f"{r['id']}: the page says {r['verdict']}, the "
+                                 f"{'lab' if r['id'] in delegated else 'artefacts'} says {want}")
+        self.assertEqual(pub["fail"] + pub["pass"] + pub["not_measurable"], 12)

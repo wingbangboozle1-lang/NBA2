@@ -1,7 +1,7 @@
 {
  "meta": {
-  "session": "arena/ac5fab5c-nba2",
-  "generated": "2026-11-14",
+  "session": "arena/04a61ac0-nba2",
+  "generated": "2026-11-15",
   "n_games": 183,
   "n_scored": 167,
   "first_date": "2026-10-23",
@@ -104,7 +104,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client, and the game-log view returns 'No data available'. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day's game book."
   },
   {
    "quantity": "player points vs assists (same player, same game)",
@@ -116,7 +116,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client, and the game-log view returns 'No data available'. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day's game book."
   },
   {
    "quantity": "teammate A points vs teammate B points (same game)",
@@ -128,7 +128,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client, and the game-log view returns 'No data available'. Required for: minutes distributions, prop probabilities, and a replacement model that does not depend on one day's game book."
   }
  ],
  "gates": [
@@ -161,7 +161,7 @@
    "name": "Estimator agreement",
    "requirement": "Two independent ratings (net points per game; NetRtg per 100 possessions) must imply spreads within 2.0 points.",
    "verdict": "PASS",
-   "measured": "largest disagreement across 30 teams: 0.68 pts (threshold 2.00)",
+   "measured": "largest disagreement across 30 teams: 0.66 pts (threshold 2.00)",
    "src": "https://www.nba.com/stats/teams/advanced"
   },
   {
@@ -169,7 +169,7 @@
    "name": "Total-estimator agreement",
    "requirement": "The points-based total and the independent pace x efficiency total must stay within 6.0 points.",
    "verdict": "PASS",
-   "measured": "largest gap across the 27-game slate: 4.04 pts (threshold 6.00)",
+   "measured": "largest gap across the 22-game slate: 3.54 pts (threshold 6.00)",
    "src": "https://www.nba.com/stats/teams/traditional"
   },
   {
@@ -186,7 +186,7 @@
    "requirement": "At least 300 settled bets of the strategy's own signals.",
    "verdict": "FAIL",
    "measured": "largest settled sample: 167 bets (threshold 300)",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games"
   },
   {
    "id": "G8",
@@ -194,7 +194,7 @@
    "requirement": "Signals must hold on the last 30% of game-dates, having been built only on the earlier ones.",
    "verdict": "PASS",
    "measured": "in-sample 63.8% vs out-of-sample 66.7% (+/- 7.0% s.e.); MAE 12.15 -> 13.16. The signal holds out of sample.",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games"
   },
   {
    "id": "G9",
@@ -210,14 +210,14 @@
    "requirement": "No parlay may be priced by multiplying legs unless the leg correlation is measured or bounded.",
    "verdict": "PASS",
    "measured": "same-game rho measured at +0.0393 (95% CI (-0.1133, 0.19))",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games"
   },
   {
    "id": "G11",
    "name": "Freshness",
    "requirement": "Inputs must be dated within 24h of the slate and the injury report within its filing window.",
    "verdict": "PASS",
-   "measured": "snapshot dated 2026-11-14; window 2026-11-14 -> 2026-11-17",
+   "measured": "snapshot dated 2026-11-15; window 2026-11-15 -> 2026-11-17",
    "src": "https://official.nba.com/nba-injury-report-2026-27-season/"
   },
   {
@@ -226,40 +226,10 @@
    "requirement": "No input timestamped after the decision time may enter that decision.",
    "verdict": "PASS",
    "measured": "0 violations across 167 predictions",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games"
   }
  ],
  "gate_g5_total_estimators": [
-  {
-   "matchup": "DEN @ NOP",
-   "points_estimator": 234.95,
-   "possessions_estimator": 230.91,
-   "gap": 4.04
-  },
-  {
-   "matchup": "DAL @ CLE",
-   "points_estimator": 229.0,
-   "possessions_estimator": 227.98,
-   "gap": 1.02
-  },
-  {
-   "matchup": "DET @ MIA",
-   "points_estimator": 230.3,
-   "possessions_estimator": 227.11,
-   "gap": 3.19
-  },
-  {
-   "matchup": "BKN @ MEM",
-   "points_estimator": 228.6,
-   "possessions_estimator": 226.54,
-   "gap": 2.06
-  },
-  {
-   "matchup": "CHI @ MIN",
-   "points_estimator": 233.65,
-   "possessions_estimator": 231.55,
-   "gap": 2.1
-  },
   {
    "matchup": "IND @ PHI",
    "points_estimator": 222.5,
@@ -286,9 +256,9 @@
   },
   {
    "matchup": "DAL @ BOS",
-   "points_estimator": 221.35,
-   "possessions_estimator": 220.38,
-   "gap": 0.97
+   "points_estimator": 222.05,
+   "possessions_estimator": 221.11,
+   "gap": 0.94
   },
   {
    "matchup": "NYK @ TOR",
@@ -322,45 +292,45 @@
   },
   {
    "matchup": "CHI @ CLE",
-   "points_estimator": 237.35,
-   "possessions_estimator": 235.23,
-   "gap": 2.12
+   "points_estimator": 236.95,
+   "possessions_estimator": 235.08,
+   "gap": 1.87
   },
   {
    "matchup": "MEM @ WAS",
-   "points_estimator": 228.75,
-   "possessions_estimator": 225.96,
-   "gap": 2.79
+   "points_estimator": 229.05,
+   "possessions_estimator": 226.3,
+   "gap": 2.75
   },
   {
    "matchup": "PHI @ BKN",
-   "points_estimator": 223.05,
-   "possessions_estimator": 221.96,
-   "gap": 1.09
+   "points_estimator": 223.6,
+   "possessions_estimator": 222.6,
+   "gap": 1.0
   },
   {
    "matchup": "HOU @ MIA",
-   "points_estimator": 230.45,
-   "possessions_estimator": 229.39,
-   "gap": 1.06
+   "points_estimator": 231.05,
+   "possessions_estimator": 230.1,
+   "gap": 0.95
   },
   {
    "matchup": "POR @ MIN",
-   "points_estimator": 228.3,
-   "possessions_estimator": 227.42,
-   "gap": 0.88
+   "points_estimator": 228.25,
+   "possessions_estimator": 227.38,
+   "gap": 0.87
   },
   {
    "matchup": "GSW @ NOP",
-   "points_estimator": 235.6,
-   "possessions_estimator": 231.85,
-   "gap": 3.75
+   "points_estimator": 234.95,
+   "possessions_estimator": 231.41,
+   "gap": 3.54
   },
   {
    "matchup": "PHX @ DEN",
-   "points_estimator": 227.8,
-   "possessions_estimator": 226.61,
-   "gap": 1.19
+   "points_estimator": 227.6,
+   "possessions_estimator": 226.57,
+   "gap": 1.03
   },
   {
    "matchup": "NYK @ TOR",
@@ -370,15 +340,15 @@
   },
   {
    "matchup": "POR @ MIN",
-   "points_estimator": 228.3,
-   "possessions_estimator": 227.42,
-   "gap": 0.88
+   "points_estimator": 228.25,
+   "possessions_estimator": 227.38,
+   "gap": 0.87
   },
   {
    "matchup": "DET @ SAS",
-   "points_estimator": 224.5,
-   "possessions_estimator": 221.49,
-   "gap": 3.01
+   "points_estimator": 225.8,
+   "possessions_estimator": 222.97,
+   "gap": 2.83
   },
   {
    "matchup": "UTA @ LAC",
@@ -389,8 +359,8 @@
   {
    "matchup": "CHA @ LAL",
    "points_estimator": 222.3,
-   "possessions_estimator": 222.1,
-   "gap": 0.2
+   "possessions_estimator": 222.09,
+   "gap": 0.21
   }
  ],
  "strategies": [
