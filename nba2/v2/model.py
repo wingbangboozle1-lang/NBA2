@@ -31,6 +31,12 @@ from dataclasses import dataclass, field
 from . import official as O
 
 
+# League-average pace (official PACE over all 30 clubs), set in originated_lines() and used
+# as the denominator of the possessions interaction. Published so the possession count can
+# be re-derived by hand from the advanced-stats page.
+LEAGUE_PACE: float = 100.0
+
+
 def phi(x: float) -> float:
     return 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
 
@@ -287,6 +293,9 @@ class Line:
     total: float = 0.0
     pts_home: float = 0.0
     pts_away: float = 0.0
+    possessions: float = 0.0
+    ppp_home: float = 0.0
+    ppp_away: float = 0.0
     total_b: float = 0.0
     pts_home_b: float = 0.0
     pts_away_b: float = 0.0
@@ -317,6 +326,8 @@ class Line:
             "fair_home": round(self.fair_home, 3), "fair_away": round(self.fair_away, 3),
             "total": round(self.total, 1),
             "pts_home": round(self.pts_home, 1), "pts_away": round(self.pts_away, 1),
+            "possessions": round(self.possessions, 2),
+            "ppp_home": round(self.ppp_home, 4), "ppp_away": round(self.ppp_away, 4),
             "total_b": round(self.total_b, 1),
             "pts_home_b": round(self.pts_home_b, 1), "pts_away_b": round(self.pts_away_b, 1),
             "total_gap": round(self.total_gap, 2),
@@ -335,6 +346,8 @@ def _half(x: float) -> float:
 
 def originated_lines(teams, cal) -> list[Line]:
     out = []
+    global LEAGUE_PACE
+    LEAGUE_PACE = sum(t.pace for t in teams.values()) / len(teams)
     lg = O.integrity()["league_pts_per_team_game"]
     for (date, time_et, away, home, gid, arena, city, tv, cup) in sorted(O.SLATE):
         a, h = teams[away], teams[home]
@@ -352,14 +365,29 @@ def originated_lines(teams, cal) -> list[Line]:
         ln.est_a = -_half((h.r_diff + cal.hca) - a.r_diff)
         ln.est_b = -_half((h.r_rtg + cal.hca) - a.r_rtg)
         ln.agreement = abs(ln.est_a - ln.est_b)
-        # ---- total, estimator A: per-game scoring averages, league level preserved
-        ln.pts_home = (h.pf + a.pa) / 2.0 + ((h.pf - h.pa) - (a.pf - a.pa)) / 2.0
-        ln.pts_away = (a.pf + h.pa) / 2.0 + ((a.pf - a.pa) - (h.pf - h.pa)) / 2.0
+        # ---- total, estimator A (PRIMARY): possessions x points-per-possession.
+        # Possessions: the two clubs' own official paces interact multiplicatively against the
+        # league pace, so two fast teams do not get handed an average pace.
+        # Points per possession: each side's own official offensive rating against the
+        # opponent's official defensive rating, averaged (the standard "each half from each
+        # team" split), converted from per-100 back to per-possession.
+        # This, not an average of scoring averages, is the published total: an average of
+        # PF and PA ignores the pace of the actual matchup.
+        poss = (h.pace * a.pace) / LEAGUE_PACE
+        ppp_home = (h.netrtg_off + a.netrtg_def) / 2.0 / 100.0
+        ppp_away = (a.netrtg_off + h.netrtg_def) / 2.0 / 100.0
+        ln.pts_home = poss * ppp_home
+        ln.pts_away = poss * ppp_away
         ln.total = ln.pts_home + ln.pts_away
-        # ---- total, estimator B: official per-100 ratings × official pace
-        poss = (h.pace + a.pace) / 2.0
-        ln.pts_home_b = (h.netrtg_off + a.netrtg_def) / 2.0 * poss / 100.0
-        ln.pts_away_b = (a.netrtg_off + h.netrtg_def) / 2.0 * poss / 100.0
+        ln.possessions = poss
+        ln.ppp_home = ppp_home
+        ln.ppp_away = ppp_away
+        # ---- total, estimator B (SECONDARY, the legacy construction): per-game scoring
+        #      averages with the league level preserved. Kept because it is the number the
+        #      average-of-averages intuition produces, and the gap between the two is the
+        #      honest measure of how much the pace interaction is worth.
+        ln.pts_home_b = (h.pf + a.pa) / 2.0 + ((h.pf - h.pa) - (a.pf - a.pa)) / 2.0
+        ln.pts_away_b = (a.pf + h.pa) / 2.0 + ((a.pf - a.pa) - (h.pf - h.pa)) / 2.0
         ln.total_b = ln.pts_home_b + ln.pts_away_b
         # Both estimators are calibrated to the league level only if they reproduce it; report the gap.
         ln.total_gap = ln.total - ln.total_b

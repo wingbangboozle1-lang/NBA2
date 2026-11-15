@@ -290,9 +290,12 @@ class TestPublishedSite(unittest.TestCase):
         # (live official re-verification) and decision-queue.html (suggestions review path);
         # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation);
         # session arena/766d0269-nba2 added skill-attribution.html (naive baselines + paired
-        # McNemar test) and decisions-needed.html (the decision register). The assertion pins the
-        # NAV to the emitted file set in both directions, so an unlisted page fails here.
-        self.assertEqual(len(pages), 22)
+        # McNemar test) and decisions-needed.html (the decision register); session
+        # arena/673acec0-nba2 added projection.html — the publishable surface, split away from
+        # the gated bet surface on picks.html so a projection and a wager are never on one page.
+        # The assertion pins the NAV to the emitted file set in both directions, so an unlisted
+        # page fails here.
+        self.assertEqual(len(pages), 23)
         self.assertEqual({p.name for p in pages}, {href for href, _ in NAV})
         for p in pages:
             doc = p.read_text()

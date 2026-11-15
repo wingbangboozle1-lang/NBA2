@@ -20,6 +20,10 @@ from . import model as M
 from . import official as O
 from . import capture as CP
 from . import report as R
+from . import arenas as AR
+from . import injury_diff as ID
+from . import rotation as ROT
+from . import market as MK
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -28,7 +32,8 @@ DATA = ROOT / "data" / "v2"
 NAV = [
     ("index.html", "Dashboard"),
     ("executive-summary.html", "Executive summary"),
-    ("picks.html", "Picks &amp; slate"),
+    ("projection.html", "Projections (publishable)"),
+    ("picks.html", "Bet surface (gated)"),
     ("lines.html", "Originated lines"),
     ("strategies.html", "Strategies &amp; leaderboard"),
     ("backtest.html", "Backtest &amp; skill"),
@@ -541,28 +546,134 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 """
     built["executive-summary.html"] = page("executive-summary.html", "Executive summary", body, "executive-summary.html")
 
-    # ------------------------------------------------------------------ picks & slate
-    body = """<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the dated window through three days after the snapshot (2026-11-14 → 2026-11-17) is priced from our own originated lines,
-and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
-that the edge is not a coin flip that happened to land, and this repository has neither.</p>
+    # ------------------------------------------------- shared slate context for both surfaces
+    # Rotation availability (official injury report x captured minutes shares) and schedule
+    # context (rest / back-to-back / 3-in-4 from the official schedule, travel from the
+    # sourced arena table) are computed once and shown on both surfaces, so the publishable
+    # projection page and the gated bet page can never disagree about the same game.
+    rot_idx = {}
+    try:
+        rot_idx = {r["team"]: r for r in
+                   ROT.rotation_availability(ROT.per_team_shares(ROT.load_logs()))["rows"]}
+    except Exception:
+        rot_idx = {}
+    ctx_idx = {}
+    try:
+        for r in AR.schedule_context()["rows"]:
+            ctx_idx[(r["date"], r["game_id"], r["team"])] = r
+    except Exception:
+        ctx_idx = {}
+    rot_cov = ROT.coverage(ROT.load_logs(), ROT.per_team_shares(ROT.load_logs()))
+
+    def rot_cell(tri):
+        r = rot_idx.get(tri)
+        if not r:
+            return '<span class="blank">not on the report</span>'
+        risk = (r["minutes_at_risk_per_game"] if r["minutes_share_at_risk"] is not None
+                else "&mdash;")
+        return (f'{esc(tri)} {r["Out"]}O / {r["Questionable"]}Q &middot; '
+                f'min@risk {risk}')
+
+    def ctx_cell(date, gid, tri):
+        r = ctx_idx.get((date, gid, tri))
+        if not r:
+            return "&mdash;"
+        tags = "".join([f' rest {r["rest_days"]}',
+                        " B2B" if r["back_to_back"] else "",
+                        " 3in4" if r["third_in_four"] else ""])
+        km = f'{r["travel_km"]:.0f} km' if r["travel_km"] is not None else "travel &mdash;"
+        return esc(tri) + tags + " &middot; " + km
+
+    def game_url(away, home, gid):
+        return f"https://www.nba.com/game/{away.lower()}-vs-{home.lower()}-{gid}"
+
+    window_txt = f"{O.WINDOW_START} &rarr; {O.WINDOW_END}"
+    n_games = len(lines)
+
+    # ------------------------------------------------------- projection surface (publishable)
+    body = f"""<h1>Projections</h1>
+<p class="lede">This is the <b>projection surface</b>: what the model believes about each of the {n_games} games in the
+window {window_txt}. It carries no price, no trigger, no lean and no stake, because it does not need one &mdash;
+a projection is a statement about a game, and it is safe to publish whether or not anyone can bet it.</p>
+<div class="note ok"><b>Safe to publish.</b> Nothing on this page is a bet recommendation. The
+companion <a href="picks.html">bet surface</a> is gated and currently withholds every stake; the two are never
+mixed on one page, so a reader can always tell a projection from a wager.</div>
+<div class="note"><b>The headline is the disagreement, not the blend.</b> Two independent estimators are
+computed for every game &mdash; one from official points-per-game differential, one from official NetRtg &mdash;
+and the number to read first is how far apart they land. The blended spread sits underneath it, and a game
+whose estimators disagree by more than 2.0 points is graded down for exactly that reason.</div>
+<div class="note"><b>The total is possessions &times; points-per-possession.</b> Possessions come from the
+two clubs' own official paces interacting against the league pace, and points-per-possession from each side's
+official offensive rating against the opponent's official defensive rating. An average of scoring averages
+ignores the pace of the actual matchup; it is still computed, and the gap between the two is printed on the
+<a href="lines.html">originated lines</a> page.</div>
+"""
+    prows = []
+    for ln in lines:
+        d = ln.as_dict()
+        prows.append({"id": d["game_id"], "cells": [
+            esc(d["date"]), esc(d["time_et"]), esc(d["matchup"]),
+            esc(d["spread"]), esc(d["total"]),
+            esc(d["est_a"]), esc(d["est_b"]), esc(d["agreement"]),
+            ctx_cell(d["date"], d["game_id"], ln.away) + "<br>" +
+            ctx_cell(d["date"], d["game_id"], ln.home),
+            rot_cell(ln.away) + "<br>" + rot_cell(ln.home),
+            badge(d["grade"], {"A": "ok", "B": "warn", "C": "bad"}[d["grade"]]),
+            srclink(game_url(ln.away, ln.home, d["game_id"])),
+        ]})
+    body += table(["Date", "ET", "Matchup", "Proj spread", "Proj total",
+                   "Est A (pts diff)", "Est B (NetRtg)", "Disagreement",
+                   "Rest & travel", "Rotation availability", "Grade", "Game page"],
+                  prows,
+                  f"All {n_games} games: the projection surface, with both estimators and the "
+                  f"disagreement between them",
+                  num_cols=(3, 4, 5, 6, 7), idcol=None)
+
+    body += f"""<h2>What the rotation column can and cannot say</h2>
+<p class="lede">Rotation availability is the official injury report (designations per club) joined to measured
+minutes shares. Both halves are only as good as the capture: {rot_cov['injured_players_with_a_captured_log']} of the
+{rot_cov['injured_players_total']} players on the latest official report appear in a captured box score, because
+{rot_cov['games_captured']} of {rot_cov['games_in_results_feed']} official finals have had their per-player logs read
+line by line. Where a club has no captured rotation the minutes column is blank with that reason rather than
+estimated. See <a href="injuries.html">Injuries &amp; rotation</a> for the per-club table.</p>
+"""
+    built["projection.html"] = page("projection.html", "Projections", body, "projection.html")
+
+    # ------------------------------------------------------------- bet surface (gated)
+    failing = [g for g in lab["gates"] if g["verdict"] != "PASS"]
+    fail_list = ", ".join(f'{esc(g["id"])} ({esc(g["name"])})' for g in failing) or "none"
+    body = f"""<h1>Bet surface &mdash; gated</h1>
+<div class="note bad"><b>This is the bet surface, and it is gated: no stake is live.</b> Everything here is
+derived from the same projections published on the <a href="projection.html">projection surface</a>, but this page
+adds prices, triggers and stakes, and those are withheld until the gates pass. The gates that currently block every
+stake: <b>{fail_list}</b>.</div>
+<p class="lede">Every game in the dated window through three days after the snapshot ({window_txt}) is priced from
+our own originated lines, and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and
+a settled sample large enough that the edge is not a coin flip that happened to land, and this repository has
+neither.</p>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
-<em>trigger</em> — the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
+<em>trigger</em> &mdash; the decimal price at which backing it stops being a losing bet. At our probability p, break-even is
 decimal 1/p exactly, so the trigger is arithmetic, not a prediction about what a bookmaker will offer.</div>
-<div class="note bad"><b>Two markets, two probabilities — read the right trigger.</b> The lean is a
+<div class="note bad"><b>Two markets, two probabilities &mdash; read the right trigger.</b> The lean is a
 <em>spread</em> at our own number, so the probability that prices it is the probability of <em>covering</em> that
 number (<b>P(cover)</b>), not the probability of winning the game (<b>P(win)</b>). Our line is the median of our own
 distribution, so P(cover) is close to 0.50 on every game by construction while P(win) ranges widely. Pricing a
-spread bet off P(win) — as an earlier build of this page did — produces a trigger of, say, −1246 on a moneyline-shaped
+spread bet off P(win) &mdash; as an earlier build of this page did &mdash; produces a trigger of, say, &minus;1246 on a moneyline-shaped
 probability, which no sportsbook offers on a spread. Both numbers are now printed, each with its own break-even
 trigger, so the arithmetic can be checked against whichever market is actually being considered.</div>
-<div class="note bad"><b>0 of 27 games are staked.</b> Not because the model failed, but because gate G6 (no market
-price) and gate G7 (167 settled bets against a 300-bet bar) both fail. Publishing a stake anyway is the one thing this
+<div class="note bad"><b>0 of {n_games} games are staked.</b> Not because the model failed, but because gate G6 (no market
+price) and gate G7 (settled bets against the bar) both fail. Publishing a stake anyway is the one thing this
 build refuses to do.</div>
+<div class="note warn"><b>No market-anchored prior is applied.</b> The published projection is the raw model
+number. A blend with the closing line is implemented (nba2/v2/market.py) but inert: with no closing price in the
+repository the market's out-of-sample log-loss cannot be measured, so the blend weight is unmeasurable rather than
+zero. The model's own measured log-loss is published on the
+<a href="strategy-lab.html">strategy lab</a> page.</div>
 """
     prows = R.t_picks(lines)
     rows = []
-    for r in prows:
+    for r, ln in zip(prows, lines):
+        d = ln.as_dict()
         rows.append({"id": r["src"] + r["matchup"], "cells": [
             esc(r["date"]), esc(r["time_et"]), esc(r["matchup"]),
             badge(r["grade"], {"A": "ok", "B": "warn", "C": "bad"}[r["grade"]]),
@@ -571,13 +682,16 @@ build refuses to do.</div>
             esc(r["trigger_decimal"]), "<b>" + esc(r["trigger_american"]) + "</b>",
             esc(r["trigger_ml_decimal"]), esc(r["trigger_ml_american"]),
             esc(r["stake"]), esc(r["gates_passed"]), esc(r["blocked_by"]),
-            srclink(f"https://www.nba.com/game/{r['matchup'].split(' @ ')[0].lower()}"
-                    f"-vs-{r['matchup'].split(' @ ')[1].lower()}-{r['date']}"),
+            rot_cell(ln.away) + "<br>" + rot_cell(ln.home),
+            srclink(game_url(r["matchup"].split(" @ ")[0], r["matchup"].split(" @ ")[1],
+                             d["game_id"])),
         ]})
     body += table(["Date", "ET", "Matchup", "Grade", "Our spread", "Our total",
                    "Lean", "P(lean) win", "P(lean) cover", "Spread trigger dec", "Spread trigger US",
-                   "ML trigger dec", "ML trigger US", "Stake", "Gates", "Blocked by", "Game page"],
-                  rows, "All 27 games: originated line, lean, both probabilities and both trigger prices, with gate status",
+                   "ML trigger dec", "ML trigger US", "Stake", "Gates", "Blocked by",
+                   "Rotation availability", "Game page"],
+                  rows, f"All {n_games} games: originated line, lean, both probabilities and both trigger "
+                  f"prices, with gate status",
                   num_cols=(4, 5, 7, 8, 9), idcol=None)
 
     body += """<h2>Why the stake is withheld</h2>
@@ -1289,22 +1403,32 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
                             "01:30 PM ET (official, later)", "Source"], _mrows,
                            "Every status that moved between the published release and the 01:30 PM ET release")
     inj_rows, counts = R.t_injuries(teams)
+    _arch = ID.archive()
+    _bn = _arch.get("newest_banner") or {}
+    _rev = _bn.get("revision_et", "unknown")
+    _retr = _bn.get("retrieved_at_utc", "unknown")
+    _nrel = _arch["n_releases"]
+    _prev = _arch["releases"][-2]["revision_et"] if _nrel >= 2 else "none"
     body = f"""<h1>Injuries &amp; rotation</h1>
-<p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official 11/14/26 04:30 AM ET report, plus the
+<div class="note ok"><b>Report revision: {esc(_rev)} &nbsp;&middot;&nbsp; retrieved by this project: {esc(_retr)}.</b>
+These are two different clocks and both are printed, because a designation is only as current as the first and only
+as honestly reported as the second. The revision stamp is the league's own, printed on the PDF; the retrieval time is
+when this project read it. <a href="{esc(_bn.get("url", O.INJURY_PDF_URL))}" target="_blank" rel="noopener">the PDF this table came from</a></div>
+<p class="lede">{len(O.INJURIES)} player-status rows transcribed from the official {esc(_rev)} report, plus the
 {len(O.NOT_SUBMITTED)} team-rows the league had not yet received at capture time. Every row links to the PDF it came from.</p>
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
-<div class="note bad"><b>This table is six releases stale. A fresher official release is now published, and it
-moves four players.</b> Re-reading the league's injury index on 2026-11-14 at 19:50Z found releases up to
-<b>01:30 PM ET</b> (the build's snapshot is <b>04:30 AM ET</b>). The later release was fetched and diffed player by
-player in <code>audit/2026-11-14-766d/verify_injuries.py</code>:</div>
+<div class="note"><b>Every release is archived and diffed, not overwritten.</b> {_nrel} official releases are stored with
+their revision stamps and diffed against the release before them: {_arch['total_status_changes']} status changes,
+{_arch['total_added']} rows added and {_arch['total_dropped']} rows dropped across {len(_arch['diffs'])} consecutive pairs.
+The newest archived release is <b>{esc(_rev)}</b>; the one before it was <b>{esc(_prev)}</b>. A dropped row is reported as a
+removal, never read as an availability. {esc(_arch['pdf_note'])}</div>
 {movement_block}
-<div class="note warn"><b>Dated input, and why days 2 and 3 are blank.</b> For the 11/15, 11/16 and 11/17 games
-the day-before filing deadline had not passed at capture time, so no official row exists to read. Those cells are
-blank by policy, never estimated. (The 05:30 AM ET release also returned AccessDenied when an earlier session tried
-it, which is why 04:30 AM ET was that build's ceiling; the 01:30 PM release is reachable now, as the capture above
-shows.)</div>
+<div class="note warn"><b>Dated input, and why later days are blank.</b> For game dates beyond the filing deadline
+that had passed at capture time no official row exists to read. Those cells are blank by policy, never estimated.
+The capture above records the exact release and the minute it was read so a reviewer can tell whether a newer one
+has landed since.</div>
 
 <h2>Per-team exposure</h2>
 """

@@ -1,0 +1,2296 @@
+{
+  "schema": "nba2.rotation.v1",
+  "shares": {
+    "UTA": {
+      "team": "UTA",
+      "games_captured": 2,
+      "game_ids": [
+        "0022600039",
+        "0022600224"
+      ],
+      "players": [
+        {
+          "player": "Keyonte George",
+          "player_id": "1641718",
+          "games": 2,
+          "mean_minutes": 2122,
+          "mean_minutes_str": "35:22",
+          "mean_share": 0.1474,
+          "share_low": 0.1384,
+          "share_high": 0.1564,
+          "mean_pts": 20.0,
+          "mean_reb": 5.5,
+          "mean_ast": 7.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "37:32",
+              "sec": 2252,
+              "pts": 27,
+              "reb": 4,
+              "ast": 7,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "33:13",
+              "sec": 1993,
+              "pts": 13,
+              "reb": 7,
+              "ast": 7,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Darryn Peterson",
+          "player_id": "1643408",
+          "games": 2,
+          "mean_minutes": 2004,
+          "mean_minutes_str": "33:24",
+          "mean_share": 0.1392,
+          "share_low": 0.1368,
+          "share_high": 0.1415,
+          "mean_pts": 25.0,
+          "mean_reb": 5.5,
+          "mean_ast": 3.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "33:58",
+              "sec": 2038,
+              "pts": 28,
+              "reb": 7,
+              "ast": 2,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "32:50",
+              "sec": 1970,
+              "pts": 22,
+              "reb": 4,
+              "ast": 5,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Ace Bailey",
+          "player_id": "1642846",
+          "games": 2,
+          "mean_minutes": 1968,
+          "mean_minutes_str": "32:48",
+          "mean_share": 0.1367,
+          "share_low": 0.1295,
+          "share_high": 0.1439,
+          "mean_pts": 19.5,
+          "mean_reb": 5.0,
+          "mean_ast": 1.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "34:32",
+              "sec": 2072,
+              "pts": 21,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "31:05",
+              "sec": 1865,
+              "pts": 18,
+              "reb": 7,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Brice Sensabaugh",
+          "player_id": "1641729",
+          "games": 2,
+          "mean_minutes": 1489,
+          "mean_minutes_str": "24:49",
+          "mean_share": 0.1034,
+          "share_low": 0.0944,
+          "share_high": 0.1124,
+          "mean_pts": 13.0,
+          "mean_reb": 3.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "26:59",
+              "sec": 1619,
+              "pts": 7,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "22:39",
+              "sec": 1359,
+              "pts": 19,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Jaxson Hayes",
+          "player_id": "1629637",
+          "games": 2,
+          "mean_minutes": 1305,
+          "mean_minutes_str": "21:45",
+          "mean_share": 0.0906,
+          "share_low": 0.056,
+          "share_high": 0.1252,
+          "mean_pts": 11.5,
+          "mean_reb": 6.5,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "13:27",
+              "sec": 807,
+              "pts": 12,
+              "reb": 5,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "30:03",
+              "sec": 1803,
+              "pts": 11,
+              "reb": 8,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Josh Green",
+          "player_id": "1630182",
+          "games": 2,
+          "mean_minutes": 1207,
+          "mean_minutes_str": "20:07",
+          "mean_share": 0.0838,
+          "share_low": 0.0598,
+          "share_high": 0.1078,
+          "mean_pts": 2.5,
+          "mean_reb": 1.0,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "14:21",
+              "sec": 861,
+              "pts": 2,
+              "reb": 0,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "25:53",
+              "sec": 1553,
+              "pts": 3,
+              "reb": 2,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Mo Bamba",
+          "player_id": "1628964",
+          "games": 2,
+          "mean_minutes": 1135,
+          "mean_minutes_str": "18:55",
+          "mean_share": 0.0788,
+          "share_low": 0.0748,
+          "share_high": 0.0828,
+          "mean_pts": 7.0,
+          "mean_reb": 5.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "19:53",
+              "sec": 1193,
+              "pts": 9,
+              "reb": 9,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "17:57",
+              "sec": 1077,
+              "pts": 5,
+              "reb": 1,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Josh Okogie",
+          "player_id": "1629006",
+          "games": 2,
+          "mean_minutes": 1108,
+          "mean_minutes_str": "18:28",
+          "mean_share": 0.0769,
+          "share_low": 0.0634,
+          "share_high": 0.0905,
+          "mean_pts": 7.0,
+          "mean_reb": 2.5,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "21:43",
+              "sec": 1303,
+              "pts": 7,
+              "reb": 2,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "15:13",
+              "sec": 913,
+              "pts": 7,
+              "reb": 3,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 8
+        },
+        {
+          "player": "Isaiah Collier",
+          "player_id": "1642268",
+          "games": 2,
+          "mean_minutes": 828,
+          "mean_minutes_str": "13:48",
+          "mean_share": 0.0575,
+          "share_low": 0.0483,
+          "share_high": 0.0666,
+          "mean_pts": 5.0,
+          "mean_reb": 2.5,
+          "mean_ast": 3.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "15:59",
+              "sec": 959,
+              "pts": 3,
+              "reb": 2,
+              "ast": 5,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "11:36",
+              "sec": 696,
+              "pts": 7,
+              "reb": 3,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 9
+        },
+        {
+          "player": "Svi Mykhailiuk",
+          "player_id": "1629004",
+          "games": 2,
+          "mean_minutes": 796,
+          "mean_minutes_str": "13:16",
+          "mean_share": 0.0553,
+          "share_low": 0.0292,
+          "share_high": 0.0813,
+          "mean_pts": 1.5,
+          "mean_reb": 0.5,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "7:01",
+              "sec": 421,
+              "pts": 0,
+              "reb": 1,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "19:31",
+              "sec": 1171,
+              "pts": 3,
+              "reb": 0,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 10
+        },
+        {
+          "player": "Tony Bradley",
+          "player_id": "1628396",
+          "games": 1,
+          "mean_minutes": 748,
+          "mean_minutes_str": "12:28",
+          "mean_share": 0.0519,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 0.0,
+          "mean_reb": 5.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "12:28",
+              "sec": 748,
+              "pts": 0,
+              "reb": 5,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 11
+        },
+        {
+          "player": "Kyle Filipowski",
+          "player_id": "1642271",
+          "games": 1,
+          "mean_minutes": 127,
+          "mean_minutes_str": "2:07",
+          "mean_share": 0.0088,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 2.0,
+          "mean_reb": 0.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "2:07",
+              "sec": 127,
+              "pts": 2,
+              "reb": 0,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 12
+        }
+      ],
+      "top8": [
+        {
+          "player": "Keyonte George",
+          "player_id": "1641718",
+          "games": 2,
+          "mean_minutes": 2122,
+          "mean_minutes_str": "35:22",
+          "mean_share": 0.1474,
+          "share_low": 0.1384,
+          "share_high": 0.1564,
+          "mean_pts": 20.0,
+          "mean_reb": 5.5,
+          "mean_ast": 7.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "37:32",
+              "sec": 2252,
+              "pts": 27,
+              "reb": 4,
+              "ast": 7,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "33:13",
+              "sec": 1993,
+              "pts": 13,
+              "reb": 7,
+              "ast": 7,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Darryn Peterson",
+          "player_id": "1643408",
+          "games": 2,
+          "mean_minutes": 2004,
+          "mean_minutes_str": "33:24",
+          "mean_share": 0.1392,
+          "share_low": 0.1368,
+          "share_high": 0.1415,
+          "mean_pts": 25.0,
+          "mean_reb": 5.5,
+          "mean_ast": 3.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "33:58",
+              "sec": 2038,
+              "pts": 28,
+              "reb": 7,
+              "ast": 2,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "32:50",
+              "sec": 1970,
+              "pts": 22,
+              "reb": 4,
+              "ast": 5,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Ace Bailey",
+          "player_id": "1642846",
+          "games": 2,
+          "mean_minutes": 1968,
+          "mean_minutes_str": "32:48",
+          "mean_share": 0.1367,
+          "share_low": 0.1295,
+          "share_high": 0.1439,
+          "mean_pts": 19.5,
+          "mean_reb": 5.0,
+          "mean_ast": 1.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "34:32",
+              "sec": 2072,
+              "pts": 21,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "31:05",
+              "sec": 1865,
+              "pts": 18,
+              "reb": 7,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Brice Sensabaugh",
+          "player_id": "1641729",
+          "games": 2,
+          "mean_minutes": 1489,
+          "mean_minutes_str": "24:49",
+          "mean_share": 0.1034,
+          "share_low": 0.0944,
+          "share_high": 0.1124,
+          "mean_pts": 13.0,
+          "mean_reb": 3.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "26:59",
+              "sec": 1619,
+              "pts": 7,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "22:39",
+              "sec": 1359,
+              "pts": 19,
+              "reb": 3,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Jaxson Hayes",
+          "player_id": "1629637",
+          "games": 2,
+          "mean_minutes": 1305,
+          "mean_minutes_str": "21:45",
+          "mean_share": 0.0906,
+          "share_low": 0.056,
+          "share_high": 0.1252,
+          "mean_pts": 11.5,
+          "mean_reb": 6.5,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "13:27",
+              "sec": 807,
+              "pts": 12,
+              "reb": 5,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "30:03",
+              "sec": 1803,
+              "pts": 11,
+              "reb": 8,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Josh Green",
+          "player_id": "1630182",
+          "games": 2,
+          "mean_minutes": 1207,
+          "mean_minutes_str": "20:07",
+          "mean_share": 0.0838,
+          "share_low": 0.0598,
+          "share_high": 0.1078,
+          "mean_pts": 2.5,
+          "mean_reb": 1.0,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "14:21",
+              "sec": 861,
+              "pts": 2,
+              "reb": 0,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "25:53",
+              "sec": 1553,
+              "pts": 3,
+              "reb": 2,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Mo Bamba",
+          "player_id": "1628964",
+          "games": 2,
+          "mean_minutes": 1135,
+          "mean_minutes_str": "18:55",
+          "mean_share": 0.0788,
+          "share_low": 0.0748,
+          "share_high": 0.0828,
+          "mean_pts": 7.0,
+          "mean_reb": 5.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "19:53",
+              "sec": 1193,
+              "pts": 9,
+              "reb": 9,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "17:57",
+              "sec": 1077,
+              "pts": 5,
+              "reb": 1,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Josh Okogie",
+          "player_id": "1629006",
+          "games": 2,
+          "mean_minutes": 1108,
+          "mean_minutes_str": "18:28",
+          "mean_share": 0.0769,
+          "share_low": 0.0634,
+          "share_high": 0.0905,
+          "mean_pts": 7.0,
+          "mean_reb": 2.5,
+          "mean_ast": 0.5,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "HOU",
+              "home": false,
+              "min": "21:43",
+              "sec": 1303,
+              "pts": 7,
+              "reb": 2,
+              "ast": 1,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            },
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "ORL",
+              "home": true,
+              "min": "15:13",
+              "sec": 913,
+              "pts": 7,
+              "reb": 3,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 8
+        }
+      ],
+      "top8_share": 0.8568,
+      "players_used": 12
+    },
+    "HOU": {
+      "team": "HOU",
+      "games_captured": 1,
+      "game_ids": [
+        "0022600039"
+      ],
+      "players": [
+        {
+          "player": "Amen Thompson",
+          "player_id": "1641708",
+          "games": 1,
+          "mean_minutes": 2453,
+          "mean_minutes_str": "40:53",
+          "mean_share": 0.1703,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 12.0,
+          "mean_reb": 10.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "40:53",
+              "sec": 2453,
+              "pts": 12,
+              "reb": 10,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Alperen Sengun",
+          "player_id": "1630578",
+          "games": 1,
+          "mean_minutes": 2225,
+          "mean_minutes_str": "37:05",
+          "mean_share": 0.1545,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 43.0,
+          "mean_reb": 12.0,
+          "mean_ast": 5.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "37:05",
+              "sec": 2225,
+              "pts": 43,
+              "reb": 12,
+              "ast": 5,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Fred VanVleet",
+          "player_id": "1627832",
+          "games": 1,
+          "mean_minutes": 2027,
+          "mean_minutes_str": "33:47",
+          "mean_share": 0.1408,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 17.0,
+          "mean_reb": 2.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:47",
+              "sec": 2027,
+              "pts": 17,
+              "reb": 2,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Kevin Durant",
+          "player_id": "201142",
+          "games": 1,
+          "mean_minutes": 2005,
+          "mean_minutes_str": "33:25",
+          "mean_share": 0.1392,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 22.0,
+          "mean_reb": 3.0,
+          "mean_ast": 6.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:25",
+              "sec": 2005,
+              "pts": 22,
+              "reb": 3,
+              "ast": 6,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Tari Eason",
+          "player_id": "1631106",
+          "games": 1,
+          "mean_minutes": 2000,
+          "mean_minutes_str": "33:20",
+          "mean_share": 0.1389,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 14.0,
+          "mean_reb": 11.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:20",
+              "sec": 2000,
+              "pts": 14,
+              "reb": 11,
+              "ast": 2,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Jabari Smith Jr.",
+          "player_id": "1631095",
+          "games": 1,
+          "mean_minutes": 1443,
+          "mean_minutes_str": "24:03",
+          "mean_share": 0.1002,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 6.0,
+          "mean_reb": 3.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "24:03",
+              "sec": 1443,
+              "pts": 6,
+              "reb": 3,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Reed Sheppard",
+          "player_id": "1642263",
+          "games": 1,
+          "mean_minutes": 1149,
+          "mean_minutes_str": "19:09",
+          "mean_share": 0.0798,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 0.0,
+          "mean_reb": 0.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "19:09",
+              "sec": 1149,
+              "pts": 0,
+              "reb": 0,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Bogdan Bogdanovi\u0107",
+          "player_id": "203992",
+          "games": 1,
+          "mean_minutes": 741,
+          "mean_minutes_str": "12:21",
+          "mean_share": 0.0515,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 11.0,
+          "mean_reb": 1.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "12:21",
+              "sec": 741,
+              "pts": 11,
+              "reb": 1,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 8
+        },
+        {
+          "player": "Oscar Tshiebwe",
+          "player_id": "1631131",
+          "games": 1,
+          "mean_minutes": 357,
+          "mean_minutes_str": "5:57",
+          "mean_share": 0.0248,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 0.0,
+          "mean_reb": 5.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "5:57",
+              "sec": 357,
+              "pts": 0,
+              "reb": 5,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 9
+        }
+      ],
+      "top8": [
+        {
+          "player": "Amen Thompson",
+          "player_id": "1641708",
+          "games": 1,
+          "mean_minutes": 2453,
+          "mean_minutes_str": "40:53",
+          "mean_share": 0.1703,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 12.0,
+          "mean_reb": 10.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "40:53",
+              "sec": 2453,
+              "pts": 12,
+              "reb": 10,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Alperen Sengun",
+          "player_id": "1630578",
+          "games": 1,
+          "mean_minutes": 2225,
+          "mean_minutes_str": "37:05",
+          "mean_share": 0.1545,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 43.0,
+          "mean_reb": 12.0,
+          "mean_ast": 5.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "37:05",
+              "sec": 2225,
+              "pts": 43,
+              "reb": 12,
+              "ast": 5,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Fred VanVleet",
+          "player_id": "1627832",
+          "games": 1,
+          "mean_minutes": 2027,
+          "mean_minutes_str": "33:47",
+          "mean_share": 0.1408,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 17.0,
+          "mean_reb": 2.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:47",
+              "sec": 2027,
+              "pts": 17,
+              "reb": 2,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Kevin Durant",
+          "player_id": "201142",
+          "games": 1,
+          "mean_minutes": 2005,
+          "mean_minutes_str": "33:25",
+          "mean_share": 0.1392,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 22.0,
+          "mean_reb": 3.0,
+          "mean_ast": 6.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:25",
+              "sec": 2005,
+              "pts": 22,
+              "reb": 3,
+              "ast": 6,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Tari Eason",
+          "player_id": "1631106",
+          "games": 1,
+          "mean_minutes": 2000,
+          "mean_minutes_str": "33:20",
+          "mean_share": 0.1389,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 14.0,
+          "mean_reb": 11.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "33:20",
+              "sec": 2000,
+              "pts": 14,
+              "reb": 11,
+              "ast": 2,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Jabari Smith Jr.",
+          "player_id": "1631095",
+          "games": 1,
+          "mean_minutes": 1443,
+          "mean_minutes_str": "24:03",
+          "mean_share": 0.1002,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 6.0,
+          "mean_reb": 3.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "24:03",
+              "sec": 1443,
+              "pts": 6,
+              "reb": 3,
+              "ast": 0,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Reed Sheppard",
+          "player_id": "1642263",
+          "games": 1,
+          "mean_minutes": 1149,
+          "mean_minutes_str": "19:09",
+          "mean_share": 0.0798,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 0.0,
+          "mean_reb": 0.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "19:09",
+              "sec": 1149,
+              "pts": 0,
+              "reb": 0,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Bogdan Bogdanovi\u0107",
+          "player_id": "203992",
+          "games": 1,
+          "mean_minutes": 741,
+          "mean_minutes_str": "12:21",
+          "mean_share": 0.0515,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 11.0,
+          "mean_reb": 1.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600039",
+              "date": "2026-11-13",
+              "opponent": "UTA",
+              "home": true,
+              "min": "12:21",
+              "sec": 741,
+              "pts": 11,
+              "reb": 1,
+              "ast": 3,
+              "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/uta-vs-hou-0022600039/box-score",
+          "rank": 8
+        }
+      ],
+      "top8_share": 0.9752,
+      "players_used": 9
+    },
+    "ORL": {
+      "team": "ORL",
+      "games_captured": 1,
+      "game_ids": [
+        "0022600224"
+      ],
+      "players": [
+        {
+          "player": "Franz Wagner",
+          "player_id": "1630532",
+          "games": 1,
+          "mean_minutes": 2362,
+          "mean_minutes_str": "39:22",
+          "mean_share": 0.164,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 38.0,
+          "mean_reb": 8.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "39:22",
+              "sec": 2362,
+              "pts": 38,
+              "reb": 8,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Anthony Black",
+          "player_id": "1641710",
+          "games": 1,
+          "mean_minutes": 2310,
+          "mean_minutes_str": "38:30",
+          "mean_share": 0.1604,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 22.0,
+          "mean_reb": 7.0,
+          "mean_ast": 8.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "38:30",
+              "sec": 2310,
+              "pts": 22,
+              "reb": 7,
+              "ast": 8,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Desmond Bane",
+          "player_id": "1630217",
+          "games": 1,
+          "mean_minutes": 2058,
+          "mean_minutes_str": "34:18",
+          "mean_share": 0.1429,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 25.0,
+          "mean_reb": 3.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "34:18",
+              "sec": 2058,
+              "pts": 25,
+              "reb": 3,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Wendell Carter Jr.",
+          "player_id": "1628976",
+          "games": 1,
+          "mean_minutes": 1679,
+          "mean_minutes_str": "27:59",
+          "mean_share": 0.1166,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 9.0,
+          "mean_reb": 7.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "27:59",
+              "sec": 1679,
+              "pts": 9,
+              "reb": 7,
+              "ast": 3,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Jevon Carter",
+          "player_id": "1628975",
+          "games": 1,
+          "mean_minutes": 1664,
+          "mean_minutes_str": "27:44",
+          "mean_share": 0.1156,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 11.0,
+          "mean_reb": 3.0,
+          "mean_ast": 4.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "27:44",
+              "sec": 1664,
+              "pts": 11,
+              "reb": 3,
+              "ast": 4,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Goga Bitadze",
+          "player_id": "1629048",
+          "games": 1,
+          "mean_minutes": 1201,
+          "mean_minutes_str": "20:01",
+          "mean_share": 0.0834,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 4.0,
+          "mean_reb": 7.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "20:01",
+              "sec": 1201,
+              "pts": 4,
+              "reb": 7,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Jase Richardson",
+          "player_id": "1642859",
+          "games": 1,
+          "mean_minutes": 1192,
+          "mean_minutes_str": "19:52",
+          "mean_share": 0.0828,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 6.0,
+          "mean_reb": 1.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "19:52",
+              "sec": 1192,
+              "pts": 6,
+              "reb": 1,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Alex Morales",
+          "player_id": "1631457",
+          "games": 1,
+          "mean_minutes": 1052,
+          "mean_minutes_str": "17:32",
+          "mean_share": 0.0731,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 5.0,
+          "mean_reb": 4.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "17:32",
+              "sec": 1052,
+              "pts": 5,
+              "reb": 4,
+              "ast": 3,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 8
+        },
+        {
+          "player": "Nikola Vu\u010devi\u0107",
+          "player_id": "202696",
+          "games": 1,
+          "mean_minutes": 838,
+          "mean_minutes_str": "13:58",
+          "mean_share": 0.0582,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 3.0,
+          "mean_reb": 5.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "13:58",
+              "sec": 838,
+              "pts": 3,
+              "reb": 5,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 9
+        },
+        {
+          "player": "Colin Castleton",
+          "player_id": "1630658",
+          "games": 1,
+          "mean_minutes": 44,
+          "mean_minutes_str": "0:44",
+          "mean_share": 0.0031,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 0.0,
+          "mean_reb": 0.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "0:44",
+              "sec": 44,
+              "pts": 0,
+              "reb": 0,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 10
+        }
+      ],
+      "top8": [
+        {
+          "player": "Franz Wagner",
+          "player_id": "1630532",
+          "games": 1,
+          "mean_minutes": 2362,
+          "mean_minutes_str": "39:22",
+          "mean_share": 0.164,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 38.0,
+          "mean_reb": 8.0,
+          "mean_ast": 1.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "39:22",
+              "sec": 2362,
+              "pts": 38,
+              "reb": 8,
+              "ast": 1,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 1
+        },
+        {
+          "player": "Anthony Black",
+          "player_id": "1641710",
+          "games": 1,
+          "mean_minutes": 2310,
+          "mean_minutes_str": "38:30",
+          "mean_share": 0.1604,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 22.0,
+          "mean_reb": 7.0,
+          "mean_ast": 8.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "38:30",
+              "sec": 2310,
+              "pts": 22,
+              "reb": 7,
+              "ast": 8,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 2
+        },
+        {
+          "player": "Desmond Bane",
+          "player_id": "1630217",
+          "games": 1,
+          "mean_minutes": 2058,
+          "mean_minutes_str": "34:18",
+          "mean_share": 0.1429,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 25.0,
+          "mean_reb": 3.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "34:18",
+              "sec": 2058,
+              "pts": 25,
+              "reb": 3,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 3
+        },
+        {
+          "player": "Wendell Carter Jr.",
+          "player_id": "1628976",
+          "games": 1,
+          "mean_minutes": 1679,
+          "mean_minutes_str": "27:59",
+          "mean_share": 0.1166,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 9.0,
+          "mean_reb": 7.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "27:59",
+              "sec": 1679,
+              "pts": 9,
+              "reb": 7,
+              "ast": 3,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 4
+        },
+        {
+          "player": "Jevon Carter",
+          "player_id": "1628975",
+          "games": 1,
+          "mean_minutes": 1664,
+          "mean_minutes_str": "27:44",
+          "mean_share": 0.1156,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 11.0,
+          "mean_reb": 3.0,
+          "mean_ast": 4.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "27:44",
+              "sec": 1664,
+              "pts": 11,
+              "reb": 3,
+              "ast": 4,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 5
+        },
+        {
+          "player": "Goga Bitadze",
+          "player_id": "1629048",
+          "games": 1,
+          "mean_minutes": 1201,
+          "mean_minutes_str": "20:01",
+          "mean_share": 0.0834,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 4.0,
+          "mean_reb": 7.0,
+          "mean_ast": 0.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "20:01",
+              "sec": 1201,
+              "pts": 4,
+              "reb": 7,
+              "ast": 0,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 6
+        },
+        {
+          "player": "Jase Richardson",
+          "player_id": "1642859",
+          "games": 1,
+          "mean_minutes": 1192,
+          "mean_minutes_str": "19:52",
+          "mean_share": 0.0828,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 6.0,
+          "mean_reb": 1.0,
+          "mean_ast": 2.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "19:52",
+              "sec": 1192,
+              "pts": 6,
+              "reb": 1,
+              "ast": 2,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 7
+        },
+        {
+          "player": "Alex Morales",
+          "player_id": "1631457",
+          "games": 1,
+          "mean_minutes": 1052,
+          "mean_minutes_str": "17:32",
+          "mean_share": 0.0731,
+          "share_low": null,
+          "share_high": null,
+          "mean_pts": 5.0,
+          "mean_reb": 4.0,
+          "mean_ast": 3.0,
+          "logs": [
+            {
+              "game_id": "0022600224",
+              "date": "2026-11-11",
+              "opponent": "UTA",
+              "home": false,
+              "min": "17:32",
+              "sec": 1052,
+              "pts": 5,
+              "reb": 4,
+              "ast": 3,
+              "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score"
+            }
+          ],
+          "source": "https://www.nba.com/game/orl-vs-uta-0022600224/box-score",
+          "rank": 8
+        }
+      ],
+      "top8_share": 0.9388,
+      "players_used": 10
+    }
+  },
+  "redistribution_example": {
+    "team": "UTA",
+    "out": [
+      "Alexander, Trey",
+      "Bufkin, Kobe",
+      "Hayes, Jaxson",
+      "Ingram, Harrison",
+      "Jackson Jr., Jaren",
+      "Markkanen, Lauri",
+      "Nurkic, Jusuf"
+    ],
+    "out_not_in_captured_rotation": [
+      "Alexander, Trey",
+      "Bufkin, Kobe",
+      "Ingram, Harrison",
+      "Jackson Jr., Jaren",
+      "Markkanen, Lauri",
+      "Nurkic, Jusuf"
+    ],
+    "freed_share": 0.0906,
+    "rule": "An absent player's measured minutes share is re-allocated to that club's available teammates in proportion to the shares they were measured at in the captured games. This is a stated modelling assumption (derived), not an official figure: no official source publishes who would have played the missing minutes.",
+    "rows": [
+      {
+        "player": "Keyonte George",
+        "baseline_share": 0.1474,
+        "absorbed_share": 0.0142,
+        "projected_share": 0.1616,
+        "delta_share": 0.0142,
+        "baseline_minutes": "35:22",
+        "baseline_share_pct": 14.7,
+        "projected_minutes": "38:47",
+        "class": "derived"
+      },
+      {
+        "player": "Darryn Peterson",
+        "baseline_share": 0.1392,
+        "absorbed_share": 0.0134,
+        "projected_share": 0.1526,
+        "delta_share": 0.0134,
+        "baseline_minutes": "33:24",
+        "baseline_share_pct": 13.9,
+        "projected_minutes": "36:38",
+        "class": "derived"
+      },
+      {
+        "player": "Ace Bailey",
+        "baseline_share": 0.1367,
+        "absorbed_share": 0.0132,
+        "projected_share": 0.1499,
+        "delta_share": 0.0132,
+        "baseline_minutes": "32:48",
+        "baseline_share_pct": 13.7,
+        "projected_minutes": "35:58",
+        "class": "derived"
+      },
+      {
+        "player": "Brice Sensabaugh",
+        "baseline_share": 0.1034,
+        "absorbed_share": 0.01,
+        "projected_share": 0.1134,
+        "delta_share": 0.01,
+        "baseline_minutes": "24:49",
+        "baseline_share_pct": 10.3,
+        "projected_minutes": "27:13",
+        "class": "derived"
+      },
+      {
+        "player": "Josh Green",
+        "baseline_share": 0.0838,
+        "absorbed_share": 0.0081,
+        "projected_share": 0.0919,
+        "delta_share": 0.0081,
+        "baseline_minutes": "20:07",
+        "baseline_share_pct": 8.4,
+        "projected_minutes": "22:03",
+        "class": "derived"
+      },
+      {
+        "player": "Mo Bamba",
+        "baseline_share": 0.0788,
+        "absorbed_share": 0.0076,
+        "projected_share": 0.0864,
+        "delta_share": 0.0076,
+        "baseline_minutes": "18:55",
+        "baseline_share_pct": 7.9,
+        "projected_minutes": "20:44",
+        "class": "derived"
+      },
+      {
+        "player": "Josh Okogie",
+        "baseline_share": 0.0769,
+        "absorbed_share": 0.0074,
+        "projected_share": 0.0843,
+        "delta_share": 0.0074,
+        "baseline_minutes": "18:28",
+        "baseline_share_pct": 7.7,
+        "projected_minutes": "20:14",
+        "class": "derived"
+      },
+      {
+        "player": "Isaiah Collier",
+        "baseline_share": 0.0575,
+        "absorbed_share": 0.0055,
+        "projected_share": 0.063,
+        "delta_share": 0.0055,
+        "baseline_minutes": "13:48",
+        "baseline_share_pct": 5.8,
+        "projected_minutes": "15:08",
+        "class": "derived"
+      },
+      {
+        "player": "Svi Mykhailiuk",
+        "baseline_share": 0.0553,
+        "absorbed_share": 0.0053,
+        "projected_share": 0.0606,
+        "delta_share": 0.0053,
+        "baseline_minutes": "13:16",
+        "baseline_share_pct": 5.5,
+        "projected_minutes": "14:33",
+        "class": "derived"
+      },
+      {
+        "player": "Tony Bradley",
+        "baseline_share": 0.0519,
+        "absorbed_share": 0.005,
+        "projected_share": 0.0569,
+        "delta_share": 0.005,
+        "baseline_minutes": "12:28",
+        "baseline_share_pct": 5.2,
+        "projected_minutes": "13:39",
+        "class": "derived"
+      },
+      {
+        "player": "Kyle Filipowski",
+        "baseline_share": 0.0088,
+        "absorbed_share": 0.0008,
+        "projected_share": 0.0096,
+        "delta_share": 0.0008,
+        "baseline_minutes": "2:07",
+        "baseline_share_pct": 0.9,
+        "projected_minutes": "2:19",
+        "class": "derived"
+      }
+    ],
+    "class": "derived"
+  },
+  "rotation_availability": {
+    "rows": [
+      {
+        "team": "ATL",
+        "team_name": "Atlanta Hawks",
+        "n_designations": 7,
+        "Out": 5,
+        "Doubtful": 1,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 1,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "BOS",
+        "team_name": "Boston Celtics",
+        "n_designations": 4,
+        "Out": 0,
+        "Doubtful": 0,
+        "Questionable": 4,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "CHA",
+        "team_name": "Charlotte Hornets",
+        "n_designations": 5,
+        "Out": 5,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "HOU",
+        "team_name": "Houston Rockets",
+        "n_designations": 6,
+        "Out": 5,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 1,
+        "Available": 0,
+        "minutes_share_at_risk": 0.1408,
+        "minutes_at_risk_per_game": "33:48",
+        "games_of_rotation_captured": 1,
+        "note": "1 of the 5 ruled-out players have a measured minutes share; the other 4 did not appear in a captured rotation, so their minutes are unknown and are NOT counted in the figure below",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "IND",
+        "team_name": "Indiana Pacers",
+        "n_designations": 6,
+        "Out": 3,
+        "Doubtful": 0,
+        "Questionable": 2,
+        "Probable": 1,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "LAC",
+        "team_name": "LA Clippers",
+        "n_designations": 4,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "LAL",
+        "team_name": "Los Angeles Lakers",
+        "n_designations": 6,
+        "Out": 2,
+        "Doubtful": 0,
+        "Questionable": 3,
+        "Probable": 0,
+        "Available": 1,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "MIL",
+        "team_name": "Milwaukee Bucks",
+        "n_designations": 5,
+        "Out": 5,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "OKC",
+        "team_name": "Oklahoma City Thunder",
+        "n_designations": 6,
+        "Out": 5,
+        "Doubtful": 0,
+        "Questionable": 1,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "PHI",
+        "team_name": "Philadelphia 76ers",
+        "n_designations": 4,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "PHX",
+        "team_name": "Phoenix Suns",
+        "n_designations": 1,
+        "Out": 1,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "SAC",
+        "team_name": "Sacramento Kings",
+        "n_designations": 6,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 2,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "SAS",
+        "team_name": "San Antonio Spurs",
+        "n_designations": 4,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "TOR",
+        "team_name": "Toronto Raptors",
+        "n_designations": 5,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 1,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "UTA",
+        "team_name": "Utah Jazz",
+        "n_designations": 7,
+        "Out": 7,
+        "Doubtful": 0,
+        "Questionable": 0,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": 0.0906,
+        "minutes_at_risk_per_game": "21:45",
+        "games_of_rotation_captured": 2,
+        "note": "1 of the 7 ruled-out players have a measured minutes share; the other 6 did not appear in a captured rotation, so their minutes are unknown and are NOT counted in the figure below",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      },
+      {
+        "team": "WAS",
+        "team_name": "Washington Wizards",
+        "n_designations": 8,
+        "Out": 4,
+        "Doubtful": 0,
+        "Questionable": 4,
+        "Probable": 0,
+        "Available": 0,
+        "minutes_share_at_risk": null,
+        "minutes_at_risk_per_game": null,
+        "games_of_rotation_captured": 0,
+        "note": "no captured box score for this club, so its minutes shares are unknown and no minutes-at-risk figure can be printed",
+        "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
+      }
+    ],
+    "teams_on_report": 16,
+    "teams_with_rotation_captured": 2
+  },
+  "coverage": {
+    "games_captured": 2,
+    "games_in_results_feed": 188,
+    "player_rows": 70,
+    "clubs_with_rotation": [
+      "HOU",
+      "ORL",
+      "UTA"
+    ],
+    "clubs_missing_rotation": [
+      "ATL",
+      "BKN",
+      "BOS",
+      "CHA",
+      "CHI",
+      "CLE",
+      "DAL",
+      "DEN",
+      "DET",
+      "GSW",
+      "IND",
+      "LAC",
+      "LAL",
+      "MEM",
+      "MIA",
+      "MIL",
+      "MIN",
+      "NOP",
+      "NYK",
+      "OKC",
+      "PHI",
+      "PHX",
+      "POR",
+      "SAC",
+      "SAS",
+      "TOR",
+      "WAS"
+    ],
+    "injured_players_total": 84,
+    "injured_players_with_a_captured_log": 2,
+    "injured_players_covered": [
+      "HOU VanVleet, Fred",
+      "UTA Hayes, Jaxson"
+    ],
+    "injured_players_not_covered": 82,
+    "why_partial": "2 of the 188 official finals in the results feed. Only these two were read, so every row is sourced but the sample is small; nba2/v2/rotation.py prints the coverage it actually has and leaves uncounted cells blank."
+  },
+  "rule": "An absent player's measured minutes share is re-allocated to that club's available teammates in proportion to the shares they were measured at in the captured games. This is a stated modelling assumption (derived), not an official figure: no official source publishes who would have played the missing minutes."
+}

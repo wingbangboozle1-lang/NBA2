@@ -15,7 +15,8 @@
   <nav>
 <a href="index.html">Dashboard</a>
 <a href="executive-summary.html">Executive summary</a>
-<a href="picks.html">Picks &amp; slate</a>
+<a href="projection.html">Projections (publishable)</a>
+<a href="picks.html">Bet surface (gated)</a>
 <a href="lines.html">Originated lines</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
@@ -325,6 +326,54 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>The published pick window now reaches 2026-11-17, which is the build date plus three days: the earlier build covered 11/13 to 11/16, so it published one already-played game date and omitted the last day of the window. The nine 2026-11-13 games are kept as day-before context and graded against the official finals.</td>
 <td>The window is read from the committed slate snapshot, so it cannot drift from the brief&#x27;s three-day limit.</td>
 <td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-035">
+<td><span class="badge b-info">F-035</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Data capture</td>
+<td>Per-player game logs are captured for 2 of the 188 official finals. The official box score is one HTML page per game and it is the only per-player source reachable here (the CDN box-score JSON returns HTTP 500 and stats.nba.com player pages render season aggregates only), so each page is read and transcribed by hand. The two captured games are the most recent involving the clubs with the largest injured lists (UTA 7 designations, HOU 6); UTA appears in both, so its minutes shares rest on two observations. Every other club&#x27;s minutes cell is blank with this reason rather than estimated.</td>
+<td>The captured rows reconcile exactly: player minutes sum to 240:00 and player points to the official team score on all four team-tables. Coverage is printed on the Injuries and Projections pages.</td>
+<td><a href="https://www.nba.com/game/uta-vs-hou-0022600039/box-score" rel="noopener" target="_blank">nba.com/game/uta-vs-hou-0022600039/box-score</a></td>
+</tr>
+<tr id="F-036">
+<td><span class="badge b-info">F-036</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Sources</td>
+<td>Arena coordinates are third-party, not official. The arena name and city every row carries were printed by the official schedule, but no official endpoint reachable here publishes arena geocodes, so the distance column uses city centroids from a public dataset (US: github.com/kelvins/US-Cities-Database; Toronto: github.com/dr5hn/countries-states-cities-database). A distance computed from them is a city-to-city great-circle, accurate to roughly the size of a metro area. Eight clubs have no row at all because they do not host inside the captured window, so no official page read here prints their arena; those travel cells are blank with that reason. Rest, back-to-back and 3-in-4 are fully official — they come from the schedule and the official finals.</td>
+<td>Every row of data/arenas.csv carries both links, and the coordinate column is labelled third_party so the provenance gate flags it.</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-17" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-17</a></td>
+</tr>
+<tr id="F-037">
+<td><span class="badge b-warn">F-037</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data capture</td>
+<td>Quarter scores are 0 of 188 captured. The official per-game results feed carries date, teams, final score and overtime on every one of the 188 rows, and each row is verified on two official surfaces, but the quarterly breakdown is only on the CDN box-score JSON, which returns HTTP 500 from this environment. The capture path is wired in the refresh job; until it lands the quarter column is empty with this reason and no game is settled on anything but the verified final.</td>
+<td>The results feed reports its own coverage (0/188) rather than implying the quarters were read.</td>
+<td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
+</tr>
+<tr id="F-038">
+<td><span class="badge b-info">F-038</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Model</td>
+<td>No market-anchored prior is applied. The blend of the model line with the closing line is implemented (nba2/v2/market.py) and wired into the build, but inert: with no closing price anywhere in the repository the market&#x27;s out-of-sample log-loss cannot be measured, so the blend weight is unmeasurable rather than zero. Publishing a weight anyway would be inventing it. The model&#x27;s own measured out-of-sample log-loss is published beside it so the arithmetic can be finished the moment a price feed exists.</td>
+<td>The projection surface states that the published number is the unblended model output.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-039">
+<td><span class="badge b-warn">F-039</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Cross-check</td>
+<td>Cross-check CC-DER-12 fails: the availability-coverage table on the site is generated by the v1 pipeline from a hard-coded list of three injury snapshots (11/13 16:15, 11/13 19:30, 11/14 05:00) and does not include the 11/15 06:15 release committed today, so it still counts 16 team-slots on 2026-11-16 as &#x27;no row in any release&#x27; when the newest PDF prints them as NOT YET SUBMITTED. The recompute unions every committed snapshot and disagrees on three cells.</td>
+<td>Logged as a cross-session request in COORDINATION.md: the fix belongs in nba2/pipeline/build_site_data.py, which this session&#x27;s claim does not cover. The published cell is the older release&#x27;s truth, not a guess, and it is flagged rather than silently changed.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-040">
+<td><span class="badge b-info">F-040</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Verification</td>
+<td>Two staleness defects found and repaired in this session: the backtest report at backtest/data/report.json claimed 183 games / 24 dates while 188 / 25 were committed (regenerated with the module&#x27;s own builder, now 188 / 25 through 2026-11-14), and the &#x27;Game page&#x27; source link on the picks page was built from the row&#x27;s date instead of its game id, producing URLs like /game/ind-vs-phi-2026-11-15 that cannot resolve. Both are repaired; the entries stay on this page because a repaired irregularity is still part of the audit trail.</td>
+<td>The picks page now links /game/&lt;away&gt;-vs-&lt;home&gt;-&lt;game_id&gt;, which the schedule snapshot publishes for every game in the window.</td>
+<td><a href="https://www.nba.com/game/ind-vs-phi-0022600236" rel="noopener" target="_blank">nba.com/game/ind-vs-phi-0022600236</a></td>
 </tr>
 <tr id="F-036">
 <td><span class="badge b-info">F-036</span></td>
