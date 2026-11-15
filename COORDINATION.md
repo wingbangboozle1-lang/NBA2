@@ -3167,3 +3167,62 @@ Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables*
 2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
 same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
 untouched and 2/2 ledgers verifying.
+
+---
+
+## Session `arena/e675ac3d-nba2` — CLAIM (2026-11-15 UTC)
+
+Branch: `arena/e675ac3d-nba2`, based on `main` @ `fc88652985915ca5a60fe326225af40f99199887`
+(PR #69 merge). Session ID: `arena/e675ac3d-nba2`.
+
+**Claimed file scope (nothing outside this list is edited):**
+
+| Path | Why |
+|---|---|
+| `nba2/v3/**` (new package) | fresh 2026-11-15 pipeline: snapshot, model, refresh gates, builder |
+| `data/v3/**` (new) | this session's committed official snapshots + derived output |
+| `data/raw/**` — **new files only** | per-date official finals with quarter scores; injury PDF transcripts; no existing file is rewritten |
+| `audit/2026-11-15-e675ac3d/**` (new) | capture scripts, raw page text, verification transcripts |
+| `site/**` — **new page names only** (`slate.html`, `rotation.html`, `travel.html`, `results.html`, `ledger.html`, `projections.html`) + an idempotent nav-link injection into the generated pages | publishing surface; no existing `site/` file's *content* is authored by this session |
+| `.github/workflows/pages.yml`, `.github/workflows/publish-parity.yml` | add `python -m nba2.v3` to the rebuild step so the parity diff still holds |
+| `COORDINATION.md` (append-only), `README.md` (append-only), `analysis/session-e675ac3d-*.md` (new) | records |
+
+**Explicitly NOT touched (owned by other sessions / open PRs):** `nba2/v2/**`, `nba2/picks.py`,
+`nba2/model.py`, `nba2/config.py`, `nba2/provenance.py`, `nba2/pipeline/**`, `nba2/tests/**`,
+`pages/**`, root `*.html`, `data/site.json`, `data/v2/**`, `requirements/QUESTIONS.json`,
+`suggestions/SUGGESTIONS.json`, `tools/crosscheck_site.py`, `data/raw/ledger/**` (sealed — read only),
+`.github/workflows/refresh.yml`, `backtest/**`.
+
+### Takeover notice (logged per protocol)
+
+Open PRs **#55** (`nba2/model.py`, `nba2/picks.py`), **#57** (`site/decision-queue.html`,
+`site/executive-summary.html`, `site/live-verification.html`, `nba2/v2/live.py`, `data/site.json`,
+`pages/**`, `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json`, `tools/crosscheck_site.py`),
+**#59** (`COORDINATION.md`) and **#68** (`nba2/v2/build.py`, `nba2/v2/content.py`, `nba2/v2/live.py`,
+`data/v2/content.json`, `data/v2/verification.json`, `site/index.html`, `site/picks.html`,
+`site/suggestions.html`, `site/data/*`, `.github/workflows/refresh.yml`) carry claims whose last
+commit is **2026-11-14**, i.e. older than the board's 60-minute handoff threshold at the time this
+session started (2026-11-15). This session therefore records a **takeover of the integration role
+only** (adding new pages to the published tree and wiring the rebuild step). It does **not** edit any
+file those PRs name as their own, and if any of them merges before this one, the rebase is expected
+to be clean on every file except the append-only board. Nothing from those branches is discarded.
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| E-01 | Board claim + push | in progress | `arena/e675ac3d-nba2` | `COORDINATION.md` |
+| E-02 | Live official capture: rolling slate 2026-11-15→11-18 | unclaimed→in progress | `arena/e675ac3d-nba2` | `data/v3/schedule_*.json`, `audit/2026-11-15-e675ac3d/**` |
+| E-03 | Live official capture: standings + 3 team-stat pages | in progress | `arena/e675ac3d-nba2` | `data/v3/standings.json`, `data/v3/team_stats.json` |
+| E-04 | Injury PDF capture + storage + consecutive-report diff | in progress | `arena/e675ac3d-nba2` | `data/v3/injuries/**`, `data/v3/injury_diffs.json` |
+| E-05 | Per-game result feed: date, teams, final score, **quarter scores** | in progress | `arena/e675ac3d-nba2` | `data/v3/results/**` |
+| E-06 | Arena-coordinate table → travel distance (sourced) | in progress | `arena/e675ac3d-nba2` | `data/v3/arenas.json` |
+| E-07 | v3 model: two estimators, disagreement headline, HCA pinned to home-win rate | in progress | `arena/e675ac3d-nba2` | `nba2/v3/model.py` |
+| E-08 | Luck z-score per team + refuse-to-publish rule | in progress | `arena/e675ac3d-nba2` | `nba2/v3/luck.py` |
+| E-09 | Minutes redistribution (top-8 shares + replacement shares) | in progress | `arena/e675ac3d-nba2` | `nba2/v3/rotation.py` |
+| E-10 | Possessions × PPP totals; rest/B2B/3-in-4; rotation availability column | in progress | `arena/e675ac3d-nba2` | `nba2/v3/model.py`, `nba2/v3/flow.py` |
+| E-11 | Parlay pricing with measured ρ + naive product printed | in progress | `arena/e675ac3d-nba2` | `nba2/v3/parlay.py` |
+| E-12 | Tamper-evident ledger + per-strategy pre-registration freeze | in progress | `arena/e675ac3d-nba2` | `nba2/v3/ledger.py`, `data/v3/prereg/**` |
+| E-13 | projection / bet surface split | in progress | `arena/e675ac3d-nba2` | `nba2/v3/build.py` |
+| E-14 | Freshness + provenance gates (rebuild only if they pass) | in progress | `arena/e675ac3d-nba2` | `nba2/v3/gates.py` |
+| E-15 | New site pages + nav wiring; every row sourced | in progress | `arena/e675ac3d-nba2` | `site/*.html` (new names) |
+| E-16 | Repo review line by line, flag irregularities | in progress | `arena/e675ac3d-nba2` | `analysis/session-e675ac3d-repo-review.md` |
+| E-17 | PR → merge → Pages deploy confirmed → record | unclaimed→in progress | `arena/e675ac3d-nba2` | `COORDINATION.md` |
