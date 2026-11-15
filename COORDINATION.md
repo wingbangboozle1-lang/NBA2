@@ -3167,3 +3167,21 @@ Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables*
 2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
 same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
 untouched and 2/2 ledgers verifying.
+
+---
+
+## Session `arena/04a61ac0-nba2` — CLAIM (2026-11-15 11:30 UTC, branch `arena/04a61ac0-nba2`, base `fc88652` = `main` @ PR #69 merge)
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| O-01 | Board claim + push before any edit | in progress (this entry) | `arena/04a61ac0-nba2` | `COORDINATION.md` (append-only) | this commit |
+| O-02 | Live official re-capture for the 2026-11-15 rolling slate: standings, schedule (11/15→11/17), the three official team-stat pages, the newest injury release + its predecessor, and the 2026-11-14 finals with quarter scores | in progress | `arena/04a61ac0-nba2` | `data/raw/**` (new dated snapshots, append-only), `audit/2026-11-15-04a61ac0/**` | every row fetched from nba.com / ak-static.cms.nba.com in this session, one URL per row; unreachable → blank + flag |
+| O-03 | Official per-game result feed: one row per game (date, teams, final, quarter scores), records rebuilt from it, settle only on verified finals | in progress | `arena/04a61ac0-nba2` | `nba2/v2/results.py` (new), `data/v2/results.json` (new) | reconstruction identity check: ΣW = ΣL = games, per-team W-L vs nba.com/standings |
+| O-04 | Rolling-slate refresh orchestrator with freshness + provenance gates, rebuild only when both pass | in progress | `arena/04a61ac0-nba2` | `nba2/v2/refresh.py` (new), `data/v2/refresh_state.json` (new), `nba2/v2/test_refresh.py` (new) | gates are executed, not narrated; a failing gate aborts the rebuild |
+| O-05 | Wire the refresh into the published build: 3-day slate priced from the 11/15 capture, disagreement as headline, rotation-availability column, injury banner stamps, results-feed page, projection/bet surface split | in progress | `arena/04a61ac0-nba2` | `nba2/v2/build.py`, `nba2/v2/report.py`, `nba2/v2/live.py`, regenerated `data/v2/**`, `site/**` | `python -m nba2.v2` then `python -m nba2.v2.check` must be 0/0 |
+| O-06 | Extend the scheduled job so the nightly runner refreshes schedule/standings/team-stats/injuries for the *next* rolling slate, then rebuilds behind the same gates | in progress | `arena/04a61ac0-nba2` | `.github/workflows/refresh.yml` | workflow runs the same gate code; a failed gate commits nothing |
+| O-07 | Registers: requirement statuses re-scored against the new artefacts, questions/suggestions/flags appended, executive summary refreshed | in progress | `arena/04a61ac0-nba2` | `requirements/*.json`, `nba2/v2/content.py`, `analysis/session-04a61ac0-*.md` | every new claim carries a source link or a blank-with-reason |
+| O-08 | PR → merge → Pages confirmation | pending | `arena/04a61ac0-nba2` | — | `gh pr create` / `gh pr merge --squash`, Pages API + live probe |
+
+**Deliberate non-overlap:** `nba2/pipeline/**` (v1 site), `nba2/models/**`, `backtest/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `pages/**`, root `*.html`, `archive/**` are **not** touched by this session.
+`site/**`, `data/v2/**` and `nba2/v2/**` are regenerated/edited only here; the registers are appended to, never rewritten — new ids only.
