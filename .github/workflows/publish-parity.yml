@@ -47,6 +47,7 @@ jobs:
           python -m nba2.pipeline.build_site
           python -m backtest.engine.build
           python -m nba2.v2
+          python -m nba2.v3
 
       - name: The published tree (site/) must equal a rebuild
         run: |
@@ -91,6 +92,8 @@ jobs:
       - name: Provenance — every row sourced, every blank explained, no broken links
         run: |
           python -m nba2.v2.check
+          python -m nba2.v3.check
+          python -m unittest discover -s nba2/v3 -t . -p 'test_*.py'
           python -m nba2.pipeline.lint
           python3 tools/check_links_all.py
 
