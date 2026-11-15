@@ -3167,3 +3167,56 @@ Post-merge state, all re-run to a fixed point: v1 LINT **1 423 rows / 50 tables*
 2 info** (including the cross-session V16 agreement with `arena/766d0269`'s independent capture of the
 same 1:30 PM PDF); unit suites **70 + 98 + 49 OK**; `run_gates.sh` exit **0**, all sealed artefacts
 untouched and 2/2 ledgers verifying.
+
+---
+
+## Session `arena/d09f8d1e-nba2` — CLAIM (2026-11-15 ~11:40 UTC, branch `arena/d09f8d1e-nba2`, base `fc88652` = `main` @ PR #69 merge)
+
+Session ID: `arena/d09f8d1e-nba2`. Claim pushed before any edit, per the board rules.
+Baseline re-read on this tree before claiming: v1 unit suite **70 OK**, v2 unit suite **98 OK**,
+v2 build + check **0 structural / 0 semantic**, v1 lint **1423 rows / 50 tables OK**,
+`tools/crosscheck_site.py` **97 checks: 90 pass, 0 fail, 7 info**. `main` had not moved since
+the base (`fc88652`).
+
+**Why this claim:** the repo is green locally but the *scheduled* half of the brief is red —
+`Nightly ingest + settlement` failed on both runs since the last merge (F-043), the crosscheck
+gate inside that workflow can never fire because it greps `'^\[fail\]'` while the checker
+prints `[FAIL]` (F-050, change request from `arena/bc867bff-nba2`), and the sealed ledgers have
+settled **0 of 22 / 0 of 27** games because the 2026-11-14 finals were never captured. Today is
+2026-11-15; the pick window (11/14→11/17) is mid-flight.
+
+**File scope claimed (this session):**
+* `COORDINATION.md` (this section + completion record, append-only)
+* `.github/workflows/refresh.yml` (F-050 grep case + diagnostics), `.github/workflows/probe.yml`
+  (new, executed evidence for F-043), `.github/workflows/ci.yml` only if the crosscheck job is
+  added there
+* `nba2/pipeline/refresh.py` (+ `nba2/tests/**` only if a defect fix needs a regression test)
+* `data/raw/**` (new dated snapshots only — existing snapshots and `data/raw/ledger/**` are
+  never edited), `data/settlement.json`, `data/site.json`, `index.html`, `pages/**` (generator
+  output), `site/**`, `data/v2/**` (generator output), `nba2/v2/content.py` (flag/suggestion
+  register updates resolving F-043/F-050), `README.md` count sync only
+* stale open PRs (#50, #55, #57, #59, #68): reviewed, then closed-with-attribution or merged as
+  the diff warrants, each decision logged here (handoff rule: >60 min idle with no commits)
+
+**Not claimed / not edited (owned elsewhere):** `docs/**`, `dashboard/**`, `originated/**`,
+`verified/**`, `archive/**`, `backtest/**`, `nba2/models/**`, `nba2/v2` generator files other
+than `content.py`, `nba2/config.py`, `nba2/provenance.py`, `data/raw/ledger/**` (sealed,
+read-only), root `*.html` other than generator output.
+
+**Task board — `arena/d09f8d1e-nba2` (D9-01…D9-09)**
+
+| # | Task | Status |
+|---|---|---|
+| D9-01 | Board claim + push before any edit | in progress (this entry) |
+| D9-02 | Baseline checker run recorded above | done (evidence in this entry) |
+| D9-03 | F-043 diagnosis with executed evidence: probe every official finals/injury endpoint from a GitHub-hosted runner, capture HTTP status + bytes + content hash per URL | claimed |
+| D9-04 | F-050 fix: refresh.yml crosscheck gate greps the wrong case; fix and prove the gate can fail | claimed |
+| D9-05 | Settlement catch-up: capture official finals for arrived window dates (2026-11-14), settle both sealed ledgers, rebuild — only if the fetch is official and the gates pass | claimed |
+| D9-06 | Rolling-slate freshness: refresh schedule/standings/injury artifacts for 2026-11-15 if the official sources are reachable from the runner; otherwise publish the failure as evidence, never a guess | claimed |
+| D9-07 | Stale open PRs #50/#55/#57/#59/#68: diff vs main, take over per the >60-min handoff rule, close superseded ones with attribution, log each decision | claimed |
+| D9-08 | Full gate chain re-run (all suites, lint, crosscheck, both trees, link check, sealed-artifact proof) | claimed |
+| D9-09 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + run IDs here | claimed |
+
+**Rules held:** nothing is marked verified without an official source or an executed command
+logged here; unreachable values stay blank and flagged; sealed ledgers are never rewritten;
+flagged items do not block the merge.
