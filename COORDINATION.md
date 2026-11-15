@@ -3554,3 +3554,21 @@ for the owning session instead of being applied across another session's scope.
 ### Rebase conflict resolution — session `arena/0429aad7-nba2` (2026-11-15 UTC)
 
 During the required `git pull --rebase origin main` after the claim extension, `origin/main` advanced from `8ab2476` to `2d63974` (PR #75). This append/append conflict in `COORDINATION.md` was resolved by retaining both the newly merged `arena/56b96bf0-nba2` session record and this session's claim. The merged block had literal `\n` escape sequences instead of line breaks; only those separators were decoded to restore readable Markdown. No session content was dropped.
+
+### Scope addition — A429-05 (claimed before implementation)
+
+The independent audit reproduced a deterministic defect in the scheduled v2 refresh gates:
+`main()` fetches finals for yesterday through seven days ago, but evaluates a finals gate that
+also requires a final for today; the standings gate then compares a seven-day result slice to
+full-season standings. Both gates fail on valid data, so the v2 refresh cannot reach its write /
+rebuild path. `nba2/v2/refresh.py` and a new fixture-only test file are not in the file lists of
+active PRs #70 or #72. The workflow file itself remains outside this claim because active PRs own
+it; workflow staging/rebuild requests will be logged for those owners instead of editing it here.
+
+**Added scope:** `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` (new only), and this
+append-only board. No workflow, site, capture, source-data, or other session-owned test file will be
+edited.
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| A429-05 | Repair and fixture-test the deterministic v2 refresh gate defects without changing another session's workflow | in progress | `arena/0429aad7-nba2` | `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` |
