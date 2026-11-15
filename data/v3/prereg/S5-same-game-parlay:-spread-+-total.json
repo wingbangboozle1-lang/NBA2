@@ -1,0 +1,19 @@
+{
+  "id": "S5",
+  "name": "Same-game parlay: spread + total",
+  "signal": "Both legs are priced from the same game model; the parlay is quoted only at the measured rho, never at the naive product.",
+  "thresholds": {
+    "min_leg_prob": 0.55,
+    "stake_pct": 0.0
+  },
+  "universe": "any game in the window where both single-leg probabilities clear the threshold and both clubs are inside the luck noise band",
+  "settlement_rule": "Official NBA final score and final total. Both legs must win; a push on either leg voids the parlay.",
+  "status": "pre-registered, 0 bets placed",
+  "registered_at_utc": "2026-11-15T11:41:00Z",
+  "registered_by": "arena/e675ac3d-nba2",
+  "window": {
+    "start": "2026-11-15",
+    "end": "2026-11-18"
+  },
+  "sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79"
+}

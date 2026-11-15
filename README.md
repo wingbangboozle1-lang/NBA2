@@ -382,3 +382,56 @@ two dashboards both reach a reader. Probing the live site disproved it — `/NBA
 `site/` artefact) is published; the v1 tree is unreachable debt that CI still rebuilds (F-027, corrected). Two
 irregularities in another session's files — a spread-sign inversion in the S2 selections (F-025) and that unreachable
 tree (F-027) — are **published, not silently fixed**.
+
+---
+
+## v3 — the 2026-11-15 rolling slate (session `arena/e675ac3d-nba2`)
+
+`site/` now also carries a **v3** section, built by `python -m nba2.v3` from a snapshot
+captured live from official pages on **2026-11-15**. It publishes the window
+**2026-11-15 → 2026-11-18** (34 games, T+0 to T+3) and adds the pages below.
+
+```bash
+python3 -m nba2.v3            # rebuild the v3 pages into site/  (7 pages)
+python3 -m nba2.v3.check      # every row sourced, every blank explained, numbers re-derived
+python3 -m nba2.v3.official   # the transcription's own arithmetic selftest
+python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 33 tests
+```
+
+| Page | What it shows |
+|---|---|
+| Slate & disagreement | every game with **E1** (efficiency) and **E2** (Pythagorean/log5) printed separately and their **disagreement as the headline**, the blend underneath |
+| Projection surface | possessions × points-per-possession totals, rotation availability; the **bet surface is separate and empty** because there is no market price |
+| Rotation & minutes | official Out/Doubtful/Questionable counts per club, plus the minutes-redistribution arithmetic (top-8 shares, replacement shares) |
+| Rest & travel | rest days, back-to-backs and 3-in-4 from official dates; travel distance blank (no official coordinates) |
+| Result feed | one row per game: date, teams, final score, **quarter scores**; settlement stamp |
+| Sealed ledger | sha256 over every published pick, hashed before tip, with the per-strategy pre-registration files |
+| v3 verification | sources read, cross-checks, luck z-scores, measured rho, gates, flags |
+
+### The four numbers that matter
+
+| Measure | Value | How |
+|---|---|---|
+| Home-win rate | **99/187 = 0.5294** | official finals, neutral-site games excluded |
+| Home-court advantage | **1.248 pts** | **pinned**: h = sd(home margin) × Φ⁻¹(home win rate), sd = 16.914 |
+| rho(margin, total) | **−0.0209**, 95% CI [−0.164, +0.123] | n = 187 official finals |
+| Luck band | **|z| ≤ 2.0** | Pythagorean expected wins vs actual, per club |
+
+HCA is pinned rather than fitted, so it is the measured home-win rate restated in
+points. This disagrees with the v2 page's fitted 1.53; the two answer different
+questions and both are published — see the v3 verification page.
+
+### What is blank, and why
+
+Travel distance (no official arena coordinates), rotation minutes shares (the official
+players page *is* reachable — 469 rows — but was not captured in this session),
+quarter scores for four of the five 11/14 finals, every market price, and every stake
+(held at 0.00%). Each blank carries a flag id and a source to check; none is estimated.
+
+### Flagged for this session
+
+The published v2 tree is **one day stale**: its 30 club records sum to 183 wins while
+today's official standings sum to 188, and the ten clubs that differ are exactly the
+ten that played on 11/14. `nba2/v2/official.py` is owned by open PRs #57 and #68, so
+it is flagged rather than edited. Full list:
+[`analysis/session-e675ac3d-repo-review.md`](analysis/session-e675ac3d-repo-review.md)

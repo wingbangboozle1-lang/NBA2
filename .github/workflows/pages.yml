@@ -29,6 +29,15 @@ jobs:
           python -m nba2.v2
           python -m nba2.v2.check
 
+      - name: Rebuild the v3 rolling-slate pages
+        # The v3 pages are written into the same published tree and v3 re-applies its
+        # navigation links to the v2 pages, so it has to run after v2 and before the
+        # parity diff below, or the diff reports v3's own contribution as drift.
+        run: |
+          python -m nba2.v3
+          python -m nba2.v3.check
+          python -m unittest discover -s nba2/v3 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2
