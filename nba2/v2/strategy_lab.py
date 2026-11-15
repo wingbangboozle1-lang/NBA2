@@ -718,6 +718,65 @@ def holdout_test(preds: list[Pred]) -> dict:
 
 
 # --------------------------------------------------------------------------- luck
+LUCK_BAND_Z = 1.96          # |z| <= 1.96 is the 95% noise band for a team's win total
+LEAN_SHARE_BAR = 0.50       # a strategy may not lean on out-of-band teams for most of its bets
+LEAN_TEAM_BAR = 0.25        # ...nor on any single out-of-band team for more than a quarter
+
+_LUCK_CACHE: dict[str, float] | None = None
+
+
+def luck_band() -> dict[str, float]:
+    """Per-team luck z-score: wins minus the wins its point differential implied.
+
+    A club whose win total sits far from what its scoring differential implies is a club
+    whose record is, at least in part, a coin-flip artefact. Betting a strategy that leans
+    on such a club is betting on that artefact reverberating, which is not a signal. The
+    z-score is computed in the model module from the official standings against the official
+    point differential, so it does not depend on anything this module fitted.
+    """
+    global _LUCK_CACHE
+    if _LUCK_CACHE is None:
+        from . import model as M            # local: the model owns the calibration
+        teams, _cal = M.build_teams()
+        _LUCK_CACHE = {tri: teams[tri].luck_z for tri in teams}
+    return _LUCK_CACHE
+
+
+def luck_exposure(bets: list) -> dict:
+    """How much of a strategy's record leans on teams outside the luck noise band."""
+    z = luck_band()
+    out_band = {t for t, v in z.items() if abs(v) > LUCK_BAND_Z}
+    n = len(bets)
+    leans, by_team = 0, {}
+    for b in bets:
+        tri = str(b.label).split()[0] if b.label else ""
+        if tri in out_band:
+            leans += 1
+            by_team[tri] = by_team.get(tri, 0) + 1
+    share = round(leans / n, 4) if n else 0.0
+    worst_team, worst_share = (None, 0.0)
+    if by_team:
+        worst_team = max(by_team, key=by_team.get)
+        worst_share = round(by_team[worst_team] / n, 4)
+    refused = share > LEAN_SHARE_BAR or worst_share > LEAN_TEAM_BAR
+    return {
+        "n_bets": n,
+        "teams_outside_band": sorted(out_band),
+        "n_outside_band": len(out_band),
+        "bets_leaning_outside": leans,
+        "share_leaning_outside": share,
+        "worst_team": worst_team,
+        "worst_team_z": round(z.get(worst_team, 0.0), 2) if worst_team else None,
+        "worst_team_share": worst_share,
+        "band": f"|z| <= {LUCK_BAND_Z}",
+        "rule": (f"REFUSED if more than {LEAN_SHARE_BAR:.0%} of bets lean on a team outside "
+                 f"the band, or if one such team carries more than {LEAN_TEAM_BAR:.0%} of them"),
+        "publishable": not refused,
+        "verdict": ("PUBLISHABLE" if not refused else
+                    "REFUSED — leans on a team outside the luck noise band"),
+    }
+
+
 def luck_report(strategies: list[Strategy]) -> dict:
     """Separate what a strategy earned from what a coin flip would have given it."""
     rows = []
@@ -759,6 +818,7 @@ def luck_report(strategies: list[Strategy]) -> dict:
             "mean_stated_probability": sc["mean_p"],
             "calibration_gap": sc["calibration_gap"],
             "verdict": verdict,
+            "luck_exposure": luck_exposure(s.bets),
         })
     return {"rows": rows, "seed": SEED}
 
@@ -1083,9 +1143,28 @@ def run() -> dict:
         "gates": gates,
         "gate_g5_total_estimators": g5_rows,
         "strategies": [
-            {"sid": s.sid, "name": s.name, "kind": s.kind, "rule": s.rule, **s.score()}
+            {"sid": s.sid, "name": s.name, "kind": s.kind, "rule": s.rule, **s.score(),
+             "luck_exposure": luck_exposure(s.bets)}
             for s in strategies
         ],
+        "luck_refusal": {
+            "band": f"|z| <= {LUCK_BAND_Z}",
+            "rule": (f"a strategy is REFUSED if more than {LEAN_SHARE_BAR:.0%} of its bets lean "
+                     f"on a team outside the band, or if one such team carries more than "
+                     f"{LEAN_TEAM_BAR:.0%} of them"),
+            "teams_outside_band": sorted(
+                t for t, v in luck_band().items() if abs(v) > LUCK_BAND_Z),
+            "n_teams_outside_band": sum(1 for v in luck_band().values()
+                                        if abs(v) > LUCK_BAND_Z),
+            "per_strategy": [
+                {"sid": s.sid, "name": s.name, **luck_exposure(s.bets)}
+                for s in strategies
+            ],
+            "why": ("a club whose win total sits far from what its point differential implies "
+                    "is carrying a coin-flip artefact, and a strategy that leans on that club "
+                    "is betting on the artefact repeating. The z-score is measured, and the "
+                    "refusal is mechanical: no judgement is applied per strategy."),
+        },
         "luck": luck,
         "baselines": baselines,
         "skill_attribution": attribution,

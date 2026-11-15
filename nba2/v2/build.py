@@ -932,6 +932,27 @@ no leaderboard.</div>
 <p class="lede">Each rule is written so it could be run by someone else tomorrow and get the same answer. "Lean" means
 the signal; none of them carries a stake.</p>
 """
+    from . import strategy_lab as SL
+    LEAN_SHARE = SL.LEAN_SHARE_BAR
+    LEAN_TEAM = SL.LEAN_TEAM_BAR
+    _band = SL.luck_band()
+    _max_abs_z = round(max((abs(v) for v in _band.values()), default=0.0), 2)
+
+    def _luck_cell(exp):
+        if not exp:
+            return '<span class="blank">not measured</span>'
+        if exp.get("publishable"):
+            return (f'<span class="badge b-ok">no</span> {esc(exp["share_leaning_outside"])} of bets '
+                    f'lean on an out-of-band club')
+        return (f'<span class="badge b-bad">REFUSED</span> '
+                f'{esc(exp["share_leaning_outside"])} lean outside the band'
+                + (f'; worst {esc(exp["worst_team"])} (z={esc(exp["worst_team_z"])}) '
+                   f'{esc(exp["worst_team_share"])} of bets' if exp.get("worst_team") else ""))
+
+    _n_refused = sum(1 for st in lab["strategies"]
+                     if not (st.get("luck_exposure") or {}).get("publishable", True))
+    _n_strat = len(lab["strategies"])
+
     srows = []
     for st in lab["strategies"]:
         kind = {"single bet": "ok", "parlay": "warn", "player prop combo": "bad"}.get(st["kind"], "off")
@@ -947,12 +968,22 @@ the signal; none of them carries a stake.</p>
             esc(st["log_loss"]) if n else '<span class="blank">—</span>',
             esc(st["brier"]) if n else '<span class="blank">—</span>',
             esc(st["rule"]),
+            _luck_cell(st.get("luck_exposure")),
             srclink(O.SOURCES["games"][1]),
         ]})
     body += table(["ID", "Strategy", "Type", "Bets", "Hit rate", "95% low", "95% high", "Log-loss", "Brier",
-                   "Rule", "Source"],
+                   "Rule", "Leans on luck?", "Source"],
                   srows, "Every candidate strategy, scored on the same walk-forward sample",
                   num_cols=(3, 4, 5, 6, 7, 8))
+
+    lr_ = lab.get("luck_refusal") or {}
+    body += f"""<div class="note"><b>The luck-refusal gate, measured.</b> A strategy is REFUSED &mdash; not merely
+downgraded &mdash; if more than {LEAN_SHARE:.0%} of its bets lean on a club whose win total sits outside the noise band
+({esc(lr_.get('band', ''))} around what its own point differential implies), or if one such club carries more than
+{LEAN_TEAM:.0%} of them. <b>{lr_.get('n_teams_outside_band', 0)} of 30 clubs</b> are currently outside that band
+(largest |z| measured: <b>{_max_abs_z:.2f}</b>), so <b>{_n_refused} of {_n_strat}</b> strategies are refused on this
+rule today. The rule is mechanical: no judgement is applied per strategy, and the count it would refuse changes the
+moment a club's record drifts out of band.</div>"""
 
     body += """<h2>2. The validation gates, evaluated</h2>
 <p class="lede">A gate that is never checked is decoration. Each row below is the number this build actually

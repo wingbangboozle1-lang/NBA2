@@ -455,7 +455,21 @@
    "brier": 0.2313,
    "auroc": 0.5922,
    "mean_p": 0.5656,
-   "calibration_gap": -0.0797
+   "calibration_gap": -0.0797,
+   "luck_exposure": {
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S2",
@@ -476,7 +490,21 @@
    "brier": 0.2429,
    "auroc": 0.5391,
    "mean_p": 0.5471,
-   "calibration_gap": -0.0401
+   "calibration_gap": -0.0401,
+   "luck_exposure": {
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S3",
@@ -497,7 +525,21 @@
    "brier": 0.2035,
    "auroc": 0.4314,
    "mean_p": 0.6569,
-   "calibration_gap": -0.0822
+   "calibration_gap": -0.0822,
+   "luck_exposure": {
+    "n_bets": 23,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S4",
@@ -518,7 +560,21 @@
    "brier": 0.1606,
    "auroc": null,
    "mean_p": 0.5998,
-   "calibration_gap": -0.4002
+   "calibration_gap": -0.4002,
+   "luck_exposure": {
+    "n_bets": 7,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S5",
@@ -539,7 +595,21 @@
    "brier": 0.2426,
    "auroc": 0.5667,
    "mean_p": 0.3198,
-   "calibration_gap": -0.0755
+   "calibration_gap": -0.0755,
+   "luck_exposure": {
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S6",
@@ -560,16 +630,165 @@
    "brier": 0.2744,
    "auroc": 0.55,
    "mean_p": 0.3854,
-   "calibration_gap": -0.1601
+   "calibration_gap": -0.1601,
+   "luck_exposure": {
+    "n_bets": 22,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   },
   {
    "sid": "S7",
    "name": "Player prop / prop combo",
    "kind": "player prop combo",
    "rule": "Price a player's points, rebounds and assists, and their combos, against a posted line. Requires a per-game minutes distribution and a within-player correlation; neither is reachable, so no bet is ever generated.",
-   "n": 0
+   "n": 0,
+   "luck_exposure": {
+    "n_bets": 0,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
   }
  ],
+ "luck_refusal": {
+  "band": "|z| <= 1.96",
+  "rule": "a strategy is REFUSED if more than 50% of its bets lean on a team outside the band, or if one such team carries more than 25% of them",
+  "teams_outside_band": [],
+  "n_teams_outside_band": 0,
+  "per_strategy": [
+   {
+    "sid": "S1",
+    "name": "Model side (moneyline, all games)",
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S2",
+    "name": "Model total vs league average",
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S3",
+    "name": "Model side, |margin| >= 5 pts",
+    "n_bets": 23,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S4",
+    "name": "Road side when model fades home by 3+",
+    "n_bets": 7,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S5",
+    "name": "Same-game parlay: side + total",
+    "n_bets": 172,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S6",
+    "name": "Cross-game parlay: two model sides",
+    "n_bets": 22,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   },
+   {
+    "sid": "S7",
+    "name": "Player prop / prop combo",
+    "n_bets": 0,
+    "teams_outside_band": [],
+    "n_outside_band": 0,
+    "bets_leaning_outside": 0,
+    "share_leaning_outside": 0.0,
+    "worst_team": null,
+    "worst_team_z": null,
+    "worst_team_share": 0.0,
+    "band": "|z| <= 1.96",
+    "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+    "publishable": true,
+    "verdict": "PUBLISHABLE"
+   }
+  ],
+  "why": "a club whose win total sits far from what its point differential implies is carrying a coin-flip artefact, and a strategy that leans on that club is betting on the artefact repeating. The z-score is measured, and the refusal is mechanical: no judgement is applied per strategy."
+ },
  "luck": {
   "rows": [
    {
@@ -592,7 +811,21 @@
     "brier": 0.2313,
     "mean_stated_probability": 0.5656,
     "calibration_gap": -0.0797,
-    "verdict": "DISTINGUISHABLE FROM CHANCE"
+    "verdict": "DISTINGUISHABLE FROM CHANCE",
+    "luck_exposure": {
+     "n_bets": 172,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S2",
@@ -614,7 +847,21 @@
     "brier": 0.2429,
     "mean_stated_probability": 0.5471,
     "calibration_gap": -0.0401,
-    "verdict": "DISTINGUISHABLE FROM CHANCE"
+    "verdict": "DISTINGUISHABLE FROM CHANCE",
+    "luck_exposure": {
+     "n_bets": 172,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S3",
@@ -636,7 +883,21 @@
     "brier": 0.2035,
     "mean_stated_probability": 0.6569,
     "calibration_gap": -0.0822,
-    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
+    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not",
+    "luck_exposure": {
+     "n_bets": 23,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S4",
@@ -658,7 +919,21 @@
     "brier": 0.1606,
     "mean_stated_probability": 0.5998,
     "calibration_gap": -0.4002,
-    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
+    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not",
+    "luck_exposure": {
+     "n_bets": 7,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S5",
@@ -680,7 +955,21 @@
     "brier": 0.2426,
     "mean_stated_probability": 0.3198,
     "calibration_gap": -0.0755,
-    "verdict": "DISTINGUISHABLE FROM CHANCE"
+    "verdict": "DISTINGUISHABLE FROM CHANCE",
+    "luck_exposure": {
+     "n_bets": 172,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S6",
@@ -702,7 +991,21 @@
     "brier": 0.2744,
     "mean_stated_probability": 0.3854,
     "calibration_gap": -0.1601,
-    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
+    "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not",
+    "luck_exposure": {
+     "n_bets": 22,
+     "teams_outside_band": [],
+     "n_outside_band": 0,
+     "bets_leaning_outside": 0,
+     "share_leaning_outside": 0.0,
+     "worst_team": null,
+     "worst_team_z": null,
+     "worst_team_share": 0.0,
+     "band": "|z| <= 1.96",
+     "rule": "REFUSED if more than 50% of bets lean on a team outside the band, or if one such team carries more than 25% of them",
+     "publishable": true,
+     "verdict": "PUBLISHABLE"
+    }
    },
    {
     "sid": "S7",

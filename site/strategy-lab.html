@@ -75,6 +75,7 @@ the signal; none of them carries a stake.</p>
 <th scope="col" class="n">Log-loss</th>
 <th scope="col" class="n">Brier</th>
 <th scope="col">Rule</th>
+<th scope="col">Leans on luck?</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
 <tr>
@@ -88,6 +89,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6554</td>
 <td class="n">0.2313</td>
 <td>Back the team our originated margin favours, priced at p = Phi(pred_margin / sigma_m).</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -101,6 +103,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6789</td>
 <td class="n">0.2429</td>
 <td>Take the over when our originated total clears the league-average total (227.6), priced at Phi((pred_total - ref) / sigma_t).</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -114,6 +117,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.5988</td>
 <td class="n">0.2035</td>
 <td>S1 restricted to games where the two ratings disagree by at least 5 points, i.e. where the signal is loudest.</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -127,6 +131,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.5118</td>
 <td class="n">0.1606</td>
 <td>Back the road team only when our number makes the home team an underdog of 3 points or more. Tests whether the market&#x27;s home bias is a real edge or a story.</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -140,6 +145,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.6792</td>
 <td class="n">0.2426</td>
 <td>In every game take our side and our total as a two-leg parlay. Priced with the measured same-game correlation, not with a product of marginals.</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -153,6 +159,7 @@ the signal; none of them carries a stake.</p>
 <td class="n">0.743</td>
 <td class="n">0.2744</td>
 <td>Pair the two loudest side signals on a date into one two-leg parlay, priced as a product. Tests the independence assumption directly.</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
 <tr>
@@ -166,9 +173,16 @@ the signal; none of them carries a stake.</p>
 <td class="n"><span class="blank">—</span></td>
 <td class="n"><span class="blank">—</span></td>
 <td>Price a player&#x27;s points, rebounds and assists, and their combos, against a posted line. Requires a per-game minutes distribution and a within-player correlation; neither is reachable, so no bet is ever generated.</td>
+<td><span class="badge b-ok">no</span> 0.0 of bets lean on an out-of-band club</td>
 <td><a href="https://www.nba.com/games?date=2026-11-14" rel="noopener" target="_blank">nba.com/games?date=2026-11-14</a></td>
 </tr>
-</tbody></table></div><h2>2. The validation gates, evaluated</h2>
+</tbody></table></div><div class="note"><b>The luck-refusal gate, measured.</b> A strategy is REFUSED &mdash; not merely
+downgraded &mdash; if more than 50% of its bets lean on a club whose win total sits outside the noise band
+(|z| &lt;= 1.96 around what its own point differential implies), or if one such club carries more than
+25% of them. <b>0 of 30 clubs</b> are currently outside that band
+(largest |z| measured: <b>1.58</b>), so <b>0 of 7</b> strategies are refused on this
+rule today. The rule is mechanical: no judgement is applied per strategy, and the count it would refuse changes the
+moment a club's record drifts out of band.</div><h2>2. The validation gates, evaluated</h2>
 <p class="lede">A gate that is never checked is decoration. Each row below is the number this build actually
 measured, with the threshold it was measured against.</p>
 <div class="scroll"><table>
