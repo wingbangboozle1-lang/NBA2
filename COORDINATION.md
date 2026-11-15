@@ -3465,3 +3465,10 @@ advanced to PR #75 (`arena/56b96bf0-nba2`) and found an append-only conflict in
 `COORDINATION.md`. The upstream session's verification record was retained unchanged; this
 session's claim and completion record were appended after it. No production-code conflict or
 discarded work.
+
+**Branch update note:** the pre-rebase claim commit was already on this session's remote
+branch. After replaying this session's commits onto the newer `main`, a normal push correctly
+rejected the non-fast-forward update. The remote branch contains only this session's prior
+claim; the rebased tree includes that claim and all implementation changes. Update will use
+`--force-with-lease` on this branch only, after another pull/rebase, so an unexpected remote
+advance is not overwritten.
