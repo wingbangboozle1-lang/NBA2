@@ -17,6 +17,8 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -46,15 +48,15 @@
 </aside>
 <main>
 <h1>Live verification — what today's official pages say</h1>
-<p class="lede">Every other page on this site renders a snapshot captured on 2026-11-14. This page is different: it is built
+<p class="lede">Every other page on this site renders a snapshot captured on 2026-11-15. This page is different: it is built
 from pages this session read <b>today</b>, records the exact URL and fetch time of each, and reports where the published
 site no longer matches. It also grades the first genuine forecast the repository ever made.</p>
 <div class="note"><b>Why this page had to exist.</b> Nothing on the site compared a published row against a fresher
 official capture, so a stale row and a correct row rendered identically — both said MATCH. This session found 18 such
 rows by hand. A page is cheaper than vigilance.</div>
 <div class="kpis">
-  <div class="kpi"><b>30/30</b><small>published team records that still match today's official standings</small></div>
-  <div class="kpi"><b>12/30</b><small>that match the pre-11/13-finals reconstruction</small></div>
+  <div class="kpi"><b>20/30</b><small>published team records that still match today's official standings</small></div>
+  <div class="kpi"><b>7/30</b><small>that match the pre-11/13-finals reconstruction</small></div>
   <div class="kpi"><b>9</b><small>11/13 games with official finals</small></div>
   <div class="kpi"><b>4</b><small>distinct games the committed picks actually bet</small></div>
   <div class="kpi"><b>5/9</b><small>games where the model named the winner</small></div>
@@ -143,7 +145,7 @@ under <code>archive/</code> with dated notes, deleting nothing.</div>
 <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_11_00AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
 </tr>
 </tbody></table></div><h2>2. The published team table has aged</h2>
-<p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on 2026-11-14
+<p class="lede">This is the most important number on this page. The site's 30 team records were transcribed on 2026-11-15
 before the nine 2026-11-13 games had official results. Nine games change eighteen records. To prove that rather than
 assert it, the pre-final state is reconstructed from today's official standings by subtracting those nine results, and
 the published table is compared with both.</p>
@@ -157,13 +159,13 @@ the published table is compared with both.</p>
 </tr></thead><tbody>
 <tr>
 <td>Published table vs today&#x27;s official standings</td>
-<td>30 of 30</td>
+<td>20 of 30</td>
 <td><span class="badge b-bad">STALE</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>Published table vs the pre-11/13-finals reconstruction</td>
-<td>12 of 30</td>
+<td>7 of 30</td>
 <td><span class="badge b-warn">EXPLAINS THE GAP</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -173,11 +175,11 @@ the published table is compared with both.</p>
 <td><span class="badge b-ok">NONE</span></td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
-</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises &#x27;Committed W-L ... vs live nba.com/standings | 30/30 identical | MATCH&#x27; - re-checked on 2026-11-14 by session arena/ac5fab5c-nba2 and true again: the committed table matches live standings 30/30.
+</tbody></table></div><div class="note warn"><b>What the site currently claims.</b> the built site advertises the committed W-L as re-read from live nba.com/standings on 2026-11-15 and rebuilt from 188 official finals - both re-checked by the row-staleness detector: every row that differs from the 11/14 audit fixture is explained by the five committed 11/14 finals, none are unexplained.
 The comparison was true when it was made. The rows are the same rows, the standings are not the same standings, and
 until today nothing on the site could tell the difference. <b>Every stale row, with both values:</b></div>
 <div class="scroll"><table>
-<caption>0 stale team records, every one explained by the 11/13 finals</caption>
+<caption>10 stale team records, every one explained by the 11/13 finals</caption>
 <thead><tr>
 <th scope="col">Team</th>
 <th scope="col">Published on this site</th>
@@ -186,6 +188,86 @@ until today nothing on the site could tell the difference. <b>Every stale row, w
 <th scope="col">Cause</th>
 <th scope="col">Source</th>
 </tr></thead><tbody>
+<tr>
+<td>BKN</td>
+<td>3-9</td>
+<td>3-8</td>
+<td>3-8</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CHI</td>
+<td>3-9</td>
+<td>2-9</td>
+<td>1-9</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CLE</td>
+<td>7-7</td>
+<td>6-7</td>
+<td>6-6</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DAL</td>
+<td>7-6</td>
+<td>7-5</td>
+<td>7-5</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DEN</td>
+<td>7-4</td>
+<td>6-4</td>
+<td>6-4</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DET</td>
+<td>8-4</td>
+<td>8-3</td>
+<td>8-3</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MEM</td>
+<td>9-4</td>
+<td>8-4</td>
+<td>7-4</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIA</td>
+<td>7-6</td>
+<td>6-6</td>
+<td>5-6</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIN</td>
+<td>9-4</td>
+<td>9-3</td>
+<td>9-3</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NOP</td>
+<td>4-10</td>
+<td>4-9</td>
+<td>4-8</td>
+<td><span class="badge b-bad">FIXTURE_SUPERSEDED</span></td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
 </tbody></table></div><h2>3. The first real out-of-sample test the repository has</h2>
 <p class="lede"><code>nba2/data/picks.json</code> was committed at <b>2026-11-13T22:36:46Z</b> (commit
 <code>d04bdc3</code>, its only commit ever) and the earliest 11/13 tip was
@@ -597,7 +679,7 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
 <tr>
 <td>Club records</td>
 <td>29 of 30 clubs, live W-L on the game-page scoreboard strip vs the published team table</td>
-<td><span class="badge b-ok">0 mismatch</span></td>
+<td><span class="badge b-bad">10 mismatch</span></td>
 <td><a href="https://www.nba.com/game/okc-vs-lac-0022600042/box-score" rel="noopener" target="_blank">nba.com/game/okc-vs-lac-0022600042/box-score</a></td>
 </tr>
 <tr>
@@ -608,7 +690,7 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
 </tr>
 <tr>
 <td>Slate</td>
-<td>20 of 27 games in the published window re-read (all 11/14, all 11/15, six 11/16)</td>
+<td>20 of 34 games in the published window re-read (all 11/14, all 11/15, six 11/16)</td>
 <td><span class="badge b-ok">ids, dates, matchup and ET tips all match</span></td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-14" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-14</a></td>
 </tr>
@@ -637,7 +719,7 @@ answers and it carries 24 rows the published section does not have. The site now
 is reachable. That converts S-41 from "unavailable" to "not yet captured for 27 of 30 clubs", which is a work item, not a
 wall. See the decision queue (S-41) and SG-35/SG-36.</div>
 <footer>
-  <p>Snapshot as of <b>2026-11-14</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

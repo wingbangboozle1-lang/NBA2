@@ -1,0 +1,288 @@
+{
+ "schema": "nba2.player-gamelog.v1",
+ "retrieved_at_utc": "2026-11-15T12:00:00Z",
+ "source_url": "https://www.nba.com/game/den-vs-nop-0022600231/box-score",
+ "note": "Per-player game log (minutes, points, rebounds, assists, opponent) captured from the official box score. Capture-time gates asserted: each team's minutes sum to exactly 240:00, player points sum to the official final (DEN 116, NOP 108), player assists sum to the official team totals (29 / 25). DNP and inactive players are listed below. Coverage: 1 of the 5 games played 2026-11-14 in this session; the scheduled job (nba2/v2/refresh.py) extends coverage to every future game day. Player rows also cross-checked against the official game-book PDF https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf linked from the same page.",
+ "dnp": [
+  {
+   "player": "Alpha Diallo",
+   "team": "DEN",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "Bryce Hopkins",
+   "team": "DEN",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "Zeke Nnaji",
+   "team": "DEN",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "Malik Dia",
+   "team": "NOP",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "AJ Johnson",
+   "team": "NOP",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "DeAndre Jordan",
+   "team": "NOP",
+   "reason": "DNP - Coach's Decision"
+  },
+  {
+   "player": "Julian Reese",
+   "team": "NOP",
+   "reason": "DNP - Coach's Decision"
+  }
+ ],
+ "inactive": {
+  "DEN": [
+   "Julian Strawther",
+   "Cam Whitmore",
+   "DaRon Holmes II",
+   "Ryan Nembhard"
+  ],
+  "NOP": [
+   "Dejounte Murray",
+   "Trey Murphy III",
+   "Trendon Watford",
+   "Bennedict Mathurin",
+   "Bryce McGowens"
+  ]
+ },
+ "records": [
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Cameron Johnson",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "30:46",
+   "min_sec": 1846,
+   "pts": 12,
+   "reb": 5,
+   "ast": 2
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Aaron Gordon",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "32:32",
+   "min_sec": 1952,
+   "pts": 11,
+   "reb": 5,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Nikola Jokic",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "37:08",
+   "min_sec": 2228,
+   "pts": 26,
+   "reb": 8,
+   "ast": 10
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Christian Braun",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "27:46",
+   "min_sec": 1666,
+   "pts": 17,
+   "reb": 7,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Jamal Murray",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "37:57",
+   "min_sec": 2277,
+   "pts": 23,
+   "reb": 7,
+   "ast": 9
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Trevon Brazile",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "15:37",
+   "min_sec": 937,
+   "pts": 5,
+   "reb": 3,
+   "ast": 0
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Spencer Jones",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "11:30",
+   "min_sec": 690,
+   "pts": 4,
+   "reb": 2,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "DeMar DeRozan",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "23:49",
+   "min_sec": 1429,
+   "pts": 9,
+   "reb": 3,
+   "ast": 2
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Tyus Jones",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "9:49",
+   "min_sec": 589,
+   "pts": 2,
+   "reb": 0,
+   "ast": 3
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Marvin Bagley III",
+   "team": "DEN",
+   "opponent": "NOP",
+   "min": "13:06",
+   "min_sec": 786,
+   "pts": 7,
+   "reb": 7,
+   "ast": 0
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Saddiq Bey",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "40:33",
+   "min_sec": 2433,
+   "pts": 16,
+   "reb": 6,
+   "ast": 4
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Zion Williamson",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "30:46",
+   "min_sec": 1846,
+   "pts": 24,
+   "reb": 6,
+   "ast": 2
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Yves Missi",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "22:03",
+   "min_sec": 1323,
+   "pts": 3,
+   "reb": 8,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Herbert Jones",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "27:29",
+   "min_sec": 1649,
+   "pts": 10,
+   "reb": 2,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Jeremiah Fears",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "32:44",
+   "min_sec": 1964,
+   "pts": 13,
+   "reb": 4,
+   "ast": 7
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Derik Queen",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "24:58",
+   "min_sec": 1498,
+   "pts": 10,
+   "reb": 5,
+   "ast": 4
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Karlo Matkovic",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "14:14",
+   "min_sec": 854,
+   "pts": 5,
+   "reb": 3,
+   "ast": 1
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Jordan Poole",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "23:55",
+   "min_sec": 1435,
+   "pts": 14,
+   "reb": 2,
+   "ast": 5
+  },
+  {
+   "date": "2026-11-14",
+   "game_id": "0022600231",
+   "player": "Jaron Pierre Jr.",
+   "team": "NOP",
+   "opponent": "DEN",
+   "min": "23:18",
+   "min_sec": 1398,
+   "pts": 13,
+   "reb": 2,
+   "ast": 0
+  }
+ ]
+}

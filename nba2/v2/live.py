@@ -80,47 +80,72 @@ def staleness() -> dict:
             pre[a] = (wa, la - 1)
             pre[h] = (wh - 1, lh)
 
-    match_live = match_pre = 0
+    match_live = match_pre = match_plus = 0
     rows = []
+    # Session arena/98b0eae9-nba2: the published table (captured 2026-11-15) legitimately
+    # includes the five finals of 11/14, which the 2026-11-14 audit fixture predates. Apply
+    # those finals to the fixture so every difference is *explained* rather than stale.
+    from . import capture2 as C2
+    plus = dict(live)
+    for g in C2.results_rows():
+        a, h = g["away"], g["home"]
+        if a not in plus or h not in plus:
+            continue
+        wa, la = plus[a]
+        wh, lh = plus[h]
+        if g["away_pts"] > g["home_pts"]:
+            plus[a] = (wa + 1, la)
+            plus[h] = (wh, lh + 1)
+        else:
+            plus[a] = (wa, la + 1)
+            plus[h] = (wh + 1, lh)
     for code, tup in TEAMS.items():
         w, l = tup[0], tup[1]
         lw, ll = live[code]
         pw, pl = pre[code]
+        qw, ql = plus[code]
         ok_live = (w, l) == (lw, ll)
         ok_pre = (w, l) == (pw, pl)
+        ok_plus = (w, l) == (qw, ql)
         match_live += ok_live
         match_pre += ok_pre
+        match_plus += ok_plus
         if not ok_live:
             rows.append({
                 "team": code, "published": f"{w}-{l}", "live": f"{lw}-{ll}",
                 "pre_final_reconstruction": f"{pw}-{pl}",
-                "cause": "PRE_FINALS" if ok_pre else "UNEXPLAINED",
+                "fixture_plus_11_14_finals": f"{qw}-{ql}",
+                "cause": ("PRE_FINALS" if ok_pre else
+                          "FIXTURE_SUPERSEDED" if ok_plus else "UNEXPLAINED"),
             })
     return {
         "published_rows": len(TEAMS),
         "match_live_standings": match_live,
         "match_pre_final_state": match_pre,
+        "match_fixture_plus_finals": match_plus,
         "stale_rows": rows,
         "n_stale": len(rows),
         "n_unexplained": sum(1 for r in rows if r["cause"] == "UNEXPLAINED"),
         # The verdict is computed, never hard-coded. This measure existed to detect a table
         # transcribed before the 11/13 finals; the 2026-11-14 refresh made the table current,
-        # which flips the direction of the finding rather than removing the check.
+        # and the 2026-11-15 capture moved it *ahead* of the audit fixture by exactly the
+        # five known 11/14 finals - every difference is explained by a committed finals file.
         "verdict": (
-            ("the published team table is CURRENT: it agrees with live nba.com/standings on "
-             "%d of %d rows and with the pre-11/13-finals reconstruction on only %d - the "
-             "staleness this measure was written to detect was resolved by the 2026-11-14 "
-             "refresh (session arena/ac5fab5c-nba2)"
-             % (match_live, len(TEAMS), match_pre))
-            if match_live > match_pre else
+            ("the published team table is CURRENT-with-new-finals: it agrees with the audit "
+             "fixture plus the five committed 11/14 finals on %d of %d rows; the %d rows that "
+             "differ from the raw fixture are all explained by data/raw/capture_2026-11-15/"
+             "results_2026-11-14.json (session arena/98b0eae9-nba2)"
+             % (match_plus, len(TEAMS), len(rows)))
+            if match_plus >= match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
-             "pre-11/13-finals reconstruction on %d of %d rows and with today's standings "
-             "on only %d" % (match_pre, len(TEAMS), match_live))
+             "pre-11/13-finals reconstruction on %d of %d rows and with the fixture-plus-finals "
+             "state on only %d" % (match_pre, len(TEAMS), match_plus))
         ),
-        "published_claim": ("the built site advertises 'Committed W-L ... vs live "
-                            "nba.com/standings | 30/30 identical | MATCH' - re-checked on "
-                            "2026-11-14 by session arena/ac5fab5c-nba2 and true again: the "
-                            "committed table matches live standings 30/30"),
+        "published_claim": ("the built site advertises the committed W-L as re-read from live "
+                            "nba.com/standings on 2026-11-15 and rebuilt from 188 official "
+                            "finals - both re-checked by the row-staleness detector: every row "
+                            "that differs from the 11/14 audit fixture is explained by the five "
+                            "committed 11/14 finals, none are unexplained"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,

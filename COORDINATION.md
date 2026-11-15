@@ -3305,3 +3305,100 @@ The dropped clause is a property of a single-generator tree, not a correctness
 property of v2, and it cannot coexist with more than one generator publishing into
 `site/`. If PR #68 lands a different resolution, theirs wins on that file; the v3
 pages will satisfy either version of the test, because they carry the full v2 nav.
+## Session `arena/98b0eae9-nba2` — CLAIM (2026-11-15, branch `arena/98b0eae9-nba2`, base `fc88652` = `main` @ PR #69 merge)
+
+**State read at claim time.** `main` = `fc88652985915ca5a60fe326225af40f99199887`; working tree clean;
+this branch is at the same commit. All prior session claims on the board are complete or
+superseded (last commits 2026-11-14); no other session holds an open claim, so there is no
+live scope to avoid beyond the standing non-overlap rules. Open items inherited from the
+board and the 2026-11-15 brief: SG-1/SG-2/SG-7/SG-8/SG-10/SG-12/SG-13/SG-16/SG-17/SG-22/SG-24/SG-25/SG-26/SG-33/SG-34/SG-35/SG-36/SG-37/SG-38.
+
+**Why this session exists.** The 2026-11-15 brief restates the requirement list line by line:
+refresh the rolling slate from official sources and re-cut the model inputs; keep a per-game
+result feed with quarter scores and settle from verified finals; store and diff injury PDFs;
+freeze pre-registrations; extend the tamper-evident ledger; keep the projection/bet split;
+two estimators with the disagreement as the headline; pin HCA to the measured home-win rate;
+luck z-scores with a noise-band refusal rule; rest/B2B/3-in-4 plus travel distance from a
+sourced arena-coordinate table; explicit minutes redistribution; measured-rho parlay prices
+with the naive product printed beside them; rotation availability column on picks; a
+market-anchored prior framework; totals as possessions x PPP; injury revision/retrieval
+stamps; settlement stamps; per-player game logs for at least the players on an injury
+report. Platform page-fetch **can** reach nba.com (verified live this session), so the
+"reachable but not captured" items can move from QUEUED to measured.
+
+**File scope claimed (this session):**
+* `nba2/v2/**` — the published-tree generator (official.py snapshot, model.py, build.py,
+  content.py registers, new `refresh.py` / `prereg.py` modules and tests)
+* `site/**`, `data/v2/**` — regenerated artefacts of that generator (never hand-edved)
+* `data/raw/**` — **new dated snapshot files only** (finals+quarters, team-stat pages,
+  standings, injury PDFs + diffs, player season tables, player game logs, arena table);
+  existing snapshots are never edited
+* `.github/workflows/refresh.yml` — extend the scheduled job (SG-1/SG-26/SG-31)
+* `requirements/REQUIREMENTS.json`, `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`,
+  `analysis/session-98b0eae9-*` (new analysis notes), `README.md` (count sync, prose preserved),
+  `COORDINATION.md` (this section + completion record, append-only)
+* `tools/crosscheck_site.py` only if a new published field needs a parity check
+
+**Not claimed / not edited:** `docs/**`, `dashboard/**`, `pages/**`, root `*.html`,
+`verified/**`, `originated/**`, `backtest/**`, `nba2/pipeline/**` (v1), `nba2/models/**` (v1),
+`archive/**`. If one of these needs a change, the request is logged here instead.
+
+**Rules for this session (same as the board's).** Claims pushed before work; small frequent
+commits; `git pull --rebase` before every push; no committed value inferred or filled in —
+anything not confirmable from an official source is left blank and published on the Flagged
+for Review page; the sealed ledgers (`data/raw/ledger/**`) are never rewritten; the site is
+never merged in a broken state.
+
+### Completion record — session `arena/98b0eae9-nba2` (2026-11-15 brief line items)
+
+*Status: complete; PR opened and merged to `main`; Pages deploy confirmed (see final PR note below).*
+
+**Data captured 2026-11-15 (all under `data/raw/capture_2026-11-15/`, source links on every row):**
+* `results_2026-11-14.json` — 5 official finals with quarter scores + gamebook PDF URLs (nba2.results-feed.v2; quarter sums asserted = finals at load).
+* `injury_report_2026-11-15_0615AM.json` — newest official release, 101 rows, revision + retrieval stamps, PDF archived + SHA-256'd (nba2.injury-transcript.v2).
+* `standings_2026-11-15.json` — 30 clubs (nba2.standings-official.v2).
+* `team_stats_2026-11-15.json` — the three official team-stat pages re-read; 21 published cross-checks, all within stated tolerances.
+* `slate_2026-11-15_to_11-18.json` — 34 games (nba2.slate.v2).
+* `arenas_2026-11-15.json` — 30/30 arena coordinates with provenance; geocodes labelled THIRD-PARTY (official sources publish none).
+* `gamelogs_2026-11-14_DEN_NOP.json` — per-player game logs for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent), capture gates asserted.
+
+**Implemented (see the Suggestions page statuses for the SG map):** results feed + visible settlement
+stamp; per-pick sha256 ledger hashes committed pre-tip (tamper test); 7 hashed pre-registration files;
+estimator disagreement as the headline (teams.html); headline total = possessions × PPP with the
+scoring average demoted to Total B; market-anchored prior framework (OOS log-loss weights, blank until
+a licensed line); parlay rows with naive product + measured ρ + Fisher-z interval; trigger prices in
+American + decimal; minutes redistribution (top-8 + replacement shares, mechanical rule); rest/B2B/
+3-in-4 + travel distance from sourced coordinates; injury revision + retrieval stamps + release-to-
+release deltas; rotation availability column on picks; landing KPIs (data currency); rolling ingest
+job `nba2/v2.refresh` wired into `refresh.yml` with 5 freshness/provenance gates (fail-closed rebuild).
+
+**Verified:** `python -m nba2.v2.check` = OK (0 structural, 0 semantic); 129 v2 + 70 v1 + 49 backtest
+tests green; `tools/crosscheck_site.py` 97 checks (89 pass / 8 info / 0 fail); `tools/check_links_all.py`
+ALL INTERNAL LINKS OK.
+
+**Flagged, carried to the Flagged page (nothing inferred):** 27/30 clubs' per-club season tables not
+captured (SG-37 partial); official page coordinates are not published (THIRD-PARTY geocodes used and
+labelled); two capture quirks I-98B-01/02 (matchup column on row 73; 'Utah Jazz' rows printed under
+the LAL@PHX heading); no licensed odds feed (G6) so market_prior values and prices stay blank; the
+nightly job's first scheduled run is pending (F-043 diagnosis still open).
+
+**Cross-session note:** PRs #70 (`arena/d09f8d1e-nba2`, nightly-ingest repair) and #72
+(`arena/04a61ac0-nba2`, official capture + gates) were left untouched — both belong to active
+parallel sessions. If both land, the ingest pieces overlap (`refresh.yml`); whoever merges second
+should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, keeping both sides.
+
+**Rebase conflict resolution (2026-11-15, integrating origin/main @ 54d61e4 / PR #71
+`arena/e675ac3d-nba2` v3 rolling-slate):** kept both sides everywhere, nothing discarded.
+* `COORDINATION.md` — union of main's new sections and this session's claim/records.
+* `nba2/v2/test_v2.py` — kept arena/e675ac3d's shared-tree assertion (v2 NAV ⊆ published tree +
+  nav coverage) and merged in this session's comment naming teams.html / official-results.html.
+* `site/results.html` — filename collision between this session's v2 results page and the v3
+  "Result feed" page. Resolution: the v3 page keeps `results.html` (its build runs last in
+  `pages.yml` and would overwrite any v2 output there anyway); the v2 page is renamed
+  `official-results.html` across nav, builder and tests. Both pages are published.
+* `nba2/v3/build.py` — additive one-line-pair edit to the shared V2_NAV list so every published
+  page (v3 pages included) links to `teams.html` and `official-results.html`; without it the
+  cross-tree nav-coverage assertion fails and v3 readers cannot reach the new pages. Logged
+  here as a cross-surface edit to `arena/e675ac3d-nba2`'s file scope.
+* Post-rebase full chain re-run exactly as `pages.yml`: `nba2.v2` → `nba2.v2.check` → `nba2.v3`
+  → `nba2.v3.check` → 33 v3 + 129 v2 + 70 v1 + 49 backtest tests — all green.

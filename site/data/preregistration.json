@@ -1,0 +1,47 @@
+{
+ "note": "pre-registration: signal, threshold, universe and settlement rule frozen BEFORE any stake can be placed; each file hashed and the hash published with the build",
+ "files": [
+  {
+   "id": "S1",
+   "file": "data/v2/prereg/S1.json",
+   "prereg_hash": "8cc2cddc2e5fe5ae09246b703496a2f27feadfc9f0b7db7026f4a0a514f80c95",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S2",
+   "file": "data/v2/prereg/S2.json",
+   "prereg_hash": "730bf57d75ea610792ef7dc4701aaa3892cc539c6d30fc3c191d9d3c1a4b3e05",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S3",
+   "file": "data/v2/prereg/S3.json",
+   "prereg_hash": "3f793972849ec5e24d475c46537ac2beacc3b39147765a356bccc5b23a10580c",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S4",
+   "file": "data/v2/prereg/S4.json",
+   "prereg_hash": "47f89f40bb58bd1dc28c75d9054cd59cffaecb2628c51ca53b191ae35ddcc932",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S5",
+   "file": "data/v2/prereg/S5.json",
+   "prereg_hash": "fc9c6ddd510fc33226dbc383af592ff0c1ab1d146c7937f0cbb1413b8edac37b",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S6",
+   "file": "data/v2/prereg/S6.json",
+   "prereg_hash": "808a3d50633b22ab29904a80bc9dd5babebecc0ac2ce66dc777e786bd22bc35d",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  },
+  {
+   "id": "S7",
+   "file": "data/v2/prereg/S7.json",
+   "prereg_hash": "7b222b926bf4ae47fb2eff2dd9d2d97a1eaf055d61c5c8647acea8e321e60e82",
+   "frozen_at_utc": "2026-11-15T12:00:00Z"
+  }
+ ]
+}

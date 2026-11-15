@@ -71,28 +71,28 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17_v2.json").read_text())
+    raw = json.loads((ROOT / "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json").read_text())
     from . import official as O
-    n_slate = 27          # the 3-day window 2026-11-14 -> 2026-11-17
+    n_slate = 34          # the 3-day window 2026-11-15 -> 2026-11-18
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
-    if len(raw["records"]) != n_slate:
-        problems.append(f"committed raw snapshot has {len(raw['records'])} games, expected {n_slate}")
+    if len(raw["games"]) != n_slate:
+        problems.append(f"committed raw snapshot has {len(raw['games'])} games, expected {n_slate}")
     lines = json.loads((ROOT / "data/v2/lines.json").read_text())
     if len(lines["lines"]) != n_slate:
         problems.append(f"lines.json has {len(lines['lines'])} lines, expected {n_slate}")
     # every published line must be a game in the committed slate, with the same game id
-    by_id = {r["game_id"]: r for r in raw["records"]}
+    by_id = {r["game_id"]: r for r in raw["games"]}
     for ln in lines["lines"]:
         gid = ln.get("game_id")
         if gid not in by_id:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (183 games played)
+    # published W/L must equal the official standings totals (188 games played through 11/14)
     from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 183:
-        problems.append("official team table no longer sums to 183 wins")
+    if sum(v[0] for v in O2.TEAMS.values()) != 188:
+        problems.append("official team table no longer sums to 188 wins")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

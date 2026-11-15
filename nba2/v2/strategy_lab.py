@@ -153,6 +153,15 @@ def load_games() -> list[dict]:
             if g["game_id"] in {x["game_id"] for x in games}:
                 continue          # a duplicate id would silently double-count a result
             games.append(g)
+    # 2026-11-15 session (arena/98b0eae9-nba2): the 5 finals of 11/14 live in the dated
+    # capture file, not the history folder — join them so the lab scores every verified final.
+    from . import capture2 as C2
+    for r in C2.results_rows():
+        if r["game_id"] in {x["game_id"] for x in games}:
+            continue
+        games.append({"game_id": r["game_id"], "date": r["date"], "away": r["away"],
+                      "home": r["home"], "away_pts": r["away_pts"], "home_pts": r["home_pts"],
+                      "ot": bool(r.get("ot_periods")), "source_url": r["source_url"]})
     games.sort(key=lambda g: (g["date"], g["game_id"]))
     return games
 

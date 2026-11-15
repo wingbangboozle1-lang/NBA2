@@ -1,0 +1,391 @@
+{
+ "schema": "nba2.slate.v2",
+ "window": "2026-11-15..2026-11-18",
+ "window_rule": "today through today+3 days (max 3 days in advance), 34 games",
+ "retrieved_at_utc": "2026-11-15T12:00:00Z",
+ "sources": [
+  "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)",
+  "https://www.nba.com/games?date=2026-11-14 (day-strip cross-check of the same game IDs and tips)",
+  "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf (tip times printed per game)"
+ ],
+ "notes": [
+  "Game IDs and ET tips were cross-checked between the schedule page, the games day-strip and the injury report's printed tip times (all three agree).",
+  "NBA Cup: no Emirates NBA Cup marker appears on any of these 34 listings at retrieval; cup status is left blank and flagged rather than assumed."
+ ],
+ "games": [
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600236",
+   "away": "IND",
+   "home": "PHI",
+   "time_et": "13:00",
+   "arena": "Xfinity Mobile Arena",
+   "city": "Philadelphia, PA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600237",
+   "away": "LAL",
+   "home": "PHX",
+   "time_et": "16:00",
+   "arena": "Mortgage Matchup Center",
+   "city": "Phoenix, AZ",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600238",
+   "away": "CHA",
+   "home": "LAC",
+   "time_et": "16:30",
+   "arena": "Intuit Dome",
+   "city": "Inglewood, CA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600239",
+   "away": "SAS",
+   "home": "UTA",
+   "time_et": "17:00",
+   "arena": "Delta Center",
+   "city": "Salt Lake City, UT",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600240",
+   "away": "DAL",
+   "home": "BOS",
+   "time_et": "18:00",
+   "arena": "TD Garden",
+   "city": "Boston, MA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600241",
+   "away": "NYK",
+   "home": "TOR",
+   "time_et": "18:00",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto, ON",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600242",
+   "away": "HOU",
+   "home": "WAS",
+   "time_et": "19:00",
+   "arena": "Capital One Arena",
+   "city": "Washington, DC",
+   "tv": "MNMT/Monumental+",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600243",
+   "away": "ATL",
+   "home": "MIL",
+   "time_et": "20:00",
+   "arena": "Fiserv Forum",
+   "city": "Milwaukee, WI",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600244",
+   "away": "OKC",
+   "home": "SAC",
+   "time_et": "21:00",
+   "arena": "Golden 1 Center",
+   "city": "Sacramento, CA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600245",
+   "away": "ORL",
+   "home": "BOS",
+   "time_et": "19:00",
+   "arena": "TD Garden",
+   "city": "Boston, MA",
+   "tv": "Peacock/NBCSN",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600246",
+   "away": "CHI",
+   "home": "CLE",
+   "time_et": "19:00",
+   "arena": "Rocket Arena",
+   "city": "Cleveland, OH",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600247",
+   "away": "MEM",
+   "home": "WAS",
+   "time_et": "19:00",
+   "arena": "Capital One Arena",
+   "city": "Washington, DC",
+   "tv": "MNMT/Monumental+",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600248",
+   "away": "PHI",
+   "home": "BKN",
+   "time_et": "19:30",
+   "arena": "Barclays Center",
+   "city": "Brooklyn, NY",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600249",
+   "away": "HOU",
+   "home": "MIA",
+   "time_et": "19:30",
+   "arena": "Kaseya Center",
+   "city": "Miami, FL",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600250",
+   "away": "POR",
+   "home": "MIN",
+   "time_et": "20:00",
+   "arena": "Target Center",
+   "city": "Minneapolis, MN",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600251",
+   "away": "GSW",
+   "home": "NOP",
+   "time_et": "21:00",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans, LA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-16",
+   "game_id": "0022600252",
+   "away": "PHX",
+   "home": "DEN",
+   "time_et": "21:00",
+   "arena": "Ball Arena",
+   "city": "Denver, CO",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-17",
+   "game_id": "0022600253",
+   "away": "NYK",
+   "home": "TOR",
+   "time_et": "19:30",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto, ON",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-17",
+   "game_id": "0022600254",
+   "away": "POR",
+   "home": "MIN",
+   "time_et": "20:00",
+   "arena": "Target Center",
+   "city": "Minneapolis, MN",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-17",
+   "game_id": "0022600255",
+   "away": "DET",
+   "home": "SAS",
+   "time_et": "20:00",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio, TX",
+   "tv": "Peacock/NBC",
+   "cup": null
+  },
+  {
+   "date": "2026-11-17",
+   "game_id": "0022600257",
+   "away": "UTA",
+   "home": "LAC",
+   "time_et": "22:30",
+   "arena": "Intuit Dome",
+   "city": "Inglewood, CA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-17",
+   "game_id": "0022600256",
+   "away": "CHA",
+   "home": "LAL",
+   "time_et": "23:00",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles, CA",
+   "tv": "Peacock",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600258",
+   "away": "MEM",
+   "home": "CLE",
+   "time_et": "19:00",
+   "arena": "Rocket Arena",
+   "city": "Cleveland, OH",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600259",
+   "away": "HOU",
+   "home": "IND",
+   "time_et": "19:00",
+   "arena": "Gainbridge Fieldhouse",
+   "city": "Indianapolis, IN",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600260",
+   "away": "MIL",
+   "home": "MIA",
+   "time_et": "19:00",
+   "arena": "Kaseya Center",
+   "city": "Miami, FL",
+   "tv": "ESPN",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600261",
+   "away": "PHI",
+   "home": "ORL",
+   "time_et": "19:00",
+   "arena": "Kia Center",
+   "city": "Orlando, FL",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600262",
+   "away": "CHI",
+   "home": "BKN",
+   "time_et": "19:30",
+   "arena": "Barclays Center",
+   "city": "Brooklyn, NY",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600263",
+   "away": "WAS",
+   "home": "TOR",
+   "time_et": "19:30",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto, ON",
+   "tv": "MNMT/Monumental+",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600264",
+   "away": "DET",
+   "home": "NOP",
+   "time_et": "20:00",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans, LA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600265",
+   "away": "ATL",
+   "home": "OKC",
+   "time_et": "20:00",
+   "arena": "Paycom Center",
+   "city": "Oklahoma City, OK",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600267",
+   "away": "GSW",
+   "home": "DAL",
+   "time_et": "20:00",
+   "arena": "American Airlines Center",
+   "city": "Dallas, TX",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600266",
+   "away": "BOS",
+   "home": "DEN",
+   "time_et": "21:30",
+   "arena": "Ball Arena",
+   "city": "Denver, CO",
+   "tv": "ESPN",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600268",
+   "away": "UTA",
+   "home": "LAL",
+   "time_et": "22:00",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles, CA",
+   "tv": "League Pass",
+   "cup": null
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600269",
+   "away": "PHX",
+   "home": "SAC",
+   "time_et": "22:00",
+   "arena": "Golden 1 Center",
+   "city": "Sacramento, CA",
+   "tv": "League Pass",
+   "cup": null
+  }
+ ]
+}

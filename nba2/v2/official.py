@@ -125,50 +125,53 @@ BLOCKED = {
     ),
 }
 
-AS_OF = "2026-11-14"
-RETRIEVED_AT_UTC = "2026-11-14T09:40:00Z"
-RETRIEVED_BY = "arena/ac5fab5c-nba2"
+AS_OF = "2026-11-15"
+RETRIEVED_AT_UTC = "2026-11-15T12:00:00Z"
+RETRIEVED_BY = "arena/98b0eae9-nba2"
 
 # The 3-day pick window the brief asks for, inclusive of both ends.
-WINDOW_START = "2026-11-14"
-WINDOW_END = "2026-11-17"
+WINDOW_START = "2026-11-15"
+WINDOW_END = "2026-11-18"
 
 # --------------------------------------------------------------------------- team table
 # tricode: W, L, HOME_W, HOME_L, ROAD_W, ROAD_L, PF(pts/g), PA(pts/g), OEFF, DEF, NET, PACE, PIE
-# W/L + splits: nba.com/standings, fetched 2026-11-14.
-# PF/PA: computed from the 183 official finals in data/raw/history/ (spot-checked against
-#        nba.com/stats/teams/traditional: LAL 122.2 vs 122.2, SAS 119.5 vs 119.5).
-# OEFF/DEF/NET/PACE/PIE: nba.com/stats/teams/advanced, fetched 2026-11-14.
+# W/L + splits: nba.com/standings, fetched 2026-11-15 (data/raw/capture_2026-11-15/standings_2026-11-15.json).
+# PF/PA: summed from the 188 official finals in data/raw/history/ + data/raw/capture_2026-11-15/
+#        (exact, never estimated; cross-checked row-by-row against nba.com/stats/teams/traditional
+#        and /stats/teams/opponent in capture_2026-11-15/team_stats_2026-11-15.json).
+# OEFF/DEF/NET/PACE/PIE: nba.com/stats/teams/advanced, fetched 2026-11-15 (all 30 rows).
+# Neutral-site games (DEN 1-0, IND 0-1, NOP 0-2) are inside W/L but outside the home/road split,
+# exactly as the official standings table prints them.
 TEAMS: dict[str, tuple] = {
     "ATL": (7, 6, 3, 3, 4, 3, 118.2, 116.8, 113.3, 111.9, 1.4, 103.55, 48.5),
-    "BKN": (3, 8, 1, 3, 2, 5, 110.2, 115.3, 109.3, 114.4, -5.2, 99.83, 47.0),
+    "BKN": (3, 9, 1, 3, 2, 6, 110.2, 116.4, 109.8, 116.0, -6.2, 99.47, 46.1),
     "BOS": (10, 2, 5, 0, 5, 2, 114.2, 103.1, 117.4, 105.6, 11.7, 96.62, 55.9),
-    "CHA": (4, 8, 3, 4, 1, 4, 98.6, 109.6, 101.8, 113.0, -11.2, 96.92, 42.9),
-    "CHI": (2, 9, 1, 4, 1, 5, 114.4, 127.7, 109.0, 122.0, -12.9, 103.83, 44.0),
-    "CLE": (6, 7, 4, 2, 2, 5, 116.8, 115.8, 116.1, 115.2, 0.9, 99.7, 50.7),
-    "DAL": (7, 5, 5, 2, 2, 3, 113.2, 112.2, 112.5, 111.7, 0.8, 100.5, 50.3),
-    "DEN": (6, 4, 2, 2, 3, 2, 114.5, 113.3, 115.9, 115.1, 0.7, 97.58, 52.2),
-    "DET": (8, 3, 3, 2, 5, 1, 115.5, 107.8, 114.1, 106.9, 7.2, 99.17, 55.3),
+    "CHA": (4, 8, 3, 4, 1, 4, 98.6, 109.6, 101.9, 113.1, -11.2, 96.83, 42.9),
+    "CHI": (3, 9, 1, 4, 2, 5, 114.6, 125.9, 109.4, 120.3, -10.9, 103.81, 44.9),
+    "CLE": (7, 7, 5, 2, 2, 5, 117.5, 115.9, 116.9, 115.4, 1.6, 99.72, 51.2),
+    "DAL": (7, 6, 5, 2, 2, 4, 113.5, 113.3, 112.8, 112.8, 0.0, 100.54, 49.7),
+    "DEN": (7, 4, 2, 2, 4, 2, 114.6, 112.8, 116.0, 114.7, 1.3, 97.67, 52.9),
+    "DET": (8, 4, 3, 2, 5, 2, 115.7, 110.2, 114.1, 109.2, 4.9, 99.48, 53.7),
     "GSW": (8, 5, 6, 1, 2, 4, 116.7, 112.4, 116.1, 112.0, 4.1, 99.66, 51.8),
     "HOU": (10, 3, 7, 1, 3, 2, 116.2, 107.4, 119.3, 110.2, 9.1, 97.42, 55.8),
     "IND": (5, 8, 2, 4, 3, 3, 111.2, 113.2, 110.1, 111.7, -1.5, 101.15, 49.6),
     "LAC": (3, 8, 3, 3, 0, 5, 112.3, 117.5, 110.7, 115.8, -5.1, 100.55, 47.4),
-    "LAL": (11, 2, 5, 1, 6, 1, 122.2, 114.2, 121.6, 113.6, 8.0, 100.5, 54.2),
-    "MEM": (8, 4, 2, 4, 6, 0, 119.9, 111.8, 117.8, 110.0, 7.8, 100.87, 53.2),
-    "MIA": (6, 6, 2, 3, 4, 3, 117.2, 120.1, 113.2, 116.4, -3.2, 102.44, 49.0),
+    "LAL": (11, 2, 5, 1, 6, 1, 122.2, 114.2, 121.6, 113.6, 8.0, 100.50, 54.2),
+    "MEM": (9, 4, 3, 4, 6, 0, 120.6, 111.7, 119.0, 110.4, 8.5, 100.46, 53.9),
+    "MIA": (7, 6, 3, 3, 4, 3, 118.7, 119.8, 114.7, 116.2, -1.5, 102.49, 50.0),
     "MIL": (1, 12, 1, 6, 0, 6, 106.2, 120.2, 105.7, 120.0, -14.2, 100.31, 42.0),
-    "MIN": (9, 3, 5, 1, 4, 2, 119.3, 105.9, 117.2, 103.8, 13.4, 101.08, 56.1),
-    "NOP": (4, 9, 3, 5, 1, 4, 116.5, 125.6, 111.4, 120.2, -8.8, 102.08, 46.2),
+    "MIN": (9, 4, 5, 2, 4, 2, 118.3, 106.8, 116.0, 104.5, 11.5, 101.27, 55.2),
+    "NOP": (4, 10, 3, 6, 1, 4, 115.9, 124.9, 111.3, 120.0, -8.6, 101.83, 45.7),
     "NYK": (6, 6, 4, 3, 2, 3, 109.8, 103.7, 114.5, 108.6, 5.9, 95.63, 53.3),
     "OKC": (8, 5, 5, 0, 3, 5, 111.2, 107.4, 112.7, 109.0, 3.7, 98.58, 53.3),
     "ORL": (5, 7, 1, 4, 4, 3, 108.3, 112.8, 109.7, 113.4, -3.7, 98.23, 47.6),
     "PHI": (10, 3, 5, 2, 5, 1, 111.2, 109.4, 111.0, 109.5, 1.5, 100.04, 50.9),
     "PHX": (5, 6, 5, 3, 0, 3, 111.7, 116.1, 113.8, 117.6, -3.8, 98.45, 48.1),
     "POR": (9, 3, 3, 2, 6, 1, 119.6, 111.8, 118.8, 111.1, 7.7, 100.67, 53.3),
-    "SAC": (1, 11, 0, 7, 1, 4, 108.2, 120.9, 107.3, 119.5, -12.2, 101.0, 42.8),
+    "SAC": (1, 11, 0, 7, 1, 4, 108.2, 120.9, 107.3, 119.5, -12.2, 101.00, 42.8),
     "SAS": (11, 2, 5, 2, 6, 0, 119.5, 106.2, 119.6, 106.6, 13.0, 98.94, 56.7),
     "TOR": (5, 7, 2, 3, 3, 4, 114.2, 112.8, 114.5, 112.8, 1.7, 99.88, 49.3),
-    "UTA": (1, 12, 1, 6, 0, 6, 107.5, 118.6, 105.0, 116.4, -11.3, 100.5, 45.3),
+    "UTA": (1, 12, 1, 6, 0, 6, 107.5, 118.6, 105.0, 116.4, -11.3, 100.50, 45.3),
     "WAS": (4, 9, 2, 3, 2, 6, 110.0, 115.8, 108.7, 114.3, -5.5, 99.63, 47.1),
 }
 
@@ -201,15 +204,15 @@ TEAM_SOURCE = {
 }
 
 # --------------------------------------------------------------------------- the slate
-# From https://www.nba.com/schedule?date=2026-11-15, read 2026-11-14.
+# From https://www.nba.com/schedule?date=2026-11-15 (chunks 0-2) and the /games day-strip,
+# read 2026-11-15 (data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json). Game IDs and
+# ET tips were triple-checked against the schedule page, the day-strip and the tip times
+# printed on the official injury report. Window = today through today+3 days:
+# 2026-11-15 .. 2026-11-18 inclusive (34 games).
 # date, time_et, away, home, game_id, arena, city, national_broadcast, cup_group
-# Window = the next three days, 2026-11-14 .. 2026-11-17 inclusive (27 games).
+# cup_group is blank: no Emirates NBA Cup marker appears on any listing at retrieval
+# (FLAG-V2-CUP-BLANK — blank and flagged, never assumed).
 SLATE = [
-    ("2026-11-14", "19:00", "DEN", "NOP", "0022600231", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
-    ("2026-11-14", "19:30", "DAL", "CLE", "0022600232", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
-    ("2026-11-14", "20:00", "DET", "MIA", "0022600233", "Kaseya Center", "Miami, FL", "NBA TV", ""),
-    ("2026-11-14", "20:00", "BKN", "MEM", "0022600234", "FedExForum", "Memphis, TN", "League Pass", ""),
-    ("2026-11-14", "20:00", "CHI", "MIN", "0022600235", "Target Center", "Minneapolis, MN", "League Pass", ""),
     ("2026-11-15", "13:00", "IND", "PHI", "0022600236", "Xfinity Mobile Arena", "Philadelphia, PA", "League Pass", ""),
     ("2026-11-15", "16:00", "LAL", "PHX", "0022600237", "Mortgage Matchup Center", "Phoenix, AZ", "League Pass", ""),
     ("2026-11-15", "16:30", "CHA", "LAC", "0022600238", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
@@ -225,13 +228,25 @@ SLATE = [
     ("2026-11-16", "19:30", "PHI", "BKN", "0022600248", "Barclays Center", "Brooklyn, NY", "League Pass", ""),
     ("2026-11-16", "19:30", "HOU", "MIA", "0022600249", "Kaseya Center", "Miami, FL", "League Pass", ""),
     ("2026-11-16", "20:00", "POR", "MIN", "0022600250", "Target Center", "Minneapolis, MN", "League Pass", ""),
-    ("2026-11-16", "20:00", "GSW", "NOP", "0022600251", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
+    ("2026-11-16", "21:00", "GSW", "NOP", "0022600251", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
     ("2026-11-16", "21:00", "PHX", "DEN", "0022600252", "Ball Arena", "Denver, CO", "League Pass", ""),
     ("2026-11-17", "19:30", "NYK", "TOR", "0022600253", "Scotiabank Arena", "Toronto, ON", "League Pass", ""),
     ("2026-11-17", "20:00", "POR", "MIN", "0022600254", "Target Center", "Minneapolis, MN", "League Pass", ""),
     ("2026-11-17", "20:00", "DET", "SAS", "0022600255", "Frost Bank Center", "San Antonio, TX", "Peacock / NBC", ""),
     ("2026-11-17", "22:30", "UTA", "LAC", "0022600257", "Intuit Dome", "Inglewood, CA", "League Pass", ""),
     ("2026-11-17", "23:00", "CHA", "LAL", "0022600256", "Crypto.com Arena", "Los Angeles, CA", "Peacock", ""),
+    ("2026-11-18", "19:00", "MEM", "CLE", "0022600258", "Rocket Arena", "Cleveland, OH", "League Pass", ""),
+    ("2026-11-18", "19:00", "HOU", "IND", "0022600259", "Gainbridge Fieldhouse", "Indianapolis, IN", "League Pass", ""),
+    ("2026-11-18", "19:00", "MIL", "MIA", "0022600260", "Kaseya Center", "Miami, FL", "ESPN", ""),
+    ("2026-11-18", "19:00", "PHI", "ORL", "0022600261", "Kia Center", "Orlando, FL", "League Pass", ""),
+    ("2026-11-18", "19:30", "CHI", "BKN", "0022600262", "Barclays Center", "Brooklyn, NY", "League Pass", ""),
+    ("2026-11-18", "19:30", "WAS", "TOR", "0022600263", "Scotiabank Arena", "Toronto, ON", "MNMT/Monumental+", ""),
+    ("2026-11-18", "20:00", "DET", "NOP", "0022600264", "Smoothie King Center", "New Orleans, LA", "League Pass", ""),
+    ("2026-11-18", "20:00", "ATL", "OKC", "0022600265", "Paycom Center", "Oklahoma City, OK", "League Pass", ""),
+    ("2026-11-18", "20:00", "GSW", "DAL", "0022600267", "American Airlines Center", "Dallas, TX", "League Pass", ""),
+    ("2026-11-18", "21:30", "BOS", "DEN", "0022600266", "Ball Arena", "Denver, CO", "ESPN", ""),
+    ("2026-11-18", "22:00", "UTA", "LAL", "0022600268", "Crypto.com Arena", "Los Angeles, CA", "League Pass", ""),
+    ("2026-11-18", "22:00", "PHX", "SAC", "0022600269", "Golden 1 Center", "Sacramento, CA", "League Pass", ""),
 ]
 
 INJURY_PDF_URL = SOURCES["injury_pdf"][1]

@@ -296,12 +296,12 @@ def t_picks(lines):
         breakeven_ml = 1.0 / p_lean if p_lean > 0 else None
         gates = {
             "G1 official inputs": "PASS",
-            "G2 inside 3-day window": "PASS" if "2026-11-14" <= d["date"] <= "2026-11-17" else "FAIL",
+            "G2 inside 3-day window": "PASS" if O.WINDOW_START <= d["date"] <= O.WINDOW_END else "FAIL",
             "G3 estimators agree <= 3.0 pts": "PASS" if d["agreement"] <= 3.0 else "FAIL",
             "G4 |margin| >= 0.15 sigma": "PASS" if d["conviction"] >= 0.15 else "FAIL",
             "G5 >= 10 official games each": "PASS" if d["grade"] != "C" or "games" not in d["grade_reason"] else "FAIL",
             "G6 market price present": "FAIL — no odds feed",
-            "G7 >= 300 settled bets": "FAIL — 167 settled of 300",
+            "G7 >= 300 settled bets": "FAIL — 172 settled of 300",
             "G8 out-of-sample holdout": "PASS",
         }
         failed = [k for k, v in gates.items() if v.startswith("FAIL")]
@@ -321,7 +321,7 @@ def t_picks(lines):
             "cover_note": ("break-even for the SPREAD at our own number, because the line is "
                            "the median of our own distribution"),
             "our_total_fair": f"{d['total']:.1f}",
-            "total_trigger": "needs a market total (G6)",
+            "total_trigger": "fair +100 at our own total; a market total prices via measured σ_tot (G6)",
             "stake": "0.00 u",
             "grade": d["grade"],
             "grade_reason": d["grade_reason"],

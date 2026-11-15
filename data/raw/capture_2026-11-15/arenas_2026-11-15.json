@@ -1,0 +1,307 @@
+{
+ "schema": "nba2.arena-coords.v1",
+ "retrieved_at_utc": "2026-11-15T12:00:00Z",
+ "provenance_note": "Arena names and cities are official (NBA.com schedule pages). Coordinates are third-party (Wikimedia REST summary `coordinates` field = Wikidata P625 geocode) and are labelled THIRD-PARTY everywhere they appear; travel distances derived from them are DERIVED values.",
+ "rows": [
+  {
+   "team": "ATL",
+   "arena": "State Farm Arena",
+   "city": "Atlanta, GA",
+   "lat": 33.75722222,
+   "lon": -84.39638889,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/State_Farm_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "BKN",
+   "arena": "Barclays Center",
+   "city": "Brooklyn, NY",
+   "lat": 40.68266111,
+   "lon": -73.975225,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Barclays_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "BOS",
+   "arena": "TD Garden",
+   "city": "Boston, MA",
+   "lat": 42.36638889,
+   "lon": -71.06222222,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/TD_Garden",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "CHA",
+   "arena": "Spectrum Center",
+   "city": "Charlotte, NC",
+   "lat": 35.225,
+   "lon": -80.83916667,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Spectrum_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "CHI",
+   "arena": "United Center",
+   "city": "Chicago, IL",
+   "lat": 41.88055556,
+   "lon": -87.67416667,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/United_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "CLE",
+   "arena": "Rocket Arena",
+   "city": "Cleveland, OH",
+   "lat": 41.49638889,
+   "lon": -81.68805556,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Rocket_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "DAL",
+   "arena": "American Airlines Center",
+   "city": "Dallas, TX",
+   "lat": 32.79055556,
+   "lon": -96.81027778,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/American_Airlines_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "DEN",
+   "arena": "Ball Arena",
+   "city": "Denver, CO",
+   "lat": 39.74861111,
+   "lon": -105.0075,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Ball_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "DET",
+   "arena": "Little Caesars Arena",
+   "city": "Detroit, MI",
+   "lat": 42.34111111,
+   "lon": -83.055,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Little_Caesars_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "GSW",
+   "arena": "Chase Center",
+   "city": "San Francisco, CA",
+   "lat": 37.76805556,
+   "lon": -122.3875,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Chase_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "HOU",
+   "arena": "Toyota Center",
+   "city": "Houston, TX",
+   "lat": 29.75083333,
+   "lon": -95.36222222,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Toyota_Center_(Houston)",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "IND",
+   "arena": "Gainbridge Fieldhouse",
+   "city": "Indianapolis, IN",
+   "lat": 39.76388889,
+   "lon": -86.15555556,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Gainbridge_Fieldhouse",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "LAC",
+   "arena": "Intuit Dome",
+   "city": "Inglewood, CA",
+   "lat": 33.9451,
+   "lon": -118.3431,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Intuit_Dome",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "LAL",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles, CA",
+   "lat": 34.04305556,
+   "lon": -118.26722222,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Crypto.com_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "MEM",
+   "arena": "FedExForum",
+   "city": "Memphis, TN",
+   "lat": 35.13833333,
+   "lon": -90.05055556,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/FedExForum",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "MIA",
+   "arena": "Kaseya Center",
+   "city": "Miami, FL",
+   "lat": 25.78138889,
+   "lon": -80.18805556,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Kaseya_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "MIL",
+   "arena": "Fiserv Forum",
+   "city": "Milwaukee, WI",
+   "lat": 43.04502778,
+   "lon": -87.91816667,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Fiserv_Forum",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis, MN",
+   "lat": 44.97944444,
+   "lon": -93.27611111,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Target_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "NOP",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans, LA",
+   "lat": 29.94888889,
+   "lon": -90.08194444,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Smoothie_King_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "NYK",
+   "arena": "Madison Square Garden",
+   "city": "New York, NY",
+   "lat": 40.75055556,
+   "lon": -73.99361111,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Madison_Square_Garden",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "OKC",
+   "arena": "Paycom Center",
+   "city": "Oklahoma City, OK",
+   "lat": 35.46333333,
+   "lon": -97.515,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Paycom_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "ORL",
+   "arena": "Kia Center",
+   "city": "Orlando, FL",
+   "lat": 28.53916667,
+   "lon": -81.38361111,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Kia_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "PHI",
+   "arena": "Xfinity Mobile Arena",
+   "city": "Philadelphia, PA",
+   "lat": 39.90111111,
+   "lon": -75.17194444,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Xfinity_Mobile_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "PHX",
+   "arena": "Mortgage Matchup Center",
+   "city": "Phoenix, AZ",
+   "lat": 33.44583333,
+   "lon": -112.07138889,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Mortgage_Matchup_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "POR",
+   "arena": "Moda Center",
+   "city": "Portland, OR",
+   "lat": 45.53166667,
+   "lon": -122.66666667,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Moda_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "SAC",
+   "arena": "Golden 1 Center",
+   "city": "Sacramento, CA",
+   "lat": 38.58036111,
+   "lon": -121.49961111,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Golden_1_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio, TX",
+   "lat": 29.42694444,
+   "lon": -98.4375,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Frost_Bank_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "TOR",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto, ON",
+   "lat": 43.64333333,
+   "lon": -79.37916667,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Scotiabank_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "UTA",
+   "arena": "Delta Center",
+   "city": "Salt Lake City, UT",
+   "lat": 40.76833333,
+   "lon": -111.90111111,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Delta_Center",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  },
+  {
+   "team": "WAS",
+   "arena": "Capital One Arena",
+   "city": "Washington, DC",
+   "lat": 38.89805556,
+   "lon": -77.02083333,
+   "arena_name_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "coords_source": "https://en.wikipedia.org/api/rest_v1/page/summary/Capital_One_Arena",
+   "coords_provenance": "THIRD-PARTY (Wikipedia/Wikidata geocode via the Wikimedia REST summary endpoint, read 2026-11-15). NBA.com publishes no coordinates; flagged FLAG-V2-ARENA-COORDS as third-party geographic reference data."
+  }
+ ]
+}

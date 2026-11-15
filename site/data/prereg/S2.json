@@ -1,0 +1,26 @@
+{
+ "id": "S2",
+ "name": "Total mean-reversion",
+ "type": "single bet",
+ "signal": "Compare our total against the market total; act only on a \u22653.0 pt gap.",
+ "threshold": "see gates: G1-G12 in data/v2/content.json",
+ "universe": "every game in the rolling 3-day window (today..today+3)",
+ "settlement_rule": "settled only from official finals published on nba.com game pages; ties/pushes per the originated line's half-point quoting; no line is staked until gates G6 and G7 pass",
+ "gates_frozen": [
+  "G1",
+  "G2",
+  "G3",
+  "G4",
+  "G5",
+  "G6",
+  "G7",
+  "G8",
+  "G9",
+  "G10",
+  "G11",
+  "G12"
+ ],
+ "frozen_at_utc": "2026-11-15T12:00:00Z",
+ "frozen_by": "arena/98b0eae9-nba2",
+ "prereg_hash": "730bf57d75ea610792ef7dc4701aaa3892cc539c6d30fc3c191d9d3c1a4b3e05"
+}

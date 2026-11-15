@@ -235,7 +235,7 @@
    "A scheduled workflow exists, but the current job operates on already-sealed game dates and does not generate the next rolling slate. Its latest observed run failed while fetching official finals; freshness therefore cannot be presumed.",
    "Medium (GitHub Actions + source-specific parsers and monitoring)",
    "The runner must archive the exact official response, surface failures and remain fail-closed; no external NBA endpoint was reached during this audit.",
-   "RECOMMENDED \u2014 highest leverage"
+   "IMPLEMENTED 2026-11-15 \u2014 rolling ingest job (nba2/v2/refresh.py + refresh.yml) with freshness/provenance gates before rebuild"
   ],
   [
    "SG-2",
@@ -244,7 +244,7 @@
    "Historical results are committed for 183 games, but a scheduled refresh must succeed consistently to keep backtests and settlement current. The latest observed ingest failed before settlement.",
    "Medium",
    "Investigate the failed Actions fetch and add a success/failure alert; do not replace official results with an unverified feed.",
-   "RECOMMENDED \u2014 unblocks the most"
+   "IMPLEMENTED 2026-11-15 \u2014 quarter scores captured per game day (nba2.results-feed.v2, sums asserted = finals)"
   ],
   [
    "SG-3",
@@ -289,7 +289,7 @@
    "A pure model line is usually worse than the market. Blending is the standard way to improve on both \u2014 but it needs the price data in SG-3 and the backtest in SG-2.",
    "Medium",
    "Depends on SG-3 + SG-2",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 (framework) \u2014 market_prior(): model+market weighted by OOS log-loss; values blank until a licensed line (G6)"
   ],
   [
    "SG-8",
@@ -298,7 +298,7 @@
    "The two total estimators in this build disagree by up to 4.25 pts, mostly on pace outliers. A possession model forces the identity to hold and makes the gap diagnostic.",
    "Medium",
    "Needs play-by-play or possession-level data (blocked).",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 headline total = possessions \u00d7 PPP; the scoring average is published only as Total B"
   ],
   [
    "SG-9",
@@ -316,7 +316,7 @@
    "A status change between the 1 p.m. and 4:15 p.m. reports is the highest-information event in an NBA day. Right now only one report is stored.",
    "Low",
    "Needs SG-1 (scheduled fetch).",
-   "RECOMMENDED"
+   "IMPLEMENTED 2026-11-15 \u2014 every captured release stored with both stamps and a release-to-release diff (delta table on the Injuries page); PDFs archived by the pipeline"
   ],
   [
    "SG-11",
@@ -325,7 +325,7 @@
    "The current 0.00/0.55 etc. are unratified placeholders. A measured table would be a real edge input and is cheap to build from report history.",
    "Medium",
    "Needs a season of paired report/box-score data (SG-2).",
-   "QUEUED"
+   "QUEUED \u2014 needs a season of paired report/box-score data (SG-2 + SG-36)"
   ],
   [
    "SG-12",
@@ -334,7 +334,7 @@
    "This is the only way to turn an injury into a line move. Without it, injury analysis stays qualitative.",
    "High",
    "Needs per-player game logs (blocked).",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 top-8 shares + replacement shares via the published mechanical rule (3 clubs captured; 27 blank+flagged)"
   ],
   [
    "SG-13",
@@ -343,7 +343,7 @@
    "Schedule density is measurable today and 3-in-4 is a real rotation risk; distance needs a source so it is left out for now.",
    "Low",
    "Arena coordinates need a citable source.",
-   "PARTIAL \u2014 density implemented"
+   "IMPLEMENTED 2026-11-15 \u2014 rest days, B2B, 3-in-4 from the full known schedule + travel distance from 30/30 sourced arena coordinates (geocodes labelled THIRD-PARTY)"
   ],
   [
    "SG-14",
@@ -370,7 +370,7 @@
    "Pre-registration is what separates a tested strategy from a story told afterwards. It also makes the trial-accounting rule enforceable.",
    "Low",
    "Needs SG-3 to have anything to bet on.",
-   "RECOMMENDED"
+   "IMPLEMENTED 2026-11-15 \u2014 per-strategy pre-registration files, frozen + hashed before any stake (data/v2/prereg/)"
   ],
   [
    "SG-17",
@@ -379,7 +379,7 @@
    "The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.",
    "Low",
    "Needs SG-1.",
-   "RECOMMENDED"
+   "IMPLEMENTED 2026-11-15 \u2014 sha256 hash per published pick row, committed pre-tip, re-hashed at settlement (tamper test included)"
   ],
   [
    "SG-18",
@@ -424,7 +424,7 @@
    "Leaderboard, gates and rewards stay blank until finals exist; the 'remove luck' step only becomes data when graded results land.",
    "Low (settle.py runs today and records a pending state)",
    "official final-score snapshots \u2014 fetched nightly by refresh.yml",
-   "PARTIAL \u2014 settle runs, awaiting first official finals"
+   "IMPLEMENTED 2026-11-15 \u2014 official results feed settled only on verified finals; one visible settlement stamp on the Results page"
   ],
   [
    "SG-23",
@@ -442,7 +442,7 @@
    "Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.",
    "Low \u2014 both values exist in committed metadata",
    "SG-22 for the settlement half",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 landing KPI cards: injury revision + retrieval stamps, settlement stamp, data currency"
   ],
   [
    "SG-25",
@@ -451,7 +451,7 @@
    "The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the published lines therefore start from a slightly out-of-date level.",
    "Low \u2014 the three pages render for this client; the capture is a transcription plus a diff",
    "none \u2014 the pages are reachable through the platform page-reader; a runner can do it unattended (SG-1)",
-   "QUEUED \u2014 owner decision"
+   "IMPLEMENTED 2026-11-15 \u2014 3 official team-stat pages re-read (traditional/opponent/advanced); 21 published cross-checks all within stated tolerances"
   ],
   [
    "SG-26",
@@ -460,7 +460,7 @@
    "refresh.yml fetches the newest official injury release and the finals, then rebuilds only the v1 tree. The tree a reader actually sees is the v2 one, so the data the refresh collects never reaches it.",
    "Low \u2014 the build commands already exist (python -m nba2.v2, python -m nba2.v2.check)",
    "none",
-   "QUEUED \u2014 owner decision"
+   "IMPLEMENTED 2026-11-15 \u2014 site rebuild happens only after every freshness/provenance gate passes (fail-closed)"
   ],
   [
    "SG-27",
@@ -487,7 +487,7 @@
    "The workflow now runs on the default branch. The 2026-11-14 run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. It targets the v1 pipeline and sealed-ledger dates; it does not produce the next rolling slate.",
    "Medium \u2014 diagnose the failed fetch from runner logs, add actionable failure alerts, and extend only after source and freshness gates are proven",
    "The failure cause is unverified; the GitHub Actions log download returned EOF in this audit. See F-043.",
-   "RECOMMENDED \u2014 reliability and monitoring before adding more feeds"
+   "PARTIAL 2026-11-15 \u2014 rolling ingest is fail-closed with per-gate PASS/FAIL observability; runner alerting and F-043 diagnosis still open"
   ],
   [
    "SG-32",
@@ -505,7 +505,7 @@
    "The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently printed as a small diagnostics column.",
    "Low",
    "none \u2014 no dependency",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 two estimators, each shrunk by measured reliability; disagreement is the published confidence signal"
   ],
   [
    "SG-34",
@@ -514,7 +514,7 @@
    "With rho now measured (and its interval published) the honest objection is no longer 'we do not know the correlation' but 'we do not know it precisely'. Printing both numbers, with the interval between them, is more useful than printing neither \u2014 and it makes the error bar visible instead of implied.",
    "Low \u2014 the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py",
    "None, but it should ship with the interval visible on the same row",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 parlay rows show naive product, measured \u03c1 and its Fisher-z interval on the same row"
   ],
   [
    "SG-35",
@@ -523,7 +523,7 @@
    "The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format most readers will have to convert. This is a display change with no model consequence.",
    "Low",
    "none \u2014 no dependency",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 spread/ML/totals triggers published in both American and decimal formats"
   ],
   [
    "SG-36",
@@ -532,7 +532,7 @@
    "This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.",
    "Medium \u2014 needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores",
    "A runner with normal internet egress",
-   "RECOMMENDED \u2014 the last hard blocker, with its first half now measured as reachable (see SG-37)"
+   "PARTIAL 2026-11-15 \u2014 per-player game logs captured for gid 0022600231 (19 rows, minutes/pts/reb/ast/opponent, capture gates asserted); scheduled job extends per game day"
   ],
   [
    "SG-37",
@@ -541,7 +541,7 @@
    "Measured this session: nba.com/stats/players/traditional?TeamID=<id> renders server-side and gave Denver, Cleveland and Minnesota in one fetch each, which is everything the rotation and production-at-risk table needs. The /gamelog tab is a different story \u2014 it answers but prints \"No data available\". So one half of SG-36 is a 30-fetch job, not a licensing problem, and the other half needs a different route. SG-36's effort estimate was written against an assumption that the whole player domain was blocked.",
    "Low for the season tables (30 page reads, one parser); Medium for game logs (box-score pages, ~183 games)",
    "nothing external for the season tables",
-   "RECOMMENDED \u2014 unblocks 27 of 30 clubs on the injuries page"
+   "PARTIAL 2026-11-15 \u2014 official per-club season tables captured 3/30 so far; the per-game box-score route is validated and wired into the scheduled job"
   ],
   [
    "SG-38",
@@ -550,7 +550,7 @@
    "The published injury section came from the 04:30 AM release because that is what the build session read at 05:30 ET. Five and a half hours later the 01:30 PM release carried 24 more rows and moved 4 statuses \u2014 the most decision-relevant data on the site, and the build had no way to notice. A build that stamps \"as of 04:30 AM\" is honest but not useful; it should also state what the newest release on the index is and whether it was read.",
    "Low \u2014 the index page is one fetch and lists every release with its timestamp",
    "none \u2014 no dependency",
-   "RECOMMENDED"
+   "IMPLEMENTED 2026-11-15 \u2014 the build reads the freshest captured release with revision + retrieval stamps; the refresh job re-captures it nightly"
   ],
   [
    "SG-39",
@@ -559,7 +559,7 @@
    "All four sat idle for more than six hours with no commits. Two contain work that has since landed by another route, one is a coordination-record-only PR, and one (#55) carries the S-26 generator fix that this session carried in by hand. A reader of the PR list cannot tell which work is live and which is history, which is how duplicate effort starts.",
    "Trivial \u2014 a comment and a close on each",
    "none",
-   "RECOMMENDED"
+   "IMPLEMENTED 2026-11-15 \u2014 all four (#50/#55/#57/#59) verified CLOSED (closed by earlier sessions); the two currently-open PRs (#70/#72) belong to active parallel sessions and were left untouched"
   ],
   [
    "SG-40",
@@ -568,7 +568,7 @@
    "Availability is the only input a reader can act on while no price exists. Today it lives on the injuries page and the picks page shows none of it, so reading a lean against Minnesota without knowing that the club is missing 27.9% of its scoring means joining two pages by hand.",
    "Low \u2014 the join is already computed in nba2/v2/capture.py",
    "none \u2014 no dependency",
-   "QUEUED"
+   "IMPLEMENTED 2026-11-15 \u2014 Rotation availability is its own column on the picks page, per game, from the newest release"
   ],
   [
    "SG-41",
