@@ -3982,3 +3982,92 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 **Rules this session follows:** sealed ledgers are never rewritten; nothing is inferred or filled
 in — a value that cannot be read from an official page is left blank and flagged; the site is
 never merged broken; small frequent commits with `git pull --rebase` before every push.
+
+---
+
+## Session `arena/fe0ffa49-nba2` — COMPLETION RECORD (2026-11-16 ~16:1x UTC)
+
+**Branch:** `arena/fe0ffa49-nba2` (base `main` @ `32019ac`). **All seven claims F-1…F-7 done.**
+
+### Final state (all re-run immediately before the PR, nothing assumed)
+
+| Check | Result |
+|---|---|
+| `python3 -m unittest discover -s nba2/tests -t .` | **79 OK** |
+| `python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'` | **136 OK** |
+| `python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'` | **64 OK** |
+| `python3 -m unittest discover -s backtest/tests` | **49 OK** |
+| `python3 -m nba2.v2.check` | **OK — 0 structural, 0 semantic** |
+| `python3 -m nba2.v3.check` | **gates 7 pass / 1 fail (advisory G-F3), publishable=True; 0 structural, 0 semantic** |
+| `python3 -m nba2.pipeline.lint` | **LINT OK — 1441 rows across 50 tables, every row sourced, every blank explained** |
+| `python3 tools/check_links_all.py` | **5995 internal links checked across 127 HTML files — ALL INTERNAL LINKS OK** |
+
+### What each claim delivered
+
+| ID | Delivered |
+|----|-----------|
+| F-1 | Board claim read and pushed before any edit. |
+| F-2 | `data/raw/results/results_2026-11-15.json` — **9 official finals**, quarter sums asserted against the official final. Irregularity I-FE0-02 (`0022600240` DAL@BOS `away_quarters: null`, status Final) is flagged, never back-solved. |
+| F-3 | `data/raw/capture_2026-11-16/` — `slate_2026-11-16_to_11-19.json` (**29 games**, IDs `0022600245`–`0022600273`, contiguous), `standings_2026-11-16.json` (30 rows + identity and cross-checks), `injury_report_2026-11-16_0915AM.json` (57 player rows + 15 NOT YET SUBMITTED), `injury_delta_1115_0615PM_to_1116_0915AM.json`. |
+| F-4 | `nba2/v2/official.py` refreshed: `AS_OF = 2026-11-16`, window **11-16 → 11-19**, 29-game `SLATE`, 57 `INJURIES`, standings and advanced stats re-read. |
+| F-5 | Every tree rebuilt and re-verified. **197 official finals, 2026-10-20 → 2026-11-15**, 0 duplicate `game_id`, ΣW = ΣL = 197; standings rebuilt from them match the live capture **30/30** (splits 28/30, both exceptions the NEUTRAL column). Sealed ledgers settled from the completed 11-15 finals. |
+| F-6 | `analysis/session-fe0ffa49-repo-review.md`, `requirements/REPO_REVIEW.json` **RR-29…RR-38**, `suggestions/SUGGESTIONS.json` **S-55…S-59**. |
+| F-7 | PR to `main`, merged, Pages deploy confirmed, PR link recorded below. |
+
+### Defects found by the line-by-line review and fixed here
+
+The three that mattered were all cases where the repository **said** one thing and **did** another:
+
+1. **RR-29 — the v3 ledger seal was not a seal.** `ledger.py::seal()` overwrote the pre-tip
+   seal on *every* build, so a commitment that must be immutable was silently re-issued after
+   the results were known. The history growing 183 → 197 finals moved every v3 margin for the
+   already-Final 11-15 slate, and the build rewrote the seal to match. Now **write-once**, with
+   an append-only divergence log (`data/v3/ledger/seal-divergence-2026-11-15.json`). The
+   authentic seal was restored from git *before* the fix, so the published seal
+   (`34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91`, sealed
+   2026-11-15T11:41:00Z by `arena/e675ac3d-nba2`) is the original, not a re-issue.
+2. **RR-30 — the v2 pre-registration files re-froze themselves.** The prereg writer re-stamped
+   `frozen_at_utc`/`frozen_by` on every run. Now first-freeze-wins; `git checkout
+   data/v2/prereg/` + two rebuilds leaves `git diff data/v2/prereg/` **empty**.
+3. **RR-31 — σ double-counted five games.** `_game_totals()` concatenated the history glob with
+   the 11-15 capture rows, so the five 11-14 finals were counted twice:
+   `n_finals_for_sd()` = 202 for a league that had played 197. Now a `game_id`-keyed union that
+   **raises** on a genuine score disagreement. `measured_total_sd()` = **19.0829** over 197.
+
+Also fixed: **RR-32** five committed finals invisible to the model (outside the history glob);
+**RR-33** `esc(None)` rendering an unexplained blank; **RR-34** front-page counts asserted as
+literals (188 / 34 / 167 / 0-of-30) instead of measured; **RR-35** the injury banner naming a
+different release than the injury table; **RR-36** the v3 frozen window published beside the
+live window with no label; **RR-37** tests encoding the snapshot instead of the invariant;
+**RR-38** the staleness detector not advancing its dated fixture (18 false
+`UNEXPLAINED` rows → 30/30 match, 0 unexplained).
+
+### Irregularities for the owner (recorded, not fixed — each needs a decision, none blocks)
+
+- **I-FE0-01** — two `fetch_page` probes of the Pages host disagree (v1 root vs v2 `site/`),
+  contradicting FLAG-PAGES-01 / F-033. `.github/workflows/pages.yml` uploads `site/`, so v2 is
+  what *should* be served, but this session will not assert a conclusion from two conflicting
+  probes. Re-probe before writing it down.
+- **I-FE0-02** — `0022600240` DAL@BOS `away_quarters: null` with `status: "final"`.
+- **I-FE0-03a** — `stats/teams/traditional` and `/opponent` not re-read; PF/PA are summed from
+  the 197 finals, not transcribed from the stats page. Stated in `official.py`'s header.
+- **I-FE0-03b** — the 11-16 injury PDF lists Ja Morant under **Portland**; printed verbatim.
+- **I-FE0-07** — `data/raw/pdf/` is empty. Bash egress to `ak-static.cms.nba.com` returns
+  HTTP 000, so PDF bytes cannot be stored from this sandbox (requirement 5).
+- **F-043** — the nightly ingest still fails at the official-finals fetch; `gh run view --log`
+  returns EOF from here, so it is not diagnosable in this sandbox.
+- **No 11-18 / 11-19 injury rows exist in any published report.** Teams file by 5 p.m. local the
+  day before. Those cells stay blank and flagged.
+
+### Sources read this session (every one official)
+
+`https://www.nba.com/standings` · `https://www.nba.com/stats/teams/advanced` ·
+`https://www.nba.com/schedule?date=2026-11-16` ·
+`https://www.nba.com/games?date=` (2026-11-15, 11-17, 11-18, 11-19) ·
+`https://official.nba.com/nba-injury-report-2026-27-season/` ·
+`https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf` ·
+`https://statsdmz.nba.com/pdfs/20261115/*_book.pdf` (official gamebooks, quarter scores).
+
+Bash egress to every nba.com host returns HTTP 000; all reads went through the platform
+page-fetch tool. Nothing on this branch was filled in from memory.
+
