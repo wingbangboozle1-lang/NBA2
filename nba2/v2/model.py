@@ -507,7 +507,9 @@ def _game_totals() -> list[float]:
     root = Path(__file__).resolve().parents[2]
     seen: dict[str, float] = {}
     for f in sorted(glob.glob(str(root / "data" / "raw" / "history" / "games_*.json"))):
-        for g in json.load(open(f))["games"]:
+        with open(f) as fh:
+            games = json.load(fh)["games"]
+        for g in games:
             seen[str(g["game_id"])] = g["home_pts"] + g["away_pts"]
     from . import capture2 as C2
     for g in C2.results_rows():

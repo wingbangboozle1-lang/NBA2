@@ -202,7 +202,8 @@
    "requirement": "No strategy may lean on a team whose record sits outside the luck noise band (|z| > 1.96).",
    "verdict": "PASS",
    "measured": "0 of 30 teams outside the band (threshold 0)",
-   "src": "https://www.nba.com/standings"
+   "src": "https://www.nba.com/standings",
+   "n_lucky": 0
   },
   {
    "id": "G10",

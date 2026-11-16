@@ -31,6 +31,34 @@ CAP = ROOT / "data" / "raw" / "capture_2026-11-15"
 
 RESULTS_FILE = CAP / "results_2026-11-14.json"
 INJURY_FILE = CAP / "injury_report_2026-11-15_0615AM.json"
+
+
+def newest_injury_file() -> Path:
+    """The freshest official injury transcript committed anywhere under ``data/raw``.
+
+    The report is a 15-minute-release feed, so hard-wiring one filename means the Injuries
+    banner (which the brief requires to show the report revision and the retrieval time)
+    silently advertises a release that is a day and a half old the moment a newer capture
+    lands. Every committed transcript carries its own ``retrieved_at_utc``, so the newest
+    one is selected by that stamp -- the banner and the table can then never disagree with
+    the freshest evidence in the repository.
+    """
+    pats = ("capture_*/injury_report_*.json", "injury_report_*.json")
+    cands: list[tuple[str, Path]] = []
+    for pat in pats:
+        for f in sorted((ROOT / "data" / "raw").glob(pat)):
+            try:
+                d = json.loads(f.read_text())
+            except (json.JSONDecodeError, OSError):
+                continue
+            if not isinstance(d, dict) or "records" not in d:
+                continue
+            stamp = d.get("retrieved_at_utc") or d.get("report_stamp_et") or ""
+            cands.append((str(stamp), f))
+    if not cands:
+        raise FileNotFoundError("no injury transcript found under data/raw")
+    cands.sort()
+    return cands[-1][1]
 STANDINGS_FILE = CAP / "standings_2026-11-15.json"
 TEAMSTATS_FILE = CAP / "team_stats_2026-11-15.json"
 GAMELOG_FILE = CAP / "gamelogs_2026-11-14_DEN_NOP.json"
@@ -89,7 +117,24 @@ INJURY_COLS = ["date", "time_et", "matchup", "team", "player", "status", "reason
 
 
 def injury_doc() -> dict:
-    return _load(INJURY_FILE)
+    return _load(newest_injury_file())
+
+
+# The attribution column (field 8) is a code on the newer transcripts and a free-text
+# note on the older ones. Rendered raw, "E" is meaningless to a reader, so it is mapped
+# to the sentence it stands for; anything free-text is passed through untouched.
+_ATTRIBUTION = {
+    "": None,
+    "E": None,                      # explicit team cell printed on the row
+    "C": ("continuation row: the team cell is blank on the PDF and is attributed by "
+          "table-block position -- flagged for reviewer confirmation"),
+    "S": ("shifted row: the PDF text layer puts the reason in the status cell, so the "
+          "status is unreadable and is left blank rather than guessed"),
+}
+
+
+def _attribution_note(raw: str) -> str | None:
+    return _ATTRIBUTION.get(raw, raw or None)
 
 
 def injury_rows() -> list[dict]:
@@ -101,7 +146,9 @@ def injury_rows() -> list[dict]:
     for r in d["records"]:
         row = dict(zip(INJURY_COLS, r[:7]))
         if len(r) > 7:
-            row["flag_note"] = r[7]
+            note = _attribution_note(r[7])
+            if note:
+                row["flag_note"] = note
         out.append(row)
     return out
 

@@ -99,7 +99,9 @@ class TestMeasuredDispersion(unittest.TestCase):
         root = Path(__file__).resolve().parents[2]
         ids = set()
         for f in glob.glob(str(root / "data" / "raw" / "history" / "games_*.json")):
-            for g in json.load(open(f))["games"]:
+            with open(f) as fh:
+                games = json.load(fh)["games"]
+            for g in games:
                 ids.add(str(g["game_id"]))
         self.assertEqual(M.n_finals_for_sd(), len(ids))
         sd = M.measured_total_sd()
@@ -229,14 +231,30 @@ class TestLedgerHashes(unittest.TestCase):
 
 class TestInjuryStamps(unittest.TestCase):
     def test_revision_and_retrieval_both_published(self):
+        # SG-21: the banner must name the report revision AND when it was retrieved. Neither
+        # is a constant -- the league publishes every 15 minutes, so the stamp is whatever
+        # the freshest committed transcript says. Assert the shape, not a remembered time.
         meta = C2.injury_meta()
-        self.assertIn("06:15", meta["revision_time_et"])
-        self.assertTrue(meta["retrieval_time_utc"].startswith("2026-11-15"))
+        self.assertRegex(meta["revision_time_et"], r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2} [AP]M ET$")
+        self.assertRegex(meta["retrieval_time_utc"], r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
         self.assertTrue(str(meta["pdf_url"]).startswith("https://"))
+        # the banner must point at the NEWEST committed release, never an older one
+        self.assertEqual(C2.injury_doc()["report_stamp_et"], meta["report_stamp_et"])
+        self.assertEqual(C2.newest_injury_file(), C2.newest_injury_file())
+        import glob
+        newest = max(
+            (f for f in glob.glob(str(C2.ROOT / "data" / "raw" / "capture_*" / "injury_report_*.json"))),
+            key=lambda f: __import__("json").loads(open(f).read()).get("retrieved_at_utc", ""))
+        self.assertEqual(str(C2.newest_injury_file()), newest)
 
     def test_rows_carry_the_report_fields_verbatim(self):
+        # Row count belongs to the transcript, not to the test: it changes every release.
         rows = C2.injury_rows()
-        self.assertEqual(len(rows), 101)
+        self.assertEqual(len(rows), len(C2.injury_doc()["records"]))
+        self.assertGreater(len(rows), 0)
+        for r in rows:
+            self.assertTrue(r["matchup"], r)
+            self.assertTrue(r["team"], r)          # every row is attributed to a club
         not_sub = [r for r in rows if "NOT YET SUBMITTED" in (r.get("reason") or "")]
         self.assertGreater(len(not_sub), 0, "unfiled clubs must be published as NOT YET SUBMITTED")
         for r in not_sub:
