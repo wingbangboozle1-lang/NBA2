@@ -14,7 +14,7 @@ message or an earlier session's summary.
 | GitHub Actions **job logs** | **not reachable** | `gh run view --log-failed` → `EOF` from the blob host (carried defect F-043) |
 
 The first row matters more than the fourth. Three earlier sessions published "the official
-podfs are unreachable" as a standing limitation; that is true of *bash egress from a sandbox*
+PDFs are unreachable" as a standing limitation; that is true of *bash egress from a sandbox*
 and false of the fetch tool. This session read four official documents with it.
 
 ## 1. Defects found, each reproduced before it was fixed
