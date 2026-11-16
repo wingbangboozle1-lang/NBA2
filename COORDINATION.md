@@ -3689,3 +3689,61 @@ should win on any conflict inside those two files. `index.html` is untouched.
   cancelled when the subsequent concurrent PR #76 main push superseded it; its build had
   succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
   live HTTP response for that later deployment is claimed.
+
+---
+
+## Session `arena/21208211-nba2` — CLAIM (2026-11-16, branch `arena/21208211-nba2`, base `1c48226` = `main` @ PR #81 merge)
+
+**Role.** v3 rolling-slate refresh. The brief's first requirement is a scheduled job that
+refreshes the official schedule, standings, team statistics and injury report for each rolling
+slate, and rebuilds **only after** freshness and provenance gates pass. The v3 pipeline
+(`nba2/v3/**`) already implements the gates and the two-estimator/pinned-HCA/luck/poss×PPP
+model, but its committed snapshot is **as-of 2026-11-15** with window 11/15→11/18. Today is
+2026-11-16, the 11/15 slate is final, and the window has not rolled forward. This session rolls
+it forward one day and re-cuts every model input from fresh official captures, then rebuilds and
+verifies.
+
+**State read at claim time (verified, not assumed).** `main` = `1c48226`; working tree clean; this
+branch is at the same commit. Five PRs are open and belong to other sessions — **#70**
+(`arena/d09f8d1e`), **#72** (`arena/04a61ac0`), **#78** (`arena/56b96bf0`), **#80**
+(`arena/0429aad7`), **#82** (`arena/f8f8f2b8`). Their file scopes cover `COORDINATION.md`,
+`README.md`, `data/raw/**`, `data/site.json`, `data/site-built.json`, `data/v2/**`, `data/settlement.json`,
+`nba2/v2/refresh.py`, `.github/workflows/**` and several `analysis/`/`audit/` files. **This session
+touches none of those** (COORDINATION.md only as append-only, below). Sandbox egress is restricted to
+github.com/pypi/npm; direct `curl` to nba.com fails at TLS, but the platform page-fetch tool reaches
+`www.nba.com`, `official.nba.com` and `ak-static.cms.nba.com` (verified live this session with the
+standings page). Every capture records its method, URL and retrieval time.
+
+**File scope claimed (nothing outside this list is edited):**
+* `COORDINATION.md` — this section + the completion record, **append-only** (no other session's text edited).
+* `nba2/v3/**` — the published-tree generator (`official.py`, `model.py`, `build.py`, `gates.py`,
+  `check.py`, `playerlogs.py`, `ledger.py`, `rotation.py`, `test_v3.py`).
+* `data/v3/**`, `site/**` — regenerated artefacts of that generator (never hand-edited).
+* `data/raw/capture_2026-11-16/**` — **new dated snapshot files only**; existing snapshots are never
+  edited, only superseded by new dated files.
+* `analysis/session-21208211-*.md` (new), `README.md` (row-count sync only, prose preserved).
+
+**Not claimed / not edited (owned by the open PRs above or by finished sessions; requests logged
+here instead):** `docs/**`, `dashboard/**`, `pages/**`, root `*.html`, `verified/**`,
+`originated/**`, `backtest/**`, `archive/**`, `tools/**`, `scripts/**`, `nba2/pipeline/**`,
+`nba2/models/**`, `nba2/v2/**`, `data/site.json`, `data/site-built.json`, `data/settlement.json`,
+`data/raw/ledger/**` (sealed — read-only), `.github/workflows/**`, `requirements/**`,
+`suggestions/**`, and the other sessions' `analysis/`/`audit/` files.
+
+**Rules this session holds itself to.** A value is published only if the official document was
+fetched in this session (or reproduced from a committed snapshot by running committed code);
+anything unconfirmable stays blank and is flagged, never inferred; the two sealed v3 ledgers are
+never rewritten except by the settlement path; flagged irregularities do not block the merge but
+appear on the Flagged-for-Review page with their source link; the site is never merged broken.
+
+| ID | Task | Status | File scope |
+|----|------|--------|-----------|
+| N-01 | Board claim + push before any edit | in progress | `COORDINATION.md` (this entry) |
+| N-02 | Live official capture: rolling slate 2026-11-16 → 2026-11-19 | claimed | `data/raw/capture_2026-11-16/slate_*.json` |
+| N-03 | Live official capture: standings + the three team-stat pages re-read | claimed | `data/raw/capture_2026-11-16/{standings,team_stats}*.json` |
+| N-04 | Injury release(s) for 11/16 game-day + 11/17 day-before; archive the PDF + diff vs prior | claimed | `data/raw/capture_2026-11-16/injury_*` |
+| N-05 | 11/15 finals (all games now complete) with quarter scores | claimed | `data/raw/capture_2026-11-16/results_*.json` |
+| N-06 | Per-player game logs for the 11/15 games (brief item 23; covers injury-report players) | claimed | `data/raw/capture_2026-11-16/{gamebooks,gamelogs}_2026-11-15.json` |
+| N-07 | Update `nba2/v3/official.py` + `playerlogs.py` to the fresh snapshot; rebuild | claimed | `nba2/v3/**`, regenerated `data/v3/**`, `site/**` |
+| N-08 | Full checker chain (v3 selftest/check, v2 check, links, tests, crosscheck) | claimed | repo-wide (read-only runs) |
+| N-09 | Record sources, verification, irregularities; PR → main, merge, confirm Pages | claimed | `COORDINATION.md` |
