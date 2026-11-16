@@ -3690,6 +3690,56 @@ should win on any conflict inside those two files. `index.html` is untouched.
   succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
   live HTTP response for that later deployment is claimed.
 
+## Session `arena/051e7a06-nba2` — CLAIM (2026-11-16 UTC, branch `arena/051e7a06-nba2`, base `1c48226` = `main` @ PR #81 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `1c48226`; this branch is at the same commit; working tree clean.
+- Open PRs at claim time: #70 (`arena/d09f8d1e-nba2`), #72 (draft, `arena/04a61ac0-nba2`), #78 (`arena/56b96bf0-nba2`), #80 (`arena/0429aad7-nba2`), #82 (`arena/f8f8f2b8-nba2`).
+- GitHub Pages API: `build_type: legacy`, `source: main /`, latest build `building` for >1 h (queued runners). The Pages source remains an owner decision (FLAG-PAGES-01 / F-033).
+- Sandbox shell egress to `www.nba.com`, `ak-static.cms.nba.com`, `official.nba.com`, `statsdmz.nba.com` = HTTP 000 (verified with `curl` at 02:0x UTC). The platform page-fetch tool **does** reach `official.nba.com` (verified). Binary PDFs are not retrievable through either path, so this session cannot store PDF bytes.
+- Gap map `analysis/session-a6d81367-brief-gap-map.md` item 4 / IR-1 is confirmed in code: `nba2/pipeline/settle.py::find_finals()` picks the newest `data/raw/finals_*.json` **by filename** (`finals_all.json`, which holds only the nine 11/13 finals). The five official 11/14 finals in `data/raw/capture_2026-11-15/results_2026-11-14.json` (including `0022600231` DEN@NOP, which is in the sealed 11/13 and 11/14 ledgers) are never read. `data/settlement.json` therefore reports 0 of 22 and 0 of 27 games settled.
+
+**Task claimed by this session (file scope; nothing outside this list is edited):**
+
+| ID | Task | Status | Owner | File scope | Verification rule |
+|----|------|--------|-------|-----------|-------------------|
+| U-01 | Board claim + push before any edit | in progress | `arena/051e7a06-nba2` | `COORDINATION.md` (append-only) | pushed immediately |
+| U-02 | Settle from the **union** of committed official final-score captures, keyed by `game_id`; fail closed on conflicting scores; reject any record whose quarter scores do not sum to the official final | unclaimed→in progress | `arena/051e7a06-nba2` | `nba2/pipeline/settle.py`, `nba2/models/ledger.py` (new function only; `settle()` behaviour unchanged) | unit tests on the failure paths; the five 11/14 finals are checked against their own LINESCORE quarter sums before use |
+| U-03 | Regression tests for U-02 | in progress | `arena/051e7a06-nba2` | `nba2/tests/test_settle_union.py` (new file) | `python -m unittest discover -s nba2/tests -t .` |
+| U-04 | Regenerate `data/settlement.json` by running `python -m nba2.pipeline.settle` | in progress | `arena/051e7a06-nba2` | `data/settlement.json` | sealed-ledger seals re-verified before and after (`data/raw/ledger/**` is read-only) |
+
+### Session `arena/051e7a06-nba2` — completion record (2026-11-16 UTC)
+
+**Status:** U-01 to U-04 done. Everything else in the 2026-11-16 brief is **not** done in this session, and the reasons are listed below rather than claimed.
+
+**What changed (U-02, the defect in gap-map item 4 / IR-1):**
+- `nba2/pipeline/settle.py` no longer picks "the newest `finals_*.json` by name". It reads the **union** of every committed official final-score capture (`data/raw/finals_*.json` and `data/raw/capture_*/results_*.json`), keyed by `game_id`.
+- A record is accepted only if: integer `game_id`, integer scores, an `https` URL on `www.nba.com` / `nba.com` / `official.nba.com`, status `final` when present, and quarter scores (when present) that sum to the official final. Records that fail are listed in `data/settlement.json` under `finals_rejected`, never corrected.
+- Two sources with different scores for the same game is a **FINALS CONFLICT**: settlement is refused and `data/settlement.json` is not rewritten (exit 3).
+- `nba2/models/ledger.py`: new `settle_records()`; `settle()` keeps its behaviour and delegates to it.
+- `data/settlement.json` regenerated with `python -m nba2.pipeline.settle`. Result: **sealed-2026-11-13: 5/22 games settled; sealed-2026-11-14: 5/27**. The five settled games are the official 11/14 finals (DEN@NOP, DAL@CLE, DET@MIA, BKN@MEM, CHI@MIN), each with a source link and quarter-sum check. The gates stay **BLOCKED** (5 settled bets vs 300 needed; no market prices), which is the correct answer.
+- The 14 verified finals (9 from 11/13 with no quarter scores — flagged `quarters_verified: false` — and 5 from 11/14 with verified quarters) have **no conflicts** (checked by the loader).
+
+**Verification performed:**
+- `python3 -m unittest discover -s nba2/tests -t .` → 84 tests OK (70 before; +14 in `nba2/tests/test_settle_union.py`, which covers every failure path: union, conflict, identical duplicate, bad quarter sum, non-official URL, non-final status, non-integer / bool score, games-key shape, partial settlement, pending, and a regression on the five committed 11/14 finals).
+- Sealed ledgers verified (`cf7dedc6…` 22 predictions, `c841e8f3…` 27 predictions) before and after settlement; `data/raw/ledger/**` **not modified**.
+- `python3 -m nba2.pipeline.build_site_data && python3 -m nba2.pipeline.build_site` → regenerated; `python3 -m nba2.pipeline.lint` → LINT OK (1426 rows / 50 tables).
+- `python3 -m nba2.v2.check` → OK (0/0); `python3 -m nba2.v3.check` → OK (0/0; advisory gate G-F3 unchanged, pre-existing); `nba2/v3` tests 41 OK; `backtest/tests` 49 OK; `tools/check_links_all.py` → ALL INTERNAL LINKS OK (124 HTML files, 5,759 internal links).
+- Sources for the five 11/14 finals: the committed capture `data/raw/capture_2026-11-15/results_2026-11-14.json` (its `source_url` values, e.g. https://www.nba.com/game/den-vs-nop-0022600231, and its LINESCORE-based quarter scores, re-summed by the loader).
+
+**Cross-scope change (logged; CI parity requires it):** the v1 CI chain (`ci.yml`) fails "if the committed site differs from a rebuild". Because `build_site_data` reads `data/settlement.json`, the settlement change regenerates these committed files — and nothing else:
+- `data/site.json` — the `E-04-settle` row text and the `FLAG-SET-01` text (5/22, 5/27 instead of 0/22, 0/27), plus the input digest.
+- `pages/flagged-review.html`, `pages/session-audit.html` — the same settlement sentence (one line each).
+- `site/methodology.html` — one line: the nba2/tests count, 70 → 84, counted from the files by the v2 build.
+These are deterministic outputs of the committed code, not hand edits. They touch files that PR #70 (`arena/d09f8d1e-nba2`) and the integration role own; **PR #70 must rebase onto this change**, and its owner should regenerate rather than hand-merge these lines.
+
+**Not done in this session (honest gaps, carried to the board; no claim made):**
+- **Injury PDF storage (brief item 5).** The shell cannot reach `ak-static.cms.nba.com` (HTTP 000), and the platform fetch tool returns parsed text, not PDF bytes. The PDFs cannot be stored byte-for-byte from here. The official release index was reached (`https://official.nba.com/nba-injury-report-2026-27-season/`), so a text-transcript store could be built later, labelled as a transcript and not as the PDF.
+- **Scheduled refresh failing** (gap-map item 1): owned by open PR #70 / draft #72.
+- **Settled-result stamp on the v2 site** (brief item 21): the v2 `site/official-results.html` still reads its own snapshot, not `data/settlement.json`. Wiring it is a `nba2/v2/**` change, owned by PR #72, so it is logged for the integration session.
+- **Pages:** `build_type: legacy`, `source: main /` (FLAG-PAGES-01 / F-033), with a build stuck in `building` at claim time; the Pages source change is an owner decision.
+- **Market-anchored prior (brief item 18):** blocked; there is no licensed odds feed in the repo (G6).
+- **Flagged-for-Review page entries** for the items above: not added here. `site/flagged.html` and `nba2/v2/content.py` are owned by open PRs; the integration session should add them.
 ## Session `arena/e73ca9d5-nba2` — CLAIM (2026-11-16 ~02:15 UTC, branch `arena/e73ca9d5-nba2`, base `1c48226` = `main` @ PR #81 merge)
 
 **Why this scope.** The brief-gap map (`analysis/session-a6d81367-brief-gap-map.md`) lists the settlement defect IR-1 as
@@ -3853,3 +3903,22 @@ captured). All are on the relevant pages with their source links.
 **Sealed ledgers:** `data/raw/ledger/**` byte-identical across the whole session (never
 rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 `34e144c635b83b89`.
+
+### Session `arena/051e7a06-nba2` — SUPERSEDED record (2026-11-16 UTC, appended after the merge with `origin/main`)
+
+**What happened (logged per protocol).** My claim (U-01…U-04, commit `38d9e99`) and the settlement fix in commit `ee38d8a` covered the same defect as session `arena/e73ca9d5-nba2` (its claim, timed "~02:15 UTC", appears on the board on `main`). I read the board on my base (`1c48226`) and did not see that claim, so the two tasks overlapped. Session `e73ca9d5` merged first (PR #85, then PR #87). **Its implementation supersedes mine.** I did not overwrite it.
+
+**Decision.** This branch's code and data changes were dropped, and the branch was reset to `origin/main`'s tree (no edits to `nba2/pipeline/settle.py`, `nba2/models/ledger.py`, `nba2/tests/**`, `data/**`, `pages/**`, `site/**`). The only change this branch keeps is this board record. PR #83 is retitled to say so and merged as a board-only change.
+
+**What I checked on `main` (`origin/main` in a detached worktree, removed after use; no new branch created):**
+- `python3 -m unittest discover -s nba2/tests -t .` → 79 tests OK on `main`.
+- `python3 -m nba2.pipeline.settle` → "official finals: 20 settled game(s) from 5 committed source file(s); 0 conflict(s); 0 rejected quarter row(s)"; sealed-2026-11-13: 11/22 settled; sealed-2026-11-14: 11/27 settled; gates BLOCKED (correct). Both seals verified.
+- `python3 -m nba2.pipeline.lint` → LINT OK (1427 rows / 50 tables).
+- Not re-fetched here: the official values themselves. Their sources are the committed captures named in `data/raw/official_finals_union.json` (each record lists its source URL), which were not independently re-read in this session.
+
+**Irregularities for review.**
+- I-051E-01: duplicate claim. Two sessions claimed the same settlement task within minutes of each other. I should have fetched `origin/main` before claiming. Cause: stale base. Resolution: the merged work stands; this branch adds nothing to it.
+- I-051E-02: CI queue stall. From ~02:19 to ~03:54 UTC on 2026-11-16, GitHub Actions showed 0 jobs in progress across the repo (12 queued, 3 pending, all sessions). Jobs started after ~03:54 UTC. No code change was needed.
+- I-051E-03: GitHub Pages. The Pages build for `main` stayed `building`/queued through the same window. The deploy result is still to be confirmed (see the PR record below).
+
+**Items this session did not complete (carried, not claimed):** injury-PDF byte storage (the sandbox cannot reach `ak-static.cms.nba.com` and the fetch tool returns text, not PDF bytes); the scheduled refresh (PR #70 / #72); the Pages source setting (FLAG-PAGES-01 / F-033, owner decision); the market-anchored prior (no odds feed, G6); Flagged-for-Review entries for the above (owned by open PRs; integration session).
