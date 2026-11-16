@@ -27,7 +27,7 @@ No fetched value or new factual NBA game record is published by this change. All
 
 - `python3 -m unittest nba2.v2.test_refresh_gates nba2.v2.test_session2` — 44 tests passed.
 - `python3 -m unittest discover -s nba2/tests -t .` — 79 tests passed.
-- `python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'` — 142 tests passed.
+- Before integrating the concurrent PR #89 mainline change, `python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'` — 142 tests passed. After integrating PR #89 (which added four v2 test cases), the combined v2 suite passed 146 tests.
 - `python3 -m unittest nba2.v3.test_gameflow nba2.v3.test_trials nba2.v3.test_v3` — 64 tests passed.
 - `python3 -m unittest discover -s backtest/tests -t .` — 49 tests passed.
 - `python3 -m nba2.v2` then `python3 -m nba2.v2.check` — build succeeded; 0 structural / 0 semantic issues.
