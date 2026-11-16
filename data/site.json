@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "598ba97d85e97e9bf231c1494a829c8053898652a4ab9e3c1fe8535e42930acf",
+  "input_digest": "33037189081d2ecf03641a2d7e7725e7b061151f79aba8758c840b1aa27549a7",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27721,7 +27721,7 @@
   "requirements": {
    "title": "Requirements register",
    "blurb": "Every requirement in the brief, decomposed to something a reviewer can say yes/no to. Status is only 'met' when the artefact exists in the repository.",
-   "source_note": "Decomposed from the project brief (Arena session request of 2026-11-13) plus the engineering requirements needed to satisfy it. Status is a self-assessment against files in this repository, reviewed by a human owner next.",
+   "source_note": "Decomposed from the project brief (Arena session request of 2026-11-13) plus the engineering requirements needed to satisfy it. Status is a self-assessment against files in this repository, reviewed by a human owner next. | 2026-11-16 arena/4f780342-nba2: rows R-003, R-009, R-010, R-011, R-014, R-044 and R-102 updated against the v4 settlement and injury work in PR #99; every claim in the 'how' text is reproducible by a committed command.",
    "columns": [
     {
      "key": "id",
@@ -27815,8 +27815,8 @@
       "requirement": "Research and develop strategies that generate useful signals",
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
       "status": "partial",
-      "owner": "arena/20c4f2f9",
-      "how": "9 strategies registered in nba2/config.py::STRATEGIES; all 9 now have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16, including S-08 (inputs blocked, documented) and S-09 (meta). Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/d2dd7c8e-nba2: added the S6-S9 pre-registration files so pre-registration is complete per strategy.",
+      "owner": "arena/4f780342-nba2 (updated)",
+      "how": "9 strategies registered in nba2/config.py::STRATEGIES; all 9 have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16. Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/4f780342-nba2: the settlement surface now grades all three seals on one table (37 graded rows / 14 distinct games), so the gate measurements have a larger settled sample than before; nothing is promoted on it (14 games is one week).",
       "priority": "P0"
      },
      "source": {
@@ -27966,7 +27966,7 @@
       "acceptance": "Correlations computed where data exists; band + sign-stability where it does not",
       "status": "partial",
       "owner": "arena/b3914335",
-      "how": "v4 measures rho on the same-game total-vs-margin pair from 196 official finals: r=-0.038, CI95 [-0.177, 0.103]. Published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only.",
+      "how": "v4 measures rho on the same-game total-vs-margin pair over 196 official finals: r=-0.038, CI95 [-0.177, 0.103], published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only. | 2026-11-16 arena/4f780342-nba2: unchanged this session (cross-checked, not re-measured).",
       "priority": "P0"
      },
      "source": {
@@ -27990,8 +27990,8 @@
       "requirement": "Remove luck from the equation",
       "acceptance": "Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL",
       "status": "partial",
-      "owner": "arena/b3914335",
-      "how": "v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|<=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked, which is the honest answer rather than a manufactured one. Still partial because the acceptance criterion also wants CLV, bootstrap CI and multiple-testing control on the leaderboard, and CLV is impossible with no market feed (F-V4-04).",
+      "owner": "arena/4f780342-nba2 (updated)",
+      "how": "v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|<=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked. | 2026-11-16 arena/4f780342-nba2: added a settlement-level luck control that is a real statistical test rather than a product of probabilities - p_at_least_observed_hits (Poisson-binomial tail) = 0.0425 for 12/14 distinct correct winners against 8.855 expected under the seals' own probabilities. Read that, not the 0.857 hit rate. Still partial: CLV is impossible with no market feed (F-V4-04).",
       "priority": "P0"
      },
      "source": {
@@ -28015,8 +28015,8 @@
       "requirement": "Build selectively skill-based strategies",
       "acceptance": "Promotion requires measured edge surviving the luck checks; abstention is a first-class output",
       "status": "partial",
-      "owner": "arena/b3914335",
-      "how": "The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. Settlement publishes p_observed_run_under_model=0.080 against an expected 6.87 hits for the 9/9 run, which is the number that stops 9/9 being read as skill.",
+      "owner": "arena/4f780342-nba2 (updated)",
+      "how": "The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. | 2026-11-16 arena/4f780342-nba2: the settlement now publishes a Poisson-binomial tail (0.0425) beside the 0.857 hit rate, and the seal-level breakdown shows the run is driven by the v3 seal (9/9 on heavy favourites); the v1 seals scored 12/14 on the same overlapping dates. Abstention remains the published output.",
       "priority": "P0"
      },
      "source": {
@@ -28090,8 +28090,8 @@
       "requirement": "Provide game flow analysis",
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
       "status": "partial",
-      "owner": "arena/20c4f2f9",
-      "how": "Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is now built from official quarter scores (nba2/v3/gameflow.py, lategame.html) with the inflation-adjusted control total. Pace / foul-flow still needs play-by-play (R-47, blocked). | 2026-11-16 session arena/d2dd7c8e-nba2: built the quarter-score late-game decomposition (the part measurable without play-by-play).",
+      "owner": "arena/4f780342-nba2 (updated)",
+      "how": "Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is built from official quarter scores. | 2026-11-16 arena/4f780342-nba2: the result feed and settlement now carry per-game quarter scores for every committed final (11/14 and 11/15), with each split printed beside its own sum so the identity is visible; a period row that does not sum to the final is withheld, not adjusted.",
       "priority": "P1"
      },
      "source": {
@@ -28841,7 +28841,7 @@
       "acceptance": "Per-player per-game box score with minutes, plus on/off",
       "status": "partial",
       "owner": "data vendor / owner",
-      "how": "per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured | 2026-11-15 session arena/f8f8f2b8-nba2: 193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus the 19 rows for 2026-11-14 DEN@NOP already in the repo. Player minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score (they did not play on 11-13).",
+      "how": "193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus 19 rows for 2026-11-14 DEN@NOP. Player-minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score. | 2026-11-16 arena/4f780342-nba2: not extended this session - the injury release carries no player-level production, and the box-score capture needs a runner that can reach statsdmz (data/raw/egress_probe.json now measures that from CI).",
       "priority": "P0"
      },
      "source": {
@@ -29292,7 +29292,7 @@
       "acceptance": "stats.nba.com equivalent reachable from the build environment",
       "status": "blocked",
       "owner": "owner (you)",
-      "how": "unblocks injury impact, props, and combo correlation",
+      "how": "unblocks injury impact, props, and combo correlation. | 2026-11-16 arena/4f780342-nba2: partially measured. The official injury releases ARE reachable from the platform fetch tool, and 83 rows of the 11/16 01:00 PM release are now stored (nba2/v4/injury_renderings.py) and parsed with zero unread cells. What is NOT reachable is per-player production: box scores and gamebooks live on statsdmz.nba.com, and whether a runner can reach them is now measured by probe-egress.yml rather than assumed.",
       "priority": "P0"
      },
      "source": {
@@ -29877,7 +29877,7 @@
   "questions": {
    "title": "Open questions — the decision list",
    "blurb": "Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.",
-   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.",
+   "source_note": "Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. | 2026-11-16 arena/4f780342-nba2: added Q-40..Q-43 from the injury-release and settlement work; each answer is re-derivable from a committed command, and Q-40 names the exact rows where the earlier transcription was wrong.",
    "columns": [
     {
      "key": "id",
@@ -30860,9 +30860,133 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-40",
+     "values": {
+      "id": "Q-40",
+      "question": "Was the hand-transcribed injury data the earlier sessions published actually faithful to the official PDF?",
+      "have": "Checked 2026-11-16 against the 70-row transcription committed by session arena/b3914335-nba2 (preserved byte-for-byte as data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json). It was not: Cleveland's Tyson, Jaylon was recorded Questionable where the official 09:30 AM PDF prints Doubtful, and five Golden State rows (Curry, Moody, Porzingis, Santos, Williams) were published with a blank status although the PDF carries Out/Out/Out/Questionable/Out. The published site said 'F-V4-06: status column lost in extraction'; the column was not lost, it was not read.",
+      "missing": "Nothing for these two releases. The general risk remains for any release read only as text.",
+      "how": "Run python -m nba2.v4.injury_diff and read cross_session_check: every difference is listed with both PDFs linked. Fix already applied: nba2/v4/injury_parse.py assigns every cell by content type, and nba2/v4/injury_renderings.py stores the verbatim rendering instead of a transcription.",
+      "impact": "High. It means the site's injury table can understate a player's availability, which changes the rotation estimate and therefore any line that depends on it.",
+      "severity": "RESOLVED - root cause fixed, superseded file retained for review"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-41",
+     "values": {
+      "id": "Q-41",
+      "question": "Do consecutive official injury releases actually change within a single day, or is the 15-minute cadence cosmetic?",
+      "have": "Measured 2026-11-16 between the 09:30 AM and 01:00 PM ET releases: two real status changes (Miami's Larsson, Pelle Questionable to Doubtful; Memphis's Stewart, Isaiah Questionable to Out), one reason-only change, 19 player rows added and 4 removed as clubs filed, 10 clubs still NOT YET SUBMITTED at 01:00 PM.",
+      "missing": "No measurement yet of how often a changed status flips a game's projected spread; that needs the minutes model and per-player production, which is R-044/R-102.",
+      "how": "python -m nba2.v4.injury_diff writes data/v4/injury/releases.json; the diff is rendered on v4-injuries.html.",
+      "impact": "Medium. It justifies storing every release rather than one per day, and it means a line sealed at 09:30 is stale by 13:00 for at least two players.",
+      "severity": "ANSWERED - measured"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-42",
+     "values": {
+      "id": "Q-42",
+      "question": "Is the sealed ledger's 9/9 winner record evidence of skill, and how should it be quoted now that more seals settled?",
+      "have": "Graded 2026-11-16 across all three seals: 37 sealed rows settled, but only 14 DISTINCT games - the seals overlap. On the distinct games the seals picked 12 winners, against 8.855 expected under their own probabilities. The Poisson-binomial chance of at least 12 is 0.0425. Summing the three seals would quote 37 games, which would be a three-fold overstatement.",
+      "missing": "A settled sample large enough to separate skill from luck at a useful power. Fourteen games in one week cannot; the leaderboard stays unallocated until the gates measure.",
+      "how": "python -m nba2.v4.settlement prints the per-seal and distinct-game figures and the tail probability.",
+      "impact": "High for presentation, none for staking: the bet surface still publishes zero rows. Quoting the 0.857 hit rate without the 0.0425 tail and the 14-game denominator would overstate the result.",
+      "severity": "ANSWERED - with a published caveat"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-43",
+     "values": {
+      "id": "Q-43",
+      "question": "Can the official injury PDFs be archived at byte level, or is F-V4-01 permanent?",
+      "have": "Partially. Bash egress to ak-static.cms.nba.com is TLS-reset from the development sandbox (reproduced 2026-11-16), so a build cannot download them. The platform page-fetch tool CAN read them, which is how the rows are stored. Byte archiving now runs from a GitHub runner via python -m nba2.v4.injury_ingest, which writes a manifest with byte length and sha256 per file, or the exact error; and .github/workflows/probe-egress.yml measures which official hosts a runner reaches.",
+      "missing": "A scheduled run of probe-egress.yml and injury_ingest from a runner: their first results are what close or confirm F-V4-01. They cannot be produced from this sandbox.",
+      "how": "Read data/v4/injury/binary_manifest.json and data/raw/egress_probe.json after the next scheduled run.",
+      "impact": "Medium. Without the bytes, a release can only be re-read from the live CDN, not from the repository.",
+      "severity": "OPEN - measurable on the next scheduled run"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -31141,7 +31265,7 @@
   "suggestions": {
    "title": "Site-improvement suggestions — review queue",
    "blurb": "Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.",
-   "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort.",
+   "source_note": "Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session's opinion. Ordered by decision-quality gain per unit of effort. | 2026-11-16 arena/4f780342-nba2: added S-56..S-60 from the injury-transcription defect, the settled-sample denominator, and the nightly-job repair. Three are implemented and awaiting a scheduled run; S-60 is a proposal.",
    "columns": [
     {
      "key": "id",
@@ -32584,9 +32708,174 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-56",
+     "values": {
+      "id": "S-56",
+      "title": "Stop transcribing official documents; store the rendering and parse it by content type",
+      "problem": "The 70-row injury transcription published on 2026-11-16 was wrong on six rows, including a real status (Tyson, Jaylon) and five blank statuses that the PDF carried. A transcription is an interpretive step between the official document and the published table, and it fails silently.",
+      "proposal": "Store the verbatim rendering (nba2/v4/injury_renderings.py) and derive every cell by content type (nba2/v4/injury_parse.py), publishing an 'unread' count per release. Apply the same pattern to any other document currently transcribed by hand.",
+      "benefit": "Every published cell traces to a stored string; a mis-read is visible as a non-zero unread count.",
+      "effort": "S — done for injuries this session; the pattern is reusable",
+      "risk": "The rendering still comes through a converter, so it is not the PDF itself; byte storage is S-57.",
+      "recommendation": "Adopt as the standing rule for every document type.",
+      "status": "implemented 2026-11-16 by arena/4f780342-nba2"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-57",
+     "values": {
+      "id": "S-57",
+      "title": "Run the byte-level archive and the egress probe on a schedule, then delete F-V4-01 if they pass",
+      "problem": "Every session since 2026-11-14 has published 'PDF not stored' because a development sandbox cannot reach the CDN. That limitation was inherited across sessions and never re-measured on a runner, so a fixable gap became a permanent-looking one.",
+      "proposal": "nba2/v4/injury_ingest.py now archives the bytes with a sha256 manifest, and probe-egress.yml records HTTP status and byte counts for seven official endpoints. Both run in refresh.yml. When a run stores both releases, remove F-V4-01 from the flagged list and say so.",
+      "benefit": "Release PDFs become reviewable from the repository; endpoint reachability becomes a dated fact.",
+      "effort": "S — written; needs one scheduled run",
+      "risk": "The CDN may still refuse a runner; the manifest records the exact error either way.",
+      "recommendation": "Accept: it is already wired, and its first output settles an open question (Q-43).",
+      "status": "implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-58",
+     "values": {
+      "id": "S-58",
+      "title": "Quote a settled-sample denominator on every performance claim, and never sum overlapping seals",
+      "problem": "The site could quote 37 settled rows or 9 of 34, and both were arithmetically true because three seals priced overlapping dates. A reader comparing '37 graded' with '14 games played' has no way to reconcile them.",
+      "proposal": "Publish n_distinct_games_graded beside n_graded on every surface (done on settle.html), label repeat rows 'counted once', and require any headline hit rate to carry the denominator and the Poisson-binomial tail that judges it.",
+      "benefit": "A reviewer can check the arithmetic row by row, and the headline can no longer double-count.",
+      "effort": "S — done for settlement; the rule should apply to the leaderboard too",
+      "risk": "None identified; it only reduces a number.",
+      "recommendation": "Adopt as policy for every metric added later.",
+      "status": "implemented 2026-11-16 by arena/4f780342-nba2"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-59",
+     "values": {
+      "id": "S-59",
+      "title": "Make one failing official surface a recorded gap, not an aborted nightly run",
+      "problem": "The nightly job failed 5 of 5 scheduled runs at the finals step, which skipped the injury archive, the rolling refresh, the gates and the commit. Three of the four official surfaces the brief asks for were therefore never refreshed by CI, and the cause was not recorded anywhere in the repo.",
+      "proposal": "refresh.yml now runs each surface as its own continue-on-error step, writes data/raw/refresh_verdict.json with each surface's outcome, commits the captured evidence, and lets a separate `publish` job rebuild only when all four surfaces captured cleanly.",
+      "benefit": "Evidence is retained on a bad night; publishing still fails closed.",
+      "effort": "M — done this session; needs one scheduled run to confirm",
+      "risk": "Two jobs instead of one means two places to read; the verdict file is the single summary.",
+      "recommendation": "Accept; watch the first two scheduled runs.",
+      "status": "implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-60",
+     "values": {
+      "id": "S-60",
+      "title": "Settle each game date the morning after, from a gamebook, and extend the pool every night",
+      "problem": "Settlement is stuck at 11/15 and the three seals stop at 11/18. The 11/16 slate completed tonight and nothing in the repository will grade it until a capture exists for 11/16 finals.",
+      "proposal": "The per-surface refresh already fetches finals for every arrived date; what it needs is a committed gamebook/quarter source per date and a settlement module that unions finals files by game_id and fails on disagreement (nba2/v4/settlement.py already unions and refuses to average). Add a CI assertion that every date before today has a finals file.",
+      "benefit": "The stamp advances every morning without a human, and the luck control accumulates a real sample.",
+      "effort": "S — the union and the refusal already exist; the assertion is new",
+      "risk": "An official final that later changes (a correction) would need an append-only supersede record.",
+      "recommendation": "Accept after the next scheduled run proves the finals step works from a runner.",
+      "status": "open — proposal"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -43316,7 +43605,7 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-16T18:20:03+00:00 with finals_snapshot official_finals_union.json; sealed-2026-11-13.json: 11/22 games settled (PARTIAL — 11 game(s) have no official final score); sealed-2026-11-14.json: 11/27 games settled (PARTIAL — 16 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
       "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
@@ -46964,7 +47253,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-16T18:20:03+00:00 with finals_snapshot official_finals_union.json; sealed-2026-11-13.json: 11/22 games settled (PARTIAL — 11 game(s) have no official final score); sealed-2026-11-14.json: 11/27 games settled (PARTIAL — 16 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },

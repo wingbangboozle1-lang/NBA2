@@ -61,40 +61,48 @@
 <main>
 <p class="crumbs"><a href="index.html">Dashboard</a> · v4 refresh · session <code>arena/b3914335-nba2</code></p>
 <h1>Injury releases</h1>
-<p class="lede">Stored official injury releases with revision and retrieval stamps, and the mechanical diff between consecutive ones.</p>
+<p class="lede">Official injury releases stored with revision and retrieval stamps, and the mechanical diff between consecutive ones, parsed by content type.</p>
 
 <div class="note"><b>Every release is stored with three stamps and one hash.</b> The
 <i>revision time</i> is the time printed in the release's own header; the <i>retrieval time</i>
 is when this session read it; the <i>index check</i> is when the official index was last
-consulted for a newer file. The hash is over the transcribed text. The PDF bytes are
-<b>not</b> stored — bash egress to <code>ak-static.cms.nba.com</code> is blocked in this sandbox
-and the page tool renders PDFs as text — and that gap is flagged rather than glossed (F-V4-01).</div>
-<h2 id="binary-not-stored">Releases stored this session</h2>
-<div class="scroll"><table><caption>Releases stored this session, newest last.</caption><thead><tr><th>Revision (ET)</th><th>Retrieved (UTC)</th><th>Index checked</th><th>Rows</th><th>Content hash</th><th>PDF bytes</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET</td><td>2026-11-16T14:41:00Z</td><td>2026-11-16T14:30:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>2026-11-16 09:30 AM ET</td><td>2026-11-16T14:52:00Z</td><td>2026-11-16T14:52:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
-<h2 id="releases">Consecutive release diff</h2>
+consulted for a newer file. The hash is over the <b>stored rendering</b> of the release, not
+over a hand transcription, so an edit to what we read is detectable.</div>
+<div class="note"><b>Why the rows below are parsed and not typed.</b> Every cell in the diff is
+assigned by <i>content type</i> — a date, a time, a matchup, a status word, a
+<code>Last, First</code> player, a reason — and never by column position. The PDF's layout
+shifts across page breaks, so a positional parser mis-reads it; the previous build did exactly
+that and published a changed status as unchanged. A cell whose type cannot be determined is
+published blank and flagged. The <i>unread</i> column counts them: it is zero for both
+releases below.</div>
+<h2 id="releases">Releases stored this session</h2>
+<div class="scroll"><table><caption>Official releases read this session, with row-level yield per release.</caption><thead><tr><th>Revision (ET)</th><th>Retrieved (UTC)</th><th>Index checked</th><th>Rows</th><th>With status</th><th>Placeholders</th><th>Unread</th><th>Content hash</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:30 AM ET</td><td>2026-11-16T18:36:00Z</td><td>2026-11-16T18:35:00Z</td><td class='n'>68</td><td class='n'>53</td><td class='n'>14</td><td class='n'>0</td><td><code>52f2e87b840c83ac</code></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr><tr><td>2026-11-16 01:00 PM ET</td><td>2026-11-16T18:38:00Z</td><td>2026-11-16T18:35:00Z</td><td class='n'>83</td><td class='n'>72</td><td class='n'>10</td><td class='n'>0</td><td><code>c8f5b1d15f51a7c8</code></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf">PDF</a></td></tr></tbody></table></div>
+<h2 id="diff">Consecutive release diff</h2>
+<div class="scroll"><table><caption>09:30 AM ET and 01:00 PM ET, same day: the pair that isolates revision drift.</caption><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Reason only</th><th>Added</th><th>Removed</th><th>Placeholder resolved</th><th>Still placeholder</th><th>Became unread</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:30 AM ET (68 rows)</td><td>2026-11-16 01:00 PM ET (83 rows)</td><td class='n'>2</td><td class='n'>1</td><td class='n'>19</td><td class='n'>4</td><td class='n'>0</td><td class='n'>10</td><td class='n'>0</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf">PDF</a></td></tr></tbody></table></div>
+<div class="scroll"><table><caption>Every status change detected between the two releases.</caption><thead><tr><th>Pair</th><th>Date</th><th>Matchup</th><th>Team</th><th>Player</th><th>Change</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:30 AM ET → 2026-11-16 01:00 PM ET</td><td>2026-11-16</td><td>HOU@MIA</td><td>Miami Heat</td><td>Larsson, Pelle</td><td>Questionable → Doubtful</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf">PDF</a></td></tr><tr><td>2026-11-16 09:30 AM ET → 2026-11-16 01:00 PM ET</td><td>2026-11-16</td><td>MEM@WAS</td><td>Memphis Grizzlies</td><td>Stewart, Isaiah</td><td>Questionable → Out</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf">PDF</a></td></tr></tbody></table></div>
+<h2 id="cross-session">Provenance check against the earlier transcription</h2>
 
-<p>Diff of the two stored releases, matched on <code>date, matchup, team, player</code>.</p>
-<div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Placeholder resolved</th><th>Reason only</th><th>Added</th><th>Removed</th><th>Still placeholder</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET (70 rows)</td><td>2026-11-16 09:30 AM ET (70 rows)</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>19</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
-<div class="note"><b>Zero changes between 09:15 and 09:30 is a real finding, and it is
-checkable in under a minute.</b> Both PDFs are linked above; the 09:30 file is declared in
-<code>nba2/v4/capture.py</code> as identical to the 09:15 transcription (F-V4-09) rather than
-silently duplicated. The machinery matters when the releases do differ — and in this league
-they differ a lot: the morning filing window is when teams submit, so a same-day night-to-morning
-pair is the one that isolates true revision drift.</div>
-<p>No status or reason changes.</p>
-
-<h2 id="cross-day">Cross-day comparison</h2>
-
-<p>For completeness, the same diff machine run across a day boundary, from the 11/15 06:15 PM
-release already committed to this session's 11/16 09:15 AM release. This one mixes genuine
-injury news with the league's filing windows, so a large added/removed count is expected and is
-<b>not</b> evidence of instability in the source.</p>
-<div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Added</th><th>Removed</th><th>Reason only</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-15 06:15 PM ET</td><td>2026-11-16 09:15 AM ET</td><td class='n'>6</td><td class='n'>13</td><td class='n'>98</td><td class='n'>0</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
-
+<p>This session's reading of the <b>09:30 AM</b> release against the <b>09:15 AM</b>
+transcription committed by an earlier session. It is a provenance check on our own record,
+not a claim about the league: a difference here is either a real revision inside those fifteen
+minutes or a transcription error in the earlier capture. Each row links both documents so it
+can be settled by eye.</p>
+<div class="scroll"><table><caption>Differences between the earlier hand transcription and this reading.</caption><thead><tr><th>Date</th><th>Matchup</th><th>Team</th><th>Player</th><th>Earlier transcription → this reading</th><th>Source</th></tr></thead><tbody><tr><td>2026-11-16</td><td>CHI@CLE</td><td>Cleveland Cavaliers</td><td>Tyson, Jaylon</td><td>Questionable → Doubtful</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr><tr><td>2026-11-16</td><td>GSW@NOP</td><td>Golden State Warriors</td><td>Curry, Stephen</td><td>blank → Out</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr><tr><td>2026-11-16</td><td>GSW@NOP</td><td>Golden State Warriors</td><td>Moody, Moses</td><td>blank → Out</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr><tr><td>2026-11-16</td><td>GSW@NOP</td><td>Golden State Warriors</td><td>Porzingis, Kristaps</td><td>blank → Out</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr><tr><td>2026-11-16</td><td>GSW@NOP</td><td>Golden State Warriors</td><td>Santos, Gui</td><td>blank → Questionable</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr><tr><td>2026-11-16</td><td>GSW@NOP</td><td>Golden State Warriors</td><td>Williams, Brandon</td><td>blank → Out</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">earlier PDF</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">this PDF</a></td></tr></tbody></table></div>
+<p class="cap">Statuses changed: 6, reason-only: 1,
+added: 2, removed: 4. The earlier session&#x27;s 09:15 AM transcription vs this session&#x27;s read of the 09:30 AM PDF. A row that appears here is either a real revision in those 15 minutes or a transcription error in the earlier capture; both rows are linked to a PDF so the reader can settle it. This is a provenance check, not a claim about the league.</p>
 <h2 id="layout">Layout artefacts of the official PDFs</h2>
 <p>These are properties of the published files, recorded so a reader can tell a transcription
 artefact from an injury. None of them is "corrected" in the data.</p>
-<div class="scroll"><table><thead><tr><th>Flag</th><th>Finding</th><th>Src</th></tr></thead><tbody><tr><td>F-V4-05</td><td>Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-06</td><td>Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so &#x27;Curry, Stephen&#x27; reads &#x27;| Injury/Illness - Right Oblique Tear |&#x27;. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-07</td><td>The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as &#x27;NOT YET SUBMITTED&#x27; at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player).</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
+<div class="scroll"><table><thead><tr><th>Flag</th><th>Finding</th><th>Src</th></tr></thead><tbody><tr><td>F-V4-06</td><td>GSW@NOP rows in this release keep only Player | Status | Reason, or Player | Reason, depending on where the page broke. The parser resolves the status from the end of the row and leaves it blank where it is genuinely absent; it never assumes the middle cell is a status.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">index</a></td></tr><tr><td>F-V4-05</td><td>Page-continuation rows print with empty date / time / matchup / team cells. They are attributed to the block in progress, and the attribution is written on the row.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">index</a></td></tr><tr><td>F-V4-10</td><td>The 13:00 PM release was returned by the fetch tool in two chunks; the junction fell inside the PHX@DEN block. The join basis is recorded on the release and can be re-checked against the PDF.</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">index</a></td></tr></tbody></table></div>
+<h2 id="bytes">The PDF bytes</h2>
+<p>The original files are <b>not</b> in this repository, and that is flagged as F-V4-01 rather
+than glossed over: bash egress from the development sandbox to
+<code>ak-static.cms.nba.com</code> is TLS-reset, so a build cannot download them. The
+<b>scheduled job</b> runs <code>python -m nba2.v4.injury_ingest</code> from a GitHub runner,
+where the CDN is reachable, and writes
+<code>data/v4/injury/binary_manifest.json</code> with the byte length and sha256 of each file
+it stores — or the exact error and timestamp if it could not. The build never reads those
+bytes as data; the published rows come from the stored rendering.</p>
 
 <footer>
 Captured 2026-11-16T14:30:00Z by session <code>arena/b3914335-nba2</code>. Method: platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method.
