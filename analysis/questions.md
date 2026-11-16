@@ -98,17 +98,19 @@ verified table with its official link, and the corresponding flag comes off the
 
 ---
 
-## Session `arena/a11505e1-nba2` additions (2026-11-16) — the four decisions the repo cannot make for itself
+## Session `arena/a11505e1-nba2` additions (2026-11-16) — the decisions the repo cannot make for itself
 
-Full entries live in `requirements/QUESTIONS.json` Q-40..Q-43 (this register's companion file —
-per SG-41, name the file when citing a bare "Q-nn"):
+Full entries live in `requirements/QUESTIONS.json` (this register's companion file — per
+SG-41, name the file when citing a bare "Q-nn"). Ids re-keyed to Q-44..Q-46 after colliding
+with the parallel v5 session's Q-40..43; the byte-archive question lives at their Q-43 with
+its mechanical route at S-57:
 
 | id | Question | What is missing | Route |
 |---|---|---|---|
-| Q-40 | Which Pages configuration is authoritative — the API's `legacy, main /` or the served v2 tree at root? | owner decision (flip to GitHub Actions or confirm legacy) | repo Settings → Pages; every deploy verified by live fetch meanwhile |
-| Q-41 | Should the retained v1 tree stay frozen at its 2026-11-14 snapshot (grading cut enforced by CC-BT-02) or roll forward? | owner confirmation of the freeze policy | one-word decision |
-| Q-42 | Who provides archival of the original injury-report PDF **bytes** + file hashes? | a network-capable ingest step (runners can reach ak-static) | S-63 is the mechanical route |
-| Q-43 | Which licensed odds feed (closing spread/total/ML) will be connected? | procurement | blocks G6: staking, CLV, market-prior weight, rewards |
+| Q-44 | Which Pages configuration is authoritative — the API's `legacy, main /` or the served v2 tree at root? | owner decision (flip to GitHub Actions or confirm legacy) | repo Settings → Pages; every deploy verified by live fetch meanwhile |
+| Q-45 | Should the retained v1 tree stay frozen at its 2026-11-14 snapshot (grading cut enforced by CC-BT-02) or roll forward? | owner confirmation of the freeze policy | one-word decision |
+| Q-43 (v5 session) | Can the official injury PDFs be archived at byte level, or is F-V4-01 permanent? | a network-capable archival step | S-57 |
+| Q-46 | Which licensed odds feed (closing spread/total/ML) will be connected? | procurement | blocks G6: staking, CLV, market-prior weight, rewards |
 
 Everything else asked by the brief is answered in `analysis/session-a11505e1-brief-audit.md`
 with its official source link, or is flagged on the Flagged page with a mechanical route.

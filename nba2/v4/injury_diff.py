@@ -1,176 +1,261 @@
-"""Store every injury release with both stamps, and diff consecutive releases.
+"""Store every injury release with its stamps, and diff consecutive releases.
 
-"Store" here means exactly what the sandbox can do, and the limitation is published rather
-than papered over (F-V4-01):
+What changed from the previous build (and why)
+----------------------------------------------
+The previous version diffed a *hand transcription* of one release against a second release
+that was **declared identical** to the first without being read. The test that guarded it
+therefore proved that a hard-coded string equalled itself. Two consequences were published
+as if they were findings: "0 status changes between 09:15 and 09:30", and six GSW@NOP rows
+with a blank status.
 
-* the release's **official URL**, its **revision stamp** (the time in the PDF's own header,
-  e.g. ``11/16/26 09:15 AM``), the **time the league index was checked**, and the
-  **retrieval timestamp** are all stored;
-* the **transcribed text** is stored, with a sha256 over the transcription
-  (``content_sha256``) so any later edit is detectable;
-* the **original PDF bytes are not stored**, because bash egress to
-  ``ak-static.cms.nba.com`` is blocked in this sandbox and the page tool renders the PDF as
-  text. The reason is recorded on every release document.
+Both are now checkable and both were wrong:
 
-The diff matches rows on ``(date, matchup, team, player)`` and reports status changes,
-reason-only changes, additions, removals and placeholder transitions. A blank status is
-diffed as blank: it is never coerced to "Unknown" and never treated as equal to a real
-status.
+* the 09:30 PDF prints ``Doubtful`` for ``Tyson, Jaylon`` where the 09:15 transcription
+  recorded ``Questionable``;
+* the 09:30 PDF *does* carry ``Out``/``Questionable`` for the six GSW@NOP rows — the earlier
+  reading lost the column, it was not missing from the release.
+
+So this module reads the stored **rendering** (``injury_renderings``) and derives every row
+by code (``injury_parse``). Nothing between the PDF and the published diff is hand-typed.
+
+Diff semantics
+--------------
+Rows are matched on ``(date, matchup, team, player)`` — a player, on a club, in a game. A
+club that has not filed is one placeholder row, so a filing replaces a placeholder with a
+set of real rows; that is reported as ``placeholder_resolved`` (clubs) *and* ``added``
+(players), never conflated.
+
+A blank status is diffed as blank and is never coerced to a word. If a status goes from
+read to unread, that is reported as ``became_unread`` rather than as a disappearance.
 """
 
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 
-from . import capture as C
+from . import injury_parse as PA
+from . import injury_renderings as RR
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "v4" / "injury"
 
 
-def release_docs() -> list[dict]:
-    today = ROOT / "data" / "raw" / "refresh_2026-11-16"
-    docs = []
-    for p in sorted(today.glob("injury_transcript_*.json")):
-        docs.append(json.loads(p.read_text()))
-    return docs
+def parsed() -> list[dict]:
+    """Every stored rendering, parsed, in revision order."""
+    out = []
+    for r in sorted(RR.RENDERS, key=lambda x: RR._revision_key(x["revision_et"])):
+        p = PA.parse_render(r["text"])
+        out.append({**{k: v for k, v in r.items() if k != "text"},
+                    "text_sha256": RR.text_sha(r["text"]),
+                    "text_lines": len(r["text"].splitlines()),
+                    "parsed": p})
+    return out
 
 
-def key(row) -> tuple:
-    date, _time, matchup, team, player = row[0], row[1], row[2], row[3], row[4]
-    return (date, matchup, team, player)
-
-
-def _bucket(rows: list[list]) -> dict:
+def _bucket(rows: list[dict]) -> dict:
     out = {}
     for r in rows:
-        out[key(r)] = {"status": r[5], "reason": r[6], "note": r[7]}
+        out[PA.key(r)] = {"status": r["status"], "reason": r["reason"],
+                          "placeholder": r["placeholder"], "note": r["note"]}
     return out
 
 
 def diff(a: dict, b: dict) -> dict:
-    ka, kb = set(_bucket(a["records"])), set(_bucket(b["records"]))
-    A, B = _bucket(a["records"]), _bucket(b["records"])
-    changes, reason_only, added, removed, placeholder = [], [], [], [], []
+    """Mechanical diff of two parsed releases."""
+    A, B = _bucket(a["parsed"]["rows"]), _bucket(b["parsed"]["rows"])
+    ka, kb = set(A), set(B)
+    status_changes, reason_only, added, removed, became_unread, resolved = [], [], [], [], [], []
+
     for k in sorted(ka & kb):
         ra, rb = A[k], B[k]
         if ra["status"] != rb["status"]:
-            # a placeholder becoming a real submission is not a "status change"
-            if not ra["status"] and not rb["status"]:
-                continue
-            changes.append({"key": k, "from": ra["status"], "to": rb["status"],
-                            "reason_from": ra["reason"], "reason_to": rb["reason"],
-                            "kind": "placeholder_resolved" if not ra["status"] else "status"})
+            if ra["status"] and not rb["status"]:
+                became_unread.append({"key": k, "from": ra["status"], "to": None})
+            else:
+                status_changes.append({"key": k, "from": ra["status"], "to": rb["status"],
+                                       "reason_from": ra["reason"], "reason_to": rb["reason"]})
         elif ra["reason"] != rb["reason"]:
             reason_only.append({"key": k, "status": ra["status"],
                                 "reason_from": ra["reason"], "reason_to": rb["reason"]})
+
     for k in sorted(kb - ka):
         added.append({"key": k, "status": B[k]["status"], "reason": B[k]["reason"]})
     for k in sorted(ka - kb):
         removed.append({"key": k, "status": A[k]["status"], "reason": A[k]["reason"]})
+
+    # clubs that moved from "NOT YET SUBMITTED" to a real filing
     for k in sorted(ka & kb):
-        if not A[k]["status"] and not B[k]["status"]:
-            placeholder.append({"key": k, "reason": A[k]["reason"]})
+        if A[k]["placeholder"] and not B[k]["placeholder"]:
+            resolved.append({"key": k})
+
     return {
-        "from": {"stamp_et": a["report_stamp_et"], "url": a["provenance"]["url"],
-                 "retrieved_utc": a["retrieved_at_utc"], "rows": len(a["records"])},
-        "to": {"stamp_et": b["report_stamp_et"], "url": b["provenance"]["url"],
-               "retrieved_utc": b["retrieved_at_utc"], "rows": len(b["records"])},
+        "from": {"stamp_et": a["stamp_et"], "url": a["url"],
+                 "retrieved_utc": a["retrieved_utc"], "rows": a["parsed"]["counts"]["rows"]},
+        "to": {"stamp_et": b["stamp_et"], "url": b["url"],
+               "retrieved_utc": b["retrieved_utc"], "rows": b["parsed"]["counts"]["rows"]},
         "match_key": ["date", "matchup", "team", "player"],
-        "counts": {"status_changed": len([c for c in changes if c["kind"] == "status"]),
-                   "placeholder_resolved": len([c for c in changes
-                                                if c["kind"] == "placeholder_resolved"]),
+        "counts": {"status_changed": len(status_changes),
                    "reason_changed_only": len(reason_only),
                    "added": len(added), "removed": len(removed),
-                   "still_placeholder": len(placeholder)},
-        "status_changes": changes, "reason_changes": reason_only,
-        "added": added, "removed": removed, "still_placeholder": placeholder,
-        "note": ("Mechanical diff. 'Added' includes a team replacing a single NOT YET "
-                 "SUBMITTED placeholder with a full submission, so an evening release "
-                 "legitimately adds many rows. A blank status is diffed as blank and is "
-                 "never coerced to a value."),
+                   "became_unread": len(became_unread),
+                   "reason_changed_only": len(reason_only),
+                   "placeholder_resolved": len(resolved),
+                   "still_placeholder": sum(1 for k in ka & kb
+                                            if A[k]["placeholder"] and B[k]["placeholder"])},
+        "status_changes": status_changes,
+        "reason_changes": reason_only,
+        "added": added,
+        "removed": removed,
+        "became_unread": became_unread,
+        "placeholder_resolved": resolved,
+        "note": ("Matched on (date, matchup, team, player). A club's first filing replaces "
+                 "its NOT YET SUBMITTED placeholder, so one morning-to-afternoon pair "
+                 "legitimately adds many player rows: that is a filing, not instability. "
+                 "A blank status is diffed as blank and is never coerced to a value."),
     }
 
 
 def release_ledger() -> dict:
-    """The stored releases (this session's) plus the historical ones already in the repo."""
-    docs = release_docs()
+    rels = parsed()
     stored = []
-    for d in docs:
+    for r in rels:
+        c = r["parsed"]["counts"]
         stored.append({
-            "report_stamp_et": d["report_stamp_et"],
-            "revision_time_et": d["revision_time_et"],
-            "retrieved_at_utc": d["retrieved_at_utc"],
-            "index_checked_utc": d.get("index_checked_utc"),
-            "url": d["provenance"]["url"],
-            "rows": len(d["records"]),
-            "content_sha256": d["content_sha256"],
-            "binary_stored": d["binary_stored"],
-            "binary_stored_reason": d["binary_stored_reason"],
-            "layout_notes": d["layout_notes"],
+            "report_stamp_et": r["stamp_et"],
+            "revision_time_et": r["revision_et"],
+            "retrieved_at_utc": r["retrieved_utc"],
+            "index_checked_utc": r["index_checked_utc"],
+            "url": r["url"],
+            "rows": c["rows"],
+            "rows_with_status": c["with_status"],
+            "rows_blank_status": c["blank_status"],
+            "placeholders": c["placeholders"],
+            "unread": c["unread"],
+            "text_sha256": r["text_sha256"],
+            "content_sha256": r["text_sha256"],   # kept: the published page prints this
+            "text_lines": r["text_lines"],
+            "method": r["method"],
+            "chunk_junction": r.get("chunk_junction"),
+            "binary_stored": False,
+            "binary_stored_reason": (
+                "the PDF bytes cannot be downloaded from this sandbox: bash egress to "
+                "ak-static.cms.nba.com is TLS-reset. nba2/v4/injury_ingest.py attempts the "
+                "byte archive from a GitHub runner and records the result; see "
+                "data/v4/injury/binary_manifest.json (F-V4-01)."),
+            "layout_notes": [
+                ("F-V4-06",
+                 "GSW@NOP rows in this release keep only Player | Status | Reason, or "
+                 "Player | Reason, depending on where the page broke. The parser resolves the "
+                 "status from the end of the row and leaves it blank where it is genuinely "
+                 "absent; it never assumes the middle cell is a status."),
+                ("F-V4-05",
+                 "Page-continuation rows print with empty date / time / matchup / team cells. "
+                 "They are attributed to the block in progress, and the attribution is written "
+                 "on the row."),
+                ("F-V4-10",
+                 "The 13:00 PM release was returned by the fetch tool in two chunks; the "
+                 "junction fell inside the PHX@DEN block. The join basis is recorded on the "
+                 "release and can be re-checked against the PDF."),
+            ],
         })
+    diffs = [diff(rels[i], rels[i + 1]) for i in range(len(rels) - 1)]
     return {
         "n_releases_stored_this_session": len(stored),
         "releases": stored,
-        "diffs": [diff(docs[i], docs[i + 1]) for i in range(len(docs) - 1)],
-        "consecutive_release_diffs": max(0, len(docs) - 1),
+        "diffs": diffs,
+        "consecutive_release_diffs": len(diffs),
         "gap": ("Where two consecutive releases lie on the same day, the diff isolates "
-                "revision drift. A night-to-morning diff mixes drift with the league's "
-                "filing deadline, which is why the same-day pair is the one to read."),
+                "revision drift. A night-to-morning diff mixes drift with the league's filing "
+                "deadline, which is why the same-day pair is the one to read."),
         "binary_gap_flag": "F-V4-01",
     }
 
 
-def comparison_with_committed() -> dict:
-    """This session's 11/16 release vs the 11/15 releases already committed.
+def cross_session_check() -> dict:
+    """Our 09:30 reading vs the 09:15 *transcription* committed by an earlier session.
 
-    Published because it is the only cross-day pair available, and because a reader
-    deserves to see that the drift is large and explainable (filing deadlines), not that
-    the league changed 60 statuses overnight.
+    This is the check the earlier build could not run, because it never read a second
+    release. It answers a narrow, useful question: was the hand transcription faithful?
+    Differences are reported per row and are **not** called status changes, because the two
+    documents are 15 minutes apart and either explanation (a real revision, or a
+    transcription error) is possible. Each row is linked so it can be settled by eye.
     """
-    hist = ROOT / "data" / "raw" / "capture_2026-11-15" / "injury_report_2026-11-15_0615PM.json"
-    docs = release_docs()
-    if not hist.exists() or not docs:
+    # The 70-row transcription committed by session arena/b3914335-nba2, preserved byte for
+    # byte as ``*_superseded.json`` when this session replaced it. Comparing against the
+    # *regenerated* file would be comparing this session's reading with itself, which proves
+    # nothing; the point of the check is to test the earlier session's record.
+    hist = (ROOT / "data" / "raw" / "refresh_2026-11-16"
+            / "injury_transcript_20261116_0930AM_superseded.json")
+    if not hist.exists():
+        hist = (ROOT / "data" / "raw" / "refresh_2026-11-16"
+                / "injury_transcript_20261116_0100PM.json")
+    rels = parsed()
+    if not hist.exists() or not rels:
         return {"available": False}
     old = json.loads(hist.read_text())
-    new = docs[0]
-    old_rows = [r[:5] + [r[5], r[6], r[7] if len(r) > 7 else ""] for r in old["records"]]
-    d = diff({"report_stamp_et": old["report_stamp_et"],
-              "retrieved_at_utc": old["retrieved_at_utc"],
-              "provenance": old["provenance"], "records": old_rows},
-             {"report_stamp_et": new["report_stamp_et"],
-              "retrieved_at_utc": new["retrieved_at_utc"],
-              "provenance": new["provenance"], "records": new["records"]})
-    return {"available": True, "cross_day": True, "diff": d}
+    # Compare like with like: the transcript is of the 09:15 AM release, so the right
+    # comparison is our 09:30 AM read (the nearest later release), NOT the newest one. An
+    # earlier version of this function used rels[0] blindly and silently became a 3.5-hour
+    # comparison as soon as a newer release was stored - which would have published genuine
+    # afternoon revisions as "transcription errors".
+    stamp = (old.get("report_stamp_et") or "").replace(" ET", "").strip()
+    first = rels[0]
+    for r in rels:
+        if r["stamp_et"].replace(" ET", "").strip() >= stamp:
+            first = r
+            break
+    old_rows = []
+    for r in old.get("records", []):
+        old_rows.append({"date": r[0], "matchup": r[2], "team": r[3], "player": r[4] or None,
+                         "status": r[5] or None, "reason": r[6] or None,
+                         "placeholder": (r[6] == "NOT YET SUBMITTED"),
+                         "note": r[7] if len(r) > 7 else ""})
+    old_doc = {"stamp_et": old.get("report_stamp_et"), "url": old["provenance"]["url"],
+               "retrieved_utc": old.get("retrieved_at_utc"),
+               "parsed": {"rows": old_rows, "counts": {"rows": len(old_rows)}}}
+    d = diff(old_doc, first)
+    d["compared_against"] = first["stamp_et"]
+    d["transcript_stamp"] = old.get("report_stamp_et")
+    d["note"] = ("The earlier session's 09:15 AM transcription vs this session's read of the "
+                 "09:30 AM PDF. A row that appears here is either a real revision in those 15 "
+                 "minutes or a transcription error in the earlier capture; both rows are "
+                 "linked to a PDF so the reader can settle it. This is a provenance check, "
+                 "not a claim about the league.")
+    return {"available": True, "cross_session": True, "diff": d}
 
 
 def write() -> list[str]:
     OUT.mkdir(parents=True, exist_ok=True)
+    problems = RR.selftest()
+    if problems:
+        raise SystemExit("injury renderings selftest failed:\n  " + "\n  ".join(problems))
     doc = {
-        "schema": "nba2.v4.injury-releases.v1",
-        "session": C.SESSION,
-        "retrieved_utc": C.RETRIEVED_UTC,
+        "schema": "nba2.v4.injury-releases.v2",
+        "session": "arena/4f780342-nba2",
+        "index_url": RR.INDEX_URL,
+        "retrieved_utc": RR.newest()["retrieved_utc"],
         "ledger": release_ledger(),
-        "cross_day_comparison": comparison_with_committed(),
+        "cross_session_check": cross_session_check(),
         "policy": {
             "revision_time": "the time printed in the release's own header",
             "retrieval_time": "when this session read it (UTC)",
-            "index_checked": "when the official index was checked for a newer release",
-            "bytes": "NOT stored - see F-V4-01",
+            "index_checked": "when the official index was last checked for a newer release",
+            "rows": ("every cell is assigned by content type, never by position; a cell whose "
+                     "type cannot be determined is left blank and flagged"),
+            "hash": "sha256 over the stored rendering text, so an edit is detectable",
+            "bytes": "the PDF bytes are archived by nba2/v4/injury_ingest.py, not by this build",
         },
     }
     p = OUT / "releases.json"
     p.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n")
+    lg = doc["ledger"]
+    print(f"releases stored: {lg['n_releases_stored_this_session']}, "
+          f"consecutive diffs: {lg['consecutive_release_diffs']}")
+    for d in lg["diffs"]:
+        print(f"  diff {d['from']['stamp_et']} -> {d['to']['stamp_et']} {d['counts']}")
     return [str(p.relative_to(ROOT))]
 
 
 if __name__ == "__main__":
-    for f in write():
-        print("wrote", f)
-    lg = release_ledger()
-    print(f"releases stored: {lg['n_releases_stored_this_session']}, "
-          f"consecutive diffs: {lg['consecutive_release_diffs']}")
-    for d in lg["diffs"]:
-        print("  diff", d["from"]["stamp_et"], "->", d["to"]["stamp_et"], d["counts"])
+    write()

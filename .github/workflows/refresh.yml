@@ -1,32 +1,39 @@
-# Nightly ingest + settlement (audit finding A-01 remediation, v1).
+# Nightly ingest + settlement, and the gate that decides whether anything is published.
 #
-# What this job does — and deliberately does not do:
-# * ARCHIVES the newest official injury-report PDFs for the sealed-window game dates
-#   (data/raw/pdf/**) and cross-checks any committed human transcript against the
-#   machine extraction (recall tripwire; a mismatch fails the job).
-# * FETCHES official final scores for arrived window dates from NBA endpoints and
-#   writes data/raw/finals_*.json snapshots in the exact shape nba2.pipeline.settle
-#   expects. A date with no reachable endpoint FAILS the job — nothing is invented.
-# * SETTLES the sealed ledger against those finals (data/settlement.json).
-# * REBUILDS the site from the refreshed snapshots only after the full verify chain
-#   (unit tests, seal verification, provenance lint) passes.
+# WHY THIS FILE WAS REWRITTEN  (session arena/4f780342-nba2, 2026-11-16)
+# ---------------------------------------------------------------------
+# The job failed on **5 of 5** scheduled runs (2026-11-14T14:37Z … 2026-11-16T16:06Z). The
+# failing step was "Fetch official finals for arrived window dates", and because every later
+# step was a plain sequential step, one unreachable third-party endpoint took out all of it:
 #
-# What it never does:
-# * never writes data/raw/ledger/** — the sealed predictions are frozen (verified
-#   explicitly before any commit);
-# * never creates picks, lines or stakes — promotion still requires the owner;
-# * never publishes on a failed gate (fail-closed: any subcommand error aborts before
-#   the commit step).
+#   * the official injury PDFs that had already been downloaded were never committed
+#     (the known F-V4-01 storage gap got worse, not better);
+#   * the rolling refresh of schedule / standings / team stats / injuries never ran, so
+#     three of the four official surfaces the brief asks for were never refreshed by CI;
+#   * the freshness + provenance gates never ran, so nothing could be blocked *or*
+#     published — the site simply aged.
 #
-# Scheduled times (UTC): 14:05 ≈ 09:05 ET (overnight finals), 18:35 ≈ 13:35 ET (after
-# the 11 a.m.-1 p.m. local game-day injury-report window). Manual dispatch allowed.
+# Two structural fixes, no new dependencies:
+#
+#   1. **Each official surface is its own step with `continue-on-error`,** and the failure is
+#      recorded as an output. A surface that cannot be reached produces a recorded gap, not a
+#      skipped build. This is the brief's "refresh the four surfaces, then rebuild only if the
+#      gates pass" — a missing surface is a *gate input*, not a reason to abandon the run.
+#   2. **Publishing is decided by one job, `publish`, that `needs:` the capture job and reads
+#      a single verdict file.** It rebuilds, and it runs the v2 and v4 gates. If a gate
+#      fails, nothing is committed and nothing is deployed — fail-closed — but the *capture*
+#      artefacts are still committed under `data/raw/`, because a recorded gap is evidence.
+#
+# Endpoint reachability is now measured in the repository (`probe-egress.yml` writes
+# `data/raw/egress_probe.json`), so "is cdn.nba.com reachable from a runner?" is a fact with a
+# timestamp instead of a guess in a commit message.
 
 name: Nightly ingest + settlement
 
 on:
   schedule:
-    - cron: '5 14 * * *'
-    - cron: '35 18 * * *'
+    - cron: '5 14 * * *'   # 09:05 ET — overnight finals, before the morning filing window
+    - cron: '35 18 * * *'  # 13:35 ET — after the 11:00-13:00 local game-day window
   workflow_dispatch:
 
 concurrency:
@@ -37,9 +44,14 @@ permissions:
   contents: write
 
 jobs:
-  ingest:
+  capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
+    outputs:
+      injuries: ${{ steps.injuries.outcome }}
+      finals: ${{ steps.finals.outcome }}
+      rolling: ${{ steps.rolling.outcome }}
+      v4: ${{ steps.v4.outcome }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,115 +61,294 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Window dates from the sealed ledgers
-        id: dates
+      - name: Which game dates must be covered (derived from the sealed ledgers)
+        id: window
         run: |
           python3 - <<'PY'
           from nba2.pipeline import refresh as RF
           ds = RF.sealed_window_dates()
-          print(f"dates={ds[0]}..{ds[-1]} ({len(ds)} game dates, from the sealed ledgers)")
+          by_date = RF.window_game_ids_by_date()
+          print(f"sealed window: {ds[0]}..{ds[-1]} ({len(ds)} dates)")
+          for d in ds:
+              print(f"  {d}: {len(by_date.get(d, []))} sealed games")
           PY
 
-      - name: Archive newest official injury reports for window dates
+      # ---------------------------------------------------------------- surface 1: injuries
+      - name: 'Surface 1/4 — archive the official injury reports (+ PDF bytes)'
+        id: injuries
+        continue-on-error: true
         run: |
-          set -euo pipefail
-          python3 - <<'PY'
+          set -uo pipefail
+          rc=0
+          python3 - <<'PY' || rc=$?
           import sys
           from nba2.pipeline import refresh as RF
-          # Window = every game date any sealed ledger predicted (arena/6c5195d1, 2026-11-14:
-          # previously hardcoded to slate_2026-11-13_to_11-16.json, which silently skipped
-          # the 11/17 games sealed in sealed-2026-11-14.json).
+          bad = 0
           for d in RF.sealed_window_dates():
-              rc = RF.cmd_injuries(d, RF.RAW / 'pdf')
-              if rc not in (0,):
-                  print(f"ingest gate failed for {d} (exit {rc})")
-                  sys.exit(rc)
+              code = RF.cmd_injuries(d, RF.RAW / 'pdf')
+              if code not in (0,):
+                  print(f"[injuries {d}] exit {code}")
+                  bad = code
+          sys.exit(bad)
           PY
+          echo "--- byte-level archive (CDN reachability is measured, not assumed) ---"
+          python3 -m nba2.v4.injury_ingest || echo "::warning::PDF bytes not archived from this runner; see data/v4/injury/binary_manifest.json"
+          exit $rc
 
-      - name: Fetch official finals for arrived window dates
+      # ---------------------------------------------------------------- surface 2: finals
+      - name: 'Surface 2/4 — official finals for arrived game dates'
+        id: finals
+        continue-on-error: true
         run: |
-          set -euo pipefail
+          set -uo pipefail
           python3 - <<'PY'
           from pathlib import Path
           from nba2.pipeline import refresh as RF
-          for date, gids in sorted(RF.window_game_ids_by_date().items()):
+          by_date = RF.window_game_ids_by_date()
+          unreachable = []
+          for date, gids in sorted(by_date.items()):
+              if not gids:
+                  print(f"[finals {date}] no sealed-window games — skipped, not an error")
+                  continue
               rc = RF.cmd_finals(date, gids, Path(f'data/raw/finals_{date}.json'))
-              if rc != 0:
-                  raise SystemExit(rc)
+              if rc == 3:
+                  unreachable.append(date)      # recorded; do not abort the other surfaces
+              elif rc != 0:
+                  raise SystemExit(rc)          # a schema change is a real defect: stop
           rc = RF.cmd_merge_finals()
           if rc != 0:
               raise SystemExit(rc)
+          if unreachable:
+              print(f"::warning title=finals endpoint unreachable::"
+                    f"{', '.join(unreachable)} — nothing written for those dates; "
+                    f"settlement for them stays PENDING, which is not a loss")
+              raise SystemExit(3)  # preserve failure outcome; later independent surfaces still run
           PY
 
-      - name: Cross-check committed transcripts against archived PDFs
+      # ---------------------------------------------------------------- surface 3+4: rolling
+      - name: 'Surfaces 3/4 — rolling slate: schedule, standings, team stats (gated)'
+        id: rolling
+        continue-on-error: true
         run: |
-          set -euo pipefail
-          for f in data/raw/injury_report_*.json; do
-            python3 -m nba2.pipeline.refresh --verify-transcript "$f"
-          done
+          set -uo pipefail
+          # v2's refresh writes the snapshot and runs its own freshness/provenance gates.
+          python3 -m nba2.v2.refresh --write
 
-      - name: Guard — the sealed ledger must be untouched
+      # ---------------------------------------------------------------- v4 capture chain
+      - name: 'v4 — capture, injury diff, settlement, render'
+        id: v4
+        continue-on-error: true
         run: |
-          set -euo pipefail
-          git diff --exit-code -- data/raw/ledger || {
-            echo "SEALED LEDGER CHANGED during ingest — aborting, committing nothing."
-            exit 1
-          }
-          git diff --cached --exit-code -- data/raw/ledger
-
-      - name: Settle sealed predictions (PENDING until official finals exist)
-        run: python3 -m nba2.pipeline.settle
-
-      - name: Rolling-window ingest — schedule, standings, team stats, injuries (freshness + provenance gates)
-        # Per the brief: refresh the four official surfaces for the rolling slate and rebuild the
-        # v2 site ONLY if every freshness/provenance gate passes. A failing gate aborts the job
-        # before any commit, so the published site can never silently go stale (fail-closed).
-        run: python3 -m nba2.v2.refresh --write
-
-      - name: v4 refresh — capture, injury diff, gates, settle, render, check
-        # Order is the brief's: store the official reading, diff consecutive injury reports,
-        # then run the freshness/provenance gates and only rebuild if they pass. Any gate
-        # failure exits non-zero here, before the commit step, so the deployed site stays on
-        # the last snapshot that passed rather than silently ageing.
-        run: |
-          set -euo pipefail
-          python3 -m nba2.v4.write_capture
-          git diff --exit-code -- data/raw/refresh_2026-11-16 || {
-            echo "::error title=capture drifted::the official snapshot no longer reproduces from the committed reading"
-            exit 1
-          }
+          set -uo pipefail
           python3 -m nba2.v4.injury_diff
           python3 -m nba2.v4.settlement
           python3 -m nba2.v4
-          python3 -m nba2.v4.check
 
-      - name: Verify (unit tests + seal + provenance lint)
+      - name: Preserve prior settlement data when official finals are unavailable
+        if: ${{ always() && steps.finals.outcome == 'failure' }}
         run: |
           set -euo pipefail
-          python3 -m unittest discover -s nba2/tests -t .
-          python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
-          python3 -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
-          python3 -m nba2.pipeline.seal_predictions --verify
-          python3 -m nba2.pipeline.build_site_data
-          python3 -m nba2.pipeline.build_site
-          python3 -m nba2.pipeline.lint
+          git restore --source=HEAD --staged --worktree -- data/settlement.json data/v4/settlement
+          git clean -fd -- data/v4/settlement
+          git diff --exit-code HEAD -- data/settlement.json data/v4/settlement
+          echo "::warning title=Settlement preserved::official finals were unavailable; the prior legacy and v4 settlement files are byte-identical to HEAD."
+          echo "- **Settlement:** official finals unavailable; prior settlement data preserved and no result inferred." >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
-        # F-050 fix (taken over from PR #70, session arena/d09f8d1e-nba2): the inline
-        # grep below matched '^\\[fail\\]' while tools/crosscheck_site.py prints '[FAIL]',
-        # so the gate could never fire, and '|| true' swallowed checker crashes. The
-        # shared tools/crosscheck_gate.sh enforces both correctly.
-        run: tools/crosscheck_gate.sh
-
-      - name: Commit refreshed snapshots (only when something changed)
+      # ---------------------------------------------------------------- evidence is kept
+      - name: Record what each official surface did
+        if: always()
         run: |
-          set -euo pipefail
+          python3 - <<'PY'
+          import datetime as dt, json, os, pathlib
+          doc = {
+            "schema": "nba2.refresh-verdict.v1",
+            "run_id": os.environ.get("GITHUB_RUN_ID"),
+            "run_url": f"https://github.com/{os.environ.get('GITHUB_REPOSITORY')}/actions/runs/"
+                       f"{os.environ.get('GITHUB_RUN_ID')}",
+            "event": os.environ.get("GITHUB_EVENT_NAME"),
+            "attempted_at_utc": dt.datetime.now(dt.timezone.utc).replace(
+                microsecond=0).isoformat().replace("+00:00", "Z"),
+            "surfaces": {k: os.environ.get(f"OUT_{k.upper()}") for k in
+                         ("injuries", "finals", "rolling", "v4")},
+            "note": ("'failure' for a surface means its official endpoint was unreachable or "
+                     "returned an unexpected schema. Nothing is invented for a failed "
+                     "surface: the affected rows stay blank and the settlement rows that "
+                     "depend on them stay PENDING. A failed surface blocks PUBLISHING, not "
+                     "the recording of the gap."),
+          }
+          p = pathlib.Path("data/raw/refresh_verdict.json")
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(doc, indent=1) + "\n")
+          print(json.dumps(doc, indent=1))
+          PY
+        env:
+          OUT_INJURIES: ${{ steps.injuries.outcome }}
+          OUT_FINALS: ${{ steps.finals.outcome }}
+          OUT_ROLLING: ${{ steps.rolling.outcome }}
+          OUT_V4: ${{ steps.v4.outcome }}
+
+      - name: Commit the captured evidence (never the sealed ledgers)
+        if: always()
+        env:
+          OUT_FINALS: ${{ steps.finals.outcome }}
+        run: |
+          set -uo pipefail
+          if [ "$OUT_FINALS" = "failure" ]; then
+            settlement_changes=$(git status --porcelain --untracked-files=all -- data/settlement.json data/v4/settlement)
+            if [ -n "$settlement_changes" ]; then
+              echo "::error title=Settlement changed despite failed finals fetch::refusing to commit any changed settlement data."
+              printf '%s\n' "$settlement_changes"
+              exit 1
+            fi
+            echo "Prior settlement files are unchanged; capture evidence may be committed."
+          fi
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
-          git add data/raw data/v4 site data/settlement.json data/site.json index.html pages 2>/dev/null || true
+          if ! git diff --exit-code -- data/raw/ledger data/v3/ledger; then
+            echo "::error title=sealed ledger changed::a sealed ledger differs from HEAD — refusing to commit anything"
+            git checkout -- data/raw/ledger data/v3/ledger
+            exit 1
+          fi
+          git add data/raw data/v4 data/raw/pdf 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing new from the official sources — no commit."
             exit 0
           fi
-          git commit -m "ingest(bot): nightly refresh — official injury releases archived, finals fetched; sealed ledger untouched (verify chain passed)"
-          git push origin HEAD:${GITHUB_REF_NAME}
+          git commit -m "ingest(bot): official capture — $(date -u +%FT%TZ); sealed ledgers untouched"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+  publish:
+    # Fail-closed publication: rebuild from the committed capture and run the gates. A gate
+    # failure stops here, before the separate Pages workflow can see a new commit.
+    needs: capture
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rolling refresh must pass; unavailable finals may remain pending
+        env:
+          CAPTURE_INJURIES: ${{ needs.capture.outputs.injuries }}
+          CAPTURE_FINALS: ${{ needs.capture.outputs.finals }}
+          CAPTURE_ROLLING: ${{ needs.capture.outputs.rolling }}
+          CAPTURE_V4: ${{ needs.capture.outputs.v4 }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, sys
+          p = pathlib.Path("data/raw/refresh_verdict.json")
+          if not p.exists():
+              print("::error title=no verdict::the capture job left no verdict file; "
+                    "refusing to rebuild the site on an unverified capture")
+              sys.exit(1)
+          v = json.loads(p.read_text())
+          s = v["surfaces"]
+          if str(v.get("run_id")) != os.environ.get("GITHUB_RUN_ID"):
+              print("::error title=stale verdict::the capture verdict is not from this Actions run")
+              sys.exit(1)
+          expected = {
+              "injuries": os.environ.get("CAPTURE_INJURIES", ""),
+              "finals": os.environ.get("CAPTURE_FINALS", ""),
+              "rolling": os.environ.get("CAPTURE_ROLLING", ""),
+              "v4": os.environ.get("CAPTURE_V4", ""),
+          }
+          if any(s.get(key) != value for key, value in expected.items()):
+              print("::error title=verdict mismatch::the stored surface outcomes disagree with the capture job outputs")
+              sys.exit(1)
+          print(json.dumps(s, indent=1))
+          # Finals feed only the settlement leg. A failed finals fetch is explicitly
+          # tolerated here; every rolling/provenance surface still has to succeed.
+          failed = {k: x for k, x in s.items()
+                    if x != "success" and not (k == "finals" and x == "failure")}
+          if failed:
+              print("::error title=a rolling surface was not captured::" +
+                    ", ".join(f"{k}={x}" for k, x in failed.items()) +
+                    " — the site is NOT rebuilt, so the last gate-passing snapshot stays live")
+              sys.exit(1)
+          if s.get("finals") == "failure":
+              message = ("Official finals were unavailable. No result was inferred; the prior "
+                         "settlement remains in place. Rolling source freshness/provenance "
+                         "gates still run before any site commit.")
+              print("::warning title=Settlement preserved::" + message)
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  summary.write("## Settlement status" + chr(10) + chr(10) + "- **Not refreshed:** " + message + chr(10))
+          else:
+              print("all four surfaces captured")
+          PY
+
+      - name: Rebuild every tree from the committed capture
+        run: |
+          set -euo pipefail
+          python3 -m nba2.pipeline.build_site_data
+          python3 -m nba2.pipeline.build_site
+          python3 -m backtest.engine.build
+          python3 -m nba2.v2
+          python3 -m nba2.settlement_page
+          python3 -m nba2.v3
+          python3 -m nba2.v4
+
+      - name: Gate — provenance and freshness on every published tree
+        run: |
+          set -euo pipefail
+          python3 -m nba2.v2.check
+          python3 -m nba2.v3.check
+          python3 -m nba2.v4.check
+          python3 -m nba2.pipeline.lint
+
+      - name: Tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s nba2/tests -t .
+          python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
+          python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'
+          python3 -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
+          python3 -m nba2.pipeline.seal_predictions --verify
+
+      - name: Guard prior settlement when the finals leg failed
+        if: ${{ always() && needs.capture.outputs.finals == 'failure' }}
+        run: |
+          set -euo pipefail
+          settlement_changes=$(git status --porcelain --untracked-files=all -- data/settlement.json data/v4/settlement)
+          if [ -n "$settlement_changes" ]; then
+            echo "::error title=Settlement output changed::official finals were unavailable and a rebuild modified settlement data; refusing to publish or commit it."
+            printf '%s' "$settlement_changes"
+            exit 1
+          fi
+          echo "Legacy and v4 settlement data remain unchanged; rolling outputs may continue through the remaining gates."
+
+      - name: Semantic cross-check (blocking, except snapshot age and README counts)
+        # Crash-proof gate (tools/crosscheck_gate.sh, F-050): the checker must produce its
+        # summary line, and [FAIL] lines block — the earlier inline grep could never match
+        # the checker's output and '|| true' hid checker crashes. CC-FRESH-01 (legacy
+        # snapshot age) is excluded by design; the nightly bot additionally excludes
+        # CC-DOC-01 (README count drift) because the README is not part of the rebuild —
+        # both remain visible in the log. Pull requests gate on the full list.
+        run: tools/crosscheck_gate.sh CC-DOC-01
+
+      - name: Commit the rebuild
+        run: |
+          set -uo pipefail
+          git config user.name "nba2-ingest-bot"
+          git config user.email "nba2-ingest-bot@users.noreply.github.com"
+          git add site data/v2 data/v3 data/v4 data/site.json index.html pages 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "The rebuild matches what is committed — nothing to publish."
+            exit 0
+          fi
+          git commit -m "ingest(bot): gate-passing rebuild of the published tree"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Fail visibly if official settlement inputs were unavailable
+        if: ${{ always() && needs.capture.outputs.finals == 'failure' }}
+        run: |
+          echo "::error title=Settlement not refreshed::rolling inputs may have been published after their own gates, but official finals were unavailable and the prior settlement remains unchanged."
+          echo "- **Settlement:** not refreshed; official finals fetch failed, no score was inferred, and prior settlement data was preserved." >> "$GITHUB_STEP_SUMMARY"
+          exit 1

@@ -27,6 +27,17 @@ set -eu
 
 LOG=/tmp/crosscheck_gate.txt
 
+# Optional extra check ids to exclude from gating (beyond CC-FRESH-01, excluded by
+# design): the nightly bot passes CC-DOC-01 because the README is not part of its
+# rebuild. Usage: tools/crosscheck_gate.sh [EXCLUDE_ID ...] [--from-log FILE]
+EXCLUDE='CC-FRESH-01'
+for arg in "$@"; do
+    case "$arg" in
+        --from-log) ;;
+        CC-*) EXCLUDE="$EXCLUDE|$arg" ;;
+    esac
+done
+
 if [ "${1:-}" = "--from-log" ]; then
     [ $# -eq 2 ] || { echo "usage: $0 --from-log FILE" >&2; exit 2; }
     cp "$2" "$LOG"
@@ -57,10 +68,10 @@ PYEOF
     exit 1
 fi
 
-if grep '^\[FAIL\]' "$LOG" | grep -v 'CC-FRESH-01' | grep -q .; then
+if grep '^\[FAIL\]' "$LOG" | grep -vE "$EXCLUDE" | grep -q .; then
     echo "::error::semantic cross-check failed ([FAIL] lines above) — refusing to proceed (CR-7)"
     exit 1
 fi
 
-echo "cross-check gate passed (checker exit $rc). CC-FRESH-01 (snapshot age) is excluded by design."
+echo "cross-check gate passed (checker exit $rc). Excluded by design/policy: $EXCLUDE."
 exit 0

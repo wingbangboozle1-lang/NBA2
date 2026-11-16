@@ -31,6 +31,9 @@ jobs:
       - name: Model + pipeline tests (stdlib unittest, no dependencies)
         run: python -m unittest discover -s nba2/tests -t . -v
 
+      - name: Cross-check ingest status regression tests
+        run: python -m unittest tools.test_crosscheck_site -v
+
       - name: Verify the sealed prediction ledgers (never rewrite them)
         run: |
           for f in data/raw/ledger/sealed-*.json; do

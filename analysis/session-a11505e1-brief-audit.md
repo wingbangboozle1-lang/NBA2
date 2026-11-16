@@ -32,7 +32,7 @@ BLOCKED (cannot proceed without an external input — registered as a question).
 | 10 | Explicit minutes redistribution: top-8 shares + replacement shares | `nba2/v3/rotation.py`, rotation/minutes pages | injury reports + season averages | IMPLEMENTED for captured clubs; replacement shares mechanical and published |
 | 11 | Price parlays with measured ρ; print the naive product next to it | `nba2/v2/parlay.py`, `nba2/v3/parlay.py`, correlations page | measured game pairs | IMPLEMENTED |
 | 12 | Rotation availability column on the picks page | picks page availability column (newest release) | injury reports | IMPLEMENTED |
-| 13 | Market-anchored prior: blend with the closing line weighted by measured OOS log-loss | `market_prior()` framework; w_market blank | — | BLOCKED — no licensed odds feed (G6/Q-43); framework frozen and labelled |
+| 13 | Market-anchored prior: blend with the closing line weighted by measured OOS log-loss | `market_prior()` framework; w_market blank | — | BLOCKED — no licensed odds feed (G6/Q-46); framework frozen and labelled |
 | 14 | Total = possessions × PPP | total estimators in the model; Total A/B published | team stats | IMPLEMENTED |
 | 15 | Originate lines; strategy signals; leaderboard with validation gates, correlation values, luck-removed skill; singles/parlays/prop combos | `site/lines.html`, `strategies.html`, `strategy-lab.html`, `skill-attribution.html`, `props.html`, `backtest/` | finals history | IMPLEMENTED — leaderboard unfunded until G6; sample-size gates (G-01) refuse ranking at 172 graded games |
 
@@ -58,7 +58,8 @@ BLOCKED (cannot proceed without an external input — registered as a question).
 
 ## Open decisions / missing information (registered)
 
-See `requirements/QUESTIONS.json` Q-40..Q-43 and `analysis/questions.md`: Pages source of
-truth (owner), frozen-v1 grading policy (owner), injury PDF byte archival (infra), licensed
-closing-lines feed (procurement). These are the four decisions the repo cannot make for
+See `requirements/QUESTIONS.json` Q-44..Q-46 (this session; ids re-keyed after collision
+with the parallel v5 session's Q-40..43 — its byte-archive question Q-43 and suggestion
+S-57 cover PDF bytes) and `analysis/questions.md`: Pages source of truth (owner), frozen-v1
+grading policy (owner), licensed closing-lines feed (procurement). These are the four decisions the repo cannot make for
 itself; everything else is either implemented or flagged with a mechanical route forward.

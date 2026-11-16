@@ -1,0 +1,257 @@
+{
+  "schema": "nba2.v5.gamebook-transcript.v1",
+  "game_date": "2026-11-14",
+  "session": "arena/6e46dbf2-nba2",
+  "retrieved_window_utc": "2026-11-16 ~18:23-18:26 UTC (platform page-fetch tool; per-call times are not logged by the tool, so each game carries the window)",
+  "retrieval_method": "platform page-fetch tool (fetch_page) reading the official NBA gamebook PDF at statsdmz.nba.com. The tool returns the PDF as text; the PDF bytes cannot be stored from this environment (bash egress to statsdmz.nba.com returns HTTP 000). Every row below therefore carries the gamebook URL it was read from, and every game is re-checked with the arithmetic gates in nba2/v5/check.py.",
+  "source_class": "official",
+  "columns": ["jersey", "name", "pos", "min", "min_sec", "pts", "reb", "ast", "fg", "fg3", "ft", "status"],
+  "notes": [
+    "status is null for a player who played; otherwise it is the official designation printed in the minutes column (DNP - Coach's Decision, DND - ..., NWT - ...).",
+    "min_sec is minutes:seconds converted to seconds; it is null when the player did not play.",
+    "reb is the gamebook TOT (total) rebounds column.",
+    "F-V5-02: in game 0022600233 the extracted visitor table carries a spurious cell in at least one row (player rebound totals sum to 47 against the club's published 46), so no Detroit rebound value can be attributed to a player with confidence. Those reb cells are null and flagged, not inferred.",
+    "F-V5-03: in game 0022600235 the extracted visitor table drops the TOT rebound cell for Tre Jones; his rebounds are recovered as 0 from the club totals (team TOT 48 reconciles only with 0) and the row is flagged."
+  ],
+  "games": [
+    {
+      "game_id": "0022600231",
+      "date": "2026-11-14",
+      "matchup": "DEN@NOP",
+      "away": "DEN",
+      "home": "NOP",
+      "arena": "Smoothie King Center, New Orleans, LA",
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+      "final": {"away": 116, "home": 108},
+      "quarters": {"away": [29, 27, 30, 30], "home": [23, 28, 31, 26], "ot": {"away": [], "home": []}},
+      "club_totals": {
+        "DEN": {"min_sec": 14400, "pts": 116, "reb": 47, "or": 8, "dr": 39, "ast": 29},
+        "NOP": {"min_sec": 14400, "pts": 108, "reb": 38, "or": 12, "dr": 26, "ast": 25}
+      },
+      "teams": {
+        "DEN": {"side": "away", "opp": "NOP", "players": [
+          {"jersey": 23, "name": "Cam Johnson", "pos": "F", "min": "30:46", "min_sec": 1846, "pts": 12, "reb": 5, "ast": 2, "fg": 3, "fg3": 1, "ft": 5, "status": null},
+          {"jersey": 32, "name": "Aaron Gordon", "pos": "F", "min": "32:32", "min_sec": 1952, "pts": 11, "reb": 5, "ast": 1, "fg": 4, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 15, "name": "Nikola Jokic", "pos": "C", "min": "37:08", "min_sec": 2228, "pts": 26, "reb": 8, "ast": 10, "fg": 9, "fg3": 1, "ft": 7, "status": null},
+          {"jersey": 0, "name": "Christian Braun", "pos": "G", "min": "27:46", "min_sec": 1666, "pts": 17, "reb": 7, "ast": 1, "fg": 6, "fg3": 1, "ft": 4, "status": null},
+          {"jersey": 27, "name": "Jamal Murray", "pos": "G", "min": "37:57", "min_sec": 2277, "pts": 23, "reb": 7, "ast": 9, "fg": 9, "fg3": 0, "ft": 5, "status": null},
+          {"jersey": 7, "name": "Trevon Brazile", "pos": null, "min": "15:37", "min_sec": 937, "pts": 5, "reb": 3, "ast": 0, "fg": 2, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 21, "name": "Spencer Jones", "pos": null, "min": "11:30", "min_sec": 690, "pts": 4, "reb": 2, "ast": 1, "fg": 2, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 10, "name": "DeMar DeRozan", "pos": null, "min": "23:49", "min_sec": 1429, "pts": 9, "reb": 3, "ast": 2, "fg": 3, "fg3": 0, "ft": 3, "status": null},
+          {"jersey": 5, "name": "Tyus Jones", "pos": null, "min": "09:49", "min_sec": 589, "pts": 2, "reb": 0, "ast": 3, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 3, "name": "Marvin Bagley III", "pos": null, "min": "13:06", "min_sec": 786, "pts": 7, "reb": 7, "ast": 0, "fg": 3, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 11, "name": "Alpha Diallo", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 13, "name": "Bryce Hopkins", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 22, "name": "Zeke Nnaji", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]},
+        "NOP": {"side": "home", "opp": "DEN", "players": [
+          {"jersey": 41, "name": "Saddiq Bey", "pos": "F", "min": "40:33", "min_sec": 2433, "pts": 16, "reb": 6, "ast": 4, "fg": 4, "fg3": 2, "ft": 6, "status": null},
+          {"jersey": 1, "name": "Zion Williamson", "pos": "F", "min": "30:46", "min_sec": 1846, "pts": 24, "reb": 6, "ast": 2, "fg": 9, "fg3": 2, "ft": 4, "status": null},
+          {"jersey": 21, "name": "Yves Missi", "pos": "C", "min": "22:03", "min_sec": 1323, "pts": 3, "reb": 8, "ast": 1, "fg": 1, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 2, "name": "Herbert Jones", "pos": "G", "min": "27:29", "min_sec": 1649, "pts": 10, "reb": 2, "ast": 1, "fg": 3, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 0, "name": "Jeremiah Fears", "pos": "G", "min": "32:44", "min_sec": 1964, "pts": 13, "reb": 4, "ast": 7, "fg": 6, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 22, "name": "Derik Queen", "pos": null, "min": "24:58", "min_sec": 1498, "pts": 10, "reb": 5, "ast": 4, "fg": 4, "fg3": 2, "ft": 0, "status": null},
+          {"jersey": 17, "name": "Karlo Matkovic", "pos": null, "min": "14:14", "min_sec": 854, "pts": 5, "reb": 3, "ast": 1, "fg": 2, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 3, "name": "Jordan Poole", "pos": null, "min": "23:55", "min_sec": 1435, "pts": 14, "reb": 2, "ast": 5, "fg": 3, "fg3": 1, "ft": 7, "status": null},
+          {"jersey": 10, "name": "Jaron Pierre Jr.", "pos": null, "min": "23:18", "min_sec": 1398, "pts": 13, "reb": 2, "ast": 0, "fg": 5, "fg3": 2, "ft": 1, "status": null},
+          {"jersey": 8, "name": "Malik Dia", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 14, "name": "AJ Johnson", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 6, "name": "DeAndre Jordan", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 13, "name": "Julian Reese", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]}
+      }
+    },
+    {
+      "game_id": "0022600232",
+      "date": "2026-11-14",
+      "matchup": "DAL@CLE",
+      "away": "DAL",
+      "home": "CLE",
+      "arena": "Rocket Arena, Cleveland, OH",
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+      "final": {"away": 117, "home": 127},
+      "quarters": {"away": [33, 20, 38, 26], "home": [33, 38, 34, 22], "ot": {"away": [], "home": []}},
+      "club_totals": {
+        "DAL": {"min_sec": 14400, "pts": 117, "reb": 39, "or": 13, "dr": 26, "ast": 23},
+        "CLE": {"min_sec": 14400, "pts": 127, "reb": 54, "or": 13, "dr": 41, "ast": 31}
+      },
+      "teams": {
+        "DAL": {"side": "away", "opp": "CLE", "players": [
+          {"jersey": 16, "name": "Caleb Martin", "pos": "F", "min": "32:42", "min_sec": 1962, "pts": 15, "reb": 8, "ast": 3, "fg": 6, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 25, "name": "P.J. Washington Jr.", "pos": "F", "min": "26:03", "min_sec": 1563, "pts": 10, "reb": 3, "ast": 1, "fg": 3, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 21, "name": "Daniel Gafford", "pos": "C", "min": "16:45", "min_sec": 1005, "pts": 10, "reb": 3, "ast": 1, "fg": 4, "fg3": 1, "ft": 1, "status": null},
+          {"jersey": 32, "name": "Cooper Flagg", "pos": "G", "min": "38:24", "min_sec": 2304, "pts": 18, "reb": 8, "ast": 5, "fg": 6, "fg3": 0, "ft": 6, "status": null},
+          {"jersey": 11, "name": "Kyrie Irving", "pos": "G", "min": "37:19", "min_sec": 2239, "pts": 34, "reb": 6, "ast": 5, "fg": 11, "fg3": 7, "ft": 5, "status": null},
+          {"jersey": 14, "name": "Morez Johnson Jr.", "pos": null, "min": "14:56", "min_sec": 896, "pts": 4, "reb": 2, "ast": 0, "fg": 0, "fg3": 0, "ft": 4, "status": null},
+          {"jersey": 3, "name": "Naji Marshall", "pos": null, "min": "29:55", "min_sec": 1795, "pts": 12, "reb": 3, "ast": 5, "fg": 4, "fg3": 0, "ft": 4, "status": null},
+          {"jersey": 10, "name": "Zaccharie Risacher", "pos": null, "min": "14:28", "min_sec": 868, "pts": 5, "reb": 2, "ast": 0, "fg": 2, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 34, "name": "Santi Aldama", "pos": null, "min": "16:13", "min_sec": 973, "pts": 7, "reb": 2, "ast": 1, "fg": 2, "fg3": 2, "ft": 1, "status": null},
+          {"jersey": 1, "name": "Walter Clayton Jr.", "pos": null, "min": "13:16", "min_sec": 796, "pts": 2, "reb": 2, "ast": 2, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 30, "name": "Moussa Cisse", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 9, "name": "Jett Howard", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 33, "name": "Tobi Lawal", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 8, "name": "Marcus Sassar", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]},
+        "CLE": {"side": "home", "opp": "DAL", "players": [
+          {"jersey": 20, "name": "Jaylon Tyson", "pos": "F", "min": "33:37", "min_sec": 2017, "pts": 18, "reb": 4, "ast": 4, "fg": 5, "fg3": 3, "ft": 5, "status": null},
+          {"jersey": 33, "name": "Mario Hezonja", "pos": "F", "min": "34:03", "min_sec": 2043, "pts": 22, "reb": 7, "ast": 4, "fg": 9, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 3, "name": "Thomas Bryant", "pos": "C", "min": "27:25", "min_sec": 1645, "pts": 19, "reb": 11, "ast": 3, "fg": 7, "fg3": 2, "ft": 3, "status": null},
+          {"jersey": 15, "name": "Meleek Thomas", "pos": "G", "min": "33:33", "min_sec": 2013, "pts": 20, "reb": 4, "ast": 2, "fg": 8, "fg3": 3, "ft": 1, "status": null},
+          {"jersey": 24, "name": "Tyrese Proctor", "pos": "G", "min": "34:05", "min_sec": 2045, "pts": 24, "reb": 11, "ast": 10, "fg": 10, "fg3": 4, "ft": 0, "status": null},
+          {"jersey": 12, "name": "Riley Minix", "pos": null, "min": "22:10", "min_sec": 1330, "pts": 2, "reb": 0, "ast": 4, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 9, "name": "Craig Porter Jr.", "pos": null, "min": "28:22", "min_sec": 1702, "pts": 9, "reb": 9, "ast": 6, "fg": 3, "fg3": 0, "ft": 3, "status": null},
+          {"jersey": 77, "name": "Norchad Omier", "pos": null, "min": "26:45", "min_sec": 1605, "pts": 13, "reb": 8, "ast": 2, "fg": 5, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 31, "name": "Jarrett Allen", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DND -- Right Knee Management"},
+          {"jersey": 18, "name": "Khalifa Diop", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 8, "name": "Peyton Watson", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DND -- Right Hamstring Management"}
+        ]}
+      }
+    },
+    {
+      "game_id": "0022600233",
+      "date": "2026-11-14",
+      "matchup": "DET@MIA",
+      "away": "DET",
+      "home": "MIA",
+      "arena": "Kaseya Center, Miami, FL",
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+      "final": {"away": 117, "home": 137},
+      "quarters": {"away": [39, 21, 26, 31], "home": [37, 31, 35, 34], "ot": {"away": [], "home": []}},
+      "club_totals": {
+        "DET": {"min_sec": 14400, "pts": 117, "reb": 46, "or": 22, "dr": 24, "ast": 31},
+        "MIA": {"min_sec": 14400, "pts": 137, "reb": 49, "or": 13, "dr": 36, "ast": 34}
+      },
+      "flags": ["F-V5-02"],
+      "teams": {
+        "DET": {"side": "away", "opp": "MIA", "reb_blank_reason": "F-V5-02: the extracted visitor box-score table carries a spurious cell in at least one row (player rebound totals sum to 47 against the club's published 46, and one row prints TOT=1 with OR=0 and DR=0), so no individual rebound value can be attributed with confidence. Blank, not inferred.", "players": [
+          {"jersey": 9, "name": "Ausar Thompson", "pos": "F", "min": "18:15", "min_sec": 1095, "pts": 10, "reb": null, "ast": 5, "fg": 5, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 55, "name": "Duncan Robinson", "pos": "F", "min": "16:55", "min_sec": 1015, "pts": 10, "reb": null, "ast": 1, "fg": 3, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 20, "name": "John Collins", "pos": "C", "min": "25:58", "min_sec": 1558, "pts": 8, "reb": null, "ast": 0, "fg": 3, "fg3": 2, "ft": 0, "status": null},
+          {"jersey": 24, "name": "Daniss Jenkins", "pos": "G", "min": "35:17", "min_sec": 2117, "pts": 10, "reb": null, "ast": 5, "fg": 4, "fg3": 1, "ft": 1, "status": null},
+          {"jersey": 2, "name": "Cade Cunningham", "pos": "G", "min": "36:13", "min_sec": 2173, "pts": 33, "reb": null, "ast": 8, "fg": 8, "fg3": 3, "ft": 14, "status": null},
+          {"jersey": 27, "name": "Kevin Huerter", "pos": null, "min": "37:50", "min_sec": 2270, "pts": 20, "reb": null, "ast": 7, "fg": 9, "fg3": 2, "ft": 0, "status": null},
+          {"jersey": 31, "name": "Javonte Green", "pos": null, "min": "11:54", "min_sec": 714, "pts": 5, "reb": null, "ast": 0, "fg": 0, "fg3": 0, "ft": 5, "status": null},
+          {"jersey": 7, "name": "Paul Reed", "pos": null, "min": "22:50", "min_sec": 1370, "pts": 9, "reb": null, "ast": 1, "fg": 3, "fg3": 0, "ft": 3, "status": null},
+          {"jersey": 5, "name": "Ronald Holland II", "pos": null, "min": "21:33", "min_sec": 1293, "pts": 5, "reb": null, "ast": 3, "fg": 2, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 12, "name": "Taurean Prince", "pos": null, "min": "08:16", "min_sec": 496, "pts": 2, "reb": null, "ast": 1, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 13, "name": "Isaac Jones", "pos": null, "min": "01:56", "min_sec": 116, "pts": 0, "reb": null, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 94, "name": "Elijah Harkless", "pos": null, "min": "01:41", "min_sec": 101, "pts": 2, "reb": null, "ast": 0, "fg": 0, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 35, "name": "Tolu Smith", "pos": null, "min": "01:23", "min_sec": 83, "pts": 3, "reb": null, "ast": 0, "fg": 1, "fg3": 0, "ft": 1, "status": null}
+        ]},
+        "MIA": {"side": "home", "opp": "DET", "players": [
+          {"jersey": 11, "name": "Klay Thompson", "pos": "F", "min": "20:13", "min_sec": 1213, "pts": 26, "reb": 1, "ast": 4, "fg": 10, "fg3": 6, "ft": 0, "status": null},
+          {"jersey": 7, "name": "Giannis Antetokounmpo", "pos": "F", "min": "30:55", "min_sec": 1855, "pts": 34, "reb": 14, "ast": 8, "fg": 13, "fg3": 1, "ft": 7, "status": null},
+          {"jersey": 13, "name": "Bam Adebayo", "pos": "C", "min": "36:06", "min_sec": 2166, "pts": 20, "reb": 5, "ast": 4, "fg": 5, "fg3": 1, "ft": 9, "status": null},
+          {"jersey": 15, "name": "Myron Gardner", "pos": "G", "min": "26:02", "min_sec": 1562, "pts": 5, "reb": 9, "ast": 3, "fg": 2, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 2, "name": "Davion Mitchell", "pos": "G", "min": "32:18", "min_sec": 1938, "pts": 15, "reb": 4, "ast": 9, "fg": 4, "fg3": 3, "ft": 4, "status": null},
+          {"jersey": 4, "name": "Ryan Conwell", "pos": null, "min": "25:48", "min_sec": 1548, "pts": 9, "reb": 4, "ast": 1, "fg": 3, "fg3": 2, "ft": 1, "status": null},
+          {"jersey": 95, "name": "Bobby Portis Jr.", "pos": null, "min": "17:36", "min_sec": 1056, "pts": 7, "reb": 4, "ast": 2, "fg": 2, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 22, "name": "Andrew Wiggins", "pos": null, "min": "22:55", "min_sec": 1375, "pts": 10, "reb": 2, "ast": 1, "fg": 3, "fg3": 0, "ft": 4, "status": null},
+          {"jersey": 0, "name": "Simone Fontecchio", "pos": null, "min": "14:12", "min_sec": 852, "pts": 7, "reb": 5, "ast": 0, "fg": 2, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 5, "name": "Nikola Jovic", "pos": null, "min": "11:09", "min_sec": 669, "pts": 2, "reb": 1, "ast": 2, "fg": 0, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 24, "name": "Tre Donaldson", "pos": null, "min": "01:23", "min_sec": 83, "pts": 2, "reb": 0, "ast": 0, "fg": 0, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 16, "name": "Keshad Johnson", "pos": null, "min": "01:23", "min_sec": 83, "pts": 0, "reb": 0, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 10, "name": "Tim Hardaway Jr.", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 8, "name": "Nick Richards", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 12, "name": "Dru Smith", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]}
+      }
+    },
+    {
+      "game_id": "0022600234",
+      "date": "2026-11-14",
+      "matchup": "BKN@MEM",
+      "away": "BKN",
+      "home": "MEM",
+      "arena": "FedExForum, Memphis, TN",
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+      "final": {"away": 110, "home": 129},
+      "quarters": {"away": [23, 31, 30, 26], "home": [38, 33, 32, 26], "ot": {"away": [], "home": []}},
+      "club_totals": {
+        "BKN": {"min_sec": 14400, "pts": 110, "reb": 43, "or": 19, "dr": 24, "ast": 26},
+        "MEM": {"min_sec": 14400, "pts": 129, "reb": 41, "or": 13, "dr": 28, "ast": 34}
+      },
+      "teams": {
+        "BKN": {"side": "away", "opp": "MEM", "players": [
+          {"jersey": 21, "name": "Noah Clowney", "pos": "F", "min": "35:01", "min_sec": 2101, "pts": 15, "reb": 7, "ast": 3, "fg": 6, "fg3": 3, "ft": 0, "status": null},
+          {"jersey": 30, "name": "Julius Randle", "pos": "F", "min": "31:23", "min_sec": 1883, "pts": 22, "reb": 4, "ast": 5, "fg": 8, "fg3": 3, "ft": 3, "status": null},
+          {"jersey": 20, "name": "Day'Ron Sharpe", "pos": "C", "min": "27:47", "min_sec": 1667, "pts": 16, "reb": 11, "ast": 5, "fg": 7, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 2, "name": "Danny Wolf", "pos": "G", "min": "27:42", "min_sec": 1662, "pts": 14, "reb": 6, "ast": 1, "fg": 5, "fg3": 4, "ft": 0, "status": null},
+          {"jersey": 8, "name": "Egor Demin", "pos": "G", "min": "27:27", "min_sec": 1647, "pts": 11, "reb": 1, "ast": 2, "fg": 3, "fg3": 3, "ft": 2, "status": null},
+          {"jersey": 10, "name": "Nolan Traore", "pos": null, "min": "19:48", "min_sec": 1188, "pts": 11, "reb": 1, "ast": 2, "fg": 5, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 13, "name": "Moritz Wagner", "pos": null, "min": "18:27", "min_sec": 1107, "pts": 10, "reb": 6, "ast": 4, "fg": 3, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 0, "name": "Mikel Brown Jr.", "pos": null, "min": "19:57", "min_sec": 1197, "pts": 6, "reb": 1, "ast": 2, "fg": 2, "fg3": 2, "ft": 0, "status": null},
+          {"jersey": 14, "name": "Terance Mann", "pos": null, "min": "09:27", "min_sec": 567, "pts": 2, "reb": 1, "ast": 1, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 31, "name": "Chaney Johnson", "pos": null, "min": "12:21", "min_sec": 741, "pts": 1, "reb": 5, "ast": 0, "fg": 0, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 1, "name": "Keon Ellis", "pos": null, "min": "07:08", "min_sec": 428, "pts": 0, "reb": 0, "ast": 1, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 0, "name": "Josh Minott", "pos": null, "min": "01:46", "min_sec": 106, "pts": 0, "reb": 0, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 4, "name": "Drake Powell", "pos": null, "min": "01:46", "min_sec": 106, "pts": 2, "reb": 0, "ast": 0, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 17, "name": "Michael Porter Jr.", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "NWT - Personal -"}
+        ]},
+        "MEM": {"side": "home", "opp": "BKN", "players": [
+          {"jersey": 0, "name": "Jaylen Wells", "pos": "F", "min": "24:35", "min_sec": 1475, "pts": 5, "reb": 2, "ast": 2, "fg": 1, "fg3": 1, "ft": 2, "status": null},
+          {"jersey": 27, "name": "Cameron Boozer", "pos": "F", "min": "28:47", "min_sec": 1727, "pts": 15, "reb": 8, "ast": 5, "fg": 7, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 28, "name": "Isaiah Stewart", "pos": "C", "min": "15:09", "min_sec": 909, "pts": 11, "reb": 3, "ast": 3, "fg": 5, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 23, "name": "Cedric Coward", "pos": "G", "min": "32:49", "min_sec": 1969, "pts": 23, "reb": 12, "ast": 4, "fg": 7, "fg3": 4, "ft": 5, "status": null},
+          {"jersey": 24, "name": "Cam Spencer", "pos": "G", "min": "33:55", "min_sec": 2035, "pts": 17, "reb": 1, "ast": 8, "fg": 6, "fg3": 3, "ft": 2, "status": null},
+          {"jersey": 22, "name": "Taylor Hendricks", "pos": null, "min": "29:01", "min_sec": 1741, "pts": 22, "reb": 5, "ast": 4, "fg": 9, "fg3": 0, "ft": 4, "status": null},
+          {"jersey": 45, "name": "GG Jackson", "pos": null, "min": "02:52", "min_sec": 172, "pts": 3, "reb": 0, "ast": 0, "fg": 1, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 10, "name": "Javon Small", "pos": null, "min": "29:48", "min_sec": 1788, "pts": 19, "reb": 2, "ast": 5, "fg": 5, "fg3": 3, "ft": 6, "status": null},
+          {"jersey": 17, "name": "Kris Murray", "pos": null, "min": "19:29", "min_sec": 1169, "pts": 3, "reb": 2, "ast": 3, "fg": 1, "fg3": 1, "ft": 0, "status": null},
+          {"jersey": 18, "name": "Olivier-Maxence Prosper", "pos": null, "min": "20:03", "min_sec": 1203, "pts": 11, "reb": 4, "ast": 0, "fg": 4, "fg3": 2, "ft": 1, "status": null},
+          {"jersey": 35, "name": "Karim Lopez", "pos": null, "min": "01:46", "min_sec": 106, "pts": 0, "reb": 2, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 21, "name": "Jahmai Mashack", "pos": null, "min": "01:46", "min_sec": 106, "pts": 0, "reb": 0, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 14, "name": "Zach Edey", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DND - Injury/Illness - Left Ankle Injury Management"}
+        ]}
+      }
+    },
+    {
+      "game_id": "0022600235",
+      "date": "2026-11-14",
+      "matchup": "CHI@MIN",
+      "away": "CHI",
+      "home": "MIN",
+      "arena": "Target Center, Minneapolis, MN",
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+      "final": {"away": 117, "home": 106},
+      "quarters": {"away": [29, 29, 30, 29], "home": [17, 28, 35, 26], "ot": {"away": [], "home": []}},
+      "club_totals": {
+        "CHI": {"min_sec": 14400, "pts": 117, "reb": 48, "or": 12, "dr": 36, "ast": 29},
+        "MIN": {"min_sec": 14400, "pts": 106, "reb": 43, "or": 12, "dr": 31, "ast": 23}
+      },
+      "flags": ["F-V5-03"],
+      "teams": {
+        "CHI": {"side": "away", "opp": "MIN", "players": [
+          {"jersey": 35, "name": "Isaac Okoro", "pos": "F", "min": "31:02", "min_sec": 1862, "pts": 9, "reb": 7, "ast": 4, "fg": 3, "fg3": 0, "ft": 3, "status": null},
+          {"jersey": 14, "name": "Matas Buzelis", "pos": "F", "min": "29:48", "min_sec": 1788, "pts": 18, "reb": 9, "ast": 2, "fg": 5, "fg3": 2, "ft": 6, "status": null},
+          {"jersey": 12, "name": "Zach Collins", "pos": "C", "min": "28:11", "min_sec": 1691, "pts": 8, "reb": 6, "ast": 4, "fg": 4, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 24, "name": "Norman Powell", "pos": "G", "min": "30:06", "min_sec": 1806, "pts": 24, "reb": 5, "ast": 3, "fg": 10, "fg3": 3, "ft": 1, "status": null},
+          {"jersey": 3, "name": "Josh Giddey", "pos": "G", "min": "26:14", "min_sec": 1574, "pts": 8, "reb": 8, "ast": 5, "fg": 3, "fg3": 2, "ft": 0, "status": null},
+          {"jersey": 7, "name": "Buddy Hield", "pos": null, "min": "20:22", "min_sec": 1222, "pts": 16, "reb": 4, "ast": 2, "fg": 6, "fg3": 4, "ft": 0, "status": null},
+          {"jersey": 30, "name": "Tre Jones", "pos": null, "min": "24:17", "min_sec": 1457, "pts": 16, "reb": 0, "ast": 4, "fg": 7, "fg3": 1, "ft": 1, "status": null, "note": "F-V5-03: the extracted row drops the TOT rebound cell; 0 is the only value consistent with the club totals (team TOT 48, OR 12, DR 36 all reconcile with Jones at 0/0/0)."},
+          {"jersey": 11, "name": "Leonard Miller", "pos": null, "min": "17:18", "min_sec": 1038, "pts": 4, "reb": 3, "ast": 4, "fg": 1, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 44, "name": "Patrick Williams", "pos": null, "min": "25:41", "min_sec": 1541, "pts": 14, "reb": 5, "ast": 1, "fg": 5, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 2, "name": "Noa Essengue", "pos": null, "min": "07:01", "min_sec": 421, "pts": 0, "reb": 1, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 15, "name": "Jordan Hawkins", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 0, "name": "Orlando Robinson", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]},
+        "MIN": {"side": "home", "opp": "CHI", "players": [
+          {"jersey": 3, "name": "Jaden McDaniels", "pos": "F", "min": "37:01", "min_sec": 2221, "pts": 18, "reb": 5, "ast": 6, "fg": 7, "fg3": 2, "ft": 2, "status": null},
+          {"jersey": 24, "name": "Jonathan Kuminga", "pos": "F", "min": "35:23", "min_sec": 2123, "pts": 11, "reb": 3, "ast": 3, "fg": 3, "fg3": 0, "ft": 5, "status": null},
+          {"jersey": 27, "name": "Rudy Gobert", "pos": "C", "min": "26:53", "min_sec": 1613, "pts": 1, "reb": 10, "ast": 4, "fg": 0, "fg3": 0, "ft": 1, "status": null},
+          {"jersey": 13, "name": "Ayo Dosunmu", "pos": "G", "min": "33:04", "min_sec": 1984, "pts": 24, "reb": 4, "ast": 0, "fg": 10, "fg3": 0, "ft": 4, "status": null},
+          {"jersey": 1, "name": "LaMelo Ball", "pos": "G", "min": "29:51", "min_sec": 1791, "pts": 19, "reb": 8, "ast": 6, "fg": 7, "fg3": 4, "ft": 1, "status": null},
+          {"jersey": 41, "name": "Trey Lyles", "pos": null, "min": "18:46", "min_sec": 1126, "pts": 5, "reb": 1, "ast": 2, "fg": 1, "fg3": 0, "ft": 3, "status": null},
+          {"jersey": 19, "name": "Joan Beringer", "pos": null, "min": "12:39", "min_sec": 759, "pts": 2, "reb": 5, "ast": 0, "fg": 1, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 8, "name": "Bones Hyland", "pos": null, "min": "21:18", "min_sec": 1278, "pts": 12, "reb": 1, "ast": 2, "fg": 3, "fg3": 3, "ft": 3, "status": null},
+          {"jersey": 4, "name": "Terrence Shannon Jr", "pos": null, "min": "21:45", "min_sec": 1305, "pts": 14, "reb": 6, "ast": 0, "fg": 6, "fg3": 0, "ft": 2, "status": null},
+          {"jersey": 7, "name": "Jaylen Clark", "pos": null, "min": "03:21", "min_sec": 201, "pts": 0, "reb": 0, "ast": 0, "fg": 0, "fg3": 0, "ft": 0, "status": null},
+          {"jersey": 33, "name": "Isaiah Evans", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 15, "name": "Zyon Pullin", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 9, "name": "Cody Williams", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"},
+          {"jersey": 44, "name": "Rocco Zikarsky", "pos": null, "min": null, "min_sec": null, "pts": null, "reb": null, "ast": null, "fg": null, "fg3": null, "ft": null, "status": "DNP - Coach's Decision"}
+        ]}
+      }
+    }
+  ]
+}

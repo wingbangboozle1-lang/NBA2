@@ -32,7 +32,7 @@
    "id": "G-V4-5",
    "name": "newest-indexed injury release is stamped three ways",
    "ok": true,
-   "measured": "revision 2026-11-16 09:15 AM ET, retrieved 2026-11-16T14:41:00Z, index checked 2026-11-16T14:30:00Z",
+   "measured": "revision 2026-11-16 01:00 PM ET, retrieved 2026-11-16T18:38:00Z, index checked 2026-11-16T18:35:00Z",
    "detail": "both stamps and the index check are recorded"
   },
   {
@@ -46,7 +46,7 @@
    "id": "G-V4-7",
    "name": "settlement re-hashes and the seal still verifies",
    "ok": true,
-   "measured": "settlement hash abb844cc4c11ab99",
+   "measured": "settlement hash b4286a1d6b34144e",
    "detail": "hash matches and the sealed ledger is unmodified"
   },
   {
@@ -59,16 +59,24 @@
  ],
  "settlement_verify": {
   "ok": true,
-  "stored": "abb844cc4c11ab999c7d8b03de04094e811650a6d96b25ebf47d2528b6193df9",
-  "recomputed": "abb844cc4c11ab999c7d8b03de04094e811650a6d96b25ebf47d2528b6193df9",
-  "seal_still_verified": true
+  "stored": "b4286a1d6b34144ea9b750fbbf23be36d3bd8b9df9c4ffff35b3419192e24574",
+  "recomputed": "b4286a1d6b34144ea9b750fbbf23be36d3bd8b9df9c4ffff35b3419192e24574",
+  "seal_still_verified": true,
+  "seals_still_verified": {
+   "sealed-2026-11-13.json": true,
+   "sealed-2026-11-14.json": true,
+   "sealed-2026-11-15.json": true
+  },
+  "all_seals_ok": true,
+  "n_graded": 37,
+  "n_sealed": 83,
+  "settled_at_utc": "2026-11-15T23:59:59Z"
  },
  "capture_files": [
   "data/raw/refresh_2026-11-16/standings_2026-11-16.json",
   "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
-  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0915AM.json",
-  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",
   "data/raw/refresh_2026-11-16/capture_index.json",
   "data/v4/injury/releases.json"

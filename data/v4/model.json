@@ -634,7 +634,7 @@
     "home": {
      "team": "BOS",
      "rows": 0,
-     "not_yet_submitted": true,
+     "not_yet_submitted": false,
      "by_status": {},
      "n_status_known": 0,
      "n_status_blank": 0,
@@ -695,7 +695,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
   },
@@ -745,7 +745,8 @@
      "not_yet_submitted": false,
      "by_status": {
       "Out": 5,
-      "Questionable": 2
+      "Doubtful": 1,
+      "Questionable": 1
      },
      "n_status_known": 7,
      "n_status_blank": 0,
@@ -807,7 +808,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
   },
@@ -853,10 +854,13 @@
    "availability": {
     "home": {
      "team": "WAS",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 2
+     },
+     "n_status_known": 6,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -866,8 +870,8 @@
      "rows": 7,
      "not_yet_submitted": false,
      "by_status": {
-      "Questionable": 3,
-      "Out": 4
+      "Questionable": 2,
+      "Out": 5
      },
      "n_status_known": 7,
      "n_status_blank": 0,
@@ -916,7 +920,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/mem-vs-was-0022600247"
   },
@@ -962,22 +966,25 @@
    "availability": {
     "home": {
      "team": "BKN",
-     "rows": 5,
+     "rows": 4,
      "not_yet_submitted": false,
      "by_status": {
-      "Out": 5
+      "Out": 4
      },
-     "n_status_known": 5,
+     "n_status_known": 4,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
     },
     "away": {
      "team": "PHI",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -1024,7 +1031,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
   },
@@ -1070,24 +1077,28 @@
    "availability": {
     "home": {
      "team": "MIA",
-     "rows": 3,
+     "rows": 4,
      "not_yet_submitted": false,
      "by_status": {
       "Out": 1,
       "Questionable": 1,
+      "Doubtful": 1,
       "Available": 1
      },
-     "n_status_known": 3,
+     "n_status_known": 4,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
     },
     "away": {
      "team": "HOU",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5,
+      "Questionable": 1
+     },
+     "n_status_known": 6,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -1134,7 +1145,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
   },
@@ -1245,7 +1256,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/por-vs-min-0022600250"
   },
@@ -1291,13 +1302,13 @@
    "availability": {
     "home": {
      "team": "NOP",
-     "rows": 8,
+     "rows": 7,
      "not_yet_submitted": false,
      "by_status": {
-      "Questionable": 3,
+      "Questionable": 2,
       "Out": 5
      },
-     "n_status_known": 8,
+     "n_status_known": 7,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -1306,9 +1317,12 @@
      "team": "GSW",
      "rows": 6,
      "not_yet_submitted": false,
-     "by_status": {},
-     "n_status_known": 0,
-     "n_status_blank": 6,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
+     "n_status_blank": 1,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
     }
@@ -1354,7 +1368,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
   },
@@ -1462,7 +1476,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/phx-vs-den-0022600252"
   },
@@ -1568,7 +1582,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253"
   },
@@ -1679,7 +1693,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/por-vs-min-0022600254"
   },
@@ -1785,7 +1799,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/det-vs-sas-0022600255"
   },
@@ -1891,7 +1905,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256"
   },
@@ -1997,7 +2011,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257"
   },
@@ -2047,7 +2061,8 @@
      "not_yet_submitted": false,
      "by_status": {
       "Out": 5,
-      "Questionable": 2
+      "Doubtful": 1,
+      "Questionable": 1
      },
      "n_status_known": 7,
      "n_status_blank": 0,
@@ -2059,8 +2074,8 @@
      "rows": 7,
      "not_yet_submitted": false,
      "by_status": {
-      "Questionable": 3,
-      "Out": 4
+      "Questionable": 2,
+      "Out": 5
      },
      "n_status_known": 7,
      "n_status_blank": 0,
@@ -2109,7 +2124,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/mem-vs-cle-0022600258"
   },
@@ -2165,10 +2180,13 @@
     },
     "away": {
      "team": "HOU",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5,
+      "Questionable": 1
+     },
+     "n_status_known": 6,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2215,7 +2233,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259"
   },
@@ -2261,14 +2279,15 @@
    "availability": {
     "home": {
      "team": "MIA",
-     "rows": 3,
+     "rows": 4,
      "not_yet_submitted": false,
      "by_status": {
       "Out": 1,
       "Questionable": 1,
+      "Doubtful": 1,
       "Available": 1
      },
-     "n_status_known": 3,
+     "n_status_known": 4,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2325,7 +2344,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/mil-vs-mia-0022600260"
   },
@@ -2383,10 +2402,13 @@
     },
     "away": {
      "team": "PHI",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2433,7 +2455,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/phi-vs-orl-0022600261"
   },
@@ -2479,12 +2501,12 @@
    "availability": {
     "home": {
      "team": "BKN",
-     "rows": 5,
+     "rows": 4,
      "not_yet_submitted": false,
      "by_status": {
-      "Out": 5
+      "Out": 4
      },
-     "n_status_known": 5,
+     "n_status_known": 4,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2544,7 +2566,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262"
   },
@@ -2600,10 +2622,13 @@
     },
     "away": {
      "team": "WAS",
-     "rows": 0,
-     "not_yet_submitted": true,
-     "by_status": {},
-     "n_status_known": 0,
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 2
+     },
+     "n_status_known": 6,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2650,7 +2675,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/was-vs-tor-0022600263"
   },
@@ -2696,13 +2721,13 @@
    "availability": {
     "home": {
      "team": "NOP",
-     "rows": 8,
+     "rows": 7,
      "not_yet_submitted": false,
      "by_status": {
-      "Questionable": 3,
+      "Questionable": 2,
       "Out": 5
      },
-     "n_status_known": 8,
+     "n_status_known": 7,
      "n_status_blank": 0,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
@@ -2759,7 +2784,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/det-vs-nop-0022600264"
   },
@@ -2865,7 +2890,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/atl-vs-okc-0022600265"
   },
@@ -2924,7 +2949,7 @@
     "away": {
      "team": "BOS",
      "rows": 0,
-     "not_yet_submitted": true,
+     "not_yet_submitted": false,
      "by_status": {},
      "n_status_known": 0,
      "n_status_blank": 0,
@@ -2973,7 +2998,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/bos-vs-den-0022600266"
   },
@@ -3031,9 +3056,12 @@
      "team": "GSW",
      "rows": 6,
      "not_yet_submitted": false,
-     "by_status": {},
-     "n_status_known": 0,
-     "n_status_blank": 6,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
+     "n_status_blank": 1,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
     }
@@ -3079,7 +3107,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267"
   },
@@ -3185,7 +3213,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/uta-vs-lal-0022600268"
   },
@@ -3291,7 +3319,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/phx-vs-sac-0022600269"
   },
@@ -3340,8 +3368,8 @@
      "rows": 7,
      "not_yet_submitted": false,
      "by_status": {
-      "Questionable": 3,
-      "Out": 4
+      "Questionable": 2,
+      "Out": 5
      },
      "n_status_known": 7,
      "n_status_blank": 0,
@@ -3352,9 +3380,12 @@
      "team": "GSW",
      "rows": 6,
      "not_yet_submitted": false,
-     "by_status": {},
-     "n_status_known": 0,
-     "n_status_blank": 6,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
+     "n_status_blank": 1,
      "production_impact": null,
      "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
     }
@@ -3400,7 +3431,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/gsw-vs-mem-0022600270"
   },
@@ -3508,7 +3539,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/por-vs-mil-0022600271"
   },
@@ -3617,7 +3648,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/nyk-vs-min-0022600272"
   },
@@ -3723,7 +3754,7 @@
     "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
     "standings": "https://www.nba.com/standings",
     "schedule": "https://www.nba.com/schedule?date=2026-11-16",
-    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    "source_url": "https://www.nba.com/game/lac-vs-sas-0022600273"
   }

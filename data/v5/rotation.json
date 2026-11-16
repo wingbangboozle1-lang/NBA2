@@ -1,0 +1,4843 @@
+{
+  "schema": "nba2.v5.rotation.v1",
+  "session": "arena/6e46dbf2-nba2",
+  "minutes_shares": [
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600037",
+      "matchup": "ATL@CHI",
+      "team": "ATL",
+      "opp": "CHI",
+      "team_minutes_s": 15900,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Nickeil Alexander-Walker",
+          "min": "41:17",
+          "share": 0.1558,
+          "pts": 16,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Jalen Johnson",
+          "min": "40:21",
+          "share": 0.1523,
+          "pts": 27,
+          "reb": 11,
+          "ast": 10
+        },
+        {
+          "player": "Dyson Daniels",
+          "min": "36:05",
+          "share": 0.1362,
+          "pts": 6,
+          "reb": 9,
+          "ast": 4
+        },
+        {
+          "player": "Onyeka Okongwu",
+          "min": "34:50",
+          "share": 0.1314,
+          "pts": 17,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "CJ McCollum",
+          "min": "31:52",
+          "share": 0.1203,
+          "pts": 20,
+          "reb": 5,
+          "ast": 5
+        },
+        {
+          "player": "Aaron Wiggins",
+          "min": "25:30",
+          "share": 0.0962,
+          "pts": 9,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Luguentz Dort",
+          "min": "19:33",
+          "share": 0.0738,
+          "pts": 10,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Jock Landale",
+          "min": "18:10",
+          "share": 0.0686,
+          "pts": 12,
+          "reb": 5,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9345,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600243",
+      "matchup": "ATL@MIL",
+      "team": "ATL",
+      "opp": "MIL",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Onyeka Okongwu",
+          "min": "35:46",
+          "share": 0.149,
+          "pts": 16,
+          "reb": 11,
+          "ast": 0
+        },
+        {
+          "player": "Jalen Johnson",
+          "min": "34:53",
+          "share": 0.1453,
+          "pts": 14,
+          "reb": 11,
+          "ast": 5
+        },
+        {
+          "player": "Nickeil Alexander-Walker",
+          "min": "32:30",
+          "share": 0.1354,
+          "pts": 20,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "CJ McCollum",
+          "min": "30:15",
+          "share": 0.126,
+          "pts": 20,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Dyson Daniels",
+          "min": "26:56",
+          "share": 0.1122,
+          "pts": 9,
+          "reb": 10,
+          "ast": 5
+        },
+        {
+          "player": "Aaron Wiggins",
+          "min": "23:37",
+          "share": 0.0984,
+          "pts": 7,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Luguentz Dort",
+          "min": "18:26",
+          "share": 0.0768,
+          "pts": 3,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "Corey Kispert",
+          "min": "15:51",
+          "share": 0.066,
+          "pts": 14,
+          "reb": 3,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9093,
+      "dnp": [
+        {
+          "player": "Dorian Finney-Smith",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Kingston Flemings",
+          "status": "DND - Injury/Illness - Lumbar Strain"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600234",
+      "matchup": "BKN@MEM",
+      "team": "BKN",
+      "opp": "MEM",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Noah Clowney",
+          "min": "35:01",
+          "share": 0.1459,
+          "pts": 15,
+          "reb": 7,
+          "ast": 3
+        },
+        {
+          "player": "Julius Randle",
+          "min": "31:23",
+          "share": 0.1308,
+          "pts": 22,
+          "reb": 4,
+          "ast": 5
+        },
+        {
+          "player": "Day'Ron Sharpe",
+          "min": "27:47",
+          "share": 0.1158,
+          "pts": 16,
+          "reb": 11,
+          "ast": 5
+        },
+        {
+          "player": "Danny Wolf",
+          "min": "27:42",
+          "share": 0.1154,
+          "pts": 14,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Egor Demin",
+          "min": "27:27",
+          "share": 0.1144,
+          "pts": 11,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Mikel Brown Jr.",
+          "min": "19:57",
+          "share": 0.0831,
+          "pts": 6,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Nolan Traore",
+          "min": "19:48",
+          "share": 0.0825,
+          "pts": 11,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Moritz Wagner",
+          "min": "18:27",
+          "share": 0.0769,
+          "pts": 10,
+          "reb": 6,
+          "ast": 4
+        }
+      ],
+      "top8_share": 0.8647,
+      "dnp": [
+        {
+          "player": "Michael Porter Jr.",
+          "status": "NWT - Personal -"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600240",
+      "matchup": "DAL@BOS",
+      "team": "BOS",
+      "opp": "DAL",
+      "team_minutes_s": 14400,
+      "n_played": 14,
+      "top8": [
+        {
+          "player": "Jayson Tatum",
+          "min": "30:08",
+          "share": 0.1256,
+          "pts": 32,
+          "reb": 6,
+          "ast": 6
+        },
+        {
+          "player": "Paul George",
+          "min": "24:51",
+          "share": 0.1035,
+          "pts": 7,
+          "reb": 7,
+          "ast": 6
+        },
+        {
+          "player": "Derrick White",
+          "min": "22:56",
+          "share": 0.0956,
+          "pts": 16,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Jordan Walsh",
+          "min": "21:07",
+          "share": 0.088,
+          "pts": 11,
+          "reb": 1,
+          "ast": 0
+        },
+        {
+          "player": "Payton Pritchard",
+          "min": "18:56",
+          "share": 0.0789,
+          "pts": 10,
+          "reb": 1,
+          "ast": 6
+        },
+        {
+          "player": "Baylor Scheierman",
+          "min": "18:00",
+          "share": 0.075,
+          "pts": 12,
+          "reb": 5,
+          "ast": 3
+        },
+        {
+          "player": "Hugo Gonzalez",
+          "min": "17:52",
+          "share": 0.0744,
+          "pts": 9,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Neemias Queta",
+          "min": "15:21",
+          "share": 0.064,
+          "pts": 8,
+          "reb": 6,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.7049,
+      "dnp": [
+        {
+          "player": "Mike Conley",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600238",
+      "matchup": "CHA@LAC",
+      "team": "CHA",
+      "opp": "LAC",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Sion James",
+          "min": "35:29",
+          "share": 0.1478,
+          "pts": 3,
+          "reb": 8,
+          "ast": 4
+        },
+        {
+          "player": "Naz Reid",
+          "min": "27:22",
+          "share": 0.114,
+          "pts": 17,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Moussa Diabate",
+          "min": "26:16",
+          "share": 0.1094,
+          "pts": 12,
+          "reb": 12,
+          "ast": 2
+        },
+        {
+          "player": "Grayson Allen",
+          "min": "24:50",
+          "share": 0.1035,
+          "pts": 12,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Brandon Miller",
+          "min": "24:28",
+          "share": 0.1019,
+          "pts": 5,
+          "reb": 2,
+          "ast": 4
+        },
+        {
+          "player": "Grant Williams",
+          "min": "20:11",
+          "share": 0.0841,
+          "pts": 11,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Coby White",
+          "min": "19:57",
+          "share": 0.0831,
+          "pts": 21,
+          "reb": 0,
+          "ast": 1
+        },
+        {
+          "player": "Royce O'Neale",
+          "min": "18:30",
+          "share": 0.0771,
+          "pts": 3,
+          "reb": 3,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.821,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600037",
+      "matchup": "ATL@CHI",
+      "team": "CHI",
+      "opp": "ATL",
+      "team_minutes_s": 15899,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Isaac Okoro",
+          "min": "40:53",
+          "share": 0.1543,
+          "pts": 15,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Josh Giddey",
+          "min": "39:01",
+          "share": 0.1472,
+          "pts": 15,
+          "reb": 10,
+          "ast": 14
+        },
+        {
+          "player": "Jalen Smith",
+          "min": "31:35",
+          "share": 0.1192,
+          "pts": 15,
+          "reb": 12,
+          "ast": 3
+        },
+        {
+          "player": "Norman Powell",
+          "min": "31:06",
+          "share": 0.1174,
+          "pts": 33,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Matas Buzelis",
+          "min": "28:35",
+          "share": 0.1079,
+          "pts": 11,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Buddy Hield",
+          "min": "25:16",
+          "share": 0.0954,
+          "pts": 12,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Patrick Williams",
+          "min": "24:25",
+          "share": 0.0921,
+          "pts": 13,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Nic Claxton",
+          "min": "21:34",
+          "share": 0.0814,
+          "pts": 2,
+          "reb": 6,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9148,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600235",
+      "matchup": "CHI@MIN",
+      "team": "CHI",
+      "opp": "MIN",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Isaac Okoro",
+          "min": "31:02",
+          "share": 0.1293,
+          "pts": 9,
+          "reb": 7,
+          "ast": 4
+        },
+        {
+          "player": "Norman Powell",
+          "min": "30:06",
+          "share": 0.1254,
+          "pts": 24,
+          "reb": 5,
+          "ast": 3
+        },
+        {
+          "player": "Matas Buzelis",
+          "min": "29:48",
+          "share": 0.1242,
+          "pts": 18,
+          "reb": 9,
+          "ast": 2
+        },
+        {
+          "player": "Zach Collins",
+          "min": "28:11",
+          "share": 0.1174,
+          "pts": 8,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Josh Giddey",
+          "min": "26:14",
+          "share": 0.1093,
+          "pts": 8,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "Patrick Williams",
+          "min": "25:41",
+          "share": 0.107,
+          "pts": 14,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Tre Jones",
+          "min": "24:17",
+          "share": 0.1012,
+          "pts": 16,
+          "reb": 0,
+          "ast": 4
+        },
+        {
+          "player": "Buddy Hield",
+          "min": "20:22",
+          "share": 0.0849,
+          "pts": 16,
+          "reb": 4,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8987,
+      "dnp": [
+        {
+          "player": "Jordan Hawkins",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Orlando Robinson",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600036",
+      "matchup": "CLE@MIA",
+      "team": "CLE",
+      "opp": "MIA",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "James Harden",
+          "min": "34:49",
+          "share": 0.1451,
+          "pts": 20,
+          "reb": 6,
+          "ast": 8
+        },
+        {
+          "player": "Donovan Mitchell",
+          "min": "32:51",
+          "share": 0.1369,
+          "pts": 25,
+          "reb": 4,
+          "ast": 7
+        },
+        {
+          "player": "Jarrett Allen",
+          "min": "31:40",
+          "share": 0.1319,
+          "pts": 9,
+          "reb": 8,
+          "ast": 1
+        },
+        {
+          "player": "Peyton Watson",
+          "min": "30:25",
+          "share": 0.1267,
+          "pts": 4,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Jaylon Tyson",
+          "min": "29:52",
+          "share": 0.1244,
+          "pts": 16,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Tyrese Proctor",
+          "min": "27:20",
+          "share": 0.1139,
+          "pts": 22,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Meleek Thomas",
+          "min": "17:54",
+          "share": 0.0746,
+          "pts": 12,
+          "reb": 3,
+          "ast": 5
+        },
+        {
+          "player": "Thomas Bryant",
+          "min": "16:20",
+          "share": 0.0681,
+          "pts": 9,
+          "reb": 1,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9216,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600232",
+      "matchup": "DAL@CLE",
+      "team": "CLE",
+      "opp": "DAL",
+      "team_minutes_s": 14400,
+      "n_played": 8,
+      "top8": [
+        {
+          "player": "Tyrese Proctor",
+          "min": "34:05",
+          "share": 0.142,
+          "pts": 24,
+          "reb": 11,
+          "ast": 10
+        },
+        {
+          "player": "Mario Hezonja",
+          "min": "34:03",
+          "share": 0.1419,
+          "pts": 22,
+          "reb": 7,
+          "ast": 4
+        },
+        {
+          "player": "Jaylon Tyson",
+          "min": "33:37",
+          "share": 0.1401,
+          "pts": 18,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Meleek Thomas",
+          "min": "33:33",
+          "share": 0.1398,
+          "pts": 20,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Craig Porter Jr.",
+          "min": "28:22",
+          "share": 0.1182,
+          "pts": 9,
+          "reb": 9,
+          "ast": 6
+        },
+        {
+          "player": "Thomas Bryant",
+          "min": "27:25",
+          "share": 0.1142,
+          "pts": 19,
+          "reb": 11,
+          "ast": 3
+        },
+        {
+          "player": "Norchad Omier",
+          "min": "26:45",
+          "share": 0.1115,
+          "pts": 13,
+          "reb": 8,
+          "ast": 2
+        },
+        {
+          "player": "Riley Minix",
+          "min": "22:10",
+          "share": 0.0924,
+          "pts": 2,
+          "reb": 0,
+          "ast": 4
+        }
+      ],
+      "top8_share": 1.0,
+      "dnp": [
+        {
+          "player": "Jarrett Allen",
+          "status": "DND -- Right Knee Management"
+        },
+        {
+          "player": "Khalifa Diop",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Peyton Watson",
+          "status": "DND -- Right Hamstring Management"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600232",
+      "matchup": "DAL@CLE",
+      "team": "DAL",
+      "opp": "CLE",
+      "team_minutes_s": 14401,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Cooper Flagg",
+          "min": "38:24",
+          "share": 0.16,
+          "pts": 18,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "Kyrie Irving",
+          "min": "37:19",
+          "share": 0.1555,
+          "pts": 34,
+          "reb": 6,
+          "ast": 5
+        },
+        {
+          "player": "Caleb Martin",
+          "min": "32:42",
+          "share": 0.1362,
+          "pts": 15,
+          "reb": 8,
+          "ast": 3
+        },
+        {
+          "player": "Naji Marshall",
+          "min": "29:55",
+          "share": 0.1246,
+          "pts": 12,
+          "reb": 3,
+          "ast": 5
+        },
+        {
+          "player": "P.J. Washington Jr.",
+          "min": "26:03",
+          "share": 0.1085,
+          "pts": 10,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Daniel Gafford",
+          "min": "16:45",
+          "share": 0.0698,
+          "pts": 10,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Santi Aldama",
+          "min": "16:13",
+          "share": 0.0676,
+          "pts": 7,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Morez Johnson Jr.",
+          "min": "14:56",
+          "share": 0.0622,
+          "pts": 4,
+          "reb": 2,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.8845,
+      "dnp": [
+        {
+          "player": "Jett Howard",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Marcus Sassar",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Moussa Cisse",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Tobi Lawal",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600240",
+      "matchup": "DAL@BOS",
+      "team": "DAL",
+      "opp": "BOS",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Caleb Martin",
+          "min": "33:51",
+          "share": 0.141,
+          "pts": 12,
+          "reb": 5,
+          "ast": 5
+        },
+        {
+          "player": "Zaccharie Risacher",
+          "min": "26:43",
+          "share": 0.1113,
+          "pts": 18,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Cooper Flagg",
+          "min": "26:41",
+          "share": 0.1112,
+          "pts": 17,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Morez Johnson Jr.",
+          "min": "25:40",
+          "share": 0.1069,
+          "pts": 2,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "P.J. Washington",
+          "min": "24:30",
+          "share": 0.1021,
+          "pts": 8,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Walter Clayton Jr.",
+          "min": "23:04",
+          "share": 0.0961,
+          "pts": 13,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Naji Marshall",
+          "min": "22:45",
+          "share": 0.0948,
+          "pts": 13,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "Daniel Gafford",
+          "min": "19:24",
+          "share": 0.0808,
+          "pts": 3,
+          "reb": 4,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8443,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600231",
+      "matchup": "DEN@NOP",
+      "team": "DEN",
+      "opp": "NOP",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Jamal Murray",
+          "min": "37:57",
+          "share": 0.1581,
+          "pts": 23,
+          "reb": 7,
+          "ast": 9
+        },
+        {
+          "player": "Nikola Jokic",
+          "min": "37:08",
+          "share": 0.1547,
+          "pts": 26,
+          "reb": 8,
+          "ast": 10
+        },
+        {
+          "player": "Aaron Gordon",
+          "min": "32:32",
+          "share": 0.1356,
+          "pts": 11,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Cam Johnson",
+          "min": "30:46",
+          "share": 0.1282,
+          "pts": 12,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Christian Braun",
+          "min": "27:46",
+          "share": 0.1157,
+          "pts": 17,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "DeMar DeRozan",
+          "min": "23:49",
+          "share": 0.0992,
+          "pts": 9,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Trevon Brazile",
+          "min": "15:37",
+          "share": 0.0651,
+          "pts": 5,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Marvin Bagley III",
+          "min": "13:06",
+          "share": 0.0546,
+          "pts": 7,
+          "reb": 7,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9112,
+      "dnp": [
+        {
+          "player": "Alpha Diallo",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Bryce Hopkins",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Zeke Nnaji",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600233",
+      "matchup": "DET@MIA",
+      "team": "DET",
+      "opp": "MIA",
+      "team_minutes_s": 14401,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Kevin Huerter",
+          "min": "37:50",
+          "share": 0.1576,
+          "pts": 20,
+          "reb": null,
+          "ast": 7
+        },
+        {
+          "player": "Cade Cunningham",
+          "min": "36:13",
+          "share": 0.1509,
+          "pts": 33,
+          "reb": null,
+          "ast": 8
+        },
+        {
+          "player": "Daniss Jenkins",
+          "min": "35:17",
+          "share": 0.147,
+          "pts": 10,
+          "reb": null,
+          "ast": 5
+        },
+        {
+          "player": "John Collins",
+          "min": "25:58",
+          "share": 0.1082,
+          "pts": 8,
+          "reb": null,
+          "ast": 0
+        },
+        {
+          "player": "Paul Reed",
+          "min": "22:50",
+          "share": 0.0951,
+          "pts": 9,
+          "reb": null,
+          "ast": 1
+        },
+        {
+          "player": "Ronald Holland II",
+          "min": "21:33",
+          "share": 0.0898,
+          "pts": 5,
+          "reb": null,
+          "ast": 3
+        },
+        {
+          "player": "Ausar Thompson",
+          "min": "18:15",
+          "share": 0.076,
+          "pts": 10,
+          "reb": null,
+          "ast": 5
+        },
+        {
+          "player": "Duncan Robinson",
+          "min": "16:55",
+          "share": 0.0705,
+          "pts": 10,
+          "reb": null,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8951,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600040",
+      "matchup": "GSW@SAS",
+      "team": "GSW",
+      "opp": "SAS",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Will Richard",
+          "min": "30:19",
+          "share": 0.1263,
+          "pts": 7,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "LJ Cryer",
+          "min": "23:57",
+          "share": 0.0998,
+          "pts": 20,
+          "reb": 2,
+          "ast": 6
+        },
+        {
+          "player": "Yaxel Lendeborg",
+          "min": "23:40",
+          "share": 0.0986,
+          "pts": 3,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Brandin Podziemski",
+          "min": "22:03",
+          "share": 0.0919,
+          "pts": 8,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Gui Santos",
+          "min": "21:10",
+          "share": 0.0882,
+          "pts": 7,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Charles Bassey",
+          "min": "20:10",
+          "share": 0.084,
+          "pts": 11,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "De'Anthony Melton",
+          "min": "18:21",
+          "share": 0.0765,
+          "pts": 8,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Draymond Green",
+          "min": "15:44",
+          "share": 0.0656,
+          "pts": 4,
+          "reb": 3,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.7308,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600039",
+      "matchup": "UTA@HOU",
+      "team": "HOU",
+      "opp": "UTA",
+      "team_minutes_s": 14400,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Amen Thompson",
+          "min": "40:53",
+          "share": 0.1703,
+          "pts": 12,
+          "reb": 10,
+          "ast": 3
+        },
+        {
+          "player": "Alperen Sengun",
+          "min": "37:05",
+          "share": 0.1545,
+          "pts": 43,
+          "reb": 12,
+          "ast": 5
+        },
+        {
+          "player": "Fred VanVleet",
+          "min": "33:47",
+          "share": 0.1408,
+          "pts": 17,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Kevin Durant",
+          "min": "33:25",
+          "share": 0.1392,
+          "pts": 22,
+          "reb": 3,
+          "ast": 6
+        },
+        {
+          "player": "Tari Eason",
+          "min": "33:20",
+          "share": 0.1389,
+          "pts": 14,
+          "reb": 11,
+          "ast": 2
+        },
+        {
+          "player": "Jabari Smith Jr.",
+          "min": "24:03",
+          "share": 0.1002,
+          "pts": 6,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Reed Sheppard",
+          "min": "19:09",
+          "share": 0.0798,
+          "pts": 0,
+          "reb": 0,
+          "ast": 3
+        },
+        {
+          "player": "Bogdan Bogdanovi\u0107",
+          "min": "12:21",
+          "share": 0.0515,
+          "pts": 11,
+          "reb": 1,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.9752,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_UTAHOU_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600242",
+      "matchup": "HOU@WAS",
+      "team": "HOU",
+      "opp": "WAS",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Tari Eason",
+          "min": "30:03",
+          "share": 0.1252,
+          "pts": 25,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Kevin Durant",
+          "min": "29:32",
+          "share": 0.1231,
+          "pts": 25,
+          "reb": 4,
+          "ast": 5
+        },
+        {
+          "player": "Amen Thompson",
+          "min": "29:15",
+          "share": 0.1219,
+          "pts": 26,
+          "reb": 7,
+          "ast": 7
+        },
+        {
+          "player": "Alperen Sengun",
+          "min": "28:14",
+          "share": 0.1176,
+          "pts": 19,
+          "reb": 8,
+          "ast": 8
+        },
+        {
+          "player": "Jabari Smith Jr.",
+          "min": "27:49",
+          "share": 0.1159,
+          "pts": 9,
+          "reb": 6,
+          "ast": 5
+        },
+        {
+          "player": "Reed Sheppard",
+          "min": "25:39",
+          "share": 0.1069,
+          "pts": 11,
+          "reb": 1,
+          "ast": 6
+        },
+        {
+          "player": "Bogdan Bogdanovic",
+          "min": "22:08",
+          "share": 0.0922,
+          "pts": 12,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Steven Adams",
+          "min": "12:09",
+          "share": 0.0506,
+          "pts": 6,
+          "reb": 7,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8534,
+      "dnp": [
+        {
+          "player": "Fred VanVleet",
+          "status": "DND - Injury/Illness - Right Knee Injury Management"
+        },
+        {
+          "player": "Marcus Smart",
+          "status": "NWT - League Suspension -"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600034",
+      "matchup": "NYK@IND",
+      "team": "IND",
+      "opp": "NYK",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Andrew Nembhard",
+          "min": "33:42",
+          "share": 0.1404,
+          "pts": 12,
+          "reb": 4,
+          "ast": 6
+        },
+        {
+          "player": "Aaron Nesmith",
+          "min": "32:31",
+          "share": 0.1355,
+          "pts": 18,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Pascal Siakam",
+          "min": "31:58",
+          "share": 0.1332,
+          "pts": 19,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Kelly Oubre Jr.",
+          "min": "29:52",
+          "share": 0.1244,
+          "pts": 16,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Ivica Zubac",
+          "min": "25:46",
+          "share": 0.1074,
+          "pts": 12,
+          "reb": 13,
+          "ast": 1
+        },
+        {
+          "player": "Quenton Jackson",
+          "min": "20:18",
+          "share": 0.0846,
+          "pts": 3,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "T.J. McConnell",
+          "min": "17:20",
+          "share": 0.0722,
+          "pts": 6,
+          "reb": 3,
+          "ast": 7
+        },
+        {
+          "player": "Obi Toppin",
+          "min": "16:02",
+          "share": 0.0668,
+          "pts": 9,
+          "reb": 3,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8645,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_NYKIND_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600236",
+      "matchup": "IND@PHI",
+      "team": "IND",
+      "opp": "PHI",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Aaron Nesmith",
+          "min": "36:20",
+          "share": 0.1514,
+          "pts": 12,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Pascal Siakam",
+          "min": "33:40",
+          "share": 0.1403,
+          "pts": 31,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "Quenton Jackson",
+          "min": "30:14",
+          "share": 0.126,
+          "pts": 15,
+          "reb": 6,
+          "ast": 8
+        },
+        {
+          "player": "Kelly Oubre Jr.",
+          "min": "28:55",
+          "share": 0.1205,
+          "pts": 16,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Ivica Zubac",
+          "min": "22:15",
+          "share": 0.0927,
+          "pts": 8,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "T.J. McConnell",
+          "min": "19:06",
+          "share": 0.0796,
+          "pts": 12,
+          "reb": 5,
+          "ast": 5
+        },
+        {
+          "player": "Jay Huff",
+          "min": "17:42",
+          "share": 0.0737,
+          "pts": 11,
+          "reb": 0,
+          "ast": 2
+        },
+        {
+          "player": "Jalen Slawson",
+          "min": "14:22",
+          "share": 0.0599,
+          "pts": 8,
+          "reb": 5,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.844,
+      "dnp": [
+        {
+          "player": "Braden Smith",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600042",
+      "matchup": "OKC@LAC",
+      "team": "LAC",
+      "opp": "OKC",
+      "team_minutes_s": 14401,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Darius Garland",
+          "min": "37:03",
+          "share": 0.1544,
+          "pts": 24,
+          "reb": 4,
+          "ast": 7
+        },
+        {
+          "player": "Rui Hachimura",
+          "min": "31:43",
+          "share": 0.1321,
+          "pts": 7,
+          "reb": 11,
+          "ast": 3
+        },
+        {
+          "player": "Brook Lopez",
+          "min": "30:44",
+          "share": 0.128,
+          "pts": 26,
+          "reb": 7,
+          "ast": 4
+        },
+        {
+          "player": "Derrick Jones Jr.",
+          "min": "29:11",
+          "share": 0.1216,
+          "pts": 14,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Max Strus",
+          "min": "22:34",
+          "share": 0.094,
+          "pts": 3,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Kris Dunn",
+          "min": "19:59",
+          "share": 0.0833,
+          "pts": 2,
+          "reb": 3,
+          "ast": 6
+        },
+        {
+          "player": "Gradey Dick",
+          "min": "18:34",
+          "share": 0.0774,
+          "pts": 13,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Keaton Wagner",
+          "min": "18:21",
+          "share": 0.0765,
+          "pts": 14,
+          "reb": 2,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8672,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_OKCLAC_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600238",
+      "matchup": "CHA@LAC",
+      "team": "LAC",
+      "opp": "CHA",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Darius Garland",
+          "min": "34:49",
+          "share": 0.1451,
+          "pts": 27,
+          "reb": 6,
+          "ast": 7
+        },
+        {
+          "player": "Brook Lopez",
+          "min": "28:34",
+          "share": 0.119,
+          "pts": 7,
+          "reb": 5,
+          "ast": 8
+        },
+        {
+          "player": "Keaton Wagler",
+          "min": "27:32",
+          "share": 0.1147,
+          "pts": 12,
+          "reb": 4,
+          "ast": 5
+        },
+        {
+          "player": "Derrick Jones Jr.",
+          "min": "25:36",
+          "share": 0.1067,
+          "pts": 13,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Max Strus",
+          "min": "24:54",
+          "share": 0.1037,
+          "pts": 14,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Rui Hachimura",
+          "min": "22:05",
+          "share": 0.092,
+          "pts": 4,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Kobe Sanders",
+          "min": "20:25",
+          "share": 0.0851,
+          "pts": 2,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Gradey Dick",
+          "min": "18:38",
+          "share": 0.0776,
+          "pts": 12,
+          "reb": 2,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.844,
+      "dnp": [
+        {
+          "player": "Cam Christie",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jalen Pickett",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600237",
+      "matchup": "LAL@PHX",
+      "team": "LAL",
+      "opp": "PHX",
+      "team_minutes_s": 14403,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Quentin Grimes",
+          "min": "37:26",
+          "share": 0.1559,
+          "pts": 22,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Luka Doncic",
+          "min": "35:44",
+          "share": 0.1489,
+          "pts": 43,
+          "reb": 3,
+          "ast": 9
+        },
+        {
+          "player": "Walker Kessler",
+          "min": "32:26",
+          "share": 0.1351,
+          "pts": 14,
+          "reb": 12,
+          "ast": 3
+        },
+        {
+          "player": "Jake LaRavia",
+          "min": "32:19",
+          "share": 0.1346,
+          "pts": 12,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Matisse Thybulle",
+          "min": "26:05",
+          "share": 0.1087,
+          "pts": 12,
+          "reb": 8,
+          "ast": 0
+        },
+        {
+          "player": "Collin Sexton",
+          "min": "23:45",
+          "share": 0.0989,
+          "pts": 16,
+          "reb": 0,
+          "ast": 3
+        },
+        {
+          "player": "Sandro Mamukelashvili",
+          "min": "21:10",
+          "share": 0.0882,
+          "pts": 4,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Ziaire Williams",
+          "min": "18:59",
+          "share": 0.0791,
+          "pts": 6,
+          "reb": 2,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.9494,
+      "dnp": [
+        {
+          "player": "Adou Thiero",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Bronny James",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Chris Manon",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jaden Hardy",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Kevon Looney",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600038",
+      "matchup": "MEM@NOP",
+      "team": "MEM",
+      "opp": "NOP",
+      "team_minutes_s": 12861,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Cedric Coward",
+          "min": "29:50",
+          "share": 0.1392,
+          "pts": 14,
+          "reb": 7,
+          "ast": 6
+        },
+        {
+          "player": "Ty Jerome",
+          "min": "28:35",
+          "share": 0.1333,
+          "pts": 17,
+          "reb": 2,
+          "ast": 9
+        },
+        {
+          "player": "Jaylen Wells",
+          "min": "26:47",
+          "share": 0.125,
+          "pts": 11,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Cameron Boozer",
+          "min": "25:05",
+          "share": 0.117,
+          "pts": 12,
+          "reb": 10,
+          "ast": 3
+        },
+        {
+          "player": "Cam Spencer",
+          "min": "24:12",
+          "share": 0.1129,
+          "pts": 14,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "GG Jackson",
+          "min": "22:21",
+          "share": 0.1043,
+          "pts": 14,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Isaiah Stewart",
+          "min": "20:21",
+          "share": 0.0949,
+          "pts": 12,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Taylor Hendricks",
+          "min": "18:43",
+          "share": 0.0873,
+          "pts": 10,
+          "reb": 12,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9139,
+      "dnp": [
+        {
+          "player": "Jerami Grant",
+          "status": null
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600234",
+      "matchup": "BKN@MEM",
+      "team": "MEM",
+      "opp": "BKN",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Cam Spencer",
+          "min": "33:55",
+          "share": 0.1413,
+          "pts": 17,
+          "reb": 1,
+          "ast": 8
+        },
+        {
+          "player": "Cedric Coward",
+          "min": "32:49",
+          "share": 0.1367,
+          "pts": 23,
+          "reb": 12,
+          "ast": 4
+        },
+        {
+          "player": "Javon Small",
+          "min": "29:48",
+          "share": 0.1242,
+          "pts": 19,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Taylor Hendricks",
+          "min": "29:01",
+          "share": 0.1209,
+          "pts": 22,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Cameron Boozer",
+          "min": "28:47",
+          "share": 0.1199,
+          "pts": 15,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "Jaylen Wells",
+          "min": "24:35",
+          "share": 0.1024,
+          "pts": 5,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "min": "20:03",
+          "share": 0.0835,
+          "pts": 11,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "Kris Murray",
+          "min": "19:29",
+          "share": 0.0812,
+          "pts": 3,
+          "reb": 2,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.9102,
+      "dnp": [
+        {
+          "player": "Zach Edey",
+          "status": "DND - Injury/Illness - Left Ankle Injury Management"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600036",
+      "matchup": "CLE@MIA",
+      "team": "MIA",
+      "opp": "CLE",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Davion Mitchell",
+          "min": "38:56",
+          "share": 0.1622,
+          "pts": 22,
+          "reb": 5,
+          "ast": 17
+        },
+        {
+          "player": "Bam Adebayo",
+          "min": "38:05",
+          "share": 0.1587,
+          "pts": 37,
+          "reb": 14,
+          "ast": 3
+        },
+        {
+          "player": "Ryan Conwell",
+          "min": "32:45",
+          "share": 0.1365,
+          "pts": 20,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Andrew Wiggins",
+          "min": "31:33",
+          "share": 0.1315,
+          "pts": 8,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "min": "31:00",
+          "share": 0.1292,
+          "pts": 37,
+          "reb": 9,
+          "ast": 2
+        },
+        {
+          "player": "Tim Hardaway Jr.",
+          "min": "20:09",
+          "share": 0.084,
+          "pts": 4,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Myron Gardner",
+          "min": "19:19",
+          "share": 0.0805,
+          "pts": 0,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Bobby Portis Jr.",
+          "min": "15:03",
+          "share": 0.0627,
+          "pts": 5,
+          "reb": 3,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9451,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600233",
+      "matchup": "DET@MIA",
+      "team": "MIA",
+      "opp": "DET",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Bam Adebayo",
+          "min": "36:06",
+          "share": 0.1504,
+          "pts": 20,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Davion Mitchell",
+          "min": "32:18",
+          "share": 0.1346,
+          "pts": 15,
+          "reb": 4,
+          "ast": 9
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "min": "30:55",
+          "share": 0.1288,
+          "pts": 34,
+          "reb": 14,
+          "ast": 8
+        },
+        {
+          "player": "Myron Gardner",
+          "min": "26:02",
+          "share": 0.1085,
+          "pts": 5,
+          "reb": 9,
+          "ast": 3
+        },
+        {
+          "player": "Ryan Conwell",
+          "min": "25:48",
+          "share": 0.1075,
+          "pts": 9,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Andrew Wiggins",
+          "min": "22:55",
+          "share": 0.0955,
+          "pts": 10,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Klay Thompson",
+          "min": "20:13",
+          "share": 0.0842,
+          "pts": 26,
+          "reb": 1,
+          "ast": 4
+        },
+        {
+          "player": "Bobby Portis Jr.",
+          "min": "17:36",
+          "share": 0.0733,
+          "pts": 7,
+          "reb": 4,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8828,
+      "dnp": [
+        {
+          "player": "Dru Smith",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Nick Richards",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Tim Hardaway Jr.",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600035",
+      "matchup": "MIL@ORL",
+      "team": "MIL",
+      "opp": "ORL",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Tyler Herro",
+          "min": "33:46",
+          "share": 0.1407,
+          "pts": 18,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Myles Turner",
+          "min": "30:43",
+          "share": 0.128,
+          "pts": 14,
+          "reb": 11,
+          "ast": 3
+        },
+        {
+          "player": "Kyle Kuzma",
+          "min": "30:36",
+          "share": 0.1275,
+          "pts": 14,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Ryan Rollins",
+          "min": "28:56",
+          "share": 0.1206,
+          "pts": 8,
+          "reb": 10,
+          "ast": 2
+        },
+        {
+          "player": "Jaime Jaquez Jr.",
+          "min": "28:16",
+          "share": 0.1178,
+          "pts": 22,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Nate Ament",
+          "min": "22:23",
+          "share": 0.0933,
+          "pts": 9,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Brayden Burries",
+          "min": "19:04",
+          "share": 0.0794,
+          "pts": 3,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Kel'el Ware",
+          "min": "17:17",
+          "share": 0.072,
+          "pts": 10,
+          "reb": 6,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8792,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600243",
+      "matchup": "ATL@MIL",
+      "team": "MIL",
+      "opp": "ATL",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Gary Trent Jr.",
+          "min": "30:03",
+          "share": 0.1252,
+          "pts": 18,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Jaime Jaquez Jr.",
+          "min": "29:41",
+          "share": 0.1237,
+          "pts": 6,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Brayden Burries",
+          "min": "29:22",
+          "share": 0.1224,
+          "pts": 13,
+          "reb": 8,
+          "ast": 4
+        },
+        {
+          "player": "Kasparas Jakucionis",
+          "min": "26:08",
+          "share": 0.1089,
+          "pts": 25,
+          "reb": 5,
+          "ast": 5
+        },
+        {
+          "player": "Kel'el Ware",
+          "min": "24:32",
+          "share": 0.1022,
+          "pts": 8,
+          "reb": 11,
+          "ast": 2
+        },
+        {
+          "player": "Myles Turner",
+          "min": "23:28",
+          "share": 0.0978,
+          "pts": 8,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Kyle Kuzma",
+          "min": "22:27",
+          "share": 0.0935,
+          "pts": 14,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Tyler Herro",
+          "min": "20:27",
+          "share": 0.0852,
+          "pts": 5,
+          "reb": 5,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.8589,
+      "dnp": [
+        {
+          "player": "Caris LeVert",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600235",
+      "matchup": "CHI@MIN",
+      "team": "MIN",
+      "opp": "CHI",
+      "team_minutes_s": 14401,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Jaden McDaniels",
+          "min": "37:01",
+          "share": 0.1542,
+          "pts": 18,
+          "reb": 5,
+          "ast": 6
+        },
+        {
+          "player": "Jonathan Kuminga",
+          "min": "35:23",
+          "share": 0.1474,
+          "pts": 11,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Ayo Dosunmu",
+          "min": "33:04",
+          "share": 0.1378,
+          "pts": 24,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "LaMelo Ball",
+          "min": "29:51",
+          "share": 0.1244,
+          "pts": 19,
+          "reb": 8,
+          "ast": 6
+        },
+        {
+          "player": "Rudy Gobert",
+          "min": "26:53",
+          "share": 0.112,
+          "pts": 1,
+          "reb": 10,
+          "ast": 4
+        },
+        {
+          "player": "Terrence Shannon Jr",
+          "min": "21:45",
+          "share": 0.0906,
+          "pts": 14,
+          "reb": 6,
+          "ast": 0
+        },
+        {
+          "player": "Bones Hyland",
+          "min": "21:18",
+          "share": 0.0887,
+          "pts": 12,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Trey Lyles",
+          "min": "18:46",
+          "share": 0.0782,
+          "pts": 5,
+          "reb": 1,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9333,
+      "dnp": [
+        {
+          "player": "Cody Williams",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Isaiah Evans",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Rocco Zikarsky",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Zyon Pullin",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600038",
+      "matchup": "MEM@NOP",
+      "team": "NOP",
+      "opp": "MEM",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Saddiq Bey",
+          "min": "34:51",
+          "share": 0.1452,
+          "pts": 30,
+          "reb": 10,
+          "ast": 0
+        },
+        {
+          "player": "Jeremiah Fears",
+          "min": "33:40",
+          "share": 0.1403,
+          "pts": 18,
+          "reb": 5,
+          "ast": 7
+        },
+        {
+          "player": "Zion Williamson",
+          "min": "33:23",
+          "share": 0.1391,
+          "pts": 22,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Herbert Jones",
+          "min": "32:16",
+          "share": 0.1344,
+          "pts": 8,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Derik Queen",
+          "min": "22:38",
+          "share": 0.0943,
+          "pts": 10,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Jordan Poole",
+          "min": "20:43",
+          "share": 0.0863,
+          "pts": 13,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Karlo Matkovi\u0107",
+          "min": "18:44",
+          "share": 0.0781,
+          "pts": 1,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "DeAndre Jordan",
+          "min": "17:06",
+          "share": 0.0712,
+          "pts": 6,
+          "reb": 8,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.889,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf"
+    },
+    {
+      "date": "2026-11-14",
+      "game_id": "0022600231",
+      "matchup": "DEN@NOP",
+      "team": "NOP",
+      "opp": "DEN",
+      "team_minutes_s": 14400,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Saddiq Bey",
+          "min": "40:33",
+          "share": 0.169,
+          "pts": 16,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Jeremiah Fears",
+          "min": "32:44",
+          "share": 0.1364,
+          "pts": 13,
+          "reb": 4,
+          "ast": 7
+        },
+        {
+          "player": "Zion Williamson",
+          "min": "30:46",
+          "share": 0.1282,
+          "pts": 24,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Herbert Jones",
+          "min": "27:29",
+          "share": 0.1145,
+          "pts": 10,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Derik Queen",
+          "min": "24:58",
+          "share": 0.104,
+          "pts": 10,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Jordan Poole",
+          "min": "23:55",
+          "share": 0.0997,
+          "pts": 14,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Jaron Pierre Jr.",
+          "min": "23:18",
+          "share": 0.0971,
+          "pts": 13,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Yves Missi",
+          "min": "22:03",
+          "share": 0.0919,
+          "pts": 3,
+          "reb": 8,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9407,
+      "dnp": [
+        {
+          "player": "AJ Johnson",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "DeAndre Jordan",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Julian Reese",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Malik Dia",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600034",
+      "matchup": "NYK@IND",
+      "team": "NYK",
+      "opp": "IND",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Jalen Brunson",
+          "min": "35:57",
+          "share": 0.1498,
+          "pts": 33,
+          "reb": 1,
+          "ast": 11
+        },
+        {
+          "player": "Karl-Anthony Towns",
+          "min": "33:53",
+          "share": 0.1412,
+          "pts": 23,
+          "reb": 15,
+          "ast": 5
+        },
+        {
+          "player": "OG Anunoby",
+          "min": "33:20",
+          "share": 0.1389,
+          "pts": 11,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Mikal Bridges",
+          "min": "28:40",
+          "share": 0.1194,
+          "pts": 18,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Josh Hart",
+          "min": "23:13",
+          "share": 0.0967,
+          "pts": 0,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Miles McBride",
+          "min": "21:49",
+          "share": 0.0909,
+          "pts": 9,
+          "reb": 1,
+          "ast": 1
+        },
+        {
+          "player": "Landry Shamet",
+          "min": "21:02",
+          "share": 0.0876,
+          "pts": 5,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Tyler Kolek",
+          "min": "18:30",
+          "share": 0.0771,
+          "pts": 5,
+          "reb": 6,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9017,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_NYKIND_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600241",
+      "matchup": "NYK@TOR",
+      "team": "NYK",
+      "opp": "TOR",
+      "team_minutes_s": 15902,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "OG Anunoby",
+          "min": "44:29",
+          "share": 0.1678,
+          "pts": 21,
+          "reb": 9,
+          "ast": 1
+        },
+        {
+          "player": "Karl-Anthony Towns",
+          "min": "42:49",
+          "share": 0.1616,
+          "pts": 28,
+          "reb": 17,
+          "ast": 3
+        },
+        {
+          "player": "Jalen Brunson",
+          "min": "40:58",
+          "share": 0.1546,
+          "pts": 28,
+          "reb": 1,
+          "ast": 9
+        },
+        {
+          "player": "Mikal Bridges",
+          "min": "32:15",
+          "share": 0.1217,
+          "pts": 5,
+          "reb": 7,
+          "ast": 3
+        },
+        {
+          "player": "Landry Shamet",
+          "min": "29:42",
+          "share": 0.1121,
+          "pts": 23,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Josh Hart",
+          "min": "26:15",
+          "share": 0.099,
+          "pts": 0,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Tyler Kolek",
+          "min": "15:35",
+          "share": 0.0588,
+          "pts": 0,
+          "reb": 0,
+          "ast": 7
+        },
+        {
+          "player": "Miles McBride",
+          "min": "13:39",
+          "share": 0.0515,
+          "pts": 3,
+          "reb": 1,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9271,
+      "dnp": [
+        {
+          "player": "Mohamed Diawara",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Pacome Dadiet",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600042",
+      "matchup": "OKC@LAC",
+      "team": "OKC",
+      "opp": "LAC",
+      "team_minutes_s": 14401,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "min": "38:30",
+          "share": 0.1604,
+          "pts": 40,
+          "reb": 4,
+          "ast": 5
+        },
+        {
+          "player": "Kenrich Williams",
+          "min": "35:15",
+          "share": 0.1469,
+          "pts": 8,
+          "reb": 8,
+          "ast": 4
+        },
+        {
+          "player": "Jared McCain",
+          "min": "30:37",
+          "share": 0.1276,
+          "pts": 23,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Isaiah Hartenstein",
+          "min": "30:21",
+          "share": 0.1264,
+          "pts": 21,
+          "reb": 16,
+          "ast": 6
+        },
+        {
+          "player": "Alex Caruso",
+          "min": "27:28",
+          "share": 0.1144,
+          "pts": 5,
+          "reb": 1,
+          "ast": 4
+        },
+        {
+          "player": "Aday Mara",
+          "min": "21:23",
+          "share": 0.0891,
+          "pts": 10,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Josh Dix",
+          "min": "17:25",
+          "share": 0.0726,
+          "pts": 0,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Nikola Topi\u0107",
+          "min": "15:30",
+          "share": 0.0646,
+          "pts": 0,
+          "reb": 4,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.902,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_OKCLAC_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600244",
+      "matchup": "OKC@SAC",
+      "team": "OKC",
+      "opp": "SAC",
+      "team_minutes_s": 14399,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Jared McCain",
+          "min": "30:05",
+          "share": 0.1254,
+          "pts": 12,
+          "reb": 1,
+          "ast": 1
+        },
+        {
+          "player": "Shai Gilgeous-Alexander",
+          "min": "29:33",
+          "share": 0.1231,
+          "pts": 37,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "Ajay Mitchell",
+          "min": "27:21",
+          "share": 0.114,
+          "pts": 14,
+          "reb": 3,
+          "ast": 5
+        },
+        {
+          "player": "Aday Mara",
+          "min": "25:32",
+          "share": 0.1064,
+          "pts": 16,
+          "reb": 13,
+          "ast": 3
+        },
+        {
+          "player": "Nique Clifford",
+          "min": "23:51",
+          "share": 0.0994,
+          "pts": 9,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Kenrich Williams",
+          "min": "18:48",
+          "share": 0.0783,
+          "pts": 10,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Alex Caruso",
+          "min": "18:28",
+          "share": 0.0769,
+          "pts": 11,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Isaiah Hartenstein",
+          "min": "18:11",
+          "share": 0.0758,
+          "pts": 3,
+          "reb": 11,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.7993,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600035",
+      "matchup": "MIL@ORL",
+      "team": "ORL",
+      "opp": "MIL",
+      "team_minutes_s": 14401,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Anthony Black",
+          "min": "36:35",
+          "share": 0.1524,
+          "pts": 5,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Franz Wagner",
+          "min": "36:05",
+          "share": 0.1503,
+          "pts": 35,
+          "reb": 9,
+          "ast": 12
+        },
+        {
+          "player": "Desmond Bane",
+          "min": "34:41",
+          "share": 0.1445,
+          "pts": 21,
+          "reb": 5,
+          "ast": 3
+        },
+        {
+          "player": "Tristan da Silva",
+          "min": "31:10",
+          "share": 0.1299,
+          "pts": 12,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Wendell Carter Jr.",
+          "min": "30:07",
+          "share": 0.1255,
+          "pts": 12,
+          "reb": 8,
+          "ast": 0
+        },
+        {
+          "player": "Jalen Suggs",
+          "min": "20:54",
+          "share": 0.0871,
+          "pts": 3,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Goga Bitadze",
+          "min": "17:53",
+          "share": 0.0745,
+          "pts": 12,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Jevon Carter",
+          "min": "17:19",
+          "share": 0.0721,
+          "pts": 5,
+          "reb": 2,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9363,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600236",
+      "matchup": "IND@PHI",
+      "team": "PHI",
+      "opp": "IND",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Tyrese Maxey",
+          "min": "35:32",
+          "share": 0.1481,
+          "pts": 27,
+          "reb": 4,
+          "ast": 6
+        },
+        {
+          "player": "Dean Wade",
+          "min": "35:03",
+          "share": 0.146,
+          "pts": 12,
+          "reb": 7,
+          "ast": 3
+        },
+        {
+          "player": "LeBron James",
+          "min": "32:47",
+          "share": 0.1366,
+          "pts": 15,
+          "reb": 7,
+          "ast": 11
+        },
+        {
+          "player": "Jaylen Brown",
+          "min": "32:28",
+          "share": 0.1353,
+          "pts": 31,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "VJ Edgecombe",
+          "min": "30:49",
+          "share": 0.1284,
+          "pts": 11,
+          "reb": 4,
+          "ast": 6
+        },
+        {
+          "player": "Jabari Walker",
+          "min": "24:42",
+          "share": 0.1029,
+          "pts": 11,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Kentavious Caldwell-Pope",
+          "min": "22:16",
+          "share": 0.0928,
+          "pts": 9,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Anfernee Simons",
+          "min": "15:28",
+          "share": 0.0644,
+          "pts": 12,
+          "reb": 0,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9545,
+      "dnp": [
+        {
+          "player": "Caleb Love",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Justin Edwards",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600237",
+      "matchup": "LAL@PHX",
+      "team": "PHX",
+      "opp": "LAL",
+      "team_minutes_s": 14401,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Jordan Goodwin",
+          "min": "31:21",
+          "share": 0.1306,
+          "pts": 14,
+          "reb": 7,
+          "ast": 6
+        },
+        {
+          "player": "Devin Booker",
+          "min": "27:48",
+          "share": 0.1158,
+          "pts": 17,
+          "reb": 4,
+          "ast": 7
+        },
+        {
+          "player": "Collin Gillespie",
+          "min": "27:38",
+          "share": 0.1151,
+          "pts": 26,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Miles Bridges",
+          "min": "24:06",
+          "share": 0.1004,
+          "pts": 14,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Ryan Dunn",
+          "min": "23:59",
+          "share": 0.0999,
+          "pts": 3,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Luke Kennard",
+          "min": "23:08",
+          "share": 0.0964,
+          "pts": 18,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Dillon Brooks",
+          "min": "22:18",
+          "share": 0.0929,
+          "pts": 1,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Jalen Green",
+          "min": "21:16",
+          "share": 0.0886,
+          "pts": 9,
+          "reb": 2,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8398,
+      "dnp": [
+        {
+          "player": "Duop Reath",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jamaree Bouyea",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Pat Spencer",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Rasheer Fleming",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600041",
+      "matchup": "POR@SAC",
+      "team": "POR",
+      "opp": "SAC",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Toumani Camara",
+          "min": "35:39",
+          "share": 0.1485,
+          "pts": 14,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Deni Avdija",
+          "min": "34:34",
+          "share": 0.144,
+          "pts": 34,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Damian Lillard",
+          "min": "33:00",
+          "share": 0.1375,
+          "pts": 29,
+          "reb": 2,
+          "ast": 6
+        },
+        {
+          "player": "Jrue Holiday",
+          "min": "26:37",
+          "share": 0.1109,
+          "pts": 6,
+          "reb": 5,
+          "ast": 5
+        },
+        {
+          "player": "Donovan Clingan",
+          "min": "26:33",
+          "share": 0.1106,
+          "pts": 13,
+          "reb": 11,
+          "ast": 2
+        },
+        {
+          "player": "Sidy Cissoko",
+          "min": "25:39",
+          "share": 0.1069,
+          "pts": 3,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Scoot Henderson",
+          "min": "23:00",
+          "share": 0.0958,
+          "pts": 11,
+          "reb": 0,
+          "ast": 1
+        },
+        {
+          "player": "Robert Williams III",
+          "min": "16:39",
+          "share": 0.0694,
+          "pts": 2,
+          "reb": 7,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9237,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_PORSAC_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600041",
+      "matchup": "POR@SAC",
+      "team": "SAC",
+      "opp": "POR",
+      "team_minutes_s": 14399,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "De'Andre Hunter",
+          "min": "41:31",
+          "share": 0.173,
+          "pts": 24,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Keegan Murray",
+          "min": "39:39",
+          "share": 0.1652,
+          "pts": 16,
+          "reb": 7,
+          "ast": 4
+        },
+        {
+          "player": "Zach LaVine",
+          "min": "36:22",
+          "share": 0.1515,
+          "pts": 12,
+          "reb": 3,
+          "ast": 6
+        },
+        {
+          "player": "Domantas Sabonis",
+          "min": "35:28",
+          "share": 0.1478,
+          "pts": 21,
+          "reb": 12,
+          "ast": 5
+        },
+        {
+          "player": "Darius Acuff Jr.",
+          "min": "35:10",
+          "share": 0.1465,
+          "pts": 17,
+          "reb": 4,
+          "ast": 6
+        },
+        {
+          "player": "Malik Monk",
+          "min": "18:15",
+          "share": 0.076,
+          "pts": 7,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Dylan Cardwell",
+          "min": "12:32",
+          "share": 0.0522,
+          "pts": 6,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Leaky Black",
+          "min": "11:47",
+          "share": 0.0491,
+          "pts": 0,
+          "reb": 0,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9615,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_PORSAC_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600244",
+      "matchup": "OKC@SAC",
+      "team": "SAC",
+      "opp": "OKC",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Darius Acuff Jr.",
+          "min": "32:39",
+          "share": 0.136,
+          "pts": 26,
+          "reb": 0,
+          "ast": 6
+        },
+        {
+          "player": "Domantas Sabonis",
+          "min": "29:29",
+          "share": 0.1228,
+          "pts": 11,
+          "reb": 13,
+          "ast": 3
+        },
+        {
+          "player": "Alex Karaban",
+          "min": "29:22",
+          "share": 0.1224,
+          "pts": 0,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Leaky Black",
+          "min": "29:09",
+          "share": 0.1215,
+          "pts": 12,
+          "reb": 9,
+          "ast": 2
+        },
+        {
+          "player": "Malik Monk",
+          "min": "28:46",
+          "share": 0.1199,
+          "pts": 14,
+          "reb": 1,
+          "ast": 10
+        },
+        {
+          "player": "Daeqwon Plowden",
+          "min": "23:59",
+          "share": 0.0999,
+          "pts": 13,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Keegan Murray",
+          "min": "21:06",
+          "share": 0.0879,
+          "pts": 6,
+          "reb": 1,
+          "ast": 0
+        },
+        {
+          "player": "Emanuel Sharp",
+          "min": "21:04",
+          "share": 0.0878,
+          "pts": 9,
+          "reb": 0,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8982,
+      "dnp": [
+        {
+          "player": "De'Andre Hunter",
+          "status": "DND -- Left Hip Soreness / Tightness"
+        },
+        {
+          "player": "Zach LaVine",
+          "status": "DND -- Illness"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600040",
+      "matchup": "GSW@SAS",
+      "team": "SAS",
+      "opp": "GSW",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Dylan Harper",
+          "min": "25:10",
+          "share": 0.1049,
+          "pts": 9,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Stephon Castle",
+          "min": "25:07",
+          "share": 0.1047,
+          "pts": 32,
+          "reb": 5,
+          "ast": 6
+        },
+        {
+          "player": "Keldon Johnson",
+          "min": "24:56",
+          "share": 0.1039,
+          "pts": 18,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Devin Vassell",
+          "min": "22:52",
+          "share": 0.0953,
+          "pts": 7,
+          "reb": 2,
+          "ast": 2
+        },
+        {
+          "player": "Julian Champagnie",
+          "min": "22:43",
+          "share": 0.0947,
+          "pts": 7,
+          "reb": 8,
+          "ast": 3
+        },
+        {
+          "player": "Harrison Barnes",
+          "min": "21:19",
+          "share": 0.0888,
+          "pts": 11,
+          "reb": 1,
+          "ast": 1
+        },
+        {
+          "player": "Victor Wembanyama",
+          "min": "20:54",
+          "share": 0.0871,
+          "pts": 12,
+          "reb": 12,
+          "ast": 6
+        },
+        {
+          "player": "Carter Bryant",
+          "min": "19:06",
+          "share": 0.0796,
+          "pts": 8,
+          "reb": 3,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.7588,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600239",
+      "matchup": "SAS@UTA",
+      "team": "SAS",
+      "opp": "UTA",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Victor Wembanyama",
+          "min": "35:13",
+          "share": 0.1467,
+          "pts": 26,
+          "reb": 10,
+          "ast": 6
+        },
+        {
+          "player": "Stephen Castle",
+          "min": "34:52",
+          "share": 0.1453,
+          "pts": 20,
+          "reb": 4,
+          "ast": 9
+        },
+        {
+          "player": "Dylan Harper",
+          "min": "34:20",
+          "share": 0.1431,
+          "pts": 31,
+          "reb": 9,
+          "ast": 4
+        },
+        {
+          "player": "Devin Vassell",
+          "min": "31:48",
+          "share": 0.1325,
+          "pts": 6,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Keldon Johnson",
+          "min": "29:19",
+          "share": 0.1222,
+          "pts": 11,
+          "reb": 10,
+          "ast": 2
+        },
+        {
+          "player": "Julian Champagne",
+          "min": "23:53",
+          "share": 0.0995,
+          "pts": 4,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Jordan McLaughlin",
+          "min": "19:14",
+          "share": 0.0801,
+          "pts": 10,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Harrison Barnes",
+          "min": "13:48",
+          "share": 0.0575,
+          "pts": 0,
+          "reb": 0,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.9269,
+      "dnp": [
+        {
+          "player": "David Jones Garcia",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Tarris Reed Jr.",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600241",
+      "matchup": "NYK@TOR",
+      "team": "TOR",
+      "opp": "NYK",
+      "team_minutes_s": 15900,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Collin Murray-Boyles",
+          "min": "39:47",
+          "share": 0.1501,
+          "pts": 6,
+          "reb": 13,
+          "ast": 2
+        },
+        {
+          "player": "Immanuel Quickley",
+          "min": "37:30",
+          "share": 0.1415,
+          "pts": 17,
+          "reb": 6,
+          "ast": 6
+        },
+        {
+          "player": "RJ Barrett",
+          "min": "37:00",
+          "share": 0.1396,
+          "pts": 14,
+          "reb": 5,
+          "ast": 6
+        },
+        {
+          "player": "Scottie Barnes",
+          "min": "36:19",
+          "share": 0.137,
+          "pts": 30,
+          "reb": 9,
+          "ast": 4
+        },
+        {
+          "player": "Ja'Kobe Walter",
+          "min": "35:38",
+          "share": 0.1345,
+          "pts": 7,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Jamal Shead",
+          "min": "25:34",
+          "share": 0.0965,
+          "pts": 19,
+          "reb": 2,
+          "ast": 4
+        },
+        {
+          "player": "Jakob Poeltl",
+          "min": "17:27",
+          "share": 0.0658,
+          "pts": 11,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Allen Graves",
+          "min": "15:46",
+          "share": 0.0595,
+          "pts": 2,
+          "reb": 5,
+          "ast": 3
+        }
+      ],
+      "top8_share": 0.9246,
+      "dnp": [
+        {
+          "player": "Jaden Bradley",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Kyle Anderson",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Trayce Jackson-Davis",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf"
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600039",
+      "matchup": "UTA@HOU",
+      "team": "UTA",
+      "opp": "HOU",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Keyonte George",
+          "min": "37:32",
+          "share": 0.1564,
+          "pts": 27,
+          "reb": 4,
+          "ast": 7
+        },
+        {
+          "player": "Ace Bailey",
+          "min": "34:32",
+          "share": 0.1439,
+          "pts": 21,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Darryn Peterson",
+          "min": "33:58",
+          "share": 0.1415,
+          "pts": 28,
+          "reb": 7,
+          "ast": 2
+        },
+        {
+          "player": "Brice Sensabaugh",
+          "min": "26:59",
+          "share": 0.1124,
+          "pts": 7,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Josh Okogie",
+          "min": "21:43",
+          "share": 0.0905,
+          "pts": 7,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Mo Bamba",
+          "min": "19:53",
+          "share": 0.0828,
+          "pts": 9,
+          "reb": 9,
+          "ast": 1
+        },
+        {
+          "player": "Isaiah Collier",
+          "min": "15:59",
+          "share": 0.0666,
+          "pts": 3,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Josh Green",
+          "min": "14:21",
+          "share": 0.0598,
+          "pts": 2,
+          "reb": 0,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.854,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_UTAHOU_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600239",
+      "matchup": "SAS@UTA",
+      "team": "UTA",
+      "opp": "SAS",
+      "team_minutes_s": 14401,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Mo Bamba",
+          "min": "35:41",
+          "share": 0.1487,
+          "pts": 26,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Darryn Peterson",
+          "min": "34:14",
+          "share": 0.1426,
+          "pts": 17,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Keyonte George",
+          "min": "33:56",
+          "share": 0.1414,
+          "pts": 13,
+          "reb": 4,
+          "ast": 8
+        },
+        {
+          "player": "Brice Sensabaugh",
+          "min": "30:14",
+          "share": 0.126,
+          "pts": 14,
+          "reb": 7,
+          "ast": 2
+        },
+        {
+          "player": "Ace Bailey",
+          "min": "29:52",
+          "share": 0.1244,
+          "pts": 7,
+          "reb": 8,
+          "ast": 4
+        },
+        {
+          "player": "Josh Okogie",
+          "min": "27:28",
+          "share": 0.1144,
+          "pts": 7,
+          "reb": 6,
+          "ast": 0
+        },
+        {
+          "player": "Svi Mykhailiuk",
+          "min": "21:19",
+          "share": 0.0888,
+          "pts": 6,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Josh Green",
+          "min": "14:58",
+          "share": 0.0624,
+          "pts": 6,
+          "reb": 1,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9487,
+      "dnp": [
+        {
+          "player": "Isaiah Collier",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jaxson Hayes",
+          "status": "DND - Injury/Illness - Left Knee Strain"
+        },
+        {
+          "player": "Kyle Filipowski",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "game_id": "0022600242",
+      "matchup": "HOU@WAS",
+      "team": "WAS",
+      "opp": "HOU",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Anthony Davis",
+          "min": "30:35",
+          "share": 0.1274,
+          "pts": 14,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "AJ Dybantsa",
+          "min": "30:20",
+          "share": 0.1264,
+          "pts": 16,
+          "reb": 7,
+          "ast": 1
+        },
+        {
+          "player": "Kyshawn George",
+          "min": "30:07",
+          "share": 0.1255,
+          "pts": 11,
+          "reb": 2,
+          "ast": 4
+        },
+        {
+          "player": "Alex Sarr",
+          "min": "27:02",
+          "share": 0.1126,
+          "pts": 25,
+          "reb": 9,
+          "ast": 2
+        },
+        {
+          "player": "Trae Young",
+          "min": "26:06",
+          "share": 0.1087,
+          "pts": 0,
+          "reb": 1,
+          "ast": 8
+        },
+        {
+          "player": "Bub Carrington",
+          "min": "22:49",
+          "share": 0.0951,
+          "pts": 11,
+          "reb": 0,
+          "ast": 4
+        },
+        {
+          "player": "Bilal Coulibaly",
+          "min": "21:02",
+          "share": 0.0876,
+          "pts": 9,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Will Riley",
+          "min": "15:45",
+          "share": 0.0656,
+          "pts": 14,
+          "reb": 3,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.849,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"
+    }
+  ],
+  "replacement_shares": [
+    {
+      "team": "ATL",
+      "player": "Jock Landale",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0686,
+      "avg_min_when_playing_s": 1090,
+      "replacements": [
+        {
+          "player": "Corey Kispert",
+          "share_delta": 0.066,
+          "minutes_delta": 951,
+          "share_with": 0.0,
+          "share_without": 0.066,
+          "minutes_with": 0,
+          "minutes_without": 951
+        },
+        {
+          "player": "Zuby Ejiofor",
+          "share_delta": 0.051,
+          "minutes_delta": 734,
+          "share_with": 0.0,
+          "share_without": 0.051,
+          "minutes_with": 0,
+          "minutes_without": 734
+        },
+        {
+          "player": "RayJ Dennis",
+          "share_delta": 0.0397,
+          "minutes_delta": 572,
+          "share_with": 0.0,
+          "share_without": 0.0397,
+          "minutes_with": 0,
+          "minutes_without": 572
+        },
+        {
+          "player": "Onyeka Okongwu",
+          "share_delta": 0.0176,
+          "minutes_delta": 56,
+          "share_with": 0.1314,
+          "share_without": 0.149,
+          "minutes_with": 2090,
+          "minutes_without": 2146
+        },
+        {
+          "player": "CJ McCollum",
+          "share_delta": 0.0058,
+          "minutes_delta": -97,
+          "share_with": 0.1203,
+          "share_without": 0.126,
+          "minutes_with": 1912,
+          "minutes_without": 1815
+        }
+      ],
+      "top_replacement": "Corey Kispert",
+      "top_replacement_minutes_delta": 951,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf"
+      ]
+    },
+    {
+      "team": "CHI",
+      "player": "Jalen Smith",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1192,
+      "avg_min_when_playing_s": 1895,
+      "replacements": [
+        {
+          "player": "Zach Collins",
+          "share_delta": 0.1174,
+          "minutes_delta": 1691,
+          "share_with": 0.0,
+          "share_without": 0.1174,
+          "minutes_with": 0,
+          "minutes_without": 1691
+        },
+        {
+          "player": "Leonard Miller",
+          "share_delta": 0.0721,
+          "minutes_delta": 1038,
+          "share_with": 0.0,
+          "share_without": 0.0721,
+          "minutes_with": 0,
+          "minutes_without": 1038
+        },
+        {
+          "player": "Tre Jones",
+          "share_delta": 0.046,
+          "minutes_delta": 579,
+          "share_with": 0.0552,
+          "share_without": 0.1012,
+          "minutes_with": 878,
+          "minutes_without": 1457
+        },
+        {
+          "player": "Matas Buzelis",
+          "share_delta": 0.0163,
+          "minutes_delta": 73,
+          "share_with": 0.1079,
+          "share_without": 0.1242,
+          "minutes_with": 1715,
+          "minutes_without": 1788
+        },
+        {
+          "player": "Patrick Williams",
+          "share_delta": 0.0149,
+          "minutes_delta": 76,
+          "share_with": 0.0921,
+          "share_without": 0.107,
+          "minutes_with": 1465,
+          "minutes_without": 1541
+        }
+      ],
+      "top_replacement": "Zach Collins",
+      "top_replacement_minutes_delta": 1691,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+      ]
+    },
+    {
+      "team": "CHI",
+      "player": "Nic Claxton",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0814,
+      "avg_min_when_playing_s": 1294,
+      "replacements": [
+        {
+          "player": "Zach Collins",
+          "share_delta": 0.1174,
+          "minutes_delta": 1691,
+          "share_with": 0.0,
+          "share_without": 0.1174,
+          "minutes_with": 0,
+          "minutes_without": 1691
+        },
+        {
+          "player": "Leonard Miller",
+          "share_delta": 0.0721,
+          "minutes_delta": 1038,
+          "share_with": 0.0,
+          "share_without": 0.0721,
+          "minutes_with": 0,
+          "minutes_without": 1038
+        },
+        {
+          "player": "Tre Jones",
+          "share_delta": 0.046,
+          "minutes_delta": 579,
+          "share_with": 0.0552,
+          "share_without": 0.1012,
+          "minutes_with": 878,
+          "minutes_without": 1457
+        },
+        {
+          "player": "Matas Buzelis",
+          "share_delta": 0.0163,
+          "minutes_delta": 73,
+          "share_with": 0.1079,
+          "share_without": 0.1242,
+          "minutes_with": 1715,
+          "minutes_without": 1788
+        },
+        {
+          "player": "Patrick Williams",
+          "share_delta": 0.0149,
+          "minutes_delta": 76,
+          "share_with": 0.0921,
+          "share_without": 0.107,
+          "minutes_with": 1465,
+          "minutes_without": 1541
+        }
+      ],
+      "top_replacement": "Zach Collins",
+      "top_replacement_minutes_delta": 1691,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+      ]
+    },
+    {
+      "team": "CLE",
+      "player": "James Harden",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1451,
+      "avg_min_when_playing_s": 2089,
+      "replacements": [
+        {
+          "player": "Norchad Omier",
+          "share_delta": 0.1115,
+          "minutes_delta": 1605,
+          "share_with": 0.0,
+          "share_without": 0.1115,
+          "minutes_with": 0,
+          "minutes_without": 1605
+        },
+        {
+          "player": "Mario Hezonja",
+          "share_delta": 0.1029,
+          "minutes_delta": 1482,
+          "share_with": 0.039,
+          "share_without": 0.1419,
+          "minutes_with": 561,
+          "minutes_without": 2043
+        },
+        {
+          "player": "Riley Minix",
+          "share_delta": 0.0924,
+          "minutes_delta": 1330,
+          "share_with": 0.0,
+          "share_without": 0.0924,
+          "minutes_with": 0,
+          "minutes_without": 1330
+        },
+        {
+          "player": "Craig Porter Jr.",
+          "share_delta": 0.0788,
+          "minutes_delta": 1134,
+          "share_with": 0.0394,
+          "share_without": 0.1182,
+          "minutes_with": 568,
+          "minutes_without": 1702
+        },
+        {
+          "player": "Meleek Thomas",
+          "share_delta": 0.0652,
+          "minutes_delta": 939,
+          "share_with": 0.0746,
+          "share_without": 0.1398,
+          "minutes_with": 1074,
+          "minutes_without": 2013
+        }
+      ],
+      "top_replacement": "Norchad Omier",
+      "top_replacement_minutes_delta": 1605,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+      ]
+    },
+    {
+      "team": "CLE",
+      "player": "Donovan Mitchell",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1369,
+      "avg_min_when_playing_s": 1971,
+      "replacements": [
+        {
+          "player": "Norchad Omier",
+          "share_delta": 0.1115,
+          "minutes_delta": 1605,
+          "share_with": 0.0,
+          "share_without": 0.1115,
+          "minutes_with": 0,
+          "minutes_without": 1605
+        },
+        {
+          "player": "Mario Hezonja",
+          "share_delta": 0.1029,
+          "minutes_delta": 1482,
+          "share_with": 0.039,
+          "share_without": 0.1419,
+          "minutes_with": 561,
+          "minutes_without": 2043
+        },
+        {
+          "player": "Riley Minix",
+          "share_delta": 0.0924,
+          "minutes_delta": 1330,
+          "share_with": 0.0,
+          "share_without": 0.0924,
+          "minutes_with": 0,
+          "minutes_without": 1330
+        },
+        {
+          "player": "Craig Porter Jr.",
+          "share_delta": 0.0788,
+          "minutes_delta": 1134,
+          "share_with": 0.0394,
+          "share_without": 0.1182,
+          "minutes_with": 568,
+          "minutes_without": 1702
+        },
+        {
+          "player": "Meleek Thomas",
+          "share_delta": 0.0652,
+          "minutes_delta": 939,
+          "share_with": 0.0746,
+          "share_without": 0.1398,
+          "minutes_with": 1074,
+          "minutes_without": 2013
+        }
+      ],
+      "top_replacement": "Norchad Omier",
+      "top_replacement_minutes_delta": 1605,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+      ]
+    },
+    {
+      "team": "DAL",
+      "player": "Kyrie Irving",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1555,
+      "avg_min_when_playing_s": 2239,
+      "replacements": [
+        {
+          "player": "Zaccharie Risacher",
+          "share_delta": 0.051,
+          "minutes_delta": 735,
+          "share_with": 0.0603,
+          "share_without": 0.1113,
+          "minutes_with": 868,
+          "minutes_without": 1603
+        },
+        {
+          "player": "Morez Johnson Jr.",
+          "share_delta": 0.0447,
+          "minutes_delta": 644,
+          "share_with": 0.0622,
+          "share_without": 0.1069,
+          "minutes_with": 896,
+          "minutes_without": 1540
+        },
+        {
+          "player": "Walter Clayton Jr.",
+          "share_delta": 0.0408,
+          "minutes_delta": 588,
+          "share_with": 0.0553,
+          "share_without": 0.0961,
+          "minutes_with": 796,
+          "minutes_without": 1384
+        },
+        {
+          "player": "Tobi Lawal",
+          "share_delta": 0.0374,
+          "minutes_delta": 538,
+          "share_with": 0.0,
+          "share_without": 0.0374,
+          "minutes_with": 0,
+          "minutes_without": 538
+        },
+        {
+          "player": "Jett Howard",
+          "share_delta": 0.0277,
+          "minutes_delta": 399,
+          "share_with": 0.0,
+          "share_without": 0.0277,
+          "minutes_with": 0,
+          "minutes_without": 399
+        }
+      ],
+      "top_replacement": "Zaccharie Risacher",
+      "top_replacement_minutes_delta": 735,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf"
+      ]
+    },
+    {
+      "team": "DAL",
+      "player": "Santi Aldama",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0676,
+      "avg_min_when_playing_s": 973,
+      "replacements": [
+        {
+          "player": "Zaccharie Risacher",
+          "share_delta": 0.051,
+          "minutes_delta": 735,
+          "share_with": 0.0603,
+          "share_without": 0.1113,
+          "minutes_with": 868,
+          "minutes_without": 1603
+        },
+        {
+          "player": "Morez Johnson Jr.",
+          "share_delta": 0.0447,
+          "minutes_delta": 644,
+          "share_with": 0.0622,
+          "share_without": 0.1069,
+          "minutes_with": 896,
+          "minutes_without": 1540
+        },
+        {
+          "player": "Walter Clayton Jr.",
+          "share_delta": 0.0408,
+          "minutes_delta": 588,
+          "share_with": 0.0553,
+          "share_without": 0.0961,
+          "minutes_with": 796,
+          "minutes_without": 1384
+        },
+        {
+          "player": "Tobi Lawal",
+          "share_delta": 0.0374,
+          "minutes_delta": 538,
+          "share_with": 0.0,
+          "share_without": 0.0374,
+          "minutes_with": 0,
+          "minutes_without": 538
+        },
+        {
+          "player": "Jett Howard",
+          "share_delta": 0.0277,
+          "minutes_delta": 399,
+          "share_with": 0.0,
+          "share_without": 0.0277,
+          "minutes_with": 0,
+          "minutes_without": 399
+        }
+      ],
+      "top_replacement": "Zaccharie Risacher",
+      "top_replacement_minutes_delta": 735,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf"
+      ]
+    },
+    {
+      "team": "IND",
+      "player": "Andrew Nembhard",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1404,
+      "avg_min_when_playing_s": 2022,
+      "replacements": [
+        {
+          "player": "Jarace Walker",
+          "share_delta": 0.0569,
+          "minutes_delta": 819,
+          "share_with": 0.0,
+          "share_without": 0.0569,
+          "minutes_with": 0,
+          "minutes_without": 819
+        },
+        {
+          "player": "Quenton Jackson",
+          "share_delta": 0.0414,
+          "minutes_delta": 596,
+          "share_with": 0.0846,
+          "share_without": 0.126,
+          "minutes_with": 1218,
+          "minutes_without": 1814
+        },
+        {
+          "player": "Jay Huff",
+          "share_delta": 0.0392,
+          "minutes_delta": 565,
+          "share_with": 0.0345,
+          "share_without": 0.0737,
+          "minutes_with": 497,
+          "minutes_without": 1062
+        },
+        {
+          "player": "Jalen Slawson",
+          "share_delta": 0.017,
+          "minutes_delta": 245,
+          "share_with": 0.0428,
+          "share_without": 0.0599,
+          "minutes_with": 617,
+          "minutes_without": 862
+        },
+        {
+          "player": "Aaron Nesmith",
+          "share_delta": 0.0159,
+          "minutes_delta": 229,
+          "share_with": 0.1355,
+          "share_without": 0.1514,
+          "minutes_with": 1951,
+          "minutes_without": 2180
+        }
+      ],
+      "top_replacement": "Jarace Walker",
+      "top_replacement_minutes_delta": 819,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_NYKIND_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+      ]
+    },
+    {
+      "team": "MEM",
+      "player": "Ty Jerome",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1333,
+      "avg_min_when_playing_s": 1715,
+      "replacements": [
+        {
+          "player": "Kris Murray",
+          "share_delta": 0.0778,
+          "minutes_delta": 1125,
+          "share_with": 0.0034,
+          "share_without": 0.0812,
+          "minutes_with": 44,
+          "minutes_without": 1169
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "share_delta": 0.0725,
+          "minutes_delta": 1061,
+          "share_with": 0.011,
+          "share_without": 0.0835,
+          "minutes_with": 142,
+          "minutes_without": 1203
+        },
+        {
+          "player": "Javon Small",
+          "share_delta": 0.0526,
+          "minutes_delta": 867,
+          "share_with": 0.0716,
+          "share_without": 0.1242,
+          "minutes_with": 921,
+          "minutes_without": 1788
+        },
+        {
+          "player": "Taylor Hendricks",
+          "share_delta": 0.0336,
+          "minutes_delta": 618,
+          "share_with": 0.0873,
+          "share_without": 0.1209,
+          "minutes_with": 1123,
+          "minutes_without": 1741
+        },
+        {
+          "player": "Cam Spencer",
+          "share_delta": 0.0284,
+          "minutes_delta": 583,
+          "share_with": 0.1129,
+          "share_without": 0.1413,
+          "minutes_with": 1452,
+          "minutes_without": 2035
+        }
+      ],
+      "top_replacement": "Kris Murray",
+      "top_replacement_minutes_delta": 1125,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
+      ]
+    },
+    {
+      "team": "MIL",
+      "player": "Ryan Rollins",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1206,
+      "avg_min_when_playing_s": 1736,
+      "replacements": [
+        {
+          "player": "Kasparas Jakucionis",
+          "share_delta": 0.1089,
+          "minutes_delta": 1568,
+          "share_with": 0.0,
+          "share_without": 0.1089,
+          "minutes_with": 0,
+          "minutes_without": 1568
+        },
+        {
+          "player": "Gary Trent Jr.",
+          "share_delta": 0.0584,
+          "minutes_delta": 841,
+          "share_with": 0.0668,
+          "share_without": 0.1252,
+          "minutes_with": 962,
+          "minutes_without": 1803
+        },
+        {
+          "player": "Jericho Sims",
+          "share_delta": 0.0451,
+          "minutes_delta": 650,
+          "share_with": 0.0,
+          "share_without": 0.0451,
+          "minutes_with": 0,
+          "minutes_without": 650
+        },
+        {
+          "player": "Brayden Burries",
+          "share_delta": 0.0429,
+          "minutes_delta": 618,
+          "share_with": 0.0794,
+          "share_without": 0.1224,
+          "minutes_with": 1144,
+          "minutes_without": 1762
+        },
+        {
+          "player": "Kel'el Ware",
+          "share_delta": 0.0302,
+          "minutes_delta": 435,
+          "share_with": 0.072,
+          "share_without": 0.1022,
+          "minutes_with": 1037,
+          "minutes_without": 1472
+        }
+      ],
+      "top_replacement": "Kasparas Jakucionis",
+      "top_replacement_minutes_delta": 1568,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf"
+      ]
+    },
+    {
+      "team": "MIL",
+      "player": "Ousmane Dieng",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0199,
+      "avg_min_when_playing_s": 287,
+      "replacements": [
+        {
+          "player": "Kasparas Jakucionis",
+          "share_delta": 0.1089,
+          "minutes_delta": 1568,
+          "share_with": 0.0,
+          "share_without": 0.1089,
+          "minutes_with": 0,
+          "minutes_without": 1568
+        },
+        {
+          "player": "Gary Trent Jr.",
+          "share_delta": 0.0584,
+          "minutes_delta": 841,
+          "share_with": 0.0668,
+          "share_without": 0.1252,
+          "minutes_with": 962,
+          "minutes_without": 1803
+        },
+        {
+          "player": "Jericho Sims",
+          "share_delta": 0.0451,
+          "minutes_delta": 650,
+          "share_with": 0.0,
+          "share_without": 0.0451,
+          "minutes_with": 0,
+          "minutes_without": 650
+        },
+        {
+          "player": "Brayden Burries",
+          "share_delta": 0.0429,
+          "minutes_delta": 618,
+          "share_with": 0.0794,
+          "share_without": 0.1224,
+          "minutes_with": 1144,
+          "minutes_without": 1762
+        },
+        {
+          "player": "Kel'el Ware",
+          "share_delta": 0.0302,
+          "minutes_delta": 435,
+          "share_with": 0.072,
+          "share_without": 0.1022,
+          "minutes_with": 1037,
+          "minutes_without": 1472
+        }
+      ],
+      "top_replacement": "Kasparas Jakucionis",
+      "top_replacement_minutes_delta": 1568,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf"
+      ]
+    },
+    {
+      "team": "NOP",
+      "player": "Bennedict Mathurin",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0419,
+      "avg_min_when_playing_s": 603,
+      "replacements": [
+        {
+          "player": "Yves Missi",
+          "share_delta": 0.0919,
+          "minutes_delta": 1323,
+          "share_with": 0.0,
+          "share_without": 0.0919,
+          "minutes_with": 0,
+          "minutes_without": 1323
+        },
+        {
+          "player": "Jaron Pierre Jr.",
+          "share_delta": 0.0798,
+          "minutes_delta": 1149,
+          "share_with": 0.0173,
+          "share_without": 0.0971,
+          "minutes_with": 249,
+          "minutes_without": 1398
+        },
+        {
+          "player": "Saddiq Bey",
+          "share_delta": 0.0237,
+          "minutes_delta": 342,
+          "share_with": 0.1452,
+          "share_without": 0.169,
+          "minutes_with": 2091,
+          "minutes_without": 2433
+        },
+        {
+          "player": "Jordan Poole",
+          "share_delta": 0.0133,
+          "minutes_delta": 192,
+          "share_with": 0.0863,
+          "share_without": 0.0997,
+          "minutes_with": 1243,
+          "minutes_without": 1435
+        },
+        {
+          "player": "Derik Queen",
+          "share_delta": 0.0097,
+          "minutes_delta": 140,
+          "share_with": 0.0943,
+          "share_without": 0.104,
+          "minutes_with": 1358,
+          "minutes_without": 1498
+        }
+      ],
+      "top_replacement": "Yves Missi",
+      "top_replacement_minutes_delta": 1323,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
+      ]
+    },
+    {
+      "team": "OKC",
+      "player": "Josh Dix",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0726,
+      "avg_min_when_playing_s": 1045,
+      "replacements": [
+        {
+          "player": "Ajay Mitchell",
+          "share_delta": 0.114,
+          "minutes_delta": 1641,
+          "share_with": 0.0,
+          "share_without": 0.114,
+          "minutes_with": 0,
+          "minutes_without": 1641
+        },
+        {
+          "player": "Micah Peavy",
+          "share_delta": 0.0556,
+          "minutes_delta": 801,
+          "share_with": 0.0,
+          "share_without": 0.0556,
+          "minutes_with": 0,
+          "minutes_without": 801
+        },
+        {
+          "player": "Nique Clifford",
+          "share_delta": 0.0507,
+          "minutes_delta": 730,
+          "share_with": 0.0487,
+          "share_without": 0.0994,
+          "minutes_with": 701,
+          "minutes_without": 1431
+        },
+        {
+          "player": "Bennett Stirtz",
+          "share_delta": 0.0234,
+          "minutes_delta": 337,
+          "share_with": 0.0494,
+          "share_without": 0.0728,
+          "minutes_with": 711,
+          "minutes_without": 1048
+        },
+        {
+          "player": "Aday Mara",
+          "share_delta": 0.0173,
+          "minutes_delta": 249,
+          "share_with": 0.0891,
+          "share_without": 0.1064,
+          "minutes_with": 1283,
+          "minutes_without": 1532
+        }
+      ],
+      "top_replacement": "Ajay Mitchell",
+      "top_replacement_minutes_delta": 1641,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_OKCLAC_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf"
+      ]
+    },
+    {
+      "team": "SAS",
+      "player": "De'Aaron Fox",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0701,
+      "avg_min_when_playing_s": 1009,
+      "replacements": [
+        {
+          "player": "Victor Wembanyama",
+          "share_delta": 0.0597,
+          "minutes_delta": 859,
+          "share_with": 0.0871,
+          "share_without": 0.1467,
+          "minutes_with": 1254,
+          "minutes_without": 2113
+        },
+        {
+          "player": "Dylan Harper",
+          "share_delta": 0.0382,
+          "minutes_delta": 550,
+          "share_with": 0.1049,
+          "share_without": 0.1431,
+          "minutes_with": 1510,
+          "minutes_without": 2060
+        },
+        {
+          "player": "Devin Vassell",
+          "share_delta": 0.0372,
+          "minutes_delta": 536,
+          "share_with": 0.0953,
+          "share_without": 0.1325,
+          "minutes_with": 1372,
+          "minutes_without": 1908
+        },
+        {
+          "player": "Jordan McLaughlin",
+          "share_delta": 0.0219,
+          "minutes_delta": 316,
+          "share_with": 0.0582,
+          "share_without": 0.0801,
+          "minutes_with": 838,
+          "minutes_without": 1154
+        },
+        {
+          "player": "Keldon Johnson",
+          "share_delta": 0.0183,
+          "minutes_delta": 263,
+          "share_with": 0.1039,
+          "share_without": 0.1222,
+          "minutes_with": 1496,
+          "minutes_without": 1759
+        }
+      ],
+      "top_replacement": "Victor Wembanyama",
+      "top_replacement_minutes_delta": 859,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf"
+      ]
+    }
+  ],
+  "suspect_name_pairs": [
+    {
+      "team": "DAL",
+      "name_a": "Marcus Sassar",
+      "name_b": "Marcus Sasser",
+      "reason": "same club, near-identical spelling; the two official gamebooks disagree, so the pair is flagged and excluded from the replacement table rather than merged by inference"
+    },
+    {
+      "team": "LAC",
+      "name_a": "Keaton Wagler",
+      "name_b": "Keaton Wagner",
+      "reason": "same club, near-identical spelling; the two official gamebooks disagree, so the pair is flagged and excluded from the replacement table rather than merged by inference"
+    },
+    {
+      "team": "SAS",
+      "name_a": "Julian Champagne",
+      "name_b": "Julian Champagnie",
+      "reason": "same club, near-identical spelling; the two official gamebooks disagree, so the pair is flagged and excluded from the replacement table rather than merged by inference"
+    },
+    {
+      "team": "SAS",
+      "name_a": "Stephen Castle",
+      "name_b": "Stephon Castle",
+      "reason": "same club, near-identical spelling; the two official gamebooks disagree, so the pair is flagged and excluded from the replacement table rather than merged by inference"
+    }
+  ],
+  "folded_names": [
+    {
+      "key": "bogdan bogdanovic",
+      "spellings": [
+        "Bogdan Bogdanovic",
+        "Bogdan Bogdanovi\u0107"
+      ]
+    },
+    {
+      "key": "karlo matkovic",
+      "spellings": [
+        "Karlo Matkovic",
+        "Karlo Matkovi\u0107"
+      ]
+    },
+    {
+      "key": "nikola topic",
+      "spellings": [
+        "Nikola Topic",
+        "Nikola Topi\u0107"
+      ]
+    },
+    {
+      "key": "pacome dadiet",
+      "spellings": [
+        "Pacome Dadiet",
+        "Pac\u00f4me Dadiet"
+      ]
+    },
+    {
+      "key": "pj washington",
+      "spellings": [
+        "P.J. Washington",
+        "P.J. Washington Jr."
+      ]
+    }
+  ]
+}

@@ -64,8 +64,8 @@
 <td>Research and develop strategies that generate useful signals</td>
 <td>Named strategies with hypothesis, inputs, edge origin and correlation consequence</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>9 strategies registered in nba2/config.py::STRATEGIES; all 9 now have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16, including S-08 (inputs blocked, documented) and S-09 (meta). Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/d2dd7c8e-nba2: added the S6-S9 pre-registration files so pre-registration is complete per strategy.</td>
+<td>arena/4f780342-nba2 (updated)</td>
+<td>9 strategies registered in nba2/config.py::STRATEGIES; all 9 have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16. Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/4f780342-nba2: the settlement surface now grades all three seals on one table (37 graded rows / 14 distinct games), so the gate measurements have a larger settled sample than before; nothing is promoted on it (14 games is one week).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -137,7 +137,7 @@
 <td>Correlations computed where data exists; band + sign-stability where it does not</td>
 <td>partial</td>
 <td>arena/b3914335</td>
-<td>v4 measures rho on the same-game total-vs-margin pair from 196 official finals: r=-0.038, CI95 [-0.177, 0.103]. Published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only.</td>
+<td>v4 measures rho on the same-game total-vs-margin pair over 196 official finals: r=-0.038, CI95 [-0.177, 0.103], published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only. | 2026-11-16 arena/4f780342-nba2: unchanged this session (cross-checked, not re-measured).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -148,8 +148,8 @@
 <td>Remove luck from the equation</td>
 <td>Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL</td>
 <td>partial</td>
-<td>arena/b3914335</td>
-<td>v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|&lt;=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked, which is the honest answer rather than a manufactured one. Still partial because the acceptance criterion also wants CLV, bootstrap CI and multiple-testing control on the leaderboard, and CLV is impossible with no market feed (F-V4-04).</td>
+<td>arena/4f780342-nba2 (updated)</td>
+<td>v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|&lt;=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked. | 2026-11-16 arena/4f780342-nba2: added a settlement-level luck control that is a real statistical test rather than a product of probabilities - p_at_least_observed_hits (Poisson-binomial tail) = 0.0425 for 12/14 distinct correct winners against 8.855 expected under the seals&#x27; own probabilities. Read that, not the 0.857 hit rate. Still partial: CLV is impossible with no market feed (F-V4-04).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -160,8 +160,8 @@
 <td>Build selectively skill-based strategies</td>
 <td>Promotion requires measured edge surviving the luck checks; abstention is a first-class output</td>
 <td>partial</td>
-<td>arena/b3914335</td>
-<td>The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. Settlement publishes p_observed_run_under_model=0.080 against an expected 6.87 hits for the 9/9 run, which is the number that stops 9/9 being read as skill.</td>
+<td>arena/4f780342-nba2 (updated)</td>
+<td>The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. | 2026-11-16 arena/4f780342-nba2: the settlement now publishes a Poisson-binomial tail (0.0425) beside the 0.857 hit rate, and the seal-level breakdown shows the run is driven by the v3 seal (9/9 on heavy favourites); the v1 seals scored 12/14 on the same overlapping dates. Abstention remains the published output.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -196,8 +196,8 @@
 <td>Provide game flow analysis</td>
 <td>Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is now built from official quarter scores (nba2/v3/gameflow.py, lategame.html) with the inflation-adjusted control total. Pace / foul-flow still needs play-by-play (R-47, blocked). | 2026-11-16 session arena/d2dd7c8e-nba2: built the quarter-score late-game decomposition (the part measurable without play-by-play).</td>
+<td>arena/4f780342-nba2 (updated)</td>
+<td>Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is built from official quarter scores. | 2026-11-16 arena/4f780342-nba2: the result feed and settlement now carry per-game quarter scores for every committed final (11/14 and 11/15), with each split printed beside its own sum so the identity is visible; a period row that does not sum to the final is withheld, not adjusted.</td>
 <td>P1</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -557,7 +557,7 @@
 <td>Per-player per-game box score with minutes, plus on/off</td>
 <td>partial</td>
 <td>data vendor / owner</td>
-<td>per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured | 2026-11-15 session arena/f8f8f2b8-nba2: 193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus the 19 rows for 2026-11-14 DEN@NOP already in the repo. Player minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score (they did not play on 11-13).</td>
+<td>193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus 19 rows for 2026-11-14 DEN@NOP. Player-minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score. | 2026-11-16 arena/4f780342-nba2: not extended this session - the injury release carries no player-level production, and the box-score capture needs a runner that can reach statsdmz (data/raw/egress_probe.json now measures that from CI).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -773,7 +773,7 @@
 <td>stats.nba.com equivalent reachable from the build environment</td>
 <td>blocked</td>
 <td>owner (you)</td>
-<td>unblocks injury impact, props, and combo correlation</td>
+<td>unblocks injury impact, props, and combo correlation. | 2026-11-16 arena/4f780342-nba2: partially measured. The official injury releases ARE reachable from the platform fetch tool, and 83 rows of the 11/16 01:00 PM release are now stored (nba2/v4/injury_renderings.py) and parsed with zero unread cells. What is NOT reachable is per-player production: box scores and gamebooks live on statsdmz.nba.com, and whether a runner can reach them is now measured by probe-egress.yml rather than assumed.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -827,7 +827,7 @@
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
 </tr>
 </tbody></table></div>
-<p class="tablenote">Decomposed from the project brief (Arena session request of 2026-11-13) plus the engineering requirements needed to satisfy it. Status is a self-assessment against files in this repository, reviewed by a human owner next.</p>
+<p class="tablenote">Decomposed from the project brief (Arena session request of 2026-11-13) plus the engineering requirements needed to satisfy it. Status is a self-assessment against files in this repository, reviewed by a human owner next. | 2026-11-16 arena/4f780342-nba2: rows R-003, R-009, R-010, R-011, R-014, R-044 and R-102 updated against the v4 settlement and injury work in PR #99; every claim in the &#x27;how&#x27; text is reproducible by a committed command.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;
