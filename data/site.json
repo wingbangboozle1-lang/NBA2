@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "598ba97d85e97e9bf231c1494a829c8053898652a4ab9e3c1fe8535e42930acf",
+  "input_digest": "18165b2e7b1d49ac5691cb2ae5926521b70c0eea3e0078617f95957a66276e4a",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27517,9 +27517,299 @@
       "FLAG-REPO-01"
      ],
      "verified": true
+    },
+    {
+     "key": "RR-29",
+     "values": {
+      "id": "RR-29",
+      "area": "Integrity — sealed ledger",
+      "finding": "nba2/v3/ledger.py::seal() recomputed and overwrote the pre-tip seal on EVERY build, so a commitment that must be immutable was silently re-issued after the results were known.",
+      "evidence": "Running `python -m nba2.v3` twice with a grown history rewrote data/v3/ledger/sealed-2026-11-15.json. Divergence log now at data/v3/ledger/seal-divergence-2026-11-15.json.",
+      "action": "FIXED this session (arena/fe0ffa49-nba2): seal() is write-once and appends a divergence record instead. The authentic seal was restored from git before the fix."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-30",
+     "values": {
+      "id": "RR-30",
+      "area": "Integrity — pre-registration",
+      "finding": "nba2/v2/build.py re-stamped frozen_at_utc/frozen_by on every build, so a file whose purpose is to be frozen before the first bet drifted daily.",
+      "evidence": "`git checkout data/v2/prereg/` + two `python -m nba2.v2` runs left the tree dirty before the fix; after the fix `git diff data/v2/prereg/` is empty across two rebuilds.",
+      "action": "FIXED: first freeze wins; a later content difference is recorded in-file, not by moving the freeze."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-31",
+     "values": {
+      "id": "RR-31",
+      "area": "Model — measured sigma",
+      "finding": "_game_totals() concatenated the history glob with the 11-15 capture's results rows, counting the five 2026-11-14 finals twice: n_finals_for_sd() returned 202 for a league that had played 197 games.",
+      "evidence": "`python -c \"from nba2.v2 import model as M; print(M.n_finals_for_sd())\"` -> 202 before, 197 after.",
+      "action": "FIXED: game_id-keyed union that raises on a genuine score disagreement between sources."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-32",
+     "values": {
+      "id": "RR-32",
+      "area": "Data — history completeness",
+      "finding": "Five official finals (2026-11-14) were already committed to the repository but sat outside the data/raw/history/games_*.json glob, so they were invisible to every backtest, rating and settlement while the standings implied 197 league games.",
+      "evidence": "data/raw/capture_2026-11-15/results_2026-11-14.json held them; the history glob did not.",
+      "action": "FIXED by transcription with the source named in the new file's meta. No value re-read, none invented."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-33",
+     "values": {
+      "id": "RR-33",
+      "area": "Site — unexplained blanks",
+      "finding": "esc(None) returns the empty string, so a missing value prints as a blank cell carrying no flag. The lint gate catches this one step downstream, which is why it survived.",
+      "evidence": "nba2/v2/build.py::esc(). Observed on injuries.html, where five Golden State rows have an empty reason cell on the official PDF.",
+      "action": "PARTIALLY FIXED: injury status/reason cells now print an explicit 'not printed on the row (FLAG-FE0-INJ-...)'. The generic esc(None) behaviour is left as-is and recorded as an open defect -- a page-wide audit of esc() call sites is separate work."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-34",
+     "values": {
+      "id": "RR-34",
+      "area": "Site — asserted vs measured",
+      "finding": "The front page hard-coded '188 official finals', '34-game window', '167 finals' and '0/30 teams outside luck noise'. Every one became false when the snapshot moved and nothing failed.",
+      "evidence": "grep of nba2/v2/build.py at commit e36359f.",
+      "action": "FIXED: all read from the model (integ['games'], len(lines), lab['meta']['n_scored'], gate G9's n_lucky)."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-35",
+     "values": {
+      "id": "RR-35",
+      "area": "Site — injury provenance",
+      "finding": "The injury banner read one hard-wired transcript while official.py carried a newer one, so the banner and the table could name different releases.",
+      "evidence": "nba2/v2/capture2.py::INJURY_FILE was a single hard-wired path.",
+      "action": "FIXED: capture2 now selects the freshest committed transcript by its own retrieved_at_utc, so banner and rows can never disagree."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-36",
+     "values": {
+      "id": "RR-36",
+      "area": "Site — frozen snapshot labelling",
+      "finding": "The v3 tree published a 2026-11-15..11-18 window beside the live 2026-11-16..11-19 window with nothing telling the reader why the dates differ.",
+      "evidence": "site/slate.html vs site/index.html at commit 847a1f4.",
+      "action": "FIXED with a self-updating banner naming the newer committed window, plus a '-- v3 frozen snapshot --' nav divider. The v3 window itself is deliberately NOT rolled forward: its ledger is sealed for it (see the sealed-ledger finding above)."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-37",
+     "values": {
+      "id": "RR-37",
+      "area": "Tests — snapshot encoded as constant",
+      "finding": "Test bodies contained 188 finals, 172 predictions, 34 slate games, 101 injury rows and 64 ledger rows as literals, so an append-only feed broke tests on the day it worked.",
+      "evidence": "nba2/v2/test_lab.py, test_session2.py, test_v2.py, nba2/v3/test_v3.py.",
+      "action": "FIXED: each is now derived from the data it is asserting about."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
+    },
+    {
+     "key": "RR-38",
+     "values": {
+      "id": "RR-38",
+      "area": "Verification — staleness detector",
+      "finding": "The staleness check applied only the five 11-14 finals to a 2026-11-14 audit fixture, so the nine 11-15 finals reported as 18 rows of UNEXPLAINED drift the moment they were committed.",
+      "evidence": "nba2/v2/live.py::staleness() -> n_unexplained = 18 before the fix.",
+      "action": "FIXED: applies every official final played after the fixture's last date, unioned by game_id. 30/30 match, 0 unexplained."
+     },
+     "source": {
+      "name": "This repository (git history)",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2",
+      "class": "official",
+      "class_label": "Official NBA.com / NBA CDN",
+      "note": "Repo review facts: commit list, file tree."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-REPO-01"
+     ],
+     "verified": true
     }
    ],
    "sources": [
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
+    {
+     "name": "This repository (git history)",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2",
+     "class": "official",
+     "class_label": "Official NBA.com / NBA CDN",
+     "note": "Repo review facts: commit list, file tree."
+    },
     {
      "name": "This repository (git history)",
      "url": "https://github.com/wingbangboozle1-lang/NBA2",
@@ -27965,8 +28255,8 @@
       "requirement": "Determine correlation values",
       "acceptance": "Correlations computed where data exists; band + sign-stability where it does not",
       "status": "partial",
-      "owner": "arena/b3914335",
-      "how": "v4 measures rho on the same-game total-vs-margin pair from 196 official finals: r=-0.038, CI95 [-0.177, 0.103]. Published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only.",
+      "owner": "arena/20c4f2f9",
+      "how": "2 of 5 relevant correlations now measured and published: parlay rho 0.00942 (n=172 games) and r(SRS, margin/G) = -0.346 (30 teams); the rest need settled per-strategy results",
       "priority": "P0"
      },
      "source": {
@@ -27990,8 +28280,8 @@
       "requirement": "Remove luck from the equation",
       "acceptance": "Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL",
       "status": "partial",
-      "owner": "arena/b3914335",
-      "how": "v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|<=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked, which is the honest answer rather than a manufactured one. Still partial because the acceptance criterion also wants CLV, bootstrap CI and multiple-testing control on the leaderboard, and CLV is impossible with no market feed (F-V4-04).",
+      "owner": "arena/20c4f2f9",
+      "how": "luck z-scores published per team with the noise-band band; stake gates refuse strategies leaning on team-luck components; full luck removal from the leaderboard needs settled results",
       "priority": "P0"
      },
      "source": {
@@ -28015,8 +28305,8 @@
       "requirement": "Build selectively skill-based strategies",
       "acceptance": "Promotion requires measured edge surviving the luck checks; abstention is a first-class output",
       "status": "partial",
-      "owner": "arena/b3914335",
-      "how": "The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. Settlement publishes p_observed_run_under_model=0.080 against an expected 6.87 hits for the 9/9 run, which is the number that stops 9/9 being read as skill.",
+      "owner": "arena/20c4f2f9",
+      "how": "Tier logic + TRAF/S-02 selective betting; no promotions yet",
       "priority": "P0"
      },
      "source": {
@@ -28689,9 +28979,9 @@
       "category": "Engine",
       "requirement": "Settle predictions against official final scores",
       "acceptance": "Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed",
-      "status": "met",
-      "owner": "arena/b3914335",
-      "how": "v4 settlement.py grades the sealed ledger against the verified 11/15 finals only: 9 graded, 25 ungraded with a stated reason, never a loss. The seal is re-verified before grading and the post-settlement file is hashed (verify_settlement() passes). Stamp is derived from the game date, not the wall clock, so a rerun is identical. Ungraded rows name what is missing (the game has not finished).",
+      "status": "partial",
+      "owner": "arena/20c4f2f9",
+      "how": "official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job | 2026-11-15 session arena/f8f8f2b8-nba2: official results feed (nba2.results-feed.v2) settles 5 verified finals for 2026-11-14; this session added 9 more verified 2026-11-13 finals with quarter scores. Per-pick ledger hashes committed pre-tip with a tamper test. Batch settlement of the pending slate still awaits an official-final capture in the scheduled job.",
       "priority": "P0"
      },
      "source": {
@@ -28864,9 +29154,9 @@
       "category": "Data",
       "requirement": "Game-level results history for calibration and backtests",
       "acceptance": ">=2 seasons of final scores with game IDs",
-      "status": "met",
-      "owner": "arena/b3914335",
-      "how": "data/raw/refresh_2026-11-15/results_2026-11-15.json stores 9 official finals with quarter rows and gamebook source URLs; data/raw/capture_2026-11-15/results_2026-11-14.json adds 5 more. Together they give 197 league games, which the standings cross-check confirms (197 wins = 197 losses). The v4 model reads the committed finals, never a hand-typed score; a quarter row that cannot be read stays null (DAL@BOS away_q) instead of being back-solved from the final.",
+      "status": "partial",
+      "owner": "data vendor / owner",
+      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day | 2026-11-15 session arena/f8f8f2b8-nba2: 188 official final scores (2026-10-24..2026-11-14) plus 9 verified 2026-11-13 finals with quarter scores captured this session from the official gamebooks; quarter sums are asserted against the finals at load. 2 games' quarter scores are flagged unverifiable because the official PDF's SCORE BY PERIOD row does not reconcile (I-F8F-06, I-F8F-09).",
       "priority": "P0"
      },
      "source": {
@@ -29064,9 +29354,9 @@
       "category": "Quality",
       "requirement": "Site must render with JavaScript disabled enough to read the flags",
       "acceptance": "static HTML contains headline numbers; tables hydrate from data/site.json",
-      "status": "met",
-      "owner": "arena/b3914335",
-      "how": "Every v4 page is static HTML with no script tag and no JavaScript dependency: nav, tables, badges and every flag (F-V4-01..09, gate IDs, NOT YET SUBMITTED) are plain text. check.py fails the build on a placeholder token or an unexplained blank, so a flag cannot be rendered as an empty cell that only a script would fill.",
+      "status": "partial",
+      "owner": "arena/20c4f2f9",
+      "how": "tables are hydrated client-side; headline cards are server-written into HTML",
       "priority": "P2"
      },
      "source": {
@@ -29140,9 +29430,9 @@
       "category": "Ops",
       "requirement": "Daily rebuild cadence with game-day 13:00 ET injury refresh",
       "acceptance": "Scheduled workflow; build aborts if snapshot is stale",
-      "status": "met",
-      "owner": "arena/b3914335",
-      "how": "v4 is now a scheduled job: .github/workflows/refresh.yml runs nba2.v4.write_capture -> injury_diff -> settlement -> nba2.v4 (gates) -> check on cron 14:05Z (overnight finals) and 18:35Z (after the 11:00-13:00 ET injury window), and pages.yml rebuilds the v4 surfaces on every push to main. The gates fail the job BEFORE rendering, so the published site stays on the last snapshot that passed rather than ageing silently. See v4-verify.html, gates G-V4-1..G-V4-8.",
+      "status": "not started",
+      "owner": "owner (you)",
+      "how": "needs a runner with network access to the official endpoints (this sandbox has none)",
       "priority": "P1"
      },
      "source": {
@@ -32584,9 +32874,141 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-56",
+     "values": {
+      "id": "S-56",
+      "title": "Derive every published count from the model, never from a literal",
+      "problem": "The front page asserted 188 finals, a 34-game window, 167 graded games and 0/30 luck outliers as literal strings. All four were false after the snapshot moved and no check noticed.",
+      "proposal": "Ban bare integer literals in build.py page copy that name a data count; lint for it, and route every such number through the module that computes it.",
+      "benefit": "The site stops lying quietly the day the results feed appends a night.",
+      "effort": "S — lint rule plus the substitutions already made",
+      "risk": "Low; a few places will need an explicit 'this really is a constant' marker.",
+      "recommendation": "Accept — this is the class of bug that erodes trust fastest.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-57",
+     "values": {
+      "id": "S-57",
+      "title": "Advance any dated fixture before using it as a comparison baseline",
+      "problem": "The staleness detector compared a live table against a 2026-11-14 audit fixture without bringing the fixture forward, so nine new finals reported as 18 rows of unexplained drift.",
+      "proposal": "Give every dated fixture a last_date field and a helper that applies all committed finals after it, unioned by game_id, before any comparison.",
+      "benefit": "Unexplained drift becomes a real signal again instead of a nightly false alarm.",
+      "effort": "S — helper plus three call sites",
+      "risk": "None.",
+      "recommendation": "Accept.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-58",
+     "values": {
+      "id": "S-58",
+      "title": "Select inputs by freshness, not by hard-wired filename",
+      "problem": "The injury banner read one hard-wired transcript while official.py carried a newer release, so the banner and the table could disagree. The league publishes every 15 minutes; a hard-wired path cannot keep up.",
+      "proposal": "For every rolling input (injury PDF, slate, standings) resolve the newest committed capture at load time by its own retrieved_at_utc, and stamp the page with which file won.",
+      "benefit": "Provenance stops being a thing a session has to remember to update.",
+      "effort": "S–M",
+      "risk": "A malformed newer capture could win; guard by requiring a parseable stamp.",
+      "recommendation": "Accept — done for the injury feed, extend to the rest.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-59",
+     "values": {
+      "id": "S-59",
+      "title": "Label frozen snapshot trees wherever they are published",
+      "problem": "The v3 tree must keep its 2026-11-15 window forever because its ledger is sealed for it, but nothing told a reader why those dates sat beside a newer window on the same site.",
+      "proposal": "Keep the freeze banner, and add a rule: any page tree whose window differs from the newest committed slate must carry a banner naming the newer window before it can be published.",
+      "benefit": "A reader can tell a dated record from a contradiction without reading the repo.",
+      "effort": "S",
+      "risk": "None.",
+      "recommendation": "Accept.",
+      "status": "awaiting owner decision"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -43316,7 +43738,7 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-16T15:10:01+00:00 with finals_snapshot official_finals_union.json; sealed-2026-11-13.json: 14/22 games settled (PARTIAL — 8 game(s) have no official final score); sealed-2026-11-14.json: 14/27 games settled (PARTIAL — 13 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
       "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
@@ -46964,7 +47386,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-16T15:10:01+00:00 with finals_snapshot official_finals_union.json; sealed-2026-11-13.json: 14/22 games settled (PARTIAL — 8 game(s) have no official final score); sealed-2026-11-14.json: 14/27 games settled (PARTIAL — 13 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },

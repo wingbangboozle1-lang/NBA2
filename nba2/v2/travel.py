@@ -59,7 +59,9 @@ def team_game_dates(teams: tuple[str, ...] | None = None) -> dict[str, list[str]
         dates.setdefault(tri, []).append(d)
 
     for f in sorted(glob.glob(str(root / "data" / "raw" / "history" / "games_*.json"))):
-        for g in json.load(open(f))["games"]:
+        with open(f) as fh:
+            games = json.load(fh)["games"]
+        for g in games:
             if g["game_id"] in seen:
                 continue
             seen.add(g["game_id"])
@@ -143,7 +145,9 @@ def _venue_team_on(dates: dict[str, list[str]], team: str, on_date: str) -> str 
 
     root = Path(__file__).resolve().parents[2]
     for f in sorted(glob.glob(str(root / "data" / "raw" / "history" / "games_*.json"))):
-        for g in json.load(open(f))["games"]:
+        with open(f) as fh:
+            games = json.load(fh)["games"]
+        for g in games:
             if g["date"] == on_date and team in (g["away"], g["home"]):
                 return g["home"]
     for g in C2.results_rows():

@@ -100,13 +100,35 @@ def freshness(result: dict) -> list[dict]:
     n_finals = result["history"]["n_games"]
     wins = sum(t["w"] for t in O.TEAMS.values())
     losses = sum(t["l"] for t in O.TEAMS.values())
+    # The v3 snapshot is a dated artefact: its 30-club table records the league as it stood
+    # at AS_OF_UTC, so the games it must reconcile against are the finals already played on
+    # or before the last date it could have observed -- the day before its as-of date (it was
+    # captured at 06:41 ET, before that day's tips). Finals committed after that date are
+    # newer information the snapshot cannot know, and comparing the frozen table against them
+    # would fail the gate for the wrong reason. The growth is reported, not treated as an error.
+    from datetime import date as _date, timedelta as _td
+    _cutoff = (_date.fromisoformat(O.AS_OF_UTC[:10]) - _td(days=1)).isoformat()
+    _played = M_load_played()
+    _finals_at_asof = sum(1 for g in _played if g["date"] <= _cutoff)
+    _added = n_finals - _finals_at_asof
     gates.append({
         "id": "G-F5", "name": "record arithmetic",
-        "pass": wins == losses == n_finals,
-        "detail": f"{wins} wins / {losses} losses vs {n_finals} official finals",
-        "value": {"wins": wins, "losses": losses, "finals": n_finals},
+        "pass": wins == losses == _finals_at_asof,
+        "detail": (f"{wins} wins / {losses} losses vs {_finals_at_asof} official finals played on "
+                   f"or before {_cutoff} (the snapshot's as-of date minus one day)"
+                   + (f"; {_added} newer final(s) are committed and not yet reflected in this "
+                      f"snapshot" if _added else "")),
+        "value": {"wins": wins, "losses": losses, "finals_at_as_of": _finals_at_asof,
+                  "cutoff_date": _cutoff, "finals_committed_now": n_finals,
+                  "finals_added_since_snapshot": _added},
     })
     return gates
+
+
+def M_load_played():
+    """Official finals from the committed history, loaded once for the gates."""
+    from .model import load_played_games
+    return load_played_games()["games"]
 
 
 def _window_dates(a: str, b: str) -> list[str]:

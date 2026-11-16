@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="54">
+    <section class="card table-card" id="suggestions" data-rows="58">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -734,6 +734,58 @@
 <td>None: the market weight is 0 and the blended line equals the model line until a feed exists.</td>
 <td>Accept; the model-side measurement is already in place.</td>
 <td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-56">
+<td>S-56</td>
+<td>Derive every published count from the model, never from a literal</td>
+<td>The front page asserted 188 finals, a 34-game window, 167 graded games and 0/30 luck outliers as literal strings. All four were false after the snapshot moved and no check noticed.</td>
+<td>Ban bare integer literals in build.py page copy that name a data count; lint for it, and route every such number through the module that computes it.</td>
+<td>The site stops lying quietly the day the results feed appends a night.</td>
+<td>S — lint rule plus the substitutions already made</td>
+<td>Low; a few places will need an explicit &#x27;this really is a constant&#x27; marker.</td>
+<td>Accept — this is the class of bug that erodes trust fastest.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-57">
+<td>S-57</td>
+<td>Advance any dated fixture before using it as a comparison baseline</td>
+<td>The staleness detector compared a live table against a 2026-11-14 audit fixture without bringing the fixture forward, so nine new finals reported as 18 rows of unexplained drift.</td>
+<td>Give every dated fixture a last_date field and a helper that applies all committed finals after it, unioned by game_id, before any comparison.</td>
+<td>Unexplained drift becomes a real signal again instead of a nightly false alarm.</td>
+<td>S — helper plus three call sites</td>
+<td>None.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-58">
+<td>S-58</td>
+<td>Select inputs by freshness, not by hard-wired filename</td>
+<td>The injury banner read one hard-wired transcript while official.py carried a newer release, so the banner and the table could disagree. The league publishes every 15 minutes; a hard-wired path cannot keep up.</td>
+<td>For every rolling input (injury PDF, slate, standings) resolve the newest committed capture at load time by its own retrieved_at_utc, and stamp the page with which file won.</td>
+<td>Provenance stops being a thing a session has to remember to update.</td>
+<td>S–M</td>
+<td>A malformed newer capture could win; guard by requiring a parseable stamp.</td>
+<td>Accept — done for the injury feed, extend to the rest.</td>
+<td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-59">
+<td>S-59</td>
+<td>Label frozen snapshot trees wherever they are published</td>
+<td>The v3 tree must keep its 2026-11-15 window forever because its ledger is sealed for it, but nothing told a reader why those dates sat beside a newer window on the same site.</td>
+<td>Keep the freeze banner, and add a rule: any page tree whose window differs from the newest committed slate must carry a banner naming the newer window before it can be published.</td>
+<td>A reader can tell a dated record from a contradiction without reading the repo.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td>awaiting owner decision</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

@@ -684,6 +684,12 @@ def evaluate_gates(strategies: list[Strategy], preds: list[Pred],
         {"id": i, "name": nm, "requirement": req, "verdict": v, "measured": m, "src": s}
         for (i, nm, req, v, m, s) in rows
     ]
+    # Publish the raw count next to the verdict string. The KPI on the front page used to
+    # hard-code "0/30"; the count is a measurement and must be read as one, so it is carried
+    # here rather than parsed back out of prose.
+    for g in out:
+        if g["id"] == "G9":
+            g["n_lucky"] = n_lucky
     return out, g5_rows
 
 

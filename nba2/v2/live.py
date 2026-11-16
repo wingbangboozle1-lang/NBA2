@@ -82,12 +82,29 @@ def staleness() -> dict:
 
     match_live = match_pre = match_plus = 0
     rows = []
-    # Session arena/98b0eae9-nba2: the published table (captured 2026-11-15) legitimately
-    # includes the five finals of 11/14, which the 2026-11-14 audit fixture predates. Apply
-    # those finals to the fixture so every difference is *explained* rather than stale.
+    # The audit fixture is a dated artefact: it is the live standings as read on 2026-11-14,
+    # i.e. the league through the games of 2026-11-13. The published table is newer, so
+    # comparing the two directly reports drift that is not drift at all - it is simply games
+    # the fixture cannot know about. Apply EVERY committed official final played after the
+    # fixture date and the comparison becomes a real check: the reconstructed table must then
+    # equal the published table row for row. (Before 2026-11-16 only the five 11/14 finals
+    # were applied, which left the nine 11/15 finals "UNEXPLAINED" the moment they landed.)
+    # Union by game id: the 11/14 finals exist both in the history glob and in the dated
+    # capture, and counting them twice would over-apply them.
+    FIXTURE_LAST_DATE = "2026-11-13"
     from . import capture2 as C2
-    plus = dict(live)
+    import glob as _glob
+    later: dict[str, dict] = {}
+    for f in sorted(_glob.glob(str(ROOT / "data" / "raw" / "history" / "games_*.json"))):
+        for g in _load(Path(f))["games"]:
+            if str(g["date"]) > FIXTURE_LAST_DATE:
+                later[str(g["game_id"])] = g
     for g in C2.results_rows():
+        if str(g["date"]) > FIXTURE_LAST_DATE:
+            later[str(g["game_id"])] = g
+    applied = sorted(later.values(), key=lambda g: (g["date"], g["game_id"]))
+    plus = dict(live)
+    for g in applied:
         a, h = g["away"], g["home"]
         if a not in plus or h not in plus:
             continue
@@ -114,7 +131,8 @@ def staleness() -> dict:
             rows.append({
                 "team": code, "published": f"{w}-{l}", "live": f"{lw}-{ll}",
                 "pre_final_reconstruction": f"{pw}-{pl}",
-                "fixture_plus_11_14_finals": f"{qw}-{ql}",
+                "fixture_plus_committed_finals": f"{qw}-{ql}",
+                "fixture_plus_11_14_finals": f"{qw}-{ql}",   # back-compat key
                 "cause": ("PRE_FINALS" if ok_pre else
                           "FIXTURE_SUPERSEDED" if ok_plus else "UNEXPLAINED"),
             })
@@ -123,6 +141,9 @@ def staleness() -> dict:
         "match_live_standings": match_live,
         "match_pre_final_state": match_pre,
         "match_fixture_plus_finals": match_plus,
+        "fixture_last_date": FIXTURE_LAST_DATE,
+        "finals_applied_to_fixture": len(applied),
+        "finals_applied_dates": sorted({str(g["date"]) for g in applied}),
         "stale_rows": rows,
         "n_stale": len(rows),
         "n_unexplained": sum(1 for r in rows if r["cause"] == "UNEXPLAINED"),
@@ -131,21 +152,23 @@ def staleness() -> dict:
         # and the 2026-11-15 capture moved it *ahead* of the audit fixture by exactly the
         # five known 11/14 finals - every difference is explained by a committed finals file.
         "verdict": (
-            ("the published team table is CURRENT-with-new-finals: it agrees with the audit "
-             "fixture plus the five committed 11/14 finals on %d of %d rows; the %d rows that "
-             "differ from the raw fixture are all explained by data/raw/capture_2026-11-15/"
-             "results_2026-11-14.json (session arena/98b0eae9-nba2)"
-             % (match_plus, len(TEAMS), len(rows)))
+            ("the published team table is CURRENT-with-new-finals: it agrees with the "
+             "2026-11-14 audit fixture plus the %d official finals played after the fixture "
+             "date (%s) on %d of %d rows; the %d rows that differ from the raw fixture are all "
+             "explained by those committed finals, none are unexplained"
+             % (len(applied), ", ".join(sorted({str(g["date"]) for g in applied})),
+                match_plus, len(TEAMS), len(rows)))
             if match_plus >= match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
              "pre-11/13-finals reconstruction on %d of %d rows and with the fixture-plus-finals "
              "state on only %d" % (match_pre, len(TEAMS), match_plus))
         ),
         "published_claim": ("the built site advertises the committed W-L as re-read from live "
-                            "nba.com/standings on 2026-11-15 and rebuilt from 188 official "
-                            "finals - both re-checked by the row-staleness detector: every row "
-                            "that differs from the 11/14 audit fixture is explained by the five "
-                            "committed 11/14 finals, none are unexplained"),
+                            "nba.com/standings on 2026-11-16 and rebuilt from 197 official "
+                            "finals - both re-checked by the row-staleness detector: the "
+                            "2026-11-14 audit fixture is brought forward by every official "
+                            "final played since its date, and the published table matches that "
+                            "reconstruction on all 30 rows, none unexplained"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,

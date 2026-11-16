@@ -219,6 +219,11 @@ def build_picks(result: dict, surface: str = "projection") -> list[dict]:
     return sorted(rows, key=lambda r: (r["date"], r["game_id"]))
 
 
+def _utc_now() -> str:
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def seal(result: dict) -> dict:
     LEDGER_DIR.mkdir(parents=True, exist_ok=True)
     picks = build_picks(result)
@@ -240,9 +245,52 @@ def seal(result: dict) -> dict:
         body["settlement"] = settled
         body["sha256_after_settlement"] = sha256(
             {"window": body["window"], "picks": picks, "settlement": settled})
+
+    # ---- WRITE-ONCE (I-FE0-04, fixed 2026-11-16) -------------------------------------
+    # A seal is a pre-registration: it is the record of what was published before tip. It is
+    # therefore immutable. Before this fix, `seal()` overwrote the file on every build, so a
+    # change to any model input silently rewrote picks for games that had already been
+    # played. Observed on 2026-11-16: extending the committed official finals from 183 to
+    # 197 moved every v3 margin for the 2026-11-15 slate (already Final) and the build
+    # overwrote the pre-tip seal. That is exactly the failure a tamper-evident ledger exists
+    # to make impossible.
+    # New behaviour: if a seal already exists for this window, it is NEVER rewritten. When
+    # the recomputed picks differ, the divergence is recorded in an append-only ledger next
+    # to it and the build reports it - the pre-tip numbers stand.
+    if prev:
+        old_body = json.loads(prev)
+        old_digest = sha256({"window": old_body["window"], "picks": old_body["picks"]})
+        if old_digest != digest:
+            div_path = LEDGER_DIR / f"seal-divergence-{O.WINDOW[0]}.json"
+            div = json.loads(div_path.read_text()) if div_path.exists() else {
+                "schema": "nba2.v3.seal-divergence.v1",
+                "window": {"start": O.WINDOW[0], "end": O.WINDOW[1]},
+                "note": ("APPEND-ONLY. One record per rebuild whose recomputed picks disagree "
+                         "with the pre-tip seal. The seal itself is never rewritten: the "
+                         "pre-tip numbers are the ones that were published, and a later change "
+                         "to a model input is recorded here instead of silently replacing them."),
+                "records": []}
+            div["records"].append({
+                "detected_at_utc": _utc_now(),
+                "detected_by": "arena/fe0ffa49-nba2",
+                "sealed_at_utc": old_body.get("sealed_at_utc"),
+                "pre_tip_sha256": old_digest,
+                "recomputed_sha256": digest,
+                "n_picks_pre_tip": len(old_body["picks"]),
+                "n_picks_recomputed": len(picks),
+                "cause": ("model inputs changed after sealing (the committed official-finals "
+                          "history grew), so the recomputed margins differ"),
+            })
+            div_path.write_text(json.dumps(div, indent=2, ensure_ascii=False) + "\n")
+            return {"file": _rel(path), "digest": old_digest, "n": len(old_body["picks"]),
+                    "settled": bool(settled), "rewritten": False,
+                    "divergence": _rel(div_path)}
+        return {"file": _rel(path), "digest": old_digest, "n": len(picks),
+                "settled": bool(settled), "rewritten": False}
+
     path.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n")
     return {"file": _rel(path), "digest": digest, "n": len(picks),
-            "settled": bool(settled)}
+            "settled": bool(settled), "rewritten": True}
 
 
 def verify(path: Path) -> tuple[bool, str, str]:

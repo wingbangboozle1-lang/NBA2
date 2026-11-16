@@ -1,0 +1,146 @@
+{
+ "schema": "nba2.games-history.v1",
+ "meta": {
+  "captured_utc": "2026-11-16T15:00:00Z",
+  "captured_by": "arena/fe0ffa49-nba2",
+  "source": "data/raw/capture_2026-11-15/results_2026-11-14.json (original read: https://www.nba.com/games?date=2026-11-14)",
+  "date_range": [
+   "2026-11-14",
+   "2026-11-14"
+  ],
+  "n_games": 5,
+  "note": "BEFORE THIS FILE THE COMMITTED HISTORY HAD ZERO GAMES ON 2026-11-14, while the official nba.com calendar lists 5 games for that date and the official standings imply 197 league games played (was 192). These five finals were already committed to the repo in data/raw/capture_2026-11-15/results_2026-11-14.json but were never loaded by the history glob (data/raw/history/games_*.json). They are transcribed here into the history schema - no value re-read from nba.com in this session; the official source is the one named above. Every quarter row sums to its final."
+ },
+ "games": [
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "list_url": "https://www.nba.com/games?date=2026-11-14",
+   "quarter_scores": {
+    "away": [
+     29,
+     27,
+     30,
+     30
+    ],
+    "home": [
+     23,
+     28,
+     31,
+     26
+    ],
+    "ot": null
+   }
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "list_url": "https://www.nba.com/games?date=2026-11-14",
+   "quarter_scores": {
+    "away": [
+     33,
+     20,
+     38,
+     26
+    ],
+    "home": [
+     33,
+     38,
+     34,
+     22
+    ],
+    "ot": null
+   }
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "list_url": "https://www.nba.com/games?date=2026-11-14",
+   "quarter_scores": {
+    "away": [
+     39,
+     21,
+     26,
+     31
+    ],
+    "home": [
+     37,
+     31,
+     35,
+     34
+    ],
+    "ot": null
+   }
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "list_url": "https://www.nba.com/games?date=2026-11-14",
+   "quarter_scores": {
+    "away": [
+     23,
+     31,
+     30,
+     26
+    ],
+    "home": [
+     38,
+     33,
+     32,
+     26
+    ],
+    "ot": null
+   }
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "ot": false,
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "list_url": "https://www.nba.com/games?date=2026-11-14",
+   "quarter_scores": {
+    "away": [
+     29,
+     29,
+     30,
+     29
+    ],
+    "home": [
+     17,
+     28,
+     35,
+     26
+    ],
+    "ot": null
+   }
+  }
+ ]
+}
