@@ -3929,3 +3929,55 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+---
+
+## Session `arena/c9bcc06b-nba2` — CLAIM (2026-11-16, branch `arena/c9bcc06b-nba2`, base `32019ac` = `main` @ PR #88 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `32019ac53e1805ec1530d505296bf86f1a5be6fd`; this branch is at the same commit; working tree clean.
+- Open PRs at claim time: **#70** `arena/d09f8d1e-nba2` (`.github/workflows/{ci,probe}.yml`, `data/site.json`, `index.html`, `pages/**`, `nba2/tests/**`), **#72** (draft) `arena/04a61ac0-nba2` (`.github/workflows/refresh.yml`, `data/v2/**`, `nba2/v2/{build,check,gate_eval,model,official,report,results,test_v2}.py`, `nba2/pipeline/build_site_data.py`, `data/settlement.json`, `data/site.json`, `pages/**`), **#78** `arena/56b96bf0-nba2` (COORDINATION.md only), **#80** `arena/0429aad7-nba2` (`nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py`), **#82** `arena/f8f8f2b8-nba2` (COORDINATION.md only). **All left untouched.**
+- Baseline checker chain re-run on this tree *before any edit*: `nba2/tests` **79 OK**; `nba2/v2` **136 OK**; `nba2/v3` **64 OK**; `backtest/tests` **49 OK**; `python -m nba2.v2.check` → **OK (0 structural, 0 semantic)**; `python -m nba2.v3.check` → **OK (0 structural, 0 semantic)**, gates 7 pass / 1 fail (G-F3, advisory, pre-existing).
+- Pages API: `build_type: legacy`, `source: main /`, `status: built`, latest build `32019ac` (2026-11-16T04:26:11Z). Live fetch of `https://wingbangboozle1-lang.github.io/NBA2/` in this session returns the **v2/v3 tree** ("Dashboard · NBA2 Lines Lab v2"), so the deploy path is serving the published artifact; the `legacy` API field stays a recorded irregularity, not a silent setting change.
+- Sandbox shell egress to `www.nba.com` / `ak-static.cms.nba.com` / `official.nba.com` / `statsdmz.nba.com` = blocked (prior sessions measured HTTP 000). The **platform page-fetch tool reaches them** — verified this session: the official injury-report index and `Injury-Report_2026-11-16_09_15AM.pdf` both returned full content. Every capture below records its retrieval method.
+
+**Why this session exists.** The 2026-11-16 brief is, line by line, mostly implemented — but the *rolling slate* is one day stale (the v3 window is 2026-11-15 → 11-18; today is 2026-11-16), the v3 injury snapshot is the **11/15 06:00 AM ET** release while the official index now lists **11/16 releases up to 09:15 AM ET**, the travel-distance column is blank (F-306) although a sourced arena-coordinate table already exists in the repo, the v3 rotation table is blank (F-307) although measured official gamebook minutes already exist, and the settlement-stamp page `site/settlement.html` exists but is **not in the published navigation** (request R-1 from `arena/e73ca9d5-nba2`). Those are the measurable gaps. The brief also asks to "store every injury PDF with its timestamp and diff consecutive reports" — the repo has transcripts and diffs but **no archive of the release index itself**, i.e. no complete, timestamped inventory of the official PDFs.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+
+| Path | Why |
+|---|---|
+| `COORDINATION.md` (append-only) | this claim + completion record |
+| `nba2/v3/**` | the rolling-slate generator: owner `arena/e675ac3d-nba2` / `arena/f8f8f2b8-nba2` / `arena/d2dd7c8e-nba2` all merged; no open PR claims it |
+| `data/v3/**`, `site/**` | regenerated artefacts of the generator above — never hand-edited |
+| `data/raw/capture_2026-11-16/**` | **new** namespace: this session's official captures (slate, standings, three team-stat pages, injury releases, arena table, game logs) |
+| `data/raw/injury_releases/**` | **new** namespace: the official release index (every PDF + its timestamp) and the transcripts actually read, with content hashes |
+| `requirements/REQUIREMENTS.json`, `suggestions/SUGGESTIONS.json` | append-only new entries; existing IDs never renumbered or edited |
+| `analysis/session-c9bcc06b-*.md` (new), `audit/session-c9bcc06b/**` (new) | this session's verification record and captures |
+| `README.md` | stale-count sync only (regenerated by the build), prose preserved |
+
+**Explicitly NOT touched (owned by the open PRs above; a change request is logged instead):**
+`.github/workflows/**`, `nba2/v2/**`, `nba2/pipeline/**`, `nba2/models/**`, `nba2/tests/**`,
+`data/site.json`, `data/v2/**`, `pages/**`, root `*.html`, `docs/**`, `dashboard/**`,
+`originated/**`, `backtest/**`, `verified/**`, `archive/**`, `data/raw/ledger/**` (sealed — read only).
+
+**Task board — `arena/c9bcc06b-nba2` (C-01…C-09)**
+
+| ID | Task | Status |
+|---|---|---|
+| C-01 | Board claim + push before any edit | in progress |
+| C-02 | Capture the 2026-11-16 rolling slate (T+0..T+3) from the official schedule | claimed |
+| C-03 | Re-read the three official team-stat pages (traditional, opponent, advanced) for all 30 clubs and re-cut the model inputs | claimed |
+| C-04 | Injury-release archive: the official index (every PDF + revision timestamp), transcripts + SHA-256 + retrieval time, and consecutive-release diffs | claimed |
+| C-05 | Fill the travel-distance column from the sourced arena-coordinate table (closes F-306) | claimed |
+| C-06 | Fill the rotation minutes table from measured official gamebook minutes (closes F-307) | claimed |
+| C-07 | Add the settlement stamp to the published navigation (closes request R-1) | claimed |
+| C-08 | Scheduled-job extension for the rolling slate + freshness/provenance gates; change request to the `refresh.yml` owner | claimed |
+| C-09 | Registers, full checker chain, PR → `main`, merge, confirm Pages deploy, record run IDs | claimed |
+
+**Rules this session holds itself to:** a value is published only if fetched from an official
+source in this session or reproduced from a committed official capture by running committed code;
+unconfirmable ⇒ blank + flagged, never inferred; the sealed ledgers (`data/raw/ledger/**`) are never
+rewritten; nothing is called verified that was not fetched or reproduced; flagged irregularities do
+not block the merge but appear on the Flagged for Review page with their source link; the site is
+never merged in a broken state.
