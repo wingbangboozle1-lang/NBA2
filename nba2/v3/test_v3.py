@@ -435,3 +435,30 @@ class TestPreregistrationCoverage(unittest.TestCase):
             self.assertTrue(s.get("settlement_rule"), f"{s['id']} has no settlement rule")
             self.assertTrue(s.get("universe"), f"{s['id']} has no universe")
             self.assertTrue(s.get("signal"), f"{s['id']} has no signal")
+
+
+class TestSettlementNavigation(unittest.TestCase):
+    """X-01 (arena/a62b498f-nba2): the settlement stamp must be linked from every navigation block
+    the v3 builder writes, and must not be treated as a v3 gate target (it is generated elsewhere)."""
+
+    def test_settlement_link_in_v3_page_nav(self):
+        html = B.page("T", "slate.html", "<p>x</p>")
+        self.assertEqual(html.count('href="settlement.html"'), 1)
+
+    def test_settlement_page_not_a_v3_gate_target(self):
+        self.assertNotIn("settlement.html", B.V3_PAGES)
+
+    def test_settlement_link_injected_once(self):
+        import tempfile as _tf
+        with _tf.TemporaryDirectory() as d:
+            site = Path(d)
+            (site / "x.html").write_text("<nav><a href=\"a.html\">a</a></nav>")
+            orig = B.SITE
+            try:
+                B.SITE = site
+                B.inject_nav()
+                B.inject_nav()
+                doc = (site / "x.html").read_text()
+            finally:
+                B.SITE = orig
+            self.assertEqual(doc.count('href="settlement.html"'), 1)

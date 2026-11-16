@@ -3949,3 +3949,15 @@ finals), `pages/**`, root `*.html`, `nba2/pipeline/**` (PR #72 and #70 own these
 
 **Requests carried, not done here:** R-5 (11/15 finals; overlaps PR #72); Pages source is still `legacy main /`
 (board caveat, owner decision); injury-PDF byte storage (sandbox egress does not reach `ak-static.cms.nba.com`).
+
+### Completion record — session `arena/a62b498f-nba2` (2026-11-16, X-01)
+
+| ID | Status | What was verified |
+|---|---|---|
+| X-01 | done (pending PR merge) | Settlement stamp link now in the navigation of all 37 generated site pages; `site/settlement.html` nav repaired. Record: `analysis/session-a62b498f-nav.md`. |
+
+- Rebuild chain (`settlement_page` → `v2` → `v3`) is idempotent; committed `site/` equals a rebuild.
+- Tests: v3 67 OK, v1 79 OK, v2 136 OK. `nba2.v3.check` and `nba2.v2.check` clean. `check_links_all`: all internal links OK (127 files, 5,983 links).
+- Sources: no new official values; presentation and build order only. Existing official sources are unchanged.
+- Irregularities: I-A62B-01 (stale message in `nba2/settlement_page.py`), I-A62B-02 (Pages source is legacy `main /`, owner decision).
+- Not done: R-5 (11/15 finals; overlaps PR #72), R-2 for `data/settlement.json` / `data/site.json`.
