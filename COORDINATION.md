@@ -4388,3 +4388,57 @@ regenerated `site/**`, `data/v2/**`, `data/site.json`, root `*.html`, `pages/**`
 | T3 | Publish one settlement surface covering **all three** sealed ledgers, with each seal re-verified before grading; nothing graded without a verified final | in progress | seal sha re-computed; graded count re-derived from official finals only |
 | T4 | Registers, executive summary, questions and suggestions updated line by line against what is actually true today | in progress | every status carries a file path or a command |
 | T5 | PR → merge → Pages deploy confirmed by fetching the live pages | in progress | live fetch of the changed pages |
+
+### Completion record — session `arena/4f780342-nba2` (2026-11-16)
+
+Claim `d8ce8cb`, pushed before any edit. Every task in the claim table is finished; the full
+evidence is in `analysis/session-4f780342-verification.md`.
+
+| ID | Task | Status | What landed | Verification |
+|----|------|--------|-------------|--------------|
+| T1 | Scheduled refresh: no single surface can abort the rest; reachability measured in-repo | **done** | `refresh.yml` rewritten (per-surface `continue-on-error` steps, `data/raw/refresh_verdict.json`, separate fail-closed `publish` job); new `probe-egress.yml`; `nba2/pipeline/refresh.py` no longer treats an empty sealed window as a network failure | `yaml.safe_load` on both workflows; all step python blocks compile; `nba2/tests` 79 OK |
+| T2 | Store the newest official injury release with both stamps + SHA-256; diff consecutive releases | **done** | new `nba2/v4/injury_renderings.py` (verbatim renderings), `nba2/v4/injury_parse.py` (content-typed parser), `nba2/v4/injury_ingest.py` (byte archive + manifest); `injury_diff.py` rebuilt on them | 2 releases stored, **0 unread rows**, 2 real status changes detected; 9 parser tests |
+| T3 | One settlement surface over all three seals, each digest verified before grading | **done** | `nba2/v4/settlement.py` rewritten; `settled-all.json` + derived `settled-2026-11-15.json`; `page_settle` rewritten | 37/83 graded, **14 distinct games**, all three seals VERIFIED, settlement hash re-verifies |
+| T4 | Registers, executive summary, questions, suggestions updated line by line | **done** | `requirements/REQUIREMENTS.json` (7 rows), `requirements/QUESTIONS.json` (+Q-40..Q-43), `suggestions/SUGGESTIONS.json` (+S-56..S-60), `nba2/v2/content.py` EXEC_BULLETS + F-003 retired | `nba2.v2.check` OK; lint 1436 rows / 50 tables |
+| T5 | PR → merge → Pages deploy confirmed by fetching the live pages | **done** | see below | live fetch |
+
+**Defects found and fixed (all reproduced before the fix):**
+1. **Nightly job failing 5/5** — one failing step skipped the injury archive, the rolling
+   refresh, the gates and the commit. Fixed structurally (above).
+2. **Injury transcription wrong on six rows** — Cleveland's Tyson, Jaylon was published
+   `Questionable` where the official 09:30 AM PDF prints **Doubtful**, and five GSW statuses
+   were published blank although the PDF carries them. Root cause: the parser addressed cells
+   by *position*. The published F-V4-06 blamed the PDF; the PDF was fine.
+3. **Two settlements disagreed** and the published one graded a third of the picks.
+4. **A self-satisfying test** — the "identical release" declaration compared a hard-coded
+   string with itself, so "0 status changes" was proved by construction.
+
+**Numbers a reviewer can re-derive** (`python -m nba2.v4.settlement`,
+`python -m nba2.v4.injury_diff`): 83 sealed / 37 graded / 46 ungraded / **14 distinct games** /
+23 repeat gradings; 12 correct distinct winners vs 8.855 expected; Poisson-binomial tail
+**0.042455**; distinct log-loss 0.6088 vs coin 0.6931. Injury: 2 releases, 0 unread, 2 status
+changes (Larsson Q→Doubtful, Stewart Q→Out), 19 rows added, 4 removed, 10 clubs still
+NOT YET SUBMITTED at 13:00 PM.
+
+**Verification run in this session:** `nba2/tests` 79 OK · `nba2/v2` 146 OK · `nba2/v3` 67 OK
+· `nba2/v4` 61 OK · `backtest/tests` 49 OK · `nba2.v2.check` OK (0/0) · `nba2.v3.check` OK
+(advisory G-F3 unchanged) · `nba2.v4.check` 8 gates pass / 0 fail · `nba2.pipeline.lint` OK
+(1436 rows / 50 tables) · `check_links_all.py` ALL INTERNAL LINKS OK (132 files) · both v1
+seals VERIFIED · `verify_backtest.py` PASSED · **parity: a full rebuild from committed inputs
+changed 0 files.**
+
+**Official sources re-read this session:** `nba.com/standings` (all 30 rows match the committed
+capture), `nba.com/schedule?date=2026-11-16` (all 8 games match), the injury index, and the
+11/16 09:30 AM and 01:00 PM injury PDFs.
+
+**Irregularities handed on (none blocks publication; all published on the Flagged page):**
+I-4F-02 runner log text unreachable from this sandbox; I-4F-03 the PDF-byte manifest and
+egress probe need one scheduled run before F-V4-01 can be closed; I-4F-04 settlement stops at
+11/15 until a 11/16 finals capture exists (S-60); I-4F-05 **PR #98 is `CONFLICTING` and overlaps
+this settlement rewrite** — the integrator should expect that; I-4F-06 `data/site.json` carries
+a build timestamp, so an interrupted run can leave one v1 test red on a dirty tree.
+
+**Not claimed / not touched:** the sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`,
+read-only and re-verified), `nba2/v2/**` except `content.py`'s prose lists, `nba2/v3/**`,
+`backtest/**`, `ci.yml`, `pages.yml`, `publish-parity.yml`, `docs/**`, `dashboard/**`,
+`originated/**`, `archive/**`, `verified/**`. PR #98 was not touched.
