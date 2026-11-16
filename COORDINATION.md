@@ -4299,3 +4299,28 @@ claim across PR #99's appended board record and hit the same `COORDINATION.md` c
 aborted that rewrite and retained the conflict-resolved merge commit so the original pushed
 claim remains in history and the PR #99 block remains intact; no force push is needed. The
 next push will target this session's tracked branch after verifying it is still a fast-forward.
+
+### Completion record — `arena/2d910a64-nba2` refresh fix (2026-11-16 UTC)
+
+The status table above records the initial plan; this completion record is authoritative for
+its final state:
+
+| ID | Final status | Result |
+|---|---|---|
+| 2D-1 | done | Stale-audit handoff and claim are preserved in the branch history. |
+| 2D-2 | superseded by PR #99 | `analysis/session-09c0c9a2-audit.md` remains the post-PR-97 audit; no duplicate full-tree audit was created. |
+| 2D-3 | done | Official-finals fetch failure is isolated from the separately gated rolling refresh. Settlement runs only after a successful finals-fetch step; on fetch failure, existing legacy and v4 settlement files are hash-checked before any commit, the rolling source gates remain required, and the job ends visibly failed after a permitted rolling refresh commit. |
+| 2D-4 | done | CC-FRESH-03 now reports the latest completed main-branch scheduled/manual ingest conclusion; current in-progress, non-main, pull-request, failed, missing, or unavailable results cannot be misreported as a successful refresh. Seven run-summary tests and five verdict tests pass offline; CI runs the new suite. |
+| 2D-5 | done | Implementation and exact verification are in `analysis/session-2d910a64-refresh-fix.md`. |
+
+**Verification:** `python3 -m unittest tools.test_crosscheck_site -v` — 12 passed;
+`py_compile`, YAML parsing, `bash -n` for every workflow run block, compilation of all five
+embedded Python heredocs in `refresh.yml`, and `git diff --check` passed. The live CLI-backed
+cross-check reported 97 checks (87 pass, 2 fail, 8 info); its existing `CC-DOC-01` and
+`CC-FRESH-01` findings remain disclosed. `CC-FRESH-03` correctly reports failed run
+[43903704042](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43903704042), not a
+pass based on run count. No official NBA source was fetched, no NBA value was promoted, and
+no run of the changed Actions workflow against live NBA endpoints is claimed. PR #98's file
+scope and PR #100's changed files were checked; none of their branch-specific data, product,
+or audit files were edited. `COORDINATION.md` was updated only by this append-only completion
+record under the shared-board protocol.
