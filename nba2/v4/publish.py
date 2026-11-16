@@ -31,7 +31,14 @@ import re
 from pathlib import Path
 
 from . import capture as C
+from . import flags as FL
 from . import model as M
+
+# Backwards-compatible alias: the register used to live here as V4_FLAGS in the
+# (id, severity, (page, fragment, label, url), finding, disposition) shape. It now
+# lives in nba2/v4/flags.py so the canonical Flagged for review page can read the
+# same list (CR-V4-2). The shape published by this module is unchanged.
+V4_FLAGS = FL.V4_SURFACE_ROWS
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -121,47 +128,10 @@ have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 
 """
 
 
-# (id, severity, (page, fragment, label, official source URL), what is wrong, what is published)
-V4_FLAGS = [
-    ("F-V4-01", "gap", ("v4-injuries.html", "binary-not-stored", "Injury releases", C.INJURY_RELEASES[0]["url"]),
-     "The injury releases are stored as transcribed text, not as the original PDF bytes: bash "
-     "egress to ak-static.cms.nba.com returns HTTP 000, and the page-fetch tool returns text.",
-     "Official URL, revision stamp, this session's retrieval stamp and a sha256 of the "
-     "transcribed text. Not the original file hash."),
-    ("F-V4-02", "gap", ("v4-verify.html", "", "This page", C.SOURCE_PAGES["schedule"]["url"]),
-     "Per-player game logs for the 11/15 and 11/16 games were not transcribed; 9 games x ~26 "
-     "rows was outside this session's budget.",
-     "The committed 11/13 and 11/14 logs stand unchanged. Nothing is back-filled."),
-    ("F-V4-03", "gap", ("projection.html", "flow", "Schedule flow", C.SOURCE_PAGES["team_adv"]["url"]),
-     "Travel mileage is a great-circle distance over arena coordinates sourced from "
-     "Wikimedia/Wikidata (P625), not from an official NBA coordinate page.",
-     "Every travel row is labelled THIRD-PARTY with its read date."),
-    ("F-V4-04", "blocking", ("bet.html", "g6", "Bet surface", C.UNREAD["closing_lines"][2]),
-     "No licensed odds feed: there is no market price, so no edge, no stake, no Kelly "
-     "fraction and no CLV can be computed.",
-     "The bet surface publishes 0 rows and 29 explicit refusals. Stakes are held at 0.00."),
-    ("F-V4-05", "gap", ("v4-injuries.html", "layout", "Layout artefacts", C.INJURY_RELEASES[0]["url"]),
-     "Continuation rows in the official PDF lose their date, time and team on page breaks.",
-     "Those rows are keyed off the preceding full row and the reconstruction is flagged; they "
-     "are never assigned a team by inference from the player's usual club."),
-    ("F-V4-06", "blocking", ("v4-injuries.html", "layout", "Layout artefacts", C.SOURCE_PAGES["injury_index"]["url"]),
-     "Six GSW@NOP rows lose the status column in extraction, so their status cannot be read.",
-     "Status left blank and counted separately, with F-V4-06 printed in the cell. Never "
-     "back-filled, never counted as Available."),
-    ("F-V4-07", "gap", ("v4-injuries.html", "cross-day", "Cross-day diff", C.INJURY_RELEASES[0]["url"]),
-     "POR@MIN appears under two different dates in the same release, so a date-only key would "
-     "merge two distinct filings.",
-     "The diff key is (date, matchup, team, player), so both filings stay distinct."),
-    ("F-V4-08", "gap", ("projection.html", "availability", "Rotation availability", C.INJURY_RELEASES[0]["url"]),
-     "Rotation impact is not published: the official report states status and reason, never "
-     "minutes, and no matched before/after pair of games has been captured.",
-     "Status counts only, with production impact explicitly blank and flagged. Minutes shares "
-     "and replacement shares are not invented."),
-    ("F-V4-09", "gap", ("v4-injuries.html", "releases", "Release diff", C.INJURY_RELEASE_0930["url"]),
-     "The 09:30 AM release is identical row-for-row to the 09:15 AM release.",
-     "Declared with identical_to and a basis, so it is not counted as a change and does not "
-     "inflate the diff ledger."),
-]
+# The v4 irregularity register lives in nba2/v4/flags.py so the canonical Flagged for
+# review page (built by v2 from nba2/v2/content.py::FLAGS) and this page read ONE list.
+# Before it was moved, an item raised here was invisible to the page a reviewer is
+# actually sent to (CR-V4-2).
 
 
 def _nav_html(active: str) -> str:
@@ -651,7 +621,7 @@ def page_verify(res: dict, settle_doc: dict | None, checks: dict) -> str:
         _gaterow(g, "PASS" if g["ok"] else "FAIL") for g in checks.get("gates", [])
     ]
     flag_rows = []
-    for fid, sev, where, what, effect in V4_FLAGS:
+    for fid, sev, where, what, effect in FL.V4_SURFACE_ROWS:
         flag_rows.append(
             "<tr>"
             f"<td><code>{esc(fid)}</code></td><td>{badge(sev, 'bad' if sev == 'blocking' else 'warn')}</td>"

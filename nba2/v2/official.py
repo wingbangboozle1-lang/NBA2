@@ -87,8 +87,8 @@ SOURCES = {
         "per-date game count used for the completeness check.",
     ),
     "injury_pdf": (
-        "NBA Official Injury Report 11/16/26 09:15 AM ET (official PDF)",
-        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+        "NBA Official Injury Report 11/16/26 01:00 PM ET (official PDF)",
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
         "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason.",
     ),
     "injury_policy": (
@@ -140,6 +140,9 @@ BLOCKED = {
 }
 
 AS_OF = "2026-11-16"
+# The session that produced this snapshot. It is printed in the footer of every v2
+# page; it was a hardcoded literal and went stale when the snapshot rolled forward.
+SESSION = "arena/7bfb0276-nba2"
 RETRIEVED_AT_UTC = "2026-11-16T15:20:00Z"
 RETRIEVED_BY = "arena/fe0ffa49-nba2"
 

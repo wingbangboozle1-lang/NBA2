@@ -71,6 +71,14 @@ V3_NAV = [
     ("trials.html", "Trial registry"),
     ("verification-v3.html", "v3 verification"),
 ]
+
+# The settlement stamp page is written by nba2/settlement_page.py from the sealed
+# ledgers. It was reachable only from the v3 and v4 navigation blocks, so a reader
+# who started on the v2 dashboard (the landing page) had no link to it at all.
+# X-01 asked the final integration session to add it; that is what this is. The link
+# is written into the nav at build time rather than injected into the rendered files
+# afterwards, so a rebuild is idempotent and the page cannot lose its link.
+SETTLEMENT_NAV = [("settlement.html", "Settlement stamp")]
 CSS = """
 :root{
   --bg:#0b0f16; --panel:#111823; --panel2:#161f2c; --line:#22303f;
@@ -233,6 +241,9 @@ def page(name, title, body, active=None):
     for href, label in V3_NAV:
         cls = ' class="on"' if href == active else ""
         nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
+    for href, label in SETTLEMENT_NAV:
+        cls = ' class="on"' if href == active else ""
+        nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
     nav = "\n".join(nav_bits)
     doc = f"""<!DOCTYPE html>
 <html lang="en">
@@ -255,7 +266,7 @@ def page(name, title, body, active=None):
 <main>
 {body}
 <footer>
-  <p>Snapshot as of <b>{O.AS_OF}</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>{O.AS_OF}</b>. Built by session <code>{O.SESSION}</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
@@ -471,20 +482,20 @@ naive rule right {_sa['baseline_won_those']} times and the model {_sa['model_won
 information. That is published as a finding, with its arithmetic, on
 <a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
 
-<div class="note ok"><b>Verified against the live official pages this session (2026-11-15).</b> All 30 club records
+<div class="note ok"><b>Verified against the live official pages for the {O.AS_OF} snapshot.</b> All 30 club records
 re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30
 identical, and independently rebuilt from the {integ['games']:.0f} official finals. All {len(lines)} window games re-checked field by field
 (date, tip time, away, home, game id, venue) against
 <a href="https://www.nba.com/schedule?date={O.WINDOW_START}" target="_blank" rel="noopener">nba.com/schedule</a>: {len(lines)}/{len(lines)}
 identical. Both checks are reproducible from <code>data/raw/capture_{O.AS_OF}/</code>.</div>
 
-<div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
-The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
-later releases up to <b>01:30 PM ET</b>, and a player-by-player diff shows <b>4 status changes</b> and
-<b>24 additional rows</b> (Cleveland and Chicago filed after 04:30). None of it changes an originated line, because
-the model is availability-blind — but a reader must not treat the table as current.
-See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the raw capture in
-<code>audit/2026-11-14-766d/</code>.</div>
+<div class="note warn"><b>Injury statuses: the newest release the league has published is the one below,
+and it is still a snapshot in time.</b> The table is the official <b>{inj_meta['revision_time_et']}</b> release,
+read at {inj_meta['retrieval_time_utc']}. The league publishes a new release every fifteen minutes, so
+this table will be superseded — the <a href="v4-injuries.html">release ledger</a> stores every release with its
+revision and retrieval stamps and diffs consecutive ones, and the
+<a href="injuries.html">Injuries &amp; rotation</a> page shows the diff. None of it changes an originated
+line, because the model is availability-blind — but a reader must not treat any single release as current.</div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a

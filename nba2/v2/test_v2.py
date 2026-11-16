@@ -450,3 +450,50 @@ class TestSkillAttribution(unittest.TestCase):
         for key in ("headline_vs_win_pct_baseline", "headline_vs_margin_baseline"):
             self.assertTrue(self.attr[key]["verdict"])
             self.assertTrue(self.attr[key]["baseline"])
+
+
+class TestLinkCheckerHandlesFragments(unittest.TestCase):
+    """CR-V4-1: the link checker used to report every fragment link as broken.
+
+    It resolved the target with only the query string stripped, so "page.html#section"
+    was looked up as a FILE named "page.html#section". Any page that used a
+    section-level link was reported as having a broken link, which is why the v4
+    surfaces had to fall back to file-level links. The checker now splits the fragment
+    off, resolves the file, and then checks that the fragment exists in it.
+    """
+
+    def _check(self, **pages: str) -> list[str]:
+        """Run the real checker against a throwaway site directory."""
+        import tempfile
+        from pathlib import Path
+        from . import check as CK
+        tmp = Path(tempfile.mkdtemp())
+        for name, body in pages.items():
+            (tmp / name.replace("__", ".")).write_text(body)
+        old = CK.SITE
+        CK.SITE = tmp
+        try:
+            return CK.check()
+        finally:
+            CK.SITE = old
+
+    def test_a_section_link_to_a_real_fragment_is_not_broken(self):
+        problems = self._check(a__html='<a href="b.html#sec">x</a>',
+                               b__html='<h2 id="sec">Section</h2>')
+        self.assertNotIn("broken local link", " ".join(problems))
+        self.assertNotIn("fragment that does not exist", " ".join(problems))
+
+    def test_a_section_link_to_a_missing_fragment_is_reported(self):
+        problems = self._check(a__html='<a href="b.html#nope">x</a>',
+                               b__html='<h2 id="sec">Section</h2>')
+        self.assertIn("fragment that does not exist", " ".join(problems))
+
+    def test_a_missing_file_is_still_broken(self):
+        problems = self._check(a__html='<a href="gone.html">x</a>')
+        self.assertIn("broken local link", " ".join(problems))
+
+    def test_a_same_page_fragment_is_resolved_against_that_page(self):
+        problems = self._check(a__html='<a href="#sec">x</a><h2 id="sec">Section</h2>')
+        joined = " ".join(problems)
+        self.assertNotIn("broken local link", joined)
+        self.assertNotIn("fragment that does not exist", joined)

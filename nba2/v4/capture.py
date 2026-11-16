@@ -39,6 +39,9 @@ RETRIEVED_ET = "2026-11-16 09:30 ET"
 METHOD = ("platform page-fetch tool (fetch_page); direct bash egress to nba.com returns "
           "HTTP 000 from this sandbox, so every read is recorded with this method")
 
+from .capture_0100pm_rows import ROWS as _R0100PM_ROWS  # noqa: E402
+from .capture_0100pm_rows import LAYOUT_NOTES as _R0100PM_LAYOUT_NOTES  # noqa: E402
+
 SOURCE_PAGES = {
     "schedule": {
         "name": "NBA.com Schedule (official)",
@@ -72,7 +75,7 @@ SOURCE_PAGES = {
         "name": "NBA Official - Injury Report index (official)",
         "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
         "read": "the filing deadlines and the list of every published release; the newest "
-                "indexed release at retrieval was 11/16/26 09:15 AM ET",
+                "indexed release at retrieval was 11/16/26 01:00 PM ET",
     },
 }
 
@@ -85,7 +88,7 @@ UNREAD = {
         "carries its official URL, its revision stamp and this session's retrieval stamp, "
         "plus a sha256 of the transcribed text (a content hash), but NOT the original file "
         "hash. Flagged F-V4-01; the fix is a runner with network access, not a guess.",
-        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
     ),
     "player_game_logs": (
         "Per-player game logs for the 11/15 and 11/16 games",
@@ -114,6 +117,18 @@ UNREAD = {
 # --------------------------------------------------------------- 2026-11-16 injury releases
 # Two consecutive releases from the SAME day, so the diff isolates revision drift.
 INJURY_RELEASES = [
+    {
+        # NEWEST official release, read by session arena/7bfb0276-nba2 on 2026-11-16.
+        # The league index publishes releases every 15 minutes; the committed capture
+        # stopped at 09:15 AM, and this session's read of the index found fourteen newer
+        # releases, of which the 01:00 PM one is transcribed here.
+        "stamp_et": "2026-11-16 01:00 PM ET",
+        "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+        "retrieved_utc": "2026-11-16T18:36:00Z",
+        "index_checked_utc": "2026-11-16T18:24:00Z",
+        "rows": _R0100PM_ROWS,
+        "layout_notes": _R0100PM_LAYOUT_NOTES,
+    },
     {
         "stamp_et": "2026-11-16 09:15 AM ET",
         "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
@@ -230,7 +245,7 @@ INJURY_RELEASE_0930 = {
     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
     "retrieved_utc": "2026-11-16T14:52:00Z",
     "index_checked_utc": "2026-11-16T14:52:00Z",
-    "identical_to": (0, "11/16/26 09:15 AM ET"),   # (index into INJURY_RELEASES, stamp)
+    "identical_to": (1, "11/16/26 09:15 AM ET"),   # (index into INJURY_RELEASES, stamp)
     "basis": ("The 09:30 AM release was read in full at retrieval and compared row by row "
               "against the 09:15 AM transcription: same 70 rows, same statuses, same "
               "reasons, same NOT YET SUBMITTED placeholders. Both PDFs are linked so the "

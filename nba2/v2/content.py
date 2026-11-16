@@ -7,6 +7,9 @@ from __future__ import annotations
 
 from . import official as O
 
+# CR-V4-2: the v4 register is appended to FLAGS at the END of this module, once
+# every FLAGS += above has run. See the tail of this file.
+
 S = O.SOURCES
 
 # --------------------------------------------------------------------------- validation gates
@@ -1061,3 +1064,66 @@ FLAGS += [
      "reproducible rather than restated.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
 ]
+
+FLAGS += [
+    ("F-061", "info", "Injury releases",
+     "RESOLVED this session — the committed capture stopped at the 09:15 AM ET release while the league's own "
+     "index already listed releases up to 01:00 PM ET: fourteen official releases were missing from the "
+     "repository, and the published Injuries page advertised a release the league had superseded.",
+     "The newest official release (11/16/26 01:00 PM ET) was read and transcribed from its official PDF, stored "
+     "with its revision stamp, its retrieval stamp and the time the index was checked, and the diff against the "
+     "previous release is published. The v2 and v4 surfaces now read that one release rather than two copies.",
+     "https://official.nba.com/nba-injury-report-2026-27-season/"),
+    ("F-062", "info", "Verification",
+     "RESOLVED this session — the semantic cross-check gate could never fire. It grepped for '^\\[fail\\]' while "
+     "the checker prints '[FAIL]', it ran the checker with '|| true' so a crash looked like a clean pass, and it "
+     "never ran at pull-request time at all. Four real defects were invisible behind it.",
+     "One shared gate script now blocks on any [FAIL] (except the documented snapshot-age exclusion), requires the "
+     "checker's summary line so a crash blocks, and runs at pull-request time. The first live run found and this "
+     "session fixed: a stale backtest report, a hardcoded generation date, stale README counts, and a checker that "
+     "compared two different trees.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_gate.sh"),
+    ("F-063", "info", "Verification",
+     "RESOLVED this session — the link checker resolved a local target without splitting off the '#fragment', so "
+     "any section-level link was reported as a broken link. The v4 surfaces had to avoid anchors because of it.",
+     "The fragment is now split off, the file is resolved on its own, and the anchor is then checked to exist in "
+     "that file, so a section-level link is verified rather than merely tolerated. Four regression tests cover it.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/check.py"),
+    ("F-064", "info", "Model",
+     "WITHDRAWN this session — an earlier flag said the v1 tree printed 'home-court adv (fitted, pts)' for a value "
+     "that is pinned to the measured home-win rate. It does not: the v1 tree fits (margin_sd, hca_points) by "
+     "least squares against observed wins, in nba2/models/ratings.py::calibrate, so the word 'fitted' is correct "
+     "there. The published v2/v3/v4 trees are the ones that pin it, and they say so.",
+     "No change made to the v1 label: changing it would make the v1 tree's own published label wrong. The flag is "
+     "withdrawn rather than acted on, and the reasoning is recorded here so the next reviewer does not 'fix' it.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py"),
+    ("F-065", "medium", "Site",
+     "The GitHub Pages API still reports build_type 'legacy' with source 'main /', while the live host verifiably "
+     "serves the v2/v3/v4 tree in site/ — the v4 projection page is live at /projection.html and the repository "
+     "root has no such file. The deployed artefact and the reported setting disagree, and the repository therefore "
+     "contains a second, stale copy of the site at the root that the setting would publish if it ever took effect.",
+     "Verified by fetching the deployed pages, not by reading the setting. The setting is an owner decision and is "
+     "not changed by this session. Until it is resolved, the root tree and the site/ tree are two different sites, "
+     "and only the latter is what a reader sees.",
+     "https://wingbangboozle1-lang.github.io/NBA2/projection.html"),
+    ("F-066", "low", "Verification",
+     "The repository's own COORDINATION.md board contains one session claim written as a single line with literal "
+     "'\\n' escape sequences instead of line breaks, so that session's claim and completion record render as one "
+     "unreadable line.",
+     "The board is append-only and the line was left as its author wrote it. It is recorded here so the claim's "
+     "existence and its owner are visible to a reviewer.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md"),
+]
+
+# --------------------------------------------------------------------------- CR-V4-2
+# The canonical Flagged for review page is generated from FLAGS, and the v4 gated
+# surfaces used to raise their own irregularities on a different page, so an item
+# could be published somewhere a reviewer would not look. The v4 register is a leaf
+# module (it imports only the capture), so it can be read here without an import
+# cycle and without the two registers drifting apart. Every v4 item now appears on
+# this page with its source link, and the count printed on the landing page includes
+# it.
+from nba2.v4.flags import V4_FLAGS as _V4_FLAGS  # noqa: E402
+
+FLAGS += [(fid, sev, f"v4 gated surfaces — {area}", finding, disposition, url)
+          for fid, sev, area, finding, disposition, url in _V4_FLAGS]

@@ -241,10 +241,27 @@ class TestInjuryStamps(unittest.TestCase):
         # the banner must point at the NEWEST committed release, never an older one
         self.assertEqual(C2.injury_doc()["report_stamp_et"], meta["report_stamp_et"])
         self.assertEqual(C2.newest_injury_file(), C2.newest_injury_file())
+        # The newest committed transcript must be the one the banner points at, and it
+        # must be the newest across EVERY place a transcript is committed -- including
+        # the v4 gated surfaces' transcripts. The glob used to look only at
+        # capture_*/injury_report_*.json, so when the v4 tree committed a newer
+        # release the test still asserted that the older capture file was the newest,
+        # and it failed for the right reason: the page was reading a stale release.
         import glob
-        newest = max(
-            (f for f in glob.glob(str(C2.ROOT / "data" / "raw" / "capture_*" / "injury_report_*.json"))),
-            key=lambda f: __import__("json").loads(open(f).read()).get("retrieved_at_utc", ""))
+        import json as _json
+        pats = ("capture_*/injury_report_*.json", "injury_report_*.json",
+                "refresh_*/injury_transcript_*.json")
+        cands = []
+        for pat in pats:
+            for f in glob.glob(str(C2.ROOT / "data" / "raw" / pat)):
+                try:
+                    d = _json.loads(open(f).read())
+                except (OSError, ValueError):
+                    continue
+                if isinstance(d, dict) and "records" in d:
+                    cands.append((str(d.get("retrieved_at_utc") or d.get("report_stamp_et") or ""), f))
+        self.assertTrue(cands, "no committed injury transcript found")
+        newest = max(cands)[1]
         self.assertEqual(str(C2.newest_injury_file()), newest)
 
     def test_rows_carry_the_report_fields_verbatim(self):

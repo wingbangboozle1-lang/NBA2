@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
 
-LOCAL_LINK = re.compile(r'(?:href|src)="([^"#][^"]*)"')
+LOCAL_LINK = re.compile(r'(?:href|src)="([^"]*)"')
 ROW = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
 CELL = re.compile(r"<td[^>]*>(.*?)</td>", re.S)
 TAG = re.compile(r"<[^>]+>")
@@ -39,9 +39,29 @@ def check() -> list[str]:
         for link in LOCAL_LINK.findall(doc):
             if link.startswith(("http://", "https://", "mailto:", "//")) or link.startswith("data:"):
                 continue
-            target = (p.parent / link.split("?")[0]).resolve()
+            # CR-V4-1 (fixed by session arena/7bfb0276-nba2): the target used to be
+            # resolved with only the query string stripped, so a link of the form
+            # "page.html#section" was looked up as a FILE named "page.html#section",
+            # which does not exist, and every fragment link in the repository was
+            # reported as broken. The fragment is now split off, the file is resolved
+            # on its own, and the fragment is then checked to exist in that file — so
+            # a section-level link is verified rather than merely tolerated.
+            path_part, _, frag = link.partition("#")
+            path_part = path_part.split("?")[0]
+            if not path_part:
+                # A same-page fragment ("#section"): the target is the page itself.
+                target = p.resolve()
+            else:
+                target = (p.parent / path_part).resolve()
             if not target.exists():
                 problems.append(f"{p.name}: broken local link -> {link}")
+                continue
+            if frag:
+                body = target.read_text(errors="replace") if target.suffix == ".html" else ""
+                if body and not re.search(rf'(?:id|name)="{re.escape(frag)}"', body):
+                    problems.append(
+                        f"{p.name}: local link points at a fragment that does not exist "
+                        f"-> {link}")
         for token in ("TODO", "TBD", "lorem ipsum", "XXX", "{{", "}}"):
             if token in doc:
                 problems.append(f"{p.name}: placeholder token {token!r}")

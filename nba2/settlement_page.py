@@ -2,9 +2,14 @@
 
     python -m nba2.settlement_page
 
-Writes ``site/settlement.html``. It does NOT edit any other page: the navigation link to it is a
-request for the final integration session (see COORDINATION.md), and ``inject_link`` is kept only
-for that session to call deliberately.
+Writes ``site/settlement.html``. It does NOT edit any other page.
+
+The navigation link to it was a request for the final integration session (X-01, see
+COORDINATION.md). That session has now done it -- and it did it AT THE SOURCE: the link is
+written into the navigation by ``nba2/v2/build.py`` and ``nba2/v3/build.py``, so it is part of
+the rendered nav rather than a post-hoc string injection into the generated files. A rebuild
+is therefore idempotent and cannot lose the link. ``inject_link`` is kept as a repair for a
+tree that was rendered before the nav carried it, and it is idempotent too.
 Everything shown is recomputed from committed files: the sealed ledgers (seal re-verified here),
 the official finals feeds (rebuilt in memory and checked against ``data/raw/official_finals_union.json``),
 and the official source links named in each row. Nothing is fetched and nothing is typed by hand.
@@ -296,7 +301,9 @@ def main() -> int:
         print("no sealed ledger found")
         return 1
     (SITE / PAGE).write_text(build_html())
-    print(f"wrote site/{PAGE}; nav link not added (integration-session request)")
+    n = inject_link()
+    print(f"wrote site/{PAGE}; settlement nav link present in the v2 and v3 nav "
+          f"(repaired in {n} file(s))")
     return 0
 
 

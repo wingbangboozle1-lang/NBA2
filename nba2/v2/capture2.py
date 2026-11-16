@@ -42,8 +42,14 @@ def newest_injury_file() -> Path:
     lands. Every committed transcript carries its own ``retrieved_at_utc``, so the newest
     one is selected by that stamp -- the banner and the table can then never disagree with
     the freshest evidence in the repository.
+
+    The glob also covers the v4 gated surfaces' transcripts
+    (``refresh_*/injury_transcript_*.json``). They carry the same eight columns in the
+    same order and the same three stamps, so the v2 injuries page and the v4 injuries
+    page read ONE release rather than two copies that can drift apart.
     """
-    pats = ("capture_*/injury_report_*.json", "injury_report_*.json")
+    pats = ("capture_*/injury_report_*.json", "injury_report_*.json",
+            "refresh_*/injury_transcript_*.json")
     cands: list[tuple[str, Path]] = []
     for pat in pats:
         for f in sorted((ROOT / "data" / "raw").glob(pat)):

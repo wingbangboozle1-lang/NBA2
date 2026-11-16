@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import unittest
 from pathlib import Path
 
@@ -405,6 +406,26 @@ class TestPublishedPages(unittest.TestCase):
             self.assertTrue(what and effect, msg=fid)
             self.assertTrue(where[3].startswith("https://"), msg=fid)
             self.assertIn(sev, ("blocking", "gap"), msg=fid)
+
+    def test_every_v4_item_is_also_on_the_canonical_flagged_page(self):
+        """CR-V4-2: an irregularity raised on a v4 page must be visible where a
+        reviewer is actually sent -- the canonical Flagged for review page."""
+        from nba2.v2 import content as CT
+        flagged = (SITE / "flagged.html").read_text()
+        v4_ids = {f[0] for f in CT.FLAGS if f[0].startswith("F-V4-")}
+        self.assertTrue(v4_ids, "no v4 items reached the canonical register")
+        for fid in sorted(v4_ids):
+            self.assertIn(fid, flagged, msg=f"{fid} is not on the Flagged for review page")
+
+    def test_the_canonical_flagged_page_counts_include_the_v4_items(self):
+        """The count printed on the landing page must match the rows actually shown,
+        so the two cannot drift apart."""
+        from nba2.v2 import content as CT
+        flagged = (SITE / "flagged.html").read_text()
+        # the table has one <tr> per flag; the header row has no <td> cells
+        rows = len(re.findall(r"<tr[^>]*>(?:(?!</tr>).)*?</tr>", flagged, re.S))
+        self.assertGreater(rows, 0)
+        self.assertGreaterEqual(rows, len(CT.FLAGS))
 
     def test_no_placeholder_tokens_anywhere(self):
         for name in P.V4_PAGES:

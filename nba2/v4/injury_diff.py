@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 from . import capture as C
@@ -31,11 +32,37 @@ OUT = ROOT / "data" / "v4" / "injury"
 
 
 def release_docs() -> list[dict]:
+    """The stored releases, in the order the league published them.
+
+    Sorted by the release's OWN revision stamp, not by filename. The filename is derived
+    from the stamp and sorts lexicographically, so a 01:00 PM release sorts BEFORE a
+    09:15 AM one and the diff would run backwards in time — which inverts the meaning of
+    "added" and "removed". The stamp is parsed into a real datetime and the releases are
+    ordered by it, so the ledger always reads forward.
+    """
     today = ROOT / "data" / "raw" / "refresh_2026-11-16"
     docs = []
     for p in sorted(today.glob("injury_transcript_*.json")):
         docs.append(json.loads(p.read_text()))
-    return docs
+    return sorted(docs, key=_stamp_key)
+
+
+def _stamp_key(doc: dict) -> tuple:
+    """Sort key for a release: (date, minutes-since-midnight) parsed from its own stamp.
+
+    A stamp that cannot be parsed sorts last rather than first, so an unparseable
+    release can never be presented as the newest one.
+    """
+    s = str(doc.get("report_stamp_et") or "")
+    m = re.search(r"(\d{4}-\d{2}-\d{2})\s+(\d{1,2}):(\d{2})\s*([AP]M)", s)
+    if not m:
+        return ("9999-99-99", 0, s)
+    day, hh, mm, ap = m.group(1), int(m.group(2)), int(m.group(3)), m.group(4)
+    if ap == "PM" and hh != 12:
+        hh += 12
+    if ap == "AM" and hh == 12:
+        hh = 0
+    return (day, hh * 60 + mm, s)
 
 
 def key(row) -> tuple:

@@ -265,23 +265,33 @@ def seal(result: dict) -> dict:
             div = json.loads(div_path.read_text()) if div_path.exists() else {
                 "schema": "nba2.v3.seal-divergence.v1",
                 "window": {"start": O.WINDOW[0], "end": O.WINDOW[1]},
-                "note": ("APPEND-ONLY. One record per rebuild whose recomputed picks disagree "
-                         "with the pre-tip seal. The seal itself is never rewritten: the "
-                         "pre-tip numbers are the ones that were published, and a later change "
-                         "to a model input is recorded here instead of silently replacing them."),
+                "note": ("APPEND-ONLY. One record per DISTINCT divergence: a pair of "
+                         "(pre-tip sha256, recomputed sha256) that has not been recorded "
+                         "before. The seal itself is never rewritten: the pre-tip numbers "
+                         "are the ones that were published, and a later change to a model "
+                         "input is recorded here instead of silently replacing them."),
                 "records": []}
-            div["records"].append({
-                "detected_at_utc": _utc_now(),
-                "detected_by": "arena/fe0ffa49-nba2",
-                "sealed_at_utc": old_body.get("sealed_at_utc"),
-                "pre_tip_sha256": old_digest,
-                "recomputed_sha256": digest,
-                "n_picks_pre_tip": len(old_body["picks"]),
-                "n_picks_recomputed": len(picks),
-                "cause": ("model inputs changed after sealing (the committed official-finals "
-                          "history grew), so the recomputed margins differ"),
-            })
-            div_path.write_text(json.dumps(div, indent=2, ensure_ascii=False) + "\n")
+            known = {(r.get("pre_tip_sha256"), r.get("recomputed_sha256"))
+                     for r in div["records"]}
+            if (old_digest, digest) not in known:
+                # A record per DISTINCT divergence, not per rebuild. Before this fix
+                # every rebuild appended a fresh record for a divergence that had
+                # already been recorded, so the file grew without bound and a rebuild
+                # of unchanged inputs produced a different file -- which is not a
+                # reproducible artefact. The ledger is a register of what changed,
+                # and the same change is still the same change.
+                div["records"].append({
+                    "detected_at_utc": _utc_now(),
+                    "detected_by": O.SESSION,
+                    "sealed_at_utc": old_body.get("sealed_at_utc"),
+                    "pre_tip_sha256": old_digest,
+                    "recomputed_sha256": digest,
+                    "n_picks_pre_tip": len(old_body["picks"]),
+                    "n_picks_recomputed": len(picks),
+                    "cause": ("model inputs changed after sealing (the committed official-finals "
+                              "history grew), so the recomputed margins differ"),
+                })
+                div_path.write_text(json.dumps(div, indent=2, ensure_ascii=False) + "\n")
             return {"file": _rel(path), "digest": old_digest, "n": len(old_body["picks"]),
                     "settled": bool(settled), "rewritten": False,
                     "divergence": _rel(div_path)}
