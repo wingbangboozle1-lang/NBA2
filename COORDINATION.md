@@ -3536,6 +3536,63 @@ per the board rules. This session does not regenerate `site/`.
 
 ---
 
+## Session `arena/f7186ace-nba2` — CLAIM (2026-11-16 UTC, branch `arena/f7186ace-nba2`, base `1c48226` = `main` @ PR #81 merge)
+
+**State read at claim time.** `main` = `1c48226aeca8036c481d0e47cf37b33a951ba61f`; working tree clean;
+both generators rebuild byte-identical to the committed `site/**` when run **in order**
+(`python -m nba2.v2` then `python -m nba2.v3`) — verified before any edit, and the ordering
+matters because v3 appends its nav block to the pages v2 emits.
+
+**Clock.** 2026-11-16 02:13 UTC = **2026-11-15 21:13 ET**. The NBA day in progress is 11-15, so the
+11-15 evening slate is live and no 11-15 final can yet be treated as final. The newest forward
+window that can be priced from a *filed* injury report is **2026-11-16 → 2026-11-19**: clubs playing
+on 11-16 file by 5 p.m. local the day before, so the 11-15 evening releases already carry 11-16
+designations. Sandbox egress to nba.com is blocked (re-confirmed: `curl` → `SSL_ERROR_SYSCALL` for
+`ak-static.cms.nba.com`, `www.nba.com`, `statsdmz.nba.com`); every capture goes through the platform
+page-fetch and is recorded here with the URL it was read from.
+
+**Why this session exists.** Every brief line item from the 2026-11-13/15 requests is already
+implemented somewhere in the tree; the register shows 42 `met`, 11 `partial`, 10 `blocked`,
+3 `not started`. What is *not* current is the window the site prices: `nba2/v3/official.py` is a
+hard-committed snapshot of **2026-11-15 06:41 ET** pricing **11-15 → 11-18**, and 11-15 is now
+finishing. A snapshot that prices a slate that is already tipping is the exact staleness the
+freshness gates exist to catch, so this session re-captures the official surfaces and re-cuts the
+model inputs on a new window rather than leaving the site a day behind.
+
+**File scope claimed (this session):**
+* `data/raw/capture_2026-11-16/**` — **new files only** (official snapshots, one provenance block each).
+* `nba2/v3/official.py` — refreshed snapshot + new window (the file is one session's snapshot by design).
+* `nba2/v3/model.py`, `nba2/v3/build.py`, `nba2/v3/gates.py`, `nba2/v3/ledger.py`,
+  `nba2/v3/playerlogs.py`, `nba2/v3/rotation.py`, `nba2/v3/test_v3.py` — only as needed to consume
+  the refreshed snapshot and to add this session's brief items.
+* `analysis/session-f7186ace-*.md` (new), `requirements/REQUIREMENTS.json`,
+  `requirements/QUESTIONS.json`, `suggestions/SUGGESTIONS.json`, `README.md` (append-only/sync),
+  `COORDINATION.md` (this section + completion record, append-only).
+* `site/**`, `data/v3/**` — regenerated artefacts of the v2/v3 generators (never hand-edited).
+
+**Not claimed / not edited (owned by open PRs or other sessions):**
+`nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` (PR #80 · `arena/0429aad7-nba2`);
+`.github/workflows/**`, `pages/**`, `data/site.json`, `index.html`, `tools/**`, `data/raw/finals_*`,
+`data/settlement.json`, `data/raw/injury_report_2026-11-1[45]_*.json`, `nba2/tests/**` (PR #70 ·
+`arena/d09f8d1e-nba2`); `data/v2/*.json`, `nba2/v2/{build,check,model,gate_eval}.py`,
+`nba2/pipeline/build_site_data.py` (PR #72 · `arena/04a61ac0-nba2`, DRAFT);
+`data/raw/ledger/**` and `data/v3/ledger/sealed-*.json` (frozen seals — never rewritten, only
+verified and appended). PR #78 and #82 touch `COORDINATION.md` only; this session appends below
+their records and will rebase.
+
+**Unavoidable cross-scope touch, logged:** refreshing `nba2/v3/official.py` regenerates `site/**`,
+which PRs #70 and #72 also touch. `site/**` is a build artefact (no hand edits anywhere in it), and
+CI fails if the committed HTML differs from a rebuild, so on any conflict the **rebuild** wins and
+nothing of either PR is lost — its source changes are unaffected.
+
+**Rules for this session (the board's):** claims pushed before work; small frequent commits;
+`git pull --rebase` before every push; nothing inferred or filled in — a value that cannot be
+confirmed from an official source is published blank with a flag id; the sealed ledgers are never
+rewritten; the site is never merged in a broken state.
+
+
+---
+
 ## Session `arena/f8f8f2b8-nba2` — CLAIM (2026-11-15, branch `arena/f8f8f2b8-nba2`, base `8ab2476` = `main` @ PR #74 merge)
 
 **State read at claim time.** `main` = `8ab2476354366751347c33d423f1033376175447`; working tree
