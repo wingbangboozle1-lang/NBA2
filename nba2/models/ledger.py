@@ -101,7 +101,7 @@ def score_margin(actual_home_minus_away: float) -> dict:
 
 
 def settle(sealed_path: Path, finals_path: Path | None) -> Settlement:
-    """Compare sealed lines with official final scores.
+    """Compare sealed lines with official final scores read from one snapshot file.
 
     `finals_path` must contain records of the form
     {"game_id": ..., "home_pts": int, "away_pts": int, "source": url}.
@@ -109,11 +109,25 @@ def settle(sealed_path: Path, finals_path: Path | None) -> Settlement:
     """
     doc = json.loads(Path(sealed_path).read_text())
     preds = doc["predictions"]
-    expected = {p["game_id"] for p in preds}
     if finals_path is None or not Path(finals_path).exists():
+        expected = {p["game_id"] for p in preds}
+        return Settlement(len(preds), 0, {}, [], "PENDING — no official final scores in the repository")
+    finals = json.loads(Path(finals_path).read_text())["records"]
+    return settle_records(sealed_path, finals)
+
+
+def settle_records(sealed_path: Path, finals: list[dict] | None) -> Settlement:
+    """Settle a sealed ledger against an in-memory list of verified official finals.
+
+    The caller is responsible for verification (see `nba2.pipeline.settle.load_official_finals`).
+    A game is scored only if a final with the same `game_id` is present; nothing is imputed.
+    """
+    doc = json.loads(Path(sealed_path).read_text())
+    preds = doc["predictions"]
+    expected = {p["game_id"] for p in preds}
+    if not finals:
         return Settlement(len(preds), 0, {}, [], "PENDING — no official final scores in the repository")
 
-    finals = json.loads(Path(finals_path).read_text())["records"]
     by_id = {f["game_id"]: f for f in finals}
     missing = sorted(expected - set(by_id))
     rows, margins_err, totals_err, probs, outcomes, push = [], [], [], [], [], 0

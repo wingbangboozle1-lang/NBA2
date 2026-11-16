@@ -3707,3 +3707,36 @@ should win on any conflict inside those two files. `index.html` is untouched.
 | U-02 | Settle from the **union** of committed official final-score captures, keyed by `game_id`; fail closed on conflicting scores; reject any record whose quarter scores do not sum to the official final | unclaimed→in progress | `arena/051e7a06-nba2` | `nba2/pipeline/settle.py`, `nba2/models/ledger.py` (new function only; `settle()` behaviour unchanged) | unit tests on the failure paths; the five 11/14 finals are checked against their own LINESCORE quarter sums before use |
 | U-03 | Regression tests for U-02 | in progress | `arena/051e7a06-nba2` | `nba2/tests/test_settle_union.py` (new file) | `python -m unittest discover -s nba2/tests -t .` |
 | U-04 | Regenerate `data/settlement.json` by running `python -m nba2.pipeline.settle` | in progress | `arena/051e7a06-nba2` | `data/settlement.json` | sealed-ledger seals re-verified before and after (`data/raw/ledger/**` is read-only) |
+
+### Session `arena/051e7a06-nba2` — completion record (2026-11-16 UTC)
+
+**Status:** U-01 to U-04 done. Everything else in the 2026-11-16 brief is **not** done in this session, and the reasons are listed below rather than claimed.
+
+**What changed (U-02, the defect in gap-map item 4 / IR-1):**
+- `nba2/pipeline/settle.py` no longer picks "the newest `finals_*.json` by name". It reads the **union** of every committed official final-score capture (`data/raw/finals_*.json` and `data/raw/capture_*/results_*.json`), keyed by `game_id`.
+- A record is accepted only if: integer `game_id`, integer scores, an `https` URL on `www.nba.com` / `nba.com` / `official.nba.com`, status `final` when present, and quarter scores (when present) that sum to the official final. Records that fail are listed in `data/settlement.json` under `finals_rejected`, never corrected.
+- Two sources with different scores for the same game is a **FINALS CONFLICT**: settlement is refused and `data/settlement.json` is not rewritten (exit 3).
+- `nba2/models/ledger.py`: new `settle_records()`; `settle()` keeps its behaviour and delegates to it.
+- `data/settlement.json` regenerated with `python -m nba2.pipeline.settle`. Result: **sealed-2026-11-13: 5/22 games settled; sealed-2026-11-14: 5/27**. The five settled games are the official 11/14 finals (DEN@NOP, DAL@CLE, DET@MIA, BKN@MEM, CHI@MIN), each with a source link and quarter-sum check. The gates stay **BLOCKED** (5 settled bets vs 300 needed; no market prices), which is the correct answer.
+- The 14 verified finals (9 from 11/13 with no quarter scores — flagged `quarters_verified: false` — and 5 from 11/14 with verified quarters) have **no conflicts** (checked by the loader).
+
+**Verification performed:**
+- `python3 -m unittest discover -s nba2/tests -t .` → 84 tests OK (70 before; +14 in `nba2/tests/test_settle_union.py`, which covers every failure path: union, conflict, identical duplicate, bad quarter sum, non-official URL, non-final status, non-integer / bool score, games-key shape, partial settlement, pending, and a regression on the five committed 11/14 finals).
+- Sealed ledgers verified (`cf7dedc6…` 22 predictions, `c841e8f3…` 27 predictions) before and after settlement; `data/raw/ledger/**` **not modified**.
+- `python3 -m nba2.pipeline.build_site_data && python3 -m nba2.pipeline.build_site` → regenerated; `python3 -m nba2.pipeline.lint` → LINT OK (1426 rows / 50 tables).
+- `python3 -m nba2.v2.check` → OK (0/0); `python3 -m nba2.v3.check` → OK (0/0; advisory gate G-F3 unchanged, pre-existing); `nba2/v3` tests 41 OK; `backtest/tests` 49 OK; `tools/check_links_all.py` → ALL INTERNAL LINKS OK (124 HTML files, 5,759 internal links).
+- Sources for the five 11/14 finals: the committed capture `data/raw/capture_2026-11-15/results_2026-11-14.json` (its `source_url` values, e.g. https://www.nba.com/game/den-vs-nop-0022600231, and its LINESCORE-based quarter scores, re-summed by the loader).
+
+**Cross-scope change (logged; CI parity requires it):** the v1 CI chain (`ci.yml`) fails "if the committed site differs from a rebuild". Because `build_site_data` reads `data/settlement.json`, the settlement change regenerates these committed files — and nothing else:
+- `data/site.json` — the `E-04-settle` row text and the `FLAG-SET-01` text (5/22, 5/27 instead of 0/22, 0/27), plus the input digest.
+- `pages/flagged-review.html`, `pages/session-audit.html` — the same settlement sentence (one line each).
+- `site/methodology.html` — one line: the nba2/tests count, 70 → 84, counted from the files by the v2 build.
+These are deterministic outputs of the committed code, not hand edits. They touch files that PR #70 (`arena/d09f8d1e-nba2`) and the integration role own; **PR #70 must rebase onto this change**, and its owner should regenerate rather than hand-merge these lines.
+
+**Not done in this session (honest gaps, carried to the board; no claim made):**
+- **Injury PDF storage (brief item 5).** The shell cannot reach `ak-static.cms.nba.com` (HTTP 000), and the platform fetch tool returns parsed text, not PDF bytes. The PDFs cannot be stored byte-for-byte from here. The official release index was reached (`https://official.nba.com/nba-injury-report-2026-27-season/`), so a text-transcript store could be built later, labelled as a transcript and not as the PDF.
+- **Scheduled refresh failing** (gap-map item 1): owned by open PR #70 / draft #72.
+- **Settled-result stamp on the v2 site** (brief item 21): the v2 `site/official-results.html` still reads its own snapshot, not `data/settlement.json`. Wiring it is a `nba2/v2/**` change, owned by PR #72, so it is logged for the integration session.
+- **Pages:** `build_type: legacy`, `source: main /` (FLAG-PAGES-01 / F-033), with a build stuck in `building` at claim time; the Pages source change is an owner decision.
+- **Market-anchored prior (brief item 18):** blocked; there is no licensed odds feed in the repo (G6).
+- **Flagged-for-Review page entries** for the items above: not added here. `site/flagged.html` and `nba2/v2/content.py` are owned by open PRs; the integration session should add them.
