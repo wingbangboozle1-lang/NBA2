@@ -4473,3 +4473,12 @@ this shared append-only `COORDINATION.md`; upstream's complete board is retained
 and this session's full claim, scope pivot, conflict notes, and completion record are appended
 below it. The other upstream verification files are retained. No PR-specific audit or product
 file was edited by this synchronization.
+
+### Rebase follow-up — 2026-11-16 UTC
+
+After resolving the main merge, the required pre-push `git pull --rebase
+origin/arena/2d910a64-nba2` attempted to linearize the branch's merged history and conflicted
+in `COORDINATION.md` while replaying the other session's claim commit `a0721a1`. I aborted the
+rebase; no rewrite or force-push was performed. The resolved sync merge remains at `ec375af`,
+`origin/main` and the tracked branch are ancestors of the worktree, and the only remaining
+push is a fast-forward to this session's tracked branch.
