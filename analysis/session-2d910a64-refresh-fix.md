@@ -84,4 +84,21 @@ mapping. `.github/workflows/ci.yml` runs it with
 - No fresh NBA data was read or promoted. Local/static checks verify code and workflow control
   paths, not the availability or correctness of a future official-source response.
 - `CC-DOC-01` and `CC-FRESH-01` remain disclosed failures, as documented in the existing
-  post-PR-97 audit. No README counts, NBA values, or committed snapshots were changed.
+  post-PR-97 audit. This session did not edit README counts, NBA values, or snapshots; it
+  retained PR #103's already-merged capture files unchanged.
+
+## Integration and deployment result
+
+- PR #106 merged to `main` with `--merge` at `2026-11-16T19:01:10Z`; merge commit
+  `24dcd6c1bc8e129fa1909a2e9952a65546d13d4e`.
+- Required PR checks passed on head `f4ba89f23e07610d50fbf7b59a20c28425c84cab`: `verify`,
+  `parity`, `v2`, and `backtest`. Post-merge `verify`, `parity`/Pages, and v2 workflows also
+  passed on the merged main commit.
+- GitHub Pages deployment succeeded: `Publish GitHub Pages` run
+  [43934908546](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908546) and
+  `pages build and deployment` run
+  [43934907052](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934907052).
+  Live fetches returned the root page and the deployed `site/settle.html` and
+  `site/v4-injuries.html` pages. The root still displays `as-of 2026-11-14`; it is a stale
+  legacy snapshot, not evidence of a fresh NBA refresh. The v4 pages show PR #103's committed
+  captures. No fresh NBA source was fetched by this session.
