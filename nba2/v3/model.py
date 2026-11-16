@@ -491,8 +491,70 @@ def build(verbose: bool = False) -> dict:
         "luck": luck, "luck_band_z": NOISE_BAND_Z, "outside_band": sorted(band),
         "rho": rho,
         "lines": lines,
+        "market_prior": market_prior(),
         "sources": O.SOURCES, "blocked": O.BLOCKED, "flags": O.FLAGS,
         "crosschecks": O.crosschecks(),
+    }
+
+
+# ------------------------------------------------------------- market-anchored prior
+def oos_log_loss() -> dict:
+    """The model's **measured out-of-sample log-loss**, the weight input to the
+    market-anchored prior.
+
+    Read from the committed walk-forward backtest report (``data/v2/backtest.json``),
+    which scores every game from ratings built only on games strictly before it (no
+    lookahead). This is the LL_model the blend weights by. If the report is absent the
+    value is None and the prior is left blank rather than guessed.
+    """
+    import json
+    p = ROOT / "data" / "v2" / "backtest.json"
+    if not p.exists():
+        return {"log_loss": None, "log_loss_baseline": None,
+                "n_games": None, "source": None, "note": "backtest report not present"}
+    d = json.loads(p.read_text())
+    h = d.get("headline", {})
+    return {
+        "log_loss": h.get("log_loss"),
+        "log_loss_baseline": h.get("log_loss_baseline"),
+        "n_games": d.get("meta", {}).get("n_games_scored"),
+        "source": d.get("meta", {}).get("source"),
+        "note": ("point-in-time walk-forward over official finals; a coin-flip baseline is "
+                 "log(2) = 0.6931"),
+    }
+
+
+def market_prior() -> dict:
+    """The market-anchored prior (brief #15), with the model's measured weight.
+
+    ``blended = w_model * model_line + w_market * closing_line`` with
+    ``w_market = (1/LL_mkt) / (1/LL_mkt + 1/LL_model)``. LL_model is MEASURED (walk-forward
+    log-loss); LL_mkt needs a closing line, which is blocked (no odds feed), so w_market is
+    published as 0 and the blended line equals the model line until a feed exists. The
+    weighting rule and the measured LL_model are published so the blend is a one-line
+    recompute once a closing line lands — nothing here is invented.
+    """
+    oos = oos_log_loss()
+    ll_model = oos["log_loss"]
+    ll_mkt = None  # blocked: no licensed closing line (gate G6)
+    w_market = None
+    w_model = None
+    if ll_model and ll_model > 0:
+        # with no market line the model carries the full weight (LL_mkt -> infinity)
+        w_model = 1.0
+        w_market = 0.0
+    return {
+        "ll_model": ll_model,
+        "ll_model_baseline": oos["log_loss_baseline"],
+        "ll_mkt": ll_mkt,
+        "ll_mkt_flag": "F-310 no licensed closing line (gate G6)",
+        "w_model": w_model,
+        "w_market": w_market,
+        "formula": "w_market = (1/LL_mkt) / (1/LL_mkt + 1/LL_model); blended = w_model*model + w_market*close",
+        "blended_equals": "model line (w_market = 0 until a closing line exists)",
+        "n_backtest_games": oos["n_games"],
+        "src": oos["source"] or "data/v2/backtest.json",
+        "note": oos["note"],
     }
 
 

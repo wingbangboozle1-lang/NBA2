@@ -46,6 +46,8 @@
 <a href="player-logs.html">Player game logs</a>
 <a href="minutes.html">Measured minutes</a>
 <a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html">Trial registry</a>
 <a href="verification-v3.html">v3 verification</a>
   </nav>
 </aside>
@@ -69,6 +71,17 @@ averages, which would ignore what each defence does.</p>
 projection acquires authority it has not earned. The projection surface above is complete and
 published; the bet surface below it is deliberately empty.</p>
 <table><thead><tr><th>Surface</th><th>Contents</th><th>State</th><th>Src</th></tr></thead><tbody><tr><td>projection</td><td>spreads, totals, probabilities, rotation availability, estimator disagreement</td><td><span class="badge b-ok">published</span></td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame" title="NBA.com Stats - Teams Advanced (official)">SRC</a> <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf" title="NBA Official Injury Report 11/15/26 06:00 AM ET (official PDF)">SRC</a></td></tr><tr><td>bet</td><td>stake, price, trigger, settlement</td><td><span class="badge b-bad">empty — no market price (F-308)</span></td><td><a href="https://www.nba.com/games">games</a></td></tr></tbody></table>
+<h2>Market-anchored prior</h2>
+<p>The brief asks for a prior that blends the model line with the closing line, weighted by
+measured out-of-sample log-loss. The weighting rule is
+<code>w_market = (1/LL_mkt) / (1/LL_mkt + 1/LL_model); blended = w_model*model + w_market*close</code>. The model's own log-loss <b>is measured</b>: it is the
+point-in-time walk-forward log-loss from the committed backtest over official finals. The
+closing-line log-loss is blank because no licensed odds feed is connected (gate G6), so the
+market weight is 0 and the blended line equals the model line until a feed lands. The
+measured weight and the rule are published so the blend is a one-line recompute once a
+closing line exists &mdash; nothing is invented.</p>
+<div class="scroll"><table><caption>Model log-loss measured from the walk-forward backtest; closing-line log-loss blank and flagged (no market price).</caption><thead><tr><th>Component</th><th>Value</th><th>Source</th></tr></thead><tbody><tr><td>LL_model (measured OOS log-loss)</td><td class='n'>0.6234</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr><tr><td>LL_model baseline (coin flip log 2)</td><td class='n'>0.6931</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr><tr><td>LL_mkt (closing line log-loss)</td><td class='n'><span class="blank">— F-310 no licensed closing line (gate G6)</span></td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr><tr><td>w_model (model weight)</td><td class='n'>1.000</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr><tr><td>w_market (market weight)</td><td class='n'>0.000</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr><tr><td>Blended line</td><td class='n'>model line (w_market = 0 until a closing line exists)</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class='s'>(data/raw/history/*.json — 183 official finals, one nba.com/game URL per row)</span></td></tr></tbody></table></div>
+
 <footer>
 Built 2026-11-15T11:41:00Z by session <code>arena/e675ac3d-nba2</code> from the pages listed on
 <a href="verification-v3.html">the v3 verification page</a>. Every row links to the official

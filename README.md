@@ -401,20 +401,25 @@ captured live from official pages on **2026-11-15**. It publishes the window
 **2026-11-15 → 2026-11-18** (34 games, T+0 to T+3) and adds the pages below.
 
 ```bash
-python3 -m nba2.v3            # rebuild the v3 pages into site/  (7 pages)
+python3 -m nba2.v3            # rebuild the v3 pages into site/  (12 pages)
 python3 -m nba2.v3.check      # every row sourced, every blank explained, numbers re-derived
 python3 -m nba2.v3.official   # the transcription's own arithmetic selftest
-python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 33 tests
+python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 64 tests
 ```
 
 | Page | What it shows |
 |---|---|
 | Slate & disagreement | every game with **E1** (efficiency) and **E2** (Pythagorean/log5) printed separately and their **disagreement as the headline**, the blend underneath |
-| Projection surface | possessions × points-per-possession totals, rotation availability; the **bet surface is separate and empty** because there is no market price |
+| Projection surface | possessions × points-per-possession totals, rotation availability, and the **market-anchored prior** weight (measured OOS log-loss); the **bet surface is separate and empty** because there is no market price |
 | Rotation & minutes | official Out/Doubtful/Questionable counts per club, plus the minutes-redistribution arithmetic (top-8 shares, replacement shares) |
-| Rest & travel | rest days, back-to-backs and 3-in-4 from official dates; travel distance blank (no official coordinates) |
+| Rest & travel | rest days, back-to-backs and 3-in-4 from official dates; travel distance from sourced arena coordinates |
 | Result feed | one row per game: date, teams, final score, **quarter scores**; settlement stamp |
-| Sealed ledger | sha256 over every published pick, hashed before tip, with the per-strategy pre-registration files |
+| Sealed ledger | sha256 over every published pick, hashed before tip, with the per-strategy pre-registration files (all 9 strategies) |
+| Player game logs | per-player minutes, points, rebounds, assists from the official gamebook PDFs |
+| Measured minutes | top-8 minutes shares and the replacement pool, measured from the official box scores |
+| Injury release diff | the report revision time and retrieval time side by side, with the mechanical diff |
+| Late-game & garbage time | Q4-vs-Q1–Q3 inflation decomposition from official quarter scores, with the inflation-adjusted control total |
+| Trial registry | the append-only trial count and the Deflated Sharpe bar G-06 imposes (multiple-testing control) |
 | v3 verification | sources read, cross-checks, luck z-scores, measured rho, gates, flags |
 
 ### The four numbers that matter

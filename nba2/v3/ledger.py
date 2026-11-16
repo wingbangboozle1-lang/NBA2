@@ -97,6 +97,61 @@ STRATEGIES = [
                            "win; a push on either leg voids the parlay.",
         "status": "pre-registered, 0 bets placed",
     },
+    {
+        "id": "S6",
+        "name": "Availability-blind guardrail fade (ABGF)",
+        "signal": "Between the 16:15 ET report the day before and the game-day 13:00 ET "
+                  "report, our line carries no availability signal; abstain or fade only our "
+                  "own conviction rather than trade a known blind spot.",
+        "thresholds": {"stake_pct": 0.0, "blind_window": "16:15 ET day-before to 13:00 ET game-day"},
+        "universe": "games in the T+0..T+3 window whose report window falls inside the blind "
+                    "window; a club that has not filed is excluded, never assumed healthy",
+        "settlement_rule": "Official NBA final score against the originated line. A game with "
+                           "no official final is UNGRADED and never counted as a loss.",
+        "status": "pre-registered, 0 bets placed",
+    },
+    {
+        "id": "S7",
+        "name": "Schedule-spot fade (SSF)",
+        "signal": "3-in-4 and 2-in-2 nights inside a known window depress home-team "
+                  "production; fade the affected side on those structurally loaded spots.",
+        "thresholds": {"three_in_four": True, "two_in_two": True, "stake_pct": 0.0},
+        "universe": "games in the T+0..T+3 window where the club has a 3-in-4 or 2-in-2 "
+                    "schedule spot computed from official dates",
+        "settlement_rule": "Official NBA final score against the originated line. Schedule "
+                           "spots are recomputed from official dates only; no in-game input.",
+        "status": "pre-registered, 0 bets placed",
+    },
+    {
+        "id": "S8",
+        "name": "Player-prop minutes model (PPMM)",
+        "signal": "Prop lines are minutes-driven; a minutes-floor projection plus a "
+                  "negative-binomial count model prices them, and combo legs inherit the "
+                  "minutes correlation.",
+        "thresholds": {"stake_pct": 0.0,
+                       "inputs": "BLOCKED: player box scores, official minutes, prop lines"},
+        "universe": "player props on games in the T+0..T+3 window, once a prop line exists",
+        "settlement_rule": "Official NBA final box score per player (minutes, points, "
+                           "rebounds, assists). No prop line and no official minutes feed exist, "
+                           "so no bet is placed until gates G6 and G7 pass.",
+        "status": "pre-registered, 0 bets placed, inputs BLOCKED (no prop line / no official minutes feed)",
+    },
+    {
+        "id": "S9",
+        "name": "Ledger-only champion (LOC)",
+        "signal": "The leaderboard champion is the strategy with the best luck-adjusted line "
+                  "accuracy over sealed, pre-tip predictions — not the best recent record.",
+        "thresholds": {"stake_pct": 0.0,
+                       "cluster_overlap": 0.7,
+                       "luck_adjusted": True},
+        "universe": "the sealed ledger's pre-tip predictions, settled only from official "
+                    "finals",
+        "settlement_rule": "Official NBA final scores. Strategies sharing >0.7 bet-level "
+                           "overlap are reported as one cluster so one signal cannot be "
+                           "awarded three times. No reward is allocated until the luck "
+                           "checks (G-05) and multiple-testing control (G-06) pass.",
+        "status": "pre-registered, 0 bets placed, evaluation rule frozen",
+    },
 ]
 
 
