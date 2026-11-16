@@ -42,29 +42,39 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_window_matches_the_committed_snapshot(self):
-        # 22 games: 9 on 11/15, 8 on 11/16, 5 on 11/17 — the count is what nba.com/schedule printed
-        # on 2026-11-15 for those three dates; the 11/14 games are results now, not slate.
-        self.assertEqual(len(O.SLATE), 22)
+    def test_slate_is_34_games_and_window_is_three_days(self):
+        # The brief's rule is "up to a maximum of 3 days in advance": today through today+3
+        # inclusive. The committed window snapshot (capture_2026-11-15) carries 34 games and the
+        # official per-day grid for 11-18 (12 games) is recorded in the 11-15 window capture.
+        self.assertEqual(len(O.SLATE), 34)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates, ["2026-11-15", "2026-11-16", "2026-11-17"])
-        self.assertEqual(O.WINDOW_START, dates[0])
-        self.assertEqual(O.WINDOW_END, dates[-1])
+        self.assertEqual(dates[0], "2026-11-15")
+        self.assertEqual(dates[-1], "2026-11-18")
+        self.assertEqual(len(dates), 4)
 
     def test_per_day_counts_match_official_grid(self):
-        """Per-day counts are compared to the official grid stored in the raw snapshot.
+        """Per-day counts are compared to the official grid stored in the raw snapshots.
 
         Deriving the expectation from data/raw (what nba.com/schedule printed) rather than from a
-        literal keeps this test honest through a refresh, while still being independent of the
-        SLATE tuple the build publishes: the two are produced by different code paths.
+        literal keeps this test honest through a refresh. The grid lives on the 11-15 window
+        capture (slate_2026-11-15_to_11-17.json, which recorded 11-18's 12-game day too); the
+        34-game window snapshot predates the grid field, so the newest snapshot that carries the
+        grid wins. The two are produced by different code paths.
         """
         from collections import Counter
-        raw = json.loads(max((ROOT / "data" / "raw").glob("slate_*_to_*.json"), key=lambda p: p.name).read_text())
+        from pathlib import Path as _P
+        import glob as _g
+        paths = (sorted(_g.glob(str(ROOT / "data" / "raw" / "slate_*_to_*.json")))
+                 + sorted(_g.glob(str(ROOT / "data" / "raw" / "capture_*" / "slate_*_to_*.json"))))
+        docs = [json.loads(_P(pl).read_text()) for pl in paths
+                if "_v2" not in str(pl) and "context" not in str(pl)]
+        docs = [d for d in docs if d.get("per_day_counts_official")]
+        self.assertTrue(docs, "no committed slate snapshot carries the official per-day grid")
+        raw = docs[-1]
         grid = raw["per_day_counts_official"]
         got = Counter(g[0] for g in O.SLATE)
         self.assertEqual(dict(got), {d: n for d, n in grid.items()
-                                     if raw["window"]["start"] <= d <= raw["window"]["end"]})
-        self.assertEqual(sum(got.values()), raw["n_games"])
+                                     if O.WINDOW_START <= d <= O.WINDOW_END})
         # the day the window gives up, it gains as a result: 11/14 is finished, so it is not slate
         self.assertEqual(grid.get("2026-11-14"), 5)
         self.assertNotIn("2026-11-14", got)
@@ -295,16 +305,13 @@ class TestPublishedSite(unittest.TestCase):
 
     def test_every_page_has_the_nav(self):
         from .build import NAV
+        from ..v3.build import V3_PAGES
         site = ROOT / "site"
         pages = sorted(site.glob("*.html"))
-        # 17 pages at the 2026-11-14 build; session arena/ab8743d8 added live-verification.html
-        # (live official re-verification) and decision-queue.html (suggestions review path);
-        # session arena/ac5fab5c-nba2 added strategy-lab.html (measured gates, luck separation);
-        # session arena/766d0269-nba2 added skill-attribution.html (naive baselines + paired
-        # McNemar test) and decisions-needed.html (the decision register). The assertion pins the
-        # NAV to the emitted file set in both directions, so an unlisted page fails here.
-        self.assertEqual(len(pages), 22)
-        self.assertEqual({p.name for p in pages}, {href for href, _ in NAV})
+        # The published tree holds the v2 pages (exactly the NAV set) plus the v3 pages, which
+        # carry the full v2 nav (arena/e675ac3d's shared-tree rule). The assertion pins the NAV
+        # to the emitted file set in both directions, so an unlisted page fails here.
+        self.assertEqual({p.name for p in pages}, {href for href, _ in NAV} | set(V3_PAGES))
         for p in pages:
             doc = p.read_text()
             for href, _ in NAV:

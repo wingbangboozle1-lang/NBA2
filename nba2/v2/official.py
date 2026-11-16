@@ -45,9 +45,35 @@ RAW = ROOT / "data" / "raw"
 AUDIT = ROOT / "audit"
 
 
+def _date_key(path_str: str):
+    """Sort key ordering snapshots by the date(s) embedded in their filename.
+
+    Snapshot names carry full dates (``2026-11-15``) and day tails (``_to_11-18``), so a plain
+    lexical sort misorders windows of the same start date. This key sorts by the last full date
+    found, then by any trailing ``MM-DD`` window tail, then by the name — so the widest window
+    for the newest capture day wins. Added by the integration of PR #74's wider 34-game window
+    with PR #72's artifact-loading build (2026-11-15, session arena/984a242f-nba2).
+    """
+    import re as _re
+    name = str(path_str)
+    full = _re.findall(r"\d{4}-\d{2}-\d{2}", name)
+    tail = _re.findall(r"_to_(\d{2}-\d{2})\.json$", name)
+    stamp = _re.findall(r"_(\d{4}-\d{2}-\d{2})_(\d{3,4})(?:AM|PM)?", name)
+    return (full[-1] if full else "0000-00-00",
+            tail[-1] if tail else "00-00",
+            stamp[-1][1] if stamp else "",
+            name)
+
+
 def _latest(pattern: str):
-    """Newest committed snapshot matching *pattern*, or None. Absence is reported, not filled in."""
-    cands = sorted(glob.glob(str(RAW / pattern)))
+    """Newest committed snapshot matching *pattern*, or None. Absence is reported, not filled in.
+
+    The search covers ``data/raw/`` *and* the dated ``data/raw/capture_<date>/`` subdirectories
+    the rolling-slate sessions write into, and orders candidates by the date embedded in the
+    filename (see :func:`_date_key`) — not by directory layout.
+    """
+    cands = sorted(glob.glob(str(RAW / pattern)) + glob.glob(str(RAW / "capture_*" / pattern)),
+                   key=_date_key)
     return json.loads(Path(cands[-1]).read_text()) if cands else None
 
 
@@ -60,6 +86,18 @@ _INJ_FILES = [f for f in sorted(glob.glob(str(RAW / "injury_report_*.json")))
 _INJ = json.loads(Path(_INJ_FILES[-1]).read_text()) if _INJ_FILES else None
 _INJ_PRIOR = json.loads(Path(_INJ_FILES[-2]).read_text()) if len(_INJ_FILES) > 1 else None
 _BOOKS = _latest("gamebooks_*.json")
+
+# Two committed slate schemas coexist (integration of PR #74 + PR #72, 2026-11-15): the rolling
+# capture stores ``window`` as a string ("2026-11-15..2026-11-18") and the build_capture snapshot
+# as a dict {"start": …, "end": …}. Normalize here — never rewrite a committed snapshot to fit code.
+def _window(doc) -> tuple[str, str]:
+    w = doc.get("window")
+    if isinstance(w, dict):
+        return w["start"], w["end"]
+    if isinstance(w, str) and ".." in w:
+        a, b = w.split("..", 1)
+        return a.strip(), b.strip()
+    raise RuntimeError(f"slate snapshot has an unreadable window field: {w!r}")
 
 if not all((_STANDINGS, _RATINGS, _FEED, _SLATE_DOC)):
     raise RuntimeError(
@@ -81,8 +119,7 @@ GAMES_PLAYED_LEAGUE = int(_STANDINGS["league"]["games"])
 
 # The 3-day pick window the brief asks for, taken from the slate snapshot rather than declared
 # here, so that a refresh that widens or moves the window does not require a code change.
-WINDOW_START = _SLATE_DOC["window"]["start"]
-WINDOW_END = _SLATE_DOC["window"]["end"]
+WINDOW_START, WINDOW_END = _window(_SLATE_DOC)
 
 # --------------------------------------------------------------------------- sources
 SOURCES = {
@@ -115,7 +152,7 @@ SOURCES = {
     ),
     "schedule": (
         "NBA.com Schedule (official)",
-        _SLATE_DOC["source_url"],
+        _SLATE_DOC.get("source_url") or ((_SLATE_DOC.get("sources") or [""])[0]),
         "Game IDs, ET tip times, arenas, cities, national broadcast.",
     ),
     "games_2026_11_14": (

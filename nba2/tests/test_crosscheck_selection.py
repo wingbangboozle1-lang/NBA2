@@ -62,15 +62,19 @@ class TestCommittedArtifacts(unittest.TestCase):
 
     def test_the_naive_first_candidate_is_the_wrong_file(self):
         """Documents why `[0]` cannot be trusted: with a defined tie-break the
-        FIRST candidate is the dict-shaped v2 file — the one that crashed CI."""
+        FIRST candidate among the tied-stamp 11/14 pair is the dict-shaped v2
+        file — the one that crashed CI. (The integration brought newer slate
+        snapshots, so the pair is selected by stamp rather than assumed at [0].)"""
         cands = CC.snapshot_candidates("slate")
         self.assertGreaterEqual(len(cands), 2)
-        self.assertTrue(cands[0].name.endswith("_v2.json"),
-                        f"expected the v2 file first under the name tie-break, got {cands[0].name}")
+        tied_11_14 = [p for p in cands if "2026-11-14" in p.name]
+        self.assertGreaterEqual(len(tied_11_14), 2, "the tied 11/14 pair must still exist")
+        self.assertTrue(tied_11_14[0].name.endswith("_v2.json"),
+                        f"expected the v2 file first under the name tie-break, got {tied_11_14[0].name}")
         site = json.loads((ROOT / "data" / "site.json").read_text())
         sel = CC.slate_snapshot(site)
         self.assertIsNotNone(sel)
-        self.assertNotEqual(sel[0], cands[0], "selection must not just take [0]")
+        self.assertNotIn(sel[0], tied_11_14[:1], "selection must not just take [0] of the tied pair")
 
 
 class TestSelectionRules(unittest.TestCase):

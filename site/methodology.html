@@ -17,6 +17,8 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -35,7 +37,14 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html" class="on">Methodology</a>
-  </nav>
+  <a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="verification-v3.html">v3 verification</a>
+</nav>
 </aside>
 <main>
 <h1>Methodology</h1>
@@ -66,9 +75,34 @@ h = +6.00 — the same RMSE to three decimals, which is why the pair is not trus
 spread   = −round_to_nearest_half(margin)            # home handicap
 p(home)  = Φ(margin / σ)
 fair odds= 1/p  and  1/(1−p)                         # no hold applied
-total    = Σ_team [ (PF(team) + PA(opp))/2 + ((PF−PA)(team) − (PF−PA)(opp))/2 ]</pre>
-<p>A second total is computed as <code>(OffRtg + opp DefRtg)/2 × pace/100</code> per team. The gap between the two is printed
-per game and any gap over 4.0 pts forces grade C.</p>
+total    = possessions × PPP                        # NOT an average of scoring averages
+poss     = (Pace(home) + Pace(away)) / 2
+PPP(home)= (OffRtg(home)/100 + DefRtg(away)/100) / 2
+total    = poss · (PPP(home) + PPP(away))</pre>
+<p>The headline total is possessions × points-per-possession. The scoring-average estimator
+<code>Σ_team [ (PF(team)+PA(opp))/2 + Δ/2 ]</code> is published beside it as "Total B"; the gap between the two is
+printed per game and any gap over 4.0 pts forces grade C.</p>
+
+<h2>4a. Market-anchored prior (framework, blank values)</h2>
+<pre>blended = w_model · model_line + w_market · closing_line
+w_i     = (1/LL_i) / Σ_j (1/LL_j)                    # LL = out-of-sample log-loss</pre>
+<p>The better-calibrated forecaster (smaller OOS log-loss) gets more weight. With no licensed odds feed (G6) the
+blend stays blank and flagged — the rule is frozen in <code>nba2/v2/model.py::market_prior</code> and pre-registered.</p>
+
+<h2>4b. Minutes redistribution (explicit)</h2>
+<pre>top-8 share_i = mpg_i / Σ_top8 mpg
+new_mpg_j     = mpg_j + Σ_{i out} mpg_i · mpg_j / Σ_{k available} mpg_k</pre>
+<p>The injury report decides who is out; this rule prices where the minutes go. Clubs without captured official
+per-club tables publish blank shares (never estimated). Triggers are published in both quote formats:
+decimal ↔ American, including the totals trigger (fair at our own total = +100 by construction; a market total T
+prices as 1−Φ((T−total)/σ_tot) with σ_tot measured from the official finals).</p>
+
+<h2>4c. Rest and travel</h2>
+<pre>days_rest  = calendar days between consecutive games (0 = back-to-back)
+3-in-4     = this game plus ≥2 more inside the 4-day window ending today
+travel leg = haversine miles between the arena of the previous game and this one</pre>
+<p>Arena names/cities are official; coordinates are third-party (Wikimedia geocode, labelled) and distances are
+DERIVED values published beside their sources. A leg whose previous venue is unknown is blank and flagged.</p>
 
 <h2>5. Grading (not betting)</h2>
 <p>A = both spread estimators within 1.0 pt, |margin| ≥ 0.75σ, both total estimators within 2.0 pts.
@@ -91,13 +125,13 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 102 tests, counted from the files
-python3 -m unittest discover -s nba2/tests -t .                # 70 tests
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 140 tests, counted from the files
+python3 -m unittest discover -s nba2/tests -t .                # 82 tests
 python3 -m unittest discover -s backtest/tests                 # 49 tests</pre>
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
 message — a remembered count is the most reliably stale number on the site (F-033).</p>
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

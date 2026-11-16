@@ -15,7 +15,7 @@
    "name": "Completeness",
    "requirement": "No required input is blank. A blank anywhere fails the strategy for that slate.",
    "verdict": "FAIL",
-   "measured": "8/22 slate games have an official availability record for both clubs; 14 do not (dates beyond the newest injury release)",
+   "measured": "8/34 slate games have an official availability record for both clubs; 26 do not (dates beyond the newest injury release)",
    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf",
    "rule": ""
   },
@@ -41,7 +41,7 @@
    "id": "G5",
    "name": "Total-estimator agreement",
    "verdict": "PASS",
-   "measured": "largest gap across the 22-game slate: 3.54 pts (threshold 6.00)",
+   "measured": "largest gap across the 34-game slate: 4.56 pts (threshold 6.00)",
    "src": "https://www.nba.com/stats/teams/traditional",
    "requirement": "PF/PA total and per-100x-pace total must be within 4.0 pts.",
    "rule": ""
@@ -51,7 +51,7 @@
    "name": "Market price present",
    "requirement": "A dated, sourced price for the exact line must exist before a pick is staked.",
    "verdict": "FAIL",
-   "measured": "no odds snapshot in data/raw; no licensed feed is connected, so no edge, stake, ROI or CLV claim is available for any game \u2014 0/22 slate games carry a price",
+   "measured": "no odds snapshot in data/raw; no licensed feed is connected, so no edge, stake, ROI or CLV claim is available for any game \u2014 0/34 slate games carry a price",
    "src": "https://www.nba.com/games",
    "rule": ""
   },
@@ -59,7 +59,7 @@
    "id": "G7",
    "name": "Backtest with settlement",
    "verdict": "FAIL",
-   "measured": "largest settled sample: 167 bets (threshold 300)",
+   "measured": "largest settled sample: 172 bets (threshold 300)",
    "src": "https://www.nba.com/games?date=2026-11-14",
    "requirement": ">= 300 settled bets of the strategy's own signals, settled from official box scores.",
    "rule": ""
@@ -68,7 +68,7 @@
    "id": "G8",
    "name": "Out-of-sample holdout",
    "verdict": "PASS",
-   "measured": "in-sample 63.8% vs out-of-sample 66.7% (+/- 7.0% s.e.); MAE 12.15 -> 13.16. The signal holds out of sample.",
+   "measured": "in-sample 63.4% vs out-of-sample 67.3% (+/- 7.1% s.e.); MAE 12.22 -> 13.23. The signal holds out of sample.",
    "src": "https://www.nba.com/games?date=2026-11-14",
    "requirement": "Signals fitted on the first 70% of the backtest window must hold on the last 30%.",
    "rule": ""
@@ -87,8 +87,8 @@
    "name": "Correlation honesty",
    "requirement": "No parlay priced by multiplying legs unless the leg correlation is measured or bounded.",
    "verdict": "PASS",
-   "measured": "same-game rho measured at +0.0393 (95% CI (-0.1133, 0.19))",
-   "src": "https://www.nba.com/schedule?date=2026-11-15",
+   "measured": "same-game rho measured at +0.0679 (95% CI (-0.0826, 0.2153))",
+   "src": "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)",
    "rule": ""
   },
   {
@@ -105,7 +105,7 @@
    "name": "No look-ahead",
    "requirement": "No input timestamped after the decision time may enter that decision.",
    "verdict": "PASS",
-   "measured": "0 of 22 slate games already have an official final on disk",
+   "measured": "0 of 34 slate games already have an official final on disk",
    "rule": "a slate game that already has a final score must not be priced at all: the ratings behind its line were rebuilt from results that include that game",
    "src": "https://www.nba.com/games?date=2026-11-14"
   }
@@ -122,7 +122,7 @@
    "note": "no odds snapshot in data/raw; no licensed feed is connected, so no edge, stake, ROI or CLV claim is available for any game"
   },
   "lookahead": {
-   "n_slate": 22,
+   "n_slate": 34,
    "violations": [],
    "rule": "a slate game that already has a final score must not be priced at all: the ratings behind its line were rebuilt from results that include that game"
   },
@@ -3073,6 +3073,13 @@
    "FILED_CLEAN": 0,
    "NOT_SUBMITTED": 0,
    "NOT_IN_DOCUMENT": 10,
+   "NO_SNAPSHOT_FOR_DATE": 0
+  },
+  "2026-11-18": {
+   "FILED": 0,
+   "FILED_CLEAN": 0,
+   "NOT_SUBMITTED": 0,
+   "NOT_IN_DOCUMENT": 24,
    "NO_SNAPSHOT_FOR_DATE": 0
   }
  },

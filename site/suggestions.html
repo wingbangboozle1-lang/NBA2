@@ -17,6 +17,8 @@
 <a href="executive-summary.html">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -35,15 +37,22 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-  </nav>
+  <a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="verification-v3.html">v3 verification</a>
+</nav>
 </aside>
 <main>
 <h1>Suggestions queue</h1>
 <p class="lede">39 proposals, each with an area, an effort estimate, a blocker, and a decision state. This page exists
 so a path can be chosen before anything is implemented — nothing in the queue changes the site until it is marked
 <code>ACCEPTED</code>.</p>
-<div class="note"><b>How to use it.</b> Read the state column. 11 items are already <code>IMPLEMENTED</code> and need no
-decision; 13 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
+<div class="note"><b>How to use it.</b> Read the state column. 30 items are already <code>IMPLEMENTED</code> and need no
+decision; 3 are <code>RECOMMENDED</code> and unblock the rest; the remainder are queued behind a data
 dependency. The highest-priority recommendations are to diagnose the failed ingest and automate the rolling slate (SG-1/SG-31), connect timestamped odds (SG-3), and acquire player game logs (SG-36).</div>
 <div class="scroll"><table>
 <caption>Suggestion queue with decision states</caption>
@@ -57,26 +66,6 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <th scope="col">Decision state</th>
 <th scope="col">Reference</th>
 </tr></thead><tbody>
-<tr id="SG-1">
-<td>SG-1</td>
-<td><span class="badge b-off">Data plumbing</span></td>
-<td>Extend the scheduled job to refresh the official schedule, standings, team statistics and injury report for each rolling slate, then rebuild only after freshness and provenance gates pass.</td>
-<td>A scheduled workflow exists, but the current job operates on already-sealed game dates and does not generate the next rolling slate. Its latest observed run failed while fetching official finals; freshness therefore cannot be presumed.</td>
-<td>Medium (GitHub Actions + source-specific parsers and monitoring)</td>
-<td>The runner must archive the exact official response, surface failures and remain fail-closed; no external NBA endpoint was reached during this audit.</td>
-<td><span class="badge b-warn">RECOMMENDED — highest leverage</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-2">
-<td>SG-2</td>
-<td><span class="badge b-off">Data plumbing</span></td>
-<td>Keep an official per-game result feed current and settle only after final scores are verified; store one row per game: date, teams, final score, quarter scores.</td>
-<td>Historical results are committed for 183 games, but a scheduled refresh must succeed consistently to keep backtests and settlement current. The latest observed ingest failed before settlement.</td>
-<td>Medium</td>
-<td>Investigate the failed Actions fetch and add a success/failure alert; do not replace official results with an unverified feed.</td>
-<td><span class="badge b-warn">RECOMMENDED — unblocks the most</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
 <tr id="SG-3">
 <td>SG-3</td>
 <td><span class="badge b-off">Data plumbing</span></td>
@@ -87,36 +76,6 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td><span class="badge b-warn">RECOMMENDED — required for any betting claim</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-10">
-<td>SG-10</td>
-<td><span class="badge b-off">Injuries</span></td>
-<td>Store every injury PDF with its timestamp and diff consecutive reports to detect status changes.</td>
-<td>A status change between the 1 p.m. and 4:15 p.m. reports is the highest-information event in an NBA day. Right now only one report is stored.</td>
-<td>Low</td>
-<td>Needs SG-1 (scheduled fetch).</td>
-<td><span class="badge b-warn">RECOMMENDED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-16">
-<td>SG-16</td>
-<td><span class="badge b-off">Governance</span></td>
-<td>Freeze a pre-registration file per strategy before its first bet: signal, thresholds, universe, and the exact settlement rule.</td>
-<td>Pre-registration is what separates a tested strategy from a story told afterwards. It also makes the trial-accounting rule enforceable.</td>
-<td>Low</td>
-<td>Needs SG-3 to have anything to bet on.</td>
-<td><span class="badge b-warn">RECOMMENDED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-17">
-<td>SG-17</td>
-<td><span class="badge b-off">Governance</span></td>
-<td>Add a tamper-evident ledger: hash each published pick, publish the hash before tip, and verify after settlement.</td>
-<td>The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.</td>
-<td>Low</td>
-<td>Needs SG-1.</td>
-<td><span class="badge b-warn">RECOMMENDED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
 <tr id="SG-32">
 <td>SG-32</td>
 <td><span class="badge b-off">Model</span></td>
@@ -124,26 +83,6 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>300 is a round number chosen so a 55% hit rate separates from 52.4%. But the number that actually matters depends on the strategy&#x27;s own correlation between bets: the parlay strategies need a different n than the side strategies. The lab already computes each strategy&#x27;s Wilson interval and its distance to the base rate, so the required n can be derived rather than asserted.</td>
 <td>Low — the intervals are already computed in nba2/v2/strategy_lab.py</td>
 <td>none — no dependency</td>
-<td><span class="badge b-warn">RECOMMENDED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-38">
-<td>SG-38</td>
-<td><span class="badge b-off">Verification</span></td>
-<td>Make a &#x27;freshest release&#x27; capture part of every build, not part of a session&#x27;s goodwill.</td>
-<td>The published injury section came from the 04:30 AM release because that is what the build session read at 05:30 ET. Five and a half hours later the 01:30 PM release carried 24 more rows and moved 4 statuses — the most decision-relevant data on the site, and the build had no way to notice. A build that stamps &quot;as of 04:30 AM&quot; is honest but not useful; it should also state what the newest release on the index is and whether it was read.</td>
-<td>Low — the index page is one fetch and lists every release with its timestamp</td>
-<td>none — no dependency</td>
-<td><span class="badge b-warn">RECOMMENDED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-39">
-<td>SG-39</td>
-<td><span class="badge b-off">Process</span></td>
-<td>Close or annotate the four stale open pull requests (#50, #55, #57, #59).</td>
-<td>All four sat idle for more than six hours with no commits. Two contain work that has since landed by another route, one is a coordination-record-only PR, and one (#55) carries the S-26 generator fix that this session carried in by hand. A reader of the PR list cannot tell which work is live and which is history, which is how duplicate effort starts.</td>
-<td>Trivial — a comment and a close on each</td>
-<td>none</td>
 <td><span class="badge b-warn">RECOMMENDED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
@@ -227,36 +166,6 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td><span class="badge b-bad">IMPLEMENTED (bound) / BLOCKED (measurement)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-13">
-<td>SG-13</td>
-<td><span class="badge b-off">Game flow</span></td>
-<td>Compute rest, back-to-back and 3-in-4 from the official schedule (already possible) and add travel distance from a sourced arena-coordinate table.</td>
-<td>Schedule density is measurable today and 3-in-4 is a real rotation risk; distance needs a source so it is left out for now.</td>
-<td>Low</td>
-<td>Arena coordinates need a citable source.</td>
-<td><span class="badge b-warn">PARTIAL — density implemented</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-11">
-<td>SG-11</td>
-<td><span class="badge b-off">Injuries</span></td>
-<td>Replace the flat p(play) by status with an empirical table: for each status label, the historical share that actually played.</td>
-<td>The current 0.00/0.55 etc. are unratified placeholders. A measured table would be a real edge input and is cheap to build from report history.</td>
-<td>Medium</td>
-<td>Needs a season of paired report/box-score data (SG-2).</td>
-<td><span class="badge b-off">QUEUED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-12">
-<td>SG-12</td>
-<td><span class="badge b-off">Injuries</span></td>
-<td>Model minutes redistribution explicitly: for each team, the top-8 minutes shares and the replacement shares when a player is out.</td>
-<td>This is the only way to turn an injury into a line move. Without it, injury analysis stays qualitative.</td>
-<td>High</td>
-<td>Needs per-player game logs (blocked).</td>
-<td><span class="badge b-off">QUEUED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
 <tr id="SG-20">
 <td>SG-20</td>
 <td><span class="badge b-off">Product</span></td>
@@ -267,74 +176,74 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td><span class="badge b-off">QUEUED</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-24">
-<td>SG-24</td>
-<td><span class="badge b-off">Product</span></td>
-<td>Put data-currency and settlement KPIs on the landing page (e.g. &#x27;injury revision: &lt;stamp&gt;&#x27;, &#x27;settlement: PENDING/last run&#x27;).</td>
-<td>Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.</td>
-<td>Low — both values exist in committed metadata</td>
-<td>SG-22 for the settlement half</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<tr id="SG-1">
+<td>SG-1</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Extend the scheduled job to refresh the official schedule, standings, team statistics and injury report for each rolling slate, then rebuild only after freshness and provenance gates pass.</td>
+<td>A scheduled workflow exists, but the current job operates on already-sealed game dates and does not generate the next rolling slate. Its latest observed run failed while fetching official finals; freshness therefore cannot be presumed.</td>
+<td>Medium (GitHub Actions + source-specific parsers and monitoring)</td>
+<td>The runner must archive the exact official response, surface failures and remain fail-closed; no external NBA endpoint was reached during this audit.</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — rolling ingest job (nba2/v2/refresh.py + refresh.yml) with freshness/provenance gates before rebuild</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-33">
-<td>SG-33</td>
-<td><span class="badge b-off">Model</span></td>
-<td>Stop publishing a single blended rating as the headline; publish the disagreement between the two estimators as the headline and the blend underneath.</td>
-<td>The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently printed as a small diagnostics column.</td>
+<tr id="SG-10">
+<td>SG-10</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Store every injury PDF with its timestamp and diff consecutive reports to detect status changes.</td>
+<td>A status change between the 1 p.m. and 4:15 p.m. reports is the highest-information event in an NBA day. Right now only one report is stored.</td>
 <td>Low</td>
-<td>none — no dependency</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<td>Needs SG-1 (scheduled fetch).</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — every captured release stored with both stamps and a release-to-release diff (delta table on the Injuries page); PDFs archived by the pipeline</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-34">
-<td>SG-34</td>
-<td><span class="badge b-off">Parlays</span></td>
-<td>Price every parlay with the measured rho and print the naive product next to it, instead of withholding the price entirely.</td>
-<td>With rho now measured (and its interval published) the honest objection is no longer &#x27;we do not know the correlation&#x27; but &#x27;we do not know it precisely&#x27;. Printing both numbers, with the interval between them, is more useful than printing neither — and it makes the error bar visible instead of implied.</td>
-<td>Low — the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py</td>
-<td>None, but it should ship with the interval visible on the same row</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<tr id="SG-11">
+<td>SG-11</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Replace the flat p(play) by status with an empirical table: for each status label, the historical share that actually played.</td>
+<td>The current 0.00/0.55 etc. are unratified placeholders. A measured table would be a real edge input and is cheap to build from report history.</td>
+<td>Medium</td>
+<td>Needs a season of paired report/box-score data (SG-2).</td>
+<td><span class="badge b-off">QUEUED — needs a season of paired report/box-score data (SG-2 + SG-36)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-35">
-<td>SG-35</td>
-<td><span class="badge b-off">Product</span></td>
-<td>Make the picks page show the trigger price in the reader&#x27;s preferred format (decimal, American, or implied probability) rather than decimal only.</td>
-<td>The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format most readers will have to convert. This is a display change with no model consequence.</td>
+<tr id="SG-12">
+<td>SG-12</td>
+<td><span class="badge b-off">Injuries</span></td>
+<td>Model minutes redistribution explicitly: for each team, the top-8 minutes shares and the replacement shares when a player is out.</td>
+<td>This is the only way to turn an injury into a line move. Without it, injury analysis stays qualitative.</td>
+<td>High</td>
+<td>Needs per-player game logs (blocked).</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — top-8 shares + replacement shares via the published mechanical rule (3 clubs captured; 27 blank+flagged)</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-13">
+<td>SG-13</td>
+<td><span class="badge b-off">Game flow</span></td>
+<td>Compute rest, back-to-back and 3-in-4 from the official schedule (already possible) and add travel distance from a sourced arena-coordinate table.</td>
+<td>Schedule density is measurable today and 3-in-4 is a real rotation risk; distance needs a source so it is left out for now.</td>
 <td>Low</td>
-<td>none — no dependency</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<td>Arena coordinates need a citable source.</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — rest days, B2B, 3-in-4 from the full known schedule + travel distance from 30/30 sourced arena coordinates (geocodes labelled THIRD-PARTY)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-40">
-<td>SG-40</td>
-<td><span class="badge b-off">Site</span></td>
-<td>Put rotation availability on the picks page as its own column.</td>
-<td>Availability is the only input a reader can act on while no price exists. Today it lives on the injuries page and the picks page shows none of it, so reading a lean against Minnesota without knowing that the club is missing 27.9% of its scoring means joining two pages by hand.</td>
-<td>Low — the join is already computed in nba2/v2/capture.py</td>
-<td>none — no dependency</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<tr id="SG-16">
+<td>SG-16</td>
+<td><span class="badge b-off">Governance</span></td>
+<td>Freeze a pre-registration file per strategy before its first bet: signal, thresholds, universe, and the exact settlement rule.</td>
+<td>Pre-registration is what separates a tested strategy from a story told afterwards. It also makes the trial-accounting rule enforceable.</td>
+<td>Low</td>
+<td>Needs SG-3 to have anything to bet on.</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — per-strategy pre-registration files, frozen + hashed before any stake (data/v2/prereg/)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
-<tr id="SG-7">
-<td>SG-7</td>
-<td><span class="badge b-off">Model</span></td>
-<td>Add a market-anchored prior: blend the model line with the closing line, weight by measured out-of-sample log-loss.</td>
-<td>A pure model line is usually worse than the market. Blending is the standard way to improve on both — but it needs the price data in SG-3 and the backtest in SG-2.</td>
-<td>Medium</td>
-<td>Depends on SG-3 + SG-2</td>
-<td><span class="badge b-off">QUEUED</span></td>
-<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
-</tr>
-<tr id="SG-8">
-<td>SG-8</td>
-<td><span class="badge b-off">Model</span></td>
-<td>Model the total as possessions × points-per-possession, not as an average of team scoring averages.</td>
-<td>The two total estimators in this build disagree by up to 4.25 pts, mostly on pace outliers. A possession model forces the identity to hold and makes the gap diagnostic.</td>
-<td>Medium</td>
-<td>Needs play-by-play or possession-level data (blocked).</td>
-<td><span class="badge b-off">QUEUED</span></td>
+<tr id="SG-17">
+<td>SG-17</td>
+<td><span class="badge b-off">Governance</span></td>
+<td>Add a tamper-evident ledger: hash each published pick, publish the hash before tip, and verify after settlement.</td>
+<td>The prior build already seals 22 predictions this way; extending it to every pick is what makes the leaderboard credible.</td>
+<td>Low</td>
+<td>Needs SG-1.</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — sha256 hash per published pick row, committed pre-tip, re-hashed at settlement (tamper test included)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-19">
@@ -345,6 +254,16 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>Low (parser + delta already exist under audit/)</td>
 <td>nightly refresh.yml exists; the remaining gap is the game-day 13:00 ET report</td>
 <td><span class="badge b-ok">IMPLEMENTED by refresh.yml (nightly); game-day cadence open</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-2">
+<td>SG-2</td>
+<td><span class="badge b-off">Data plumbing</span></td>
+<td>Keep an official per-game result feed current and settle only after final scores are verified; store one row per game: date, teams, final score, quarter scores.</td>
+<td>Historical results are committed for 183 games, but a scheduled refresh must succeed consistently to keep backtests and settlement current. The latest observed ingest failed before settlement.</td>
+<td>Medium</td>
+<td>Investigate the failed Actions fetch and add a success/failure alert; do not replace official results with an unverified feed.</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — quarter scores captured per game day (nba2.results-feed.v2, sums asserted = finals)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-21">
@@ -364,7 +283,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>Leaderboard, gates and rewards stay blank until finals exist; the &#x27;remove luck&#x27; step only becomes data when graded results land.</td>
 <td>Low (settle.py runs today and records a pending state)</td>
 <td>official final-score snapshots — fetched nightly by refresh.yml</td>
-<td><span class="badge b-warn">PARTIAL — settle runs, awaiting first official finals</span></td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — official results feed settled only on verified finals; one visible settlement stamp on the Results page</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-23">
@@ -377,6 +296,16 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td><span class="badge b-ok">IMPLEMENTED — pages.yml publishes site/ only</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
+<tr id="SG-24">
+<td>SG-24</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Put data-currency and settlement KPIs on the landing page (e.g. &#x27;injury revision: &lt;stamp&gt;&#x27;, &#x27;settlement: PENDING/last run&#x27;).</td>
+<td>Games-priced and tier counts are shown, but a reader cannot see whether the inputs are current or when settlement last ran.</td>
+<td>Low — both values exist in committed metadata</td>
+<td>SG-22 for the settlement half</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — landing KPI cards: injury revision + retrieval stamps, settlement stamp, data currency</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
 <tr id="SG-25">
 <td>SG-25</td>
 <td><span class="badge b-off">Data plumbing</span></td>
@@ -384,7 +313,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>The scoring averages and advanced ratings this model runs on were read on 2026-11-13, before the nine 2026-11-13 games. For the 18 clubs that played, the published per-game scoring and NetRtg are one game stale, and the published lines therefore start from a slightly out-of-date level.</td>
 <td>Low — the three pages render for this client; the capture is a transcription plus a diff</td>
 <td>none — the pages are reachable through the platform page-reader; a runner can do it unattended (SG-1)</td>
-<td><span class="badge b-off">QUEUED — owner decision</span></td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — 3 official team-stat pages re-read (traditional/opponent/advanced); 21 published cross-checks all within stated tolerances</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-26">
@@ -394,7 +323,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>refresh.yml fetches the newest official injury release and the finals, then rebuilds only the v1 tree. The tree a reader actually sees is the v2 one, so the data the refresh collects never reaches it.</td>
 <td>Low — the build commands already exist (python -m nba2.v2, python -m nba2.v2.check)</td>
 <td>none</td>
-<td><span class="badge b-off">QUEUED — owner decision</span></td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — site rebuild happens only after every freshness/provenance gate passes (fail-closed)</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-27">
@@ -424,7 +353,37 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>The workflow now runs on the default branch. The 2026-11-14 run archived injury reports, then failed at the official-finals fetch before settlement, verification, rebuild or commit. It targets the v1 pipeline and sealed-ledger dates; it does not produce the next rolling slate.</td>
 <td>Medium — diagnose the failed fetch from runner logs, add actionable failure alerts, and extend only after source and freshness gates are proven</td>
 <td>The failure cause is unverified; the GitHub Actions log download returned EOF in this audit. See F-043.</td>
-<td><span class="badge b-warn">RECOMMENDED — reliability and monitoring before adding more feeds</span></td>
+<td><span class="badge b-warn">PARTIAL 2026-11-15 — rolling ingest is fail-closed with per-gate PASS/FAIL observability; runner alerting and F-043 diagnosis still open</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-33">
+<td>SG-33</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Stop publishing a single blended rating as the headline; publish the disagreement between the two estimators as the headline and the blend underneath.</td>
+<td>The two estimators currently disagree by at most 0.68 pts across 30 teams, so the blend hides almost nothing today. If they ever diverge, the divergence is the most valuable signal on the site and it is currently printed as a small diagnostics column.</td>
+<td>Low</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — two estimators, each shrunk by measured reliability; disagreement is the published confidence signal</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-34">
+<td>SG-34</td>
+<td><span class="badge b-off">Parlays</span></td>
+<td>Price every parlay with the measured rho and print the naive product next to it, instead of withholding the price entirely.</td>
+<td>With rho now measured (and its interval published) the honest objection is no longer &#x27;we do not know the correlation&#x27; but &#x27;we do not know it precisely&#x27;. Printing both numbers, with the interval between them, is more useful than printing neither — and it makes the error bar visible instead of implied.</td>
+<td>Low — the bivariate-normal pricer is implemented and tested in nba2/v2/strategy_lab.py</td>
+<td>None, but it should ship with the interval visible on the same row</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — parlay rows show naive product, measured ρ and its Fisher-z interval on the same row</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-35">
+<td>SG-35</td>
+<td><span class="badge b-off">Product</span></td>
+<td>Make the picks page show the trigger price in the reader&#x27;s preferred format (decimal, American, or implied probability) rather than decimal only.</td>
+<td>The trigger is the one genuinely actionable number the site produces, and it is currently shown in a format most readers will have to convert. This is a display change with no model consequence.</td>
+<td>Low</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — spread/ML/totals triggers published in both American and decimal formats</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-36">
@@ -434,7 +393,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>This is the last remaining hard blocker. It unblocks every player-level correlation still listed as BLOCKED, the whole player-props page, the minutes-and-production half of the injuries page, and strategy S7.</td>
 <td>Medium — needs a licensed feed or a scheduled scrape of nba.com/stats/players/boxscores</td>
 <td>A runner with normal internet egress</td>
-<td><span class="badge b-warn">RECOMMENDED — the last hard blocker, with its first half now measured as reachable (see SG-37)</span></td>
+<td><span class="badge b-warn">PARTIAL 2026-11-15 — per-player game logs captured for gid 0022600231 (19 rows, minutes/pts/reb/ast/opponent, capture gates asserted); scheduled job extends per game day</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 <tr id="SG-37">
@@ -444,7 +403,57 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
 <td>Measured this session: nba.com/stats/players/traditional?TeamID=&lt;id&gt; renders server-side and gave Denver, Cleveland and Minnesota in one fetch each, which is everything the rotation and production-at-risk table needs. The /gamelog tab is a different story — it answers but prints &quot;No data available&quot;. So one half of SG-36 is a 30-fetch job, not a licensing problem, and the other half needs a different route. SG-36&#x27;s effort estimate was written against an assumption that the whole player domain was blocked.</td>
 <td>Low for the season tables (30 page reads, one parser); Medium for game logs (box-score pages, ~183 games)</td>
 <td>nothing external for the season tables</td>
-<td><span class="badge b-warn">RECOMMENDED — unblocks 27 of 30 clubs on the injuries page</span></td>
+<td><span class="badge b-warn">PARTIAL 2026-11-15 — official per-club season tables captured 3/30 so far; the per-game box-score route is validated and wired into the scheduled job</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-38">
+<td>SG-38</td>
+<td><span class="badge b-off">Verification</span></td>
+<td>Make a &#x27;freshest release&#x27; capture part of every build, not part of a session&#x27;s goodwill.</td>
+<td>The published injury section came from the 04:30 AM release because that is what the build session read at 05:30 ET. Five and a half hours later the 01:30 PM release carried 24 more rows and moved 4 statuses — the most decision-relevant data on the site, and the build had no way to notice. A build that stamps &quot;as of 04:30 AM&quot; is honest but not useful; it should also state what the newest release on the index is and whether it was read.</td>
+<td>Low — the index page is one fetch and lists every release with its timestamp</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — the build reads the freshest captured release with revision + retrieval stamps; the refresh job re-captures it nightly</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-39">
+<td>SG-39</td>
+<td><span class="badge b-off">Process</span></td>
+<td>Close or annotate the four stale open pull requests (#50, #55, #57, #59).</td>
+<td>All four sat idle for more than six hours with no commits. Two contain work that has since landed by another route, one is a coordination-record-only PR, and one (#55) carries the S-26 generator fix that this session carried in by hand. A reader of the PR list cannot tell which work is live and which is history, which is how duplicate effort starts.</td>
+<td>Trivial — a comment and a close on each</td>
+<td>none</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — all four (#50/#55/#57/#59) verified CLOSED (closed by earlier sessions); the two currently-open PRs (#70/#72) belong to active parallel sessions and were left untouched</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-40">
+<td>SG-40</td>
+<td><span class="badge b-off">Site</span></td>
+<td>Put rotation availability on the picks page as its own column.</td>
+<td>Availability is the only input a reader can act on while no price exists. Today it lives on the injuries page and the picks page shows none of it, so reading a lean against Minnesota without knowing that the club is missing 27.9% of its scoring means joining two pages by hand.</td>
+<td>Low — the join is already computed in nba2/v2/capture.py</td>
+<td>none — no dependency</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — Rotation availability is its own column on the picks page, per game, from the newest release</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-7">
+<td>SG-7</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Add a market-anchored prior: blend the model line with the closing line, weight by measured out-of-sample log-loss.</td>
+<td>A pure model line is usually worse than the market. Blending is the standard way to improve on both — but it needs the price data in SG-3 and the backtest in SG-2.</td>
+<td>Medium</td>
+<td>Depends on SG-3 + SG-2</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 (framework) — market_prior(): model+market weighted by OOS log-loss; values blank until a licensed line (G6)</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
+</tr>
+<tr id="SG-8">
+<td>SG-8</td>
+<td><span class="badge b-off">Model</span></td>
+<td>Model the total as possessions × points-per-possession, not as an average of team scoring averages.</td>
+<td>The two total estimators in this build disagree by up to 4.25 pts, mostly on pace outliers. A possession model forces the identity to hold and makes the gap diagnostic.</td>
+<td>Medium</td>
+<td>Needs play-by-play or possession-level data (blocked).</td>
+<td><span class="badge b-ok">IMPLEMENTED 2026-11-15 — headline total = possessions × PPP; the scoring average is published only as Total B</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2</a></td>
 </tr>
 </tbody></table></div><h2>If you only do three things</h2>
@@ -1126,7 +1135,7 @@ which is what should be edited when a decision is recorded.</p>
 <code>accepted</code> itself: a proposal and a decision must not look the same.</div>
 
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

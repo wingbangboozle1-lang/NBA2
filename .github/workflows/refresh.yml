@@ -125,21 +125,12 @@ jobs:
           python3 -m nba2.pipeline.lint
 
       - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
-        run: |
-          set -uo pipefail
-          python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || true
-          cat /tmp/crosscheck.txt
-          # tools/crosscheck_site.py prints "[FAIL]" (upper case) — see its mark table. The
-          # original pattern here was '^\[fail\]', which matches nothing, so this step has been
-          # green by construction since bc867bff: a blocking gate that cannot fire is worse than no
-          # gate, because it advertises protection. -i would also work; exact case is stricter.
-          if grep '^\[FAIL\]' /tmp/crosscheck.txt | grep -v 'CC-FRESH-01'; then
-            echo "::error::semantic cross-check failed (failures above) — refusing to commit (CR-7)"
-            exit 1
-          fi
-          echo "cross-check clean. CC-FRESH-01 (snapshot age) is excluded by design: the bot"
-          echo "cannot refresh the third-party ratings snapshot, and blocking settlement on it"
-          echo "would freeze the ledger's metrics whenever the ratings capture ages."
+        # Integration (arena/984a242f-nba2, 2026-11-15): the inline grep kept the two holes PR #70
+        # documented (a checker crash looked like a clean run, and a missing summary line passed),
+        # while PR #72 fixed only the case bug. Both sides are kept by calling PR #70's shared gate,
+        # which enforces the summary line, the [FAIL] pattern (CC-FRESH-01 excluded by design) and
+        # a non-zero checker exit — the same rules ci.yml already runs at pull-request time.
+        run: tools/crosscheck_gate.sh
 
       - name: Commit refreshed snapshots (only when something changed)
         run: |

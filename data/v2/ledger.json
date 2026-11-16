@@ -8,7 +8,7 @@
    "date": "2026-11-15",
    "published_line": -3.5,
    "published_total": 222.5,
-   "row_hash": "01b45a74e538cbea6dbeb1ffee80cdf105a05881b5c0a517f4d73cac0d8b2440",
+   "row_hash": "75ca6374ba02ef0c7f916d9f37380bcdb48f0e5447e6ba5d64482a105b514918",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -42,6 +42,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.26,
     "est_a": -3.5,
@@ -49,9 +61,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -62,7 +74,7 @@
    "date": "2026-11-15",
    "published_line": 8.5,
    "published_total": 232.1,
-   "row_hash": "885d7232316315149a864b8bac5a15e5cf171a34216f0aa4556ade487597adcb",
+   "row_hash": "f0b6b135d44a9be134588a16b727b9c829a19ca9db1a62f7cfe739a7166271b8",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -96,6 +108,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.66,
     "est_a": 9.0,
@@ -103,9 +127,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -116,7 +140,7 @@
    "date": "2026-11-15",
    "published_line": -5.5,
    "published_total": 217.9,
-   "row_hash": "9b1e78f9c018d5a0d6ec05b8d7c66316898a4e88411ae7aaccc379bc1376e422",
+   "row_hash": "ccfeb46edbfb3996a8e7e728d2db5aed9a31d7f9088cc2bd389b676347102d99",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -150,6 +174,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.4,
     "est_a": -5.5,
@@ -157,9 +193,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -170,7 +206,7 @@
    "date": "2026-11-15",
    "published_line": 18.5,
    "published_total": 223.2,
-   "row_hash": "1d0083aedf819a12ed892bf6565b2d9cc9cd996f8cfdc6e3e4413a4a0a290552",
+   "row_hash": "cdbf344c9e7c54ce4da1bc87eb13d9246b7cd64e37217669841089a3757f9cad",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -204,6 +240,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 1.4,
     "est_a": 18.5,
@@ -211,9 +259,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -224,7 +272,7 @@
    "date": "2026-11-15",
    "published_line": -9.5,
    "published_total": 221.1,
-   "row_hash": "1c79542d6370bb3ee5425d75b71ddf85800565194d1feddc537025f08c470c5b",
+   "row_hash": "7bcf7421de90ec57ae02901ba2e16b93bbf73157cce2ef11a7682c3278ea1908",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -258,6 +306,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.71,
     "est_a": -9.0,
@@ -265,9 +330,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -278,7 +343,7 @@
    "date": "2026-11-15",
    "published_line": 2.5,
    "published_total": 220.1,
-   "row_hash": "4011f4983fb3e0e2435bcbd6dea66c4407cb364b6bf7d4e0f78f0c97edcec37f",
+   "row_hash": "8a432b9968a4f0e7fe6b4d5f41dbcfc2e93a93a3ca92716342a1db34ab11086b",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -312,6 +377,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.2,
     "est_a": 3.0,
@@ -319,9 +396,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -332,7 +409,7 @@
    "date": "2026-11-15",
    "published_line": 10.5,
    "published_total": 222.9,
-   "row_hash": "e557d64fec7e3a139abbf53efb098044d6ab2bc78cfcb05af7698068ce8ae8fe",
+   "row_hash": "0004a7a154e83fe74179e6dd07f6e500f644e35974e0203acbec2b2ba5d94d85",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -366,6 +443,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.81,
     "est_a": 10.5,
@@ -373,9 +462,9 @@
     "agreement": 0.0,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -386,7 +475,7 @@
    "date": "2026-11-15",
    "published_line": 11.5,
    "published_total": 229.8,
-   "row_hash": "7a001ebb4765719995c70c3ca23b834a7b7bd8f71d7cdf1a8a3e6d8644db77b6",
+   "row_hash": "d825ecd2943ea1f83e554c035b7e5d603bc113246f680a07ccbfc35a9879cb09",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -420,6 +509,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.88,
     "est_a": 11.5,
@@ -427,9 +528,9 @@
     "agreement": 0.0,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -440,7 +541,7 @@
    "date": "2026-11-15",
    "published_line": 12.0,
    "published_total": 223.8,
-   "row_hash": "ded4c1d7d2177cfca7b225ccbd658517642909a1f6927b07d762bf6c16ef950b",
+   "row_hash": "c50ea9401fa2029ed8d7035f382bf49486f6757b0d85dc1f36c73c561b0e45ed",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-15",
@@ -474,6 +575,18 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.9,
     "est_a": 12.0,
@@ -481,9 +594,9 @@
     "agreement": 0.5,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -494,7 +607,7 @@
    "date": "2026-11-16",
    "published_line": -11.0,
    "published_total": 235.1,
-   "row_hash": "66d186791e8fa5dc6b96095d30784261189c38cebc5df8e7c71c9b8e44993e08",
+   "row_hash": "f5d6d3f49f31d7dc97f09a885adae0ab1908f06ad716d12e32bff6e274799cb4",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -528,6 +641,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.82,
     "est_a": -11.0,
@@ -535,9 +665,9 @@
     "agreement": 0.0,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -548,7 +678,7 @@
    "date": "2026-11-16",
    "published_line": 10.5,
    "published_total": 226.3,
-   "row_hash": "7444b79909695caa60bbdf036b69daa9fa4103e7de82ff32b058b2229aa28973",
+   "row_hash": "98c114ea33f707d89d201535e0468169b539101c3b0bc241cad08ec7710abe8a",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -582,6 +712,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.8,
     "est_a": 11.0,
@@ -589,9 +736,9 @@
     "agreement": 1.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -602,7 +749,7 @@
    "date": "2026-11-16",
    "published_line": -12.5,
    "published_total": 217.3,
-   "row_hash": "9d6e3d96d657c8f25f871efaee37f2e02ad240861d4a89d722a130b3eb00cdce",
+   "row_hash": "8d6a41043e61c6b55ff4c60e5a45b7f85660ce81c24d87607c8e94522ef03193",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -611,7 +758,7 @@
     "matchup": "ORL @ BOS",
     "arena": "TD Garden",
     "city": "Boston, MA",
-    "tv": "Peacock / NBC Sports Network",
+    "tv": "Peacock/NBCSN",
     "cup": "",
     "margin": 12.54,
     "spread": -12.5,
@@ -636,6 +783,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.96,
     "est_a": -13.0,
@@ -643,9 +807,9 @@
     "agreement": 0.5,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -656,7 +820,7 @@
    "date": "2026-11-16",
    "published_line": 7.0,
    "published_total": 230.1,
-   "row_hash": "db7041f54ffbb9fed52a82b278391b47ad7cc8c46e9b974d016b3bbf8feb5474",
+   "row_hash": "d8cdeda9cef3353e7109387566c51dc7b913c1e5308fb70a41a8be7a04aed536",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -690,6 +854,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.55,
     "est_a": 7.0,
@@ -697,9 +878,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -710,7 +891,7 @@
    "date": "2026-11-16",
    "published_line": 5.5,
    "published_total": 222.6,
-   "row_hash": "f82eac8a4ee58d1709850a8a68fdf92d9aa076ca0c39b248b0864b314cf88225",
+   "row_hash": "7777690e4586f67ece9ae886cf1a1489849db53b143bf6d761c98658cc25213a",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -744,6 +925,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.41,
     "est_a": 5.5,
@@ -751,9 +949,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -764,7 +962,7 @@
    "date": "2026-11-16",
    "published_line": -4.0,
    "published_total": 227.4,
-   "row_hash": "f3b33c706967f29db042f148c614afc9a397bf6d6d4574cd9921365d8d79011b",
+   "row_hash": "66f42bec552fcc8f2b34c325fa3ddd862b8c0c837c19838c37ba19534e30d8ac",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -798,6 +996,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.3,
     "est_a": -4.0,
@@ -805,9 +1020,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -818,7 +1033,7 @@
    "date": "2026-11-16",
    "published_line": 9.5,
    "published_total": 231.4,
-   "row_hash": "5b635430b8d99838ec1522280f258ce641d21319af47cee9a7cf36a4149653e7",
+   "row_hash": "49447b7781411cb5b5939a7a191bfa6fcd880ecfdeb0552d9c83606660d8d12c",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -852,6 +1067,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.73,
     "est_a": 10.0,
@@ -859,9 +1091,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -872,7 +1104,7 @@
    "date": "2026-11-16",
    "published_line": -5.0,
    "published_total": 226.6,
-   "row_hash": "d479449cc21587c771134771edeff8e588eff362a9a900fa7333a4cd78d26d03",
+   "row_hash": "14a8bcd6d3cb6b2e250f996bce8e9fe2d3367a4e6f6b141014a659a11ac88031",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-16",
@@ -906,6 +1138,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_SUBMITTED",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_SUBMITTED); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.38,
     "est_a": -5.5,
@@ -913,9 +1162,9 @@
     "agreement": 1.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_SUBMITTED)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -926,7 +1175,7 @@
    "date": "2026-11-17",
    "published_line": 2.5,
    "published_total": 220.1,
-   "row_hash": "d1729f5cffac838c9ff977c0c7965357c71e02701ea793ee68dda37d541dd008",
+   "row_hash": "62efb0ba7b794640e749c789ec9edde7c7fa3a7edc13ba46f69c76617bc986c5",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-17",
@@ -960,6 +1209,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.2,
     "est_a": 3.0,
@@ -967,9 +1233,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -980,7 +1246,7 @@
    "date": "2026-11-17",
    "published_line": -7.0,
    "published_total": 223.0,
-   "row_hash": "30c1b7edd55d7677f8abb5d4af80ccc68956b615148172e64f3e9910a7e10172",
+   "row_hash": "a459212efbd5c1db0d6ff82383861de49552fb86fa2bb6eda58a9a45e974aab3",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-17",
@@ -989,7 +1255,7 @@
     "matchup": "DET @ SAS",
     "arena": "Frost Bank Center",
     "city": "San Antonio, TX",
-    "tv": "Peacock / NBC",
+    "tv": "Peacock/NBC",
     "cup": "",
     "margin": 7.03,
     "spread": -7.0,
@@ -1014,6 +1280,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.54,
     "est_a": -7.0,
@@ -1021,9 +1304,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1034,7 +1317,7 @@
    "date": "2026-11-17",
    "published_line": -4.0,
    "published_total": 227.4,
-   "row_hash": "0a8f14439901b15a7a79bbb05a3a1ca79b87a0c60d4227fd4c70dbfdf528f124",
+   "row_hash": "359e37554acfa7bf051d45b26c08f0960d20f32f748daa93e2bc008dbab6288e",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-17",
@@ -1068,6 +1351,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.3,
     "est_a": -4.0,
@@ -1075,9 +1375,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1088,7 +1388,7 @@
    "date": "2026-11-17",
    "published_line": -5.5,
    "published_total": 225.1,
-   "row_hash": "a5df16e9f2e68eeacf2f23afed5f7693dfe5a2505f5c19cbc20cf284eeb2ca5c",
+   "row_hash": "9db544b87e747a7358baa890ac0695a3521410a2f64fa45b7b224d6c4c30bc08",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-17",
@@ -1122,6 +1422,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.43,
     "est_a": -5.5,
@@ -1129,9 +1446,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1142,7 +1459,7 @@
    "date": "2026-11-17",
    "published_line": -15.5,
    "published_total": 222.1,
-   "row_hash": "14703524acdc360b43de05494ef6e400a482b4c7a8a4c7ffa9efcb02074a6a94",
+   "row_hash": "ec441fad81aa185e429c761b733c71d8d4fc4b6e8ad7e553675856d7daa46986",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-17",
@@ -1176,6 +1493,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 1.19,
     "est_a": -15.5,
@@ -1183,9 +1517,9 @@
     "agreement": 0.0,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1196,7 +1530,7 @@
    "date": "2026-11-18",
    "published_line": 7.5,
    "published_total": 224.0,
-   "row_hash": "5a69b103b7177a256ea9528dd14ab7f8946d639e622fbebd6973e37ae535e247",
+   "row_hash": "d36e1784573a1a8b10f46b4eea8ebd14cd5f05708ca75ce5fb0232c1d4fa1e03",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1230,6 +1564,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.58,
     "est_a": 7.5,
@@ -1237,9 +1588,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1250,7 +1601,7 @@
    "date": "2026-11-18",
    "published_line": 5.0,
    "published_total": 231.1,
-   "row_hash": "d8074ef534cb13218e518f7c17573dc0b4d58c0adc687068ffa740d295c35000",
+   "row_hash": "c787b7461ab2ec5ddb1f07466a59ff1ad70286093d9bf34736497eb2969039e0",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1284,6 +1635,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.37,
     "est_a": 5.0,
@@ -1291,9 +1659,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1304,7 +1672,7 @@
    "date": "2026-11-18",
    "published_line": -11.0,
    "published_total": 231.5,
-   "row_hash": "3fd1f2b53173c1079eac39e0584e51433217eab287fca2caf92b00752123ac67",
+   "row_hash": "f24d85b39cd85fae3ca7f3f4e141d920fd623f02aebd5eee19519b4e74586955",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1338,6 +1706,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.83,
     "est_a": -11.0,
@@ -1345,9 +1730,9 @@
     "agreement": 0.5,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1358,7 +1743,7 @@
    "date": "2026-11-18",
    "published_line": 3.5,
    "published_total": 219.9,
-   "row_hash": "e796afac8c590f3934dc9a112d9c96002124775fa6c069d29e310c3772bc0ec6",
+   "row_hash": "c8f51fddc229e39c96a1f67c55eeabe367c03b8cc9db04b6b99ff16d560c7521",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1392,6 +1777,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.28,
     "est_a": 4.0,
@@ -1399,9 +1801,9 @@
     "agreement": 1.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1412,7 +1814,7 @@
    "date": "2026-11-18",
    "published_line": -4.5,
    "published_total": 231.5,
-   "row_hash": "f5bcc03bbef6e182baebb303b2ca71c273fcb68df5d02b9a8639821508fcde59",
+   "row_hash": "6a2cfb6f8020bcb9a8180218f0ec44d2fb820933db7f9a398971024d4b929c38",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1446,6 +1848,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.36,
     "est_a": -4.5,
@@ -1453,9 +1872,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1466,7 +1885,7 @@
    "date": "2026-11-18",
    "published_line": -6.5,
    "published_total": 224.6,
-   "row_hash": "162231428ac85675f89dc18c6036076c2dfc9af422aa0cda8860561b5e3fcd07",
+   "row_hash": "94d58b62743f14a5e2a29e2682144d2b28c1e77e2d6181fe25408ac2b3278b43",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1500,6 +1919,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.49,
     "est_a": -6.5,
@@ -1507,9 +1943,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1520,7 +1956,7 @@
    "date": "2026-11-18",
    "published_line": -2.5,
    "published_total": 225.8,
-   "row_hash": "002b4647d8c10e69fdd3fddefefed0a41ab7074b4dc4990775e5dd049de68773",
+   "row_hash": "430ab0dd428aff2c26b1b10f3dc26456b21bc0029e81203cc42fedf68142e8ca",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1554,6 +1990,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.2,
     "est_a": -2.5,
@@ -1561,9 +2014,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1574,7 +2027,7 @@
    "date": "2026-11-18",
    "published_line": 10.5,
    "published_total": 228.8,
-   "row_hash": "07e12a25b56a32c32cc4d7dae90f32d6c90825a05fa0b522e4a7f27508cdcb89",
+   "row_hash": "c049e0065bc72af30041916fa7c6afb574eb24256aca12ae13d3ac165e428cf5",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1608,6 +2061,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.79,
     "est_a": 10.5,
@@ -1615,9 +2085,9 @@
     "agreement": 0.5,
     "grade": "C",
     "grade_reason": "total estimators differ by -4.6 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1628,7 +2098,7 @@
    "date": "2026-11-18",
    "published_line": 2.5,
    "published_total": 227.1,
-   "row_hash": "856ac82dbe6826f21c4f9ca3123294c4bfca88dd866064155ffff7d062e5b8ad",
+   "row_hash": "643044f27716fdea8c62bd22bbb6e90fc7a8883b05632154fb1786ced59c660d",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1662,6 +2132,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.19,
     "est_a": 2.5,
@@ -1669,9 +2156,9 @@
     "agreement": 0.0,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1682,7 +2169,7 @@
    "date": "2026-11-18",
    "published_line": 6.5,
    "published_total": 220.4,
-   "row_hash": "36846e0b9ca4e32eaaf64b0c76dad5580f443fab537f830d9973faff211a5a62",
+   "row_hash": "baa492d4dd660b7e0baf181633960746adf79fd5e29c00554a9ce233fccaf171",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1716,6 +2203,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.51,
     "est_a": 6.5,
@@ -1723,9 +2227,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1736,7 +2240,7 @@
    "date": "2026-11-18",
    "published_line": 6.0,
    "published_total": 228.5,
-   "row_hash": "ac56282b093d73f7b41a77f7ab28e28603651762be5c68483a22bee00a2a9d98",
+   "row_hash": "33b22158c8ebafe9a4fdd4bd1be7225d810c1e78d00b792223500c97c5727fc5",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1770,6 +2274,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 0.44,
     "est_a": 5.5,
@@ -1777,9 +2298,9 @@
     "agreement": 0.5,
     "grade": "B",
     "grade_reason": "passes minimum gates; below the A bar",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"
@@ -1790,7 +2311,7 @@
    "date": "2026-11-18",
    "published_line": -16.0,
    "published_total": 229.4,
-   "row_hash": "5b11b90daa3281b14be89171e4e2f71cdb318e3c8c71175a018393ce37ad7636",
+   "row_hash": "6e66e6f98c0115180fc0a84edc6c22c0e13f534cc11606b93b06b2d536326f3d",
    "hash_alg": "sha256",
    "row_payload": {
     "date": "2026-11-18",
@@ -1824,6 +2345,23 @@
     "market_line": null,
     "market_blended": null,
     "market_note": "model line + closing line weighted by OOS log-loss (w_mkt = (1/LL_mkt)/(1/LL_mkt + 1/LL_model)); closing line not available \u2014 flagged FLAG-V2-NO-MARKET-PRICE, never filled",
+    "gate_blockers": [
+     {
+      "gate": "G6",
+      "short": "no dated market price",
+      "reason": "no dated market price for this game id; a projection without a price cannot be staked, sized, or graded against the close"
+     },
+     {
+      "gate": "G7",
+      "short": "settlement 10/300 of our own lines scored",
+      "reason": "10 of our own sealed lines have been scored against official finals; the promotion bar is 300"
+     },
+     {
+      "gate": "G2",
+      "short": "availability not filed: NOT_IN_DOCUMENT",
+      "reason": "availability for this game is not fully filed in the 2026-11-15 report (NOT_IN_DOCUMENT); the line is published, the pick is not"
+     }
+    ],
     "sigma": 13.06,
     "conviction": 1.22,
     "est_a": -16.0,
@@ -1831,9 +2369,9 @@
     "agreement": 0.0,
     "grade": "A",
     "grade_reason": "estimators agree \u22641.0 pts, |margin| \u2265 0.75\u03c3, totals agree \u22642.0 pts",
-    "pick_status": "WITHHELD (gate G6 no market price, G7 no settlement data)"
+    "pick_status": "WITHHELD (G6 no dated market price; G7 settlement 10/300 of our own lines scored; G2 availability not filed: NOT_IN_DOCUMENT)"
    },
-   "published_at_utc": "2026-11-15T12:00:00Z",
+   "published_at_utc": "2026-11-15T11:45:00Z",
    "pre_tip": true,
    "settlement": "pending official final",
    "verify": "sha256(row_payload, sort_keys=True) must equal row_hash; the hash is committed in git before tip-off, and the same re-hash at settlement detects tampering"

@@ -38,7 +38,7 @@
     "live_value": "n/a",
     "result": "ERROR",
     "detail": "'columns'",
-    "src": "https://www.nba.com/schedule?date=2026-11-15"
+    "src": "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
    },
    {
     "id": "finals-reconstruction",
@@ -61,10 +61,10 @@
    {
     "id": "injury-filing",
     "what": "Club filing state for every slate game \u2014 a non-filed club is not an available club",
-    "repo_value": "22 slate games",
-    "live_value": "44 club-slots: 16 filed, 1 filed clean, 17 NOT YET SUBMITTED",
+    "repo_value": "34 slate games",
+    "live_value": "68 club-slots: 16 filed, 1 filed clean, 17 NOT YET SUBMITTED",
     "result": "CHECK",
-    "detail": "FILED=16; FILED_CLEAN=1; NOT_IN_DOCUMENT=10; NOT_SUBMITTED=17 \u2014 an unfiled club is priced availability-blind and its line carries the gate that documents it (see gate G2 and the pick_status column)",
+    "detail": "FILED=16; FILED_CLEAN=1; NOT_IN_DOCUMENT=34; NOT_SUBMITTED=17 \u2014 an unfiled club is priced availability-blind and its line carries the gate that documents it (see gate G2 and the pick_status column)",
     "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"
    },
    {
@@ -128,7 +128,7 @@
    "fields": "The 188 finals from 2026-10-20 through 2026-11-14: both team scores, quarter scores where a game page or game book was read, and the per-game URL."
   },
   "schedule": {
-   "url": "https://www.nba.com/schedule?date=2026-11-15",
+   "url": "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)",
    "fields": "Game IDs, ET tip times, arenas, cities, national broadcast."
   },
   "games_2026_11_14": {

@@ -77,7 +77,7 @@
    "Correlation honesty",
    "No parlay priced by multiplying legs unless the leg correlation is measured or bounded.",
    "PROPOSED \u2014 policy",
-   "https://www.nba.com/schedule?date=2026-11-15",
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)",
    "Same-game legs are not independent; the error is one-sided and expensive."
   ],
   [
@@ -129,7 +129,7 @@
    "gates_that_fail_today": "G6,G7",
    "status": "BLOCKED \u2014 legs have no price",
    "why": "Cross-game independence is a stated assumption, not a measurement; and the compounded hold makes it worse than two singles at equal edge.",
-   "src": "https://www.nba.com/schedule?date=2026-11-15"
+   "src": "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   },
   {
    "id": "S4",
@@ -203,7 +203,7 @@
    "A pick must be published before tip and be sealed with a hash",
    "Prevents back-filling a winning pick after the result is known.",
    "PROPOSED",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "Unit accounting",
@@ -588,7 +588,7 @@
    "The covariance of (margin, total) over settled games.",
    "Pull per-game final scores (SG-2) and compute Pearson/Spearman on \u2265300 games, per team and league-wide.",
    "Blocks every same-game parlay (S4) and gate G10.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "Q-2",
@@ -606,7 +606,7 @@
    "Whether shared slate conditions (travel, referee crews, league-wide pace nights) induce any correlation.",
    "Regression of leg A's result on leg B's across \u22651,000 parlays with no shared team.",
    "Blocks S3 pricing being more than an assumption.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "Q-4",
@@ -678,7 +678,7 @@
    "Archival storage of the exact page (a hash of the raw bytes), not just the transcription.",
    "Store the raw fetched HTML/PDF bytes as a content-addressed artefact in the pipeline (SG-1 + SG-17).",
    "Needed before any third party trusts a published record.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "Q-12",
@@ -696,7 +696,7 @@
    "Whether any game is postponed or moved after retrieval.",
    "Re-fetch the schedule before each slate and diff (SG-1).",
    "A moved game would silently invalidate a line.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "Q-14",
@@ -894,7 +894,7 @@
    "Product",
    "The repository contains five earlier site trees (root, pages/, docs/, dashboard/, verified/, originated/) with different data.",
    "This build does not edit them; the new tree is self-contained under /site. A consolidation decision is logged on the Suggestions page.",
-   "https://www.nba.com/schedule?date=2026-11-15"
+   "https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)"
   ],
   [
    "F-012",

@@ -72,12 +72,9 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    import glob as _g
-    cands = sorted(_g.glob(str(ROOT / "data" / "raw" / "slate_*_to_*.json")))
-    cands = [c for c in cands if "_v2" not in c and "context" not in c]
-    raw = json.loads(pathlib.Path(cands[-1]).read_text())   # newest committed window snapshot
-    recs = raw.get("records") or raw.get("games") or []
     from . import official as O
+    raw = O._latest("slate_*_to_*.json")   # newest committed window snapshot (incl. capture_*/ subdirs)
+    recs = raw.get("records") or raw.get("games") or []
     n_slate = len(recs)   # the published slate must equal the raw snapshot it was transcribed from
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")

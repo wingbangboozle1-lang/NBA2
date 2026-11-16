@@ -17,6 +17,8 @@
 <a href="executive-summary.html" class="on">Executive summary</a>
 <a href="picks.html">Picks &amp; slate</a>
 <a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
 <a href="strategies.html">Strategies &amp; leaderboard</a>
 <a href="backtest.html">Backtest &amp; skill</a>
 <a href="strategy-lab.html">Strategy lab</a>
@@ -35,7 +37,14 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-  </nav>
+  <a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="verification-v3.html">v3 verification</a>
+</nav>
 </aside>
 <main>
 <h1>Executive summary</h1>
@@ -100,15 +109,15 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr></thead><tbody>
 <tr>
 <td>Games in window</td>
-<td>22</td>
-<td>2026-11-15 → 2026-11-17 (ends +3 days from snapshot; inclusive dates)</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td>34</td>
+<td>2026-11-15 → 2026-11-18 (ends +3 days from snapshot; inclusive dates)</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15 (game IDs, ET tip …</a></td>
 </tr>
 <tr>
 <td>Games verified against the official schedule</td>
-<td>22 / 22</td>
+<td>34 / 34</td>
 <td>date, tip time, arena, game id</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15 (game IDs, ET tip …</a></td>
 </tr>
 <tr>
 <td>Team records verified against nba.com/standings</td>
@@ -119,12 +128,12 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <tr>
 <td>Team records rebuilt from official final scores</td>
 <td>30 / 30</td>
-<td>every standings record reconstructed from the 183 committed finals, 0 mismatches</td>
+<td>every standings record reconstructed from the 188 committed finals, 0 mismatches</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>Official finals captured</td>
-<td>183 / 183</td>
+<td>188 / 188</td>
 <td>the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
@@ -160,7 +169,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Leans published / games staked</td>
-<td>22 / 0</td>
+<td>34 / 0</td>
 <td>every game gets an originated lean and a trigger price; no stake clears G6 and G7</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
@@ -186,7 +195,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <td>Suggestions in the register</td>
 <td>50</td>
 <td>7 of them are the numbered decision queue — see the decision queue page</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-15 (game IDs, ET tip times, arenas, cities, broadcasters)" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15 (game IDs, ET tip …</a></td>
 </tr>
 <tr>
 <td>Flagged irregularities</td>
@@ -214,8 +223,8 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Model accuracy vs the naive 'better record' rule</td>
-<td>39% vs 61%</td>
-<td>on the 33 discordant games; exact McNemar p = 0.2962</td>
+<td>41% vs 59%</td>
+<td>on the 34 discordant games; exact McNemar p = 0.3915</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
@@ -252,7 +261,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 </div>
 
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/6e7afc65-nba2</code>.
+  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
