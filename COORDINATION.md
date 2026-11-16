@@ -32,6 +32,7 @@ touches, and the verification record. **Read this before starting any task.**
 | arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
 | arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
 | arena/5a5fa7c4-nba2 | done (PRs #24/#25) | Data-window refresh + automated ingest (A-01 remediation) | 2026-11-14 day-before injury designations snapshot, pipeline integration, nightly refresh/settlement workflow with freshness gates, A-03 `.pyc` cleanup. See session section at end of board. |
+| arena/3cd85a22-nba2 | active | Independent live verification vs official NBA sources (2026-11-16) + fresh official capture | `analysis/session-3cd85a22-live-verification.md`, `verified/session-3cd85a22-live/**`, append-only `COORDINATION.md` |
 
 ## Tasks
 
@@ -4211,6 +4212,99 @@ and the protocol is to log a cross-scope request instead of editing.
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
 
+---
+
+## Session `arena/3cd85a22-nba2` — CLAIM (2026-11-16, branch `arena/3cd85a22-nba2`, base `f943bd1` = `main`)
+
+**State read at claim time (verified, not assumed).** `main` = `f943bd1`; this branch is at the same
+commit, working tree clean. `git fetch` run; `origin/main` = `f943bd1`. Open PRs: #98
+(`arena/fe0ffa49-nba2` refresh to 2026-11-16), #82, #80, #78, #72 (draft), #70. None is an
+independent-verification task.
+
+**Egress capability this session (the reason for this claim).** Prior sessions recorded that
+`cdn.nba.com`/`stats.nba.com`/`ak-static.cms.nba.com` were unreachable from bash. That is still true
+of bash, **but the platform `fetch_page` tool reaches the official sources**: `www.nba.com/standings`
+and `official.nba.com/nba-injury-report-2026-27-season/` were both read live this session
+(2026-11-16). So genuine live verification against official NBA sources is possible and was not
+possible for the earlier sessions that flagged IR-1…IR-9. The injury index now lists **11/16
+releases up to 1:00 p.m. ET** (`Injury-Report_2026-11-16_01_00PM.pdf`), while the committed
+`refresh_2026-11-16` capture is the **09:15/09:30 a.m. ET** release — a concrete freshness gap.
+
+**Task (independent verification + fresh official capture, no overlap with the open PRs).**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| V-01 | Claim + push before work | done | `COORDINATION.md` | pushed before any file was written |
+| V-02 | Live-verify committed published data line by line against official NBA sources as of 2026-11-16 (standings 30 rows, window schedule, injury report, official finals) | done | `verified/session-3cd85a22-live/**` (new) | each verified value carries its official URL + retrieval stamp; a value that cannot be confirmed is left blank and flagged |
+| V-03 | Capture the freshest official 2026-11-16 injury release (up to 1:00 p.m. ET) + standings + schedule into the same scope, with revision/retrieval stamps and the PDF URL | done | `verified/session-3cd85a22-live/**` | PDF index URL + revision time + retrieval time on every release |
+| V-04 | Re-derive and cross-check the published headline numbers (home-win rate, pinned HCA, total–margin rho, n_finals) against the live official inputs | done | `analysis/session-3cd85a22-live-verification.md` | arithmetic re-derived from the committed captures + live standings |
+| V-05 | Publish the verification report + flagged irregularities, record sources/verification in this board | done | `analysis/session-3cd85a22-live-verification.md`, `COORDINATION.md` | every flag links an official source or states why it is unverified |
+
+**Explicitly NOT touched (owned by the open PRs / shared outputs):** `data/raw/capture_2026-11-16/**`,
+`data/raw/refresh_2026-11-16/**`, `data/v2/**`, `data/v3/**`, `data/v4/**`, `data/settlement.json`,
+`nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `site/**`, `pages/**`, root `*.html`,
+`requirements/*.json`, `suggestions/*.json`, `data/raw/ledger/**` (sealed, read-only).
+
+**Rules:** no value inferred or filled; unconfirmed ⇒ blank + flag; official source linked per row;
+sealed ledgers read-only; `git pull --rebase` before every push.
+
+### Completion record — session `arena/3cd85a22-nba2` (2026-11-16, V-01…V-05)
+
+**Egress unlock (the point of this session).** `fetch_page` reaches the official sources even though
+bash cannot. Standings, schedule and the injury-report PDF were read **live** at
+`2026-11-16T18:23:30Z`. This is the first session that could re-fetch official values, so the
+"egress blocked, values cited from captures only" caveat on IR-1…IR-9 does not apply here.
+
+**Verified (re-derived / re-read, not assumed):**
+
+| ID | What was verified | Result |
+|----|-------------------|--------|
+| V-02 | Committed standings vs live [nba.com/standings](https://www.nba.com/standings) | **30/30 MATCH** (W-L + all splits) |
+| V-02 | Committed slate vs live [nba.com/schedule](https://www.nba.com/schedule?date=2026-11-16) | **29/29 MATCH** (id, date, teams, tip, arena) |
+| V-02 | Committed injury (09:30 AM ET) vs live official (01:00 PM ET) | 23 new rows, 2 real status changes, 5 mis-attributed rows (see flags) |
+| V-04 | Headline re-derivation from the 197-game official-finals pool | home-win rate **0.5204**, margin sd **16.987**, pinned HCA **0.869**, rho **−0.038** (n=196) — **all match `data/v4/model.json` exactly** |
+| V-02 | Team-stat pages (brief #22) re-read live: advanced, opponent, traditional | advanced **150/150** (OffRtg/DefRtg/NetRtg/PACE/POSS × 30), opponent **30/30** (Opp PTS), traditional **30/30** (PTS) — all MATCH |
+
+**Flags raised (published with official source links, none blocks the merge):**
+
+| ID | Finding | Source |
+|----|---------|--------|
+| F-3CD-01 | Injury freshness gap: committed capture is 09:30 AM ET; official index had moved to 01:00 PM ET; 23 player rows added | [injury index](https://official.nba.com/nba-injury-report-2026-27-season/), [01:00 PM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf) |
+| F-3CD-02 | Two status changes between releases: CLE Tyson (Q→Doubtful), MIA Larsson (Q→Doubtful) | same PDFs |
+| F-3CD-03 | Committed 09:30 AM transcript mis-attributes 5 WAS players to MEM (IR-6 block-position artefact, confirmed) | [01:00 PM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf) |
+| F-3CD-04 | Committed 09:30 AM GSW block has blank status/reason (F-V4-06 extraction artefact, confirmed) | same |
+
+**Not done (out of scope / owned elsewhere):** advancing the live site to the 11/16 v4 snapshot —
+that is open PR #98 (`arena/fe0ffa49-nba2`); this session did not rebuild or merge it. Injury PDF
+**bytes**/file SHA-256 remain unreachable (`fetch_page` returns text, bash egress to
+`ak-static.cms.nba.com` is blocked) — the same IR-2/F-V4-01 limitation. Market prices / player props
+remain unavailable, so every stake stays at 0.00 by policy.
+
+**Artefacts:** `verified/session-3cd85a22-live/{live_standings_2026-11-16.json,
+live_slate_2026-11-16.json, live_injury_report_2026-11-16_0100PM.json, verify.py,
+verification_results.json}`, `analysis/session-3cd85a22-live-verification.md`. Reproduce with
+`python3 verified/session-3cd85a22-live/verify.py`.
+
+**PR & merge result.** PR #101
+(https://github.com/wingbangboozle1-lang/NBA2/pull/101, `arena/3cd85a22-nba2` → `main`) —
+**MERGED** with `--merge` at 2026-11-16T18:33:43Z; merge commit `ca3a11697faeacc9a1c4970065a46af87c517ee5`.
+The merge required combining this session's append-only `COORDINATION.md` section with the
+concurrently-merged session `arena/72ee6841-nba2` section (PR #100); both sections were preserved
+(neither discarded). Flagged items F-3CD-01…F-3CD-04 do not block the merge and are published with
+their official source links in `analysis/session-3cd85a22-live-verification.md` for post-launch
+review. The live GitHub Pages site still serves the pre-11/16 v2 tree until open PR #98
+(`arena/fe0ffa49-nba2`) refreshes it — that refresh is not this session's scope.
+
+**PR #104 (team-stat extension).** PR #104
+(https://github.com/wingbangboozle1-lang/NBA2/pull/104, `arena/3cd85a22-nba2` → `main`) —
+**MERGED** with `--merge` at 2026-11-16T18:39:29Z; merge commit `ce5bd27d1894666e6b526520b462fa440546bfa7`.
+Carries the brief #22 team-stat re-read (advanced 150/150, opponent 30/30, traditional 30/30, all
+MATCH against the live official pages). Both PRs merged cleanly after merging `origin/main` into
+the session branch; the append-only `COORDINATION.md` sections from concurrent sessions were
+combined, never discarded.
+
+---
+
 ## Session `arena/09c0c9a2-nba2` — CLAIM (2026-11-16 UTC)
 
 **Task:** independent post-integration verification of the current `main` snapshot after PR #97, with a concise reproducible audit record. No product data or published shared tables will be edited; any confirmed defect is documented as a finding/change request rather than silently changed.
@@ -4229,8 +4323,54 @@ Files touched: only this claim/completion record and the new audit note. No sour
 - Z-02: current unit/checker/link/crosscheck results and code-level findings are in `analysis/session-09c0c9a2-audit.md`. Suites passed (79 + 146 + 67 + 53 + 49 tests); v4 gates 8/8; provenance lint 1,427 rows/50 tables; whole-site internal-link scan passed 132 files/6,378 links. `tools/crosscheck_site.py` reports 97 checks, 88 pass, 2 fail, 7 info: CC-DOC-01 stale README counts and CC-FRESH-01 stale legacy snapshot. v3 stored verification also has G-F3 (used injury report is not the newest indexed).
 - Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
 - Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
-
 ---
+
+---\n\n## Session `arena/72ee6841-nba2` — CLAIM (2026-11-16 UTC, branch `arena/72ee6841-nba2`, base `f943bd1` = `main` @ PR #97 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `f943bd1`; this branch is at the same commit, working tree clean. No other session holds an open claim.
+- Full checker chain green on the committed tree: v1 tests 79 OK, v2 tests 146 OK, v3 tests 67 OK, v4 tests 53 OK, backtest tests 49 OK;
+  `python -m nba2.v2` builds 24 pages (0 structural, 0 semantic); `python -m nba2.v3` builds 12 pages (gates 7 pass / 1 advisory fail);
+  `python -m nba2.v4` builds 5 pages (8/8 gates pass, publishable=True); `python -m nba2.pipeline.lint` OK;
+  `tools/check_links_all.py` ALL INTERNAL LINKS OK.
+- GitHub Pages API: `build_type: legacy`, `source: main /`, URL `https://wingbangboozle1-lang.github.io/NBA2/`. The live site serves the `site/` tree for v4 paths (projection/bet/settle confirmed live post-PR #95). The bare-root source setting is FLAG-PAGES-01 / F-033 — an owner decision, not changed silently here.
+- Sandbox bash egress to nba.com hosts is blocked (HTTP 000); official re-verification runs through the platform page-fetch tool, and every capture records its method. Direct `curl`/`urllib` to nba.com cannot be used from this sandbox.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim section + completion record, append-only.
+- Regenerated artefacts of the committed generators: `site/**`, `data/v2/**`, `data/v4/**`, `data/site.json` — only as direct output of `python -m nba2.v2` / `python -m nba2.v4`, never hand-edited.
+- `README.md` — stale count sync only (regenerated from the build), prose preserved.
+- `.github/workflows/pages.yml` and `.github/workflows/publish-parity.yml` — only to confirm the v4 build step and parity diff are present and correct (no schedule change).
+
+**Explicitly NOT edited (owned by finished sessions; a change request is logged instead):**
+`nba2/**` other than regeneration outputs · `pages/**` (v1, owned by PR #70/#72 scope) · root `*.html` · `flagged.html` ·
+`css/**` · `app.js` · `build_site.py` · `docs/**` · `dashboard/**` · `originated/**` · `verified/**` · `archive/**` ·
+`backtest/**` · `tools/**` · `scripts/**` · `data/raw/ledger/**` (sealed — read only) · `data/raw/*.json` existing snapshots ·
+`.github/workflows/refresh.yml`, `ci.yml`, `v2-verify.yml` (owned by the refresh/ingest sessions).
+
+**Rules this session holds itself to:** a value is published only if fetched from an official source (nba.com /
+ak-static.cms.nba.com / official.nba.com) in this session or reproduced from a committed snapshot by running the committed
+code; unconfirmed ⇒ blank + flagged, never inferred; sealed ledgers are never rewritten; nothing is called verified that was not
+fetched or reproduced; flagged irregularities do not block the merge but appear on the Flagged for Review page with their source
+link; the site is never merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| I1 | Board claim + push before work | done | `COORDINATION.md` (this section) | pushed immediately |
+| I2 | Re-verify committed official snapshot against live official NBA sources (schedule, standings, injury report) | done | `audit/session-72ee6841-nba2/**` (new) | value + official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flagged |
+| I3 | Line-by-line repo review for irregularities; publish to Flagged for Review with source links | done | `audit/session-72ee6841-nba2/repo-review.md` + flagged entries | each irregularity carries an official source link or a reason |
+| I4 | Confirm full checker chain green after rebuild (tests + lint + v2/v3/v4 checks + links) | done | `nba2/`, `site/`, `data/v2/`, `data/v4/` | every checker green; build is a fixed point |
+| I5 | Confirm the live GitHub Pages site builds and serves content | done | workflows (read-only) + live fetch | every checker green; live fetch returns content |
+| I6 | Final integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result here | done | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+
+### Completion record — `arena/72ee6841-nba2` (2026-11-16)
+
+- I1: claim committed as `326019a` and pushed to `arena/72ee6841-nba2` before any file edit; rebased onto `origin/main` (`197d63d`, PR #99) and force-with-lease pushed.
+- I2: schedule, standings and injury-report index re-verified against live official NBA sources (nba.com/schedule, nba.com/standings, official.nba.com injury-report index); 34/34 slate games and 30/30 standings records identical; filing deadlines quoted verbatim. Recorded in `audit/session-72ee6841-nba2/repo-review.md`.
+- I3: line-by-line repo review published in `audit/session-72ee6841-nba2/repo-review.md`; irregularities I-72EE-01…07 documented with official source links, none estimated.
+- I4: full checker chain green — 79 + 146 + 67 + 53 + 49 tests; v2/v3/v4 builds all pass; lint OK (1,427 rows / 50 tables); check_links_all OK (6,234 internal links); sealed ledgers verified.
+- I5: live site confirmed serving post-deploy; https://wingbangboozle1-lang.github.io/NBA2/ returns content. Bare root serves the legacy v1 tree (FLAG-PAGES-01 / F-033 — owner decision, not changed silently).
+- I6: PR #100 (`arena/72ee6841-nba2` → `main`) merged with `--merge` at 2026-11-16, merge commit `66539b33fbcbb89aeea37b6c774d7d11bb8c68ca`; PR: https://github.com/wingbangboozle1-lang/NBA2/pull/100. All checks passed (verify, parity, v2, backtest). GitHub Pages deploy succeeded: Publish GitHub Pages run 43929685386 (success), pages build and deployment run 43929683217 (success). Live site: https://wingbangboozle1-lang.github.io/NBA2/. No product data, model output, sealed ledger, or published page was altered — verification + documentation session only.
 
 ## Session `arena/2d910a64-nba2` — CLAIM (2026-11-16 UTC)
 
@@ -4324,3 +4464,12 @@ no run of the changed Actions workflow against live NBA endpoints is claimed. PR
 scope and PR #100's changed files were checked; none of their branch-specific data, product,
 or audit files were edited. `COORDINATION.md` was updated only by this append-only completion
 record under the shared-board protocol.
+
+### Main synchronization conflict resolution — 2026-11-16 UTC
+
+After commit `42dd2bb`, `origin/main` advanced from `197d63d` to `26b646a` with PRs #100,
+#101, #102, #104, and #105. The changed-file comparison showed that the only overlap was
+this shared append-only `COORDINATION.md`; upstream's complete board is retained verbatim,
+and this session's full claim, scope pivot, conflict notes, and completion record are appended
+below it. The other upstream verification files are retained. No PR-specific audit or product
+file was edited by this synchronization.
