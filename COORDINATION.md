@@ -3402,3 +3402,56 @@ should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, k
   here as a cross-surface edit to `arena/e675ac3d-nba2`'s file scope.
 * Post-rebase full chain re-run exactly as `pages.yml`: `nba2.v2` → `nba2.v2.check` → `nba2.v3`
   → `nba2.v3.check` → 33 v3 + 129 v2 + 70 v1 + 49 backtest tests — all green.
+
+---
+
+## Session `arena/55ef5064-nba2` — CLAIM (2026-11-16 00:25 UTC, branch `arena/55ef5064-nba2`, base `8ab2476` = `main` @ PR #74 merge)
+
+**State read at claim time.** `main` = `8ab2476354366751347c33d423f1033376175447`, working tree
+clean, this branch at the same commit. Local gates green before any edit: 70 v1 + 129 v2 + 33 v3
++ 49 backtest tests OK; `nba2.v2.check` 0/0; `nba2.v3.check` OK (7 gates pass / 1 fail,
+publishable=True). Two pull requests are open from sessions whose claims are stale under the
+board's 60-minute rule (no commits for >11 hours): **PR #70** (`arena/d09f8d1e-nba2`, open, last
+commit 2026-11-15 13:03 UTC) and **PR #72** (`arena/04a61ac0-nba2`, draft, last commit
+2026-11-15 12:33 UTC). Both are CONFLICTING against `main`. Per the handoff rule this session
+**takes over both**, integrating their work rather than duplicating it, and records the handoff
+here. Additionally the scheduled `Nightly ingest + settlement` job is failing on `main` (runs
+43725486781 and 43751588814, step "Fetch official finals for arrived window dates", exit 3 =
+every official endpoint unreachable — TLS EOF on `cdn.nba.com` and `stats.nba.com` from the
+runner, while `official.nba.com` answered in the same job). That defect (F-043) is unclaimed
+work: `nba2/pipeline/refresh.py` is named in no open claim.
+
+**Why this session exists (the 2026-11-16 brief).** Final integration: take over the two stale
+PRs, resolve their conflicts against `main` without discarding either side's work, repair the
+failing scheduled job with measured evidence (not assumption), re-run the whole verification
+chain on the combined tree, then PR → `main` → merge without waiting → confirm GitHub Pages
+deploys → record the PR link and merge result here.
+
+**File scope claimed (this session):**
+* `COORDINATION.md` (append-only, plus conflict-resolution merges of the two stale PRs' sections)
+* everything named in PR #70's and PR #72's file lists (taken over per the handoff rule):
+  `tools/**`, `.github/workflows/{ci,probe,refresh}.yml`, `nba2/tests/**`, `nba2/v2/**`,
+  `nba2/pipeline/build_site_data.py`, `audit/**` (their dated dirs), `data/raw/**` (their new
+  dated snapshots only), `data/v2/**`, `data/site.json`, `data/settlement.json`, `site/**`,
+  `pages/**`, `index.html`, `README.md`, `requirements/*.json`, `suggestions/SUGGESTIONS.json`,
+  `analysis/session-{03a581a0,f95ac5bc,04a61ac0,d09f8d1e}-*`
+* `nba2/pipeline/refresh.py` (unclaimed — F-043 finals-fetch repair, only after probe evidence)
+* `analysis/session-55ef5064-*` (new notes)
+
+**Not claimed / not edited:** `nba2/v3/**` (green as merged; only its tests run), `docs/**`,
+`dashboard/**`, `verified/**`, `originated/**`, `backtest/**`, `archive/**`, sealed ledgers
+`data/raw/ledger/**` (verified before and after every commit, never rewritten).
+
+**Rules (same as the board's).** Claim pushed before work; small frequent commits;
+`git pull --rebase` before every push; no value committed unless confirmed from an official
+source — otherwise blank + Flagged; generated trees are rebuilt, never hand-edited; the site is
+never merged broken.
+
+| ID | Task | Status | Notes |
+|---|---|---|---|
+| W-01 | Board claim + push before any edit | in progress (this entry) | pushed immediately |
+| W-02 | Take over PR #72 (official capture + gates) and PR #70 (crosscheck gate + probe + salvage); merge both into this branch; resolve conflicts keeping both sides; rebuild generated trees | unclaimed→in progress | stale-PR handoff rule; generated artefacts rebuilt, not side-picked |
+| W-03 | F-043: run the official-source probe from this branch (annotations channel), measure which endpoints the Actions runner can reach, repair `nba2/pipeline/refresh.py` finals fetch accordingly or record why it cannot be repaired | unclaimed→in progress | evidence before any code change |
+| W-04 | Wire CR-D9-1: `tools/crosscheck_gate.sh` + failure-time diagnostics job into `refresh.yml` (the yielded file's two remaining gaps) | unclaimed→in progress | one-line gate replacement + diagnostics job from `d3d8428` |
+| W-05 | Full verification chain on the combined tree (v1+v2+v3+backtest suites, both checks, crosscheck gate, link check, provenance lint, seal verify, rebuild parity) | unclaimed→in progress | every command's output recorded in `analysis/session-55ef5064-*.md` |
+| W-06 | PR → `main` → merge without approval → confirm Pages deploy → record PR link + merge result + run IDs here | unclaimed→in progress | `gh pr create` / `gh pr merge` / `gh run list` / live probe |
