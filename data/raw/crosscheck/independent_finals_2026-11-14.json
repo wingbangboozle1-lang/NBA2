@@ -1,0 +1,159 @@
+{
+ "schema": "nba2.games.v2",
+ "captured_utc": "2026-11-15T11:45:00Z",
+ "session": "arena/04a61ac0-nba2",
+ "meaning": "official final scores with quarter scores, captured 2026-11-15 from the game page and the official game book; the two documents agree on every line",
+ "n_games": 5,
+ "date_range": [
+  "2026-11-14",
+  "2026-11-14"
+ ],
+ "retrieval_method": "platform page-fetch tool (fetch_page). Direct TLS egress from this workspace to every nba.com host is blocked; the tool reaches the same URLs, which is recorded rather than worked around. Each document below carries the URL it was read from.",
+ "source_pages": [
+  "https://www.nba.com/games?date=2026-11-14",
+  "https://www.nba.com/schedule?date=2026-11-15"
+ ],
+ "games": [
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "quarters": {
+    "away": [
+     29,
+     27,
+     30,
+     30
+    ],
+    "home": [
+     23,
+     28,
+     31,
+     26
+    ]
+   },
+   "arena": "Smoothie King Center",
+   "status": "final",
+   "quarter_source_game_page": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "quarters": {
+    "away": [
+     33,
+     20,
+     38,
+     26
+    ],
+    "home": [
+     33,
+     38,
+     34,
+     22
+    ]
+   },
+   "arena": "Rocket Arena",
+   "status": "final",
+   "quarter_source_game_page": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "quarters": {
+    "away": [
+     39,
+     21,
+     26,
+     31
+    ],
+    "home": [
+     37,
+     31,
+     35,
+     34
+    ]
+   },
+   "arena": "Kaseya Center",
+   "status": "final",
+   "quarter_source_game_page": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "quarters": {
+    "away": [
+     23,
+     31,
+     30,
+     26
+    ],
+    "home": [
+     38,
+     33,
+     32,
+     26
+    ]
+   },
+   "arena": "FedExForum",
+   "status": "final",
+   "quarter_source_game_page": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "quarters": {
+    "away": [
+     29,
+     29,
+     30,
+     29
+    ],
+    "home": [
+     17,
+     28,
+     35,
+     26
+    ]
+   },
+   "arena": "Target Center",
+   "status": "final",
+   "quarter_source_game_page": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "list_url": "https://www.nba.com/games?date=2026-11-14"
+  }
+ ],
+ "role": "Independent cross-check of the 2026-11-14 official finals and quarter scores, transcribed by session arena/04a61ac0-nba2 from the NBA.com game page AND the referees' game-book PDF. Every row agrees exactly with the canonical data/raw/history/games_2026-11-14.json on the final score and on every period. It is filed under a name the committed-history loader does not pick up, so the canonical history is not double-counted; it exists so a reviewer can confirm the agreement without re-reading the sources."
+}

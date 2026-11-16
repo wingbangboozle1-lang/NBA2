@@ -36,7 +36,10 @@
      26
     ],
     "ot": null
-   }
+   },
+   "quarter_source_game_page": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+   "quarter_cross_check": "independently transcribed from the official game page AND the official referees' game book; the two sources agree on every period and on the final"
   },
   {
    "game_id": "0022600232",
@@ -62,7 +65,10 @@
      22
     ],
     "ot": null
-   }
+   },
+   "quarter_source_game_page": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+   "quarter_cross_check": "independently transcribed from the official game page AND the official referees' game book; the two sources agree on every period and on the final"
   },
   {
    "game_id": "0022600233",
@@ -88,7 +94,10 @@
      34
     ],
     "ot": null
-   }
+   },
+   "quarter_source_game_page": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+   "quarter_cross_check": "independently transcribed from the official game page AND the official referees' game book; the two sources agree on every period and on the final"
   },
   {
    "game_id": "0022600234",
@@ -114,7 +123,10 @@
      26
     ],
     "ot": null
-   }
+   },
+   "quarter_source_game_page": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+   "quarter_cross_check": "independently transcribed from the official game page AND the official referees' game book; the two sources agree on every period and on the final"
   },
   {
    "game_id": "0022600235",
@@ -140,7 +152,11 @@
      26
     ],
     "ot": null
-   }
+   },
+   "quarter_source_game_page": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "quarter_source_game_book": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+   "quarter_cross_check": "independently transcribed from the official game page AND the official referees' game book; the two sources agree on every period and on the final"
   }
- ]
+ ],
+ "quarter_provenance_note": "Each 2026-11-14 row carries the two official pages its quarter scores were read from (the NBA.com game page and the referees' game-book PDF), cross-checked against the independent transcription in data/raw/finals_2026-11-14.json."
 }
