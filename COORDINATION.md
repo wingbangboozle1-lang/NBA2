@@ -4210,3 +4210,28 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+---
+
+## Session `arena/2d910a64-nba2` — CLAIM (2026-11-16 UTC)
+
+**Task:** take over the stale current-state audit registry entry `arena/9707c113-nba2` and
+independently check the merged `main` tree at `f943bd1b2c39244b739053eeeaa28eb8e3c162e9`.
+The previous audit report is dated 2026-11-14; GitHub reports its last commit as
+`5f9ae4dc4a5ea5c35341c979fdcc6f64189a787c` at 2026-11-14T00:57:51Z (well over the 60-minute
+handoff threshold), and the current snapshot has since merged PR #97. This is a handoff of the
+stale audit work only; the old report is preserved unchanged.
+
+**Scope:** new `analysis/session-2d910a64-audit.md` and append-only `COORDINATION.md` only.
+This is a read-only audit of repo claims, current workflow/build gates, and locally reproducible
+checks. It does not edit NBA values, the model, site pages, generated data, or workflows.
+PR #98 (`arena/fe0ffa49-nba2`) is open and owns the 2026-11-16 refresh/model/site files; this
+session will not touch its files. No separate work branch will be created: the platform-fixed
+branch for this session is `arena/2d910a64-nba2`.
+
+| ID | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| 2D-1 | Claim + stale-audit handoff | in progress | `COORDINATION.md` | claim pushed before further work |
+| 2D-2 | Independent current-tree audit of requirement coverage, provenance boundaries, and CI evidence | pending | `analysis/session-2d910a64-audit.md` | distinguish local reproducibility from a fresh official-source read; no unverified value promoted |
+| 2D-3 | Run independent local test/build/link checks and record exact results | pending | report only | commands/results captured; no generated artefact or data changes |
+| 2D-4 | Log scoped findings, official manual-review links, and unresolved requests | pending | report + append-only board | each factual assertion tied to a repository file, CI run, GitHub record, or official URL |
