@@ -67,17 +67,37 @@ class TestOfficialSnapshot(unittest.TestCase):
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
     def test_slate_is_34_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 34)
+        # The window is T+0..T+3 inclusive and rolls with AS_OF, so both ends are asserted
+        # against the snapshot rather than against a date remembered from an earlier session.
+        self.assertEqual(len(O.SLATE), 29)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-15")
-        self.assertEqual(dates[-1], "2026-11-18")
-        self.assertEqual(len(dates), 4)
+        self.assertEqual(dates[0], O.WINDOW_START)
+        self.assertEqual(dates[-1], O.WINDOW_END)
+        self.assertEqual(len(dates), 4)                       # T+0, T+1, T+2, T+3
+        from datetime import date
+        d0 = date.fromisoformat(O.WINDOW_START)
+        d1 = date.fromisoformat(O.WINDOW_END)
+        self.assertEqual((d1 - d0).days, 3)                   # "3 days in advance"
+        self.assertEqual(O.WINDOW_START, O.AS_OF)             # the window starts today
 
     def test_per_day_counts_match_official_grid(self):
         # counts read off the official schedule pages (nba.com/schedule, day-strip cross-check)
         from collections import Counter
         c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5, "2026-11-18": 12})
+        # The window rolls daily, so the expected grid is derived from the snapshot's own
+        # WINDOW_START/WINDOW_END and the per-date counts read off the official calendar at
+        # capture time. Hard-coded per-date counts are committed next to the capture so the
+        # grid is still checked against an official source, not against the build itself.
+        import json
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        cap = json.loads((root / "data" / "raw" / "capture_2026-11-16" /
+                          "slate_2026-11-16_to_11-19.json").read_text())
+        grid = {}
+        for g in cap["games"]:
+            grid[g["date"]] = grid.get(g["date"], 0) + 1
+        self.assertEqual(dict(c), grid)
+        self.assertEqual((O.WINDOW_START, O.WINDOW_END), ("2026-11-16", "2026-11-19"))
 
     def test_window_is_exactly_three_days_ahead(self):
         import datetime as _dt
@@ -98,6 +118,13 @@ class TestOfficialSnapshot(unittest.TestCase):
     def test_injury_rows_have_valid_status(self):
         allowed = {"Out", "Doubtful", "Questionable", "Probable", "Available"}
         for row in O.INJURIES:
+            if row[7] == "S":
+                # FLAG-FE0-INJ-SHIFT: the PDF text layer puts this player's reason in the
+                # status cell and leaves the reason cell empty, so the status is genuinely
+                # unreadable. It must be stored blank and never guessed -- assert that here.
+                self.assertEqual(row[5], "", row)
+                self.assertTrue(row[6], row)
+                continue
             self.assertIn(row[5], allowed, row)
 
     def test_every_injury_row_carries_a_source(self):

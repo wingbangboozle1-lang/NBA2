@@ -600,6 +600,50 @@
       "risk": "None: the market weight is 0 and the blended line equals the model line until a feed exists.",
       "recommendation": "Accept; the model-side measurement is already in place.",
       "status": "applied in this PR"
+    },
+    {
+      "id": "S-56",
+      "title": "Derive every published count from the model, never from a literal",
+      "problem": "The front page asserted 188 finals, a 34-game window, 167 graded games and 0/30 luck outliers as literal strings. All four were false after the snapshot moved and no check noticed.",
+      "proposal": "Ban bare integer literals in build.py page copy that name a data count; lint for it, and route every such number through the module that computes it.",
+      "benefit": "The site stops lying quietly the day the results feed appends a night.",
+      "effort": "S — lint rule plus the substitutions already made",
+      "risk": "Low; a few places will need an explicit 'this really is a constant' marker.",
+      "recommendation": "Accept — this is the class of bug that erodes trust fastest.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-57",
+      "title": "Advance any dated fixture before using it as a comparison baseline",
+      "problem": "The staleness detector compared a live table against a 2026-11-14 audit fixture without bringing the fixture forward, so nine new finals reported as 18 rows of unexplained drift.",
+      "proposal": "Give every dated fixture a last_date field and a helper that applies all committed finals after it, unioned by game_id, before any comparison.",
+      "benefit": "Unexplained drift becomes a real signal again instead of a nightly false alarm.",
+      "effort": "S — helper plus three call sites",
+      "risk": "None.",
+      "recommendation": "Accept.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-58",
+      "title": "Select inputs by freshness, not by hard-wired filename",
+      "problem": "The injury banner read one hard-wired transcript while official.py carried a newer release, so the banner and the table could disagree. The league publishes every 15 minutes; a hard-wired path cannot keep up.",
+      "proposal": "For every rolling input (injury PDF, slate, standings) resolve the newest committed capture at load time by its own retrieved_at_utc, and stamp the page with which file won.",
+      "benefit": "Provenance stops being a thing a session has to remember to update.",
+      "effort": "S–M",
+      "risk": "A malformed newer capture could win; guard by requiring a parseable stamp.",
+      "recommendation": "Accept — done for the injury feed, extend to the rest.",
+      "status": "awaiting owner decision"
+    },
+    {
+      "id": "S-59",
+      "title": "Label frozen snapshot trees wherever they are published",
+      "problem": "The v3 tree must keep its 2026-11-15 window forever because its ledger is sealed for it, but nothing told a reader why those dates sat beside a newer window on the same site.",
+      "proposal": "Keep the freeze banner, and add a rule: any page tree whose window differs from the newest committed slate must carry a banner naming the newer window before it can be published.",
+      "benefit": "A reader can tell a dated record from a contradiction without reading the repo.",
+      "effort": "S",
+      "risk": "None.",
+      "recommendation": "Accept.",
+      "status": "awaiting owner decision"
     }
   ]
 }

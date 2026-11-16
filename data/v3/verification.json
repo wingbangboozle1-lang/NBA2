@@ -50,11 +50,14 @@
         "id": "G-F5",
         "name": "record arithmetic",
         "pass": true,
-        "detail": "188 wins / 188 losses vs 188 official finals",
+        "detail": "188 wins / 188 losses vs 188 official finals played on or before 2026-11-14 (the snapshot's as-of date minus one day); 9 newer final(s) are committed and not yet reflected in this snapshot",
         "value": {
           "wins": 188,
           "losses": 188,
-          "finals": 188
+          "finals_at_as_of": 188,
+          "cutoff_date": "2026-11-14",
+          "finals_committed_now": 197,
+          "finals_added_since_snapshot": 9
         }
       },
       {
@@ -287,7 +290,9 @@
     "file": "data/v3/ledger/sealed-2026-11-15.json",
     "digest": "34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91",
     "n": 34,
-    "settled": false
+    "settled": false,
+    "rewritten": false,
+    "divergence": "data/v3/ledger/seal-divergence-2026-11-15.json"
   },
   "settlement": null,
   "prereg": [

@@ -71,9 +71,9 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json").read_text())
+    raw = json.loads((ROOT / "data/raw/capture_2026-11-16/slate_2026-11-16_to_11-19.json").read_text())
     from . import official as O
-    n_slate = 34          # the 3-day window 2026-11-15 -> 2026-11-18
+    n_slate = 29          # the 3-day window 2026-11-16 -> 2026-11-19
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
     if len(raw["games"]) != n_slate:
@@ -89,10 +89,15 @@ def semantic() -> list[str]:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (188 games played through 11/14)
+    # published W/L must equal the official standings totals (197 games played through 11/15)
     from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 188:
-        problems.append("official team table no longer sums to 188 wins")
+    if sum(v[0] for v in O2.TEAMS.values()) != 197:
+        problems.append("official team table no longer sums to 197 wins")
+    if sum(v[1] for v in O2.TEAMS.values()) != 197:
+        problems.append("official team table no longer sums to 197 losses")
+    # every published slate game must exist in the committed official slate snapshot
+    if len({r["game_id"] for r in raw["games"]}) != n_slate:
+        problems.append("committed slate snapshot has duplicate game ids")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

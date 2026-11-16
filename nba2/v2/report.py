@@ -343,11 +343,18 @@ def t_injuries(teams):
         counts[team][status] += 1
         rows.append({
             "date": d, "time": tm, "matchup": matchup, "team": team, "player": player,
-            "status": status, "reason": reason,
-            "attrib": "explicit on row" if attrib == "E" else "team cell on previous page (continuation)",
+            "status": status or "not printed on the row (FLAG-FE0-INJ-SHIFT: the PDF text layer "
+                               "puts the reason in the status cell, so the status is unreadable "
+                               "and is never guessed)",
+            "reason": reason or "not printed on the row (FLAG-FE0-INJ-NOREASON: the PDF leaves "
+                                "the reason cell empty for this player)",
+            "attrib": ("explicit on row" if attrib == "E" else
+                       "team cell on previous page (continuation) — FLAG-FE0-INJ-CONT" if attrib == "C" else
+                       "FLAG-FE0-INJ-SHIFT: status cell unreadable in the PDF text layer"),
             "p_play": None,
             "src": O.INJURY_PDF_URL,
-            "flag": "" if attrib == "E" else "FLAG-V2-INJ-ATTR",
+            "flag": "" if attrib == "E" else ("FLAG-FE0-INJ-CONT" if attrib == "C"
+                                              else "FLAG-FE0-INJ-SHIFT"),
         })
     return rows, counts
 

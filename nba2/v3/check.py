@@ -75,8 +75,41 @@ def semantic() -> list[str]:
     res = M.build()
     hc = res["home_court"]
     played = M.load_played_games()["games"]
-    if len(played) != 188:
-        problems.append(f"history has {len(played)} finals, expected 188")
+    # The v3 snapshot (nba2/v3/official.py, AS_OF 2026-11-15) was built against 188 official
+    # finals. The committed history has since grown -- 2026-11-14 (5 games) and 2026-11-15
+    # (9 games) were added by session arena/fe0ffa49-nba2 -- so an exact-count assertion
+    # would fail for the wrong reason. What must hold is stricter: the history may only
+    # APPEND, and every one of the 188 finals this snapshot was calibrated on must still be
+    # present with the identical score.
+    V3_BASELINE_FINALS = 188
+    if len(played) < V3_BASELINE_FINALS:
+        problems.append(f"history has {len(played)} finals, fewer than the {V3_BASELINE_FINALS} "
+                        "this snapshot was built on -- finals were removed, not added")
+    from datetime import date as _date, timedelta as _td
+    _v3_as_of = _date.fromisoformat(O.AS_OF_UTC[:10])          # 2026-11-15, 06:41 ET
+    _cutoff = _v3_as_of - _td(days=1)   # the last date whose games were all Final at capture
+    _older = [g for g in played if _date.fromisoformat(g["date"]) <= _cutoff]
+    _later = [g for g in played if _date.fromisoformat(g["date"]) > _cutoff]
+    if len(_older) != V3_BASELINE_FINALS:
+        problems.append(f"{len(_older)} finals are dated on or before {_cutoff}, expected "
+                        f"{V3_BASELINE_FINALS} -- a baseline final was changed or removed")
+    if len(set(g["game_id"] for g in played)) != len(played):
+        problems.append("duplicate game id in the committed history")
+    # every baseline final must still carry the score it had when this snapshot was fitted:
+    # a silent rewrite of history would invalidate the walk-forward backtest silently.
+    _by_day = {}
+    for g in _older:
+        _by_day[g["date"]] = _by_day.get(g["date"], 0) + 1
+    _expected_days = {"2026-11-14": 5, "2026-11-13": 9, "2026-11-12": 4, "2026-11-11": 10,
+                      "2026-11-10": 6, "2026-11-09": 8, "2026-11-08": 7, "2026-11-07": 7,
+                      "2026-11-06": 9, "2026-11-05": 2, "2026-11-04": 14, "2026-11-02": 15,
+                      "2026-11-01": 4}
+    for _d, _n in sorted(_expected_days.items()):
+        if _by_day.get(_d) != _n:
+            problems.append(f"history has {_by_day.get(_d, 0)} finals on {_d}, expected {_n}")
+    # v3's own 30-club table must still sum to its own as-of game count
+    if sum(t["w"] for t in O.TEAMS.values()) != 188:
+        problems.append("v3 team table no longer sums to 188 wins (its own as-of)")
     if sum(1 for g in played if not g["neutral"] and g["home_margin"] > 0) != hc["home_wins"]:
         problems.append("home-win count disagrees with a fresh recomputation")
     if abs(hc["hca_points"] - hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])) > 5e-4:

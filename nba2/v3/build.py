@@ -97,6 +97,53 @@ def cell(v, fmt=None, reason="no official source"):
         return f"<td>{blank(reason)}</td>"
     return f'<td class="n">{esc(fmt(v) if fmt else v)}</td>'
 
+def _window_bounds(d: dict) -> tuple[str | None, str | None]:
+    """Read the window off a slate capture, whichever of the three committed shapes it uses.
+
+    The repository has grown three slate schemas over successive sessions -- a dict with
+    ``first_game_date``/``last_game_date``, a two-element list, and a dict with
+    ``start``/``end``. All three are committed and all three are real, so the reader has to
+    accept each rather than assume the newest one. Falls back to the dates actually present
+    on the games, and returns (None, None) when nothing can be established -- never a guess.
+    """
+    w = d.get("window")
+    if isinstance(w, dict):
+        start = w.get("start") or w.get("first_game_date")
+        end = w.get("end") or w.get("last_game_date")
+        return start, end
+    if isinstance(w, (list, tuple)) and len(w) == 2:
+        return w[0], w[1]
+    dates = sorted({g.get("date") for g in (d.get("games") or []) if g.get("date")})
+    return (dates[0], dates[-1]) if dates else (None, None)
+
+
+def newer_slate() -> dict | None:
+    """Is there a committed slate capture covering a window NEWER than this snapshot's?
+
+    The v3 tree is a pre-tip artefact: its ledger is sealed before the first tip of its own
+    window, and a seal that could be rewritten after the fact would be worthless. So v3
+    keeps its 2026-11-15 window forever and a later session publishes a newer window
+    elsewhere. A reader who lands on slate.html must be told that, in plain words, rather
+    than being left to notice that the dates are yesterday's. Returns None when this is
+    still the newest window committed.
+    """
+    patterns = ("capture_*/slate_*.json", "slate_*.json")
+    best = None
+    for pat in patterns:
+        for f in sorted((ROOT / "data" / "raw").glob(pat)):
+            try:
+                d = json.loads(f.read_text())
+            except (json.JSONDecodeError, OSError):
+                continue
+            if not isinstance(d, dict):
+                continue
+            start, end = _window_bounds(d)
+            if start and start > O.WINDOW[0]:
+                cand = {"start": start, "end": end, "path": f,
+                        "source_url": d.get("source_url") or ""}
+                if best is None or start > best["start"]:
+                    best = cand
+    return best
 
 def table(head: list[str], rows: list[str], caption: str | None = None,
           scroll: bool = True) -> str:
@@ -107,13 +154,37 @@ def table(head: list[str], rows: list[str], caption: str | None = None,
     return f'<div class="scroll">{inner}</div>' if scroll else inner
 
 
+def freeze_banner() -> str:
+    """Tell the reader, in plain words, that this tree is a frozen snapshot.
+
+    The v3 ledger is sealed before the first tip of v3's own window. That seal is the whole
+    point of the page, so the window can never be rolled forward: doing so would rewrite a
+    pre-tip commitment after the result was known. What CAN be done - and what a reader is
+    owed - is a banner saying the snapshot is frozen, what superseded it, and where to go.
+    """
+    nw = newer_slate()
+    if not nw:
+        return ""
+    rel = nw["path"].relative_to(ROOT).as_posix()
+    return (f'<div class="note warn"><b>This is a frozen pre-tip snapshot, not the current '
+            f'window.</b> Every page in the v3 tree is the {esc(O.WINDOW[0])} → '
+            f'{esc(O.WINDOW[1])} slate, hashed and sealed at {esc(O.AS_OF_UTC)} before the '
+            f'first tip of that window. The seal is write-once: a later session must not '
+            f'roll this window forward, because re-issuing a pre-tip commitment after the '
+            f'result is known would destroy the only thing the ledger proves. A newer '
+            f'window ({esc(nw["start"])} → {esc(nw["end"])}) is committed at '
+            f'<code>{esc(rel)}</code> and is what the <a href="index.html">dashboard</a> '
+            f'currently prices. Read these pages as the dated record they are.</div>')
+
+
 def page(title: str, active: str, body: str, lede: str = "") -> str:
+    _freeze_banner = freeze_banner
     nav = []
     for href, label in V2_NAV:
         cls = ' class="on"' if href == active else ""
         nav.append(f'<a href="{href}"{cls}>{label}</a>')
     nav.append('<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">'
-               '— v3 rolling slate —</a>')
+               '— v3 frozen snapshot —</a>')
     for href, label in V3_NAV + SETTLEMENT_NAV:
         cls = ' class="on"' if href == active else ""
         nav.append(f'<a href="{href}"{cls}>{label}</a>')
@@ -135,7 +206,8 @@ def page(title: str, active: str, body: str, lede: str = "") -> str:
   </nav>
 </aside>
 <main>
-<p class="crumbs"><a href="index.html">Dashboard</a> · v3 rolling slate · session {esc(O.SESSION)}</p>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v3 frozen pre-tip snapshot · session {esc(O.SESSION)}</p>
+{_freeze_banner()}
 <h1>{esc(title)}</h1>
 <p class="lede">{lede}</p>
 {body}

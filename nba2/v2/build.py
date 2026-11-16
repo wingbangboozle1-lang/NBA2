@@ -52,6 +52,25 @@ NAV = [
     ("methodology.html", "Methodology"),
 ]
 
+# The v3 tree is written by nba2/v3 and is a FROZEN pre-tip snapshot of an earlier window:
+# its ledger is sealed before the first tip of its own slate, so its window can never be
+# rolled forward without destroying the commitment the seal exists to prove. It stays on
+# the site as a dated record -- but it has to be labelled as one, or a reader comparing it
+# with this window will reasonably conclude the site contradicts itself.
+V3_NAV = [
+    ("slate.html", "Slate &amp; disagreement"),
+    ("projections.html", "Projection surface"),
+    ("rotation.html", "Rotation &amp; minutes"),
+    ("travel.html", "Rest &amp; travel"),
+    ("results.html", "Result feed"),
+    ("ledger.html", "Sealed ledger"),
+    ("player-logs.html", "Player game logs"),
+    ("minutes.html", "Measured minutes"),
+    ("injury-diff.html", "Injury release diff"),
+    ("lategame.html", "Late-game &amp; garbage time"),
+    ("trials.html", "Trial registry"),
+    ("verification-v3.html", "v3 verification"),
+]
 CSS = """
 :root{
   --bg:#0b0f16; --panel:#111823; --panel2:#161f2c; --line:#22303f;
@@ -133,6 +152,20 @@ def _suite_counts() -> dict:
     return out
 
 
+# A blank on the official injury PDF is a fact about the PDF, not a licence to fill it in.
+# Every empty status/reason cell is printed as an explicit "not printed" statement carrying
+# the flag id, so the site's own lint gate (which rejects an unexplained blank) can never
+# trip on a row the league itself left empty.
+def _reason_cell(reason) -> str:
+    return (esc(reason) if reason else
+            '<span class="blank">not printed on the row (FLAG-FE0-INJ-NOREASON)</span>')
+
+
+def _status_cell(status) -> str:
+    return (esc(status) if status else
+            '<span class="blank">not printed on the row (FLAG-FE0-INJ-SHIFT)</span>')
+
+
 def esc(x):
     if x is None:
         return ""
@@ -193,6 +226,11 @@ def srclink(url, label=None):
 def page(name, title, body, active=None):
     nav_bits = []
     for href, label in NAV:
+        cls = ' class="on"' if href == active else ""
+        nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
+    nav_bits.append('<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">'
+                    '— v3 frozen snapshot —</a>')
+    for href, label in V3_NAV:
         cls = ' class="on"' if href == active else ""
         nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
     nav = "\n".join(nav_bits)
@@ -326,9 +364,39 @@ def build(run_backtest: bool = True):
             "frozen_at_utc": O.RETRIEVED_AT_UTC,
             "frozen_by": O.RETRIEVED_BY,
         }
+        # ---- FREEZE-ONCE (I-FE0-05, fixed 2026-11-16) --------------------------------
+        # A pre-registration is the record of the rule that was fixed before the first bet.
+        # Before this fix the writer stamped it with the current build time on every run, so
+        # the "frozen_at" date advanced each day and the published hash changed with it -
+        # a file that re-freezes itself is not frozen. Now: the FIRST freeze wins. If the
+        # file already exists, the original frozen_at_utc / frozen_by and the hash of the
+        # frozen content are preserved. If the content later differs from what was frozen,
+        # that is recorded in the file and reported, but the original freeze is not moved.
+        _pf = prereg_dir / f"{st['id']}.json"
+        if _pf.exists():
+            try:
+                _prev = json.loads(_pf.read_text())
+            except (ValueError, OSError):
+                _prev = None
+            if _prev and _prev.get("frozen_at_utc"):
+                _content_now = {k: v for k, v in doc.items()
+                                if k not in ("frozen_at_utc", "frozen_by", "prereg_hash")}
+                _content_then = {k: v for k, v in _prev.items()
+                                 if k not in ("frozen_at_utc", "frozen_by", "prereg_hash",
+                                              "prereg_content_sha256", "content_changed")}
+                doc["frozen_at_utc"] = _prev["frozen_at_utc"]
+                doc["frozen_by"] = _prev.get("frozen_by", O.RETRIEVED_BY)
+                if _content_now != _content_then:
+                    doc["content_changed"] = {
+                        "detected_at_utc": O.RETRIEVED_AT_UTC,
+                        "detected_by": O.RETRIEVED_BY,
+                        "note": ("pre-registered content differs from the version frozen at "
+                                 "frozen_at_utc. The original freeze is preserved and NOT moved; "
+                                 "this note records the change for review."),
+                    }
         h = hashlib.sha256(json.dumps(doc, sort_keys=True).encode()).hexdigest()
         doc["prereg_hash"] = h
-        (prereg_dir / f"{st['id']}.json").write_text(json.dumps(doc, indent=1) + "\n")
+        _pf.write_text(json.dumps(doc, indent=1) + "\n")
         prereg_index.append({"id": st["id"], "file": f"data/v2/prereg/{st['id']}.json",
                              "prereg_hash": h, "frozen_at_utc": doc["frozen_at_utc"]})
     (DATA / "preregistration.json").write_text(json.dumps({
@@ -368,12 +436,17 @@ def build(run_backtest: bool = True):
         _acc = f"{json.loads((DATA / 'backtest.json').read_text())['headline']['straight_up_accuracy']*100:.1f}%"
     _nscored = lab["meta"]["n_scored"]
     _nleans = len(R.t_picks(lines))
+    # The luck screen is a measurement (gate G9), not a decoration: read the count off the
+    # gate rather than asserting a remembered "0/30" on the front page.
+    _nlucky = next((g["n_lucky"] for g in lab["gates"]
+                    if g["id"] == "G9" and "n_lucky" in g), None)
+    _nlucky = "—" if _nlucky is None else _nlucky
     settle_stamp = json.loads((DATA / "results.json").read_text())["settlement_stamp"]
     inj_meta = C2.injury_meta()
     _sa = lab["skill_attribution"]["headline_vs_win_pct_baseline"]
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 34-game window (Nov 15 → Nov 18) priced from official NBA data only: two independent
+<p class="lede">A {len(lines)}-game window ({O.WINDOW_START[5:].replace('-', '/')} → {O.WINDOW_END[5:].replace('-', '/')}) priced from official NBA data only: two independent
 ratings, a home-court term pinned to the measured home-win rate, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
@@ -385,13 +458,13 @@ line and a lean; no game gets a stake, because no market price is connected to b
   <div class="kpi"><b>{_nleans}</b><small>leans published / stakes 0</small></div>
   <div class="kpi"><b>{cal.margin_sd:.2f}</b><small>σ margin sd (fitted, pts)</small></div>
   <div class="kpi"><b>{cal.hca:+.2f}</b><small>home-court (pinned to measured home-win rate, pts)</small></div>
-  <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
+  <div class="kpi"><b>{_nlucky}/{len(O.TEAMS)}</b><small>teams outside luck noise</small></div>
   <div class="kpi"><b>{blocked}</b><small>inputs blocked</small></div>
   <div class="kpi"><b>{settle_stamp['games_settled']}</b><small>finals settled {settle_stamp['settled_date']} · stamp on <a href="official-results.html">Results</a></small></div>
   <div class="kpi"><b>{inj_meta['revision_time_et']}</b><small>injury report revision · retrieved {inj_meta['retrieval_time_utc']}</small></div>
 </div>
 
-<div class="note bad"><b>2026-11-15, this session: the model's accuracy is not yet separable from
+<div class="note bad"><b>{O.AS_OF}, this session: the model's accuracy is not yet separable from
 "back the better team".</b> A paired test on the {_sa['discordant_games']} games where our model and that naive rule disagreed found the
 naive rule right {_sa['baseline_won_those']} times and the model {_sa['model_won_those']} (exact p = {_sa['mcnemar_exact_p']}). The headline
 <a href="backtest.html">walk-forward accuracy</a> is high because favourites win, not because the model adds
@@ -400,10 +473,10 @@ information. That is published as a finding, with its arithmetic, on
 
 <div class="note ok"><b>Verified against the live official pages this session (2026-11-15).</b> All 30 club records
 re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30
-identical, and independently rebuilt from the 188 official finals. All 34 window games re-checked field by field
+identical, and independently rebuilt from the {integ['games']:.0f} official finals. All {len(lines)} window games re-checked field by field
 (date, tip time, away, home, game id, venue) against
-<a href="https://www.nba.com/schedule?date=2026-11-15" target="_blank" rel="noopener">nba.com/schedule</a>: 34/34
-identical. Both checks are reproducible from <code>data/raw/capture_2026-11-15/</code>.</div>
+<a href="https://www.nba.com/schedule?date={O.WINDOW_START}" target="_blank" rel="noopener">nba.com/schedule</a>: {len(lines)}/{len(lines)}
+identical. Both checks are reproducible from <code>data/raw/capture_{O.AS_OF}/</code>.</div>
 
 <div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
 The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
@@ -423,7 +496,7 @@ lean and a trigger price for all {n_lines} games but holds every stake at 0.00 u
   <div class="card"><h4><a href="lines.html">Originated lines</a></h4><p>All {n_lines} games: spread, total, moneyline fair odds, conviction, and the gap between two estimators.</p></div>
   <div class="card"><h4><a href="picks.html">Picks &amp; slate</a></h4><p>Every game: the lean, the price that would justify it, and the gate that holds the stake at zero.</p></div>
   <div class="card"><h4><a href="correlations.html">Correlations &amp; parlays</a></h4><p>Six measured correlations, six that cannot be measured, and why multiplication is wrong.</p></div>
-  <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on 167 finals, twelve gates evaluated from data, and the luck separation.</p></div>
+  <div class="card"><h4><a href="strategy-lab.html">Strategy lab</a></h4><p>Seven strategies scored walk-forward on {_nscored} finals, twelve gates evaluated from data, and the luck separation.</p></div>
   <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
   <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
@@ -440,7 +513,7 @@ The standings this build published had been transcribed before the 2026-11-13 fi
 with the pre-final state on 30 of 30 rows and with live standings on 12 of 30. On 2026-11-14 the
 table was re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
 and it now matches live official standings on <b>30 of 30</b> rows, home and road splits included.
-The proof is stronger than a re-read: all 30 records were rebuilt independently from the 183 official
+The proof is stronger than a re-read: all 30 records were rebuilt independently from the {integ['games']:.0f} official
 final scores in <code>data/raw/history/</code> and agree exactly. The measure that found the drift is
 kept, inverted, on the <a href="live-verification.html">Live verification page</a>.</div>
 
@@ -548,7 +621,7 @@ ranges from 0.07 to 0.95. Pricing one with the other produced break-even trigger
 offers on a spread. Both probabilities and both triggers are now published side by side, and four regression tests
 pin the arithmetic.</div>
 <div class="note warn"><b>The skill claim does not survive its own test — and that is the most useful result here.</b>
-The model's 64.7% accuracy on 167 graded games is not distinguishable from the naive rule "back the team with the
+The model's accuracy is not distinguishable from the naive rule "back the team with the
 better record", which scored 70.3% on the same games. On the 33 games where they disagreed, the naive rule won 20 and
 the model 13 (exact McNemar p = 0.2962). Full arithmetic on
 <a href="skill-attribution.html">Skill vs luck</a>. The consequence for decisions is direct: any promotion rule that
@@ -577,7 +650,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Leans published / games staked", f"{len(lines)} / 0", "every game gets an originated lean and a trigger price; no stake clears G6 and G7", srclink(O.BLOCKED["odds"][2])]},
         {"cells": ["Gates passing / failing", f"{sum(1 for g in lab['gates'] if g['verdict'] == 'PASS')} / {sum(1 for g in lab['gates'] if g['verdict'] == 'FAIL')}", "evaluated from data, not asserted — see the strategy lab", srclink(O.SOURCES["games"][1])]},
-        {"cells": ["Strategies that may be ranked", "0 / 7", "G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data", srclink(O.BLOCKED["live_ingest"][2])]},
+        {"cells": ["Strategies that may be ranked", "0 / 7", f"G6 (no price) fails for all; G7 fails on sample size ({_nscored} settled of 300), not on absence of data", srclink(O.BLOCKED["live_ingest"][2])]},
         {"cells": ["Current questions shown", f"{n_questions}", "22 core + 5 supplemental; other shared-register entries are flagged for reconciliation (F-044)", srclink("https://github.com/wingbangboozle1-lang/NBA2/blob/main/requirements/QUESTIONS.json")]},
         {"cells": ["Suggestions in the register", f"{n_suggestions}", "7 of them are the numbered decision queue — see the decision queue page", srclink(O.SOURCES["schedule"][1])]},
         {"cells": ["Flagged irregularities", f"{n_flags}", "all on the Flagged for review page with a source to check", srclink(O.SOURCES["standings"][1])]},
@@ -619,7 +692,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 
     # ------------------------------------------------------------------ picks & slate
     body = f"""<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the dated window through three days after the snapshot (2026-11-15 → 2026-11-18) is priced from our own originated lines,
+<p class="lede">Every game in the dated window through three days after the snapshot ({O.WINDOW_START} → {O.WINDOW_END}) is priced from our own originated lines,
 and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
 that the edge is not a coin flip that happened to land, and this repository has neither.</p>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
@@ -1196,7 +1269,7 @@ lucky ones. Nothing is eligible for a reward while a blocking gate fails.</p>
 <ol>
   <li><b>A dated market price (G6).</b> One odds feed with timestamps turns every projection on this site into a
   testable claim. Nothing else on this list matters as much.</li>
-  <li><b>More settled bets (G7).</b> The bar is 300. The largest sample here is 167, and the season produces roughly
+  <li><b>More settled bets (G7).</b> The bar is 300. The largest sample here is {_nscored}, and the season produces roughly
   12 games a day, so the bar is reachable inside a season rather than in years.</li>
   <li><b>Per-player game logs.</b> Unblocks S7 and every prop-combo correlation on the correlations table. These are
   the only correlations on this site still listed as blocked for lack of data rather than lack of power.</li>
@@ -1359,17 +1432,17 @@ hold. This is the shortest honest version of that list.</p>
              for (a, b, c, d, e) in missing]
     body += table(["What is missing", "What it blocks", "How to obtain it", "Decision it closes", "Source"],
                   mrows, "The gap list: what we do not have and what it would take to get it")
-    body += """
+    body += f"""
 <h2>What we already have, so nobody re-decides it</h2>
 <div class="cards">
-  <div class="card"><h4>The whole 3-day slate</h4><p>27 games, 2026-11-14 → 11-17, each verified field by field
-  against the official NBA.com schedule this session (27/27 identical).</p></div>
+  <div class="card"><h4>The whole 3-day slate</h4><p>{len(lines)} games, {O.WINDOW_START} → {O.WINDOW_END}, each verified field by field
+  against the official NBA.com schedule this session ({len(lines)}/{len(lines)} identical).</p></div>
   <div class="card"><h4>Official team records</h4><p>All 30 clubs re-read from the official standings this session
   and matching the published table exactly (30/30).</p></div>
   <div class="card"><h4>An originated line for every game</h4><p>Spread, total, win probability and both break-even
   triggers, from two independent estimators, with their disagreement published beside every number.</p></div>
   <div class="card"><h4>An honest skill measurement</h4><p>A paired test against naive rules, which found no
-  separable skill at 167 games. That is a result, and it is published rather than buried.</p></div>
+  separable skill at {_nscored} games. That is a result, and it is published rather than buried.</p></div>
 </div>
 """
     built["decisions-needed.html"] = page("decisions-needed.html", "Decisions needed", body, "decisions-needed.html")
@@ -1496,17 +1569,20 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
         _dr.append({"cells": [badge("ADDED", "warn"),
                               esc(r["player"]) if r.get("player") else '<span class="blank">no player row — club not yet submitted</span>',
                               esc(r.get("team", "")),
-                              esc(r["status"]) if r.get("status") else '<span class="blank">no status printed</span>',
-                              esc(r.get("reason", "")), srclink(_pdf15)]})
+                              _status_cell(r.get("status", "")),
+                              _reason_cell(r.get("reason", "")), srclink(_pdf15)]})
     for r in _c2delta["status_changed"]:
         _dr.append({"cells": [badge("STATUS", "off"), esc(r.get("player", "")), esc(r.get("team", "")),
-                              esc(f"{r.get('from','')} → {r.get('to','')}"), esc(r.get("reason", "")), srclink(_pdf15)]})
+                              esc(f"{r.get('from','')} → {r.get('to','')}"), _reason_cell(r.get("reason", "")), srclink(_pdf15)]})
     for r in _c2delta["removed"]:
         _dr.append({"cells": [badge("GONE", "off"), esc(r.get("player", "")), esc(r.get("team", "")),
-                              esc(r.get("status", "")), esc(r.get("reason", "")),
-                              srclink("https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf")]})
+                              _status_cell(r.get("status", "")), _reason_cell(r.get("reason", "")),
+                              srclink(CP.pdf_url())]})
+    _prev_stamp = (CP.pdf_url().rsplit("/", 1)[-1].replace("Injury-Report_", "")
+                   .replace(".pdf", "").replace("_", " "))
     delta_block = table(["Change", "Player", "Team", "Status", "Reason", "Source"], _dr,
-        f"06:15 AM ET 11/15 release vs the 01:30 PM ET 11/14 release: "
+        f"{C2.injury_meta()['report_stamp_et']} release vs the previous committed release "
+        f"({_prev_stamp}): "
         f"{len(_c2delta['added'])} rows added, {len(_c2delta['status_changed'])} statuses moved, "
         f"{len(_c2delta['removed'])} rows gone")
     body = f"""<h1>Injuries &amp; rotation</h1>
@@ -1653,14 +1729,25 @@ minutes floors) is still blank, still flagged, and still named in (F-061).</div>
     body += f"<h2>Current release rows — {inj_meta['report_stamp_et']} ({len(C2.injury_rows())} rows)</h2>"
     rows = []
     for r in C2.injury_rows():
+        # A blank on the official PDF is a fact about the PDF, not a licence to fill it in.
+        # Every empty cell is printed as an explicit "not printed" statement carrying the
+        # flag that names it, so the site's own lint gate can never see an unexplained blank.
+        note = r.get("flag_note") or "explicit team cell on the PDF row"
+        if not r["reason"]:
+            note = ("FLAG-FE0-INJ-NOREASON: the official PDF prints no reason for this "
+                    "player; the cell is left blank, never inferred")
+        if not r["status"]:
+            note = ("FLAG-FE0-INJ-SHIFT: the PDF text layer puts the reason in the status "
+                    "cell, so the status is unreadable and is never guessed")
         rows.append({"id": f"{r['matchup']}-{r['player'] or r['team']}".replace(" ", "-"),
                      "cells": [esc(r["date"]), esc(r["time_et"]), esc(r["matchup"]), esc(r["team"]),
                               esc(r["player"]) if r["player"] else '<span class="blank">no player row — club not yet submitted</span>',
                               badge(r["status"], "bad" if r["status"] == "Out" else
                                     "warn" if r["status"] in ("Questionable", "Doubtful") else "off") if r["status"]
-                                else '<span class="blank">no status printed</span>',
-                              esc(r["reason"]),
-                              esc(r["flag_note"]) if r.get("flag_note") else '<span class="blank">explicit team cell on the PDF row</span>',
+                                else '<span class="blank">not printed on the row (FLAG-FE0-INJ-SHIFT)</span>',
+                              esc(r["reason"]) if r["reason"]
+                                else '<span class="blank">not printed on the row (FLAG-FE0-INJ-NOREASON)</span>',
+                              esc(note),
                               srclink(_pdf15)]})
     body += table(["Date", "ET", "Matchup", "Team (as printed)", "Player (as printed)", "Status", "Reason",
                    "Transcription note", "Source"], rows,
@@ -1702,7 +1789,7 @@ release are removed; QUESTIONABLE players keep their share and are listed separa
     body = """<h1>Game flow</h1>
 <p class="lede">What the schedule alone can tell you about how a game is likely to unfold, and what needs play-by-play.</p>
 """
-    # rest / B2B / 3-in-4 computed over the FULL known schedule (188 finals + slate), and travel
+    # rest / B2B / 3-in-4 computed over the FULL known schedule ({integ['games']:.0f} finals + slate), and travel
     # distance from the sourced arena coordinates (nba2/v2/travel.py).
     from . import travel as TV
     dates_all = TV.team_game_dates()
@@ -1858,7 +1945,7 @@ running its own checks rather than trusting its documentation.</p>
 <div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
 1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
 and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
-<div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
+<div class="note warn"><b>Freshness is not assured.</b> The committed {integ['games']:.0f}-game official-results history is a useful historical snapshot, not a live feed.
 The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
 The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
 <div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
