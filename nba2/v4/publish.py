@@ -205,8 +205,11 @@ def page_projection(res: dict) -> str:
                         if d.get("n_status_blank") == 0 else
                         "listed but status unreadable (F-V4-06)")
             parts = ", ".join(f"{k} {v}" for k, v in sorted(d["by_status"].items()))
-            extra = f" +{d['n_status_blank']} blank (F-V4-06)" if d["n_status_blank"] else ""
-            return (parts or "listed, all statuses blank (F-V4-06)") + extra
+            if d["n_status_blank"] and not parts:
+                return f"listed, {d['n_status_blank']} status unreadable (F-V4-06)"
+            extra = (f" + {d['n_status_blank']} status unreadable (F-V4-06)"
+                     if d["n_status_blank"] else "")
+            return parts + extra
         avail_rows.append(
             "<tr>"
             f"<td>{esc(p['date'])}</td><td>{esc(p['matchup'])}</td>"
@@ -729,6 +732,30 @@ def rerender_verify(res: dict, settle_doc: dict | None, checks: dict) -> str:
     doc = re.sub(r"href='([^']*)'", r'href="\1"', page_verify(res, settle_doc, checks))
     (SITE / "v4-verify.html").write_text(doc)
     return "v4-verify.html"
+
+
+V4_NAV_MARKER = '<a href="projection.html"'
+
+
+def inject_nav() -> int:
+    """Idempotently add the v4 links to every published page that already has a <nav>.
+
+    v3 does the same thing for its own pages. The marker is the first v4 link, so running
+    this twice is a no-op and re-running after v3 cannot duplicate the block.
+    """
+    n = 0
+    for p in sorted(SITE.glob("*.html")):
+        if p.name in V4_PAGES:
+            continue
+        doc = p.read_text()
+        if "</nav>" not in doc or V4_NAV_MARKER in doc:
+            continue
+        block = '<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:auto">' \
+                '— v4 gated refresh —</a>\n'
+        block += "\n".join(f'<a href="{h}">{l}</a>' for h, l in V4_NAV)
+        p.write_text(doc.replace("</nav>", block + "\n</nav>", 1))
+        n += 1
+    return n
 
 
 def _injury_doc() -> dict:

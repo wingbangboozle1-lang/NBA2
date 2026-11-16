@@ -361,16 +361,21 @@ def availability_for(game: dict, rows: list[dict]) -> dict:
         placeholder = any(r["reason"] == "NOT YET SUBMITTED" for r in mine)
         counted = [r for r in mine if r["reason"] != "NOT YET SUBMITTED"]
         by_status = {}
+        blank = 0
         for r in counted:
-            key = r["status"] or "unlisted (extraction artefact)"
-            by_status[key] = by_status.get(key, 0) + 1
+            if not r["status"]:
+                # never invent a status bucket: an unread status is counted separately and
+                # flagged, so "unlisted" can never be mistaken for a league status word
+                blank += 1
+                continue
+            by_status[r["status"]] = by_status.get(r["status"], 0) + 1
         listed = sum(1 for r in counted if r["status"] in STATUS_WEIGHT)
         out[side] = {
             "team": tri, "rows": len(counted),
             "not_yet_submitted": placeholder,
             "by_status": by_status,
             "n_status_known": listed,
-            "n_status_blank": sum(1 for r in counted if not r["status"]),
+            "n_status_blank": blank,
             # production delta needs two captured games for the same club -> not computed
             "production_impact": None,
             "impact_flag": "F-V4-08 production impact needs a matched before/after pair "

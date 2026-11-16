@@ -49,6 +49,7 @@ def build() -> tuple[list[str], dict]:
     result = CH.run()
     checks["gates"] = result["gates"]
     checks["surface_wall"] = result["surface_wall"]
+    P.inject_nav()
     P.rerender_verify(res, settle_doc, checks)
     data = P.write_data(res, {k: v for k, v in settle_doc.items()}, checks)
     return pages, {"capture": written, "injury": inj, "data": data,
