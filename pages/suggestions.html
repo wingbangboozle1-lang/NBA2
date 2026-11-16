@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="54">
+    <section class="card table-card" id="suggestions" data-rows="59">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -737,8 +737,73 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
+<tr id="S-56">
+<td>S-56</td>
+<td>Stop transcribing official documents; store the rendering and parse it by content type</td>
+<td>The 70-row injury transcription published on 2026-11-16 was wrong on six rows, including a real status (Tyson, Jaylon) and five blank statuses that the PDF carried. A transcription is an interpretive step between the official document and the published table, and it fails silently.</td>
+<td>Store the verbatim rendering (nba2/v4/injury_renderings.py) and derive every cell by content type (nba2/v4/injury_parse.py), publishing an &#x27;unread&#x27; count per release. Apply the same pattern to any other document currently transcribed by hand.</td>
+<td>Every published cell traces to a stored string; a mis-read is visible as a non-zero unread count.</td>
+<td>S — done for injuries this session; the pattern is reusable</td>
+<td>The rendering still comes through a converter, so it is not the PDF itself; byte storage is S-57.</td>
+<td>Adopt as the standing rule for every document type.</td>
+<td>implemented 2026-11-16 by arena/4f780342-nba2</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-57">
+<td>S-57</td>
+<td>Run the byte-level archive and the egress probe on a schedule, then delete F-V4-01 if they pass</td>
+<td>Every session since 2026-11-14 has published &#x27;PDF not stored&#x27; because a development sandbox cannot reach the CDN. That limitation was inherited across sessions and never re-measured on a runner, so a fixable gap became a permanent-looking one.</td>
+<td>nba2/v4/injury_ingest.py now archives the bytes with a sha256 manifest, and probe-egress.yml records HTTP status and byte counts for seven official endpoints. Both run in refresh.yml. When a run stores both releases, remove F-V4-01 from the flagged list and say so.</td>
+<td>Release PDFs become reviewable from the repository; endpoint reachability becomes a dated fact.</td>
+<td>S — written; needs one scheduled run</td>
+<td>The CDN may still refuse a runner; the manifest records the exact error either way.</td>
+<td>Accept: it is already wired, and its first output settles an open question (Q-43).</td>
+<td>implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-58">
+<td>S-58</td>
+<td>Quote a settled-sample denominator on every performance claim, and never sum overlapping seals</td>
+<td>The site could quote 37 settled rows or 9 of 34, and both were arithmetically true because three seals priced overlapping dates. A reader comparing &#x27;37 graded&#x27; with &#x27;14 games played&#x27; has no way to reconcile them.</td>
+<td>Publish n_distinct_games_graded beside n_graded on every surface (done on settle.html), label repeat rows &#x27;counted once&#x27;, and require any headline hit rate to carry the denominator and the Poisson-binomial tail that judges it.</td>
+<td>A reviewer can check the arithmetic row by row, and the headline can no longer double-count.</td>
+<td>S — done for settlement; the rule should apply to the leaderboard too</td>
+<td>None identified; it only reduces a number.</td>
+<td>Adopt as policy for every metric added later.</td>
+<td>implemented 2026-11-16 by arena/4f780342-nba2</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-59">
+<td>S-59</td>
+<td>Make one failing official surface a recorded gap, not an aborted nightly run</td>
+<td>The nightly job failed 5 of 5 scheduled runs at the finals step, which skipped the injury archive, the rolling refresh, the gates and the commit. Three of the four official surfaces the brief asks for were therefore never refreshed by CI, and the cause was not recorded anywhere in the repo.</td>
+<td>refresh.yml now runs each surface as its own continue-on-error step, writes data/raw/refresh_verdict.json with each surface&#x27;s outcome, commits the captured evidence, and lets a separate `publish` job rebuild only when all four surfaces captured cleanly.</td>
+<td>Evidence is retained on a bad night; publishing still fails closed.</td>
+<td>M — done this session; needs one scheduled run to confirm</td>
+<td>Two jobs instead of one means two places to read; the verdict file is the single summary.</td>
+<td>Accept; watch the first two scheduled runs.</td>
+<td>implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-60">
+<td>S-60</td>
+<td>Settle each game date the morning after, from a gamebook, and extend the pool every night</td>
+<td>Settlement is stuck at 11/15 and the three seals stop at 11/18. The 11/16 slate completed tonight and nothing in the repository will grade it until a capture exists for 11/16 finals.</td>
+<td>The per-surface refresh already fetches finals for every arrived date; what it needs is a committed gamebook/quarter source per date and a settlement module that unions finals files by game_id and fails on disagreement (nba2/v4/settlement.py already unions and refuses to average). Add a CI assertion that every date before today has a finals file.</td>
+<td>The stamp advances every morning without a human, and the luck control accumulates a real sample.</td>
+<td>S — the union and the refusal already exist; the assertion is new</td>
+<td>An official final that later changes (a correction) would need an append-only supersede record.</td>
+<td>Accept after the next scheduled run proves the finals step works from a runner.</td>
+<td>open — proposal</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
 </tbody></table></div>
-<p class="tablenote">Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session&#x27;s opinion. Ordered by decision-quality gain per unit of effort.</p>
+<p class="tablenote">Nothing here has been implemented. Each item is written so it can be accepted, rejected or deferred on its own merits, and the Status column is the record of that decision — not of this session&#x27;s opinion. Ordered by decision-quality gain per unit of effort. | 2026-11-16 arena/4f780342-nba2: added S-56..S-60 from the injury-transcription defect, the settled-sample denominator, and the nightly-job repair. Three are implemented and awaiting a scheduled run; S-60 is a proposal.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

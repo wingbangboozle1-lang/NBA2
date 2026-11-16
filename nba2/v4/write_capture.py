@@ -102,7 +102,7 @@ def write() -> list[str]:
     written.append(str((today / "slate_2026-11-16_to_11-19.json").relative_to(ROOT)))
 
     # ------------------------------------------------------------ today: injury releases
-    # A release may be declared identical to an earlier one (see INJURY_RELEASE_0930).
+    # A release may be declared identical to an earlier one; none currently is.
     # The declaration is materialised into the written file as an explicit field, never
     # silently expanded, so the artefact says exactly what was done.
     def _materialise(rel):
@@ -116,7 +116,7 @@ def write() -> list[str]:
             "flagged": "F-V4-09",
         }
 
-    for rel in C.INJURY_RELEASES + [C.INJURY_RELEASE_0930]:
+    for rel in C.INJURY_RELEASES:
         rows, replication = _materialise(rel)
         doc = {
             "schema": "nba2.injury-transcript.v3",
@@ -124,7 +124,7 @@ def write() -> list[str]:
             "revision_time_et": rel["stamp_et"],
             "retrieved_at_utc": rel["retrieved_utc"],
             "index_checked_utc": rel["index_checked_utc"],
-            "retrieval_method": C.METHOD,
+            "retrieval_method": rel["method"],
             "provenance": {
                 "publisher": "NBA Official Injury Report (official)",
                 "url": rel["url"],

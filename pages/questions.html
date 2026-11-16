@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="39">
+    <section class="card table-card" id="questions" data-rows="43">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -462,8 +462,52 @@
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>
+<tr id="Q-40">
+<td>Q-40</td>
+<td>Was the hand-transcribed injury data the earlier sessions published actually faithful to the official PDF?</td>
+<td>Checked 2026-11-16 against the 70-row transcription committed by session arena/b3914335-nba2 (preserved byte-for-byte as data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json). It was not: Cleveland&#x27;s Tyson, Jaylon was recorded Questionable where the official 09:30 AM PDF prints Doubtful, and five Golden State rows (Curry, Moody, Porzingis, Santos, Williams) were published with a blank status although the PDF carries Out/Out/Out/Questionable/Out. The published site said &#x27;F-V4-06: status column lost in extraction&#x27;; the column was not lost, it was not read.</td>
+<td>Nothing for these two releases. The general risk remains for any release read only as text.</td>
+<td>Run python -m nba2.v4.injury_diff and read cross_session_check: every difference is listed with both PDFs linked. Fix already applied: nba2/v4/injury_parse.py assigns every cell by content type, and nba2/v4/injury_renderings.py stores the verbatim rendering instead of a transcription.</td>
+<td>High. It means the site&#x27;s injury table can understate a player&#x27;s availability, which changes the rotation estimate and therefore any line that depends on it.</td>
+<td>RESOLVED - root cause fixed, superseded file retained for review</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-41">
+<td>Q-41</td>
+<td>Do consecutive official injury releases actually change within a single day, or is the 15-minute cadence cosmetic?</td>
+<td>Measured 2026-11-16 between the 09:30 AM and 01:00 PM ET releases: two real status changes (Miami&#x27;s Larsson, Pelle Questionable to Doubtful; Memphis&#x27;s Stewart, Isaiah Questionable to Out), one reason-only change, 19 player rows added and 4 removed as clubs filed, 10 clubs still NOT YET SUBMITTED at 01:00 PM.</td>
+<td>No measurement yet of how often a changed status flips a game&#x27;s projected spread; that needs the minutes model and per-player production, which is R-044/R-102.</td>
+<td>python -m nba2.v4.injury_diff writes data/v4/injury/releases.json; the diff is rendered on v4-injuries.html.</td>
+<td>Medium. It justifies storing every release rather than one per day, and it means a line sealed at 09:30 is stale by 13:00 for at least two players.</td>
+<td>ANSWERED - measured</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-42">
+<td>Q-42</td>
+<td>Is the sealed ledger&#x27;s 9/9 winner record evidence of skill, and how should it be quoted now that more seals settled?</td>
+<td>Graded 2026-11-16 across all three seals: 37 sealed rows settled, but only 14 DISTINCT games - the seals overlap. On the distinct games the seals picked 12 winners, against 8.855 expected under their own probabilities. The Poisson-binomial chance of at least 12 is 0.0425. Summing the three seals would quote 37 games, which would be a three-fold overstatement.</td>
+<td>A settled sample large enough to separate skill from luck at a useful power. Fourteen games in one week cannot; the leaderboard stays unallocated until the gates measure.</td>
+<td>python -m nba2.v4.settlement prints the per-seal and distinct-game figures and the tail probability.</td>
+<td>High for presentation, none for staking: the bet surface still publishes zero rows. Quoting the 0.857 hit rate without the 0.0425 tail and the 14-game denominator would overstate the result.</td>
+<td>ANSWERED - with a published caveat</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-43">
+<td>Q-43</td>
+<td>Can the official injury PDFs be archived at byte level, or is F-V4-01 permanent?</td>
+<td>Partially. Bash egress to ak-static.cms.nba.com is TLS-reset from the development sandbox (reproduced 2026-11-16), so a build cannot download them. The platform page-fetch tool CAN read them, which is how the rows are stored. Byte archiving now runs from a GitHub runner via python -m nba2.v4.injury_ingest, which writes a manifest with byte length and sha256 per file, or the exact error; and .github/workflows/probe-egress.yml measures which official hosts a runner reaches.</td>
+<td>A scheduled run of probe-egress.yml and injury_ingest from a runner: their first results are what close or confirm F-V4-01. They cannot be produced from this sandbox.</td>
+<td>Read data/v4/injury/binary_manifest.json and data/raw/egress_probe.json after the next scheduled run.</td>
+<td>Medium. Without the bytes, a release can only be re-read from the live CDN, not from the repository.</td>
+<td>OPEN - measurable on the next scheduled run</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
 </tbody></table></div>
-<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked.</p>
+<p class="tablenote">Each row is a decision, not a curiosity: it says what we already have, what is missing, how to close it, and what changes in the model once it is answered. Anything I could resolve from an official source this session was resolved instead of asked. | 2026-11-16 arena/4f780342-nba2: added Q-40..Q-43 from the injury-release and settlement work; each answer is re-derivable from a committed command, and Q-40 names the exact rows where the earlier transcription was wrong.</p>
 </section>
     <footer class="footer">
       <p>Research and specification artefacts, not betting advice. No market price was available to this build;

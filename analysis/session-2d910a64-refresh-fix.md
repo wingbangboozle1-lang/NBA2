@@ -3,71 +3,85 @@
 **Date:** 2026-11-16 UTC
 **Scope:** `.github/workflows/refresh.yml`, `.github/workflows/ci.yml`,
 `tools/crosscheck_site.py`, new `tools/test_crosscheck_site.py`, this focused note, and
-append-only `COORDINATION.md`. No NBA values, frozen ledgers, or PR #98 / PR #100 audit files
-were changed. The shared coordination file was only appended under the board protocol; their
-branch-specific product and report files remain untouched.
+append-only `COORDINATION.md`. This session did not edit NBA values or frozen ledgers; the
+branch's main synchronization retains PR #103's already-merged data and code unchanged. No PR
+#98 / PR #100 audit files were edited. The shared coordination file was only appended under
+the board protocol; their branch-specific product and report files remain untouched.
 
 ## Implementation
 
-### Official-finals failures no longer short-circuit the rolling refresh
+### Finals failure is isolated from fresh rolling inputs
 
-In `.github/workflows/refresh.yml`, the official-finals fetch now has an explicit step ID and
-`continue-on-error`. The sealed-prediction settlement step runs only when that fetch step's
-`outcome` is `success`. A failed fetch emits a warning and a job-summary note; it does not
-invent a score or run the legacy settlement command. The later rolling `nba2.v2.refresh
---write` and its own source/freshness/provenance gates still run normally. The v4 freshness,
-verification, seal, and provenance steps also remain in the workflow and have not been
-weakened.
+PR #103 (`arena/4f780342-nba2`) merged a new capture/publish workflow while this work was in
+progress. The implementation was adapted to that current architecture rather than replacing
+it. The capture job still attempts the independent injury, finals, rolling, and v4 surfaces;
+its `continue-on-error` steps preserve the failure outcome while allowing later surfaces to
+run. The finals step now returns a failing outcome when the official endpoint is unreachable
+or its response is unusable, after recording the gap. No score is inferred.
 
-Before fetching finals, the workflow hashes the existing `data/settlement.json` and v4
-`data/v4/settlement/settled-*.json` files. If the fetch failed, the pre-commit step recomputes
-the aggregate and refuses to commit if any prior settlement file changed. After a passing
-rolling refresh is committed, the final step marks the overall Actions run failed so an
-unavailable settlement source remains visible to monitoring. A failed rolling-source gate
-still prevents the commit as before.
+The separate publish precheck now permits **only** a finals failure. Injury, rolling, and v4
+surface outcomes must all be `success`; a missing/unknown outcome is fail-closed. The verdict
+file must match the current Actions run ID and the capture job outputs, preventing a stale
+verdict from authorizing a rebuild. The normal v2/v3/v4 freshness and provenance checks,
+seal verification, tests, and provenance lint still run before a site commit.
 
-The semantic cross-check command was corrected to recognize its actual uppercase `[FAIL]`
-output. It blocks on other semantic failures while leaving the pre-existing legacy-snapshot
-age check (`CC-FRESH-01`) and README-count drift (`CC-DOC-01`) visible but non-gating; the
-workflow labels both exceptions. The direct rolling source gates remain mandatory.
+When the finals leg fails, the capture job restores `data/settlement.json` and
+`data/v4/settlement/**` to the checked-out commit and removes any untracked generated
+settlement files before committing capture evidence. It also refuses to commit if settlement
+files remain changed. The publish job independently refuses to commit if its rebuild changes
+any prior settlement data. Thus, if rolling inputs and their gates pass, they can still be
+published while the previous settlement remains intact. A final workflow step marks the
+overall Actions run failed after that permitted rolling publication, so monitoring does not
+report a complete settlement refresh as success.
 
-### CC-FRESH-03 now uses run conclusions
+The semantic cross-check now matches the checker's uppercase `[FAIL]` output. It blocks on
+other failures while leaving the known legacy snapshot age (`CC-FRESH-01`) and README count
+drift (`CC-DOC-01`) visible as explicitly named, non-gating checks. These exceptions do not
+weaken the direct rolling freshness/provenance gates.
+
+### CC-FRESH-03 reports the latest completed run conclusion
 
 `tools/crosscheck_site.py` requests JSON status and conclusion data for the latest main-branch
 `Nightly ingest + settlement` Actions runs, retaining scheduled/manual runs only. It excludes
-the currently executing run, chooses the latest completed run by creation time, and includes
-the run URL in the evidence. Only a latest completed `success` can yield `PASS`. A failed,
-cancelled, missing, in-progress-only, or API-unavailable result is `INFO`, never a presumed
-successful refresh.
+the current run, selects the latest completed run by creation time, and includes its URL in the
+evidence. Only a latest completed `success` can yield `PASS`. A failed, cancelled, missing,
+in-progress-only, or API-unavailable result is `INFO`, never a presumed successful refresh;
+`INFO` ensures a prior failed settlement attempt cannot block the next gated refresh.
 
-`tools/test_crosscheck_site.py` adds offline regression coverage for run selection and the
-CC-FRESH-03 verdict mapping. `.github/workflows/ci.yml` runs the suite with
+`tools/test_crosscheck_site.py` adds offline regression coverage for run selection and verdict
+mapping. `.github/workflows/ci.yml` runs it with
 `python -m unittest tools.test_crosscheck_site -v`.
 
 ## Verification
 
 - `python3 -m unittest tools.test_crosscheck_site -v` — **12 tests passed**.
 - `python3 -m py_compile tools/crosscheck_site.py tools/test_crosscheck_site.py` — passed.
-- `git diff --check` — passed.
 - Parsed both workflow files with PyYAML installed temporarily under `/tmp/nba2-pyyaml`;
   `bash -n` passed for every workflow `run` block, and all five embedded Python heredocs in
   `refresh.yml` compiled successfully.
+- Offline execution of the publish precheck against temporary verdict files: finals-only
+  failure was allowed; injury failure, rolling failure, unknown finals outcome, and a stale
+  run ID all failed closed as expected.
+- Offline execution in a temporary Git repository confirmed the settlement-preservation step
+  restores both tracked settlement surfaces and removes a newly generated untracked settlement
+  file. The publish guard rejected a changed settlement output.
+- `git diff --check` — passed.
 - `python3 tools/crosscheck_site.py` — **97 checks: 87 pass, 2 fail, 8 info** (exit 1).
   The existing failures remain `CC-DOC-01` (stale README counts) and `CC-FRESH-01` (the
-  committed legacy snapshot is two days old). `CC-FRESH-03` now reports the latest completed
+  committed legacy snapshot is two days old). `CC-FRESH-03` reports the latest completed
   scheduled-ingest run as a failure, with evidence link:
   [run 43903704042](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43903704042),
   created `2026-11-16T16:06:01Z`. It no longer passes merely because runs exist.
 - GitHub CLI run-list inspection confirmed that live result. No official NBA endpoint was
-  fetched during this task, and the changed Actions workflow was not run against a fresh
+  fetched during this task, and the changed scheduled workflow has not been run against a fresh
   official-source response here.
 
 ## Remaining limitations
 
 - The latest observed scheduled-ingest run is still failed; its logs were unavailable in the
   earlier audit (`results-receiver.actions.githubusercontent.com` returned EOF). This change
-  records/isolates the failure but does not establish a successful live refresh.
-- No fresh NBA data was read or promoted. Local/static checks verify the workflow and code
+  records and isolates the failure but does not establish a successful live refresh.
+- No fresh NBA data was read or promoted. Local/static checks verify code and workflow control
   paths, not the availability or correctness of a future official-source response.
 - `CC-DOC-01` and `CC-FRESH-01` remain disclosed failures, as documented in the existing
   post-PR-97 audit. No README counts, NBA values, or committed snapshots were changed.

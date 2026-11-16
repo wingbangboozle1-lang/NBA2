@@ -1,6 +1,15 @@
 {
-  "settled_at_utc": "2026-11-14T11:46:27+00:00",
-  "finals_snapshot": "finals_all.json",
+  "settled_at_utc": "2026-11-16T18:20:03+00:00",
+  "finals_snapshot": "official_finals_union.json",
+  "finals_sources_read": [
+    "data/raw/finals_2026-11-13.json",
+    "data/raw/finals_all.json",
+    "data/raw/capture_2026-11-15/results_2026-11-14.json",
+    "data/raw/results/results_2026-11-15.json",
+    "data/v2/results.json"
+  ],
+  "finals_conflicts": [],
+  "finals_rejected_quarter_rows": [],
   "ledgers": [
     {
       "ledger": "sealed-2026-11-13.json",
@@ -8,11 +17,213 @@
         "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
         "n_predictions": 22
       },
-      "status": "PARTIAL \u2014 22 game(s) have no official final score",
-      "games_settled": 0,
+      "status": "PARTIAL \u2014 11 game(s) have no official final score",
+      "games_settled": 11,
       "games_expected": 22,
-      "metrics": {},
-      "gate_measurements": {}
+      "metrics": {
+        "n_settled": 11,
+        "missing_games": 11,
+        "spread_mae": 11.273,
+        "total_mae": 13.318,
+        "total_pushes": 0,
+        "brier": 0.2178,
+        "log_loss": 0.7136,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "settled_rows": [
+        {
+          "game_id": "0022600231",
+          "matchup": "DEN @ NOP",
+          "final": "116-108",
+          "our_spread_home": 6.0,
+          "spread_err": 2.0,
+          "our_total": 234.5,
+          "total_err": 10.5,
+          "source": "https://www.nba.com/game/den-vs-nop-0022600231"
+        },
+        {
+          "game_id": "0022600232",
+          "matchup": "DAL @ CLE",
+          "final": "117-127",
+          "our_spread_home": -1.0,
+          "spread_err": 9.0,
+          "our_total": 228.0,
+          "total_err": 16.0,
+          "source": "https://www.nba.com/game/dal-vs-cle-0022600232"
+        },
+        {
+          "game_id": "0022600233",
+          "matchup": "DET @ MIA",
+          "final": "117-137",
+          "our_spread_home": 6.0,
+          "spread_err": 26.0,
+          "our_total": 229.5,
+          "total_err": 24.5,
+          "source": "https://www.nba.com/game/det-vs-mia-0022600233"
+        },
+        {
+          "game_id": "0022600234",
+          "matchup": "BKN @ MEM",
+          "final": "110-129",
+          "our_spread_home": -10.5,
+          "spread_err": 8.5,
+          "our_total": 227.5,
+          "total_err": 11.5,
+          "source": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+        },
+        {
+          "game_id": "0022600235",
+          "matchup": "CHI @ MIN",
+          "final": "117-106",
+          "our_spread_home": -23.0,
+          "spread_err": 34.0,
+          "our_total": 233.5,
+          "total_err": 10.5,
+          "source": "https://www.nba.com/game/chi-vs-min-0022600235"
+        },
+        {
+          "game_id": "0022600236",
+          "matchup": "IND @ PHI",
+          "final": "124-131",
+          "our_spread_home": -4.5,
+          "spread_err": 2.5,
+          "our_total": 223.0,
+          "total_err": 32.0,
+          "source": "https://www.nba.com/game/ind-vs-phi-0022600236"
+        },
+        {
+          "game_id": "0022600237",
+          "matchup": "LAL @ PHX",
+          "final": "131-123",
+          "our_spread_home": 6.0,
+          "spread_err": 2.0,
+          "our_total": 232.0,
+          "total_err": 22.0,
+          "source": "https://www.nba.com/game/lal-vs-phx-0022600237"
+        },
+        {
+          "game_id": "0022600238",
+          "matchup": "CHA @ LAC",
+          "final": "105-113",
+          "our_spread_home": -7.5,
+          "spread_err": 0.5,
+          "our_total": 219.5,
+          "total_err": 1.5,
+          "source": "https://www.nba.com/game/cha-vs-lac-0022600238"
+        },
+        {
+          "game_id": "0022600239",
+          "matchup": "SAS @ UTA",
+          "final": "110-102",
+          "our_spread_home": 14.5,
+          "spread_err": 6.5,
+          "our_total": 226.0,
+          "total_err": 14.0,
+          "source": "https://www.nba.com/game/sas-vs-uta-0022600239"
+        },
+        {
+          "game_id": "0022600240",
+          "matchup": "DAL @ BOS",
+          "final": "94-131",
+          "our_spread_home": -6.5,
+          "spread_err": 30.5,
+          "our_total": 221.5,
+          "total_err": 3.5,
+          "source": "https://www.nba.com/game/dal-vs-bos-0022600240"
+        },
+        {
+          "game_id": "0022600241",
+          "matchup": "NYK @ TOR",
+          "final": "112-108",
+          "our_spread_home": 1.5,
+          "spread_err": 2.5,
+          "our_total": 220.5,
+          "total_err": 0.5,
+          "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+        }
+      ],
+      "games_in_conflict": [],
+      "gate_measurements": {
+        "settled_bets": 11,
+        "line_mae": 11.273,
+        "baseline_mae": null,
+        "brier": 0.2178,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gates": [
+        {
+          "gate_id": "G-01",
+          "name": "Sample size",
+          "result": "BLOCKED",
+          "measured": "11 settled bets (need 300)",
+          "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
+        },
+        {
+          "gate_id": "G-02",
+          "name": "Closing line value",
+          "result": "BLOCKED",
+          "measured": "no market prices captured",
+          "reason": "CLV cannot be computed without an odds feed (R-101). This blocks promotion."
+        },
+        {
+          "gate_id": "G-03",
+          "name": "Probability calibration",
+          "result": "BLOCKED",
+          "measured": "slope=not measured; intercept=not measured",
+          "reason": "Needs >= 100 settled games with official outcomes."
+        },
+        {
+          "gate_id": "G-04",
+          "name": "Line accuracy vs baselines",
+          "result": "BLOCKED",
+          "measured": "no settled games",
+          "reason": "Requires official final scores for games in the sealed ledger."
+        },
+        {
+          "gate_id": "G-05",
+          "name": "Luck removal",
+          "result": "BLOCKED",
+          "measured": "no settled bets",
+          "reason": "Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment."
+        },
+        {
+          "gate_id": "G-06",
+          "name": "Multiple-testing control",
+          "result": "BLOCKED",
+          "measured": "no trial ledger",
+          "reason": "Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless."
+        },
+        {
+          "gate_id": "G-07",
+          "name": "Walk-forward, no lookahead",
+          "result": "BLOCKED",
+          "measured": "no holdout",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-08",
+          "name": "Parameter robustness",
+          "result": "BLOCKED",
+          "measured": "not computed",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-09",
+          "name": "Cost and capacity",
+          "result": "BLOCKED",
+          "measured": "reference price 1.9091 is a placeholder, not a quote",
+          "reason": "Cannot net out vig we have never seen."
+        },
+        {
+          "gate_id": "G-10",
+          "name": "Availability-adjustment guardrail",
+          "result": "BLOCKED",
+          "measured": "no injury join",
+          "reason": ""
+        }
+      ]
     },
     {
       "ledger": "sealed-2026-11-14.json",
@@ -20,12 +231,214 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PARTIAL \u2014 27 game(s) have no official final score",
-      "games_settled": 0,
+      "status": "PARTIAL \u2014 16 game(s) have no official final score",
+      "games_settled": 11,
       "games_expected": 27,
-      "metrics": {},
-      "gate_measurements": {}
+      "metrics": {
+        "n_settled": 11,
+        "missing_games": 16,
+        "spread_mae": 11.273,
+        "total_mae": 13.318,
+        "total_pushes": 0,
+        "brier": 0.2178,
+        "log_loss": 0.7136,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "settled_rows": [
+        {
+          "game_id": "0022600231",
+          "matchup": "DEN @ NOP",
+          "final": "116-108",
+          "our_spread_home": 6.0,
+          "spread_err": 2.0,
+          "our_total": 234.5,
+          "total_err": 10.5,
+          "source": "https://www.nba.com/game/den-vs-nop-0022600231"
+        },
+        {
+          "game_id": "0022600232",
+          "matchup": "DAL @ CLE",
+          "final": "117-127",
+          "our_spread_home": -1.0,
+          "spread_err": 9.0,
+          "our_total": 228.0,
+          "total_err": 16.0,
+          "source": "https://www.nba.com/game/dal-vs-cle-0022600232"
+        },
+        {
+          "game_id": "0022600233",
+          "matchup": "DET @ MIA",
+          "final": "117-137",
+          "our_spread_home": 6.0,
+          "spread_err": 26.0,
+          "our_total": 229.5,
+          "total_err": 24.5,
+          "source": "https://www.nba.com/game/det-vs-mia-0022600233"
+        },
+        {
+          "game_id": "0022600234",
+          "matchup": "BKN @ MEM",
+          "final": "110-129",
+          "our_spread_home": -10.5,
+          "spread_err": 8.5,
+          "our_total": 227.5,
+          "total_err": 11.5,
+          "source": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+        },
+        {
+          "game_id": "0022600235",
+          "matchup": "CHI @ MIN",
+          "final": "117-106",
+          "our_spread_home": -23.0,
+          "spread_err": 34.0,
+          "our_total": 233.5,
+          "total_err": 10.5,
+          "source": "https://www.nba.com/game/chi-vs-min-0022600235"
+        },
+        {
+          "game_id": "0022600236",
+          "matchup": "IND @ PHI",
+          "final": "124-131",
+          "our_spread_home": -4.5,
+          "spread_err": 2.5,
+          "our_total": 223.0,
+          "total_err": 32.0,
+          "source": "https://www.nba.com/game/ind-vs-phi-0022600236"
+        },
+        {
+          "game_id": "0022600237",
+          "matchup": "LAL @ PHX",
+          "final": "131-123",
+          "our_spread_home": 6.0,
+          "spread_err": 2.0,
+          "our_total": 232.0,
+          "total_err": 22.0,
+          "source": "https://www.nba.com/game/lal-vs-phx-0022600237"
+        },
+        {
+          "game_id": "0022600238",
+          "matchup": "CHA @ LAC",
+          "final": "105-113",
+          "our_spread_home": -7.5,
+          "spread_err": 0.5,
+          "our_total": 219.5,
+          "total_err": 1.5,
+          "source": "https://www.nba.com/game/cha-vs-lac-0022600238"
+        },
+        {
+          "game_id": "0022600239",
+          "matchup": "SAS @ UTA",
+          "final": "110-102",
+          "our_spread_home": 14.5,
+          "spread_err": 6.5,
+          "our_total": 226.0,
+          "total_err": 14.0,
+          "source": "https://www.nba.com/game/sas-vs-uta-0022600239"
+        },
+        {
+          "game_id": "0022600240",
+          "matchup": "DAL @ BOS",
+          "final": "94-131",
+          "our_spread_home": -6.5,
+          "spread_err": 30.5,
+          "our_total": 221.5,
+          "total_err": 3.5,
+          "source": "https://www.nba.com/game/dal-vs-bos-0022600240"
+        },
+        {
+          "game_id": "0022600241",
+          "matchup": "NYK @ TOR",
+          "final": "112-108",
+          "our_spread_home": 1.5,
+          "spread_err": 2.5,
+          "our_total": 220.5,
+          "total_err": 0.5,
+          "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+        }
+      ],
+      "games_in_conflict": [],
+      "gate_measurements": {
+        "settled_bets": 11,
+        "line_mae": 11.273,
+        "baseline_mae": null,
+        "brier": 0.2178,
+        "calibration_slope": null,
+        "calibration_intercept": null
+      },
+      "gates": [
+        {
+          "gate_id": "G-01",
+          "name": "Sample size",
+          "result": "BLOCKED",
+          "measured": "11 settled bets (need 300)",
+          "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
+        },
+        {
+          "gate_id": "G-02",
+          "name": "Closing line value",
+          "result": "BLOCKED",
+          "measured": "no market prices captured",
+          "reason": "CLV cannot be computed without an odds feed (R-101). This blocks promotion."
+        },
+        {
+          "gate_id": "G-03",
+          "name": "Probability calibration",
+          "result": "BLOCKED",
+          "measured": "slope=not measured; intercept=not measured",
+          "reason": "Needs >= 100 settled games with official outcomes."
+        },
+        {
+          "gate_id": "G-04",
+          "name": "Line accuracy vs baselines",
+          "result": "BLOCKED",
+          "measured": "no settled games",
+          "reason": "Requires official final scores for games in the sealed ledger."
+        },
+        {
+          "gate_id": "G-05",
+          "name": "Luck removal",
+          "result": "BLOCKED",
+          "measured": "no settled bets",
+          "reason": "Bootstrap CI + t-stat on settled PnL; sign must survive luck adjustment."
+        },
+        {
+          "gate_id": "G-06",
+          "name": "Multiple-testing control",
+          "result": "BLOCKED",
+          "measured": "no trial ledger",
+          "reason": "Every evaluation attempt must be counted (S-11 suggestion); without the trial count the correction is meaningless."
+        },
+        {
+          "gate_id": "G-07",
+          "name": "Walk-forward, no lookahead",
+          "result": "BLOCKED",
+          "measured": "no holdout",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-08",
+          "name": "Parameter robustness",
+          "result": "BLOCKED",
+          "measured": "not computed",
+          "reason": ""
+        },
+        {
+          "gate_id": "G-09",
+          "name": "Cost and capacity",
+          "result": "BLOCKED",
+          "measured": "reference price 1.9091 is a placeholder, not a quote",
+          "reason": "Cannot net out vig we have never seen."
+        },
+        {
+          "gate_id": "G-10",
+          "name": "Availability-adjustment guardrail",
+          "result": "BLOCKED",
+          "measured": "no injury join",
+          "reason": ""
+        }
+      ]
     }
   ],
-  "note": "PENDING where no official final-score snapshot covers the ledger's games. Metrics stay unmeasured rather than assumed."
+  "note": "PENDING where no official final-score snapshot covers the ledger's games. Metrics stay unmeasured rather than assumed. Finals are the keyed union of every committed official source (data/raw/official_finals_union.json); conflicting games are excluded, never averaged."
 }
