@@ -4230,7 +4230,6 @@ Files touched: only this claim/completion record and the new audit note. No sour
 - Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
 - Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
 ---
----
 
 ## Session `arena/8d7c29de-nba2` — claim (2026-11-16 UTC)
 
