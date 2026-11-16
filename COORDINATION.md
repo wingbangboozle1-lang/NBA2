@@ -4386,13 +4386,13 @@ as the final integration session for the 2026-11-16 round.
 
 | ID | Task | Status | File scope | Verification rule |
 |----|------|--------|-----------|-------------------|
-| A1 | Claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
-| A2 | Take over stale claims (>60 min, no commits): open PRs #70/#72/#78/#80/#82/#98 — review each diff, integrate what is still valid, close what is superseded, with reasons | pending | `COORDINATION.md`, integration merges | nothing merged blind; every integrated artefact re-verified on the combined tree |
-| A3 | CR-V4-1: fragment-aware local-link resolution in `nba2/v2/check.py` + regression test | pending | `nba2/v2/check.py`, `nba2/v2/test_check_links*.py` | checker green; `page.html#frag` links verified, not reported broken |
-| A4 | CR-V4-2: publish F-V4-01..F-V4-09 on the shared Flagged-for-review page (or link it to v4-verify); I-32C-04: stale "this session (2026-11-15)" wording | pending | `nba2/v2/content.py` (+ regenerated `data/v2/content.json`, `site/**`) | flags visible from the Flagged page; wording states the true snapshot date |
-| A5 | Line-by-line re-verification of the combined tree: v1/v2/v3/v4 + backtest tests, gates, provenance lint, internal/external link scan, parity rebuild | pending | `analysis/session-a11505e1-verification.md` | every checker green or the failure disclosed on the Flagged page |
-| A6 | Brief-audit register: each brief line mapped to its implementation + official source links, gaps and missing-information questions | pending | `analysis/session-a11505e1-brief-audit.md`, `requirements/`, `suggestions/`, `analysis/questions.md` | no value without an official source link; gaps flagged, never inferred |
-| A7 | PR -> `main` -> merge -> Pages deploy confirmed live -> record here | pending | `COORDINATION.md` | live fetch returns the new pages; checks green on the merged SHA |
+| A1 | Claim + push before work | done | `COORDINATION.md` | pushed immediately |
+| A2 | Take over stale claims (>60 min, no commits): open PRs #70/#72/#78/#80/#82/#98 — review each diff, integrate what is still valid, close what is superseded, with reasons | done (#98 merged; #80/#70 essence ported; #72 salvaged; #78/#82 records preserved — see takeover records) | `COORDINATION.md`, integration merges | nothing merged blind; every integrated artefact re-verified on the combined tree |
+| A3 | CR-V4-1: fragment-aware local-link resolution in `nba2/v2/check.py` + regression test | done (7 regression tests) | `nba2/v2/check.py`, `nba2/v2/test_check_links*.py` | checker green; `page.html#frag` links verified, not reported broken |
+| A4 | CR-V4-2: publish F-V4-01..F-V4-09 on the shared Flagged-for-review page (or link it to v4-verify); I-32C-04: stale "this session (2026-11-15)" wording | done | `nba2/v2/content.py` (+ regenerated `data/v2/content.json`, `site/**`) | flags visible from the Flagged page; wording states the true snapshot date |
+| A5 | Line-by-line re-verification of the combined tree: v1/v2/v3/v4 + backtest tests, gates, provenance lint, internal/external link scan, parity rebuild | done (analysis/session-a11505e1-verification.md; all green except the designed CC-FRESH-01 exclusion) | `analysis/session-a11505e1-verification.md` | every checker green or the failure disclosed on the Flagged page |
+| A6 | Brief-audit register: each brief line mapped to its implementation + official source links, gaps and missing-information questions | done (analysis/session-a11505e1-brief-audit.md; Q-40..43, S-60..63) | `analysis/session-a11505e1-brief-audit.md`, `requirements/`, `suggestions/`, `analysis/questions.md` | no value without an official source link; gaps flagged, never inferred |
+| A7 | PR -> `main` -> merge -> Pages deploy confirmed live -> record here | in progress | `COORDINATION.md` | live fetch returns the new pages; checks green on the merged SHA |
 
 ---
 
