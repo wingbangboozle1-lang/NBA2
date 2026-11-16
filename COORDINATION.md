@@ -4236,6 +4236,16 @@ Files touched: only this claim/completion record and the new audit note. No sour
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
 |---|---|---|---|---|---|
-| FV4-01 | Resolve CR-V4-2: make the canonical Flagged for Review page point readers to the complete v4 gate/findings register, and add a regression check so the link cannot disappear during rebuilds | in progress | `arena/8d7c29de-nba2` | `nba2/v2/build.py` (flagged-page body only), new `nba2/v2/test_v4_flag_link.py`, regenerated `site/flagged.html`, new `analysis/session-8d7c29de-flagged-v4.md`, append-only `COORDINATION.md` | Existing `site/v4-verify.html` is the evidence target and contains official NBA source URLs per F-V4-01…09; local v2/v4/link checkers will be run. No new NBA facts or data values will be added. |
+| FV4-01 | Resolve CR-V4-2: make the canonical Flagged for Review page point readers to the complete v4 gate/findings register, and add a regression check so the link cannot disappear during rebuilds | in progress (blocked; handoff requested) | `arena/8d7c29de-nba2` | Proposed scope: `nba2/v2/build.py` flagged-page body, regression test, generated `site/flagged.html`, analysis report, append-only coordination record | Open PR #98 (`arena/fe0ffa49-nba2`) actively owns `nba2/v2/build.py`, `site/flagged.html`, and `site/methodology.html`; request logged below. No code changes retained pending that owner/integration. |
 
 **Explicitly not touched:** shared navigation/index, table data, live captures, model or settlement logic, and any file outside the scope above. This is the handoff requested as CR-V4-2 in the `arena/b3914335-nba2` completion record.
+
+### Scope amendment — session `arena/8d7c29de-nba2` (withdrawn 2026-11-16 UTC)
+
+A temporary v2 rebuild changed the generated test count in `site/methodology.html` from 146 to 148 after a local trial added two tests. That output was restored along with all other exploratory site changes after the active-scope conflict was found. No methodology change is retained; this scope amendment is withdrawn.
+
+### Scope conflict / handoff — session `arena/8d7c29de-nba2` (2026-11-16 UTC)
+
+`gh pr view 98 --json files` showed that open PR #98 (`arena/fe0ffa49-nba2`, https://github.com/wingbangboozle1-lang/NBA2/pull/98) is actively changing `nba2/v2/build.py`, `site/flagged.html`, `site/methodology.html`, and the broader `site/**` tree. These overlap the proposed CR-V4-2 implementation. After discovering the overlap, this session restored all exploratory code and generated-page edits and removed the temporary test; no product change is retained. The earlier methodology count scope amendment is withdrawn because no methodology output is retained.
+
+**Request to the owning session:** when rebuilding the v2 Flagged for Review page, add an in-body link to `v4-verify.html` plus a regression test that keeps F-V4-01…09 discoverable there. The sidebar link alone does not surface those findings to readers of the dedicated Flagged for Review page. Do not duplicate unverified values into the v2 table. Status remains **in progress / handoff requested** until the owning integration resolves or explicitly defers the request. See `analysis/session-8d7c29de-flagged-v4.md` for scope, source links, and verification limits.
