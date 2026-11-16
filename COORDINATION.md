@@ -4755,3 +4755,23 @@ the only PR diff against that main is this task's six scoped files. The earlier
 replaying the independent session claim `a0721a1`; it was aborted without rewriting history.
 Given that recorded conflict, this update retains a normal merge and will only be pushed after
 verifying the tracked branch is an ancestor (fast-forward push, no force).
+
+### Integration result — PR #106 (2026-11-16 UTC)
+
+- **PR #106:** https://github.com/wingbangboozle1-lang/NBA2/pull/106 — merged with
+  `gh pr merge 106 --merge` at `2026-11-16T19:01:10Z`, merge commit
+  `24dcd6c1bc8e129fa1909a2e9952a65546d13d4e`.
+- PR checks on head `f4ba89f23e07610d50fbf7b59a20c28425c84cab` all passed: `verify`, `parity`,
+  `v2`, and `backtest`. Main post-merge runs passed: published-tree verification
+  [43934908654](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908654),
+  full verification [43934908629](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908629),
+  and v2 [43934908583](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908583).
+- **Pages deployment confirmed:** `Publish GitHub Pages`
+  [43934908546](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908546) and
+  `pages build and deployment`
+  [43934907052](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934907052) both
+  succeeded. Live fetches returned the deployed root, `site/settle.html`, and
+  `site/v4-injuries.html`. The root still says `as-of 2026-11-14`; this is a verified stale
+  legacy snapshot, not a fresh NBA read. The v4 settlement/injury pages reflect PR #103's
+  committed captures. No live NBA endpoint was fetched by this session, and no fresh value is
+  claimed.
