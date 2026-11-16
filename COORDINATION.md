@@ -3689,3 +3689,54 @@ should win on any conflict inside those two files. `index.html` is untouched.
   cancelled when the subsequent concurrent PR #76 main push superseded it; its build had
   succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
   live HTTP response for that later deployment is claimed.
+
+---
+
+## Session `arena/b0c1edd1-nba2` — CLAIM (2026-11-16 02:20 UTC, branch `arena/b0c1edd1-nba2`, base `1c48226` = `main` @ PR #81 merge)
+
+**State read at claim time (verified by running it, not assumed).**
+* `main` = `1c482265…`; this branch sits on it; working tree clean.
+* `python -m nba2.v2` → `.check` = OK; `python -m nba2.v3` → `.check` = OK (gates 7 pass / 1 fail,
+  `publishable=True`); suites green: v1 70, v2 136, v3 41, backtest 49.
+* `site/` reproduces byte-for-byte from a rebuild (CI order) → `git status` clean.
+* Direct TLS egress to nba.com/CDN hosts is still blocked from this sandbox (`curl` → HTTP 000,
+  re-tested 2026-11-16 02:1x UTC). Official pages **are** readable through the platform
+  page-fetch tool; that is the capture channel used here and it is named on every row.
+* GitHub Pages API: `build_type: legacy`, `source: main /` → the live URL serves the **root tree**,
+  not `site/`. Confirmed by fetching the live URL: its title and KPI block are `index.html`'s
+  ("originated lines & gated strategies"), not `site/index.html`'s. FLAG-PAGES-01 / F-033.
+* Five pull requests from earlier sessions are still open (#70, #72, #78, #80, #82). None of them
+  touches the files claimed below, so no overlap is created by this session; they are left untouched.
+
+**What this session has verified live so far (2026-11-16, page-fetch tool):**
+* `official.nba.com/nba-injury-report-2026-27-season/` → the index lists the 11/15 releases through
+  **09:00 PM ET**. The repo's freshest capture is 11/15 **06:15 AM** (v2) / **06:00 AM** (v3) — a
+  15-hour/9-release gap, now measured rather than described.
+* `Injury-Report_2026-11-15_09_00PM.pdf` → fetched, 155-row shape, release stamp `11/15/26 09:00 PM`.
+* `www.nba.com/games?date=2026-11-15` → nine 11/15 games; **five finished** (IND 124 @ PHI 131,
+  LAL 131 @ PHX 123, CHA 105 @ LAC 113, DEN @ NOP, …) and four live at fetch time. This is new
+  official data that the repo does not hold and that the 11/15 slate's own model rows cannot grade
+  against yet.
+* `www.nba.com/games?date=2026-11-16` → the T+1 slate is 8 games (calendar count on the same page).
+
+**Task claim (IDs B0-1 … B0-7).** The brief for this session is the 2026-11-16 full brief; the
+line-by-line gap analysis already exists (`analysis/session-a6d81367-brief-gap-map.md`), so this
+session targets the **open defects and the open decisions** it lists, plus the site consolidation
+that FLAG-PAGES-01 has left unresolved across four sessions.
+
+| ID | Task | File scope |
+|---|---|---|
+| B0-1 | Claim + this section | `COORDINATION.md` (append-only) |
+| B0-2 | Fix IR-1: settlement must read every committed official result feed keyed by game id, fail on conflicting scores, and never prefer a stale file by name | `nba2/pipeline/settle.py`, `data/settlement.json`, `nba2/tests/test_pipeline.py` |
+| B0-3 | Fresh official capture for the 11/15 09:00 PM release + the five 11/15 finals + the 11/16 slate, stored with retrieval stamps and SHA-256, and diffed against the 06:15 AM release | new `data/raw/capture_2026-11-16/**`, `nba2/v2/capture3.py` |
+| B0-4 | Settle the v3 sealed ledger from those official finals and keep the stamp visible (brief rows 4, 8, 21) | `nba2/v3/ledger.py`, `nba2/v3/official.py` (results only), `nba2/v3/build.py` |
+| B0-5 | Reconcile the two conflicting labels the last four sessions carried: IR-4 (HCA "fitted" vs pinned) and IR-3 (06:00 vs 06:15 release stamp) | `nba2/v2/build.py`, `nba2/v3/official.py` |
+| B0-6 | Publish the session's verification + irregularity report as a page, with per-row official links | `nba2/v3/report.py` (new), `site/**` regeneration |
+| B0-7 | Final integration: merge the open session branches that are safe, re-verify the combined tree line by line, publish, PR + merge, record the deploy | repo-wide (integration) |
+
+**Rules held:** every new value carries the official URL it was read from and the retrieval time;
+anything not confirmable stays blank and is flagged on the Flagged for Review page; sealed ledgers
+are never rewritten; no stake is ever published (there is still no market price); the site is not
+merged in a broken state. **No manual input needed from the owner** — the brief delegates the work
+and the PR/merge, and every decision this session makes is recorded with its evidence so it can be
+reversed.
