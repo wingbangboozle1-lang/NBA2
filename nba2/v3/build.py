@@ -17,6 +17,7 @@ from . import model as M
 from . import ledger as LD
 from . import rotation as ROT
 from . import gates as G
+from . import gameflow as GF
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -60,6 +61,7 @@ V3_NAV = [
     ("player-logs.html", "Player game logs"),
     ("minutes.html", "Measured minutes"),
     ("injury-diff.html", "Injury release diff"),
+    ("lategame.html", "Late-game &amp; garbage time"),
     ("verification-v3.html", "v3 verification"),
 ]
 
@@ -815,6 +817,85 @@ fail-closed: the club is dropped from the tables above rather than repaired.</p>
                 "replacement pool behind each top eight.")
 
 
+# --------------------------- session arena/d2dd7c8e: late-game / garbage-time decomposition
+def page_lategame() -> str:
+    d = GF.decomposition()
+    s, rows = d["summary"], d["rows"]
+
+    def num(v, places=2):
+        return "" if v is None else format(v, f".{places}f")
+
+    brows = "".join(
+        "<tr>"
+        f"<td>{esc(r['date'])}</td>"
+        f"<td>{esc(r['matchup'])}</td>"
+        f"<td class='n'>{esc(r['quarters_txt']) if r['quarters_txt'] else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['early_total'], 1)) if r['early_total'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['late_total'], 1)) if r['late_total'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['early_rate'])) if r['early_rate'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['inflation'])) if r['inflation'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['inflation_z'], 3)) if r['inflation_z'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['adj_total'], 1)) if r['adj_total'] is not None else blank(r['flag'] or 'no official quarter source')}</td>"
+        f"<td class='n'>{esc(num(r['ot'] or 0, 0))}</td>"
+        f"<td>{badge('late-game inflation', 'bad') if r['late_inflated'] else (badge('late-game tightening', 'warn') if r['late_deflated'] else badge('in band', 'info'))}</td>"
+        f"<td>{link(r['source_url'], r['source_label'])}</td>"
+        "</tr>"
+        for r in rows)
+
+    t_games = table(
+        ["Date", "Matchup", "Quarters (A / H)", "Early total (Q1-Q3)", "Late total (Q4)",
+         "Early rate / qtr", "Inflation", "Inflation z", "Adj total", "OT", "Signal",
+         "Source"], _rows(brows),
+        caption="One row per game. Quarter scores are the official LINESCORE / gamebook "
+                "values; inflation = Q4 combined − mean(Q1,Q2,Q3 combined).")
+
+    kpi = (
+        f"<div class=\"cards\">"
+        f"<div class=\"card\"><span class=\"k\">Games with quarters</span><span class=\"v\">"
+        f"{s['n_games_with_quarters']} / {s['n_games_total']}</span>"
+        f"<span class=\"s\">official quarter tables captured</span></div>"
+        f"<div class=\"card\"><span class=\"k\">Mean early rate</span><span class=\"v\">"
+        f"{num(s['mean_early_rate'])}</span><span class=\"s\">combined pts per quarter, Q1-Q3</span></div>"
+        f"<div class=\"card\"><span class=\"k\">Inflation mean ± sd</span><span class=\"v\">"
+        f"{num(s['inflation_mean'])} ± {num(s['inflation_sd'])}</span>"
+        f"<span class=\"s\">Q4 minus early mean, across the window</span></div>"
+        f"<div class=\"card\"><span class=\"k\">Late-game inflation</span><span class=\"v\">"
+        f"{s['n_late_inflated']}</span><span class=\"s\">|z| above {s['noise_band_z']} (positive)</span></div>"
+        f"<div class=\"card\"><span class=\"k\">Late-game tightening</span><span class=\"v\">"
+        f"{s['n_late_deflated']}</span><span class=\"s\">|z| above {s['noise_band_z']} (negative)</span></div>"
+        f"<div class=\"card\"><span class=\"k\">Overtime games</span><span class=\"v\">"
+        f"{s['n_overtime']}</span><span class=\"s\">OT kept out of the regulation decomposition</span></div>"
+        f"</div>"
+    )
+
+    body = f"""
+{kpi}
+<div class="note"><b>What this is.</b> The brief asks for game-flow analysis. True
+pace / garbage-time decomposition needs play-by-play (blocked, R-047), but the part that is
+measurable from the official quarter table is published here. <b>Inflation</b> is how much more
+(or less) the two teams combined scored in Q4 than in the average of Q1&ndash;Q3. Positive
+inflation is the signature of late-game (garbage-time) scoring; a large negative z is a
+late-game tightening. <b>Adj total</b> is the game total with the Q4 inflation removed
+(early total + early rate) &mdash; a derived control, never a forecast. Every number is
+re-derived from the committed official quarter scores by <code>nba2/v3/gameflow.py</code>.</div>
+
+<h2>Per-game decomposition</h2>
+{t_games}
+
+<h2>Definition</h2>
+<p><code>{esc(s['rule'])}</code></p>
+<p class="s">Sources: official NBA gamebook PDFs
+(<a href="https://statsdmz.nba.com/pdfs/20261113/20261113_NYKIND_book.pdf">statsdmz.nba.com</a>)
+for the 2026-11-13 games and the official LINESCORE table on each 2026-11-14 game-summary
+page (<a href="https://www.nba.com/game/den-vs-nop-0022600231">nba.com/game</a>). Games whose
+quarter table did not extract or was not captured are published blank and flagged, never
+estimated.</p>
+"""
+    return page("Late-game & garbage time", "lategame.html", body,
+                "Late-game and garbage-time decomposition measured from official quarter "
+                "scores, with the inflation-adjusted control total per game.")
+
+
 # ------------------------------------------- session arena/f8f8f2b8: injury release diff
 def page_injury_diff() -> str:
     from . import playerlogs as PL
@@ -977,6 +1058,7 @@ def build(verbose: bool = False) -> tuple[list[str], dict]:
         "player-logs.html": page_player_logs(),
         "minutes.html": page_minutes(),
         "injury-diff.html": page_injury_diff(),
+        "lategame.html": page_lategame(),
         "verification-v3.html": page_verification(res, G.run(res), seal_info),
     }
     for name, doc in pages.items():
