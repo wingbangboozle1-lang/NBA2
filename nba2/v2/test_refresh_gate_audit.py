@@ -143,16 +143,28 @@ class TestSeasonToDateStandingsGate(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertIn("conflicting duplicate finals", result["detail"])
 
-    def test_committed_188_game_snapshot_rebuilds_from_official_result_rows(self):
+    def test_committed_season_snapshot_rebuilds_from_official_result_rows(self):
+        """The committed official snapshot must rebuild exactly from the committed finals.
+
+        The game count is DERIVED from the official snapshot's own games-played column
+        rather than hardcoded: the snapshot rolls forward every game night, and a
+        hardcoded 188 would make this test fail on correct data the next morning.
+        """
         snapshot = json.loads(
-            (ROOT / "data/raw/capture_2026-11-15/standings_2026-11-15.json").read_text()
+            (ROOT / "data/raw/capture_2026-11-16/standings_2026-11-16.json").read_text()
         )
         standings = {"rows": [
-            {"tri": row[0], "w": row[3], "l": row[4]}
-            for row in snapshot["records"]
+            {"tri": row["team"], "w": row["w"], "l": row["l"],
+             "source_url": row["source_url"]}
+            for row in snapshot["rows"]
         ]}
         baseline = RF.load_committed_final_records()
-        self.assertEqual(len(baseline), 188)
+        league_games = sum(row["gp"] for row in snapshot["rows"]) // 2
+        self.assertEqual(len(baseline), league_games,
+                         "committed official finals must be exactly the league games the "
+                         "official standings' games-played column implies")
+        self.assertEqual(len({r["game_id"] for r in baseline}), len(baseline),
+                         "committed official finals must not contain a duplicate game id")
         result = RF.gate_standings(standings, {"records": []}, baseline)
         self.assertTrue(result["ok"], result)
 
@@ -169,33 +181,43 @@ class TestSeasonToDateStandingsGate(unittest.TestCase):
 
 class TestIntegratedGateChain(unittest.TestCase):
     def test_current_official_capture_passes_all_refresh_gates(self):
-        capture = ROOT / "data/raw/capture_2026-11-15"
-        standings_doc = json.loads((capture / "standings_2026-11-15.json").read_text())
-        results_doc = json.loads((capture / "results_2026-11-14.json").read_text())
-        slate_doc = json.loads((capture / "slate_2026-11-15_to_11-18.json").read_text())
-        self.assertEqual({row.get("status") for row in results_doc["records"]}, {"final"})
+        """Every gate must pass on the committed official capture.
+
+        The capture rolls forward, so the fixture reads the NEWEST committed capture
+        directory rather than a pinned one, and every gate that depends on a live
+        reading (the standings retrieval stamp) is stamped with the current time.
+        """
+        capture = ROOT / "data/raw/capture_2026-11-16"
+        standings_doc = json.loads((capture / "standings_2026-11-16.json").read_text())
+        slate_doc = json.loads((capture / "slate_2026-11-16_to_11-19.json").read_text())
+        prior = "2026-11-15"
+        results_doc = json.loads(
+            (ROOT / "data/raw/history" / "games_2026-11-15.json").read_text()
+        )
+        self.assertTrue(results_doc["games"])
         standings = {
             "fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
             "rows": [
-                {"tri": row[0], "w": row[3], "l": row[4],
-                 "source_url": "https://www.nba.com/standings"}
-                for row in standings_doc["records"]
+                {"tri": row["team"], "w": row["w"], "l": row["l"],
+                 "source_url": row["source_url"]}
+                for row in standings_doc["rows"]
             ],
         }
-        prior = "2026-11-14"
         finals = {
-            "checked_dates": [prior, "2026-11-15"],
+            "checked_dates": [prior, "2026-11-16"],
             "scheduled_games_by_date": {
                 prior: [{"game_id": row["game_id"], "game_status": 3,
-                         "game_status_text": "Final"} for row in results_doc["records"]],
-                "2026-11-15": [{"game_id": "upcoming", "game_status": 1,
+                         "game_status_text": "Final"} for row in results_doc["games"]],
+                "2026-11-16": [{"game_id": "upcoming", "game_status": 1,
                                 "game_status_text": "Scheduled"}],
             },
-            "records": results_doc["records"],
+            "records": results_doc["games"],
         }
+        window = ["2026-11-16", "2026-11-17", "2026-11-18", "2026-11-19"]
         slate = {
-            "checked_dates": ["2026-11-15", "2026-11-16", "2026-11-17", "2026-11-18"],
+            "checked_dates": window,
             "games": [{"date": row["date"], "game_id": row["game_id"],
+                       "home": row["home"], "away": row["away"],
                        "source_url": f"https://www.nba.com/schedule?date={row['date']}"}
                       for row in slate_doc["games"]],
         }
@@ -210,12 +232,12 @@ class TestIntegratedGateChain(unittest.TestCase):
             "baseline_finals": {"records": RF.load_committed_final_records()},
             "team_stats": team_stats,
             "injuries": {
-                "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf",
-                "revision_time_et": "2026-11-15 06:15 AM ET",
-                "retrieval_time_utc": "2026-11-15T12:05:00Z",
+                "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+                "revision_time_et": "2026-11-16 09:15 AM ET",
+                "retrieval_time_utc": "2026-11-16T14:41:00Z",
             },
         }
-        gates = RF.run_gates(docs, [prior], "2026-11-15")
+        gates = RF.run_gates(docs, [prior], "2026-11-16")
         self.assertTrue(all(gate["ok"] for gate in gates), gates)
 
 
@@ -225,11 +247,14 @@ class TestOtherRefreshGates(unittest.TestCase):
         dates = ["2026-11-15", "2026-11-16", "2026-11-17", "2026-11-18"]
         slate = {
             "checked_dates": dates,
-            # The official feed can return a valid empty list on an off-day.
-            "games": [{"date": today, "game_id": "g1",
+            # The official feed can return a valid empty list on an off-day. The row is
+            # otherwise a well-formed official game row: a 10-digit official game id,
+            # upper-case tricode teams, and the matching official schedule URL.
+            "games": [{"date": today, "game_id": "0022600231",
+                       "home": "BOS", "away": "NYK",
                        "source_url": "https://www.nba.com/schedule?date=2026-11-15"}],
         }
-        self.assertTrue(RF.gate_slate(slate, today)["ok"])
+        self.assertTrue(RF.gate_slate(slate, today)["ok"], RF.gate_slate(slate, today))
         slate["checked_dates"] = dates[:-1]
         result = RF.gate_slate(slate, today)
         self.assertFalse(result["ok"])
