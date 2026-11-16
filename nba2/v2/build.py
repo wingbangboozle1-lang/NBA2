@@ -589,7 +589,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Official finals captured", f"{lab['meta']['n_games']} / {lab['meta']['n_games']}", "the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} rows (04:30 AM) + {len(CP.latest_rows())} rows (01:30 PM)", "both releases published, 24 rows added and 4 statuses moved between them", srclink(O.INJURY_PDF_URL) + " · " + srclink(CP.pdf_url(), "1:30 PM PDF")]},
-        {"cells": ["Rotation / production at risk, quantified", f"{len(CP.production_at_risk(teams))} / 30 clubs", "season averages from the official per-club table × the 1:30 PM designations; 27 clubs blank because not captured, not because blocked", srclink("https://www.nba.com/stats/players/traditional?TeamID=1610612739", "per-club stats table")]},
+        {"cells": ["Rotation / production at risk, quantified", f"{len(CP.production_at_risk(teams))} / 30 clubs", "season averages from the official per-club table × the 1:30 PM designations; clubs not covered by a capture stay blank, not estimated", srclink("https://www.nba.com/stats/players/traditional?TeamID=1610612739", "per-club stats table")]},
         {"cells": ["Measured correlations", f"{sum(1 for c in lab['correlations'] if c['status'] == 'MEASURED')}", "computed walk-forward from the official finals", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Correlations that cannot be measured", f"{sum(1 for c in lab['correlations'] if c['status'] == 'BLOCKED')}", "all three are player-level; each names the missing dataset", srclink(O.BLOCKED["player_box"][2])]},
         {"cells": ["Teams outside the luck noise band", f"{sum(1 for t in teams.values() if abs(t.luck_z) > 1.96)} / 30", "|z| ≤ 1.96", srclink(O.SOURCES["standings"][1])]},
@@ -1625,9 +1625,22 @@ UTC tonight (F-065).</div>"""
                    "Reading aid on the total", "Sources"],
                   rows, "Season averages (official per-club table) × game-day designations (official PDF). "
                         "An addition and a ratio — no on/off model, no assumed replacement value.", num_cols=(1, 2, 5, 7, 8, 9, 10))
+    from . import clubs as CLUBS
+    _cl = CLUBS.snapshot_meta()
+    if _cl["coverage_clubs"] >= 30:
+        _cov_note = (f"all 30 clubs captured by the scheduled ingest from the official stats API "
+                     f"(the dataset behind nba.com/stats/players/traditional), retrieved "
+                     f"{_cl.get('retrieved_at_utc', 'unstamped')}")
+    elif _cl["coverage_clubs"] > 0:
+        _cov_note = (f"{_cl['coverage_clubs']} of 30 clubs come from the scheduled ingest snapshot "
+                     f"({_cl.get('snapshot') or 'committed capture'}), retrieved {_cl.get('retrieved_at_utc', 'unstamped')}; "
+                     f"the rest are blank, not estimated")
+    else:
+        _cov_note = (f"the other 27 clubs are blank on this table because their page was not fetched in the "
+                     f"2026-11-14 hand-capture session and no scheduled player-season snapshot is committed yet — "
+                     f"not because the endpoint refuses")
     body += f"""<div class="note warn"><b>Coverage, stated plainly.</b> The per-club averages are captured for {len(cap_prod)} of 30
-clubs ({", ".join(r["tricode"] for r in cap_prod)}); the other 27 clubs are blank on this table because their page was not
-fetched in this session, not because the endpoint refuses. A "0" above means <em>nothing ruled out inside the eight rows
+clubs ({", ".join(r["tricode"] for r in cap_prod)}); {_cov_note}. A "0" above means <em>nothing ruled out inside the eight rows
 captured for that club</em> — Denver has four designations, all outside the captured block (F-060). The minutes share is a
 share of the captured block, not of the club's full roster. The "reading aid" column is
 <code>mean window total × pct ÷ 200</code> = the midpoint of a one-club scoring deficit landing in a two-club total; it is

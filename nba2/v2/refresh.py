@@ -54,6 +54,12 @@ URLS = {
     "scoreboard": "https://stats.nba.com/stats/scoreboardv3?GameDate={date}&LeagueID=00",
     "boxscore": "https://stats.nba.com/stats/boxscoretraditionalv2?GameID={gid}&SeasonType=Regular+Season",
     "injury_index": "https://official.nba.com/nba-injury-report-2026-27-season/",
+    "players": ("https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&"
+                "DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&"
+                "LastSegment=&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&"
+                "PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&"
+                "PlusMinus=N&Rank=N&Season={season}&SeasonSegment=&SeasonType=Regular+Season&"
+                "ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision="),
 }
 
 
@@ -179,6 +185,64 @@ def fetch_newest_injury_release() -> dict:
             "revision_time_et": "_".join(newest.split("_")[-2:]).replace(".pdf", "")}
 
 
+def fetch_player_season() -> dict:
+    """SG-37 (per-club season tables): one official request covers all 30 clubs.
+
+    ``leaguedashplayerstats`` is the dataset behind nba.com/stats/players/traditional —
+    one row per player with the club abbreviation, per-game minutes and points. The per-club
+    page URL is recorded as each row's source_url so a reviewer can re-check it against the
+    rendered table, exactly as the three-club hand capture (2026-11-14) did.
+    """
+    url = URLS["players"].format(season=SEASON)
+    doc = http_json(url)
+    rs = doc["resultSets"][0]
+    headers = rs["headers"]
+    idx = {h: i for i, h in enumerate(headers)}
+    rows = []
+    for r in rs["rowSet"]:
+        tri = r[idx["TeamAbbreviation"]]
+        tid = r[idx["TeamID"]]
+        rows.append({
+            "player": r[idx["PLAYER_NAME"]],
+            "player_id": str(r[idx["PLAYER_ID"]]),
+            "team_abbrev": tri,
+            "team_id": tid,
+            "age": r[idx["AGE"]],
+            "gp": r[idx["GP"]],
+            "team_w": r[idx["W"]], "team_l": r[idx["L"]],
+            "mpg": r[idx["MIN"]], "ppg": r[idx["PTS"]],
+            "source_url": f"https://www.nba.com/stats/players/traditional?TeamID={tid}",
+        })
+    rows = [r for r in rows if r["team_abbrev"]]  # rows without a club stay out, never guessed
+    return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "source_url": url, "rows": rows}
+
+
+def gate_players(players: dict) -> dict:
+    """30 clubs, sane minutes, every row sourced — the SG-37 capture's own gate."""
+    rows = players.get("rows", [])
+    clubs = {}
+    issues = []
+    for r in rows:
+        clubs.setdefault(r["team_abbrev"], 0)
+        clubs[r["team_abbrev"]] += 1
+        m = r["mpg"]
+        if m is None or not (0 <= float(m) <= 48.0):
+            issues.append(f"implausible MIN for {r['player']} ({m})")
+        if not r.get("source_url"):
+            issues.append(f"row without source: {r['player']}")
+    missing = [t for t in ("ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN", "DET", "GSW",
+                           "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NOP", "NYK",
+                           "OKC", "ORL", "PHI", "PHX", "POR", "SAC", "SAS", "TOR", "UTA", "WAS")
+               if t not in clubs]
+    ok = len(clubs) == 30 and not missing and not issues
+    if missing:
+        issues.append(f"clubs missing from the capture: {missing}")
+    return {"gate": "freshness/players", "ok": ok,
+            "measured": f"{len(rows)} players across {len(clubs)} clubs",
+            "detail": "; ".join(issues[:8]) if issues else "30 clubs, every row sourced, minutes in range"}
+
+
 # --------------------------------------------------------------------------- gates
 def gate_finals(dates: list[str], finals: dict) -> dict:
     """Require complete scoreboard coverage, not a game on every calendar date."""
@@ -297,6 +361,7 @@ def run_gates(docs: dict, dates: list[str], today: str) -> list[dict]:
         gate_standings(docs["standings"], finals),
         gate_injuries(docs["injuries"], dates[-1] if dates else today),
         gate_slate(docs["slate"], today),
+        gate_players(docs["players"]),
         gate_provenance(docs),
     ]
 
@@ -319,6 +384,7 @@ def main(argv=None) -> int:
         "finals": fetch_finals(prior_days),
         "team_stats": fetch_team_stats(),
         "injuries": fetch_newest_injury_release(),
+        "players": fetch_player_season(),
     }
     gates = run_gates(docs, prior_days + [today], today)
     for g in gates:
@@ -348,6 +414,13 @@ def main(argv=None) -> int:
         "records": docs["finals"]["records"]}, indent=1))
     (cap / f"team_stats_{today}.json").write_text(json.dumps({
         "schema": "nba2.team-stats-3page.v1", "pages": docs["team_stats"]}, indent=1))
+    (cap / f"player_season_{today}.json").write_text(json.dumps({
+        "schema": "nba2.player-season.v1", "as_of": today,
+        "retrieved_at_utc": docs["players"]["fetched_at_utc"],
+        "retrieval_method": "nba2.v2.refresh (stats.nba.com leaguedashplayerstats — the dataset "
+                            "behind nba.com/stats/players/traditional)",
+        "source_url": docs["players"]["source_url"],
+        "rows": docs["players"]["rows"]}, indent=1))
     (cap / f"injury_release_{today}.json").write_text(json.dumps({
         "schema": "nba2.injury-transcript.v2",
         "revision_time_et": docs["injuries"]["revision_time_et"],

@@ -37,14 +37,7 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html" class="on">Methodology</a>
-  <a href="slate.html">Slate &amp; disagreement</a>
-<a href="projections.html">Projection surface</a>
-<a href="rotation.html">Rotation &amp; minutes</a>
-<a href="travel.html">Rest &amp; travel</a>
-<a href="results.html">Result feed</a>
-<a href="ledger.html">Sealed ledger</a>
-<a href="verification-v3.html">v3 verification</a>
-</nav>
+  </nav>
 </aside>
 <main>
 <h1>Methodology</h1>
@@ -125,7 +118,7 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 140 tests, counted from the files
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 150 tests, counted from the files
 python3 -m unittest discover -s nba2/tests -t .                # 82 tests
 python3 -m unittest discover -s backtest/tests                 # 49 tests</pre>
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit

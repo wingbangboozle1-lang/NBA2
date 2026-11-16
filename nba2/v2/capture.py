@@ -122,6 +122,37 @@ def rotation() -> list[dict]:
             r["reason"] = d["reason"] if d else None
             r["min_share"] = round(100.0 * r["mpg"] / tot_min, 1) if tot_min else None
             out.append(r)
+
+    # ---- SG-37 completion (integration, arena/984a242f-nba2, 2026-11-15): every club the hand
+    # capture does not cover, from the scheduled job's official per-player season snapshot
+    # (nba2.player-season.v1, the dataset behind nba.com/stats/players/traditional). Top 8 by
+    # minutes per club, re-ordered exactly like the audit rows, same status enrichment, same
+    # share-of-captured-block definition. Clubs the snapshot does not cover stay absent — a
+    # blank in the coverage column, never an estimate.
+    from . import clubs as CLUBS
+    from .official import NAMES as _NAMES
+    covered_full = set(by_club)
+    for tri, n in CLUBS.coverage().items():
+        club_full = _NAMES.get(tri, tri)
+        if club_full in covered_full:
+            continue
+        blk = [r for r in CLUBS.club_rows(tri)][:8]
+        tot_min = sum(float(r["mpg"] or 0) for r in blk)
+        for i, r in enumerate(blk):
+            d = st.get(str(r["player"]).lower())
+            mpg = r["mpg"]
+            out.append({
+                "rank": None, "player": r["player"], "player_id": r["player_id"],
+                "team": club_full, "age": r.get("age"), "gp": r.get("gp"),
+                "team_w": r.get("team_w"), "team_l": r.get("team_l"),
+                "mpg": mpg, "ppg": r["ppg"],
+                "min_rank_club": i + 1,
+                "status": d["status"] if d else None,
+                "reason": d["reason"] if d else None,
+                "min_share": round(100.0 * float(mpg or 0) / tot_min, 1) if tot_min else None,
+                "source_url": r["source_url"],
+                "capture": "nba2.player-season.v1 (scheduled ingest)",
+            })
     return out
 
 
@@ -137,9 +168,10 @@ def production_at_risk(teams: dict) -> list[dict]:
     by_club: dict[str, list[dict]] = {}
     for r in rot:
         by_club.setdefault(r["team"], []).append(r)
+    from .official import NAMES as _NAMES
     out = []
     for club, blk in sorted(by_club.items()):
-        tri = CLUB_TRI[club]
+        tri = CLUB_TRI.get(club) or next((k for k, v in _NAMES.items() if v == club), club)
         t = teams.get(tri)
         pf = getattr(t, "pf", None) if t is not None else None
         sit = [r for r in blk if r["status"] in SIT_OUT]
@@ -171,7 +203,18 @@ def r_src(club: str) -> str:
     """The official per-club stats page a rotation row came from."""
     from .official import NAMES
     tid = {"DEN": "1610612743", "CLE": "1610612739", "MIN": "1610612750"}
-    _ = NAMES
+    try:
+        from . import clubs as CLUBS
+        tri = CLUB_TRI.get(club) or next((k for k, v in NAMES.items() if v == club), None)
+        rows = CLUBS.club_rows(tri) if tri else []
+        if rows and rows[0].get("player_id") is not None:
+            page = rows[0]["source_url"]
+            if page:
+                return page
+    except Exception:
+        pass
+    if club not in CLUB_TRI:
+        return ""  # not covered by the hand capture and no snapshot row — blank, not guessed
     return f"https://www.nba.com/stats/players/traditional?TeamID={tid[CLUB_TRI[club]]}"
 
 
