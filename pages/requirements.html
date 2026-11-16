@@ -65,7 +65,7 @@
 <td>Named strategies with hypothesis, inputs, edge origin and correlation consequence</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results | 2026-11-15 session arena/f8f8f2b8-nba2: 9 strategies registered in nba2/config.py::STRATEGIES; 7 have hashed pre-registration files frozen 2026-11-15T12:05:00Z. This session added the measured minutes-reallocation input a rotation-availability strategy needs. Usefulness is still unproven until the gates measure on settled results.</td>
+<td>9 strategies registered in nba2/config.py::STRATEGIES; all 9 now have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16, including S-08 (inputs blocked, documented) and S-09 (meta). Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/d2dd7c8e-nba2: added the S6-S9 pre-registration files so pre-registration is complete per strategy.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -197,7 +197,7 @@
 <td>Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing</td>
 <td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open | 2026-11-15 session arena/f8f8f2b8-nba2: rest days, B2B, 3-in-4 and travel distance published; 8 additional games now carry verified quarter scores from the official gamebooks, which is the input a pace/garbage-time decomposition needs. That decomposition is still not built.</td>
+<td>Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is now built from official quarter scores (nba2/v3/gameflow.py, lategame.html) with the inflation-adjusted control total. Pace / foul-flow still needs play-by-play (R-47, blocked). | 2026-11-16 session arena/d2dd7c8e-nba2: built the quarter-score late-game decomposition (the part measurable without play-by-play).</td>
 <td>P1</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -615,9 +615,9 @@
 <td>Governance</td>
 <td>Trial-count registry so multiple-testing correction is real</td>
 <td>Every evaluation attempt appended to a ledger and fed to G-06</td>
-<td>not started</td>
+<td>partial</td>
 <td>arena/20c4f2f9</td>
-<td>S-11; without it Deflated Sharpe has no N</td>
+<td>Trial-count registry built (nba2/v3/trials.py, trials.html): every evaluation attempt is recorded (9 strategies + 1 backtest) and the Deflated Sharpe bar G-06 imposes is computed and published. The observed Sharpe / DSR per strategy is blank until settled PnL exists (no market price, gate G6). | 2026-11-16 session arena/d2dd7c8e-nba2: built the registry and the Deflated Sharpe bar; observed SR still blank by policy.</td>
 <td>P1</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
