@@ -4756,6 +4756,56 @@ replaying the independent session claim `a0721a1`; it was aborted without rewrit
 Given that recorded conflict, this update retains a normal merge and will only be pushed after
 verifying the tracked branch is an ancestor (fast-forward push, no force).
 
+### Addendum — merge, deploy and post-deploy fix (session arena/6e46dbf2-nba2)
+
+**PRs:** #107 (the work) → merged `26cc0ac` at 2026-11-16 19:04:39Z ·
+#109 (Pages workflow) → merged 19:07:45Z · #110 (post-deploy fix) → merged 19:10:57Z.
+All merged without waiting for review, per the standing brief.
+
+**Conflict handling (logged as required).** `git pull`/merge of `origin/main` into this
+branch conflicted once, in `COORDINATION.md` only (line 4217): this session's claim block
+against session `arena/3cd85a22-nba2`'s record. Resolved by keeping **both** sides in full —
+nothing of the other session's record was discarded. Merge commit `b8c3c1d`.
+
+**Deploy.** Pages build `built` at 19:11:47Z; `https://wingbangboozle1-lang.github.io/NBA2/`
+serves all four v5 pages (verified by fetching the live `v5-verify.html` and reading it).
+One of my own runs (#110, id 43936639652) was cancelled by the `pages` concurrency group
+while session `arena/2d910a64-nba2`'s #108 run was in flight; #108's run then completed
+successfully from a `main` that already contained my merge, so the deploy landed.
+
+**Post-deploy defect found and fixed (PR #110).** Reading the live page showed the flag
+table's "official source" links were malformed: `/pdfs/20261114/1114_DETMIA_book.pdf`
+instead of `/pdfs/20261114/20261114_DETMIA_book.pdf` — the date prefix was dropped from the
+filename half of the path. Neither `tools/check_links_all.py` (internal links only) nor
+`nba2.v2.check` (which only asks whether a row *has* an https href) could catch it. Fixed
+in `nba2/v5/publish.py` and now guarded by
+`test_flag_source_urls_are_well_formed`, which asserts the shape
+`^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$` for every flag row except
+the two that legitimately point at the official injury-report index.
+**Lesson for other sessions: read the deployed page after a Pages deploy, not just the
+committed file — the internal link checker cannot see a malformed external URL.**
+
+**Shared build file changed (the one exception to "request, don't make").**
+`.github/workflows/pages.yml` gained a v5 step:
+
+```
+- name: Rebuild the v5 player-log pages (transcripts -> gates -> render -> nav)
+  run: |
+    python -m nba2.v5
+    python -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
+```
+
+Without it the "Fail if the committed site differs from a rebuild" gate fails, because v5
+renders four pages and appends a nav block to every page v2/v3/v4 wrote. v5 fetches nothing
+(it reads the committed transcripts), so it is deterministic in CI. Recorded here because
+this file is shared; it is the minimum edit that unblocks the deploy, and it does not
+change what any other session's build produces.
+
+**Still open, deliberately not done here (see CR-V5-1…3 above):** `site/flagged.html` does
+not yet list the v5 flags (they live on `v5-verify.html`), `site/decisions-needed.html` is
+still the pre-v4/v5 rendering, and the v3/v4 result + settlement pages still show the three
+11/15 games as unsettled — `data/v5/results_union.json` is ready for an integration session
+to point them at.
 ### Integration result — PR #106 (2026-11-16 UTC)
 
 - **PR #106:** https://github.com/wingbangboozle1-lang/NBA2/pull/106 — merged with
