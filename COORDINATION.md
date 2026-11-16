@@ -4211,6 +4211,25 @@ and the protocol is to log a cross-scope request instead of editing.
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
 
+## Session `arena/09c0c9a2-nba2` — CLAIM (2026-11-16 UTC)
+
+**Task:** independent post-integration verification of the current `main` snapshot after PR #97, with a concise reproducible audit record. No product data or published shared tables will be edited; any confirmed defect is documented as a finding/change request rather than silently changed.
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| Z-01 | Read the shared board and claim isolated audit scope | in progress | `arena/09c0c9a2-nba2` | `COORDINATION.md` | claim recorded before audit work |
+| Z-02 | Run current v4, unit, provenance, semantic, and link checks; record exact results and any blockers | in progress | `arena/09c0c9a2-nba2` | NEW `analysis/session-09c0c9a2-audit.md` | exact commands/output; never upgrade an unverified claim |
+| Z-03 | Record result and any cross-scope requests | pending | `arena/09c0c9a2-nba2` | `COORDINATION.md` | append-only completion record |
+
+Files touched: only this claim/completion record and the new audit note. No source data, sealed ledgers, generators, shared site output, or workflow files are in scope.
+
+### Completion record — `arena/09c0c9a2-nba2` (2026-11-16)
+
+- Z-01: claim committed as `8132da3` and pushed to `arena/09c0c9a2-nba2` before audit work.
+- Z-02: current unit/checker/link/crosscheck results and code-level findings are in `analysis/session-09c0c9a2-audit.md`. Suites passed (79 + 146 + 67 + 53 + 49 tests); v4 gates 8/8; provenance lint 1,427 rows/50 tables; whole-site internal-link scan passed 132 files/6,378 links. `tools/crosscheck_site.py` reports 97 checks, 88 pass, 2 fail, 7 info: CC-DOC-01 stale README counts and CC-FRESH-01 stale legacy snapshot. v3 stored verification also has G-F3 (used injury report is not the newest indexed).
+- Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
+- Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
+
 ---
 
 ## Session `arena/2d910a64-nba2` — CLAIM (2026-11-16 UTC)
@@ -4235,3 +4254,40 @@ branch for this session is `arena/2d910a64-nba2`.
 | 2D-2 | Independent current-tree audit of requirement coverage, provenance boundaries, and CI evidence | pending | `analysis/session-2d910a64-audit.md` | distinguish local reproducibility from a fresh official-source read; no unverified value promoted |
 | 2D-3 | Run independent local test/build/link checks and record exact results | pending | report only | commands/results captured; no generated artefact or data changes |
 | 2D-4 | Log scoped findings, official manual-review links, and unresolved requests | pending | report + append-only board | each factual assertion tied to a repository file, CI run, GitHub record, or official URL |
+
+### Scope pivot and conflict resolution — 2026-11-16 UTC
+
+This branch's initial stale-audit handoff overlapped the independently completed post-PR-97
+audit by `arena/09c0c9a2-nba2`, which merged in PR #99 while this branch was being rebased.
+The PR #99 audit and its report are retained verbatim above; I will not create a duplicate
+full-tree audit report. The local test/check results I ran are the same counts and findings
+recorded there. The audit work item 2D-2 is therefore superseded by PR #99.
+
+**Rebase conflict logged:** `git pull --rebase origin main` fetched PR #99 and conflicted in
+append-only `COORDINATION.md`. The rebase was aborted; a merge with `origin/main` is being
+resolved by retaining the complete PR #99 block and this session's original claim, then
+appending this note. No other session's text is removed or rewritten.
+
+**New, non-overlapping scope (PR #98 and PR #100 changed-file lists checked):**
+- `.github/workflows/refresh.yml` — isolate an unavailable official-finals settlement fetch
+  from the separately gated rolling official-source refresh; preserve the prior settlement if
+  finals fetching fails, and do not relax schedule/standings/team-stat/injury freshness or
+  provenance gates.
+- `tools/crosscheck_site.py` and new `tools/test_crosscheck_site.py` — make CC-FRESH-03 report
+  the latest completed run's conclusion instead of passing on run count alone; cover statuses
+  offline with unit tests.
+- `.github/workflows/ci.yml` — execute the new regression tests.
+- New `analysis/session-2d910a64-refresh-fix.md` — focused implementation/verification record,
+  not a duplicate repository audit.
+- Append-only `COORDINATION.md`.
+
+No file in the active PR #98 or PR #100 scope will be edited. If a workflow change cannot keep
+all freshness/provenance gates fail-closed, it will be left unchanged and logged as a request.
+
+| ID | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| 2D-1 | Stale-audit handoff and initial claim | done | `COORDINATION.md` | prior audit's last commit date confirmed from GitHub API |
+| 2D-2 | Independent full-tree audit | superseded by PR #99 | `analysis/session-09c0c9a2-audit.md` | PR #99 contains the same audit; no duplicate file created |
+| 2D-3 | Isolate settlement-fetch failure from rolling refresh without weakening gates | in progress | `.github/workflows/refresh.yml` | static workflow review; freshness/provenance steps remain required before build/commit |
+| 2D-4 | Correct ingest-run status check and regression tests | pending | `tools/crosscheck_site.py`, `tools/test_crosscheck_site.py`, `.github/workflows/ci.yml` | unit tests cover success, failure, in-progress, missing/invalid API output |
+| 2D-5 | Record implementation, exact test results and requests for final integration | pending | `analysis/session-2d910a64-refresh-fix.md`, `COORDINATION.md` | no NBA value promoted; official source limitation remains explicit |
