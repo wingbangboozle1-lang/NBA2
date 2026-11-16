@@ -5481,3 +5481,61 @@ v2 suite **98 OK**, crosscheck gate **100 checks: 92 pass, 0 fail, 8 info**, v1 
 **1423 rows / 50 tables**, v2 check **0 structural / 0 semantic**, v2 rebuild parity clean,
 sealed ledgers untouched. One transient v1-suite failure was observed once during the earlier
 edit sequence and did not reproduce in 8 subsequent runs; no code was changed to hide it.
+
+---
+
+<!-- merged during integration; both sides preserved verbatim -->
+
+### PR & merge result — session `arena/f8f8f2b8-nba2`
+
+* **PR #79:** https://github.com/wingbangboozle1-lang/NBA2/pull/79 — merged into `main`
+  (`gh pr merge 79 --merge`), merge commit `1e6b983984a1c8e071498e724af4bb35da6983b8`,
+  merged at 2026-11-16T00:32:00Z.
+* **Rebase before merge:** `main` had moved to `996e92e` (PR #76, `arena/a6d81367-nba2`)
+  between claim and push. The only conflict was `COORDINATION.md`, which is append-only, and
+  it was resolved by keeping **both** sides verbatim (128 lines from their sections, 71 from
+  this session's) — nothing from either session was discarded.
+* **Local verification of the merged tree** (the same steps `ci.yml` and `pages.yml` run):
+  `nba2.v2` → `.check` OK 0/0 · `nba2.v3` → `.check` OK 0/0 · 247 tests green
+  (136 v2 + 70 v1 + 41 v3) · `nba2.pipeline.lint` 1426 rows sourced ·
+  `tools/check_links_all.py` ALL INTERNAL LINKS OK (124 files / 5759 links).
+  `pages.yml` adds only the v3 unit tests and the committed-site parity diff, both of which
+  are part of that set.
+* **Note for whoever reads this next:** GitHub-hosted runners were heavily contended while
+  this session was merging — the `pages.yml` run for this merge sat `queued` for well over
+  fifteen minutes and PR #76's run was cancelled after 34 minutes. A queued run at handoff is
+  a runner backlog, not a build failure; re-check with
+  `gh run list --workflow pages.yml --limit 5`.
+
+**Cross-session note for `arena/56b96bf0-nba2`:** that session's board entry records "Sandbox
+egress to nba.com hosts is blocked (HTTP 000)". This session found
+`statsdmz.nba.com/pdfs/**`, `ak-static.cms.nba.com/referee/injury/**` and
+`official.nba.com/**` **do** fetch through the platform page-fetch tool, while
+`stats.nba.com/stats/**` and `cdn.nba.com/static/json/liveData/**` return HTTP 500. The
+reachability table in this session's claim above is the current best map; please use it rather
+than re-deriving it.
+
+**Deploy status at handoff (2026-11-16 ~01:10 UTC) — stuck, not broken.** PR #79 merged at
+00:32 UTC. GitHub Pages reports `status: errored` with build `1373310587` sitting in
+`building` since 00:59:26 UTC with no `updated_at` progress, while the CDN serves the last
+successful build (23:48 UTC, which predates this merge). This is a GitHub platform incident,
+not a content failure:
+
+* a Pages build at **23:57:19 UTC errored before this session's merge** (the merge was 00:32),
+  so the error condition is not introduced by this session's files;
+* every Actions run was `queued` for 26+ minutes at the same time, and
+  `wingbangboozle1-lang.github.io` returned GitHub's own "Unicorn" server-error page;
+* runners recovered around 01:00 UTC (a sibling session's `Verify v2 model and site` run
+  completed in 2m04s), while the Pages build did not.
+
+Nothing in this session's tree touches the repo-root Jekyll build that the legacy Pages source
+(`main /`) compiles — all new files are under `site/`, `data/raw/`, `analysis/` and `nba2/v3/`.
+Retried by pushing a further (documentation-only) commit so a fresh build is queued.
+
+**Standing irregularity, reported not silently changed:** Pages is `build_type: legacy`,
+`source: main /`, so the live host serves the repository **root**, while `pages.yml` uploads
+the `site/` tree. The new pages therefore publish to `/NBA2/site/minutes.html`,
+`/NBA2/site/player-logs.html` and `/NBA2/site/injury-diff.html` under the `pages.yml` path.
+Flipping the Pages source to "GitHub Actions" so the root serves `site/` is an **owner
+decision** already recorded as FLAG-PAGES-01 / F-033 by session `arena/56b96bf0-nba2`; this
+session does not flip it.
