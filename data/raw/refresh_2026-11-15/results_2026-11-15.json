@@ -1,0 +1,260 @@
+{
+ "schema": "nba2.results-feed.v3",
+ "game_date": "2026-11-15",
+ "retrieved_utc": "2026-11-16T14:30:00Z",
+ "retrieval_method": "finals and quarter scores read from each game's official gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final printed on nba.com/schedule for 2026-11-16, via the platform page-fetch tool. Bash egress cannot reach nba.com; the PDFs were read as text, not archived as binaries (F-V4-01).",
+ "settle_rule": "A game is SETTLED only when its official gamebook period row sums to the final for that club AND the final matches the official schedule/scoreboard. A club whose period row was not transcribed carries null quarters and is shown as unverified; nothing is back-solved from the final.",
+ "records": [
+  {
+   "game_id": "0022600236",
+   "date": "2026-11-15",
+   "away": "IND",
+   "home": "PHI",
+   "away_pts": 124,
+   "home_pts": 131,
+   "ot_periods": 0,
+   "away_q": [
+    35,
+    22,
+    30,
+    37
+   ],
+   "home_q": [
+    29,
+    29,
+    39,
+    34
+   ],
+   "home_margin": 7,
+   "total_pts": 255,
+   "final_source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (124, 131)",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600237",
+   "date": "2026-11-15",
+   "away": "LAL",
+   "home": "PHX",
+   "away_pts": 131,
+   "home_pts": 123,
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    31,
+    40,
+    27
+   ],
+   "home_q": [
+    24,
+    30,
+    26,
+    43
+   ],
+   "home_margin": -8,
+   "total_pts": 254,
+   "final_source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600238",
+   "date": "2026-11-15",
+   "away": "CHA",
+   "home": "LAC",
+   "away_pts": 105,
+   "home_pts": 113,
+   "ot_periods": 0,
+   "away_q": [
+    21,
+    31,
+    31,
+    22
+   ],
+   "home_q": [
+    22,
+    29,
+    33,
+    29
+   ],
+   "home_margin": 8,
+   "total_pts": 218,
+   "final_source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600239",
+   "date": "2026-11-15",
+   "away": "SAS",
+   "home": "UTA",
+   "away_pts": 110,
+   "home_pts": 102,
+   "ot_periods": 0,
+   "away_q": [
+    31,
+    27,
+    23,
+    29
+   ],
+   "home_q": [
+    33,
+    22,
+    26,
+    21
+   ],
+   "home_margin": -8,
+   "total_pts": 212,
+   "final_source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600240",
+   "date": "2026-11-15",
+   "away": "DAL",
+   "home": "BOS",
+   "away_pts": 94,
+   "home_pts": 131,
+   "ot_periods": 0,
+   "away_q": null,
+   "home_q": [
+    42,
+    25,
+    37,
+    27
+   ],
+   "home_margin": 37,
+   "total_pts": 225,
+   "final_source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+   "quarter_status": "partial",
+   "quarter_note": "away period row not transcribed; home row (42+25+37+27=131) checked",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600241",
+   "date": "2026-11-15",
+   "away": "NYK",
+   "home": "TOR",
+   "away_pts": 112,
+   "home_pts": 108,
+   "ot_periods": 1,
+   "away_q": [
+    23,
+    24,
+    20,
+    28,
+    17
+   ],
+   "home_q": [
+    17,
+    26,
+    31,
+    21,
+    13
+   ],
+   "home_margin": -4,
+   "total_pts": 220,
+   "final_source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "five periods each; both rows sum to the final (112, 108)",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600242",
+   "date": "2026-11-15",
+   "away": "HOU",
+   "home": "WAS",
+   "away_pts": 147,
+   "home_pts": 119,
+   "ot_periods": 0,
+   "away_q": [
+    36,
+    37,
+    46,
+    28
+   ],
+   "home_q": [
+    31,
+    23,
+    34,
+    31
+   ],
+   "home_margin": -28,
+   "total_pts": 266,
+   "final_source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (147, 119)",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600243",
+   "date": "2026-11-15",
+   "away": "ATL",
+   "home": "MIL",
+   "away_pts": 113,
+   "home_pts": 106,
+   "ot_periods": 0,
+   "away_q": [
+    18,
+    37,
+    32,
+    26
+   ],
+   "home_q": [
+    37,
+    16,
+    27,
+    26
+   ],
+   "home_margin": -7,
+   "total_pts": 219,
+   "final_source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (113, 106)",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  },
+  {
+   "game_id": "0022600244",
+   "date": "2026-11-15",
+   "away": "OKC",
+   "home": "SAC",
+   "away_pts": 125,
+   "home_pts": 103,
+   "ot_periods": 0,
+   "away_q": [
+    32,
+    30,
+    32,
+    31
+   ],
+   "home_q": [
+    24,
+    26,
+    30,
+    23
+   ],
+   "home_margin": -22,
+   "total_pts": 228,
+   "final_source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (125, 103)",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+  }
+ ],
+ "n_games": 9,
+ "n_verified_quarters": 8
+}

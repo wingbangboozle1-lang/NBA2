@@ -1,0 +1,94 @@
+{
+ "schema": "nba2.capture-index.v1",
+ "retrieved_utc": "2026-11-16T14:30:00Z",
+ "retrieved_et": "2026-11-16 09:30 ET",
+ "session": "arena/b3914335-nba2",
+ "method": "platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method",
+ "source_pages": {
+  "schedule": {
+   "name": "NBA.com Schedule (official)",
+   "url": "https://www.nba.com/schedule?date=2026-11-16",
+   "read": "game ids, ET tip times, arena, city, state for 11/16 - 11/19, and the official finals + quarter-level scores of the 11/15 games"
+  },
+  "standings": {
+   "name": "NBA.com Standings (official)",
+   "url": "https://www.nba.com/standings",
+   "read": "30 clubs: W, L, WIN%, GB, CONF, DIV, HOME, ROAD, NEUTRAL, OT, LAST10, STREAK"
+  },
+  "team_adv": {
+   "name": "NBA.com Stats - Teams Advanced (official)",
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: GP, W, L, MIN, OffRtg, DefRtg, NetRtg, AST%, OREB%, DREB%, TOV%, eFG%, TS%, PACE, PIE, POSS"
+  },
+  "team_opp": {
+   "name": "NBA.com Stats - Teams Opponent (official)",
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: Opp PTS (points allowed per game) and the opponent +/- column"
+  },
+  "team_trad": {
+   "name": "NBA.com Stats - Teams Traditional (official)",
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: PTS, FGM/A, FG%, 3PM/A, 3P%, FTM/A, FT%, OREB, DREB, REB, AST, TOV, STL, BLK, PF, +/-"
+  },
+  "injury_index": {
+   "name": "NBA Official - Injury Report index (official)",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "read": "the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/16/26 09:15 AM ET"
+  }
+ },
+ "unread": {
+  "injury_binary_pdf": {
+   "what": "The injury PDFs as stored bytes",
+   "why": "The page-fetch tool returns the PDF's text, not its bytes, and bash egress to ak-static.cms.nba.com is blocked (HTTP 000). Every release this session therefore carries its official URL, its revision stamp and this session's retrieval stamp, plus a sha256 of the transcribed text (a content hash), but NOT the original file hash. Flagged F-V4-01; the fix is a runner with network access, not a guess.",
+   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+  },
+  "player_game_logs": {
+   "what": "Per-player game logs for the 11/15 and 11/16 games",
+   "why": "Gamebook box scores for 11/15 are reachable and their team/period rows were read, but transcribing 9 games x ~26 player rows was outside this session's budget. The committed 11/13 and 11/14 logs stand unchanged; the gap is published, not filled. Flagged F-V4-02.",
+   "attempted_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+  },
+  "arena_coordinates_official": {
+   "what": "Official arena latitude / longitude",
+   "why": "NBA.com publishes arena name, city and state but no coordinates. The coordinates used for travel distance are THIRD-PARTY (Wikipedia/Wikidata geocodes, captured 2026-11-15) and are labelled that way on every row that uses them. Flagged F-V4-03.",
+   "attempted_url": "https://www.nba.com/schedule"
+  },
+  "closing_lines": {
+   "what": "Closing market prices (spread / total / moneyline)",
+   "why": "No licensed odds feed is connected (gate G6). Without a closing line the market-anchored prior's weight is undefined, so w_market stays blank and the blended line is not published. Flagged F-V4-04, carried from v3.",
+   "attempted_url": "https://www.nba.com/games"
+  }
+ },
+ "files": [
+  "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+  "data/raw/refresh_2026-11-16/capture_index.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0915AM.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json",
+  "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+  "data/raw/refresh_2026-11-16/standings_2026-11-16.json",
+  "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json"
+ ],
+ "crosschecks": {
+  "n_clubs": 30,
+  "wins": 197,
+  "losses": 197,
+  "wins_equal_losses": true,
+  "home_w": 102,
+  "road_l": 102,
+  "home_w_equal_road_l": true,
+  "home_l": 94,
+  "road_w": 94,
+  "home_l_equal_road_w": true,
+  "team_games": 394,
+  "league_games": 197.0,
+  "pts_for_sum": 44821.2,
+  "pts_against_sum": 44819.3,
+  "pts_diff": 1.9,
+  "rounding_bound": 39.4,
+  "pts_balance_within_bound": true,
+  "games_whole": true,
+  "n_teams_advanced": 30,
+  "n_teams_opponent": 30,
+  "n_teams_traditional": 30,
+  "all_three_pages_complete": true
+ }
+}

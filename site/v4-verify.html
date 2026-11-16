@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v4 verification · NBA2 Lines Lab v4</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v4 · refreshed 2026-11-16 09:30 ET · window 2026-11-16 → 2026-11-18</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+<a href="slate.html">— v3 rolling slate —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html">Trial registry</a>
+<a href="verification-v3.html">v3 verification</a>
+<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v4 refresh —</a>
+<a href="projection.html">Projection (safe)</a>
+<a href="bet.html">Bet surface (gated)</a>
+<a href="settle.html">Result feed &amp; settlement</a>
+<a href="v4-injuries.html">Injury releases</a>
+<a href="v4-verify.html" class="on">v4 verification</a>
+  </nav>
+</aside>
+<main>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v4 refresh · session <code>arena/b3914335-nba2</code></p>
+<h1>v4 verification</h1>
+<p class="lede">The capture ledger: every official document read, every gap, and every arithmetic identity the published numbers must satisfy.</p>
+
+<div class="note"><b>What was read, what was not, and what would break if a transcription
+were wrong.</b> Every value on the v4 pages comes from one of the official documents below,
+read in this session through the platform page-fetch tool. Bash egress to nba.com returns
+HTTP 000 from this sandbox, so the reading method is recorded on every capture file rather
+than assumed.</div>
+
+<h2>Sources read this session</h2>
+<div class="scroll"><table><thead><tr><th>Block</th><th>Document</th><th>Link</th><th>What was taken from it</th></tr></thead><tbody><tr><td><code>schedule</code></td><td>NBA.com Schedule (official)</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">open</a></td><td>game ids, ET tip times, arena, city, state for 11/16 - 11/19, and the official finals + quarter-level scores of the 11/15 games</td></tr><tr><td><code>standings</code></td><td>NBA.com Standings (official)</td><td><a href="https://www.nba.com/standings">open</a></td><td>30 clubs: W, L, WIN%, GB, CONF, DIV, HOME, ROAD, NEUTRAL, OT, LAST10, STREAK</td></tr><tr><td><code>team_adv</code></td><td>NBA.com Stats - Teams Advanced (official)</td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">open</a></td><td>30 rows: GP, W, L, MIN, OffRtg, DefRtg, NetRtg, AST%, OREB%, DREB%, TOV%, eFG%, TS%, PACE, PIE, POSS</td></tr><tr><td><code>team_opp</code></td><td>NBA.com Stats - Teams Opponent (official)</td><td><a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">open</a></td><td>30 rows: Opp PTS (points allowed per game) and the opponent +/- column</td></tr><tr><td><code>team_trad</code></td><td>NBA.com Stats - Teams Traditional (official)</td><td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">open</a></td><td>30 rows: PTS, FGM/A, FG%, 3PM/A, 3P%, FTM/A, FT%, OREB, DREB, REB, AST, TOV, STL, BLK, PF, +/-</td></tr><tr><td><code>injury_index</code></td><td>NBA Official - Injury Report index (official)</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">open</a></td><td>the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/16/26 09:15 AM ET</td></tr></tbody></table></div>
+
+<h2>Inputs that are missing, and why</h2>
+<p>These are published as gaps on the page they affect. None of them is estimated.</p>
+<div class="scroll"><table><thead><tr><th>Block</th><th>What is missing</th><th>Why / what would fix it</th><th>Source</th></tr></thead><tbody><tr><td><code>injury_binary_pdf</code></td><td>The injury PDFs as stored bytes</td><td>The page-fetch tool returns the PDF&#x27;s text, not its bytes, and bash egress to ak-static.cms.nba.com is blocked (HTTP 000). Every release this session therefore carries its official URL, its revision stamp and this session&#x27;s retrieval stamp, plus a sha256 of the transcribed text (a content hash), but NOT the original file hash. Flagged F-V4-01; the fix is a runner with network access, not a guess.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">source</a></td></tr><tr><td><code>player_game_logs</code></td><td>Per-player game logs for the 11/15 and 11/16 games</td><td>Gamebook box scores for 11/15 are reachable and their team/period rows were read, but transcribing 9 games x ~26 player rows was outside this session&#x27;s budget. The committed 11/13 and 11/14 logs stand unchanged; the gap is published, not filled. Flagged F-V4-02.</td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf">source</a></td></tr><tr><td><code>arena_coordinates_official</code></td><td>Official arena latitude / longitude</td><td>NBA.com publishes arena name, city and state but no coordinates. The coordinates used for travel distance are THIRD-PARTY (Wikipedia/Wikidata geocodes, captured 2026-11-15) and are labelled that way on every row that uses them. Flagged F-V4-03.</td><td><a href="https://www.nba.com/schedule">source</a></td></tr><tr><td><code>closing_lines</code></td><td>Closing market prices (spread / total / moneyline)</td><td>No licensed odds feed is connected (gate G6). Without a closing line the market-anchored prior&#x27;s weight is undefined, so w_market stays blank and the blended line is not published. Flagged F-V4-04, carried from v3.</td><td><a href="https://www.nba.com/games">source</a></td></tr></tbody></table></div>
+
+<h2>Arithmetic identities the official pages must satisfy</h2>
+<p>If a transcription were wrong, one of these breaks. They are recomputed from the capture on
+every build, not copied from a previous run.</p>
+<div class="scroll"><table><thead><tr><th>Identity</th><th>Observed</th><th>Result</th><th>Src</th></tr></thead><tbody><tr><td>League wins = league losses</td><td>197 = 197</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/standings">SRC</a></td></tr><tr><td>Home wins = road losses</td><td>102 = 102</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/standings">SRC</a></td></tr><tr><td>Home losses = road wins</td><td>94 = 94</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/standings">SRC</a></td></tr><tr><td>Points scored = points allowed (games-weighted)</td><td>44821.2 vs 44819.3 (diff 1.9, rounding bound ±39.4)</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr><tr><td>Team-games is a whole number of games</td><td>394 team-games = 197.0 league games</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr><tr><td>All three team-stat pages complete</td><td>30 / 30 / 30</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr><tr><td>Points identity: 2·FGM + 3PM + FTM = PTS, all 30 clubs</td><td>30 rows checked, 0 outside ±0.45</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr><tr><td>Corroboration across pages: OffRtg·POSS/(100·GP) vs PTS read from the traditional page</td><td>worst club CHA -0.069 pts/g (all 30 within ±0.10)</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr></tbody></table></div>
+
+<h2>Build gates</h2>
+<div class="scroll"><table><thead><tr><th>Gate</th><th>Measured</th><th>Result</th><th>Src</th></tr></thead><tbody><tr><td><code>G-V4-1</code></td><td>9 finals, 8 with verified quarters</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SRC</a></td></tr><tr><td><code>G-V4-2</code></td><td>30 clubs, 197W/197L, home 102-94 vs road 94-102</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/standings">SRC</a></td></tr><tr><td><code>G-V4-3</code></td><td>advanced 30, opponent 30, traditional 30; points diff 1.9 within ±39.4</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr><tr><td><code>G-V4-4</code></td><td>29 games across 4 dates (2026-11-16..2026-11-19)</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SRC</a></td></tr><tr><td><code>G-V4-5</code></td><td>revision 2026-11-16 09:15 AM ET, retrieved 2026-11-16T14:41:00Z, index checked 2026-11-16T14:30:00Z</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/">SRC</a></td></tr><tr><td><code>G-V4-6</code></td><td>7 capture documents scanned</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SRC</a></td></tr><tr><td><code>G-V4-7</code></td><td>settlement hash abb844cc4c11ab99</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/data/v3/ledger">SRC</a></td></tr><tr><td><code>G-V4-8</code></td><td>2 pages inspected on the emitted HTML</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame">SRC</a></td></tr></tbody></table></div>
+
+<h2>Capture ledger</h2>
+<p>The committed capture is reproducible: <code>python -m nba2.v4.write_capture</code> rewrites
+it byte-identically, and CI fails the build if the committed capture differs from a rebuild.
+The settlement carries its own hash and re-verifies the sealed ledger before grading.</p>
+
+<h2>Settlement integrity</h2>
+<div class="scroll"><table><thead><tr><th>Check</th><th>Observed</th><th>Result</th></tr></thead><tbody><tr><td>Settlement file hash</td><td>abb844cc4c11ab999c7d8b03</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v4/settlement/settled-2026-11-15.json">SRC</a></td></tr><tr><td>Sealed ledger still verifies</td><td>34e144c635b83b8991a61e8c</td><td><span class="badge b-ok">PASS</span></td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v3/ledger/sealed-2026-11-15.json">SRC</a></td></tr></tbody></table></div>
+
+<footer>
+Captured 2026-11-16T14:30:00Z by session <code>arena/b3914335-nba2</code>. Method: platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method.
+Every row links to the official document it was read from. A blank cell is a value we do not
+have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 verification</a>.
+</footer>
+</main>
+</div>
+</body>
+</html>

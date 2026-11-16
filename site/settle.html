@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Result feed &amp;amp; settlement · NBA2 Lines Lab v4</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v4 · refreshed 2026-11-16 09:30 ET · window 2026-11-16 → 2026-11-18</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+<a href="slate.html">— v3 rolling slate —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html">Trial registry</a>
+<a href="verification-v3.html">v3 verification</a>
+<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v4 refresh —</a>
+<a href="projection.html">Projection (safe)</a>
+<a href="bet.html">Bet surface (gated)</a>
+<a href="settle.html" class="on">Result feed &amp; settlement</a>
+<a href="v4-injuries.html">Injury releases</a>
+<a href="v4-verify.html">v4 verification</a>
+  </nav>
+</aside>
+<main>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v4 refresh · session <code>arena/b3914335-nba2</code></p>
+<h1>Result feed &amp;amp; settlement</h1>
+<p class="lede">The official per-game result feed with quarter-score provenance, and the sealed ledger's settlement stamp against it.</p>
+
+<div class="note"><b>One row per game: date, teams, final score, quarter scores.</b> Every
+final was read from the game's official page and cross-read against its official gamebook.
+A quarter cell is only filled when that club's period row was actually transcribed and summed
+to the final; otherwise it is blank and flagged. Nothing here is back-solved from the final —
+a split that adds up because it was constructed to add up is not evidence.</div>
+<div class="scroll"><table><caption>Official finals of 2026-11-15. Margin is home minus away.</caption><thead><tr><th>Date</th><th>Teams</th><th>Game</th><th>Away</th><th>Home</th><th>Margin</th><th>Total</th><th>Away quarters</th><th>Home quarters</th><th>Quarters</th><th>Book</th></tr></thead><tbody><tr><td>2026-11-15</td><td>IND @ PHI</td><td><a href="https://www.nba.com/game/ind-vs-phi-0022600236" title="official game page">0022600236</a></td><td class='n'>124</td><td class='n'>131</td><td class='n'>+7</td><td class='n'>255</td><td class='n'>35 · 22 · 30 · 37</td><td class='n'>29 · 29 · 39 · 34</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>LAL @ PHX</td><td><a href="https://www.nba.com/game/lal-vs-phx-0022600237" title="official game page">0022600237</a></td><td class='n'>131</td><td class='n'>123</td><td class='n'>-8</td><td class='n'>254</td><td class='n'>33 · 31 · 40 · 27</td><td class='n'>24 · 30 · 26 · 43</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>CHA @ LAC</td><td><a href="https://www.nba.com/game/cha-vs-lac-0022600238" title="official game page">0022600238</a></td><td class='n'>105</td><td class='n'>113</td><td class='n'>+8</td><td class='n'>218</td><td class='n'>21 · 31 · 31 · 22</td><td class='n'>22 · 29 · 33 · 29</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>SAS @ UTA</td><td><a href="https://www.nba.com/game/sas-vs-uta-0022600239" title="official game page">0022600239</a></td><td class='n'>110</td><td class='n'>102</td><td class='n'>-8</td><td class='n'>212</td><td class='n'>31 · 27 · 23 · 29</td><td class='n'>33 · 22 · 26 · 21</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>DAL @ BOS</td><td><a href="https://www.nba.com/game/dal-vs-bos-0022600240" title="official game page">0022600240</a></td><td class='n'>94</td><td class='n'>131</td><td class='n'>+37</td><td class='n'>225</td><td><span class="blank">— F-V4-10 period row not transcribed</span></td><td class='n'>42 · 25 · 37 · 27</td><td><span class="badge b-warn">unverified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>NYK @ TOR</td><td><a href="https://www.nba.com/game/nyk-vs-tor-0022600241" title="official game page">0022600241</a></td><td class='n'>112</td><td class='n'>108</td><td class='n'>-4</td><td class='n'>220</td><td class='n'>23 · 24 · 20 · 28 · 17</td><td class='n'>17 · 26 · 31 · 21 · 13</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>HOU @ WAS</td><td><a href="https://www.nba.com/game/hou-vs-was-0022600242" title="official game page">0022600242</a></td><td class='n'>147</td><td class='n'>119</td><td class='n'>-28</td><td class='n'>266</td><td class='n'>36 · 37 · 46 · 28</td><td class='n'>31 · 23 · 34 · 31</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>ATL @ MIL</td><td><a href="https://www.nba.com/game/atl-vs-mil-0022600243" title="official game page">0022600243</a></td><td class='n'>113</td><td class='n'>106</td><td class='n'>-7</td><td class='n'>219</td><td class='n'>18 · 37 · 32 · 26</td><td class='n'>37 · 16 · 27 · 26</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf" title="official gamebook PDF">book</a></td></tr><tr><td>2026-11-15</td><td>OKC @ SAC</td><td><a href="https://www.nba.com/game/okc-vs-sac-0022600244" title="official game page">0022600244</a></td><td class='n'>125</td><td class='n'>103</td><td class='n'>-22</td><td class='n'>228</td><td class='n'>32 · 30 · 32 · 31</td><td class='n'>24 · 26 · 30 · 23</td><td><span class="badge b-ok">verified</span></td><td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf" title="official gamebook PDF">book</a></td></tr></tbody></table></div>
+
+<div class="note"><b>Settlement stamp 2026-11-15T23:59:59Z</b> — sealed
+<code>34e144c635b83b89</code> verified
+<span class="badge b-ok">PRE-TIP HASH VERIFIED</span>;
+<b>9 of 34</b> sealed rows graded against official finals,
+25 ungraded (not losses). Margin MAE <b>8.267</b>,
+total MAE <b>14.2</b>, winner hit rate <b>1.0</b>.
+Log-loss <b>0.2804</b> vs coin-flip <b>0.6931</b>.</div>
+<p style="color:var(--warn)"><b>Read the luck control before the hit rate.</b> Nine correct
+winners out of nine looks like skill and is not yet distinguishable from it: under the model's
+own probabilities the chance of that run is
+<b>0.080177</b> and the model expected
+<b>6.87</b> correct. One game day of heavy favourites is not a
+measurement. The stamp stays visible so a reader can watch the sample grow.</p>
+<h2>What the stamp is grading</h2>
+<div class="scroll"><table><caption>Only sealed rows with a verified official final appear here.</caption><thead><tr><th>Date</th><th>Matchup</th><th>Consensus</th><th>Official</th><th>Margin error</th><th>Proj total</th><th>Official total</th><th>Total error</th><th>Winner</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-15</td><td>IND @ PHI</td><td class='n'>+4.86</td><td class='n'>+7</td><td class='n'>+2.14</td><td class='n'>222.5</td><td class='n'>255</td><td class='n'>+32.50</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/ind-vs-phi-0022600236">GAME</a></td></tr><tr><td>2026-11-15</td><td>LAL @ PHX</td><td class='n'>-11.82</td><td class='n'>-8</td><td class='n'>+3.82</td><td class='n'>232.1</td><td class='n'>254</td><td class='n'>+21.90</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/lal-vs-phx-0022600237">GAME</a></td></tr><tr><td>2026-11-15</td><td>CHA @ LAC</td><td class='n'>+8.57</td><td class='n'>+8</td><td class='n'>-0.57</td><td class='n'>217.9</td><td class='n'>218</td><td class='n'>+0.10</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/cha-vs-lac-0022600238">GAME</a></td></tr><tr><td>2026-11-15</td><td>SAS @ UTA</td><td class='n'>-25.18</td><td class='n'>-8</td><td class='n'>+17.18</td><td class='n'>223.2</td><td class='n'>212</td><td class='n'>-11.20</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/sas-vs-uta-0022600239">GAME</a></td></tr><tr><td>2026-11-15</td><td>DAL @ BOS</td><td class='n'>+14.60</td><td class='n'>+37</td><td class='n'>+22.40</td><td class='n'>221.1</td><td class='n'>225</td><td class='n'>+3.90</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/dal-vs-bos-0022600240">GAME</a></td></tr><tr><td>2026-11-15</td><td>NYK @ TOR</td><td class='n'>-3.59</td><td class='n'>-4</td><td class='n'>-0.41</td><td class='n'>220.1</td><td class='n'>220</td><td class='n'>-0.10</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/nyk-vs-tor-0022600241">GAME</a></td></tr><tr><td>2026-11-15</td><td>HOU @ WAS</td><td class='n'>-15.07</td><td class='n'>-28</td><td class='n'>-12.93</td><td class='n'>222.9</td><td class='n'>266</td><td class='n'>+43.10</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/hou-vs-was-0022600242">GAME</a></td></tr><tr><td>2026-11-15</td><td>ATL @ MIL</td><td class='n'>-16.44</td><td class='n'>-7</td><td class='n'>+9.44</td><td class='n'>229.8</td><td class='n'>219</td><td class='n'>-10.80</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/atl-vs-mil-0022600243">GAME</a></td></tr><tr><td>2026-11-15</td><td>OKC @ SAC</td><td class='n'>-16.49</td><td class='n'>-22</td><td class='n'>-5.51</td><td class='n'>223.8</td><td class='n'>228</td><td class='n'>+4.20</td><td><span class="badge b-ok">hit</span></td><td><a href="https://www.nba.com/game/okc-vs-sac-0022600244">GAME</a></td></tr></tbody></table></div>
+<h2>What is not graded, and why</h2>
+<div class="scroll"><table><caption>Ungraded is not a loss. A sealed game with no official final has no result.</caption><thead><tr><th>Date</th><th>Matchup</th><th>Game</th><th>State</th><th>Reason</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16</td><td>ORL @ BOS</td><td>0022600245</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>CHI @ CLE</td><td>0022600246</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>MEM @ WAS</td><td>0022600247</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>PHI @ BKN</td><td>0022600248</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>HOU @ MIA</td><td>0022600249</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>POR @ MIN</td><td>0022600250</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>GSW @ NOP</td><td>0022600251</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-16</td><td>PHX @ DEN</td><td>0022600252</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-17</td><td>NYK @ TOR</td><td>0022600253</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-17</td><td>POR @ MIN</td><td>0022600254</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-17</td><td>DET @ SAS</td><td>0022600255</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-17</td><td>CHA @ LAL</td><td>0022600256</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-17</td><td>UTA @ LAC</td><td>0022600257</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>MEM @ CLE</td><td>0022600258</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>HOU @ IND</td><td>0022600259</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>MIL @ MIA</td><td>0022600260</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>PHI @ ORL</td><td>0022600261</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>CHI @ BKN</td><td>0022600262</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>WAS @ TOR</td><td>0022600263</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>DET @ NOP</td><td>0022600264</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>ATL @ OKC</td><td>0022600265</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>BOS @ DEN</td><td>0022600266</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>GSW @ DAL</td><td>0022600267</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>UTA @ LAL</td><td>0022600268</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr><tr><td>2026-11-18</td><td>PHX @ SAC</td><td>0022600269</td><td><span class="badge b-info">UNGRADED</span></td><td>no verified official final in the committed capture</td><td><a href="https://www.nba.com/schedule?date=2026-11-16">SCHED</a></td></tr></tbody></table></div>
+<h2>The seal itself</h2>
+<p>The pre-tip hash of the sealed ledger is re-verified before any grading runs; if it did not
+match, this page would not render a stamp at all. The seal file is never rewritten; the
+settlement is written beside it. Verify with
+<code>python -m nba2.v4.settlement</code> → <code>verify_settlement()</code>.</p>
+
+<footer>
+Captured 2026-11-16T14:30:00Z by session <code>arena/b3914335-nba2</code>. Method: platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method.
+Every row links to the official document it was read from. A blank cell is a value we do not
+have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 verification</a>.
+</footer>
+</main>
+</div>
+</body>
+</html>

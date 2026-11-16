@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bet surface (gated) · NBA2 Lines Lab v4</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v4 · refreshed 2026-11-16 09:30 ET · window 2026-11-16 → 2026-11-18</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+<a href="slate.html">— v3 rolling slate —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html">Trial registry</a>
+<a href="verification-v3.html">v3 verification</a>
+<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v4 refresh —</a>
+<a href="projection.html">Projection (safe)</a>
+<a href="bet.html" class="on">Bet surface (gated)</a>
+<a href="settle.html">Result feed &amp; settlement</a>
+<a href="v4-injuries.html">Injury releases</a>
+<a href="v4-verify.html">v4 verification</a>
+  </nav>
+</aside>
+<main>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v4 refresh · session <code>arena/b3914335-nba2</code></p>
+<h1>Bet surface (gated)</h1>
+<p class="lede">The only surface that may carry a stake. Nothing is published here without a measured market price, so today it publishes refusals, one per game.</p>
+<div class="kpis"><div class="kpi"><b>0</b><small>bet rows published</small></div><div class="kpi"><b>29</b><small>bet rows refused</small></div><div class="kpi"><b>0.00</b><small>total stake published (units)</small></div></div>
+<div class="note"><b>This surface is empty on purpose, and it says so per game.</b> A stake is
+<code>model probability × price − 1</code>. With no licensed odds feed there is no price, so the
+expression has no value. Publishing a stake anyway would be publishing a number with no
+evidence behind it, which is the one thing this project does not do (gate G6).</div>
+<p>The projection surface is <a href="projection.html">here</a>. It is a different page with a
+different contract: it may not contain a market price, an edge or a stake. This page may not
+contain a row that lacks one. <code>nba2.v4.check</code> asserts both directions on the emitted
+HTML, so the wall cannot be crossed by editing a template.</p>
+<div class="scroll"><table><caption>One row per game in the window. A refused row is a published outcome, not a missing one.</caption><thead><tr><th>Date</th><th>Matchup</th><th>State</th><th>Gate / book</th><th>Reason</th><th>Detail</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/orl-vs-bos-0022600245" title="official game page">ORL @ BOS</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/chi-vs-cle-0022600246" title="official game page">CHI @ CLE</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/mem-vs-was-0022600247" title="official game page">MEM @ WAS</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/phi-vs-bkn-0022600248" title="official game page">PHI @ BKN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/hou-vs-mia-0022600249" title="official game page">HOU @ MIA</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/por-vs-min-0022600250" title="official game page">POR @ MIN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/gsw-vs-nop-0022600251" title="official game page">GSW @ NOP</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-16</td><td><a href="https://www.nba.com/game/phx-vs-den-0022600252" title="official game page">PHX @ DEN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-17</td><td><a href="https://www.nba.com/game/nyk-vs-tor-0022600253" title="official game page">NYK @ TOR</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-17</td><td><a href="https://www.nba.com/game/por-vs-min-0022600254" title="official game page">POR @ MIN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-17</td><td><a href="https://www.nba.com/game/det-vs-sas-0022600255" title="official game page">DET @ SAS</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-17</td><td><a href="https://www.nba.com/game/cha-vs-lal-0022600256" title="official game page">CHA @ LAL</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-17</td><td><a href="https://www.nba.com/game/uta-vs-lac-0022600257" title="official game page">UTA @ LAC</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/mem-vs-cle-0022600258" title="official game page">MEM @ CLE</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/hou-vs-ind-0022600259" title="official game page">HOU @ IND</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/mil-vs-mia-0022600260" title="official game page">MIL @ MIA</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/phi-vs-orl-0022600261" title="official game page">PHI @ ORL</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/chi-vs-bkn-0022600262" title="official game page">CHI @ BKN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/was-vs-tor-0022600263" title="official game page">WAS @ TOR</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/det-vs-nop-0022600264" title="official game page">DET @ NOP</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/atl-vs-okc-0022600265" title="official game page">ATL @ OKC</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/bos-vs-den-0022600266" title="official game page">BOS @ DEN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/gsw-vs-dal-0022600267" title="official game page">GSW @ DAL</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/uta-vs-lal-0022600268" title="official game page">UTA @ LAL</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-18</td><td><a href="https://www.nba.com/game/phx-vs-sac-0022600269" title="official game page">PHX @ SAC</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-19</td><td><a href="https://www.nba.com/game/gsw-vs-mem-0022600270" title="official game page">GSW @ MEM</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-19</td><td><a href="https://www.nba.com/game/por-vs-mil-0022600271" title="official game page">POR @ MIL</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-19</td><td><a href="https://www.nba.com/game/nyk-vs-min-0022600272" title="official game page">NYK @ MIN</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr><tr><td>2026-11-19</td><td><a href="https://www.nba.com/game/lac-vs-sas-0022600273" title="official game page">LAC @ SAS</a></td><td><span class="badge b-bad">REFUSED</span></td><td>G6</td><td>G6: no measured market price for this game</td><td>a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published</td><td><a href="https://www.nba.com/games" title="where a price would come from">MKT</a></td></tr></tbody></table></div>
+<h2>What would fill this surface</h2>
+<table>
+<tr><th>Input</th><th>Why it is needed</th><th>Where it would come from</th><th>Status</th><th>Src</th></tr>
+<tr><td>Closing spread / total / moneyline</td>
+<td>an edge is a difference from a price; with no price there is no edge</td>
+<td>a licensed odds vendor</td><td><span class="badge b-bad">blocked</span> F-V4-04</td>
+<td><a href="https://www.nba.com/games">MKT</a></td></tr>
+<tr><td>Opening line, for line movement</td>
+<td>movement is the only observable that separates information from noise pre-tip</td>
+<td>same vendor, historical tier</td><td><span class="badge b-bad">blocked</span> F-V4-04</td>
+<td><a href="https://www.nba.com/games">MKT</a></td></tr>
+<tr><td>Bankroll and staking policy</td>
+<td>a stake percentage needs a denominator and a drawdown rule</td>
+<td>owner decision</td><td><span class="badge b-warn">owner</span> R-048</td>
+<td><a href="https://www.nba.com/games">NBA</a></td></tr>
+</table>
+
+<footer>
+Captured 2026-11-16T14:30:00Z by session <code>arena/b3914335-nba2</code>. Method: platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method.
+Every row links to the official document it was read from. A blank cell is a value we do not
+have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 verification</a>.
+</footer>
+</main>
+</div>
+</body>
+</html>
