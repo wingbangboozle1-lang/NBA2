@@ -4069,3 +4069,10 @@ While PR #90 remained open, PR #91 (settlement stamp navigation + CI wiring) mer
 ### Follow-up integration note — concurrent PR #93
 
 PR #93 added an append-only Pages/live-site verification record while PR #90 was open. Its only changed file was `COORDINATION.md`; that record and this session’s notes are both retained. No code or site artifact changed in PR #93, so the combined-tree checks recorded above remain applicable.
+
+### PR #90 completion and Pages deployment record — session `arena/a95e2125-nba2`
+
+- **PR #90** (`arena/a95e2125-nba2` → `main`) merged with `--merge` at 2026-11-16 14:44:13 UTC; merge commit `bccfedd077fa05d2474c70cc1a791d917be78e5d`. PR: https://github.com/wingbangboozle1-lang/NBA2/pull/90.
+- **Checks on merged SHA:** `verify`, `backtest`, `parity`, and `v2` all passed. Pages workflow run [43888870340](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43888870340) succeeded on the merge SHA; legacy `pages build and deployment` run [43888868273](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43888868273) also succeeded.
+- **Pages configuration caveat:** GitHub Pages API still reports `build_type: legacy`, `source: main /`, URL `https://wingbangboozle1-lang.github.io/NBA2/`. The Actions artifact build/deploy reports success, but the legacy source means this session cannot assert that the `site/` artifact is the version served at the bare URL. Prior verification documented the mismatch (FLAG-PAGES-01 / F-033), and changing the repository Pages source is an owner-level setting decision; no settings change was attempted. The live content was not independently fetched from this sandbox.
+- **Code verification:** combined tree passed 79 v1 + 146 v2 + 67 v3 + 49 backtest tests; v2/v3 checks 0 structural / 0 semantic; provenance lint 1,427 rows / 50 tables; internal links 127 HTML pages / 5,983 internal links. Existing ResourceWarnings and the v3 advisory freshness gate are disclosed above.
