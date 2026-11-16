@@ -53,7 +53,13 @@ class TestSnapshot(unittest.TestCase):
 class TestHomeCourt(unittest.TestCase):
     def test_hca_is_the_pinned_identity(self):
         hc = M.home_court(M.load_played_games()["games"])
-        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 188)
+        # The game count is the number of committed official finals, not a remembered
+        # constant: the history grows every game night, and a hard-coded 188 fails the
+        # moment it does. The invariant is that every committed final is classified either
+        # as a home/road game or as a neutral-site exclusion.
+        games = M.load_played_games()["games"]
+        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], len(games))
+        self.assertGreater(len(games), 0)
         want = hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])
         self.assertLess(abs(hc["hca_points"] - want), 5e-4)
         self.assertAlmostEqual(M.phi(hc["hca_points"] / hc["margin_sd"]),
