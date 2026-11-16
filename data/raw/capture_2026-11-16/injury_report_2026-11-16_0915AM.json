@@ -1,0 +1,776 @@
+{
+ "schema": "nba2.injury-transcript.v1",
+ "report_stamp_et": "2026-11-16 09:15 AM ET",
+ "revision_time_et": "2026-11-16 09:15 AM ET",
+ "retrieved_at_utc": "2026-11-16T15:15:00Z",
+ "retrieved_by": "arena/fe0ffa49-nba2",
+ "retrieval_method": "platform page-fetch tool (fetch_page) against the official PDF; the PDF text is read, the binary cannot be stored from this sandbox (bash egress to ak-static.cms.nba.com returns HTTP 000).",
+ "provenance": {
+  "publisher": "NBA Official Injury Report (official)",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+  "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+  "prior_release_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf",
+  "note": "Newest release listed on the league's official index at retrieval time (the index rendered links through the 09:15 AM ET stamp). Rows transcribed verbatim from the PDF text; nothing inferred. Three layout quirks of the PDF itself are recorded, not corrected: (FLAG-FE0-INJ-CONT) page-continuation rows print with an empty date/time/matchup/team cell and are attributed by table position; (FLAG-FE0-INJ-SHIFT) in the GSW@NOP block the status cell holds a reason string and the reason cell is empty for one row, so that row's status is unreadable and is left blank; (FLAG-FE0-INJ-NO18) the report contains no rows for 2026-11-18 or 2026-11-19, because the 5 p.m. local day-before filing deadline for those games has not passed."
+ },
+ "columns": [
+  "date",
+  "time_et",
+  "matchup",
+  "team",
+  "player",
+  "status",
+  "reason",
+  "attribution"
+ ],
+ "records": [
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Chicago Bulls",
+   "Awaka, Tobe",
+   "Out",
+   "Injury/Illness - Disc Irritation",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Chicago Bulls",
+   "Robinson, Orlando",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Chicago Bulls",
+   "Sellers, Jaylin",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Chicago Bulls",
+   "Smith, Jalen",
+   "Questionable",
+   "Injury/Illness - Left Finger Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Chicago Bulls",
+   "Wilson, Caleb",
+   "Out",
+   "Injury/Illness - Right Metacarpal Fracture",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Diop, Khalifa",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Merrill, Sam",
+   "Out",
+   "Injury/Illness - Right Elbow Injury Management",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Mobley, Evan",
+   "Out",
+   "Injury/Illness - Left Great Toe Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Tomlin, Nae'Qwan",
+   "Out",
+   "Injury/Illness - Low Back Stress Reaction",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Tyson, Jaylon",
+   "Questionable",
+   "Injury/Illness - Right Ankle Injury Management",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Udeh, Jr., Ernest",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "CHI@CLE",
+   "Cleveland Cavaliers",
+   "Watson, Peyton",
+   "Questionable",
+   "Injury/Illness - Right Abdominal Soreness",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Edey, Zach",
+   "Questionable",
+   "Injury/Illness - Left Ankle Injury Management",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Jackson, GG",
+   "Out",
+   "Injury/Illness - Left Foot Injury",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Jerome, Ty",
+   "Out",
+   "Injury/Illness - Right Hip Soreness",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Pippen Jr., Scotty",
+   "Out",
+   "Injury/Illness - Lumbar Disc Herniation",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Post, Quinten",
+   "Questionable",
+   "Injury/Illness - Concussion Protocol",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Saunders, Richie",
+   "Out",
+   "Injury/Illness - Right Knee Surgery",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Memphis Grizzlies",
+   "Stewart, Isaiah",
+   "Questionable",
+   "Injury/Illness - Illness",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "MEM@WAS",
+   "Washington Wizards",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "ORL@BOS",
+   "Orlando Magic",
+   "Banchero, Paolo",
+   "Out",
+   "Injury/Illness - Right High Ankle Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "ORL@BOS",
+   "Orlando Magic",
+   "Isaac, Jonathan",
+   "Out",
+   "Injury/Illness - Left Knee Injury Management",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "ORL@BOS",
+   "Orlando Magic",
+   "Nelson, Izaiyah",
+   "Out",
+   "Injury/Illness - Left Ankle Injury Recovery",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "ORL@BOS",
+   "Orlando Magic",
+   "Penda, Noah",
+   "Out",
+   "Injury/Illness - Right Partially Torn Hamstring",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:00",
+   "ORL@BOS",
+   "Boston Celtics",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "HOU@MIA",
+   "Houston Rockets",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "HOU@MIA",
+   "Miami Heat",
+   "Goldin, Vladislav",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "HOU@MIA",
+   "Miami Heat",
+   "Larsson, Pelle",
+   "Questionable",
+   "Injury/Illness - Illness",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "HOU@MIA",
+   "Miami Heat",
+   "Thompson, Klay",
+   "Available",
+   "Injury/Illness - Left Ankle Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Philadelphia 76ers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Brooklyn Nets",
+   "Bilodeau, Tyler",
+   "Out",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Brooklyn Nets",
+   "Jefferson, Joshua",
+   "Out",
+   "G League - On Assignment",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Brooklyn Nets",
+   "Nelson, Grant",
+   "Out",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Brooklyn Nets",
+   "Powell, Drake",
+   "Out",
+   "G League - On Assignment",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "07:30",
+   "PHI@BKN",
+   "Brooklyn Nets",
+   "Saraf, Ben",
+   "Out",
+   "G League - On Assignment",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Butler III, Jimmy",
+   "",
+   "Injury/Illness - Right ACL Repair / Surgery",
+   "S"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Curry, Stephen",
+   "Out",
+   "",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Moody, Moses",
+   "Out",
+   "",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Porzingis, Kristaps",
+   "Out",
+   "",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Santos, Gui",
+   "Questionable",
+   "",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "Golden State Warriors",
+   "Williams, Brandon",
+   "Out",
+   "",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Dia, Malik",
+   "Questionable",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Mathurin, Bennedict",
+   "Out",
+   "Injury/Illness - Left Plantar Fasciitis",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "McGowens, Bryce",
+   "Out",
+   "Injury/Illness - Left Elbow Infection",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Murphy III, Trey",
+   "Out",
+   "Injury/Illness - Bilateral Patellar Tendinopathy",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Murray, Dejounte",
+   "Out",
+   "Injury/Illness - Left Ankle Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Pierre Jr., Jaron",
+   "Questionable",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Reese, Julian",
+   "Questionable",
+   "G League - Two-Way",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "GSW@NOP",
+   "New Orleans Pelicans",
+   "Watford, Trendon",
+   "Out",
+   "Injury/Illness - Right Ankle Sprain",
+   "C"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Portland Trail Blazers",
+   "Krejci, Vit",
+   "Out",
+   "Injury/Illness - Left Ankle Fracture",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Portland Trail Blazers",
+   "Morant, Ja",
+   "Out",
+   "Injury/Illness - Left Hamstring Strain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Portland Trail Blazers",
+   "Sharpe, Shaedon",
+   "Out",
+   "Injury/Illness - Right Knee Surgery",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Portland Trail Blazers",
+   "Youngblood, Chris",
+   "Out",
+   "Injury/Illness - Right Heel Contusion / Bone Bruise",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Minnesota Timberwolves",
+   "Beringer, Joan",
+   "Available",
+   "Injury/Illness - Face Mask",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Minnesota Timberwolves",
+   "Clark, Jaylen",
+   "Out",
+   "Injury/Illness - Right Hamstring Strain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Minnesota Timberwolves",
+   "DiVincenzo, Donte",
+   "Out",
+   "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "08:00",
+   "POR@MIN",
+   "Minnesota Timberwolves",
+   "Edwards, Anthony",
+   "Out",
+   "Injury/Illness - Right Knee Arthroscopy",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "09:00",
+   "PHX@DEN",
+   "Phoenix Suns",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "09:00",
+   "PHX@DEN",
+   "Denver Nuggets",
+   "Holmes II, DaRon",
+   "Out",
+   "G League - On Assignment",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "09:00",
+   "PHX@DEN",
+   "Denver Nuggets",
+   "Nembhard, Ryan",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "09:00",
+   "PHX@DEN",
+   "Denver Nuggets",
+   "Strawther, Julian",
+   "Out",
+   "Injury/Illness - Left Knee Sprain",
+   "E"
+  ],
+  [
+   "2026-11-16",
+   "09:00",
+   "PHX@DEN",
+   "Denver Nuggets",
+   "Whitmore, Cam",
+   "Out",
+   "G League - Two-Way",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "07:30",
+   "NYK@TOR",
+   "New York Knicks",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "07:30",
+   "NYK@TOR",
+   "Toronto Raptors",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "08:00",
+   "DET@SAS",
+   "Detroit Pistons",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "08:00",
+   "DET@SAS",
+   "San Antonio Spurs",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "08:00",
+   "POR@MIN",
+   "Portland Trail Blazers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "08:00",
+   "POR@MIN",
+   "Minnesota Timberwolves",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "10:30",
+   "UTA@LAC",
+   "Utah Jazz",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "10:30",
+   "UTA@LAC",
+   "LA Clippers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "11:00",
+   "CHA@LAL",
+   "Charlotte Hornets",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ],
+  [
+   "2026-11-17",
+   "11:00",
+   "CHA@LAL",
+   "Los Angeles Lakers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   "E"
+  ]
+ ],
+ "counts": {
+  "rows": 72,
+  "player_rows": 57,
+  "not_yet_submitted_rows": 15,
+  "continuation_rows": 12,
+  "shifted_rows": 1,
+  "games_covered": [
+   "CHA@LAL",
+   "CHI@CLE",
+   "DET@SAS",
+   "GSW@NOP",
+   "HOU@MIA",
+   "MEM@WAS",
+   "NYK@TOR",
+   "ORL@BOS",
+   "PHI@BKN",
+   "PHX@DEN",
+   "POR@MIN",
+   "UTA@LAC"
+  ],
+  "dates_covered": [
+   "2026-11-16",
+   "2026-11-17"
+  ]
+ },
+ "no_rows_for_dates": [
+  "2026-11-18",
+  "2026-11-19"
+ ]
+}

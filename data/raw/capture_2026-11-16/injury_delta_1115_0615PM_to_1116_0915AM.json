@@ -1,0 +1,751 @@
+{
+ "schema": "nba2.injury-diff.v1",
+ "from_release": {
+  "stamp_et": "2026-11-15 06:15 PM ET",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf",
+  "file": "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615PM.json"
+ },
+ "to_release": {
+  "stamp_et": "2026-11-16 09:15 AM ET",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+  "file": "data/raw/capture_2026-11-16/injury_report_2026-11-16_0915AM.json"
+ },
+ "computed_by": "arena/fe0ffa49-nba2",
+ "computed_at_utc": "2026-11-16T15:20:00Z",
+ "method": "join on (date, matchup, team, player); NOT YET SUBMITTED team rows carry no player and are excluded from the join",
+ "counts": {
+  "changed": 1,
+  "added": 4,
+  "no_longer_listed": 97,
+  "unchanged": 52
+ },
+ "status_changes": [
+  {
+   "date": "2026-11-16",
+   "matchup": "GSW@NOP",
+   "team": "Golden State Warriors",
+   "player": "Butler III, Jimmy",
+   "from_status": "Out",
+   "to_status": "",
+   "reason": "Injury/Illness - Right ACL Repair / Surgery",
+   "is_real_change": false,
+   "note": "layout shift in the PDF text layer (FLAG-FE0-INJ-SHIFT); status unreadable, not changed"
+  }
+ ],
+ "added": [
+  {
+   "date": "2026-11-16",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Holmes II, DaRon",
+   "status": "Out",
+   "reason": "G League - On Assignment"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Nembhard, Ryan",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Strawther, Julian",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Knee Sprain"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Whitmore, Cam",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  }
+ ],
+ "no_longer_listed": [
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Flemings, Kingston",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Gilbert, Keshon",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Gueye, Mouhamed",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Landale, Jock",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Newell, Asa",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Veesaar, Henri",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Atlanta Hawks",
+   "player": "Wilson, Jalen",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Dieng, Ousmane",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Jones, Kam",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Markovic, Bogoljub",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Nance, Pete",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Rollins, Ryan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "Ryan, Cormac",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "Ajayi, Michael",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "Boswell, Kylan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "Knueppel, Kon",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "Schroder, Dennis",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "Charlotte Hornets",
+   "player": "Steinbach, Hannes",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "Beal, Bradley",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "Ingram, Brandon",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "Martinelli, Nick",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "Miller, Jordan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA@LAC",
+   "team": "LA Clippers",
+   "player": "Niederhauser, Yanic Konan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics",
+   "player": "Carter, Devin",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics",
+   "player": "Cenac Jr., Christopher",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics",
+   "player": "Mitchell, Dillon",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Boston Celtics",
+   "player": "Williams, Amari",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Aldama, Santi",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Biberovic, Tarik",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Christie, Max",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "de Larrea, Sergio",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Gafford, Daniel",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Irving, Kyrie",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Lively II, Dereck",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL@BOS",
+   "team": "Dallas Mavericks",
+   "player": "Martin, Caleb",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "Adams, Steven",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "Capela, Clint",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "Copeland, Quadir",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "Phillips, Julian",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "Smart, Marcus",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Houston Rockets",
+   "player": "VanVleet, Fred",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Beekman, Reece",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Carrington, Bub",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Champagne, Justin",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Johnson, Tre",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Okpara, Felix",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Sarr, Alex",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Vukcevic, Tristan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU@WAS",
+   "team": "Washington Wizards",
+   "player": "Watkins, Jamir",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "Furphy, Johnny",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "Haliburton, Tyrese",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "McConnell, T.J.",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "Nembhard, Andrew",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "Nesmith, Aaron",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Indiana Pacers",
+   "player": "Sheppard, Ben",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers",
+   "player": "Barlow, Dominick",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers",
+   "player": "Bona, Adem",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers",
+   "player": "Embiid, Joel",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND@PHI",
+   "team": "Philadelphia 76ers",
+   "player": "Hukporti, Ariel",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "Carr, Cameron",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "Grimes, Quentin",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "James, Bronny",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "Reaves, Austin",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "Sexton, Collin",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Los Angeles Lakers",
+   "player": "Thiero, Adou",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Phoenix Suns",
+   "player": "Timme, Drew",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL@PHX",
+   "team": "Phoenix Suns",
+   "player": "Williams, Mark",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "Barnes, Scottie",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "Bittle, Nate",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "Leonard, Kawhi",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "McCullar Jr., Kevin",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK@TOR",
+   "team": "Toronto Raptors",
+   "player": "Smith, Malachi",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Holmgren, Chet",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Mitchell, Ajay",
+   "was_status": "Questionable"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Sorber, Thomas",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Wallace, Cason",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Williams, Jalen",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Williams, Jaylin",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Achiuwa, Precious",
+   "was_status": "Questionable"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Mogbo, Jonathan",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Murray, Keegan",
+   "was_status": "Available"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Pedulla, Sean",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Raynaud, Maxime",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Simmons, Ben",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "ORL@BOS",
+   "team": "Boston Celtics",
+   "player": "Penda, Noah",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "Brown, Maliq",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "Fox, De'Aaron",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "Gillespie, Ja'Kobi",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "Harris, Tobias",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "San Antonio Spurs",
+   "player": "Quaintance, Jayden",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Alexander, Trey",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Bufkin, Kobe",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Hayes, Jaxson",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Ingram, Harrison",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Jackson Jr., Jaren",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Markkanen, Lauri",
+   "was_status": "Out"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS@UTA",
+   "team": "Utah Jazz",
+   "player": "Nurkic, Jusuf",
+   "was_status": "Out"
+  }
+ ],
+ "caveat": "The single 'status change' is a PDF layout artefact, not a real move: in the 09:15 AM release the Butler III, Jimmy row of the GSW@NOP block prints its reason in the status column and leaves the reason column empty, so the status cell is unreadable and is stored blank (FLAG-FE0-INJ-SHIFT). It is NOT evidence that his status changed from Out. The 4 'added' rows are Denver Nuggets players for PHX@DEN who were listed NOT YET SUBMITTED in the prior release and have since filed. The 97 rows no longer listed are overwhelmingly 2026-11-15 games that have now been played, so their designations no longer appear on a current report."
+}
