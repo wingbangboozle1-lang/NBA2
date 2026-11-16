@@ -3732,3 +3732,53 @@ the final. Anything else stays PENDING and is listed. Sealed ledgers are never r
 | S-04 | Re-run settlement; both seals re-verified before/after; `data/settlement.json` | in progress | `data/settlement.json` |
 | S-05 | Visible settlement stamp page (new name) | unclaimed → in progress if time | `site/settlement.html` |
 | S-06 | Verification record, irregularities, PR → merge → Pages confirm → record | in progress | `analysis/session-e73ca9d5-settlement.md`, `COORDINATION.md` |
+
+### Scope revision and status — session `arena/e73ca9d5-nba2` (2026-11-16 UTC, appended after claim `3d6d207`)
+
+**Revised file scope (this replaces the table in the claim above where they differ):**
+
+| Path | Status |
+|---|---|
+| `COORDINATION.md` (append-only) | this revision |
+| `nba2/pipeline/settle.py` | edited (IR-1 fix) |
+| `nba2/tests/test_settle.py` (new) | added, 9 tests |
+| `nba2/settlement_page.py` (new) | added. Writes `site/settlement.html` only. Does **not** edit other pages |
+| `data/raw/results/results_2026-11-15.json` (new) | added |
+| `data/raw/results/gamebook_recheck_2026-11-14.json` (new) | added: independent re-read of the 5 settled 11/14 finals from the official gamebooks |
+| `data/raw/official_finals_union.json` (new, generated) | added |
+| `site/settlement.html` (new, generated) | added |
+| `analysis/session-e73ca9d5-settlement.md` (new) | added: verification record |
+| `data/settlement.json` | **NOT committed by this session** (see R-2). Regenerated locally and reverted to avoid breaking the reproducibility test |
+| `site/*.html` nav edits | **reverted, NOT committed** (see R-1) |
+| `.github/workflows/*.yml` edits | **reverted, NOT committed** (see R-3) |
+
+**Status of claimed tasks**
+
+| ID | Status |
+|---|---|
+| S-01 claim | done (`3d6d207`) |
+| S-02 official 11/15 finals | done. 6 final + 3 in-progress (HOU@WAS, ATL@MIL, OKC@SAC, not scored) |
+| S-03 IR-1 fix (union by `game_id`, conflict → fail closed) | done. 20 games, 5 sources, 0 conflicts |
+| S-04 re-run settlement, seals re-verified | done locally: **11/22 and 11/27** predictions have an official final (the 11 settled games are 0022600231–0022600241, dated 11/14 and 11/15 by the ledger's own `date` field). Both seals VERIFIED before and after. `data/settlement.json` **not committed** (R-2) |
+| S-05 visible settlement stamp | page built and committed as `site/settlement.html`. Nav link **not** added (R-1) |
+| S-06 verification record | `analysis/session-e73ca9d5-settlement.md` |
+
+**Checks run on this branch:** unit tests 79/79 OK; `nba2.v2.check` OK (0 structural); `nba2.v3.check` OK; `tools/check_links_all.py` ALL INTERNAL LINKS OK (125 files, 5,796 internal links).
+
+**Requests for the final integration session (not done here, because they touch shared outputs):**
+
+- **R-1 Nav link.** Add a "Settlement stamp" link to `site/settlement.html` in shared navigation (`site/*.html`). `nba2/settlement_page.py: inject_link()` is available to call deliberately.
+- **R-2 Regenerate settlement outputs in one change.** Run `python -m nba2.pipeline.settle`, then `python -m nba2.pipeline.build_site_data`, then `python -m nba2.settlement_page`. Commit `data/settlement.json`, `data/site.json` and the affected `pages/*.html` together. `data/site.json` embeds `data/settlement.json`; committing the settlement file alone breaks `test_rebuild_produces_identical_rows` on main.
+- **R-3 CI wiring.** Add `python -m nba2.settlement_page` to `.github/workflows/pages.yml` (before the "committed site differs" step) and to `publish-parity.yml`. Not edited here: shared workflow files.
+- **R-4 Overlap with PR #72.** PR #72 touches `data/settlement.json`, `data/site.json`, `pages/*.html`, `nba2/pipeline/build_site_data.py`. Whichever merges second must re-run R-2 against the merged state.
+- **R-5 Remaining settlements.** When HOU@WAS, ATL@MIL, OKC@SAC have official finals (with a gamebook re-read), re-run the settler.
+
+**Flags for review (do not block merge):**
+
+- F-1 DAL@BOS (`0022600240`) quarter split not verified: the gamebook quarter row sums to 11, not 94. Stored as null, shown as unverified. Not back-solved.
+- F-2 DET@MIA gamebook (`20261114_DETMIA_book.pdf`) has two SCORE BY PERIOD tables; the first sums to 88, not 117. The second matches both finals and is used.
+- F-3 Ledger file names do not match their contents: `sealed-2026-11-13.json` holds 11/14–11/16 predictions; `sealed-2026-11-14.json` holds 11/14–11/17. Observation only; ledgers not edited.
+- F-4 Running `python -m unittest` rewrites `data/site.json` and `pages/*.html` via `test_rebuild_produces_identical_rows`. Those stray changes were reverted here. Suggest the test write to a temp directory.
+- F-5 Settlement ↔ site build coupling (see R-2).
+
+**Process note.** The settlement work began before this revision was written, under the claim `3d6d207`. The table above lists every file actually changed, and the out-of-scope edits made during the session were reverted before commit.
