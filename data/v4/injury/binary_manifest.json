@@ -1,0 +1,35 @@
+{
+ "schema": "nba2.v4.injury-binary-manifest.v1",
+ "attempted_at_utc": "2026-11-16T18:23:55+00:00",
+ "runner": "nba2/v4/injury_ingest.py (called from .github/workflows/refresh.yml)",
+ "n_releases": 2,
+ "n_stored": 0,
+ "flag": "F-V4-01",
+ "entries": [
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
+   "revision_et": "11/16/26 09:30 AM",
+   "attached_to_release": "2026-11-16 09:30 AM ET",
+   "attempted_at_utc": "2026-11-16T18:23:55+00:00",
+   "stored_path": null,
+   "bytes": null,
+   "sha256": null,
+   "outcome": "unreachable",
+   "detail": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>",
+   "drift": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+   "revision_et": "11/16/26 01:00 PM",
+   "attached_to_release": "2026-11-16 01:00 PM ET",
+   "attempted_at_utc": "2026-11-16T18:23:55+00:00",
+   "stored_path": null,
+   "bytes": null,
+   "sha256": null,
+   "outcome": "unreachable",
+   "detail": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>",
+   "drift": null
+  }
+ ],
+ "note": "Closes the storage half of F-V4-01 when n_stored == n_releases. The build never reads these bytes as data: the published rows come from the stored rendering, and this manifest only states whether the original file is in the repository."
+}

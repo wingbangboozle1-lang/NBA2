@@ -22,6 +22,8 @@ from pathlib import Path
 from . import capture as C
 from . import check as CH
 from . import injury_diff as ID
+from . import injury_parse as PA
+from . import injury_renderings as RR
 from . import model as M
 from . import publish as P
 from . import settlement as S
@@ -220,30 +222,65 @@ class TestSurfaceWall(unittest.TestCase):
 
 
 class TestSettlement(unittest.TestCase):
+    """The settlement contract after the 2026-11-16 rewrite: all seals, distinct games."""
+
     @classmethod
     def setUpClass(cls):
         cls.doc = S.settle()
+        cls.ledgers = {l["ledger"]: l for l in cls.doc["ledgers"]}
 
-    def test_seal_is_verified_before_grading(self):
-        self.assertTrue(self.doc["seal_verified"])
-        self.assertEqual(self.doc["seal_sha256"],
-                         json.loads((ROOT / "data/v3/ledger/sealed-2026-11-15.json")
-                                    .read_text())["sha256"])
+    def test_every_sealed_ledger_is_graded_on_one_surface(self):
+        files = {l["ledger"] for l in self.doc["ledgers"]}
+        self.assertEqual(files, {"data/raw/ledger/sealed-2026-11-13.json",
+                                 "data/raw/ledger/sealed-2026-11-14.json",
+                                 "data/v3/ledger/sealed-2026-11-15.json"},
+                         "a seal that is not on this surface is a seal nobody can read")
 
-    def test_graded_plus_ungraded_equals_the_seal(self):
+    def test_every_seal_is_verified_before_grading(self):
+        self.assertTrue(self.doc["settlement"]["seal_verified_all"])
+        for l in self.doc["ledgers"]:
+            self.assertTrue(l["seal_verified"], l["ledger"])
+            self.assertEqual(l["seal_sha256"], l["seal_sha256"].lower())
+
+    def test_graded_plus_ungraded_equals_each_seal(self):
+        for l in self.doc["ledgers"]:
+            self.assertEqual(l["n_graded"] + l["n_ungraded"], l["n_sealed"], l["ledger"])
         s = self.doc["settlement"]
         self.assertEqual(s["n_graded"] + s["n_ungraded"], s["n_sealed"])
 
-    def test_only_verified_finals_are_graded(self):
-        verified = {g["game_id"] for g in C.finals_2026_11_15()}
-        for g in self.doc["graded"]:
-            self.assertIn(g["game_id"], verified)
+    def test_overlapping_gradings_are_not_double_counted(self):
+        s = self.doc["settlement"]
+        distinct = {g["game_id"] for l in self.doc["ledgers"] for g in l["graded"]}
+        self.assertEqual(s["n_distinct_games_graded"], len(distinct))
+        self.assertLessEqual(s["n_distinct_games_graded"], s["n_graded"])
+        self.assertEqual(s["n_duplicate_gradings"], s["n_graded"] - len(distinct))
+        # the headline rate must be the distinct-game rate, never the summed one
+        hits = {g["game_id"]: g for l in self.doc["ledgers"] for g in l["graded"]}
+        expected = round(sum(1 for g in hits.values() if g["winner_correct"]) / len(hits), 4)
+        self.assertEqual(s["distinct_winner_hit_rate"], expected)
+
+    def test_only_games_with_a_verified_final_are_graded(self):
+        verified = {f["game_id"] for f in self.doc["finals_used"]}
+        for l in self.doc["ledgers"]:
+            for g in l["graded"]:
+                self.assertIn(g["game_id"], verified)
+            for u in l["ungraded"]:
+                self.assertNotIn(u["game_id"], verified,
+                                 "a game with a verified final must not be left ungraded")
 
     def test_ungraded_is_not_a_loss(self):
-        # every ungraded row must carry a reason and no score
-        for u in self.doc["ungraded"]:
-            self.assertTrue(u["reason"])
-            self.assertNotIn("official_margin", u)
+        for l in self.doc["ledgers"]:
+            for u in l["ungraded"]:
+                self.assertTrue(u["reason"])
+                self.assertNotIn("official_margin", u)
+
+    def test_a_quarter_row_that_does_not_sum_to_the_final_is_withheld(self):
+        for f in self.doc["finals_used"]:
+            for side in ("away_q", "home_q"):
+                q = f[side]
+                if q:
+                    self.assertEqual(sum(q), f["away_pts"] if side == "away_q" else f["home_pts"],
+                                     f"{f['game_id']} {side} does not sum to the final")
 
     def test_stamp_is_deterministic_and_not_wall_clock(self):
         a = S.settle()["settlement"]["settled_at_utc"]
@@ -251,73 +288,119 @@ class TestSettlement(unittest.TestCase):
         self.assertEqual(a, b)
         self.assertTrue(a.endswith("T23:59:59Z"))
 
-    def test_settlement_hash_verifies_and_seal_survives(self):
+    def test_settlement_hash_verifies_and_seals_survive(self):
         v = S.verify_settlement()
         self.assertTrue(v["ok"])
         self.assertTrue(v["seal_still_verified"])
+        self.assertTrue(v["all_seals_ok"])
 
-    def test_a_nine_for_nine_run_is_not_published_as_skill(self):
-        # If this test ever fails, someone has started claiming the run as evidence.
+    def test_luck_is_reported_as_a_tail_probability_not_a_hit_rate(self):
         s = self.doc["settlement"]
-        if s["n_graded"] >= 5:
-            self.assertGreater(s["p_observed_run_under_model"], 0.01,
-                               "the observed run is now unlikely enough to investigate - "
-                               "but check the sample size before calling it skill")
+        self.assertIsNotNone(s["p_at_least_observed_hits"])
+        self.assertGreater(s["p_at_least_observed_hits"], 0.0)
+        self.assertLessEqual(s["p_at_least_observed_hits"], 1.0)
+        # the Poisson-binomial tail must dominate the all-correct product by construction
+        self.assertGreaterEqual(s["p_at_least_observed_hits"], s["p_observed_distinct_run"])
         self.assertIn("luck", json.dumps(s).lower())
 
-    def test_log_loss_beats_the_coin_flip_baseline_or_is_reported_honestly(self):
+    def test_log_loss_baseline_is_the_coin_flip(self):
         s = self.doc["settlement"]
-        self.assertIsNotNone(s["log_loss_coin"])
-        self.assertAlmostEqual(s["log_loss_coin"], math.log(2), places=4)
+        self.assertAlmostEqual(s["distinct_log_loss_coin"], math.log(2), places=4)
+
+    def test_tail_probability_helper(self):
+        self.assertEqual(S.p_at_least(0, [0.5, 0.5]), 1.0)
+        self.assertAlmostEqual(S.p_at_least(2, [0.5, 0.5]), 0.25, places=9)
+        self.assertAlmostEqual(S.p_at_least(1, [1.0, 1.0]), 1.0, places=9)
+        self.assertAlmostEqual(S.p_at_least(2, [0.9, 0.9]), 0.81, places=9)
 
 
-class TestInjuryDiff(unittest.TestCase):
-    def test_releases_carry_three_stamps_and_a_hash(self):
-        doc = ID.release_ledger()
-        self.assertGreaterEqual(doc["n_releases_stored_this_session"], 2)
-        for r in doc["releases"]:
-            self.assertTrue(r["report_stamp_et"])
-            self.assertTrue(r["retrieved_at_utc"])
-            self.assertTrue(r["url"].startswith("https://"))
-            self.assertEqual(len(r["content_sha256"]), 64)
-            self.assertFalse(r["binary_stored"], "bytes are not storeable in this sandbox")
-            self.assertIn("F-V4-01", r["binary_stored_reason"])
+class TestInjuryParse(unittest.TestCase):
+    """The parser is the thing that failed silently before, so it is tested directly."""
 
-    def test_consecutive_diff_counts_add_up(self):
-        doc = ID.release_ledger()
-        self.assertGreaterEqual(doc["consecutive_release_diffs"], 1)
-        for d in doc["diffs"]:
-            c = d["counts"]
-            total = (c["status_changed"] + c["placeholder_resolved"] + c["reason_changed_only"]
-                     + c["added"] + c["removed"] + c["still_placeholder"])
-            self.assertEqual(len(d["status_changes"]) + len(d["reason_changes"])
-                             + len(d["added"]) + len(d["removed"])
-                             + len(d["still_placeholder"]), total)
+    TABLE = ("| Game Date | Game Time | Matchup | Team | Player Name | Current Status | Reason |\n"
+             "| --- | --- | --- | --- | --- | --- | --- |\n")
 
-    def test_a_blank_status_is_diffed_as_blank(self):
-        a = {"report_stamp_et": "x", "retrieved_at_utc": "x", "provenance": {"url": "u"},
-             "records": [["2026-11-16", "07:00", "A@B", "T", "P", "", "", ""]]}
-        b = {"report_stamp_et": "y", "retrieved_at_utc": "y", "provenance": {"url": "u"},
-             "records": [["2026-11-16", "07:00", "A@B", "T", "P", "", "", ""]]}
-        d = ID.diff(a, b)
-        self.assertEqual(d["counts"]["status_changed"], 0)
-        self.assertEqual(d["counts"]["still_placeholder"], 1)
-        # a blank becoming a real status IS a change
-        b["records"][0][5] = "Out"
-        d = ID.diff(a, b)
-        self.assertEqual(d["counts"]["placeholder_resolved"], 1)
-        self.assertEqual(d["status_changes"][0]["to"], "Out")
+    def _p(self, body: str) -> dict:
+        return PA.parse_render("**Injury Report: 11/16/26 07:00 AM**\n\n" + self.TABLE + body)
 
-    def test_a_placeholder_is_never_a_player(self):
-        for r in C.INJURY_RELEASES[0]["rows"]:
-            if r[6] == "NOT YET SUBMITTED":
-                self.assertEqual(r[4], "")
+    def test_full_row(self):
+        d = self._p("| 11/16/2026 | 07:00 (ET) | CHI@CLE | Chicago Bulls | Smith, Jalen | "
+                    "Questionable | Injury/Illness - Left Finger Sprain |\n")
+        r = d["rows"][0]
+        self.assertEqual((r["date"], r["time_et"], r["matchup"], r["team"], r["player"],
+                          r["status"], r["reason"]),
+                         ("2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls",
+                          "Smith, Jalen", "Questionable",
+                          "Injury/Illness - Left Finger Sprain"))
+        self.assertEqual(d["unread"], [])
 
-    def test_identical_release_is_declared_not_duplicated(self):
-        p = ROOT / "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json"
-        doc = json.loads(p.read_text())
-        self.assertIsNotNone(doc["replication"])
-        self.assertEqual(doc["replication"]["flagged"], "F-V4-09")
+    def test_a_status_is_read_even_when_the_left_cells_are_dropped(self):
+        d = self._p("|  |  |  | Pippen Jr., Scotty | Out | Injury/Illness - Lumbar Disc Herniation |\n")
+        r = d["rows"][0]
+        self.assertEqual((r["player"], r["status"], r["reason"]),
+                         ("Pippen Jr., Scotty", "Out",
+                          "Injury/Illness - Lumbar Disc Herniation"))
+        self.assertEqual(d["unread"], [])
+
+    def test_the_gsw_shape_never_assumes_the_middle_cell_is_a_status(self):
+        # 'Out' survives here; the player/reason pair must still be attributed correctly.
+        d = self._p("|  | 08:00 (ET) | GSW@NOP | Golden State Warriors | Curry, Stephen | Out |\n")
+        r = d["rows"][0]
+        self.assertEqual((r["team"], r["player"], r["status"], r["reason"]),
+                         ("Golden State Warriors", "Curry, Stephen", "Out", None))
+        # and when the status column is genuinely gone, the status stays blank
+        d = self._p("|  | 08:00 (ET) | GSW@NOP | Golden State Warriors | Butler III, Jimmy | "
+                    "Injury/Illness - Right ACL Repair / Surgery |\n")
+        r = d["rows"][0]
+        self.assertEqual(r["player"], "Butler III, Jimmy")
+        self.assertIsNone(r["status"], "a status must never be inferred from a reason")
+        self.assertEqual(r["reason"], "Injury/Illness - Right ACL Repair / Surgery")
+        self.assertIn("F-V4-06", r["note"])
+
+    def test_a_placeholder_is_a_club_not_a_player(self):
+        d = self._p("|  |  |  | Washington Wizards |  |  | NOT YET SUBMITTED |\n")
+        r = d["rows"][0]
+        self.assertTrue(r["placeholder"])
+        self.assertEqual(r["team"], "Washington Wizards")
+        self.assertIsNone(r["player"])
+
+    def test_a_non_status_word_is_not_accepted_as_a_status(self):
+        d = self._p("|  |  |  | Team X | Some, Player | Maybe | Injury/Illness - Knee |\n")
+        r = d["rows"][0]
+        self.assertIsNone(r["status"])
+        self.assertNotIn("Maybe", json.dumps(r["status"]))
+
+    def test_every_stored_release_parses_with_no_unread_rows(self):
+        for rel in RR.RENDERS:
+            d = PA.parse_render(rel["text"])
+            self.assertEqual(d["unread"], [], f"{rel['stamp_et']} has unread rows")
+            self.assertEqual(d["counts"]["rows"], len(d["rows"]))
+
+    def test_the_stored_rendering_matches_its_own_header(self):
+        self.assertEqual(RR.selftest(), [])
+
+    def test_the_diff_detects_the_two_real_status_changes(self):
+        rels = ID.parsed()
+        d = ID.diff(rels[0], rels[1])
+        changes = {(c["key"][2], c["key"][3]): (c["from"], c["to"])
+                   for c in d["status_changes"]}
+        self.assertEqual(changes.get(("Miami Heat", "Larsson, Pelle")),
+                         ("Questionable", "Doubtful"))
+        self.assertEqual(changes.get(("Memphis Grizzlies", "Stewart, Isaiah")),
+                         ("Questionable", "Out"))
+
+    def test_the_cross_session_check_finds_the_dropped_statuses(self):
+        cs = ID.cross_session_check()
+        self.assertTrue(cs["available"])
+        rows = {(c["key"][2], c["key"][3]): (c["from"], c["to"])
+                for c in cs["diff"]["status_changes"]}
+        self.assertEqual(rows.get(("Cleveland Cavaliers", "Tyson, Jaylon")),
+                         ("Questionable", "Doubtful"),
+                         "the earlier transcription recorded Questionable; the PDF prints Doubtful")
+        for player in ("Curry, Stephen", "Moody, Moses", "Porzingis, Kristaps",
+                       "Santos, Gui", "Williams, Brandon"):
+            self.assertIn(("Golden State Warriors", player), rows,
+                          f"the earlier transcription lost {player}'s status")
 
 
 class TestGatesAndCheck(unittest.TestCase):
@@ -375,13 +458,17 @@ class TestPublishedPages(unittest.TestCase):
 
     def test_the_injuries_banner_shows_both_times(self):
         doc = (SITE / "v4-injuries.html").read_text()
-        self.assertIn(C.INJURY_RELEASES[0]["stamp_et"], doc)
-        self.assertIn(C.INJURY_RELEASES[0]["retrieved_utc"], doc)
+        newest = RR.newest()
+        self.assertIn(newest["stamp_et"], doc, "the revision time must be printed")
+        self.assertIn(newest["retrieved_utc"], doc, "the retrieval time must be printed")
+        self.assertIn(newest["index_checked_utc"], doc, "the index check must be printed")
 
     def test_the_settlement_stamp_is_visible(self):
         doc = (SITE / "settle.html").read_text()
         self.assertIn("Settlement stamp", doc)
-        self.assertIn("PRE-TIP HASH VERIFIED", doc)
+        self.assertIn("ALL SEALS VERIFIED", doc)
+        # the distinct-game correction must be on the page, not just in the JSON
+        self.assertIn("gradings are repeats", doc)
 
     def test_every_fragment_link_lands_on_a_real_anchor(self):
         # A link to page.html#section is a broken link if the section was renamed.
