@@ -520,10 +520,15 @@ FLAGS = [
     "from nba.com/games. Player box scores remain unreachable, so player-level settlement is still impossible.",
      "G8 and G12 now pass. G7 still fails, but on sample size (167 settled bets against a 300 bar), not on absence "
      "of data.", O.BLOCKED["live_ingest"][2]),
-    ("F-003", "medium", "Data", "The 2026-11-14 05:30 AM ET official injury report returns AccessDenied, so the "
-    "freshest reachable release is 04:30 AM ET. See F-038 for why days 11/15-11/17 have no rows at all.",
-     "The site uses the 11/14 04:30 AM ET report and labels every not-yet-filed team explicitly.",
-     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_05_30AM.pdf"),
+    ("F-003", "info", "Data", "SUPERSEDED 2026-11-16. An earlier session recorded that the 11/14 05:30 AM ET "
+     "release returned AccessDenied and concluded the injury PDFs were unreachable. Re-checked this session: "
+     "ak-static.cms.nba.com PDFs ARE readable through the platform page-fetch tool, which is how the 11/16 "
+     "09:30 AM and 01:00 PM releases were read and stored in full. Only bash egress is blocked, and only from "
+     "a sandbox.",
+     "The v4 injury pages now publish the 11/16 01:00 PM release (83 rows, 0 unread) and the diff against the "
+     "09:30 AM release, both linked to their PDFs. The older F-003 wording is retired rather than deleted, "
+     "because it explains why four earlier sessions published blank injury columns.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"),
     ("F-004", "medium", "Data", "The official NBA site's 'Preview' pages could not be used for odds: prices are rendered client-side only.",
      "No workaround was attempted; a licensed feed is required (SG-3).", "https://www.nba.com/games"),
     ("F-005", "medium", "Model", "Home-court advantage and margin volatility are only weakly identified from one season's win totals.",
