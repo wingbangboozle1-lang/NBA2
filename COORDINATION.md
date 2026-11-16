@@ -4092,3 +4092,25 @@ PR #93 added an append-only Pages/live-site verification record while PR #90 was
 **Boundary:** This is an independent verification/report task, not the final integration session. It does not edit `data/**`, `site/**`, `nba2/**`, `README.md`, or `.github/workflows/**`; those contain shared outputs or are in open PR scopes (#70, #72, #80, #90, #91). The audit will document current-source discrepancies and leave implementation requests for the integration session. No values will be changed merely to make a gate pass.
 
 **Rebase conflict note:** The initial claim was pushed, then `origin/main` advanced from `7b3c855` to `635fa42` (PR #92) before the next rebase. The append-only `COORDINATION.md` conflict is resolved by retaining the complete current-main record and reappending this claim below it. No other files or upstream changes are discarded.
+
+---
+
+## Session `arena/0961c8b9-nba2` — completion record (2026-11-16 UTC)
+
+**Status:** A96-01 and A96-02 done. Audit/report only; no implementation or data values changed.
+
+**Branch synchronization:** Rebasing onto latest `origin/main` at `de4f8c0` produced one append-only `COORDINATION.md` conflict. Resolution retained the complete upstream record (including PR #94/#96 material) and this claim. The rebased claim commit `3190f4b` was pushed to the same session branch with an explicit `--force-with-lease` against the fetched prior tip `4d576e2`.
+
+**Report:** [`analysis/session-0961c8b9-audit.md`](analysis/session-0961c8b9-audit.md) records live page reads separately from committed captures and local derived checks. It includes the 30-club W–L comparison, representative traditional/opponent/advanced-stat deltas, schedule-window check, injury-release freshness, result settlement gaps, command outputs, and owner handoff.
+
+**Principal findings (live observations, read 2026-11-16):**
+- Official [schedule](https://www.nba.com/schedule?date=2026-11-16) shows 8 / 5 / 12 games on Nov 16–18; the official [Nov 15 games page](https://www.nba.com/games?date=2026-11-15) shows nine finals. The committed 34-game Nov 15–18 capture has the same window counts; no date/game-ID/matchup difference was observed.
+- Official [standings](https://www.nba.com/standings) now sum to 197 league games, versus the committed Nov 15 `data/v2/teams.json` snapshot at 188. W–L records match for 12/30 clubs; the 18 differences are exactly the teams in the nine Nov 15 finals. Live [traditional](https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular%20Season&PerMode=PerGame), [opponent](https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular%20Season&PerMode=PerGame), and [advanced](https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular%20Season&PerMode=PerGame) examples also differ from the Nov 15 capture.
+- The v2 injury page names the Nov 15 06:15 AM ET / 101-row capture although a later same-day 06:15 PM / 155-row file is committed. The official [injury index](https://official.nba.com/nba-injury-report-2026-27-season/) had advanced to Nov 16 09:45 AM ET; no cross-date player-status diff is claimed.
+- Local Nov 15 results have six finals and three null pending rows; all nine are final on the official page. The missing scores are HOU–WAS 147–119, ATL–MIL 113–106, and OKC–SAC 125–103. No snapshot was updated.
+
+**Verification on `de4f8c0` plus this audit branch:** v1 79, v2 146, v3 67, backtest 49 tests passed; v2 and v3 structural/semantic checks passed (0/0); provenance lint passed (1,427 rows / 50 tables); backtest verification and internal-link scan passed (127 HTML files, 5,983 internal links). v3 still reports its advisory G-F3 freshness fail (publishable). `tools/crosscheck_site.py` remains **88 pass / 2 fail / 7 info** (97 checks, exit 1): stale README counts (1,423 vs 1,427 rows; 70 vs 79 tests) and freshness (two days old; four dates already tipped/tipping). The v2 ResourceWarnings are non-fatal and disclosed in the report.
+
+**Handoff — not edited here:** refresh/results/stat/injury outputs overlap open PRs [#70](https://github.com/wingbangboozle1-lang/NBA2/pull/70), [#72](https://github.com/wingbangboozle1-lang/NBA2/pull/72), [#80](https://github.com/wingbangboozle1-lang/NBA2/pull/80), and [#95](https://github.com/wingbangboozle1-lang/NBA2/pull/95). PR #95 contains a separate Nov 16 capture set but is still open, so it is not evidence in the audited main tree. README, `nba2/v2/**`, `data/**`, `site/**`, and workflows were left untouched. The legacy Pages source (`main /`) remains an owner decision.
+
+**Scope check:** only this append-only board entry and the new audit report were added after the claim; no `data/**`, `site/**`, `nba2/**`, `README.md`, or workflow files were changed.
