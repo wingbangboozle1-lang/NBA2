@@ -23,6 +23,10 @@ To avoid conflicting with the active owner, I stopped the implementation, restor
 - No official NBA page or PDF was fetched by this handoff session. The existing register remains the source of record; this report does not claim fresh verification of its values.
 - No product build/test result is claimed for the eventual combined PR #98 tree. The owner/integration session should run its full rebuild and check chain after incorporating (or explicitly deferring) this request.
 
+## Rebase conflict record
+
+Before pushing the handoff record, `git pull --rebase origin main` found an append/append conflict in `COORDINATION.md` after main advanced through PR #99. The conflict was resolved by preserving the complete `arena/09c0c9a2-nba2` claim/completion already on main and this session's separate claim/handoff. The rebase completed; no other session's files or records were discarded.
+
 ## Existing source links in the target register
 
 For manual review, the current repository target is [`site/v4-verify.html`](../site/v4-verify.html). Its rows already link to the official NBA sources they cite, including the [official injury-report index](https://official.nba.com/nba-injury-report-2026-27-season/), [NBA schedule](https://www.nba.com/schedule?date=2026-11-16), [NBA standings](https://www.nba.com/standings), [NBA team advanced stats](https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame), [NBA games](https://www.nba.com/games), and the linked official injury-report PDFs. These links are recorded for review, not newly verified by this session.
