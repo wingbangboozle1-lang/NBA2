@@ -4603,3 +4603,13 @@ blocks a changed settlement. `tools/crosscheck_site.py` remains at 97 checks (87
 failures, 8 info); CC-FRESH-03 reports run 43903704042 as failure. No official NBA source was
 fetched. PR #106's previous commit had verify/parity/v2/backtest checks pass; the adapted
 branch still requires a new push and fresh check run before it can be claimed green.
+
+### PR #103 merge resolution and pre-push state — 2026-11-16 UTC
+
+The updated tree is recorded in merge commit `b472078`. `origin/main` at `7b28360` is its
+ancestor; all 42 non-overlapping incoming files were verified byte-identical to upstream, and
+the only PR diff against that main is this task's six scoped files. The earlier
+`git pull --rebase` attempt on this merged branch conflicted in `COORDINATION.md` while
+replaying the independent session claim `a0721a1`; it was aborted without rewriting history.
+Given that recorded conflict, this update retains a normal merge and will only be pushed after
+verifying the tracked branch is an ancestor (fast-forward push, no force).
