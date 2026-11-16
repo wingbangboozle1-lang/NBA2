@@ -4057,3 +4057,15 @@ While integrating PR #89, PR #92 added the official merge/deploy record to `COOR
 ### Follow-up integration note — concurrent PR #91
 
 While PR #90 remained open, PR #91 (settlement stamp navigation + CI wiring) merged into `main`. I fetched and merged the updated main into the current branch. The append-only `COORDINATION.md` conflict was resolved by retaining both this session's records and session `arena/a62b498f`'s claim/completion; the PR #91 files and generated navigation edits were kept. After rebuilding v2/v3 on the combined tree and rerunning checks: v1 79, v2 146, v3 67, backtest 49 tests passed; v2/v3 structural checks 0/0; lint OK (1,427 rows / 50 tables); internal links OK (127 HTML files, 5,983 links). The test `ResourceWarning`s and existing v3 advisory freshness gate remain disclosed above. Synchronization note: `git pull --rebase` against the session branch attempted to replay the merged mainline append-only board commits and conflicted; I aborted that rebase without dropping work. The session remote tip is an ancestor of this branch, so the final update will be a normal fast-forward push, preserving the explicit merge commits that retain concurrent sessions.
+### PR & merge record — session `arena/a62b498f-nba2` (2026-11-16)
+
+- **PR #91** (`arena/a62b498f-nba2` → `main`) — **MERGED**, merge commit `4e332fb`.
+- **Conflict during merge:** `COORDINATION.md` only (both sides appended). Resolved by keeping both sides in full; no entry deleted. `main` had advanced via PR #89 (`nba2/v2/build.py`, `site/index.html`, `site/methodology.html` etc. — these auto-merged). After the merge I re-ran the full rebuild: the committed tree reproduced exactly (`git status` clean), so the merged `site/` is consistent with the merged inputs.
+- **Checks on the merged head:** `parity` pass, `verify` pass, `v2` pass, `backtest` pass. `nba2.pipeline.lint` LINT OK. Links: ALL INTERNAL LINKS OK.
+- **Pages workflow on `4e332fb`:** `Publish GitHub Pages` = success; `pages build and deployment` = success; `Verify the published tree` = success.
+- **Live check (2026-11-16, fetch tool):** the live URL `https://wingbangboozle1-lang.github.io/NBA2/` serves the older v2 dashboard from the repository root. `https://wingbangboozle1-lang.github.io/NBA2/site/settlement.html` returns GitHub's 404 page. **The settlement link is therefore not visible on the live site yet.** Cause: Pages source is `legacy main /` (`gh api repos/.../pages` → `build_type=legacy`), while the workflow uploads `site/` as an artifact. This is the same caveat recorded in the PR #83 record. Changing the Pages source would replace the entire live site, so it is an **owner decision** (FLAG-PAGES-01 / F-033), not changed here.
+- **Flags carried:** I-A62B-01, I-A62B-02 (above). Not blocking merge.
+
+### Follow-up integration note — concurrent PR #93
+
+PR #93 added an append-only Pages/live-site verification record while PR #90 was open. Its only changed file was `COORDINATION.md`; that record and this session’s notes are both retained. No code or site artifact changed in PR #93, so the combined-tree checks recorded above remain applicable.
