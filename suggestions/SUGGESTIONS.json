@@ -55,12 +55,12 @@
       "id": "S-05",
       "title": "Preregister strategy trials with a counter",
       "problem": "G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.",
-      "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
+      "proposal": "Append every evaluation attempt to an append-only registry; the leaderboard charges the winner for the count. BUILT: nba2/v3/trials.py + trials.html record every trial (9 strategies + 1 backtest) and compute the Deflated Sharpe bar G-06 imposes; observed SR/DSR stay blank until settled PnL exists.",
       "benefit": "Makes the leaderboard a science instead of a search result; costs ~20 lines.",
       "effort": "S",
       "risk": "Requires discipline to log failed attempts too — that is the point.",
       "recommendation": "Accept; pair with a rule 'no evaluation without registration'.",
-      "status": "awaiting owner decision"
+      "status": "applied in this PR"
     },
     {
       "id": "S-06",
@@ -589,6 +589,17 @@
       "risk": "Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.",
       "recommendation": "Accept, assigned to the owner of nba2/v3/official.py.",
       "status": "open"
+    },
+    {
+      "id": "S-55",
+      "title": "Add a market-anchored prior weighted by measured out-of-sample log-loss",
+      "problem": "A blended line that mixes our model with the closing line needs a weight; an arbitrary weight reintroduces a free parameter, and with no odds feed the market side is unavailable.",
+      "proposal": "Blend = w_model*model_line + w_market*closing_line with w_market = (1/LL_mkt)/(1/LL_mkt + 1/LL_model). Measure LL_model from the point-in-time walk-forward backtest; leave LL_mkt blank until a closing line exists.",
+      "benefit": "Publishes the weighting rule and the measured model log-loss now, so the blend is a one-line recompute once a licensed odds feed lands.",
+      "effort": "S",
+      "risk": "None: the market weight is 0 and the blended line equals the model line until a feed exists.",
+      "recommendation": "Accept; the model-side measurement is already in place.",
+      "status": "applied in this PR"
     }
   ]
 }

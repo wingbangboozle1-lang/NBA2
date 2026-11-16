@@ -325,6 +325,34 @@
       "file": "data/v3/prereg/S5-same-game-parlay:-spread-+-total.json",
       "sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79",
       "status": "pre-registered, 0 bets placed"
+    },
+    {
+      "id": "S6",
+      "name": "Availability-blind guardrail fade (ABGF)",
+      "file": "data/v3/prereg/S6-availability-blind-guardrail-fade-(abgf).json",
+      "sha256": "825fa3a88bf411900f8f86d059e92b4912bda9a4027c64c2d21be906c534d4da",
+      "status": "pre-registered, 0 bets placed"
+    },
+    {
+      "id": "S7",
+      "name": "Schedule-spot fade (SSF)",
+      "file": "data/v3/prereg/S7-schedule-spot-fade-(ssf).json",
+      "sha256": "72f1d4ac12edf8a879a6930c6cf830adb70b5181eec945e32c70fa73c99c1477",
+      "status": "pre-registered, 0 bets placed"
+    },
+    {
+      "id": "S8",
+      "name": "Player-prop minutes model (PPMM)",
+      "file": "data/v3/prereg/S8-player-prop-minutes-model-(ppmm).json",
+      "sha256": "6d7c50bf906c5a8ec87085cde0583fdb19a411115f7af7873b631b712b1c6068",
+      "status": "pre-registered, 0 bets placed, inputs BLOCKED (no prop line / no official minutes feed)"
+    },
+    {
+      "id": "S9",
+      "name": "Ledger-only champion (LOC)",
+      "file": "data/v3/prereg/S9-ledger-only-champion-(loc).json",
+      "sha256": "b69a1125f9b593f17376ecd0c25d295e1848a887526f870c8165facb31a4845f",
+      "status": "pre-registered, 0 bets placed, evaluation rule frozen"
     }
   ]
 }
