@@ -3572,3 +3572,59 @@ edited.
 | ID | Task | Status | Owner | File scope |
 |---|---|---|---|---|
 | A429-05 | Repair and fixture-test the deterministic v2 refresh gate defects without changing another session's workflow | in progress | `arena/0429aad7-nba2` | `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` |
+
+### A429 audit and implementation update (2026-11-15 UTC)
+
+The independent findings and verification log are in `analysis/session-0429aad7-audit.md`.
+The A429-05 implementation remains limited to `nba2/v2/refresh.py` and the new
+`nba2/v2/test_refresh_gate_audit.py`; no workflow, site, capture, source-data, or other
+session-owned file was changed.
+
+- **Finals gate reproduction:** the previous rolling request covered 2026-11-14 through
+  2026-11-08, but `main()` also required a result for the 2026-11-15 anchor date. The
+  revised gate records checked dates and scheduled game/status rows, requires finals only
+  on supplied completed dates, accepts checked no-game dates, and fails closed for an
+  unchecked date, missing inventory, non-final game or malformed final record.
+- **Standings gate reproduction:** the previous code compared 30 season-to-date standings
+  rows against 49 recent finals. The revised gate uses the 188 unique committed results as
+  its baseline, overlays recent/current scoreboard finals by game ID, surfaces conflicting
+  duplicates and malformed/unmapped records, and checks all 30 standings rows. The
+  committed 188-game capture rebuild test passes.
+- **Additional in-file guard coverage:** the four-day slate records its queried dates;
+  page-level team-stat provenance is checked; injury PDF links are sorted by parsed
+  timestamp rather than HTML order. The latter behavior is backed by the official index
+  [official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/) and
+  [the 2026-11-15 06:15 AM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf).
+- **Tests:** 15 fixture-only A429 tests, 144 tests in the full v2 suite, 70 base tests and
+  33 v3 tests passed. The existing v3 checker still reports 7 gate passes / 1 gate failure
+  with `publishable=True`; details and scope limits are in the audit report.
+- **Other verification:** v2 checker 0 structural / 0 semantic issues; internal link scan
+  5,547 links clean; provenance lint 1,423 rows / 50 tables; sealed-ledger verification
+  passed (27 predictions); crosscheck 90 pass / 0 fail / 7 info; backtest verification
+  passed. Existing `ResourceWarning`s in `nba2/v2/model.py` and `nba2/v2/travel.py` were
+  observed but are outside scope.
+
+**Needs owner review (not published to the Flagged page by this session):** live official
+standings report PHI 11-3, IND 5-9, LAL 12-2 and PHX 5-7, while the dated NBA2 table remains
+PHI 10-3, IND 5-8, LAL 11-2 and PHX 5-6. The official [standings](https://www.nba.com/standings)
+and [2026-11-15 schedule](https://www.nba.com/schedule?date=2026-11-15) show IND–PHI and
+LAL–PHX finals. The live `picks.html` 11/15 NYK–TOR row points to game ID `0022600253`,
+while the [official 11/15 schedule](https://www.nba.com/schedule?date=2026-11-15) and
+[official game page](https://www.nba.com/game/nyk-vs-tor-0022600241) identify `0022600241`.
+The [Flagged for Review page](https://wingbangboozle1-lang.github.io/NBA2/flagged.html)
+needs an owner update for these new observations; editing it is outside this claim.
+
+The injury gate still checks presence of the report URL and two timestamps, not recency
+against the last game date. That limitation is explicitly documented in `refresh.py` and
+filed as a separate owner request. PR #72's failed run
+[43714472051](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43714472051), job
+`132812900286`, stopped at “v2 model + source-completeness tests”; the failing assertion
+remains unverified. No direct live `refresh --check-only` was run because shell egress to
+NBA hosts is blocked. PR, merge and Pages deployment confirmation remain pending at this
+append; no deployment claim is made.
+
+### A429 task status (2026-11-15 UTC)
+
+The review, source checks, scoped gate implementation, regression fixtures and audit report are
+complete. The working tree is limited to the claimed refresh module/test, the audit report and
+this append-only board. PR creation, merge and any post-merge Pages confirmation remain next.
