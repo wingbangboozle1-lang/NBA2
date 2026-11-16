@@ -1061,3 +1061,67 @@ FLAGS += [
      "reproducible rather than restated.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
 ]
+
+# --------------------------------------------------------------------------- session
+# arena/a11505e1-nba2 (2026-11-16) — CR-V4-2: the v4 gate register (F-V4-01..F-V4-09)
+# is published in full on the consolidated v4 verification page (v4-verify.html). Until
+# now the shared Flagged page did not list them, so a reviewer had to know to look there.
+# Each summary below is transcribed from nba2/v4/publish.py's V4_FLAGS register and links
+# to that page; nothing is inferred or re-worded into a claim.
+FLAGS += [
+    ("F-V4-01", "medium", "Data",
+     "Injury releases are stored as transcribed text, not as the original PDF bytes: bash egress to "
+     "ak-static.cms.nba.com returns HTTP 000 and the page-fetch tool returns text. Each release carries "
+     "its official URL, revision stamp, retrieval stamp and a sha256 of the transcribed text, but NOT the "
+     "original file hash.",
+     "Blank-and-flag; the fix is a runner with network access, never a guess. Full register on "
+     "<a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"),
+    ("F-V4-02", "low", "Data",
+     "Per-player game logs for the 11/15 and 11/16 games were not transcribed (9 games x ~26 rows was "
+     "outside the capture session's budget). The committed 11/13 and 11/14 logs stand unchanged.",
+     "The gap is published, not filled. Full register on <a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"),
+    ("F-V4-03", "low", "Data",
+     "Travel mileage uses great-circle distance over arena coordinates sourced from Wikimedia/Wikidata "
+     "(P625), not from an official NBA coordinate page (NBA.com publishes arena name/city/state only).",
+     "Every travel row is labelled THIRD-PARTY with its read date. Full register on "
+     "<a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://www.nba.com/schedule"),
+    ("F-V4-04", "high", "Model",
+     "No licensed odds feed (gate G6): there is no market price, so no edge, no stake, no Kelly fraction "
+     "and no CLV can be computed. The market-anchored prior's weight is undefined, so w_market stays blank "
+     "and the blended line is not published.",
+     "The bet surface publishes 0 rows and explicit G6 refusals; stakes are held at 0.00. Full register on "
+     "<a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://www.nba.com/games"),
+    ("F-V4-05", "low", "Data",
+     "Continuation rows in the official injury PDF lose their date, time and team cells on page breaks.",
+     "Those rows are keyed off the preceding full row and the reconstruction is flagged on the row; never "
+     "assigned by inference from the player's usual club. Full register on "
+     "<a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"),
+    ("F-V4-06", "high", "Data",
+     "Six GSW@NOP rows lose the status column in extraction, so their status cannot be read from the "
+     "official report text.",
+     "Status left blank and counted separately, with F-V4-06 printed in the cell; never back-filled, never "
+     "counted as Available. Full register on <a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://official.nba.com/nba-injury-report-2026-27-season/"),
+    ("F-V4-07", "low", "Data",
+     "POR@MIN appears under two different game dates in the same release, so a date-only key would merge "
+     "two distinct filings.",
+     "The diff key is (date, matchup, team, player); both filings stay distinct. Full register on "
+     "<a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"),
+    ("F-V4-08", "medium", "Model",
+     "Rotation/production impact is not published: the official report states status and reason, never "
+     "minutes, and no matched before/after pair of games has been captured.",
+     "Status counts only; production impact explicitly blank and flagged. Minutes shares and replacement "
+     "shares are not invented. Full register on <a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"),
+    ("F-V4-09", "low", "Data",
+     "The 2026-11-16 09:30 AM ET release is identical row-for-row to the 09:15 AM ET release.",
+     "Declared with identical_to and a basis (diff = 0 changes), so it is not counted as a change and does "
+     "not inflate the diff ledger. Full register on <a href=\"v4-verify.html\">v4-verify.html</a>.",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf"),
+]

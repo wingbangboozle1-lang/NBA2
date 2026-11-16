@@ -555,6 +555,78 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Replaced with the measured diff table and a pointer to the script that produces it, so the claim is reproducible rather than restated.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/audi…</a></td>
 </tr>
+<tr id="F-V4-01">
+<td><span class="badge b-warn">F-V4-01</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>Injury releases are stored as transcribed text, not as the original PDF bytes: bash egress to ak-static.cms.nba.com returns HTTP 000 and the page-fetch tool returns text. Each release carries its official URL, revision stamp, retrieval stamp and a sha256 of the transcribed text, but NOT the original file hash.</td>
+<td>Blank-and-flag; the fix is a runner with network access, never a guess. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-V4-02">
+<td><span class="badge b-off">F-V4-02</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>Per-player game logs for the 11/15 and 11/16 games were not transcribed (9 games x ~26 rows was outside the capture session&#x27;s budget). The committed 11/13 and 11/14 logs stand unchanged.</td>
+<td>The gap is published, not filled. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book…</a></td>
+</tr>
+<tr id="F-V4-03">
+<td><span class="badge b-off">F-V4-03</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>Travel mileage uses great-circle distance over arena coordinates sourced from Wikimedia/Wikidata (P625), not from an official NBA coordinate page (NBA.com publishes arena name/city/state only).</td>
+<td>Every travel row is labelled THIRD-PARTY with its read date. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="F-V4-04">
+<td><span class="badge b-bad">F-V4-04</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Model</td>
+<td>No licensed odds feed (gate G6): there is no market price, so no edge, no stake, no Kelly fraction and no CLV can be computed. The market-anchored prior&#x27;s weight is undefined, so w_market stays blank and the blended line is not published.</td>
+<td>The bet surface publishes 0 rows and explicit G6 refusals; stakes are held at 0.00. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr id="F-V4-05">
+<td><span class="badge b-off">F-V4-05</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>Continuation rows in the official injury PDF lose their date, time and team cells on page breaks.</td>
+<td>Those rows are keyed off the preceding full row and the reconstruction is flagged on the row; never assigned by inference from the player&#x27;s usual club. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-V4-06">
+<td><span class="badge b-bad">F-V4-06</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Data</td>
+<td>Six GSW@NOP rows lose the status column in extraction, so their status cannot be read from the official report text.</td>
+<td>Status left blank and counted separately, with F-V4-06 printed in the cell; never back-filled, never counted as Available. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official.nba.com/nba-injury-report-2026-27-season/</a></td>
+</tr>
+<tr id="F-V4-07">
+<td><span class="badge b-off">F-V4-07</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>POR@MIN appears under two different game dates in the same release, so a date-only key would merge two distinct filings.</td>
+<td>The diff key is (date, matchup, team, player); both filings stay distinct. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-V4-08">
+<td><span class="badge b-warn">F-V4-08</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Model</td>
+<td>Rotation/production impact is not published: the official report states status and reason, never minutes, and no matched before/after pair of games has been captured.</td>
+<td>Status counts only; production impact explicitly blank and flagged. Minutes shares and replacement shares are not invented. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
+<tr id="F-V4-09">
+<td><span class="badge b-off">F-V4-09</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>The 2026-11-16 09:30 AM ET release is identical row-for-row to the 09:15 AM ET release.</td>
+<td>Declared with identical_to and a basis (diff = 0 changes), so it is not counted as a change and does not inflate the diff ledger. Full register on &lt;a href=&quot;v4-verify.html&quot;&gt;v4-verify.html&lt;/a&gt;.</td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

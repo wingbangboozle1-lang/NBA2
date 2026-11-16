@@ -471,7 +471,7 @@ naive rule right {_sa['baseline_won_those']} times and the model {_sa['model_won
 information. That is published as a finding, with its arithmetic, on
 <a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
 
-<div class="note ok"><b>Verified against the live official pages this session (2026-11-15).</b> All 30 club records
+<div class="note ok"><b>Verified against the live official pages in the {O.AS_OF} capture.</b> All 30 club records
 re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30
 identical, and independently rebuilt from the {integ['games']:.0f} official finals. All {len(lines)} window games re-checked field by field
 (date, tip time, away, home, game id, venue) against

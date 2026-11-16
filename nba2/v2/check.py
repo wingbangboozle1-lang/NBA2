@@ -17,7 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
 
-LOCAL_LINK = re.compile(r'(?:href|src)="([^"#][^"]*)"')
+LOCAL_LINK = re.compile(r'(?:href|src)="([^"]*)"')
+FRAG_ID = re.compile(r'(?:id|name)="([^"]+)"')
 ROW = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
 CELL = re.compile(r"<td[^>]*>(.*?)</td>", re.S)
 TAG = re.compile(r"<[^>]+>")
@@ -39,9 +40,23 @@ def check() -> list[str]:
         for link in LOCAL_LINK.findall(doc):
             if link.startswith(("http://", "https://", "mailto:", "//")) or link.startswith("data:"):
                 continue
-            target = (p.parent / link.split("?")[0]).resolve()
+            # CR-V4-1 (change request from session arena/b3914335-nba2, implemented by
+            # arena/a11505e1-nba2): strip the fragment before resolving the file, then
+            # verify the fragment exists in the target. Before this fix any
+            # `page.html#section` link resolved to a file literally named
+            # "page.html#section" and was reported broken, so the v4 register had to
+            # fall back to file-level links. Pure `#anchor` links are verified against
+            # the page they appear on.
+            path_part, _, frag = link.partition("#")
+            path_part = path_part.split("?")[0]
+            target = (p.parent / path_part).resolve() if path_part else p.resolve()
             if not target.exists():
                 problems.append(f"{p.name}: broken local link -> {link}")
+                continue
+            if frag and target.suffix.lower() in (".html", ".htm"):
+                if frag not in set(FRAG_ID.findall(target.read_text())):
+                    problems.append(f"{p.name}: broken anchor -> {link} "
+                                    f"(no id/name {frag!r} in {target.name})")
         for token in ("TODO", "TBD", "lorem ipsum", "XXX", "{{", "}}"):
             if token in doc:
                 problems.append(f"{p.name}: placeholder token {token!r}")
