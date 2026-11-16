@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import pathlib
 import unittest
 from pathlib import Path
 
@@ -499,6 +500,21 @@ class TestPublishedPages(unittest.TestCase):
                               msg=f"{fid}: a resolved flag must state the date and the finding")
                 self.assertGreater(len(effect), 80,
                                    msg=f"{fid}: say what is published now, not just that it is fixed")
+
+    def test_the_sidebar_order_is_enforced_by_lint(self):
+        """A partial build silently drops the v4 nav block; lint must name the pages."""
+        import tempfile, shutil
+        from nba2.pipeline import lint as L
+        self.assertEqual(L.lint_nav_order(), [])
+        with tempfile.TemporaryDirectory() as td:
+            tmp = pathlib.Path(td)
+            shutil.copytree(SITE, tmp / "site")
+            page = tmp / "site" / "slate.html"
+            page.write_text(page.read_text().replace('href="v4-verify.html"', 'href="verification-v3.html"'))
+            problems = L.lint_nav_order(tmp)
+            self.assertEqual(len(problems), 1, problems)
+            self.assertIn("slate.html", problems[0])
+            self.assertIn("v2 -> v3 -> v4", problems[0])
 
     def test_no_placeholder_tokens_anywhere(self):
         for name in P.V4_PAGES:

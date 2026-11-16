@@ -189,10 +189,36 @@ def lint_html(data: dict, root: Path) -> list[str]:
     return problems
 
 
+def lint_nav_order(root: Path | None = None) -> list[str]:
+    """Every published page must carry the v4 nav block, or the build ran out of order.
+
+    v2, v3 and v4 each rewrite the sidebar, and only the full v2 -> v3 -> v4 sequence
+    converges: v3 alone leaves 12 pages without the block, v2 alone leaves 24. A partial run
+    therefore produces a tree that is internally consistent and silently missing navigation,
+    which no link checker catches because nothing links *to* the absent block. This makes the
+    ordering requirement observable instead of tribal knowledge. It is a warning, not a hard
+    failure, because the v4 tree is absent on a checkout that has not built v4 at all.
+    """
+    r = Path(root) if root else ROOT
+    site = r / "site"
+    if not site.is_dir() or not (site / "v4-verify.html").exists():
+        return []
+    missing = []
+    for page in sorted(site.glob("*.html")):
+        if page.name.startswith("v4-"):
+            continue
+        if 'href="v4-verify.html"' not in page.read_text():
+            missing.append(page.name)
+    if not missing:
+        return []
+    return [f"site/{n} has no v4 nav block — the build ran out of order "
+            f"(the supported sequence is v2 -> v3 -> v4)" for n in missing]
+
+
 def lint_all(root: Path | None = None) -> list[str]:
     r = Path(root) if root else ROOT
     data = json.loads((r / "data" / "site.json").read_text())
-    return lint_data(data) + lint_html(data, r)
+    return lint_data(data) + lint_html(data, r) + lint_nav_order(r)
 
 
 def main() -> int:
