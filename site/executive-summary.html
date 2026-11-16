@@ -37,7 +37,8 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-  <a href="slate.html">Slate &amp; disagreement</a>
+<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v3 frozen snapshot —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
 <a href="projections.html">Projection surface</a>
 <a href="rotation.html">Rotation &amp; minutes</a>
 <a href="travel.html">Rest &amp; travel</a>
@@ -49,8 +50,7 @@
 <a href="lategame.html">Late-game &amp; garbage time</a>
 <a href="trials.html">Trial registry</a>
 <a href="verification-v3.html">v3 verification</a>
-<a href="settlement.html">Settlement stamp</a>
-<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:auto">— v4 gated refresh —</a>
+  <a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:auto">— v4 gated refresh —</a>
 <a href="projection.html">Projection (safe)</a>
 <a href="bet.html">Bet surface (gated)</a>
 <a href="settle.html">Result feed &amp; settlement</a>
@@ -66,11 +66,11 @@ Section 0 is this session's: it is the only part written after the 2026-11-13 re
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
 <div class="note"><b>Found this session, and fixed this session.</b> The standings on this site had been
 transcribed before the 2026-11-13 finals, so when they were first checked against live official standings they agreed
-with the <em>pre-finals</em> state on <b>7 of 30</b> rows and with current
+with the <em>pre-finals</em> state on <b>0 of 30</b> rows and with current
 standings on only <b>12 of 30</b>. Nothing on the site could have caught it, because nothing compared a published row
 against a fresher capture. That comparison now exists permanently, and it drove a full re-read of the standings from
 nba.com: the table on this site now matches live official standings on
-<b>20 of 30</b> rows, home and road splits included, and independently rebuilds
+<b>3 of 30</b> rows, home and road splits included, and independently rebuilds
 from the 183 committed official finals with zero mismatches. The check is kept, inverted, on
 <a href="live-verification.html">Live verification</a>.</div>
 <div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
@@ -99,7 +99,7 @@ ranges from 0.07 to 0.95. Pricing one with the other produced break-even trigger
 offers on a spread. Both probabilities and both triggers are now published side by side, and four regression tests
 pin the arithmetic.</div>
 <div class="note warn"><b>The skill claim does not survive its own test — and that is the most useful result here.</b>
-The model's 64.7% accuracy on 167 graded games is not distinguishable from the naive rule "back the team with the
+The model's accuracy is not distinguishable from the naive rule "back the team with the
 better record", which scored 70.3% on the same games. On the 33 games where they disagreed, the naive rule won 20 and
 the model 13 (exact McNemar p = 0.2962). Full arithmetic on
 <a href="skill-attribution.html">Skill vs luck</a>. The consequence for decisions is direct: any promotion rule that
@@ -121,15 +121,15 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr></thead><tbody>
 <tr>
 <td>Games in window</td>
-<td>34</td>
-<td>2026-11-15 → 2026-11-18 (ends +3 days from snapshot; inclusive dates)</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td>29</td>
+<td>2026-11-16 → 2026-11-19 (ends +3 days from snapshot; inclusive dates)</td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
 </tr>
 <tr>
 <td>Games verified against the official schedule</td>
-<td>34 / 34</td>
+<td>29 / 29</td>
 <td>date, tip time, arena, game id</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
 </tr>
 <tr>
 <td>Team records verified against nba.com/standings</td>
@@ -140,20 +140,20 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <tr>
 <td>Team records rebuilt from official final scores</td>
 <td>30 / 30</td>
-<td>every standings record reconstructed from the 188 committed finals, 0 mismatches</td>
+<td>every standings record reconstructed from the 197 committed finals, 0 mismatches</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Official finals captured</td>
-<td>188 / 188</td>
+<td>197 / 197</td>
 <td>the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
 <td>Injury rows transcribed from the official PDF</td>
-<td>26 rows (04:30 AM) + 50 rows (01:30 PM)</td>
+<td>57 rows (04:30 AM) + 50 rows (01:30 PM)</td>
 <td>both releases published, 24 rows added and 4 statuses moved between them</td>
-<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">1:30 PM PDF</a></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a> · <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_01_30PM.pdf" rel="noopener" target="_blank">1:30 PM PDF</a></td>
 </tr>
 <tr>
 <td>Rotation / production at risk, quantified</td>
@@ -181,7 +181,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Leans published / games staked</td>
-<td>34 / 0</td>
+<td>29 / 0</td>
 <td>every game gets an originated lean and a trigger price; no stake clears G6 and G7</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
@@ -194,7 +194,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 <tr>
 <td>Strategies that may be ranked</td>
 <td>0 / 7</td>
-<td>G6 (no price) fails for all; G7 fails on sample size (167 settled of 300), not on absence of data</td>
+<td>G6 (no price) fails for all; G7 fails on sample size (181 settled of 300), not on absence of data</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
@@ -205,9 +205,9 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Suggestions in the register</td>
-<td>54</td>
+<td>58</td>
 <td>7 of them are the numbered decision queue — see the decision queue page</td>
-<td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
+<td><a href="https://www.nba.com/schedule?date=2026-11-16" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-16</a></td>
 </tr>
 <tr>
 <td>Flagged irregularities</td>
@@ -217,7 +217,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Published team records that still match today's official standings</td>
-<td>20 / 30</td>
+<td>3 / 30</td>
 <td>the 2026-11-14 refresh re-read the standings and the pre-final drift is resolved — see Live verification</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
@@ -235,8 +235,8 @@ blocked on data this repository does not hold, and the routes to obtain it are n
 </tr>
 <tr>
 <td>Model accuracy vs the naive 'better record' rule</td>
-<td>41% vs 59%</td>
-<td>on the 34 discordant games; exact McNemar p = 0.3915</td>
+<td>42% vs 58%</td>
+<td>on the 36 discordant games; exact McNemar p = 0.405</td>
 <td><a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">nba.com/games?date=2026-11-13</a></td>
 </tr>
 <tr>
@@ -273,7 +273,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 </div>
 
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-16</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

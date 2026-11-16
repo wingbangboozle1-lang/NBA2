@@ -19,6 +19,8 @@
    "games_2026-11-06_11-11_11-13.json",
    "games_2026-11-07_to_2026-11-08_and_11-12.json",
    "games_2026-11-09_to_2026-11-10.json",
+   "games_2026-11-14.json",
+   "games_2026-11-15.json",
    "data/raw/capture_2026-11-15/results_2026-11-14.json"
   ],
   "includes": "data/raw/history/games_*.json + this session's 11/15 finals"

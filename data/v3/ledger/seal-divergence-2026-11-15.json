@@ -125,6 +125,16 @@
       "n_picks_pre_tip": 34,
       "n_picks_recomputed": 34,
       "cause": "model inputs changed after sealing (the committed official-finals history grew), so the recomputed margins differ"
+    },
+    {
+      "detected_at_utc": "2026-11-16T18:21:27Z",
+      "detected_by": "arena/fe0ffa49-nba2",
+      "sealed_at_utc": "2026-11-15T11:41:00Z",
+      "pre_tip_sha256": "34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91",
+      "recomputed_sha256": "fe784fcd3e9709ebd8782c5568805f103b480b9ff5601d57febd13cdd065281f",
+      "n_picks_pre_tip": 34,
+      "n_picks_recomputed": 34,
+      "cause": "model inputs changed after sealing (the committed official-finals history grew), so the recomputed margins differ"
     }
   ]
 }
