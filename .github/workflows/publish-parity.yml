@@ -47,6 +47,7 @@ jobs:
           python -m nba2.pipeline.build_site
           python -m backtest.engine.build
           python -m nba2.v2
+          python -m nba2.settlement_page
           python -m nba2.v3
 
       - name: The published tree (site/) must equal a rebuild
