@@ -59,6 +59,15 @@ URLS = [
     ("stats_league_leaders",
      "https://stats.nba.com/stats/leagueleaders?LeagueID=00&Season=2026-27"
      "&SeasonType=Regular%20Season&PerMode=PerGame"),
+    ("stats_leaguedashplayerstats",
+     "https://stats.nba.com/stats/leaguedashplayerstats?MeasureType=Base&PerMode=PerGame"
+     "&Season=2026-27&SeasonType=Regular%20Season&LeagueID=00&TeamID=1610612743"),
+    ("statsdmz_gamebook_pdf",
+     "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"),
+    ("akstatic_injury_pdf",
+     "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf"),
+    ("www_stats_players_club_page",
+     "https://www.nba.com/stats/players/traditional?TeamID=1610612743"),
 ]
 
 CAP = 2_000_000  # bytes of any single body kept on disk

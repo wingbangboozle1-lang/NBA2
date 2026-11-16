@@ -144,3 +144,39 @@ jobs:
           fi
           git commit -m "ingest(bot): nightly refresh — official injury releases archived, finals fetched; sealed ledger untouched (verify chain passed)"
           git push origin HEAD:${GITHUB_REF_NAME}
+
+  diagnostics:
+    # F-043 evidence channel (PR #70's job, restored by the integration and upgraded: this
+    # environment cannot download Actions artifacts — the results blob host is outside its
+    # egress allowlist — so the probe report is COMMITTED to the dispatch ref under audit/
+    # instead of only uploaded as an artifact. Read-only w.r.t. data/; runs only on failure.
+    needs: ingest
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Probe every official endpoint (read-only)
+        run: python3 tools/probe_official.py --out audit/probe_out
+      - name: Commit the probe evidence to this ref
+        run: |
+          set -euo pipefail
+          STAMP=$(date -u +%Y-%m-%dT%H%MZ)
+          mkdir -p "audit/egress/${STAMP}"
+          cp audit/probe_out/*.json "audit/egress/${STAMP}/" 2>/dev/null || true
+          git config user.name "nba2-ingest-bot"
+          git config user.email "nba2-ingest-bot@users.noreply.github.com"
+          git add "audit/egress/${STAMP}" || true
+          if git diff --cached --quiet; then
+            echo "probe produced no files — nothing to commit"
+            exit 0
+          fi
+          git commit -m "diagnostics(bot): official-source probe evidence (ingest failed; F-043)"
+          git push origin HEAD:${GITHUB_REF_NAME}
