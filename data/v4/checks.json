@@ -32,14 +32,14 @@
    "id": "G-V4-5",
    "name": "newest-indexed injury release is stamped three ways",
    "ok": true,
-   "measured": "revision 2026-11-16 09:15 AM ET, retrieved 2026-11-16T14:41:00Z, index checked 2026-11-16T14:30:00Z",
+   "measured": "revision 2026-11-16 01:00 PM ET, retrieved 2026-11-16T18:36:00Z, index checked 2026-11-16T18:24:00Z",
    "detail": "both stamps and the index check are recorded"
   },
   {
    "id": "G-V4-6",
    "name": "provenance: every captured row carries a source",
    "ok": true,
-   "measured": "7 capture documents scanned",
+   "measured": "8 capture documents scanned",
    "detail": "every row carries a source URL"
   },
   {
@@ -67,6 +67,7 @@
   "data/raw/refresh_2026-11-16/standings_2026-11-16.json",
   "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
   "data/raw/refresh_2026-11-16/injury_transcript_20261116_0915AM.json",
   "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json",
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",

@@ -3,7 +3,7 @@
  "session": "arena/b3914335-nba2",
  "retrieved_utc": "2026-11-16T14:30:00Z",
  "ledger": {
-  "n_releases_stored_this_session": 2,
+  "n_releases_stored_this_session": 3,
   "releases": [
    {
     "report_stamp_et": "2026-11-16 09:15 AM ET",
@@ -18,15 +18,15 @@
     "layout_notes": [
      {
       "id": "F-V4-05",
-      "finding": "Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects."
+      "finding": "Continuation rows in the official PDF lose their date, time, matchup and sometimes their team cell at a page break. Each such row is keyed off the block the PDF prints it in, and the reconstruction is written into the row's note so a reader can see it was reconstructed rather than read."
      },
      {
-      "id": "F-V4-06",
-      "finding": "Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so 'Curry, Stephen' reads '| Injury/Illness - Right Oblique Tear |'. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for."
+      "id": "F-V4-10",
+      "finding": "One GSW@NOP row (Jimmy Butler III) prints no Current Status cell at all in this release: only the reason is legible. The status is left BLANK and flagged. It is not back-filled from the club's other rows and it is not treated as Available."
      },
      {
-      "id": "F-V4-07",
-      "finding": "The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as 'NOT YET SUBMITTED' at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player)."
+      "id": "F-V4-11",
+      "finding": "Five GSW@NOP rows (Curry, Moody, Porzingis, Santos, Williams) print a legible Current Status but an empty Reason cell, so the reason is left blank. In the 09:15 AM release the same six rows lost the status column instead; the status is therefore now readable for five of the six, and the diff records that change."
      }
     ]
    },
@@ -43,15 +43,40 @@
     "layout_notes": [
      {
       "id": "F-V4-05",
-      "finding": "Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects."
+      "finding": "Continuation rows in the official PDF lose their date, time, matchup and sometimes their team cell at a page break. Each such row is keyed off the block the PDF prints it in, and the reconstruction is written into the row's note so a reader can see it was reconstructed rather than read."
      },
      {
-      "id": "F-V4-06",
-      "finding": "Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so 'Curry, Stephen' reads '| Injury/Illness - Right Oblique Tear |'. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for."
+      "id": "F-V4-10",
+      "finding": "One GSW@NOP row (Jimmy Butler III) prints no Current Status cell at all in this release: only the reason is legible. The status is left BLANK and flagged. It is not back-filled from the club's other rows and it is not treated as Available."
      },
      {
-      "id": "F-V4-07",
-      "finding": "The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as 'NOT YET SUBMITTED' at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player)."
+      "id": "F-V4-11",
+      "finding": "Five GSW@NOP rows (Curry, Moody, Porzingis, Santos, Williams) print a legible Current Status but an empty Reason cell, so the reason is left blank. In the 09:15 AM release the same six rows lost the status column instead; the status is therefore now readable for five of the six, and the diff records that change."
+     }
+    ]
+   },
+   {
+    "report_stamp_et": "2026-11-16 01:00 PM ET",
+    "revision_time_et": "2026-11-16 01:00 PM ET",
+    "retrieved_at_utc": "2026-11-16T18:36:00Z",
+    "index_checked_utc": "2026-11-16T18:24:00Z",
+    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+    "rows": 87,
+    "content_sha256": "65990ff925d896546927a1d912dcc4ae154301f2685093fcd0077e4c39ee66de",
+    "binary_stored": false,
+    "binary_stored_reason": "The page-fetch tool returns the PDF's text, not its bytes, and bash egress to ak-static.cms.nba.com is blocked (HTTP 000). Every release this session therefore carries its official URL, its revision stamp and this session's retrieval stamp, plus a sha256 of the transcribed text (a content hash), but NOT the original file hash. Flagged F-V4-01; the fix is a runner with network access, not a guess.",
+    "layout_notes": [
+     {
+      "id": "F-V4-05",
+      "finding": "Continuation rows in the official PDF lose their date, time, matchup and sometimes their team cell at a page break. Each such row is keyed off the block the PDF prints it in, and the reconstruction is written into the row's note so a reader can see it was reconstructed rather than read."
+     },
+     {
+      "id": "F-V4-10",
+      "finding": "One GSW@NOP row (Jimmy Butler III) prints no Current Status cell at all in this release: only the reason is legible. The status is left BLANK and flagged. It is not back-filled from the club's other rows and it is not treated as Available."
+     },
+     {
+      "id": "F-V4-11",
+      "finding": "Five GSW@NOP rows (Curry, Moody, Porzingis, Santos, Williams) print a legible Current Status but an empty Reason cell, so the reason is left blank. In the 09:15 AM release the same six rows lost the status column instead; the status is therefore now readable for five of the six, and the diff records that change."
      }
     ]
    }
@@ -262,9 +287,503 @@
      }
     ],
     "note": "Mechanical diff. 'Added' includes a team replacing a single NOT YET SUBMITTED placeholder with a full submission, so an evening release legitimately adds many rows. A blank status is diffed as blank and is never coerced to a value."
+   },
+   {
+    "from": {
+     "stamp_et": "2026-11-16 09:30 AM ET",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
+     "retrieved_utc": "2026-11-16T14:52:00Z",
+     "rows": 70
+    },
+    "to": {
+     "stamp_et": "2026-11-16 01:00 PM ET",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+     "retrieved_utc": "2026-11-16T18:36:00Z",
+     "rows": 87
+    },
+    "match_key": [
+     "date",
+     "matchup",
+     "team",
+     "player"
+    ],
+    "counts": {
+     "status_changed": 3,
+     "placeholder_resolved": 5,
+     "reason_changed_only": 2,
+     "added": 20,
+     "removed": 3,
+     "still_placeholder": 11
+    },
+    "status_changes": [
+     {
+      "key": [
+       "2026-11-16",
+       "CHI@CLE",
+       "Cleveland Cavaliers",
+       "Tyson, Jaylon"
+      ],
+      "from": "Questionable",
+      "to": "Doubtful",
+      "reason_from": "Injury/Illness - Right Ankle Injury Management",
+      "reason_to": "Injury/Illness - Right Ankle Injury Management",
+      "kind": "status"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Curry, Stephen"
+      ],
+      "from": "",
+      "to": "Out",
+      "reason_from": "",
+      "reason_to": "",
+      "kind": "placeholder_resolved"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Moody, Moses"
+      ],
+      "from": "",
+      "to": "Out",
+      "reason_from": "",
+      "reason_to": "",
+      "kind": "placeholder_resolved"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Porzingis, Kristaps"
+      ],
+      "from": "",
+      "to": "Out",
+      "reason_from": "",
+      "reason_to": "",
+      "kind": "placeholder_resolved"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Santos, Gui"
+      ],
+      "from": "",
+      "to": "Questionable",
+      "reason_from": "",
+      "reason_to": "",
+      "kind": "placeholder_resolved"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Williams, Brandon"
+      ],
+      "from": "",
+      "to": "Out",
+      "reason_from": "",
+      "reason_to": "",
+      "kind": "placeholder_resolved"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Miami Heat",
+       "Larsson, Pelle"
+      ],
+      "from": "Questionable",
+      "to": "Doubtful",
+      "reason_from": "Injury/Illness - Illness",
+      "reason_to": "Injury/Illness - Illness",
+      "kind": "status"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Memphis Grizzlies",
+       "Stewart, Isaiah"
+      ],
+      "from": "Questionable",
+      "to": "Out",
+      "reason_from": "Injury/Illness - Illness",
+      "reason_to": "Injury/Illness - Illness",
+      "kind": "status"
+     }
+    ],
+    "reason_changes": [
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Butler III, Jimmy"
+      ],
+      "status": "",
+      "reason_from": "",
+      "reason_to": "Injury/Illness - Right ACL Repair / Surgery"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Memphis Grizzlies",
+       "Jackson, GG"
+      ],
+      "status": "Out",
+      "reason_from": "Injury/Illness - Left Foot Injury",
+      "reason_to": "Injury/Illness - Left 5th Metatarsal"
+     }
+    ],
+    "added": [
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Adams, Steven"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Lower Leg Injury Management"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Capela, Clint"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Ankle Sprain"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Copeland, Quadir"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Phillips, Julian"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Smart, Marcus"
+      ],
+      "status": "Out",
+      "reason": "League Suspension"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       "Thompson, Amen"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Left Knee Soreness"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Miami Heat",
+       "Jovic, Nikola"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Illness"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Beekman, Reece"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right AC Joint Injury"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Champagne, Justin"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Foot Surgery"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Johnson, Tre"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Low Back Soreness"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Okpara, Felix"
+      ],
+      "status": "Questionable",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Vukcevic, Tristan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Hip Impingement"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       "Watkins, Jamir"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left ACL Repair / Surgery"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       "Barlow, Dominick"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Low Back Stress Reaction"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       "Bona, Adem"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Cervical Spine Sprain"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       "Embiid, Joel"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Right Foot Plantar Fascia Injury Management"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       "Hukporti, Ariel"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Achilles Tendon Rupture / Tear"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       "James, LeBron"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Low Back/Sciatica Management"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "POR@MIN",
+       "Minnesota Timberwolves",
+       ""
+      ],
+      "status": "",
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "POR@MIN",
+       "Portland Trail Blazers",
+       ""
+      ],
+      "status": "",
+      "reason": "NOT YET SUBMITTED"
+     }
+    ],
+    "removed": [
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets",
+       ""
+      ],
+      "status": "",
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards",
+       ""
+      ],
+      "status": "",
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers",
+       ""
+      ],
+      "status": "",
+      "reason": "NOT YET SUBMITTED"
+     }
+    ],
+    "still_placeholder": [
+     {
+      "key": [
+       "2026-11-16",
+       "GSW@NOP",
+       "Golden State Warriors",
+       "Butler III, Jimmy"
+      ],
+      "reason": ""
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "ORL@BOS",
+       "Boston Celtics",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHX@DEN",
+       "Phoenix Suns",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Los Angeles Lakers",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "San Antonio Spurs",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "New York Knicks",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "Toronto Raptors",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "LA Clippers",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       ""
+      ],
+      "reason": "NOT YET SUBMITTED"
+     }
+    ],
+    "note": "Mechanical diff. 'Added' includes a team replacing a single NOT YET SUBMITTED placeholder with a full submission, so an evening release legitimately adds many rows. A blank status is diffed as blank and is never coerced to a value."
    }
   ],
-  "consecutive_release_diffs": 1,
+  "consecutive_release_diffs": 2,
   "gap": "Where two consecutive releases lie on the same day, the diff isolates revision drift. A night-to-morning diff mixes drift with the league's filing deadline, which is why the same-day pair is the one to read.",
   "binary_gap_flag": "F-V4-01"
  },

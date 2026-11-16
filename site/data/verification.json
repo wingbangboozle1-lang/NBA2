@@ -48,7 +48,7 @@
     "live_value": "57 player rows",
     "result": "MISMATCH",
     "detail": "only-in-repo=[('2026-11-13', 'ATL@CHI', 'Awaka, Tobe', 'Out'), ('2026-11-13', 'ATL@CHI', 'Dennis, RayJ', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Flemings, Kingston', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Gilbert, Keshon', 'Out'), ('2026-11-13', 'ATL@CHI', 'Gueye, Mouhamed', 'Out')] only-in-live=[('2026-11-16', 'CHI@CLE', 'Awaka, Tobe', 'Out'), ('2026-11-16', 'CHI@CLE', 'Diop, Khalifa', 'Out'), ('2026-11-16', 'CHI@CLE', 'Merrill, Sam', 'Out'), ('2026-11-16', 'CHI@CLE', 'Mobley, Evan', 'Out'), ('2026-11-16', 'CHI@CLE', 'Robinson, Orlando', 'Out')]",
-    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
    },
    {
     "id": "repo-wl",
@@ -97,7 +97,7 @@
    "fields": "Official final scores, one page per date; the day-strip calendar gives the per-date game count used for the completeness check."
   },
   "injury_pdf": {
-   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
    "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason."
   },
   "injury_policy": {

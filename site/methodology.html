@@ -50,6 +50,7 @@
 <a href="lategame.html">Late-game &amp; garbage time</a>
 <a href="trials.html">Trial registry</a>
 <a href="verification-v3.html">v3 verification</a>
+<a href="settlement.html">Settlement stamp</a>
   <a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:auto">— v4 gated refresh —</a>
 <a href="projection.html">Projection (safe)</a>
 <a href="bet.html">Bet surface (gated)</a>
@@ -137,13 +138,13 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 146 tests, counted from the files
-python3 -m unittest discover -s nba2/tests -t .                # 79 tests
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 165 tests, counted from the files
+python3 -m unittest discover -s nba2/tests -t .                # 91 tests
 python3 -m unittest discover -s backtest/tests                 # 49 tests</pre>
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
 message — a remembered count is the most reliably stale number on the site (F-033).</p>
 <footer>
-  <p>Snapshot as of <b>2026-11-16</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-16</b>. Built by session <code>arena/7bfb0276-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

@@ -173,7 +173,7 @@
    "gates_that_fail_today": "G2,G7,G9",
    "status": "BLOCKED \u2014 no on/off or usage data",
    "why": "Status is official and dated; the size of the effect is not available. The prior build correctly left the impact blank.",
-   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
   }
  ],
  "leaderboard": [
@@ -615,7 +615,7 @@
    "The empirical play rate conditional on each status label, and whether it varies by team or by body part.",
    "Join report history to box scores: for each status label, count appearances (SG-11).",
    "Makes the current p(play) column unusable as evidence.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
   ],
   [
    "Q-5",
@@ -878,7 +878,7 @@
    "Verification",
    "Eleven injury rows carry their team from a previous page of the PDF, not from the same row.",
    "Marked 'continuation' in the attribution column. The team labels match the game block they sit in; a human can confirm on the PDF.",
-   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
   ],
   [
    "F-010",
@@ -1287,6 +1287,158 @@
    "THE INJURY TABLE'S OWN PROSE WAS HARD-CODED to the 04:30 AM ceiling and to a specific count of 'unreachable' files, so it could not have updated itself even when a fresher release became reachable. Found while re-verifying the page this session.",
    "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is reproducible rather than restated.",
    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"
+  ],
+  [
+   "F-061",
+   "info",
+   "Injury releases",
+   "RESOLVED this session \u2014 the committed capture stopped at the 09:15 AM ET release while the league's own index already listed releases up to 01:00 PM ET: fourteen official releases were missing from the repository, and the published Injuries page advertised a release the league had superseded.",
+   "The newest official release (11/16/26 01:00 PM ET) was read and transcribed from its official PDF, stored with its revision stamp, its retrieval stamp and the time the index was checked, and the diff against the previous release is published. The v2 and v4 surfaces now read that one release rather than two copies.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-062",
+   "info",
+   "Verification",
+   "RESOLVED this session \u2014 the semantic cross-check gate could never fire. It grepped for '^\\[fail\\]' while the checker prints '[FAIL]', it ran the checker with '|| true' so a crash looked like a clean pass, and it never ran at pull-request time at all. Four real defects were invisible behind it.",
+   "One shared gate script now blocks on any [FAIL] (except the documented snapshot-age exclusion), requires the checker's summary line so a crash blocks, and runs at pull-request time. The first live run found and this session fixed: a stale backtest report, a hardcoded generation date, stale README counts, and a checker that compared two different trees.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/crosscheck_gate.sh"
+  ],
+  [
+   "F-063",
+   "info",
+   "Verification",
+   "RESOLVED this session \u2014 the link checker resolved a local target without splitting off the '#fragment', so any section-level link was reported as a broken link. The v4 surfaces had to avoid anchors because of it.",
+   "The fragment is now split off, the file is resolved on its own, and the anchor is then checked to exist in that file, so a section-level link is verified rather than merely tolerated. Four regression tests cover it.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/check.py"
+  ],
+  [
+   "F-064",
+   "info",
+   "Model",
+   "WITHDRAWN this session \u2014 an earlier flag said the v1 tree printed 'home-court adv (fitted, pts)' for a value that is pinned to the measured home-win rate. It does not: the v1 tree fits (margin_sd, hca_points) by least squares against observed wins, in nba2/models/ratings.py::calibrate, so the word 'fitted' is correct there. The published v2/v3/v4 trees are the ones that pin it, and they say so.",
+   "No change made to the v1 label: changing it would make the v1 tree's own published label wrong. The flag is withdrawn rather than acted on, and the reasoning is recorded here so the next reviewer does not 'fix' it.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/models/ratings.py"
+  ],
+  [
+   "F-065",
+   "medium",
+   "Site",
+   "The GitHub Pages API still reports build_type 'legacy' with source 'main /', while the live host verifiably serves the v2/v3/v4 tree in site/ \u2014 the v4 projection page is live at /projection.html and the repository root has no such file. The deployed artefact and the reported setting disagree, and the repository therefore contains a second, stale copy of the site at the root that the setting would publish if it ever took effect.",
+   "Verified by fetching the deployed pages, not by reading the setting. The setting is an owner decision and is not changed by this session. Until it is resolved, the root tree and the site/ tree are two different sites, and only the latter is what a reader sees.",
+   "https://wingbangboozle1-lang.github.io/NBA2/projection.html"
+  ],
+  [
+   "F-066",
+   "low",
+   "Verification",
+   "The repository's own COORDINATION.md board contains one session claim written as a single line with literal '\\n' escape sequences instead of line breaks, so that session's claim and completion record render as one unreadable line.",
+   "The board is append-only and the line was left as its author wrote it. It is recorded here so the claim's existence and its owner are visible to a reviewer.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md"
+  ],
+  [
+   "F-V4-01",
+   "high",
+   "v4 gated surfaces \u2014 Injury releases",
+   "The injury releases are stored as transcribed text, not as the original PDF bytes: bash egress to ak-static.cms.nba.com returns HTTP 000 from this sandbox, and the page-fetch tool returns the PDF as text rather than as bytes.",
+   "Every release carries its official URL, its revision stamp, the time the league index was checked, this session's retrieval stamp, and a sha256 over the transcribed text (a content hash). The original file hash is not available and is not claimed.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-02",
+   "medium",
+   "v4 gated surfaces \u2014 Player logs",
+   "Per-player game logs for the 11/15 and 11/16 games were not transcribed: 9 games x roughly 26 player rows was outside the capture budget of the session that read them.",
+   "The committed 11/13 and 11/14 logs stand unchanged and are labelled with their own dates. Nothing is back-filled and no player row is inferred from a team sheet.",
+   "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+  ],
+  [
+   "F-V4-03",
+   "medium",
+   "v4 gated surfaces \u2014 Travel distance",
+   "Travel mileage is a great-circle distance over arena coordinates sourced from Wikimedia/Wikidata (P625). NBA.com publishes arena name, city and state but no coordinates, so no official coordinate source exists to check against.",
+   "Every travel row is labelled THIRD-PARTY and carries the date its coordinates were read. The travel distance is never presented as an official value.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-V4-04",
+   "high",
+   "v4 gated surfaces \u2014 Bet surface",
+   "No licensed odds feed is connected, so there is no market price anywhere in this repository: no edge, no stake, no Kelly fraction and no closing-line value can be computed, and the market-anchored prior's weight is undefined.",
+   "The bet surface publishes 0 rows and an explicit refusal for every game, and every stake is held at 0.00 units. The gate that refused it is named on the page.",
+   "https://www.nba.com/games"
+  ],
+  [
+   "F-V4-05",
+   "medium",
+   "v4 gated surfaces \u2014 Injury releases",
+   "Continuation rows in the official PDF lose their date, time, matchup and sometimes their team cell at a page break, so those cells are not directly readable.",
+   "Each affected row is keyed off the block the PDF prints it in, and the reconstruction is written into the row's own note so a reader can see that it was reconstructed rather than read. A player is never assigned a team by inference from the club they normally play for.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-06",
+   "medium",
+   "v4 gated surfaces \u2014 Injury releases",
+   "One GSW@NOP row in the 01:00 PM release (Jimmy Butler III) prints no Current Status cell at all: only the reason is legible. In the earlier 09:15 AM release the same block lost the status column for all six rows, so five of the six are now readable and this one is not.",
+   "The status is left blank and flagged on the row, and the row is counted separately from the status tally. It is never back-filled and never treated as Available.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-V4-07",
+   "medium",
+   "v4 gated surfaces \u2014 Injury releases",
+   "POR@MIN appears under two different dates in the same release (the 11/16 and the 11/17 filing), so a date-only key would merge two distinct filings.",
+   "The diff key is (date, matchup, team, player), so both filings stay distinct and each is diffed against its own earlier state.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-08",
+   "medium",
+   "v4 gated surfaces \u2014 Rotation availability",
+   "Rotation impact is not published as a number: the official injury report states a status and a reason, never minutes, and no matched before/after pair of games has been captured for the affected clubs.",
+   "Status counts only, with production impact explicitly blank and flagged. Minutes shares and replacement shares are not invented, and the availability column names its reason instead of showing a bare dash.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-09",
+   "low",
+   "v4 gated surfaces \u2014 Injury releases",
+   "The 09:30 AM release is identical row-for-row to the 09:15 AM release.",
+   "It is declared with an explicit identical_to and a basis, so it is not counted as a change and does not inflate the diff ledger.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf"
+  ],
+  [
+   "F-V4-10",
+   "medium",
+   "v4 gated surfaces \u2014 Injury releases",
+   "The newest official release (11/16/26 01:00 PM ET) prints no Current Status for one GSW@NOP row, so that player's status cannot be read from the official text.",
+   "The status cell is left blank, the reason that IS legible is kept, and the row carries a note naming this flag. It is not inferred from the club's other rows.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-11",
+   "low",
+   "v4 gated surfaces \u2014 Injury releases",
+   "Five GSW@NOP rows in the newest release print a legible Current Status but an empty Reason cell, so their reason cannot be read from the official text.",
+   "The status is published as printed and the reason is left blank. No reason is carried over from an earlier release or written from a player's known injury.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+  ],
+  [
+   "F-V4-12",
+   "medium",
+   "v4 gated surfaces \u2014 Injury releases",
+   "A captured injury release is a point-in-time reading and ages within the hour: the league index publishes a new release every fifteen minutes. The committed capture stopped at 09:15 AM ET while the index already listed releases up to 01:00 PM ET, so a capture can be stale by fourteen releases without anything in the repository noticing.",
+   "The release ledger now stores every release with its revision stamp, the time the index was checked, and the retrieval time, and the diff between consecutive releases is published. The gap is still possible; what changed is that the age of the newest release is printed on the page and the index is checked at read time.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-V4-13",
+   "low",
+   "v4 gated surfaces \u2014 Cross-surface",
+   "The shared official finals history advances every game night, while the frozen v1 slate snapshot it was once anchored to does not. A checker that compared the two reported a category error as a look-ahead leak.",
+   "The check is now anchored to the report's own declared cutoff, and the cross-tree offset is disclosed as its own line rather than being hidden or used to fail a build. The v1 tree remains a self-contained 2026-11-14 build that never reads data/raw/history.",
+   "https://www.nba.com/games"
   ]
  ],
  "requirements": [

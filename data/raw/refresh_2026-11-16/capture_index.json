@@ -33,14 +33,14 @@
   "injury_index": {
    "name": "NBA Official - Injury Report index (official)",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "read": "the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/16/26 09:15 AM ET"
+   "read": "the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/16/26 01:00 PM ET"
   }
  },
  "unread": {
   "injury_binary_pdf": {
    "what": "The injury PDFs as stored bytes",
    "why": "The page-fetch tool returns the PDF's text, not its bytes, and bash egress to ak-static.cms.nba.com is blocked (HTTP 000). Every release this session therefore carries its official URL, its revision stamp and this session's retrieval stamp, plus a sha256 of the transcribed text (a content hash), but NOT the original file hash. Flagged F-V4-01; the fix is a runner with network access, not a guess.",
-   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
   },
   "player_game_logs": {
    "what": "Per-player game logs for the 11/15 and 11/16 games",
@@ -61,6 +61,7 @@
  "files": [
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",
   "data/raw/refresh_2026-11-16/capture_index.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
   "data/raw/refresh_2026-11-16/injury_transcript_20261116_0915AM.json",
   "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",

@@ -726,15 +726,15 @@
  "layout_notes": [
   {
    "id": "F-V4-05",
-   "finding": "Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects."
+   "finding": "Continuation rows in the official PDF lose their date, time, matchup and sometimes their team cell at a page break. Each such row is keyed off the block the PDF prints it in, and the reconstruction is written into the row's note so a reader can see it was reconstructed rather than read."
   },
   {
-   "id": "F-V4-06",
-   "finding": "Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so 'Curry, Stephen' reads '| Injury/Illness - Right Oblique Tear |'. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for."
+   "id": "F-V4-10",
+   "finding": "One GSW@NOP row (Jimmy Butler III) prints no Current Status cell at all in this release: only the reason is legible. The status is left BLANK and flagged. It is not back-filled from the club's other rows and it is not treated as Available."
   },
   {
-   "id": "F-V4-07",
-   "finding": "The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as 'NOT YET SUBMITTED' at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player)."
+   "id": "F-V4-11",
+   "finding": "Five GSW@NOP rows (Curry, Moody, Porzingis, Santos, Williams) print a legible Current Status but an empty Reason cell, so the reason is left blank. In the 09:15 AM release the same six rows lost the status column instead; the status is therefore now readable for five of the six, and the diff records that change."
   }
  ],
  "content_sha256": "b9dac67b092d464da2fc590bd6d8689ac9be21eaef9d92b786dc16228ef08b4c",
