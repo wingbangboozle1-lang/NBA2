@@ -1421,16 +1421,12 @@ def check_freshness(r: Report, site: dict):
                 else "no explicit stale-state banner found on index.html")
     sched = _workflow_summary()
     has_ingest = "schedule" in sched
-    runs_today = _refresh_run_count()
-    r.add("CC-FRESH-03", g, "a scheduled ingestion exists, and it has actually run",
-          "list the workflows and their triggers; then record whether any ingest run exists yet",
-          PASS if (has_ingest and runs_today.isdigit() and int(runs_today) > 0) else INFO,
-          f"{sched}; ingest runs recorded: {runs_today}"
-          + ("" if runs_today.isdigit() and int(runs_today) > 0
-             else " \u2014 not a PASS: the schedule is armed but nothing has run, so the site's "
-                  "freshness still depends on a manual or first-scheduled ingest"),
-          note="an active schedule with zero runs is not yet a refresh: the site is only as fresh as the "
-               "last successful ingest run, so this check stays INFO until a run exists")
+    run_status = _refresh_run_status()
+    verdict, run_text, note = _refresh_status_check(run_status, has_ingest)
+    r.add("CC-FRESH-03", g,
+          "report the latest completed scheduled-ingest result; a failed attempt is not a refresh",
+          "inspect the workflow trigger and the conclusion of the latest completed run",
+          verdict, f"{sched}; {run_text}", note=note)
 
 
 # --------------------------------------------------------------------------- helpers used above
@@ -1463,20 +1459,100 @@ def _wl_reconciliation_line(captures: dict[str, dict[str, str]]) -> str:
     return "; ".join(parts)
 
 
-def _refresh_run_count() -> str:
-    """Number of ingest runs, read from a local `gh` call when one is available.
+def _refresh_status_check(run_status: dict, has_ingest: bool) -> tuple[str, str, str]:
+    """Map run evidence to CC-FRESH-03; only the latest completed success is a PASS."""
+    latest = run_status.get("latest")
+    n_runs = run_status.get("n_runs")
+    if not has_ingest:
+        return (INFO,
+                "no scheduled ingestion trigger was found",
+                "no scheduled trigger was found; a run alone does not prove an unattended refresh exists")
+    if not run_status.get("available"):
+        return (INFO,
+                run_status.get("detail", "workflow run status unavailable"),
+                "run status could not be verified; do not infer a successful refresh from the schedule alone")
+    if latest is None:
+        return (INFO,
+                f"{n_runs} prior run(s) listed; no completed run is available",
+                "an armed schedule or an in-progress attempt is not a completed refresh")
+    created_at = latest.get("created_at") or "unknown time"
+    url = f" ({latest['url']})" if latest.get("url") else ""
+    if latest.get("conclusion") == "success":
+        return (PASS,
+                f"{n_runs} prior run(s) listed; latest completed run succeeded at {created_at}{url}",
+                "this check reports the latest completed run; current in-progress runs are excluded")
+    conclusion = latest.get("conclusion") or "unknown"
+    return (INFO,
+            f"{n_runs} prior run(s) listed; latest completed run concluded {conclusion} at {created_at}{url}",
+            "a failed/cancelled run is not a successful refresh; the site is only as fresh as "
+            "the last successful ingest, and this check does not block a new gated refresh")
 
-    Deliberately not an assertion: if the CLI is missing or the API is unreachable, the answer is
-    'unknown', and the check reports that instead of guessing a zero.
+
+def _summarize_refresh_runs(runs, current_run_id: str = "") -> dict:
+    """Return the newest completed run without mistaking an attempt for a refresh.
+
+    GitHub Actions may include the currently executing run in ``gh run list``. Exclude it
+    explicitly, then select the most recent *completed* run by its creation timestamp. An
+    in-progress or failed attempt is never reported as a successful refresh.
     """
+    if not isinstance(runs, list):
+        return {"available": False, "n_runs": None, "latest": None,
+                "detail": "workflow run response was not a JSON list"}
+    run_rows = []
+    for run in runs:
+        if not isinstance(run, dict):
+            continue
+        run_id = str(run.get("databaseId", run.get("id", "")))
+        if current_run_id and run_id == str(current_run_id):
+            continue
+        # Only a run on the deployed branch can refresh the published tree. If these
+        # fields are absent in a synthetic/older response, keep the record and report it.
+        if run.get("headBranch") not in (None, "main"):
+            continue
+        if run.get("event") not in (None, "schedule", "workflow_dispatch"):
+            continue
+        run_rows.append(run)
+    completed = [r for r in run_rows if r.get("status") == "completed"]
+    if not completed:
+        return {"available": True, "n_runs": len(run_rows), "latest": None}
+    latest = max(completed,
+                 key=lambda r: str(r.get("createdAt", r.get("created_at", ""))))
+    return {"available": True, "n_runs": len(run_rows),
+            "latest": {
+                "status": latest.get("status"),
+                "conclusion": latest.get("conclusion"),
+                "created_at": latest.get("createdAt", latest.get("created_at")),
+                "url": latest.get("url", latest.get("html_url")),
+            }}
+
+
+def _refresh_run_status() -> dict:
+    """Inspect the latest completed scheduled-ingest run when the local `gh` is available.
+
+    If the CLI or API is unavailable, return an explicit unknown state rather than guessing
+    that an absent result means either zero runs or a successful refresh. The active Actions
+    run (if any) is excluded so the scheduled job does not report its own in-progress state.
+    """
+    import os
     import subprocess
     try:
-        out = subprocess.run(["gh", "run", "list", "--workflow", "Nightly ingest + settlement", "--limit", "5"],
-                             capture_output=True, text=True, timeout=25, cwd=str(ROOT))
-        lines = [x for x in out.stdout.strip().splitlines() if x.strip()]
-        return str(len(lines)) if out.returncode == 0 and lines else "unknown (no runs reported or gh unavailable)"
-    except Exception:
-        return "unknown (gh not reachable from this environment)"
+        out = subprocess.run(
+            ["gh", "run", "list", "--workflow", "Nightly ingest + settlement",
+             "--branch", "main", "--limit", "10", "--json",
+             "databaseId,status,conclusion,createdAt,url,headBranch,event"],
+            capture_output=True, text=True, timeout=25, cwd=str(ROOT))
+        if out.returncode != 0:
+            return {"available": False, "n_runs": None, "latest": None,
+                    "detail": "gh run list failed; latest ingest conclusion is unknown"}
+        try:
+            runs = json.loads(out.stdout)
+        except json.JSONDecodeError:
+            return {"available": False, "n_runs": None, "latest": None,
+                    "detail": "gh run list returned invalid JSON; latest ingest conclusion is unknown"}
+        return _summarize_refresh_runs(runs, os.environ.get("GITHUB_RUN_ID", ""))
+    except Exception as exc:
+        return {"available": False, "n_runs": None, "latest": None,
+                "detail": f"gh run list unavailable ({type(exc).__name__}); latest ingest conclusion is unknown"}
 
 
 def _workflow_summary() -> str:
