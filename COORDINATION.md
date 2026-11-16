@@ -3531,3 +3531,11 @@ per the board rules. This session does not regenerate `site/`.
 * → integration session (v2 build label): IR-4 — "+0.77 home-court (fitted, pts)" on `site/index.html` contradicts the pinned HCA in `nba2/v3/model.py`; choose one value and label.
 
 **Not done in this session (honest scope):** no new official data captured (egress blocked; capture happens only on GitHub-hosted runners); no settlement fix (touches the shared v1 chain); no site regeneration beyond the CI-order check (shared output, integration session only); market prior and player props remain BLOCKED (no licensed feed).
+
+### PR & merge result — session `arena/a6d81367-nba2`
+
+* **PR #76** (`arena/a6d81367-nba2` → `main`): https://github.com/wingbangboozle1-lang/NBA2/pull/76
+* **Merged** (merge commit `996e92e`, 2026-11-15T23:57:18Z) with `gh pr merge 76 --merge` after its three PR checks passed on head `a6666bb`: "Verify data, model and site" ✔, "Verify v2 model and site" ✔, "Verify the published tree (zero tolerance for drift)" ✔.
+* Conflict during the rebase onto `main` @ `87d556b` (PR #77): `COORDINATION.md` only (both sides appended). Resolved by keeping both sides in full; nothing discarded.
+* **Pages deploy: NOT YET CONFIRMED.** The `main` runs triggered by the merge (`Publish GitHub Pages`, `pages build and deployment`, `Verify v2 model and site`, `Verify data, model and site`, `Verify the published tree`) remained in `queued` state from 2026-11-15T23:57:20Z through at least 2026-11-16T00:21Z UTC (about 24 minutes) with no run in progress elsewhere. Prior `main` runs of the same workflows completed in 2–6 minutes. This is a runner-queue stall on GitHub's side; no run has failed. The site content of this PR is unchanged relative to the rebuild that the checks just verified (`site/` diff empty in CI order).
+* **Next step for whoever reads this:** confirm `pages build and deployment` completes on `main`; if it does not, re-run it with `gh run rerun` (no code change is needed for this PR).
