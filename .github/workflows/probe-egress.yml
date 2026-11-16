@@ -1,0 +1,108 @@
+# Measure, do not assume, which official endpoints a runner can reach.
+#
+# Three separate sessions concluded "ak-static.cms.nba.com is unreachable" from a *development*
+# sandbox and published that as a limitation. That is true of the sandbox and says nothing
+# about a GitHub-hosted runner. The result has been a repository that cannot answer a simple
+# question about itself — whether its own nightly job can reach the sources it depends on —
+# and a nightly job that has failed five times in a row with the cause unrecorded.
+#
+# This workflow writes `data/raw/egress_probe.json`: one row per official URL, with the HTTP
+# status, the byte count, the elapsed time and the exact error when there is one. It runs on a
+# schedule and on demand, and it commits the result so the answer has a timestamp and a link.
+
+name: Probe official endpoint reachability
+
+on:
+  schedule:
+    - cron: '20 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: egress-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe every endpoint the nightly job depends on
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, gzip, io, json, pathlib, time, urllib.error, urllib.request
+
+          UA = {"User-Agent": "NBA2-research-desk/1.0 (endpoint reachability check)",
+                "Accept": "*/*", "Referer": "https://official.nba.com/"}
+          URLS = [
+            ("injury_index",      "https://official.nba.com/nba-injury-report-2026-27-season/"),
+            ("injury_pdf",        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"),
+            ("scoreboard_cdn",    "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json"),
+            ("scoreboard_stats",  "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=11/16/2026&DayOffset=0"),
+            ("schedule",          "https://www.nba.com/schedule?date=2026-11-16"),
+            ("standings",         "https://www.nba.com/standings"),
+            ("gamebook_pdf",      "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"),
+          ]
+          rows = []
+          for name, url in URLS:
+              t0 = time.time()
+              row = {"name": name, "url": url, "http_status": None, "bytes": None,
+                     "elapsed_ms": None, "ok": False, "error": None, "is_pdf": None}
+              try:
+                  req = urllib.request.Request(url, headers=UA)
+                  with urllib.request.urlopen(req, timeout=25) as r:
+                      raw = r.read()
+                      if r.headers.get("Content-Encoding") == "gzip":
+                          raw = gzip.decompress(raw)
+                      row.update(http_status=r.status, bytes=len(raw), ok=True)
+                      row["is_pdf"] = raw[:4] == b"%PDF"
+              except urllib.error.HTTPError as e:
+                  row.update(http_status=e.code, error=f"HTTP {e.code}")
+              except Exception as e:                       # noqa: BLE001 - the error IS the data
+                  row["error"] = f"{type(e).__name__}: {e}"
+              row["elapsed_ms"] = int((time.time() - t0) * 1000)
+              rows.append(row)
+              print(f"{'OK ' if row['ok'] else 'ERR'} {name:18s} {row['http_status']} "
+                    f"{row['bytes']} bytes {row['elapsed_ms']}ms {row['error'] or ''}")
+
+          doc = {
+            "schema": "nba2.egress-probe.v1",
+            "probed_at_utc": dt.datetime.now(dt.timezone.utc).replace(
+                microsecond=0).isoformat().replace("+00:00", "Z"),
+            "runner": "GitHub-hosted ubuntu-latest",
+            "purpose": ("answers, with a timestamp, which official endpoints the nightly job "
+                        "can actually reach from a runner - replacing the assumption inherited "
+                        "from a development sandbox where all nba.com egress is TLS-reset"),
+            "rows": rows,
+            "summary": {"n": len(rows), "ok": sum(1 for r in rows if r["ok"]),
+                        "unreachable": [r["name"] for r in rows if not r["ok"]]},
+          }
+          p = pathlib.Path("data/raw/egress_probe.json")
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(doc, indent=1) + "\n")
+          print(json.dumps(doc["summary"], indent=1))
+          PY
+
+      - name: Commit the measurement
+        run: |
+          set -uo pipefail
+          git config user.name "nba2-ingest-bot"
+          git config user.email "nba2-ingest-bot@users.noreply.github.com"
+          git add data/raw/egress_probe.json
+          if git diff --cached --quiet; then
+            echo "probe unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "probe(bot): official endpoint reachability from a runner"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

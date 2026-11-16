@@ -284,6 +284,10 @@ def cmd_finals(date: str, expected_game_ids: list[str], out: Path) -> int:
     """0  = ok, or no FINAL games yet (expected pre-tip),
        3  = every official endpoint unreachable (network-level failure),
        4  = endpoints reachable but schema/coverage broken."""
+    if not expected_game_ids:
+        print(f"[finals {date}] no sealed-window game ids for this date — nothing to fetch "
+              f"(the weekly window may not cover it yet); not an error")
+        return 0
     print(f"[finals {date}] expecting {len(expected_game_ids)} sealed-window games")
     snap, url, kind = fetch_finals(date, expected_game_ids)
     if kind == "unreachable":
@@ -331,6 +335,12 @@ def sealed_window_dates() -> list[str]:
             if p.get("date"):
                 dates.add(p["date"])
     return sorted(dates)
+
+
+# A sealed window date with no game ids to look for means the ledger and this module
+# disagree about the window. That is a data defect, not a network failure, and it used to be
+# indistinguishable from one: the scheduled job aborted the whole run on it.
+EXIT_NO_WINDOW_GAMES = 5
 
 
 def window_game_ids_by_date() -> dict[str, list[str]]:
@@ -390,6 +400,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--finals", metavar="DATE", action="append", default=[])
     ap.add_argument("--merge-finals", action="store_true")
     ap.add_argument("--verify-transcript", metavar="PATH")
+    ap.add_argument("--best-effort-finals", action="store_true",
+                    help="record an unreachable official finals endpoint but do not abort the "
+                         "rest of the nightly job; the absence is written to the log and no "
+                         "snapshot is produced")
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
     rc = 0
@@ -400,7 +414,12 @@ def main(argv: list[str] | None = None) -> int:
         for date in args.finals:
             gids = by_date.get(date, [])
             out = Path(args.out) if args.out else RAW / f"finals_{date}.json"
-            rc |= cmd_finals(date, gids, out)
+            one = cmd_finals(date, gids, out)
+            if one == 3 and args.best_effort_finals:
+                print(f"[finals {date}] endpoints unreachable — recorded, continuing "
+                      f"(nothing written, nothing invented)")
+                continue
+            rc |= one
     if args.merge_finals:
         rc |= cmd_merge_finals()
     if args.verify_transcript:

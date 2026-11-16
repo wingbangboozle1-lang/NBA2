@@ -45,16 +45,11 @@
   "margin_mae": 8.267,
   "total_mae": 14.2,
   "winner_hit_rate": 1.0,
-  "e1_winner_hit_rate": 1.0,
-  "e2_winner_hit_rate": 1.0,
   "log_loss_model": 0.2804,
   "log_loss_coin": 0.6931,
   "home_wins_in_graded": 3,
   "p_observed_run_under_model": 0.080177,
-  "p_all_correct_under_model": 0.080177,
-  "expected_hits_under_model": 6.87,
-  "luck_note": "A 9/9 result on 9 games is NOT evidence of skill by itself: the model priced those games as heavy favourites, so the product of its own probabilities is the right yardstick. Compare p_observed_run_under_model with 0.05 before claiming anything, and note the sample is one game day.",
-  "note": "Graded against official finals only. A sealed game with no verified final stays UNGRADED and never counts as a loss. The stamp is the end of the latest graded game day, not the wall clock, so a rebuild reproduces it exactly."
+  "expected_hits_under_model": 6.87
  },
  "graded": [
   {
@@ -76,13 +71,25 @@
    "abs_margin_error": 2.14,
    "abs_total_error": 32.5,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.4891,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    35,
+    22,
+    30,
+    37
+   ],
+   "home_q": [
+    29,
+    29,
+    39,
+    34
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/ind-vs-phi-0022600236",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600237",
@@ -103,13 +110,25 @@
    "abs_margin_error": 3.82,
    "abs_total_error": 21.9,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.2775,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    33,
+    31,
+    40,
+    27
+   ],
+   "home_q": [
+    24,
+    30,
+    26,
+    43
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/lal-vs-phx-0022600237",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600238",
@@ -130,13 +149,25 @@
    "abs_margin_error": 0.57,
    "abs_total_error": 0.1,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.3654,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    21,
+    31,
+    31,
+    22
+   ],
+   "home_q": [
+    22,
+    29,
+    33,
+    29
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/cha-vs-lac-0022600238",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600239",
@@ -157,13 +188,25 @@
    "abs_margin_error": 17.18,
    "abs_total_error": 11.2,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.0707,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    31,
+    27,
+    23,
+    29
+   ],
+   "home_q": [
+    33,
+    22,
+    26,
+    21
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/sas-vs-uta-0022600239",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600240",
@@ -184,13 +227,20 @@
    "abs_margin_error": 22.4,
    "abs_total_error": 3.9,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.2157,
    "log_loss_coin": 0.6931,
+   "away_q": null,
+   "home_q": [
+    42,
+    25,
+    37,
+    27
+   ],
+   "quarter_status": "partial",
    "official_source": "https://www.nba.com/game/dal-vs-bos-0022600240",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
-   "quarter_status": "partial"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600241",
@@ -211,13 +261,27 @@
    "abs_margin_error": 0.41,
    "abs_total_error": 0.1,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.5379,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    23,
+    24,
+    20,
+    28,
+    17
+   ],
+   "home_q": [
+    17,
+    26,
+    31,
+    21,
+    13
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600242",
@@ -238,13 +302,25 @@
    "abs_margin_error": 12.93,
    "abs_total_error": 43.1,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.2063,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    36,
+    37,
+    46,
+    28
+   ],
+   "home_q": [
+    31,
+    23,
+    34,
+    31
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/hou-vs-was-0022600242",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600243",
@@ -265,13 +341,25 @@
    "abs_margin_error": 9.44,
    "abs_total_error": 10.8,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.1809,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    18,
+    37,
+    32,
+    26
+   ],
+   "home_q": [
+    37,
+    16,
+    27,
+    26
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/atl-vs-mil-0022600243",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   },
   {
    "game_id": "0022600244",
@@ -292,13 +380,25 @@
    "abs_margin_error": 5.51,
    "abs_total_error": 4.2,
    "winner_correct": true,
-   "e1_correct": true,
-   "e2_correct": true,
    "log_loss_model": 0.1801,
    "log_loss_coin": 0.6931,
+   "away_q": [
+    32,
+    30,
+    32,
+    31
+   ],
+   "home_q": [
+    24,
+    26,
+    30,
+    23
+   ],
+   "quarter_status": "read",
    "official_source": "https://www.nba.com/game/okc-vs-sac-0022600244",
+   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "quarter_status": "read"
+   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
   }
  ],
  "ungraded": [
@@ -306,151 +406,151 @@
    "game_id": "0022600245",
    "date": "2026-11-16",
    "matchup": "ORL @ BOS",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600246",
    "date": "2026-11-16",
    "matchup": "CHI @ CLE",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600247",
    "date": "2026-11-16",
    "matchup": "MEM @ WAS",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600248",
    "date": "2026-11-16",
    "matchup": "PHI @ BKN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600249",
    "date": "2026-11-16",
    "matchup": "HOU @ MIA",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600250",
    "date": "2026-11-16",
    "matchup": "POR @ MIN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600251",
    "date": "2026-11-16",
    "matchup": "GSW @ NOP",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600252",
    "date": "2026-11-16",
    "matchup": "PHX @ DEN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600253",
    "date": "2026-11-17",
    "matchup": "NYK @ TOR",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600254",
    "date": "2026-11-17",
    "matchup": "POR @ MIN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600255",
    "date": "2026-11-17",
    "matchup": "DET @ SAS",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600256",
    "date": "2026-11-17",
    "matchup": "CHA @ LAL",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600257",
    "date": "2026-11-17",
    "matchup": "UTA @ LAC",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600258",
    "date": "2026-11-18",
    "matchup": "MEM @ CLE",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600259",
    "date": "2026-11-18",
    "matchup": "HOU @ IND",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600260",
    "date": "2026-11-18",
    "matchup": "MIL @ MIA",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600261",
    "date": "2026-11-18",
    "matchup": "PHI @ ORL",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600262",
    "date": "2026-11-18",
    "matchup": "CHI @ BKN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600263",
    "date": "2026-11-18",
    "matchup": "WAS @ TOR",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600264",
    "date": "2026-11-18",
    "matchup": "DET @ NOP",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600265",
    "date": "2026-11-18",
    "matchup": "ATL @ OKC",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600266",
    "date": "2026-11-18",
    "matchup": "BOS @ DEN",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600267",
    "date": "2026-11-18",
    "matchup": "GSW @ DAL",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600268",
    "date": "2026-11-18",
    "matchup": "UTA @ LAL",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   },
   {
    "game_id": "0022600269",
    "date": "2026-11-18",
    "matchup": "PHX @ SAC",
-   "reason": "no verified official final in the committed capture"
+   "reason": "no verified official final is committed for this game yet"
   }
  ],
  "finals_used": [
@@ -509,6 +609,7 @@
    "quarter_status": "read"
   }
  ],
- "settle_rule": "A game is settled only when its official final is in the committed capture AND the gamebook period row was checked against it. Ungraded is not a loss.",
- "sha256_after_settlement": "abb844cc4c11ab999c7d8b03de04094e811650a6d96b25ebf47d2528b6193df9"
+ "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
+ "derived_from": "data/v4/settlement/settled-all.json",
+ "sha256_after_settlement": "dc0bc3c35695fe1eefe7ea90837c9421689c5bc92c85f2701076253d1ebb7a85"
 }

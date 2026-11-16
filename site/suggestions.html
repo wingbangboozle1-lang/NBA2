@@ -498,7 +498,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
       by a distributional assumption is indistinguishable from a bad pick.</li>
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
-</ul><h2>Review register — 2026-11-14 (54 items)</h2>
+</ul><h2>Review register — 2026-11-14 (59 items)</h2>
 <p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
 change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
 below has been applied on the owner's behalf. The machine-readable copy is
@@ -527,6 +527,16 @@ which is what should be edited when a decision is recorded.</p>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 <tr>
+<td>implemented 2026-11-16 by arena/4f780342-nba2</td>
+<td>2</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result</td>
+<td>2</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
 <td>implemented this session</td>
 <td>7</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
@@ -534,6 +544,11 @@ which is what should be edited when a decision is recorded.</p>
 <tr>
 <td>open</td>
 <td>3</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>open — proposal</td>
+<td>1</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 </tbody></table></div><div class="scroll"><table>
@@ -1196,6 +1211,66 @@ which is what should be edited when a decision is recorded.</p>
 <td>None: the market weight is 0 and the blended line equals the model line until a feed exists.</td>
 <td>Accept; the model-side measurement is already in place.</td>
 <td><span class="badge b-ok">applied in this PR</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-56">
+<td>S-56</td>
+<td><b>Stop transcribing official documents; store the rendering and parse it by content type</b></td>
+<td>The 70-row injury transcription published on 2026-11-16 was wrong on six rows, including a real status (Tyson, Jaylon) and five blank statuses that the PDF carried. A transcription is an interpretive step between the official document and the published table, and it fails silently.</td>
+<td>Store the verbatim rendering (nba2/v4/injury_renderings.py) and derive every cell by content type (nba2/v4/injury_parse.py), publishing an &#x27;unread&#x27; count per release. Apply the same pattern to any other document currently transcribed by hand.</td>
+<td>Every published cell traces to a stored string; a mis-read is visible as a non-zero unread count.</td>
+<td>S — done for injuries this session; the pattern is reusable</td>
+<td>The rendering still comes through a converter, so it is not the PDF itself; byte storage is S-57.</td>
+<td>Adopt as the standing rule for every document type.</td>
+<td><span class="badge b-ok">implemented 2026-11-16 by arena/4f780342-nba2</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-57">
+<td>S-57</td>
+<td><b>Run the byte-level archive and the egress probe on a schedule, then delete F-V4-01 if they pass</b></td>
+<td>Every session since 2026-11-14 has published &#x27;PDF not stored&#x27; because a development sandbox cannot reach the CDN. That limitation was inherited across sessions and never re-measured on a runner, so a fixable gap became a permanent-looking one.</td>
+<td>nba2/v4/injury_ingest.py now archives the bytes with a sha256 manifest, and probe-egress.yml records HTTP status and byte counts for seven official endpoints. Both run in refresh.yml. When a run stores both releases, remove F-V4-01 from the flagged list and say so.</td>
+<td>Release PDFs become reviewable from the repository; endpoint reachability becomes a dated fact.</td>
+<td>S — written; needs one scheduled run</td>
+<td>The CDN may still refuse a runner; the manifest records the exact error either way.</td>
+<td>Accept: it is already wired, and its first output settles an open question (Q-43).</td>
+<td><span class="badge b-ok">implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-58">
+<td>S-58</td>
+<td><b>Quote a settled-sample denominator on every performance claim, and never sum overlapping seals</b></td>
+<td>The site could quote 37 settled rows or 9 of 34, and both were arithmetically true because three seals priced overlapping dates. A reader comparing &#x27;37 graded&#x27; with &#x27;14 games played&#x27; has no way to reconcile them.</td>
+<td>Publish n_distinct_games_graded beside n_graded on every surface (done on settle.html), label repeat rows &#x27;counted once&#x27;, and require any headline hit rate to carry the denominator and the Poisson-binomial tail that judges it.</td>
+<td>A reviewer can check the arithmetic row by row, and the headline can no longer double-count.</td>
+<td>S — done for settlement; the rule should apply to the leaderboard too</td>
+<td>None identified; it only reduces a number.</td>
+<td>Adopt as policy for every metric added later.</td>
+<td><span class="badge b-ok">implemented 2026-11-16 by arena/4f780342-nba2</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-59">
+<td>S-59</td>
+<td><b>Make one failing official surface a recorded gap, not an aborted nightly run</b></td>
+<td>The nightly job failed 5 of 5 scheduled runs at the finals step, which skipped the injury archive, the rolling refresh, the gates and the commit. Three of the four official surfaces the brief asks for were therefore never refreshed by CI, and the cause was not recorded anywhere in the repo.</td>
+<td>refresh.yml now runs each surface as its own continue-on-error step, writes data/raw/refresh_verdict.json with each surface&#x27;s outcome, commits the captured evidence, and lets a separate `publish` job rebuild only when all four surfaces captured cleanly.</td>
+<td>Evidence is retained on a bad night; publishing still fails closed.</td>
+<td>M — done this session; needs one scheduled run to confirm</td>
+<td>Two jobs instead of one means two places to read; the verdict file is the single summary.</td>
+<td>Accept; watch the first two scheduled runs.</td>
+<td><span class="badge b-ok">implemented 2026-11-16 by arena/4f780342-nba2 — awaiting first scheduled result</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-60">
+<td>S-60</td>
+<td><b>Settle each game date the morning after, from a gamebook, and extend the pool every night</b></td>
+<td>Settlement is stuck at 11/15 and the three seals stop at 11/18. The 11/16 slate completed tonight and nothing in the repository will grade it until a capture exists for 11/16 finals.</td>
+<td>The per-surface refresh already fetches finals for every arrived date; what it needs is a committed gamebook/quarter source per date and a settlement module that unions finals files by game_id and fails on disagreement (nba2/v4/settlement.py already unions and refuses to average). Add a CI assertion that every date before today has a finals file.</td>
+<td>The stamp advances every morning without a human, and the luck control accumulates a real sample.</td>
+<td>S — the union and the refusal already exist; the assertion is new</td>
+<td>An official final that later changes (a correction) would need an append-only supersede record.</td>
+<td>Accept after the next scheduled run proves the finals step works from a runner.</td>
+<td><span class="badge b-warn">open — proposal</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 </tbody></table></div>

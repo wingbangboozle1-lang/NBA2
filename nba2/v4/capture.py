@@ -113,129 +113,62 @@ UNREAD = {
 
 # --------------------------------------------------------------- 2026-11-16 injury releases
 # Two consecutive releases from the SAME day, so the diff isolates revision drift.
-INJURY_RELEASES = [
-    {
-        "stamp_et": "2026-11-16 09:15 AM ET",
-        "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
-        "retrieved_utc": "2026-11-16T14:41:00Z",
-        "index_checked_utc": "2026-11-16T14:30:00Z",
-        # rows: [date, time_et, matchup, team, player, status, reason, note]
-        "rows": [
-            ["2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls", "Awaka, Tobe", "Out", "Injury/Illness - Disc Irritation", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls", "Robinson, Orlando", "Out", "G League - On Assignment", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls", "Sellers, Jaylin", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls", "Smith, Jalen", "Questionable", "Injury/Illness - Left Finger Sprain", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Chicago Bulls", "Wilson, Caleb", "Out", "Injury/Illness - Right Metacarpal Fracture", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Diop, Khalifa", "Out", "G League - On Assignment", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Merrill, Sam", "Out", "Injury/Illness - Right Elbow Injury Management", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Mobley, Evan", "Out", "Injury/Illness - Left Great Toe Sprain", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Tomlin, Nae'Qwan", "Out", "Injury/Illness - Low Back Stress Reaction", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Tyson, Jaylon", "Questionable", "Injury/Illness - Right Ankle Injury Management", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Udeh, Jr., Ernest", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "07:00", "CHI@CLE", "Cleveland Cavaliers", "Watson, Peyton", "Questionable", "Injury/Illness - Right Abdominal Soreness", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Edey, Zach", "Questionable", "Injury/Illness - Left Ankle Injury Management", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Jackson, GG", "Out", "Injury/Illness - Left Foot Injury", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Jerome, Ty", "Out", "Injury/Illness - Right Hip Soreness", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Pippen Jr., Scotty", "Out", "Injury/Illness - Lumbar Disc Herniation", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Post, Quinten", "Questionable", "Injury/Illness - Concussion Protocol", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Saunders, Richie", "Out", "Injury/Illness - Right Knee Surgery", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Memphis Grizzlies", "Stewart, Isaiah", "Questionable", "Injury/Illness - Illness", ""],
-            ["2026-11-16", "07:00", "MEM@WAS", "Washington Wizards", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-16", "07:00", "ORL@BOS", "Orlando Magic", "Banchero, Paolo", "Out", "Injury/Illness - Right High Ankle Sprain", ""],
-            ["2026-11-16", "07:00", "ORL@BOS", "Orlando Magic", "Isaac, Jonathan", "Out", "Injury/Illness - Left Knee Injury Management", ""],
-            ["2026-11-16", "07:00", "ORL@BOS", "Orlando Magic", "Nelson, Izaiyah", "Out", "Injury/Illness - Left Ankle Injury Recovery", ""],
-            ["2026-11-16", "07:00", "ORL@BOS", "Orlando Magic", "Penda, Noah", "Out", "Injury/Illness - Right Partially Torn Hamstring", ""],
-            ["2026-11-16", "07:00", "ORL@BOS", "Boston Celtics", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-16", "07:30", "HOU@MIA", "Houston Rockets", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-16", "07:30", "HOU@MIA", "Miami Heat", "Goldin, Vladislav", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "07:30", "HOU@MIA", "Miami Heat", "Larsson, Pelle", "Questionable", "Injury/Illness - Illness", ""],
-            ["2026-11-16", "07:30", "HOU@MIA", "Miami Heat", "Thompson, Klay", "Available", "Injury/Illness - Left Ankle Sprain", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Philadelphia 76ers", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Brooklyn Nets", "Bilodeau, Tyler", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Brooklyn Nets", "Jefferson, Joshua", "Out", "G League - On Assignment", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Brooklyn Nets", "Nelson, Grant", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Brooklyn Nets", "Powell, Drake", "Out", "G League - On Assignment", ""],
-            ["2026-11-16", "07:30", "PHI@BKN", "Brooklyn Nets", "Saraf, Ben", "Out", "G League - On Assignment", ""],
-            # The PDF extraction for this block prints only THREE populated cells per row:
-            # | Player | Status | Reason |. The Current Status column simply did not survive
-            # the text conversion for these six rows, and the extracted text is reproduced
-            # verbatim. Whether the middle cell is a status or a reason is therefore NOT
-            # determined here: both columns are published blank and flagged F-V4-06, rather
-            # than guessed from position or carried over from another release.
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Butler III, Jimmy", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Curry, Stephen", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Moody, Moses", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Porzingis, Kristaps", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Santos, Gui", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "Golden State Warriors", "Williams, Brandon", "", "", "F-V4-06 extraction prints only Player | X | Y; X/Y not assigned to a column"],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Dia, Malik", "Questionable", "G League - Two-Way", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Mathurin, Bennedict", "Out", "Injury/Illness - Left Plantar Fasciitis", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "McGowens, Bryce", "Out", "Injury/Illness - Left Elbow Infection", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Murphy III, Trey", "Out", "Injury/Illness - Bilateral Patellar Tendinopathy", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Murray, Dejounte", "Out", "Injury/Illness - Left Ankle Sprain", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Pierre Jr., Jaron", "Questionable", "G League - Two-Way", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Reese, Julian", "Questionable", "G League - Two-Way", ""],
-            ["2026-11-16", "08:00", "GSW@NOP", "New Orleans Pelicans", "Watford, Trendon", "Out", "Injury/Illness - Right Ankle Sprain", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Portland Trail Blazers", "Krejci, Vit", "Out", "Injury/Illness - Left Ankle Fracture", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Portland Trail Blazers", "Morant, Ja", "Out", "Injury/Illness - Left Hamstring Strain", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Portland Trail Blazers", "Sharpe, Shaedon", "Out", "Injury/Illness - Right Knee Surgery", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Portland Trail Blazers", "Youngblood, Chris", "Out", "Injury/Illness - Right Heel Contusion / Bone Bruise", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Minnesota Timberwolves", "Beringer, Joan", "Available", "Injury/Illness - Face Mask", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Minnesota Timberwolves", "Clark, Jaylen", "Out", "Injury/Illness - Right Hamstring Strain", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Minnesota Timberwolves", "DiVincenzo, Donte", "Out", "Injury/Illness - Right Achilles Tendon Repair / Surgery", ""],
-            ["2026-11-16", "08:00", "POR@MIN", "Minnesota Timberwolves", "Edwards, Anthony", "Out", "Injury/Illness - Right Knee Arthroscopy", ""],
-            ["2026-11-16", "09:00", "PHX@DEN", "Phoenix Suns", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-16", "09:00", "PHX@DEN", "Denver Nuggets", "Holmes II, DaRon", "Out", "G League - On Assignment", ""],
-            ["2026-11-16", "09:00", "PHX@DEN", "Denver Nuggets", "Nembhard, Ryan", "Out", "G League - Two-Way", ""],
-            ["2026-11-16", "09:00", "PHX@DEN", "Denver Nuggets", "Strawther, Julian", "Out", "Injury/Illness - Left Knee Sprain", ""],
-            ["2026-11-16", "09:00", "PHX@DEN", "Denver Nuggets", "Whitmore, Cam", "Out", "G League - Two-Way", ""],
-            ["2026-11-17", "07:30", "NYK@TOR", "New York Knicks", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "07:30", "NYK@TOR", "Toronto Raptors", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "08:00", "DET@SAS", "Detroit Pistons", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "08:00", "DET@SAS", "San Antonio Spurs", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "10:30", "UTA@LAC", "Utah Jazz", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "10:30", "UTA@LAC", "LA Clippers", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "11:00", "CHA@LAL", "Charlotte Hornets", "", "", "NOT YET SUBMITTED", ""],
-            ["2026-11-17", "11:00", "CHA@LAL", "Los Angeles Lakers", "", "", "NOT YET SUBMITTED", ""],
-        ],
-        # PDF layout artefacts observed in this release. Recorded, never "corrected".
+# The releases read this session live in ``injury_renderings`` as verbatim text and are
+# parsed by ``injury_parse``. This name is kept because older call sites (the model's
+# provenance block, the gate table, the projection banner) ask for "the newest release", and
+# it must always answer with the newest one actually stored - not with a transcription
+# frozen on the day it was typed. The previous build's hard-coded 70-row transcription is
+# gone: it recorded ``Tyson, Jaylon | Questionable`` where the PDF prints Doubtful, and a
+# value that cannot be re-derived from the source does not belong in a module that claims to
+# be data-not-code.
+from . import injury_parse as _PA            # noqa: E402  (late import: avoids a cycle)
+from . import injury_renderings as _RR       # noqa: E402
+
+
+def _newest_release() -> dict:
+    rel = _RR.newest()
+    parsed = _PA.parse_render(rel["text"])
+    rows = [[r["date"] or "", r["time_et"] or "", r["matchup"] or "", r["team"] or "",
+             r["player"] or "", r["status"] or "", r["reason"] or "", r["note"]]
+            for r in parsed["rows"]]
+    return {
+        "stamp_et": rel["stamp_et"],
+        "url": rel["url"],
+        "retrieved_utc": rel["retrieved_utc"],
+        "index_checked_utc": rel["index_checked_utc"],
+        "method": rel["method"],
+        "rows": rows,
+        "counts": parsed["counts"],
+        "unread": parsed["unread"],
+        "text_sha256": _RR.text_sha(rel["text"]),
         "layout_notes": [
-            ("F-V4-05",
-             "Page-continuation rows print with empty date / time / matchup / team cells "
-             "(e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; "
-             "Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). "
-             "They are attributed by table position to the block in progress and that "
-             "attribution is stated on the row it affects."),
             ("F-V4-06",
-             "Six GSW@NOP rows print with only three populated cells; the page-fetch text "
-             "drops the Current Status column, so 'Curry, Stephen' reads "
-             "'| Injury/Illness - Right Oblique Tear |'. The status is therefore NOT "
-             "published for those rows - blank and flagged rather than inferred from the "
-             "reason. This is exactly the class of error the blank-and-flag rule exists for."),
-            ("F-V4-07",
-             "The POR@MIN block prints both clubs twice: once with a full submission "
-             "(Portland, 08:00) and once as 'NOT YET SUBMITTED' at the end of the PDF for "
-             "the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept "
-             "separately and the diff keys on (date, matchup, team, player)."),
+             "GSW@NOP rows keep only Player | Status | Reason, or Player | Reason, depending on "
+             "where the page broke. The parser resolves the status from the end of the row and "
+             "leaves it genuinely blank where it is absent; it never assumes the middle cell is "
+             "a status."),
+            ("F-V4-05",
+             "Page-continuation rows print with empty date / time / matchup / team cells and are "
+             "attributed to the block in progress; the attribution is written on the row."),
+            ("F-V4-10",
+             "The 13:00 PM release was returned by the fetch tool in two chunks; the junction "
+             "fell inside the PHX@DEN block and the join basis is recorded on the release."),
         ],
-    },
-]
+    }
+
+
+INJURY_RELEASES = [_newest_release()]
 
 # A second, consecutive release from the same day. Row-for-row it prints the same 70 rows
 # as the 09:15 AM release. Rather than pretend to a second independent transcription, the
 # relationship is declared here and the claim is checked by the diff (0 changes) and by the
 # linked PDF. Flagged F-V4-09 so a reviewer can re-derive it from the source in minutes.
-INJURY_RELEASE_0930 = {
-    "stamp_et": "2026-11-16 09:30 AM ET",
-    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
-    "retrieved_utc": "2026-11-16T14:52:00Z",
-    "index_checked_utc": "2026-11-16T14:52:00Z",
-    "identical_to": (0, "11/16/26 09:15 AM ET"),   # (index into INJURY_RELEASES, stamp)
-    "basis": ("The 09:30 AM release was read in full at retrieval and compared row by row "
-              "against the 09:15 AM transcription: same 70 rows, same statuses, same "
-              "reasons, same NOT YET SUBMITTED placeholders. Both PDFs are linked so the "
-              "comparison is re-derivable from the source (F-V4-09)."),
-}
+# The 2026-11-16 09:15 AM transcription that an earlier session committed, preserved byte
+# for byte (data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json) so
+# the provenance comparison in injury_diff.cross_session_check tests THEIR record rather than
+# ours. It is NOT a live release and is not counted in any diff. The earlier build also
+# declared the 09:30 AM release "identical row-for-row" to this one without reading it; that
+# declaration is withdrawn - both releases are now read in full (F-V4-09).
 
 # --------------------------------------------------------------- 2026-11-16 schedule (T+0..T+3)
 # game_id, date, away, home, time_et, arena, city, state

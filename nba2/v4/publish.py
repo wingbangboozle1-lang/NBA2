@@ -31,6 +31,7 @@ import re
 from pathlib import Path
 
 from . import capture as C
+from . import injury_renderings as RR
 from . import model as M
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -123,11 +124,13 @@ have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 
 
 # (id, severity, (page, fragment, label, official source URL), what is wrong, what is published)
 V4_FLAGS = [
-    ("F-V4-01", "gap", ("v4-injuries.html", "binary-not-stored", "Injury releases", C.INJURY_RELEASES[0]["url"]),
-     "The injury releases are stored as transcribed text, not as the original PDF bytes: bash "
-     "egress to ak-static.cms.nba.com returns HTTP 000, and the page-fetch tool returns text.",
-     "Official URL, revision stamp, this session's retrieval stamp and a sha256 of the "
-     "transcribed text. Not the original file hash."),
+    ("F-V4-01", "gap", ("v4-injuries.html", "bytes", "Injury releases", RR.newest()["url"]),
+     "The original injury PDF bytes are not in the repository. Bash egress from the development "
+     "sandbox to ak-static.cms.nba.com is TLS-reset and the page-fetch tool returns text, so a "
+     "build cannot download the file; nba2/v4/injury_ingest.py archives it from a GitHub runner "
+     "and records the outcome per file in data/v4/injury/binary_manifest.json.",
+     "Official URL, revision stamp, retrieval stamp, index-check stamp and a sha256 over the "
+     "stored RENDERING of the release. Not the original file hash, and not a transcription."),
     ("F-V4-02", "gap", ("v4-verify.html", "", "This page", C.SOURCE_PAGES["schedule"]["url"]),
      "Per-player game logs for the 11/15 and 11/16 games were not transcribed; 9 games x ~26 "
      "rows was outside this session's budget.",
@@ -140,14 +143,28 @@ V4_FLAGS = [
      "No licensed odds feed: there is no market price, so no edge, no stake, no Kelly "
      "fraction and no CLV can be computed.",
      "The bet surface publishes 0 rows and 29 explicit refusals. Stakes are held at 0.00."),
-    ("F-V4-05", "gap", ("v4-injuries.html", "layout", "Layout artefacts", C.INJURY_RELEASES[0]["url"]),
-     "Continuation rows in the official PDF lose their date, time and team on page breaks.",
-     "Those rows are keyed off the preceding full row and the reconstruction is flagged; they "
-     "are never assigned a team by inference from the player's usual club."),
-    ("F-V4-06", "blocking", ("v4-injuries.html", "layout", "Layout artefacts", C.SOURCE_PAGES["injury_index"]["url"]),
-     "Six GSW@NOP rows lose the status column in extraction, so their status cannot be read.",
-     "Status left blank and counted separately, with F-V4-06 printed in the cell. Never "
-     "back-filled, never counted as Available."),
+    ("F-V4-05", "gap", ("v4-injuries.html", "layout", "Layout artefacts", RR.newest()["url"]),
+     "Continuation rows in the official PDF rendering lose their date, time and team on page "
+     "breaks, and the number of leading empty cells varies by block.",
+     "Those rows are attributed to the block in progress and the attribution is written onto "
+     "the row. No team is ever assigned by inference from a player's usual club."),
+    ("F-V4-06", "resolved", ("v4-injuries.html", "layout", "Layout artefacts", RR.RENDERS[0]["url"]),
+     "FIXED 2026-11-16. The previous build published a blank status for six GSW@NOP rows and "
+     "blamed the extraction. The extraction was not the problem: the parser addressed the status "
+     "column by POSITION, and those rows carry fewer leading cells. Re-read by content type, the "
+     "09:30 AM PDF yields Out/Out/Out/Questionable/Out for Curry, Moody, Porzingis, Santos and "
+     "Williams, and the 09:15 transcription also recorded Doubtful as Questionable for Tyson, "
+     "Jaylon.",
+     "Every one of those cells is now read and published. The parser reports zero unread rows on "
+     "both stored releases, and residue risk (a future release with a shape it cannot type) is "
+     "reported as a count rather than silently dropped."),
+    ("F-V4-10", "gap", ("v4-injuries.html", "releases", "Release diff", RR.newest()["url"]),
+     "The 01:00 PM release was returned by the page-fetch tool in two chunks and the junction "
+     "fell inside the PHX@DEN block.",
+     "The join basis is recorded on the release: the resumed chunk re-prints the row prefix, the "
+     "joined row has the same cell shape as its block, and the same five Denver rows were read "
+     "single-chunked from the 09:30 AM release and match row for row. A reviewer can check both "
+     "PDFs."),
     ("F-V4-07", "gap", ("v4-injuries.html", "cross-day", "Cross-day diff", C.INJURY_RELEASES[0]["url"]),
      "POR@MIN appears under two different dates in the same release, so a date-only key would "
      "merge two distinct filings.",
@@ -157,10 +174,13 @@ V4_FLAGS = [
      "minutes, and no matched before/after pair of games has been captured.",
      "Status counts only, with production impact explicitly blank and flagged. Minutes shares "
      "and replacement shares are not invented."),
-    ("F-V4-09", "gap", ("v4-injuries.html", "releases", "Release diff", C.INJURY_RELEASE_0930["url"]),
-     "The 09:30 AM release is identical row-for-row to the 09:15 AM release.",
-     "Declared with identical_to and a basis, so it is not counted as a change and does not "
-     "inflate the diff ledger."),
+    ("F-V4-09", "resolved", ("v4-injuries.html", "cross-session", "Provenance check", RR.RENDERS[0]["url"]),
+     "FIXED 2026-11-16. The previous build declared the 09:30 AM release 'identical row-for-row "
+     "to the 09:15 AM release' without reading it, so the test guarding it compared a hard-coded "
+     "string with itself and published '0 status changes' as a finding.",
+     "Both releases are now read and stored, the diff between them is computed, and the earlier "
+     "session's 70-row transcription is retained as *_superseded.json so the comparison is "
+     "against their record rather than against our own."),
 ]
 
 
@@ -433,44 +453,61 @@ HTML, so the wall cannot be crossed by editing a template.</p>
 
 # ----------------------------------------------------------- result feed & settlement
 def page_settle(res: dict, settle_doc: dict | None) -> str:
-    fin = C.finals_2026_11_15()
+    """The result feed and the settlement stamp for **every** sealed ledger.
+
+    The page publishes the distinct-game view first, because the seals overlap: the two v1
+    seals re-priced the same 11/14-11/15 games on consecutive days, and the v3 seal priced
+    11/15 again. Presenting 37 graded rows as a 37-game sample would be a three-fold
+    overstatement, so both numbers are shown and the difference is named.
+    """
+    fin = settle_doc["finals_used"] if settle_doc else []
     rows = []
-    for g in sorted(fin, key=lambda g: g["game_id"]):
-        def qs(q, status):
-            if q is None:
-                return f"<td>{blank('F-V4-10 period row not transcribed')}</td>"
-            return f"<td class='n'>{' · '.join(str(x) for x in q)}</td>"
-        qflag = badge("verified", "ok") if g["quarter_status"] == "read" else badge("unverified", "warn")
+    for g in sorted(fin, key=lambda g: (g["date"], g["game_id"])):
+        def qs(q):
+            if not q:
+                return f"<td>{blank('period row not captured for this club (see flag)')}</td>"
+            return f"<td class='n'>{' · '.join(str(x) for x in q)} = {sum(q)}</td>"
+        qflag = (badge("verified", "ok") if str(g.get("quarter_status", "")).startswith("read")
+                 else badge("unverified", "warn"))
         rows.append(
             "<tr>"
             f"<td>{esc(g['date'])}</td>"
             f"<td>{esc(g['away'])} @ {esc(g['home'])}</td>"
             f"<td>{link(g['final_source_url'], g['game_id'], 'official game page')}</td>"
             f"<td class='n'>{g['away_pts']}</td><td class='n'>{g['home_pts']}</td>"
-            f"<td class='n'>{g['home_margin']:+d}</td><td class='n'>{g['total_pts']}</td>"
-            f"{qs(g['away_q'], g['quarter_status'])}{qs(g['home_q'], g['quarter_status'])}"
+            f"<td class='n'>{g['home_pts'] - g['away_pts']:+d}</td>"
+            f"<td class='n'>{g['home_pts'] + g['away_pts']}</td>"
+            f"{qs(g['away_q'])}{qs(g['home_q'])}"
             f"<td>{qflag}</td>"
-            f"<td>{link(g['gamebook_url'], 'book', 'official gamebook PDF')}</td></tr>")
-    stamp_html = "<p>No settlement stamp: the seal has not been graded.</p>"
-    if settle_doc:
-        s = settle_doc["settlement"]
-        stamp_html = f"""
-<div class="note"><b>Settlement stamp {esc(s['settled_at_utc'])}</b> — sealed
-<code>{esc(settle_doc['seal_sha256'][:16])}</code> verified
-{badge('PRE-TIP HASH VERIFIED', 'ok') if settle_doc['seal_verified'] else badge('HASH BROKEN', 'bad')};
-<b>{s['n_graded']} of {s['n_sealed']}</b> sealed rows graded against official finals,
-{s['n_ungraded']} ungraded (not losses). Margin MAE <b>{s['margin_mae']}</b>,
-total MAE <b>{s['total_mae']}</b>, winner hit rate <b>{s['winner_hit_rate']}</b>.
-Log-loss <b>{s['log_loss_model']}</b> vs coin-flip <b>{s['log_loss_coin']}</b>.</div>
-<p style="color:var(--warn)"><b>Read the luck control before the hit rate.</b> Nine correct
-winners out of nine looks like skill and is not yet distinguishable from it: under the model's
-own probabilities the chance of that run is
-<b>{s['p_observed_run_under_model']}</b> and the model expected
-<b>{s['expected_hits_under_model']}</b> correct. One game day of heavy favourites is not a
-measurement. The stamp stays visible so a reader can watch the sample grow.</p>"""
+            f"<td>{link(g['gamebook_url'], 'book', 'official gamebook PDF') if g.get('gamebook_url') else blank('no gamebook URL captured')}</td></tr>")
+
+    if not settle_doc:
+        return page("Result feed &amp; settlement", "settle.html",
+                    "<p>No settlement was produced.</p>",
+                    "The official per-game result feed and the sealed-ledger settlement.")
+
+    s = settle_doc["settlement"]
+    led_rows = []
+    for l in settle_doc["ledgers"]:
+        led_rows.append(
+            "<tr>"
+            f"<td><code>{esc(l['ledger'])}</code></td>"
+            f"<td>{esc(str(l['seal_window']['start']))} → {esc(str(l['seal_window']['end']))}</td>"
+            f"<td>{esc(l['seal_sealed_at_utc'])}</td>"
+            f"<td class='n'>{l['n_sealed']}</td><td class='n'>{l['n_graded']}</td>"
+            f"<td class='n'>{l['n_ungraded']}</td>"
+            f"<td class='n'>{l['winner_hit_rate'] if l['winner_hit_rate'] is not None else '—'}</td>"
+            f"<td class='n'>{l['margin_mae'] if l['margin_mae'] is not None else '—'}</td>"
+            f"<td>{badge('VERIFIED', 'ok') if l['seal_verified'] else badge('BROKEN', 'bad')}</td>"
+            f"<td><code>{esc(l['seal_sha256'][:12])}</code></td>"
+            f"<td>{link(_gh(l['ledger']), 'seal')}</td></tr>")
+
     graded_rows = []
-    if settle_doc:
-        for g in settle_doc["graded"]:
+    seen = set()
+    for l in settle_doc["ledgers"]:
+        for g in l["graded"]:
+            dup = g["game_id"] in seen
+            seen.add(g["game_id"])
             graded_rows.append(
                 "<tr>"
                 f"<td>{esc(g['date'])}</td><td>{esc(g['matchup'])}</td>"
@@ -481,45 +518,93 @@ measurement. The stamp stays visible so a reader can watch the sample grow.</p>"
                 f"<td class='n'>{g['official_total']}</td>"
                 f"<td class='n'>{g['total_error']:+.2f}</td>"
                 f"<td>{badge('hit', 'ok') if g['winner_correct'] else badge('miss', 'bad')}</td>"
+                f"<td><code>{esc(Path(l['ledger']).name)}</code></td>"
+                f"<td>{badge('counted once', 'info') if dup else badge('distinct game', 'ok')}</td>"
                 f"<td>{link(g['official_source'], 'GAME')}</td></tr>")
+
     ungraded_rows = []
-    if settle_doc:
-        for u in settle_doc["ungraded"]:
+    for l in settle_doc["ledgers"]:
+        for u in l["ungraded"]:
             ungraded_rows.append(
                 "<tr>"
+                f"<td><code>{esc(Path(l['ledger']).name)}</code></td>"
                 f"<td>{esc(u['date'])}</td><td>{esc(u['matchup'])}</td>"
                 f"<td>{esc(u['game_id'])}</td>"
                 f"<td>{badge('UNGRADED', 'info')}</td><td>{esc(u['reason'])}</td>"
                 f"<td>{link(C.SOURCE_PAGES['schedule']['url'], 'SCHED')}</td></tr>")
+
+    prov_rows = [
+        "<tr>"
+        f"<td><code>{esc(p['file'])}</code></td><td>{esc(p['date'])}</td>"
+        f"<td>{esc(p.get('retrieved_utc') or '—')}</td><td class='n'>{p['n_games']}</td>"
+        f"<td>{link(p.get('source_page') or C.SOURCE_PAGES['schedule']['url'], 'source')}</td>"
+        f"<td>{esc((p.get('method') or '')[:160])}</td></tr>"
+        for p in settle_doc["finals_provenance"]]
+
+    luck = (f"""<p style="color:var(--warn)"><b>Read this before the hit rate.</b>
+{s['hits_distinct']} of {s['n_distinct_games_graded']} distinct graded games picked the right
+winner, against <b>{s['expected_distinct_hits']}</b> expected under the seals' own
+probabilities. The Poisson-binomial chance of doing at least that well by luck is
+<b>{s['p_at_least_observed_hits']}</b>. That is below 0.05 — the run is <i>just</i> outside the
+noise band, on fourteen games, and it is a single-seal-dominated sample. It is not yet a
+measured edge, and nothing is staked on it: see the
+<a href="bet.html">bet surface</a>, which publishes zero rows by gate.</p>""")
+
+    warn = ""
+    if s["n_duplicate_gradings"]:
+        warn = f"""<div class="note"><b>{s['n_duplicate_gradings']} gradings are repeats.</b>
+Three seals priced overlapping game dates: <code>sealed-2026-11-13</code> and
+<code>sealed-2026-11-14</code> both cover 11/14-11/16, and <code>sealed-2026-11-15</code> covers
+11/15-11/18. Summing {s['n_graded']} graded rows would describe a
+<b>{s['n_graded']}-game</b> sample that does not exist. The distinct-game figures are
+{s['n_distinct_games_graded']} games and are the ones quoted everywhere else on this site.
+Every repeat is labelled <i>counted once</i> in the table below so the arithmetic can be
+checked row by row.</div>"""
+
     body = f"""
+<div class="note"><b>Settlement stamp {esc(s['settled_at_utc'])}</b> — the end of the latest
+graded game day, so a rebuild reproduces it exactly.
+<b>{s['n_graded']} of {s['n_sealed']}</b> sealed rows graded across
+<b>{s['n_ledgers']}</b> ledgers, <b>{s['n_ungraded']}</b> ungraded (ungraded is never a loss).
+All three pre-tip digests re-verified before grading:
+{badge('ALL SEALS VERIFIED', 'ok') if s['seal_verified_all'] else badge('A SEAL IS BROKEN', 'bad')}.</div>
+{warn}
+{luck}
+<h2 id="stamp">The settlement stamp, per seal</h2>
+{table(['Seal file', 'Window', 'Sealed at (UTC)', 'Sealed', 'Graded', 'Ungraded',
+        'Winner hit', 'Margin MAE', 'Digest', 'SHA-256', 'Src'], led_rows,
+       caption="One row per sealed ledger. Every digest is recomputed from the picks before any grading runs.")}
+<h2 id="feed">Official per-game result feed</h2>
 <div class="note"><b>One row per game: date, teams, final score, quarter scores.</b> Every
-final was read from the game's official page and cross-read against its official gamebook.
-A quarter cell is only filled when that club's period row was actually transcribed and summed
-to the final; otherwise it is blank and flagged. Nothing here is back-solved from the final —
-a split that adds up because it was constructed to add up is not evidence.</div>
+final is from the game's official page and cross-read against its official gamebook. A quarter
+cell is printed only when that club's period row was captured and summed to the final; the sum
+is shown beside the split so the check is visible rather than asserted. Nothing is back-solved
+from the final.</div>
 {table(['Date', 'Teams', 'Game', 'Away', 'Home', 'Margin', 'Total', 'Away quarters',
         'Home quarters', 'Quarters', 'Book'], rows,
-       caption="Official finals of 2026-11-15. Margin is home minus away.")}
-{stamp_html}
-<h2>What the stamp is grading</h2>
-{table(['Date', 'Matchup', 'Consensus', 'Official', 'Margin error', 'Proj total',
-        'Official total', 'Total error', 'Winner', 'Src'], graded_rows,
+       caption="Every official final committed to the repository, 11/14 and 11/15.")}
+<h2 id="finals-provenance">Where the finals came from</h2>
+{table(['File', 'Game date', 'Retrieved (UTC)', 'Games', 'Source page', 'Method'], prov_rows,
+       caption="Each finals file carries its own retrieval stamp; none is inferred from another.")}
+<h2 id="graded">Every graded row</h2>
+{table(['Date', 'Matchup', 'Sealed margin', 'Official', 'Error', 'Sealed total', 'Official',
+        'Error', 'Winner', 'Seal', 'Sample', 'Src'], graded_rows,
        caption="Only sealed rows with a verified official final appear here.")}
-<h2>What is not graded, and why</h2>
-{table(['Date', 'Matchup', 'Game', 'State', 'Reason', 'Src'], ungraded_rows,
+<h2 id="ungraded">What is not graded, and why</h2>
+{table(['Seal', 'Date', 'Matchup', 'Game', 'State', 'Reason', 'Src'], ungraded_rows,
        caption="Ungraded is not a loss. A sealed game with no official final has no result.")}
-<h2>The seal itself</h2>
-<p>The pre-tip hash of the sealed ledger is re-verified before any grading runs; if it did not
-match, this page would not render a stamp at all. The seal file is never rewritten; the
-settlement is written beside it. Verify with
-<code>python -m nba2.v4.settlement</code> → <code>verify_settlement()</code>.</p>
+<h2 id="rule">The rule this page follows</h2>
+<p>{esc(settle_doc['settle_rule'])}</p>
+<p>{esc(settle_doc['luck_rule'])}</p>
+<p>The seal files are never rewritten; the settlement is written beside them. Re-derive with
+<code>python -m nba2.v4.settlement</code>, which prints each seal's recomputed digest and the
+settlement's own digest.</p>
 """
     return page("Result feed &amp; settlement", "settle.html", body,
-                "The official per-game result feed with quarter-score provenance, and the "
-                "sealed ledger's settlement stamp against it.")
+                "The official per-game result feed with quarter-score provenance, and every "
+                "sealed ledger's settlement, graded against verified official finals only.")
 
 
-# ------------------------------------------------------------------ injury releases
 def page_injuries(doc: dict) -> str:
     lg = doc["ledger"]
     rel_rows = []
@@ -530,86 +615,121 @@ def page_injuries(doc: dict) -> str:
             f"<td>{esc(r['retrieved_at_utc'])}</td>"
             f"<td>{esc(r['index_checked_utc'] or '—')}</td>"
             f"<td class='n'>{r['rows']}</td>"
+            f"<td class='n'>{r['rows_with_status']}</td>"
+            f"<td class='n'>{r['placeholders']}</td>"
+            f"<td class='n'>{r['unread']}</td>"
             f"<td><code>{esc(r['content_sha256'][:16])}</code></td>"
-            f"<td>{badge('NOT stored (F-V4-01)', 'warn') if not r['binary_stored'] else badge('stored', 'ok')}</td>"
             f"<td>{link(r['url'], 'PDF')}</td></tr>")
-    diff_html = "<p>Only one release is stored, so there is no consecutive diff yet.</p>"
-    if lg["diffs"]:
-        d = lg["diffs"][0]
+
+    summary_rows, detail_rows = [], []
+    for d in lg["diffs"]:
         c = d["counts"]
-        ch_rows = [
+        summary_rows.append(
             "<tr>"
             f"<td>{esc(d['from']['stamp_et'])} ({d['from']['rows']} rows)</td>"
             f"<td>{esc(d['to']['stamp_et'])} ({d['to']['rows']} rows)</td>"
-            f"<td class='n'>{c['status_changed']}</td><td class='n'>{c['placeholder_resolved']}</td>"
-            f"<td class='n'>{c['reason_changed_only']}</td><td class='n'>{c['added']}</td>"
-            f"<td class='n'>{c['removed']}</td><td class='n'>{c['still_placeholder']}</td>"
-            f"<td>{link(d['to']['url'], 'PDF')}</td></tr>"]
-        detail = d["status_changes"] or d["reason_changes"] or []
-        detail_rows = [
-            "<tr>"
-            f"<td>{esc(k[0])}</td><td>{esc(k[2])}</td><td>{esc(k[1])}</td><td>{esc(k[3])}</td>"
-            f"<td>{esc(x.get('from') or '—')} → {esc(x.get('to') or '—')}</td>"
-            f"<td>{link(d['to']['url'], 'PDF')}</td></tr>"
-            for x in detail for k in [x["key"]]]
-        diff_html = f"""
-<p>Diff of the two stored releases, matched on <code>{esc(', '.join(d['match_key']))}</code>.</p>
-{table(['From', 'To', 'Status changed', 'Placeholder resolved', 'Reason only', 'Added',
-        'Removed', 'Still placeholder', 'Src'], ch_rows)}
-<div class="note"><b>Zero changes between 09:15 and 09:30 is a real finding, and it is
-checkable in under a minute.</b> Both PDFs are linked above; the 09:30 file is declared in
-<code>nba2/v4/capture.py</code> as identical to the 09:15 transcription (F-V4-09) rather than
-silently duplicated. The machinery matters when the releases do differ — and in this league
-they differ a lot: the morning filing window is when teams submit, so a same-day night-to-morning
-pair is the one that isolates true revision drift.</div>
-{table(['Date', 'Matchup', 'Team', 'Player', 'Change', 'Src'], detail_rows,
-       caption="Every status or reason change between the two stored releases.") if detail_rows else '<p>No status or reason changes.</p>'}
-"""
-    cd = doc.get("cross_day_comparison") or {}
-    cd_html = "<p>No cross-day pair available.</p>"
-    if cd.get("available"):
-        c = cd["diff"]["counts"]
-        cd_rows = [
-            "<tr>"
-            f"<td>{esc(cd['diff']['from']['stamp_et'])}</td>"
-            f"<td>{esc(cd['diff']['to']['stamp_et'])}</td>"
-            f"<td class='n'>{c['status_changed']}</td><td class='n'>{c['added']}</td>"
-            f"<td class='n'>{c['removed']}</td><td class='n'>{c['reason_changed_only']}</td>"
-            f"<td>{link(cd['diff']['to']['url'], 'PDF')}</td></tr>"]
-        cd_html = f"""
-<p>For completeness, the same diff machine run across a day boundary, from the 11/15 06:15 PM
-release already committed to this session's 11/16 09:15 AM release. This one mixes genuine
-injury news with the league's filing windows, so a large added/removed count is expected and is
-<b>not</b> evidence of instability in the source.</p>
-{table(['From', 'To', 'Status changed', 'Added', 'Removed', 'Reason only', 'Src'], cd_rows)}
-"""
-    notes = []
-    for r in C.INJURY_RELEASES[0]["layout_notes"]:
-        notes.append(f"<tr><td>{esc(r[0])}</td><td>{esc(r[1])}</td>"
-                     f"<td>{link(C.INJURY_RELEASES[0]['url'], 'PDF')}</td></tr>")
+            f"<td class='n'>{c['status_changed']}</td>"
+            f"<td class='n'>{c['reason_changed_only']}</td>"
+            f"<td class='n'>{c['added']}</td><td class='n'>{c['removed']}</td>"
+            f"<td class='n'>{c['placeholder_resolved']}</td>"
+            f"<td class='n'>{c['still_placeholder']}</td>"
+            f"<td class='n'>{c['became_unread']}</td>"
+            f"<td>{link(d['to']['url'], 'PDF')}</td></tr>")
+        for x in d["status_changes"]:
+            k = x["key"]
+            detail_rows.append(
+                "<tr>"
+                f"<td>{esc(d['from']['stamp_et'])} → {esc(d['to']['stamp_et'])}</td>"
+                f"<td>{esc(k[0])}</td><td>{esc(k[1])}</td><td>{esc(k[2])}</td>"
+                f"<td>{esc(k[3])}</td>"
+                f"<td>{esc(x['from'] or 'blank')} → {esc(x['to'] or 'blank')}</td>"
+                f"<td>{link(d['to']['url'], 'PDF')}</td></tr>")
+        for x in d["became_unread"]:
+            k = x["key"]
+            detail_rows.append(
+                "<tr>"
+                f"<td>{esc(d['from']['stamp_et'])} → {esc(d['to']['stamp_et'])}</td>"
+                f"<td>{esc(k[0])}</td><td>{esc(k[1])}</td><td>{esc(k[2])}</td>"
+                f"<td>{esc(k[3])}</td>"
+                f"<td>{esc(x['from'] or '—')} → blank (status unread in the newer release)</td>"
+                f"<td>{link(d['to']['url'], 'PDF')}</td></tr>")
+
+    cs = doc.get("cross_session_check") or {}
+    cs_html = "<p>No comparison available.</p>"
+    if cs.get("available"):
+        c = cs["diff"]["counts"]
+        cs_rows = []
+        for x in cs["diff"]["status_changes"]:
+            k = x["key"]
+            cs_rows.append(
+                "<tr>"
+                f"<td>{esc(k[0])}</td><td>{esc(k[1])}</td><td>{esc(k[2])}</td>"
+                f"<td>{esc(k[3])}</td>"
+                f"<td>{esc(x['from'] or 'blank')} → {esc(x['to'] or 'blank')}</td>"
+                f"<td>{link(cs['diff']['from']['url'], 'earlier PDF')} · "
+                f"{link(cs['diff']['to']['url'], 'this PDF')}</td></tr>")
+        cs_html = f"""
+<p>This session's reading of the <b>09:30 AM</b> release against the <b>09:15 AM</b>
+transcription committed by an earlier session. It is a provenance check on our own record,
+not a claim about the league: a difference here is either a real revision inside those fifteen
+minutes or a transcription error in the earlier capture. Each row links both documents so it
+can be settled by eye.</p>
+{table(['Date', 'Matchup', 'Team', 'Player', 'Earlier transcription → this reading', 'Source'],
+       cs_rows, caption="Differences between the earlier hand transcription and this reading.") if cs_rows else '<p>No differences.</p>'}
+<p class="cap">Statuses changed: {c['status_changed']}, reason-only: {c['reason_changed_only']},
+added: {c['added']}, removed: {c['removed']}. {esc(cs['diff']['note'])}</p>"""
+
+    seen_flags, note_rows = set(), []
+    for r in lg["releases"]:
+        for f, txt in r["layout_notes"]:
+            if f in seen_flags:
+                continue
+            seen_flags.add(f)
+            note_rows.append(f"<tr><td>{esc(f)}</td><td>{esc(txt)}</td>"
+                             f"<td>{link(RR.INDEX_URL, 'index')}</td></tr>")
+
     body = f"""
 <div class="note"><b>Every release is stored with three stamps and one hash.</b> The
 <i>revision time</i> is the time printed in the release's own header; the <i>retrieval time</i>
 is when this session read it; the <i>index check</i> is when the official index was last
-consulted for a newer file. The hash is over the transcribed text. The PDF bytes are
-<b>not</b> stored — bash egress to <code>ak-static.cms.nba.com</code> is blocked in this sandbox
-and the page tool renders PDFs as text — and that gap is flagged rather than glossed (F-V4-01).</div>
-<h2 id="binary-not-stored">Releases stored this session</h2>
-{table(['Revision (ET)', 'Retrieved (UTC)', 'Index checked', 'Rows', 'Content hash',
-        'PDF bytes', 'Src'], rel_rows,
-       caption="Releases stored this session, newest last.")}
-<h2 id="releases">Consecutive release diff</h2>
-{diff_html}
-<h2 id="cross-day">Cross-day comparison</h2>
-{cd_html}
+consulted for a newer file. The hash is over the <b>stored rendering</b> of the release, not
+over a hand transcription, so an edit to what we read is detectable.</div>
+<div class="note"><b>Why the rows below are parsed and not typed.</b> Every cell in the diff is
+assigned by <i>content type</i> — a date, a time, a matchup, a status word, a
+<code>Last, First</code> player, a reason — and never by column position. The PDF's layout
+shifts across page breaks, so a positional parser mis-reads it; the previous build did exactly
+that and published a changed status as unchanged. A cell whose type cannot be determined is
+published blank and flagged. The <i>unread</i> column counts them: it is zero for both
+releases below.</div>
+<h2 id="releases">Releases stored this session</h2>
+{table(['Revision (ET)', 'Retrieved (UTC)', 'Index checked', 'Rows', 'With status',
+        'Placeholders', 'Unread', 'Content hash', 'Src'], rel_rows,
+       caption="Official releases read this session, with row-level yield per release.")}
+<h2 id="diff">Consecutive release diff</h2>
+{table(['From', 'To', 'Status changed', 'Reason only', 'Added', 'Removed',
+        'Placeholder resolved', 'Still placeholder', 'Became unread', 'Src'], summary_rows,
+       caption="09:30 AM ET and 01:00 PM ET, same day: the pair that isolates revision drift.")}
+{table(['Pair', 'Date', 'Matchup', 'Team', 'Player', 'Change', 'Src'],
+       detail_rows, caption="Every status change detected between the two releases.") if detail_rows else '<p>No status changes between the stored releases.</p>'}
+<h2 id="cross-session">Provenance check against the earlier transcription</h2>
+{cs_html}
 <h2 id="layout">Layout artefacts of the official PDFs</h2>
 <p>These are properties of the published files, recorded so a reader can tell a transcription
 artefact from an injury. None of them is "corrected" in the data.</p>
-{table(['Flag', 'Finding', 'Src'], notes)}
+{table(['Flag', 'Finding', 'Src'], note_rows)}
+<h2 id="bytes">The PDF bytes</h2>
+<p>The original files are <b>not</b> in this repository, and that is flagged as F-V4-01 rather
+than glossed over: bash egress from the development sandbox to
+<code>ak-static.cms.nba.com</code> is TLS-reset, so a build cannot download them. The
+<b>scheduled job</b> runs <code>python -m nba2.v4.injury_ingest</code> from a GitHub runner,
+where the CDN is reachable, and writes
+<code>data/v4/injury/binary_manifest.json</code> with the byte length and sha256 of each file
+it stores — or the exact error and timestamp if it could not. The build never reads those
+bytes as data; the published rows come from the stored rendering.</p>
 """
     return page("Injury releases", "v4-injuries.html", body,
-                "Stored official injury releases with revision and retrieval stamps, and the "
-                "mechanical diff between consecutive ones.")
+                "Official injury releases stored with revision and retrieval stamps, and the "
+                "mechanical diff between consecutive ones, parsed by content type.")
 
 
 # ------------------------------------------------------------------- verification page
@@ -654,7 +774,8 @@ def page_verify(res: dict, settle_doc: dict | None, checks: dict) -> str:
     for fid, sev, where, what, effect in V4_FLAGS:
         flag_rows.append(
             "<tr>"
-            f"<td><code>{esc(fid)}</code></td><td>{badge(sev, 'bad' if sev == 'blocking' else 'warn')}</td>"
+            f"<td><code>{esc(fid)}</code></td>"
+            f"<td>{badge(sev.upper(), 'ok' if sev == 'resolved' else ('bad' if sev == 'blocking' else 'warn'))}</td>"
             # v2's link checker (nba2/v2/check.py:42) resolves a target without stripping
             # its fragment, so a bare "page.html#id" is reported as broken. Every target
             # here is a real file, so linking the file itself satisfies both checkers;
@@ -703,9 +824,10 @@ The settlement carries its own hash and re-verifies the sealed ledger before gra
 <h2>Settlement integrity</h2>
 {table(['Check', 'Observed', 'Result'], [
     _idrow("Settlement file hash", esc(str(v.get('stored'))[:24]), bool(v.get('ok')),
-           _gh("data/v4/settlement/settled-2026-11-15.json")),
-    _idrow("Sealed ledger still verifies", esc(settle_doc['seal_sha256'][:24]),
-           bool(settle_doc['seal_verified']), _gh("data/v3/ledger/sealed-2026-11-15.json")),
+           _gh("data/v4/settlement/settled-all.json")),
+    _idrow("All three sealed ledgers still verify",
+           esc(f"{v.get('n_graded')} graded / {v.get('n_sealed')} sealed"),
+           bool(v.get('all_seals_ok')), _gh("data/v4/settlement/settled-all.json")),
 ])}
 """
     return page("v4 verification", "v4-verify.html", body,

@@ -509,7 +509,8 @@ official pages without trusting the rendering: <a href="data/teams.json">teams.j
     gr_ex = chk.get("grade") or {}
     body = f"""<h1>Executive summary</h1>
 <p class="lede">The state of the project in one screen, then the numbers behind it, then the single next decision.
-Section 0 is this session's: it is the only part written after the 2026-11-13 results became official.</p>
+The six bullets below are the current state; section 0 records what a live re-check changed on 2026-11-14 and is kept
+as history rather than as the headline.</p>
 """
     body += f"""
 <h2>0. What the live re-check changed today (2026-11-14)</h2>
