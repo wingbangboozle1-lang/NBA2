@@ -32,6 +32,7 @@ touches, and the verification record. **Read this before starting any task.**
 | arena-35264d96-nba2 | merged to main | Verification-first docs site + integration | Built `docs/` 13-page site, `tools/`; PRs #8–#9 merged; Pages verified. |
 | arena-10957a28-nba2 (arena/10957a28-nba2) | PR #10 (this record) | Model + CSV data platform + `dashboard/` site | Built `data/*.csv`, `scripts/`, `analysis/`, `dashboard/` (12 pages, 524 source-linked rows). Scope integrated append-only; see session section below. |
 | arena/5a5fa7c4-nba2 | done (PRs #24/#25) | Data-window refresh + automated ingest (A-01 remediation) | 2026-11-14 day-before injury designations snapshot, pipeline integration, nightly refresh/settlement workflow with freshness gates, A-03 `.pyc` cleanup. See session section at end of board. |
+| arena/3cd85a22-nba2 | active | Independent live verification vs official NBA sources (2026-11-16) + fresh official capture | `analysis/session-3cd85a22-live-verification.md`, `verified/session-3cd85a22-live/**`, append-only `COORDINATION.md` |
 
 ## Tasks
 
@@ -4210,3 +4211,39 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+---
+
+## Session `arena/3cd85a22-nba2` — CLAIM (2026-11-16, branch `arena/3cd85a22-nba2`, base `f943bd1` = `main`)
+
+**State read at claim time (verified, not assumed).** `main` = `f943bd1`; this branch is at the same
+commit, working tree clean. `git fetch` run; `origin/main` = `f943bd1`. Open PRs: #98
+(`arena/fe0ffa49-nba2` refresh to 2026-11-16), #82, #80, #78, #72 (draft), #70. None is an
+independent-verification task.
+
+**Egress capability this session (the reason for this claim).** Prior sessions recorded that
+`cdn.nba.com`/`stats.nba.com`/`ak-static.cms.nba.com` were unreachable from bash. That is still true
+of bash, **but the platform `fetch_page` tool reaches the official sources**: `www.nba.com/standings`
+and `official.nba.com/nba-injury-report-2026-27-season/` were both read live this session
+(2026-11-16). So genuine live verification against official NBA sources is possible and was not
+possible for the earlier sessions that flagged IR-1…IR-9. The injury index now lists **11/16
+releases up to 1:00 p.m. ET** (`Injury-Report_2026-11-16_01_00PM.pdf`), while the committed
+`refresh_2026-11-16` capture is the **09:15/09:30 a.m. ET** release — a concrete freshness gap.
+
+**Task (independent verification + fresh official capture, no overlap with the open PRs).**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| V-01 | Claim + push before work | done | `COORDINATION.md` | pushed before any file was written |
+| V-02 | Live-verify committed published data line by line against official NBA sources as of 2026-11-16 (standings 30 rows, window schedule, injury report, official finals) | pending | `verified/session-3cd85a22-live/**` (new) | each verified value carries its official URL + retrieval stamp; a value that cannot be confirmed is left blank and flagged |
+| V-03 | Capture the freshest official 2026-11-16 injury release (up to 1:00 p.m. ET) + standings + schedule into the same scope, with revision/retrieval stamps and the PDF URL | pending | `verified/session-3cd85a22-live/**` | PDF index URL + revision time + retrieval time on every release |
+| V-04 | Re-derive and cross-check the published headline numbers (home-win rate, pinned HCA, total–margin rho, n_finals) against the live official inputs | pending | `analysis/session-3cd85a22-live-verification.md` | arithmetic re-derived from the committed captures + live standings |
+| V-05 | Publish the verification report + flagged irregularities, record sources/verification in this board | pending | `analysis/session-3cd85a22-live-verification.md`, `COORDINATION.md` | every flag links an official source or states why it is unverified |
+
+**Explicitly NOT touched (owned by the open PRs / shared outputs):** `data/raw/capture_2026-11-16/**`,
+`data/raw/refresh_2026-11-16/**`, `data/v2/**`, `data/v3/**`, `data/v4/**`, `data/settlement.json`,
+`nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `site/**`, `pages/**`, root `*.html`,
+`requirements/*.json`, `suggestions/*.json`, `data/raw/ledger/**` (sealed, read-only).
+
+**Rules:** no value inferred or filled; unconfirmed ⇒ blank + flag; official source linked per row;
+sealed ledgers read-only; `git pull --rebase` before every push.
