@@ -378,3 +378,32 @@ class TestPlayerGameLogs(unittest.TestCase):
         self.assertIn("06:15 PM ET", st["revision_time_et"])
         self.assertIn("06:15 AM ET", st["prior_revision_time_et"])
         self.assertTrue(st["report_url"].startswith("https://ak-static.cms.nba.com/"))
+
+
+class TestMarketAnchoredPrior(unittest.TestCase):
+    """Brief #15: blend the model line with the closing line, weight by OOS log-loss."""
+
+    def test_model_log_loss_is_measured(self):
+        mp = M.market_prior()
+        self.assertIsNotNone(mp["ll_model"], "LL_model must be measured from the backtest")
+        self.assertGreater(mp["ll_model"], 0.0)
+        # a measured model log-loss should beat the coin-flip baseline (log 2 = 0.6931)
+        self.assertLess(mp["ll_model"], mp["ll_model_baseline"])
+
+    def test_market_weight_is_zero_without_closing_line(self):
+        mp = M.market_prior()
+        # no licensed closing line -> w_market = 0, blended = model line
+        self.assertIsNone(mp["ll_mkt"])
+        self.assertEqual(mp["w_market"], 0.0)
+        self.assertEqual(mp["w_model"], 1.0)
+        self.assertIn("model line", mp["blended_equals"])
+
+    def test_weight_formula_is_stated(self):
+        mp = M.market_prior()
+        self.assertIn("LL_mkt", mp["formula"])
+        self.assertIn("LL_model", mp["formula"])
+
+    def test_oos_log_loss_reads_committed_backtest(self):
+        oos = M.oos_log_loss()
+        self.assertIsNotNone(oos["log_loss"])
+        self.assertIsNotNone(oos["source"])

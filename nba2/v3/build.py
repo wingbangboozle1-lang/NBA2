@@ -259,6 +259,40 @@ published; the bet surface below it is deliberately empty.</p>
         + badge('empty — no market price (F-308)', 'bad') + "</td>"
         "<td><a href='https://www.nba.com/games'>games</a></td></tr>"],
        scroll=False)}"""
+
+    mp = res.get("market_prior") or {}
+    MP_SRC = "https://www.nba.com/games"  # official finals the backtest scores against
+    mp_rows = "".join(
+        "<tr>"
+        f"<td>{esc(label)}</td>"
+        f"<td class='n'>{val}</td>"
+        f"<td>{link(MP_SRC, 'official finals')} "
+        f"<span class='s'>({esc(mp.get('src') or 'data/v2/backtest.json')})</span></td>"
+        "</tr>"
+        for label, val in [
+            ("LL_model (measured OOS log-loss)",
+             esc(format(mp["ll_model"], ".4f")) if mp.get("ll_model") is not None else blank("no backtest report")),
+            ("LL_model baseline (coin flip log 2)",
+             esc(format(mp["ll_model_baseline"], ".4f")) if mp.get("ll_model_baseline") is not None else blank("no backtest report")),
+            ("LL_mkt (closing line log-loss)", blank(mp.get("ll_mkt_flag", "F-310 no licensed closing line"))),
+            ("w_model (model weight)", esc(format(mp["w_model"], ".3f")) if mp.get("w_model") is not None else blank("no LL_model")),
+            ("w_market (market weight)", esc(format(mp["w_market"], ".3f")) if mp.get("w_market") is not None else blank("no closing line")),
+            ("Blended line", esc(mp.get("blended_equals", "")) or blank("no closing line")),
+        ])
+    body += f"""
+<h2>Market-anchored prior</h2>
+<p>The brief asks for a prior that blends the model line with the closing line, weighted by
+measured out-of-sample log-loss. The weighting rule is
+<code>{esc(mp.get('formula', ''))}</code>. The model's own log-loss <b>is measured</b>: it is the
+point-in-time walk-forward log-loss from the committed backtest over official finals. The
+closing-line log-loss is blank because no licensed odds feed is connected (gate G6), so the
+market weight is 0 and the blended line equals the model line until a feed lands. The
+measured weight and the rule are published so the blend is a one-line recompute once a
+closing line exists &mdash; nothing is invented.</p>
+{table(['Component', 'Value', 'Source'], _rows(mp_rows),
+       caption="Model log-loss measured from the walk-forward backtest; closing-line log-loss "
+               "blank and flagged (no market price).")}
+"""
     return page("Projection surface", "projections.html", body,
                 "What the model believes about each game, from official inputs only. No stake, "
                 "no price, no edge claim — that lives on the bet surface, which is empty.")
