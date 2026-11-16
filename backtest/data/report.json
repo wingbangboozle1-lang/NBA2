@@ -1,12 +1,13 @@
 {
  "schema": "nba2.backtest-report.v1",
  "meta": {
-  "n_games": 183,
-  "n_graded": 167,
+  "n_games": 197,
+  "n_graded": 181,
   "first_date": "2026-10-20",
-  "last_date": "2026-11-13",
-  "n_dates": 24,
-  "generated": "2026-11-14"
+  "last_date": "2026-11-15",
+  "n_dates": 26,
+  "generated": "2026-11-15",
+  "generated_field_note": "the newest official final date in the committed history; this report is a deterministic rebuild of that history, so the stamp moves only when the committed history does"
  },
  "integrity": {
   "exact_check": {
@@ -323,85 +324,85 @@
   "reconstruction_note": "All 30 teams sit at or below the snapshot, which is the expected direction when 19 games are missing from the captured history. 0 teams exceed their snapshot, which would indicate a transcription error somewhere."
  },
  "accuracy": {
-  "n": 167,
-  "margin_mae_model": 12.205,
-  "margin_rmse_model": 15.598,
-  "margin_mae_baseline_zero": 13.359,
-  "margin_rmse_baseline_zero": 16.65,
-  "margin_bias": -0.283,
-  "total_mae_model": 15.127,
-  "total_rmse_model": 19.658,
-  "total_mae_baseline_mean": 15.241,
-  "total_bias": 0.648,
-  "auroc_winner": 0.6975,
-  "brier": 0.2248,
+  "n": 181,
+  "margin_mae_model": 12.131,
+  "margin_rmse_model": 15.543,
+  "margin_mae_baseline_zero": 13.414,
+  "margin_rmse_baseline_zero": 16.668,
+  "margin_bias": -0.316,
+  "total_mae_model": 15.064,
+  "total_rmse_model": 19.563,
+  "total_mae_baseline_mean": 15.183,
+  "total_bias": 0.026,
+  "auroc_winner": 0.714,
+  "brier": 0.2226,
   "brier_baseline_50pct": 0.25,
-  "straight_up_accuracy": 0.6287,
+  "straight_up_accuracy": 0.6464,
   "straight_up_ci95": [
-   0.5533,
-   0.6984
+   0.5744,
+   0.7124
   ]
  },
  "ats": {
-  "n": 166,
-  "hits": 105,
+  "n": 180,
+  "hits": 117,
   "pushes_reported": 1,
   "pickem_games_excluded": 1,
-  "hit_rate": 0.6325,
+  "hit_rate": 0.65,
   "straight_up_for_comparison": {
-   "n": 167,
-   "hits": 105,
-   "rate": 0.6287,
+   "n": 181,
+   "hits": 117,
+   "rate": 0.6464,
    "same_picks_different_denominator": true,
    "why": "the ATS block drops any game whose originated line is exactly a pick'em, so its denominator is smaller than the straight-up denominator by that many games; the two rates are therefore expected to differ slightly and the difference is arithmetic, not an inconsistency"
   },
   "ci95": [
-   0.557,
-   0.7021
+   0.5778,
+   0.7159
   ],
   "note": "Self-consistency only: the line is ours, so this is not a market test. No odds feed exists, so no ROI or CLV can be computed and none is shown."
  },
  "baseline_gap": {
-  "n": 167,
-  "mean_abs_error_model": 12.205,
-  "mean_abs_error_baseline": 13.359,
-  "observed_diff": -1.154,
-  "p_value": 0.2916,
+  "n": 181,
+  "mean_abs_error_model": 12.131,
+  "mean_abs_error_baseline": 13.414,
+  "observed_diff": -1.284,
+  "p_value": 0.2127,
   "draws": 10000,
   "seed": 20261114,
   "model_better": true,
   "significant_at_5pct": false
  },
  "naive_baselines": {
-  "n_games": 167,
+  "n_games": 181,
   "always_home": {
-   "hits": 86,
-   "rate": 0.515,
+   "hits": 92,
+   "rate": 0.5083,
    "ci95": [
-    0.4397,
-    0.5896
+    0.436,
+    0.5802
    ]
   },
   "better_net_rating": {
-   "n": 167,
-   "hits": 104,
-   "rate": 0.6228,
+   "n": 181,
+   "hits": 116,
+   "rate": 0.6409,
    "ci95": [
-    0.5473,
-    0.6927
+    0.5687,
+    0.7072
    ]
   },
   "originated_model": {
-   "n": 167,
-   "hits": 105,
-   "rate": 0.6287,
+   "n": 181,
+   "hits": 117,
+   "rate": 0.6464,
    "ci95": [
-    0.5533,
-    0.6984
+    0.5744,
+    0.7124
    ]
   },
   "model_vs_better_net": {
-   "observed_diff": 0.006,
+   "observed_diff": 0.0055,
    "p_value": 1.0,
    "model_better": true,
    "significant_at_5pct": false,
@@ -411,48 +412,48 @@
  "calibration": [
   {
    "bin": "20%-30%",
-   "n": 2,
-   "mean_predicted": 0.2707,
+   "n": 3,
+   "mean_predicted": 0.2655,
    "observed_home_win_rate": 0.0,
    "ci95_low": 0.0,
-   "ci95_high": 0.6576,
-   "gap_pp": -27.07
+   "ci95_high": 0.5615,
+   "gap_pp": -26.55
   },
   {
    "bin": "30%-40%",
-   "n": 16,
-   "mean_predicted": 0.3518,
-   "observed_home_win_rate": 0.25,
-   "ci95_low": 0.1018,
-   "ci95_high": 0.495,
-   "gap_pp": -10.18
+   "n": 20,
+   "mean_predicted": 0.3538,
+   "observed_home_win_rate": 0.2,
+   "ci95_low": 0.0807,
+   "ci95_high": 0.416,
+   "gap_pp": -15.38
   },
   {
    "bin": "40%-50%",
-   "n": 52,
-   "mean_predicted": 0.4505,
-   "observed_home_win_rate": 0.4038,
-   "ci95_low": 0.2816,
-   "ci95_high": 0.5393,
-   "gap_pp": -4.66
+   "n": 55,
+   "mean_predicted": 0.4496,
+   "observed_home_win_rate": 0.4,
+   "ci95_low": 0.2812,
+   "ci95_high": 0.5319,
+   "gap_pp": -4.96
   },
   {
    "bin": "50%-60%",
-   "n": 66,
-   "mean_predicted": 0.5488,
-   "observed_home_win_rate": 0.5758,
-   "ci95_low": 0.4556,
-   "ci95_high": 0.6876,
-   "gap_pp": 2.7
+   "n": 68,
+   "mean_predicted": 0.549,
+   "observed_home_win_rate": 0.5882,
+   "ci95_low": 0.4696,
+   "ci95_high": 0.6974,
+   "gap_pp": 3.92
   },
   {
    "bin": "60%-70%",
-   "n": 26,
-   "mean_predicted": 0.643,
-   "observed_home_win_rate": 0.6923,
-   "ci95_low": 0.5001,
-   "ci95_high": 0.835,
-   "gap_pp": 4.93
+   "n": 29,
+   "mean_predicted": 0.6434,
+   "observed_home_win_rate": 0.7241,
+   "ci95_low": 0.5428,
+   "ci95_high": 0.853,
+   "gap_pp": 8.07
   },
   {
    "bin": "70%-80%",
@@ -462,18 +463,27 @@
    "ci95_low": 0.5655,
    "ci95_high": 1.0,
    "gap_pp": 27.07
+  },
+  {
+   "bin": "80%-90%",
+   "n": 1,
+   "mean_predicted": 0.8027,
+   "observed_home_win_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.7935,
+   "gap_pp": -80.27
   }
  ],
  "tiers": [
   {
    "tier": "A",
-   "n": 83,
-   "mean_abs_margin_error": 12.343,
-   "auroc_winner": 0.7485,
-   "straight_up_accuracy": 0.7349,
+   "n": 95,
+   "mean_abs_margin_error": 12.316,
+   "auroc_winner": 0.7618,
+   "straight_up_accuracy": 0.7474,
    "ci95": [
-    0.6311,
-    0.818
+    0.6516,
+    0.824
    ]
   },
   {
@@ -489,13 +499,13 @@
   },
   {
    "tier": "C",
-   "n": 43,
-   "mean_abs_margin_error": 11.21,
-   "auroc_winner": 0.5152,
-   "straight_up_accuracy": 0.4651,
+   "n": 45,
+   "mean_abs_margin_error": 10.973,
+   "auroc_winner": 0.5504,
+   "straight_up_accuracy": 0.4889,
    "ci95": [
-    0.3251,
-    0.6108
+    0.3496,
+    0.63
    ]
   },
   {
@@ -533,58 +543,58 @@
  ],
  "correlation": {
   "margin_total": {
-   "n": 183,
-   "r": -0.034,
+   "n": 197,
+   "r": -0.0354,
    "ci95": [
-    -0.1782,
-    0.1116
+    -0.1743,
+    0.1049
    ],
-   "r_squared": 0.0012,
-   "total_sd": 19.21,
-   "margin_sd": 16.98,
+   "r_squared": 0.0013,
+   "total_sd": 19.13,
+   "margin_sd": 16.97,
    "verdict": "no detectable relationship at this sample size"
   },
   "legs": {
-   "n": 167,
+   "n": 181,
    "cells": {
-    "home_cover_over": 42,
-    "home_cover_under": 39,
-    "away_cover_over": 41,
-    "away_cover_under": 45
+    "home_cover_over": 47,
+    "home_cover_under": 41,
+    "away_cover_over": 44,
+    "away_cover_under": 49
    },
-   "p_home_covers": 0.485,
-   "p_over": 0.497,
-   "joint_observed": 0.2515,
-   "joint_if_independent": 0.2411,
-   "difference": 0.0104,
-   "difference_pp": 1.04,
-   "z": 0.315,
+   "p_home_covers": 0.4862,
+   "p_over": 0.5028,
+   "joint_observed": 0.2597,
+   "joint_if_independent": 0.2444,
+   "difference": 0.0152,
+   "difference_pp": 1.52,
+   "z": 0.477,
    "interpretation": "The two legs are treated as independent by naive parlay pricing. The observed difference is what a same-game parlay would be mispriced by BEFORE any vig; a z below about 2 means this sample cannot yet separate it from noise.",
    "note": "Pushes are impossible on these numbers only if the line is a half point; half-point increments are enforced by the line builder, so no push handling is needed here."
   },
   "cross_game": {
-   "n_pairs": 762,
-   "r": 0.0196,
+   "n_pairs": 808,
+   "r": 0.012,
    "verdict": "no evidence of within-night dependence",
    "note": "Pairs within the same date only. Overlapping pairs are not independent, so this r is indicative."
   },
   "rest": {
-   "n_team_games_with_rest_known": 213,
+   "n_team_games_with_rest_known": 233,
    "b2b": {
-    "n": 61,
-    "mean_margin": -1.787
+    "n": 67,
+    "mean_margin": -1.403
    },
    "rested_3plus_days": {
-    "n": 59,
-    "mean_margin": 1.831
+    "n": 68,
+    "mean_margin": 1.485
    },
    "three_games_in_four_days": {
-    "n": 93,
-    "mean_margin": -1.387
+    "n": 98,
+    "mean_margin": -1.367
    },
    "b2b_vs_rested": {
-    "difference": -3.617,
-    "p_value": 0.2415,
+    "difference": -2.888,
+    "p_value": 0.3305,
     "significant_at_5pct": false
    },
    "note": "Rest is derived from official game dates only. A negative b2b margin would support the fatigue story; the p-value says whether this sample can see it."
@@ -598,9 +608,9 @@
     "registered_rule": ">= 300 settled bets for team markets; >= 500 for player props.",
     "registered_threshold": 300,
     "status": "FAIL",
-    "measured": "167 graded games",
+    "measured": "181 graded games",
     "required": ">= 300 settled bets for team markets",
-    "arithmetic": "167 / 300 = 56% of the required sample",
+    "arithmetic": "181 / 300 = 60% of the required sample",
     "why_it_matters": "At this sample a 63% hit rate and a 52% hit rate cannot be told apart. The leaderboard ranks noise until this gate passes."
    },
    "G-02": {
@@ -618,54 +628,54 @@
     "name": "Probability calibration",
     "registered_rule": "Brier score <= 0.245 on settled games AND calibration slope in [0.85, 1.15] AND intercept in [-0.10, 0.10].",
     "registered_threshold": 0.245,
-    "status": "PARTIAL",
-    "measured": "Brier 0.2248 vs 0.245 threshold; baseline (always 50%) 0.2500",
-    "sample": "167 games (gate needs >= 100: met)",
+    "status": "FAIL",
+    "measured": "Brier 0.2226 vs 0.245 threshold; baseline (always 50%) 0.2500",
+    "sample": "181 games (gate needs >= 100: met)",
     "calibration_bins": [
      {
       "bin": "20%-30%",
-      "n": 2,
-      "mean_predicted": 0.2707,
+      "n": 3,
+      "mean_predicted": 0.2655,
       "observed_home_win_rate": 0.0,
       "ci95_low": 0.0,
-      "ci95_high": 0.6576,
-      "gap_pp": -27.07
+      "ci95_high": 0.5615,
+      "gap_pp": -26.55
      },
      {
       "bin": "30%-40%",
-      "n": 16,
-      "mean_predicted": 0.3518,
-      "observed_home_win_rate": 0.25,
-      "ci95_low": 0.1018,
-      "ci95_high": 0.495,
-      "gap_pp": -10.18
+      "n": 20,
+      "mean_predicted": 0.3538,
+      "observed_home_win_rate": 0.2,
+      "ci95_low": 0.0807,
+      "ci95_high": 0.416,
+      "gap_pp": -15.38
      },
      {
       "bin": "40%-50%",
-      "n": 52,
-      "mean_predicted": 0.4505,
-      "observed_home_win_rate": 0.4038,
-      "ci95_low": 0.2816,
-      "ci95_high": 0.5393,
-      "gap_pp": -4.66
+      "n": 55,
+      "mean_predicted": 0.4496,
+      "observed_home_win_rate": 0.4,
+      "ci95_low": 0.2812,
+      "ci95_high": 0.5319,
+      "gap_pp": -4.96
      },
      {
       "bin": "50%-60%",
-      "n": 66,
-      "mean_predicted": 0.5488,
-      "observed_home_win_rate": 0.5758,
-      "ci95_low": 0.4556,
-      "ci95_high": 0.6876,
-      "gap_pp": 2.7
+      "n": 68,
+      "mean_predicted": 0.549,
+      "observed_home_win_rate": 0.5882,
+      "ci95_low": 0.4696,
+      "ci95_high": 0.6974,
+      "gap_pp": 3.92
      },
      {
       "bin": "60%-70%",
-      "n": 26,
-      "mean_predicted": 0.643,
-      "observed_home_win_rate": 0.6923,
-      "ci95_low": 0.5001,
-      "ci95_high": 0.835,
-      "gap_pp": 4.93
+      "n": 29,
+      "mean_predicted": 0.6434,
+      "observed_home_win_rate": 0.7241,
+      "ci95_low": 0.5428,
+      "ci95_high": 0.853,
+      "gap_pp": 8.07
      },
      {
       "bin": "70%-80%",
@@ -675,9 +685,18 @@
       "ci95_low": 0.5655,
       "ci95_high": 1.0,
       "gap_pp": 27.07
+     },
+     {
+      "bin": "80%-90%",
+      "n": 1,
+      "mean_predicted": 0.8027,
+      "observed_home_win_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.7935,
+      "gap_pp": -80.27
      }
     ],
-    "calibration_shape": "monotone: observed rises with predicted",
+    "calibration_shape": "not monotone; the probabilities are not calibrated",
     "why_it_matters": "A Brier score below the 50% baseline is necessary but not sufficient: the reliability table must also be monotone, otherwise the probability cannot be used for staking."
    },
    "G-04": {
@@ -686,21 +705,21 @@
     "registered_rule": "Mean absolute error of our spread must beat BOTH baselines: (a) 0.0 spread, (b) raw point-differential-per-game, by >= 0.30 points.",
     "registered_threshold": 0.3,
     "status": "PASS",
-    "measured": "our MAE 12.21 pts vs baseline (a) 0.0-spread 13.36 (gain +1.15) and baseline (b) raw point differential 15.05 (gain +2.85)",
+    "measured": "our MAE 12.13 pts vs baseline (a) 0.0-spread 13.41 (gain +1.28) and baseline (b) raw point differential 14.81 (gain +2.68)",
     "required": "beat BOTH baselines by >= 0.30 points of MAE",
-    "baseline_c_shrunk_net_no_hca": 12.137,
-    "gain_from_shrinkage": 1.222,
-    "gain_from_home_court": -0.068,
+    "baseline_c_shrunk_net_no_hca": 12.084,
+    "gain_from_shrinkage": 1.33,
+    "gain_from_home_court": -0.047,
     "disputed": true,
-    "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.14 vs 12.21 MAE (home-court gain -0.07 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
-    "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.07 pts. Passing this gate on baseline (b) alone would be a false positive.",
+    "dispute_reason": "Model fails to beat baseline (c), a shrunk differential with no home-court term: 12.08 vs 12.13 MAE (home-court gain -0.05 pts). The registered gate compares against an unshrunk baseline that is wrong by construction in week one, so this PASS is a false positive and must not be counted as evidence of skill.",
+    "strawman_warning": "Baseline (b) is an unshrunk raw differential and is a strawman: in week one it reads up to -66 points, so it is wrong by construction and any sane model beats it. Baseline (c) applies the same shrinkage with no home-court term; the true gain over it is only -0.05 pts. Passing this gate on baseline (b) alone would be a false positive.",
     "why_it_matters": "Baseline (b) is the important one: if shrinkage and the home-court term do not beat a raw point differential, the model is decoration. NOTE: this baseline is unshrunk and is a strawman -- see baseline (c) and the disputed flag below.",
     "gap_test": {
-     "n": 167,
-     "mean_abs_error_model": 12.205,
-     "mean_abs_error_baseline": 13.359,
-     "observed_diff": -1.154,
-     "p_value": 0.2916,
+     "n": 181,
+     "mean_abs_error_model": 12.131,
+     "mean_abs_error_baseline": 13.414,
+     "observed_diff": -1.284,
+     "p_value": 0.2127,
      "draws": 10000,
      "seed": 20261114,
      "model_better": true,
@@ -713,7 +732,7 @@
     "registered_rule": "Bootstrap (10,000 resamples, fixed seed) 95% CI of ROI excludes 0; t-stat >= 2.0; and the luck-adjusted PnL (each bet replaced by its model-expected PnL, variance kept) must not reverse the sign.",
     "registered_threshold": 2.0,
     "status": "PARTIAL",
-    "measured": "permutation test of the margin-error difference: diff -1.154, p 0.2916. ROI half is BLOCKED (no prices).",
+    "measured": "permutation test of the margin-error difference: diff -1.284, p 0.2127. ROI half is BLOCKED (no prices).",
     "required": "bootstrap 95% CI of ROI excludes 0 and t >= 2.0",
     "why_it_matters": "The luck question splits in two. Whether the *forecast* is better than naive can be answered without prices (done here, and the answer is 'not significantly'). Whether a *strategy* makes money needs prices (blocked)."
    },
@@ -733,7 +752,7 @@
     "registered_rule": "Every feature timestamped at or before tip-off; train on the first 70% of the window, test on the final 30%; test MAE must not exceed full-window MAE by more than 25%.",
     "registered_threshold": 0.25,
     "status": "PASS",
-    "measured": "train (first 70%) MAE 11.89; test (final 30%) MAE 12.92; degradation 5.9%",
+    "measured": "train (first 70%) MAE 11.79; test (final 30%) MAE 12.91; degradation 6.4%",
     "required": "test MAE not more than 25% worse than full-window MAE",
     "why_it_matters": "This gate was 'AT RISK by construction' on the old site because the only snapshot was a single as-of table that leaks the future. The backtest rebuilds every rating from games strictly before tip-off, and `assert_no_leakage` re-checks it, so the gate is now genuinely evaluable.",
     "leakage_check": "PASS (every graded game used only earlier games)"
@@ -750,32 +769,32 @@
     "sweep": [
      {
       "line_scale": 0.8,
-      "mae": 12.344,
-      "accuracy": 0.6287,
+      "mae": 12.285,
+      "accuracy": 0.6464,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 0.9,
-      "mae": 12.272,
-      "accuracy": 0.6287,
+      "mae": 12.205,
+      "accuracy": 0.6464,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.0,
-      "mae": 12.205,
-      "accuracy": 0.6287,
+      "mae": 12.131,
+      "accuracy": 0.6464,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.1,
-      "mae": 12.146,
-      "accuracy": 0.6287,
+      "mae": 12.064,
+      "accuracy": 0.6464,
       "note": "scale 1.0 is the published model"
      },
      {
       "line_scale": 1.2,
-      "mae": 12.099,
-      "accuracy": 0.6287,
+      "mae": 12.015,
+      "accuracy": 0.6464,
       "note": "scale 1.0 is the published model"
      }
     ]
@@ -808,10 +827,10 @@
     "G-07"
    ],
    "failed": [
-    "G-01"
+    "G-01",
+    "G-03"
    ],
    "partial": [
-    "G-03",
     "G-05",
     "G-08"
    ],
@@ -836,14 +855,14 @@
    "description": "Reliability-Shrunk Spread: bet only the highest-confidence tier",
    "tier_used": "A",
    "tier_definition": "model edge >= 3.0 pts over a neutral line",
-   "n_games": 83,
-   "straight_up_accuracy": 0.7349,
+   "n_games": 95,
+   "straight_up_accuracy": 0.7474,
    "coin_flip": 0.5,
-   "se": 0.0549,
-   "z_vs_coinflip": 4.28,
-   "z_deflated_for_search": 2.14,
-   "auroc_winner": 0.7485,
-   "mean_abs_margin_error": 12.343,
+   "se": 0.0513,
+   "z_vs_coinflip": 4.823,
+   "z_deflated_for_search": 2.411,
+   "auroc_winner": 0.7618,
+   "mean_abs_margin_error": 12.316,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -886,14 +905,14 @@
    "description": "Pace-Neutral Total Anchor: includes the low-edge tier",
    "tier_used": "C",
    "tier_definition": "model edge < 1.5 pts (noise tier)",
-   "n_games": 43,
-   "straight_up_accuracy": 0.4651,
+   "n_games": 45,
+   "straight_up_accuracy": 0.4889,
    "coin_flip": 0.5,
-   "se": 0.0762,
-   "z_vs_coinflip": -0.458,
-   "z_deflated_for_search": -0.229,
-   "auroc_winner": 0.5152,
-   "mean_abs_margin_error": 11.21,
+   "se": 0.0745,
+   "z_vs_coinflip": -0.149,
+   "z_deflated_for_search": -0.074,
+   "auroc_winner": 0.5504,
+   "mean_abs_margin_error": 10.973,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -911,14 +930,14 @@
    "description": "Schedule-Spot Fade: low-edge tier",
    "tier_used": "C",
    "tier_definition": "model edge < 1.5 pts (noise tier)",
-   "n_games": 43,
-   "straight_up_accuracy": 0.4651,
+   "n_games": 45,
+   "straight_up_accuracy": 0.4889,
    "coin_flip": 0.5,
-   "se": 0.0762,
-   "z_vs_coinflip": -0.458,
-   "z_deflated_for_search": -0.229,
-   "auroc_winner": 0.5152,
-   "mean_abs_margin_error": 11.21,
+   "se": 0.0745,
+   "z_vs_coinflip": -0.149,
+   "z_deflated_for_search": -0.074,
+   "auroc_winner": 0.5504,
+   "mean_abs_margin_error": 10.973,
    "gate_pass_fraction": 0.167,
    "gates_counted": [
     "G-07"
@@ -933,7 +952,7 @@
   }
  ],
  "leaderboard_notes": [
-  "Ranked on deflated z, not on win rate. 183 graded games is far below the G-01 floor of 300 settled bets, so the ordering is provisional by construction.",
+  "Ranked on deflated z, not on win rate. 197 graded games is far below the G-01 floor of 300 settled bets, so the ordering is provisional by construction.",
   "Reward units are 0 for every strategy while any validation gate is FAILED. That is the gate doing its job, not a missing feature.",
   "Strategies are mapped to confidence tiers before outcomes are seen, so a strategy cannot be re-labelled onto whichever tier happened to perform.",
   "Every strategy here shares one model. Their results are therefore highly correlated and the leaderboard compares *filters on the same forecasts*, not independent systems."
@@ -5330,6 +5349,342 @@
    "actual_total": 225,
    "margin_error": -4.45,
    "total_error": -0.85
+  },
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "away": "DEN",
+   "home": "NOP",
+   "away_pts": 116,
+   "home_pts": 108,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "away_games_before": 10,
+   "home_games_before": 13,
+   "league_mean_pts": 113.47,
+   "sigma": 17.039,
+   "hca": 1.408,
+   "pred_margin_home": -3.9,
+   "pred_margin_net_only": -10.35,
+   "pred_total": 234.94,
+   "p_home": 0.4095,
+   "tier": "A",
+   "actual_margin_home": -8,
+   "actual_total": 224,
+   "margin_error": 4.1,
+   "total_error": 10.94
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "away": "DAL",
+   "home": "CLE",
+   "away_pts": 117,
+   "home_pts": 127,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "away_games_before": 12,
+   "home_games_before": 13,
+   "league_mean_pts": 113.47,
+   "sigma": 17.039,
+   "hca": 1.408,
+   "pred_margin_home": 1.43,
+   "pred_margin_net_only": 0.0,
+   "pred_total": 228.94,
+   "p_home": 0.5334,
+   "tier": "C",
+   "actual_margin_home": 10,
+   "actual_total": 244,
+   "margin_error": -8.57,
+   "total_error": -15.06
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "away": "DET",
+   "home": "MIA",
+   "away_pts": 117,
+   "home_pts": 137,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "away_games_before": 11,
+   "home_games_before": 12,
+   "league_mean_pts": 113.47,
+   "sigma": 17.039,
+   "hca": 1.408,
+   "pred_margin_home": -3.75,
+   "pred_margin_net_only": -10.64,
+   "pred_total": 230.31,
+   "p_home": 0.413,
+   "tier": "A",
+   "actual_margin_home": 20,
+   "actual_total": 254,
+   "margin_error": -23.75,
+   "total_error": -23.69
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "away": "BKN",
+   "home": "MEM",
+   "away_pts": 110,
+   "home_pts": 129,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "away_games_before": 11,
+   "home_games_before": 12,
+   "league_mean_pts": 113.47,
+   "sigma": 17.039,
+   "hca": 1.408,
+   "pred_margin_home": 7.88,
+   "pred_margin_net_only": 13.17,
+   "pred_total": 228.6,
+   "p_home": 0.6782,
+   "tier": "A",
+   "actual_margin_home": 19,
+   "actual_total": 239,
+   "margin_error": -11.12,
+   "total_error": -10.4
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "away": "CHI",
+   "home": "MIN",
+   "away_pts": 117,
+   "home_pts": 106,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "away_games_before": 11,
+   "home_games_before": 12,
+   "league_mean_pts": 113.47,
+   "sigma": 17.039,
+   "hca": 1.408,
+   "pred_margin_home": 14.51,
+   "pred_margin_net_only": 26.78,
+   "pred_total": 233.67,
+   "p_home": 0.8027,
+   "tier": "A",
+   "actual_margin_home": -11,
+   "actual_total": 223,
+   "margin_error": 25.51,
+   "total_error": 10.67
+  },
+  {
+   "game_id": "0022600236",
+   "date": "2026-11-15",
+   "away": "IND",
+   "home": "PHI",
+   "away_pts": 124,
+   "home_pts": 131,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+   "away_games_before": 13,
+   "home_games_before": 13,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": 3.51,
+   "pred_margin_net_only": 3.85,
+   "pred_total": 222.46,
+   "p_home": 0.5819,
+   "tier": "A",
+   "actual_margin_home": 7,
+   "actual_total": 255,
+   "margin_error": -3.49,
+   "total_error": -32.54
+  },
+  {
+   "game_id": "0022600237",
+   "date": "2026-11-15",
+   "away": "LAL",
+   "home": "PHX",
+   "away_pts": 131,
+   "home_pts": 123,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+   "away_games_before": 13,
+   "home_games_before": 11,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -4.7,
+   "pred_margin_net_only": -12.29,
+   "pred_total": 232.1,
+   "p_home": 0.391,
+   "tier": "A",
+   "actual_margin_home": -8,
+   "actual_total": 254,
+   "margin_error": 3.3,
+   "total_error": -21.9
+  },
+  {
+   "game_id": "0022600238",
+   "date": "2026-11-15",
+   "away": "CHA",
+   "home": "LAC",
+   "away_pts": 105,
+   "home_pts": 113,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+   "away_games_before": 12,
+   "home_games_before": 11,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": 4.49,
+   "pred_margin_net_only": 5.73,
+   "pred_total": 218.99,
+   "p_home": 0.6042,
+   "tier": "A",
+   "actual_margin_home": 8,
+   "actual_total": 218,
+   "margin_error": -3.51,
+   "total_error": 0.99
+  },
+  {
+   "game_id": "0022600239",
+   "date": "2026-11-15",
+   "away": "SAS",
+   "home": "UTA",
+   "away_pts": 110,
+   "home_pts": 102,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+   "away_games_before": 13,
+   "home_games_before": 13,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -11.17,
+   "pred_margin_net_only": -24.38,
+   "pred_total": 225.88,
+   "p_home": 0.2552,
+   "tier": "A",
+   "actual_margin_home": -8,
+   "actual_total": 212,
+   "margin_error": -3.17,
+   "total_error": 13.88
+  },
+  {
+   "game_id": "0022600240",
+   "date": "2026-11-15",
+   "away": "DAL",
+   "home": "BOS",
+   "away_pts": 94,
+   "home_pts": 131,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+   "away_games_before": 13,
+   "home_games_before": 12,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": 7.01,
+   "pred_margin_net_only": 11.01,
+   "pred_total": 222.05,
+   "p_home": 0.6602,
+   "tier": "A",
+   "actual_margin_home": 37,
+   "actual_total": 225,
+   "margin_error": -29.99,
+   "total_error": -2.95
+  },
+  {
+   "game_id": "0022600241",
+   "date": "2026-11-15",
+   "away": "NYK",
+   "home": "TOR",
+   "away_pts": 112,
+   "home_pts": 108,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+   "away_games_before": 12,
+   "home_games_before": 12,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -0.82,
+   "pred_margin_net_only": -4.67,
+   "pred_total": 220.25,
+   "p_home": 0.4806,
+   "tier": "C",
+   "actual_margin_home": -4,
+   "actual_total": 220,
+   "margin_error": 3.18,
+   "total_error": 0.25
+  },
+  {
+   "game_id": "0022600242",
+   "date": "2026-11-15",
+   "away": "HOU",
+   "home": "WAS",
+   "away_pts": 147,
+   "home_pts": 119,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
+   "away_games_before": 13,
+   "home_games_before": 13,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -6.05,
+   "pred_margin_net_only": -14.54,
+   "pred_total": 224.65,
+   "p_home": 0.3607,
+   "tier": "A",
+   "actual_margin_home": -28,
+   "actual_total": 266,
+   "margin_error": 21.95,
+   "total_error": -41.35
+  },
+  {
+   "game_id": "0022600243",
+   "date": "2026-11-15",
+   "away": "ATL",
+   "home": "MIL",
+   "away_pts": 113,
+   "home_pts": 106,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
+   "away_games_before": 13,
+   "home_games_before": 13,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -6.49,
+   "pred_margin_net_only": -15.38,
+   "pred_total": 230.69,
+   "p_home": 0.3511,
+   "tier": "A",
+   "actual_margin_home": -7,
+   "actual_total": 219,
+   "margin_error": 0.51,
+   "total_error": 11.69
+  },
+  {
+   "game_id": "0022600244",
+   "date": "2026-11-15",
+   "away": "OKC",
+   "home": "SAC",
+   "away_pts": 125,
+   "home_pts": 103,
+   "periods": 4,
+   "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
+   "away_games_before": 13,
+   "home_games_before": 12,
+   "league_mean_pts": 113.54,
+   "sigma": 16.976,
+   "hca": 1.509,
+   "pred_margin_home": -6.83,
+   "pred_margin_net_only": -16.52,
+   "pred_total": 223.81,
+   "p_home": 0.3438,
+   "tier": "A",
+   "actual_margin_home": -22,
+   "actual_total": 228,
+   "margin_error": 15.17,
+   "total_error": -4.19
   }
  ]
 }

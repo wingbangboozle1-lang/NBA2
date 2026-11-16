@@ -151,7 +151,46 @@ def snapshot_candidates(kind: str) -> list[Path]:
                 return str(v)
         return ""
 
-    return sorted(files, key=stamp, reverse=True)
+    # Tie-break on the file name: stamps TIE across candidates (slate_..._to_11-17.json
+    # and ..._v2.json both read 2026-11-14), and a stable sort keeps glob order — which
+    # is filesystem order, not a defined order. Two hosts then disagree about [0].
+    return sorted(files, key=lambda p: (stamp(p), p.name), reverse=True)
+
+
+def slate_snapshot(site: dict) -> tuple[Path, dict] | None:
+    """The slate snapshot the published slate table was built from (rows as lists).
+
+    Why this exists: `snapshot_candidates("slate")[0]` was "the newest slate", but the
+    committed candidates TIE on their internal stamp, so `[0]` fell through to glob
+    order. On a GitHub-hosted runner that returned the dict-shaped 27-row
+    `slate_2026-11-14_to_11-17_v2.json` first and this checker died with
+    `KeyError: 4` at CC-SNAP-02 (`x[idx["game_id"]]` on a dict row) — found the first
+    time the crosscheck gate ran in CI (session arena/d09f8d1e-nba2, F-050).
+
+    Selection is anchored to the published artefact instead of a timestamp: the
+    candidate whose record count equals the published slate table's row count and
+    whose records carry the declared columns. List rows pass through; dict rows are
+    projected through the declared column order so every downstream positional index
+    keeps working. Returns None when no candidate matches — the caller reports that
+    as a failure and never falls back to an arbitrary file.
+    """
+    n_pub = len(rows_of(site, "slate"))
+    for p in snapshot_candidates("slate"):
+        try:
+            d = load_json(p)
+        except Exception:
+            continue
+        cols = d.get("columns") or []
+        recs = d.get("records") or []
+        if "game_id" not in cols or len(recs) != n_pub:
+            continue
+        if all(isinstance(x, list) and len(x) == len(cols) for x in recs):
+            return p, d
+        if recs and all(isinstance(x, dict) and all(c in x for c in cols) for x in recs):
+            d = dict(d)
+            d["records"] = [[x[c] for c in cols] for x in recs]
+            return p, d
+    return None
 
 
 def by_key(rows: list[dict], key: str) -> dict:
@@ -188,11 +227,16 @@ def norm_time(t):
 def check_snapshots(r: Report, site: dict):
     g = "A. snapshot integrity"
     slate_files = snapshot_candidates("slate")
-    if not slate_files:
-        r.add("CC-SNAP-00", g, "a slate snapshot exists", "glob data/raw/slate_2*.json", FAIL,
-              "none found", "data/raw")
+    sel = slate_snapshot(site)
+    if sel is None:
+        r.add("CC-SNAP-00", g, "a slate snapshot exists and matches the published slate table",
+              "glob data/raw/slate_2*.json, then match each candidate against the published row count",
+              FAIL,
+              f"no candidate matches the {len(rows_of(site, 'slate'))} published rows "
+              f"(candidates: {[p.name for p in slate_files] or 'none'})", "data/raw")
         return
-    slate = load_json(slate_files[0])
+    slate_files = [sel[0]] + [p for p in slate_files if p != sel[0]]
+    slate = sel[1]
     recs = slate.get("records", [])
     cols = slate.get("columns", [])
     idx = {c: i for i, c in enumerate(cols)}
@@ -352,7 +396,14 @@ def check_snapshots(r: Report, site: dict):
 
 def check_published_vs_snapshot(r: Report, site: dict):
     g = "B. published rows vs the snapshot they cite"
-    slate = load_json(snapshot_candidates("slate")[0])
+    sel = slate_snapshot(site)
+    if sel is None:
+        r.add("CC-PUB-02", g, "a slate snapshot matches the published slate table",
+              "match the published slate row count against every committed slate candidate",
+              FAIL, "no candidate matches — published rows cannot be compared to any snapshot",
+              "data/raw")
+        return
+    slate = sel[1]
     scols = {c: i for i, c in enumerate(slate["columns"])}
     srecs = {x[scols["game_id"]]: x for x in slate["records"]}
     pub = {vals(row)["game_id"]: row for row in rows_of(site, "slate")}
@@ -384,7 +435,7 @@ def check_published_vs_snapshot(r: Report, site: dict):
           PASS if not mismatches and not extra_pub and not missing_pub else FAIL,
           f"{len(mismatches)} cell mismatch(es): {mismatches[:4]}; published-not-in-snapshot={sorted(extra_pub)}; "
           f"snapshot-not-published={sorted(missing_pub)}",
-          evidence=str(snapshot_candidates('slate')[0].relative_to(ROOT)))
+          evidence=str(sel[0].relative_to(ROOT)))
 
     inj_rows = rows_of(site, "injuries")
     inj_file = _matching_injury_snapshot(site)
@@ -403,7 +454,7 @@ def check_published_vs_snapshot(r: Report, site: dict):
           "recount over published injury rows", PASS if not p_bad else FAIL,
           f"{len(p0)} rows; Out rows with p_play != 0.00: {len(p_bad)}")
 
-    times = load_json(snapshot_candidates("times")[0])
+    times = load_json(_matching_times_snapshot(site))
     tmap = {}
     for rec in times["records"]:
         d, mu, tm, present = rec[0], rec[1], rec[2], rec[3]
@@ -452,6 +503,38 @@ def check_published_vs_snapshot(r: Report, site: dict):
           f"recomputed {n_corrob} twice-confirmed, {n_lost} time-lost, {n_outside} outside; title: {title!r}"
           + (f"; row-level problems: {corr_bad[:3]}" if corr_bad else ""),
           evidence="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf")
+
+
+def _availability_recount(r: Report, g: str, sl: dict, avail: list, union: dict) -> None:
+    """CC-DER-12 body, split out so the slate-dependent block can be skipped honestly.
+
+    `sl` must already be a slate_snapshot() result (list-shaped rows), which is what
+    makes the positional `x[sc["date"]]` indexing below safe on every host.
+    """
+    sc = {c: i for i, c in enumerate(sl["columns"])}
+    bad = []
+    for row in avail:
+        v = vals(row)
+        dte = str(v.get("date"))
+        n_games = sum(1 for x in sl["records"] if x[sc["date"]] == dte)
+        slots = 2 * n_games
+        e = union.get(dte, {"filed": set(), "nys": set()})
+        filed = len(e["filed"])
+        nys_only = len(e["nys"] - e["filed"])
+        unlisted = slots - filed - nys_only
+        if num(v.get("no_rows_yet")) != unlisted:
+            bad.append(f"{dte}: published no_rows_yet {v.get('no_rows_yet')}, "
+                       f"recomputed {unlisted} (slots {slots} - filed {filed} - not-submitted-only {nys_only})")
+        if num(v.get("not_yet_submitted")) != nys_only:
+            bad.append(f"{dte}: published NOT YET SUBMITTED {v.get('not_yet_submitted')}, "
+                       f"recomputed {nys_only} teams that have no designation in any release either")
+    r.add("CC-DER-12", g, "availability coverage recomputes from both official injury snapshots",
+          "union the team designations across every committed injury snapshot per date, then "
+          "recount: a team that has since filed must not also be counted as not-yet-submitted",
+          PASS if not bad else FAIL, f"{len(bad)} problem(s): {bad[:3] or 'none'}",
+          evidence="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
+          note="the column is a count of teams, and the sets overlap: 'filed' and 'NOT YET SUBMITTED' "
+               "are not disjoint when two releases are unioned, so slots - filed - nys can go below zero")
 
 
 def check_derived_arithmetic(r: Report, site: dict):
@@ -625,32 +708,14 @@ def check_derived_arithmetic(r: Report, site: dict):
                 dte = rec[c0["game_date"]]
                 e = union.setdefault(dte, {"filed": set(), "nys": set()})
                 (e["nys"] if rec[c0["status"]] == "NOT YET SUBMITTED" else e["filed"]).add(rec[c0["team"]])
-        sl = load_json(snapshot_candidates("slate")[0])
-        sc = {c: i for i, c in enumerate(sl["columns"])}
-        as_of = sl.get("as_of")
-        bad = []
-        for row in avail:
-            v = vals(row)
-            dte = str(v.get("date"))
-            n_games = sum(1 for x in sl["records"] if x[sc["date"]] == dte)
-            slots = 2 * n_games
-            e = union.get(dte, {"filed": set(), "nys": set()})
-            filed = len(e["filed"])
-            nys_only = len(e["nys"] - e["filed"])
-            unlisted = slots - filed - nys_only
-            if num(v.get("no_rows_yet")) != unlisted:
-                bad.append(f"{dte}: published no_rows_yet {v.get('no_rows_yet')}, "
-                           f"recomputed {unlisted} (slots {slots} - filed {filed} - not-submitted-only {nys_only})")
-            if num(v.get("not_yet_submitted")) != nys_only:
-                bad.append(f"{dte}: published NOT YET SUBMITTED {v.get('not_yet_submitted')}, "
-                           f"recomputed {nys_only} teams that have no designation in any release either")
-        r.add("CC-DER-12", g, "availability coverage recomputes from both official injury snapshots",
-              "union the team designations across every committed injury snapshot per date, then "
-              "recount: a team that has since filed must not also be counted as not-yet-submitted",
-              PASS if not bad else FAIL, f"{len(bad)} problem(s): {bad[:3] or 'none'}",
-              evidence="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_07_30PM.pdf",
-              note="the column is a count of teams, and the sets overlap: 'filed' and 'NOT YET SUBMITTED' "
-                   "are not disjoint when two releases are unioned, so slots - filed - nys can go below zero")
+        sl_sel = slate_snapshot(site)
+        if sl_sel is None:
+            r.add("CC-DER-12", g, "availability coverage recomputes from both official injury snapshots",
+                  "union the team designations across every committed injury snapshot per date, then recount",
+                  FAIL, "no slate snapshot matches the published slate table — game slots unavailable",
+                  "data/raw")
+        else:
+            _availability_recount(r, g, sl_sel[1], avail, union)
 
     r.add("CC-DER-08", g, "rotation table: expected-bodies-missing never exceeds the players actually listed, floor inside 0..15",
           f"recompute over {len(rot)} teams", PASS if not rot_bad else FAIL,
@@ -768,7 +833,14 @@ def check_seal(r: Report, site: dict):
     r.add("CC-SEAL-03", g, "the digest printed on every page is the file's own digest",
           "meta.seal.sha256 vs the sealed file header", PASS if same_digest else FAIL,
           f"site {site['meta']['seal']['sha256'][:16]}… vs file {stored[:16]}…")
-    slate = load_json(snapshot_candidates("slate")[0])
+    sel = slate_snapshot(site)
+    if sel is None:
+        r.add("CC-SEAL-07", g, "sealed predictions reference games present in the slate snapshot that matches the published table",
+              "slate_snapshot selection (row-count anchored)", FAIL,
+              "no slate snapshot matches the published slate table — sealed-vs-slate checks cannot run",
+              "data/raw")
+        return
+    slate = sel[1]
     scols = {c: i for i, c in enumerate(slate["columns"])}
     srecs = {x[scols["game_id"]]: x for x in slate["records"]}
     sealed_at = datetime.fromisoformat(str(doc["header"]["sealed_at_utc"]).replace("Z", "+00:00"))
@@ -1113,11 +1185,42 @@ def check_backtest_surface(r: Report, site: dict):
           f"report says n_games={meta.get('n_games')}, n_dates={meta.get('n_dates')}, "
           f"{meta.get('first_date')}..{meta.get('last_date')}; bad rows: {bad_rows[:3] or 'none'}",
           evidence="https://www.nba.com/games")
-    as_of = str(load_json(snapshot_candidates("slate")[0]).get("as_of"))
-    future = [gid for gid, x in games.items() if str(x.get("date")) > as_of]
-    r.add("CC-BT-02", g, "a 'final scores' set contains only games that precede the snapshot it is graded against",
-          f"compare each game date with the slate snapshot as_of ({as_of})",
-          PASS if not future else FAIL, f"{len(future)} game(s) dated after the snapshot: {future[:4] or 'none'}")
+    sel = slate_snapshot(site)
+    as_of = str(sel[1].get("as_of")) if sel else ""
+    # CC-BT-02 — the no-look-ahead invariant, anchored where it actually applies.
+    #
+    # This check used to anchor the committed "final scores" set to the PUBLISHED SLATE's
+    # as_of. That was correct while the two trees shared one anchor date, and it stopped
+    # being correct the moment the shared official history advanced past the frozen v1
+    # slate snapshot (the v1 tree is a self-contained 2026-11-14 build: it reads
+    # config.SNAPSHOT_SLATE and config.SNAPSHOT_FINALS and never touches data/raw/history).
+    # The report is a WALK-FORWARD sample: each game is graded only on games that preceded
+    # it, so the anchor that governs it is the report's own declared cutoff, not another
+    # tree's slate snapshot. The invariant is therefore restated against that cutoff:
+    # no game in the report's final-scores set may post-date the cutoff the report
+    # declares for itself.
+    rep_last = str(meta.get("last_date") or "")
+    future = [gid for gid, x in games.items() if rep_last and str(x.get("date")) > rep_last]
+    r.add("CC-BT-02", g,
+          "the report's 'final scores' set contains only games on or before the cutoff the report declares",
+          f"compare each committed game date with the report's own last_date ({rep_last or 'UNAVAILABLE'})",
+          PASS if rep_last and not future else FAIL,
+          f"{len(future)} game(s) dated after the report cutoff: {future[:4] or 'none'}" if rep_last
+          else "the report declares no last_date — cannot be checked",
+          evidence="https://www.nba.com/games")
+    # The cross-tree fact is disclosed rather than hidden: the shared official history
+    # advances every game night, and the frozen v1 slate snapshot it used to share an
+    # anchor with does not. It is reported, with the count, so a reviewer can see it.
+    beyond = [gid for gid, x in games.items() if sel and str(x.get("date")) > as_of]
+    r.add("CC-BT-02b", g,
+          "the shared official history and the frozen v1 slate snapshot are not silently conflated",
+          "count the committed games that post-date the published slate snapshot's as_of",
+          PASS if sel else FAIL,
+          f"{len(beyond)} committed game(s) post-date the v1 slate snapshot (as_of {as_of or 'UNAVAILABLE'}); "
+          f"the v1 tree grades only from its own {('finals_2026-11-13.json')} and never reads data/raw/history, "
+          f"so this is a cross-tree offset and not look-ahead leakage",
+          evidence="https://www.nba.com/games",
+          note="disclosed as irregularity I-7BF0-05 on the Flagged for Review page")
 
     def frac(a, b):
         return round(a / b, 4) if b else None
@@ -1283,11 +1386,13 @@ def check_docs(r: Report, site: dict):
     r.add("CC-DOC-03", g, "meta.tiers equals a recount of the line table",
           f"count tier letters: {counted}", PASS if tier_ok else FAIL,
           f"meta {tiers}")
+    sel4 = slate_snapshot(site)
+    as_of4 = str(sel4[1].get('as_of')) if sel4 else None
     r.add("CC-DOC-04", g, "the site reports which snapshot it is built from",
-          "meta.snapshot_as_of must equal the slate snapshot's own as_of",
-          PASS if str(meta.get("snapshot_as_of")) == str(load_json(snapshot_candidates('slate')[0]).get('as_of')) else FAIL,
-          f"meta {meta.get('snapshot_as_of')!r} vs snapshot "
-          f"{load_json(snapshot_candidates('slate')[0]).get('as_of')!r}")
+          "meta.snapshot_as_of must equal the as_of of the slate snapshot the published table matches",
+          PASS if sel4 and str(meta.get("snapshot_as_of")) == as_of4 else FAIL,
+          f"meta {meta.get('snapshot_as_of')!r} vs snapshot {as_of4!r}"
+          + ("" if sel4 else " (no slate snapshot matches the published table)"))
     gen = str(meta.get("generated_at_utc") or "")
     try:
         dt = datetime.strptime(gen, "%Y-%m-%d %H:%M UTC")
@@ -1397,7 +1502,14 @@ def check_html(r: Report, site: dict):
 
 def check_freshness(r: Report, site: dict):
     g = "J. freshness (the known product blocker)"
-    slate = load_json(snapshot_candidates("slate")[0])
+    sel = slate_snapshot(site)
+    if sel is None:
+        r.add("CC-FRESH-04", g, "a slate snapshot matching the published table exists (freshness computable)",
+              "slate_snapshot selection (row-count anchored)", FAIL,
+              "no candidate matches the published slate table — as_of unknown, freshness not computable",
+              "data/raw")
+        return
+    slate = sel[1]
     as_of = date.fromisoformat(str(slate.get("as_of")))
     head = ROOT / ".git/HEAD"
     commit_date = None
@@ -1489,6 +1601,31 @@ def _workflow_summary() -> str:
         trig = re.findall(r"^\s{2}(\w+):", text.split("on:", 1)[-1].split("\njobs")[0], re.M)
         out.append(f"{p.name}: {','.join(t for t in trig if t in ('push', 'pull_request', 'schedule', 'workflow_dispatch')) or '?'}")
     return "; ".join(out)
+
+
+def _matching_times_snapshot(site: dict) -> Path:
+    """The times snapshot the published corroboration table was built from.
+
+    Same defect class as slate selection: "newest first" is not "the one the
+    published rows cite". The corroboration section names the release its build
+    used (11/13 19:30 ET, `Injury-Report_2026-11-13_07_30PM.pdf`), while a later
+    capture — e.g. the 05:15 AM ET game-times file salvaged from PR #57 — sorts
+    newer and would silently become "the second document", changing the
+    recomputed counts and failing CC-PUB-05 for a reason that has nothing to do
+    with the published rows. Anchor on the citation; fall back to the newest
+    candidate only when no citation matches (the pre-existing behaviour).
+    """
+    urls = {s.get("url") for s in section(site, "corroboration").get("sources", [])
+            if isinstance(s, dict) and s.get("url")}
+    cands = snapshot_candidates("times")
+    for p in cands:
+        try:
+            src = load_json(p).get("source") or ""
+        except Exception:
+            continue
+        if isinstance(src, str) and src in urls:
+            return p
+    return cands[0]
 
 
 def _matching_injury_snapshot(site: dict) -> Path:

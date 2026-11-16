@@ -1,0 +1,53 @@
+# Official-source reachability probe (session arena/d09f8d1e-nba2, D9-03 / F-043).
+#
+# WHY: the scheduled "Nightly ingest + settlement" job failed twice at
+# "Fetch official finals for arrived window dates" with exit code 3, which
+# nba2/pipeline/refresh.py defines as "every official endpoint unreachable
+# (network-level failure)". F-043 records that the failure cause is unverified
+# because the run-log download returned EOF during the prior audit.
+#
+# This workflow is READ-ONLY evidence: tools/probe_official.py requests each
+# official URL the pipeline depends on, with both the pipeline's User-Agent and a
+# browser User-Agent, and records per URL: HTTP status, byte length, sha256,
+# content type, and the response body itself (capped). It never writes to the
+# repository's data tree and never commits. Runs only on manual dispatch.
+#
+# Note: a workflow file is registered from the default branch, so this workflow
+# becomes dispatchable by name once it lands on main; until then the same script
+# runs from the `diagnostics` job in refresh.yml (dispatched with --ref).
+
+name: Probe official sources (read-only)
+
+on:
+  workflow_dispatch:
+  # Registered workflows dispatch from the default branch only, so until this file
+  # lands on main the same probe runs at pull-request time when it (or the script)
+  # changes — that is how the F-043 evidence in this session's record was gathered.
+  pull_request:
+    paths:
+      - 'tools/probe_official.py'
+      - '.github/workflows/probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe every official endpoint the ingest depends on
+        run: python3 tools/probe_official.py --out probe_out
+
+      - name: Upload probe report as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-source-probe
+          path: probe_out/
+          retention-days: 30

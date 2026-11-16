@@ -151,7 +151,17 @@ def build() -> dict:
         "first_date": dates[0],
         "last_date": dates[-1],
         "n_dates": len(dates),
-        "generated": "2026-11-14",
+        # Deterministic, and truthful. This used to be the hardcoded literal "2026-11-14",
+        # which quietly went stale: the report now covers games through 2026-11-15 while
+        # still claiming to have been generated on 2026-11-14 — a report cannot have been
+        # produced before the newest game it contains. The stamp is now the newest
+        # official final in the committed history, so it moves exactly when the data does
+        # and a rebuild stays byte-identical (the CI backtest job depends on that).
+        "generated": dates[-1],
+        "generated_field_note": (
+            "the newest official final date in the committed history; this report is a "
+            "deterministic rebuild of that history, so the stamp moves only when the "
+            "committed history does"),
     }
 
     integrity = _integrity(games)
