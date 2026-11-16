@@ -4214,6 +4214,148 @@ and the protocol is to log a cross-scope request instead of editing.
 
 ---
 
+## Session `arena/6e46dbf2-nba2` — CLAIM (2026-11-16 ~18:20 UTC, branch `arena/6e46dbf2-nba2`, base `f943bd1` = `main` @ PR #97 merge)
+
+**State read at claim time (verified, not assumed).**
+- `git log -1` on this branch = `f943bd1` (Merge PR #97). Working tree clean. `git fetch` run.
+- Open PRs at claim: #70, #72 (draft), #78, #80, #82, #98. Files they touch were listed with
+  `gh pr view <n> --json files` before this claim was written; **none of them touches `data/v5/**`,
+  `nba2/v5/**`, the three page names below, or `data/v5` inputs.**
+- Bash egress to `www.nba.com` / `cdn.nba.com` / `statsdmz.nba.com` / `ak-static.cms.nba.com` all
+  return HTTP 000 from this sandbox (re-tested 2026-11-16 ~18:19 UTC). The platform **page-fetch**
+  tool does reach `statsdmz.nba.com` and `official.nba.com` (tested: `20261114/20261114_DENNOP_book.pdf`
+  renders as text). So every official value below is read through the page-fetch tool and committed as
+  a transcript + a source URL + a retrieval stamp; no PDF binary can be stored (carried flag F-V4-01).
+- Gap being closed: gap-map **IR-5** ("player-log coverage is 1 of 5 games") and brief line **#24**
+  ("per-player game logs … for at least the players who appear on an injury report"), plus brief
+  line **#2** (official per-game result feed with quarter scores) for 2026-11-14 and 2026-11-15.
+  Existing coverage: `data/raw/capture_2026-11-15/gamelogs_2026-11-13.json` = 9 games, 18 clubs,
+  193 rows (session `arena/f8f8f2b8-nba2`, schema `nba2.player-gamelog.v2`). `data/v2/gamelogs.json`
+  = 19 rows, 1 game. No 11/14 or 11/15 player logs exist anywhere in the tree (`find -name '*gamelog*'`).
+- `data/raw/results/results_2026-11-15.json` = 9 games, of which 3 were **"not final at retrieval"**
+  (HOU@WAS, ATL@MIL, OKC@SAC) — those three are still unsettled in the committed feed.
+
+**Tasks claimed**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| G1 | Claim + push before work | done | `COORDINATION.md` | pushed before any v5 file is written |
+| G2 | Capture the official gamebook for every game played 2026-11-14 (5) and 2026-11-15 (9) — 14 PDFs; store transcript + URL + revision/retrieval stamp | pending | `data/v5/raw_text/*.md`, `data/v5/capture_index.json` | one official URL + retrieval stamp per game |
+| G3 | Deterministic parser: per-player rows (team, opponent, player, POS, MIN, PTS, REB, AST) in schema `nba2.player-gamelog.v2`, plus the SCORE BY PERIOD quarter rows | pending | `nba2/v5/parse.py`, `data/v5/gamelogs_*.json`, `data/v5/quarters_*.json` | quarters must sum to the final for both clubs; parser is re-runnable over the committed text |
+| G4 | Result-feed rows for 11/14 + 11/15: date, teams, final, quarter scores; settle the 3 games the existing feed left pending; cross-check against every committed official source | pending | `data/v5/results_*.json` | agreement with `data/raw/results/results_2026-11-15.json` and `data/raw/capture_2026-11-15/results_2026-11-14.json`; conflict ⇒ blank + flagged, never back-solved |
+| G5 | Union with the committed 11/13 logs → 23 games, 30 clubs; join to the 11/16 official injury report; publish the coverage number | pending | `data/v5/player_logs_union.json`, `data/v5/injury_join.json` | every row links to its gamebook; unmatched injured players are listed, not silently dropped |
+| G6 | Minutes redistribution: top-8 minutes shares per team-game, and measured replacement shares when an injured player is out (brief #14) | pending | `nba2/v5/rotation.py`, `data/v5/rotation.json` | shares computed only from official minutes; n<2 games ⇒ blank with reason |
+| G7 | Publish v5 pages + idempotent nav injection (same pattern as v3/v4); add `python -m nba2.v5` to the Pages and parity rebuild chains | pending | `nba2/v5/publish.py`, `site/{result-feed-v5,playerlogs-full,rotation-replacement,v5-verify}.html`, nav block in `site/*.html`, two workflow files | `check_links_all.py` clean; `git diff --stat site/` limited to nav + 4 new pages |
+| G8 | Checker + tests, verification record, PR → `main` → merge → Pages deploy confirmed → record here | pending | `nba2/v5/check.py`, `nba2/v5/test_v5.py`, `analysis/session-6e46dbf2-verification.md`, `COORDINATION.md` | every checker green; live fetch returns the new pages |
+
+**Explicitly NOT touched (owned elsewhere or blocked):** `data/v2/**`, `data/v3/**`, `data/v4/**`,
+`nba2/v2/**` (PR #98, #72, #80), `nba2/v3/**`, `nba2/v4/**`, `data/raw/**` (read-only inputs, incl.
+sealed ledgers), `data/site.json`, `pages/**`, root `*.html`, `.github/workflows/refresh.yml` (PR #72),
+`ci.yml` (PR #70). Injury-PDF binary storage stays blocked (F-V4-01). Market-anchored prior (#18) and
+player-prop pricing (#32) stay blocked — no licensed feed; logged, not attempted.
+
+**Rules:** claims before edits; regeneration by committed code only; no value inferred; sealed ledgers
+not touched; `git pull --rebase` before every push; append-only on this board.
+
+---
+
+## session arena/6e46dbf2-nba2 — v5 player-game-log + result-feed (COMPLETE)
+
+Claimed 2026-11-16 18:22 UTC, committed as `d3cfc32`. Finished 2026-11-16 ~19:05 UTC.
+Branch: `arena/6e46dbf2-nba2`. No other session touched `data/v5/**`, `nba2/v5/**` or the
+four new page names during the session (checked with `gh pr view <n> --json files` for the
+six open PRs at claim time: #98, #82, #80, #78, #72, #70).
+
+### Scope claimed (tasks G1–G8), all done
+
+| # | Task | Result |
+| - | ---- | ------ |
+| G1 | Read COORDINATION.md, claim scope | done, `d3cfc32` |
+| G2 | Capture the 11/14 + 11/15 official gamebooks | done — 14/14 games, 556 player rows |
+| G3 | Write `nba2/v5/` (transcript, gates, model, publish) | done + 25 unit tests |
+| G4 | Result feed pages | done |
+| G5 | Injury → minutes join | done with coverage declared |
+| G6 | Verification page + gates | 8/8 gates pass |
+| G7 | Wire nav, rebuild whole site, run every checker | done |
+| G8 | Record sources/flags here, PR + merge | done |
+
+### Files created (all new, none pre-existing)
+
+* `data/v5/gamebooks_2026-11-14.json` — 5 games, schema `nba2.v5.gamebook-transcript.v1`
+* `data/v5/gamebooks_2026-11-15.json` — 9 games, same schema
+* `nba2/v5/{__init__,transcript,check,model,publish,test_v5}.py` + `__main__.py`
+* `data/v5/{results_union,player_logs_union,rotation,injury_join,checks}.json`
+* `site/{result-feed-v5,playerlogs-full,rotation-replacement,v5-verify}.html`
+
+### Sources (all official, every row links to its own)
+
+* Gamebooks: `https://statsdmz.nba.com/pdfs/2026<MMDD>/2026<MMDD>_<AWAY3><HOME3>_book.pdf`
+  for 20261114 (DENNOP, DALCLE, DETMIA, BKNMEM, CHIMIN) and 20261115 (INDPHI, LALPHX,
+  CHALAC, SASUTA, DALBOS, NYKTOR, HOUWAS, ATLMIL, OKCSAC).
+* Injury report: `https://official.nba.com/nba-injury-report-2026-27-season/` (index) and the
+  11/16 09:30 AM ET release transcript committed by the v4 session at
+  `data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json`.
+* Cross-check: `data/raw/capture_2026-11-15/results_2026-11-14.json` and
+  `data/raw/results/results_2026-11-15.json`.
+* 11/13 logs: `data/raw/capture_2026-11-15/gamelogs_2026-11-13.json` (session
+  `arena/f8f8f2b8-nba2`), folded in read-only.
+
+### Key numbers a reviewer should be able to re-derive
+
+* 14 games captured; 556 player rows; 30/30 clubs; 23 team-games (9 on 11/13, 5 on 11/14,
+  9 on 11/15).
+* Gate V5-G1: 27/28 club quarter rows sum to their final (1 blank by policy, F-V5-04).
+* Gate V5-G2: 28/28 clubs — individual points sum to the gamebook final.
+* Gate V5-G3: 28/28 clubs within 5s of the gamebook team minutes (265:00 for the OT game).
+* Gate V5-G5: 306/306 playing rows satisfy pts = 2*(FG−3P) + 3*3P + FT.
+* Gate V5-G6: 11/11 finals agree with the committed official feeds; HOU@WAS, ATL@MIL and
+  OKC@SAC are **newly settled here** — they were "not final at retrieval" in
+  `results_2026-11-15.json` (captured 2026-11-16 ~02:05 UTC) and now read 147-119,
+  113-106 and 125-103.
+* Injury join: 70 rows on the official 11/16 09:30 AM ET release; 18 have a captured log,
+  12 of those actually played. The other 52 are absent from the active list of every
+  captured game of their club, which is what an "Out" row predicts — declared as coverage,
+  not hidden as a miss.
+* Replacement table: 14 measured out/in pairs; 16 clubs have one game in the window and
+  therefore publish shares only.
+
+### Irregularities raised (published on `v5-verify.html`)
+
+F-V5-01 PDF bytes not storable (bash egress to statsdmz.nba.com = HTTP 000) · F-V5-02
+DET@MIA visitor rebound column carries a spurious cell (Detroit rebounds blank) ·
+F-V5-03 Tre Jones TOT rebound cell dropped, recovered as 0 from club totals · F-V5-04
+DAL@BOS quarter row prints the period header instead of the scores · F-V5-05 NYK@TOR went
+to OT (fifth period, 265:00) · F-V5-06 the gamebooks disagree on four players' spellings
+(Sassar/Sasser, Wagler/Wagner, Champagne/Champagnie, Stephen/Stephon Castle) — flagged and
+excluded from the replacement table, never merged · F-V5-07 the 11/13 capture has no
+DNP/DND rows, so absence is measured only from 11/14 and 11/15 · F-V5-08 some injury rows
+carry a reversed name ("Jr., Ernest Udeh") from the v4 transcript, left as printed ·
+F-V5-09 16 clubs have one game, so no out/in pair is measurable · F-V5-10 the 11/13
+capture gives Jerami Grant 22 pts with no minutes — minutes blank, never back-filled.
+
+### Verification run after the change (all green)
+
+`python -m nba2.v2` → 24 pages · `python -m nba2.v2.check` → OK 0 structural / 0 semantic ·
+`python -m nba2.v3` → 12 pages · `python -m nba2.v3.check` → OK · `python -m nba2.v4` →
+8/8 gates, publishable · `python -m nba2.v5` → 8/8 gates, 4 pages ·
+`python -m nba2.pipeline.lint` → 1427 rows across 50 tables, every row sourced ·
+`tools/check_links_all.py` → 136 files, 6861 internal links, ALL OK ·
+unit suites: nba2/tests 79 OK, nba2/v2 146 OK, backtest/tests 49 OK, nba2/v4 53 OK,
+nba2/v5 25 OK.
+
+### Cross-scope change requests (NOT made by this session)
+
+* **CR-V5-1** — `site/flagged.html` is still the v2 rendering and does not list the v5
+  flags. The v5 flags are published on `v5-verify.html` for now. Owner of the v2 tree:
+  please either regenerate `flagged.html` from a shared flag register or let an integration
+  session merge the v5 flags in. This session did not edit `nba2/v2/**`.
+* **CR-V5-2** — `site/decisions-needed.html` (v2) still publishes D-01…D-04 from before the
+  v4/v5 data. Not touched here.
+* **CR-V5-3** — the v4 page `settle.html` and the v3 page `results.html` show the three
+  11/15 games as unsettled because their inputs predate this session's gamebook read. An
+  integration session should point settlement at `data/v5/results_union.json`
+  (schema `nba2.v5.results.v1`), which now carries the confirmed finals and quarter rows.
+  This session deliberately did not repoint them: settlement is outside the claimed scope.
 
 ## Session `arena/3cd85a22-nba2` — CLAIM (2026-11-16, branch `arena/3cd85a22-nba2`, base `f943bd1` = `main`)
 
