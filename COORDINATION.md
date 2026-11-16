@@ -4229,3 +4229,13 @@ Files touched: only this claim/completion record and the new audit note. No sour
 - Z-02: current unit/checker/link/crosscheck results and code-level findings are in `analysis/session-09c0c9a2-audit.md`. Suites passed (79 + 146 + 67 + 53 + 49 tests); v4 gates 8/8; provenance lint 1,427 rows/50 tables; whole-site internal-link scan passed 132 files/6,378 links. `tools/crosscheck_site.py` reports 97 checks, 88 pass, 2 fail, 7 info: CC-DOC-01 stale README counts and CC-FRESH-01 stale legacy snapshot. v3 stored verification also has G-F3 (used injury report is not the newest indexed).
 - Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
 - Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
+---
+---
+
+## Session `arena/8d7c29de-nba2` — claim (2026-11-16 UTC)
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| FV4-01 | Resolve CR-V4-2: make the canonical Flagged for Review page point readers to the complete v4 gate/findings register, and add a regression check so the link cannot disappear during rebuilds | in progress | `arena/8d7c29de-nba2` | `nba2/v2/build.py` (flagged-page body only), new `nba2/v2/test_v4_flag_link.py`, regenerated `site/flagged.html`, new `analysis/session-8d7c29de-flagged-v4.md`, append-only `COORDINATION.md` | Existing `site/v4-verify.html` is the evidence target and contains official NBA source URLs per F-V4-01…09; local v2/v4/link checkers will be run. No new NBA facts or data values will be added. |
+
+**Explicitly not touched:** shared navigation/index, table data, live captures, model or settlement logic, and any file outside the scope above. This is the handoff requested as CR-V4-2 in the `arena/b3914335-nba2` completion record.
