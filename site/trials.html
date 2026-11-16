@@ -36,7 +36,7 @@
 <a href="flagged.html">Flagged for review</a>
 <a href="sources.html">Sources</a>
 <a href="methodology.html">Methodology</a>
-<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v3 rolling slate —</a>
+<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v3 frozen snapshot —</a>
 <a href="slate.html">Slate &amp; disagreement</a>
 <a href="projections.html">Projection surface</a>
 <a href="rotation.html">Rotation &amp; minutes</a>
@@ -53,6 +53,7 @@
 </aside>
 <main>
 <p class="crumbs"><a href="index.html">Dashboard</a> · v3 rolling slate · session arena/e675ac3d-nba2</p>
+<div class="note warn"><b>This is a frozen pre-tip snapshot, not the current window.</b> Every page in the v3 tree is the 2026-11-15 → 2026-11-18 slate, hashed and sealed at 2026-11-15T11:41:00Z before the first tip of that window. The seal is write-once: a later session must not roll this window forward, because re-issuing a pre-tip commitment after the result is known would destroy the only thing the ledger proves. A newer window (2026-11-16 → 2026-11-19) is committed at <code>data/raw/capture_2026-11-16/slate_2026-11-16_to_11-19.json</code> and is what the <a href="index.html">dashboard</a> currently prices. Read these pages as the dated record they are.</div>
 <h1>Trial registry &amp; multiple-testing</h1>
 <p class="lede">Append-only trial-count registry and the Deflated Sharpe bar that G-06 imposes on the leaderboard.</p>
 

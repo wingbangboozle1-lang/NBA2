@@ -52,6 +52,25 @@ NAV = [
     ("methodology.html", "Methodology"),
 ]
 
+# The v3 tree is written by nba2/v3 and is a FROZEN pre-tip snapshot of an earlier window:
+# its ledger is sealed before the first tip of its own slate, so its window can never be
+# rolled forward without destroying the commitment the seal exists to prove. It stays on
+# the site as a dated record -- but it has to be labelled as one, or a reader comparing it
+# with this window will reasonably conclude the site contradicts itself.
+V3_NAV = [
+    ("slate.html", "Slate &amp; disagreement"),
+    ("projections.html", "Projection surface"),
+    ("rotation.html", "Rotation &amp; minutes"),
+    ("travel.html", "Rest &amp; travel"),
+    ("results.html", "Result feed"),
+    ("ledger.html", "Sealed ledger"),
+    ("player-logs.html", "Player game logs"),
+    ("minutes.html", "Measured minutes"),
+    ("injury-diff.html", "Injury release diff"),
+    ("lategame.html", "Late-game &amp; garbage time"),
+    ("trials.html", "Trial registry"),
+    ("verification-v3.html", "v3 verification"),
+]
 CSS = """
 :root{
   --bg:#0b0f16; --panel:#111823; --panel2:#161f2c; --line:#22303f;
@@ -207,6 +226,11 @@ def srclink(url, label=None):
 def page(name, title, body, active=None):
     nav_bits = []
     for href, label in NAV:
+        cls = ' class="on"' if href == active else ""
+        nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
+    nav_bits.append('<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">'
+                    '— v3 frozen snapshot —</a>')
+    for href, label in V3_NAV:
         cls = ' class="on"' if href == active else ""
         nav_bits.append(f'<a href="{href}"{cls}>{label}</a>')
     nav = "\n".join(nav_bits)
@@ -668,7 +692,7 @@ surface. The expensive decision remains the price: with no odds feed, nothing on
 
     # ------------------------------------------------------------------ picks & slate
     body = f"""<h1>Picks &amp; the upcoming slate</h1>
-<p class="lede">Every game in the dated window through three days after the snapshot (2026-11-15 → 2026-11-18) is priced from our own originated lines,
+<p class="lede">Every game in the dated window through three days after the snapshot ({O.WINDOW_START} → {O.WINDOW_END}) is priced from our own originated lines,
 and every game gets a lean. What no game gets is a stake: a bet needs a price to beat and a settled sample large enough
 that the edge is not a coin flip that happened to land, and this repository has neither.</p>
 <div class="note"><b>What a "lean" is here.</b> It is the side our own number favours, together with the
