@@ -1,0 +1,164 @@
+{
+ "schema": "nba2/v3/team_opponent/v1",
+ "source_url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+ "source_class": "official",
+ "retrieved_at_utc": "2026-11-16T02:28:00Z",
+ "session": "arena/f7186ace-nba2",
+ "chunks_read": [
+  0,
+  1
+ ],
+ "note": "Opp PTS and the Opponent +/- column only; the other 24 opponent columns are not model inputs and were not transcribed.",
+ "rows": [
+  {
+   "abbr": "LAL",
+   "opp_pts": 114.9,
+   "opp_plus_minus": -7.9
+  },
+  {
+   "abbr": "SAS",
+   "opp_pts": 105.9,
+   "opp_plus_minus": -12.9
+  },
+  {
+   "abbr": "BOS",
+   "opp_pts": 102.4,
+   "opp_plus_minus": -13.2
+  },
+  {
+   "abbr": "PHI",
+   "opp_pts": 110.4,
+   "opp_plus_minus": -2.1
+  },
+  {
+   "abbr": "HOU",
+   "opp_pts": 107.4,
+   "opp_plus_minus": -8.8
+  },
+  {
+   "abbr": "MEM",
+   "opp_pts": 111.7,
+   "opp_plus_minus": -8.9
+  },
+  {
+   "abbr": "MIN",
+   "opp_pts": 106.8,
+   "opp_plus_minus": -11.5
+  },
+  {
+   "abbr": "POR",
+   "opp_pts": 111.8,
+   "opp_plus_minus": -7.8
+  },
+  {
+   "abbr": "DET",
+   "opp_pts": 110.3,
+   "opp_plus_minus": -5.4
+  },
+  {
+   "abbr": "GSW",
+   "opp_pts": 112.4,
+   "opp_plus_minus": -4.3
+  },
+  {
+   "abbr": "OKC",
+   "opp_pts": 107.4,
+   "opp_plus_minus": -3.8
+  },
+  {
+   "abbr": "ATL",
+   "opp_pts": 116.8,
+   "opp_plus_minus": -1.3
+  },
+  {
+   "abbr": "CLE",
+   "opp_pts": 115.9,
+   "opp_plus_minus": -1.6
+  },
+  {
+   "abbr": "DAL",
+   "opp_pts": 114.6,
+   "opp_plus_minus": 2.5
+  },
+  {
+   "abbr": "DEN",
+   "opp_pts": 112.8,
+   "opp_plus_minus": -1.8
+  },
+  {
+   "abbr": "MIA",
+   "opp_pts": 119.8,
+   "opp_plus_minus": 1.2
+  },
+  {
+   "abbr": "NYK",
+   "opp_pts": 104.0,
+   "opp_plus_minus": -5.9
+  },
+  {
+   "abbr": "IND",
+   "opp_pts": 114.5,
+   "opp_plus_minus": 2.4
+  },
+  {
+   "abbr": "ORL",
+   "opp_pts": 112.8,
+   "opp_plus_minus": 4.4
+  },
+  {
+   "abbr": "PHX",
+   "opp_pts": 117.3,
+   "opp_plus_minus": 4.7
+  },
+  {
+   "abbr": "TOR",
+   "opp_pts": 112.8,
+   "opp_plus_minus": -1.0
+  },
+  {
+   "abbr": "CHA",
+   "opp_pts": 109.8,
+   "opp_plus_minus": 10.8
+  },
+  {
+   "abbr": "LAC",
+   "opp_pts": 116.5,
+   "opp_plus_minus": 4.2
+  },
+  {
+   "abbr": "NOP",
+   "opp_pts": 124.9,
+   "opp_plus_minus": 9.1
+  },
+  {
+   "abbr": "WAS",
+   "opp_pts": 115.8,
+   "opp_plus_minus": 5.8
+  },
+  {
+   "abbr": "BKN",
+   "opp_pts": 116.4,
+   "opp_plus_minus": 6.3
+  },
+  {
+   "abbr": "CHI",
+   "opp_pts": 125.9,
+   "opp_plus_minus": 11.3
+  },
+  {
+   "abbr": "MIL",
+   "opp_pts": 120.2,
+   "opp_plus_minus": 14.1
+  },
+  {
+   "abbr": "SAC",
+   "opp_pts": 120.9,
+   "opp_plus_minus": 12.8
+  },
+  {
+   "abbr": "UTA",
+   "opp_pts": 118.0,
+   "opp_plus_minus": 10.9
+  }
+ ]
+}

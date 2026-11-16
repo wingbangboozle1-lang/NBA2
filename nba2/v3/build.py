@@ -75,6 +75,14 @@ def src(key: str, label: str | None = None) -> str:
     return f'<a href="{url}" title="{esc(name)}">{esc(label or "SRC")}</a>'
 
 
+def _abbr_for_arena(arena: str):
+    """Arena name -> team tri-code, from the coordinate table. None if not present."""
+    for t, c in O.ARENA_COORDS.items():
+        if len(c) > 2 and c[2] == arena:
+            return t
+    return None
+
+
 def badge(text, kind="info"):
     return f'<span class="badge b-{kind}">{esc(text)}</span>'
 
@@ -353,30 +361,44 @@ def page_travel(res: dict) -> str:
             f"<td class='n'>{esc(f['away']['games_last_4_days'])} / {esc(f['home']['games_last_4_days'])}</td>"
             f"<td>{badge('3-in-4', 'warn') if f['away']['three_in_four'] or f['home']['three_in_four'] else badge('no', 'off')}</td>"
             f"<td>{esc(f['away']['last_game_date'])} / {esc(f['home']['last_game_date'])}</td>"
-            + cell(f["away"]["travel_km"], reason="F-306 no arena coordinates")
-            + f"<td>{esc(l['arena'])}, {esc(l['city'])}, {esc(l['state'])}</td>"
+            + cell(f["away"]["travel_km"], reason="F-306 previous game unknown")
+            + cell(f["home"]["travel_km"], reason="F-306 previous game unknown")
+            + f"<td>{esc(f['away']['previous_game_arena'])} / "
+            f"{esc(f['home']['previous_game_arena'])}</td>"
+            f"<td>{esc(l['arena'])}, {esc(l['city'])}, {esc(l['state'])}</td>"
             f"<td>{src('schedule')}</td></tr>")
     arenas = "".join(
         f"<tr><td>{esc(a)}</td><td>{esc(c)}</td><td>{esc(s)}</td>"
-        + cell(None, reason="F-306 NBA.com publishes no coordinates")
-        + cell(None, reason="F-306 no official geocoder reachable")
-        + f"<td>{src('schedule')}</td></tr>" for a, c, s in O.ARENAS)
+        + (f'<td class="n">{esc(O.ARENA_COORDS.get(_t, (None,))[0])}</td>'
+           f'<td class="n">{esc(O.ARENA_COORDS.get(_t, (None, None))[1])}</td>'
+           if _t else cell(None, reason="F-306 not in the coordinate table")
+           + cell(None, reason="F-306 not in the coordinate table"))
+        + f"<td>{src('schedule')}</td><td>{src('arena_coords')}</td></tr>"
+        for a, c, s in O.ARENAS for _t in [_abbr_for_arena(a)])
     body = f"""
-<div class="note"><b>Rest is measured; travel is not.</b> Rest days, back-to-backs and 3-in-4 come
-straight from the official schedule dates plus the {res['history']['n_games']} official finals
-committed under <code>data/raw/history/</code>. Travel distance needs arena coordinates, which
-NBA.com does not publish; see <a href="verification-v3.html">F-306</a>.</div>
+<div class="note"><b>Rest is official; travel is derived from a third-party coordinate
+table.</b> Rest days, back-to-backs and 3-in-4 come straight from the official schedule dates plus
+the {res['history']['n_games']} official finals committed under <code>data/raw/history/</code>.
+Travel distance is great-circle km between the arena of each club's previous game and the arena of
+this game, computed with haversine over the committed arena-coordinate table. <b>The arena name,
+city and state are official; the coordinates are not</b> — NBA.com publishes none and no official
+geocoder is reachable, so they come from Wikipedia/Wikidata and every distance below carries
+<a href="verification-v3.html">F-306</a> and is labelled derived, never official.</div>
 <h2>Schedule load for every game in the window</h2>
 {table(['Date', 'Matchup', 'Game', 'Rest (away)', 'Rest (home)', 'Rest edge (home)',
         'Back-to-back', 'Games in last 4 days (A/H)', '3-in-4', 'Previous game (A/H)',
-        'Travel km', 'Arena', 'Src'],
+        'Travel km (away)', 'Travel km (home)', 'Previous arena (A/H)', 'This game arena',
+        'Src'],
        rows,
        caption="Rest days = calendar days since that club's previous official game. "
-               "3-in-4 = three or more games in the last four calendar days.")}
-<h2>Arena table</h2>
-{table(['Arena', 'City', 'State', 'Latitude', 'Longitude', 'Src'], arenas,
-       caption="Arena, city and state are official. Coordinates are blank because no official "
-               "source publishes them; the distance column stays blank with them.")}"""
+               "3-in-4 = three or more games in the last four calendar days. Travel km = "
+               "great-circle distance from the arena of that club's previous game to this "
+               "game's arena; derived from third-party coordinates (F-306).")}
+<h2>Arena coordinate table (the source of every distance above)</h2>
+{table(['Arena', 'City', 'State', 'Latitude', 'Longitude', 'Arena src', 'Coord src'], arenas,
+       caption="Arena, city and state are official (nba.com). Latitude and longitude are "
+               "THIRD-PARTY (Wikipedia/Wikidata via the Wikimedia REST summary endpoint, "
+               "captured 2026-11-15) because NBA.com publishes no coordinates — F-306.")}"""
     return page("Rest &amp; travel", "travel.html", body,
                 "Schedule load computed from official dates. Travel distance is withheld until "
                 "arena coordinates have an official source.")

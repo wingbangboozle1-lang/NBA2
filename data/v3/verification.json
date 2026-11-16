@@ -1,14 +1,14 @@
 {
-  "as_of_utc": "2026-11-15T11:41:00Z",
+  "as_of_utc": "2026-11-16T02:45:00Z",
   "gates": {
-    "ran_at_utc": "2026-11-15T11:41:00Z",
+    "ran_at_utc": "2026-11-16T02:45:00Z",
     "measured_against": "the snapshot capture time (deterministic; see _now)",
     "gates": [
       {
         "id": "G-F1",
         "name": "snapshot covers the window it prices",
         "pass": true,
-        "detail": "snapshot 2026-11-15 is 0 day(s) before the first window date 2026-11-15 (allowed 0 or 1)",
+        "detail": "snapshot 2026-11-16 is 0 day(s) before the first window date 2026-11-16 (allowed 0 or 1)",
         "value": {
           "gap_days": 0,
           "measured_age_hours_at_build": 0.0
@@ -21,10 +21,10 @@
         "detail": "all 4 dates carry at least one official game",
         "value": {
           "dates": [
-            "2026-11-15",
             "2026-11-16",
             "2026-11-17",
-            "2026-11-18"
+            "2026-11-18",
+            "2026-11-19"
           ],
           "missing": []
         }
@@ -32,29 +32,29 @@
       {
         "id": "G-F3",
         "name": "injury release is the newest indexed",
-        "pass": false,
-        "detail": "using 11/15/26 06:00 AM ET; newest indexed at retrieval was 11/15/26 06:15 AM ET",
+        "pass": true,
+        "detail": "using 11/15/26 09:00 PM ET; newest indexed at retrieval was 11/15/26 09:00 PM ET",
         "value": {
-          "used": "11/15/26 06:00 AM ET",
-          "newest_indexed": "11/15/26 06:15 AM ET"
+          "used": "11/15/26 09:00 PM ET",
+          "newest_indexed": "11/15/26 09:00 PM ET"
         }
       },
       {
         "id": "G-F4",
         "name": "no sealed row within the tip cutoff",
         "pass": true,
-        "detail": "first tip 2026-11-15 1:00 PM ET is 6.3 h away (cutoff 6 h)",
-        "value": 6.32
+        "detail": "first tip 2026-11-16 7:00 PM ET is 21.2 h away (cutoff 6 h)",
+        "value": 21.25
       },
       {
         "id": "G-F5",
         "name": "record arithmetic",
         "pass": true,
-        "detail": "188 wins / 188 losses vs 188 official finals",
+        "detail": "194 wins / 194 losses vs 194 official finals",
         "value": {
-          "wins": 188,
-          "losses": 188,
-          "finals": 188
+          "wins": 194,
+          "losses": 194,
+          "finals": 194
         }
       },
       {
@@ -79,8 +79,8 @@
         "value": []
       }
     ],
-    "n_pass": 7,
-    "n_fail": 1,
+    "n_pass": 8,
+    "n_fail": 0,
     "publishable": true,
     "policy": "G-F3 and G-F4 are advisory: a newer injury release or a tip inside the cutoff is reported, not fatal, because the site must still show what it knows. Everything in the hard set is fatal."
   },
@@ -96,9 +96,9 @@
           "official": 112.8
         },
         {
-          "team": "PHX",
-          "derived": 115.46,
-          "official": 116.1
+          "team": "NYK",
+          "derived": 104.62,
+          "official": 104.0
         },
         {
           "team": "DEN",
@@ -106,32 +106,22 @@
           "official": 112.8
         },
         {
-          "team": "UTA",
-          "derived": 119.09,
-          "official": 118.6
+          "team": "PHX",
+          "derived": 116.82,
+          "official": 117.3
         },
         {
-          "team": "IND",
-          "derived": 112.73,
-          "official": 113.2
+          "team": "DET",
+          "derived": 110.75,
+          "official": 110.3
         }
       ],
-      "mean_abs_diff": 0.259
+      "mean_abs_diff": 0.269
     },
     "pts_for_vs_traditional_page": {
-      "n": 16,
-      "max_abs_diff": 0.09,
+      "n": 11,
+      "max_abs_diff": 0.07,
       "worst": [
-        {
-          "team": "TOR",
-          "derived": 114.21,
-          "official": 114.3
-        },
-        {
-          "team": "IND",
-          "derived": 111.12,
-          "official": 111.2
-        },
         {
           "team": "NOP",
           "derived": 115.83,
@@ -143,62 +133,72 @@
           "official": 120.6
         },
         {
-          "team": "WAS",
-          "derived": 109.95,
-          "official": 110.0
+          "team": "SAS",
+          "derived": 118.77,
+          "official": 118.8
+        },
+        {
+          "team": "MIA",
+          "derived": 118.67,
+          "official": 118.7
+        },
+        {
+          "team": "GSW",
+          "derived": 116.73,
+          "official": 116.7
         }
       ],
-      "mean_abs_diff": 0.036
+      "mean_abs_diff": 0.027
     }
   },
   "flags": [
     {
       "id": "F-301",
       "area": "window",
-      "finding": "Slate contains a repeat matchup on consecutive days: POR @ MIN is scheduled on both 2026-11-16 (0022600250) and 2026-11-17 (0022600254), in the same arena. NYK @ TOR also repeats inside the window (0022600241 on 11/15, 0022600253 on 11/17). Recorded, not resolved; no line is suppressed for it.",
-      "source": "https://www.nba.com/schedule",
+      "finding": "Slate contains a repeat matchup on consecutive days: POR @ MIN is scheduled on both 2026-11-16 (0022600250) and 2026-11-17 (0022600254), in the same arena. Recorded, not resolved; no line is suppressed for it.",
+      "source": "https://www.nba.com/games?date=2026-11-19",
       "severity": "review"
     },
     {
       "id": "F-302",
       "area": "slate",
       "finding": "Official game IDs are not monotonic in tip order inside 2026-11-18: BOS@DEN is 0022600266 but tips at 9:30 PM ET, after GSW@DAL which is 0022600267 and tips at 8:00 PM ET. Do not use game ID as a date proxy.",
-      "source": "https://www.nba.com/schedule",
+      "source": "https://www.nba.com/games?date=2026-11-19",
       "severity": "review"
     },
     {
       "id": "F-303",
       "area": "injury",
-      "finding": "The 11/15 06:00 AM ET release prints an explicit 'NOT YET SUBMITTED' row for DAL (DAL@BOS) but prints no row at all for NYK (NYK@TOR). Both mean the club had not filed; only one is labelled. The two are recorded identically here, and the difference in the PDF is disclosed rather than smoothed over.",
-      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf",
+      "finding": "The 11/15 09:00 PM ET release is inconsistent about how it marks an unfiled club: PHX@DEN prints an explicit 'NOT YET SUBMITTED' row for Phoenix, while the NYK@TOR block on 11/15 prints no New York rows at all. Both mean the club had not filed; only one is labelled. Both are recorded identically here and the difference is disclosed rather than smoothed over.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
       "severity": "review"
     },
     {
       "id": "F-304",
       "area": "results",
-      "finding": "Quarter scores were captured for 1 of the 5 official 11/14 finals (0022600231). The other four rows carry their game URL and a blank quarter column; nothing was estimated.",
-      "source": "https://www.nba.com/games?date=2026-11-14",
+      "finding": "Quarter scores were captured for 1 of the 11 official finals in the result feed (0022600231). The other ten rows carry their game URL and a blank quarter column; nothing was estimated.",
+      "source": "https://www.nba.com/games?date=2026-11-15",
       "severity": "open"
     },
     {
       "id": "F-305",
       "area": "data",
-      "finding": "Points scored per game is derived from the official OffRtg and POSS columns for all 30 clubs, because only 16 of 30 PTS rows were inside the fetched chunks of the traditional page. The 16 read rows are published as a cross-check and the largest disagreement is reported on the verification page.",
-      "source": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+      "finding": "Points scored per game is derived from the official OffRtg and POSS columns for all 30 clubs, because only 11 of 30 PTS rows were inside the fetched chunks of the traditional page (the table was read sorted by PTS descending). The 11 read rows are published as a cross-check and the largest disagreement is reported on the verification page.",
+      "source": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame&dir=-1&sort=PTS",
       "severity": "open"
     },
     {
       "id": "F-306",
       "area": "travel",
-      "finding": "No arena coordinates: NBA.com publishes arena, city and state but no lat/lon, and no official geocoder is reachable. Travel distance is blank for every game; rest, back-to-back and 3-in-4 are computed from the official schedule dates.",
+      "finding": "Arena coordinates are THIRD-PARTY. NBA.com publishes arena, city and state but no lat/lon, and no official geocoder is reachable, so the coordinates come from Wikipedia/Wikidata (Wikimedia REST summary endpoint, captured 2026-11-15). Rest, back-to-back and 3-in-4 are computed from official schedule dates and are official. Every travel distance derived from the coordinates is published carrying this flag and is labelled derived, never official.",
       "source": "https://www.nba.com/schedule",
       "severity": "open"
     },
     {
       "id": "F-307",
       "area": "rotation",
-      "finding": "nba.com/stats/players/traditional is reachable this session (469 rows with a MIN column), which contradicts the standing 'player_box' blocked entry on the v2 site. The capture was not completed in this session's context budget; the rotation model ships wired but empty.",
-      "source": "https://www.nba.com/stats/players/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+      "finding": "Measured minutes shares exist for the 2026-11-13 window (all nine games, from the official gamebook PDFs) but not for this window: no gamebook for an 11/16-11/19 game can exist yet. The rotation column therefore applies a labelled mechanical rule over the last measured window instead of a fresh measurement.",
+      "source": "https://statsdmz.nba.com/pdfs/",
       "severity": "open"
     },
     {
@@ -207,43 +207,114 @@
       "finding": "No market price feed, so nothing on the bet surface is a bettable edge and every stake is 0.00. The bet surface is emitted only when the projection surface is complete and the owner has accepted the trigger policy.",
       "source": "https://www.nba.com/games",
       "severity": "blocking"
+    },
+    {
+      "id": "F-401",
+      "area": "snapshot",
+      "finding": "This snapshot was captured DURING the 2026-11-15 evening slate (2026-11-16 02:20-02:45 UTC = 21:20-21:45 ET). Three of the nine 11/15 games were still in progress: HOU@WAS (Q4 5:24), ATL@MIL (Q3 12:00) and OKC@SAC (Q1 7:59). Only the six games NBA.com marked Final entered the result feed; the three live scores are committed for provenance and are used in no statistic anywhere in this repository.",
+      "source": "https://www.nba.com/games?date=2026-11-15",
+      "severity": "review"
+    },
+    {
+      "id": "F-402",
+      "area": "slate",
+      "finding": "Tip-time disagreement for GSW@NOP on 2026-11-16: the official injury report prints '08:00 (ET)' while the official schedule (captured by session arena/f8f8f2b8-nba2) prints 21:00 ET. The schedule clock is used, because the PDF prints 12-hour times with no AM/PM marker; the disagreement is recorded, not resolved.",
+      "source": "https://www.nba.com/games?date=2026-11-16",
+      "severity": "review"
+    },
+    {
+      "id": "F-403",
+      "area": "injury",
+      "finding": "Two 11/16 blocks in the PDF (MEM@WAS and ORL@BOS) print NO tip time at all, in a column where the same page prints times for six other games. The time shown for those rows comes from the official schedule, not from the PDF.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+      "severity": "review"
+    },
+    {
+      "id": "F-404",
+      "area": "injury",
+      "finding": "In the 11/16 MEM@WAS block the PDF prints 'Saunders, Richie' and 'Stewart, Isaiah' between the last Memphis row and the Washington 'NOT YET SUBMITTED' row with no team cell of their own. Table position attributes them to Memphis; that is a position read, not a roster fact, and it is the only attribution available from the document.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+      "severity": "review"
+    },
+    {
+      "id": "F-405",
+      "area": "injury",
+      "finding": "The four Denver Nuggets rows in the 11/16 PHX@DEN block (Holmes II, Nembhard, Strawther, Whitmore) print an Out status with an EMPTY reason cell. The reason is unknown from this document and is published blank, not filled in.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+      "severity": "review"
+    },
+    {
+      "id": "F-406",
+      "area": "slate",
+      "finding": "All four 2026-11-19 games render the same 8:00 PM ET tip on nba.com/games. That is what the page printed and it is transcribed as read; it is plausible (all four are 7:00 p.m. Central local) but a single shared value across four games is worth a second look on the next roll.",
+      "source": "https://www.nba.com/games?date=2026-11-19",
+      "severity": "review"
+    },
+    {
+      "id": "F-407",
+      "area": "injury",
+      "finding": "The window is priced from the 11/15 09:00 PM ET release because the 11/16 designations are filed the day before and no 11/16-dated release existed at retrieval. By league rule no report published on 11/15 can contain 11/17, 11/18 or 11/19 rows, so three of the four window dates have no injury data at all and are published blank rather than carried forward.",
+      "source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "severity": "review"
+    },
+    {
+      "id": "F-408",
+      "area": "data",
+      "finding": "The 11/15 09:00 PM release carries 160 rows; only the 62 with an 11/16 game date are transcribed into this snapshot. The full 160-row transcript is committed at data/raw/capture_2026-11-16/injury_report_2026-11-15_0900PM.json and the mechanical diff against the previous release is at data/raw/capture_2026-11-16/injury_delta_0615PM_to_0900PM.json (2 status changes, 7 added, 2 removed, 151 unchanged).",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+      "severity": "review"
     }
   ],
   "sources": {
     "standings": [
       "NBA.com Standings (official)",
       "https://www.nba.com/standings",
-      "W, L, WIN%, GB, conference and division records, home/road/neutral splits, OT record, LAST10, streak."
+      "W, L, WIN%, GB, conference record, home/road/neutral splits, OT record, LAST10, streak. Read live 2026-11-16 02:38 UTC."
     ],
     "team_adv": [
       "NBA.com Stats - Teams Advanced (official)",
       "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
-      "GP, MIN, OffRtg, DefRtg, NetRtg, PACE, POSS, eFG%, TS%, TOV%, OREB%, DREB%, AST%."
+      "GP, W, L, MIN, OffRtg, DefRtg, NetRtg, PACE, POSS, eFG%, TS%, TOV%, OREB%, DREB%, AST%. Read live 2026-11-16 02:25 UTC; all 30 rows."
     ],
     "team_opp": [
       "NBA.com Stats - Teams Opponent (official)",
       "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
-      "Opponent points per game (points allowed) and the opponent +/- column."
+      "Opponent points per game (points allowed) and the opponent +/- column. Read live 2026-11-16 02:28 UTC; all 30 rows."
     ],
     "team_trad": [
       "NBA.com Stats - Teams Traditional (official)",
-      "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
-      "PTS per game (read for 16 of 30 clubs - see PTS_READ), FGA, 3PA, FTA, REB, AST, TOV."
+      "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame&dir=-1&sort=PTS",
+      "PTS per game, read for 11 of 30 clubs (the 11 highest scorers - see PTS_READ). The remaining 19 rows fell outside the chunks fetched and are NOT guessed."
     ],
     "schedule": [
-      "NBA.com Schedule (official)",
-      "https://www.nba.com/schedule",
-      "Game IDs, ET tip times, arena, city and state, broadcast, and the official final scores of the already-completed 11/14 games."
+      "NBA.com Schedule / Games (official)",
+      "https://www.nba.com/games?date=2026-11-19",
+      "The four 2026-11-19 games with official game IDs and ET tip times, read live 2026-11-16 02:34 UTC. The 11-16/17/18 game IDs, tip times and arenas come from data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json (session arena/f8f8f2b8-nba2, read from https://www.nba.com/schedule)."
+    ],
+    "results_1115": [
+      "NBA.com Games - 2026-11-15 (official)",
+      "https://www.nba.com/games?date=2026-11-15",
+      "Final scores and game status for all nine 11/15 games, read live 2026-11-16 02:36 UTC. Six were Final; three were in progress and are excluded from every statistic."
     ],
     "injury_pdf": [
-      "NBA Official Injury Report 11/15/26 06:00 AM ET (official PDF)",
-      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_00AM.pdf",
-      "Per-player status (Out / Doubtful / Questionable / Probable / Available) with the stated reason, plus explicit NOT YET SUBMITTED team rows."
+      "NBA Official Injury Report 11/15/26 09:00 PM ET (official PDF)",
+      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+      "Per-player status (Out / Doubtful / Questionable / Probable / Available) with the stated reason, plus explicit NOT YET SUBMITTED team rows. 160 rows; the 62 that carry an 11/16 game date are the ones this snapshot prices."
     ],
     "injury_index": [
       "NBA Official - injury report policy and release archive (official)",
       "https://official.nba.com/nba-injury-report-2026-27-season/",
-      "Filing deadlines and the list of every published report for the season."
+      "Filing deadlines and the list of every published report for the season. At retrieval the index rendered links through 11/15 09:00 PM ET."
+    ],
+    "injury_prior": [
+      "NBA Official Injury Report 11/15/26 06:15 PM ET (official PDF)",
+      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf",
+      "The release immediately before the one transcribed here. Diffed mechanically (data/raw/capture_2026-11-16/injury_delta_0615PM_to_0900PM.json): 2 status changes, 7 rows added, 2 removed, 151 unchanged."
+    ],
+    "arena_coords": [
+      "Arena latitude / longitude (THIRD-PARTY - Wikipedia/Wikidata geocode)",
+      "https://en.wikipedia.org/api/rest_v1/page/summary/State_Farm_Arena",
+      "Arena name, city and state are official (nba.com schedule). The coordinates are NOT: NBA.com publishes none and no official geocoder is reachable, so they come from the Wikimedia REST summary endpoint captured by session arena/f8f8f2b8-nba2 in data/raw/capture_2026-11-15/arenas_2026-11-15.json. Every distance derived from them is flagged third-party."
     ],
     "linescore": [
       "NBA.com game page - LINESCORES table (official)",
@@ -257,36 +328,36 @@
       "No licensed odds feed is connected and NBA.com renders odds client-side only. Without a price there is no edge, no CLV, no ROI and no stake sizing, so every bet-surface stake is held at 0.00 and only a trigger price is published.",
       "https://www.nba.com/games"
     ],
-    "player_minutes": [
-      "Per-player minutes and usage",
-      "nba.com/stats/players/traditional IS reachable this session (469 rows, MIN column present) but capturing all ten pages was outside this session's context budget. The rotation model is implemented and wired; its per-player shares are blank until the capture lands.",
-      "https://www.nba.com/stats/players/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
-    ],
-    "player_logs": [
-      "Per-player game logs (minutes, points, rebounds, assists, opponent)",
-      "The official player pages render season aggregates only for this client; there is no per-game log endpoint reachable here.",
-      "https://www.nba.com/stats/players/traditional"
-    ],
-    "arena_coords": [
-      "Arena latitude / longitude",
-      "NBA.com publishes the arena name, city and state (captured below) but no coordinates, and no official geocoder is reachable from this environment. Travel distance is therefore blank rather than estimated.",
-      "https://www.nba.com/schedule"
-    ],
     "quarters": [
-      "Quarter scores for games other than 0022600231",
-      "The official LINESCORES table was fetched for one 11/14 game. The other four were not fetched in this session; the cells are blank and each carries its own game URL.",
-      "https://www.nba.com/games?date=2026-11-14"
+      "Quarter scores for 10 of the 11 official finals in the result feed",
+      "The official LINESCORES table was fetched for one game (0022600231). The other ten finals carry their game URL and a blank quarter column; nothing is estimated.",
+      "https://www.nba.com/games?date=2026-11-15"
     ],
     "future_injuries": [
-      "Injury rows for 11/17 and 11/18",
-      "A club files by 5 p.m. local the day before a game, so no report published at 06:41 ET on 11/15 can contain 11/17 or 11/18 rows. Blank by league rule.",
+      "Injury rows for 11/17, 11/18 and 11/19",
+      "A club files by 5 p.m. local the day before a game, so no report published at 21:45 ET on 11/15 can contain 11/17, 11/18 or 11/19 rows. Blank by league rule.",
       "https://official.nba.com/nba-injury-report-2026-27-season/"
+    ],
+    "in_progress": [
+      "Finals for the three 11/15 games still in progress at retrieval",
+      "HOU@WAS, ATL@MIL and OKC@SAC had not finished. Their partial scores are committed for provenance and enter no statistic; they will be captured by the next roll.",
+      "https://www.nba.com/games?date=2026-11-15"
+    ],
+    "player_minutes": [
+      "Per-player minutes and usage for the CURRENT window",
+      "Measured minutes shares exist for the 11/13 window (see the Measured minutes page, built from the official gamebook PDFs of all nine 11/13 games). No gamebook for an 11/16-11/19 game can exist yet, so this window's rotation column is a labelled mechanical rule over the last measured window, not a fresh measurement.",
+      "https://statsdmz.nba.com/pdfs/"
+    ],
+    "arena_coords_official": [
+      "Arena latitude / longitude from an OFFICIAL source",
+      "NBA.com publishes the arena name, city and state but no coordinates, and no official geocoder is reachable. Coordinates are therefore taken from Wikipedia / Wikidata (third-party) and every distance derived from them is published with that flag rather than silently treated as official.",
+      "https://www.nba.com/schedule"
     ]
   },
   "seal": {
-    "file": "data/v3/ledger/sealed-2026-11-15.json",
-    "digest": "34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91",
-    "n": 34,
+    "file": "data/v3/ledger/sealed-2026-11-16.json",
+    "digest": "3aa62646249737b6c77c47a62d8cec505e879dcf6682c3acca849013b89be44c",
+    "n": 29,
     "settled": false
   },
   "settlement": null,
@@ -294,36 +365,36 @@
     {
       "id": "S1",
       "name": "Estimator-agreement moneyline",
-      "file": "data/v3/prereg/S1-estimator-agreement-moneyline.json",
-      "sha256": "623f0bdba346133d83dcd188256bec5382286a74f43901f234d38503a03318b3",
+      "file": "data/v3/prereg/S1-estimator-agreement-moneyline__2026-11-16.json",
+      "sha256": "64dd01184996ce91c62937f0f475b7d173010752239b24cf0e1c9d5a7215b7e2",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S2",
       "name": "Disagreement-fade spread",
-      "file": "data/v3/prereg/S2-disagreement-fade-spread.json",
-      "sha256": "d27fe0b04f2e0d5b289776e6164c7e380d66dd1b49bba4b6958bf5b30a2c02db",
+      "file": "data/v3/prereg/S2-disagreement-fade-spread__2026-11-16.json",
+      "sha256": "8bc35643dea9aecdb5791641336fa39aaf61d77c51fc18d46e0716423e97609b",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S3",
       "name": "Possession-model total",
-      "file": "data/v3/prereg/S3-possession-model-total.json",
-      "sha256": "f88f07be464e81fc570e2d7e22c6b3cf67cb493efd3abde7c1869d3c484177ee",
+      "file": "data/v3/prereg/S3-possession-model-total__2026-11-16.json",
+      "sha256": "8e5c8207f42b9ad7ee86c424c7e574bb041d1182864fe52822f1beb704f32d32",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S4",
       "name": "Rotation-availability fade",
-      "file": "data/v3/prereg/S4-rotation-availability-fade.json",
-      "sha256": "97b85e33675ca0b8fd7cf8f7d328094c7b4ddfb30450e5266dff66ff24d9a8db",
+      "file": "data/v3/prereg/S4-rotation-availability-fade__2026-11-16.json",
+      "sha256": "6c071d3a75371304eabfbbe43bb042fc2c59778ca7159a252efc6b27ac68f21d",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S5",
       "name": "Same-game parlay: spread + total",
-      "file": "data/v3/prereg/S5-same-game-parlay:-spread-+-total.json",
-      "sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79",
+      "file": "data/v3/prereg/S5-same-game-parlay:-spread-+-total__2026-11-16.json",
+      "sha256": "35f36d948a3b380dfccf48fb881b2383aede9d8d7af3458f4a9a9313e413c695",
       "status": "pre-registered, 0 bets placed"
     }
   ]

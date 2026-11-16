@@ -9,11 +9,11 @@
   "universe": "any game in the window where both single-leg probabilities clear the threshold and both clubs are inside the luck noise band",
   "settlement_rule": "Official NBA final score and final total. Both legs must win; a push on either leg voids the parlay.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-16T02:45:00Z",
+  "registered_by": "arena/f7186ace-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-16",
+    "end": "2026-11-19"
   },
-  "sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79"
+  "sha256": "35f36d948a3b380dfccf48fb881b2383aede9d8d7af3458f4a9a9313e413c695"
 }

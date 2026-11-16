@@ -30,8 +30,10 @@ class TestSnapshot(unittest.TestCase):
         self.assertEqual(O.selftest(), [])
 
     def test_records_match_the_finals(self):
-        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), 188)
-        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), 188)
+        """Wins = losses = official finals. Derived, so a refresh cannot break it."""
+        n_finals = len(M.load_played_games()["games"])
+        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), n_finals)
+        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), n_finals)
 
     def test_every_game_carries_a_source_url(self):
         for g in O.SLATE:
@@ -43,17 +45,30 @@ class TestSnapshot(unittest.TestCase):
             self.assertIn(r["game_date"], ("2026-11-15", "2026-11-16"), r)
 
     def test_arenas_have_no_fabricated_coordinates(self):
+        """No coordinate may exist that is not in the committed coordinate table.
+
+        The table is third-party (F-306) and that is disclosed on the page; what this test
+        forbids is a coordinate typed into the snapshot by hand.
+        """
         for a, c, s in O.ARENAS:
             self.assertTrue(a and c and s)
         for g in O.SLATE:
-            self.assertIsNone(g["lat"])
-            self.assertIsNone(g["lon"])
+            row = O.ARENA_COORDS.get(g["home"])
+            if row is None:
+                self.assertIsNone(g["lat"])
+                self.assertIsNone(g["lon"])
+            else:
+                self.assertEqual(g["lat"], row[0])
+                self.assertEqual(g["lon"], row[1])
+            for a, c, st in O.ARENAS:
+                self.assertTrue(a and c and st)
 
 
 class TestHomeCourt(unittest.TestCase):
     def test_hca_is_the_pinned_identity(self):
-        hc = M.home_court(M.load_played_games()["games"])
-        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 188)
+        played = M.load_played_games()["games"]
+        hc = M.home_court(played)
+        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], len(played))
         want = hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])
         self.assertLess(abs(hc["hca_points"] - want), 5e-4)
         self.assertAlmostEqual(M.phi(hc["hca_points"] / hc["margin_sd"]),
@@ -122,8 +137,11 @@ class TestFlow(unittest.TestCase):
                 self.assertIn(f[side]["three_in_four"], (True, False))
                 if f[side]["rest_days"] is not None:
                     self.assertGreaterEqual(f[side]["rest_days"], 0)
-                self.assertIsNone(f[side]["travel_km"])
+                # Travel is measured now, but from THIRD-PARTY coordinates: it must always
+                # carry F-306 and never be presented as an official number.
                 self.assertEqual(f[side]["travel_flag"], "F-306")
+                km = f[side]["travel_km"]
+                self.assertTrue(km is None or (isinstance(km, float) and km >= 0.0), km)
 
     def test_back_to_back_flags_are_consistent(self):
         res = M.build()
@@ -207,7 +225,8 @@ class TestLedger(unittest.TestCase):
             try:
                 LD.LEDGER_DIR = Path(td)
                 info = LD.seal(res)
-                ok, stored, recomputed = LD.verify(Path(td) / "sealed-2026-11-15.json")
+                seal_name = f"sealed-{O.WINDOW[0]}.json"
+                ok, stored, recomputed = LD.verify(Path(td) / seal_name)
                 self.assertTrue(ok)
                 self.assertEqual(stored, info["digest"])
                 self.assertEqual(stored, recomputed)

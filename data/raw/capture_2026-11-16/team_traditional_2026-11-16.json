@@ -1,0 +1,58 @@
+{
+ "schema": "nba2/v3/team_traditional/v1",
+ "source_url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame&dir=-1&sort=PTS",
+ "source_class": "official",
+ "retrieved_at_utc": "2026-11-16T02:32:00Z",
+ "session": "arena/f7186ace-nba2",
+ "chunks_read": [
+  0,
+  1
+ ],
+ "note": "PTS per game read for 11 of 30 clubs - the table is sorted by PTS descending and only chunks 0-1 were fetched, so rows 12-30 (the lowest-scoring clubs) were not read. They are NOT guessed: pts_for is derived from OffRtg x POSS / GP and the 11 read rows are published as an independent cross-check.",
+ "rows": [
+  {
+   "abbr": "LAL",
+   "pts": 122.8
+  },
+  {
+   "abbr": "MEM",
+   "pts": 120.6
+  },
+  {
+   "abbr": "POR",
+   "pts": 119.6
+  },
+  {
+   "abbr": "SAS",
+   "pts": 118.8
+  },
+  {
+   "abbr": "MIA",
+   "pts": 118.7
+  },
+  {
+   "abbr": "MIN",
+   "pts": 118.3
+  },
+  {
+   "abbr": "ATL",
+   "pts": 118.2
+  },
+  {
+   "abbr": "CLE",
+   "pts": 117.5
+  },
+  {
+   "abbr": "GSW",
+   "pts": 116.7
+  },
+  {
+   "abbr": "HOU",
+   "pts": 116.2
+  },
+  {
+   "abbr": "NOP",
+   "pts": 115.9
+  }
+ ]
+}

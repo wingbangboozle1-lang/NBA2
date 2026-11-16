@@ -125,7 +125,11 @@ def write_prereg() -> list[dict]:
         body["window"] = {"start": O.WINDOW[0], "end": O.WINDOW[1]}
         digest = sha256(body)
         body["sha256"] = digest
-        path = PREREG_DIR / f"{s['id']}-{s['name'].lower().replace(' ', '-')[:40]}.json"
+        # Window-scoped filename. A pre-registration is frozen BEFORE the first bet of the
+        # window it names, so a later window must never overwrite it: each window writes
+        # its own file and every previous registration stays verifiable on disk.
+        slug = s["name"].lower().replace(" ", "-")[:40]
+        path = PREREG_DIR / f"{s['id']}-{slug}__{O.WINDOW[0]}.json"
         path.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n")
         out.append({"id": s["id"], "name": s["name"], "file": _rel(path),
                     "sha256": digest, "status": s["status"]})

@@ -251,9 +251,43 @@ def team_schedule(played: list[dict], slate: list[dict]) -> dict:
     return out
 
 
+def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Great-circle distance in km. Pure geometry on two published coordinates."""
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = math.radians(lat2 - lat1)
+    dl = math.radians(lon2 - lon1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * 6371.0088 * math.asin(math.sqrt(a))
+
+
+def travel_for(last_home_abbr: str | None, this_home_abbr: str) -> tuple:
+    """(km, flag_id) from the previous game's arena to this game's arena.
+
+    The arena NAME is official. The COORDINATES are third-party (Wikipedia/Wikidata), so
+    the number is published carrying ``F-306`` - it is derived, not official, and the page
+    says so. When either end is missing a coordinate the answer is ``(None, "F-306")``:
+    a blank with a reason, never an estimate.
+    """
+    a = O.ARENA_COORDS.get(last_home_abbr) if last_home_abbr else None
+    b = O.ARENA_COORDS.get(this_home_abbr)
+    if not a or not b:
+        return None, "F-306"
+    return round(haversine_km(a[0], a[1], b[0], b[1]), 1), "F-306"
+
+
 def flow_for_game(game: dict, played: list[dict], slate: list[dict]) -> dict:
-    """Rest, back-to-back and 3-in-4 from official dates. Travel distance is blank."""
+    """Rest, back-to-back, 3-in-4 and travel distance.
+
+    Rest is measured from official dates. Travel is great-circle km between the previous
+    game's arena and this one, computed on the committed arena-coordinate table; the
+    coordinates are third-party, so every distance carries flag ``F-306`` and is labelled
+    derived on the page. A club with no previous game in the window has no distance.
+    """
     sched = team_schedule(played, slate)
+    by_date_host: dict[str, dict] = {}
+    for g in played + slate:
+        by_date_host.setdefault(g["date"], {})[g["home"]] = g["home"]
+        by_date_host.setdefault(g["date"], {})[g["away"]] = g["home"]
     day = game["date"]
     res = {}
     for side in ("away", "home"):
@@ -269,6 +303,8 @@ def flow_for_game(game: dict, played: list[dict], slate: list[dict]) -> dict:
         last = prior[-1] if prior else None
         days = (iso_days(day) - iso_days(last)) if last else None
         n4 = sum(1 for d in prior if iso_days(day) - iso_days(d) <= 3)
+        last_host = by_date_host.get(last, {}).get(team) if last else None
+        km, flag = travel_for(last_host, game["home"]) if last_host else (None, "F-306")
         res[side] = {
             "team": team,
             "last_game_date": last,
@@ -276,8 +312,10 @@ def flow_for_game(game: dict, played: list[dict], slate: list[dict]) -> dict:
             "back_to_back": days == 1 if days is not None else None,
             "three_in_four": n4 >= 3,
             "games_last_4_days": n4,
-            "travel_km": None,
-            "travel_flag": "F-306",
+            "previous_game_arena": O.ARENA_COORDS.get(last_host, (None, None, None, None))[2]
+                                  if last_host else None,
+            "travel_km": km,
+            "travel_flag": flag,
         }
     res["rest_edge"] = (
         (res["home"]["rest_days"] or 0) - (res["away"]["rest_days"] or 0)

@@ -1,0 +1,19 @@
+{
+  "id": "S2",
+  "name": "Disagreement-fade spread",
+  "signal": "Fade the consensus spread when the two estimators disagree by more than 4.0 points, on the published reasoning that a wide gap means the number is not trustworthy in either direction.",
+  "thresholds": {
+    "min_disagreement_pts": 4.0,
+    "stake_pct": 0.0
+  },
+  "universe": "games in the T+0..T+3 window where both clubs are inside the luck noise band",
+  "settlement_rule": "Official NBA final score against the originated spread. A margin within 0.5 of the spread is a PUSH and is excluded from the hit rate, never counted as a win.",
+  "status": "pre-registered, 0 bets placed",
+  "registered_at_utc": "2026-11-16T02:45:00Z",
+  "registered_by": "arena/f7186ace-nba2",
+  "window": {
+    "start": "2026-11-16",
+    "end": "2026-11-19"
+  },
+  "sha256": "8bc35643dea9aecdb5791641336fa39aaf61d77c51fc18d46e0716423e97609b"
+}

@@ -1,0 +1,134 @@
+{
+ "schema": "nba2/results-official/v2",
+ "source_url": "https://www.nba.com/games?date=2026-11-15",
+ "source_class": "official",
+ "retrieved_at_utc": "2026-11-16T02:36:00Z",
+ "session": "arena/f7186ace-nba2",
+ "chunks_read": [
+  0,
+  1
+ ],
+ "note": "Nine games were scheduled on 11/15. At retrieval (2026-11-15 21:13 ET) six were marked Final by NBA.com and three were still in progress. Only the six Final rows are entered in the result feed; the three in-progress rows are recorded here for provenance and are NOT used in any statistic.",
+ "finals": [
+  {
+   "game_id": "0022600236",
+   "date": "2026-11-15",
+   "away": "IND",
+   "home": "PHI",
+   "away_pts": 124,
+   "home_pts": 131,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600237",
+   "date": "2026-11-15",
+   "away": "LAL",
+   "home": "PHX",
+   "away_pts": 131,
+   "home_pts": 123,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600238",
+   "date": "2026-11-15",
+   "away": "CHA",
+   "home": "LAC",
+   "away_pts": 105,
+   "home_pts": 113,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600239",
+   "date": "2026-11-15",
+   "away": "SAS",
+   "home": "UTA",
+   "away_pts": 110,
+   "home_pts": 102,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600240",
+   "date": "2026-11-15",
+   "away": "DAL",
+   "home": "BOS",
+   "away_pts": 94,
+   "home_pts": 131,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600241",
+   "date": "2026-11-15",
+   "away": "NYK",
+   "home": "TOR",
+   "away_pts": 112,
+   "home_pts": 108,
+   "periods": 5,
+   "status": "Final",
+   "final": true,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+   "src": "games_page"
+  }
+ ],
+ "in_progress_at_retrieval": [
+  {
+   "game_id": "0022600242",
+   "date": "2026-11-15",
+   "away": "HOU",
+   "home": "WAS",
+   "status": "Q4 5:24",
+   "away_pts": 132,
+   "home_pts": 102,
+   "final": false,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/hou-vs-was-0022600242",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600243",
+   "date": "2026-11-15",
+   "away": "ATL",
+   "home": "MIL",
+   "status": "Q3 12:00",
+   "away_pts": 55,
+   "home_pts": 53,
+   "final": false,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
+   "src": "games_page"
+  },
+  {
+   "game_id": "0022600244",
+   "date": "2026-11-15",
+   "away": "OKC",
+   "home": "SAC",
+   "status": "Q1 7:59",
+   "away_pts": 15,
+   "home_pts": 4,
+   "final": false,
+   "source_url": "https://www.nba.com/games?date=2026-11-15",
+   "game_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
+   "src": "games_page"
+  }
+ ]
+}

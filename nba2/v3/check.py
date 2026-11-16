@@ -72,8 +72,17 @@ def semantic() -> list[str]:
     res = M.build()
     hc = res["home_court"]
     played = M.load_played_games()["games"]
-    if len(played) != 188:
-        problems.append(f"history has {len(played)} finals, expected 188")
+    # The invariant, not a magic number: the 30 official W/L records must reconstruct
+    # exactly the official finals this repository has committed. Written this way so a
+    # snapshot refresh cannot turn this check red.
+    if sum(t["w"] for t in O.TEAMS.values()) != len(played):
+        problems.append(f"the 30 official records sum to "
+                        f"{sum(t['w'] for t in O.TEAMS.values())} wins but the repository "
+                        f"holds {len(played)} official finals")
+    if sum(t["l"] for t in O.TEAMS.values()) != len(played):
+        problems.append(f"the 30 official records sum to "
+                        f"{sum(t['l'] for t in O.TEAMS.values())} losses but the repository "
+                        f"holds {len(played)} official finals")
     if sum(1 for g in played if not g["neutral"] and g["home_margin"] > 0) != hc["home_wins"]:
         problems.append("home-win count disagrees with a fresh recomputation")
     if abs(hc["hca_points"] - hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])) > 5e-4:

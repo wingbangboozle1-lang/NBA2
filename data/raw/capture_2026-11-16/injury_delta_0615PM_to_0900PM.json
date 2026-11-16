@@ -1,0 +1,128 @@
+{
+ "schema": "nba2.injury-delta/v1",
+ "prior_release": {
+  "stamp_et": "2026-11-15 06:15 PM ET",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf",
+  "retrieved_at_utc": "2026-11-15T23:41:00Z",
+  "rows": 155
+ },
+ "new_release": {
+  "stamp_et": "2026-11-15 09:00 PM ET",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf",
+  "retrieved_at_utc": "2026-11-16T02:20:00Z",
+  "rows": 160
+ },
+ "key": "(date, matchup, team, player)",
+ "n_status_changes": 2,
+ "n_added": 7,
+ "n_removed": 2,
+ "n_unchanged": 151,
+ "status_changes": [
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Oklahoma City Thunder",
+   "player": "Mitchell, Ajay",
+   "from": "Questionable",
+   "to": "Available",
+   "reason_before": "Injury/Illness - Left Ankle Sprain",
+   "reason_after": "Injury/Illness - Left Ankle Sprain"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Achiuwa, Precious",
+   "from": "Questionable",
+   "to": "Out",
+   "reason_before": "Injury/Illness - Left Ankle Soreness",
+   "reason_after": "Injury/Illness - Left Ankle Soreness"
+  }
+ ],
+ "added": [
+  {
+   "date": "2026-11-15",
+   "time_et": "09:00",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "Hunter, De'Andre",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Hip Soreness / Tightness"
+  },
+  {
+   "date": "2026-11-15",
+   "time_et": "09:00",
+   "matchup": "OKC@SAC",
+   "team": "Sacramento Kings",
+   "player": "LaVine, Zach",
+   "status": "Out",
+   "reason": "Injury/Illness - Illness"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "07:00",
+   "matchup": "ORL@BOS",
+   "team": "Boston Celtics",
+   "player": "",
+   "status": "",
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "09:00",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Holmes II, DaRon",
+   "status": "Out",
+   "reason": ""
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "09:00",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Nembhard, Ryan",
+   "status": "Out",
+   "reason": ""
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "09:00",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Strawther, Julian",
+   "status": "Out",
+   "reason": ""
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "09:00",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "Whitmore, Cam",
+   "status": "Out",
+   "reason": ""
+  }
+ ],
+ "removed": [
+  {
+   "date": "2026-11-16",
+   "time_et": "07:00",
+   "matchup": "ORL@BOS",
+   "team": "Boston Celtics",
+   "player": "Penda, Noah",
+   "status": "Out",
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "date": "2026-11-16",
+   "time_et": "09:00",
+   "matchup": "PHX@DEN",
+   "team": "Denver Nuggets",
+   "player": "",
+   "status": "",
+   "reason": "NOT YET SUBMITTED"
+  }
+ ],
+ "note": "Mechanical diff of two consecutive official PDF releases. Both files are committed under data/raw/, so the diff is reproducible. Rows are matched on (date, matchup, team, player); 'removed' means a row present in the 06:15 PM release is absent from the 09:00 PM release."
+}

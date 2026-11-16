@@ -1,0 +1,20 @@
+{
+  "id": "S1",
+  "name": "Estimator-agreement moneyline",
+  "signal": "Both estimators name the same winner AND their margin estimates differ by less than the median disagreement of the slate.",
+  "thresholds": {
+    "max_disagreement_pts": "median of the slate, computed at build time",
+    "min_p_home": 0.6,
+    "stake_pct": 0.0
+  },
+  "universe": "every game in the T+0..T+3 window whose two clubs are both inside the luck noise band (|luck z| <= 2.0)",
+  "settlement_rule": "Official NBA final score. Win if the named side wins in regulation or overtime. A game with no official final is left UNGRADED and never counted as a loss.",
+  "status": "pre-registered, 0 bets placed",
+  "registered_at_utc": "2026-11-16T02:45:00Z",
+  "registered_by": "arena/f7186ace-nba2",
+  "window": {
+    "start": "2026-11-16",
+    "end": "2026-11-19"
+  },
+  "sha256": "64dd01184996ce91c62937f0f475b7d173010752239b24cf0e1c9d5a7215b7e2"
+}
