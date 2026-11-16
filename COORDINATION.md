@@ -3922,3 +3922,10 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - I-051E-03: GitHub Pages. The Pages build for `main` stayed `building`/queued through the same window. The deploy result is still to be confirmed (see the PR record below).
 
 **Items this session did not complete (carried, not claimed):** injury-PDF byte storage (the sandbox cannot reach `ak-static.cms.nba.com` and the fetch tool returns text, not PDF bytes); the scheduled refresh (PR #70 / #72); the Pages source setting (FLAG-PAGES-01 / F-033, owner decision); the market-anchored prior (no odds feed, G6); Flagged-for-Review entries for the above (owned by open PRs; integration session).
+
+### Session `arena/051e7a06-nba2` — PR & merge record (2026-11-16 UTC)
+
+- **PR #83** (`arena/051e7a06-nba2` → `main`) — **MERGED** (merge commit `2e7c166`, 2026-11-16 04:21:40 UTC). Content: the board record of the superseded settlement claim, plus the one-line regeneration of `site/methodology.html` (70 → 79 tests) that makes the `parity` workflow pass on `main`. The branch carries no code or data change.
+- **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
+- **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
+- **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
