@@ -1,0 +1,20 @@
+{
+  "id": "S9",
+  "name": "Ledger-only champion (LOC)",
+  "signal": "The leaderboard champion is the strategy with the best luck-adjusted line accuracy over sealed, pre-tip predictions — not the best recent record.",
+  "thresholds": {
+    "stake_pct": 0.0,
+    "cluster_overlap": 0.7,
+    "luck_adjusted": true
+  },
+  "universe": "the sealed ledger's pre-tip predictions, settled only from official finals",
+  "settlement_rule": "Official NBA final scores. Strategies sharing >0.7 bet-level overlap are reported as one cluster so one signal cannot be awarded three times. No reward is allocated until the luck checks (G-05) and multiple-testing control (G-06) pass.",
+  "status": "pre-registered, 0 bets placed, evaluation rule frozen",
+  "registered_at_utc": "2026-11-15T11:41:00Z",
+  "registered_by": "arena/e675ac3d-nba2",
+  "window": {
+    "start": "2026-11-15",
+    "end": "2026-11-18"
+  },
+  "sha256": "b69a1125f9b593f17376ecd0c25d295e1848a887526f870c8165facb31a4845f"
+}

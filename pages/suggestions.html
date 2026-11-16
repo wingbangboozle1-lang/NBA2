@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="53">
+    <section class="card table-card" id="suggestions" data-rows="54">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -91,12 +91,12 @@
 <td>S-05</td>
 <td>Preregister strategy trials with a counter</td>
 <td>G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.</td>
-<td>Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.</td>
+<td>Append every evaluation attempt to an append-only registry; the leaderboard charges the winner for the count. BUILT: nba2/v3/trials.py + trials.html record every trial (9 strategies + 1 backtest) and compute the Deflated Sharpe bar G-06 imposes; observed SR/DSR stay blank until settled PnL exists.</td>
 <td>Makes the leaderboard a science instead of a search result; costs ~20 lines.</td>
 <td>S</td>
 <td>Requires discipline to log failed attempts too — that is the point.</td>
 <td>Accept; pair with a rule &#x27;no evaluation without registration&#x27;.</td>
-<td>awaiting owner decision</td>
+<td>applied in this PR</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>
@@ -721,6 +721,19 @@
 <td>Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.</td>
 <td>Accept, assigned to the owner of nba2/v3/official.py.</td>
 <td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-55">
+<td>S-55</td>
+<td>Add a market-anchored prior weighted by measured out-of-sample log-loss</td>
+<td>A blended line that mixes our model with the closing line needs a weight; an arbitrary weight reintroduces a free parameter, and with no odds feed the market side is unavailable.</td>
+<td>Blend = w_model*model_line + w_market*closing_line with w_market = (1/LL_mkt)/(1/LL_mkt + 1/LL_model). Measure LL_model from the point-in-time walk-forward backtest; leave LL_mkt blank until a closing line exists.</td>
+<td>Publishes the weighting rule and the measured model log-loss now, so the blend is a one-line recompute once a licensed odds feed lands.</td>
+<td>S</td>
+<td>None: the market weight is 0 and the blended line equals the model line until a feed exists.</td>
+<td>Accept; the model-side measurement is already in place.</td>
+<td>applied in this PR</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

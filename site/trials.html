@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trial registry &amp; multiple-testing · NBA2 Lines Lab v3</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v3 · rolling slate 2026-11-15 → 2026-11-18</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+<a href="slate.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v3 rolling slate —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html" class="on">Trial registry</a>
+<a href="verification-v3.html">v3 verification</a>
+  </nav>
+</aside>
+<main>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v3 rolling slate · session arena/e675ac3d-nba2</p>
+<h1>Trial registry &amp; multiple-testing</h1>
+<p class="lede">Append-only trial-count registry and the Deflated Sharpe bar that G-06 imposes on the leaderboard.</p>
+
+<div class="cards"><div class="card"><span class="k">Trials charged (n)</span><span class="v">10</span><span class="s">9 strategies + 1 backtest</span></div><div class="card"><span class="k">Backtest observations</span><span class="v">139</span><span class="s">point-in-time official finals</span></div><div class="card"><span class="k">Break-even Sharpe (n=139)</span><span class="v">0.2788</span><span class="s">SR needed for DSR &gt; 0.95</span></div><div class="card"><span class="k">Observed Sharpe / DSR</span><span class="v"><span class="blank">— no settled PnL</span></span><span class="s">blank by policy, see note</span></div></div>
+<div class="note"><b>Why this exists.</b> A leaderboard that tries N strategies and rewards
+the best produces a winner by search, not by skill. The defence is the Deflated Sharpe Ratio
+(Bailey &amp; L&oacute;pez de Prado, 2014): the probability the observed Sharpe beats the
+best-of-N-trials Sharpe expected under no skill. It needs three inputs &mdash; the observed
+Sharpe, the observation count, and the <b>trial count</b> &mdash; and the trial count was the
+missing one (G-06 sat at BLOCKED "no trial ledger"). This registry makes it real. The
+<b>break-even Sharpe</b> is the bar G-06 imposes: with 10 trials over
+139 observations a strategy must show a Sharpe above
+0.2788 to pass.</div>
+
+<div class="note warn"><b>What is blank.</b> The observed Sharpe is a function of settled PnL.
+There is no market price (gate G6) and no settled bet, so no return exists. The bar is
+published; the observed SR and the resulting DSR per strategy are left blank and flagged,
+never invented.</div>
+
+<h2>Trial registry</h2>
+<div class="scroll"><table><caption>Append-only registry of every evaluation attempt in this window. The multiple-testing correction (G-06) charges the winner for this count.</caption><thead><tr><th>Trial</th><th>Strategy</th><th>Name</th><th>Family</th><th>Evaluation</th><th>Predictions</th><th>Window</th><th>Source</th></tr></thead><tbody><tr><td>T-S-01</td><td>S-01</td><td>Reliability-Shrunk Spread (RSS)</td><td>single</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" title="https://www.basketball-reference.com/leagues/NBA_2027_standings.html">source</a></td></tr><tr><td>T-S-02</td><td>S-02</td><td>Two-Rating Agreement Filter (TRAF)</td><td>single</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class="s">(derived from S-01 inputs)</span></td></tr><tr><td>T-S-03</td><td>S-03</td><td>Pace-Neutral Total Anchor (PNTA)</td><td>single</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.basketball-reference.com/leagues/NBA_2027_standings.html" title="https://www.basketball-reference.com/leagues/NBA_2027_standings.html">source</a></td></tr><tr><td>T-S-04</td><td>S-04</td><td>Correlation-Hedged Two-Leg Parlay (CHP2)</td><td>parlay</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class="s">(derived: nba2.models.correlation)</span></td></tr><tr><td>T-S-05</td><td>S-05</td><td>Cross-Slate Correlated Parlay (XSCP)</td><td>parlay</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class="s">(derived: nba2.models.parlays)</span></td></tr><tr><td>T-S-06</td><td>S-06</td><td>Availability-Blind Guardrail Fade (ABGF)</td><td>single</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf" title="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_04_15PM.pdf">source</a></td></tr><tr><td>T-S-07</td><td>S-07</td><td>Schedule-Spot Fade (SSF)</td><td>single</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/schedule" title="https://www.nba.com/schedule">source</a></td></tr><tr><td>T-S-08</td><td>S-08</td><td>Player-Prop Minutes Model (PPMM)</td><td>prop</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class="s">(BLOCKED — see pages/questions.html Q-05)</span></td></tr><tr><td>T-S-09</td><td>S-09</td><td>Ledger-Only Champion (LOC)</td><td>meta</td><td>gate-score (this window)</td><td class='n'><span class="blank">— blocked: no settled bet to count</span></td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a> <span class="s">(derived: nba2.models.leaderboard)</span></td></tr><tr><td>T-BACKTEST</td><td>MODEL</td><td>Walk-forward model backtest</td><td>meta</td><td>walk-forward backtest (point-in-time)</td><td class='n'>139</td><td>2026-11-15..2026-11-18</td><td><a href="https://www.nba.com/games (official finals, committed in data/raw/history/)" title="https://www.nba.com/games (official finals, committed in data/raw/history/)">source</a></td></tr></tbody></table></div>
+
+<h2>The G-06 bar vs. sample size</h2>
+<div class="scroll"><table><caption>How many observations it takes to clear G-06 at the measured trial count. More history lowers the bar; more trials raise it.</caption><thead><tr><th>Observations (n)</th><th>Break-even Sharpe for DSR 0.95</th><th>Source</th></tr></thead><tbody><tr><td class='n'>30</td><td class='n'>0.6531</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a></td></tr><tr><td class='n'>60</td><td class='n'>0.4369</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a></td></tr><tr><td class='n'>139</td><td class='n'>0.2788</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a></td></tr><tr><td class='n'>300</td><td class='n'>0.1877</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a></td></tr><tr><td class='n'>600</td><td class='n'>0.1321</td><td><a href="https://www.nba.com/games" title="https://www.nba.com/games">official finals</a></td></tr></tbody></table></div>
+
+<h2>Definition</h2>
+<p><code>DSR = Phi((SR - E[max SR under no skill]) * sqrt(T-1) / sqrt(1 - g3*SR + (g4-1)/4 * SR^2)); E[max SR] grows with the trial count, so more tries raise the bar. G-06 passes when DSR &gt; 0.95.</code></p>
+<p class="s">Sources: strategy registrations in <code>nba2/config.py</code>; the walk-forward
+backtest over the official finals committed in <code>data/raw/history/</code>. The Deflated
+Sharpe construction mirrors <code>nba2/models/gates.py</code> (a test asserts the two
+agree).</p>
+
+<footer>
+Built 2026-11-15T11:41:00Z by session <code>arena/e675ac3d-nba2</code> from the pages listed on
+<a href="verification-v3.html">the v3 verification page</a>. Every row links to the official
+document it was read from; a blank cell is a value we do not have, never a zero.
+</footer>
+</main>
+</div>
+</body>
+</html>

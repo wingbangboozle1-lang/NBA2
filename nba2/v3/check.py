@@ -10,12 +10,15 @@
 from __future__ import annotations
 
 import html
+import math
 import re
 from pathlib import Path
 
 from .build import V3_PAGES
 from . import official as O
 from . import model as M
+from . import gameflow as GF
+from . import trials as TR
 from . import gates as G
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,7 +29,7 @@ ROW = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
 CELL = re.compile(r"<td[^>]*>(.*?)</td>", re.S)
 TAG = re.compile(r"<[^>]+>")
 PLACEHOLDER = re.compile(r"\b(TODO|TBD|lorem ipsum|XXX|FIXME)\b", re.I)
-BLANK_OK = re.compile(r"(F-\d{3}|no official|not filed|blocked|BLOCKED|no minutes|"
+BLANK_OK = re.compile(r"(F-\d{3}|I-F8F-\d{2}|no official|not filed|blocked|BLOCKED|no minutes|"
                       r"no arena coordinates|no market price|linescore not captured|"
                       r"unknown|no source)", re.I)
 
@@ -95,6 +98,23 @@ def semantic() -> list[str]:
             problems.append(f"sealed pick {p['game_id']} is not in the slate")
         if p["stake_pct"] != 0.0:
             problems.append(f"sealed pick {p['game_id']} has a non-zero stake")
+    # late-game decomposition must re-derive from the committed quarter scores
+    for r in GF.decomposition()["rows"]:
+        if r["inflation"] is None:
+            continue
+        if abs(r["inflation"] - (r["late_total"] - r["early_rate"])) > 0.02:
+            problems.append(f"{r['matchup']}: inflation does not equal late_total - early_rate")
+        if abs(r["adj_total"] - (r["early_total"] + r["early_rate"])) > 0.11:
+            problems.append(f"{r['matchup']}: adj_total does not equal early_total + early_rate")
+    # trial registry: the multiple-testing bar must re-derive and be finite
+    ts = TR.summary()
+    if ts["n_trials"] != len(TR.registry()):
+        problems.append("trial count disagrees with the registry length")
+    if not math.isfinite(ts["breakeven_sharpe_139"]):
+        problems.append("break-even Sharpe is not finite")
+    for c in ts["sample_curve"]:
+        if not math.isfinite(c["breakeven_sharpe"]):
+            problems.append(f"sample curve break-even at n={c['n_obs']} is not finite")
     return problems
 
 

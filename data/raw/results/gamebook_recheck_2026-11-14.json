@@ -1,0 +1,29 @@
+{
+  "schema": "nba2.gamebook-recheck.v1",
+  "game_date": "2026-11-14",
+  "purpose": "Independent re-read of the five 2026-11-14 finals that the sealed ledgers settle against. Done in session arena/e73ca9d5-nba2 from the official gamebook PDFs (statsdmz.nba.com), not from the earlier capture.",
+  "retrieved_window_utc": "2026-11-16 ~02:15-02:25 UTC (platform page-fetch tool; per-call times not logged)",
+  "retrieval_method": "platform page-fetch tool (fetch_page) reading the gamebook PDF text; no binary archived",
+  "records": [
+    {"game_id": "0022600231", "away": "DEN", "home": "NOP", "away_pts": 116, "home_pts": 108,
+     "gamebook_score_by_period": {"DEN": [29, 27, 30, 30], "NOP": [23, 28, 31, 26]},
+     "result": "agrees with capture (quarters and final); both rows sum to the final",
+     "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"},
+    {"game_id": "0022600232", "away": "DAL", "home": "CLE", "away_pts": 117, "home_pts": 127,
+     "gamebook_score_by_period": {"DAL": [33, 20, 38, 26], "CLE": [33, 38, 34, 22]},
+     "result": "agrees with capture (quarters and final); both rows sum to the final",
+     "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"},
+    {"game_id": "0022600233", "away": "DET", "home": "MIA", "away_pts": 117, "home_pts": 137,
+     "gamebook_score_by_period": {"DET": [39, 21, 26, 31], "MIA": [37, 31, 35, 34]},
+     "result": "agrees with capture (quarters and final). Flag: the gamebook contains TWO SCORE BY PERIOD tables; the first reads DET 20-21-26-21 (sums to 88, not 117) and is not used. The second table reproduces both finals and is the one used.",
+     "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"},
+    {"game_id": "0022600234", "away": "BKN", "home": "MEM", "away_pts": 110, "home_pts": 129,
+     "gamebook_score_by_period": {"BKN": [23, 31, 30, 26], "MEM": [38, 33, 32, 26]},
+     "result": "agrees with capture (quarters and final); both rows sum to the final",
+     "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"},
+    {"game_id": "0022600235", "away": "CHI", "home": "MIN", "away_pts": 117, "home_pts": 106,
+     "gamebook_score_by_period": {"CHI": [29, 29, 30, 29], "MIN": [17, 28, 35, 26]},
+     "result": "agrees with capture (quarters and final); both rows sum to the final",
+     "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"}
+  ]
+}

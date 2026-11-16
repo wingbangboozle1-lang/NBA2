@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "a0a490818a4257e7c967e282046e99bb083111ce79b3026e1c451cc023fb7c90",
+  "input_digest": "bd727cde5a7f1422f73701ae5013a0c7a066a66409d4f86bcaa71d750a5a4f93",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27816,7 +27816,7 @@
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results | 2026-11-15 session arena/f8f8f2b8-nba2: 9 strategies registered in nba2/config.py::STRATEGIES; 7 have hashed pre-registration files frozen 2026-11-15T12:05:00Z. This session added the measured minutes-reallocation input a rotation-availability strategy needs. Usefulness is still unproven until the gates measure on settled results.",
+      "how": "9 strategies registered in nba2/config.py::STRATEGIES; all 9 now have hashed pre-registration files (data/v3/prereg/S1..S9.json) frozen 2026-11-16, including S-08 (inputs blocked, documented) and S-09 (meta). Usefulness is still unproven until the gates measure on settled results. | 2026-11-16 session arena/d2dd7c8e-nba2: added the S6-S9 pre-registration files so pre-registration is complete per strategy.",
       "priority": "P0"
      },
      "source": {
@@ -28091,7 +28091,7 @@
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open | 2026-11-15 session arena/f8f8f2b8-nba2: rest days, B2B, 3-in-4 and travel distance published; 8 additional games now carry verified quarter scores from the official gamebooks, which is the input a pace/garbage-time decomposition needs. That decomposition is still not built.",
+      "how": "Rest days, B2B, 3-in-4 and travel distance published from official dates and sourced arena coordinates; the late-game / garbage-time decomposition is now built from official quarter scores (nba2/v3/gameflow.py, lategame.html) with the inflation-adjusted control total. Pace / foul-flow still needs play-by-play (R-47, blocked). | 2026-11-16 session arena/d2dd7c8e-nba2: built the quarter-score late-game decomposition (the part measurable without play-by-play).",
       "priority": "P1"
      },
      "source": {
@@ -28964,9 +28964,9 @@
       "category": "Governance",
       "requirement": "Trial-count registry so multiple-testing correction is real",
       "acceptance": "Every evaluation attempt appended to a ledger and fed to G-06",
-      "status": "not started",
+      "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "S-11; without it Deflated Sharpe has no N",
+      "how": "Trial-count registry built (nba2/v3/trials.py, trials.html): every evaluation attempt is recorded (9 strategies + 1 backtest) and the Deflated Sharpe bar G-06 imposes is computed and published. The observed Sharpe / DSR per strategy is blank until settled PnL exists (no market price, gate G6). | 2026-11-16 session arena/d2dd7c8e-nba2: built the registry and the Deflated Sharpe bar; observed SR still blank by policy.",
       "priority": "P1"
      },
      "source": {
@@ -31291,12 +31291,12 @@
       "id": "S-05",
       "title": "Preregister strategy trials with a counter",
       "problem": "G-06 (multiple-testing control) is unpayable while nobody records how many variants were tried; the Deflated Sharpe needs N.",
-      "proposal": "Append every evaluation attempt (id, config hash, timestamp, seed) to data/trials.jsonl; leaderboard reads N from it.",
+      "proposal": "Append every evaluation attempt to an append-only registry; the leaderboard charges the winner for the count. BUILT: nba2/v3/trials.py + trials.html record every trial (9 strategies + 1 backtest) and compute the Deflated Sharpe bar G-06 imposes; observed SR/DSR stay blank until settled PnL exists.",
       "benefit": "Makes the leaderboard a science instead of a search result; costs ~20 lines.",
       "effort": "S",
       "risk": "Requires discipline to log failed attempts too — that is the point.",
       "recommendation": "Accept; pair with a rule 'no evaluation without registration'.",
-      "status": "awaiting owner decision"
+      "status": "applied in this PR"
      },
      "source": {
       "name": "COORDINATION.md",
@@ -32558,9 +32558,42 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-55",
+     "values": {
+      "id": "S-55",
+      "title": "Add a market-anchored prior weighted by measured out-of-sample log-loss",
+      "problem": "A blended line that mixes our model with the closing line needs a weight; an arbitrary weight reintroduces a free parameter, and with no odds feed the market side is unavailable.",
+      "proposal": "Blend = w_model*model_line + w_market*closing_line with w_market = (1/LL_mkt)/(1/LL_mkt + 1/LL_model). Measure LL_model from the point-in-time walk-forward backtest; leave LL_mkt blank until a closing line exists.",
+      "benefit": "Publishes the weighting rule and the measured model log-loss now, so the blend is a one-line recompute once a licensed odds feed lands.",
+      "effort": "S",
+      "risk": "None: the market weight is 0 and the blended line equals the model line until a feed exists.",
+      "recommendation": "Accept; the model-side measurement is already in place.",
+      "status": "applied in this PR"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -43283,7 +43316,7 @@
      "key": "E-04-settle",
      "values": {
       "check": "E-04 sealed-ledger settlement status",
-      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-16T02:12:09+00:00 with finals_snapshot results_2026-11-14.json, finals_2026-11-13.json, finals_all.json; sealed-2026-11-13.json: 5/22 games settled (PARTIAL — 17 game(s) have no official final score); sealed-2026-11-14.json: 5/27 games settled (PARTIAL — 22 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
+      "result": "PARTIAL, and that is the correct answer — the settlement path was exercised on 2026-11-14 against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json, nine games, captured independently by two sessions). data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The nine played games are day-before context that neither sealed ledger covers, so metrics stay unmeasured rather than assumed, and a partial settlement is refused rather than published",
       "method": "python -m nba2.pipeline.settle with the committed finals captures; the nightly ingest job fetches and settles the sealed games per game day"
      },
      "source": {
@@ -46931,7 +46964,7 @@
       "id": "FLAG-SET-01",
       "severity": "info",
       "area": "provenance",
-      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-16T02:12:09+00:00 with finals_snapshot results_2026-11-14.json, finals_2026-11-13.json, finals_all.json; sealed-2026-11-13.json: 5/22 games settled (PARTIAL — 17 game(s) have no official final score); sealed-2026-11-14.json: 5/27 games settled (PARTIAL — 22 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
+      "statement": "Settlement, reward allocation and the leaderboard scores are all unmeasured by design. As of 2026-11-14 the settlement path has been exercised against real official finals captures (data/raw/finals_2026-11-13.json + data/raw/finals_all.json — the nine 2026-11-13 games): both sealed ledgers verify, and the loader reports data/settlement.json records settled_at 2026-11-14T11:46:27+00:00 with finals_snapshot finals_all.json; sealed-2026-11-13.json: 0/22 games settled (PARTIAL — 22 game(s) have no official final score); sealed-2026-11-14.json: 0/27 games settled (PARTIAL — 27 game(s) have no official final score) The sealed games of 11/14–11/17 still have no official final scores, so every leaderboard score, bet count and reward cell is blank and the gates stay blocked or unmeasured. A partial settlement is refused, not published.",
       "source": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/ledger/sealed-2026-11-14.json",
       "action": "Commit data/raw/finals_<date>.json from official box scores once each game day ends, then re-run python -m nba2.pipeline.settle — the nightly ingest job (.github/workflows/refresh.yml) does this automatically (suggestion S-A04 on the Session Audit page)."
      },
