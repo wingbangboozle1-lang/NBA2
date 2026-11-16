@@ -1,269 +1,274 @@
 {
- "schema": "nba2.results-feed.official-gamebook.v1",
- "game_date": "2026-11-15",
- "retrieved_window_utc": "2026-11-16 ~02:05-02:14 UTC (platform page-fetch tool; per-call times not logged)",
- "retrieval_method": "platform page-fetch tool (fetch_page). Final scores and quarter scores read from the official NBA gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final shown on the official nba.com game page / scoreboard. Bash egress cannot reach nba.com; the PDFs were read as text, not archived as binaries.",
- "settle_rule": "A game is SETTLED only when (a) the gamebook SCORE BY PERIOD row sums to the final for both clubs and (b) the final matches the official game page. Any game not Final at retrieval is PENDING and carries no score. Blank quarter cells are never back-solved.",
- "records": [
-  {
-   "game_id": "0022600236",
-   "date": "2026-11-15",
-   "away": "IND",
-   "home": "PHI",
-   "status": "final",
-   "away_pts": 124,
-   "home_pts": 131,
-   "away_quarters": [
-    35,
-    22,
-    30,
-    37
-   ],
-   "home_quarters": [
-    29,
-    29,
-    39,
-    34
-   ],
-   "ot_periods": 0,
-   "quarter_check": "both rows sum to the final (124 = 35+22+30+37; 131 = 29+29+39+34)",
-   "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
-   "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page; both read 2026-11-16 UTC window"
-  },
-  {
-   "game_id": "0022600237",
-   "date": "2026-11-15",
-   "away": "LAL",
-   "home": "PHX",
-   "status": "final",
-   "away_pts": 131,
-   "home_pts": 123,
-   "away_quarters": [
-    33,
-    31,
-    40,
-    27
-   ],
-   "home_quarters": [
-    24,
-    30,
-    26,
-    43
-   ],
-   "ot_periods": 0,
-   "quarter_check": "both rows sum to the final (131 = 33+31+40+27; 123 = 24+30+26+43)",
-   "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
-   "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
-  },
-  {
-   "game_id": "0022600238",
-   "date": "2026-11-15",
-   "away": "CHA",
-   "home": "LAC",
-   "status": "final",
-   "away_pts": 105,
-   "home_pts": 113,
-   "away_quarters": [
-    21,
-    31,
-    31,
-    22
-   ],
-   "home_quarters": [
-    22,
-    29,
-    33,
-    29
-   ],
-   "ot_periods": 0,
-   "quarter_check": "both rows sum to the final (105 = 21+31+31+22; 113 = 22+29+33+29)",
-   "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
-   "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
-  },
-  {
-   "game_id": "0022600239",
-   "date": "2026-11-15",
-   "away": "SAS",
-   "home": "UTA",
-   "status": "final",
-   "away_pts": 110,
-   "home_pts": 102,
-   "away_quarters": [
-    31,
-    27,
-    23,
-    29
-   ],
-   "home_quarters": [
-    33,
-    22,
-    26,
-    21
-   ],
-   "ot_periods": 0,
-   "quarter_check": "both rows sum to the final (110 = 31+27+23+29; 102 = 33+22+26+21)",
-   "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
-   "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
-  },
-  {
-   "game_id": "0022600240",
-   "date": "2026-11-15",
-   "away": "DAL",
-   "home": "BOS",
-   "status": "final",
-   "away_pts": 94,
-   "home_pts": 131,
-   "away_quarters": null,
-   "home_quarters": [
-    42,
-    25,
-    37,
-    27
-   ],
-   "ot_periods": 0,
-   "quarter_check": "home row sums to the final (131 = 42+25+37+27). DAL quarter row UNVERIFIED: the gamebook SCORE BY PERIOD row for DAL reads 2 | 3 | 4 | 2 (sums to 11, not 94) and is not used; left blank, not back-solved.",
-   "final_check": "94 = sum of DAL player PTS in the gamebook box score; 131 = sum of BOS player PTS; both match the final on the nba.com game page",
-   "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
-   "verified": "final 94-131 verified three ways (gamebook player sums, gamebook team line, nba.com scoreboard); DAL quarter split NOT verified (flag I-E73-02)"
-  },
-  {
-   "game_id": "0022600241",
-   "date": "2026-11-15",
-   "away": "NYK",
-   "home": "TOR",
-   "status": "final",
-   "away_pts": 112,
-   "home_pts": 108,
-   "away_quarters": [
-    23,
-    24,
-    20,
-    28
-   ],
-   "home_quarters": [
-    17,
-    26,
-    31,
-    21
-   ],
-   "ot_periods": 1,
-   "ot_quarters": {
-    "away": [
-     17
-    ],
-    "home": [
-     13
-    ]
-   },
-   "quarter_check": "NYK 23+24+20+28+17 = 112; TOR 17+26+31+21+13 = 108",
-   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
-   "verified": "SCORE BY PERIOD incl. OT1 (gamebook) + 'Final/OT' 112-108 on nba.com scoreboard"
-  },
-  {
-   "game_id": "0022600242",
-   "date": "2026-11-15",
-   "away": "HOU",
-   "home": "WAS",
-   "status": "final",
-   "away_pts": 147,
-   "home_pts": 119,
-   "away_quarters": [
-    36,
-    37,
-    46,
-    28
-   ],
-   "home_quarters": [
-    31,
-    23,
-    34,
-    31
-   ],
-   "ot_periods": 0,
-   "note": "Scoreboard showed Q4 (in progress) when read. Not settled. Live scores are not recorded here.",
-   "source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
-   "quarter_check": "both rows sum to the final (147 = 36+37+46+28; 119 = 31+23+34+31)",
-   "away_record_after": "11-3",
-   "home_record_after": "4-10",
-   "completed_by": "arena/fe0ffa49-nba2",
-   "completed_at_utc": "2026-11-16T14:45:00Z"
-  },
-  {
-   "game_id": "0022600243",
-   "date": "2026-11-15",
-   "away": "ATL",
-   "home": "MIL",
-   "status": "final",
-   "away_pts": 113,
-   "home_pts": 106,
-   "away_quarters": [
-    18,
-    37,
-    32,
-    26
-   ],
-   "home_quarters": [
-    37,
-    16,
-    27,
-    26
-   ],
-   "ot_periods": 0,
-   "note": "Scoreboard showed 'Half' (in progress) when read. Not settled.",
-   "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
-   "quarter_check": "both rows sum to the final (113 = 18+37+32+26; 106 = 37+16+27+26)",
-   "away_record_after": "8-6",
-   "home_record_after": "1-13",
-   "completed_by": "arena/fe0ffa49-nba2",
-   "completed_at_utc": "2026-11-16T14:45:00Z"
-  },
-  {
-   "game_id": "0022600244",
-   "date": "2026-11-15",
-   "away": "OKC",
-   "home": "SAC",
-   "status": "final",
-   "away_pts": 125,
-   "home_pts": 103,
-   "away_quarters": [
-    32,
-    30,
-    32,
-    31
-   ],
-   "home_quarters": [
-    24,
-    26,
-    30,
-    23
-   ],
-   "ot_periods": 0,
-   "note": "Scoreboard showed Q1 (in progress) when read. Not settled.",
-   "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
-   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
-   "quarter_check": "both rows sum to the final (125 = 32+30+32+31; 103 = 24+26+30+23)",
-   "away_record_after": "9-5",
-   "home_record_after": "1-12",
-   "completed_by": "arena/fe0ffa49-nba2",
-   "completed_at_utc": "2026-11-16T14:45:00Z"
+  "schema": "nba2.results-feed.official-gamebook.v1",
+  "game_date": "2026-11-15",
+  "retrieved_window_utc": "2026-11-16 ~02:05-02:14 UTC (platform page-fetch tool; per-call times not logged)",
+  "retrieval_method": "platform page-fetch tool (fetch_page). Final scores and quarter scores read from the official NBA gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final shown on the official nba.com game page / scoreboard. Bash egress cannot reach nba.com; the PDFs were read as text, not archived as binaries.",
+  "settle_rule": "A game is SETTLED only when (a) the gamebook SCORE BY PERIOD row sums to the final for both clubs and (b) the final matches the official game page. Any game not Final at retrieval is PENDING and carries no score. Blank quarter cells are never back-solved.",
+  "records": [
+    {
+      "game_id": "0022600236",
+      "date": "2026-11-15",
+      "away": "IND",
+      "home": "PHI",
+      "status": "final",
+      "away_pts": 124,
+      "home_pts": 131,
+      "away_quarters": [
+        35,
+        22,
+        30,
+        37
+      ],
+      "home_quarters": [
+        29,
+        29,
+        39,
+        34
+      ],
+      "ot_periods": 0,
+      "quarter_check": "both rows sum to the final (124 = 35+22+30+37; 131 = 29+29+39+34)",
+      "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+      "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page; both read 2026-11-16 UTC window"
+    },
+    {
+      "game_id": "0022600237",
+      "date": "2026-11-15",
+      "away": "LAL",
+      "home": "PHX",
+      "status": "final",
+      "away_pts": 131,
+      "home_pts": 123,
+      "away_quarters": [
+        33,
+        31,
+        40,
+        27
+      ],
+      "home_quarters": [
+        24,
+        30,
+        26,
+        43
+      ],
+      "ot_periods": 0,
+      "quarter_check": "both rows sum to the final (131 = 33+31+40+27; 123 = 24+30+26+43)",
+      "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
+      "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
+    },
+    {
+      "game_id": "0022600238",
+      "date": "2026-11-15",
+      "away": "CHA",
+      "home": "LAC",
+      "status": "final",
+      "away_pts": 105,
+      "home_pts": 113,
+      "away_quarters": [
+        21,
+        31,
+        31,
+        22
+      ],
+      "home_quarters": [
+        22,
+        29,
+        33,
+        29
+      ],
+      "ot_periods": 0,
+      "quarter_check": "both rows sum to the final (105 = 21+31+31+22; 113 = 22+29+33+29)",
+      "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
+      "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
+    },
+    {
+      "game_id": "0022600239",
+      "date": "2026-11-15",
+      "away": "SAS",
+      "home": "UTA",
+      "status": "final",
+      "away_pts": 110,
+      "home_pts": 102,
+      "away_quarters": [
+        31,
+        27,
+        23,
+        29
+      ],
+      "home_quarters": [
+        33,
+        22,
+        26,
+        21
+      ],
+      "ot_periods": 0,
+      "quarter_check": "both rows sum to the final (110 = 31+27+23+29; 102 = 33+22+26+21)",
+      "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
+      "verified": "SCORE BY PERIOD (gamebook) + final on nba.com game page / scoreboard"
+    },
+    {
+      "game_id": "0022600240",
+      "date": "2026-11-15",
+      "away": "DAL",
+      "home": "BOS",
+      "status": "final",
+      "away_pts": 94,
+      "home_pts": 131,
+      "away_quarters": [
+        9,
+        28,
+        34,
+        23
+      ],
+      "home_quarters": [
+        42,
+        25,
+        37,
+        27
+      ],
+      "ot_periods": 0,
+      "quarter_check": "both rows sum to the final (94 = 9+28+34+23; 131 = 42+25+37+27). DAL quarters read from the official gamebook's own cumulative SCORE BY PERIOD tables (halftime: 9|28|37; through three: 9|28|34|71) and confirmed by each period box's team totals (Q2 28-25, Q3 34-37, Q4 23-27). The full-game box's garbled DAL row (2|3|4|2) is not used. Closed 2026-11-16 by session arena/a11505e1-nba2 (was flag I-E73-02/I-FE0-02).",
+      "final_check": "94 = sum of DAL player PTS in the gamebook box score; 131 = sum of BOS player PTS; both match the final on the nba.com game page",
+      "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+      "verified": "final 94-131 verified three ways (gamebook player sums, gamebook team line, nba.com scoreboard); DAL quarter split verified 2026-11-16 from the gamebook period boxes and cumulative score tables"
+    },
+    {
+      "game_id": "0022600241",
+      "date": "2026-11-15",
+      "away": "NYK",
+      "home": "TOR",
+      "status": "final",
+      "away_pts": 112,
+      "home_pts": 108,
+      "away_quarters": [
+        23,
+        24,
+        20,
+        28
+      ],
+      "home_quarters": [
+        17,
+        26,
+        31,
+        21
+      ],
+      "ot_periods": 1,
+      "ot_quarters": {
+        "away": [
+          17
+        ],
+        "home": [
+          13
+        ]
+      },
+      "quarter_check": "NYK 23+24+20+28+17 = 112; TOR 17+26+31+21+13 = 108",
+      "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
+      "verified": "SCORE BY PERIOD incl. OT1 (gamebook) + 'Final/OT' 112-108 on nba.com scoreboard"
+    },
+    {
+      "game_id": "0022600242",
+      "date": "2026-11-15",
+      "away": "HOU",
+      "home": "WAS",
+      "status": "final",
+      "away_pts": 147,
+      "home_pts": 119,
+      "away_quarters": [
+        36,
+        37,
+        46,
+        28
+      ],
+      "home_quarters": [
+        31,
+        23,
+        34,
+        31
+      ],
+      "ot_periods": 0,
+      "note": "Scoreboard showed Q4 (in progress) when read. Not settled. Live scores are not recorded here.",
+      "source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+      "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
+      "quarter_check": "both rows sum to the final (147 = 36+37+46+28; 119 = 31+23+34+31)",
+      "away_record_after": "11-3",
+      "home_record_after": "4-10",
+      "completed_by": "arena/fe0ffa49-nba2",
+      "completed_at_utc": "2026-11-16T14:45:00Z"
+    },
+    {
+      "game_id": "0022600243",
+      "date": "2026-11-15",
+      "away": "ATL",
+      "home": "MIL",
+      "status": "final",
+      "away_pts": 113,
+      "home_pts": 106,
+      "away_quarters": [
+        18,
+        37,
+        32,
+        26
+      ],
+      "home_quarters": [
+        37,
+        16,
+        27,
+        26
+      ],
+      "ot_periods": 0,
+      "note": "Scoreboard showed 'Half' (in progress) when read. Not settled.",
+      "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
+      "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
+      "quarter_check": "both rows sum to the final (113 = 18+37+32+26; 106 = 37+16+27+26)",
+      "away_record_after": "8-6",
+      "home_record_after": "1-13",
+      "completed_by": "arena/fe0ffa49-nba2",
+      "completed_at_utc": "2026-11-16T14:45:00Z"
+    },
+    {
+      "game_id": "0022600244",
+      "date": "2026-11-15",
+      "away": "OKC",
+      "home": "SAC",
+      "status": "final",
+      "away_pts": 125,
+      "home_pts": 103,
+      "away_quarters": [
+        32,
+        30,
+        32,
+        31
+      ],
+      "home_quarters": [
+        24,
+        26,
+        30,
+        23
+      ],
+      "ot_periods": 0,
+      "note": "Scoreboard showed Q1 (in progress) when read. Not settled.",
+      "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
+      "verified": "SCORE BY PERIOD read from the official gamebook PDF and summed to the final on both rows; the final was cross-read against the Final score printed on the official nba.com schedule page for 2026-11-15. Both reads 2026-11-16 ~14:45 UTC, session arena/fe0ffa49-nba2.",
+      "quarter_check": "both rows sum to the final (125 = 32+30+32+31; 103 = 24+26+30+23)",
+      "away_record_after": "9-5",
+      "home_record_after": "1-12",
+      "completed_by": "arena/fe0ffa49-nba2",
+      "completed_at_utc": "2026-11-16T14:45:00Z"
+    }
+  ],
+  "completion_record": {
+    "by": "arena/fe0ffa49-nba2",
+    "at_utc": "2026-11-16T14:45:00Z",
+    "note": "Three games recorded as 'not final at retrieval' by session arena/e73ca9d5-nba2 are Final on the official nba.com schedule page for 2026-11-15, and their official gamebook PDFs are published. Their finals and quarter scores were read this session and every quarter row sums to the official final on both sides. The five earlier records (0022600236-0022600241) were NOT re-read from the PDFs this session; their quarter sums were re-asserted by this script and their finals cross-read against the official schedule page. No value inferred, none back-solved.",
+    "crosscheck_source": "https://www.nba.com/schedule?date=2026-11-15",
+    "irregularity": "I-FE0-02: 0022600240 DAL@BOS away_quarters is null. The SCORE BY PERIOD row for the visitor in 20261115_DALBOS_book.pdf renders as 'Mavericks 2 3 4 2 0 0 ...' in the extracted text layer (mangled), so the four Dallas quarter values cannot be read. Home quarters (42/25/37/27 = 131) are present and sum correctly. Left blank and flagged; never inferred."
   }
- ],
- "completion_record": {
-  "by": "arena/fe0ffa49-nba2",
-  "at_utc": "2026-11-16T14:45:00Z",
-  "note": "Three games recorded as 'not final at retrieval' by session arena/e73ca9d5-nba2 are Final on the official nba.com schedule page for 2026-11-15, and their official gamebook PDFs are published. Their finals and quarter scores were read this session and every quarter row sums to the official final on both sides. The five earlier records (0022600236-0022600241) were NOT re-read from the PDFs this session; their quarter sums were re-asserted by this script and their finals cross-read against the official schedule page. No value inferred, none back-solved.",
-  "crosscheck_source": "https://www.nba.com/schedule?date=2026-11-15",
-  "irregularity": "I-FE0-02: 0022600240 DAL@BOS away_quarters is null. The SCORE BY PERIOD row for the visitor in 20261115_DALBOS_book.pdf renders as 'Mavericks 2 3 4 2 0 0 ...' in the extracted text layer (mangled), so the four Dallas quarter values cannot be read. Home quarters (42/25/37/27 = 131) are present and sum correctly. Left blank and flagged; never inferred."
- }
 }

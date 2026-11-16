@@ -393,7 +393,12 @@
       "sources": [
         "data/raw/results/results_2026-11-15.json"
       ],
-      "away_quarters": null,
+      "away_quarters": [
+        9,
+        28,
+        34,
+        23
+      ],
       "home_quarters": [
         42,
         25,
