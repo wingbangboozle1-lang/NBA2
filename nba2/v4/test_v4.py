@@ -383,6 +383,29 @@ class TestPublishedPages(unittest.TestCase):
         self.assertIn("Settlement stamp", doc)
         self.assertIn("PRE-TIP HASH VERIFIED", doc)
 
+    def test_every_fragment_link_lands_on_a_real_anchor(self):
+        # A link to page.html#section is a broken link if the section was renamed.
+        import re as _re
+        anchor = _re.compile(r'href="([^"]+)"')
+        for name in P.V4_PAGES:
+            for href in anchor.findall((SITE / name).read_text()):
+                if href.startswith(("http", "mailto")):
+                    continue
+                path, _, frag = href.partition("#")
+                target = SITE / (path or name)
+                self.assertTrue(target.exists(), msg=f"{name} -> {href}")
+                if frag:
+                    self.assertIn(f'id="{frag}"', target.read_text(),
+                                  msg=f"{name} -> {href} has no matching anchor")
+
+    def test_the_irregularity_register_is_complete_and_reasoned(self):
+        doc = (SITE / "v4-verify.html").read_text()
+        for fid, sev, where, what, effect in P.V4_FLAGS:
+            self.assertIn(fid, doc, msg=fid)
+            self.assertTrue(what and effect, msg=fid)
+            self.assertTrue(where[3].startswith("https://"), msg=fid)
+            self.assertIn(sev, ("blocking", "gap"), msg=fid)
+
     def test_no_placeholder_tokens_anywhere(self):
         for name in P.V4_PAGES:
             self.assertIsNone(CH.PLACEHOLDER.search((SITE / name).read_text()), msg=name)

@@ -68,11 +68,18 @@ def structural() -> list[str]:
             continue
         doc = p.read_text()
         for href in LOCAL.findall(doc):
-            if href.startswith(("http://", "https://", "mailto:", "//", "data:", "#")):
+            if href.startswith(("http://", "https://", "mailto:", "//", "data:")):
                 continue
-            target = p.parent / href.split("?")[0].split("#")[0]
+            path, _, frag = href.partition("#")
+            target = p.parent / path.split("?")[0] if path else p
             if not target.exists():
                 problems.append(f"{name}: broken local link -> {href}")
+                continue
+            # a fragment must actually exist in the target, or the link lands nowhere
+            if frag:
+                tdoc = target.read_text()
+                if f'id="{frag}"' not in tdoc and f'name="{frag}"' not in tdoc:
+                    problems.append(f"{name}: link -> {href} has no matching anchor")
         for m in PLACEHOLDER.finditer(doc):
             problems.append(f"{name}: placeholder {m.group(0)!r}")
         # A data row must carry its own source link. A table whose caption carries an

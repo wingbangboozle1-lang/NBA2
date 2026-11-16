@@ -4034,3 +4034,13 @@ owner decision, not code. `R-003/009/010/011/013/014/044/049` stay **partial** a
 stated on each row. Everything unverified is on the Flagged for Review page and on the
 v4-verify page's gate table; none of it blocks the merge, and none of it is presented as
 verified.
+
+### Change requests handed to the owning sessions (not edited here)
+
+| # | Target (owner) | Request | Why it matters |
+|---|---|---|---|
+| CR-V4-1 | `nba2/v2/check.py` (v2) | Strip the fragment before resolving a local link: `(p.parent / link.split("?")[0].split("#")[0])`, and verify the fragment exists in the target. | As written, **any** fragment link (`page.html#section`) is reported as a broken local link. v2's own pages are unaffected only because they never use one. The v4 register wanted section-level links and had to fall back to file-level links, which is a worse experience for a reviewer. |
+| CR-V4-2 | `nba2/v2/content.py` `FLAGS` (v2) | Add F-V4-01..F-V4-09 to the shared Flagged-for-review page, or link that page to `v4-verify.html`. | The brief asks for unverified items to be published on the Flagged page. They **are** published, in full, in the consolidated register on `v4-verify.html` — but the canonical Flagged page is generated from v2's `FLAGS` list, which is outside this session's scope. Until CR-V4-2 lands a reviewer has to know to look at the v4 verification page. |
+
+Both are recorded rather than actioned because `nba2/v2/**` belongs to another session's scope
+and the protocol is to log a cross-scope request instead of editing.

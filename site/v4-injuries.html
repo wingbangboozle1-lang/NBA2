@@ -68,8 +68,9 @@ is when this session read it; the <i>index check</i> is when the official index 
 consulted for a newer file. The hash is over the transcribed text. The PDF bytes are
 <b>not</b> stored — bash egress to <code>ak-static.cms.nba.com</code> is blocked in this sandbox
 and the page tool renders PDFs as text — and that gap is flagged rather than glossed (F-V4-01).</div>
+<h2 id="binary-not-stored">Releases stored this session</h2>
 <div class="scroll"><table><caption>Releases stored this session, newest last.</caption><thead><tr><th>Revision (ET)</th><th>Retrieved (UTC)</th><th>Index checked</th><th>Rows</th><th>Content hash</th><th>PDF bytes</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET</td><td>2026-11-16T14:41:00Z</td><td>2026-11-16T14:30:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>2026-11-16 09:30 AM ET</td><td>2026-11-16T14:52:00Z</td><td>2026-11-16T14:52:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
-<h2>Consecutive release diff</h2>
+<h2 id="releases">Consecutive release diff</h2>
 
 <p>Diff of the two stored releases, matched on <code>date, matchup, team, player</code>.</p>
 <div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Placeholder resolved</th><th>Reason only</th><th>Added</th><th>Removed</th><th>Still placeholder</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET (70 rows)</td><td>2026-11-16 09:30 AM ET (70 rows)</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>19</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
@@ -81,7 +82,7 @@ they differ a lot: the morning filing window is when teams submit, so a same-day
 pair is the one that isolates true revision drift.</div>
 <p>No status or reason changes.</p>
 
-<h2>Cross-day comparison</h2>
+<h2 id="cross-day">Cross-day comparison</h2>
 
 <p>For completeness, the same diff machine run across a day boundary, from the 11/15 06:15 PM
 release already committed to this session's 11/16 09:15 AM release. This one mixes genuine
@@ -89,7 +90,7 @@ injury news with the league's filing windows, so a large added/removed count is 
 <b>not</b> evidence of instability in the source.</p>
 <div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Added</th><th>Removed</th><th>Reason only</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-15 06:15 PM ET</td><td>2026-11-16 09:15 AM ET</td><td class='n'>6</td><td class='n'>13</td><td class='n'>98</td><td class='n'>0</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
 
-<h2>Layout artefacts of the official PDFs</h2>
+<h2 id="layout">Layout artefacts of the official PDFs</h2>
 <p>These are properties of the published files, recorded so a reader can tell a transcription
 artefact from an injury. None of them is "corrected" in the data.</p>
 <div class="scroll"><table><thead><tr><th>Flag</th><th>Finding</th><th>Src</th></tr></thead><tbody><tr><td>F-V4-05</td><td>Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-06</td><td>Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so &#x27;Curry, Stephen&#x27; reads &#x27;| Injury/Illness - Right Oblique Tear |&#x27;. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-07</td><td>The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as &#x27;NOT YET SUBMITTED&#x27; at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player).</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
