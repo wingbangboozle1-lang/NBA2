@@ -396,7 +396,7 @@
     "stamp_et": "2026-11-16 09:30 AM ET",
     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
     "retrieved_utc": "2026-11-16T14:52:00Z",
-    "rows": 83
+    "rows": 70
    },
    "to": {
     "stamp_et": "2026-11-16 09:30 AM ET",
@@ -411,59 +411,107 @@
     "player"
    ],
    "counts": {
-    "status_changed": 2,
+    "status_changed": 6,
     "reason_changed_only": 1,
-    "added": 4,
-    "removed": 19,
+    "added": 2,
+    "removed": 4,
     "became_unread": 0,
     "placeholder_resolved": 0,
-    "still_placeholder": 10
+    "still_placeholder": 12
    },
    "status_changes": [
     {
      "key": [
       "2026-11-16",
-      "HOU@MIA",
-      "Miami Heat",
-      "Larsson, Pelle"
+      "CHI@CLE",
+      "Cleveland Cavaliers",
+      "Tyson, Jaylon"
      ],
-     "from": "Doubtful",
-     "to": "Questionable",
-     "reason_from": "Injury/Illness - Illness",
-     "reason_to": "Injury/Illness - Illness"
+     "from": "Questionable",
+     "to": "Doubtful",
+     "reason_from": "Injury/Illness - Right Ankle Injury Management",
+     "reason_to": "Injury/Illness - Right Ankle Injury Management"
     },
     {
      "key": [
       "2026-11-16",
-      "MEM@WAS",
-      "Memphis Grizzlies",
-      "Stewart, Isaiah"
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Curry, Stephen"
      ],
-     "from": "Out",
+     "from": null,
+     "to": "Out",
+     "reason_from": null,
+     "reason_to": null
+    },
+    {
+     "key": [
+      "2026-11-16",
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Moody, Moses"
+     ],
+     "from": null,
+     "to": "Out",
+     "reason_from": null,
+     "reason_to": null
+    },
+    {
+     "key": [
+      "2026-11-16",
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Porzingis, Kristaps"
+     ],
+     "from": null,
+     "to": "Out",
+     "reason_from": null,
+     "reason_to": null
+    },
+    {
+     "key": [
+      "2026-11-16",
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Santos, Gui"
+     ],
+     "from": null,
      "to": "Questionable",
-     "reason_from": "Injury/Illness - Illness",
-     "reason_to": "Injury/Illness - Illness"
+     "reason_from": null,
+     "reason_to": null
+    },
+    {
+     "key": [
+      "2026-11-16",
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Williams, Brandon"
+     ],
+     "from": null,
+     "to": "Out",
+     "reason_from": null,
+     "reason_to": null
     }
    ],
    "reason_changes": [
     {
      "key": [
       "2026-11-16",
-      "MEM@WAS",
-      "Memphis Grizzlies",
-      "Jackson, GG"
+      "GSW@NOP",
+      "Golden State Warriors",
+      "Butler III, Jimmy"
      ],
-     "status": "Out",
-     "reason_from": "Injury/Illness - Left 5th Metatarsal",
-     "reason_to": "Injury/Illness - Left Foot Injury"
+     "status": null,
+     "reason_from": null,
+     "reason_to": "Injury/Illness - Right ACL Repair / Surgery"
     }
    ],
    "added": [
     {
      "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
+      "2026-11-17",
+      "POR@MIN",
+      "Minnesota Timberwolves",
       "<placeholder>"
      ],
      "status": null,
@@ -471,29 +519,9 @@
     },
     {
      "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "<placeholder>"
-     ],
-     "status": null,
-     "reason": "NOT YET SUBMITTED"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "ORL@BOS",
-      "Boston Celtics",
-      "<placeholder>"
-     ],
-     "status": null,
-     "reason": "NOT YET SUBMITTED"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
+      "2026-11-17",
+      "POR@MIN",
+      "Portland Trail Blazers",
       "<placeholder>"
      ],
      "status": null,
@@ -504,72 +532,12 @@
     {
      "key": [
       "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Adams, Steven"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Left Lower Leg Injury Management"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Capela, Clint"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Right Ankle Sprain"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Copeland, Quadir"
-     ],
-     "status": "Out",
-     "reason": "G League - Two-Way"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Phillips, Julian"
-     ],
-     "status": "Out",
-     "reason": "G League - Two-Way"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Smart, Marcus"
-     ],
-     "status": "Out",
-     "reason": "League Suspension"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Houston Rockets",
-      "Thompson, Amen"
+      "GSW@NOP",
+      "New Orleans Pelicans",
+      "Reese, Julian"
      ],
      "status": "Questionable",
-     "reason": "Injury/Illness - Left Knee Soreness"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "HOU@MIA",
-      "Miami Heat",
-      "Jovic, Nikola"
-     ],
-     "status": "Questionable",
-     "reason": "Injury/Illness - Illness"
+     "reason": "G League - Two-Way"
     },
     {
      "key": [
@@ -584,117 +552,29 @@
     {
      "key": [
       "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Beekman, Reece"
+      "PHI@BKN",
+      "Brooklyn Nets",
+      "Bilodeau, Tyler"
      ],
      "status": "Out",
-     "reason": "Injury/Illness - Right AC Joint Injury"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Champagne, Justin"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Right Foot Surgery"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Johnson, Tre"
-     ],
-     "status": "Questionable",
-     "reason": "Injury/Illness - Low Back Soreness"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Okpara, Felix"
-     ],
-     "status": "Questionable",
      "reason": "G League - Two-Way"
     },
     {
      "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Vukcevic, Tristan"
+      "2026-11-17",
+      "DET@SAS",
+      "Detroit Pistons",
+      "<placeholder>"
      ],
-     "status": "Out",
-     "reason": "Injury/Illness - Left Hip Impingement"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "MEM@WAS",
-      "Washington Wizards",
-      "Watkins, Jamir"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Left ACL Repair / Surgery"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
-      "Barlow, Dominick"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Low Back Stress Reaction"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
-      "Bona, Adem"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Cervical Spine Sprain"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
-      "Embiid, Joel"
-     ],
-     "status": "Questionable",
-     "reason": "Injury/Illness - Right Foot Plantar Fascia Injury Management"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
-      "Hukporti, Ariel"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Right Achilles Tendon Rupture / Tear"
-    },
-    {
-     "key": [
-      "2026-11-16",
-      "PHI@BKN",
-      "Philadelphia 76ers",
-      "James, LeBron"
-     ],
-     "status": "Out",
-     "reason": "Injury/Illness - Low Back/Sciatica Management"
+     "status": null,
+     "reason": "NOT YET SUBMITTED"
     }
    ],
    "became_unread": [],
    "placeholder_resolved": [],
-   "note": "The earlier session's 09:15 AM transcription vs this session's read of the 09:30 AM PDF. A row that appears here is either a real revision in those 15 minutes or a transcription error in the earlier capture; both rows are linked to a PDF so the reader can settle it. This is a provenance check, not a claim about the league."
+   "note": "The earlier session's 09:15 AM transcription vs this session's read of the 09:30 AM PDF. A row that appears here is either a real revision in those 15 minutes or a transcription error in the earlier capture; both rows are linked to a PDF so the reader can settle it. This is a provenance check, not a claim about the league.",
+   "compared_against": "2026-11-16 09:30 AM ET",
+   "transcript_stamp": "2026-11-16 09:30 AM ET"
   }
  },
  "policy": {

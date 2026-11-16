@@ -124,11 +124,13 @@ have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 
 
 # (id, severity, (page, fragment, label, official source URL), what is wrong, what is published)
 V4_FLAGS = [
-    ("F-V4-01", "gap", ("v4-injuries.html", "binary-not-stored", "Injury releases", C.INJURY_RELEASES[0]["url"]),
-     "The injury releases are stored as transcribed text, not as the original PDF bytes: bash "
-     "egress to ak-static.cms.nba.com returns HTTP 000, and the page-fetch tool returns text.",
-     "Official URL, revision stamp, this session's retrieval stamp and a sha256 of the "
-     "transcribed text. Not the original file hash."),
+    ("F-V4-01", "gap", ("v4-injuries.html", "bytes", "Injury releases", RR.newest()["url"]),
+     "The original injury PDF bytes are not in the repository. Bash egress from the development "
+     "sandbox to ak-static.cms.nba.com is TLS-reset and the page-fetch tool returns text, so a "
+     "build cannot download the file; nba2/v4/injury_ingest.py archives it from a GitHub runner "
+     "and records the outcome per file in data/v4/injury/binary_manifest.json.",
+     "Official URL, revision stamp, retrieval stamp, index-check stamp and a sha256 over the "
+     "stored RENDERING of the release. Not the original file hash, and not a transcription."),
     ("F-V4-02", "gap", ("v4-verify.html", "", "This page", C.SOURCE_PAGES["schedule"]["url"]),
      "Per-player game logs for the 11/15 and 11/16 games were not transcribed; 9 games x ~26 "
      "rows was outside this session's budget.",
@@ -141,14 +143,28 @@ V4_FLAGS = [
      "No licensed odds feed: there is no market price, so no edge, no stake, no Kelly "
      "fraction and no CLV can be computed.",
      "The bet surface publishes 0 rows and 29 explicit refusals. Stakes are held at 0.00."),
-    ("F-V4-05", "gap", ("v4-injuries.html", "layout", "Layout artefacts", C.INJURY_RELEASES[0]["url"]),
-     "Continuation rows in the official PDF lose their date, time and team on page breaks.",
-     "Those rows are keyed off the preceding full row and the reconstruction is flagged; they "
-     "are never assigned a team by inference from the player's usual club."),
-    ("F-V4-06", "blocking", ("v4-injuries.html", "layout", "Layout artefacts", C.SOURCE_PAGES["injury_index"]["url"]),
-     "Six GSW@NOP rows lose the status column in extraction, so their status cannot be read.",
-     "Status left blank and counted separately, with F-V4-06 printed in the cell. Never "
-     "back-filled, never counted as Available."),
+    ("F-V4-05", "gap", ("v4-injuries.html", "layout", "Layout artefacts", RR.newest()["url"]),
+     "Continuation rows in the official PDF rendering lose their date, time and team on page "
+     "breaks, and the number of leading empty cells varies by block.",
+     "Those rows are attributed to the block in progress and the attribution is written onto "
+     "the row. No team is ever assigned by inference from a player's usual club."),
+    ("F-V4-06", "resolved", ("v4-injuries.html", "layout", "Layout artefacts", RR.RENDERS[0]["url"]),
+     "FIXED 2026-11-16. The previous build published a blank status for six GSW@NOP rows and "
+     "blamed the extraction. The extraction was not the problem: the parser addressed the status "
+     "column by POSITION, and those rows carry fewer leading cells. Re-read by content type, the "
+     "09:30 AM PDF yields Out/Out/Out/Questionable/Out for Curry, Moody, Porzingis, Santos and "
+     "Williams, and the 09:15 transcription also recorded Doubtful as Questionable for Tyson, "
+     "Jaylon.",
+     "Every one of those cells is now read and published. The parser reports zero unread rows on "
+     "both stored releases, and residue risk (a future release with a shape it cannot type) is "
+     "reported as a count rather than silently dropped."),
+    ("F-V4-10", "gap", ("v4-injuries.html", "releases", "Release diff", RR.newest()["url"]),
+     "The 01:00 PM release was returned by the page-fetch tool in two chunks and the junction "
+     "fell inside the PHX@DEN block.",
+     "The join basis is recorded on the release: the resumed chunk re-prints the row prefix, the "
+     "joined row has the same cell shape as its block, and the same five Denver rows were read "
+     "single-chunked from the 09:30 AM release and match row for row. A reviewer can check both "
+     "PDFs."),
     ("F-V4-07", "gap", ("v4-injuries.html", "cross-day", "Cross-day diff", C.INJURY_RELEASES[0]["url"]),
      "POR@MIN appears under two different dates in the same release, so a date-only key would "
      "merge two distinct filings.",
@@ -158,10 +174,13 @@ V4_FLAGS = [
      "minutes, and no matched before/after pair of games has been captured.",
      "Status counts only, with production impact explicitly blank and flagged. Minutes shares "
      "and replacement shares are not invented."),
-    ("F-V4-09", "gap", ("v4-injuries.html", "releases", "Release diff", C.INJURY_RELEASE_0930["url"]),
-     "The 09:30 AM release is identical row-for-row to the 09:15 AM release.",
-     "Declared with identical_to and a basis, so it is not counted as a change and does not "
-     "inflate the diff ledger."),
+    ("F-V4-09", "resolved", ("v4-injuries.html", "cross-session", "Provenance check", RR.RENDERS[0]["url"]),
+     "FIXED 2026-11-16. The previous build declared the 09:30 AM release 'identical row-for-row "
+     "to the 09:15 AM release' without reading it, so the test guarding it compared a hard-coded "
+     "string with itself and published '0 status changes' as a finding.",
+     "Both releases are now read and stored, the diff between them is computed, and the earlier "
+     "session's 70-row transcription is retained as *_superseded.json so the comparison is "
+     "against their record rather than against our own."),
 ]
 
 
@@ -755,7 +774,8 @@ def page_verify(res: dict, settle_doc: dict | None, checks: dict) -> str:
     for fid, sev, where, what, effect in V4_FLAGS:
         flag_rows.append(
             "<tr>"
-            f"<td><code>{esc(fid)}</code></td><td>{badge(sev, 'bad' if sev == 'blocking' else 'warn')}</td>"
+            f"<td><code>{esc(fid)}</code></td>"
+            f"<td>{badge(sev.upper(), 'ok' if sev == 'resolved' else ('bad' if sev == 'blocking' else 'warn'))}</td>"
             # v2's link checker (nba2/v2/check.py:42) resolves a target without stripping
             # its fragment, so a bare "page.html#id" is reported as broken. Every target
             # here is a real file, so linking the file itself satisfies both checkers;
