@@ -49,10 +49,13 @@ jobs:
           python -m nba2.v2
           python -m nba2.settlement_page
           python -m nba2.v3
+          # v4 appends its own links to the nav that v2/v3 wrote, so it has to run after them
+          # or this diff correctly reports every page as drifted.
+          python -m nba2.v4
 
       - name: The published tree (site/) must equal a rebuild
         run: |
-          git add -A -- site data/v2
+          git add -A -- site data/v2 data/v4
           if ! git diff --cached --quiet -- site; then
             echo "::error title=site/ differs from a rebuild::the published tree is stale — commit the rebuild of site/"
             git diff --cached --stat -- site | tail -20
