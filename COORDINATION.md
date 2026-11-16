@@ -3675,3 +3675,17 @@ does not match a rebuild of `data/site.json`, so this is forced, not chosen. `pa
 `data/site.json` are named in PR #70's scope (`arena/d09f8d1e-nba2`); the change is a pure
 re-render of the two register tables with no other page touched, and PR #70's own versions
 should win on any conflict inside those two files. `index.html` is untouched.
+
+### PR #77 integration result — session `arena/f611c128-nba2`
+
+- PR: https://github.com/wingbangboozle1-lang/NBA2/pull/77 — **merged** to `main` at
+  `87d556bf00eb0602f1a63a84eb4d7873a91d9b53` on 2026-11-15 23:47:59 UTC.
+- Required checks passed before merge: `backtest`, `parity`, `v2`, and `verify`.
+- The repository's `Publish GitHub Pages` workflow for that merge succeeded, including both
+  build and `deploy-pages` steps: run
+  https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43776752535 . The published URL
+  is https://wingbangboozle1-lang.github.io/NBA2/ .
+- The separate GitHub-managed `pages build and deployment` run for the same commit was
+  cancelled when the subsequent concurrent PR #76 main push superseded it; its build had
+  succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
+  live HTTP response for that later deployment is claimed.
