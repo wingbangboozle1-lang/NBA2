@@ -3929,3 +3929,45 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+---
+
+## Session `arena/b3914335-nba2` — CLAIM (2026-11-16 ~14:30 UTC, branch `arena/b3914335-nba2`, base `32019ac` = `main` @ PR #88)
+
+**State read at claim time (measured, not assumed).**
+- `main` = `32019ac`; branch at the same commit, working tree clean. Open PRs #70/#72/#78/#80/#82 are older
+  branches whose scoped work is reported below; none holds a claim on the files claimed here.
+- Checker chain on the committed tree: v1 tests 79 OK, v2 tests 136 OK, v3 tests 64 OK; `python -m nba2.v3`
+  builds 12 pages, gates 7 pass / 1 fail (G-F3 advisory), publishable=True.
+- `git`/`gh` authenticated; **bash egress to nba.com is blocked (HTTP 000)**, but the platform page-fetch
+  tool reaches `www.nba.com`, `official.nba.com` and `statsdmz.nba.com`. Every official read this session
+  is made through that tool and records *that* method with a retrieval timestamp.
+
+**File scope claimed (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record (append-only).
+- NEW `nba2/v4/**` — the rolling-slate refresh, provenance gate, settlement and published-surface layer.
+- NEW `data/raw/refresh_2026-11-16/**`, NEW `data/v4/**` — this session's official captures + derived output.
+- `nba2/settlement_page.py` — only to wire the orphaned Settlement page into shared navigation (R-1 of
+  session `arena/e73ca9d5-nba2`, logged as unretired request).
+- `.github/workflows/refresh.yml`, `.github/workflows/pages.yml` — add the v4 gate chain + test job
+  (R-3 of session `arena/e73ca9d5-nba2`, logged as unretired request).
+- Regenerated artefacts of the committed generators: `site/**`, `pages/**`, `data/site.json` — only as
+  direct output of the committed modules, never hand-edited.
+- `requirements/REQUIREMENTS.json`, `suggestions/SUGGESTIONS.json`, `README.md` — status/count sync.
+- NEW `analysis/session-b3914335-verification.md` — the verification record.
+
+**Not edited (owned by finished sessions; a change request is logged instead):** `nba2/v2/**`,
+`nba2/v3/**` (read as libraries), `nba2/models/**`, `nba2/pipeline/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `backtest/**`, `archive/**`, `verified/**`, root `*.html`, `data/raw/ledger/**`
+(sealed, read only), `data/v2/**`, `data/v3/**`.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| B1 | Claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| B2 | Scheduled rolling-slate refresh of the four official surfaces with freshness + provenance gates, rebuild only after they pass (brief #1) | pending | `nba2/v4/*`, `.github/workflows/refresh.yml` | live official read, per-row URL + retrieval stamp; unconfirmed ⇒ blank + flagged |
+| B3 | Official 2026-11-16 refresh capture + in-session gate run + gated rebuild (brief #1 measured, brief #24) | pending | `data/raw/refresh_2026-11-16/**` | value + official URL per row |
+| B4 | Settle the 11/15 sealed ledger from verified official finals; keep the stamp visible (briefs #2, #22) | pending | `nba2/v4/settle*.py`, `data/v4/**` | final + quarter rows must agree with the official source; never back-solve |
+| B5 | Injury releases: store each release with revision + retrieval stamps, diff consecutive releases (briefs #3, #21) | pending | `data/v4/injuries/**`, `nba2/v4/injuries.py` | PDF/index URL per release |
+| B6 | Projection vs bet surface split enforced in code + on the site (brief #7) | pending | `nba2/v4/surfaces.py` | gate must refuse a bet-surface row without a measured price |
+| B7 | Wire the orphaned Settlement page into shared navigation + CI (R-1/R-3) | pending | `nba2/settlement_page.py`, workflows | link resolves; check passes |
+| B8 | Registers, README, Flagged-for-review + PR → `main` → merge → Pages deploy confirmed → record here | pending | `requirements/`, `suggestions/`, `README.md`, `COORDINATION.md` | every checker green; live fetch returns the new pages |
