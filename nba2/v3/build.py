@@ -652,12 +652,14 @@ def page_player_logs() -> str:
         if m is not None)
     no_row = "".join(
         f"<tr><td>{esc(p['team'])}</td><td>{esc(p['player'])}</td>"
-        f"<td>{esc(p['status'])}</td><td>{esc(p['reason'])}</td>"
+        f"<td>{esc(p['status'])}</td>"
+        f"<td>{esc(p['reason']) if p['reason'] else blank('F-405 the PDF prints an empty Reason cell')}</td>"
         f"<td>{link(p['source_url'], 'injury PDF')}</td></tr>"
         for p in cov["no_row_in_captured_game"])
     no_club = "".join(
         f"<tr><td>{esc(p['team'])}</td><td>{esc(p['player'])}</td>"
-        f"<td>{esc(p['status'])}</td><td>{esc(p['reason'])}</td>"
+        f"<td>{esc(p['status'])}</td>"
+        f"<td>{esc(p['reason']) if p['reason'] else blank('F-405 the PDF prints an empty Reason cell')}</td>"
         f"<td>{link(p['source_url'], 'injury PDF')}</td></tr>"
         for p in cov["club_not_captured"])
 
@@ -675,21 +677,24 @@ def page_player_logs() -> str:
     body = f"""
 <div class="cards">
   <div class="card"><span class="k">Games captured</span><span class="v">{meta['n_games']}</span>
-    <span class="s">every game played 2026-11-13</span></div>
-  <div class="card"><span class="k">Clubs covered</span><span class="v">{meta['n_teams']} / 30</span>
+    <span class="s">{' + '.join(meta['windows'])} — every game that was Final at capture</span></div>
+  <div class="card"><span class="k">Clubs covered</span><span class="v">{meta['n_clubs']} / 30</span>
     <span class="s">{clubs_yes}</span></div>
   <div class="card"><span class="k">Player log rows</span><span class="v">{meta['n_rows']}</span>
     <span class="s">minutes, points, rebounds, assists, opponent</span></div>
   <div class="card"><span class="k">Injured players matched</span>
     <span class="v">{cov['n_matched']} / {cov['n_injured_named']}</span>
-    <span class="s">join to the 06:15 PM ET release</span></div>
+    <span class="s">join to the newest official release</span></div>
 </div>
 
 <h2>Per-player game log</h2>
-<p>One row per player per game, transcribed from the official NBA gamebook PDF. The minutes
-column is the only one that can be blank: Memphis' Jerami Grant has no extracted minutes cell
-in the official document, and the 25:39 the team total would imply is a residual, not a
-published number, so it is left empty and flagged I-F8F-07.</p>
+<p>One row per player per game, transcribed from the official NBA gamebook PDF. Two windows are
+captured: <b>2026-11-13</b> (all nine games, eighteen clubs, captured by session
+arena/f8f8f2b8-nba2) and <b>2026-11-15</b> (the six games that were Final when this session
+captured them, twelve clubs). The minutes column is the only one that can be blank: Memphis'
+Jerami Grant has no extracted minutes cell in the official 11/13 document, and the 25:39 the
+team total would imply is a residual, not a published number, so it is left empty and flagged
+I-F8F-07.</p>
 {t_logs}
 
 <h2>Injured players who have a captured log row</h2>
@@ -860,13 +865,15 @@ def page_injury_diff() -> str:
     arows = "".join(
         f"<tr><td>{esc(a['date'])}</td><td>{esc(a['matchup'])}</td><td>{esc(a['team'])}</td>"
         f"<td>{esc(a['player']) or blank('FLAGGED I-F8F-13: no source for this cell - the release prints no player')}</td>"
-        f"<td>{esc(a['status'])}</td><td>{esc(a['reason'])}</td>"
+        f"<td>{esc(a['status'])}</td>"
+        f"<td>{esc(a['reason']) if a['reason'] else blank('F-405 the PDF prints an empty Reason cell')}</td>"
         f"<td>{link(st['report_url'], 'PDF')}</td></tr>"
         for a in added)
     rrows = "".join(
         f"<tr><td>{esc(a['date'])}</td><td>{esc(a['matchup'])}</td><td>{esc(a['team'])}</td>"
         f"<td>{esc(a['player']) or blank('FLAGGED I-F8F-13: no source for this cell - the release prints no player')}</td>"
-        f"<td>{esc(a['status'])}</td><td>{esc(a['reason'])}</td>"
+        f"<td>{esc(a['status'])}</td>"
+        f"<td>{esc(a['reason']) if a['reason'] else blank('F-405 the PDF prints an empty Reason cell')}</td>"
         f"<td>{link(st['prior_report_url'], 'PDF')}</td></tr>"
         for a in removed)
     QUIRKS = [
@@ -899,11 +906,34 @@ def page_injury_diff() -> str:
                      "reconciles to the printed final. Both readings are recorded in the "
                      "capture file.", "warn",
          "https://statsdmz.nba.com/pdfs/20261113/20261113_UTAHOU_book.pdf", "UTA@HOU book"),
-        ("I-F8F-11", "nba2/v3/official.py carries the injury release as 11/15/26 06:00 AM ET "
-                     'with "newest indexed 06:15 AM ET". The official index now lists releases '
-                     "through <b>06:15 PM ET</b>, twelve hours later. Logged as a cross-scope "
-                     "request; that file is not edited here.", "warn",
-         st["index_url"], "official index"),
+        ("I-F8F-11", "RESOLVED this session (was: nba2/v3/official.py carried the 06:00 AM ET "
+                     "release while the index listed 06:15 PM ET). Session "
+                     "arena/f7186ace-nba2 refreshed the snapshot to the <b>09:00 PM ET</b> "
+                     "release, the newest the index listed at 2026-11-16 02:20 UTC; gate G-F3 "
+                     "now passes. The twelve-hour gap it flagged is the reason the diff below "
+                     "is 06:15 PM &rarr; 09:00 PM rather than two consecutive 15-minute "
+                     "releases.", "off", st["index_url"], "official index"),
+        ("I-F71-01", "Page-continuation rows print with empty date / time / matchup / team "
+                     "cells; the value has to be inherited from the block in progress.",
+         "warn", st["report_url"], "PDF"),
+        ("I-F71-02", "In the 11/16 MEM@WAS block, 'Saunders, Richie' and 'Stewart, Isaiah' print "
+                     "between the last Memphis row and the Washington NOT YET SUBMITTED row with "
+                     "no team cell of their own. Table position attributes them to Memphis; that "
+                     "is a position read, not a roster fact.", "warn", st["report_url"], "PDF"),
+        ("I-F71-03", "The 11/15 NYK@TOR block contains no New York Knicks rows at all &mdash; not "
+                     "even a placeholder.", "warn", st["report_url"], "PDF"),
+        ("I-F71-04", "Game times print in 12-hour form with no AM/PM marker, and the 11/16 "
+                     "MEM@WAS and ORL@BOS blocks print no time at all. The 24-hour clock on "
+                     + link("slate.html", "the slate page") + " is authoritative.", "warn",
+         st["report_url"], "PDF"),
+        ("I-F71-05", "The four Denver Nuggets rows in the 11/16 PHX@DEN block print an Out status "
+                     "with an empty Reason cell; the reason is unknown from the document and is "
+                     "published blank.", "warn", st["report_url"], "PDF"),
+        ("I-F71-06", "DAL@BOS (2026-11-15): the SCORE BY PERIOD row for Dallas renders in the PDF "
+                     'text layer as the page-number sequence "2 3 4 2" rather than four quarter '
+                     "scores. Boston's row extracted and reconciles to 131; Dallas' quarter "
+                     "column is blank (F-409).", "warn",
+         "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf", "DAL@BOS book"),
         ("I-F8F-12", "DEN@NOP (2026-11-14) and OKC@LAC: the PDF prints the same surname twice "
                      "in one club's inactive list (two distinct Williams entries for OKC), so a "
                      "last-name-only join would over-count.", "off",
@@ -929,19 +959,22 @@ def page_injury_diff() -> str:
   <div><span class="k">Report revision time</span><span class="v">{esc(st['revision_time_et'])}</span>
     <span class="s">the stamp printed on the PDF</span></div>
   <div><span class="k">Retrieved</span><span class="v">{esc(st['retrieved_at_utc'])}</span>
-    <span class="s">when this session fetched it</span></div>
+    <span class="s">{esc(st['retrieved_at_et'])} &mdash; when this session fetched it</span></div>
   <div><span class="k">Compared against</span><span class="v">{esc(st['prior_revision_time_et'])}</span>
-    <span class="s">{esc(st['elapsed'])} earlier, same day</span></div>
+    <span class="s">retrieved {esc(st['prior_retrieved_at_utc'])}, {esc(st['elapsed'])} earlier</span></div>
+  <div><span class="k">Newest indexed at retrieval</span>
+    <span class="v">09:00 PM ET</span>
+    <span class="s">the index listed no newer release &mdash; gate G-F3 passes</span></div>
   <div><span class="k">Source</span>
-    <span class="v">{link(st['report_url'], '06:15 PM PDF')}</span>
-    <span class="s">{link(st['index_url'], 'official index')} · {link(st['prior_report_url'], '06:15 AM PDF')}</span></div>
+    <span class="v">{link(st['report_url'], '09:00 PM PDF')}</span>
+    <span class="s">{link(st['index_url'], 'official index')} · {link(st['prior_report_url'], '06:15 PM PDF')}</span></div>
 </div>
 
 <h2>Release-to-release movement</h2>
 <div class="cards">
-  <div class="card"><span class="k">Rows in the 06:15 AM release</span>
-    <span class="v">{d['am_rows']}</span></div>
   <div class="card"><span class="k">Rows in the 06:15 PM release</span>
+    <span class="v">{d['am_rows']}</span></div>
+  <div class="card"><span class="k">Rows in the 09:00 PM release</span>
     <span class="v">{d['pm_rows']}</span></div>
   <div class="card"><span class="k">Status changes</span>
     <span class="v">{len(changes)}</span>

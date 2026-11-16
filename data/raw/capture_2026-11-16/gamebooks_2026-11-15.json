@@ -1,0 +1,1301 @@
+{
+ "schema": "nba2.gamebooks/v2",
+ "date": "2026-11-15",
+ "n_games": 6,
+ "retrieved_at_utc": "2026-11-16T02:55:00Z",
+ "session": "arena/f7186ace-nba2",
+ "retrieval_method": "platform page-fetch tool (fetch_page) against the official gamebook PDF",
+ "source_pattern": "https://statsdmz.nba.com/pdfs/20261115/20261115_{AWAY}{HOME}_book.pdf",
+ "index_page": "https://www.nba.com/games?date=2026-11-15",
+ "gates": {
+  "n_games_played_that_were_final": 6,
+  "n_captured": 6,
+  "every_quarter_row_sums_to_the_official_final": false
+ },
+ "incomplete": [
+  {
+   "game_id": "0022600240",
+   "team": "DAL",
+   "issue": "the SCORE BY PERIOD row for this club did not extract from the PDF",
+   "flag": "F-409"
+  }
+ ],
+ "n_player_rows": 132,
+ "games": [
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600236",
+   "away": "IND",
+   "home": "PHI",
+   "away_pts": 124,
+   "home_pts": 131,
+   "quarters": {
+    "IND": [
+     35,
+     22,
+     30,
+     37
+    ],
+    "PHI": [
+     29,
+     29,
+     39,
+     34
+    ]
+   },
+   "quarters_complete": true,
+   "arena": "Xfinity Mobile Arena",
+   "city": "Philadelphia, PA",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+   "game_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
+   "teams": {
+    "IND": {
+     "played": [
+      [
+       "Aaron Nesmith",
+       "F",
+       "36:20",
+       12,
+       4,
+       4
+      ],
+      [
+       "Pascal Siakam",
+       "F",
+       "33:40",
+       31,
+       2,
+       2
+      ],
+      [
+       "Ivica Zubac",
+       "C",
+       "22:15",
+       8,
+       5,
+       2
+      ],
+      [
+       "Kelly Oubre Jr.",
+       "G",
+       "28:55",
+       16,
+       4,
+       2
+      ],
+      [
+       "Quenton Jackson",
+       "G",
+       "30:14",
+       15,
+       6,
+       8
+      ],
+      [
+       "T.J. McConnell",
+       "",
+       "19:06",
+       12,
+       5,
+       5
+      ],
+      [
+       "Jalen Slawson",
+       "",
+       "14:22",
+       8,
+       5,
+       2
+      ],
+      [
+       "Obi Toppin",
+       "",
+       "14:15",
+       5,
+       2,
+       1
+      ],
+      [
+       "Larry Nance Jr.",
+       "",
+       "06:33",
+       4,
+       2,
+       2
+      ],
+      [
+       "Jarace Walker",
+       "",
+       "13:39",
+       2,
+       5,
+       2
+      ],
+      [
+       "Jay Huff",
+       "",
+       "17:42",
+       11,
+       0,
+       2
+      ],
+      [
+       "Kobe Brown",
+       "",
+       "02:59",
+       0,
+       0,
+       0
+      ]
+     ]
+    },
+    "PHI": {
+     "played": [
+      [
+       "Jaylen Brown",
+       "F",
+       "32:28",
+       31,
+       2,
+       2
+      ],
+      [
+       "LeBron James",
+       "F",
+       "32:47",
+       15,
+       7,
+       11
+      ],
+      [
+       "Jabari Walker",
+       "C",
+       "24:42",
+       11,
+       7,
+       1
+      ],
+      [
+       "VJ Edgecombe",
+       "G",
+       "30:49",
+       11,
+       4,
+       6
+      ],
+      [
+       "Tyrese Maxey",
+       "G",
+       "35:32",
+       27,
+       4,
+       6
+      ],
+      [
+       "Dean Wade",
+       "",
+       "35:03",
+       12,
+       7,
+       3
+      ],
+      [
+       "Kentavious Caldwell-Pope",
+       "",
+       "22:16",
+       9,
+       5,
+       0
+      ],
+      [
+       "Anfernee Simons",
+       "",
+       "15:28",
+       12,
+       0,
+       0
+      ],
+      [
+       "Labaron Philon Jr.",
+       "",
+       "06:06",
+       3,
+       1,
+       0
+      ],
+      [
+       "Tacko Fall",
+       "",
+       "04:49",
+       0,
+       3,
+       0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600237",
+   "away": "LAL",
+   "home": "PHX",
+   "away_pts": 131,
+   "home_pts": 123,
+   "quarters": {
+    "LAL": [
+     33,
+     31,
+     40,
+     27
+    ],
+    "PHX": [
+     24,
+     30,
+     26,
+     43
+    ]
+   },
+   "quarters_complete": true,
+   "arena": "Mortgage Matchup Center",
+   "city": "Phoenix, AZ",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
+   "game_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
+   "teams": {
+    "LAL": {
+     "played": [
+      [
+       "Matisse Thybulle",
+       "F",
+       "26:05",
+       12,
+       8,
+       0
+      ],
+      [
+       "Jake LaRavia",
+       "F",
+       "32:19",
+       12,
+       3,
+       3
+      ],
+      [
+       "Walker Kessler",
+       "C",
+       "32:26",
+       14,
+       12,
+       3
+      ],
+      [
+       "Quentin Grimes",
+       "G",
+       "37:26",
+       22,
+       6,
+       1
+      ],
+      [
+       "Luka Don\u010di\u0107",
+       "G",
+       "35:44",
+       43,
+       3,
+       9
+      ],
+      [
+       "Ziaire Williams",
+       "",
+       "18:59",
+       6,
+       2,
+       3
+      ],
+      [
+       "Sandro Mamukelashvili",
+       "",
+       "21:10",
+       4,
+       2,
+       3
+      ],
+      [
+       "Jarred Vanderbilt",
+       "",
+       "12:09",
+       2,
+       4,
+       0
+      ],
+      [
+       "Collin Sexton",
+       "",
+       "23:45",
+       16,
+       0,
+       3
+      ]
+     ]
+    },
+    "PHX": {
+     "played": [
+      [
+       "Dillon Brooks",
+       "F",
+       "22:18",
+       1,
+       2,
+       0
+      ],
+      [
+       "Miles Bridges",
+       "F",
+       "24:06",
+       14,
+       3,
+       3
+      ],
+      [
+       "Oso Ighodaro",
+       "C",
+       "17:01",
+       4,
+       2,
+       3
+      ],
+      [
+       "Jalen Green",
+       "G",
+       "21:16",
+       9,
+       2,
+       1
+      ],
+      [
+       "Devin Booker",
+       "G",
+       "27:48",
+       17,
+       4,
+       7
+      ],
+      [
+       "Jordan Goodwin",
+       "",
+       "31:21",
+       14,
+       7,
+       6
+      ],
+      [
+       "Khaman Maluach",
+       "",
+       "13:11",
+       7,
+       4,
+       0
+      ],
+      [
+       "Collin Gillespie",
+       "",
+       "27:38",
+       26,
+       4,
+       4
+      ],
+      [
+       "Ryan Dunn",
+       "",
+       "23:59",
+       3,
+       6,
+       1
+      ],
+      [
+       "Luke Kennard",
+       "",
+       "23:08",
+       18,
+       6,
+       4
+      ],
+      [
+       "Koa Peat",
+       "",
+       "08:15",
+       10,
+       2,
+       0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600238",
+   "away": "CHA",
+   "home": "LAC",
+   "away_pts": 105,
+   "home_pts": 113,
+   "quarters": {
+    "CHA": [
+     21,
+     31,
+     31,
+     22
+    ],
+    "LAC": [
+     22,
+     29,
+     33,
+     29
+    ]
+   },
+   "quarters_complete": true,
+   "arena": "Intuit Dome",
+   "city": "Inglewood, CA",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
+   "game_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
+   "teams": {
+    "CHA": {
+     "played": [
+      [
+       "Sion James",
+       "F",
+       "35:29",
+       3,
+       8,
+       4
+      ],
+      [
+       "Naz Reid",
+       "F",
+       "27:22",
+       17,
+       4,
+       3
+      ],
+      [
+       "Moussa Diabat\u00e9",
+       "C",
+       "26:16",
+       12,
+       12,
+       2
+      ],
+      [
+       "Brandon Miller",
+       "G",
+       "24:28",
+       5,
+       2,
+       4
+      ],
+      [
+       "Coby White",
+       "G",
+       "19:57",
+       21,
+       0,
+       1
+      ],
+      [
+       "Grayson Allen",
+       "",
+       "24:50",
+       12,
+       5,
+       4
+      ],
+      [
+       "Christian Anderson",
+       "",
+       "18:00",
+       16,
+       3,
+       2
+      ],
+      [
+       "Ryan Kalkbrenner",
+       "",
+       "18:20",
+       5,
+       5,
+       1
+      ],
+      [
+       "Royce O'Neale",
+       "",
+       "18:30",
+       3,
+       3,
+       1
+      ],
+      [
+       "Grant Williams",
+       "",
+       "20:11",
+       11,
+       2,
+       1
+      ],
+      [
+       "Tidjane Sala\u00fcn",
+       "",
+       "04:48",
+       0,
+       2,
+       0
+      ],
+      [
+       "Liam McNeeley",
+       "",
+       "01:49",
+       0,
+       0,
+       0
+      ]
+     ]
+    },
+    "LAC": {
+     "played": [
+      [
+       "Derrick Jones Jr.",
+       "F",
+       "25:36",
+       13,
+       4,
+       1
+      ],
+      [
+       "Rui Hachimura",
+       "F",
+       "22:05",
+       4,
+       2,
+       0
+      ],
+      [
+       "Brook Lopez",
+       "C",
+       "28:34",
+       7,
+       5,
+       8
+      ],
+      [
+       "Kris Dunn",
+       "G",
+       "18:01",
+       7,
+       3,
+       1
+      ],
+      [
+       "Darius Garland",
+       "G",
+       "34:49",
+       27,
+       6,
+       7
+      ],
+      [
+       "Max Strus",
+       "",
+       "24:54",
+       14,
+       3,
+       4
+      ],
+      [
+       "Isaiah Jackson",
+       "",
+       "14:55",
+       13,
+       2,
+       2
+      ],
+      [
+       "Keaton Wagler",
+       "",
+       "27:32",
+       12,
+       4,
+       5
+      ],
+      [
+       "Gradey Dick",
+       "",
+       "18:38",
+       12,
+       2,
+       0
+      ],
+      [
+       "Kobe Sanders",
+       "",
+       "20:25",
+       2,
+       6,
+       4
+      ],
+      [
+       "Baba Miller",
+       "",
+       "04:31",
+       2,
+       0,
+       0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600239",
+   "away": "SAS",
+   "home": "UTA",
+   "away_pts": 110,
+   "home_pts": 102,
+   "quarters": {
+    "SAS": [
+     31,
+     27,
+     23,
+     29
+    ],
+    "UTA": [
+     33,
+     22,
+     26,
+     21
+    ]
+   },
+   "quarters_complete": true,
+   "arena": "Delta Center",
+   "city": "Salt Lake City, UT",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
+   "game_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
+   "teams": {
+    "SAS": {
+     "played": [
+      [
+       "Julian Champagne",
+       "F",
+       "23:53",
+       4,
+       5,
+       1
+      ],
+      [
+       "Devin Vassell",
+       "F",
+       "31:48",
+       6,
+       6,
+       1
+      ],
+      [
+       "Victor Wembanyama",
+       "C",
+       "35:13",
+       26,
+       10,
+       6
+      ],
+      [
+       "Stephen Castle",
+       "G",
+       "34:52",
+       20,
+       4,
+       9
+      ],
+      [
+       "Dylan Harper",
+       "G",
+       "34:20",
+       31,
+       9,
+       4
+      ],
+      [
+       "Jordan McLaughlin",
+       "",
+       "19:14",
+       10,
+       1,
+       2
+      ],
+      [
+       "Keldon Johnson",
+       "",
+       "29:19",
+       11,
+       10,
+       2
+      ],
+      [
+       "Luke Kornet",
+       "",
+       "12:47",
+       2,
+       2,
+       0
+      ],
+      [
+       "Harrison Barnes",
+       "",
+       "13:48",
+       0,
+       0,
+       2
+      ],
+      [
+       "Carter Bryant",
+       "",
+       "04:46",
+       0,
+       1,
+       0
+      ]
+     ]
+    },
+    "UTA": {
+     "played": [
+      [
+       "Josh Green",
+       "F",
+       "14:58",
+       6,
+       1,
+       1
+      ],
+      [
+       "Ace Bailey",
+       "F",
+       "29:52",
+       7,
+       8,
+       4
+      ],
+      [
+       "Mo Bamba",
+       "C",
+       "35:41",
+       26,
+       5,
+       4
+      ],
+      [
+       "Darryn Peterson",
+       "G",
+       "34:14",
+       17,
+       5,
+       4
+      ],
+      [
+       "Keyonte George",
+       "G",
+       "33:56",
+       13,
+       4,
+       8
+      ],
+      [
+       "Tony Bradley",
+       "",
+       "12:19",
+       6,
+       2,
+       0
+      ],
+      [
+       "Josh Okogie",
+       "",
+       "27:28",
+       7,
+       6,
+       0
+      ],
+      [
+       "Brice Sensabaugh",
+       "",
+       "30:14",
+       14,
+       7,
+       2
+      ],
+      [
+       "Svi Mykhailiuk",
+       "",
+       "21:19",
+       6,
+       2,
+       3
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600240",
+   "away": "DAL",
+   "home": "BOS",
+   "away_pts": 94,
+   "home_pts": 131,
+   "quarters": {
+    "DAL": null,
+    "BOS": [
+     42,
+     25,
+     37,
+     27
+    ]
+   },
+   "quarters_complete": false,
+   "arena": "TD Garden",
+   "city": "Boston, MA",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+   "game_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
+   "teams": {
+    "DAL": {
+     "played": [
+      [
+       "Caleb Martin",
+       "F",
+       "33:51",
+       12,
+       5,
+       5
+      ],
+      [
+       "P.J. Washington",
+       "F",
+       "24:30",
+       8,
+       5,
+       4
+      ],
+      [
+       "Daniel Gafford",
+       "C",
+       "19:24",
+       3,
+       4,
+       2
+      ],
+      [
+       "Cooper Flagg",
+       "G",
+       "26:41",
+       17,
+       3,
+       4
+      ],
+      [
+       "Naji Marshall",
+       "G",
+       "22:45",
+       13,
+       2,
+       2
+      ],
+      [
+       "Walter Clayton Jr.",
+       "",
+       "23:04",
+       13,
+       4,
+       3
+      ],
+      [
+       "Morez Johnson Jr.",
+       "",
+       "25:40",
+       2,
+       6,
+       4
+      ],
+      [
+       "Zaccharie Risacher",
+       "",
+       "26:43",
+       18,
+       5,
+       0
+      ],
+      [
+       "Marcus Sasser",
+       "",
+       "18:07",
+       5,
+       1,
+       2
+      ],
+      [
+       "Tobi Lawal",
+       "",
+       "08:58",
+       2,
+       2,
+       0
+      ],
+      [
+       "Jett Howard",
+       "",
+       "06:39",
+       0,
+       0,
+       1
+      ],
+      [
+       "Moussa Ciss\u00e9",
+       "",
+       "03:38",
+       1,
+       1,
+       0
+      ]
+     ]
+    },
+    "BOS": {
+     "played": [
+      [
+       "Paul George",
+       "F",
+       "24:51",
+       7,
+       7,
+       6
+      ],
+      [
+       "Jayson Tatum",
+       "F",
+       "30:08",
+       32,
+       6,
+       6
+      ],
+      [
+       "Neemias Queta",
+       "C",
+       "15:21",
+       8,
+       6,
+       2
+      ],
+      [
+       "Jordan Walsh",
+       "G",
+       "21:07",
+       11,
+       1,
+       0
+      ],
+      [
+       "Derrick White",
+       "G",
+       "22:56",
+       16,
+       4,
+       2
+      ],
+      [
+       "Mitchell Robinson",
+       "",
+       "14:47",
+       0,
+       7,
+       1
+      ],
+      [
+       "Baylor Scheierman",
+       "",
+       "18:00",
+       12,
+       5,
+       3
+      ],
+      [
+       "Sam Hauser",
+       "",
+       "10:51",
+       8,
+       1,
+       0
+      ],
+      [
+       "Payton Pritchard",
+       "",
+       "18:56",
+       10,
+       1,
+       6
+      ],
+      [
+       "Luka Garza",
+       "",
+       "14:14",
+       2,
+       3,
+       5
+      ],
+      [
+       "Hugo Gonz\u00e1lez",
+       "",
+       "17:52",
+       9,
+       5,
+       2
+      ],
+      [
+       "Devin Carter",
+       "",
+       "12:00",
+       0,
+       2,
+       1
+      ],
+      [
+       "Ron Harper Jr.",
+       "",
+       "12:00",
+       10,
+       1,
+       0
+      ],
+      [
+       "Chris Cenac Jr.",
+       "",
+       "06:57",
+       6,
+       3,
+       0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "game_id": "0022600241",
+   "away": "NYK",
+   "home": "TOR",
+   "away_pts": 112,
+   "home_pts": 108,
+   "quarters": {
+    "NYK": [
+     23,
+     24,
+     20,
+     28,
+     17
+    ],
+    "TOR": [
+     17,
+     26,
+     31,
+     21,
+     13
+    ]
+   },
+   "quarters_complete": true,
+   "arena": "Scotiabank Arena",
+   "city": "Toronto, ON",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
+   "game_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
+   "teams": {
+    "NYK": {
+     "played": [
+      [
+       "Josh Hart",
+       "F",
+       "26:15",
+       0,
+       5,
+       2
+      ],
+      [
+       "OG Anunoby",
+       "F",
+       "44:29",
+       21,
+       9,
+       1
+      ],
+      [
+       "Karl-Anthony Towns",
+       "C",
+       "42:49",
+       28,
+       17,
+       3
+      ],
+      [
+       "Mikal Bridges",
+       "G",
+       "32:15",
+       5,
+       7,
+       3
+      ],
+      [
+       "Jalen Brunson",
+       "G",
+       "40:58",
+       28,
+       1,
+       9
+      ],
+      [
+       "Landry Shamet",
+       "",
+       "29:42",
+       23,
+       2,
+       0
+      ],
+      [
+       "Andre Drummond",
+       "",
+       "07:10",
+       2,
+       3,
+       0
+      ],
+      [
+       "Miles McBride",
+       "",
+       "13:39",
+       3,
+       1,
+       0
+      ],
+      [
+       "Tyler Kolek",
+       "",
+       "15:35",
+       0,
+       0,
+       7
+      ],
+      [
+       "Jordan Clarkson",
+       "",
+       "06:57",
+       2,
+       2,
+       0
+      ],
+      [
+       "Jose Alvarado",
+       "",
+       "02:22",
+       0,
+       0,
+       1
+      ],
+      [
+       "James Wiseman",
+       "",
+       "02:51",
+       0,
+       3,
+       0
+      ]
+     ]
+    },
+    "TOR": {
+     "played": [
+      [
+       "RJ Barrett",
+       "F",
+       "37:00",
+       14,
+       5,
+       6
+      ],
+      [
+       "Scottie Barnes",
+       "F",
+       "36:19",
+       30,
+       9,
+       4
+      ],
+      [
+       "Collin Murray-Boyles",
+       "C",
+       "39:47",
+       6,
+       13,
+       2
+      ],
+      [
+       "Ja'Kobe Walter",
+       "G",
+       "35:38",
+       7,
+       2,
+       1
+      ],
+      [
+       "Immanuel Quickley",
+       "G",
+       "37:30",
+       17,
+       6,
+       6
+      ],
+      [
+       "Jakob Poeltl",
+       "",
+       "17:27",
+       11,
+       5,
+       1
+      ],
+      [
+       "Jamal Shead",
+       "",
+       "25:34",
+       19,
+       2,
+       4
+      ],
+      [
+       "Jamison Battle",
+       "",
+       "08:07",
+       0,
+       3,
+       0
+      ],
+      [
+       "Allen Graves",
+       "",
+       "15:46",
+       2,
+       5,
+       3
+      ],
+      [
+       "Alijah Martin",
+       "",
+       "11:52",
+       2,
+       4,
+       0
+      ]
+     ]
+    }
+   }
+  }
+ ]
+}

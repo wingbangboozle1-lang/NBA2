@@ -32,12 +32,26 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CAP = ROOT / "data" / "raw" / "capture_2026-11-15"
+CAP16 = ROOT / "data" / "raw" / "capture_2026-11-16"
 
 GAMEBOOKS = CAP / "gamebooks_2026-11-13.json"
 GAMELOGS = CAP / "gamelogs_2026-11-13.json"
+# Second captured window (session arena/f7186ace-nba2): the six 2026-11-15 games that were
+# Final at capture. Unioned into the game-log page so the coverage scoreboard counts every
+# captured game, not just the first window's nine.
+GAMELOGS_1115 = CAP16 / "gamelogs_2026-11-15.json"
+
+GAMELOG_FILES = [GAMELOGS, GAMELOGS_1115]
 INJURY_PM = CAP / "injury_report_2026-11-15_0615PM.json"
 INJURY_AM = CAP / "injury_report_2026-11-15_0615AM.json"
 DELTA = CAP / "injury_delta_0615AM_to_0615PM.json"
+# This session's newest release and its diff (brief: store every injury PDF with its
+# timestamp and diff consecutive reports). The NEWEST pointer is what the coverage join and
+# the banner read; the older pair above stays on disk and stays referenced by the 11-13
+# capture's own record.
+INJURY_NEWEST = CAP16 / "injury_report_2026-11-15_0900PM.json"
+INJURY_PREV = CAP / "injury_report_2026-11-15_0615PM.json"
+DELTA_NEWEST = CAP16 / "injury_delta_0615PM_to_0900PM.json"
 
 ROTATION_SIZE = 8
 
@@ -81,12 +95,28 @@ def _mmss(sec: int | None) -> str:
 
 # ----------------------------------------------------------------------------- game logs
 def game_logs() -> list[dict]:
-    return _load(GAMELOGS)["records"]
+    """Every captured per-player row, oldest window first, newest window last."""
+    out = []
+    for f in GAMELOG_FILES:
+        out.extend(_load(f)["records"])
+    return out
 
 
 def game_log_meta() -> dict:
-    d = _load(GAMELOGS)
-    return {k: v for k, v in d.items() if k != "records"}
+    metas = [{k: v for k, v in _load(f).items() if k != "records"} for f in GAMELOG_FILES]
+    return {
+        "windows": [m["window"] for m in metas],
+        "n_windows": len(metas),
+        "n_rows": sum(m["n_rows"] for m in metas),
+        "n_games": sum(m["n_games"] for m in metas),
+        "n_clubs": len({r["team"] for r in game_logs()}),
+        "retrieved_at_utc": [m.get("retrieved_at_utc") for m in metas],
+        "per_window": metas,
+        "note": ("Two captured windows are unioned here. The measured-minutes page stays on the "
+                 "single 2026-11-13 window (all nine games, eighteen clubs) because that is what "
+                 "its shares are computed from; the game-log page below shows every captured "
+                 "row from both windows."),
+    }
 
 
 def gamebooks() -> list[dict]:
@@ -162,9 +192,10 @@ def excluded_teams() -> list[dict]:
 
 
 # ------------------------------------------------------------------ injury-report join
-def injured_players(release: str = "PM") -> list[dict]:
+def injured_players(release: str = "newest") -> list[dict]:
     """Players named on the newest official injury release, normalised for joining."""
-    path = INJURY_PM if release == "PM" else INJURY_AM
+    path = {"newest": INJURY_NEWEST, "prev": INJURY_PREV,
+            "PM": INJURY_PM, "AM": INJURY_AM}[release]
     rows = _load(path)["records"]
     out = []
     for r in rows:
@@ -221,9 +252,9 @@ def injury_coverage() -> dict:
 
 # ----------------------------------------------------------------------------- injury diff
 def injury_release_diff() -> dict:
-    d = _load(DELTA)
-    pm = _load(INJURY_PM)
-    am = _load(INJURY_AM)
+    d = _load(DELTA_NEWEST)
+    pm = _load(INJURY_NEWEST)
+    am = _load(INJURY_PREV)
     return {
         "delta": d,
         "pm_provenance": pm["provenance"],
@@ -234,16 +265,28 @@ def injury_release_diff() -> dict:
 
 
 def release_stamps() -> dict:
-    pm = _load(INJURY_PM)
-    am = _load(INJURY_AM)
+    """Revision time and retrieval time of the two newest releases, computed not typed."""
+    pm = _load(INJURY_NEWEST)
+    am = _load(INJURY_PREV)
+
+    def _hms(a: str, b: str) -> str:
+        import datetime as _dt
+        fmt = "%Y-%m-%dT%H:%M:%SZ"
+        d = _dt.datetime.strptime(a, fmt) - _dt.datetime.strptime(b, fmt)
+        return f"{d.days * 24 + d.seconds // 3600}h{(d.seconds % 3600) // 60:02d}m"
+
     return {
         "revision_time_et": pm["revision_time_et"],
         "retrieved_at_utc": pm["retrieved_at_utc"],
+        "retrieved_at_et": pm.get("retrieved_at_et"),
         "report_url": pm["provenance"]["url"],
         "index_url": pm["provenance"]["index_url"],
         "prior_revision_time_et": am["revision_time_et"],
+        "prior_retrieved_at_utc": am["retrieved_at_utc"],
         "prior_report_url": am["provenance"]["url"],
-        "elapsed": "12h00m",
+        "elapsed": _hms(pm["retrieved_at_utc"], am["retrieved_at_utc"]),
+        "rows": len(pm["records"]),
+        "prior_rows": len(am["records"]),
     }
 
 

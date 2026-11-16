@@ -244,6 +244,13 @@
       "severity": "review"
     },
     {
+      "id": "F-409",
+      "area": "results",
+      "finding": "In the official gamebook for 0022600240 (DAL@BOS, 2026-11-15) the SCORE BY PERIOD row for Dallas did not extract: the PDF's text layer renders that row as the page-number sequence '2 3 4 2' rather than four quarter scores. Boston's row (42,25,37,27 = 131) did extract and reconciles with the official final. Dallas' quarter column is published blank; the final score is not in doubt and came from nba.com/games.",
+      "source": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+      "severity": "open"
+    },
+    {
       "id": "F-406",
       "area": "slate",
       "finding": "All four 2026-11-19 games render the same 8:00 PM ET tip on nba.com/games. That is what the page printed and it is transcribed as read; it is plausible (all four are 7:00 p.m. Central local) but a single shared value across four games is worth a second look on the next roll.",
@@ -329,9 +336,9 @@
       "https://www.nba.com/games"
     ],
     "quarters": [
-      "Quarter scores for 10 of the 11 official finals in the result feed",
-      "The official LINESCORES table was fetched for one game (0022600231). The other ten finals carry their game URL and a blank quarter column; nothing is estimated.",
-      "https://www.nba.com/games?date=2026-11-15"
+      "Quarter scores for 4 of the 11 official finals in the result feed",
+      "Quarter scores were read for 0022600231 (from the LINESCORES table) and for the six 11/15 finals from the official gamebook PDFs - five in full and DAL@BOS for the home club only, because that PDF's Dallas quarter row does not extract (F-409). The four remaining 11/14 finals carry their game URL and a blank quarter column; nothing is estimated.",
+      "https://statsdmz.nba.com/pdfs/20261115/"
     ],
     "future_injuries": [
       "Injury rows for 11/17, 11/18 and 11/19",

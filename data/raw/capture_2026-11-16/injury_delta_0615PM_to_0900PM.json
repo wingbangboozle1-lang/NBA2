@@ -23,20 +23,26 @@
    "matchup": "OKC@SAC",
    "team": "Oklahoma City Thunder",
    "player": "Mitchell, Ajay",
-   "from": "Questionable",
-   "to": "Available",
    "reason_before": "Injury/Illness - Left Ankle Sprain",
-   "reason_after": "Injury/Illness - Left Ankle Sprain"
+   "reason_after": "Injury/Illness - Left Ankle Sprain",
+   "from_status": "Questionable",
+   "to_status": "Available",
+   "reason_to": "Injury/Illness - Left Ankle Sprain",
+   "reason_from": "Injury/Illness - Left Ankle Sprain",
+   "reason_changed": false
   },
   {
    "date": "2026-11-15",
    "matchup": "OKC@SAC",
    "team": "Sacramento Kings",
    "player": "Achiuwa, Precious",
-   "from": "Questionable",
-   "to": "Out",
    "reason_before": "Injury/Illness - Left Ankle Soreness",
-   "reason_after": "Injury/Illness - Left Ankle Soreness"
+   "reason_after": "Injury/Illness - Left Ankle Soreness",
+   "from_status": "Questionable",
+   "to_status": "Out",
+   "reason_to": "Injury/Illness - Left Ankle Soreness",
+   "reason_from": "Injury/Illness - Left Ankle Soreness",
+   "reason_changed": false
   }
  ],
  "added": [
@@ -124,5 +130,12 @@
    "reason": "NOT YET SUBMITTED"
   }
  ],
- "note": "Mechanical diff of two consecutive official PDF releases. Both files are committed under data/raw/, so the diff is reproducible. Rows are matched on (date, matchup, team, player); 'removed' means a row present in the 06:15 PM release is absent from the 09:00 PM release."
+ "note": "Mechanical diff of two consecutive official PDF releases. Both files are committed under data/raw/, so the diff is reproducible. Rows are matched on (date, matchup, team, player); 'removed' means a row present in the 06:15 PM release is absent from the 09:00 PM release.",
+ "counts": {
+  "status_changes": 2,
+  "added": 7,
+  "removed": 2,
+  "unchanged": 151,
+  "status_changed": 2
+ }
 }

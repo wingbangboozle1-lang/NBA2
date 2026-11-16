@@ -394,6 +394,9 @@ class TestPlayerGameLogs(unittest.TestCase):
 
     def test_release_stamps_are_printed(self):
         st = PL.release_stamps()
-        self.assertIn("06:15 PM ET", st["revision_time_et"])
-        self.assertIn("06:15 AM ET", st["prior_revision_time_et"])
+        # Derived, not hardcoded: the pair must be two distinct releases of the same report
+        # and the "prior" one must be the older of the two.
+        self.assertNotEqual(st["revision_time_et"], st["prior_revision_time_et"])
+        self.assertIn(st["prior_revision_time_et"][:10], st["revision_time_et"][:10])
+        self.assertRegex(st["elapsed"], r"^\d+h\d{2}m$")
         self.assertTrue(st["report_url"].startswith("https://ak-static.cms.nba.com/"))

@@ -145,10 +145,13 @@ BLOCKED = {
         "https://www.nba.com/games",
     ),
     "quarters": (
-        "Quarter scores for 10 of the 11 official finals in the result feed",
-        "The official LINESCORES table was fetched for one game (0022600231). The other ten "
-        "finals carry their game URL and a blank quarter column; nothing is estimated.",
-        "https://www.nba.com/games?date=2026-11-15",
+        "Quarter scores for 4 of the 11 official finals in the result feed",
+        "Quarter scores were read for 0022600231 (from the LINESCORES table) and for the six "
+        "11/15 finals from the official gamebook PDFs - five in full and DAL@BOS for the home "
+        "club only, because that PDF's Dallas quarter row does not extract (F-409). The four "
+        "remaining 11/14 finals carry their game URL and a blank quarter column; nothing is "
+        "estimated.",
+        "https://statsdmz.nba.com/pdfs/20261115/",
     ),
     "future_injuries": (
         "Injury rows for 11/17, 11/18 and 11/19",
@@ -381,12 +384,12 @@ _R = """
 0022600233|2026-11-14|DET|MIA|117|137|4||
 0022600234|2026-11-14|BKN|MEM|110|129|4||
 0022600235|2026-11-14|CHI|MIN|117|106|4||
-0022600236|2026-11-15|IND|PHI|124|131|4||
-0022600237|2026-11-15|LAL|PHX|131|123|4||
-0022600238|2026-11-15|CHA|LAC|105|113|4||
-0022600239|2026-11-15|SAS|UTA|110|102|4||
-0022600240|2026-11-15|DAL|BOS|94|131|4||
-0022600241|2026-11-15|NYK|TOR|112|108|5||
+0022600236|2026-11-15|IND|PHI|124|131|4|35,22,30,37|29,29,39,34
+0022600237|2026-11-15|LAL|PHX|131|123|4|33,31,40,27|24,30,26,43
+0022600238|2026-11-15|CHA|LAC|105|113|4|21,31,31,22|22,29,33,29
+0022600239|2026-11-15|SAS|UTA|110|102|4|31,27,23,29|33,22,26,21
+0022600240|2026-11-15|DAL|BOS|94|131|4||42,25,37,27
+0022600241|2026-11-15|NYK|TOR|112|108|5|23,24,20,28,17|17,26,31,21,13
 """
 
 
@@ -607,6 +610,12 @@ FLAGS = [
      "Nembhard, Strawther, Whitmore) print an Out status with an EMPTY reason cell. The "
      "reason is unknown from this document and is published blank, not filled in.",
      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_09_00PM.pdf", "review"),
+    ("F-409", "results", "In the official gamebook for 0022600240 (DAL@BOS, 2026-11-15) the "
+     "SCORE BY PERIOD row for Dallas did not extract: the PDF's text layer renders that row as "
+     "the page-number sequence '2 3 4 2' rather than four quarter scores. Boston's row "
+     "(42,25,37,27 = 131) did extract and reconciles with the official final. Dallas' quarter "
+     "column is published blank; the final score is not in doubt and came from nba.com/games.",
+     "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf", "open"),
     ("F-406", "slate", "All four 2026-11-19 games render the same 8:00 PM ET tip on "
      "nba.com/games. That is what the page printed and it is transcribed as read; it is "
      "plausible (all four are 7:00 p.m. Central local) but a single shared value across four "
