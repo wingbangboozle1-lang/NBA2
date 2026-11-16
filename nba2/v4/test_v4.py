@@ -491,7 +491,14 @@ class TestPublishedPages(unittest.TestCase):
             self.assertIn(fid, doc, msg=fid)
             self.assertTrue(what and effect, msg=fid)
             self.assertTrue(where[3].startswith("https://"), msg=fid)
-            self.assertIn(sev, ("blocking", "gap"), msg=fid)
+            self.assertIn(sev, ("blocking", "gap", "resolved"), msg=fid)
+            if sev == "resolved":
+                # A flag may only be retired with the evidence that retired it. "Fixed" with
+                # no reproducer is how a register rots.
+                self.assertIn("FIXED 2026-", what,
+                              msg=f"{fid}: a resolved flag must state the date and the finding")
+                self.assertGreater(len(effect), 80,
+                                   msg=f"{fid}: say what is published now, not just that it is fixed")
 
     def test_no_placeholder_tokens_anywhere(self):
         for name in P.V4_PAGES:

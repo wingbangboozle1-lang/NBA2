@@ -4,7 +4,7 @@
  "revision_time_et": "2026-11-16 01:00 PM ET",
  "retrieved_at_utc": "2026-11-16T18:38:00Z",
  "index_checked_utc": "2026-11-16T18:35:00Z",
- "retrieval_method": "platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method",
+ "retrieval_method": "platform page-fetch tool (fetch_page); returned in two chunks",
  "provenance": {
   "publisher": "NBA Official Injury Report (official)",
   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",

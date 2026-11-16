@@ -39,7 +39,7 @@
    "id": "G-V4-6",
    "name": "provenance: every captured row carries a source",
    "ok": true,
-   "measured": "9 capture documents scanned",
+   "measured": "7 capture documents scanned",
    "detail": "every row carries a source URL"
   },
   {
@@ -77,7 +77,6 @@
   "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
   "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
-  "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM.json",
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",
   "data/raw/refresh_2026-11-16/capture_index.json",
   "data/v4/injury/releases.json"

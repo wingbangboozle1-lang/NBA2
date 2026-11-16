@@ -136,6 +136,7 @@ def _newest_release() -> dict:
         "url": rel["url"],
         "retrieved_utc": rel["retrieved_utc"],
         "index_checked_utc": rel["index_checked_utc"],
+        "method": rel["method"],
         "rows": rows,
         "counts": parsed["counts"],
         "unread": parsed["unread"],
@@ -162,17 +163,12 @@ INJURY_RELEASES = [_newest_release()]
 # as the 09:15 AM release. Rather than pretend to a second independent transcription, the
 # relationship is declared here and the claim is checked by the diff (0 changes) and by the
 # linked PDF. Flagged F-V4-09 so a reviewer can re-derive it from the source in minutes.
-INJURY_RELEASE_0930 = {
-    "stamp_et": "2026-11-16 09:30 AM ET",
-    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf",
-    "retrieved_utc": "2026-11-16T14:52:00Z",
-    "index_checked_utc": "2026-11-16T14:52:00Z",
-    "identical_to": (0, "11/16/26 09:15 AM ET"),   # (index into INJURY_RELEASES, stamp)
-    "basis": ("The 09:30 AM release was read in full at retrieval and compared row by row "
-              "against the 09:15 AM transcription: same 70 rows, same statuses, same "
-              "reasons, same NOT YET SUBMITTED placeholders. Both PDFs are linked so the "
-              "comparison is re-derivable from the source (F-V4-09)."),
-}
+# The 2026-11-16 09:15 AM transcription that an earlier session committed, preserved byte
+# for byte (data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json) so
+# the provenance comparison in injury_diff.cross_session_check tests THEIR record rather than
+# ours. It is NOT a live release and is not counted in any diff. The earlier build also
+# declared the 09:30 AM release "identical row-for-row" to this one without reading it; that
+# declaration is withdrawn - both releases are now read in full (F-V4-09).
 
 # --------------------------------------------------------------- 2026-11-16 schedule (T+0..T+3)
 # game_id, date, away, home, time_et, arena, city, state

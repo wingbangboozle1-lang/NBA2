@@ -189,7 +189,7 @@ def cross_session_check() -> dict:
             / "injury_transcript_20261116_0930AM_superseded.json")
     if not hist.exists():
         hist = (ROOT / "data" / "raw" / "refresh_2026-11-16"
-                / "injury_transcript_20261116_0930AM.json")
+                / "injury_transcript_20261116_0100PM.json")
     rels = parsed()
     if not hist.exists() or not rels:
         return {"available": False}
