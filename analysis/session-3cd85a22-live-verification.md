@@ -73,6 +73,25 @@ compared field by field (game id, date, away, home, tip time, arena) against the
 **Result: 29 of 29 games identical.** Window 11/16 → 11/19: 8 games on 11/16, 5 on 11/17, 12 on
 11/18, 4 on 11/19. The committed slate is a correct read of the official schedule.
 
+## 3b. Team-stat pages (brief item #22) — all three re-read live: **full MATCH**
+
+The three official team-stat pages were re-read live and compared against the committed
+`team_stats_2026-11-16.json` capture (09:30 ET). No game tips before 7:00 PM ET on 11/16, so the
+09:30 and 13:23 ET reads must agree. Model-critical fields compared, per team:
+
+| Page | Fields compared | Rows | Result |
+|---|---|---|---|
+| [Advanced](https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame) | OffRtg, DefRtg, NetRtg, PACE, POSS | 5 × 30 = 150 | **150 / 150 MATCH** |
+| [Opponent](https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame) | Opp PTS (points allowed) | 30 | **30 / 30 MATCH** |
+| [Traditional](https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame) | PTS | 30 | **30 / 30 MATCH** |
+
+The committed capture's own arithmetic identity checks also hold (ΣW = ΣL = 197; ΣPTS-for ≈
+ΣPTS-against within the rounding bound; all three pages complete at 30 rows). **Brief item #22
+("re-read the three official team-stat pages and re-cut the model inputs") is verified end to end:**
+the committed 11/16 re-read is a correct transcription of the official pages, and the v4 model
+inputs cut from it are the official values. Reproduce with
+`python3 verified/session-3cd85a22-live/verify_team_stats.py`.
+
 ## 4. Injury report — freshness gap and two genuine status changes
 
 The committed injury transcript is the **09:30 a.m. ET** release (70 player records, retrieved
