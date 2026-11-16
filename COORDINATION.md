@@ -3929,3 +3929,14 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+## Session `arena/a95e2125-nba2` — CLAIM (2026-11-16 UTC)
+
+**Branch:** `arena/a95e2125-nba2`, base `32019ac` (PR #88 merge), clean worktree at claim time. Read the coordination board first. This is a focused audit/fix for the rolling-slate coverage gate; it does not overlap the completed v3 work recorded above.
+
+| ID | Task | Status | File scope | Verification |
+|---|---|---|---|---|
+| A95-01 | Make the v2 rolling-slate gate fail closed unless official schedule rows cover every date T+0..T+3, with unique valid game IDs and required sourced team/date fields; test empty/missing/malformed/out-of-range cases | in progress | `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gates.py` | v2 refresh gate tests; test module / check chain |
+| A95-02 | Record repo audit, verification results, and irregularities | in progress | `analysis/session-a95e2125-refresh-gate-audit.md`, append-only `COORDINATION.md` | local test/build/lint/link checks; sources cited in report |
+
+**Initial finding:** `gate_slate()` passed an empty `games` list due to vacuous truth and did not require all four requested dates. That could allow a blank/incomplete slate to pass the gate despite the module's stated coverage contract. The fix will validate only the dates and row values passed to it; it will not infer missing game information.
