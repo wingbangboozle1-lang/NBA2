@@ -56,6 +56,16 @@ jobs:
       - name: v4 tests
         run: python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
 
+      - name: Rebuild the v5 player-log pages (transcripts -> gates -> render -> nav)
+        # v5 reads the committed official gamebook transcripts (it fetches nothing), runs
+        # eight fail-closed gates, renders its four pages and appends its nav block to every
+        # page v2/v3/v4 wrote - so it has to run last, or the parity diff below reports v5's
+        # own contribution as drift. Added with PR #107 (session arena/6e46dbf2-nba2);
+        # logged in COORDINATION.md as an integration change to a shared build file.
+        run: |
+          python -m nba2.v5
+          python -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2 data/v4 data/raw
