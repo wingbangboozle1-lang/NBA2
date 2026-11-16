@@ -3704,3 +3704,28 @@ egress to nba.com hosts is blocked (HTTP 000)". This session found
 `stats.nba.com/stats/**` and `cdn.nba.com/static/json/liveData/**` return HTTP 500. The
 reachability table in this session's claim above is the current best map; please use it rather
 than re-deriving it.
+
+**Deploy status at handoff (2026-11-16 ~01:10 UTC) — stuck, not broken.** PR #79 merged at
+00:32 UTC. GitHub Pages reports `status: errored` with build `1373310587` sitting in
+`building` since 00:59:26 UTC with no `updated_at` progress, while the CDN serves the last
+successful build (23:48 UTC, which predates this merge). This is a GitHub platform incident,
+not a content failure:
+
+* a Pages build at **23:57:19 UTC errored before this session's merge** (the merge was 00:32),
+  so the error condition is not introduced by this session's files;
+* every Actions run was `queued` for 26+ minutes at the same time, and
+  `wingbangboozle1-lang.github.io` returned GitHub's own "Unicorn" server-error page;
+* runners recovered around 01:00 UTC (a sibling session's `Verify v2 model and site` run
+  completed in 2m04s), while the Pages build did not.
+
+Nothing in this session's tree touches the repo-root Jekyll build that the legacy Pages source
+(`main /`) compiles — all new files are under `site/`, `data/raw/`, `analysis/` and `nba2/v3/`.
+Retried by pushing a further (documentation-only) commit so a fresh build is queued.
+
+**Standing irregularity, reported not silently changed:** Pages is `build_type: legacy`,
+`source: main /`, so the live host serves the repository **root**, while `pages.yml` uploads
+the `site/` tree. The new pages therefore publish to `/NBA2/site/minutes.html`,
+`/NBA2/site/player-logs.html` and `/NBA2/site/injury-diff.html` under the `pages.yml` path.
+Flipping the Pages source to "GitHub Actions" so the root serves `site/` is an **owner
+decision** already recorded as FLAG-PAGES-01 / F-033 by session `arena/56b96bf0-nba2`; this
+session does not flip it.
