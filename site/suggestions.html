@@ -487,7 +487,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
       by a distributional assumption is indistinguishable from a bad pick.</li>
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
-</ul><h2>Review register — 2026-11-14 (54 items)</h2>
+</ul><h2>Review register — 2026-11-14 (58 items)</h2>
 <p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
 change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
 below has been applied on the owner's behalf. The machine-readable copy is
@@ -507,7 +507,7 @@ which is what should be edited when a decision is recorded.</p>
 </tr>
 <tr>
 <td>awaiting owner decision</td>
-<td>36</td>
+<td>40</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 <tr>
@@ -1185,6 +1185,54 @@ which is what should be edited when a decision is recorded.</p>
 <td>None: the market weight is 0 and the blended line equals the model line until a feed exists.</td>
 <td>Accept; the model-side measurement is already in place.</td>
 <td><span class="badge b-ok">applied in this PR</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-56">
+<td>S-56</td>
+<td><b>Derive every published count from the model, never from a literal</b></td>
+<td>The front page asserted 188 finals, a 34-game window, 167 graded games and 0/30 luck outliers as literal strings. All four were false after the snapshot moved and no check noticed.</td>
+<td>Ban bare integer literals in build.py page copy that name a data count; lint for it, and route every such number through the module that computes it.</td>
+<td>The site stops lying quietly the day the results feed appends a night.</td>
+<td>S — lint rule plus the substitutions already made</td>
+<td>Low; a few places will need an explicit &#x27;this really is a constant&#x27; marker.</td>
+<td>Accept — this is the class of bug that erodes trust fastest.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-57">
+<td>S-57</td>
+<td><b>Advance any dated fixture before using it as a comparison baseline</b></td>
+<td>The staleness detector compared a live table against a 2026-11-14 audit fixture without bringing the fixture forward, so nine new finals reported as 18 rows of unexplained drift.</td>
+<td>Give every dated fixture a last_date field and a helper that applies all committed finals after it, unioned by game_id, before any comparison.</td>
+<td>Unexplained drift becomes a real signal again instead of a nightly false alarm.</td>
+<td>S — helper plus three call sites</td>
+<td>None.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-58">
+<td>S-58</td>
+<td><b>Select inputs by freshness, not by hard-wired filename</b></td>
+<td>The injury banner read one hard-wired transcript while official.py carried a newer release, so the banner and the table could disagree. The league publishes every 15 minutes; a hard-wired path cannot keep up.</td>
+<td>For every rolling input (injury PDF, slate, standings) resolve the newest committed capture at load time by its own retrieved_at_utc, and stamp the page with which file won.</td>
+<td>Provenance stops being a thing a session has to remember to update.</td>
+<td>S–M</td>
+<td>A malformed newer capture could win; guard by requiring a parseable stamp.</td>
+<td>Accept — done for the injury feed, extend to the rest.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="S-59">
+<td>S-59</td>
+<td><b>Label frozen snapshot trees wherever they are published</b></td>
+<td>The v3 tree must keep its 2026-11-15 window forever because its ledger is sealed for it, but nothing told a reader why those dates sat beside a newer window on the same site.</td>
+<td>Keep the freeze banner, and add a rule: any page tree whose window differs from the newest committed slate must carry a banner naming the newer window before it can be published.</td>
+<td>A reader can tell a dated record from a contradiction without reading the repo.</td>
+<td>S</td>
+<td>None.</td>
+<td>Accept.</td>
+<td><span class="badge b-warn">awaiting owner decision</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 </tbody></table></div>
