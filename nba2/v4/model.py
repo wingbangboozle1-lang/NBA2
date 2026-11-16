@@ -504,20 +504,40 @@ def bet_surface_rows(projections: list[dict], market_prices: dict | None = None)
 
 
 def assert_no_mixing(rows: list[dict], surface: str) -> None:
-    """Raise if a row on ``surface`` carries a field the other surface owns."""
+    """Raise if a row on ``surface`` carries a field the other surface owns.
+
+    This is the wall the brief asks for, so it is written to fail loudly rather than to
+    pass quietly. A projection row may hold the *keys* price/stake (the templates print
+    "never published"), but any of them holding a real number is a leak. A bet row must
+    hold a price, because an unpriced recommendation is not a bet.
+    """
     if surface not in SURFACES:
         raise ValueError(f"unknown surface {surface!r}")
-    other = set(BET_FIELDS if surface == "projection" else PROJECTION_FIELDS) - set(
-        PROJECTION_FIELDS if surface == "projection" else BET_FIELDS)
     for r in rows:
+        gid = r.get("game_id", "?")
         if r.get("surface") != surface:
-            raise AssertionError(f"{surface} row labelled {r.get('surface')!r}: {r.get('game_id')}")
-        leaked = [k for k in BET_FIELDS if surface == "projection"
-                  and r.get(k) not in (None, 0.0, 0.0) and k not in
-                  ("market_price", "stake_pct", "edge_vs_market", "kelly_fraction")]
-        if leaked:
-            raise AssertionError(f"projection row carries bet fields {leaked}: {r.get('game_id')}")
-    del other
+            raise AssertionError(f"{surface} row labelled {r.get('surface')!r}: {gid}")
+
+        if surface == "projection":
+            # any of these holding a real number is a market or sizing leak
+            leaked = []
+            for k in ("market_price", "market_book", "edge_vs_market", "stake_pct",
+                      "kelly_fraction"):
+                v = r.get(k)
+                if isinstance(v, str) or (v not in (None, 0.0, 0, False)):
+                    leaked.append(f"{k}={v!r}")
+            if leaked:
+                raise AssertionError(f"projection row carries bet fields {leaked}: {gid}")
+            # a projection row may never claim to be priced
+            if r.get("price_status", "").startswith("PRICED"):
+                raise AssertionError(f"projection row claims a price: {gid}")
+        else:
+            if r.get("market_price") in (None, ""):
+                raise AssertionError(f"bet row has no market price: {gid}")
+            if r.get("edge_vs_market") is None:
+                raise AssertionError(f"bet row has no edge: {gid}")
+            if r.get("stake_pct") in (None, ""):
+                raise AssertionError(f"bet row has no stake: {gid}")
 
 
 # --------------------------------------------------------------------------------- build

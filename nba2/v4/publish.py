@@ -199,9 +199,14 @@ def page_projection(res: dict) -> str:
             d = a[s]
             if d["not_yet_submitted"] and not d["rows"]:
                 return "NOT YET SUBMITTED (official)"
+            if not d["rows"]:
+                # no row for this club at all: say which failure it is, never a bare dash
+                return ("no row for this club in the newest report (F-V4-06)"
+                        if d.get("n_status_blank") == 0 else
+                        "listed but status unreadable (F-V4-06)")
             parts = ", ".join(f"{k} {v}" for k, v in sorted(d["by_status"].items()))
-            extra = f" +{d['n_status_blank']} blank" if d["n_status_blank"] else ""
-            return (parts or "—") + extra
+            extra = f" +{d['n_status_blank']} blank (F-V4-06)" if d["n_status_blank"] else ""
+            return (parts or "listed, all statuses blank (F-V4-06)") + extra
         avail_rows.append(
             "<tr>"
             f"<td>{esc(p['date'])}</td><td>{esc(p['matchup'])}</td>"

@@ -44,8 +44,12 @@ CAPTION = re.compile(r"<caption>(.*?)</caption>", re.S)
 CELL = re.compile(r"<td[^>]*>(.*?)</td>", re.S)
 TAG = re.compile(r"<[^>]+>")
 PLACEHOLDER = re.compile(r"\b(TODO|TBD|lorem ipsum|XXX|FIXME)\b", re.I)
-BLANK_OK = re.compile(r"(F-V4-\d{2}|no official|not filed|blocked|BLOCKED|NOT YET SUBMITTED|"
-                      r"not transcribed|no measured|no odds|—)", re.I)
+# A blank is only acceptable when the cell says *why* it is blank. A bare em dash (or an
+# empty cell) is a finding, not a blank - the brief is explicit that a value with no source
+# must be flagged, not silently dropped. "—" is therefore deliberately NOT in this list.
+BLANK_OK = re.compile(r"(F-V4-\d{2}|no official|not filed|blocked|NOT YET SUBMITTED|"
+                      r"not transcribed|no measured|no row|unreadable|not published|"
+                      r"not available|unlisted|withheld)", re.I)
 
 BET_MARKERS = re.compile(r"(stake|kelly|edge_vs_market|market price|\bedge\b)", re.I)
 
@@ -98,7 +102,9 @@ def structural() -> list[str]:
                 t = text_of(c)
                 if not t:
                     problems.append(f"{name}: empty cell (should be a reasoned blank)")
-                elif t.startswith("—") and not BLANK_OK.search(t):
+                elif not re.search(r"[0-9A-Za-z]", t):
+                    problems.append(f"{name}: bare dash cell - blanks must state the reason: {t!r}")
+                elif "—" in t and not BLANK_OK.search(t):
                     problems.append(f"{name}: unexplained blank: {t!r}")
     return problems
 
