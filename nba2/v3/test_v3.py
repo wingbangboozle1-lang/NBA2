@@ -407,3 +407,31 @@ class TestMarketAnchoredPrior(unittest.TestCase):
         oos = M.oos_log_loss()
         self.assertIsNotNone(oos["log_loss"])
         self.assertIsNotNone(oos["source"])
+
+
+class TestPreregistrationCoverage(unittest.TestCase):
+    """Brief #4: a pre-registration file per strategy, frozen before any bet."""
+
+    def test_one_prereg_per_registered_strategy(self):
+        # the config registry has 9 strategies; the ledger must pre-register all of them
+        from .. import config
+
+        def norm(sid):
+            # "S-01" -> "S1"
+            return "S" + sid.split("-")[-1].lstrip("0")
+
+        p = LD.write_prereg()
+        self.assertEqual(len(p), len(config.STRATEGIES))
+        self.assertEqual({x["id"] for x in p},
+                         {norm(s["id"]) for s in config.STRATEGIES})
+
+    def test_all_prereg_files_verify(self):
+        ok, msgs = LD.verify_prereg()
+        self.assertTrue(ok, "\n".join(msgs))
+        self.assertEqual(len(msgs), len(LD.STRATEGIES))
+
+    def test_every_prereg_has_a_settlement_rule(self):
+        for s in LD.STRATEGIES:
+            self.assertTrue(s.get("settlement_rule"), f"{s['id']} has no settlement rule")
+            self.assertTrue(s.get("universe"), f"{s['id']} has no universe")
+            self.assertTrue(s.get("signal"), f"{s['id']} has no signal")
