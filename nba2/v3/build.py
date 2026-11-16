@@ -18,6 +18,7 @@ from . import ledger as LD
 from . import rotation as ROT
 from . import gates as G
 from . import gameflow as GF
+from . import trials as TR
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -62,6 +63,7 @@ V3_NAV = [
     ("minutes.html", "Measured minutes"),
     ("injury-diff.html", "Injury release diff"),
     ("lategame.html", "Late-game &amp; garbage time"),
+    ("trials.html", "Trial registry"),
     ("verification-v3.html", "v3 verification"),
 ]
 
@@ -896,6 +898,102 @@ estimated.</p>
                 "scores, with the inflation-adjusted control total per game.")
 
 
+# --------------------------------- session arena/d2dd7c8e: trial registry / multiple-testing
+def page_trials() -> str:
+    s = TR.summary()
+    reg = s["registry"]
+
+    def num(v, places=4):
+        return "" if v is None else format(v, f".{places}f")
+
+    OFFICIAL = "https://www.nba.com/games"
+
+    def src_cell(r):
+        # every row must carry an official https link: use the strategy's own official
+        # source when it has one, otherwise the official finals page the strategy is
+        # evaluated against (the strategies are derived from those official inputs).
+        s = r["source"]
+        if str(s).startswith("http"):
+            return link(s, "source")
+        return f'{link(OFFICIAL, "official finals")} <span class="s">({esc(s)})</span>'
+
+    rrows = "".join(
+        "<tr>"
+        f"<td>{esc(r['trial_id'])}</td>"
+        f"<td>{esc(r['strategy_id'])}</td>"
+        f"<td>{esc(r['name'])}</td>"
+        f"<td>{esc(r['family'])}</td>"
+        f"<td>{esc(r['evaluation'])}</td>"
+        f"<td class='n'>{esc(r['n_predictions']) if r['n_predictions'] is not None else blank('blocked: no settled bet to count')}</td>"
+        f"<td>{esc(r['window'])}</td>"
+        f"<td>{src_cell(r)}</td>"
+        "</tr>"
+        for r in reg)
+
+    t_reg = table(
+        ["Trial", "Strategy", "Name", "Family", "Evaluation", "Predictions", "Window",
+         "Source"], _rows(rrows),
+        caption="Append-only registry of every evaluation attempt in this window. The "
+                "multiple-testing correction (G-06) charges the winner for this count.")
+
+    curve_rows = "".join(
+        f"<tr><td class='n'>{c['n_obs']}</td>"
+        f"<td class='n'>{esc(num(c['breakeven_sharpe']))}</td>"
+        f"<td>{link(OFFICIAL, 'official finals')}</td></tr>"
+        for c in s["sample_curve"])
+    t_curve = table(["Observations (n)", "Break-even Sharpe for DSR 0.95", "Source"],
+                    _rows(curve_rows),
+                    caption="How many observations it takes to clear G-06 at the measured "
+                            "trial count. More history lowers the bar; more trials raise it.")
+
+    bar = (f"<div class=\"cards\">"
+           f"<div class=\"card\"><span class=\"k\">Trials charged (n)</span><span class=\"v\">"
+           f"{s['n_trials']}</span><span class=\"s\">{s['n_strategies']} strategies + 1 "
+           f"backtest</span></div>"
+           f"<div class=\"card\"><span class=\"k\">Backtest observations</span><span class=\"v\">"
+           f"{s['backtest_n_obs']}</span><span class=\"s\">point-in-time official finals</span></div>"
+           f"<div class=\"card\"><span class=\"k\">Break-even Sharpe (n=139)</span><span class=\"v\">"
+           f"{esc(num(s['breakeven_sharpe_139']))}</span><span class=\"s\">SR needed for "
+           f"DSR &gt; {s['dsr_threshold']}</span></div>"
+           f"<div class=\"card\"><span class=\"k\">Observed Sharpe / DSR</span><span class=\"v\">"
+           f"{blank('no settled PnL')}</span><span class=\"s\">blank by policy, see note</span></div>"
+           f"</div>")
+
+    body = f"""
+{bar}
+<div class="note"><b>Why this exists.</b> A leaderboard that tries N strategies and rewards
+the best produces a winner by search, not by skill. The defence is the Deflated Sharpe Ratio
+(Bailey &amp; L&oacute;pez de Prado, 2014): the probability the observed Sharpe beats the
+best-of-N-trials Sharpe expected under no skill. It needs three inputs &mdash; the observed
+Sharpe, the observation count, and the <b>trial count</b> &mdash; and the trial count was the
+missing one (G-06 sat at BLOCKED "no trial ledger"). This registry makes it real. The
+<b>break-even Sharpe</b> is the bar G-06 imposes: with {s['n_trials']} trials over
+{s['backtest_n_obs']} observations a strategy must show a Sharpe above
+{esc(num(s['breakeven_sharpe_139']))} to pass.</div>
+
+<div class="note warn"><b>What is blank.</b> The observed Sharpe is a function of settled PnL.
+There is no market price (gate G6) and no settled bet, so no return exists. The bar is
+published; the observed SR and the resulting DSR per strategy are left blank and flagged,
+never invented.</div>
+
+<h2>Trial registry</h2>
+{t_reg}
+
+<h2>The G-06 bar vs. sample size</h2>
+{t_curve}
+
+<h2>Definition</h2>
+<p><code>{esc(s['rule'])}</code></p>
+<p class="s">Sources: strategy registrations in <code>nba2/config.py</code>; the walk-forward
+backtest over the official finals committed in <code>data/raw/history/</code>. The Deflated
+Sharpe construction mirrors <code>nba2/models/gates.py</code> (a test asserts the two
+agree).</p>
+"""
+    return page("Trial registry & multiple-testing", "trials.html", body,
+                "Append-only trial-count registry and the Deflated Sharpe bar that G-06 "
+                "imposes on the leaderboard.")
+
+
 # ------------------------------------------- session arena/f8f8f2b8: injury release diff
 def page_injury_diff() -> str:
     from . import playerlogs as PL
@@ -1059,6 +1157,7 @@ def build(verbose: bool = False) -> tuple[list[str], dict]:
         "minutes.html": page_minutes(),
         "injury-diff.html": page_injury_diff(),
         "lategame.html": page_lategame(),
+        "trials.html": page_trials(),
         "verification-v3.html": page_verification(res, G.run(res), seal_info),
     }
     for name, doc in pages.items():
