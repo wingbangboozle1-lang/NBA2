@@ -4210,3 +4210,22 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+---
+
+## Session `arena/a11505e1-nba2` — CLAIM (2026-11-16 ~18:25 UTC, branch `arena/a11505e1-nba2`, base `f943bd1` = `main` @ PR #97 merge)
+
+**Role: final integration + brief backlog closure.** Per protocol, tasks whose claims are
+more than 60 minutes old with no commits may be taken over; handoffs are noted in the log
+below. This session claims the shared outputs (site index/navigation, combined table data)
+as the final integration session for the 2026-11-16 round.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| A1 | Claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| A2 | Take over stale claims (>60 min, no commits): open PRs #70/#72/#78/#80/#82/#98 — review each diff, integrate what is still valid, close what is superseded, with reasons | pending | `COORDINATION.md`, integration merges | nothing merged blind; every integrated artefact re-verified on the combined tree |
+| A3 | CR-V4-1: fragment-aware local-link resolution in `nba2/v2/check.py` + regression test | pending | `nba2/v2/check.py`, `nba2/v2/test_check_links*.py` | checker green; `page.html#frag` links verified, not reported broken |
+| A4 | CR-V4-2: publish F-V4-01..F-V4-09 on the shared Flagged-for-review page (or link it to v4-verify); I-32C-04: stale "this session (2026-11-15)" wording | pending | `nba2/v2/content.py` (+ regenerated `data/v2/content.json`, `site/**`) | flags visible from the Flagged page; wording states the true snapshot date |
+| A5 | Line-by-line re-verification of the combined tree: v1/v2/v3/v4 + backtest tests, gates, provenance lint, internal/external link scan, parity rebuild | pending | `analysis/session-a11505e1-verification.md` | every checker green or the failure disclosed on the Flagged page |
+| A6 | Brief-audit register: each brief line mapped to its implementation + official source links, gaps and missing-information questions | pending | `analysis/session-a11505e1-brief-audit.md`, `requirements/`, `suggestions/`, `analysis/questions.md` | no value without an official source link; gaps flagged, never inferred |
+| A7 | PR -> `main` -> merge -> Pages deploy confirmed live -> record here | pending | `COORDINATION.md` | live fetch returns the new pages; checks green on the merged SHA |
