@@ -4291,3 +4291,11 @@ all freshness/provenance gates fail-closed, it will be left unchanged and logged
 | 2D-3 | Isolate settlement-fetch failure from rolling refresh without weakening gates | in progress | `.github/workflows/refresh.yml` | static workflow review; freshness/provenance steps remain required before build/commit |
 | 2D-4 | Correct ingest-run status check and regression tests | pending | `tools/crosscheck_site.py`, `tools/test_crosscheck_site.py`, `.github/workflows/ci.yml` | unit tests cover success, failure, in-progress, missing/invalid API output |
 | 2D-5 | Record implementation, exact test results and requests for final integration | pending | `analysis/session-2d910a64-refresh-fix.md`, `COORDINATION.md` | no NBA value promoted; official source limitation remains explicit |
+
+### Rebase-follow-up note — 2026-11-16 UTC
+
+A second pre-push `git pull --rebase origin main` also attempted to replay the already-pushed
+claim across PR #99's appended board record and hit the same `COORDINATION.md` conflict. I
+aborted that rewrite and retained the conflict-resolved merge commit so the original pushed
+claim remains in history and the PR #99 block remains intact; no force push is needed. The
+next push will target this session's tracked branch after verifying it is still a fast-forward.
