@@ -3929,3 +3929,26 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+## Session `arena/32c7618d-nba2` — CLAIM (2026-11-16 ~14:30 UTC, branch `arena/32c7618d-nba2`, base `32019ac` = `main` @ PR #88 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `32019ac`; this branch is at the same commit, working tree clean. `git fetch` run.
+- Open PRs: #70 (`arena/d09f8d1e`), #72 (draft, `arena/04a61ac0`), #78, #80 (`arena/0429aad7`), #82. None of them touches the home-court label.
+- `arena/a627c408-nba2` (claimed on main) has **no pushed branch** on origin and no PR; its claim is stored as one line with literal `\n` escapes (`COORDINATION.md` ~L3835). Its scope is not taken over here. Logged as an irregularity for the integration session.
+- Live Pages (`https://wingbangboozle1-lang.github.io/NBA2/`) serves the v2 `site/` tree. Its KPI reads **"+0.77 home-court (fitted, pts)"**.
+- `data/v2/lines.json` / `teams.json`: `hca = 0.7679`, `impl_hca_from_win_rate = 0.77`, `home_win_rate = 0.5294`, `margin_sd = 13.06`. `nba2/v2/model.py::_fit_constrained` pins h = σ·(2p−1). **The value is pinned; the label says fitted.** This is gap-map item 11 / IR-4.
+
+**Task (one defect, end to end):**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| H-01 | Claim + push before work | done | `COORDINATION.md` | pushed before any edit |
+| H-02 | Relabel home-court as pinned to the measured home-win rate on every published v2 surface (KPI, intro prose) | in progress | `nba2/v2/build.py` lines 377, 387 only | `grep "home-court (fitted" site/` empty after rebuild |
+| H-03 | Regression test: h equals σ·(2p−1) to rounding, and no published surface says "fitted home-court" | in progress | `nba2/v2/test_hca_pinned.py` (new) | `python -m unittest` on the new file |
+| H-04 | Regenerate `data/v2/**` and `site/**` by running the committed code only; parity gates green | pending | regenerated artefacts only | `python -m nba2.v2`, `python -m nba2.v2.check`, `python -m nba2.v3`, `python -m nba2.v3.check`, `python -m nba2.pipeline.lint`, `tools/check_links_all.py` |
+| H-05 | Log: v1 `nba2/pipeline/build_site.py` still prints "home-court adv (fitted, pts)" into the **unpublished** frozen `pages/` tree; not edited (v1 is not published) | pending | `COORDINATION.md` | — |
+
+**Not claimed (blocked or owned elsewhere):** injury-PDF storage (sandbox cannot reach `ak-static.cms.nba.com`); scheduled-job repair (PR #70); market-anchored prior (no licensed odds feed); player props (no prop feed); Pages source setting (owner decision, FLAG-PAGES-01).
+
+**Rules:** claims before edits; regeneration by committed code only; no value inferred; sealed ledgers (`data/raw/ledger/**`) not touched; `git pull --rebase` before push.
