@@ -3929,3 +3929,56 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+---
+
+## Session `arena/fe0ffa49-nba2` — CLAIM (2026-11-16 ~14:30 UTC, branch `arena/fe0ffa49-nba2`, base `32019ac` = `main` @ PR #88 merge)
+
+**State read at claim time (verified, not assumed).**
+- `date -u` = 2026-11-16 14:2x UTC (09:2x ET). Branch `arena/fe0ffa49-nba2` at `32019ac`, tree clean.
+- Baseline on this branch: `python3 -m unittest discover -s nba2/tests -t .` → **79 tests OK**;
+  `python3 -m nba2.v2.check` → OK (0 structural, 0 semantic); `python3 -m nba2.v3.check` →
+  gates 7 pass / 1 fail (advisory G-F3), 0 structural / 0 semantic.
+- **Sandbox egress (verified with `curl` this session):** `www.nba.com`, `official.nba.com`,
+  `ak-static.cms.nba.com`, `statsdmz.nba.com`, `cdn.nba.com` and `*.github.io` all return
+  HTTP 000 from bash. The **platform page-fetch tool does reach** `www.nba.com` and
+  `official.nba.com` (verified this session: `/games?date=2026-11-15`, `/schedule?date=2026-11-16`,
+  the injury index). Binary PDF bytes are still not retrievable; PDFs are read as text.
+- **Live-site probe (fetch_page, this session):** `https://wingbangboozle1-lang.github.io/NBA2/`
+  returns the **v2 dashboard** ("Dashboard · NBA2 Lines Lab v2"), i.e. the Pages host serves the
+  `site/` tree. This **contradicts FLAG-PAGES-01 / F-033** as recorded by sessions
+  `arena/f8f8f2b8-nba2` (PR #82) and `arena/051e7a06-nba2` (PR #83), which both state the host
+  serves the repository root (v1). Result recorded as irregularity I-FE0-01 for the owner;
+  the setting is not changed by this session.
+- Live site is **one day stale**: it publishes the 2026-11-15 → 11-18 window.
+- Open PRs at claim time: #70 (`arena/d09f8d1e-nba2`, last commit 2026-11-15 13:03Z),
+  #72 (**draft**, `arena/04a61ac0-nba2`, 2026-11-15 12:33Z), #78 (`arena/56b96bf0-nba2`,
+  2026-11-15 23:46Z), #80 (`arena/0429aad7-nba2`, 2026-11-16 00:44Z),
+  #82 (`arena/f8f8f2b8-nba2`, 2026-11-16 01:15Z). All five claims are **more than 60 minutes old
+  with no commits**, so per the board's handoff rule this session may take over their tasks and
+  records the handoff here rather than editing another session's files blindly.
+- Data gap read at claim time: `data/raw/results/results_2026-11-15.json` (session
+  `arena/e73ca9d5-nba2`, merged) holds **6 verified finals and 3 games marked
+  "not final at retrieval"** (0022600242 HOU@WAS, 0022600243 ATL@MIL, 0022600244 OKC@SAC).
+  All three are **Final** on the official schedule page now.
+
+**File scope claimed (nothing outside this list is edited by hand):**
+
+| ID | Task | Status | File scope |
+|----|------|--------|-----------|
+| F-1 | Board claim + push before any edit | in progress | `COORDINATION.md` (append-only) |
+| F-2 | Complete the official 2026-11-15 results feed: the three games that were PENDING at the prior capture, with quarter scores from the official gamebook, quarter sums asserted against the official final | in progress | `data/raw/results/results_2026-11-15.json` (append/complete), new `analysis/session-fe0ffa49-capture.md` |
+| F-3 | Verified official capture for 2026-11-16 (slate 11-16→11-19, standings, 3 team-stat pages, latest injury release, 11-15 gamebooks + player logs) | in progress | new `data/raw/capture_2026-11-16/**` |
+| F-4 | Refresh the v2 published snapshot to AS_OF 2026-11-16 and window 11-16→11-19 | pending | `nba2/v2/official.py` (takeover from stale PR #72; handoff logged) |
+| F-5 | Rebuild + re-verify every tree, settle the sealed ledgers from the completed 11-15 finals | pending | regenerated `data/v2/**`, `data/v3/**`, `site/**`, `data/site.json`, `pages/**`, `index.html`, `data/settlement.json` |
+| F-6 | Line-by-line repo review against official sources; publish irregularities | pending | `analysis/session-fe0ffa49-repo-review.md`, `requirements/REPO_REVIEW.json`, `suggestions/SUGGESTIONS.json` |
+| F-7 | Final integration: PR → merge → Pages deploy; record result | pending | `COORDINATION.md`, PR on `main` |
+
+**Not claimed / not edited:** `nba2/models/**`, `nba2/pipeline/**` (except regenerated outputs),
+`nba2/v3/**` source (only the regenerated `data/v3/**` and `site/**` artefacts), `docs/**`,
+`dashboard/**`, `pages/**` sources, `verified/**`, `originated/**`, `backtest/**` source,
+`archive/**`, `audit/**`, root `*.html`, `.github/workflows/**`, `data/raw/ledger/**` (frozen seals).
+
+**Rules this session follows:** sealed ledgers are never rewritten; nothing is inferred or filled
+in — a value that cannot be read from an official page is left blank and flagged; the site is
+never merged broken; small frequent commits with `git pull --rebase` before every push.
