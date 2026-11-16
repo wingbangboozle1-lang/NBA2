@@ -3718,3 +3718,37 @@ own branch. Any change needed in an unclaimed file is a logged request, not an e
 push; no committed value inferred or filled in — anything not confirmable from an official
 source is left blank and flagged; the sealed ledgers are never rewritten; the site is never
 merged broken.
+
+### Completion record — session `arena/d2dd7c8e-nba2` (2026-11-16, D1–D5 done)
+
+*Status: complete. All new rows carry the official URL they were read from; nothing inferred.*
+
+**Delivered (all new files in this session's scope; `nba2/v2/**`, `nba2/models/**`,
+`nba2/pipeline/**`, frozen ledgers and every other tree untouched):**
+
+| Task | What was built | Official source / verification |
+|---|---|---|
+| D1 Late-game / garbage-time decomposition | `nba2/v3/gameflow.py` + `lategame.html`. Q4-vs-Q1–Q3 inflation, z-score, inflation-adjusted control total, overtime handled (regulation quarters only). 9/14 games carry quarters; 5 blank + flagged. | Official gamebook PDFs `statsdmz.nba.com/pdfs/20261113/*` (8 games) + official LINESCORE `nba.com/game/den-vs-nop-0022600231`. Re-derived by `nba2/v3/check.py` and `test_gameflow.py` (7 tests). |
+| D2 Trial-count registry | `nba2/v3/trials.py` + `trials.html`. Append-only registry (9 strategies + 1 backtest = 10 trials), Deflated Sharpe (mirrors `nba2/models/gates.py`, test asserts bit-equality), and the G-06 break-even Sharpe bar. Observed SR/DSR blank (no settled PnL). | Bailey & López de Prado (2014); official finals in `data/raw/history/`. `test_trials.py` (9 tests). |
+| D3 Market-anchored prior | `nba2/v3/model.py::oos_log_loss/market_prior` + section on `projections.html`. Model OOS log-loss **measured** from the committed walk-forward backtest (LL_model = 0.6234 vs coin-flip 0.6931); closing-line weight blank + flagged (no odds feed). | Walk-forward over official finals (`data/v2/backtest.json`, source `data/raw/history/*.json`). `test_v3.py` (4 tests). |
+| D4 Pre-registration, all 9 strategies | Added S6–S9 to `nba2/v3/ledger.py::STRATEGIES`; `write_prereg()` now emits `data/v3/prereg/S1..S9.json`, all sha256-verified. S-08 documents its blocked inputs; S-09 is the frozen evaluation rule. | Strategy definitions in `nba2/config.py::STRATEGIES`. `test_v3.py` (3 tests). |
+| D5 Registers + integration | `requirements/REQUIREMENTS.json` (R-003/R-014/R-049 updated), `suggestions/SUGGESTIONS.json` (S-05 applied, S-55 added), `README.md` v3 page table. Full parity rebuild run. | See verification below. |
+
+**Verification performed (all green):** `python -m nba2.v3` → 12 pages, gates 7 pass / 1 fail
+(G-F3 advisory, pre-existing I-F8F-11), publishable=True; `python -m nba2.v3.check` → 0
+structural, 0 semantic; `python -m nba2.v2.check` → OK; `python -m nba2.pipeline.lint` →
+1427 rows / 50 tables, every row sourced, every blank explained;
+`python3 tools/check_links_all.py` → ALL INTERNAL LINKS OK (126 files, 5908 internal, 7084
+external); full parity rebuild (`build_site_data`, `build_site`, `backtest.engine.build`,
+`nba2.v2`, `nba2.v3`) reproduces the committed trees; tests 64 v3 + 136 v2 + 70 v1 + 49
+backtest = 319 green; `python -m nba2.v2.live` reproducible (staleness 20/30 today).
+
+**Irregularities / blanks published, none corrected by guesswork:** the observed Sharpe / DSR
+per strategy is blank (no market price → no settled PnL → no return); the closing-line
+log-loss is blank (no licensed odds feed); quarter scores for 5 of 14 games are blank and
+flagged (I-F8F-06 for MIL@ORL, F-304 for the four 11/14 games whose LINESCORE was not
+captured). All are on the relevant pages with their source links.
+
+**Sealed ledgers:** `data/raw/ledger/**` byte-identical across the whole session (never
+rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
+`34e144c635b83b89`.
