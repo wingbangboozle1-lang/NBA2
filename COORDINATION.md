@@ -4081,3 +4081,14 @@ PR #93 added an append-only Pages/live-site verification record while PR #90 was
 
 - **PR #94** (`arena/a95e2125-nba2` → `main`) merged 2026-11-16 14:49:13 UTC at `b1156bf6f4e50ea02d453d85203af9ae18eb0c19`: https://github.com/wingbangboozle1-lang/NBA2/pull/94.
 - Checks: `verify`, `backtest`, `parity`, and `v2` passed. The Pages build/deploy for this documentation record also completed successfully (run `43889779879`). The existing Pages source caveat remains: API says `build_type: legacy`, `source: main /`; deployment success does not prove the `site/` artifact is served at the public root.
+
+## Session `arena/0961c8b9-nba2` — CLAIM (2026-11-16 UTC)
+
+| ID | Task | Status | Owner | File scope | Verification rule |
+|---|---|---|---|---|---|
+| A96-01 | Independent current-tree audit: re-read the official rolling schedule, standings, traditional/opponent/advanced team-stat pages, injury-report index, and current results; compare the current published snapshot to those sources; run the local verification chain | in progress | `arena/0961c8b9-nba2` | new `analysis/session-0961c8b9-audit.md`; append-only `COORDINATION.md` | Every reported NBA value has its official NBA source URL; distinguish live reads from committed captures and derived checks; no unsupported cells are filled |
+| A96-02 | Record reproducible build/test/link results and route defects that overlap another session's files to the integration owner rather than editing them | in progress | `arena/0961c8b9-nba2` | same as A96-01 | Re-run the named local checkers; preserve all other session scopes and generated/shared outputs |
+
+**Boundary:** This is an independent verification/report task, not the final integration session. It does not edit `data/**`, `site/**`, `nba2/**`, `README.md`, or `.github/workflows/**`; those contain shared outputs or are in open PR scopes (#70, #72, #80, #90, #91). The audit will document current-source discrepancies and leave implementation requests for the integration session. No values will be changed merely to make a gate pass.
+
+**Rebase conflict note:** The initial claim was pushed, then `origin/main` advanced from `7b3c855` to `635fa42` (PR #92) before the next rebase. The append-only `COORDINATION.md` conflict is resolved by retaining the complete current-main record and reappending this claim below it. No other files or upstream changes are discarded.
