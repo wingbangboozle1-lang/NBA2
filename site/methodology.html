@@ -50,7 +50,13 @@
 <a href="lategame.html">Late-game &amp; garbage time</a>
 <a href="trials.html">Trial registry</a>
 <a href="verification-v3.html">v3 verification</a>
-  </nav>
+  <a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:auto">— v4 gated refresh —</a>
+<a href="projection.html">Projection (safe)</a>
+<a href="bet.html">Bet surface (gated)</a>
+<a href="settle.html">Result feed &amp; settlement</a>
+<a href="v4-injuries.html">Injury releases</a>
+<a href="v4-verify.html">v4 verification</a>
+</nav>
 </aside>
 <main>
 <h1>Methodology</h1>
@@ -131,7 +137,7 @@ That means no team's record in this window is distinguishable from its underlyin
 <pre>python3 -m nba2.v2                # rebuilds data/v2/*.json and site/
 python3 -m nba2.v2.check          # every row sourced, every blank explained
 python3 -m nba2.v2.strategy_lab   # strategies, gates, correlations, luck separation
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 136 tests, counted from the files
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 146 tests, counted from the files
 python3 -m unittest discover -s nba2/tests -t .                # 79 tests
 python3 -m unittest discover -s backtest/tests                 # 49 tests</pre>
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit

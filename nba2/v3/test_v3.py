@@ -222,6 +222,40 @@ class TestLedger(unittest.TestCase):
             finally:
                 LD.LEDGER_DIR = orig
 
+    def test_divergence_log_records_each_distinct_state_once(self):
+        # Regression: the append-only divergence log used to append an identical record on
+        # EVERY rebuild, so the generated tree was not a fixed point and the log grew
+        # without bound. One record per distinct (seal, recomputed) state; re-detecting an
+        # identical divergence adds nothing.
+        res = M.build()
+        mutated = json.loads(json.dumps(res))
+        mutated["lines"][0]["e1_margin"] = mutated["lines"][0]["e1_margin"] + 3.0
+        with tempfile.TemporaryDirectory() as td:
+            orig = LD.LEDGER_DIR
+            try:
+                LD.LEDGER_DIR = Path(td)
+                first = LD.seal(res)
+                diverged = LD.seal(mutated)          # distinct state -> 1 record
+                again = LD.seal(mutated)             # identical state -> no new record
+                div_path = Path(td) / f"seal-divergence-{O.WINDOW[0]}.json"
+                self.assertTrue(div_path.exists())
+                records = json.loads(div_path.read_text())["records"]
+                self.assertEqual(len(records), 1)
+                self.assertIn("divergence", diverged)
+                # the divergence persists and is still reported, but it is NOT re-logged
+                self.assertIn("divergence", again)
+                # the seal itself was never rewritten
+                ok, stored, _ = LD.verify(Path(td) / f"sealed-{O.WINDOW[0]}.json")
+                self.assertTrue(ok)
+                self.assertEqual(stored, first["digest"])
+                third = json.loads(json.dumps(mutated))
+                third["lines"][0]["e1_margin"] = third["lines"][0]["e1_margin"] + 1.0
+                LD.seal(third)                       # a NEW state -> second record
+                records = json.loads(div_path.read_text())["records"]
+                self.assertEqual(len(records), 2)
+            finally:
+                LD.LEDGER_DIR = orig
+
     def test_prereg_digest_detects_edits(self):
         with tempfile.TemporaryDirectory() as td:
             orig = LD.PREREG_DIR
