@@ -4263,6 +4263,7 @@ bash cannot. Standings, schedule and the injury-report PDF were read **live** at
 | V-02 | Committed slate vs live [nba.com/schedule](https://www.nba.com/schedule?date=2026-11-16) | **29/29 MATCH** (id, date, teams, tip, arena) |
 | V-02 | Committed injury (09:30 AM ET) vs live official (01:00 PM ET) | 23 new rows, 2 real status changes, 5 mis-attributed rows (see flags) |
 | V-04 | Headline re-derivation from the 197-game official-finals pool | home-win rate **0.5204**, margin sd **16.987**, pinned HCA **0.869**, rho **−0.038** (n=196) — **all match `data/v4/model.json` exactly** |
+| V-02 | Team-stat pages (brief #22) re-read live: advanced, opponent, traditional | advanced **150/150** (OffRtg/DefRtg/NetRtg/PACE/POSS × 30), opponent **30/30** (Opp PTS), traditional **30/30** (PTS) — all MATCH |
 
 **Flags raised (published with official source links, none blocks the merge):**
 
@@ -4283,6 +4284,16 @@ remain unavailable, so every stake stays at 0.00 by policy.
 live_slate_2026-11-16.json, live_injury_report_2026-11-16_0100PM.json, verify.py,
 verification_results.json}`, `analysis/session-3cd85a22-live-verification.md`. Reproduce with
 `python3 verified/session-3cd85a22-live/verify.py`.
+
+**PR & merge result.** PR #101
+(https://github.com/wingbangboozle1-lang/NBA2/pull/101, `arena/3cd85a22-nba2` → `main`) —
+**MERGED** with `--merge` at 2026-11-16T18:33:43Z; merge commit `ca3a11697faeacc9a1c4970065a46af87c517ee5`.
+The merge required combining this session's append-only `COORDINATION.md` section with the
+concurrently-merged session `arena/72ee6841-nba2` section (PR #100); both sections were preserved
+(neither discarded). Flagged items F-3CD-01…F-3CD-04 do not block the merge and are published with
+their official source links in `analysis/session-3cd85a22-live-verification.md` for post-launch
+review. The live GitHub Pages site still serves the pre-11/16 v2 tree until open PR #98
+(`arena/fe0ffa49-nba2`) refreshes it — that refresh is not this session's scope.
 
 ---
 

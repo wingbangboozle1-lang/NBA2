@@ -1,0 +1,25 @@
+{
+ "session": "arena/3cd85a22-nba2",
+ "retrieved_utc": "2026-11-16T18:23:30Z",
+ "sources": {
+  "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+  "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+  "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+ },
+ "committed_capture": "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json (retrieved 2026-11-16T14:30:00Z / 09:30 ET)",
+ "advanced": {
+  "n": 150,
+  "match": 150,
+  "mismatch": []
+ },
+ "opponent": {
+  "n": 30,
+  "match": 30,
+  "mismatch": []
+ },
+ "traditional": {
+  "n": 30,
+  "match": 30,
+  "mismatch": []
+ }
+}
