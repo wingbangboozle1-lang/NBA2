@@ -303,14 +303,19 @@ class TestRefreshGates(unittest.TestCase):
 
     def test_slate_gate_rejects_duplicate_ids_and_unsourced_rows(self):
         from . import refresh as RF
-        slate = {"games": [
-            {"date": "2026-11-15", "game_id": "g1", "source_url": "https://www.nba.com/schedule?date=2026-11-15"},
-            {"date": "2026-11-15", "game_id": "g2", "source_url": "https://www.nba.com/schedule?date=2026-11-15"},
+        dates = ["2026-11-15", "2026-11-16", "2026-11-17", "2026-11-18"]
+        slate = {"covered_dates": dates, "games": [
+            {"date": dates[0], "game_id": "0022600101", "home": "BOS", "away": "NYK",
+             "source_url": f"https://www.nba.com/schedule?date={dates[0]}"},
+            {"date": dates[0], "game_id": "0022600102", "home": "LAL", "away": "LAC",
+             "source_url": f"https://www.nba.com/schedule?date={dates[0]}"},
         ]}
         self.assertTrue(RF.gate_slate(slate, "2026-11-15")["ok"])
-        slate["games"].append({"date": "2026-11-15", "game_id": "g2", "source_url": "https://x"})
+        slate["games"].append({"date": dates[0], "game_id": "0022600102", "home": "LAL", "away": "LAC",
+                                "source_url": "https://example.com/schedule?date=2026-11-15"})
         self.assertFalse(RF.gate_slate(slate, "2026-11-15")["ok"])
-        slate2 = {"games": [{"date": "2026-11-15", "game_id": "g1", "source_url": ""}]}
+        slate2 = {"covered_dates": dates, "games": [
+            {"date": dates[0], "game_id": "0022600101", "home": "BOS", "away": "NYK", "source_url": ""}]}
         self.assertFalse(RF.gate_slate(slate2, "2026-11-15")["ok"])
 
     def test_provenance_gate_flags_sourceless_rows(self):
