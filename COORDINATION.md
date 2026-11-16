@@ -4442,3 +4442,50 @@ a build timestamp, so an interrupted run can leave one v1 test red on a dirty tr
 read-only and re-verified), `nba2/v2/**` except `content.py`'s prose lists, `nba2/v3/**`,
 `backtest/**`, `ci.yml`, `pages.yml`, `publish-parity.yml`, `docs/**`, `dashboard/**`,
 `originated/**`, `archive/**`, `verified/**`. PR #98 was not touched.
+
+### PR result — session `arena/4f780342-nba2`
+
+**PR #103 → MERGED** into `main` as `7b28360` on 2026-11-16T18:47Z. Merge method: `--merge`.
+All four required checks passed before the merge (`parity`, `v2`, `verify`, `backtest`), and
+the post-merge `main` runs of `pages.yml`, `publish-parity.yml`, `ci.yml` and `v2-verify.yml`
+all concluded **success**.
+
+**Pages deploy: succeeded, but the deployed artefact is not what readers get.** Measured, not
+assumed:
+
+* `gh api repos/.../pages` → `"build_type": "legacy"`, `"source": {"branch":"main","path":"/"}`
+* `gh api .../pages/builds/latest` → `"status": "built"` at `7b28360`
+* the `pages.yml` run uploaded a 326,033-byte `github-pages` artefact and the `deploy` job
+  concluded **success**
+* fetching **`https://wingbangboozle1-lang.github.io/NBA2/`** returns the **v1 root tree**
+  (`as-of 2026-11-14`, 36 games, 94 flags, standings read 11/14)
+* fetching **`https://wingbangboozle1-lang.github.io/NBA2/site/`** returns the **current v4
+  tree** — verified page by page: `settle.html` (37/83, all three seals VERIFIED, distinct-game
+  paragraph, tail 0.042455), `v4-injuries.html` (2 releases, 0 unread, 2 status changes,
+  6-row provenance table), `v4-verify.html` (8/8 gates, F-V4-06 and F-V4-09 RESOLVED).
+
+So the deploy pipeline works end to end and its output is correct; the repository *setting*
+that decides which tree is served is still `legacy`, and in that mode GitHub Pages ignores the
+uploaded artefact and serves `main`'s root instead. **Changing it needs `pages: write` on repo
+settings, which this session's token does not have** (`PUT /pages` → `403 Resource not
+accessible by integration`). This is the pre-existing owner setting **FLAG-PAGES-01 / S-A05**
+and it is not re-decided here: an earlier session explicitly chose the root tree as canonical.
+
+**What this session adds to that flag is the measurement, which changes its urgency.** The
+root tree a reader lands on is not merely a different design — it publishes `as-of 2026-11-14`,
+36 games and 94 flags, while the verified work from 2026-11-15/16 sits one path segment away at
+`/site/`. Two surfaces on one origin now disagree by two days. **Recommendation to the owner
+(either setting satisfies it, and the first is one click):** set Pages `build_type` to
+`workflow` so `site/` is served at the root; or, if the root tree must stay canonical, the
+`build_site_data` snapshot has to be refreshed before the next scheduled run, because it is
+what a first-time visitor reads. Until one of those happens the site is live and verified but
+the default landing page is stale, and that is published as a gap rather than claimed as done.
+
+**Second finding, for whoever edits `site/` next:** `publish-parity.yml` compared my branch and
+correctly failed it. I had verified "0 files changed" locally *before* committing, so I diffed
+my rebuild against my own uncommitted rebuild — a false pass. The committed tree was missing the
+v4 nav block on 12 v3 pages; `inject_nav()` only adds the block to pages that do not already
+carry the marker, so a tree committed mid-sequence stays without it. Regenerating v2→v3→v4 in
+order and committing the result fixed it, and a **second** rebuild then showed 0 drift. Anyone
+running the v4 tree must run it *after* v3 and commit the result — the CI job is right and the
+local shortcut is wrong.
