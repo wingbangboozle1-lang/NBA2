@@ -4295,6 +4295,14 @@ their official source links in `analysis/session-3cd85a22-live-verification.md` 
 review. The live GitHub Pages site still serves the pre-11/16 v2 tree until open PR #98
 (`arena/fe0ffa49-nba2`) refreshes it — that refresh is not this session's scope.
 
+**PR #104 (team-stat extension).** PR #104
+(https://github.com/wingbangboozle1-lang/NBA2/pull/104, `arena/3cd85a22-nba2` → `main`) —
+**MERGED** with `--merge` at 2026-11-16T18:39:29Z; merge commit `ce5bd27d1894666e6b526520b462fa440546bfa7`.
+Carries the brief #22 team-stat re-read (advanced 150/150, opponent 30/30, traditional 30/30, all
+MATCH against the live official pages). Both PRs merged cleanly after merging `origin/main` into
+the session branch; the append-only `COORDINATION.md` sections from concurrent sessions were
+combined, never discarded.
+
 ---
 
 ## Session `arena/09c0c9a2-nba2` — CLAIM (2026-11-16 UTC)
