@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import datetime as dt
 import unittest
+from unittest import mock
 
 from . import refresh as R
 
@@ -69,12 +70,88 @@ class TestFinalsGate(unittest.TestCase):
             "injuries": {"pdf_url": "https://official.nba.com/report.pdf",
                          "retrieval_time_utc": "2026-11-15T00:00:00Z",
                          "revision_time_et": "2026-11-15 06:00 AM ET"},
-            "slate": {"games": [{"date": today, "game_id": "0022600102",
-                                  "source_url": "https://www.nba.com/schedule"}]},
+            "slate": {
+                "covered_dates": ["2026-11-15", "2026-11-16", "2026-11-17", "2026-11-18"],
+                "games": [{"date": today, "game_id": "0022600102", "home": "BOS", "away": "NYK",
+                           "source_url": "https://www.nba.com/schedule?date=2026-11-15"}],
+            },
             "team_stats": {},
         }
         gates = R.run_gates(docs, ["2026-11-14", today], today)
         self.assertTrue(gates[0]["ok"], gates[0]["detail"])
+
+
+class TestSlateGate(unittest.TestCase):
+    TODAY = "2026-11-15"
+    DATES = ["2026-11-15", "2026-11-16", "2026-11-17", "2026-11-18"]
+
+    @classmethod
+    def valid_slate(cls):
+        return {
+            "covered_dates": list(cls.DATES),
+            "games": [{
+                "date": cls.DATES[0], "game_id": "0022600101", "home": "BOS", "away": "NYK",
+                "source_url": f"https://www.nba.com/schedule?date={cls.DATES[0]}",
+            }],
+        }
+
+    def test_fetch_slate_records_every_successful_date_query(self):
+        empty_scoreboard = {"resultSets": [{"headers": ["gameId", "homeTeamTricode", "awayTeamTricode",
+                                                          "gameEt", "arenaName"], "rowSet": []}]}
+        with mock.patch.object(R, "http_json", return_value=empty_scoreboard) as get:
+            result = R.fetch_slate(self.DATES)
+        self.assertEqual(result["covered_dates"], self.DATES)
+        self.assertEqual(result["games"], [])
+        self.assertEqual(get.call_count, 4)
+
+    def test_requires_all_four_successful_schedule_fetches(self):
+        slate = self.valid_slate()
+        self.assertTrue(R.gate_slate(slate, self.TODAY)["ok"])
+        slate["covered_dates"].remove(self.DATES[2])
+        result = R.gate_slate(slate, self.TODAY)
+        self.assertFalse(result["ok"])
+        self.assertIn(self.DATES[2], result["detail"])
+
+    def test_empty_game_list_only_passes_when_all_dates_were_fetched(self):
+        slate = {"covered_dates": list(self.DATES), "games": []}
+        self.assertTrue(R.gate_slate(slate, self.TODAY)["ok"])
+        result = R.gate_slate({"covered_dates": [], "games": []}, self.TODAY)
+        self.assertFalse(result["ok"])
+
+    def test_rejects_out_of_window_rows_invalid_ids_or_missing_teams(self):
+        slate = self.valid_slate()
+        slate["games"][0]["date"] = "2026-11-19"
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+        slate = self.valid_slate()
+        slate["games"][0]["game_id"] = "unknown"
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+        slate = self.valid_slate()
+        slate["games"][0]["home"] = None
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+    def test_rejects_duplicate_ids_and_non_nba_or_wrong_date_source_urls(self):
+        slate = self.valid_slate()
+        duplicate = dict(slate["games"][0], date=self.DATES[1],
+                         source_url=f"https://www.nba.com/schedule?date={self.DATES[1]}")
+        slate["games"].append(duplicate)
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+        slate = self.valid_slate()
+        slate["games"][0]["source_url"] = "https://example.com/schedule?date=2026-11-15"
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+        slate = self.valid_slate()
+        slate["games"][0]["source_url"] = "https://www.nba.com/schedule?date=2026-11-16"
+        self.assertFalse(R.gate_slate(slate, self.TODAY)["ok"])
+
+    def test_malformed_coverage_and_anchor_fail_without_exception(self):
+        for covered in ({}, [None], [["2026-11-15"]]):
+            with self.subTest(covered=covered):
+                result = R.gate_slate({"covered_dates": covered, "games": []}, self.TODAY)
+                self.assertFalse(result["ok"])
+        self.assertFalse(R.gate_slate(self.valid_slate(), "not-a-date")["ok"])
 
 
 class TestStandingsGate(unittest.TestCase):
