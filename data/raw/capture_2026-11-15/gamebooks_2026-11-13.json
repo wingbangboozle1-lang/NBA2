@@ -1,0 +1,2070 @@
+{
+  "schema": "nba2.gamebook-capture.v1",
+  "date": "2026-11-13",
+  "n_games": 9,
+  "retrieved_at_utc": "2026-11-15T23:45:00Z",
+  "retrieval_method": "platform page-fetch tool (fetch_page) against the official gamebook PDFs",
+  "source_pattern": "https://statsdmz.nba.com/pdfs/<YYYYMMDD>/<YYYYMMDD>_<AWAY><HOME>_book.pdf",
+  "index_page": "https://www.nba.com/games?date=2026-11-13",
+  "gates": {
+    "minutes_sum": "player minutes must sum to 240:00 + 25:00 per OT (+/-2s for the PDF's own rounding)",
+    "points_sum": "player points must sum to the official final score (exact)",
+    "quarters_sum": "quarter scores must sum to the official final score; a row that does not is left blank and flagged (I-F8F-06 / I-F8F-09)"
+  },
+  "incomplete": [
+    {
+      "game_id": "0022600038",
+      "team": "MEM",
+      "reason": "minutes cell did not extract for: Jerami Grant",
+      "flag": "I-F8F-07"
+    }
+  ],
+  "residuals": [
+    {
+      "game_id": "0022600035",
+      "team": "ORL",
+      "reason": "player minutes sum 14401s vs team total 14400s (residual +1s, inside the 2s tolerance)",
+      "flag": "I-F8F-05",
+      "blocking": false
+    },
+    {
+      "game_id": "0022600037",
+      "team": "CHI",
+      "reason": "player minutes sum 15899s vs team total 15900s (residual -1s, inside the 2s tolerance)",
+      "flag": "I-F8F-05",
+      "blocking": false
+    },
+    {
+      "game_id": "0022600041",
+      "team": "SAC",
+      "reason": "player minutes sum 14399s vs team total 14400s (residual -1s, inside the 2s tolerance)",
+      "flag": "I-F8F-05",
+      "blocking": false
+    },
+    {
+      "game_id": "0022600042",
+      "team": "OKC",
+      "reason": "player minutes sum 14401s vs team total 14400s (residual +1s, inside the 2s tolerance)",
+      "flag": "I-F8F-05",
+      "blocking": false
+    },
+    {
+      "game_id": "0022600042",
+      "team": "LAC",
+      "reason": "player minutes sum 14401s vs team total 14400s (residual +1s, inside the 2s tolerance)",
+      "flag": "I-F8F-05",
+      "blocking": false
+    }
+  ],
+  "games": [
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600034",
+      "away": "NYK",
+      "home": "IND",
+      "away_pts": 104,
+      "home_pts": 106,
+      "quarters": {
+        "NYK": [
+          27,
+          22,
+          35,
+          20
+        ],
+        "IND": [
+          26,
+          32,
+          27,
+          21
+        ]
+      },
+      "arena": "Gainbridge Fieldhouse",
+      "city": "Indianapolis, IN",
+      "attendance": "17274 (Sellout)",
+      "officials": "#64 Justin Van Duyne, #7 Ed Malloy, #73 Intae Hwang",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_NYKIND_book.pdf",
+      "game_url": "https://www.nba.com/game/nyk-vs-ind-0022600034",
+      "minutes_complete": {
+        "NYK": true,
+        "IND": true
+      },
+      "teams": {
+        "NYK": {
+          "played": [
+            [
+              "Josh Hart",
+              "F",
+              "23:13",
+              0,
+              5,
+              4
+            ],
+            [
+              "OG Anunoby",
+              "F",
+              "33:20",
+              11,
+              2,
+              1
+            ],
+            [
+              "Karl-Anthony Towns",
+              "C",
+              "33:53",
+              23,
+              15,
+              5
+            ],
+            [
+              "Mikal Bridges",
+              "G",
+              "28:40",
+              18,
+              3,
+              3
+            ],
+            [
+              "Jalen Brunson",
+              "G",
+              "35:57",
+              33,
+              1,
+              11
+            ],
+            [
+              "Andre Drummond",
+              "",
+              "13:47",
+              0,
+              6,
+              0
+            ],
+            [
+              "Tyler Kolek",
+              "",
+              "18:30",
+              5,
+              6,
+              2
+            ],
+            [
+              "Miles McBride",
+              "",
+              "21:49",
+              9,
+              1,
+              1
+            ],
+            [
+              "Landry Shamet",
+              "",
+              "21:02",
+              5,
+              3,
+              1
+            ],
+            [
+              "Jordan Clarkson",
+              "",
+              "08:40",
+              0,
+              1,
+              0
+            ],
+            [
+              "Pacôme Dadiet",
+              "",
+              "01:09",
+              0,
+              0,
+              0
+            ]
+          ],
+          "dnp": [
+            "Jose Alvarado",
+            "Mohamed Diawara",
+            "James Wiseman"
+          ],
+          "inactive": "Akins, Knecht, Nickel"
+        },
+        "IND": {
+          "played": [
+            [
+              "Aaron Nesmith",
+              "F",
+              "32:31",
+              18,
+              7,
+              1
+            ],
+            [
+              "Pascal Siakam",
+              "F",
+              "31:58",
+              19,
+              3,
+              2
+            ],
+            [
+              "Ivica Zubac",
+              "C",
+              "25:46",
+              12,
+              13,
+              1
+            ],
+            [
+              "Kelly Oubre Jr.",
+              "G",
+              "29:52",
+              16,
+              5,
+              0
+            ],
+            [
+              "Andrew Nembhard",
+              "G",
+              "33:42",
+              12,
+              4,
+              6
+            ],
+            [
+              "Jay Huff",
+              "",
+              "08:17",
+              8,
+              1,
+              0
+            ],
+            [
+              "Quenton Jackson",
+              "",
+              "20:18",
+              3,
+              5,
+              4
+            ],
+            [
+              "T.J. McConnell",
+              "",
+              "17:20",
+              6,
+              3,
+              7
+            ],
+            [
+              "Obi Toppin",
+              "",
+              "16:02",
+              9,
+              3,
+              1
+            ],
+            [
+              "Larry Nance Jr.",
+              "",
+              "13:57",
+              2,
+              2,
+              1
+            ],
+            [
+              "Jalen Slawson",
+              "",
+              "10:17",
+              1,
+              4,
+              0
+            ]
+          ],
+          "dnp": [
+            "Jarace Walker"
+          ],
+          "inactive": "Brown, Furphy (Injury/Illness - Right ACL Repair / Surgery), Haliburton (Injury/Illness - Left Hamstring Strain), Sheppard (Injury/Illness - Left Meniscus Surgery), Smith"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600035",
+      "away": "MIL",
+      "home": "ORL",
+      "away_pts": 99,
+      "home_pts": 107,
+      "quarters": null,
+      "arena": "Kia Center",
+      "city": "Orlando, FL",
+      "attendance": null,
+      "officials": "#27 Mitchell Ervin, #68 Jacyn Goble, #70 Phenizee Ransom",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf",
+      "game_url": "https://www.nba.com/game/mil-vs-orl-0022600035",
+      "minutes_complete": {
+        "MIL": true,
+        "ORL": true
+      },
+      "teams": {
+        "MIL": {
+          "played": [
+            [
+              "Ousmane Dieng",
+              "F",
+              "04:47",
+              0,
+              0,
+              0
+            ],
+            [
+              "Kyle Kuzma",
+              "F",
+              "30:36",
+              14,
+              4,
+              2
+            ],
+            [
+              "Myles Turner",
+              "C",
+              "30:43",
+              14,
+              11,
+              3
+            ],
+            [
+              "Tyler Herro",
+              "G",
+              "33:46",
+              18,
+              1,
+              2
+            ],
+            [
+              "Brayden Burries",
+              "G",
+              "19:04",
+              3,
+              4,
+              3
+            ],
+            [
+              "Nate Ament",
+              "",
+              "22:23",
+              9,
+              3,
+              1
+            ],
+            [
+              "Jaime Jaquez Jr.",
+              "",
+              "28:16",
+              22,
+              6,
+              4
+            ],
+            [
+              "Kel'el Ware",
+              "",
+              "17:17",
+              10,
+              6,
+              1
+            ],
+            [
+              "Ryan Rollins",
+              "",
+              "28:56",
+              8,
+              10,
+              2
+            ],
+            [
+              "Gary Trent Jr.",
+              "",
+              "16:02",
+              1,
+              0,
+              0
+            ],
+            [
+              "AJ Green",
+              "",
+              "08:10",
+              0,
+              0,
+              2
+            ]
+          ],
+          "dnp": [
+            "Kasparas Jakučionis",
+            "Caris LeVert",
+            "Bogoljub Marković",
+            "Jericho Sims"
+          ],
+          "inactive": "Jones, Nance, Ryan"
+        },
+        "ORL": {
+          "played": [
+            [
+              "Tristan da Silva",
+              "F",
+              "31:10",
+              12,
+              6,
+              2
+            ],
+            [
+              "Franz Wagner",
+              "F",
+              "36:05",
+              35,
+              9,
+              12
+            ],
+            [
+              "Wendell Carter Jr.",
+              "C",
+              "30:07",
+              12,
+              8,
+              0
+            ],
+            [
+              "Desmond Bane",
+              "G",
+              "34:41",
+              21,
+              5,
+              3
+            ],
+            [
+              "Anthony Black",
+              "G",
+              "36:35",
+              5,
+              2,
+              5
+            ],
+            [
+              "Jalen Suggs",
+              "",
+              "20:54",
+              3,
+              2,
+              3
+            ],
+            [
+              "Nikola Vučević",
+              "",
+              "11:10",
+              2,
+              3,
+              0
+            ],
+            [
+              "Jevon Carter",
+              "",
+              "17:19",
+              5,
+              2,
+              2
+            ],
+            [
+              "Goga Bitadze",
+              "",
+              "17:53",
+              12,
+              4,
+              1
+            ],
+            [
+              "Jamal Cain",
+              "",
+              "04:07",
+              0,
+              4,
+              1
+            ]
+          ],
+          "dnp": [
+            "Colin Castleton",
+            "Alex Morales",
+            "Jase Richardson"
+          ],
+          "inactive": "Banchero (Injury/Illness - Right High Ankle Sprain), Isaac (Injury/Illness - Left Knee Injury Management), Nelson (Injury/Illness - Left Ankle Injury Recovery), Penda (Injury/Illness - Right Partially Torn Hamstring )"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600036",
+      "away": "CLE",
+      "home": "MIA",
+      "away_pts": 121,
+      "home_pts": 133,
+      "ot_periods": 0,
+      "quarters": {
+        "CLE": [
+          27,
+          30,
+          34,
+          30
+        ],
+        "MIA": [
+          29,
+          25,
+          38,
+          41
+        ]
+      },
+      "arena": "Kaseya Center",
+      "city": "Miami, FL",
+      "attendance": "19646 (Sellout)",
+      "officials": "#10 John Goble, #29 Mark Lindsay, #80 JD Ralls",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
+      "game_url": "https://www.nba.com/game/cle-vs-mia-0022600036",
+      "minutes_complete": {
+        "CLE": true,
+        "MIA": true
+      },
+      "teams": {
+        "CLE": {
+          "played": [
+            [
+              "Jaylon Tyson",
+              "F",
+              "29:52",
+              16,
+              3,
+              1
+            ],
+            [
+              "Peyton Watson",
+              "F",
+              "30:25",
+              4,
+              4,
+              2
+            ],
+            [
+              "Jarrett Allen",
+              "C",
+              "31:40",
+              9,
+              8,
+              1
+            ],
+            [
+              "James Harden",
+              "G",
+              "34:49",
+              20,
+              6,
+              8
+            ],
+            [
+              "Donovan Mitchell",
+              "G",
+              "32:51",
+              25,
+              4,
+              7
+            ],
+            [
+              "Tyrese Proctor",
+              "",
+              "27:20",
+              22,
+              4,
+              3
+            ],
+            [
+              "Meleek Thomas",
+              "",
+              "17:54",
+              12,
+              3,
+              5
+            ],
+            [
+              "Thomas Bryant",
+              "",
+              "16:20",
+              9,
+              1,
+              1
+            ],
+            [
+              "Mario Hezonja",
+              "",
+              "09:21",
+              4,
+              4,
+              0
+            ],
+            [
+              "Craig Porter Jr.",
+              "",
+              "09:28",
+              0,
+              2,
+              2
+            ]
+          ],
+          "dnp": [
+            "Riley Minix",
+            "Norchad Omier"
+          ],
+          "inactive": "Diop (G League - On Assignment), Merrill (Injury/Illness - Right Elbow Injury Management), Mobley (Injury/Illness - Left Great Toe - Sprain), Tomlin (Injury/Illness - Low Back Stress Reaction), Udeh, Jr. (G League - Two-Way)"
+        },
+        "MIA": {
+          "played": [
+            [
+              "Myron Gardner",
+              "F",
+              "19:19",
+              0,
+              4,
+              2
+            ],
+            [
+              "Giannis Antetokounmpo",
+              "F",
+              "31:00",
+              37,
+              9,
+              2
+            ],
+            [
+              "Bam Adebayo",
+              "C",
+              "38:05",
+              37,
+              14,
+              3
+            ],
+            [
+              "Tim Hardaway Jr.",
+              "G",
+              "20:09",
+              4,
+              3,
+              2
+            ],
+            [
+              "Davion Mitchell",
+              "G",
+              "38:56",
+              22,
+              5,
+              17
+            ],
+            [
+              "Ryan Conwell",
+              "",
+              "32:45",
+              20,
+              5,
+              2
+            ],
+            [
+              "Bobby Portis Jr.",
+              "",
+              "15:03",
+              5,
+              3,
+              2
+            ],
+            [
+              "Andrew Wiggins",
+              "",
+              "31:33",
+              8,
+              3,
+              4
+            ],
+            [
+              "Dru Smith",
+              "",
+              "05:44",
+              0,
+              0,
+              1
+            ],
+            [
+              "Simone Fontecchio",
+              "",
+              "07:26",
+              0,
+              0,
+              2
+            ]
+          ],
+          "dnp": [
+            "Tre Donaldson",
+            "Keshad Johnson",
+            "Nikola Jović",
+            "Nick Richards",
+            "Klay Thompson"
+          ],
+          "inactive": "Goldin (G League - Two-Way), Larsson (Injury/Illness - Illness )"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600037",
+      "away": "ATL",
+      "home": "CHI",
+      "away_pts": 117,
+      "home_pts": 125,
+      "ot_periods": 1,
+      "quarters": {
+        "ATL": [
+          24,
+          29,
+          30,
+          27,
+          7
+        ],
+        "CHI": [
+          33,
+          27,
+          24,
+          26,
+          15
+        ]
+      },
+      "arena": "United Center",
+      "city": "Chicago, IL",
+      "attendance": "19466",
+      "officials": "#25 Tony Brothers, #55 Bill Kennedy, #72 J.T. Orr",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
+      "game_url": "https://www.nba.com/game/atl-vs-chi-0022600037",
+      "minutes_complete": {
+        "ATL": true,
+        "CHI": true
+      },
+      "teams": {
+        "ATL": {
+          "played": [
+            [
+              "Dyson Daniels",
+              "F",
+              "36:05",
+              6,
+              9,
+              4
+            ],
+            [
+              "Jalen Johnson",
+              "F",
+              "40:21",
+              27,
+              11,
+              10
+            ],
+            [
+              "Onyeka Okongwu",
+              "C",
+              "34:50",
+              17,
+              6,
+              1
+            ],
+            [
+              "Nickeil Alexander-Walker",
+              "G",
+              "41:17",
+              16,
+              6,
+              3
+            ],
+            [
+              "Kingston Flemings",
+              "G",
+              "17:22",
+              0,
+              1,
+              1
+            ],
+            [
+              "Luguentz Dort",
+              "",
+              "19:33",
+              10,
+              1,
+              2
+            ],
+            [
+              "Jock Landale",
+              "",
+              "18:10",
+              12,
+              5,
+              0
+            ],
+            [
+              "CJ McCollum",
+              "",
+              "31:52",
+              20,
+              5,
+              5
+            ],
+            [
+              "Aaron Wiggins",
+              "",
+              "25:30",
+              9,
+              4,
+              3
+            ]
+          ],
+          "dnp": [
+            "RayJ Dennis",
+            "Zuby Ejiofor",
+            "Dorian Finney-Smith",
+            "Corey Kispert"
+          ],
+          "inactive": "Gilbert (Injury/Illness - Left Knee Inflammation; Non-Surgical Procedure), Gueye (Injury/Illness - Left Foot Fracture), Newell (Injury/Illness - Left Great Toe Hyperextension), Veesaar (Injury/Illness - Right ACL Tear), Wilson (G League - Two-Way)"
+        },
+        "CHI": {
+          "played": [
+            [
+              "Isaac Okoro",
+              "F",
+              "40:53",
+              15,
+              3,
+              2
+            ],
+            [
+              "Matas Buzelis",
+              "F",
+              "28:35",
+              11,
+              6,
+              2
+            ],
+            [
+              "Jalen Smith",
+              "C",
+              "31:35",
+              15,
+              12,
+              3
+            ],
+            [
+              "Norman Powell",
+              "G",
+              "31:06",
+              33,
+              5,
+              2
+            ],
+            [
+              "Josh Giddey",
+              "G",
+              "39:01",
+              15,
+              10,
+              14
+            ],
+            [
+              "Nic Claxton",
+              "",
+              "21:34",
+              2,
+              6,
+              2
+            ],
+            [
+              "Buddy Hield",
+              "",
+              "25:16",
+              12,
+              3,
+              3
+            ],
+            [
+              "Patrick Williams",
+              "",
+              "24:25",
+              13,
+              4,
+              2
+            ],
+            [
+              "Noa Essengue",
+              "",
+              "07:56",
+              5,
+              1,
+              1
+            ],
+            [
+              "Tre Jones",
+              "",
+              "14:38",
+              4,
+              1,
+              3
+            ]
+          ],
+          "dnp": [
+            "Zach Collins",
+            "Jordan Hawkins",
+            "Leonard Miller",
+            "Orlando Robinson"
+          ],
+          "inactive": "Awaka (Injury/Illness - Disc Irritation), Sellers (G League - Two-Way), Swain (Injury/Illness - Right Disc Irritation), Wilson (Injury/Illness - Right Metacarpal Fracture)"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600038",
+      "away": "MEM",
+      "home": "NOP",
+      "away_pts": 142,
+      "home_pts": 111,
+      "ot_periods": 0,
+      "quarters": {
+        "MEM": [
+          35,
+          35,
+          35,
+          37
+        ],
+        "NOP": [
+          28,
+          30,
+          28,
+          25
+        ]
+      },
+      "arena": "Smoothie King Center",
+      "city": "New Orleans, LA",
+      "attendance": "16487",
+      "officials": "#74 Curtis Blair, #36 Brent Barnaky, #12 CJ Washington",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
+      "game_url": "https://www.nba.com/game/mem-vs-nop-0022600038",
+      "minutes_complete": {
+        "MEM": false,
+        "NOP": true
+      },
+      "teams": {
+        "MEM": {
+          "played": [
+            [
+              "Jaylen Wells",
+              "F",
+              "26:47",
+              11,
+              2,
+              1
+            ],
+            [
+              "Cameron Boozer",
+              "F",
+              "25:05",
+              12,
+              10,
+              3
+            ],
+            [
+              "Isaiah Stewart",
+              "C",
+              "20:21",
+              12,
+              5,
+              0
+            ],
+            [
+              "Cedric Coward",
+              "G",
+              "29:50",
+              14,
+              7,
+              6
+            ],
+            [
+              "Ty Jerome",
+              "G",
+              "28:35",
+              17,
+              2,
+              9
+            ],
+            [
+              "Jerami Grant",
+              "",
+              null,
+              22,
+              1,
+              1
+            ],
+            [
+              "Taylor Hendricks",
+              "",
+              "18:43",
+              10,
+              12,
+              2
+            ],
+            [
+              "GG Jackson",
+              "",
+              "22:21",
+              14,
+              6,
+              4
+            ],
+            [
+              "Javon Small",
+              "",
+              "15:21",
+              10,
+              2,
+              5
+            ],
+            [
+              "Cam Spencer",
+              "",
+              "24:12",
+              14,
+              2,
+              5
+            ],
+            [
+              "Olivier-Maxence Prosper",
+              "",
+              "02:22",
+              6,
+              1,
+              0
+            ],
+            [
+              "Kris Murray",
+              "",
+              "00:44",
+              0,
+              1,
+              0
+            ]
+          ],
+          "dnp": [],
+          "inactive": "Edey (Injury/Illness - Left Ankle Injury Management), López (G League - On Assignment - G League - On Assignment), Mashack (G League - Two-Way - G League - Two-Way), Pippen Jr. (Injury/Illness - Lumbar Disc Herniation), Post (Injury/Illness - Concussion Protocol), Saunders (Injury/Illness - Right Knee Surgery)"
+        },
+        "NOP": {
+          "played": [
+            [
+              "Saddiq Bey",
+              "F",
+              "34:51",
+              30,
+              10,
+              0
+            ],
+            [
+              "Zion Williamson",
+              "F",
+              "33:23",
+              22,
+              5,
+              4
+            ],
+            [
+              "DeAndre Jordan",
+              "C",
+              "17:06",
+              6,
+              8,
+              1
+            ],
+            [
+              "Herbert Jones",
+              "G",
+              "32:16",
+              8,
+              2,
+              3
+            ],
+            [
+              "Jeremiah Fears",
+              "G",
+              "33:40",
+              18,
+              5,
+              7
+            ],
+            [
+              "Karlo Matković",
+              "",
+              "18:44",
+              1,
+              3,
+              0
+            ],
+            [
+              "Jordan Poole",
+              "",
+              "20:43",
+              13,
+              2,
+              5
+            ],
+            [
+              "Bennedict Mathurin",
+              "",
+              "10:03",
+              0,
+              0,
+              0
+            ],
+            [
+              "Derik Queen",
+              "",
+              "22:38",
+              10,
+              6,
+              2
+            ],
+            [
+              "Malik Dia",
+              "",
+              "04:09",
+              2,
+              0,
+              1
+            ],
+            [
+              "AJ Johnson",
+              "",
+              "04:09",
+              1,
+              0,
+              0
+            ],
+            [
+              "Jaron Pierre Jr.",
+              "",
+              "04:09",
+              0,
+              0,
+              0
+            ],
+            [
+              "Julian Reese",
+              "",
+              "04:09",
+              0,
+              2,
+              0
+            ]
+          ],
+          "dnp": [],
+          "inactive": "McGowens (Injury/Illness - Left Elbow Infection), Missi (Injury/Illness - Left Knee Contusion / Bone Bruise), Murphy III (Injury/Illness - Bilateral Patellar Tendinopathy), Murray (Injury/Illness - Left Ankle Sprain), Watford (Injury/Illness - Right Ankle Sprain)"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600039",
+      "away": "UTA",
+      "home": "HOU",
+      "away_pts": 118,
+      "home_pts": 125,
+      "ot_periods": 0,
+      "quarters": {
+        "UTA": [
+          27,
+          26,
+          36,
+          29
+        ],
+        "HOU": [
+          27,
+          36,
+          29,
+          33
+        ]
+      },
+      "quarters_source": "UTA from the SCORE BY PERIOD table (27/26/36/29 = 118, reconciles). HOU from the gamebook's repeated footer line (27/36/29/33 = 125, reconciles); the SCORE BY PERIOD table row for HOU extracted as 27/26/30/22 (sums to 105, contradicts the printed final 125) — see I-F8F-09.",
+      "arena": "Toyota Center",
+      "city": "Houston, TX",
+      "attendance": "18055 (Sellout)",
+      "officials": "#4 Sean Wright, #34 Kevin Cutler, #93 Jenna Reneau",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_UTAHOU_book.pdf",
+      "game_url": "https://www.nba.com/game/uta-vs-hou-0022600039",
+      "minutes_complete": {
+        "UTA": true,
+        "HOU": true
+      },
+      "teams": {
+        "UTA": {
+          "played": [
+            [
+              "Josh Okogie",
+              "F",
+              "21:43",
+              7,
+              2,
+              1
+            ],
+            [
+              "Ace Bailey",
+              "F",
+              "34:32",
+              21,
+              3,
+              1
+            ],
+            [
+              "Jaxson Hayes",
+              "C",
+              "13:27",
+              12,
+              5,
+              1
+            ],
+            [
+              "Darryn Peterson",
+              "G",
+              "33:58",
+              28,
+              7,
+              2
+            ],
+            [
+              "Keyonte George",
+              "G",
+              "37:32",
+              27,
+              4,
+              7
+            ],
+            [
+              "Mo Bamba",
+              "",
+              "19:53",
+              9,
+              9,
+              1
+            ],
+            [
+              "Brice Sensabaugh",
+              "",
+              "26:59",
+              7,
+              3,
+              1
+            ],
+            [
+              "Isaiah Collier",
+              "",
+              "15:59",
+              3,
+              2,
+              5
+            ],
+            [
+              "Josh Green",
+              "",
+              "14:21",
+              2,
+              0,
+              0
+            ],
+            [
+              "Svi Mykhailiuk",
+              "",
+              "07:01",
+              0,
+              1,
+              0
+            ],
+            [
+              "Tony Bradley",
+              "",
+              "12:28",
+              0,
+              5,
+              1
+            ],
+            [
+              "Kyle Filipowski",
+              "",
+              "02:07",
+              2,
+              0,
+              0
+            ]
+          ],
+          "dnp": [],
+          "inactive": "Alexander (G League - Two-Way), Bufkin (G League - Two-Way), Ingram (G League - Two-Way), Jackson Jr. (Injury/Illness - Right MCL Tear), Markkanen (Injury/Illness - Right Hand Fracture), Nurkić (Injury/Illness - Right 2nd Plantar Plate Tear)"
+        },
+        "HOU": {
+          "played": [
+            [
+              "Kevin Durant",
+              "F",
+              "33:25",
+              22,
+              3,
+              6
+            ],
+            [
+              "Jabari Smith Jr.",
+              "F",
+              "24:03",
+              6,
+              3,
+              0
+            ],
+            [
+              "Alperen Sengun",
+              "C",
+              "37:05",
+              43,
+              12,
+              5
+            ],
+            [
+              "Amen Thompson",
+              "G",
+              "40:53",
+              12,
+              10,
+              3
+            ],
+            [
+              "Fred VanVleet",
+              "G",
+              "33:47",
+              17,
+              2,
+              3
+            ],
+            [
+              "Tari Eason",
+              "",
+              "33:20",
+              14,
+              11,
+              2
+            ],
+            [
+              "Reed Sheppard",
+              "",
+              "19:09",
+              0,
+              0,
+              3
+            ],
+            [
+              "Oscar Tshiebwe",
+              "",
+              "05:57",
+              0,
+              5,
+              0
+            ],
+            [
+              "Bogdan Bogdanović",
+              "",
+              "12:21",
+              11,
+              1,
+              3
+            ]
+          ],
+          "dnp": [
+            "Steven Adams (DND - - Right Soleus Strain)",
+            "Clint Capela (DND - - Right Ankle Sprain)",
+            "Isaiah Crawford (DNP - Coach's Decision)",
+            "Marcus Smart (NWT - - League Suspension)",
+            "Jae'Sean Tate (DNP - Coach's Decision)",
+            "Bruce Thornton (DNP - Coach's Decision)"
+          ],
+          "inactive": "Copeland (G League - Two-Way), Phillips (G League - Two-Way)"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600040",
+      "away": "GSW",
+      "home": "SAS",
+      "away_pts": 85,
+      "home_pts": 123,
+      "ot_periods": 0,
+      "quarters": {
+        "GSW": [
+          14,
+          19,
+          27,
+          25
+        ],
+        "SAS": [
+          38,
+          25,
+          34,
+          26
+        ]
+      },
+      "arena": "Frost Bank Center",
+      "city": "San Antonio, TX",
+      "attendance": "18849 (Sellout)",
+      "officials": "#60 James Williams, #37 Eric Dalen, #78 Evan Scott",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf",
+      "game_url": "https://www.nba.com/game/gsw-vs-sas-0022600040",
+      "minutes_complete": {
+        "GSW": true,
+        "SAS": true
+      },
+      "teams": {
+        "GSW": {
+          "played": [
+            [
+              "De'Anthony Melton",
+              "F",
+              "18:21",
+              8,
+              4,
+              3
+            ],
+            [
+              "Yaxel Lendeborg",
+              "F",
+              "23:40",
+              3,
+              7,
+              1
+            ],
+            [
+              "Draymond Green",
+              "C",
+              "15:44",
+              4,
+              3,
+              3
+            ],
+            [
+              "Brandin Podziemski",
+              "G",
+              "22:03",
+              8,
+              3,
+              0
+            ],
+            [
+              "Will Richard",
+              "G",
+              "30:19",
+              7,
+              4,
+              1
+            ],
+            [
+              "LJ Cryer",
+              "",
+              "23:57",
+              20,
+              2,
+              6
+            ],
+            [
+              "Al Horford",
+              "",
+              "09:51",
+              0,
+              3,
+              1
+            ],
+            [
+              "Georges Niang",
+              "",
+              "15:14",
+              5,
+              3,
+              2
+            ],
+            [
+              "Gui Santos",
+              "",
+              "21:10",
+              7,
+              4,
+              1
+            ],
+            [
+              "Charles Bassey",
+              "",
+              "20:10",
+              11,
+              5,
+              2
+            ],
+            [
+              "Gary Payton II",
+              "",
+              "12:32",
+              2,
+              2,
+              0
+            ],
+            [
+              "Graham Ike",
+              "",
+              "13:01",
+              5,
+              2,
+              3
+            ],
+            [
+              "Malevy Leons",
+              "",
+              "13:58",
+              5,
+              1,
+              0
+            ]
+          ],
+          "dnp": [],
+          "inactive": "Butler III (Injury/Illness - Right ACL Repair / Surgery), Curry (Injury/Illness - Right Oblique Tear), Moody (Injury/Illness - Left Patellar Tendon Repair / Surgery), Porziņģis (Not With Team), Williams (Injury/Illness - Left Hamstring Strain)"
+        },
+        "SAS": {
+          "played": [
+            [
+              "Stephon Castle",
+              "F",
+              "25:07",
+              32,
+              5,
+              6
+            ],
+            [
+              "Devin Vassell",
+              "F",
+              "22:52",
+              7,
+              2,
+              2
+            ],
+            [
+              "Victor Wembanyama",
+              "C",
+              "20:54",
+              12,
+              12,
+              6
+            ],
+            [
+              "Dylan Harper",
+              "G",
+              "25:10",
+              9,
+              3,
+              4
+            ],
+            [
+              "De'Aaron Fox",
+              "G",
+              "16:49",
+              7,
+              5,
+              1
+            ],
+            [
+              "Julian Champagnie",
+              "",
+              "22:43",
+              7,
+              8,
+              3
+            ],
+            [
+              "Luke Kornet",
+              "",
+              "16:12",
+              6,
+              7,
+              2
+            ],
+            [
+              "Keldon Johnson",
+              "",
+              "24:56",
+              18,
+              4,
+              4
+            ],
+            [
+              "Harrison Barnes",
+              "",
+              "21:19",
+              11,
+              1,
+              1
+            ],
+            [
+              "Carter Bryant",
+              "",
+              "19:06",
+              8,
+              3,
+              2
+            ],
+            [
+              "Jordan McLaughlin",
+              "",
+              "13:58",
+              4,
+              6,
+              2
+            ],
+            [
+              "Tarris Reed Jr.",
+              "",
+              "10:54",
+              2,
+              4,
+              1
+            ]
+          ],
+          "dnp": [],
+          "inactive": "Brown (G League - Two-Way), Gillespie (G League - Two-Way), Harris (Injury/Illness - Left Calf Strain), Jones Garcia (G League - Two-Way), Quaintance (Injury/Illness - Right Knee Surgery)"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600041",
+      "away": "POR",
+      "home": "SAC",
+      "away_pts": 120,
+      "home_pts": 107,
+      "ot_periods": 0,
+      "quarters": {
+        "POR": [
+          34,
+          30,
+          29,
+          27
+        ],
+        "SAC": [
+          25,
+          28,
+          25,
+          29
+        ]
+      },
+      "quarters_source": "POR from the SCORE BY PERIOD table (34/30/29/27 = 120, reconciles). SAC from the gamebook's repeated footer line (25/28/25/29 = 107, reconciles); the SCORE BY PERIOD table row for SAC extracted as 25/28/25/20 (sums to 98, contradicts the printed final 107) — see I-F8F-09.",
+      "arena": "Golden 1 Center",
+      "city": "Sacramento, CA",
+      "attendance": null,
+      "officials": "#8 Marc Davis, #18 Andy Nagy, #94 Biniam Maru",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_PORSAC_book.pdf",
+      "game_url": "https://www.nba.com/game/por-vs-sac-0022600041",
+      "minutes_complete": {
+        "POR": true,
+        "SAC": true
+      },
+      "teams": {
+        "POR": {
+          "played": [
+            [
+              "Sidy Cissoko",
+              "F",
+              "25:39",
+              3,
+              4,
+              1
+            ],
+            [
+              "Toumani Camara",
+              "F",
+              "35:39",
+              14,
+              2,
+              1
+            ],
+            [
+              "Donovan Clingan",
+              "C",
+              "26:33",
+              13,
+              11,
+              2
+            ],
+            [
+              "Deni Avdija",
+              "G",
+              "34:34",
+              34,
+              6,
+              4
+            ],
+            [
+              "Damian Lillard",
+              "G",
+              "33:00",
+              29,
+              2,
+              6
+            ],
+            [
+              "Branden Carlson",
+              "",
+              "07:35",
+              5,
+              3,
+              0
+            ],
+            [
+              "Jrue Holiday",
+              "",
+              "26:37",
+              6,
+              5,
+              5
+            ],
+            [
+              "Robert Williams III",
+              "",
+              "16:39",
+              2,
+              7,
+              1
+            ],
+            [
+              "Scoot Henderson",
+              "",
+              "23:00",
+              11,
+              0,
+              1
+            ],
+            [
+              "Jayson Kent",
+              "",
+              "10:44",
+              3,
+              1,
+              0
+            ]
+          ],
+          "dnp": [
+            "Micah Potter",
+            "John Tonje",
+            "Yang Hansen"
+          ],
+          "inactive": "Krejčí (Injury/Illness - Left Ankle Fracture), Morant (Injury/Illness - Left Hamstring Strain), Sharpe (Injury/Illness - Right Meniscus Surgery), Youngblood (Injury/Illness - Right Bone Bruise)"
+        },
+        "SAC": {
+          "played": [
+            [
+              "Keegan Murray",
+              "F",
+              "39:39",
+              16,
+              7,
+              4
+            ],
+            [
+              "De'Andre Hunter",
+              "F",
+              "41:31",
+              24,
+              5,
+              2
+            ],
+            [
+              "Domantas Sabonis",
+              "C",
+              "35:28",
+              21,
+              12,
+              5
+            ],
+            [
+              "Zach LaVine",
+              "G",
+              "36:22",
+              12,
+              3,
+              6
+            ],
+            [
+              "Darius Acuff Jr.",
+              "G",
+              "35:10",
+              17,
+              4,
+              6
+            ],
+            [
+              "Leaky Black",
+              "",
+              "11:47",
+              0,
+              0,
+              0
+            ],
+            [
+              "Malik Monk",
+              "",
+              "18:15",
+              7,
+              4,
+              3
+            ],
+            [
+              "Emanuel Sharp",
+              "",
+              "06:58",
+              4,
+              0,
+              0
+            ],
+            [
+              "Dylan Cardwell",
+              "",
+              "12:32",
+              6,
+              3,
+              3
+            ],
+            [
+              "Daeqwon Plowden",
+              "",
+              "02:17",
+              0,
+              0,
+              0
+            ]
+          ],
+          "dnp": [
+            "Mason Plumlee"
+          ],
+          "inactive": "Achiuwa (Injury/Illness - Left Ankle Soreness), Karaban (G League - On Assignment), Mogbo (G League - Two-Way), Pedulla (G League - Two-Way), Raynaud (Injury/Illness - Right Patella Subluxation), Simmons (Injury/Illness - Right Achilles Tendon Repair / Surgery)"
+        }
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "game_id": "0022600042",
+      "away": "OKC",
+      "home": "LAC",
+      "away_pts": 112,
+      "home_pts": 113,
+      "ot_periods": 0,
+      "quarters": {
+        "OKC": [
+          27,
+          17,
+          40,
+          28
+        ],
+        "LAC": [
+          33,
+          24,
+          25,
+          31
+        ]
+      },
+      "arena": "Intuit Dome",
+      "city": "Inglewood, CA",
+      "attendance": "17927 (Sellout)",
+      "officials": "#48 Scott Foster, #9 Natalie Sago, #67 Brandon Adair",
+      "gamebook_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_OKCLAC_book.pdf",
+      "game_url": "https://www.nba.com/game/okc-vs-lac-0022600042",
+      "minutes_complete": {
+        "OKC": true,
+        "LAC": true
+      },
+      "teams": {
+        "OKC": {
+          "played": [
+            [
+              "Kenrich Williams",
+              "F",
+              "35:15",
+              8,
+              8,
+              4
+            ],
+            [
+              "Aday Mara",
+              "F",
+              "21:23",
+              10,
+              3,
+              0
+            ],
+            [
+              "Isaiah Hartenstein",
+              "C",
+              "30:21",
+              21,
+              16,
+              6
+            ],
+            [
+              "Jared McCain",
+              "G",
+              "30:37",
+              23,
+              4,
+              2
+            ],
+            [
+              "Shai Gilgeous-Alexander",
+              "G",
+              "38:30",
+              40,
+              4,
+              5
+            ],
+            [
+              "Alex Caruso",
+              "",
+              "27:28",
+              5,
+              1,
+              4
+            ],
+            [
+              "Nikola Topić",
+              "",
+              "15:30",
+              0,
+              4,
+              3
+            ],
+            [
+              "Nique Clifford",
+              "",
+              "11:41",
+              0,
+              0,
+              0
+            ],
+            [
+              "Bennett Stirtz",
+              "",
+              "11:51",
+              5,
+              1,
+              0
+            ],
+            [
+              "Josh Dix",
+              "",
+              "17:25",
+              0,
+              4,
+              3
+            ]
+          ],
+          "dnp": [
+            "Brooks Barnhizer"
+          ],
+          "inactive": "Holmgren (Injury/Illness - Right Knee/ Injury Recovery ), Mitchell (Injury/Illness - Left Ankle Sprain), Peavy (G League - Two-Way), Sorber (Injury/Illness - Right Knee Surgery ), Wallace (Injury/Illness - Left Shoulder Surgery ), Williams (Injury/Illness - Left Ankle Surgery ), Williams (Injury/Illness - Low Back Spasms)"
+        },
+        "LAC": {
+          "played": [
+            [
+              "Derrick Jones Jr.",
+              "F",
+              "29:11",
+              14,
+              5,
+              0
+            ],
+            [
+              "Rui Hachimura",
+              "F",
+              "31:43",
+              7,
+              11,
+              3
+            ],
+            [
+              "Brook Lopez",
+              "C",
+              "30:44",
+              26,
+              7,
+              4
+            ],
+            [
+              "Kris Dunn",
+              "G",
+              "19:59",
+              2,
+              3,
+              6
+            ],
+            [
+              "Darius Garland",
+              "G",
+              "37:03",
+              24,
+              4,
+              7
+            ],
+            [
+              "Max Strus",
+              "",
+              "22:34",
+              3,
+              2,
+              3
+            ],
+            [
+              "Gradey Dick",
+              "",
+              "18:34",
+              13,
+              3,
+              0
+            ],
+            [
+              "Isaiah Jackson",
+              "",
+              "17:16",
+              5,
+              3,
+              1
+            ],
+            [
+              "Kobe Sanders",
+              "",
+              "14:36",
+              5,
+              0,
+              1
+            ],
+            [
+              "Keaton Wagner",
+              "",
+              "18:21",
+              14,
+              2,
+              1
+            ]
+          ],
+          "dnp": [
+            "Cam Christie",
+            "Baba Miller",
+            "Jalen Pickett"
+          ],
+          "inactive": "Beal (Injury/Illness - Right Knee Injury Management), Ingram (Injury/Illness - Right Heel Surgery ), Martinelli (G League - Two-Way), Miller (Injury/Illness - Left Rotator Cuff Surgery ), Niederhäuser (Injury/Illness - Right Lisfranc Surgery )"
+        }
+      }
+    }
+  ]
+}

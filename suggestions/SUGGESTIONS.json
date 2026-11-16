@@ -556,6 +556,39 @@
       "risk": "Closing someone else's PR without credit reads as a grab; the comment is the fix.",
       "recommendation": "Applied by the integration session as part of this merge, with attribution in both the PR body and COORDINATION.md.",
       "status": "applied in this PR"
+    },
+    {
+      "id": "SG-F8F-01",
+      "title": "Capture a second game day per club so the injury-replacement delta is measurable",
+      "problem": "The measured minutes page publishes top-8 shares and the replacement POOL, but the observed delta (who actually absorbed the minutes when a player was out) is blank. It needs two captured games for the same club, one with the player and one without; this window has exactly one game per club.",
+      "proposal": "Ingest the official gamebook PDFs for one more completed game day per club and diff the rotation between the two games for each player who missed one.",
+      "benefit": "Turns a flagged blank into a measurement on the single input the brief asks to be modelled explicitly.",
+      "effort": "M — one more capture pass, reusing the loader already committed.",
+      "risk": "Low. Same source, same gates; a new failure excludes a club rather than guessing.",
+      "recommendation": "Do next. It is the only thing standing between the rotation model and an observed replacement share.",
+      "status": "open"
+    },
+    {
+      "id": "SG-F8F-02",
+      "title": "Extend the gamebook capture to the 12 clubs with no box score",
+      "problem": "18 clubs are covered (they played 2026-11-13). BKN, BOS, CHA, DAL, DEN, DET, LAL, MIN, PHI, PHX, TOR and WAS have no captured game, so their injured players' log rows are blank and flagged.",
+      "proposal": "Capture the most recent completed game for each uncovered club and append to the same artifact, keeping the per-club gate.",
+      "benefit": "Completes the 'at least the players who appear on an injury report' requirement across the whole league rather than two-thirds of it.",
+      "effort": "M — 6-10 more gamebook fetches.",
+      "risk": "Low.",
+      "recommendation": "Do next, in the same pass as SG-F8F-01.",
+      "status": "open"
+    },
+    {
+      "id": "SG-F8F-03",
+      "title": "Re-read the injury release in nba2/v3/official.py (gate G-F3 is failing)",
+      "problem": "nba2/v3/official.py carries 11/15/26 06:00 AM ET as the release and 06:15 AM ET as the newest indexed. The official index now lists releases through 06:15 PM ET, twelve hours later, so G-F3 has been failing and every downstream injury number on the v3 pages is half a day stale. Logged as I-F8F-11; not edited here because the file belongs to another session's scope.",
+      "proposal": "Re-read the official index, take the newest release, and refresh the snapshot so G-F3 turns green.",
+      "benefit": "Removes a standing gate failure and the staleness it represents.",
+      "effort": "S — one capture plus a rebuild.",
+      "risk": "Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.",
+      "recommendation": "Accept, assigned to the owner of nba2/v3/official.py.",
+      "status": "open"
     }
   ]
 }
