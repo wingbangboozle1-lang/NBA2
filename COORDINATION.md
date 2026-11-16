@@ -4775,3 +4775,11 @@ verifying the tracked branch is an ancestor (fast-forward push, no force).
   legacy snapshot, not a fresh NBA read. The v4 settlement/injury pages reflect PR #103's
   committed captures. No live NBA endpoint was fetched by this session, and no fresh value is
   claimed.
+
+### Documentation follow-up after PR #107 — 2026-11-16 UTC
+
+PR #107 advanced `main` from `24dcd6c` to `26cc0ac` after the PR #106 deployment check. The
+required `git pull --rebase origin main` succeeded cleanly, and the only remaining diff from
+latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
+matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
+site files were edited; they remain byte-identical to `origin/main`.
