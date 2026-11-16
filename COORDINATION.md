@@ -3971,3 +3971,66 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 | B6 | Projection vs bet surface split enforced in code + on the site (brief #7) | pending | `nba2/v4/surfaces.py` | gate must refuse a bet-surface row without a measured price |
 | B7 | Wire the orphaned Settlement page into shared navigation + CI (R-1/R-3) | pending | `nba2/settlement_page.py`, workflows | link resolves; check passes |
 | B8 | Registers, README, Flagged-for-review + PR → `main` → merge → Pages deploy confirmed → record here | pending | `requirements/`, `suggestions/`, `README.md`, `COORDINATION.md` | every checker green; live fetch returns the new pages |
+
+---
+
+## Completion record — session `arena/b3914335-nba2`
+
+Branch `arena/b3914335-nba2`, base `32019ac`. Claim `934c855`. Work committed in the sequence
+below; no file outside the claimed scope was edited.
+
+### Deliverables, by task
+
+| ID | Task | Status | What actually landed | Verification |
+|----|------|--------|----------------------|--------------|
+| B1 | Claim + push before work | **done** | `934c855` on `arena/b3914335-nba2` | pushed before any v4 file was written |
+| B2 | Scheduled gated refresh | **done** | `nba2/v4/{capture,write_capture,model,settlement,injury_diff,publish,check,__main__}.py`; `refresh.yml` + `pages.yml` run the chain on cron 14:05Z / 18:35Z | 8/8 gates pass; gate failure exits non-zero **before** rendering |
+| B3 | Official 2026-11-16 capture + gated rebuild | **done** | `data/raw/refresh_2026-11-16/**` (6 files) + `refresh_2026-11-15/results_2026-11-15.json`; 5 pages rendered | `capture.selftest() == []`; capture rewrite byte-identical, CI fails if not |
+| B4 | Settle the 11/15 seal from verified finals | **done** | `data/v4/settlement/settled-2026-11-15.json`; 9 graded / 25 ungraded, none a loss | seal re-verified before grading; `verify_settlement()` ok; stamp deterministic |
+| B5 | Injury releases stored + diffed | **done** | `data/v4/injury/releases.json`; 2 releases, 1 consecutive diff, cross-day diff | revision + retrieval + index stamps on every release; 09:30 declared identical (F-V4-09) |
+| B6 | Projection/bet wall enforced in code | **done** | wall asserted on the **emitted HTML**, not the model; bet surface publishes 0 rows, 29 explicit refusals | `assert_no_mixing` defect found and fixed (it excluded the fields it guarded) |
+| B7 | Settlement page in nav + CI | **done** | `settle.html` in the shared nav; v4 chain in both workflows | every v4 page reachable from every other, checked by test |
+| B8 | Registers, record, PR, merge, Pages | **in progress** | `requirements/REQUIREMENTS.json` (46 met / 9 partial / 10 blocked / 1 not started); `analysis/session-b3914335-verification.md` | PR raised after this record |
+
+### Numbers a reviewer should be able to re-derive
+
+| Quantity | Value | How |
+|---|---|---|
+| Official history pool | 197 games | matches the standings-implied 197 |
+| Home-win rate (non-neutral) | 0.5204, n=196 | 102 home wins over official finals |
+| Pinned HCA | **0.869 pts** | `16.987 × Φ⁻¹(0.5204)`, never fitted |
+| Total–margin correlation | **−0.038**, CI95 [−0.177, 0.103], n=196 | neutral games excluded |
+| Sealed ledger | 34 picks, `34e144c635b83b89` | re-verified after settlement |
+| Graded / ungraded | 9 / 25 | ungraded rows carry a reason, never a loss |
+| Log-loss vs coin flip | 0.2804 vs 0.6931 | 9 graded games |
+| `p_observed_run_under_model` | **0.0802** | the 9/9 run is not evidence of skill; printed before the hit rate |
+| Clubs outside the luck band | 0 | so 0 games blocked — reported as the honest answer |
+| Slate published | 25 games (11/16–11/18), 29 captured (to 11/19) | every row sourced |
+
+### Defects found and fixed during the session
+
+1. **Gate ordering.** The surface-wall gate is only measurable on emitted HTML but was in the
+   pre-render gate list, so the build aborted on its own first run. Split into pre-render
+   (freshness/provenance) and post-render (wall), with the verify page re-rendered once so it
+   shows the post-render result too.
+2. **`assert_no_mixing` was vacuous.** It excluded `market_price`, `stake_pct`,
+   `edge_vs_market` and `kelly_fraction` from its own leak test, so a projection row carrying a
+   12% Kelly stake passed the wall. Now fails on any of them holding a real number; the test
+   that caught it is kept.
+3. **Unreasoned blanks.** 11/17–11/18 games rendered a bare `—` in the availability column,
+   and the checker accepted a bare dash. Both fixed: a blank must now name its reason and a
+   bare dash is a build failure.
+4. **An invented status bucket.** Six unread statuses were being counted as
+   `"unlisted (extraction artefact)"` inside the status tally. The status tally now only holds
+   league status words; unread rows are counted separately and flagged F-V4-06.
+5. **Missing history input.** The 5 official 11/14 finals were in the committed capture but in
+   no v4 pool, so HCA was computed on n=191 instead of 196. Fixed by reading the committed
+   file; the standings cross-check now catches this class of gap.
+
+### Not done, and where it is published
+
+`R-048` (owner ratifies thresholds before money is risked) remains **not started** — it needs an
+owner decision, not code. `R-003/009/010/011/013/014/044/049` stay **partial** and the reason is
+stated on each row. Everything unverified is on the Flagged for Review page and on the
+v4-verify page's gate table; none of it blocks the merge, and none of it is presented as
+verified.
