@@ -3985,3 +3985,10 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 **Change requests (logged, not edited):**
 - To the integration session: correct I-32C-04 wording in `nba2/v2/content.py`; add Flagged entries for I-32C-02/03/05.
 - To owner: decide the Pages source (legacy vs workflow) — see FLAG-PAGES-01.
+
+### PR & merge record — `arena/32c7618d-nba2` (2026-11-16)
+
+- **PR #89** (`arena/32c7618d-nba2` → `main`) — **MERGED** (`--merge`), 2026-11-16 14:32:00 UTC, merge commit `7b3c855e48dab065bc103e33c175c0df8d7ff26e`.
+- **Checks on the PR head:** `v2` pass, `backtest` pass, `parity` pass, `verify` pass.
+- **Pages:** `Publish GitHub Pages` = success and `pages build and deployment` = success for `7b3c855`. Verified live: `https://wingbangboozle1-lang.github.io/NBA2/index.html?v=7b3c855` shows "home-court (pinned to measured home-win rate, pts)". **Caveat:** the bare URL `https://wingbangboozle1-lang.github.io/NBA2/` returned the previous copy when fetched right after the deploy (a cache, not a failed deploy). The Pages API still reports `build_type: legacy`, `source: main /` (FLAG-PAGES-01 / F-033, owner decision).
+- **Not claimed here:** Flagged-for-Review entries for I-32C-02…05 (integration session).
