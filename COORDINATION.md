@@ -4196,3 +4196,17 @@ verified.
 
 Both are recorded rather than actioned because `nba2/v2/**` belongs to another session's scope
 and the protocol is to log a cross-scope request instead of editing.
+
+### Result — merged and deployed
+
+- **PR #95** (`arena/b3914335-nba2` → `main`) — **MERGED** with `--merge` at 2026-11-16T15:07:16Z; merge commit `90c99d59a9246acdec2b767c9c93f37f494c7842`. https://github.com/wingbangboozle1-lang/NBA2/pull/95
+- **Checks on the merged SHA:** `verify` ✅, `parity` ✅, `v2` ✅, `backtest` ✅.
+- **Pages:** `Publish GitHub Pages` [43892970901](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43892970901) ✅ and `pages build and deployment` [43892969828](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43892969828) ✅, both on `90c99d5`.
+- **Live verification, fetched not assumed:** `projection.html`, `bet.html` and `settle.html` were re-read from `https://wingbangboozle1-lang.github.io/NBA2/` after the deploy and serve the v4 content — 25 games with per-row official links, 0 bet rows with 29 G6 refusals, and the settlement stamp `2026-11-15T23:59:59Z` with seal `34e144c635b83b89` verified. So the `site/` artefact **is** what the Pages URL serves for these paths; the legacy-source caveat (F-033) still applies to the bare repo root.
+- **Two CI failures found and fixed at PR time, both real:** `verify` failed because the requirement-register edit needed its v1 rebuild committed; `parity` failed because that workflow's rebuild list did not include `python -m nba2.v4`, so the v4 nav block was reported as drift on every page. The second one would have blocked **every** future PR once the v4 nav shipped — the fix is in `publish-parity.yml`, not in the check.
+
+**Files added:** `nba2/v4/{capture,write_capture,model,settlement,injury_diff,publish,check,__main__,test_v4}.py`,
+`data/raw/refresh_2026-11-16/**`, `data/raw/refresh_2026-11-15/results_2026-11-15.json`,
+`data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
+`analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
+`publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
