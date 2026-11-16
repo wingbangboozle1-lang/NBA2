@@ -326,9 +326,39 @@ def build(run_backtest: bool = True):
             "frozen_at_utc": O.RETRIEVED_AT_UTC,
             "frozen_by": O.RETRIEVED_BY,
         }
+        # ---- FREEZE-ONCE (I-FE0-05, fixed 2026-11-16) --------------------------------
+        # A pre-registration is the record of the rule that was fixed before the first bet.
+        # Before this fix the writer stamped it with the current build time on every run, so
+        # the "frozen_at" date advanced each day and the published hash changed with it -
+        # a file that re-freezes itself is not frozen. Now: the FIRST freeze wins. If the
+        # file already exists, the original frozen_at_utc / frozen_by and the hash of the
+        # frozen content are preserved. If the content later differs from what was frozen,
+        # that is recorded in the file and reported, but the original freeze is not moved.
+        _pf = prereg_dir / f"{st['id']}.json"
+        if _pf.exists():
+            try:
+                _prev = json.loads(_pf.read_text())
+            except (ValueError, OSError):
+                _prev = None
+            if _prev and _prev.get("frozen_at_utc"):
+                _content_now = {k: v for k, v in doc.items()
+                                if k not in ("frozen_at_utc", "frozen_by", "prereg_hash")}
+                _content_then = {k: v for k, v in _prev.items()
+                                 if k not in ("frozen_at_utc", "frozen_by", "prereg_hash",
+                                              "prereg_content_sha256", "content_changed")}
+                doc["frozen_at_utc"] = _prev["frozen_at_utc"]
+                doc["frozen_by"] = _prev.get("frozen_by", O.RETRIEVED_BY)
+                if _content_now != _content_then:
+                    doc["content_changed"] = {
+                        "detected_at_utc": O.RETRIEVED_AT_UTC,
+                        "detected_by": O.RETRIEVED_BY,
+                        "note": ("pre-registered content differs from the version frozen at "
+                                 "frozen_at_utc. The original freeze is preserved and NOT moved; "
+                                 "this note records the change for review."),
+                    }
         h = hashlib.sha256(json.dumps(doc, sort_keys=True).encode()).hexdigest()
         doc["prereg_hash"] = h
-        (prereg_dir / f"{st['id']}.json").write_text(json.dumps(doc, indent=1) + "\n")
+        _pf.write_text(json.dumps(doc, indent=1) + "\n")
         prereg_index.append({"id": st["id"], "file": f"data/v2/prereg/{st['id']}.json",
                              "prereg_hash": h, "frozen_at_utc": doc["frozen_at_utc"]})
     (DATA / "preregistration.json").write_text(json.dumps({

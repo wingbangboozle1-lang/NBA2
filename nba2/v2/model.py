@@ -487,7 +487,16 @@ _TOTALS_CACHE: list[float] | None = None
 
 
 def _game_totals() -> list[float]:
-    """Every official final's combined score: 188 verified finals (history + 11/14)."""
+    """Every official final's combined score, de-duplicated by official game id.
+
+    The history glob and the dated capture overlap: the five finals of 2026-11-14 were
+    committed under ``data/raw/capture_2026-11-15/results_2026-11-14.json`` and were added to
+    ``data/raw/history/`` on 2026-11-16 (session arena/fe0ffa49-nba2) because the history was
+    five games short of the count the official standings imply. Concatenating the two sources
+    therefore counted those games twice (202 instead of 197), which silently inflated the
+    sample used to measure sigma. Fixed here by unioning on ``game_id``; a genuine score
+    disagreement between the two sources is raised rather than averaged over.
+    """
     global _TOTALS_CACHE
     if _TOTALS_CACHE is not None:
         return _TOTALS_CACHE
@@ -496,15 +505,21 @@ def _game_totals() -> list[float]:
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[2]
-    totals = []
+    seen: dict[str, float] = {}
     for f in sorted(glob.glob(str(root / "data" / "raw" / "history" / "games_*.json"))):
         for g in json.load(open(f))["games"]:
-            totals.append(g["home_pts"] + g["away_pts"])
+            seen[str(g["game_id"])] = g["home_pts"] + g["away_pts"]
     from . import capture2 as C2
     for g in C2.results_rows():
-        totals.append(g["home_pts"] + g["away_pts"])
-    _TOTALS_CACHE = totals
-    return totals
+        gid = str(g["game_id"])
+        tot = g["home_pts"] + g["away_pts"]
+        if gid in seen and abs(seen[gid] - tot) > 1e-9:
+            raise ValueError(
+                f"official finals disagree for game {gid}: history total {seen[gid]} "
+                f"vs capture total {tot}")
+        seen[gid] = tot
+    _TOTALS_CACHE = [seen[k] for k in sorted(seen)]
+    return _TOTALS_CACHE
 
 
 def n_finals_for_sd() -> int:

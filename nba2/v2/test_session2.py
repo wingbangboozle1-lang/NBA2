@@ -90,8 +90,18 @@ class TestTotalsPossTimesPPP(unittest.TestCase):
 
 
 class TestMeasuredDispersion(unittest.TestCase):
-    def test_total_sd_is_measured_from_188_finals(self):
-        self.assertEqual(M.n_finals_for_sd(), 188)
+    def test_total_sd_is_measured_from_the_committed_finals(self):
+        # sigma is measured over the committed official finals, de-duplicated by game id, so
+        # the count must equal the number of distinct finals in data/raw/history (plus any
+        # dated capture whose games are not already in it) -- never a remembered constant.
+        import glob, json
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        ids = set()
+        for f in glob.glob(str(root / "data" / "raw" / "history" / "games_*.json")):
+            for g in json.load(open(f))["games"]:
+                ids.add(str(g["game_id"]))
+        self.assertEqual(M.n_finals_for_sd(), len(ids))
         sd = M.measured_total_sd()
         self.assertGreater(sd, 15)
         self.assertLess(sd, 30)
@@ -188,7 +198,11 @@ class TestLedgerHashes(unittest.TestCase):
         cls.doc = json.loads((root / "data" / "v2" / "ledger.json").read_text())
 
     def test_every_row_has_a_hash_and_a_status(self):
-        self.assertGreaterEqual(len(self.doc["rows"]), 34)
+        # One hashed row per published line. The count follows the rolling 3-day window, so
+        # it is asserted against the window the build actually used, not a remembered number.
+        from nba2.v2 import official as O
+        self.assertEqual(len(self.doc["rows"]), len(O.SLATE))
+        self.assertGreater(len(self.doc["rows"]), 0)
         for r in self.doc["rows"]:
             self.assertEqual(len(r["row_hash"]), 64)
             self.assertEqual(r["hash_alg"], "sha256")

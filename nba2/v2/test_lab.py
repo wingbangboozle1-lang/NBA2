@@ -36,7 +36,15 @@ class TestHistoryCompleteness(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)), "a duplicated game id would double-count")
 
     def test_history_is_188_games(self):
-        self.assertEqual(len(self.games), 188)
+        # Named for the count it was written against; the invariant is the one that matters:
+        # every final is unique by game id, wins balance losses, and the count is at least
+        # the 188 the lab was calibrated on (the committed history only grows).
+        ids = [g["game_id"] for g in self.games]
+        self.assertEqual(len(ids), len(set(ids)), "duplicate game id in the history")
+        self.assertGreaterEqual(len(self.games), 188)
+        from nba2.v2 import official as O
+        self.assertEqual(sum(v[0] for v in O.TEAMS.values()), len(self.games),
+                         "official team table no longer matches the committed finals")
 
     def test_rebuilt_records_equal_official_standings(self):
         w, l = Counter(), Counter()
@@ -79,8 +87,29 @@ class TestNoLookAhead(unittest.TestCase):
         self.assertEqual(audit["n_violations"], 0, audit["offending_game_ids"])
 
     def test_predictions_cover_every_game_after_the_first_date(self):
-        # 188 games minus the 16 played on the first date (no prior data exists for those)
-        self.assertEqual(len(self.preds), 172)
+        # Walk-forward coverage is a rule, not a constant. A prediction can only exist once
+        # the model has something to fit on, so the invariant is: EVERY game in which both
+        # clubs had already played at least one official final must carry a prediction. The
+        # pre-season-opening games (a club's first appearance) legitimately have none. A
+        # remembered constant such as 172 breaks the moment a night of results is appended,
+        # which is precisely what the results feed is for.
+        from collections import Counter
+        played = Counter()
+        first_appearance = []
+        for g in sorted(self.games, key=lambda x: (x["date"], x["game_id"])):
+            if played[g["away"]] == 0 or played[g["home"]] == 0:
+                first_appearance.append(g["game_id"])
+            played[g["away"]] += 1
+            played[g["home"]] += 1
+        have = {p.game_id for p in self.preds}
+        missing = [g for g in self.games
+                   if g["game_id"] not in have and g["game_id"] not in set(first_appearance)]
+        self.assertEqual(missing, [],
+                         f"{len(missing)} game(s) have no prediction although both clubs had "
+                         f"already played: {[m['game_id'] for m in missing][:5]}")
+        self.assertEqual(len(self.preds), len(self.games) - len(first_appearance),
+                         f"{len(self.preds)} predictions for {len(self.games)} finals minus "
+                         f"{len(first_appearance)} first-appearance game(s)")
 
 
 class TestParlayMath(unittest.TestCase):

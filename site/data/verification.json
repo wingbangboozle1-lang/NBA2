@@ -1,25 +1,25 @@
 {
- "as_of": "2026-11-15",
+ "as_of": "2026-11-16",
  "integrity": {
   "teams": 30,
-  "games_played_team_sum": 376,
-  "games": 188.0,
-  "wins": 188,
-  "losses": 188,
+  "games_played_team_sum": 394,
+  "games": 197.0,
+  "wins": 197,
+  "losses": 197,
   "wins_equals_losses": true,
-  "weighted_points_scored": 42728.6,
-  "weighted_points_allowed": 42719.6,
-  "weighted_points_diff": 9.0,
-  "rounding_bound": 37.6,
+  "weighted_points_scored": 44821.2,
+  "weighted_points_allowed": 44818.1,
+  "weighted_points_diff": 3.1,
+  "rounding_bound": 39.4,
   "points_identity_ok": true,
-  "home_w": 99,
-  "home_l": 88,
-  "road_w": 88,
-  "road_l": 99,
+  "home_w": 102,
+  "home_l": 94,
+  "road_w": 94,
+  "road_l": 102,
   "home_wins_equal_road_losses": true,
   "home_losses_equal_road_wins": true,
-  "home_win_rate": 0.5294,
-  "league_pts_per_team_game": 113.64
+  "home_win_rate": 0.5204,
+  "league_pts_per_team_game": 113.759
  },
  "cross_checks": {
   "checks": [
@@ -27,45 +27,45 @@
     "id": "repo-schedule",
     "what": "Committed slate snapshot vs the published tree's slate (date, away, home, game id)",
     "repo_value": "36 games",
-    "live_value": "34 games",
+    "live_value": "29 games",
     "result": "MISMATCH",
-    "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039'), ('2026-11-14', 'BKN', 'MEM', '0022600234'), ('2026-11-14', 'CHI', 'MIN', '0022600235'), ('2026-11-14', 'DAL', 'CLE', '0022600232'), ('2026-11-14', 'DEN', 'NOP', '0022600231'), ('2026-11-14', 'DET', 'MIA', '0022600233')] only-in-live=[('2026-11-18', 'ATL', 'OKC', '0022600265'), ('2026-11-18', 'BOS', 'DEN', '0022600266'), ('2026-11-18', 'CHI', 'BKN', '0022600262'), ('2026-11-18', 'DET', 'NOP', '0022600264'), ('2026-11-18', 'GSW', 'DAL', '0022600267'), ('2026-11-18', 'HOU', 'IND', '0022600259'), ('2026-11-18', 'MEM', 'CLE', '0022600258'), ('2026-11-18', 'MIL', 'MIA', '0022600260'), ('2026-11-18', 'PHI', 'ORL', '0022600261'), ('2026-11-18', 'PHX', 'SAC', '0022600269'), ('2026-11-18', 'UTA', 'LAL', '0022600268'), ('2026-11-18', 'WAS', 'TOR', '0022600263')]",
-    "src": "https://www.nba.com/schedule?date=2026-11-15"
+    "detail": "only-in-repo=[('2026-11-13', 'ATL', 'CHI', '0022600037'), ('2026-11-13', 'CLE', 'MIA', '0022600036'), ('2026-11-13', 'GSW', 'SAS', '0022600040'), ('2026-11-13', 'MEM', 'NOP', '0022600038'), ('2026-11-13', 'MIL', 'ORL', '0022600035'), ('2026-11-13', 'NYK', 'IND', '0022600034'), ('2026-11-13', 'OKC', 'LAC', '0022600042'), ('2026-11-13', 'POR', 'SAC', '0022600041'), ('2026-11-13', 'UTA', 'HOU', '0022600039'), ('2026-11-14', 'BKN', 'MEM', '0022600234'), ('2026-11-14', 'CHI', 'MIN', '0022600235'), ('2026-11-14', 'DAL', 'CLE', '0022600232'), ('2026-11-14', 'DEN', 'NOP', '0022600231'), ('2026-11-14', 'DET', 'MIA', '0022600233'), ('2026-11-15', 'ATL', 'MIL', '0022600243'), ('2026-11-15', 'CHA', 'LAC', '0022600238'), ('2026-11-15', 'DAL', 'BOS', '0022600240'), ('2026-11-15', 'HOU', 'WAS', '0022600242'), ('2026-11-15', 'IND', 'PHI', '0022600236'), ('2026-11-15', 'LAL', 'PHX', '0022600237'), ('2026-11-15', 'NYK', 'TOR', '0022600241'), ('2026-11-15', 'OKC', 'SAC', '0022600244'), ('2026-11-15', 'SAS', 'UTA', '0022600239')] only-in-live=[('2026-11-18', 'ATL', 'OKC', '0022600265'), ('2026-11-18', 'BOS', 'DEN', '0022600266'), ('2026-11-18', 'CHI', 'BKN', '0022600262'), ('2026-11-18', 'DET', 'NOP', '0022600264'), ('2026-11-18', 'GSW', 'DAL', '0022600267'), ('2026-11-18', 'HOU', 'IND', '0022600259'), ('2026-11-18', 'MEM', 'CLE', '0022600258'), ('2026-11-18', 'MIL', 'MIA', '0022600260'), ('2026-11-18', 'PHI', 'ORL', '0022600261'), ('2026-11-18', 'PHX', 'SAC', '0022600269'), ('2026-11-18', 'UTA', 'LAL', '0022600268'), ('2026-11-18', 'WAS', 'TOR', '0022600263'), ('2026-11-19', 'GSW', 'MEM', '0022600270'), ('2026-11-19', 'LAC', 'SAS', '0022600273'), ('2026-11-19', 'NYK', 'MIN', '0022600272'), ('2026-11-19', 'POR', 'MIL', '0022600271')]",
+    "src": "https://www.nba.com/schedule?date=2026-11-16"
    },
    {
     "id": "finals-reconstruction",
     "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
-    "repo_value": "183 finals, 183 wins assigned",
-    "live_value": "188 official wins",
+    "repo_value": "197 finals, 197 wins assigned",
+    "live_value": "197 official wins",
     "result": "CONSISTENT",
-    "detail": "no team exceeds its official record; the 5 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
+    "detail": "no team exceeds its official record; the 0 missing games are exactly the 11/06 + 11/11 hole that has no reachable score",
     "src": "https://www.nba.com/games"
    },
    {
     "id": "repo-injury",
     "what": "Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF",
     "repo_value": "85 player rows",
-    "live_value": "26 player rows",
+    "live_value": "57 player rows",
     "result": "MISMATCH",
-    "detail": "only-in-repo=[('2026-11-13', 'ATL@CHI', 'Awaka, Tobe', 'Out'), ('2026-11-13', 'ATL@CHI', 'Dennis, RayJ', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Flemings, Kingston', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Gilbert, Keshon', 'Out'), ('2026-11-13', 'ATL@CHI', 'Gueye, Mouhamed', 'Out')] only-in-live=[('2026-11-14', 'BKN@MEM', 'Bilodeau, Tyler', 'Out'), ('2026-11-14', 'BKN@MEM', 'Brown Jr., Mikel', 'Questionable'), ('2026-11-14', 'BKN@MEM', 'Jefferson, Joshua', 'Out'), ('2026-11-14', 'BKN@MEM', 'Nelson, Grant', 'Out'), ('2026-11-14', 'BKN@MEM', 'Saraf, Ben', 'Out')]",
-    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf"
+    "detail": "only-in-repo=[('2026-11-13', 'ATL@CHI', 'Awaka, Tobe', 'Out'), ('2026-11-13', 'ATL@CHI', 'Dennis, RayJ', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Flemings, Kingston', 'Questionable'), ('2026-11-13', 'ATL@CHI', 'Gilbert, Keshon', 'Out'), ('2026-11-13', 'ATL@CHI', 'Gueye, Mouhamed', 'Out')] only-in-live=[('2026-11-16', 'CHI@CLE', 'Awaka, Tobe', 'Out'), ('2026-11-16', 'CHI@CLE', 'Diop, Khalifa', 'Out'), ('2026-11-16', 'CHI@CLE', 'Merrill, Sam', 'Out'), ('2026-11-16', 'CHI@CLE', 'Mobley, Evan', 'Out'), ('2026-11-16', 'CHI@CLE', 'Robinson, Orlando', 'Out')]",
+    "src": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
    },
    {
     "id": "repo-wl",
     "what": "The published team's official W-L column vs this tree's own 2026-11-13 transcription",
-    "repo_value": "20/30 identical",
+    "repo_value": "3/30 identical",
     "live_value": "30 teams",
     "result": "AGED",
-    "detail": "10 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: ['BKN', 'CHI', 'CLE', 'DAL', 'DEN', 'DET', 'MEM', 'MIA', 'MIN', 'NOP']",
+    "detail": "27 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: ['ATL', 'BKN', 'BOS', 'CHA', 'CHI', 'CLE', 'DAL', 'DEN', 'DET', 'HOU', 'IND', 'LAC', 'LAL', 'MEM', 'MIA', 'MIL', 'MIN', 'NOP', 'NYK', 'OKC', 'PHI', 'PHX', 'SAC', 'SAS', 'TOR', 'UTA', 'WAS']",
     "src": "https://www.nba.com/standings"
    },
    {
-    "id": "repo-wl-current",
-    "what": "The published team's official W-L column vs nba.com/standings read 2026-11-14",
-    "repo_value": "20/30 identical",
-    "live_value": "30 teams, official table read 2026-11-15",
-    "result": "MISMATCH",
-    "detail": "{'BKN': ('3-8', '3-9'), 'CHI': ('2-9', '3-9'), 'CLE': ('6-7', '7-7'), 'DAL': ('7-5', '7-6'), 'DEN': ('6-4', '7-4'), 'DET': ('8-3', '8-4'), 'MEM': ('8-4', '9-4'), 'MIA': ('6-6', '7-6'), 'MIN': ('9-3', '9-4'), 'NOP': ('4-9', '4-10')}",
+    "id": "repo-wl",
+    "what": "W-L cross-check",
+    "repo_value": "n/a",
+    "live_value": "n/a",
+    "result": "ERROR",
+    "detail": "module 'nba2.v2.official' has no attribute 'STANDINGS'",
     "src": "https://www.nba.com/standings"
    }
   ],
@@ -89,7 +89,7 @@
    "fields": "OffRtg, DefRtg, NetRtg, PACE, PIE - all per-100-possession."
   },
   "schedule": {
-   "url": "https://www.nba.com/schedule?date=2026-11-15",
+   "url": "https://www.nba.com/schedule?date=2026-11-16",
    "fields": "Game IDs, ET tip times, arenas, national broadcast, Emirates NBA Cup group."
   },
   "games": {
@@ -97,7 +97,7 @@
    "fields": "Official final scores, one page per date; the day-strip calendar gives the per-date game count used for the completeness check."
   },
   "injury_pdf": {
-   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf",
    "fields": "Per-player status (Out/Doubtful/Questionable/Probable/Available) with the stated reason."
   },
   "injury_policy": {
@@ -121,7 +121,7 @@
   },
   "live_ingest": {
    "what": "An automated feed that keeps the results history current without a human capture",
-   "why": "The 183 official finals from 2026-10-20 to 2026-11-13 ARE committed under data/raw/history/, and they rebuild every one of the 30 standings records exactly. Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night's results, so the history freezes between manual captures and the window ages.",
+   "why": "The 197 official finals from 2026-10-20 to 2026-11-15 ARE committed under data/raw/history/, and they rebuild all 30 standings W/L exactly and 28 of 30 home/road splits (the two exceptions are neutral-site games, see official.py). Backtests, out-of-sample splits and settlement therefore run today. What is missing is a scheduled job that appends each night's results, so the history freezes between manual captures and the window ages.",
    "url": "https://www.nba.com/games?date=2026-11-13"
   },
   "player_box": {
