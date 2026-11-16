@@ -4806,3 +4806,30 @@ not yet list the v5 flags (they live on `v5-verify.html`), `site/decisions-neede
 still the pre-v4/v5 rendering, and the v3/v4 result + settlement pages still show the three
 11/15 games as unsettled — `data/v5/results_union.json` is ready for an integration session
 to point them at.
+### Integration result — PR #106 (2026-11-16 UTC)
+
+- **PR #106:** https://github.com/wingbangboozle1-lang/NBA2/pull/106 — merged with
+  `gh pr merge 106 --merge` at `2026-11-16T19:01:10Z`, merge commit
+  `24dcd6c1bc8e129fa1909a2e9952a65546d13d4e`.
+- PR checks on head `f4ba89f23e07610d50fbf7b59a20c28425c84cab` all passed: `verify`, `parity`,
+  `v2`, and `backtest`. Main post-merge runs passed: published-tree verification
+  [43934908654](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908654),
+  full verification [43934908629](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908629),
+  and v2 [43934908583](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908583).
+- **Pages deployment confirmed:** `Publish GitHub Pages`
+  [43934908546](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934908546) and
+  `pages build and deployment`
+  [43934907052](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43934907052) both
+  succeeded. Live fetches returned the deployed root, `site/settle.html`, and
+  `site/v4-injuries.html`. The root still says `as-of 2026-11-14`; this is a verified stale
+  legacy snapshot, not a fresh NBA read. The v4 settlement/injury pages reflect PR #103's
+  committed captures. No live NBA endpoint was fetched by this session, and no fresh value is
+  claimed.
+
+### Documentation follow-up after PR #107 — 2026-11-16 UTC
+
+PR #107 advanced `main` from `24dcd6c` to `26cc0ac` after the PR #106 deployment check. The
+required `git pull --rebase origin main` succeeded cleanly, and the only remaining diff from
+latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
+matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
+site files were edited; they remain byte-identical to `origin/main`.
