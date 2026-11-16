@@ -1,12 +1,12 @@
 # Session A429 audit and refresh-gate remediation
 
-**Session:** `arena/0429aad7-nba2`  
-**Audit date:** 2026-11-15 (UTC, per the session date)  
-**Scope:** independent verification plus the explicitly approved A429-05 changes in `nba2/v2/refresh.py` and the new fixture-only `nba2/v2/test_refresh_gate_audit.py`. The workflow, generated site, snapshots, and other sessions' files were not edited.
+- **Session:** `arena/0429aad7-nba2`
+- **Audit date:** 2026-11-15 official-source observation/capture date; final post-rebase checks rerun 2026-11-16T00:19Z UTC
+- **Scope:** independent verification plus the explicitly approved A429-05 changes in `nba2/v2/refresh.py` and the new fixture-only `nba2/v2/test_refresh_gate_audit.py`. The workflow, generated site, snapshots, and other sessions' files were not edited.
 
 ## Executive result
 
-The original v2 refresh could not pass its gates on an ordinary rolling window: it required a final for the anchor date even though that day was not yet complete, and compared a one-week finals slice with season-to-date standings. The implementation now checks the scoreboard inventory for prior dates, allows checked no-game dates, and rebuilds season records from deduplicated committed finals plus fresh results (including any already-final games today). The baseline loader fails closed on unreadable or malformed authoritative result snapshots. Fifteen offline regression tests and the full v2 suite pass.
+The original v2 refresh could not pass its gates on an ordinary rolling window: it required a final for the anchor date even though that day was not yet complete, and compared a one-week finals slice with season-to-date standings. PR #77's first-stage gate correction merged while this branch was being rebased; the final implementation builds on it by retaining detailed per-game status inventory, accepting only checked off-days, and rebuilding season records from the 188 unique committed finals plus fresh results (including any already-final games today). The baseline loader fails closed on unreadable or malformed authoritative result snapshots. Fifteen offline A429 regression tests and 151 tests in the full v2 suite pass.
 
 The source audit also confirmed live-site discrepancies that are outside this session's file scope. They are recorded below with official links and change requests; `site/` and `flagged.html` were deliberately not changed. The live `freshness/injuries` gate still checks only for report/timestamp presence, not whether the revision meets a game-date freshness threshold. This limitation is now stated accurately in `refresh.py` and raised for the owning session.
 
@@ -22,7 +22,7 @@ The selected official capture files in `data/raw/capture_2026-11-15/` record ret
 
 ## Current-source discrepancies requiring owner action
 
-The published NBA2 team table is the dated 188-game snapshot. It remains internally reproducible for that capture, but it is no longer current against the official standings after two 2026-11-15 finals. Each row below links to the official standings page; the official schedule provides a second source for the game results.
+The published NBA2 team table is the dated 188-game snapshot. It remains internally reproducible for that capture, but it is no longer current against the official standings after two 2026-11-15 finals. Each row below links to the official standings page; the official schedule provides a second source for the game results. A post-rebase crosscheck rerun at 2026-11-16T00:19Z also measured the published snapshot as two days old and found four dates in the published window with games already tipped or tipping (CC-FRESH-01). The site discloses its as-of date, but a current official refresh is still required.
 
 | Team | NBA2 `teams.html` snapshot | Official standings at audit read | Context | Official source |
 |---|---:|---:|---|---|
@@ -41,11 +41,12 @@ The current `flagged.html` already documents older staleness and injury issues, 
 2. **Refresh-gate owner — make injury freshness measurable.** `gate_injuries()` currently verifies only that a PDF URL, revision stamp and retrieval stamp exist; it does not compare the revision to the most recent completed game's reporting window. Implement and fixture-test that threshold in the owning scope, or keep the limitation plainly documented. This A429 change corrects report selection order but does not broaden into this separate policy gate.
 3. **Workflow owner — investigate the existing failed refresh check.** [PR #72's run `43714472051`](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43714472051) (job `132812900286`) failed at “v2 model + source-completeness tests”; rebuild/check were skipped. The failing assertion/log was not available during this audit, so the cause remains unverified. No workflow change was made here.
 4. **v3 owner — re-check the 06:00/06:15 AM selection.** The earlier v3 audit recorded that the 06:00 AM report was used although the official index included a 06:15 AM release. The source index now lists later timestamps as well. This session does not edit `nba2/v3/**`; the file-order defect in the scoped v2 fetcher is covered by the new timestamp-selection helper and fixture.
+5. **Refresh/site owner — publish a current snapshot.** The 2026-11-16T00:19Z post-rebase `tools/crosscheck_site.py` run fails CC-FRESH-01: the published snapshot is measured two days old and four dates in its window have already tipped or are tipping. The stale as-of date is disclosed, but a fresh official ingest/build is needed; this session did not run a live refresh or edit generated site/data files.
 
 ## Verification performed
 
 - `python -m unittest nba2.v2.test_refresh_gate_audit -v` — **15 passed**, no network.
-- `python -m unittest discover -s nba2/v2 -t . -p 'test_*.py' -v` — **144 passed**. Existing `ResourceWarning`s remain in `nba2/v2/model.py:501` and `nba2/v2/travel.py:62,146`; those files are outside scope.
+- `python -m unittest discover -s nba2/v2 -t . -p 'test_*.py' -v` — **151 passed** after rebasing onto `origin/main` `996e92e`. Existing `ResourceWarning`s remain in `nba2/v2/model.py:501` and `nba2/v2/travel.py:62,146`; those files are outside scope.
 - `python -m unittest discover -s nba2/tests -t . -p 'test_*.py' -v` — **70 passed**.
 - `python -m unittest discover -s nba2/v3 -t . -p 'test_*.py' -v` — **33 passed**.
 - `python -m nba2.v2.check` — **0 structural, 0 semantic issues**.
@@ -53,7 +54,7 @@ The current `flagged.html` already documents older staleness and injury issues, 
 - `python tools/check_links_all.py` — **121 HTML files; 5,547 internal links; all internal links OK** (6,355 external links scanned).
 - `python -m nba2.pipeline.lint` — **1,423 rows across 50 tables; every row sourced and every blank explained**.
 - `python -m nba2.pipeline.seal_predictions --verify` — **27 predictions verified**, digest prefix `c841e8f396dae6ca`.
-- `python tools/crosscheck_site.py` — **97 checks: 90 pass, 0 fail, 7 info**.
+- `python tools/crosscheck_site.py` — initial 2026-11-15 run: **97 checks, 90 pass / 0 fail / 7 info**; post-rebase rerun at `2026-11-16T00:19Z`: **97 checks, 89 pass / 1 fail / 7 info**. The sole current failure is CC-FRESH-01 (snapshot measured two days old; four game dates already tipped or tipping), an owner refresh follow-up.
 - `python tools/verify_backtest.py` — **passed**, 12 pages and 183 sourced result rows.
 - `python -m py_compile nba2/v2/refresh.py nba2/v2/test_refresh_gate_audit.py` and `git diff --check` — passed.
 

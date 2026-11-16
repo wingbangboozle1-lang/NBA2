@@ -3595,7 +3595,7 @@ session-owned file was changed.
   timestamp rather than HTML order. The latter behavior is backed by the official index
   [official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/) and
   [the 2026-11-15 06:15 AM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf).
-- **Tests:** 15 fixture-only A429 tests, 144 tests in the full v2 suite, 70 base tests and
+- **Tests:** 15 fixture-only A429 tests, 151 tests in the full v2 suite, 70 base tests and
   33 v3 tests passed. The existing v3 checker still reports 7 gate passes / 1 gate failure
   with `publishable=True`; details and scope limits are in the audit report.
 - **Other verification:** v2 checker 0 structural / 0 semantic issues; internal link scan
@@ -3628,3 +3628,30 @@ append; no deployment claim is made.
 The review, source checks, scoped gate implementation, regression fixtures and audit report are
 complete. The working tree is limited to the claimed refresh module/test, the audit report and
 this append-only board. PR creation, merge and any post-merge Pages confirmation remain next.
+
+### A429 rebase and verification update (2026-11-16 UTC)
+
+The integration base advanced from `2d63974` to `996e92e` during `git pull --rebase origin main`.
+That main revision includes PR #77's first-stage refresh-gate correction and PR #76's v2 test
+side-effect fix. The append conflicts were resolved by retaining both upstream session records
+and A429's claim/completion. A429's production change now builds on PR #77: it keeps the detailed
+per-game scoreboard inventory and count-schema compatibility, while the operational standings
+gate rebuilds all 30 records from deduplicated committed finals plus the fresh scoreboard feed.
+The injury-link timestamp selection and slate/team-stat provenance checks remain in the scoped
+refresh module. No workflow, site, capture or sealed data was edited.
+
+**Verification after the rebase:** 15 A429 fixture tests, 151 full v2 tests, 70 base tests and
+33 v3 tests passed. `py_compile`, `git diff --check`, v2 check (0 structural / 0 semantic), v3
+check (7 gates pass / 1 fail, `publishable=True`), pipeline lint (1,423 rows / 50 tables),
+27-prediction seal verification, backtest verification (12 pages / 183 sourced rows), and the
+internal-link scan (121 HTML files / 5,547 links) passed. Existing v2 `ResourceWarning`s in
+`model.py` and `travel.py` remain outside scope.
+
+The re-run of `tools/crosscheck_site.py` at 2026-11-16T00:19Z reports 89 pass / 1 fail / 7 info.
+The sole failure is CC-FRESH-01: the published snapshot is measured as two days old while four
+dates in its window have games already tipped or tipping. The prior 90/0/7 result was the
+2026-11-15 run; the age-based failure is a current site/data refresh follow-up, not a regression
+in the refresh-gate unit tests. No live `refresh --check-only` or Pages deployment was confirmed.
+
+As of this update A429-01..04 are complete and A429-05's implementation/tests are complete;
+PR creation, merge, the site freshness follow-up and Pages confirmation remain pending.
