@@ -35,8 +35,16 @@ V4_NAMES = [n for n, _ in V4_PAGES]
 MARKER = '<a href="player-logs.html"'
 
 
+_ENTITY_RE = re.compile(r"&(?:[a-zA-Z][a-zA-Z0-9]*|#[0-9]{1,7}|#[xX][0-9a-fA-F]{1,6});")
+
+
 def esc(x) -> str:
-    return "" if x is None else html.escape(str(x), quote=True)
+    text = "" if x is None else str(x)
+    # idempotent: an already-escaped fragment (&amp; / &#x27;) is unescaped first, so a cell
+    # that is escaped twice by accident still prints one character, never "&amp;#x27;".
+    if "&" in text and _ENTITY_RE.search(text):
+        text = html.unescape(text)
+    return html.escape(text, quote=True)
 
 
 def blank(reason: str) -> str:
@@ -116,7 +124,7 @@ def body_player_logs() -> str:
     for b in sorted(base, key=lambda x: (-x["mpg"])):
         h = b["official_header"]
         brows.append(
-            f'<tr><td>{src(b["source_url"], esc(b["player"]))}</td><td>{esc(b["team"])}</td>'
+            f'<tr><td>{src(b["source_url"], b["player"])}</td><td>{esc(b["team"])}</td>'
             f'<td>{esc(b["injury_status"])}</td><td>{esc(b["games"])}</td>'
             f'<td>{esc(b["mpg"])}</td><td>{esc(b["ppg"])}</td><td>{esc(b["rpg"])}</td>'
             f'<td>{esc(b["apg"])}</td><td>{esc(b["l5_mpg"])}</td><td>{esc(b["l5_ppg"])}</td>'
@@ -139,7 +147,7 @@ def body_player_logs() -> str:
             f'<td>{esc(r["minutes"])}</td><td>{esc(r["points"])}</td>'
             f'<td>{esc(r["rebounds"])}</td><td>{esc(r["assists"])}</td>'
             f'<td>{esc(r["plus_minus"])}</td>'
-            f'<td>{src(r["game_url"], esc(r["game_id"]))}</td>'
+            f'<td>{src(r["game_url"], r["game_id"])}</td>'
             f'<td>{src(r["source_url"], "log")}</td></tr>')
     out.append(table(
         ["Date", "Player", "Club", "Match up", "Opponent", "H/A", "W/L", "MIN",
@@ -171,7 +179,7 @@ def body_player_logs() -> str:
                      title="On the release, but not captured", anchor="v4-missing"))
 
     unreach = "".join(
-        f'<tr><td>{esc(name)}</td><td>{src(url, esc(url))}</td><td>{esc(why)}</td></tr>'
+        f'<tr><td>{esc(name)}</td><td>{src(url, url)}</td><td>{esc(why)}</td></tr>'
         for name, url, why in O.UNREACHABLE)
     out.append(table(["Endpoint", "URL", "What happened"], [unreach],
                      blurb="Measured this session so the next session does not spend its "
@@ -228,7 +236,7 @@ def body_rotation_impact() -> str:
                          anchor=f'v4-{b["team"].lower()}'))
 
         cand = MN.absorption_candidates(b["team"])
-        crows = [f'<tr><td>{src(c["source_url"], esc(c["player"]))}</td><td>{esc(c["pos"])}</td>'
+        crows = [f'<tr><td>{src(c["source_url"], c["player"])}</td><td>{esc(c["pos"])}</td>'
                  f'<td>{blank("minutes log not captured — no data (F-41B-05)")}</td>'
                  f'<td>{blank("no data — redistribution needs Σ available mpg")}</td>'
                  f'<td>{esc(c["note"])}</td></tr>' for c in cand]

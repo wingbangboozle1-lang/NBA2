@@ -152,6 +152,18 @@ class TestPages(unittest.TestCase):
                     continue
                 self.assertTrue((SITE / link).exists(), f"{name}: broken link {link}")
 
+    def test_no_double_escaped_entities(self):
+        # A URL cell that is escaped twice prints as "&amp;amp;" to the reader and, worse,
+        # is a link that no longer matches the endpoint it claims to document.
+        B.build()
+        for name in B.V4_NAMES:
+            doc = (SITE / name).read_text()
+            for bad in ("&amp;amp;", "&amp;lt;", "&amp;quot;", "&amp;#"):
+                self.assertNotIn(bad, doc, f"{name}: double-escaped entity {bad!r}")
+            # hrefs keep exactly one level of escaping (& -> &amp;); a second level is the bug.
+            for m in re.finditer(r'href="(https?://[^"]+)"', doc):
+                self.assertNotIn("&amp;amp;", m.group(1), f"{name}: href {m.group(1)}")
+
 
 if __name__ == "__main__":
     unittest.main()
