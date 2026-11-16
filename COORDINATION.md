@@ -4210,3 +4210,48 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+---
+
+## Session `arena/6e46dbf2-nba2` — CLAIM (2026-11-16 ~18:20 UTC, branch `arena/6e46dbf2-nba2`, base `f943bd1` = `main` @ PR #97 merge)
+
+**State read at claim time (verified, not assumed).**
+- `git log -1` on this branch = `f943bd1` (Merge PR #97). Working tree clean. `git fetch` run.
+- Open PRs at claim: #70, #72 (draft), #78, #80, #82, #98. Files they touch were listed with
+  `gh pr view <n> --json files` before this claim was written; **none of them touches `data/v5/**`,
+  `nba2/v5/**`, the three page names below, or `data/v5` inputs.**
+- Bash egress to `www.nba.com` / `cdn.nba.com` / `statsdmz.nba.com` / `ak-static.cms.nba.com` all
+  return HTTP 000 from this sandbox (re-tested 2026-11-16 ~18:19 UTC). The platform **page-fetch**
+  tool does reach `statsdmz.nba.com` and `official.nba.com` (tested: `20261114/20261114_DENNOP_book.pdf`
+  renders as text). So every official value below is read through the page-fetch tool and committed as
+  a transcript + a source URL + a retrieval stamp; no PDF binary can be stored (carried flag F-V4-01).
+- Gap being closed: gap-map **IR-5** ("player-log coverage is 1 of 5 games") and brief line **#24**
+  ("per-player game logs … for at least the players who appear on an injury report"), plus brief
+  line **#2** (official per-game result feed with quarter scores) for 2026-11-14 and 2026-11-15.
+  Existing coverage: `data/raw/capture_2026-11-15/gamelogs_2026-11-13.json` = 9 games, 18 clubs,
+  193 rows (session `arena/f8f8f2b8-nba2`, schema `nba2.player-gamelog.v2`). `data/v2/gamelogs.json`
+  = 19 rows, 1 game. No 11/14 or 11/15 player logs exist anywhere in the tree (`find -name '*gamelog*'`).
+- `data/raw/results/results_2026-11-15.json` = 9 games, of which 3 were **"not final at retrieval"**
+  (HOU@WAS, ATL@MIL, OKC@SAC) — those three are still unsettled in the committed feed.
+
+**Tasks claimed**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| G1 | Claim + push before work | done | `COORDINATION.md` | pushed before any v5 file is written |
+| G2 | Capture the official gamebook for every game played 2026-11-14 (5) and 2026-11-15 (9) — 14 PDFs; store transcript + URL + revision/retrieval stamp | pending | `data/v5/raw_text/*.md`, `data/v5/capture_index.json` | one official URL + retrieval stamp per game |
+| G3 | Deterministic parser: per-player rows (team, opponent, player, POS, MIN, PTS, REB, AST) in schema `nba2.player-gamelog.v2`, plus the SCORE BY PERIOD quarter rows | pending | `nba2/v5/parse.py`, `data/v5/gamelogs_*.json`, `data/v5/quarters_*.json` | quarters must sum to the final for both clubs; parser is re-runnable over the committed text |
+| G4 | Result-feed rows for 11/14 + 11/15: date, teams, final, quarter scores; settle the 3 games the existing feed left pending; cross-check against every committed official source | pending | `data/v5/results_*.json` | agreement with `data/raw/results/results_2026-11-15.json` and `data/raw/capture_2026-11-15/results_2026-11-14.json`; conflict ⇒ blank + flagged, never back-solved |
+| G5 | Union with the committed 11/13 logs → 23 games, 30 clubs; join to the 11/16 official injury report; publish the coverage number | pending | `data/v5/player_logs_union.json`, `data/v5/injury_join.json` | every row links to its gamebook; unmatched injured players are listed, not silently dropped |
+| G6 | Minutes redistribution: top-8 minutes shares per team-game, and measured replacement shares when an injured player is out (brief #14) | pending | `nba2/v5/rotation.py`, `data/v5/rotation.json` | shares computed only from official minutes; n<2 games ⇒ blank with reason |
+| G7 | Publish v5 pages + idempotent nav injection (same pattern as v3/v4); add `python -m nba2.v5` to the Pages and parity rebuild chains | pending | `nba2/v5/publish.py`, `site/{result-feed-v5,playerlogs-full,rotation-replacement,v5-verify}.html`, nav block in `site/*.html`, two workflow files | `check_links_all.py` clean; `git diff --stat site/` limited to nav + 4 new pages |
+| G8 | Checker + tests, verification record, PR → `main` → merge → Pages deploy confirmed → record here | pending | `nba2/v5/check.py`, `nba2/v5/test_v5.py`, `analysis/session-6e46dbf2-verification.md`, `COORDINATION.md` | every checker green; live fetch returns the new pages |
+
+**Explicitly NOT touched (owned elsewhere or blocked):** `data/v2/**`, `data/v3/**`, `data/v4/**`,
+`nba2/v2/**` (PR #98, #72, #80), `nba2/v3/**`, `nba2/v4/**`, `data/raw/**` (read-only inputs, incl.
+sealed ledgers), `data/site.json`, `pages/**`, root `*.html`, `.github/workflows/refresh.yml` (PR #72),
+`ci.yml` (PR #70). Injury-PDF binary storage stays blocked (F-V4-01). Market-anchored prior (#18) and
+player-prop pricing (#32) stay blocked — no licensed feed; logged, not attempted.
+
+**Rules:** claims before edits; regeneration by committed code only; no value inferred; sealed ledgers
+not touched; `git pull --rebase` before every push; append-only on this board.
