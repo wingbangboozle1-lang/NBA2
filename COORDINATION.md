@@ -4018,3 +4018,7 @@ PR #89 (pinned home-court label) merged into `main` while PR #90 was open, so th
 - **Checks on the PR head:** `v2` pass, `backtest` pass, `parity` pass, `verify` pass.
 - **Pages:** `Publish GitHub Pages` = success and `pages build and deployment` = success for `7b3c855`. Verified live: `https://wingbangboozle1-lang.github.io/NBA2/index.html?v=7b3c855` shows "home-court (pinned to measured home-win rate, pts)". **Caveat:** the bare URL `https://wingbangboozle1-lang.github.io/NBA2/` returned the previous copy when fetched right after the deploy (a cache, not a failed deploy). The Pages API still reports `build_type: legacy`, `source: main /` (FLAG-PAGES-01 / F-033, owner decision).
 - **Not claimed here:** Flagged-for-Review entries for I-32C-02…05 (integration session).
+
+### Follow-up integration note — concurrent PR #92
+
+While integrating PR #89, PR #92 added the official merge/deploy record to `COORDINATION.md` and merged into `main`. I fetched and merged that latest main commit into this branch; its only conflict was the append-only coordination tail. Both PR #92's record and this session's verification note were retained. PR #92 did not change code or generated site data; the combined-tree test/build/lint/link results above remain applicable.
