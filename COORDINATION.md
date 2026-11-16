@@ -3689,3 +3689,56 @@ should win on any conflict inside those two files. `index.html` is untouched.
   cancelled when the subsequent concurrent PR #76 main push superseded it; its build had
   succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
   live HTTP response for that later deployment is claimed.
+
+
+## Session `arena/5470b953-nba2` — CLAIM (2026-11-16 UTC, branch `arena/5470b953-nba2`, base `1c48226a` = `main` @ PR #81 merge)
+
+**State read at claim time (verified, not assumed).** `main` = `1c48226a`; this branch is at
+the same commit, working tree clean. Six prior sessions' PRs are still open and own the
+files listed below; per the board protocol I edit **none** of them and log change requests
+instead: #70 (`arena/d09f8d1e-nba2`: ci.yml, probe.yml, COORDINATION.md, README.md,
+data/site-built.json, data/site.json, index.html, nba2/tests/**, pages/**, site/**, tools/
+crosscheck_*, tools/probe_official.py, audit/2026-11-14-live/**, audit/2026-11-15-d09f8d1e/**, 
+audit/3fbd894a/**, data/raw/injury_report_2026-11-14_0515AMET.json,
+data/raw/official_capture_2026-11-14T1015Z.json), #72 (`arena/04a61ac0-nba2`, DRAFT:
+refresh.yml, COORDINATION.md, data/raw/finals_*.json, data/site.json, data/v2/**, index.html,
+nba2/pipeline/build_site_data.py, nba2/v2/**, pages/**, site/**, data/settlement.json),
+#78 (`arena/56b96bf0-nba2`: COORDINATION.md), #80 (`arena/0429aad7-nba2`: COORDINATION.md,
+analysis/session-0429aad7-audit.md, nba2/v2/refresh.py, nba2/v2/test_refresh_gate_audit.py),
+#82 (`arena/f8f8f2b8-nba2`: COORDINATION.md), #83 (`arena/051e7a06-nba2`: COORDINATION.md,
+data/settlement.json, nba2/models/ledger.py, nba2/pipeline/settle.py, nba2/tests/
+test_settle_union.py, pages/flagged-review.html, pages/session-audit.html, site/
+methodology.html).
+
+**File scope claimed by this session (new files only; nothing in an open PR's scope is edited):**
+- `COORDINATION.md` — this claim section + completion record, append-only.
+- `data/raw/capture_2026-11-16/**` — new official captures only: rolling slate 2026-11-16→11-19
+  (official IDs, ET times, arenas), 2026-11-15 official finals with quarter scores, the newest
+  official injury release with revision + retrieval timestamps, consecutive-report injury diff,
+  30-club standings re-read. Every row carries its official URL and retrieval time.
+- `audit/session-5470b953-nba2/**` — verification report and capture transcripts (new files
+  only; nothing existing is rewritten).
+- `README.md` — stale-count sync only, prose preserved.
+
+**Explicitly NOT touched:** every file in open PRs #70/#72/#80/#83 above; `data/raw/ledger/**`
+(sealed — immutable); `nba2/pipeline/settle.py` (settlement-union fix is PR #83's scope);
+`nba2/v2/build.py` (the v2-index HCA label, IR-4 — logged as a change request to #72's owner
+rather than edited here); `data/site.json`, `index.html`, `pages/**` (PR #70's regenerated
+artefacts — I cannot rebuild them without touching #70/#72 files, so parity is left to the
+integration of those PRs).
+
+**Rules this session holds itself to:** a value is published only if fetched from an official
+source (nba.com / ak-static.cms.nba.com / official.nba.com) in this session or reproduced from
+a committed snapshot by running committed code; unconfirmed ⇒ blank + flagged, never inferred;
+sealed ledgers are never rewritten; nothing is called verified that was not fetched or
+reproduced; the site is never merged in a broken state; small frequent commits; `git pull
+--rebase` before every push.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|------------|-------------------|
+| M-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| M-02 | Live official capture: rolling slate 2026-11-16→11-19 + 2026-11-15 finals with quarter scores | in progress | `data/raw/capture_2026-11-16/**` | each row: value + official URL + retrieval timestamp; unconfirmed ⇒ blank + flagged |
+| M-03 | Injury PDF: newest official release with revision + retrieval stamps; diff vs previous committed release | in progress | `data/raw/capture_2026-11-16/` | mechanical diff published with both release URLs |
+| M-04 | Standings re-read vs committed snapshots (30 clubs, W-L + splits) | in progress | `audit/session-5470b953-nba2/**` | row-level diff vs `data/raw/standings_2026-11-14_official.json` etc. |
+| M-05 | Verification report + open irregularities log (status of IR-1…IR-9, new flags) | in progress | `audit/session-5470b953-nba2/verification_report.md` | every irregularity carries an official source link or a reason |
+| M-06 | PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result here | in progress | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of https://wingbangboozle1-lang.github.io/NBA2/ |
