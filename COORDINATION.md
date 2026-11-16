@@ -4210,3 +4210,15 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+## Session `arena/09c0c9a2-nba2` — CLAIM (2026-11-16 UTC)
+
+**Task:** independent post-integration verification of the current `main` snapshot after PR #97, with a concise reproducible audit record. No product data or published shared tables will be edited; any confirmed defect is documented as a finding/change request rather than silently changed.
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| Z-01 | Read the shared board and claim isolated audit scope | in progress | `arena/09c0c9a2-nba2` | `COORDINATION.md` | claim recorded before audit work |
+| Z-02 | Run current v4, unit, provenance, semantic, and link checks; record exact results and any blockers | in progress | `arena/09c0c9a2-nba2` | NEW `analysis/session-09c0c9a2-audit.md` | exact commands/output; never upgrade an unverified claim |
+| Z-03 | Record result and any cross-scope requests | pending | `arena/09c0c9a2-nba2` | `COORDINATION.md` | append-only completion record |
+
+Files touched: only this claim/completion record and the new audit note. No source data, sealed ledgers, generators, shared site output, or workflow files are in scope.
