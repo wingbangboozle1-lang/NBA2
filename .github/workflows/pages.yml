@@ -34,6 +34,9 @@ jobs:
         # navigation links to the v2 pages, so it has to run after v2 and before the
         # parity diff below, or the diff reports v3's own contribution as drift.
         run: |
+          # X-01 (arena/a62b498f-nba2): the settlement page must be written BEFORE the v3 navigation
+          # pass, because v3 adds the 'Settlement stamp' link to every page that has a <nav>.
+          python -m nba2.settlement_page
           python -m nba2.v3
           python -m nba2.v3.check
           python -m unittest discover -s nba2/v3 -t . -p 'test_*.py'

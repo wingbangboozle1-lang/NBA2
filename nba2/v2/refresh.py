@@ -109,8 +109,12 @@ def fetch_standings() -> dict:
 
 def fetch_slate(dates: list[str]) -> dict:
     games = []
+    covered_dates = []
     for d in dates:
         doc = http_json(URLS["scoreboard"].format(date=d))
+        # A successful empty result is valid schedule coverage (the league can have
+        # an off day); a missing date in this list means the source was not fetched.
+        covered_dates.append(d)
         for g in doc["resultSets"][0]["rowSet"]:
             headers = doc["resultSets"][0]["headers"]
             idx = {h: i for i, h in enumerate(headers)}
@@ -124,7 +128,7 @@ def fetch_slate(dates: list[str]) -> dict:
                 "source_url": f"https://www.nba.com/schedule?date={d}",
             })
     return {"fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-            "games": games}
+            "covered_dates": covered_dates, "games": games}
 
 
 def fetch_finals(dates: list[str]) -> dict:
@@ -255,14 +259,81 @@ def gate_injuries(inj: dict, most_recent_game_date: str) -> dict:
 
 
 def gate_slate(slate: dict, today: str) -> dict:
-    end = (dt.date.fromisoformat(today) + dt.timedelta(days=3)).isoformat()
-    gids = [g["game_id"] for g in slate["games"]]
-    in_window = [g for g in slate["games"] if today <= g["date"] <= end]
-    ok = len(gids) == len(set(gids)) and all(g["source_url"] for g in slate["games"])
+    """Require fetched coverage for each date in today's four-day rolling window.
+
+    An empty game list for one date is valid only when that date's official scoreboard
+    request completed successfully (recorded in ``covered_dates``). No missing schedule
+    row is inferred or filled in.
+    """
+    try:
+        start = dt.date.fromisoformat(today)
+        expected = [(start + dt.timedelta(days=i)).isoformat() for i in range(4)]
+    except (TypeError, ValueError):
+        expected = []
+
+    covered = slate.get("covered_dates", []) if isinstance(slate, dict) else []
+    games = slate.get("games", []) if isinstance(slate, dict) else []
+    covered_is_dates = (isinstance(covered, list) and all(
+        isinstance(day, str) and len(day) == 10 and day[4:5] == "-" and day[7:8] == "-"
+        for day in covered))
+    covered_set = set(covered) if covered_is_dates else set()
+    dates_ok = (bool(expected) and covered_is_dates
+                and len(covered) == len(covered_set)
+                and covered_set == set(expected))
+
+    malformed = []
+    gids = []
+    from urllib.parse import parse_qs, urlparse
+    for i, game in enumerate(games if isinstance(games, list) else []):
+        if not isinstance(game, dict):
+            malformed.append(f"row {i} is not an object")
+            continue
+        date = game.get("date")
+        gid = game.get("game_id")
+        home, away = game.get("home"), game.get("away")
+        source = game.get("source_url")
+        if date not in expected or date not in covered:
+            malformed.append(f"row {i} has a date outside fetched window")
+        if not isinstance(gid, str) or len(gid) != 10 or not gid.isdigit() or not gid.startswith("002"):
+            malformed.append(f"row {i} has an invalid official game id")
+        else:
+            gids.append(gid)
+        if (not isinstance(home, str) or len(home) != 3 or not home.isalpha()
+                or home != home.upper() or not isinstance(away, str) or len(away) != 3
+                or not away.isalpha() or away != away.upper() or home == away):
+            malformed.append(f"row {i} has missing or invalid home/away team codes")
+        try:
+            parsed = urlparse(source)
+            source_ok = (parsed.scheme == "https" and parsed.hostname == "www.nba.com"
+                         and parsed.path == "/schedule"
+                         and parse_qs(parsed.query).get("date") == [date])
+        except (TypeError, ValueError):
+            source_ok = False
+        if not source_ok:
+            malformed.append(f"row {i} lacks the matching official NBA schedule URL")
+
+    duplicates = sorted({gid for gid in gids if gids.count(gid) > 1})
+    problems = []
+    if not expected:
+        problems.append("invalid anchor date")
+    if not dates_ok:
+        missing = sorted(set(expected) - covered_set) if covered_is_dates else expected
+        extra = sorted(covered_set - set(expected)) if covered_is_dates else []
+        problems.append(f"official schedule fetch coverage mismatch (missing={missing}, extra={extra})")
+    if not isinstance(games, list):
+        problems.append("games field is not a list")
+    if duplicates:
+        problems.append(f"duplicate game ids: {duplicates}")
+    problems.extend(malformed)
+
+    unique_count = len(set(gids))
+    game_count = len(games) if isinstance(games, list) else 0
+    ok = not problems
     return {"gate": "freshness/slate", "ok": ok,
-            "measured": f"{len(in_window)} games in {today}..{end}, {len(set(gids))} unique ids",
-            "detail": "duplicate game id or a row without a source url" if not ok else
-                      "unique ids, every row sourced"}
+            "measured": f"{game_count} games in {expected[0] if expected else today}..{expected[-1] if expected else 'invalid'}, "
+                        f"{unique_count} unique ids; {len(covered) if isinstance(covered, list) else 0}/4 dates fetched",
+            "detail": "; ".join(problems) if problems else
+                      "all four dates fetched; every game row has valid teams, id, date, and official source"}
 
 
 def gate_provenance(docs: dict) -> dict:

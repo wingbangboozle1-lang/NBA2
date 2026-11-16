@@ -374,7 +374,7 @@ def build(run_backtest: bool = True):
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
 <p class="lede">A 34-game window (Nov 15 → Nov 18) priced from official NBA data only: two independent
-ratings, a fitted home-court term, published formulas, and a source link on every row. Every game gets an originated
+ratings, a home-court term pinned to the measured home-win rate, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
 <div class="kpis">
@@ -384,7 +384,7 @@ line and a lean; no game gets a stake, because no market price is connected to b
   <div class="kpi"><b>{_acc}</b><small>walk-forward accuracy ({_nscored} finals)</small></div>
   <div class="kpi"><b>{_nleans}</b><small>leans published / stakes 0</small></div>
   <div class="kpi"><b>{cal.margin_sd:.2f}</b><small>σ margin sd (fitted, pts)</small></div>
-  <div class="kpi"><b>{cal.hca:+.2f}</b><small>home-court (fitted, pts)</small></div>
+  <div class="kpi"><b>{cal.hca:+.2f}</b><small>home-court (pinned to measured home-win rate, pts)</small></div>
   <div class="kpi"><b>0/30</b><small>teams outside luck noise</small></div>
   <div class="kpi"><b>{blocked}</b><small>inputs blocked</small></div>
   <div class="kpi"><b>{settle_stamp['games_settled']}</b><small>finals settled {settle_stamp['settled_date']} · stamp on <a href="official-results.html">Results</a></small></div>
