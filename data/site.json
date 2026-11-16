@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "637cb480ac8cb28d2c23ded154e4a54b978cec011d62160cf88c890e53d0bfe9",
+  "input_digest": "4bacec302fd4048fd0ee62255b335ae57c0156c26ce74698b7901a827828e22e",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27816,7 +27816,7 @@
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results | 2026-11-15 session arena/f8f8f2b8-nba2: 9 strategies registered in nba2/config.py::STRATEGIES; 7 have hashed pre-registration files frozen 2026-11-15T12:05:00Z. This session added the measured minutes-reallocation input a rotation-availability strategy needs. Usefulness is still unproven until the gates measure on settled results.",
+      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results",
       "priority": "P0"
      },
      "source": {
@@ -28091,7 +28091,7 @@
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open | 2026-11-15 session arena/f8f8f2b8-nba2: rest days, B2B, 3-in-4 and travel distance published; 8 additional games now carry verified quarter scores from the official gamebooks, which is the input a pace/garbage-time decomposition needs. That decomposition is still not built.",
+      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open",
       "priority": "P1"
      },
      "source": {
@@ -28866,7 +28866,7 @@
       "acceptance": ">=2 seasons of final scores with game IDs",
       "status": "partial",
       "owner": "data vendor / owner",
-      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day | 2026-11-15 session arena/f8f8f2b8-nba2: 188 official final scores (2026-10-24..2026-11-14) plus 9 verified 2026-11-13 finals with quarter scores captured this session from the official gamebooks; quarter sums are asserted against the finals at load. 2 games' quarter scores are flagged unverifiable because the official PDF's SCORE BY PERIOD row does not reconcile (I-F8F-06, I-F8F-09).",
+      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day",
       "priority": "P0"
      },
      "source": {

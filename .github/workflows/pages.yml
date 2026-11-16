@@ -38,14 +38,6 @@ jobs:
           python -m nba2.v3.check
           python -m unittest discover -s nba2/v3 -t . -p 'test_*.py'
 
-      - name: Rebuild the v4 player-level pages
-        # v4 (session arena/41bd6ce8-nba2) publishes the per-player game-log surface into the
-        # same tree and appends its links to every page, so it has to run after v3 and before
-        # the parity diff below, or the diff reports v4's own contribution as drift.
-        run: |
-          python -m nba2.v4
-          python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
-
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2

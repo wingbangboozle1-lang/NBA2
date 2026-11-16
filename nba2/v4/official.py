@@ -146,6 +146,64 @@ def team_full(team: str) -> str:
     return team
 
 
+def injury_rows() -> list[dict]:
+    """Rows of the newest committed injury release, one dict per printed row.
+
+    The release now in the repository was transcribed by session
+    ``arena/f8f8f2b8-nba2`` (155 rows); this module reads whatever newest capture
+    holds one, so a later capture is picked up without a code change.
+    """
+    path = INJURY_PM
+    d = json.loads(path.read_text())
+    cols = d.get("columns") or []
+    out = []
+    for rec in d.get("records", []):
+        row = dict(zip(cols, rec))
+        # the two transcriptions in the repo name the date column differently
+        if "game_date" not in row and "date" in row:
+            row["game_date"] = row["date"]
+        row.setdefault("attributed_team", False)
+        row["source_url"] = SOURCES["injury_pdf"][1]
+        out.append(row)
+    return out
+
+
+RELEASE_COLS = ["game_date", "time_et", "matchup", "team", "player", "status", "reason",
+                "attributed_team"]
+
+
+def slate_clubs(date: str) -> list[str]:
+    """Clubs that play on ``date``, read off the newest committed injury release."""
+    clubs = set()
+    for row in injury_rows():
+        if row.get("game_date") == date and row.get("team"):
+            clubs.add(team_abbr(row["team"]))
+    return sorted(clubs)
+
+
+def designated_players(date: str, clubs: list[str]) -> dict[str, list[dict]]:
+    """Out / Doubtful / Questionable players per club on ``date``.
+
+    Rows whose official reason begins with "G League" are excluded: a two-way or
+    on-assignment player has no rotation minutes to redistribute.
+    """
+    out: dict[str, list[dict]] = {c: [] for c in clubs}
+    for row in injury_rows():
+        club = team_abbr(row.get("team", ""))
+        if row.get("game_date") != date or club not in clubs:
+            continue
+        if not row.get("player"):
+            continue
+        status = (row.get("status") or "").strip()
+        reason = (row.get("reason") or "").strip()
+        if status not in ("Out", "Doubtful", "Questionable"):
+            continue
+        if reason.startswith("G League"):
+            continue
+        out[club].append({"player": row["player"], "status": status, "reason": reason})
+    return out
+
+
 def team_abbr(team: str) -> str:
     """'Golden State Warriors' -> GSW. The PDF prints club names; the site uses codes."""
     from nba2 import config

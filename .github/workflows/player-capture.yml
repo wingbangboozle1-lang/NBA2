@@ -1,30 +1,32 @@
 name: Player game-log capture
 
-# Captures the per-player surface (minutes / points / rebounds / assists / opponent,
-# official game id) that session arena/41bd6ce8-nba2 proved reachable one page at a
-# time, and extends it without a human in the loop.
+# Extends the per-player surface without a human in the loop. Session
+# arena/41bd6ce8-nba2 proved the data is reachable and gated it; session
+# arena/f8f8f2b8-nba2 showed the official gamebook PDF is the higher-yield source
+# (one document per game = every player in that game). This job does both:
 #
-# What the job does:
-# * for each of the next three slate dates, fetches the official club page for every
-#   club on that slate, then the official game-log page of every player the newest
-#   committed injury release designates Out / Doubtful / Questionable (G League rows
-#   excluded — a two-way player has no rotation minutes to redistribute);
-# * re-gates every parsed player before it is written: the mean of the captured rows
-#   must reproduce the PPG / RPG / APG printed in that player's own official header,
-#   and every row must carry an official game id. A parse that fails writes nothing;
-# * archives the newest official injury-release PDF for the date and reports how many
-#   player/status pairs it prints that we do not already hold (a reader still
-#   transcribes rows — the PDF is never parsed into published data);
-# * rebuilds both published trees and commits only if something actually changed.
+# * gamebooks mode — for each of the next three slate dates, read the official games
+#   index, download one official gamebook PDF per game, and archive each with a
+#   sha256. Primary documents only: no rows are parsed out of them here, so nothing
+#   unverified enters the repository.
+# * players mode — for the clubs on those dates, read the official club page for
+#   player ids, then the official game-log page of every player the newest committed
+#   injury release designates Out / Doubtful / Questionable (G League rows excluded:
+#   a two-way player has no rotation minutes to redistribute). Every parsed player is
+#   re-gated before it is written — the mean of its rows must reproduce the
+#   PPG / RPG / APG printed in that player's own official header, and every row must
+#   carry an official game id. A parse that fails writes nothing and records why.
 #
 # What it never does:
-# * never invents a value — an unreachable page is a capture failure, and a player
-#   whose table prints "No data available" is a failure, not a zero;
+# * never invents a value — an unreachable page is a recorded capture failure, and a
+#   player whose table prints "No data available" is a failure, not a zero;
 # * never rewrites data/raw/ledger/** or any committed capture directory;
-# * never commits a tree that fails nba2.v2.check (the row-level source gate).
+# * never commits a tree that fails nba2.v2.check (the row-level source gate);
+# * never fails the job because nba.com is not answering — an unreachable upstream is
+#   reported and nothing is written, so the last good capture stays published.
 #
 # The first scheduled run is supervised: the parsers were written against the page
-# structure observed on 2026-11-15 and were tested against fixtures, not live pages.
+# structure observed on 2026-11-15 and tested against fixtures, not live pages.
 # A layout change shows up as a capture failure with the reason, never as data.
 
 on:
@@ -47,7 +49,7 @@ on:
       max_players:
         description: 'Optional cap on players captured this run'
         required: false
-        default: ''
+        default: '6'
 
 concurrency:
   group: player-capture
@@ -78,44 +80,50 @@ jobs:
           print("dates=" + " ".join(str(today + timedelta(days=i)) for i in range(1, n + 1)))
           PY
 
-      - name: Capture per-player game logs
+      - name: Archive the official gamebook PDFs (primary documents)
+        run: |
+          set -u
+          for d in ${{ steps.dates.outputs.dates }}; do
+            echo "== gamebooks $d =="
+            python -m nba2.v4.capture --mode gamebooks --date "$d"
+          done
+
+      - name: Capture gated per-player game logs
         env:
           CLUBS: ${{ github.event.inputs.clubs }}
           MAXP: ${{ github.event.inputs.max_players }}
         run: |
           set -u
           for d in ${{ steps.dates.outputs.dates }}; do
-            args="--date $d"
+            args="--mode players --no-injury --date $d"
             [ -n "${CLUBS:-}" ] && args="$args --clubs $CLUBS"
             [ -n "${MAXP:-}" ] && args="$args --max-players $MAXP"
-            echo "== $d =="
+            echo "== players $d =="
             python -m nba2.v4.capture $args
           done
 
-      - name: Rebuild both published trees (v2 -> v3 -> v4 -> v1 mirror)
-        # v4 last: a v2 run strips the v3/v4 navigation, so it must not be the final
-        # generator. build_site mirrors the result into pages/, the tree Pages serves.
+      - name: Measure the capture's gates
+        # Fails the job (and blocks the commit below) if any captured player stops
+        # reproducing the rates the official page prints for them.
+        run: |
+          python -m nba2.v4
+          python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
+
+      - name: Rebuild the published trees (v2 -> v3 -> the pages/ mirror)
         run: |
           python -m nba2.v2
           python -m nba2.v3
-          python -m nba2.v4
           python -m nba2.pipeline.build_site
-          python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
           python -m nba2.v2.check
 
       - name: Commit if the capture changed anything
         run: |
           git config user.name  "nba2 capture bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A -- data/raw site pages index.html data/site-built.json
+          git add -A -- data/raw site pages index.html data/site.json data/site-built.json
           if git diff --cached --quiet; then
             echo "no change — the capture produced nothing new, nothing committed"
             exit 0
           fi
-          git commit -m "capture: $(date -u +%Y-%m-%dT%H:%MZ) per-player game logs
-
-          Unattended nba2.v4.capture run. Committed only because every captured player
-          passed G-41-01..06: row count matches the page's own count, mean PTS/REB/AST
-          matches the official season header, every row carries an official game id.
-          Failures and not-captured players are listed in the snapshot itself."
+          git commit -m "capture: $(date -u +%Y-%m-%dT%H:%MZ) per-player game logs"
           git push

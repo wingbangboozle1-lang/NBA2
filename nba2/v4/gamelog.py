@@ -70,16 +70,15 @@ def gates() -> list[dict]:
             "source": p["source_url"],
         })
         # G-41-05 the player is on the injury release this capture was built from
-        from . import injury as IN
         club = O.team_full(p["team"])
-        rows = [r for r in IN.records() if r["player"] == tag]
+        rows = [r for r in O.injury_rows() if r["player"] == tag]
         same = [r for r in rows if r["team"] == club]
         out.append({
             "id": "G-41-05", "player": tag,
             "name": "the player appears on the official injury release with the same club",
             "measurement": f"{len(same)} matching release row(s)" if rows else "not on the release",
             "status": "PASS" if same else "FAIL",
-            "source": IN.SOURCE_URL,
+            "source": O.SOURCES["injury_pdf"][1],
         })
         # G-41-06 the game ids on the log are official game ids (ten digits, season prefix)
         bad_ids = [x["game_id"] for x in g if not (len(x["game_id"]) == 10 and x["game_id"].startswith("00226"))]

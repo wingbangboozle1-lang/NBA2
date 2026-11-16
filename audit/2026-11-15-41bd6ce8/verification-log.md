@@ -1,8 +1,10 @@
 # Verification log — session `arena/41bd6ce8-nba2` (2026-11-15)
 
 Scope: the per-player capture in `data/raw/capture_2026-11-15-41bd6ce8/`, the injury
-release of the same evening, and the three pages published from them
-(`player-logs.html`, `rotation-impact.html`, `injury-diff.html`).
+release of the same evening, and the gates that make the capture publishable. (The three
+pages this session first published were withdrawn after session `arena/f8f8f2b8-nba2`
+published the same questions from the official gamebooks — see
+`analysis/session-41bd6ce8-player-logs.md` § Reconciliation.)
 
 Method: every value below was read from the official page named in the Source column on
 2026-11-15 through the platform page-fetch tool. Nothing is inferred, modelled, or
@@ -46,6 +48,12 @@ Every id comes from the `/player/{id}/` link in the club's own roster table; non
 
 
 ## 4. Injury release (06:15 PM ET) — what was checked
+
+The release transcribed by this session was **withdrawn**: session `arena/f8f8f2b8-nba2`
+transcribed the same PDF (155 rows) and merged it first, so the repository keeps one
+transcription (`data/raw/capture_2026-11-15/injury_report_2026-11-15_0615PM.json`) and
+`nba2/v4/official.py` resolves whatever newest capture holds one. The counts below are
+that file's.
 
 | Check | Measurement | Source |
 |---|---|---|

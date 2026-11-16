@@ -307,6 +307,70 @@ def pdf_pairs(raw: bytes) -> set[tuple[str, str]]:
     return pairs
 
 
+# --------------------------------------------------------------------------- gamebooks
+# The per-player endpoint above yields one player per page. The official gamebook PDF
+# yields every player of a whole game in one document — the higher-yield source, found
+# and verified by session arena/f8f8f2b8-nba2 (9 games, 18 clubs, 193 rows for
+# 2026-11-13). This module does not re-implement their transcription: it ARCHIVES the
+# primary document per game and reports what it could confirm from the bytes, so the
+# next capture does not depend on anybody being at a keyboard. Parsing a layout that
+# cannot be tested offline would be guesswork, so nothing is parsed into rows here.
+
+GAMES_URL = "https://www.nba.com/games?date={date}"
+GAMEBOOK_URL = ("https://statsdmz.nba.com/pdfs/{yyyymmdd}/"
+                "{yyyymmdd}_{away}{home}_book.pdf")
+GAME_LINK_RE = re.compile(
+    r"/game/([a-z]{3})-vs-([a-z]{3})-(\d{10})", re.I)
+
+
+def game_slots(date: str) -> list[dict]:
+    """(away, home, game id) for every game the official index lists on ``date``."""
+    page = page_text(http_get(GAMES_URL.format(date=date)))
+    seen: dict[str, dict] = {}
+    for away, home, gid in GAME_LINK_RE.findall(page):
+        seen[gid] = {"game_id": gid, "away": away.upper(), "home": home.upper(),
+                     "game_url": GAME_URL.format(gid=gid)}
+    return [seen[k] for k in sorted(seen)]
+
+
+def gamebook_url(date: str, away: str, home: str) -> str:
+    return GAMEBOOK_URL.format(yyyymmdd=date.replace("-", ""),
+                               away=away.upper(), home=home.upper())
+
+
+def archive_gamebooks(date: str, out: Path) -> dict:
+    """Download and archive one official gamebook PDF per game, with a sha256 each.
+
+    A game whose document cannot be fetched is a recorded failure — never a game with
+    invented rows.
+    """
+    import hashlib
+
+    archived: list[dict] = []
+    failures: list[dict] = []
+    for slot in game_slots(date):
+        url = gamebook_url(date, slot["away"], slot["home"])
+        try:
+            raw = http_get(url)
+        except CaptureError as exc:
+            failures.append({**slot, "url": url, "reason": str(exc)})
+            continue
+        if not raw.startswith(b"%PDF"):
+            failures.append({**slot, "url": url,
+                             "reason": f"the response is not a PDF ({len(raw)} bytes, "
+                                       f"first bytes {raw[:8]!r})"})
+            continue
+        name = url.rsplit("/", 1)[-1]
+        (out / "pdf").mkdir(parents=True, exist_ok=True)
+        (out / "pdf" / name).write_bytes(raw)
+        (out / "pdf" / (name + ".sha256")).write_text(
+            hashlib.sha256(raw).hexdigest() + f"  {name}\n")
+        archived.append({**slot, "url": url, "bytes": len(raw),
+                         "sha256": hashlib.sha256(raw).hexdigest(),
+                         "player_status_pairs": len(pdf_pairs(raw))})
+    return {"date": date, "archived": archived, "failures": failures}
+
+
 # --------------------------------------------------------------------------- capture
 def capture_player(name: str, team: str, pid: str, status: str = "", reason: str = "",
                    team_full: str = "") -> dict:
@@ -337,7 +401,7 @@ def run(date: str, clubs: list[str], max_players: int | None, out: Path,
     started = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     from nba2 import config  # official team ids / slugs (verified 2026-11-13)
 
-    designated = _designated(date, clubs)
+    designated = O.designated_players(date, clubs)
     players: list[dict] = []
     failures: list[dict] = []
     not_captured: list[dict] = []
@@ -456,35 +520,6 @@ def slate_clubs(date: str) -> list[str]:
     return sorted(clubs)
 
 
-def _designated(date: str, clubs: list[str]) -> dict[str, list[dict]]:
-    """Designated players from the newest committed release (Out/Questionable/Doubtful,
-    excluding G League rows, which have no rotation minutes to redistribute)."""
-    out: dict[str, list[dict]] = {c: [] for c in clubs}
-    try:
-        release = json.loads(O.INJURY_PM.read_text())
-    except (OSError, ValueError):
-        return out
-    cols = release.get("columns", O_INJURY_COLS)
-    for rec in release.get("records", []):
-        row = dict(zip(cols, rec))
-        club = O.team_abbr(row.get("team", ""))
-        if row.get("game_date") != date or club not in clubs:
-            continue
-        if not row.get("player"):
-            continue
-        status = (row.get("status") or "").strip()
-        reason = (row.get("reason") or "").strip()
-        if status not in ("Out", "Doubtful", "Questionable"):
-            continue
-        if reason.startswith("G League"):
-            continue
-        out[club].append({"player": row["player"], "status": status, "reason": reason})
-    return out
-
-
-O_INJURY_COLS = ["game_date", "time_et", "matchup", "team", "player", "status",
-                 "reason", "attributed_team"]
-
 def _team_url(club: str) -> str:
     """Official club page URL from the repo's verified id/slug table (nba2.config)."""
     from nba2 import config
@@ -507,17 +542,52 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", default="", help="output dir (default data/raw/capture_<stamp>)")
     ap.add_argument("--index-url", default=O.SOURCES["injury_index"][1])
     ap.add_argument("--no-injury", action="store_true", help="skip the injury-release archive")
+    ap.add_argument("--mode", choices=("players", "gamebooks"), default="players",
+                    help="players: gated per-player game logs (default). "
+                         "gamebooks: archive one official gamebook PDF per game on the date")
     args = ap.parse_args(argv)
+
+    stamp0 = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
+    out0 = Path(args.out) if args.out else O.RAW / f"capture_{stamp0}"
+
+    if args.mode == "gamebooks":
+        try:
+            report = archive_gamebooks(args.date, out0)
+        except CaptureError as exc:
+            # An unreachable index is a fact, not a failure of the repository: the
+            # nightly job must stay green when nba.com is not answering, and nothing
+            # is written, so the last good capture stays the one published.
+            print(f"[gamebooks {args.date}] upstream unreachable: {exc}")
+            print("nothing captured, nothing written")
+            return 0
+        out0.mkdir(parents=True, exist_ok=True)
+        (out0 / f"gamebooks_{args.date}.json").write_text(json.dumps({
+            "schema": "nba2.gamebook-archive.v1",
+            "date": args.date,
+            "retrieved_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+            "retrieval_method": "nba2.v4.capture: urllib GET of the official gamebook PDF",
+            "source_pattern": GAMEBOOK_URL,
+            "index_page": GAMES_URL.format(date=args.date),
+            "note": "primary documents archived with a sha256 each; no rows are parsed from "
+                    "them here, so nothing unverified enters the repository",
+            **report,
+        }, indent=1) + "\n")
+        print(f"[gamebooks {args.date}] {len(report['archived'])} archived, "
+              f"{len(report['failures'])} failure(s) -> {out0}")
+        for f in report["failures"]:
+            print(f"  FAIL {f.get('game_id','')}: {f['reason']}")
+        return 0
 
     clubs = [c.strip().upper() for c in args.clubs.split(",") if c.strip()]
     if not clubs:
-        clubs = slate_clubs(args.date)
+        clubs = O.slate_clubs(args.date)
     if not clubs:
         print(f"no clubs resolved for {args.date} — nothing captured, nothing written")
         return 0
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
     out = Path(args.out) if args.out else O.RAW / f"capture_{stamp}"
+
     payload = run(args.date, clubs, args.max_players, out, args.index_url,
                   ingest_injury=not args.no_injury)
 

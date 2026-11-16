@@ -17,15 +17,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DATA: dict = {}
 
-# v4 (session arena/41bd6ce8-nba2) renders three player-level pages into this tree.
-# Imported lazily inside _pages() so a missing snapshot cannot break this build.
-V4_TITLES = {
-    "pages/player-logs.html": "Player game logs",
-    "pages/rotation-impact.html": "Rotation impact",
-    "pages/injury-diff.html": "Injury release diff",
-}
-
-
 
 def _load_data() -> dict:
     """Load data/site.json. Called at build time so a freshly generated file is always used."""
@@ -58,11 +49,6 @@ NAV_GROUPS: list[tuple[str, str, list[tuple[str, str]]]] = [
     ("Inputs", "The verified facts every number is built from.", [
         ("pages/injuries.html", "Injuries & Rotation"),
         ("pages/game-flow.html", "Game Flow"),
-        # v4 — session arena/41bd6ce8-nba2: the player-level surface. Additive entries only;
-        # the bodies come from nba2/v4 so this file holds no second copy of that logic.
-        ("pages/player-logs.html", "Player Game Logs"),
-        ("pages/rotation-impact.html", "Rotation Impact"),
-        ("pages/injury-diff.html", "Injury Release Diff"),
     ]),
     ("Governance", "What we know, what we do not, and what needs your decision.", [
         ("pages/executive-summary.html", "Executive Summary"),
@@ -129,20 +115,6 @@ INTROS = {
     "pages/suggestions.html": "<p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p>",
     "pages/flagged-review.html": "<p>Every unverified value, every caveat, every action. If a number is neither here nor blank, it was checked.</p>",
     "pages/sources.html": "<p>What we read, when, and what we could not read at all.</p>",
-    "pages/player-logs.html":
-        "<p>Per-player game logs captured from the official player pages: minutes, points, "
-        "rebounds, assists and the opponent for every player on the current injury release "
-        "whose club plays tomorrow. Every player's captured mean is checked against the "
-        "season rate the same official page prints — if a row were missing, the check would "
-        "fail.</p>",
-    "pages/rotation-impact.html":
-        "<p>Minutes and production designated out for each captured club, and the players who "
-        "would have to absorb them. The receiving column is blank because those logs are not "
-        "captured yet; it is not filled with a proxy.</p>",
-    "pages/injury-diff.html":
-        "<p>Two official injury releases, twelve hours apart, stored with their timestamps and "
-        "diffed: every status change, every club that has not filed, and the retrieval stamp "
-        "for each PDF.</p>",
 }
 
 
@@ -364,11 +336,6 @@ def sec(key: str) -> dict:
 
 def _pages() -> dict[str, list[str]]:
     L = True
-    try:
-        from nba2.v4 import build as _v4
-    except Exception:
-        _v4 = None
-    v4_pages = {rel: [body] for rel, body in _v4.v1_sections().items()} if _v4 else {}
     return {
         "pages/executive-summary.html": [
             '<div class="card">' + kpis() + "</div>",
@@ -424,10 +391,6 @@ def _pages() -> dict[str, list[str]]:
         "pages/verification-report.html": [render_table(sec("verification"), L)],
         "pages/flagged-review.html": [render_table(sec("flags"), L)],
         "pages/sources.html": [render_table(sec("sources"), L)],
-        # v4 (session arena/41bd6ce8-nba2): one additive dict merge. The bodies are produced
-        # by nba2/v4 from its own captured snapshot and are passed straight through this
-        # tree's renderer, so the pages inherit the standard navigation and styling.
-        **v4_pages,
     }
 
 
@@ -463,7 +426,7 @@ def build() -> list[str]:
                              False, "index.html"))
 
     for rel, secs in _pages().items():
-        title = V4_TITLES.get(rel) or rel.split("/")[-1].replace(".html", "").replace("-", " ").title()
+        title = rel.split("/")[-1].replace(".html", "").replace("-", " ").title()
         write(rel, page(title, secs, INTROS.get(rel, ""), True, rel))
 
     write("flagged.html", '<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8">\n'

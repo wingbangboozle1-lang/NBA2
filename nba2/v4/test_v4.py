@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import re
+import tempfile
 import unittest.mock
 import zlib
 import unittest
@@ -16,9 +17,6 @@ from pathlib import Path
 
 from . import official as O
 from . import gamelog as GL
-from . import injury as IN
-from . import minutes as MN
-from . import build as B
 from . import capture as CAP
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -56,7 +54,7 @@ class TestCapture(unittest.TestCase):
             self.assertEqual(ids.get(p["player"]), p["player_id"], p["player"])
 
     def test_every_captured_player_is_on_the_release(self):
-        names = {r["player"] for r in IN.player_rows(True)}
+        names = {r["player"] for r in O.injury_rows()}
         for p in GL.players():
             self.assertIn(p["player"], names, p["player"])
 
@@ -65,138 +63,13 @@ class TestCapture(unittest.TestCase):
             self.assertNotIn(f["player"], [p["player"] for p in GL.players()])
 
 
-class TestInjuryDiff(unittest.TestCase):
-    def test_both_files_are_addressed_by_their_own_timestamp(self):
-        self.assertIn("06_15PM", O.injury(True)["provenance"]["url"])
-        self.assertIn("06_15AM", O.injury(False)["provenance"]["url"])
-
-    def test_diff_keys_are_club_player_pairs(self):
-        d = IN.diff()
-        for c in d["changes"]:
-            self.assertTrue(c["team"] and c["player"])
-            self.assertNotEqual(c["from_status"], c["to_status"])
-
-    def test_diff_is_reproducible(self):
-        self.assertEqual(IN.diff(), IN.diff())
-
-    def test_every_release_row_has_a_source(self):
-        for r in IN.records(True):
-            self.assertTrue(r["source_url"].startswith("https://"), r)
-
-    def test_not_submitted_rows_have_no_player(self):
-        for r in IN.not_submitted(True):
-            self.assertEqual(r["player"], "")
 
 
-class TestMinutes(unittest.TestCase):
-    def test_at_risk_sums_only_captured_players(self):
-        for team in MN.CAPTURED_CLUBS:
-            a = MN.at_risk(team)
-            s = sum(r["mpg"] for r in a["rows"] if r["mpg"] is not None)
-            self.assertAlmostEqual(s, a["vacated_mpg"], places=1)
 
-    def test_absorption_candidates_exclude_designated_players(self):
-        for team in MN.CAPTURED_CLUBS:
-            outs = {r["player"] for r in MN.release_outs(team)}
-            for c in MN.absorption_candidates(team):
-                self.assertNotIn(c["player"], outs)
-
-    def test_redistribution_leaves_the_receiving_side_blank(self):
-        for team in MN.CAPTURED_CLUBS:
-            r = MN.redistribution(team)
-            for row in r["rows"]:
-                self.assertIsNone(row["new_mpg"], row)
-                self.assertIsNone(row["new_share"], row)
-
-
-class TestPages(unittest.TestCase):
-    def test_bodies_are_deterministic(self):
-        self.assertEqual(B.body_player_logs(), B.body_player_logs())
-        self.assertEqual(B.body_rotation_impact(), B.body_rotation_impact())
-        self.assertEqual(B.body_injury_diff(), B.body_injury_diff())
-
-    def test_every_row_in_every_body_links_out(self):
-        for name, fn in B.BODIES.items():
-            doc = fn()
-            for m in re.finditer(r"<tr[^>]*>(.*?)</tr>", doc, re.S):
-                if "<td" not in m.group(1):
-                    continue  # header row
-                self.assertIn('href="https://', m.group(1), f"{name}: {m.group(1)[:80]}")
-            self.assertNotIn("href='", doc, name)
-
-    def test_no_placeholder_tokens(self):
-        for name, fn in B.BODIES.items():
-            doc = fn()
-            for token in ("TODO", "TBD", "lorem ipsum", "XXX", "{{", "}}"):
-                self.assertNotIn(token, doc, f"{name} contains {token!r}")
-
-    def test_build_is_idempotent(self):
-        B.build()
-        first = {p.name: p.read_text() for p in SITE.glob("*.html")}
-        B.build()
-        second = {p.name: p.read_text() for p in SITE.glob("*.html")}
-        self.assertEqual(first, second)
-
-    def test_v4_pages_carry_the_published_nav(self):
-        B.build()
-        index = (SITE / "index.html").read_text()
-        v2_links = set(re.findall(r'<a href="([a-z0-9\-]+\.html)"', index))
-        for name in B.V4_NAMES:
-            doc = (SITE / name).read_text()
-            links = set(re.findall(r'<a href="([a-z0-9\-]+\.html)"', doc))
-            self.assertTrue(v2_links <= links, f"{name} is missing {sorted(v2_links - links)}")
-
-    def test_nav_links_resolve(self):
-        B.build()
-        for name in B.V4_NAMES:
-            doc = (SITE / name).read_text()
-            for link in re.findall(r'href="([^"#:]+)"', doc):
-                if link.startswith(("http://", "https://", "mailto:")):
-                    continue
-                self.assertTrue((SITE / link).exists(), f"{name}: broken link {link}")
-
-    def test_no_double_escaped_entities(self):
-        # A URL cell that is escaped twice prints as "&amp;amp;" to the reader and, worse,
-        # is a link that no longer matches the endpoint it claims to document.
-        B.build()
-        for name in B.V4_NAMES:
-            doc = (SITE / name).read_text()
-            for bad in ("&amp;amp;", "&amp;lt;", "&amp;quot;", "&amp;#"):
-                self.assertNotIn(bad, doc, f"{name}: double-escaped entity {bad!r}")
-            # hrefs keep exactly one level of escaping (& -> &amp;); a second level is the bug.
-            for m in re.finditer(r'href="(https?://[^"]+)"', doc):
-                self.assertNotIn("&amp;amp;", m.group(1), f"{name}: href {m.group(1)}")
-
-    def test_nav_survives_the_whole_generator_chain(self):
-        # v4 copies the navigation out of the published index.html. If a v2 run happens
-        # after v3 has written its links, index.html is missing them and v4 would then
-        # propagate the incomplete nav to every page. This is the tripwire: after a
-        # v2 -> v3 -> v4 chain, every page must still link every v3 and v4 page.
-        try:
-            from nba2.v3 import build as V3
-            v3_names = [n for n, _ in V3.V3_PAGES]
-        except Exception:  # noqa: BLE001 - v3 not importable: assert the v4 half only
-            v3_names = []
-        B.build()
-        required = set(v3_names) | set(B.V4_NAMES)
-        for page in sorted(SITE.glob("*.html")):
-            nav = re.search(r"<nav[^>]*>(.*?)</nav>", page.read_text(), re.S)
-            if nav is None:
-                continue
-            links = set(re.findall(r'href="([^"]+\.html)"', nav.group(1)))
-            missing = required - links
-            self.assertFalse(missing, f"{page.name}: nav is missing {sorted(missing)}")
-
-
-if __name__ == "__main__":
-    unittest.main()
-
-
-# --------------------------------------------------------------------------- capture code
+# --------------------------------------------------------------------------- fixtures
 # The fixtures below are structural: they reproduce the shape of the official tables
 # (column order, /game/<id>/ and /player/<id>/ links) with invented numbers, so the
-# parsers can be tested offline. They are NOT official data and nothing in this file
-# publishes them.
+# parsers can be tested offline. They are NOT official data and nothing publishes them.
 
 LOG_FIXTURE = """<html><body>
 <div>PPG 20.0 RPG 5.0 APG 4.0</div>
@@ -291,12 +164,12 @@ class TestCaptureCode(unittest.TestCase):
     def test_designated_players_come_off_the_committed_release(self):
         # A guard on the join the nightly run depends on: the PDF prints club names,
         # the site and this module work in tricodes.
-        got = CAP._designated("2026-11-16", ["GSW"])
+        got = O.designated_players("2026-11-16", ["GSW"])
         self.assertTrue(got["GSW"], "the join from club name to tricode returned nothing")
         self.assertTrue(all(r["status"] in ("Out", "Doubtful", "Questionable") for r in got["GSW"]))
         self.assertFalse(any(r["reason"].startswith("G League") for r in got["GSW"]))
 
     def test_slate_clubs_returns_tricodes(self):
-        for club in CAP.slate_clubs("2026-11-16"):
+        for club in O.slate_clubs("2026-11-16"):
             self.assertEqual(club, club.upper())
             self.assertLessEqual(len(club), 3)
