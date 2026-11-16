@@ -20,6 +20,30 @@ from . import report as R
 ROOT = Path(__file__).resolve().parents[2]
 
 
+
+import contextlib
+import shutil
+import tempfile
+
+
+@contextlib.contextmanager
+def _preserved(*paths: Path):
+    """Snapshot the given directories and restore them exactly on exit (A6-1)."""
+    tmp = Path(tempfile.mkdtemp(prefix="nba2-preserve-"))
+    saved = []
+    try:
+        for i, p in enumerate(paths):
+            dst = tmp / str(i)
+            shutil.copytree(p, dst)
+            saved.append((p, dst))
+        yield
+    finally:
+        for p, dst in saved:
+            shutil.rmtree(p, ignore_errors=True)
+            shutil.copytree(dst, p)
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 class TestOfficialSnapshot(unittest.TestCase):
     def test_all_30_teams_present(self):
         self.assertEqual(len(O.TEAMS), 30)
@@ -299,9 +323,15 @@ class TestPublishedSite(unittest.TestCase):
     def test_site_builds_and_passes_its_own_check(self):
         from . import build as B
         from . import check as K
-        B.build()
-        self.assertEqual(K.check(), [])
-        self.assertEqual(K.semantic(), [])
+        # A6-1 (arena/a6d81367-nba2): B.build() rewrites the PUBLISHED tree (site/) and
+        # data/v2/. Running the suite used to leave those files dirty, and the rewrite
+        # drops the v3 navigation links that pages.yml re-applies, so a local test run
+        # produced drift that would fail the zero-tolerance publish check. The build is
+        # still exercised; the tree is restored byte-for-byte afterwards.
+        with _preserved(ROOT / "site", ROOT / "data" / "v2"):
+            B.build()
+            self.assertEqual(K.check(), [])
+            self.assertEqual(K.semantic(), [])
 
     def test_every_page_has_the_nav(self):
         from .build import NAV
