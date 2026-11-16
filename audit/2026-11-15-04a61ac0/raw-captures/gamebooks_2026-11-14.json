@@ -1,0 +1,541 @@
+{
+ "schema": "nba2.gamebook-extract.v1",
+ "captured_utc": "2026-11-15T11:45:00Z",
+ "session": "arena/04a61ac0-nba2",
+ "meaning": "what this session could stand behind from the five official 2026-11-14 game books: inactive blocks, DND/NWT rows, named leaders and game facts. Team shooting lines are recorded only as the arithmetic that disqualifies them.",
+ "urls": [
+  "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+  "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+  "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+  "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+  "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+ ],
+ "leaders": {
+  "CLE": [
+   {
+    "player": "Tyrese Proctor",
+    "pts": 24,
+    "reb": 11,
+    "ast": 10,
+    "note": "first Cleveland triple-double since Max Strus, 2024-04-14"
+   },
+   {
+    "player": "Mario Hezonja",
+    "pts": 22,
+    "reb": 7,
+    "ast": 4,
+    "note": ""
+   },
+   {
+    "player": "Meleek Thomas",
+    "pts": 20,
+    "reb": 4,
+    "ast": 2,
+    "note": ""
+   },
+   {
+    "player": "Thomas Bryant",
+    "pts": 19,
+    "reb": 11,
+    "ast": 3,
+    "note": ""
+   },
+   {
+    "player": "Jaylon Tyson",
+    "pts": 18,
+    "reb": 4,
+    "ast": 4,
+    "note": ""
+   },
+   {
+    "player": "Norchad Omier",
+    "pts": 13,
+    "reb": 8,
+    "ast": 2,
+    "note": ""
+   }
+  ],
+  "DAL": [
+   {
+    "player": "Kyrie Irving",
+    "pts": 34,
+    "reb": 6,
+    "ast": 5,
+    "note": "7 of 16 from three"
+   },
+   {
+    "player": "Cooper Flagg",
+    "pts": 18,
+    "reb": 8,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Caleb Martin",
+    "pts": 15,
+    "reb": 8,
+    "ast": 3,
+    "note": ""
+   },
+   {
+    "player": "Naji Marshall",
+    "pts": 12,
+    "reb": 3,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Daniel Gafford",
+    "pts": 10,
+    "reb": 3,
+    "ast": 1,
+    "note": ""
+   }
+  ],
+  "MIA": [
+   {
+    "player": "Giannis Antetokounmpo",
+    "pts": 34,
+    "reb": 14,
+    "ast": 8,
+    "note": ""
+   },
+   {
+    "player": "Klay Thompson",
+    "pts": 26,
+    "reb": 1,
+    "ast": 4,
+    "note": "6 of 11 from three"
+   },
+   {
+    "player": "Bam Adebayo",
+    "pts": 20,
+    "reb": 5,
+    "ast": 4,
+    "note": "9 of 13 from the line"
+   },
+   {
+    "player": "Davion Mitchell",
+    "pts": 15,
+    "reb": 4,
+    "ast": 9,
+    "note": ""
+   },
+   {
+    "player": "Andrew Wiggins",
+    "pts": 10,
+    "reb": 2,
+    "ast": 1,
+    "note": ""
+   }
+  ],
+  "DET": [
+   {
+    "player": "Cade Cunningham",
+    "pts": 33,
+    "reb": 5,
+    "ast": 8,
+    "note": "14 of 14 from the line"
+   },
+   {
+    "player": "Kevin Huerter",
+    "pts": 20,
+    "reb": 4,
+    "ast": 7,
+    "note": ""
+   },
+   {
+    "player": "Ausar Thompson",
+    "pts": 10,
+    "reb": 8,
+    "ast": 5,
+    "note": ""
+   }
+  ],
+  "MEM": [
+   {
+    "player": "Cedric Coward",
+    "pts": 23,
+    "reb": 12,
+    "ast": 4,
+    "note": ""
+   },
+   {
+    "player": "Taylor Hendricks",
+    "pts": 22,
+    "reb": 5,
+    "ast": 4,
+    "note": ""
+   },
+   {
+    "player": "Javon Small",
+    "pts": 19,
+    "reb": 2,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Cam Spencer",
+    "pts": 17,
+    "reb": 1,
+    "ast": 8,
+    "note": ""
+   },
+   {
+    "player": "Cameron Boozer",
+    "pts": 15,
+    "reb": 8,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Olivier-Maxence Prosper",
+    "pts": 11,
+    "reb": 4,
+    "ast": 0,
+    "note": ""
+   },
+   {
+    "player": "Isaiah Stewart",
+    "pts": 11,
+    "reb": 3,
+    "ast": 3,
+    "note": ""
+   }
+  ],
+  "BKN": [
+   {
+    "player": "Julius Randle",
+    "pts": 22,
+    "reb": 4,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Day'Ron Sharpe",
+    "pts": 16,
+    "reb": 11,
+    "ast": 5,
+    "note": ""
+   },
+   {
+    "player": "Noah Clowney",
+    "pts": 15,
+    "reb": 7,
+    "ast": 3,
+    "note": ""
+   },
+   {
+    "player": "Danny Wolf",
+    "pts": 14,
+    "reb": 6,
+    "ast": 1,
+    "note": ""
+   },
+   {
+    "player": "Egor Demin",
+    "pts": 11,
+    "reb": 1,
+    "ast": 2,
+    "note": ""
+   },
+   {
+    "player": "Nolan Traore",
+    "pts": 11,
+    "reb": 1,
+    "ast": 2,
+    "note": ""
+   }
+  ],
+  "CHI": [
+   {
+    "player": "Norman Powell",
+    "pts": 24,
+    "reb": 5,
+    "ast": 3,
+    "note": ""
+   },
+   {
+    "player": "Matas Buzelis",
+    "pts": 18,
+    "reb": 9,
+    "ast": 2,
+    "note": ""
+   },
+   {
+    "player": "Buddy Hield",
+    "pts": 16,
+    "reb": 4,
+    "ast": 2,
+    "note": ""
+   },
+   {
+    "player": "Tre Jones",
+    "pts": 16,
+    "reb": 4,
+    "ast": 3,
+    "note": ""
+   },
+   {
+    "player": "Patrick Williams",
+    "pts": 14,
+    "reb": 5,
+    "ast": 1,
+    "note": ""
+   }
+  ],
+  "MIN": [
+   {
+    "player": "Ayo Dosunmu",
+    "pts": 24,
+    "reb": 4,
+    "ast": 0,
+    "note": ""
+   },
+   {
+    "player": "LaMelo Ball",
+    "pts": 19,
+    "reb": 8,
+    "ast": 6,
+    "note": "7 of 25 FG, 4 of 19 from three"
+   },
+   {
+    "player": "Jaden McDaniels",
+    "pts": 18,
+    "reb": 5,
+    "ast": 6,
+    "note": ""
+   },
+   {
+    "player": "Terrence Shannon Jr",
+    "pts": 14,
+    "reb": 6,
+    "ast": 0,
+    "note": ""
+   },
+   {
+    "player": "Bones Hyland",
+    "pts": 12,
+    "reb": 1,
+    "ast": 2,
+    "note": ""
+   },
+   {
+    "player": "Rudy Gobert",
+    "pts": 1,
+    "reb": 10,
+    "ast": 4,
+    "note": "0 of 7 from the field in 26:53"
+   }
+  ]
+ },
+ "inactives": {
+  "CLE": [
+   {
+    "player": "Harden",
+    "reason": "Right Elbow Injury Management"
+   },
+   {
+    "player": "Merrill",
+    "reason": "Injury/Illness - Right Hamstring Injury Management"
+   },
+   {
+    "player": "Mitchell",
+    "reason": ""
+   },
+   {
+    "player": "Mobely",
+    "reason": ""
+   },
+   {
+    "player": "Tomlin",
+    "reason": ""
+   },
+   {
+    "player": "Udeh Jr.",
+    "reason": ""
+   }
+  ],
+  "MEM": [
+   {
+    "player": "Grant",
+    "reason": "Head Injury"
+   },
+   {
+    "player": "Jerome",
+    "reason": "Injury/Illness - Right Hip Soreness"
+   },
+   {
+    "player": "Pippen Jr.",
+    "reason": "Injury/Illness - Lumbar Disc Herniation"
+   },
+   {
+    "player": "Post",
+    "reason": "Injury/Illness - Concussion Protocol"
+   },
+   {
+    "player": "Saunders",
+    "reason": "Injury/Illness - Right Knee Surgery"
+   }
+  ],
+  "CHI": [
+   {
+    "player": "Awaka",
+    "reason": "Injury/Illness - Disc Irritation"
+   },
+   {
+    "player": "Claxton",
+    "reason": "Injury/Illness - Left Hamstring Injury Management"
+   },
+   {
+    "player": "Sellers",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "player": "Smith",
+    "reason": "Injury/Illness - Left Finger Sprain"
+   },
+   {
+    "player": "Swain",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "player": "Wilson",
+    "reason": "Injury/Illness - Right Metacarpal Fracture"
+   }
+  ],
+  "MIN": [
+   {
+    "player": "Broome",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "player": "DiVincenzo",
+    "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+   },
+   {
+    "player": "Edwards",
+    "reason": "Injury/Illness - Right Knee Arthroscopy"
+   }
+  ]
+ },
+ "inactives_not_preserved": [
+  "DEN",
+  "NOP",
+  "DAL",
+  "DET",
+  "MIA",
+  "BKN"
+ ],
+ "dnd_and_nwt_rows": [
+  {
+   "tri": "CLE",
+   "player": "Jarrett Allen",
+   "printed": "DND -- Right Knee Management"
+  },
+  {
+   "tri": "CLE",
+   "player": "Peyton Watson",
+   "printed": "DND -- Right Hamstring Management"
+  },
+  {
+   "tri": "MEM",
+   "player": "Zach Edey",
+   "printed": "DND - Injury/Illness - Left Ankle Injury Management"
+  },
+  {
+   "tri": "BKN",
+   "player": "Michael Porter Jr.",
+   "printed": "NWT - Personal -"
+  }
+ ],
+ "game_context": {
+  "0022600232": {
+   "attendance": 19432,
+   "duration_min": 138,
+   "notes": [
+    "points in the paint 54-42 Cleveland",
+    "Cleveland scored 38 points in the second quarter"
+   ]
+  },
+  "0022600233": {
+   "attendance": 19658,
+   "duration_min": 152,
+   "notes": [
+    "Miami blocked 14 shots, one short of the franchise record, with nine different players registering a block",
+    "points in the paint 52-50 Detroit; fast break 28-11 Miami",
+    "technical fouls: Holland II and Gardner, 6:23 of the second"
+   ]
+  },
+  "0022600234": {
+   "attendance": 15103,
+   "duration_min": null,
+   "notes": [
+    "Brooklyn's 16 turnovers produced 30 Memphis points"
+   ]
+  },
+  "0022600235": {
+   "attendance": 18054,
+   "duration_min": null,
+   "notes": [
+    "Minnesota's 17-point first quarter is its season low",
+    "technical fouls: T. Williams 6:24 of the third; Miller defensive three-second, 2:52 of the first"
+   ]
+  },
+  "0022600231": {
+   "attendance": null,
+   "duration_min": null,
+   "notes": [
+    "the recap on the game page records Dejounte Murray requesting a trade on Friday; he is listed inactive with a left ankle sprain"
+   ]
+  }
+ },
+ "league_context": [
+  "Memphis had 10 double-digit scorers on 2026-11-13 in its 142-111 win at New Orleans, tying the NBA record for one game.",
+  "Miami is the fourth team in 25 seasons to open 0-4 and then post a winning record, doing it 13 games in."
+ ],
+ "team_lines_discarded": {
+  "DAL": {
+   "printed": "39 of 93 FG, 14 of 44 from three, 25 of 31 FT",
+   "fgm": 39,
+   "ftm": 25,
+   "pts_final": 117,
+   "why": "2 x 39 + 25 = 103 != 117"
+  },
+  "CLE": {
+   "printed": "48 of 90 FG, 15 of 40 from three, 16 of 18 FT",
+   "fgm": 48,
+   "ftm": 16,
+   "pts_final": 127,
+   "why": "2 x 48 + 16 = 112 != 127"
+  },
+  "MIA": {
+   "printed": "44 of 87 FG, 16 of 41 from three, 33 of 40 FT",
+   "fgm": 44,
+   "ftm": 33,
+   "pts_final": 137,
+   "why": "2 x 44 + 33 = 121 != 137"
+  },
+  "DET": {
+   "printed": "39 of 97 FG, 11 of 34 from three, 28 of 32 FT",
+   "fgm": 39,
+   "ftm": 28,
+   "pts_final": 117,
+   "why": "2 x 39 + 28 = 106 != 117"
+  },
+  "MEM": {
+   "printed": "46 of 87 FG, 15 of 35 from three, 22 of 29 FT",
+   "fgm": 46,
+   "ftm": 22,
+   "pts_final": 129,
+   "why": "2 x 46 + 22 = 114 != 129"
+  },
+  "MIN": {
+   "printed": "38 of 91 FG, 9 of 38 from three, 21 of 28 FT",
+   "fgm": 38,
+   "ftm": 21,
+   "pts_final": 106,
+   "why": "2 x 38 + 21 = 97 != 106"
+  }
+ }
+}
