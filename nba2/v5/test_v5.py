@@ -6,6 +6,7 @@ Run with ``python -m unittest nba2.v5.test_v5 -v``.
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -212,6 +213,18 @@ class TestModel(unittest.TestCase):
 
 
 class TestPublished(unittest.TestCase):
+    def test_flag_source_urls_are_well_formed(self):
+        """A flag row links to a real gamebook path: /pdfs/<YYYYMMDD>/<YYYYMMDD>_<M>_book.pdf."""
+        from . import publish as P
+        pat = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
+        for fid, sev, where, url, wrong, published in P.FLAGS:
+            with self.subTest(flag=fid):
+                # Two flags are about the injury report, so they legitimately point at the
+                # official injury index rather than a gamebook.
+                if url == M.INJURY_INDEX_URL:
+                    continue
+                self.assertTrue(pat.match(url), f"{fid} links to {url!r}")
+
     def test_pages_exist_and_are_wired(self):
         site = T.ROOT / "site"
         for name in ("result-feed-v5.html", "playerlogs-full.html",
