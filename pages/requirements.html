@@ -112,8 +112,8 @@
 <td>Cover player prop bet combos</td>
 <td>Prop pricing math present and tested; combo legs priced with dependence</td>
 <td>blocked</td>
-<td>arena/20c4f2f9</td>
-<td>nba2/models/props.py implements NB tails + copula combos, but no official player-level input exists in the repo — every prop row is blank | 2026-11-15 session arena/f8f8f2b8-nba2: nba2/models/props.py implements NB tails + copula combos. The player-level INPUT now exists (193 measured game-log rows: minutes, points, rebounds, assists), but there is still no prop line to price against, so every prop row stays blank.</td>
+<td>arena/20c4f2f9 + arena/41bd6ce8-nba2</td>
+<td>nba2/models/props.py implements NB tails + copula combos, and the repo now holds official per-player game logs (5 players / 48 player-games, nba2/v4) — but no book publishes a prop line to this repository, so every prop price column stays blank. The remaining blocker is the market, not the player data.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -184,8 +184,8 @@
 <td>Track how injuries affect rotation minutes and production</td>
 <td>Official statuses joined to per-team rotation depth, with minutes/production impact fields present</td>
 <td>partial</td>
-<td>arena/20c4f2f9 + arena-23927d63</td>
-<td>91 official rows ingested; minutes/production columns blank by policy (report has no such fields) | 2026-11-15 session arena/f8f8f2b8-nba2: Minutes redistribution is now MEASURED, not a rule: top-8 minutes shares + replacement pool for 18 clubs read from the official gamebook PDFs of 2026-11-13. The observed in/out delta stays blank by design — it needs two captured games for the same club.</td>
+<td>arena/20c4f2f9 + arena-23927d63 + arena/41bd6ce8-nba2</td>
+<td>91 official rows ingested; minutes/production columns were blank by policy because the report has no such fields. Session arena/41bd6ce8-nba2 filled the production side from official logs for the clubs it captured (GSW, NOP): &#x27;Rotation impact&#x27; publishes minutes/PPG/RPG/APG designated out, the share of the club&#x27;s 240 team minutes that represents, and the official roster of players who must absorb it (their minutes deliberately blank — not captured, not estimated).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -484,8 +484,8 @@
 <td>Settle predictions against official final scores</td>
 <td>Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job | 2026-11-15 session arena/f8f8f2b8-nba2: official results feed (nba2.results-feed.v2) settles 5 verified finals for 2026-11-14; this session added 9 more verified 2026-11-13 finals with quarter scores. Per-pick ledger hashes committed pre-tip with a tamper test. Batch settlement of the pending slate still awaits an official-final capture in the scheduled job.</td>
+<td>arena/20c4f2f9 + arena/41bd6ce8-nba2</td>
+<td>official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; the injury side of settlement gained a second stored release this session (06:15 PM ET, diffed against 06:15 AM ET) so a status change is detected rather than noticed.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -556,8 +556,8 @@
 <td>Player-level minutes, usage and production</td>
 <td>Per-player per-game box score with minutes, plus on/off</td>
 <td>partial</td>
-<td>data vendor / owner</td>
-<td>per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured | 2026-11-15 session arena/f8f8f2b8-nba2: 193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus the 19 rows for 2026-11-14 DEN@NOP already in the repo. Player minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score (they did not play on 11-13).</td>
+<td>data vendor / owner + arena/41bd6ce8-nba2</td>
+<td>per-player game logs (minutes, points, rebounds, assists, opponent, official game id) captured for 5 players and 48 official player-games on 2026-11-15 by session arena/41bd6ce8-nba2: data/raw/capture_2026-11-15-41bd6ce8/player_gamelogs.json, published on &#x27;Player game logs&#x27;. Every player&#x27;s captured mean is checked against the PPG/RPG/APG the same official page prints (gate G-41-02, 15/15 pass). Coverage is 5 of the 31 Out/Questionable players on the 11/16 slate — two clubs were captured in full before the page budget was spent; two players&#x27; tables printed &#x27;No data available&#x27; (flagged, nothing substituted). Not scaled up, not estimated.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -771,9 +771,9 @@
 <td>Data request</td>
 <td>Official player-level game data (minutes, usage, on/off)</td>
 <td>stats.nba.com equivalent reachable from the build environment</td>
-<td>blocked</td>
-<td>owner (you)</td>
-<td>unblocks injury impact, props, and combo correlation</td>
+<td>partial</td>
+<td>owner (you) + arena/41bd6ce8-nba2</td>
+<td>NOT blocked any more — the data is reachable per player at nba.com/stats/player/{id}/boxscores-traditional, measured live 2026-11-15. What is unreachable: cdn.nba.com JSON (HTTP 500) and nba.com/stats/players/traditional (&#x27;No data available&#x27;), so there is no league-wide one-shot table and coverage scales with pages read. 5 players captured this session; the parser, the gates and the pages are committed (nba2/v4) and extend by adding players to the same schema.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
