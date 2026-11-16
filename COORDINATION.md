@@ -3663,4 +3663,6 @@ from `arena/0429aad7-nba2` after the rebase and force-with-lease branch update. 
 head was `765aa62688575e41b9f1110fd185baaccb7f7934`. At the 2026-11-16T00:43Z check, the
 `backtest`, `parity`, `v2` and `verify` Actions checks were still queued (runs `43779948383`,
 `43779948612` and `43779948408`); no CI pass/fail result was available. PR #80 is open and
-unmerged. No Pages deployment is claimed.
+unmerged. No Pages deployment is claimed. After the documentation-only push to `2e2a9d2`,
+`gh pr checks 80` reported no checks for that latest SHA; the queued runs above belong to the
+opening code head `765aa62`, which has the same tested implementation.
