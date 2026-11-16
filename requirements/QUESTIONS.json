@@ -368,6 +368,42 @@
       "how": "Accept the rule: the generator and the verifiers change, the sealed artefact never does; corrections ship as a second column, not as an edit. Already the convention for the ledger (data/raw/ledger, 2/2 verify).",
       "impact": "Decides whether a '4-0' headline may appear anywhere on a public page. It may not: the same four rows on the intended side are 3-1, and n=4 grades nothing either way.",
       "severity": "LOW"
+    },
+    {
+      "id": "Q-40",
+      "question": "Which Pages configuration is authoritative: the API's 'legacy, main /' setting, or the served tree (the v2 dashboard at the site root)?",
+      "have": "Both sides measured 2026-11-16: the GitHub Pages API reports build_type 'legacy', source 'main /', while fetching https://wingbangboozle1-lang.github.io/NBA2/ returns the v2 dashboard ('Dashboard · NBA2 Lines Lab v2'). The disagreement is documented as FLAG-PAGES-01 / F-033 / F-039 and was re-confirmed this session from both sides.",
+      "missing": "An owner decision: either flip the Pages source to 'GitHub Actions' (so the config matches what is served and pages.yml owns the deploy), or confirm the legacy setting is intentional.",
+      "how": "Repository Settings → Pages. Until decided, every deploy is verified by fetching the live URLs, not by trusting the API field.",
+      "impact": "Determines which tree is guaranteed to publish and who can break the deploy by pushing to main.",
+      "severity": "high"
+    },
+    {
+      "id": "Q-41",
+      "question": "Should the retained v1 dashboard tree stay frozen at its 2026-11-14 snapshot, or roll forward?",
+      "have": "The v1 tree is labelled 'retained, not published' and carries its as-of date. Its backtest now grades only through its own snapshot (grading_as_of = 2026-11-14; 188 games / 172 graded) so the published walk-forward claim stays true to its snapshot — crosscheck CC-BT-02 enforces it. Later finals stay model inputs and settle through the sealed ledgers. The age of the frozen snapshot is disclosed (CC-FRESH-01/02) and excluded from the blocking gate.",
+      "missing": "Owner confirmation of the freeze policy (and, if it should ever roll, who owns re-cutting the slate snapshot and re-sealing).",
+      "how": "A one-word decision; the mechanics exist either way (the nightly ingest rolls v2/v4).",
+      "impact": "What 'walk-forward accuracy' means on the legacy surface, and whether CC-FRESH-01 is a defect or a disclosure there.",
+      "severity": "medium"
+    },
+    {
+      "id": "Q-42",
+      "question": "Who provides a network-capable archival step for the original injury-report PDF bytes?",
+      "have": "Transcribed rows with official URLs, revision + retrieval stamps and sha256 content hashes are published (F-V4-01). tools/probe_official.py + probe.yml record which official hosts are reachable (statsdmz and ak-static reachable from GitHub runners per the f8f8f2b8 record; ak-static blocked from this sandbox's egress).",
+      "missing": "A step in the ingest that stores the PDF bytes themselves with their file hashes — the one thing the brief's 'store every injury PDF' asks for that transcripts cannot substitute.",
+      "how": "Add a download-and-hash step to refresh.yml (runners can reach ak-static.cms.nba.com) writing to an archive path with per-file sha256; nothing else changes.",
+      "impact": "Without the bytes, tamper-evidence for releases rests on content hashes of transcripts, not the official files.",
+      "severity": "medium"
+    },
+    {
+      "id": "Q-43",
+      "question": "Which licensed odds feed (closing spread / total / moneyline) will be connected?",
+      "have": "The market-anchored prior framework is frozen with w_market blank; the bet surface publishes 0 rows and 29 explicit G6 refusals; every stake is 0.00 and the gate is printed on every row.",
+      "missing": "The feed itself (a licence and an endpoint). Nothing in the repo can substitute a market price.",
+      "how": "Owner procurement; the model-side hook (market_prior()) is already implemented and unit-shaped for it.",
+      "impact": "Blocks staking, CLV, ROI, the measured market-prior weight, and every strategy reward on the leaderboard.",
+      "severity": "high"
     }
   ]
 }

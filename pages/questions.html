@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Questions</h2><p>What must be known before a reasonable decision can be made — and how to go find out.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:45 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="questions" data-rows="39">
+    <section class="card table-card" id="questions" data-rows="43">
 <h2>Open questions — the decision list</h2>
 <p class="blurb">Ordered by how much money a wrong answer costs, not by how interesting they are. Each row states what is already known so nobody re-asks it.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Open questions — the decision list</caption><thead><tr>
@@ -459,6 +459,50 @@
 <td>Accept the rule: the generator and the verifiers change, the sealed artefact never does; corrections ship as a second column, not as an edit. Already the convention for the ledger (data/raw/ledger, 2/2 verify).</td>
 <td>Decides whether a &#x27;4-0&#x27; headline may appear anywhere on a public page. It may not: the same four rows on the intended side are 3-1, and n=4 grades nothing either way.</td>
 <td>LOW</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-40">
+<td>Q-40</td>
+<td>Which Pages configuration is authoritative: the API&#x27;s &#x27;legacy, main /&#x27; setting, or the served tree (the v2 dashboard at the site root)?</td>
+<td>Both sides measured 2026-11-16: the GitHub Pages API reports build_type &#x27;legacy&#x27;, source &#x27;main /&#x27;, while fetching https://wingbangboozle1-lang.github.io/NBA2/ returns the v2 dashboard (&#x27;Dashboard · NBA2 Lines Lab v2&#x27;). The disagreement is documented as FLAG-PAGES-01 / F-033 / F-039 and was re-confirmed this session from both sides.</td>
+<td>An owner decision: either flip the Pages source to &#x27;GitHub Actions&#x27; (so the config matches what is served and pages.yml owns the deploy), or confirm the legacy setting is intentional.</td>
+<td>Repository Settings → Pages. Until decided, every deploy is verified by fetching the live URLs, not by trusting the API field.</td>
+<td>Determines which tree is guaranteed to publish and who can break the deploy by pushing to main.</td>
+<td>high</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-41">
+<td>Q-41</td>
+<td>Should the retained v1 dashboard tree stay frozen at its 2026-11-14 snapshot, or roll forward?</td>
+<td>The v1 tree is labelled &#x27;retained, not published&#x27; and carries its as-of date. Its backtest now grades only through its own snapshot (grading_as_of = 2026-11-14; 188 games / 172 graded) so the published walk-forward claim stays true to its snapshot — crosscheck CC-BT-02 enforces it. Later finals stay model inputs and settle through the sealed ledgers. The age of the frozen snapshot is disclosed (CC-FRESH-01/02) and excluded from the blocking gate.</td>
+<td>Owner confirmation of the freeze policy (and, if it should ever roll, who owns re-cutting the slate snapshot and re-sealing).</td>
+<td>A one-word decision; the mechanics exist either way (the nightly ingest rolls v2/v4).</td>
+<td>What &#x27;walk-forward accuracy&#x27; means on the legacy surface, and whether CC-FRESH-01 is a defect or a disclosure there.</td>
+<td>medium</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-42">
+<td>Q-42</td>
+<td>Who provides a network-capable archival step for the original injury-report PDF bytes?</td>
+<td>Transcribed rows with official URLs, revision + retrieval stamps and sha256 content hashes are published (F-V4-01). tools/probe_official.py + probe.yml record which official hosts are reachable (statsdmz and ak-static reachable from GitHub runners per the f8f8f2b8 record; ak-static blocked from this sandbox&#x27;s egress).</td>
+<td>A step in the ingest that stores the PDF bytes themselves with their file hashes — the one thing the brief&#x27;s &#x27;store every injury PDF&#x27; asks for that transcripts cannot substitute.</td>
+<td>Add a download-and-hash step to refresh.yml (runners can reach ak-static.cms.nba.com) writing to an archive path with per-file sha256; nothing else changes.</td>
+<td>Without the bytes, tamper-evidence for releases rests on content hashes of transcripts, not the official files.</td>
+<td>medium</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
+</tr>
+<tr id="Q-43">
+<td>Q-43</td>
+<td>Which licensed odds feed (closing spread / total / moneyline) will be connected?</td>
+<td>The market-anchored prior framework is frozen with w_market blank; the bet surface publishes 0 rows and 29 explicit G6 refusals; every stake is 0.00 and the gate is printed on every row.</td>
+<td>The feed itself (a licence and an endpoint). Nothing in the repo can substitute a market price.</td>
+<td>Owner procurement; the model-side hook (market_prior()) is already implemented and unit-shaped for it.</td>
+<td>Blocks staking, CLV, ROI, the measured market-prior weight, and every strategy reward on the leaderboard.</td>
+<td>high</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-QUEST-01">FLAG-QUEST-01</a></td>
 </tr>

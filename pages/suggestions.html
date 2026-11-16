@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:45 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="58">
+    <section class="card table-card" id="suggestions" data-rows="62">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -786,6 +786,58 @@
 <td>None.</td>
 <td>Accept.</td>
 <td>awaiting owner decision</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-60">
+<td>S-60</td>
+<td>Align the Pages configuration with what is actually served</td>
+<td>The Pages API says legacy main/root; the live host serves the v2 site/ tree. A future push that assumes either story can silently replace the published site with the v1 tree.</td>
+<td>After the owner answers Q-40, flip the source to &#x27;GitHub Actions&#x27; so pages.yml owns the deploy and the declared config matches the served tree.</td>
+<td>The deploy path becomes explainable from the settings page alone.</td>
+<td>S</td>
+<td>A deploy-path change; verify by fetching the live URLs before and after.</td>
+<td>RECOMMENDED after Q-40</td>
+<td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-61">
+<td>S-61</td>
+<td>Watch the repaired nightly ingest now that the CR-7 gate can actually fire</td>
+<td>The semantic cross-check could never block a commit (grep case bug) and checker crashes were swallowed. Both are fixed, but no run has yet proven the loop end-to-end on GitHub runners.</td>
+<td>Trigger refresh.yml manually once, watch gates + crosscheck + commit, and add a failed-run alert (the F-043 diagnosis tooling, probe.yml, is already in place).</td>
+<td>The freshness/provenance loop stops being unwatched infrastructure.</td>
+<td>S</td>
+<td>None — read-only observation first.</td>
+<td>RECOMMENDED</td>
+<td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-62">
+<td>S-62</td>
+<td>Extend per-player game logs to every injury-report game via the validated box-score route</td>
+<td>Player logs exist for 11/13–11/14; 11/15–11/16 were not transcribed (F-V4-02), so injury impact on production stays blank.</td>
+<td>Use the statsdmz gamebook route (validated this session: the DAL@BOS book parsed cleanly through the page-fetch tool) to transcribe the remaining windows, or run the transcription on a runner with network access.</td>
+<td>Closes the minutes/production half of the injury-impact brief line.</td>
+<td>M</td>
+<td>Extraction artefacts (the F-V4-05/06 class) must stay blank+flagged, never inferred.</td>
+<td>RECOMMENDED</td>
+<td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="S-63">
+<td>S-63</td>
+<td>Archive injury PDF bytes with hashes in the ingest (answers Q-42 mechanically)</td>
+<td>The brief asks for stored PDFs; the pipeline stores transcripts with content hashes because the sandbox cannot reach ak-static.</td>
+<td>refresh.yml runs on GitHub runners, which CAN reach ak-static.cms.nba.com (per the f8f8f2b8 reachability record): add a download + sha256 + archive step next to the existing archive step, and verify the hash against the transcription&#x27;s content hash.</td>
+<td>Every future release is archived as the official file; past releases can be back-filled once.</td>
+<td>S</td>
+<td>None — additive storage.</td>
+<td>RECOMMENDED</td>
+<td>open</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

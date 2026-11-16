@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:45 UTC",
-  "input_digest": "80cbea7152da74a857623c70cecf736a7944713cf1396d7bb2c61639a922976e",
+  "input_digest": "183c7a3e2bc3c430bad27eb9be1aa084a5d2e4e41f670beb68a01ec0bfb3b566",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -31150,9 +31150,133 @@
       "FLAG-QUEST-01"
      ],
      "verified": false
+    },
+    {
+     "key": "Q-40",
+     "values": {
+      "id": "Q-40",
+      "question": "Which Pages configuration is authoritative: the API's 'legacy, main /' setting, or the served tree (the v2 dashboard at the site root)?",
+      "have": "Both sides measured 2026-11-16: the GitHub Pages API reports build_type 'legacy', source 'main /', while fetching https://wingbangboozle1-lang.github.io/NBA2/ returns the v2 dashboard ('Dashboard · NBA2 Lines Lab v2'). The disagreement is documented as FLAG-PAGES-01 / F-033 / F-039 and was re-confirmed this session from both sides.",
+      "missing": "An owner decision: either flip the Pages source to 'GitHub Actions' (so the config matches what is served and pages.yml owns the deploy), or confirm the legacy setting is intentional.",
+      "how": "Repository Settings → Pages. Until decided, every deploy is verified by fetching the live URLs, not by trusting the API field.",
+      "impact": "Determines which tree is guaranteed to publish and who can break the deploy by pushing to main.",
+      "severity": "high"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-41",
+     "values": {
+      "id": "Q-41",
+      "question": "Should the retained v1 dashboard tree stay frozen at its 2026-11-14 snapshot, or roll forward?",
+      "have": "The v1 tree is labelled 'retained, not published' and carries its as-of date. Its backtest now grades only through its own snapshot (grading_as_of = 2026-11-14; 188 games / 172 graded) so the published walk-forward claim stays true to its snapshot — crosscheck CC-BT-02 enforces it. Later finals stay model inputs and settle through the sealed ledgers. The age of the frozen snapshot is disclosed (CC-FRESH-01/02) and excluded from the blocking gate.",
+      "missing": "Owner confirmation of the freeze policy (and, if it should ever roll, who owns re-cutting the slate snapshot and re-sealing).",
+      "how": "A one-word decision; the mechanics exist either way (the nightly ingest rolls v2/v4).",
+      "impact": "What 'walk-forward accuracy' means on the legacy surface, and whether CC-FRESH-01 is a defect or a disclosure there.",
+      "severity": "medium"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-42",
+     "values": {
+      "id": "Q-42",
+      "question": "Who provides a network-capable archival step for the original injury-report PDF bytes?",
+      "have": "Transcribed rows with official URLs, revision + retrieval stamps and sha256 content hashes are published (F-V4-01). tools/probe_official.py + probe.yml record which official hosts are reachable (statsdmz and ak-static reachable from GitHub runners per the f8f8f2b8 record; ak-static blocked from this sandbox's egress).",
+      "missing": "A step in the ingest that stores the PDF bytes themselves with their file hashes — the one thing the brief's 'store every injury PDF' asks for that transcripts cannot substitute.",
+      "how": "Add a download-and-hash step to refresh.yml (runners can reach ak-static.cms.nba.com) writing to an archive path with per-file sha256; nothing else changes.",
+      "impact": "Without the bytes, tamper-evidence for releases rests on content hashes of transcripts, not the official files.",
+      "severity": "medium"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "Q-43",
+     "values": {
+      "id": "Q-43",
+      "question": "Which licensed odds feed (closing spread / total / moneyline) will be connected?",
+      "have": "The market-anchored prior framework is frozen with w_market blank; the bet surface publishes 0 rows and 29 explicit G6 refusals; every stake is 0.00 and the gate is printed on every row.",
+      "missing": "The feed itself (a licence and an endpoint). Nothing in the repo can substitute a market price.",
+      "how": "Owner procurement; the model-side hook (market_prior()) is already implemented and unit-shaped for it.",
+      "impact": "Blocks staking, CLV, ROI, the measured market-prior weight, and every strategy reward on the leaderboard.",
+      "severity": "high"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-QUEST-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
@@ -32978,9 +33102,141 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "S-60",
+     "values": {
+      "id": "S-60",
+      "title": "Align the Pages configuration with what is actually served",
+      "problem": "The Pages API says legacy main/root; the live host serves the v2 site/ tree. A future push that assumes either story can silently replace the published site with the v1 tree.",
+      "proposal": "After the owner answers Q-40, flip the source to 'GitHub Actions' so pages.yml owns the deploy and the declared config matches the served tree.",
+      "benefit": "The deploy path becomes explainable from the settings page alone.",
+      "effort": "S",
+      "risk": "A deploy-path change; verify by fetching the live URLs before and after.",
+      "recommendation": "RECOMMENDED after Q-40",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-61",
+     "values": {
+      "id": "S-61",
+      "title": "Watch the repaired nightly ingest now that the CR-7 gate can actually fire",
+      "problem": "The semantic cross-check could never block a commit (grep case bug) and checker crashes were swallowed. Both are fixed, but no run has yet proven the loop end-to-end on GitHub runners.",
+      "proposal": "Trigger refresh.yml manually once, watch gates + crosscheck + commit, and add a failed-run alert (the F-043 diagnosis tooling, probe.yml, is already in place).",
+      "benefit": "The freshness/provenance loop stops being unwatched infrastructure.",
+      "effort": "S",
+      "risk": "None — read-only observation first.",
+      "recommendation": "RECOMMENDED",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-62",
+     "values": {
+      "id": "S-62",
+      "title": "Extend per-player game logs to every injury-report game via the validated box-score route",
+      "problem": "Player logs exist for 11/13–11/14; 11/15–11/16 were not transcribed (F-V4-02), so injury impact on production stays blank.",
+      "proposal": "Use the statsdmz gamebook route (validated this session: the DAL@BOS book parsed cleanly through the page-fetch tool) to transcribe the remaining windows, or run the transcription on a runner with network access.",
+      "benefit": "Closes the minutes/production half of the injury-impact brief line.",
+      "effort": "M",
+      "risk": "Extraction artefacts (the F-V4-05/06 class) must stay blank+flagged, never inferred.",
+      "recommendation": "RECOMMENDED",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "S-63",
+     "values": {
+      "id": "S-63",
+      "title": "Archive injury PDF bytes with hashes in the ingest (answers Q-42 mechanically)",
+      "problem": "The brief asks for stored PDFs; the pipeline stores transcripts with content hashes because the sandbox cannot reach ak-static.",
+      "proposal": "refresh.yml runs on GitHub runners, which CAN reach ak-static.cms.nba.com (per the f8f8f2b8 reachability record): add a download + sha256 + archive step next to the existing archive step, and verify the hash against the transcription's content hash.",
+      "benefit": "Every future release is archived as the official file; past releases can be back-filled once.",
+      "effort": "S",
+      "risk": "None — additive storage.",
+      "recommendation": "RECOMMENDED",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
