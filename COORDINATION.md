@@ -4393,3 +4393,170 @@ as the final integration session for the 2026-11-16 round.
 | A5 | Line-by-line re-verification of the combined tree: v1/v2/v3/v4 + backtest tests, gates, provenance lint, internal/external link scan, parity rebuild | pending | `analysis/session-a11505e1-verification.md` | every checker green or the failure disclosed on the Flagged page |
 | A6 | Brief-audit register: each brief line mapped to its implementation + official source links, gaps and missing-information questions | pending | `analysis/session-a11505e1-brief-audit.md`, `requirements/`, `suggestions/`, `analysis/questions.md` | no value without an official source link; gaps flagged, never inferred |
 | A7 | PR -> `main` -> merge -> Pages deploy confirmed live -> record here | pending | `COORDINATION.md` | live fetch returns the new pages; checks green on the merged SHA |
+
+---
+
+## Takeover record — PR #80 (`arena/0429aad7-nba2`) by `arena/a11505e1-nba2` (2026-11-16 ~19:0x UTC)
+
+Claim stale >60 min with no commits (last commit 2026-11-16 00:44 UTC); taken over per the
+handoff rule. The full session record of `arena/0429aad7-nba2` is preserved below (copied
+verbatim from its branch `arena/0429aad7-nba2` at `3dd1961`).
+
+**What was integrated (A2, PR #80 essence):**
+
+| Ported into the merged tree | Where |
+|---|---|
+| `newest_release_from_index()` — order-independent chronological injury-release selection (the `links[0]` picker assumed "newest first" and selected the OLDEST report) | `nba2/v2/refresh.py`, test `test_injury_index_selection_uses_latest_timestamp_not_link_order` |
+| Strict page-level team-stat provenance (`team_stats.<page>.source_url`) | `nba2/v2/refresh.py`, test `test_team_stats_gate_requires_a_page_level_source` |
+| Season-record reconciliation: `load_committed_final_records`, `merge_final_records`, `_normalise_final_record`, `_gate_standings_snapshot`, baseline `gate_standings` (rebuild every W/L row from unique committed finals + fresh feed; missing baseline falls back to the snapshot contract so fixture callers keep working) | `nba2/v2/refresh.py`, `TestSeasonToDateStandingsGate` (5 tests), `TestIntegratedGateChain` |
+| `main()` now fetches finals for prior days + today and always passes the committed baseline to the standings gate | `nba2/v2/refresh.py` |
+
+**What was NOT ported, and why:** PR #80's parallel `gate_finals`/`gate_slate`/`fetch_finals`
+variants (fixture shapes `checked_dates`/`scheduled_games_by_date`) are laterally equivalent
+to the fail-closed implementations already merged from session `arena/a95e2125-nba2`
+(`covered_dates`, `games_seen_by_date`/`finals_by_date`). Both cannot live in one module;
+the already-tested merged implementations were kept. PR #80's test scenarios were adapted
+to those shapes with every assertion intent preserved — see the module docstring of
+`nba2/v2/test_refresh_gate_audit.py`. The one stale hard-coded count assertion (188 games)
+was rewritten as its invariant (unique history rebuilds exactly to the captured standings),
+per the RR-37 lesson.
+
+**Verification (this session, 2026-11-16):** `nba2.v2` suite 161 tests OK (146 pre-existing +
+15 adapted A429 tests); v2 check 0 structural / 0 semantic; no published value changed.
+
+### Preserved record — session `arena/0429aad7-nba2` (verbatim from its branch)
+
+## Session `arena/0429aad7-nba2` — CLAIM (2026-11-15 UTC)
+
+**Objective:** independently audit the current merged tree and live-published site against the
+brief, run the repository's verification chain, and report any reproducible gaps or irregularities.
+This is a review-only task; it does not duplicate the in-flight ingestion/source-capture work in
+PRs #70 and #72.
+
+**Claimed scope:** `analysis/session-0429aad7-audit.md` (new file only) and this file (`COORDINATION.md`,
+append-only). No generated site, model, official snapshots, source data, or workflow file will be
+edited by this session. Any production change request discovered during the audit will be logged here
+for the owning session instead of being applied across another session's scope.
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| A429-01 | Record review-only claim before work | in progress | `arena/0429aad7-nba2` | `COORDINATION.md` |
+| A429-02 | Run the published build/check/test/link/provenance chain | in progress | `arena/0429aad7-nba2` | no edits |
+| A429-03 | Independently inspect source links, timestamps, and flagged items for the merged site | in progress | `arena/0429aad7-nba2` | no edits |
+| A429-04 | Record reproducible results, open questions, and file-scoped change requests | unclaimed | `arena/0429aad7-nba2` | `analysis/session-0429aad7-audit.md`, `COORDINATION.md` |
+
+### Rebase conflict resolution — session `arena/0429aad7-nba2` (2026-11-15 UTC)
+
+During the required `git pull --rebase origin main` after the claim extension, `origin/main` advanced from `8ab2476` to `2d63974` (PR #75). This append/append conflict in `COORDINATION.md` was resolved by retaining both the newly merged `arena/56b96bf0-nba2` session record and this session's claim. The merged block had literal `\n` escape sequences instead of line breaks; only those separators were decoded to restore readable Markdown. No session content was dropped.
+
+### Scope addition — A429-05 (claimed before implementation)
+
+The independent audit reproduced a deterministic defect in the scheduled v2 refresh gates:
+`main()` fetches finals for yesterday through seven days ago, but evaluates a finals gate that
+also requires a final for today; the standings gate then compares a seven-day result slice to
+full-season standings. Both gates fail on valid data, so the v2 refresh cannot reach its write /
+rebuild path. `nba2/v2/refresh.py` and a new fixture-only test file are not in the file lists of
+active PRs #70 or #72. The workflow file itself remains outside this claim because active PRs own
+it; workflow staging/rebuild requests will be logged for those owners instead of editing it here.
+
+**Added scope:** `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` (new only), and this
+append-only board. No workflow, site, capture, source-data, or other session-owned test file will be
+edited.
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| A429-05 | Repair and fixture-test the deterministic v2 refresh gate defects without changing another session's workflow | in progress | `arena/0429aad7-nba2` | `nba2/v2/refresh.py`, `nba2/v2/test_refresh_gate_audit.py` |
+
+### A429 audit and implementation update (2026-11-15 UTC)
+
+The independent findings and verification log are in `analysis/session-0429aad7-audit.md`.
+The A429-05 implementation remains limited to `nba2/v2/refresh.py` and the new
+`nba2/v2/test_refresh_gate_audit.py`; no workflow, site, capture, source-data, or other
+session-owned file was changed.
+
+- **Finals gate reproduction:** the previous rolling request covered 2026-11-14 through
+  2026-11-08, but `main()` also required a result for the 2026-11-15 anchor date. The
+  revised gate records checked dates and scheduled game/status rows, requires finals only
+  on supplied completed dates, accepts checked no-game dates, and fails closed for an
+  unchecked date, missing inventory, non-final game or malformed final record.
+- **Standings gate reproduction:** the previous code compared 30 season-to-date standings
+  rows against 49 recent finals. The revised gate uses the 188 unique committed results as
+  its baseline, overlays recent/current scoreboard finals by game ID, surfaces conflicting
+  duplicates and malformed/unmapped records, and checks all 30 standings rows. The
+  committed 188-game capture rebuild test passes.
+- **Additional in-file guard coverage:** the four-day slate records its queried dates;
+  page-level team-stat provenance is checked; injury PDF links are sorted by parsed
+  timestamp rather than HTML order. The latter behavior is backed by the official index
+  [official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/) and
+  [the 2026-11-15 06:15 AM PDF](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15AM.pdf).
+- **Tests:** 15 fixture-only A429 tests, 151 tests in the full v2 suite, 70 base tests and
+  33 v3 tests passed. The existing v3 checker still reports 7 gate passes / 1 gate failure
+  with `publishable=True`; details and scope limits are in the audit report.
+- **Other verification:** v2 checker 0 structural / 0 semantic issues; internal link scan
+  5,547 links clean; provenance lint 1,423 rows / 50 tables; sealed-ledger verification
+  passed (27 predictions); crosscheck 90 pass / 0 fail / 7 info; backtest verification
+  passed. Existing `ResourceWarning`s in `nba2/v2/model.py` and `nba2/v2/travel.py` were
+  observed but are outside scope.
+
+**Needs owner review (not published to the Flagged page by this session):** live official
+standings report PHI 11-3, IND 5-9, LAL 12-2 and PHX 5-7, while the dated NBA2 table remains
+PHI 10-3, IND 5-8, LAL 11-2 and PHX 5-6. The official [standings](https://www.nba.com/standings)
+and [2026-11-15 schedule](https://www.nba.com/schedule?date=2026-11-15) show IND–PHI and
+LAL–PHX finals. The live `picks.html` 11/15 NYK–TOR row points to game ID `0022600253`,
+while the [official 11/15 schedule](https://www.nba.com/schedule?date=2026-11-15) and
+[official game page](https://www.nba.com/game/nyk-vs-tor-0022600241) identify `0022600241`.
+The [Flagged for Review page](https://wingbangboozle1-lang.github.io/NBA2/flagged.html)
+needs an owner update for these new observations; editing it is outside this claim.
+
+The injury gate still checks presence of the report URL and two timestamps, not recency
+against the last game date. That limitation is explicitly documented in `refresh.py` and
+filed as a separate owner request. PR #72's failed run
+[43714472051](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43714472051), job
+`132812900286`, stopped at “v2 model + source-completeness tests”; the failing assertion
+remains unverified. No direct live `refresh --check-only` was run because shell egress to
+NBA hosts is blocked. PR, merge and Pages deployment confirmation remain pending at this
+append; no deployment claim is made.
+
+### A429 task status (2026-11-15 UTC)
+
+The review, source checks, scoped gate implementation, regression fixtures and audit report are
+complete. The working tree is limited to the claimed refresh module/test, the audit report and
+this append-only board. PR creation, merge and any post-merge Pages confirmation remain next.
+
+### A429 rebase and verification update (2026-11-16 UTC)
+
+The integration base advanced from `2d63974` to `996e92e` during `git pull --rebase origin main`.
+That main revision includes PR #77's first-stage refresh-gate correction and PR #76's v2 test
+side-effect fix. The append conflicts were resolved by retaining both upstream session records
+and A429's claim/completion. A429's production change now builds on PR #77: it keeps the detailed
+per-game scoreboard inventory and count-schema compatibility, while the operational standings
+gate rebuilds all 30 records from deduplicated committed finals plus the fresh scoreboard feed.
+The injury-link timestamp selection and slate/team-stat provenance checks remain in the scoped
+refresh module. No workflow, site, capture or sealed data was edited.
+
+**Verification after the rebase:** 15 A429 fixture tests, 151 full v2 tests, 70 base tests and
+33 v3 tests passed. `py_compile`, `git diff --check`, v2 check (0 structural / 0 semantic), v3
+check (7 gates pass / 1 fail, `publishable=True`), pipeline lint (1,423 rows / 50 tables),
+27-prediction seal verification, backtest verification (12 pages / 183 sourced rows), and the
+internal-link scan (121 HTML files / 5,547 links) passed. Existing v2 `ResourceWarning`s in
+`model.py` and `travel.py` remain outside scope.
+
+The re-run of `tools/crosscheck_site.py` at 2026-11-16T00:19Z reports 89 pass / 1 fail / 7 info.
+The sole failure is CC-FRESH-01: the published snapshot is measured as two days old while four
+dates in its window have games already tipped or tipping. The prior 90/0/7 result was the
+2026-11-15 run; the age-based failure is a current site/data refresh follow-up, not a regression
+in the refresh-gate unit tests. No live `refresh --check-only` or Pages deployment was confirmed.
+
+As of this update A429-01..04 are complete and A429-05's implementation/tests are complete;
+PR creation, merge, the site freshness follow-up and Pages confirmation remain pending.
+
+### A429 pull request update (2026-11-16 UTC)
+
+PR [#80](https://github.com/wingbangboozle1-lang/NBA2/pull/80) was opened against `main`
+from `arena/0429aad7-nba2` after the rebase and force-with-lease branch update. Its opening
+head was `765aa62688575e41b9f1110fd185baaccb7f7934`. At the 2026-11-16T00:43Z check, the
+`backtest`, `parity`, `v2` and `verify` Actions checks were still queued (runs `43779948383`,
+`43779948612` and `43779948408`); no CI pass/fail result was available. PR #80 is open and
+unmerged. No Pages deployment is claimed. After the documentation-only push to `2e2a9d2`,
+`gh pr checks 80` reported no checks for that latest SHA; the queued runs above belong to the
+opening code head `765aa62`, which has the same tested implementation.

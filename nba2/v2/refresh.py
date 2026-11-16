@@ -31,10 +31,12 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
+from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw"
@@ -55,6 +57,39 @@ URLS = {
     "boxscore": "https://stats.nba.com/stats/boxscoretraditionalv2?GameID={gid}&SeasonType=Regular+Season",
     "injury_index": "https://official.nba.com/nba-injury-report-2026-27-season/",
 }
+
+INJURY_PDF_LINK_RE = re.compile(
+    r'href=["\']([^"\']*Injury-Report_(\d{4}-\d{2}-\d{2})_(\d{2})_(\d{2})(AM|PM)\.pdf)["\']',
+    re.IGNORECASE,
+)
+
+
+def newest_release_from_index(html: str) -> dict | None:
+    """Choose the chronologically newest official injury PDF, independent of HTML order.
+
+    The official index has historically rendered releases in ascending timestamp order.
+    Taking ``links[0]`` (the earlier implementation) therefore selected the oldest report.
+    Parse each filename's release stamp instead of assuming the page's presentation order.
+    (Ported from PR #80, session arena/0429aad7-nba2, by the integration session.)
+    """
+    candidates = []
+    for match in INJURY_PDF_LINK_RE.finditer(html):
+        raw_url, date_s, hour_s, minute_s, ampm = match.groups()
+        try:
+            stamp = dt.datetime.strptime(
+                f"{date_s} {hour_s}:{minute_s} {ampm.upper()}",
+                "%Y-%m-%d %I:%M %p",
+            )
+        except ValueError:
+            continue
+        candidates.append((stamp, urljoin(URLS["injury_index"], raw_url)))
+    if not candidates:
+        return None
+    stamp, url = max(candidates, key=lambda item: item[0])
+    return {
+        "pdf_url": url,
+        "revision_time_et": stamp.strftime("%Y-%m-%d %I:%M %p ET"),
+    }
 
 
 def http_get(url: str, tries: int = RETRIES) -> bytes:
@@ -171,16 +206,14 @@ def fetch_team_stats() -> dict:
 
 
 def fetch_newest_injury_release() -> dict:
-    """Parse the league's official index for the newest release link; fetch it; stamp both times."""
+    """Parse the official index and choose the newest timestamped PDF link."""
     html = http_get(URLS["injury_index"]).decode("utf-8", "replace")
-    import re
-    links = re.findall(r'href="([^"]*Injury-Report_[^"]*\.pdf)"', html)
-    if not links:
-        raise RuntimeError("no injury PDF links on the official index — refusing to guess")
-    newest = links[0]  # the index lists newest first
-    return {"index_url": URLS["injury_index"], "pdf_url": newest,
+    release = newest_release_from_index(html)
+    if not release:
+        raise RuntimeError("no timestamped injury PDF links on the official index — refusing to guess")
+    return {"index_url": URLS["injury_index"], "pdf_url": release["pdf_url"],
             "retrieval_time_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-            "revision_time_et": "_".join(newest.split("_")[-2:]).replace(".pdf", "")}
+            "revision_time_et": release["revision_time_et"]}
 
 
 # --------------------------------------------------------------------------- gates
@@ -214,40 +247,243 @@ def gate_finals(dates: list[str], finals: dict) -> dict:
             "detail": "; ".join(issues) if issues else "all scheduled games on covered dates are final; off-days are valid"}
 
 
-def gate_standings(standings: dict, finals: dict) -> dict:
-    """Validate a season-to-date standings snapshot internally, not against a partial feed."""
-    rows = standings.get("rows", [])
-    tris = [r.get("tri") for r in rows]
-    malformed = [r.get("tri") for r in rows if
-                 not r.get("tri") or not isinstance(r.get("w"), int) or
-                 not isinstance(r.get("l"), int) or r["w"] < 0 or r["l"] < 0]
-    unique_clubs = len(set(tris)) == len(tris) and None not in tris
-    wins = sum(r["w"] for r in rows if isinstance(r.get("w"), int))
-    losses = sum(r["l"] for r in rows if isinstance(r.get("l"), int))
-    fresh = False
-    retrieved = standings.get("fetched_at_utc")
-    if retrieved:
+def _normalise_final_record(record: dict, default_date: str | None = None) -> dict | None:
+    """Return the minimal comparable shape used for season-record reconstruction.
+
+    (Ported from PR #80, session arena/0429aad7-nba2, by the integration session.)
+    """
+    if not isinstance(record, dict):
+        return None
+    gid = record.get("game_id") or record.get("gameId")
+    home = record.get("home") or record.get("home_team") or record.get("homeTeamTricode")
+    away = record.get("away") or record.get("away_team") or record.get("awayTeamTricode")
+    home_pts = record.get("home_pts", record.get("homeTeamScore"))
+    away_pts = record.get("away_pts", record.get("awayTeamScore"))
+    date = record.get("date") or default_date
+    if not gid or not home or not away or home_pts is None or away_pts is None:
+        return None
+    try:
+        home_pts, away_pts = int(home_pts), int(away_pts)
+    except (TypeError, ValueError):
+        return None
+    return {
+        "game_id": str(gid), "date": str(date) if date else None,
+        "home": str(home), "away": str(away),
+        "home_pts": home_pts, "away_pts": away_pts,
+        "source_url": (record.get("source_url") or record.get("source") or
+                       record.get("list_url") or record.get("game_url")),
+    }
+
+
+def merge_final_records(*record_groups: list[dict]) -> tuple[list[dict], list[str]]:
+    """Deduplicate official finals by game ID and surface conflicting duplicate rows."""
+    by_id = {}
+    conflicts = []
+    identity = ("date", "home", "away", "home_pts", "away_pts")
+    for group in record_groups:
+        for raw in group or []:
+            record = _normalise_final_record(raw)
+            if record is None:
+                continue
+            gid = record["game_id"]
+            prior = by_id.get(gid)
+            if prior is not None:
+                differing = [key for key in identity
+                             if prior.get(key) is not None and record.get(key) is not None
+                             and prior[key] != record[key]]
+                if differing:
+                    conflicts.append(f"{gid}: {', '.join(differing)} disagree")
+                # Keep the newer group's values when equal, while retaining any source
+                # metadata the current record lacks.
+                by_id[gid] = {**prior, **{k: v for k, v in record.items() if v is not None}}
+            else:
+                by_id[gid] = record
+    return [by_id[k] for k in sorted(by_id)], conflicts
+
+
+def load_committed_final_records() -> list[dict]:
+    """Load the existing official result history as the baseline for live standings.
+
+    The refresh fetches only a rolling week of scoreboard data; comparing that partial
+    slice directly with season-to-date standings is invalid. The committed history and
+    dated result snapshots are the baseline, and the just-fetched finals are overlaid by
+    ``gate_standings``. Duplicate IDs are removed before any W/L arithmetic.
+    """
+    paths = set(HISTORY.glob("games_*.json"))
+    paths.update(RAW.rglob("results_*.json"))
+    paths.update(p for p in RAW.rglob("finals_*.json") if p.name != "finals_all.json")
+    records = []
+    for path in sorted(paths):
         try:
-            stamp = dt.datetime.fromisoformat(retrieved.replace("Z", "+00:00"))
-            age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-            fresh = -300 <= age <= 24 * 60 * 60
-        except (TypeError, ValueError):
-            pass
-    ok = len(rows) == 30 and unique_clubs and not malformed and wins == losses and fresh
+            doc = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f"cannot load committed result snapshot {path}: {exc}") from exc
+        if not isinstance(doc, dict):
+            raise RuntimeError(f"committed result snapshot is not an object: {path}")
+        default_date = doc.get("date")
+        for key in ("games", "records"):
+            if key not in doc:
+                continue
+            rows = doc[key]
+            if not isinstance(rows, list):
+                raise RuntimeError(f"committed result snapshot {path} has non-list {key}")
+            for i, row in enumerate(rows):
+                normalised = _normalise_final_record(row, default_date)
+                if normalised is not None:
+                    records.append(normalised)
+                elif key == "games" or not isinstance(doc.get("games"), list):
+                    raise RuntimeError(f"committed result snapshot {path} has malformed {key}[{i}]")
+    merged, conflicts = merge_final_records(records)
+    if conflicts:
+        raise RuntimeError("committed official result snapshots conflict: " + "; ".join(conflicts[:8]))
+    return merged
+
+
+def _fresh_retrieval_stamp(value) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        stamp = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if stamp.tzinfo is None:
+            return False
+        age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
+        return -300 <= age <= 24 * 60 * 60
+    except (TypeError, ValueError):
+        return False
+
+
+def _gate_standings_snapshot(standings: dict) -> dict:
+    """Validate a live standings snapshot when no historical finals baseline is supplied."""
+    rows = standings.get("rows", []) if isinstance(standings, dict) else []
     issues = []
-    if len(rows) != 30:
-        issues.append(f"expected 30 official clubs, got {len(rows)}")
-    if not unique_clubs:
-        issues.append("club abbreviations are missing or duplicated")
+    if not isinstance(rows, list):
+        rows = []
+        issues.append("standings rows are not a list")
+    seen = set()
+    wins = losses = 0
+    malformed = []
+    for i, row in enumerate(rows):
+        if not isinstance(row, dict):
+            malformed.append(f"row {i} is not an object")
+            continue
+        tri, w, l = row.get("tri"), row.get("w"), row.get("l")
+        if not isinstance(tri, str) or not tri:
+            malformed.append(f"row {i} has no club abbreviation")
+        elif tri in seen:
+            malformed.append(f"{tri}: duplicate standings row")
+        else:
+            seen.add(tri)
+        if (not isinstance(w, int) or isinstance(w, bool) or w < 0
+                or not isinstance(l, int) or isinstance(l, bool) or l < 0):
+            malformed.append(f"row {i} has invalid W/L values")
+        else:
+            wins += w
+            losses += l
+    if len(rows) != 30 or len(seen) != 30:
+        issues.append(f"expected 30 unique team standings rows, got {len(seen)}")
     if malformed:
-        issues.append(f"invalid W/L values: {malformed}")
+        issues.append(f"invalid standings rows: {malformed[:8]}")
     if wins != losses:
         issues.append(f"season wins ({wins}) do not equal losses ({losses})")
-    if not fresh:
+    retrieved = standings.get("fetched_at_utc") if isinstance(standings, dict) else None
+    if not _fresh_retrieval_stamp(retrieved):
         issues.append("retrieval timestamp is missing, invalid, in the future, or older than 24h")
+    if not issues:
+        issues.append("fresh 30-club season record is internally balanced")
+    ok = len(issues) == 1 and issues[0] == "fresh 30-club season record is internally balanced"
     return {"gate": "freshness/standings", "ok": ok,
             "measured": f"{len(rows)} clubs; {wins} wins / {losses} losses; retrieved {retrieved or 'unstamped'}",
-            "detail": "; ".join(issues) if issues else "fresh 30-club season record is internally balanced"}
+            "detail": "; ".join(issues)}
+
+
+def gate_standings(standings: dict, finals: dict, baseline_records: list[dict] | None = None,
+                   require_all_30: bool = False) -> dict:
+    """Rebuild season-to-date W/L from baseline + fresh finals and compare all rows.
+
+    Calls without a baseline preserve the independent-snapshot validation contract used by
+    older fixture callers. The scheduled live refresh always passes its committed baseline,
+    so a missing baseline cannot silently downgrade the operational comparison.
+    (Ported from PR #80, session arena/0429aad7-nba2, by the integration session.)
+    """
+    if baseline_records is None:
+        return _gate_standings_snapshot(standings)
+
+    malformed_records = []
+    if not isinstance(baseline_records, list):
+        malformed_records.append("baseline is not a list")
+        baseline_records = []
+    fresh_records = finals.get("records", []) if isinstance(finals, dict) else []
+    if not isinstance(fresh_records, list):
+        malformed_records.append("fresh results are not a list")
+        fresh_records = []
+    for label, group in (("baseline", baseline_records), ("fresh", fresh_records)):
+        for i, record in enumerate(group):
+            normalised = _normalise_final_record(record)
+            if normalised is None or normalised["date"] is None:
+                malformed_records.append(f"{label} record {i}")
+    records, conflicts = merge_final_records(baseline_records, fresh_records)
+    w, l = {}, {}
+    arithmetic_errors = []
+    if not records:
+        arithmetic_errors.append("no official final records available to rebuild standings")
+    for r in records:
+        if r["home_pts"] == r["away_pts"]:
+            arithmetic_errors.append(f"{r['game_id']}: tied final score")
+            continue
+        hw = r["home_pts"] > r["away_pts"]
+        win, lose = (r["home"], r["away"]) if hw else (r["away"], r["home"])
+        w[win] = w.get(win, 0) + 1
+        l[lose] = l.get(lose, 0) + 1
+
+    bad = []
+    seen = set()
+    standings_rows = standings.get("rows", []) if isinstance(standings, dict) else []
+    if not isinstance(standings_rows, list):
+        standings_rows = []
+        bad.append("standings rows are not a list")
+    for i, row in enumerate(standings_rows):
+        if not isinstance(row, dict):
+            bad.append(f"standings row {i} is not an object")
+            continue
+        tri, row_wins, row_losses = row.get("tri"), row.get("w"), row.get("l")
+        if not isinstance(tri, str) or not tri:
+            bad.append(f"team {row.get('team', 'unknown')}: missing tricode")
+            continue
+        if tri in seen:
+            bad.append(f"{tri}: duplicate standings row")
+            continue
+        seen.add(tri)
+        if (not isinstance(row_wins, int) or isinstance(row_wins, bool) or row_wins < 0
+                or not isinstance(row_losses, int) or isinstance(row_losses, bool) or row_losses < 0):
+            bad.append(f"{tri}: invalid W/L values")
+            continue
+        if (w.get(tri, 0), l.get(tri, 0)) != (row_wins, row_losses):
+            bad.append(tri)
+    if require_all_30 and len(seen) != 30:
+        bad.append(f"expected 30 unique team standings rows, got {len(seen)}")
+    unknown_teams = sorted((set(w) | set(l)) - seen)
+    if unknown_teams:
+        bad.append(f"final-feed teams absent from standings: {unknown_teams}")
+    if sum(w.values()) != len(records) or sum(l.values()) != len(records):
+        arithmetic_errors.append("rebuilt wins/losses do not equal unique final count")
+    if require_all_30 and not _fresh_retrieval_stamp(standings.get("fetched_at_utc")):
+        bad.append("standings retrieval timestamp is missing, invalid, in the future, or older than 24h")
+
+    ok = not bad and not conflicts and not arithmetic_errors and not malformed_records
+    details = []
+    if bad:
+        details.append(f"rows that do not rebuild from finals: {bad}")
+    if malformed_records:
+        details.append(f"malformed baseline/fresh final records: {malformed_records[:8]}")
+    if conflicts:
+        details.append(f"conflicting duplicate finals: {conflicts[:8]}")
+    if arithmetic_errors:
+        details.append(f"final-feed arithmetic errors: {arithmetic_errors[:8]}")
+    if not details:
+        details.append("every season-to-date row rebuilds exactly from unique official finals")
+    return {"gate": "freshness/standings", "ok": ok,
+            "measured": f"{len(standings_rows)} rows vs {len(records)} unique season finals",
+            "detail": "; ".join(details)}
 
 
 def gate_injuries(inj: dict, most_recent_game_date: str) -> dict:
@@ -350,10 +586,14 @@ def gate_provenance(docs: dict) -> dict:
             if isinstance(doc, dict) and k in doc:
                 scan(name, doc[k])
         if name == "team_stats":
-            for sub in doc.values():
-                if isinstance(sub, dict) and "rows" in sub:
-                    for i, r in enumerate(sub["rows"]):
-                        pass  # stats rows carry the page-level source_url on the doc
+            for page, sub in doc.items():
+                if not isinstance(sub, dict) or "rows" not in sub:
+                    continue
+                # The NBA stats endpoint returns positional arrays; the official page URL
+                # is therefore stored at the page-document level, not repeated per cell.
+                # (Strict page-level check ported from PR #80, session arena/0429aad7-nba2.)
+                if not sub.get("source_url"):
+                    missing.append(f"team_stats.{page}.source_url")
     ok = not missing
     return {"gate": "provenance", "ok": ok,
             "measured": f"{len(docs)} documents scanned",
@@ -362,10 +602,22 @@ def gate_provenance(docs: dict) -> dict:
 
 def run_gates(docs: dict, dates: list[str], today: str) -> list[dict]:
     finals = docs["finals"]
+    baseline_doc = docs.get("baseline_finals")
+    # A missing baseline keeps the independent-snapshot validation contract used by
+    # fixture callers; main() always supplies the committed baseline so the live
+    # refresh runs the full season-record reconciliation (PR #80).
+    baseline = baseline_doc.get("records") if isinstance(baseline_doc, dict) else None
     completed_dates = [d for d in dates if d < today]
+    completed_finals = dict(finals)
+    # Rows dated today are already-final games that belong in the season-record
+    # reconciliation only; every other row outside the completed dates is genuinely
+    # out of window and must still fail gate_finals.
+    completed_finals["records"] = [
+        r for r in finals.get("records", []) if r.get("date") != today
+    ]
     return [
-        gate_finals(completed_dates, finals),
-        gate_standings(docs["standings"], finals),
+        gate_finals(completed_dates, completed_finals),
+        gate_standings(docs["standings"], finals, baseline, require_all_30=True),
         gate_injuries(docs["injuries"], dates[-1] if dates else today),
         gate_slate(docs["slate"], today),
         gate_provenance(docs),
@@ -387,7 +639,11 @@ def main(argv=None) -> int:
     docs = {
         "standings": fetch_standings(),
         "slate": fetch_slate(dates),
-        "finals": fetch_finals(prior_days),
+        # Include completed games from today in the season-to-date standings
+        # comparison (PR #80 convention), but only require dates through yesterday
+        # to be complete — run_gates excludes today's rows from gate_finals.
+        "finals": fetch_finals(prior_days + [today]),
+        "baseline_finals": {"records": load_committed_final_records()},
         "team_stats": fetch_team_stats(),
         "injuries": fetch_newest_injury_release(),
     }
