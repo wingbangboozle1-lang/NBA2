@@ -1,0 +1,4021 @@
+{
+ "session": "arena/b3914335-nba2",
+ "as_of_utc": "2026-11-16T14:30:00Z",
+ "as_of_et": "2026-11-16 09:30 ET",
+ "window": {
+  "start": "2026-11-16",
+  "end": "2026-11-18",
+  "n_games": 25,
+  "n_games_extended": 29,
+  "rule": "T+0..T+3 published (2026-11-16..11-18); 11/19 captured but outside the 3-day publication cap"
+ },
+ "history": {
+  "n_games": 197,
+  "files": [
+   "games_2026-10-20_to_2026-10-31.json",
+   "games_2026-11-01_to_2026-11-02.json",
+   "games_2026-11-04.json",
+   "games_2026-11-05.json",
+   "games_2026-11-06_11-11_11-13.json",
+   "games_2026-11-07_to_2026-11-08_and_11-12.json",
+   "games_2026-11-09_to_2026-11-10.json",
+   "data/raw/capture_2026-11-15/results_2026-11-14.json"
+  ],
+  "includes": "data/raw/history/games_*.json + this session's 11/15 finals"
+ },
+ "home_court": {
+  "n_games": 196,
+  "home_wins": 102,
+  "home_win_rate": 0.5204,
+  "neutral_excluded": 1,
+  "margin_sd": 16.987,
+  "margin_mean": 1.689,
+  "hca_points": 0.869,
+  "rule": "h = sd(home margin) x Phi^-1(measured home win rate)",
+  "measured": true,
+  "note": "HCA is a restatement of an official count, not an estimated edge: with this h and this sd, two otherwise equal clubs get exactly the measured home-win probability. It is never fitted to results."
+ },
+ "luck": [
+  {
+   "team": "PHI",
+   "name": "Philadelphia 76ers",
+   "gp": 14,
+   "w": 11,
+   "l": 3,
+   "pts_for": 112.6,
+   "pts_against": 110.4,
+   "pythag_win_pct": 0.5682,
+   "expected_wins": 7.95,
+   "actual_wins": 11,
+   "luck_wins": 3.05,
+   "luck_z": 1.643,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 1.657,
+   "luck_z_exp16_5": 1.555
+  },
+  {
+   "team": "LAL",
+   "name": "Los Angeles Lakers",
+   "gp": 14,
+   "w": 12,
+   "l": 2,
+   "pts_for": 122.8,
+   "pts_against": 114.9,
+   "pythag_win_pct": 0.716,
+   "expected_wins": 10.02,
+   "actual_wins": 12,
+   "luck_wins": 1.98,
+   "luck_z": 1.171,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 1.21,
+   "luck_z_exp16_5": 0.928
+  },
+  {
+   "team": "CHA",
+   "name": "Charlotte Hornets",
+   "gp": 13,
+   "w": 4,
+   "l": 9,
+   "pts_for": 99.1,
+   "pts_against": 109.8,
+   "pythag_win_pct": 0.1937,
+   "expected_wins": 2.52,
+   "actual_wins": 4,
+   "luck_wins": 1.48,
+   "luck_z": 1.04,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.967,
+   "luck_z_exp16_5": 1.514
+  },
+  {
+   "team": "DAL",
+   "name": "Dallas Mavericks",
+   "gp": 14,
+   "w": 7,
+   "l": 7,
+   "pts_for": 112.1,
+   "pts_against": 114.6,
+   "pythag_win_pct": 0.4239,
+   "expected_wins": 5.93,
+   "actual_wins": 7,
+   "luck_wins": 1.07,
+   "luck_z": 0.576,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.559,
+   "luck_z_exp16_5": 0.685
+  },
+  {
+   "team": "DEN",
+   "name": "Denver Nuggets",
+   "gp": 11,
+   "w": 7,
+   "l": 4,
+   "pts_for": 114.6,
+   "pts_against": 112.8,
+   "pythag_win_pct": 0.5548,
+   "expected_wins": 6.1,
+   "actual_wins": 7,
+   "luck_wins": 0.9,
+   "luck_z": 0.544,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.555,
+   "luck_z_exp16_5": 0.478
+  },
+  {
+   "team": "MIA",
+   "name": "Miami Heat",
+   "gp": 13,
+   "w": 7,
+   "l": 6,
+   "pts_for": 118.7,
+   "pts_against": 119.8,
+   "pythag_win_pct": 0.468,
+   "expected_wins": 6.08,
+   "actual_wins": 7,
+   "luck_wins": 0.92,
+   "luck_z": 0.509,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.503,
+   "luck_z_exp16_5": 0.553
+  },
+  {
+   "team": "ORL",
+   "name": "Orlando Magic",
+   "gp": 12,
+   "w": 5,
+   "l": 7,
+   "pts_for": 108.3,
+   "pts_against": 112.8,
+   "pythag_win_pct": 0.3621,
+   "expected_wins": 4.35,
+   "actual_wins": 5,
+   "luck_wins": 0.65,
+   "luck_z": 0.393,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.365,
+   "luck_z_exp16_5": 0.575
+  },
+  {
+   "team": "PHX",
+   "name": "Phoenix Suns",
+   "gp": 12,
+   "w": 5,
+   "l": 7,
+   "pts_for": 112.7,
+   "pts_against": 117.3,
+   "pythag_win_pct": 0.3644,
+   "expected_wins": 4.37,
+   "actual_wins": 5,
+   "luck_wins": 0.63,
+   "luck_z": 0.376,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.348,
+   "luck_z_exp16_5": 0.555
+  },
+  {
+   "team": "CHI",
+   "name": "Chicago Bulls",
+   "gp": 12,
+   "w": 3,
+   "l": 9,
+   "pts_for": 114.6,
+   "pts_against": 125.9,
+   "pythag_win_pct": 0.2128,
+   "expected_wins": 2.55,
+   "actual_wins": 3,
+   "luck_wins": 0.45,
+   "luck_z": 0.315,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.257,
+   "luck_z_exp16_5": 0.685
+  },
+  {
+   "team": "SAS",
+   "name": "San Antonio Spurs",
+   "gp": 14,
+   "w": 12,
+   "l": 2,
+   "pts_for": 118.8,
+   "pts_against": 105.9,
+   "pythag_win_pct": 0.8319,
+   "expected_wins": 11.65,
+   "actual_wins": 12,
+   "luck_wins": 0.35,
+   "luck_z": 0.253,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.315,
+   "luck_z_exp16_5": -0.137
+  },
+  {
+   "team": "POR",
+   "name": "Portland Trail Blazers",
+   "gp": 12,
+   "w": 9,
+   "l": 3,
+   "pts_for": 119.6,
+   "pts_against": 111.8,
+   "pythag_win_pct": 0.7187,
+   "expected_wins": 8.62,
+   "actual_wins": 9,
+   "luck_wins": 0.38,
+   "luck_z": 0.241,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.283,
+   "luck_z_exp16_5": -0.021
+  },
+  {
+   "team": "NOP",
+   "name": "New Orleans Pelicans",
+   "gp": 14,
+   "w": 4,
+   "l": 10,
+   "pts_for": 115.9,
+   "pts_against": 124.9,
+   "pythag_win_pct": 0.2611,
+   "expected_wins": 3.66,
+   "actual_wins": 4,
+   "luck_wins": 0.34,
+   "luck_z": 0.21,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.158,
+   "luck_z_exp16_5": 0.539
+  },
+  {
+   "team": "ATL",
+   "name": "Atlanta Hawks",
+   "gp": 14,
+   "w": 8,
+   "l": 6,
+   "pts_for": 117.8,
+   "pts_against": 116.1,
+   "pythag_win_pct": 0.5504,
+   "expected_wins": 7.71,
+   "actual_wins": 8,
+   "luck_wins": 0.29,
+   "luck_z": 0.158,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.169,
+   "luck_z_exp16_5": 0.089
+  },
+  {
+   "team": "HOU",
+   "name": "Houston Rockets",
+   "gp": 14,
+   "w": 11,
+   "l": 3,
+   "pts_for": 118.4,
+   "pts_against": 108.2,
+   "pythag_win_pct": 0.7778,
+   "expected_wins": 10.89,
+   "actual_wins": 11,
+   "luck_wins": 0.11,
+   "luck_z": 0.071,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.128,
+   "luck_z_exp16_5": -0.288
+  },
+  {
+   "team": "DET",
+   "name": "Detroit Pistons",
+   "gp": 12,
+   "w": 8,
+   "l": 4,
+   "pts_for": 115.7,
+   "pts_against": 110.3,
+   "pythag_win_pct": 0.6603,
+   "expected_wins": 7.92,
+   "actual_wins": 8,
+   "luck_wins": 0.08,
+   "luck_z": 0.046,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.078,
+   "luck_z_exp16_5": -0.156
+  },
+  {
+   "team": "BOS",
+   "name": "Boston Celtics",
+   "gp": 13,
+   "w": 11,
+   "l": 2,
+   "pts_for": 115.5,
+   "pts_against": 102.4,
+   "pythag_win_pct": 0.8422,
+   "expected_wins": 10.95,
+   "actual_wins": 11,
+   "luck_wins": 0.05,
+   "luck_z": 0.039,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": 0.104,
+   "luck_z_exp16_5": -0.368
+  },
+  {
+   "team": "WAS",
+   "name": "Washington Wizards",
+   "gp": 14,
+   "w": 4,
+   "l": 10,
+   "pts_for": 110.6,
+   "pts_against": 118.0,
+   "pythag_win_pct": 0.2889,
+   "expected_wins": 4.04,
+   "actual_wins": 4,
+   "luck_wins": -0.04,
+   "luck_z": -0.026,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.071,
+   "luck_z_exp16_5": 0.258
+  },
+  {
+   "team": "OKC",
+   "name": "Oklahoma City Thunder",
+   "gp": 14,
+   "w": 9,
+   "l": 5,
+   "pts_for": 112.1,
+   "pts_against": 107.1,
+   "pythag_win_pct": 0.6536,
+   "expected_wins": 9.15,
+   "actual_wins": 9,
+   "luck_wins": -0.15,
+   "luck_z": -0.084,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.051,
+   "luck_z_exp16_5": -0.296
+  },
+  {
+   "team": "GSW",
+   "name": "Golden State Warriors",
+   "gp": 13,
+   "w": 8,
+   "l": 5,
+   "pts_for": 116.7,
+   "pts_against": 112.4,
+   "pythag_win_pct": 0.6277,
+   "expected_wins": 8.16,
+   "actual_wins": 8,
+   "luck_wins": -0.16,
+   "luck_z": -0.092,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.065,
+   "luck_z_exp16_5": -0.262
+  },
+  {
+   "team": "LAC",
+   "name": "LA Clippers",
+   "gp": 12,
+   "w": 4,
+   "l": 8,
+   "pts_for": 112.3,
+   "pts_against": 116.5,
+   "pythag_win_pct": 0.375,
+   "expected_wins": 4.5,
+   "actual_wins": 4,
+   "luck_wins": -0.5,
+   "luck_z": -0.298,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.323,
+   "luck_z_exp16_5": -0.143
+  },
+  {
+   "team": "CLE",
+   "name": "Cleveland Cavaliers",
+   "gp": 14,
+   "w": 7,
+   "l": 7,
+   "pts_for": 117.5,
+   "pts_against": 115.9,
+   "pythag_win_pct": 0.5475,
+   "expected_wins": 7.67,
+   "actual_wins": 7,
+   "luck_wins": -0.67,
+   "luck_z": -0.357,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.347,
+   "luck_z_exp16_5": -0.424
+  },
+  {
+   "team": "MEM",
+   "name": "Memphis Grizzlies",
+   "gp": 13,
+   "w": 9,
+   "l": 4,
+   "pts_for": 120.6,
+   "pts_against": 111.7,
+   "pythag_win_pct": 0.7439,
+   "expected_wins": 9.67,
+   "actual_wins": 9,
+   "luck_wins": -0.67,
+   "luck_z": -0.426,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.374,
+   "luck_z_exp16_5": -0.762
+  },
+  {
+   "team": "BKN",
+   "name": "Brooklyn Nets",
+   "gp": 12,
+   "w": 3,
+   "l": 9,
+   "pts_for": 110.2,
+   "pts_against": 116.4,
+   "pythag_win_pct": 0.3183,
+   "expected_wins": 3.82,
+   "actual_wins": 3,
+   "luck_wins": -0.82,
+   "luck_z": -0.508,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.542,
+   "luck_z_exp16_5": -0.294
+  },
+  {
+   "team": "IND",
+   "name": "Indiana Pacers",
+   "gp": 14,
+   "w": 5,
+   "l": 9,
+   "pts_for": 112.1,
+   "pts_against": 114.5,
+   "pythag_win_pct": 0.4269,
+   "expected_wins": 5.98,
+   "actual_wins": 5,
+   "luck_wins": -0.98,
+   "luck_z": -0.527,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.543,
+   "luck_z_exp16_5": -0.428
+  },
+  {
+   "team": "SAC",
+   "name": "Sacramento Kings",
+   "gp": 13,
+   "w": 1,
+   "l": 12,
+   "pts_for": 107.8,
+   "pts_against": 121.2,
+   "pythag_win_pct": 0.1639,
+   "expected_wins": 2.13,
+   "actual_wins": 1,
+   "luck_wins": -1.13,
+   "luck_z": -0.847,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.898,
+   "luck_z_exp16_5": -0.537
+  },
+  {
+   "team": "MIL",
+   "name": "Milwaukee Bucks",
+   "gp": 14,
+   "w": 1,
+   "l": 13,
+   "pts_for": 106.1,
+   "pts_against": 119.7,
+   "pythag_win_pct": 0.1574,
+   "expected_wins": 2.2,
+   "actual_wins": 1,
+   "luck_wins": -1.2,
+   "luck_z": -0.883,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.936,
+   "luck_z_exp16_5": -0.562
+  },
+  {
+   "team": "MIN",
+   "name": "Minnesota Timberwolves",
+   "gp": 13,
+   "w": 9,
+   "l": 4,
+   "pts_for": 118.3,
+   "pts_against": 106.8,
+   "pythag_win_pct": 0.8057,
+   "expected_wins": 10.47,
+   "actual_wins": 9,
+   "luck_wins": -1.47,
+   "luck_z": -1.034,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -0.961,
+   "luck_z_exp16_5": -1.506
+  },
+  {
+   "team": "TOR",
+   "name": "Toronto Raptors",
+   "gp": 13,
+   "w": 5,
+   "l": 8,
+   "pts_for": 113.8,
+   "pts_against": 112.8,
+   "pythag_win_pct": 0.5307,
+   "expected_wins": 6.9,
+   "actual_wins": 5,
+   "luck_wins": -1.9,
+   "luck_z": -1.055,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -1.048,
+   "luck_z_exp16_5": -1.097
+  },
+  {
+   "team": "NYK",
+   "name": "New York Knicks",
+   "gp": 13,
+   "w": 7,
+   "l": 6,
+   "pts_for": 109.9,
+   "pts_against": 104.0,
+   "pythag_win_pct": 0.683,
+   "expected_wins": 8.88,
+   "actual_wins": 7,
+   "luck_wins": -1.88,
+   "luck_z": -1.12,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -1.077,
+   "luck_z_exp16_5": -1.392
+  },
+  {
+   "team": "UTA",
+   "name": "Utah Jazz",
+   "gp": 14,
+   "w": 1,
+   "l": 13,
+   "pts_for": 107.1,
+   "pts_against": 118.0,
+   "pythag_win_pct": 0.2062,
+   "expected_wins": 2.89,
+   "actual_wins": 1,
+   "luck_wins": -1.89,
+   "luck_z": -1.246,
+   "in_noise_band": true,
+   "exponent": 13.91,
+   "luck_z_exp13_5": -1.292,
+   "luck_z_exp16_5": -0.967
+  }
+ ],
+ "luck_band_z": 2.0,
+ "outside_band": [],
+ "rho": {
+  "n": 196,
+  "r": -0.038,
+  "ci95": [
+   -0.1772,
+   0.1027
+  ],
+  "definition": "r(home margin, total points) over official finals, neutral-site games excluded"
+ },
+ "projections": [
+  {
+   "game_id": "0022600245",
+   "date": "2026-11-16",
+   "time_et": "7:00 PM",
+   "matchup": "ORL @ BOS",
+   "arena": "TD Garden",
+   "city": "Boston",
+   "state": "MA",
+   "surface": "projection",
+   "possessions": 97.38,
+   "ppp_home": 1.1615,
+   "ppp_away": 1.074,
+   "proj_home_pts": 113.1,
+   "proj_away_pts": 104.6,
+   "proj_total": 217.7,
+   "e1_margin": 17.91,
+   "e2_margin": 23.02,
+   "disagreement": 5.11,
+   "consensus_margin": 20.46,
+   "spread_home": -20.5,
+   "p_home": 0.8858,
+   "p_home_e1": 0.8541,
+   "p_home_e2": 0.9123,
+   "trigger_price": {
+    "home_ml_min": 1.129,
+    "away_ml_min": 8.759,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "BOS",
+    "away": "ORL",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "BOS",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "ORL",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "BOS",
+     "last_game": "2026-11-15",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "ORL",
+     "last_game": "2026-11-13",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "BOS",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "ORL",
+       "from_date": "2026-11-13",
+       "miles": 1116.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
+  },
+  {
+   "game_id": "0022600246",
+   "date": "2026-11-16",
+   "time_et": "7:00 PM",
+   "matchup": "CHI @ CLE",
+   "arena": "Rocket Arena",
+   "city": "Cleveland",
+   "state": "OH",
+   "surface": "projection",
+   "possessions": 101.77,
+   "ppp_home": 1.186,
+   "ppp_away": 1.124,
+   "proj_home_pts": 120.7,
+   "proj_away_pts": 114.4,
+   "proj_total": 235.1,
+   "e1_margin": 13.49,
+   "e2_margin": 16.25,
+   "disagreement": 2.76,
+   "consensus_margin": 14.87,
+   "spread_home": -14.9,
+   "p_home": 0.8093,
+   "p_home_e1": 0.7864,
+   "p_home_e2": 0.8306,
+   "trigger_price": {
+    "home_ml_min": 1.236,
+    "away_ml_min": 5.244,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "CLE",
+    "away": "CHI",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "CLE",
+     "rows": 7,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5,
+      "Questionable": 2
+     },
+     "n_status_known": 7,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "CHI",
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "CLE",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "CHI",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "CLE",
+       "from_date": "2026-11-14",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIN",
+       "from_date": "2026-11-14",
+       "miles": 630.3,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
+  },
+  {
+   "game_id": "0022600247",
+   "date": "2026-11-16",
+   "time_et": "7:00 PM",
+   "matchup": "MEM @ WAS",
+   "arena": "Capital One Arena",
+   "city": "Washington",
+   "state": "DC",
+   "surface": "projection",
+   "possessions": 100.09,
+   "ppp_home": 1.099,
+   "ppp_away": 1.1775,
+   "proj_home_pts": 110.0,
+   "proj_away_pts": 117.9,
+   "proj_total": 227.9,
+   "e1_margin": -14.85,
+   "e2_margin": -18.86,
+   "disagreement": 4.02,
+   "consensus_margin": -16.86,
+   "spread_home": 16.9,
+   "p_home": 0.1605,
+   "p_home_e1": 0.1911,
+   "p_home_e2": 0.1334,
+   "trigger_price": {
+    "home_ml_min": 6.229,
+    "away_ml_min": 1.191,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "WAS",
+    "away": "MEM",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "WAS",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "MEM",
+     "rows": 7,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Questionable": 3,
+      "Out": 4
+     },
+     "n_status_known": 7,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "WAS",
+     "last_game": "2026-11-15",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "MEM",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "WAS",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MEM",
+       "from_date": "2026-11-14",
+       "miles": 763.5,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/mem-vs-was-0022600247"
+  },
+  {
+   "game_id": "0022600248",
+   "date": "2026-11-16",
+   "time_et": "7:30 PM",
+   "matchup": "PHI @ BKN",
+   "arena": "Barclays Center",
+   "city": "Brooklyn",
+   "state": "NY",
+   "surface": "projection",
+   "possessions": 99.84,
+   "ppp_home": 1.1005,
+   "ppp_away": 1.1415,
+   "proj_home_pts": 109.9,
+   "proj_away_pts": 114.0,
+   "proj_total": 223.8,
+   "e1_margin": -7.32,
+   "e2_margin": -9.96,
+   "disagreement": 2.64,
+   "consensus_margin": -8.64,
+   "spread_home": 8.6,
+   "p_home": 0.3056,
+   "p_home_e1": 0.3333,
+   "p_home_e2": 0.2789,
+   "trigger_price": {
+    "home_ml_min": 3.273,
+    "away_ml_min": 1.44,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "BKN",
+    "away": "PHI",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "BKN",
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5
+     },
+     "n_status_known": 5,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "PHI",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "BKN",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "PHI",
+     "last_game": "2026-11-15",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MEM",
+       "from_date": "2026-11-14",
+       "miles": 954.5,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "PHI",
+       "from_date": "2026-11-15",
+       "miles": 83.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+  },
+  {
+   "game_id": "0022600249",
+   "date": "2026-11-16",
+   "time_et": "7:30 PM",
+   "matchup": "HOU @ MIA",
+   "arena": "Kaseya Center",
+   "city": "Miami",
+   "state": "FL",
+   "surface": "projection",
+   "possessions": 100.09,
+   "ppp_home": 1.127,
+   "ppp_away": 1.187,
+   "proj_home_pts": 112.8,
+   "proj_away_pts": 118.8,
+   "proj_total": 231.6,
+   "e1_margin": -11.14,
+   "e2_margin": -13.38,
+   "disagreement": 2.24,
+   "consensus_margin": -12.26,
+   "spread_home": 12.3,
+   "p_home": 0.2352,
+   "p_home_e1": 0.256,
+   "p_home_e2": 0.2154,
+   "trigger_price": {
+    "home_ml_min": 4.251,
+    "away_ml_min": 1.308,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIA",
+    "away": "HOU",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIA",
+     "rows": 3,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 1,
+      "Questionable": 1,
+      "Available": 1
+     },
+     "n_status_known": 3,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "HOU",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIA",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "HOU",
+     "last_game": "2026-11-15",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIA",
+       "from_date": "2026-11-14",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "WAS",
+       "from_date": "2026-11-15",
+       "miles": 924.8,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
+  },
+  {
+   "game_id": "0022600250",
+   "date": "2026-11-16",
+   "time_et": "8:00 PM",
+   "matchup": "POR @ MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis",
+   "state": "MN",
+   "surface": "projection",
+   "possessions": 100.97,
+   "ppp_home": 1.1355,
+   "ppp_away": 1.1165,
+   "proj_home_pts": 114.7,
+   "proj_away_pts": 112.7,
+   "proj_total": 227.4,
+   "e1_margin": 4.71,
+   "e2_margin": 6.0,
+   "disagreement": 1.3,
+   "consensus_margin": 5.36,
+   "spread_home": -5.4,
+   "p_home": 0.6237,
+   "p_home_e1": 0.6091,
+   "p_home_e2": 0.6381,
+   "trigger_price": {
+    "home_ml_min": 1.603,
+    "away_ml_min": 2.658,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIN",
+    "away": "POR",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIN",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Available": 1,
+      "Out": 3
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "POR",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIN",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "POR",
+     "last_game": "2026-11-13",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIN",
+       "from_date": "2026-11-14",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "SAC",
+       "from_date": "2026-11-13",
+       "miles": 1511.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600250"
+  },
+  {
+   "game_id": "0022600251",
+   "date": "2026-11-16",
+   "time_et": "8:00 PM",
+   "matchup": "GSW @ NOP",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans",
+   "state": "LA",
+   "surface": "projection",
+   "possessions": 100.75,
+   "ppp_home": 1.1165,
+   "ppp_away": 1.1805,
+   "proj_home_pts": 112.5,
+   "proj_away_pts": 118.9,
+   "proj_total": 231.4,
+   "e1_margin": -12.03,
+   "e2_margin": -15.12,
+   "disagreement": 3.09,
+   "consensus_margin": -13.57,
+   "spread_home": 13.6,
+   "p_home": 0.2121,
+   "p_home_e1": 0.2395,
+   "p_home_e2": 0.1867,
+   "trigger_price": {
+    "home_ml_min": 4.714,
+    "away_ml_min": 1.269,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "NOP",
+    "away": "GSW",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "NOP",
+     "rows": 8,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Questionable": 3,
+      "Out": 5
+     },
+     "n_status_known": 8,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "GSW",
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 6,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "NOP",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "GSW",
+     "last_game": "2026-11-13",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "NOP",
+       "from_date": "2026-11-14",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "SAS",
+       "from_date": "2026-11-13",
+       "miles": 502.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+  },
+  {
+   "game_id": "0022600252",
+   "date": "2026-11-16",
+   "time_et": "9:00 PM",
+   "matchup": "PHX @ DEN",
+   "arena": "Ball Arena",
+   "city": "Denver",
+   "state": "CO",
+   "surface": "projection",
+   "possessions": 98.23,
+   "ppp_home": 1.1725,
+   "ppp_away": 1.145,
+   "proj_home_pts": 115.2,
+   "proj_away_pts": 112.5,
+   "proj_total": 227.6,
+   "e1_margin": 6.27,
+   "e2_margin": 9.05,
+   "disagreement": 2.78,
+   "consensus_margin": 7.66,
+   "spread_home": -7.7,
+   "p_home": 0.674,
+   "p_home_e1": 0.644,
+   "p_home_e2": 0.7029,
+   "trigger_price": {
+    "home_ml_min": 1.484,
+    "away_ml_min": 3.068,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "DEN",
+    "away": "PHX",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "DEN",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "PHX",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "DEN",
+     "last_game": "2026-11-14",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "PHX",
+     "last_game": "2026-11-15",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "NOP",
+       "from_date": "2026-11-14",
+       "miles": 1081.2,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "PHX",
+       "from_date": "2026-11-15",
+       "miles": 585.4,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/phx-vs-den-0022600252"
+  },
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "time_et": "7:30 PM",
+   "matchup": "NYK @ TOR",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto",
+   "state": "ON",
+   "surface": "projection",
+   "possessions": 97.6,
+   "ppp_home": 1.109,
+   "ppp_away": 1.1295,
+   "proj_home_pts": 108.2,
+   "proj_away_pts": 110.2,
+   "proj_total": 218.5,
+   "e1_margin": -3.13,
+   "e2_margin": -5.94,
+   "disagreement": 2.81,
+   "consensus_margin": -4.54,
+   "spread_home": 4.5,
+   "p_home": 0.3947,
+   "p_home_e1": 0.4268,
+   "p_home_e2": 0.3632,
+   "trigger_price": {
+    "home_ml_min": 2.534,
+    "away_ml_min": 1.652,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "TOR",
+    "away": "NYK",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "TOR",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "NYK",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "TOR",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "NYK",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "TOR",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "TOR",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "time_et": "8:00 PM",
+   "matchup": "POR @ MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis",
+   "state": "MN",
+   "surface": "projection",
+   "possessions": 100.97,
+   "ppp_home": 1.1355,
+   "ppp_away": 1.1165,
+   "proj_home_pts": 114.7,
+   "proj_away_pts": 112.7,
+   "proj_total": 227.4,
+   "e1_margin": 4.71,
+   "e2_margin": 6.0,
+   "disagreement": 1.3,
+   "consensus_margin": 5.36,
+   "spread_home": -5.4,
+   "p_home": 0.6237,
+   "p_home_e1": 0.6091,
+   "p_home_e2": 0.6381,
+   "trigger_price": {
+    "home_ml_min": 1.603,
+    "away_ml_min": 2.658,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIN",
+    "away": "POR",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIN",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Available": 1,
+      "Out": 3
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "POR",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIN",
+     "last_game": "2026-11-16",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "POR",
+     "last_game": "2026-11-16",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIN",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIN",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600254"
+  },
+  {
+   "game_id": "0022600255",
+   "date": "2026-11-17",
+   "time_et": "8:00 PM",
+   "matchup": "DET @ SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio",
+   "state": "TX",
+   "surface": "projection",
+   "possessions": 99.12,
+   "ppp_home": 1.142,
+   "ppp_away": 1.1035,
+   "proj_home_pts": 113.2,
+   "proj_away_pts": 109.4,
+   "proj_total": 222.6,
+   "e1_margin": 8.5,
+   "e2_margin": 10.66,
+   "disagreement": 2.16,
+   "consensus_margin": 9.58,
+   "spread_home": -9.6,
+   "p_home": 0.7137,
+   "p_home_e1": 0.6916,
+   "p_home_e2": 0.7349,
+   "trigger_price": {
+    "home_ml_min": 1.401,
+    "away_ml_min": 3.492,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "SAS",
+    "away": "DET",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "SAS",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "DET",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "SAS",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "DET",
+     "last_game": "2026-11-14",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "UTA",
+       "from_date": "2026-11-15",
+       "miles": 1089.8,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIA",
+       "from_date": "2026-11-14",
+       "miles": 1144.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/det-vs-sas-0022600255"
+  },
+  {
+   "game_id": "0022600256",
+   "date": "2026-11-17",
+   "time_et": "11:00 PM",
+   "matchup": "CHA @ LAL",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles",
+   "state": "CA",
+   "surface": "projection",
+   "possessions": 98.65,
+   "ppp_home": 1.1785,
+   "ppp_away": 1.0825,
+   "proj_home_pts": 116.3,
+   "proj_away_pts": 106.8,
+   "proj_total": 223.0,
+   "e1_margin": 19.81,
+   "e2_margin": 23.96,
+   "disagreement": 4.16,
+   "consensus_margin": 21.89,
+   "spread_home": -21.9,
+   "p_home": 0.9012,
+   "p_home_e1": 0.8782,
+   "p_home_e2": 0.9208,
+   "trigger_price": {
+    "home_ml_min": 1.11,
+    "away_ml_min": 10.122,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "LAL",
+    "away": "CHA",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "LAL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "CHA",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "LAL",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "CHA",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "PHX",
+       "from_date": "2026-11-15",
+       "miles": 358.3,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "LAC",
+       "from_date": "2026-11-15",
+       "miles": 8.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256"
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "time_et": "10:30 PM",
+   "matchup": "UTA @ LAC",
+   "arena": "Intuit Dome",
+   "city": "Inglewood",
+   "state": "CA",
+   "surface": "projection",
+   "possessions": 100.13,
+   "ppp_home": 1.138,
+   "ppp_away": 1.102,
+   "proj_home_pts": 114.0,
+   "proj_away_pts": 110.3,
+   "proj_total": 224.3,
+   "e1_margin": 8.08,
+   "e2_margin": 9.68,
+   "disagreement": 1.6,
+   "consensus_margin": 8.88,
+   "spread_home": -8.9,
+   "p_home": 0.6994,
+   "p_home_e1": 0.6828,
+   "p_home_e2": 0.7155,
+   "trigger_price": {
+    "home_ml_min": 1.43,
+    "away_ml_min": 3.326,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "LAC",
+    "away": "UTA",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "LAC",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "UTA",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "LAC",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "UTA",
+     "last_game": "2026-11-15",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "LAC",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "UTA",
+       "from_date": "2026-11-15",
+       "miles": 589.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257"
+  },
+  {
+   "game_id": "0022600258",
+   "date": "2026-11-18",
+   "time_et": "7:00 PM",
+   "matchup": "MEM @ CLE",
+   "arena": "Rocket Arena",
+   "city": "Cleveland",
+   "state": "OH",
+   "surface": "projection",
+   "possessions": 100.09,
+   "ppp_home": 1.1365,
+   "ppp_away": 1.172,
+   "proj_home_pts": 113.8,
+   "proj_away_pts": 117.3,
+   "proj_total": 231.1,
+   "e1_margin": -6.24,
+   "e2_margin": -8.33,
+   "disagreement": 2.09,
+   "consensus_margin": -7.28,
+   "spread_home": 7.3,
+   "p_home": 0.334,
+   "p_home_e1": 0.3567,
+   "p_home_e2": 0.3119,
+   "trigger_price": {
+    "home_ml_min": 2.994,
+    "away_ml_min": 1.502,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "CLE",
+    "away": "MEM",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "CLE",
+     "rows": 7,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5,
+      "Questionable": 2
+     },
+     "n_status_known": 7,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "MEM",
+     "rows": 7,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Questionable": 3,
+      "Out": 4
+     },
+     "n_status_known": 7,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "CLE",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "MEM",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "CLE",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "WAS",
+       "from_date": "2026-11-16",
+       "miles": 304.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/mem-vs-cle-0022600258"
+  },
+  {
+   "game_id": "0022600259",
+   "date": "2026-11-18",
+   "time_et": "7:00 PM",
+   "matchup": "HOU @ IND",
+   "arena": "Gainbridge Fieldhouse",
+   "city": "Indianapolis",
+   "state": "IN",
+   "surface": "projection",
+   "possessions": 99.47,
+   "ppp_home": 1.108,
+   "ppp_away": 1.1705,
+   "proj_home_pts": 110.2,
+   "proj_away_pts": 116.4,
+   "proj_total": 226.6,
+   "e1_margin": -11.56,
+   "e2_margin": -14.98,
+   "disagreement": 3.42,
+   "consensus_margin": -13.27,
+   "spread_home": 13.3,
+   "p_home": 0.2173,
+   "p_home_e1": 0.248,
+   "p_home_e2": 0.1889,
+   "trigger_price": {
+    "home_ml_min": 4.602,
+    "away_ml_min": 1.278,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "IND",
+    "away": "HOU",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "IND",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "HOU",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "IND",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "HOU",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "PHI",
+       "from_date": "2026-11-15",
+       "miles": 582.5,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIA",
+       "from_date": "2026-11-16",
+       "miles": 1025.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259"
+  },
+  {
+   "game_id": "0022600260",
+   "date": "2026-11-18",
+   "time_et": "7:00 PM",
+   "matchup": "MIL @ MIA",
+   "arena": "Kaseya Center",
+   "city": "Miami",
+   "state": "FL",
+   "surface": "projection",
+   "possessions": 101.59,
+   "ppp_home": 1.168,
+   "ppp_away": 1.108,
+   "proj_home_pts": 118.7,
+   "proj_away_pts": 112.6,
+   "proj_total": 231.2,
+   "e1_margin": 13.06,
+   "e2_margin": 16.73,
+   "disagreement": 3.67,
+   "consensus_margin": 14.9,
+   "spread_home": -14.9,
+   "p_home": 0.8097,
+   "p_home_e1": 0.779,
+   "p_home_e2": 0.8377,
+   "trigger_price": {
+    "home_ml_min": 1.235,
+    "away_ml_min": 5.256,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIA",
+    "away": "MIL",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIA",
+     "rows": 3,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 1,
+      "Questionable": 1,
+      "Available": 1
+     },
+     "n_status_known": 3,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "MIL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIA",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "MIL",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIA",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIL",
+       "from_date": "2026-11-15",
+       "miles": 1270.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/mil-vs-mia-0022600260"
+  },
+  {
+   "game_id": "0022600261",
+   "date": "2026-11-18",
+   "time_et": "7:00 PM",
+   "matchup": "PHI @ ORL",
+   "arena": "Kia Center",
+   "city": "Orlando",
+   "state": "FL",
+   "surface": "projection",
+   "possessions": 99.22,
+   "ppp_home": 1.1,
+   "ppp_away": 1.1285,
+   "proj_home_pts": 109.1,
+   "proj_away_pts": 112.0,
+   "proj_total": 221.1,
+   "e1_margin": -4.79,
+   "e2_margin": -7.97,
+   "disagreement": 3.19,
+   "consensus_margin": -6.38,
+   "spread_home": 6.4,
+   "p_home": 0.3536,
+   "p_home_e1": 0.3891,
+   "p_home_e2": 0.3194,
+   "trigger_price": {
+    "home_ml_min": 2.828,
+    "away_ml_min": 1.547,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "ORL",
+    "away": "PHI",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "ORL",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "PHI",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "ORL",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "PHI",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "BOS",
+       "from_date": "2026-11-16",
+       "miles": 1116.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "BKN",
+       "from_date": "2026-11-16",
+       "miles": 938.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/phi-vs-orl-0022600261"
+  },
+  {
+   "game_id": "0022600262",
+   "date": "2026-11-18",
+   "time_et": "7:30 PM",
+   "matchup": "CHI @ BKN",
+   "arena": "Barclays Center",
+   "city": "Brooklyn",
+   "state": "NY",
+   "surface": "projection",
+   "possessions": 101.64,
+   "ppp_home": 1.1505,
+   "ppp_away": 1.127,
+   "proj_home_pts": 116.9,
+   "proj_away_pts": 114.5,
+   "proj_total": 231.5,
+   "e1_margin": 5.65,
+   "e2_margin": 6.66,
+   "disagreement": 1.01,
+   "consensus_margin": 6.15,
+   "spread_home": -6.2,
+   "p_home": 0.6414,
+   "p_home_e1": 0.6302,
+   "p_home_e2": 0.6525,
+   "trigger_price": {
+    "home_ml_min": 1.559,
+    "away_ml_min": 2.789,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "BKN",
+    "away": "CHI",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "BKN",
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 5
+     },
+     "n_status_known": 5,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "CHI",
+     "rows": 5,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4,
+      "Questionable": 1
+     },
+     "n_status_known": 5,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "BKN",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "CHI",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "BKN",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "CLE",
+       "from_date": "2026-11-16",
+       "miles": 405.4,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262"
+  },
+  {
+   "game_id": "0022600263",
+   "date": "2026-11-18",
+   "time_et": "7:30 PM",
+   "matchup": "WAS @ TOR",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto",
+   "state": "ON",
+   "surface": "projection",
+   "possessions": 99.64,
+   "ppp_home": 1.1505,
+   "ppp_away": 1.108,
+   "proj_home_pts": 114.6,
+   "proj_away_pts": 110.4,
+   "proj_total": 225.0,
+   "e1_margin": 9.34,
+   "e2_margin": 11.57,
+   "disagreement": 2.23,
+   "consensus_margin": 10.46,
+   "spread_home": -10.5,
+   "p_home": 0.7309,
+   "p_home_e1": 0.7088,
+   "p_home_e2": 0.7521,
+   "trigger_price": {
+    "home_ml_min": 1.368,
+    "away_ml_min": 3.716,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "TOR",
+    "away": "WAS",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "TOR",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "WAS",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "TOR",
+     "last_game": "2026-11-17",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "WAS",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "TOR",
+       "from_date": "2026-11-17",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "WAS",
+       "from_date": "2026-11-16",
+       "miles": 350.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/was-vs-tor-0022600263"
+  },
+  {
+   "game_id": "0022600264",
+   "date": "2026-11-18",
+   "time_et": "8:00 PM",
+   "matchup": "DET @ NOP",
+   "arena": "Smoothie King Center",
+   "city": "New Orleans",
+   "state": "LA",
+   "surface": "projection",
+   "possessions": 100.66,
+   "ppp_home": 1.1025,
+   "ppp_away": 1.1705,
+   "proj_home_pts": 111.0,
+   "proj_away_pts": 117.8,
+   "proj_total": 228.8,
+   "e1_margin": -12.82,
+   "e2_margin": -16.46,
+   "disagreement": 3.64,
+   "consensus_margin": -14.64,
+   "spread_home": 14.6,
+   "p_home": 0.1944,
+   "p_home_e1": 0.2252,
+   "p_home_e2": 0.1662,
+   "trigger_price": {
+    "home_ml_min": 5.145,
+    "away_ml_min": 1.241,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "NOP",
+    "away": "DET",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "NOP",
+     "rows": 8,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Questionable": 3,
+      "Out": 5
+     },
+     "n_status_known": 8,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "DET",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "NOP",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "DET",
+     "last_game": "2026-11-17",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "NOP",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "SAS",
+       "from_date": "2026-11-17",
+       "miles": 502.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/det-vs-nop-0022600264"
+  },
+  {
+   "game_id": "0022600265",
+   "date": "2026-11-18",
+   "time_et": "8:00 PM",
+   "matchup": "ATL @ OKC",
+   "arena": "Paycom Center",
+   "city": "Oklahoma City",
+   "state": "OK",
+   "surface": "projection",
+   "possessions": 101.25,
+   "ppp_home": 1.1225,
+   "ppp_away": 1.106,
+   "proj_home_pts": 113.7,
+   "proj_away_pts": 112.0,
+   "proj_total": 225.6,
+   "e1_margin": 4.21,
+   "e2_margin": 5.46,
+   "disagreement": 1.25,
+   "consensus_margin": 4.83,
+   "spread_home": -4.8,
+   "p_home": 0.612,
+   "p_home_e1": 0.5979,
+   "p_home_e2": 0.626,
+   "trigger_price": {
+    "home_ml_min": 1.634,
+    "away_ml_min": 2.577,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "OKC",
+    "away": "ATL",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "OKC",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "ATL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "OKC",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "ATL",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "SAC",
+       "from_date": "2026-11-15",
+       "miles": 1336.6,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIL",
+       "from_date": "2026-11-15",
+       "miles": 732.6,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/atl-vs-okc-0022600265"
+  },
+  {
+   "game_id": "0022600266",
+   "date": "2026-11-18",
+   "time_et": "9:30 PM",
+   "matchup": "BOS @ DEN",
+   "arena": "Ball Arena",
+   "city": "Denver",
+   "state": "CO",
+   "surface": "projection",
+   "possessions": 97.1,
+   "ppp_home": 1.1055,
+   "ppp_away": 1.168,
+   "proj_home_pts": 107.3,
+   "proj_away_pts": 113.4,
+   "proj_total": 220.8,
+   "e1_margin": -11.27,
+   "e2_margin": -14.09,
+   "disagreement": 2.82,
+   "consensus_margin": -12.68,
+   "spread_home": 12.7,
+   "p_home": 0.2278,
+   "p_home_e1": 0.2535,
+   "p_home_e2": 0.2035,
+   "trigger_price": {
+    "home_ml_min": 4.391,
+    "away_ml_min": 1.295,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "DEN",
+    "away": "BOS",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "DEN",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "BOS",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "DEN",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "BOS",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "DEN",
+       "from_date": "2026-11-16",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "BOS",
+       "from_date": "2026-11-16",
+       "miles": 1766.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/bos-vs-den-0022600266"
+  },
+  {
+   "game_id": "0022600267",
+   "date": "2026-11-18",
+   "time_et": "8:00 PM",
+   "matchup": "GSW @ DAL",
+   "arena": "American Airlines Center",
+   "city": "Dallas",
+   "state": "TX",
+   "surface": "projection",
+   "possessions": 99.92,
+   "ppp_home": 1.119,
+   "ppp_away": 1.153,
+   "proj_home_pts": 111.8,
+   "proj_away_pts": 115.2,
+   "proj_total": 227.0,
+   "e1_margin": -5.93,
+   "e2_margin": -7.85,
+   "disagreement": 1.93,
+   "consensus_margin": -6.89,
+   "spread_home": 6.9,
+   "p_home": 0.3426,
+   "p_home_e1": 0.3636,
+   "p_home_e2": 0.322,
+   "trigger_price": {
+    "home_ml_min": 2.919,
+    "away_ml_min": 1.521,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "DAL",
+    "away": "GSW",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "DAL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "GSW",
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 6,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "DAL",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "GSW",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "BOS",
+       "from_date": "2026-11-15",
+       "miles": 1549.2,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "NOP",
+       "from_date": "2026-11-16",
+       "miles": 442.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267"
+  },
+  {
+   "game_id": "0022600268",
+   "date": "2026-11-18",
+   "time_et": "10:00 PM",
+   "matchup": "UTA @ LAL",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles",
+   "state": "CA",
+   "surface": "projection",
+   "possessions": 100.43,
+   "ppp_home": 1.1915,
+   "ppp_away": 1.0955,
+   "proj_home_pts": 119.7,
+   "proj_away_pts": 110.0,
+   "proj_total": 229.7,
+   "e1_margin": 20.15,
+   "e2_margin": 23.3,
+   "disagreement": 3.14,
+   "consensus_margin": 21.72,
+   "spread_home": -21.7,
+   "p_home": 0.8995,
+   "p_home_e1": 0.8822,
+   "p_home_e2": 0.9149,
+   "trigger_price": {
+    "home_ml_min": 1.112,
+    "away_ml_min": 9.953,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "LAL",
+    "away": "UTA",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "LAL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "UTA",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "LAL",
+     "last_game": "2026-11-17",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "UTA",
+     "last_game": "2026-11-17",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "LAL",
+       "from_date": "2026-11-17",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "LAC",
+       "from_date": "2026-11-17",
+       "miles": 8.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/uta-vs-lal-0022600268"
+  },
+  {
+   "game_id": "0022600269",
+   "date": "2026-11-18",
+   "time_et": "10:00 PM",
+   "matchup": "PHX @ SAC",
+   "arena": "Golden 1 Center",
+   "city": "Sacramento",
+   "state": "CA",
+   "surface": "projection",
+   "possessions": 99.94,
+   "ppp_home": 1.1265,
+   "ppp_away": 1.1705,
+   "proj_home_pts": 112.6,
+   "proj_away_pts": 117.0,
+   "proj_total": 229.6,
+   "e1_margin": -7.93,
+   "e2_margin": -10.33,
+   "disagreement": 2.41,
+   "consensus_margin": -9.13,
+   "spread_home": 9.1,
+   "p_home": 0.2955,
+   "p_home_e1": 0.3204,
+   "p_home_e2": 0.2715,
+   "trigger_price": {
+    "home_ml_min": 3.384,
+    "away_ml_min": 1.419,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "SAC",
+    "away": "PHX",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "SAC",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "PHX",
+     "rows": 0,
+     "not_yet_submitted": true,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "SAC",
+     "last_game": "2026-11-15",
+     "rest_days": 2,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "PHX",
+     "last_game": "2026-11-16",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "SAC",
+       "from_date": "2026-11-15",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "DEN",
+       "from_date": "2026-11-16",
+       "miles": 885.9,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/phx-vs-sac-0022600269"
+  },
+  {
+   "game_id": "0022600270",
+   "date": "2026-11-19",
+   "time_et": "8:00 PM",
+   "matchup": "GSW @ MEM",
+   "arena": "FedExForum",
+   "city": "Memphis",
+   "state": "TN",
+   "surface": "projection",
+   "possessions": 100.06,
+   "ppp_home": 1.155,
+   "ppp_away": 1.1325,
+   "proj_home_pts": 115.6,
+   "proj_away_pts": 113.3,
+   "proj_total": 228.9,
+   "e1_margin": 5.37,
+   "e2_margin": 6.63,
+   "disagreement": 1.26,
+   "consensus_margin": 6.0,
+   "spread_home": -6.0,
+   "p_home": 0.6381,
+   "p_home_e1": 0.6241,
+   "p_home_e2": 0.6519,
+   "trigger_price": {
+    "home_ml_min": 1.567,
+    "away_ml_min": 2.763,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MEM",
+    "away": "GSW",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MEM",
+     "rows": 7,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Questionable": 3,
+      "Out": 4
+     },
+     "n_status_known": 7,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "GSW",
+     "rows": 6,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 6,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MEM",
+     "last_game": "2026-11-18",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "GSW",
+     "last_game": "2026-11-18",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "CLE",
+       "from_date": "2026-11-18",
+       "miles": 630.7,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "DAL",
+       "from_date": "2026-11-18",
+       "miles": 419.8,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/gsw-vs-mem-0022600270"
+  },
+  {
+   "game_id": "0022600271",
+   "date": "2026-11-19",
+   "time_et": "8:00 PM",
+   "matchup": "POR @ MIL",
+   "arena": "Fiserv Forum",
+   "city": "Milwaukee",
+   "state": "WI",
+   "surface": "projection",
+   "possessions": 100.68,
+   "ppp_home": 1.0825,
+   "ppp_away": 1.1885,
+   "proj_home_pts": 109.0,
+   "proj_away_pts": 119.7,
+   "proj_total": 228.6,
+   "e1_margin": -20.47,
+   "e2_margin": -24.44,
+   "disagreement": 3.96,
+   "consensus_margin": -22.46,
+   "spread_home": 22.5,
+   "p_home": 0.0931,
+   "p_home_e1": 0.114,
+   "p_home_e2": 0.0751,
+   "trigger_price": {
+    "home_ml_min": 10.743,
+    "away_ml_min": 1.103,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIL",
+    "away": "POR",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIL",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "POR",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Out": 4
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIL",
+     "last_game": "2026-11-18",
+     "rest_days": 0,
+     "back_to_back": true,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "POR",
+     "last_game": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIA",
+       "from_date": "2026-11-18",
+       "miles": 1270.1,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "MIN",
+       "from_date": "2026-11-17",
+       "miles": 297.8,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/por-vs-mil-0022600271"
+  },
+  {
+   "game_id": "0022600272",
+   "date": "2026-11-19",
+   "time_et": "8:00 PM",
+   "matchup": "NYK @ MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis",
+   "state": "MN",
+   "surface": "projection",
+   "possessions": 98.47,
+   "ppp_home": 1.121,
+   "ppp_away": 1.091,
+   "proj_home_pts": 110.4,
+   "proj_away_pts": 107.4,
+   "proj_total": 217.8,
+   "e1_margin": 6.78,
+   "e2_margin": 7.79,
+   "disagreement": 1.01,
+   "consensus_margin": 7.28,
+   "spread_home": -7.3,
+   "p_home": 0.6659,
+   "p_home_e1": 0.655,
+   "p_home_e2": 0.6767,
+   "trigger_price": {
+    "home_ml_min": 1.502,
+    "away_ml_min": 2.993,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "MIN",
+    "away": "NYK",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "MIN",
+     "rows": 4,
+     "not_yet_submitted": false,
+     "by_status": {
+      "Available": 1,
+      "Out": 3
+     },
+     "n_status_known": 4,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "NYK",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "MIN",
+     "last_game": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 2,
+     "three_in_four": true
+    },
+    "away": {
+     "team": "NYK",
+     "last_game": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "MIN",
+       "from_date": "2026-11-17",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "TOR",
+       "from_date": "2026-11-17",
+       "miles": 692.4,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/nyk-vs-min-0022600272"
+  },
+  {
+   "game_id": "0022600273",
+   "date": "2026-11-19",
+   "time_et": "8:00 PM",
+   "matchup": "LAC @ SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio",
+   "state": "TX",
+   "surface": "projection",
+   "possessions": 99.41,
+   "ppp_home": 1.1725,
+   "ppp_away": 1.09,
+   "proj_home_pts": 116.6,
+   "proj_away_pts": 108.4,
+   "proj_total": 224.9,
+   "e1_margin": 17.27,
+   "e2_margin": 21.87,
+   "disagreement": 4.6,
+   "consensus_margin": 19.57,
+   "spread_home": -19.6,
+   "p_home": 0.8754,
+   "p_home_e1": 0.8454,
+   "p_home_e2": 0.901,
+   "trigger_price": {
+    "home_ml_min": 1.142,
+    "away_ml_min": 8.024,
+    "note": "fair odds from the projection; a bet needs a BETTER price than this and a measured market to compare it to"
+   },
+   "market_price": null,
+   "stake_pct": 0.0,
+   "price_status": "BLOCKED (gate G6): no licensed odds feed - no edge, no stake",
+   "luck_gate": {
+    "home": "SAS",
+    "away": "LAC",
+    "home_outside": false,
+    "away_outside": false,
+    "blocked": false,
+    "band_z": 2.0
+   },
+   "availability": {
+    "home": {
+     "team": "SAS",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    },
+    "away": {
+     "team": "LAC",
+     "rows": 0,
+     "not_yet_submitted": false,
+     "by_status": {},
+     "n_status_known": 0,
+     "n_status_blank": 0,
+     "production_impact": null,
+     "impact_flag": "F-V4-08 production impact needs a matched before/after pair of captured games; the report states status, not minutes"
+    }
+   },
+   "flow": {
+    "home": {
+     "team": "SAS",
+     "last_game": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "away": {
+     "team": "LAC",
+     "last_game": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "games_in_3": 1,
+     "three_in_four": false
+    },
+    "travel": {
+     "legs": {
+      "home": {
+       "from": "SAS",
+       "from_date": "2026-11-17",
+       "miles": 0.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      },
+      "away": {
+       "from": "LAC",
+       "from_date": "2026-11-17",
+       "miles": 1209.0,
+       "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+      }
+     },
+     "provenance": "THIRD-PARTY (Wikimedia REST / Wikidata P625), read 2026-11-15"
+    }
+   },
+   "sources": {
+    "advanced": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "traditional": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opponent": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "standings": "https://www.nba.com/standings",
+    "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+    "injury": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf"
+   },
+   "source_url": "https://www.nba.com/game/lac-vs-sas-0022600273"
+  }
+ ],
+ "bet_surface": {
+  "refused": [
+   {
+    "game_id": "0022600245",
+    "date": "2026-11-16",
+    "matchup": "ORL @ BOS",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600246",
+    "date": "2026-11-16",
+    "matchup": "CHI @ CLE",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600247",
+    "date": "2026-11-16",
+    "matchup": "MEM @ WAS",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600248",
+    "date": "2026-11-16",
+    "matchup": "PHI @ BKN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600249",
+    "date": "2026-11-16",
+    "matchup": "HOU @ MIA",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600250",
+    "date": "2026-11-16",
+    "matchup": "POR @ MIN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600251",
+    "date": "2026-11-16",
+    "matchup": "GSW @ NOP",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600252",
+    "date": "2026-11-16",
+    "matchup": "PHX @ DEN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600253",
+    "date": "2026-11-17",
+    "matchup": "NYK @ TOR",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600254",
+    "date": "2026-11-17",
+    "matchup": "POR @ MIN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600255",
+    "date": "2026-11-17",
+    "matchup": "DET @ SAS",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600256",
+    "date": "2026-11-17",
+    "matchup": "CHA @ LAL",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600257",
+    "date": "2026-11-17",
+    "matchup": "UTA @ LAC",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600258",
+    "date": "2026-11-18",
+    "matchup": "MEM @ CLE",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600259",
+    "date": "2026-11-18",
+    "matchup": "HOU @ IND",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600260",
+    "date": "2026-11-18",
+    "matchup": "MIL @ MIA",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600261",
+    "date": "2026-11-18",
+    "matchup": "PHI @ ORL",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600262",
+    "date": "2026-11-18",
+    "matchup": "CHI @ BKN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600263",
+    "date": "2026-11-18",
+    "matchup": "WAS @ TOR",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600264",
+    "date": "2026-11-18",
+    "matchup": "DET @ NOP",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600265",
+    "date": "2026-11-18",
+    "matchup": "ATL @ OKC",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600266",
+    "date": "2026-11-18",
+    "matchup": "BOS @ DEN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600267",
+    "date": "2026-11-18",
+    "matchup": "GSW @ DAL",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600268",
+    "date": "2026-11-18",
+    "matchup": "UTA @ LAL",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600269",
+    "date": "2026-11-18",
+    "matchup": "PHX @ SAC",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600270",
+    "date": "2026-11-19",
+    "matchup": "GSW @ MEM",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600271",
+    "date": "2026-11-19",
+    "matchup": "POR @ MIL",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600272",
+    "date": "2026-11-19",
+    "matchup": "NYK @ MIN",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   },
+   {
+    "game_id": "0022600273",
+    "date": "2026-11-19",
+    "matchup": "LAC @ SAS",
+    "surface": "bet",
+    "refusal": "G6: no measured market price for this game",
+    "gate": "G6",
+    "detail": "a stake is (model probability x price) - 1; without a price the expression has no value, so no row is published"
+   }
+  ],
+  "n_rows": 0,
+  "n_refused": 29,
+  "publishable": false
+ },
+ "crosschecks": {
+  "n_clubs": 30,
+  "wins": 197,
+  "losses": 197,
+  "wins_equal_losses": true,
+  "home_w": 102,
+  "road_l": 102,
+  "home_w_equal_road_l": true,
+  "home_l": 94,
+  "road_w": 94,
+  "home_l_equal_road_w": true,
+  "team_games": 394,
+  "league_games": 197.0,
+  "pts_for_sum": 44821.2,
+  "pts_against_sum": 44819.3,
+  "pts_diff": 1.9,
+  "rounding_bound": 39.4,
+  "pts_balance_within_bound": true,
+  "games_whole": true,
+  "n_teams_advanced": 30,
+  "n_teams_opponent": 30,
+  "n_teams_traditional": 30,
+  "all_three_pages_complete": true
+ }
+}

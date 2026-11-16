@@ -41,9 +41,24 @@ jobs:
           python -m nba2.v3.check
           python -m unittest discover -s nba2/v3 -t . -p 'test_*.py'
 
+      - name: Rebuild the v4 gated surfaces (capture -> gate -> render -> settle -> check)
+        # The v4 build is fail-closed in two places and both matter for publishing:
+        #   * a freshness/provenance gate fails BEFORE rendering, so a stale or unsourced
+        #     snapshot cannot reach the tree (the job exits and the deploy is skipped);
+        #   * nba2.v4.check then re-verifies the emitted HTML - links, per-row sources,
+        #     reasoned blanks, the projection/bet wall, the total = possessions x PPP
+        #     identity, the pinned HCA and the settlement hash.
+        # It runs last because it appends its own links to the nav that v2 and v3 wrote.
+        run: |
+          python -m nba2.v4
+          python -m nba2.v4.check
+
+      - name: v4 tests
+        run: python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
-          git add -A -- site data/v2
+          git add -A -- site data/v2 data/v4 data/raw
           if ! git diff --cached --quiet -- site; then
             echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
             git diff --cached --stat -- site | tail -40

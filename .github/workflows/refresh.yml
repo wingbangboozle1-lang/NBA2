@@ -114,11 +114,29 @@ jobs:
         # before any commit, so the published site can never silently go stale (fail-closed).
         run: python3 -m nba2.v2.refresh --write
 
+      - name: v4 refresh — capture, injury diff, gates, settle, render, check
+        # Order is the brief's: store the official reading, diff consecutive injury reports,
+        # then run the freshness/provenance gates and only rebuild if they pass. Any gate
+        # failure exits non-zero here, before the commit step, so the deployed site stays on
+        # the last snapshot that passed rather than silently ageing.
+        run: |
+          set -euo pipefail
+          python3 -m nba2.v4.write_capture
+          git diff --exit-code -- data/raw/refresh_2026-11-16 || {
+            echo "::error title=capture drifted::the official snapshot no longer reproduces from the committed reading"
+            exit 1
+          }
+          python3 -m nba2.v4.injury_diff
+          python3 -m nba2.v4.settlement
+          python3 -m nba2.v4
+          python3 -m nba2.v4.check
+
       - name: Verify (unit tests + seal + provenance lint)
         run: |
           set -euo pipefail
           python3 -m unittest discover -s nba2/tests -t .
           python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'
+          python3 -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
           python3 -m nba2.pipeline.seal_predictions --verify
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site
@@ -142,7 +160,7 @@ jobs:
           set -euo pipefail
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
-          git add data/raw data/settlement.json data/site.json index.html pages 2>/dev/null || true
+          git add data/raw data/v4 site data/settlement.json data/site.json index.html pages 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing new from the official sources — no commit."
             exit 0

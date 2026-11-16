@@ -4081,3 +4081,118 @@ PR #93 added an append-only Pages/live-site verification record while PR #90 was
 
 - **PR #94** (`arena/a95e2125-nba2` → `main`) merged 2026-11-16 14:49:13 UTC at `b1156bf6f4e50ea02d453d85203af9ae18eb0c19`: https://github.com/wingbangboozle1-lang/NBA2/pull/94.
 - Checks: `verify`, `backtest`, `parity`, and `v2` passed. The Pages build/deploy for this documentation record also completed successfully (run `43889779879`). The existing Pages source caveat remains: API says `build_type: legacy`, `source: main /`; deployment success does not prove the `site/` artifact is served at the public root.
+
+---
+
+## Session `arena/b3914335-nba2` — CLAIM (2026-11-16 ~14:30 UTC, branch `arena/b3914335-nba2`, base `32019ac` = `main` @ PR #88)
+
+**State read at claim time (measured, not assumed).**
+- `main` = `32019ac`; branch at the same commit, working tree clean. Open PRs #70/#72/#78/#80/#82 are older
+  branches whose scoped work is reported below; none holds a claim on the files claimed here.
+- Checker chain on the committed tree: v1 tests 79 OK, v2 tests 136 OK, v3 tests 64 OK; `python -m nba2.v3`
+  builds 12 pages, gates 7 pass / 1 fail (G-F3 advisory), publishable=True.
+- `git`/`gh` authenticated; **bash egress to nba.com is blocked (HTTP 000)**, but the platform page-fetch
+  tool reaches `www.nba.com`, `official.nba.com` and `statsdmz.nba.com`. Every official read this session
+  is made through that tool and records *that* method with a retrieval timestamp.
+
+**File scope claimed (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record (append-only).
+- NEW `nba2/v4/**` — the rolling-slate refresh, provenance gate, settlement and published-surface layer.
+- NEW `data/raw/refresh_2026-11-16/**`, NEW `data/v4/**` — this session's official captures + derived output.
+- `nba2/settlement_page.py` — only to wire the orphaned Settlement page into shared navigation (R-1 of
+  session `arena/e73ca9d5-nba2`, logged as unretired request).
+- `.github/workflows/refresh.yml`, `.github/workflows/pages.yml` — add the v4 gate chain + test job
+  (R-3 of session `arena/e73ca9d5-nba2`, logged as unretired request).
+- Regenerated artefacts of the committed generators: `site/**`, `pages/**`, `data/site.json` — only as
+  direct output of the committed modules, never hand-edited.
+- `requirements/REQUIREMENTS.json`, `suggestions/SUGGESTIONS.json`, `README.md` — status/count sync.
+- NEW `analysis/session-b3914335-verification.md` — the verification record.
+
+**Not edited (owned by finished sessions; a change request is logged instead):** `nba2/v2/**`,
+`nba2/v3/**` (read as libraries), `nba2/models/**`, `nba2/pipeline/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `backtest/**`, `archive/**`, `verified/**`, root `*.html`, `data/raw/ledger/**`
+(sealed, read only), `data/v2/**`, `data/v3/**`.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| B1 | Claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| B2 | Scheduled rolling-slate refresh of the four official surfaces with freshness + provenance gates, rebuild only after they pass (brief #1) | pending | `nba2/v4/*`, `.github/workflows/refresh.yml` | live official read, per-row URL + retrieval stamp; unconfirmed ⇒ blank + flagged |
+| B3 | Official 2026-11-16 refresh capture + in-session gate run + gated rebuild (brief #1 measured, brief #24) | pending | `data/raw/refresh_2026-11-16/**` | value + official URL per row |
+| B4 | Settle the 11/15 sealed ledger from verified official finals; keep the stamp visible (briefs #2, #22) | pending | `nba2/v4/settle*.py`, `data/v4/**` | final + quarter rows must agree with the official source; never back-solve |
+| B5 | Injury releases: store each release with revision + retrieval stamps, diff consecutive releases (briefs #3, #21) | pending | `data/v4/injuries/**`, `nba2/v4/injuries.py` | PDF/index URL per release |
+| B6 | Projection vs bet surface split enforced in code + on the site (brief #7) | pending | `nba2/v4/surfaces.py` | gate must refuse a bet-surface row without a measured price |
+| B7 | Wire the orphaned Settlement page into shared navigation + CI (R-1/R-3) | pending | `nba2/settlement_page.py`, workflows | link resolves; check passes |
+| B8 | Registers, README, Flagged-for-review + PR → `main` → merge → Pages deploy confirmed → record here | pending | `requirements/`, `suggestions/`, `README.md`, `COORDINATION.md` | every checker green; live fetch returns the new pages |
+
+---
+
+## Completion record — session `arena/b3914335-nba2`
+
+Branch `arena/b3914335-nba2`, base `32019ac`. Claim `934c855`. Work committed in the sequence
+below; no file outside the claimed scope was edited.
+
+### Deliverables, by task
+
+| ID | Task | Status | What actually landed | Verification |
+|----|------|--------|----------------------|--------------|
+| B1 | Claim + push before work | **done** | `934c855` on `arena/b3914335-nba2` | pushed before any v4 file was written |
+| B2 | Scheduled gated refresh | **done** | `nba2/v4/{capture,write_capture,model,settlement,injury_diff,publish,check,__main__}.py`; `refresh.yml` + `pages.yml` run the chain on cron 14:05Z / 18:35Z | 8/8 gates pass; gate failure exits non-zero **before** rendering |
+| B3 | Official 2026-11-16 capture + gated rebuild | **done** | `data/raw/refresh_2026-11-16/**` (6 files) + `refresh_2026-11-15/results_2026-11-15.json`; 5 pages rendered | `capture.selftest() == []`; capture rewrite byte-identical, CI fails if not |
+| B4 | Settle the 11/15 seal from verified finals | **done** | `data/v4/settlement/settled-2026-11-15.json`; 9 graded / 25 ungraded, none a loss | seal re-verified before grading; `verify_settlement()` ok; stamp deterministic |
+| B5 | Injury releases stored + diffed | **done** | `data/v4/injury/releases.json`; 2 releases, 1 consecutive diff, cross-day diff | revision + retrieval + index stamps on every release; 09:30 declared identical (F-V4-09) |
+| B6 | Projection/bet wall enforced in code | **done** | wall asserted on the **emitted HTML**, not the model; bet surface publishes 0 rows, 29 explicit refusals | `assert_no_mixing` defect found and fixed (it excluded the fields it guarded) |
+| B7 | Settlement page in nav + CI | **done** | `settle.html` in the shared nav; v4 chain in both workflows | every v4 page reachable from every other, checked by test |
+| B8 | Registers, record, PR, merge, Pages | **in progress** | `requirements/REQUIREMENTS.json` (46 met / 9 partial / 10 blocked / 1 not started); `analysis/session-b3914335-verification.md` | PR raised after this record |
+
+### Numbers a reviewer should be able to re-derive
+
+| Quantity | Value | How |
+|---|---|---|
+| Official history pool | 197 games | matches the standings-implied 197 |
+| Home-win rate (non-neutral) | 0.5204, n=196 | 102 home wins over official finals |
+| Pinned HCA | **0.869 pts** | `16.987 × Φ⁻¹(0.5204)`, never fitted |
+| Total–margin correlation | **−0.038**, CI95 [−0.177, 0.103], n=196 | neutral games excluded |
+| Sealed ledger | 34 picks, `34e144c635b83b89` | re-verified after settlement |
+| Graded / ungraded | 9 / 25 | ungraded rows carry a reason, never a loss |
+| Log-loss vs coin flip | 0.2804 vs 0.6931 | 9 graded games |
+| `p_observed_run_under_model` | **0.0802** | the 9/9 run is not evidence of skill; printed before the hit rate |
+| Clubs outside the luck band | 0 | so 0 games blocked — reported as the honest answer |
+| Slate published | 25 games (11/16–11/18), 29 captured (to 11/19) | every row sourced |
+
+### Defects found and fixed during the session
+
+1. **Gate ordering.** The surface-wall gate is only measurable on emitted HTML but was in the
+   pre-render gate list, so the build aborted on its own first run. Split into pre-render
+   (freshness/provenance) and post-render (wall), with the verify page re-rendered once so it
+   shows the post-render result too.
+2. **`assert_no_mixing` was vacuous.** It excluded `market_price`, `stake_pct`,
+   `edge_vs_market` and `kelly_fraction` from its own leak test, so a projection row carrying a
+   12% Kelly stake passed the wall. Now fails on any of them holding a real number; the test
+   that caught it is kept.
+3. **Unreasoned blanks.** 11/17–11/18 games rendered a bare `—` in the availability column,
+   and the checker accepted a bare dash. Both fixed: a blank must now name its reason and a
+   bare dash is a build failure.
+4. **An invented status bucket.** Six unread statuses were being counted as
+   `"unlisted (extraction artefact)"` inside the status tally. The status tally now only holds
+   league status words; unread rows are counted separately and flagged F-V4-06.
+5. **Missing history input.** The 5 official 11/14 finals were in the committed capture but in
+   no v4 pool, so HCA was computed on n=191 instead of 196. Fixed by reading the committed
+   file; the standings cross-check now catches this class of gap.
+
+### Not done, and where it is published
+
+`R-048` (owner ratifies thresholds before money is risked) remains **not started** — it needs an
+owner decision, not code. `R-003/009/010/011/013/014/044/049` stay **partial** and the reason is
+stated on each row. Everything unverified is on the Flagged for Review page and on the
+v4-verify page's gate table; none of it blocks the merge, and none of it is presented as
+verified.
+
+### Change requests handed to the owning sessions (not edited here)
+
+| # | Target (owner) | Request | Why it matters |
+|---|---|---|---|
+| CR-V4-1 | `nba2/v2/check.py` (v2) | Strip the fragment before resolving a local link: `(p.parent / link.split("?")[0].split("#")[0])`, and verify the fragment exists in the target. | As written, **any** fragment link (`page.html#section`) is reported as a broken local link. v2's own pages are unaffected only because they never use one. The v4 register wanted section-level links and had to fall back to file-level links, which is a worse experience for a reviewer. |
+| CR-V4-2 | `nba2/v2/content.py` `FLAGS` (v2) | Add F-V4-01..F-V4-09 to the shared Flagged-for-review page, or link that page to `v4-verify.html`. | The brief asks for unverified items to be published on the Flagged page. They **are** published, in full, in the consolidated register on `v4-verify.html` — but the canonical Flagged page is generated from v2's `FLAGS` list, which is outside this session's scope. Until CR-V4-2 lands a reviewer has to know to look at the v4 verification page. |
+
+Both are recorded rather than actioned because `nba2/v2/**` belongs to another session's scope
+and the protocol is to log a cross-scope request instead of editing.

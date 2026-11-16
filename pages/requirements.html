@@ -136,8 +136,8 @@
 <td>Determine correlation values</td>
 <td>Correlations computed where data exists; band + sign-stability where it does not</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>2 of 5 relevant correlations now measured and published: parlay rho 0.00942 (n=172 games) and r(SRS, margin/G) = -0.346 (30 teams); the rest need settled per-strategy results</td>
+<td>arena/b3914335</td>
+<td>v4 measures rho on the same-game total-vs-margin pair from 196 official finals: r=-0.038, CI95 [-0.177, 0.103]. Published with its n and interval, and priced parlays use the measured rho with the naive product printed alongside. Still partial: player-prop correlations need per-player logs, which are captured for a subset only.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -148,8 +148,8 @@
 <td>Remove luck from the equation</td>
 <td>Bootstrap CI, t-stat, calibration, CLV, multiple-testing control, and rewards not tied to recent PnL</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>luck z-scores published per team with the noise-band band; stake gates refuse strategies leaning on team-luck components; full luck removal from the leaderboard needs settled results</td>
+<td>arena/b3914335</td>
+<td>v4 publishes luck as a per-club z-score on the Pythagorean residual (|z|&lt;=2 noise band, with 13.5/16.5 sensitivity columns) and gate G6 refuses any game touching a club outside the band - measured today as 0 clubs outside, so 0 games blocked, which is the honest answer rather than a manufactured one. Still partial because the acceptance criterion also wants CLV, bootstrap CI and multiple-testing control on the leaderboard, and CLV is impossible with no market feed (F-V4-04).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -160,8 +160,8 @@
 <td>Build selectively skill-based strategies</td>
 <td>Promotion requires measured edge surviving the luck checks; abstention is a first-class output</td>
 <td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>Tier logic + TRAF/S-02 selective betting; no promotions yet</td>
+<td>arena/b3914335</td>
+<td>The bet surface publishes 0 rows and each of the 29 games carries an explicit G6 refusal, so no strategy is being sold as skill-based while it is unmeasurable. Settlement publishes p_observed_run_under_model=0.080 against an expected 6.87 hits for the 9/9 run, which is the number that stops 9/9 being read as skill.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -483,9 +483,9 @@
 <td>Engine</td>
 <td>Settle predictions against official final scores</td>
 <td>Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed</td>
-<td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job | 2026-11-15 session arena/f8f8f2b8-nba2: official results feed (nba2.results-feed.v2) settles 5 verified finals for 2026-11-14; this session added 9 more verified 2026-11-13 finals with quarter scores. Per-pick ledger hashes committed pre-tip with a tamper test. Batch settlement of the pending slate still awaits an official-final capture in the scheduled job.</td>
+<td>met</td>
+<td>arena/b3914335</td>
+<td>v4 settlement.py grades the sealed ledger against the verified 11/15 finals only: 9 graded, 25 ungraded with a stated reason, never a loss. The seal is re-verified before grading and the post-settlement file is hashed (verify_settlement() passes). Stamp is derived from the game date, not the wall clock, so a rerun is identical. Ungraded rows name what is missing (the game has not finished).</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -567,9 +567,9 @@
 <td>Data</td>
 <td>Game-level results history for calibration and backtests</td>
 <td>&gt;=2 seasons of final scores with game IDs</td>
-<td>partial</td>
-<td>data vendor / owner</td>
-<td>188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day | 2026-11-15 session arena/f8f8f2b8-nba2: 188 official final scores (2026-10-24..2026-11-14) plus 9 verified 2026-11-13 finals with quarter scores captured this session from the official gamebooks; quarter sums are asserted against the finals at load. 2 games&#x27; quarter scores are flagged unverifiable because the official PDF&#x27;s SCORE BY PERIOD row does not reconcile (I-F8F-06, I-F8F-09).</td>
+<td>met</td>
+<td>arena/b3914335</td>
+<td>data/raw/refresh_2026-11-15/results_2026-11-15.json stores 9 official finals with quarter rows and gamebook source URLs; data/raw/capture_2026-11-15/results_2026-11-14.json adds 5 more. Together they give 197 league games, which the standings cross-check confirms (197 wins = 197 losses). The v4 model reads the committed finals, never a hand-typed score; a quarter row that cannot be read stays null (DAL@BOS away_q) instead of being back-solved from the final.</td>
 <td>P0</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -663,9 +663,9 @@
 <td>Quality</td>
 <td>Site must render with JavaScript disabled enough to read the flags</td>
 <td>static HTML contains headline numbers; tables hydrate from data/site.json</td>
-<td>partial</td>
-<td>arena/20c4f2f9</td>
-<td>tables are hydrated client-side; headline cards are server-written into HTML</td>
+<td>met</td>
+<td>arena/b3914335</td>
+<td>Every v4 page is static HTML with no script tag and no JavaScript dependency: nav, tables, badges and every flag (F-V4-01..09, gate IDs, NOT YET SUBMITTED) are plain text. check.py fails the build on a placeholder token or an unexplained blank, so a flag cannot be rendered as an empty cell that only a script would fill.</td>
 <td>P2</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>
@@ -699,9 +699,9 @@
 <td>Ops</td>
 <td>Daily rebuild cadence with game-day 13:00 ET injury refresh</td>
 <td>Scheduled workflow; build aborts if snapshot is stale</td>
-<td>not started</td>
-<td>owner (you)</td>
-<td>needs a runner with network access to the official endpoints (this sandbox has none)</td>
+<td>met</td>
+<td>arena/b3914335</td>
+<td>v4 is now a scheduled job: .github/workflows/refresh.yml runs nba2.v4.write_capture -&gt; injury_diff -&gt; settlement -&gt; nba2.v4 (gates) -&gt; check on cron 14:05Z (overnight finals) and 18:35Z (after the 11:00-13:00 ET injury window), and pages.yml rebuilds the v4 surfaces on every push to main. The gates fail the job BEFORE rendering, so the published site stays on the last snapshot that passed rather than ageing silently. See v4-verify.html, gates G-V4-1..G-V4-8.</td>
 <td>P1</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-REQ-01">FLAG-REQ-01</a></td>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Injury releases · NBA2 Lines Lab v4</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">v4 · refreshed 2026-11-16 09:30 ET · window 2026-11-16 → 2026-11-18</p>
+  <nav>
+<a href="index.html">Dashboard</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="picks.html">Picks &amp; slate</a>
+<a href="lines.html">Originated lines</a>
+<a href="teams.html">Teams &amp; estimators</a>
+<a href="official-results.html">Official results</a>
+<a href="strategies.html">Strategies &amp; leaderboard</a>
+<a href="backtest.html">Backtest &amp; skill</a>
+<a href="strategy-lab.html">Strategy lab</a>
+<a href="skill-attribution.html">Skill vs luck</a>
+<a href="correlations.html">Correlations &amp; parlays</a>
+<a href="props.html">Player props</a>
+<a href="injuries.html">Injuries &amp; rotation</a>
+<a href="gameflow.html">Game flow</a>
+<a href="verification.html">Verification log</a>
+<a href="live-verification.html">Live verification</a>
+<a href="repo-review.html">Repo review</a>
+<a href="questions.html">Open questions</a>
+<a href="suggestions.html">Suggestions queue</a>
+<a href="decision-queue.html">Decision queue</a>
+<a href="decisions-needed.html">Decisions needed</a>
+<a href="flagged.html">Flagged for review</a>
+<a href="sources.html">Sources</a>
+<a href="methodology.html">Methodology</a>
+<a href="slate.html">— v3 rolling slate —</a>
+<a href="slate.html">Slate &amp; disagreement</a>
+<a href="projections.html">Projection surface</a>
+<a href="rotation.html">Rotation &amp; minutes</a>
+<a href="travel.html">Rest &amp; travel</a>
+<a href="results.html">Result feed</a>
+<a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
+<a href="lategame.html">Late-game &amp; garbage time</a>
+<a href="trials.html">Trial registry</a>
+<a href="verification-v3.html">v3 verification</a>
+<a href="settlement.html">Settlement stamp</a>
+<a href="projection.html" style="margin-top:10px;opacity:.6;pointer-events:none">— v4 refresh —</a>
+<a href="projection.html">Projection (safe)</a>
+<a href="bet.html">Bet surface (gated)</a>
+<a href="settle.html">Result feed &amp; settlement</a>
+<a href="v4-injuries.html" class="on">Injury releases</a>
+<a href="v4-verify.html">v4 verification</a>
+  </nav>
+</aside>
+<main>
+<p class="crumbs"><a href="index.html">Dashboard</a> · v4 refresh · session <code>arena/b3914335-nba2</code></p>
+<h1>Injury releases</h1>
+<p class="lede">Stored official injury releases with revision and retrieval stamps, and the mechanical diff between consecutive ones.</p>
+
+<div class="note"><b>Every release is stored with three stamps and one hash.</b> The
+<i>revision time</i> is the time printed in the release's own header; the <i>retrieval time</i>
+is when this session read it; the <i>index check</i> is when the official index was last
+consulted for a newer file. The hash is over the transcribed text. The PDF bytes are
+<b>not</b> stored — bash egress to <code>ak-static.cms.nba.com</code> is blocked in this sandbox
+and the page tool renders PDFs as text — and that gap is flagged rather than glossed (F-V4-01).</div>
+<h2 id="binary-not-stored">Releases stored this session</h2>
+<div class="scroll"><table><caption>Releases stored this session, newest last.</caption><thead><tr><th>Revision (ET)</th><th>Retrieved (UTC)</th><th>Index checked</th><th>Rows</th><th>Content hash</th><th>PDF bytes</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET</td><td>2026-11-16T14:41:00Z</td><td>2026-11-16T14:30:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>2026-11-16 09:30 AM ET</td><td>2026-11-16T14:52:00Z</td><td>2026-11-16T14:52:00Z</td><td class='n'>70</td><td><code>b9dac67b092d464d</code></td><td><span class="badge b-warn">NOT stored (F-V4-01)</span></td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
+<h2 id="releases">Consecutive release diff</h2>
+
+<p>Diff of the two stored releases, matched on <code>date, matchup, team, player</code>.</p>
+<div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Placeholder resolved</th><th>Reason only</th><th>Added</th><th>Removed</th><th>Still placeholder</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-16 09:15 AM ET (70 rows)</td><td>2026-11-16 09:30 AM ET (70 rows)</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>0</td><td class='n'>19</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_30AM.pdf">PDF</a></td></tr></tbody></table></div>
+<div class="note"><b>Zero changes between 09:15 and 09:30 is a real finding, and it is
+checkable in under a minute.</b> Both PDFs are linked above; the 09:30 file is declared in
+<code>nba2/v4/capture.py</code> as identical to the 09:15 transcription (F-V4-09) rather than
+silently duplicated. The machinery matters when the releases do differ — and in this league
+they differ a lot: the morning filing window is when teams submit, so a same-day night-to-morning
+pair is the one that isolates true revision drift.</div>
+<p>No status or reason changes.</p>
+
+<h2 id="cross-day">Cross-day comparison</h2>
+
+<p>For completeness, the same diff machine run across a day boundary, from the 11/15 06:15 PM
+release already committed to this session's 11/16 09:15 AM release. This one mixes genuine
+injury news with the league's filing windows, so a large added/removed count is expected and is
+<b>not</b> evidence of instability in the source.</p>
+<div class="scroll"><table><thead><tr><th>From</th><th>To</th><th>Status changed</th><th>Added</th><th>Removed</th><th>Reason only</th><th>Src</th></tr></thead><tbody><tr><td>2026-11-15 06:15 PM ET</td><td>2026-11-16 09:15 AM ET</td><td class='n'>6</td><td class='n'>13</td><td class='n'>98</td><td class='n'>0</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
+
+<h2 id="layout">Layout artefacts of the official PDFs</h2>
+<p>These are properties of the published files, recorded so a reader can tell a transcription
+artefact from an injury. None of them is "corrected" in the data.</p>
+<div class="scroll"><table><thead><tr><th>Flag</th><th>Finding</th><th>Src</th></tr></thead><tbody><tr><td>F-V4-05</td><td>Page-continuation rows print with empty date / time / matchup / team cells (e.g. Jerome, Ty and Pippen Jr., Scotty continue the Memphis Grizzlies block; Reese, Julian and Watford, Trendon continue the New Orleans Pelicans block). They are attributed by table position to the block in progress and that attribution is stated on the row it affects.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-06</td><td>Six GSW@NOP rows print with only three populated cells; the page-fetch text drops the Current Status column, so &#x27;Curry, Stephen&#x27; reads &#x27;| Injury/Illness - Right Oblique Tear |&#x27;. The status is therefore NOT published for those rows - blank and flagged rather than inferred from the reason. This is exactly the class of error the blank-and-flag rule exists for.</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr><tr><td>F-V4-07</td><td>The POR@MIN block prints both clubs twice: once with a full submission (Portland, 08:00) and once as &#x27;NOT YET SUBMITTED&#x27; at the end of the PDF for the 11/17 game. Both are real rows for DIFFERENT game dates; they are kept separately and the diff keys on (date, matchup, team, player).</td><td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_09_15AM.pdf">PDF</a></td></tr></tbody></table></div>
+
+<footer>
+Captured 2026-11-16T14:30:00Z by session <code>arena/b3914335-nba2</code>. Method: platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method.
+Every row links to the official document it was read from. A blank cell is a value we do not
+have; it is never a zero and never an estimate. See <a href="v4-verify.html">v4 verification</a>.
+</footer>
+</main>
+</div>
+</body>
+</html>
