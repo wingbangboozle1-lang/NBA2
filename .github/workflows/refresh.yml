@@ -143,17 +143,11 @@ jobs:
           python3 -m nba2.pipeline.lint
 
       - name: Semantic cross-check (CR-7 — blocking, except snapshot age)
-        run: |
-          set -uo pipefail
-          python3 tools/crosscheck_site.py > /tmp/crosscheck.txt 2>&1 || true
-          cat /tmp/crosscheck.txt
-          if grep '^\[fail\]' /tmp/crosscheck.txt | grep -v 'CC-FRESH-01'; then
-            echo "::error::semantic cross-check failed (failures above) — refusing to commit (CR-7)"
-            exit 1
-          fi
-          echo "cross-check clean. CC-FRESH-01 (snapshot age) is excluded by design: the bot"
-          echo "cannot refresh the third-party ratings snapshot, and blocking settlement on it"
-          echo "would freeze the ledger's metrics whenever the ratings capture ages."
+        # F-050 fix (taken over from PR #70, session arena/d09f8d1e-nba2): the inline
+        # grep below matched '^\\[fail\\]' while tools/crosscheck_site.py prints '[FAIL]',
+        # so the gate could never fire, and '|| true' swallowed checker crashes. The
+        # shared tools/crosscheck_gate.sh enforces both correctly.
+        run: tools/crosscheck_gate.sh
 
       - name: Commit refreshed snapshots (only when something changed)
         run: |

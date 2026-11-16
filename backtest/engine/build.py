@@ -118,8 +118,51 @@ def src(url: str, label: str = "nba.com") -> str:
     return f'<a href="{esc(url)}" target="_blank" rel="noopener">{esc(label)}</a>'
 
 
+def grading_as_of() -> str:
+    """The snapshot date the published walk-forward grades claim to represent.
+
+    The frozen v1 surface may publish grades only for games on or before the slate
+    snapshot its slate table cites — the same row-count-anchored selection rule as
+    ``tools/crosscheck_site.py::slate_snapshot`` (a "newest file" tie is not a
+    defined order; see F-050). Outcomes after that date are verified into the
+    official results feed and settled through the sealed pre-tip ledgers
+    (``data/settlement.json``); they are never back-graded onto the frozen
+    snapshot (crosscheck CC-BT-02). This keeps the published accuracy claim true
+    to its own as-of date even as the committed history grows past it.
+    """
+    raw = ROOT / "data" / "raw"
+    site = json.loads((ROOT / "data" / "site.json").read_text())
+    n_pub = len(site["sections"]["slate"].get("rows", []))
+    cands = sorted(raw.glob("slate_2*_to_*.json"))
+
+    def stamp(p: pathlib.Path) -> str:
+        try:
+            return str(json.loads(p.read_text()).get("as_of", ""))
+        except Exception:
+            return ""
+
+    best = None
+    for p in sorted(cands, key=lambda p: (stamp(p), p.name), reverse=True):
+        try:
+            d = json.loads(p.read_text())
+        except Exception:
+            continue
+        if len(d.get("records", [])) == n_pub and d.get("as_of"):
+            best = d
+            break
+    if best is None and cands:
+        best = json.loads(sorted(cands, key=lambda p: (stamp(p), p.name), reverse=True)[0].read_text())
+    if best is None or not best.get("as_of"):
+        raise SystemExit("no slate snapshot with an as_of date — refusing to invent a grading cut")
+    return str(best["as_of"])
+
+
 def build() -> dict:
-    games = wf.load_games()
+    as_of = grading_as_of()
+    all_games = wf.load_games()
+    # Grade only through the snapshot the surface is built from; later finals stay
+    # in data/raw/history as model inputs and are settled via the sealed ledgers.
+    games = [g for g in all_games if str(g.get("date", "")) <= as_of]
     rows = wf.walk_forward(games)
     wf.assert_no_leakage(rows, games)
     d = [r.as_dict() for r in rows]
@@ -151,6 +194,7 @@ def build() -> dict:
         "first_date": dates[0],
         "last_date": dates[-1],
         "n_dates": len(dates),
+        "grading_as_of": as_of,
         "generated": "2026-11-14",
     }
 
