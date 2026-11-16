@@ -1,0 +1,644 @@
+{
+ "session": "arena/3cd85a22-nba2",
+ "retrieved_utc": "2026-11-16T18:23:30Z",
+ "sources": {
+  "standings": "https://www.nba.com/standings",
+  "schedule": "https://www.nba.com/schedule?date=2026-11-16",
+  "injury_index": "https://official.nba.com/nba-injury-report-2026-27-season/",
+  "injury_pdf": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf"
+ },
+ "history_pool": {
+  "n_games_total": 197,
+  "n_non_neutral": 196,
+  "n_neutral_excluded": 1
+ },
+ "rederived": {
+  "home_wins": 102,
+  "home_win_rate": 0.5204,
+  "margin_mean": 1.689,
+  "margin_sd": 16.987,
+  "hca_points": 0.869,
+  "rho": -0.038,
+  "n_rho": 196
+ },
+ "v4_model_published": {
+  "home_wins": 102,
+  "home_win_rate": 0.5204,
+  "margin_sd": 16.987,
+  "hca_points": 0.869,
+  "rho": -0.038,
+  "n_rho": 196
+ },
+ "headline_match": {
+  "home_win_rate": true,
+  "margin_sd": true,
+  "hca_points": true,
+  "rho": true
+ },
+ "standings": {
+  "n": 30,
+  "match": 30,
+  "checks": [
+   {
+    "team": "ATL",
+    "committed": "8-6 (home 3-3, road 5-3)",
+    "live": "8-6 (home 3-3, road 5-3)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "BKN",
+    "committed": "3-9 (home 1-3, road 2-6)",
+    "live": "3-9 (home 1-3, road 2-6)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "BOS",
+    "committed": "11-2 (home 6-0, road 5-2)",
+    "live": "11-2 (home 6-0, road 5-2)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "CHA",
+    "committed": "4-9 (home 3-4, road 1-5)",
+    "live": "4-9 (home 3-4, road 1-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "CHI",
+    "committed": "3-9 (home 1-4, road 2-5)",
+    "live": "3-9 (home 1-4, road 2-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "CLE",
+    "committed": "7-7 (home 5-2, road 2-5)",
+    "live": "7-7 (home 5-2, road 2-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "DAL",
+    "committed": "7-7 (home 5-2, road 2-5)",
+    "live": "7-7 (home 5-2, road 2-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "DEN",
+    "committed": "7-4 (home 2-2, road 4-2)",
+    "live": "7-4 (home 2-2, road 4-2)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "DET",
+    "committed": "8-4 (home 3-2, road 5-2)",
+    "live": "8-4 (home 3-2, road 5-2)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "GSW",
+    "committed": "8-5 (home 6-1, road 2-4)",
+    "live": "8-5 (home 6-1, road 2-4)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "HOU",
+    "committed": "11-3 (home 7-1, road 4-2)",
+    "live": "11-3 (home 7-1, road 4-2)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "IND",
+    "committed": "5-9 (home 2-4, road 3-4)",
+    "live": "5-9 (home 2-4, road 3-4)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "LAC",
+    "committed": "4-8 (home 4-3, road 0-5)",
+    "live": "4-8 (home 4-3, road 0-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "LAL",
+    "committed": "12-2 (home 5-1, road 7-1)",
+    "live": "12-2 (home 5-1, road 7-1)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "MEM",
+    "committed": "9-4 (home 3-4, road 6-0)",
+    "live": "9-4 (home 3-4, road 6-0)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "MIA",
+    "committed": "7-6 (home 3-3, road 4-3)",
+    "live": "7-6 (home 3-3, road 4-3)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "MIL",
+    "committed": "1-13 (home 1-7, road 0-6)",
+    "live": "1-13 (home 1-7, road 0-6)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "MIN",
+    "committed": "9-4 (home 5-2, road 4-2)",
+    "live": "9-4 (home 5-2, road 4-2)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "NOP",
+    "committed": "4-10 (home 3-6, road 1-4)",
+    "live": "4-10 (home 3-6, road 1-4)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "NYK",
+    "committed": "7-6 (home 4-3, road 3-3)",
+    "live": "7-6 (home 4-3, road 3-3)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "OKC",
+    "committed": "9-5 (home 5-0, road 4-5)",
+    "live": "9-5 (home 5-0, road 4-5)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "ORL",
+    "committed": "5-7 (home 1-4, road 4-3)",
+    "live": "5-7 (home 1-4, road 4-3)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "PHI",
+    "committed": "11-3 (home 6-2, road 5-1)",
+    "live": "11-3 (home 6-2, road 5-1)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "PHX",
+    "committed": "5-7 (home 5-4, road 0-3)",
+    "live": "5-7 (home 5-4, road 0-3)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "POR",
+    "committed": "9-3 (home 3-2, road 6-1)",
+    "live": "9-3 (home 3-2, road 6-1)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "SAC",
+    "committed": "1-12 (home 0-8, road 1-4)",
+    "live": "1-12 (home 0-8, road 1-4)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "SAS",
+    "committed": "12-2 (home 5-2, road 7-0)",
+    "live": "12-2 (home 5-2, road 7-0)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "TOR",
+    "committed": "5-8 (home 2-4, road 3-4)",
+    "live": "5-8 (home 2-4, road 3-4)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "UTA",
+    "committed": "1-13 (home 1-7, road 0-6)",
+    "live": "1-13 (home 1-7, road 0-6)",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "team": "WAS",
+    "committed": "4-10 (home 2-4, road 2-6)",
+    "live": "4-10 (home 2-4, road 2-6)",
+    "result": "MATCH",
+    "diffs": []
+   }
+  ]
+ },
+ "slate": {
+  "n": 29,
+  "match": 29,
+  "checks": [
+   {
+    "game_id": "0022600245",
+    "matchup": "ORL @ BOS",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600246",
+    "matchup": "CHI @ CLE",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600247",
+    "matchup": "MEM @ WAS",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600248",
+    "matchup": "PHI @ BKN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600249",
+    "matchup": "HOU @ MIA",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600250",
+    "matchup": "POR @ MIN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600251",
+    "matchup": "GSW @ NOP",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600252",
+    "matchup": "PHX @ DEN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600253",
+    "matchup": "NYK @ TOR",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600254",
+    "matchup": "POR @ MIN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600255",
+    "matchup": "DET @ SAS",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600256",
+    "matchup": "CHA @ LAL",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600257",
+    "matchup": "UTA @ LAC",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600258",
+    "matchup": "MEM @ CLE",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600259",
+    "matchup": "HOU @ IND",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600260",
+    "matchup": "MIL @ MIA",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600261",
+    "matchup": "PHI @ ORL",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600262",
+    "matchup": "CHI @ BKN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600263",
+    "matchup": "WAS @ TOR",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600264",
+    "matchup": "DET @ NOP",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600265",
+    "matchup": "ATL @ OKC",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600266",
+    "matchup": "BOS @ DEN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600267",
+    "matchup": "GSW @ DAL",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600268",
+    "matchup": "UTA @ LAL",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600269",
+    "matchup": "PHX @ SAC",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600270",
+    "matchup": "GSW @ MEM",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600271",
+    "matchup": "POR @ MIL",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600272",
+    "matchup": "NYK @ MIN",
+    "result": "MATCH",
+    "diffs": []
+   },
+   {
+    "game_id": "0022600273",
+    "matchup": "LAC @ SAS",
+    "result": "MATCH",
+    "diffs": []
+   }
+  ]
+ },
+ "injury": {
+  "committed_release": "2026-11-16 09:30 AM ET",
+  "committed_retrieved_utc": "2026-11-16T14:52:00Z",
+  "committed_n_records": 70,
+  "live_release": "2026-11-16 01:00 PM ET",
+  "live_retrieved_utc": "2026-11-16T18:23:30Z",
+  "live_n_rows": 77,
+  "new_rows_in_live": [
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Jerome, Ty"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Pippen Jr., Scotty"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Post, Quinten"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Saunders, Richie"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Stewart, Isaiah"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Beekman, Reece"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Champagne, Justin"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Johnson, Tre"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Okpara, Felix"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Vukcevic, Tristan"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "WAS",
+    "player": "Watkins, Jamir"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Adams, Steven"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Capela, Clint"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Copeland, Quadir"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Phillips, Julian"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Smart, Marcus"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "HOU",
+    "player": "Thompson, Amen"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "MIA",
+    "player": "Jovic, Nikola"
+   },
+   {
+    "matchup": "PHI@BKN",
+    "team": "PHI",
+    "player": "Barlow, Dominick"
+   },
+   {
+    "matchup": "PHI@BKN",
+    "team": "PHI",
+    "player": "Bona, Adem"
+   },
+   {
+    "matchup": "PHI@BKN",
+    "team": "PHI",
+    "player": "Embiid, Joel"
+   },
+   {
+    "matchup": "PHI@BKN",
+    "team": "PHI",
+    "player": "Hukporti, Ariel"
+   },
+   {
+    "matchup": "PHI@BKN",
+    "team": "PHI",
+    "player": "James, LeBron"
+   }
+  ],
+  "rows_gone_from_committed": [
+   {
+    "matchup": "MEM@WAS",
+    "team": "MEM",
+    "player": "Jerome, Ty"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "MEM",
+    "player": "Pippen Jr., Scotty"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "MEM",
+    "player": "Post, Quinten"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "MEM",
+    "player": "Saunders, Richie"
+   },
+   {
+    "matchup": "MEM@WAS",
+    "team": "MEM",
+    "player": "Stewart, Isaiah"
+   }
+  ],
+  "status_changes": [
+   {
+    "matchup": "CHI@CLE",
+    "team": "CLE",
+    "player": "Tyson, Jaylon",
+    "committed_status": "Questionable",
+    "live_status": "Doubtful"
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Butler III, Jimmy",
+    "committed_status": "",
+    "live_status": null
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Curry, Stephen",
+    "committed_status": "",
+    "live_status": "Out"
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Moody, Moses",
+    "committed_status": "",
+    "live_status": "Out"
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Porzingis, Kristaps",
+    "committed_status": "",
+    "live_status": "Out"
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Santos, Gui",
+    "committed_status": "",
+    "live_status": "Questionable"
+   },
+   {
+    "matchup": "GSW@NOP",
+    "team": "GSW",
+    "player": "Williams, Brandon",
+    "committed_status": "",
+    "live_status": "Out"
+   },
+   {
+    "matchup": "HOU@MIA",
+    "team": "MIA",
+    "player": "Larsson, Pelle",
+    "committed_status": "Questionable",
+    "live_status": "Doubtful"
+   }
+  ]
+ }
+}
