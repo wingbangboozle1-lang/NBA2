@@ -4210,3 +4210,65 @@ and the protocol is to log a cross-scope request instead of editing.
 `data/v4/**`, `site/{projection,bet,settle,v4-injuries,v4-verify}.html`,
 `analysis/session-b3914335-verification.md`. **Workflow changes:** `refresh.yml`, `pages.yml`,
 `publish-parity.yml`. No sealed ledger, no v2/v3 module, and no file outside the claim was edited.
+
+---
+
+## Session `arena/7bfb0276-nba2` — CLAIM (2026-11-16 ~18:30 UTC, branch `arena/7bfb0276-nba2`, base `f943bd1` = `main` @ PR #97 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `f943bd1`; this branch is at the same commit, working tree clean.
+- The clone was **depth-1 shallow** with a refspec pinned to this session's branch only; `git fetch --unshallow`
+  was run to recover history so the open branches can be merged rather than re-implemented. No working file changed.
+- Open PRs at claim time and their measured distance from `main`:
+  | PR | branch | ahead | behind | content |
+  |---|---|---|---|---|
+  | #98 | `arena/fe0ffa49-nba2` | 10 | 37 | 2026-11-16 snapshot roll + 3 real "claimed guarantee not kept" fixes (v3 ledger seal write-once, v2 prereg first-freeze-wins, σ double-count of 5 games) |
+  | #80 | `arena/0429aad7-nba2` | 7 | 70 | v2 refresh inventory + 30-row standings reconciliation gates |
+  | #70 | `arena/d09f8d1e-nba2` | 13 | 89 | F-050 crosscheck gate could never fire (`^\[fail\]` vs `[FAIL]`, `\|\| true` swallowed crashes, no PR-time gate); F-043 failure evidence probe |
+  | #72 | `arena/04a61ac0-nba2` | 3 | 98 | DRAFT; 11/14–11/15 capture + measurable gates — largely superseded by the merged v4 chain |
+  | #82 | `arena/f8f8f2b8-nba2` | 2 | 66 | board record only |
+  | #78 | `arena/56b96bf0-nba2` | 1 | 81 | board record only |
+- Checker baseline on the committed tree: `nba2.v2.check` OK (0/0); `nba2.v4.check` 8/8 gates pass, publishable=True;
+  `tools/check_links_all.py` ALL INTERNAL LINKS OK (132 files, 6,450 internal links).
+
+**Live official read in this session (method: platform page-fetch tool; bash egress to nba.com is blocked, HTTP 000).**
+- `https://www.nba.com/standings` (2026-11-16 ~18:20 UTC) — matches the committed `data/raw/refresh_2026-11-16/standings_2026-11-16.json` on every row read.
+- `https://official.nba.com/nba-injury-report-2026-27-season/` — **the official index now publishes releases up to 11/16/26 01:00 PM ET**. The committed snapshot's newest release is **09:15 AM ET** (plus a 09:30 AM transcript). **14 newer official releases exist and are not in the repository.** This is the refresh work this session must do.
+- `https://www.nba.com/schedule?date=2026-11-16` — 8 games on 11/16 (ids 0022600245–0022600252), 5 on 11/17 (…253 onward) — to be reconciled line by line against the committed slate.
+
+**Scope claimed (nothing outside this list is edited):**
+- `COORDINATION.md` — append-only.
+- `analysis/session-7bfb0276-*.md` — new files only.
+- `data/raw/refresh_2026-11-16/**` and new `data/raw/refresh_2026-11-16b/**` — official captures.
+- `data/v2/**`, `data/v4/**`, `data/v3/**`, `data/raw/ledger/**` — READ-ONLY for the ledger; regenerated artefacts elsewhere by the committed code.
+- `nba2/v2/check.py`, `nba2/v2/content.py`, `nba2/v2/refresh.py`, `nba2/v4/**`, `nba2/v3/**` — the merged branches' code plus the logged change requests CR-V4-1 and CR-V4-2.
+- `site/**`, `pages/**`, root `*.html`, `dashboard/**`, `docs/**` — regenerated published artefacts only.
+- `requirements/**`, `suggestions/**`, `README.md` — registers and counts.
+- `.github/workflows/**`.
+- `tools/**`.
+
+**Explicitly NOT edited:** `data/raw/ledger/**` (sealed — read only, verified before and after every settlement),
+`archive/**`, `backtest/**` (frozen inputs), `data/demo/**`.
+
+**Change requests inherited and actioned here (logged by their owners, now in scope):**
+- **CR-V4-1** — `nba2/v2/check.py` resolved local links without stripping the `#fragment`, so *any* fragment link was reported broken.
+- **CR-V4-2** — the v4 flags F-V4-01..F-V4-09 were published only on `site/v4-verify.html`, not on the canonical
+  Flagged-for-review page the brief asks for.
+- **I-32C-04** — the published v2 intro still says "this session (2026-11-15)" on a 2026-11-16 build.
+- **I-32C-02** — `nba2/pipeline/build_site.py` still writes "home-court adv (fitted, pts)" into the unpublished `pages/` tree.
+
+**Rules this session holds itself to:** a value is published only if fetched from an official source in this
+session or reproduced from a committed snapshot by running the committed code; unconfirmed ⇒ blank + flagged,
+never inferred; sealed ledgers are never rewritten; nothing is called verified that was not fetched or reproduced;
+flagged irregularities do not block the merge but appear on the Flagged for Review page with their source link;
+the site is never merged in a broken state; a claim is taken over only with the handoff noted in the log.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| F-01 | Board claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| F-02 | Integrate open PR branches #98, #80, #70, #78, #82; evaluate #72 | pending | see scope above | each merged branch re-verified by its own gates after merge; conflicts resolved without discarding any side's work |
+| F-03 | Live official refresh 2026-11-16 (schedule, standings, 3 team-stat pages, injury index + newest releases) with freshness + provenance gates | pending | `data/raw/refresh_2026-11-16b/**` | value + official URL + retrieval stamp per row; unconfirmed ⇒ blank + flagged |
+| F-04 | Injury releases: store each release with revision + retrieval stamp; diff consecutive releases | pending | `nba2/v4/injury_diff.py`, `data/v4/injury/**` | PDF index URL per release; unread rows counted separately, never bucketed as a status |
+| F-05 | CR-V4-1, CR-V4-2, I-32C-04, I-32C-02 | pending | `nba2/v2/check.py`, `nba2/v2/content.py`, `nba2/pipeline/build_site.py` | regression test per fix; no published surface says "fitted home-court" or a stale session date |
+| F-06 | Full line-by-line verification of the combined tree; every table row sourced | pending | `analysis/session-7bfb0276-verification.md` | checker chain green; per-row source links; unrecoverable values blank + flagged |
+| F-07 | PR → merge → Pages deploy confirmed → record | pending | `COORDINATION.md` | live fetch of the deployed pages after the deploy |
