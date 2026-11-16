@@ -1,0 +1,121 @@
+name: Player game-log capture
+
+# Captures the per-player surface (minutes / points / rebounds / assists / opponent,
+# official game id) that session arena/41bd6ce8-nba2 proved reachable one page at a
+# time, and extends it without a human in the loop.
+#
+# What the job does:
+# * for each of the next three slate dates, fetches the official club page for every
+#   club on that slate, then the official game-log page of every player the newest
+#   committed injury release designates Out / Doubtful / Questionable (G League rows
+#   excluded — a two-way player has no rotation minutes to redistribute);
+# * re-gates every parsed player before it is written: the mean of the captured rows
+#   must reproduce the PPG / RPG / APG printed in that player's own official header,
+#   and every row must carry an official game id. A parse that fails writes nothing;
+# * archives the newest official injury-release PDF for the date and reports how many
+#   player/status pairs it prints that we do not already hold (a reader still
+#   transcribes rows — the PDF is never parsed into published data);
+# * rebuilds both published trees and commits only if something actually changed.
+#
+# What it never does:
+# * never invents a value — an unreachable page is a capture failure, and a player
+#   whose table prints "No data available" is a failure, not a zero;
+# * never rewrites data/raw/ledger/** or any committed capture directory;
+# * never commits a tree that fails nba2.v2.check (the row-level source gate).
+#
+# The first scheduled run is supervised: the parsers were written against the page
+# structure observed on 2026-11-15 and were tested against fixtures, not live pages.
+# A layout change shows up as a capture failure with the reason, never as data.
+
+on:
+  schedule:
+    # 13:20 ET — after the 11 a.m.–1 p.m. local game-day injury-report window, so the
+    # designations the run works from are the ones the clubs actually filed.
+    - cron: '20 18 * * *'
+    # 21:20 ET — second pass for the clubs that file late.
+    - cron: '20 02 * * *'
+  workflow_dispatch:
+    inputs:
+      days_ahead:
+        description: 'How many slate dates to capture (1-3)'
+        required: false
+        default: '3'
+      clubs:
+        description: 'Optional comma-separated tricodes (default: every club on the slate)'
+        required: false
+        default: ''
+      max_players:
+        description: 'Optional cap on players captured this run'
+        required: false
+        default: ''
+
+concurrency:
+  group: player-capture
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Slate dates to capture (ET, 1..3 days ahead)
+        id: dates
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime, timedelta
+          from zoneinfo import ZoneInfo
+          n = int("${{ github.event.inputs.days_ahead || '3' }}")
+          today = datetime.now(ZoneInfo("America/New_York")).date()
+          print("dates=" + " ".join(str(today + timedelta(days=i)) for i in range(1, n + 1)))
+          PY
+
+      - name: Capture per-player game logs
+        env:
+          CLUBS: ${{ github.event.inputs.clubs }}
+          MAXP: ${{ github.event.inputs.max_players }}
+        run: |
+          set -u
+          for d in ${{ steps.dates.outputs.dates }}; do
+            args="--date $d"
+            [ -n "${CLUBS:-}" ] && args="$args --clubs $CLUBS"
+            [ -n "${MAXP:-}" ] && args="$args --max-players $MAXP"
+            echo "== $d =="
+            python -m nba2.v4.capture $args
+          done
+
+      - name: Rebuild both published trees (v2 -> v3 -> v4 -> v1 mirror)
+        # v4 last: a v2 run strips the v3/v4 navigation, so it must not be the final
+        # generator. build_site mirrors the result into pages/, the tree Pages serves.
+        run: |
+          python -m nba2.v2
+          python -m nba2.v3
+          python -m nba2.v4
+          python -m nba2.pipeline.build_site
+          python -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
+          python -m nba2.v2.check
+
+      - name: Commit if the capture changed anything
+        run: |
+          git config user.name  "nba2 capture bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A -- data/raw site pages index.html data/site-built.json
+          if git diff --cached --quiet; then
+            echo "no change — the capture produced nothing new, nothing committed"
+            exit 0
+          fi
+          git commit -m "capture: $(date -u +%Y-%m-%dT%H:%MZ) per-player game logs
+
+          Unattended nba2.v4.capture run. Committed only because every captured player
+          passed G-41-01..06: row count matches the page's own count, mean PTS/REB/AST
+          matches the official season header, every row carries an official game id.
+          Failures and not-captured players are listed in the snapshot itself."
+          git push

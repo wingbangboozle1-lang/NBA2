@@ -11,13 +11,39 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CAPTURE = ROOT / "data" / "raw" / "capture_2026-11-15-41bd6ce8"
-PRIOR_CAPTURE = ROOT / "data" / "raw" / "capture_2026-11-15"
+RAW = ROOT / "data" / "raw"
+CAPTURE = RAW / "capture_2026-11-15-41bd6ce8"
+PRIOR_CAPTURE = RAW / "capture_2026-11-15"
 
-GAMELOGS = CAPTURE / "player_gamelogs.json"
-ROSTERS = CAPTURE / "rosters.json"
-INJURY_PM = CAPTURE / "injury_report_2026-11-15_0615PM.json"
-INJURY_AM = PRIOR_CAPTURE / "injury_report_2026-11-15_0615AM.json"
+
+def capture_dirs() -> list[Path]:
+    """Every dated capture directory, newest name first.
+
+    A later session (or the nightly ``player-capture`` workflow) drops a new
+    ``data/raw/capture_<stamp>/`` directory next to this one; resolving each file
+    through the newest directory that actually holds it means the published pages
+    follow the freshest capture without a code change, and a partial capture that
+    is missing a file silently falls back to the last complete one instead of
+    blanking the site.
+    """
+    return sorted((d for d in RAW.glob("capture_*") if d.is_dir()),
+                  key=lambda d: d.name, reverse=True)
+
+
+def resolve(pattern: str, exclude: Path | None = None) -> Path:
+    """Newest capture file matching ``pattern``; the committed one as a fallback."""
+    for d in capture_dirs():
+        hits = sorted(p for p in d.glob(pattern) if p != exclude)
+        if hits:
+            return hits[-1]
+    return CAPTURE / pattern
+
+
+GAMELOGS = resolve("player_gamelogs.json")
+ROSTERS = resolve("rosters.json")
+INJURY_PM = resolve("injury_report_*.json")
+INJURY_AM = resolve("injury_report_*AM.json", exclude=INJURY_PM) if INJURY_PM.name.endswith(
+    "PM.json") else resolve("injury_report_*.json", exclude=INJURY_PM)
 
 SOURCES = {
     "gamelog": (
@@ -118,6 +144,13 @@ def team_full(team: str) -> str:
         if c["team"] == team:
             return c["team_full"]
     return team
+
+
+def team_abbr(team: str) -> str:
+    """'Golden State Warriors' -> GSW. The PDF prints club names; the site uses codes."""
+    from nba2 import config
+    inverse = {full: abbr for abbr, full in config.TEAM_NAMES.items()}
+    return inverse.get(team, team)
 
 
 def rules_text() -> str:

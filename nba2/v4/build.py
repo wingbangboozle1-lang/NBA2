@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import html
 import re
+import sys
 from pathlib import Path
 
 from . import official as O
@@ -361,21 +362,40 @@ BODIES = {
 
 
 # --------------------------------------------------------------------------- chrome
+def _published_navs() -> list[str]:
+    """Every ``<nav>`` inner HTML in the published tree, richest first."""
+    found = []
+    for p in sorted(SITE.glob("*.html")):
+        m = re.search(r"<nav[^>]*>(.*?)</nav>", p.read_text(), re.S)
+        if m:
+            found.append(m.group(1))
+    return sorted(found, key=lambda n: -len(re.findall(r"<a ", n)))
+
+
 def nav_block(active: str) -> str:
-    """Copy the navigation from an already-published page and mark this one active.
+    """Copy the navigation from the published tree and mark this one active.
 
     Copying rather than restating is deliberate: the v2 and v3 generators own the
-    nav, and a copy cannot drift from it silently.
+    nav, and a copy cannot drift from it silently. The copy is taken from the
+    *richest* nav in the tree, not from index.html specifically, because a v2-only
+    rebuild rewrites index.html without the v3 links — taking the richest one means
+    a stale index shrinks nothing, and the repair in :func:`inject_nav` can then
+    hand the full nav back to the pages that lost it.
     """
-    doc = (SITE / "index.html").read_text()
-    m = re.search(r"<nav>(.*?)</nav>", doc, re.S)
-    inner = m.group(1) if m else ""
+    navs = _published_navs()
+    inner = navs[0] if navs else ""
+    if not navs:
+        print("WARNING: no <nav> found in site/*.html — run `python -m nba2.v2` first",
+              file=sys.stderr)
     inner = re.sub(r'\s*class="on"', "", inner)
 
     def mark(mm: re.Match) -> str:
         href = mm.group(1)
         cls = ' class="on"' if href == active else ""
-        return f'<a href="{href}"{cls}>'
+        # no closing ">" here: the pattern stops at the closing quote, so the tag's own
+        # ">" is still in the text. Adding one grew the label by a ">" on every build
+        # (">Dashboard" -> ">>Dashboard" -> ...), which is how it was caught.
+        return f'<a href="{href}"{cls}'
 
     inner = re.sub(r'<a href="([^"]+)"', mark, inner)
     return f"<nav>{inner}</nav>"
@@ -407,16 +427,36 @@ def page(title: str, active: str, body: str) -> str:
 
 
 def inject_nav() -> int:
-    """Idempotently add the v4 links to every published page that has a nav."""
+    """Add the v4 links to every published page that has a nav, idempotently.
+
+    Idempotency is "already present", not "skip": a page whose nav is missing any v4
+    link, or whose nav is poorer than the richest nav in the tree (the v2-only-rebuild
+    case), still gets the block — and gets it rebuilt from the richest nav so a page
+    that lost the v3 links regains them.
+    """
     block = "\n".join(f'<a href="{n}">{esc(l)}</a>' for n, l in V4_PAGES)
+    navs = _published_navs()
+    best = navs[0] if navs else ""
+    best_links = set(re.findall(r'href="([^"]+)"', best))
     n = 0
     for p in sorted(SITE.glob("*.html")):
         if p.name in V4_NAMES:
             continue
         doc = p.read_text()
-        if "</nav>" not in doc or MARKER in doc:
+        m = re.search(r"<nav[^>]*>(.*?)</nav>", doc, re.S)
+        if m is None:
             continue
-        p.write_text(doc.replace("</nav>", block + "\n</nav>", 1))
+        inner = m.group(1)
+        have = set(re.findall(r'href="([^"]+)"', inner))
+        if all(name in have for name in V4_NAMES) and not (best_links - have):
+            continue
+        inner = re.sub(
+            r'\s*<a href="(?:%s)"[^>]*>[^<]*</a>' % "|".join(re.escape(x) for x in V4_NAMES),
+            "", inner)
+        if best_links - have:
+            # restore the richer nav (v3 links and any v2 links this page lost)
+            inner = best
+        p.write_text(doc[:m.start(1)] + inner.rstrip() + "\n" + block + doc[m.end(1):])
         n += 1
     return n
 
