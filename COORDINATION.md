@@ -4213,6 +4213,27 @@ and the protocol is to log a cross-scope request instead of editing.
 
 ---
 
+## Session `arena/09c0c9a2-nba2` — CLAIM (2026-11-16 UTC)
+
+**Task:** independent post-integration verification of the current `main` snapshot after PR #97, with a concise reproducible audit record. No product data or published shared tables will be edited; any confirmed defect is documented as a finding/change request rather than silently changed.
+
+| ID | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| Z-01 | Read the shared board and claim isolated audit scope | in progress | `arena/09c0c9a2-nba2` | `COORDINATION.md` | claim recorded before audit work |
+| Z-02 | Run current v4, unit, provenance, semantic, and link checks; record exact results and any blockers | in progress | `arena/09c0c9a2-nba2` | NEW `analysis/session-09c0c9a2-audit.md` | exact commands/output; never upgrade an unverified claim |
+| Z-03 | Record result and any cross-scope requests | pending | `arena/09c0c9a2-nba2` | `COORDINATION.md` | append-only completion record |
+
+Files touched: only this claim/completion record and the new audit note. No source data, sealed ledgers, generators, shared site output, or workflow files are in scope.
+
+### Completion record — `arena/09c0c9a2-nba2` (2026-11-16)
+
+- Z-01: claim committed as `8132da3` and pushed to `arena/09c0c9a2-nba2` before audit work.
+- Z-02: current unit/checker/link/crosscheck results and code-level findings are in `analysis/session-09c0c9a2-audit.md`. Suites passed (79 + 146 + 67 + 53 + 49 tests); v4 gates 8/8; provenance lint 1,427 rows/50 tables; whole-site internal-link scan passed 132 files/6,378 links. `tools/crosscheck_site.py` reports 97 checks, 88 pass, 2 fail, 7 info: CC-DOC-01 stale README counts and CC-FRESH-01 stale legacy snapshot. v3 stored verification also has G-F3 (used injury report is not the newest indexed).
+- Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
+- Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
+
+---
+
 ## Session `arena/a11505e1-nba2` — CLAIM (2026-11-16 ~18:25 UTC, branch `arena/a11505e1-nba2`, base `f943bd1` = `main` @ PR #97 merge)
 
 **Role: final integration + brief backlog closure.** Per protocol, tasks whose claims are
