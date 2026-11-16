@@ -31,14 +31,14 @@ V5_NAV_MARKER = '<a href="result-feed-v5.html"'
 SESSION = T.SESSION
 WINDOW = "2026-11-13 → 2026-11-15"
 
-GAMEBOOK = "https://statsdmz.nba.com/pdfs/2026{d}/{d}_{m}_book.pdf"
-GB_1114_DETMIA = GAMEBOOK.format(d="1114", m="DETMIA")
-GB_1114_CHIMIN = GAMEBOOK.format(d="1114", m="CHIMIN")
-GB_1115_DALBOS = GAMEBOOK.format(d="1115", m="DALBOS")
-GB_1115_NYKTOR = GAMEBOOK.format(d="1115", m="NYKTOR")
-GB_1115_SASUTA = GAMEBOOK.format(d="1115", m="SASUTA")
-GB_1115_OKCSAC = GAMEBOOK.format(d="1115", m="OKCSAC")
-GB_1113_MEMNOP = GAMEBOOK.format(d="1113", m="MEMNOP")
+GAMEBOOK = "https://statsdmz.nba.com/pdfs/{d}/{d}_{m}_book.pdf"
+GB_1114_DETMIA = GAMEBOOK.format(d="20261114", m="DETMIA")
+GB_1114_CHIMIN = GAMEBOOK.format(d="20261114", m="CHIMIN")
+GB_1115_DALBOS = GAMEBOOK.format(d="20261115", m="DALBOS")
+GB_1115_NYKTOR = GAMEBOOK.format(d="20261115", m="NYKTOR")
+GB_1115_SASUTA = GAMEBOOK.format(d="20261115", m="SASUTA")
+GB_1115_OKCSAC = GAMEBOOK.format(d="20261115", m="OKCSAC")
+GB_1113_MEMNOP = GAMEBOOK.format(d="20261113", m="MEMNOP")
 
 # (id, severity, where, official URL the flag is about, what is wrong, what is published)
 FLAGS = [
