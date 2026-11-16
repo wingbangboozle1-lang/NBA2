@@ -1,0 +1,199 @@
+{
+  "schema": "nba2.player-gamelog.v2",
+  "retrieved_at_utc": "2026-11-15T23:45:00Z",
+  "retrieval_method": "platform page-fetch tool (fetch_page) against the official per-player game-log page, every rendered chunk read per player",
+  "source_template": "https://www.nba.com/stats/player/{player_id}/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+  "capture_rule": "every player listed Out / Questionable / Doubtful on the official injury release Injury-Report_2026-11-15_06_15PM.pdf whose club plays on 2026-11-16, excluding rows whose official reason begins 'G League' (a two-way or on-assignment player has no rotation minutes to redistribute). Two clubs of that slate, GSW and NOP, were captured in full in this session; the remaining clubs are listed under not_captured and are blank by policy, never estimated.",
+  "columns": ["date", "opponent", "home_away", "result", "minutes", "points", "rebounds", "assists", "game_id"],
+  "notes": [
+    "Each player block is checked against three identities, all of which pass for the five captured players: (1) rows_captured equals the row count the official page declares above the table; (2) the mean of the captured points / rebounds / assists equals the PPG / RPG / APG the same official page prints in the player header, to one decimal; (3) no captured minute total exceeds 48:00 and every date lies inside 2026-10-21..2026-11-15.",
+    "Identity (2) is the one that can actually fail: if a row were missed or a digit mistyped, the mean would move in the first decimal. It is the reason the capture is publishable without re-reading the page.",
+    "minutes are stored as the official 'MM:SS' string and as decimal minutes; the header means PPG/RPG/APG are official, the per-game rows are official, and the means are arithmetic on the official rows."
+  ],
+  "players": [
+    {
+      "player": "Curry, Stephen",
+      "team": "GSW",
+      "team_full": "Golden State Warriors",
+      "player_id": "201939",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Right Oblique Tear",
+      "rows_declared": 10,
+      "rows_captured": 10,
+      "season_header": {"ppg": 27.8, "rpg": 3.7, "apg": 3.9},
+      "source_url": "https://www.nba.com/stats/player/201939/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "games": [
+        {"date": "2026-11-11", "opponent": "HOU", "home_away": "away", "result": "L", "minutes": "5:35", "minutes_dec": 5.58, "points": 3, "rebounds": 0, "assists": 0, "plus_minus": -9, "game_id": "0022600225"},
+        {"date": "2026-11-09", "opponent": "NOP", "home_away": "home", "result": "W", "minutes": "20:49", "minutes_dec": 20.82, "points": 25, "rebounds": 5, "assists": 2, "plus_minus": 32, "game_id": "0022600210"},
+        {"date": "2026-11-07", "opponent": "ORL", "home_away": "home", "result": "W", "minutes": "35:45", "minutes_dec": 35.75, "points": 41, "rebounds": 6, "assists": 6, "plus_minus": 11, "game_id": "0022600193"},
+        {"date": "2026-11-05", "opponent": "MIA", "home_away": "home", "result": "W", "minutes": "27:57", "minutes_dec": 27.95, "points": 29, "rebounds": 1, "assists": 4, "plus_minus": 17, "game_id": "0022600188"},
+        {"date": "2026-11-02", "opponent": "PHX", "home_away": "home", "result": "W", "minutes": "32:50", "minutes_dec": 32.83, "points": 34, "rebounds": 6, "assists": 7, "plus_minus": 21, "game_id": "0022600170"},
+        {"date": "2026-10-30", "opponent": "LAL", "home_away": "home", "result": "W", "minutes": "30:58", "minutes_dec": 30.97, "points": 31, "rebounds": 4, "assists": 6, "plus_minus": 19, "game_id": "0022600023"},
+        {"date": "2026-10-28", "opponent": "MIN", "home_away": "away", "result": "W", "minutes": "31:36", "minutes_dec": 31.60, "points": 44, "rebounds": 8, "assists": 6, "plus_minus": 10, "game_id": "0022600139"},
+        {"date": "2026-10-26", "opponent": "DEN", "home_away": "away", "result": "W", "minutes": "26:34", "minutes_dec": 26.57, "points": 24, "rebounds": 3, "assists": 3, "plus_minus": 7, "game_id": "0022600127"},
+        {"date": "2026-10-23", "opponent": "MEM", "home_away": "home", "result": "L", "minutes": "29:47", "minutes_dec": 29.78, "points": 24, "rebounds": 2, "assists": 4, "plus_minus": -4, "game_id": "0022600101"},
+        {"date": "2026-10-21", "opponent": "LAL", "home_away": "away", "result": "L", "minutes": "21:11", "minutes_dec": 21.18, "points": 23, "rebounds": 2, "assists": 1, "plus_minus": -22, "game_id": "0022600005"}
+      ]
+    },
+    {
+      "player": "Santos, Gui",
+      "team": "GSW",
+      "team_full": "Golden State Warriors",
+      "player_id": "1630611",
+      "injury_status": "Questionable",
+      "injury_reason": "Injury/Illness - Right Ankle Inflammation",
+      "rows_declared": 10,
+      "rows_captured": 10,
+      "season_header": {"ppg": 5.6, "rpg": 3.9, "apg": 1.4},
+      "source_url": "https://www.nba.com/stats/player/1630611/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "games": [
+        {"date": "2026-11-13", "opponent": "SAS", "home_away": "away", "result": "L", "minutes": "21:10", "minutes_dec": 21.17, "points": 7, "rebounds": 4, "assists": 1, "plus_minus": -7, "game_id": "0022600040"},
+        {"date": "2026-11-11", "opponent": "HOU", "home_away": "away", "result": "L", "minutes": "12:05", "minutes_dec": 12.08, "points": 0, "rebounds": 3, "assists": 1, "plus_minus": 7, "game_id": "0022600225"},
+        {"date": "2026-11-09", "opponent": "NOP", "home_away": "home", "result": "W", "minutes": "20:52", "minutes_dec": 20.87, "points": 3, "rebounds": 7, "assists": 4, "plus_minus": 21, "game_id": "0022600210"},
+        {"date": "2026-11-07", "opponent": "ORL", "home_away": "home", "result": "W", "minutes": "11:37", "minutes_dec": 11.62, "points": 3, "rebounds": 1, "assists": 0, "plus_minus": -4, "game_id": "0022600193"},
+        {"date": "2026-11-01", "opponent": "LAC", "home_away": "home", "result": "W", "minutes": "8:43", "minutes_dec": 8.72, "points": 4, "rebounds": 3, "assists": 1, "plus_minus": 8, "game_id": "0022600156"},
+        {"date": "2026-10-30", "opponent": "LAL", "home_away": "home", "result": "W", "minutes": "16:21", "minutes_dec": 16.35, "points": 2, "rebounds": 5, "assists": 1, "plus_minus": 9, "game_id": "0022600023"},
+        {"date": "2026-10-26", "opponent": "DEN", "home_away": "away", "result": "W", "minutes": "27:41", "minutes_dec": 27.68, "points": 13, "rebounds": 3, "assists": 1, "plus_minus": 18, "game_id": "0022600127"},
+        {"date": "2026-10-24", "opponent": "PHX", "home_away": "away", "result": "L", "minutes": "23:17", "minutes_dec": 23.28, "points": 7, "rebounds": 4, "assists": 3, "plus_minus": -13, "game_id": "0022600111"},
+        {"date": "2026-10-23", "opponent": "MEM", "home_away": "home", "result": "L", "minutes": "19:51", "minutes_dec": 19.85, "points": 5, "rebounds": 4, "assists": 2, "plus_minus": 14, "game_id": "0022600101"},
+        {"date": "2026-10-21", "opponent": "LAL", "home_away": "away", "result": "L", "minutes": "24:44", "minutes_dec": 24.73, "points": 12, "rebounds": 5, "assists": 0, "plus_minus": -14, "game_id": "0022600005"}
+      ]
+    },
+    {
+      "player": "Williams, Brandon",
+      "team": "GSW",
+      "team_full": "Golden State Warriors",
+      "player_id": "1630314",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Left Hamstring Strain",
+      "rows_declared": 10,
+      "rows_captured": 10,
+      "season_header": {"ppg": 10.4, "rpg": 2.1, "apg": 2.3},
+      "source_url": "https://www.nba.com/stats/player/1630314/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "games": [
+        {"date": "2026-11-09", "opponent": "NOP", "home_away": "home", "result": "W", "minutes": "1:39", "minutes_dec": 1.65, "points": 4, "rebounds": 0, "assists": 0, "plus_minus": 4, "game_id": "0022600210"},
+        {"date": "2026-11-07", "opponent": "ORL", "home_away": "home", "result": "W", "minutes": "17:13", "minutes_dec": 17.22, "points": 9, "rebounds": 0, "assists": 2, "plus_minus": -2, "game_id": "0022600193"},
+        {"date": "2026-11-05", "opponent": "MIA", "home_away": "home", "result": "W", "minutes": "20:39", "minutes_dec": 20.65, "points": 10, "rebounds": 1, "assists": 4, "plus_minus": 7, "game_id": "0022600188"},
+        {"date": "2026-11-01", "opponent": "LAC", "home_away": "home", "result": "W", "minutes": "24:53", "minutes_dec": 24.88, "points": 17, "rebounds": 3, "assists": 3, "plus_minus": 15, "game_id": "0022600156"},
+        {"date": "2026-10-30", "opponent": "LAL", "home_away": "home", "result": "W", "minutes": "16:35", "minutes_dec": 16.58, "points": 9, "rebounds": 2, "assists": 1, "plus_minus": -1, "game_id": "0022600023"},
+        {"date": "2026-10-28", "opponent": "MIN", "home_away": "away", "result": "W", "minutes": "13:56", "minutes_dec": 13.93, "points": 11, "rebounds": 3, "assists": 1, "plus_minus": -2, "game_id": "0022600139"},
+        {"date": "2026-10-26", "opponent": "DEN", "home_away": "away", "result": "W", "minutes": "14:41", "minutes_dec": 14.68, "points": 6, "rebounds": 3, "assists": 3, "plus_minus": 14, "game_id": "0022600127"},
+        {"date": "2026-10-24", "opponent": "PHX", "home_away": "away", "result": "L", "minutes": "24:11", "minutes_dec": 24.18, "points": 20, "rebounds": 3, "assists": 5, "plus_minus": 5, "game_id": "0022600111"},
+        {"date": "2026-10-23", "opponent": "MEM", "home_away": "home", "result": "L", "minutes": "9:23", "minutes_dec": 9.38, "points": 4, "rebounds": 2, "assists": 1, "plus_minus": 8, "game_id": "0022600101"},
+        {"date": "2026-10-21", "opponent": "LAL", "home_away": "away", "result": "L", "minutes": "17:49", "minutes_dec": 17.82, "points": 14, "rebounds": 4, "assists": 3, "plus_minus": -7, "game_id": "0022600005"}
+      ]
+    },
+    {
+      "player": "Murphy III, Trey",
+      "team": "NOP",
+      "team_full": "New Orleans Pelicans",
+      "player_id": "1630530",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Bilateral Patellar Tendinopathy",
+      "rows_declared": 9,
+      "rows_captured": 9,
+      "season_header": {"ppg": 15.6, "rpg": 4.8, "apg": 3.6},
+      "source_url": "https://www.nba.com/stats/player/1630530/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "games": [
+        {"date": "2026-11-08", "opponent": "LAC", "home_away": "away", "result": "L", "minutes": "30:23", "minutes_dec": 30.38, "points": 26, "rebounds": 7, "assists": 3, "plus_minus": -10, "game_id": "0022600201"},
+        {"date": "2026-11-06", "opponent": "MIN", "home_away": "home", "result": "L", "minutes": "33:53", "minutes_dec": 33.88, "points": 10, "rebounds": 4, "assists": 5, "plus_minus": -1, "game_id": "0022600031"},
+        {"date": "2026-11-02", "opponent": "MEM", "home_away": "away", "result": "W", "minutes": "39:47", "minutes_dec": 39.78, "points": 18, "rebounds": 5, "assists": 5, "plus_minus": -4, "game_id": "0022600165"},
+        {"date": "2026-10-31", "opponent": "ATL", "home_away": "home", "result": "W", "minutes": "28:58", "minutes_dec": 28.97, "points": 15, "rebounds": 5, "assists": 5, "plus_minus": 24, "game_id": "0022600149"},
+        {"date": "2026-10-29", "opponent": "SAC", "home_away": "home", "result": "W", "minutes": "31:42", "minutes_dec": 31.70, "points": 19, "rebounds": 5, "assists": 3, "plus_minus": 4, "game_id": "0022600145"},
+        {"date": "2026-10-28", "opponent": "DEN", "home_away": "home", "result": "L", "minutes": "30:27", "minutes_dec": 30.45, "points": 6, "rebounds": 1, "assists": 3, "plus_minus": -12, "game_id": "0022600140"},
+        {"date": "2026-10-24", "opponent": "DEN", "home_away": "away", "result": "L", "minutes": "36:56", "minutes_dec": 36.93, "points": 26, "rebounds": 6, "assists": 4, "plus_minus": -17, "game_id": "0022600110"},
+        {"date": "2026-10-23", "opponent": "UTA", "home_away": "away", "result": "L", "minutes": "31:27", "minutes_dec": 31.45, "points": 9, "rebounds": 6, "assists": 3, "plus_minus": 1, "game_id": "0022600100"},
+        {"date": "2026-10-21", "opponent": "IND", "home_away": "home", "result": "L", "minutes": "31:33", "minutes_dec": 31.55, "points": 11, "rebounds": 4, "assists": 1, "plus_minus": -8, "game_id": "0022600090"}
+      ]
+    },
+    {
+      "player": "Murray, Dejounte",
+      "team": "NOP",
+      "team_full": "New Orleans Pelicans",
+      "player_id": "1627749",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Left Ankle Sprain",
+      "rows_declared": 9,
+      "rows_captured": 9,
+      "season_header": {"ppg": 13.4, "rpg": 4.6, "apg": 4.4},
+      "source_url": "https://www.nba.com/stats/player/1627749/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "games": [
+        {"date": "2026-11-11", "opponent": "BKN", "home_away": "home", "result": "L", "minutes": "27:56", "minutes_dec": 27.93, "points": 5, "rebounds": 2, "assists": 4, "plus_minus": -33, "game_id": "0022600223"},
+        {"date": "2026-11-09", "opponent": "GSW", "home_away": "away", "result": "L", "minutes": "17:33", "minutes_dec": 17.55, "points": 12, "rebounds": 3, "assists": 1, "plus_minus": -21, "game_id": "0022600210"},
+        {"date": "2026-11-08", "opponent": "LAC", "home_away": "away", "result": "L", "minutes": "28:12", "minutes_dec": 28.20, "points": 6, "rebounds": 3, "assists": 3, "plus_minus": 4, "game_id": "0022600201"},
+        {"date": "2026-11-06", "opponent": "MIN", "home_away": "home", "result": "L", "minutes": "34:48", "minutes_dec": 34.80, "points": 7, "rebounds": 2, "assists": 4, "plus_minus": -7, "game_id": "0022600031"},
+        {"date": "2026-11-04", "opponent": "UTA", "home_away": "home", "result": "W", "minutes": "44:30", "minutes_dec": 44.50, "points": 20, "rebounds": 8, "assists": 4, "plus_minus": 17, "game_id": "0022600179"},
+        {"date": "2026-10-28", "opponent": "DEN", "home_away": "home", "result": "L", "minutes": "30:12", "minutes_dec": 30.20, "points": 10, "rebounds": 8, "assists": 5, "plus_minus": -12, "game_id": "0022600140"},
+        {"date": "2026-10-24", "opponent": "DEN", "home_away": "away", "result": "L", "minutes": "34:32", "minutes_dec": 34.53, "points": 22, "rebounds": 6, "assists": 6, "plus_minus": -16, "game_id": "0022600110"},
+        {"date": "2026-10-23", "opponent": "UTA", "home_away": "away", "result": "L", "minutes": "30:13", "minutes_dec": 30.22, "points": 16, "rebounds": 6, "assists": 6, "plus_minus": 0, "game_id": "0022600100"},
+        {"date": "2026-10-21", "opponent": "IND", "home_away": "home", "result": "L", "minutes": "34:21", "minutes_dec": 34.35, "points": 23, "rebounds": 3, "assists": 7, "plus_minus": -6, "game_id": "0022600090"}
+      ]
+    }
+  ],
+  "capture_failures": [
+    {
+      "player": "Butler III, Jimmy",
+      "team": "GSW",
+      "player_id": "202710",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Right ACL Repair / Surgery",
+      "source_url": "https://www.nba.com/stats/player/202710/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "attempts": 2,
+      "observed": "the page renders the player header (PPG 20.0, RPG 5.6, APG 4.9) and then prints 'No data available' where the game-log table should be; a second request without the query string behaves identically",
+      "published": "no rows — the header rates are not a game log and are not published as one; flagged for re-capture"
+    },
+    {
+      "player": "Moody, Moses",
+      "team": "GSW",
+      "player_id": "1630541",
+      "injury_status": "Out",
+      "injury_reason": "Injury/Illness - Left Patellar Tendon Repair / Surgery",
+      "source_url": "https://www.nba.com/stats/player/1630541/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "attempts": 1,
+      "observed": "same rendering as Butler III: header present (PPG 12.1, RPG 3.3, APG 1.6), table prints 'No data available'",
+      "published": "no rows — flagged for re-capture"
+    }
+  ],
+  "not_captured": [
+    {"team": "GSW", "player": "Porzingis, Kristaps", "player_id": "204001", "injury_status": "Out", "injury_reason": "Not With Team", "why": "capture budget this session: two clubs were captured in full before the page budget was spent"},
+    {"team": "NOP", "player": "Mathurin, Bennedict", "player_id": "1631097", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Plantar Fasciitis", "why": "same"},
+    {"team": "NOP", "player": "McGowens, Bryce", "player_id": "1631121", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Elbow Infection", "why": "same"},
+    {"team": "NOP", "player": "Watford, Trendon", "player_id": "1630570", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Ankle Sprain", "why": "same"},
+    {"team": "CLE", "player": "Mobley, Evan", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Great Toe Sprain", "why": "club not in this session's capture set"},
+    {"team": "CLE", "player": "Merrill, Sam", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Elbow Injury Management", "why": "club not in this session's capture set"},
+    {"team": "CLE", "player": "Tomlin, Nae'Qwan", "injury_status": "Out", "injury_reason": "Injury/Illness - Low Back Stress Reaction", "why": "club not in this session's capture set"},
+    {"team": "CHI", "player": "Awaka, Tobe", "injury_status": "Out", "injury_reason": "Injury/Illness - Disc Irritation", "why": "club not in this session's capture set"},
+    {"team": "CHI", "player": "Wilson, Caleb", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Metacarpal Fracture", "why": "club not in this session's capture set"},
+    {"team": "MEM", "player": "Jackson, GG", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Foot Injury", "why": "club not in this session's capture set"},
+    {"team": "MEM", "player": "Jerome, Ty", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Hip Soreness", "why": "club not in this session's capture set"},
+    {"team": "MEM", "player": "Pippen Jr., Scotty", "injury_status": "Out", "injury_reason": "Injury/Illness - Lumbar Disc Herniation", "why": "club not in this session's capture set"},
+    {"team": "MEM", "player": "Saunders, Richie", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Knee Surgery", "why": "club not in this session's capture set"},
+    {"team": "ORL", "player": "Banchero, Paolo", "injury_status": "Out", "injury_reason": "Injury/Illness - Right High Ankle Sprain", "why": "club not in this session's capture set"},
+    {"team": "ORL", "player": "Isaac, Jonathan", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Knee Injury Management", "why": "club not in this session's capture set"},
+    {"team": "ORL", "player": "Nelson, Izaiyah", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Ankle Injury Recovery", "why": "club not in this session's capture set"},
+    {"team": "ORL", "player": "Penda, Noah", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Partially Torn Hamstring", "why": "club not in this session's capture set"},
+    {"team": "POR", "player": "Krejci, Vit", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Ankle Fracture", "why": "club not in this session's capture set"},
+    {"team": "POR", "player": "Morant, Ja", "injury_status": "Out", "injury_reason": "Injury/Illness - Left Hamstring Strain", "why": "club not in this session's capture set"},
+    {"team": "POR", "player": "Sharpe, Shaedon", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Knee Surgery", "why": "club not in this session's capture set"},
+    {"team": "POR", "player": "Youngblood, Chris", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Heel Contusion / Bone Bruise", "why": "club not in this session's capture set"},
+    {"team": "MIN", "player": "Clark, Jaylen", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Hamstring Strain", "why": "club not in this session's capture set"},
+    {"team": "MIN", "player": "DiVincenzo, Donte", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery", "why": "club not in this session's capture set"},
+    {"team": "MIN", "player": "Edwards, Anthony", "injury_status": "Out", "injury_reason": "Injury/Illness - Right Knee Arthroscopy", "why": "club not in this session's capture set"}
+  ],
+  "flags": [
+    {
+      "id": "F-41B-04",
+      "area": "player game-log capture",
+      "finding": "Two of the seven GSW players on the release (Butler III, Moody) render the player header but print 'No data available' in place of the game-log table; no rows are published for them rather than substituting the header rates.",
+      "source": "https://www.nba.com/stats/player/202710/boxscores-traditional?Season=2026-27&SeasonType=Regular+Season",
+      "severity": "advisory"
+    },
+    {
+      "id": "F-41B-05",
+      "area": "player game-log coverage",
+      "finding": "5 of 31 Out/Questionable players on the 2026-11-16 slate have a captured game log. Minutes-at-risk totals are therefore lower bounds for every club and are labelled as such; they are never scaled up to a full-slate estimate.",
+      "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf",
+      "severity": "decision-relevant"
+    }
+  ]
+}

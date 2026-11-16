@@ -1,0 +1,62 @@
+{
+  "schema": "nba2.official-roster.v1",
+  "retrieved_at_utc": "2026-11-15T23:42:00Z",
+  "retrieval_method": "platform page-fetch tool (fetch_page) against the official club page, ROSTER table transcribed verbatim",
+  "note": "Player ids are taken from the official /player/{id}/ links in the club's own roster table; they are needed to address the official per-player game-log page, and no id in this file was constructed or guessed.",
+  "clubs": [
+    {
+      "team": "GSW",
+      "team_full": "Golden State Warriors",
+      "team_id": "1610612744",
+      "record_on_page": "8 - 5 | 8th in Western",
+      "source_url": "https://www.nba.com/team/1610612744/warriors",
+      "players": [
+        {"player": "Payton II, Gary", "player_id": "1627780", "jersey": "0", "pos": "G"},
+        {"player": "Lendeborg, Yaxel", "player_id": "1642865", "jersey": "1", "pos": "F"},
+        {"player": "Podziemski, Brandin", "player_id": "1641764", "jersey": "2", "pos": "G"},
+        {"player": "Richard, Will", "player_id": "1642954", "jersey": "3", "pos": "G"},
+        {"player": "Moody, Moses", "player_id": "1630541", "jersey": "4", "pos": "G"},
+        {"player": "Porzingis, Kristaps", "player_id": "204001", "jersey": "7", "pos": "F-C"},
+        {"player": "Melton, De'Anthony", "player_id": "1629001", "jersey": "8", "pos": "G"},
+        {"player": "Butler III, Jimmy", "player_id": "202710", "jersey": "10", "pos": "F"},
+        {"player": "Williams, Brandon", "player_id": "1630314", "jersey": "12", "pos": "G"},
+        {"player": "Santos, Gui", "player_id": "1630611", "jersey": "15", "pos": "F"},
+        {"player": "Cryer, LJ", "player_id": "1643018", "jersey": "18", "pos": "G"},
+        {"player": "Horford, Al", "player_id": "201143", "jersey": "20", "pos": "C"},
+        {"player": "Green, Draymond", "player_id": "203110", "jersey": "23", "pos": "F-C"},
+        {"player": "Bassey, Charles", "player_id": "1629646", "jersey": "28", "pos": "F-C"},
+        {"player": "Curry, Stephen", "player_id": "201939", "jersey": "30", "pos": "G"},
+        {"player": "Niang, Georges", "player_id": "1627777", "jersey": "32", "pos": "F"},
+        {"player": "Leons, Malevy", "player_id": "1642502", "jersey": "33", "pos": "F"},
+        {"player": "Ike, Graham", "player_id": "1643633", "jersey": "45", "pos": "F-C"}
+      ]
+    },
+    {
+      "team": "NOP",
+      "team_full": "New Orleans Pelicans",
+      "team_id": "1610612740",
+      "record_on_page": "4 - 10 | 12th in Western",
+      "source_url": "https://www.nba.com/team/1610612740/pelicans",
+      "players": [
+        {"player": "Fears, Jeremiah", "player_id": "1642847", "jersey": "0", "pos": "G"},
+        {"player": "Williamson, Zion", "player_id": "1629627", "jersey": "1", "pos": "F"},
+        {"player": "Jones, Herbert", "player_id": "1630529", "jersey": "2", "pos": "F"},
+        {"player": "Poole, Jordan", "player_id": "1629673", "jersey": "3", "pos": "G"},
+        {"player": "Murray, Dejounte", "player_id": "1627749", "jersey": "5", "pos": "G"},
+        {"player": "Jordan, DeAndre", "player_id": "201599", "jersey": "6", "pos": "C"},
+        {"player": "Dia, Malik", "player_id": "1643738", "jersey": "8", "pos": "F"},
+        {"player": "Watford, Trendon", "player_id": "1630570", "jersey": "9", "pos": "G-F"},
+        {"player": "Pierre Jr., Jaron", "player_id": "1643555", "jersey": "10", "pos": "G"},
+        {"player": "McGowens, Bryce", "player_id": "1631121", "jersey": "11", "pos": "G"},
+        {"player": "Reese, Julian", "player_id": "1642882", "jersey": "13", "pos": "F"},
+        {"player": "Johnson, AJ", "player_id": "1642358", "jersey": "14", "pos": "G"},
+        {"player": "Matkovic, Karlo", "player_id": "1631255", "jersey": "17", "pos": "F-C"},
+        {"player": "Missi, Yves", "player_id": "1642274", "jersey": "21", "pos": "C"},
+        {"player": "Queen, Derik", "player_id": "1642852", "jersey": "22", "pos": "C"},
+        {"player": "Mathurin, Bennedict", "player_id": "1631097", "jersey": "24", "pos": "G-F"},
+        {"player": "Murphy III, Trey", "player_id": "1630530", "jersey": "25", "pos": "F"},
+        {"player": "Bey, Saddiq", "player_id": "1630180", "jersey": "41", "pos": "F"}
+      ]
+    }
+  ]
+}
