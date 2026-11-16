@@ -8,15 +8,19 @@ contain both a game the player played and a game he missed, the row is blank wit
 
 from __future__ import annotations
 
+import re
 import unicodedata
 from collections import defaultdict
 
 from . import transcript as T
 
-INJURY_TRANSCRIPTS = [
-    T.DATA / "raw" / "refresh_2026-11-16" / "injury_transcript_20261116_0915AM.json",
-    T.DATA / "raw" / "refresh_2026-11-16" / "injury_transcript_20261116_0930AM.json",
-]
+INJURY_DIR = T.DATA / "raw" / "refresh_2026-11-16"
+
+# Read whatever release transcripts are committed, newest report stamp wins. A file
+# renamed "..._superseded.json" by another session is skipped, because that session has
+# already published a later revision of the same filing.
+INJURY_TRANSCRIPTS = sorted(p for p in INJURY_DIR.glob("injury_transcript_*.json")
+                            if "superseded" not in p.name)
 
 INJURY_INDEX_URL = "https://official.nba.com/nba-injury-report-2026-27-season/"
 
@@ -292,7 +296,16 @@ def injury_join(rows: list[dict]) -> dict:
     inj = injury_rows()
     if not inj:
         return {"matched": [], "unmatched": [], "n_report_rows": 0, "stamp": None}
-    newest = max(r["report_stamp_et"] for r in inj)
+    # Newest by the official revision stamp, not by filename: another session may add a
+    # later filing at any time (the 09:30 AM release was superseded mid-session).
+    def _rank(stamp: str) -> tuple:
+        m = re.match(r"(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}) ([AP])M", stamp or "")
+        if not m:
+            return (0,)
+        y, mo, d, hh, mm, ap = m.groups()
+        h = int(hh) % 12 + (12 if ap == "P" else 0)
+        return (int(y), int(mo), int(d), h, int(mm))
+    newest = max(inj, key=lambda r: _rank(r["report_stamp_et"]))["report_stamp_et"]
     report = [r for r in inj if r["report_stamp_et"] == newest]
 
     by_team_player: dict[tuple[str, str], list[dict]] = defaultdict(list)

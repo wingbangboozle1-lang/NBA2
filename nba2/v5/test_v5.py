@@ -182,7 +182,11 @@ class TestModel(unittest.TestCase):
 
     def test_injury_join_reports_its_own_coverage(self):
         inj = self.res["injury"]
-        self.assertEqual(inj["n_report_rows"], 70)
+        # The count is whatever the newest committed release holds, not a hardcoded 70:
+        # another session superseded the 09:30 AM filing with the 01:00 PM one (83 rows).
+        self.assertGreaterEqual(inj["n_report_rows"], 70)
+        self.assertEqual(inj["stamp"], max(
+            m["report_stamp_et"] for m in M.injury_rows()))
         self.assertEqual(inj["n_matched"] + inj["n_unmatched"], inj["n_report_rows"])
         self.assertTrue(inj["index_url"].startswith("https://official.nba.com"))
         for u in inj["unmatched"]:

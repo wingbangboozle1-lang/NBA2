@@ -100,6 +100,13 @@ FLAGS = [
      "with no minutes, and no DNP/DND rows at all for that date.",
      "His minutes are blank with this flag rather than back-filled from the box score, and "
      "the 11/13 capture contributes 'played' games only, never 'out' games (F-V5-07)."),
+    ("F-V5-11", "gap", "v5 verification", M.INJURY_INDEX_URL,
+     "Of the 83 rows on the 11/16 01:00 PM ET release, 11 carry no status in the extracted "
+     "text (a layout artefact of the official PDF, carried forward from the v4 session's "
+     "F-V4-06). Their status cannot be read.",
+     "Those rows are listed with the status cell blank and are never counted as Available "
+     "and never folded into the Out/Questionable counts. The counts on this page are of "
+     "rows whose status the release actually printed."),
 ]
 
 
@@ -391,7 +398,10 @@ def page_verify(res: dict, gates: list[dict]) -> str:
         str(inj["n_matched_played"]) + "</b> of those actually played. The remaining <b>" +
         str(inj["n_unmatched"]) + "</b> are absent from the active list of every captured "
         "game of their club — which is exactly what a report row predicting a player is "
-        "out would look like, and is not a gap in the capture. "
+        "out would look like, and is not a gap in the capture. The newest committed release "
+        "wins (the 09:30 AM filing was superseded by the 01:00 PM one while this session "
+        "ran), and 11 of its rows carry no status in the extracted text, so they are listed "
+        "with that cell blank rather than counted as Available (F-V5-11). "
         + link(inj["index_url"], "official injury-report index", inj["index_url"]) +
         ".</div>",
         "<h2>Flags</h2>",
