@@ -3929,3 +3929,23 @@ rewritten). The v3 seal is `data/v3/ledger/sealed-2026-11-15.json`, 34 rows,
 - **Checks on the PR head (`9bd615c`):** `backtest` pass, `parity` pass, `v2` pass, `verify` pass. Before the merge, the `parity` check had failed on the stale count line; it was fixed by regeneration, not by editing the check.
 - **Pages deploy:** `Publish GitHub Pages` = success, `pages build and deployment` = success, both for `2e7c166`. **Caveat (not fixed here):** the Pages API still reports `build_type: legacy`, `source: main /`. The live URL `https://wingbangboozle1-lang.github.io/NBA2/` therefore serves the **repository root** (the v1 tree, as-of 2026-11-14), not the `site/` artifact the workflow uploads. This was already logged as FLAG-PAGES-01 / F-033. Changing it is a repo-settings decision for the owner. Nothing in this session changed it.
 - **Open for the integration session (not claimed here):** Flagged-for-Review entries for I-051E-01…03 and the Pages source; the v2 settled-stamp wiring; injury-PDF byte storage (blocked from this sandbox).
+
+## Session `arena/a62b498f-nba2` — CLAIM (2026-11-16 UTC, branch `arena/a62b498f-nba2`, base `32019ac` = `main` @ PR #88 merge)
+
+**Why this task.** Brief line item "Settle the sealed ledger from official finals ... and keep the settlement
+stamp visible". The settlement session (`arena/e73ca9d5-nba2`, PR #85/#87) left requests R-1 (nav link),
+R-2 (regeneration) and R-3 (CI wiring) open. Its page `site/settlement.html` exists but **no site page links to it**
+(verified: only the page itself contains `settlement.html`). R-5 (11/15 finals) overlaps open PR #72 and is **not** claimed here.
+
+**Claimed task**
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| X-01 | Put the settlement stamp in the site navigation so it is visible on every page (R-1), keep it through rebuilds (R-2 nav part), and wire `nba2.settlement_page` into the Pages and parity workflows (R-3) | in progress | `arena/a62b498f-nba2` | `nba2/v3/build.py` (nav block only), `nba2/v3/test_v3.py` (one test), `site/*.html` (regenerated nav only), `site/settlement.html` (regenerated), `.github/workflows/pages.yml` and `.github/workflows/publish-parity.yml` (one step each), `analysis/session-a62b498f-nav.md` (new), `COORDINATION.md` (append-only) | local rebuild parity + `nba2.v3.check` + unit tests + `tools/check_links_all.py`; no new data values |
+
+**Explicitly NOT touched:** `data/settlement.json`, `data/site.json`, `data/raw/**` (incl. ledgers and official
+finals), `pages/**`, root `*.html`, `nba2/pipeline/**` (PR #72 and #70 own these), `.github/workflows/refresh.yml`
+(PR #72), `nba2/v2/**`, `data/v2/**`.
+
+**Requests carried, not done here:** R-5 (11/15 finals; overlaps PR #72); Pages source is still `legacy main /`
+(board caveat, owner decision); injury-PDF byte storage (sandbox egress does not reach `ak-static.cms.nba.com`).
