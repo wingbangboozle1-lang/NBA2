@@ -3689,3 +3689,21 @@ should win on any conflict inside those two files. `index.html` is untouched.
   cancelled when the subsequent concurrent PR #76 main push superseded it; its build had
   succeeded. At the time of this record, #76's follow-up Pages run was still queued, so no
   live HTTP response for that later deployment is claimed.
+
+## Session `arena/051e7a06-nba2` — CLAIM (2026-11-16 UTC, branch `arena/051e7a06-nba2`, base `1c48226` = `main` @ PR #81 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `1c48226`; this branch is at the same commit; working tree clean.
+- Open PRs at claim time: #70 (`arena/d09f8d1e-nba2`), #72 (draft, `arena/04a61ac0-nba2`), #78 (`arena/56b96bf0-nba2`), #80 (`arena/0429aad7-nba2`), #82 (`arena/f8f8f2b8-nba2`).
+- GitHub Pages API: `build_type: legacy`, `source: main /`, latest build `building` for >1 h (queued runners). The Pages source remains an owner decision (FLAG-PAGES-01 / F-033).
+- Sandbox shell egress to `www.nba.com`, `ak-static.cms.nba.com`, `official.nba.com`, `statsdmz.nba.com` = HTTP 000 (verified with `curl` at 02:0x UTC). The platform page-fetch tool **does** reach `official.nba.com` (verified). Binary PDFs are not retrievable through either path, so this session cannot store PDF bytes.
+- Gap map `analysis/session-a6d81367-brief-gap-map.md` item 4 / IR-1 is confirmed in code: `nba2/pipeline/settle.py::find_finals()` picks the newest `data/raw/finals_*.json` **by filename** (`finals_all.json`, which holds only the nine 11/13 finals). The five official 11/14 finals in `data/raw/capture_2026-11-15/results_2026-11-14.json` (including `0022600231` DEN@NOP, which is in the sealed 11/13 and 11/14 ledgers) are never read. `data/settlement.json` therefore reports 0 of 22 and 0 of 27 games settled.
+
+**Task claimed by this session (file scope; nothing outside this list is edited):**
+
+| ID | Task | Status | Owner | File scope | Verification rule |
+|----|------|--------|-------|-----------|-------------------|
+| U-01 | Board claim + push before any edit | in progress | `arena/051e7a06-nba2` | `COORDINATION.md` (append-only) | pushed immediately |
+| U-02 | Settle from the **union** of committed official final-score captures, keyed by `game_id`; fail closed on conflicting scores; reject any record whose quarter scores do not sum to the official final | unclaimed→in progress | `arena/051e7a06-nba2` | `nba2/pipeline/settle.py`, `nba2/models/ledger.py` (new function only; `settle()` behaviour unchanged) | unit tests on the failure paths; the five 11/14 finals are checked against their own LINESCORE quarter sums before use |
+| U-03 | Regression tests for U-02 | in progress | `arena/051e7a06-nba2` | `nba2/tests/test_settle_union.py` (new file) | `python -m unittest discover -s nba2/tests -t .` |
+| U-04 | Regenerate `data/settlement.json` by running `python -m nba2.pipeline.settle` | in progress | `arena/051e7a06-nba2` | `data/settlement.json` | sealed-ledger seals re-verified before and after (`data/raw/ledger/**` is read-only) |
