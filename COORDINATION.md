@@ -3655,3 +3655,12 @@ in the refresh-gate unit tests. No live `refresh --check-only` or Pages deployme
 
 As of this update A429-01..04 are complete and A429-05's implementation/tests are complete;
 PR creation, merge, the site freshness follow-up and Pages confirmation remain pending.
+
+### A429 pull request update (2026-11-16 UTC)
+
+PR [#80](https://github.com/wingbangboozle1-lang/NBA2/pull/80) was opened against `main`
+from `arena/0429aad7-nba2` after the rebase and force-with-lease branch update. Its opening
+head was `765aa62688575e41b9f1110fd185baaccb7f7934`. At the 2026-11-16T00:43Z check, the
+`backtest`, `parity`, `v2` and `verify` Actions checks were still queued (runs `43779948383`,
+`43779948612` and `43779948408`); no CI pass/fail result was available. PR #80 is open and
+unmerged. No Pages deployment is claimed.
