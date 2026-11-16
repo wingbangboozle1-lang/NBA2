@@ -57,6 +57,9 @@ V3_NAV = [
     ("travel.html", "Rest &amp; travel"),
     ("results.html", "Result feed"),
     ("ledger.html", "Sealed ledger"),
+    ("player-logs.html", "Player game logs"),
+    ("minutes.html", "Measured minutes"),
+    ("injury-diff.html", "Injury release diff"),
     ("verification-v3.html", "v3 verification"),
 ]
 
@@ -586,6 +589,373 @@ instead of it.</p>
 
 
 # -------------------------------------------------------------------------- build
+def link(url: str, label: str = "SRC") -> str:
+    return f'<a href="{esc(url)}" title="{esc(url)}">{esc(label)}</a>'
+
+
+# ------------------------------------------------- session arena/f8f8f2b8: player game logs
+def page_player_logs() -> str:
+    from . import playerlogs as PL
+
+    meta = PL.game_log_meta()
+    logs = PL.game_logs()
+    cov = PL.injury_coverage()
+    rows = "".join(
+        "<tr>"
+        f"<td>{esc(r['date'])}</td>"
+        f"<td>{esc(r['matchup'])}</td>"
+        f"<td>{esc(r['team'])}</td>"
+        f"<td>{esc(r['opponent'])}</td>"
+        f"<td>{esc(r['player'])}</td>"
+        f"<td>{esc(r['pos']) or blank('FLAGGED I-F8F-14: no source for this cell - the box score prints no POS')}</td>"
+        f"<td class='n'>{esc(r['min']) if r['min'] else blank('I-F8F-07')}</td>"
+        f"<td class='n'>{esc(r['pts'])}</td>"
+        f"<td class='n'>{esc(r['reb'])}</td>"
+        f"<td class='n'>{esc(r['ast'])}</td>"
+        f"<td>{link(r['source_url'], 'gamebook')}</td>"
+        "</tr>"
+        for r in logs)
+    mrows = "".join(
+        "<tr>"
+        f"<td>{esc(p['team'])}</td><td>{esc(p['player'])}</td>"
+        f"<td>{badge(p['status'], 'bad' if p['status'] == 'Out' else ('warn' if p['status'] == 'Questionable' else 'ok'))}</td>"
+        f"<td>{esc(p['matchup'])}</td>"
+        f"<td class='n'>{esc(m['min'])}</td><td class='n'>{esc(m['pts'])}</td>"
+        f"<td class='n'>{esc(m['reb'])}</td><td class='n'>{esc(m['ast'])}</td>"
+        f"<td>{link(m['log_source'], 'gamebook')}</td>"
+        "</tr>"
+        for p, m in ((p, next((x for x in cov["matched"]
+                               if x["player"] == p["player"] and x["team"] == p["team"]), None))
+                     for p in PL.injured_players())
+        if m is not None)
+    no_row = "".join(
+        f"<tr><td>{esc(p['team'])}</td><td>{esc(p['player'])}</td>"
+        f"<td>{esc(p['status'])}</td><td>{esc(p['reason'])}</td>"
+        f"<td>{link(p['source_url'], 'injury PDF')}</td></tr>"
+        for p in cov["no_row_in_captured_game"])
+    no_club = "".join(
+        f"<tr><td>{esc(p['team'])}</td><td>{esc(p['player'])}</td>"
+        f"<td>{esc(p['status'])}</td><td>{esc(p['reason'])}</td>"
+        f"<td>{link(p['source_url'], 'injury PDF')}</td></tr>"
+        for p in cov["club_not_captured"])
+
+    t_logs = table(["Date", "Matchup", "Team", "Opponent", "Player", "Pos", "MIN", "PTS",
+                    "REB", "AST", "Source"], _rows(rows),
+                   caption=f"{meta['n_rows']} rows, each linked to the official gamebook it "
+                           f"was read from")
+    t_matched = table(["Club", "Player", "Report status", "Next game", "MIN", "PTS", "REB",
+                       "AST", "Source"], _rows(mrows))
+    t_norow = table(["Club", "Player", "Status", "Reason", "Source"], _rows(no_row))
+    t_noclub = table(["Club", "Player", "Status", "Reason", "Source"], _rows(no_club))
+    clubs_not = esc(", ".join(cov["clubs_not_captured"]))
+    clubs_yes = esc(", ".join(cov["clubs_captured"]))
+
+    body = f"""
+<div class="cards">
+  <div class="card"><span class="k">Games captured</span><span class="v">{meta['n_games']}</span>
+    <span class="s">every game played 2026-11-13</span></div>
+  <div class="card"><span class="k">Clubs covered</span><span class="v">{meta['n_teams']} / 30</span>
+    <span class="s">{clubs_yes}</span></div>
+  <div class="card"><span class="k">Player log rows</span><span class="v">{meta['n_rows']}</span>
+    <span class="s">minutes, points, rebounds, assists, opponent</span></div>
+  <div class="card"><span class="k">Injured players matched</span>
+    <span class="v">{cov['n_matched']} / {cov['n_injured_named']}</span>
+    <span class="s">join to the 06:15 PM ET release</span></div>
+</div>
+
+<h2>Per-player game log</h2>
+<p>One row per player per game, transcribed from the official NBA gamebook PDF. The minutes
+column is the only one that can be blank: Memphis' Jerami Grant has no extracted minutes cell
+in the official document, and the 25:39 the team total would imply is a residual, not a
+published number, so it is left empty and flagged I-F8F-07.</p>
+{t_logs}
+
+<h2>Injured players who have a captured log row</h2>
+<p>The brief asks for game logs for at least the players who appear on an injury report. These
+are the named players on the newest official release who also appear in a captured box score.</p>
+{t_matched}
+
+<h2>Named on the injury report, but no row in a captured game</h2>
+<p>These players' clubs <i>are</i> captured, so the absence is real: they did not play (or did
+not dress) in the 2026-11-13 game, which is exactly what an "Out" designation predicts. A player
+who did not play has no minutes to report, so there is nothing to put in the cell.</p>
+{t_norow}
+
+<h2>Clubs with no captured game in this window</h2>
+<p>{clubs_not} did not play on 2026-11-13, so the players below have no game log here. Their
+rows are blank and flagged &mdash; extending the capture to a second game day is the open action
+for the next session.</p>
+{t_noclub}
+"""
+    return page("Player game logs", "player-logs.html", body,
+                "Per-player minutes, points, rebounds and assists from the official gamebook "
+                "PDFs, joined to the official injury report.")
+
+
+def _rows(html_rows: str) -> list[str]:
+    """Split a concatenated ``<tr>…</tr>`` blob back into a list for :func:`table`."""
+    return [f"{r}</tr>" for r in html_rows.split("</tr>") if r.strip()]
+
+
+# ------------------------------------------- session arena/f8f8f2b8: measured minutes shares
+def page_minutes() -> str:
+    from . import playerlogs as PL
+
+    tab = PL.minutes_table()
+    exc = PL.excluded_teams()
+    meta = PL.gamebook_meta()
+
+    def pct(x):
+        return "" if x is None else f"{x * 100:.1f}%"
+
+    srows = "".join(
+        "<tr>"
+        f"<td>{esc(r['team'])}</td><td>{esc(r['opponent'])}</td>"
+        f"<td class='n'>{esc(r['n_games'])}</td>"
+        f"<td class='n'>{esc(pct(r['top8_share']))}</td>"
+        f"<td class='n'>{esc(pct(r['max_share']))}</td>"
+        f"<td class='n'>{esc(pct(r['bench_share']))}</td>"
+        f"<td class='n'>{esc(r['n_bench'])}</td>"
+        f"<td class='n'>{esc('' if r['hhi_top8'] is None else format(r['hhi_top8'], '.3f'))}</td>"
+        f"<td>{link(r['source_url'], 'gamebook')}</td>"
+        "</tr>"
+        for r in tab)
+    drows = "".join(
+        "<tr>"
+        f"<td>{esc(r['team'])}</td><td class='n'>{esc(i + 1)}</td>"
+        f"<td>{esc(p['player'])}</td><td>{esc(p['pos']) or blank('FLAGGED I-F8F-14: no source for this cell - the box score prints no POS')}</td>"
+        f"<td class='n'>{esc(p['min'])}</td>"
+        f"<td class='n'>{esc(pct(p['share']))}</td>"
+        f"<td class='n'>{esc(p['pts'])}</td><td class='n'>{esc(p['reb'])}</td>"
+        f"<td class='n'>{esc(p['ast'])}</td>"
+        f"<td>{link(r['source_url'], 'gamebook')}</td>"
+        "</tr>"
+        for r in tab for i, p in enumerate(r["top8"]))
+    prows = "".join(
+        "<tr>"
+        f"<td>{esc(r['team'])}</td><td>{esc(p['player'])}</td>"
+        f"<td class='n'>{esc(p['min'])}</td>"
+        f"<td class='n'>{esc(pct(p['share']))}</td>"
+        f"<td class='n'>{esc(p['pts'])}</td><td class='n'>{esc(p['reb'])}</td>"
+        f"<td class='n'>{esc(p['ast'])}</td>"
+        f"<td>{link(r['source_url'], 'gamebook')}</td>"
+        "</tr>"
+        for r in tab for p in r["bench"])
+    erows = "".join(
+        f"<tr><td>{esc(e['team'])}</td><td>{esc(e['game_id'])}</td>"
+        f"<td>{esc(e['reason'])}</td>"
+        f"<td><b>{esc(e['flag'])}</b></td>"
+        f"<td>{link(e['source_url'], 'gamebook') if e['source_url'] else ''}</td></tr>"
+        for e in exc)
+
+    t_sum = table(["Club", "Opponent", "Games", "Top-8 share", "Largest share", "Bench share",
+                   "Bench players", "Top-8 HHI", "Source"], _rows(srows),
+                  caption="Minutes shares measured from the official gamebook PDFs for "
+                          "2026-11-13")
+    t_top = table(["Club", "#", "Player", "Pos", "MIN", "Share", "PTS", "REB", "AST",
+                   "Source"], _rows(drows))
+    t_pool = table(["Club", "Player", "MIN", "Share", "PTS", "REB", "AST", "Source"],
+                   _rows(prows))
+    t_exc = table(["Club", "Game", "Reason", "Flag", "Source"], _rows(erows))
+    exc_names = esc(", ".join(e["team"] for e in exc)) or "none"
+    gate_list = "".join(f"<li><b>{esc(k)}</b> &mdash; {esc(v)}</li>"
+                        for k, v in meta["gates"].items())
+    no_delta = blank("needs 2 games")
+
+    body = f"""
+<div class="cards">
+  <div class="card"><span class="k">Clubs measured</span><span class="v">{len(tab)} / 30</span>
+    <span class="s">one captured game each, 2026-11-13</span></div>
+  <div class="card"><span class="k">Excluded by a gate</span><span class="v">{len(exc)}</span>
+    <span class="s">{exc_names}</span></div>
+  <div class="card"><span class="k">Rotation size</span><span class="v">top 8</span>
+    <span class="s">minutes shares, not a fitted rating</span></div>
+  <div class="card"><span class="k">Observed in/out delta</span>
+    <span class="v">{no_delta}</span>
+    <span class="s">blank by design &mdash; see the note below</span></div>
+</div>
+
+<h2>Measured top-8 minutes shares</h2>
+<p>Every share is <code>player minutes / (240:00 + 25:00 &times; OT)</code> read straight off
+the official box score. This replaces the mechanical rule the site used to publish with a
+measurement, which is what the brief asks for. <b>HHI</b> is the Herfindahl index of the top-8
+shares: higher means the club leans harder on fewer players, so an injury to a high-share
+player is more disruptive.</p>
+{t_sum}
+
+<h2>Top-8 detail</h2>
+<p>Eight rows per club, ordered by minutes played.</p>
+{t_top}
+
+<h2>Replacement pool &mdash; who is behind the top eight</h2>
+<p>These are the players ranked ninth and below by minutes in the same official box score.
+Their measured shares are the minutes available to absorb a missing rotation player's load.
+This is a measured <i>pool</i>, not an observed <i>delta</i>.</p>
+{t_pool}
+
+<h2>Why there is no observed injury-replacement delta</h2>
+<p>Measuring <i>who actually absorbed the minutes when player X was out</i> needs at least two
+captured games for the same club, one with X and one without. This window contains exactly one
+captured game per club, so that column would have to be back-solved from a single game and is
+left {blank("blank")} instead. The mechanical rule the site published before this session stays
+in place as the labelled fallback until a second game day is captured.</p>
+
+<h2>Clubs excluded by the minutes gate</h2>
+<p>A club is excluded when its captured team-game fails the official-sum gate. The gate is
+fail-closed: the club is dropped from the tables above rather than repaired.</p>
+{t_exc}
+
+<h2>Gates applied to every team-game</h2>
+<ul>
+{gate_list}
+</ul>
+"""
+    return page("Measured minutes", "minutes.html", body,
+                "Rotation minutes measured from the official gamebook PDFs, with the "
+                "replacement pool behind each top eight.")
+
+
+# ------------------------------------------- session arena/f8f8f2b8: injury release diff
+def page_injury_diff() -> str:
+    from . import playerlogs as PL
+
+    d = PL.injury_release_diff()
+    delta, st = d["delta"], PL.release_stamps()
+    changes = delta["status_changes"]
+    added, removed = delta["added"], delta["removed"]
+
+    crows = "".join(
+        "<tr>"
+        f"<td>{esc(c['date'])}</td><td>{esc(c['matchup'])}</td><td>{esc(c['team'])}</td>"
+        f"<td>{esc(c['player'])}</td>"
+        f"<td>{badge(c['from_status'], 'warn')}</td>"
+        f"<td>{badge(c['to_status'], 'ok' if c['to_status'] == 'Available' else ('bad' if c['to_status'] == 'Out' else 'warn'))}</td>"
+        f"<td>{esc(c['reason_to'])}</td>"
+        f"<td>{esc('yes' if c['reason_changed'] else 'no')}</td>"
+        f"<td>{link(st['report_url'], 'new')} &middot; {link(st['prior_report_url'], 'old')}</td>"
+        "</tr>"
+        for c in changes)
+    arows = "".join(
+        f"<tr><td>{esc(a['date'])}</td><td>{esc(a['matchup'])}</td><td>{esc(a['team'])}</td>"
+        f"<td>{esc(a['player']) or blank('FLAGGED I-F8F-13: no source for this cell - the release prints no player')}</td>"
+        f"<td>{esc(a['status'])}</td><td>{esc(a['reason'])}</td>"
+        f"<td>{link(st['report_url'], 'PDF')}</td></tr>"
+        for a in added)
+    rrows = "".join(
+        f"<tr><td>{esc(a['date'])}</td><td>{esc(a['matchup'])}</td><td>{esc(a['team'])}</td>"
+        f"<td>{esc(a['player']) or blank('FLAGGED I-F8F-13: no source for this cell - the release prints no player')}</td>"
+        f"<td>{esc(a['status'])}</td><td>{esc(a['reason'])}</td>"
+        f"<td>{link(st['prior_report_url'], 'PDF')}</td></tr>"
+        for a in removed)
+    QUIRKS = [
+        ("I-F8F-01", "Page-continuation rows print with an empty team / date / time / matchup "
+                     "cell; the value has to be inherited from the block in progress.",
+         "warn", st["report_url"], "PDF"),
+        ("I-F8F-02", 'The ORL@BOS block prints a second "Penda, Noah" row under the '
+                     "<i>Boston Celtics</i> team cell with the reason NOT YET SUBMITTED.",
+         "warn", st["report_url"], "PDF"),
+        ("I-F8F-03", "The NYK@TOR block contains no New York Knicks rows at all in this "
+                     "release &mdash; not even a placeholder.",
+         "warn", st["report_url"], "PDF"),
+        ("I-F8F-04", 'Game times are printed in 12-hour form with no AM/PM marker (IND@PHI '
+                     'shows "01:00 (ET)" for a 13:00 ET tip). The 24-hour clock on '
+                     + link("slate.html", "the slate page") + " is authoritative.",
+         "warn", st["report_url"], "PDF"),
+        ("I-F8F-05", "Player minutes occasionally sum to one second above or below the printed "
+                     "240:00 team total (5 of 18 club-games here).", "off",
+         "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf", "MIL@ORL book"),
+        ("I-F8F-06", "MIL@ORL: the SCORE BY PERIOD row for Orlando did not extract (it reads "
+                     '"33 33 33 33", summing to 132 against a final of 107). Quarter scores for '
+                     "that game are left blank.", "warn",
+         "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf", "MIL@ORL book"),
+        ("I-F8F-07", "MEM@NOP: the MIN cell for Memphis' Jerami Grant did not extract. His "
+                     "minutes are recorded as null and Memphis is excluded from the measured "
+                     "shares rather than back-solved from the team total.", "warn",
+         "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf", "MEM@NOP book"),
+        ("I-F8F-09", "UTA@HOU and POR@SAC: the SCORE BY PERIOD table row and the gamebook's "
+                     "repeated footer line disagree for the home club; only the footer "
+                     "reconciles to the printed final. Both readings are recorded in the "
+                     "capture file.", "warn",
+         "https://statsdmz.nba.com/pdfs/20261113/20261113_UTAHOU_book.pdf", "UTA@HOU book"),
+        ("I-F8F-11", "nba2/v3/official.py carries the injury release as 11/15/26 06:00 AM ET "
+                     'with "newest indexed 06:15 AM ET". The official index now lists releases '
+                     "through <b>06:15 PM ET</b>, twelve hours later. Logged as a cross-scope "
+                     "request; that file is not edited here.", "warn",
+         st["index_url"], "official index"),
+        ("I-F8F-12", "DEN@NOP (2026-11-14) and OKC@LAC: the PDF prints the same surname twice "
+                     "in one club's inactive list (two distinct Williams entries for OKC), so a "
+                     "last-name-only join would over-count.", "off",
+         "https://statsdmz.nba.com/pdfs/20261113/20261113_OKCLAC_book.pdf", "OKC@LAC book"),
+    ]
+    qrows = "".join(
+        f'<tr id="{esc(fid)}"><td><b>{esc(fid)}</b></td><td>{desc}</td>'
+        f'<td>{badge("open", "warn") if sev == "warn" else badge("informational", "off")}</td>'
+        f"<td>{link(u, lab)}</td></tr>"
+        for fid, desc, sev, u, lab in QUIRKS)
+    t_quirks = table(["Flag", "What the official document does", "Severity",
+                      "Source to check"], _rows(qrows))
+
+    t_changes = table(["Game date", "Matchup", "Team", "Player", "From", "To", "Reason (new)",
+                       "Reason changed?", "Source"], _rows(crows))
+    t_added = table(["Game date", "Matchup", "Team", "Player", "Status", "Reason", "Source"],
+                    _rows(arows))
+    t_removed = table(["Game date", "Matchup", "Team", "Player", "Status", "Reason", "Source"],
+                      _rows(rrows))
+
+    body = f"""
+<div class="banner">
+  <div><span class="k">Report revision time</span><span class="v">{esc(st['revision_time_et'])}</span>
+    <span class="s">the stamp printed on the PDF</span></div>
+  <div><span class="k">Retrieved</span><span class="v">{esc(st['retrieved_at_utc'])}</span>
+    <span class="s">when this session fetched it</span></div>
+  <div><span class="k">Compared against</span><span class="v">{esc(st['prior_revision_time_et'])}</span>
+    <span class="s">{esc(st['elapsed'])} earlier, same day</span></div>
+  <div><span class="k">Source</span>
+    <span class="v">{link(st['report_url'], '06:15 PM PDF')}</span>
+    <span class="s">{link(st['index_url'], 'official index')} · {link(st['prior_report_url'], '06:15 AM PDF')}</span></div>
+</div>
+
+<h2>Release-to-release movement</h2>
+<div class="cards">
+  <div class="card"><span class="k">Rows in the 06:15 AM release</span>
+    <span class="v">{d['am_rows']}</span></div>
+  <div class="card"><span class="k">Rows in the 06:15 PM release</span>
+    <span class="v">{d['pm_rows']}</span></div>
+  <div class="card"><span class="k">Status changes</span>
+    <span class="v">{len(changes)}</span>
+    <span class="s">same player, different designation</span></div>
+  <div class="card"><span class="k">Unchanged</span><span class="v">{delta['counts']['unchanged']}</span></div>
+  <div class="card"><span class="k">Added</span><span class="v">{len(added)}</span>
+    <span class="s">includes clubs replacing a placeholder with a full submission</span></div>
+  <div class="card"><span class="k">Removed</span><span class="v">{len(removed)}</span></div>
+</div>
+
+<h2>Status changes</h2>
+<p>These are real designation movements between two consecutive official releases, detected by
+a mechanical diff on (date, matchup, team, player). A change from <i>Questionable</i> to
+<i>Available</i> moves a rotation decision; a change to <i>Out</i> removes minutes that the
+{link('minutes.html', 'measured minutes page')} shows have to be reallocated.</p>
+{t_changes}
+
+<h2>Added in the 06:15 PM release</h2>
+<p>A large added count between a morning and an evening release is expected, not an error: clubs
+playing the following day replace a single "NOT YET SUBMITTED" placeholder with their full
+submission as the 5 p.m. local deadline passes.</p>
+{t_added}
+
+<h2>Present in 06:15 AM, absent from 06:15 PM</h2>
+{t_removed}
+
+<h2>Irregularities in the official PDF itself</h2>
+<p>Found while transcribing. None of these is corrected in the data — each is reproduced exactly
+as the league published it and flagged so a reviewer can check the source document.</p>
+{t_quirks}
+"""
+    return page("Injury release diff", "injury-diff.html", body,
+                "Two consecutive official injury releases, diffed mechanically, with the "
+                "revision and retrieval stamps shown side by side.")
+
+
 def build(verbose: bool = False) -> tuple[list[str], dict]:
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
@@ -604,6 +974,9 @@ def build(verbose: bool = False) -> tuple[list[str], dict]:
         "travel.html": page_travel(res),
         "results.html": page_results(res, stamp),
         "ledger.html": page_ledger(res, seal_info, prereg),
+        "player-logs.html": page_player_logs(),
+        "minutes.html": page_minutes(),
+        "injury-diff.html": page_injury_diff(),
         "verification-v3.html": page_verification(res, G.run(res), seal_info),
     }
     for name, doc in pages.items():

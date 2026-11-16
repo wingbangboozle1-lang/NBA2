@@ -1,7 +1,7 @@
 {
  "meta": {
   "generated_at_utc": "2026-11-14 10:25 UTC",
-  "input_digest": "87ca2991ad16e6cf0bbd6c481788ebc6612d5ae926a80fec74cb8ed30aeb7fbb",
+  "input_digest": "ae681964673fc5e523b3d2dc0cdfd4ae6e92bc7f01e1c4d01b1caa0064ee626a",
   "build_is_idempotent": true,
   "snapshot_as_of": "2026-11-14",
   "slate_window": "2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)",
@@ -27816,7 +27816,7 @@
       "acceptance": "Named strategies with hypothesis, inputs, edge origin and correlation consequence",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results",
+      "how": "9 strategies registered in nba2/config.py::STRATEGIES; 7 now have hashed pre-registration files (data/v2/prereg/) frozen 2026-11-15T12:05:00Z; usefulness unproven until gates measure on settled results | 2026-11-15 session arena/f8f8f2b8-nba2: 9 strategies registered in nba2/config.py::STRATEGIES; 7 have hashed pre-registration files frozen 2026-11-15T12:05:00Z. This session added the measured minutes-reallocation input a rotation-availability strategy needs. Usefulness is still unproven until the gates measure on settled results.",
       "priority": "P0"
      },
      "source": {
@@ -27916,7 +27916,7 @@
       "acceptance": "Prop pricing math present and tested; combo legs priced with dependence",
       "status": "blocked",
       "owner": "arena/20c4f2f9",
-      "how": "nba2/models/props.py implements NB tails + copula combos, but no official player-level input exists in the repo — every prop row is blank",
+      "how": "nba2/models/props.py implements NB tails + copula combos, but no official player-level input exists in the repo — every prop row is blank | 2026-11-15 session arena/f8f8f2b8-nba2: nba2/models/props.py implements NB tails + copula combos. The player-level INPUT now exists (193 measured game-log rows: minutes, points, rebounds, assists), but there is still no prop line to price against, so every prop row stays blank.",
       "priority": "P0"
      },
      "source": {
@@ -28066,7 +28066,7 @@
       "acceptance": "Official statuses joined to per-team rotation depth, with minutes/production impact fields present",
       "status": "partial",
       "owner": "arena/20c4f2f9 + arena-23927d63",
-      "how": "91 official rows ingested; minutes/production columns blank by policy (report has no such fields)",
+      "how": "91 official rows ingested; minutes/production columns blank by policy (report has no such fields) | 2026-11-15 session arena/f8f8f2b8-nba2: Minutes redistribution is now MEASURED, not a rule: top-8 minutes shares + replacement pool for 18 clubs read from the official gamebook PDFs of 2026-11-13. The observed in/out delta stays blank by design — it needs two captured games for the same club.",
       "priority": "P0"
      },
      "source": {
@@ -28091,7 +28091,7 @@
       "acceptance": "Schedule-spot analysis from official dates; in-game flow fields present but blank where data is missing",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open",
+      "how": "rest days, B2B, 3-in-4 and travel distance (haversine from 30/30 sourced arena coordinates) published on the Game flow page; pace/garbage-time decomposition still open | 2026-11-15 session arena/f8f8f2b8-nba2: rest days, B2B, 3-in-4 and travel distance published; 8 additional games now carry verified quarter scores from the official gamebooks, which is the input a pace/garbage-time decomposition needs. That decomposition is still not built.",
       "priority": "P1"
      },
      "source": {
@@ -28691,7 +28691,7 @@
       "acceptance": "Settlement computes MAE/Brier/log-loss/calibration; missing games listed, never imputed",
       "status": "partial",
       "owner": "arena/20c4f2f9",
-      "how": "official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job",
+      "how": "official results feed (nba2/results-feed.v2) settles 5 verified finals for 2026-11-14 with quarter sums asserted and one visible settlement stamp; per-pick ledger hashes committed pre-tip with a tamper-detection test; batch settlement of the pending slate awaits an official-final capture in the job | 2026-11-15 session arena/f8f8f2b8-nba2: official results feed (nba2.results-feed.v2) settles 5 verified finals for 2026-11-14; this session added 9 more verified 2026-11-13 finals with quarter scores. Per-pick ledger hashes committed pre-tip with a tamper test. Batch settlement of the pending slate still awaits an official-final capture in the scheduled job.",
       "priority": "P0"
      },
      "source": {
@@ -28841,7 +28841,7 @@
       "acceptance": "Per-player per-game box score with minutes, plus on/off",
       "status": "partial",
       "owner": "data vendor / owner",
-      "how": "per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured",
+      "how": "per-player game logs captured for gid 0022600231 (19 rows: minutes, points, rebounds, assists, opponent) from official box-score pages; capture gates asserted; the scheduled job extends this per game day; 3/30 per-club season tables captured | 2026-11-15 session arena/f8f8f2b8-nba2: 193 per-player game-log rows (minutes, points, rebounds, assists, opponent) captured from the official gamebook PDFs for all 9 games of 2026-11-13 (18 clubs), plus the 19 rows for 2026-11-14 DEN@NOP already in the repo. Player minutes gate: 240:00 + 25:00/OT, +/-2s. 12 clubs still have no captured box score (they did not play on 11-13).",
       "priority": "P0"
      },
      "source": {
@@ -28866,7 +28866,7 @@
       "acceptance": ">=2 seasons of final scores with game IDs",
       "status": "partial",
       "owner": "data vendor / owner",
-      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day",
+      "how": "188 official final scores (2026-10-24..2026-11-14) + quarter scores and gamebook URLs for the 5 newest games, all from nba.com; the scheduled job appends finals per game day | 2026-11-15 session arena/f8f8f2b8-nba2: 188 official final scores (2026-10-24..2026-11-14) plus 9 verified 2026-11-13 finals with quarter scores captured this session from the official gamebooks; quarter sums are asserted against the finals at load. 2 games' quarter scores are flagged unverifiable because the official PDF's SCORE BY PERIOD row does not reconcile (I-F8F-06, I-F8F-09).",
       "priority": "P0"
      },
      "source": {
@@ -32480,9 +32480,108 @@
       "FLAG-SUGG-01"
      ],
      "verified": false
+    },
+    {
+     "key": "SG-F8F-01",
+     "values": {
+      "id": "SG-F8F-01",
+      "title": "Capture a second game day per club so the injury-replacement delta is measurable",
+      "problem": "The measured minutes page publishes top-8 shares and the replacement POOL, but the observed delta (who actually absorbed the minutes when a player was out) is blank. It needs two captured games for the same club, one with the player and one without; this window has exactly one game per club.",
+      "proposal": "Ingest the official gamebook PDFs for one more completed game day per club and diff the rotation between the two games for each player who missed one.",
+      "benefit": "Turns a flagged blank into a measurement on the single input the brief asks to be modelled explicitly.",
+      "effort": "M — one more capture pass, reusing the loader already committed.",
+      "risk": "Low. Same source, same gates; a new failure excludes a club rather than guessing.",
+      "recommendation": "Do next. It is the only thing standing between the rotation model and an observed replacement share.",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "SG-F8F-02",
+     "values": {
+      "id": "SG-F8F-02",
+      "title": "Extend the gamebook capture to the 12 clubs with no box score",
+      "problem": "18 clubs are covered (they played 2026-11-13). BKN, BOS, CHA, DAL, DEN, DET, LAL, MIN, PHI, PHX, TOR and WAS have no captured game, so their injured players' log rows are blank and flagged.",
+      "proposal": "Capture the most recent completed game for each uncovered club and append to the same artifact, keeping the per-club gate.",
+      "benefit": "Completes the 'at least the players who appear on an injury report' requirement across the whole league rather than two-thirds of it.",
+      "effort": "M — 6-10 more gamebook fetches.",
+      "risk": "Low.",
+      "recommendation": "Do next, in the same pass as SG-F8F-01.",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
+    },
+    {
+     "key": "SG-F8F-03",
+     "values": {
+      "id": "SG-F8F-03",
+      "title": "Re-read the injury release in nba2/v3/official.py (gate G-F3 is failing)",
+      "problem": "nba2/v3/official.py carries 11/15/26 06:00 AM ET as the release and 06:15 AM ET as the newest indexed. The official index now lists releases through 06:15 PM ET, twelve hours later, so G-F3 has been failing and every downstream injury number on the v3 pages is half a day stale. Logged as I-F8F-11; not edited here because the file belongs to another session's scope.",
+      "proposal": "Re-read the official index, take the newest release, and refresh the snapshot so G-F3 turns green.",
+      "benefit": "Removes a standing gate failure and the staleness it represents.",
+      "effort": "S — one capture plus a rebuild.",
+      "risk": "Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.",
+      "recommendation": "Accept, assigned to the owner of nba2/v3/official.py.",
+      "status": "open"
+     },
+     "source": {
+      "name": "COORDINATION.md",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+      "class": "derived",
+      "class_label": "Derived in-repo from a verified snapshot",
+      "note": "Session claims, conflict log, irregularity findings."
+     },
+     "note": "",
+     "flags": [
+      "FLAG-SUGG-01"
+     ],
+     "verified": false
     }
    ],
    "sources": [
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
+    {
+     "name": "COORDINATION.md",
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",
+     "class": "derived",
+     "class_label": "Derived in-repo from a verified snapshot",
+     "note": "Session claims, conflict log, irregularity findings."
+    },
     {
      "name": "COORDINATION.md",
      "url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md",

@@ -43,6 +43,9 @@
 <a href="travel.html">Rest &amp; travel</a>
 <a href="results.html">Result feed</a>
 <a href="ledger.html">Sealed ledger</a>
+<a href="player-logs.html">Player game logs</a>
+<a href="minutes.html">Measured minutes</a>
+<a href="injury-diff.html">Injury release diff</a>
 <a href="verification-v3.html">v3 verification</a>
 </nav>
 </aside>
@@ -481,7 +484,7 @@ dependency. The highest-priority recommendations are to diagnose the failed inge
       by a distributional assumption is indistinguishable from a bad pick.</li>
   <li><b>Do not rank strategies on win rate.</b> Twelve bets can look skilful and be noise; log-loss on 300 settled bets is
       the cheapest defence.</li>
-</ul><h2>Review register — 2026-11-14 (50 items)</h2>
+</ul><h2>Review register — 2026-11-14 (53 items)</h2>
 <p class="lede">This is the queue a reviewer actually decides on: one row per proposal, its measured problem, the exact
 change it would make, the risk of making it, the effort, this session's recommendation, and the decision state. Nothing
 below has been applied on the owner's behalf. The machine-readable copy is
@@ -512,6 +515,11 @@ which is what should be edited when a decision is recorded.</p>
 <tr>
 <td>implemented this session</td>
 <td>7</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr>
+<td>open</td>
+<td>3</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 </tbody></table></div><div class="scroll"><table>
@@ -1126,6 +1134,42 @@ which is what should be edited when a decision is recorded.</p>
 <td>Closing someone else&#x27;s PR without credit reads as a grab; the comment is the fix.</td>
 <td>Applied by the integration session as part of this merge, with attribution in both the PR body and COORDINATION.md.</td>
 <td><span class="badge b-ok">applied in this PR</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="SG-F8F-01">
+<td>SG-F8F-01</td>
+<td><b>Capture a second game day per club so the injury-replacement delta is measurable</b></td>
+<td>The measured minutes page publishes top-8 shares and the replacement POOL, but the observed delta (who actually absorbed the minutes when a player was out) is blank. It needs two captured games for the same club, one with the player and one without; this window has exactly one game per club.</td>
+<td>Ingest the official gamebook PDFs for one more completed game day per club and diff the rotation between the two games for each player who missed one.</td>
+<td>Turns a flagged blank into a measurement on the single input the brief asks to be modelled explicitly.</td>
+<td>M — one more capture pass, reusing the loader already committed.</td>
+<td>Low. Same source, same gates; a new failure excludes a club rather than guessing.</td>
+<td>Do next. It is the only thing standing between the rotation model and an observed replacement share.</td>
+<td><span class="badge b-warn">open</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="SG-F8F-02">
+<td>SG-F8F-02</td>
+<td><b>Extend the gamebook capture to the 12 clubs with no box score</b></td>
+<td>18 clubs are covered (they played 2026-11-13). BKN, BOS, CHA, DAL, DEN, DET, LAL, MIN, PHI, PHX, TOR and WAS have no captured game, so their injured players&#x27; log rows are blank and flagged.</td>
+<td>Capture the most recent completed game for each uncovered club and append to the same artifact, keeping the per-club gate.</td>
+<td>Completes the &#x27;at least the players who appear on an injury report&#x27; requirement across the whole league rather than two-thirds of it.</td>
+<td>M — 6-10 more gamebook fetches.</td>
+<td>Low.</td>
+<td>Do next, in the same pass as SG-F8F-01.</td>
+<td><span class="badge b-warn">open</span></td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
+</tr>
+<tr id="SG-F8F-03">
+<td>SG-F8F-03</td>
+<td><b>Re-read the injury release in nba2/v3/official.py (gate G-F3 is failing)</b></td>
+<td>nba2/v3/official.py carries 11/15/26 06:00 AM ET as the release and 06:15 AM ET as the newest indexed. The official index now lists releases through 06:15 PM ET, twelve hours later, so G-F3 has been failing and every downstream injury number on the v3 pages is half a day stale. Logged as I-F8F-11; not edited here because the file belongs to another session&#x27;s scope.</td>
+<td>Re-read the official index, take the newest release, and refresh the snapshot so G-F3 turns green.</td>
+<td>Removes a standing gate failure and the staleness it represents.</td>
+<td>S — one capture plus a rebuild.</td>
+<td>Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.</td>
+<td>Accept, assigned to the owner of nba2/v3/official.py.</td>
+<td><span class="badge b-warn">open</span></td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/suggestions/SUGGESTIONS.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/sugg…</a></td>
 </tr>
 </tbody></table></div>

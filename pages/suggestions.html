@@ -21,7 +21,7 @@
   <main class="main">
     <section class="hero"><h2>Suggestions</h2><p>Improvement queue for owner review. Nothing here has been implemented on your behalf.</p></section>
     <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-14 10:25 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
-    <section class="card table-card" id="suggestions" data-rows="50">
+    <section class="card table-card" id="suggestions" data-rows="53">
 <h2>Site-improvement suggestions — review queue</h2>
 <p class="blurb">Each item is written so a reviewer can accept, reject or defer it on its own merits. Nothing is applied silently: the Status column is the record of what has been decided or already built, and every item still stands or falls on its own.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Site-improvement suggestions — review queue</caption><thead><tr>
@@ -682,6 +682,45 @@
 <td>Closing someone else&#x27;s PR without credit reads as a grab; the comment is the fix.</td>
 <td>Applied by the integration session as part of this merge, with attribution in both the PR body and COORDINATION.md.</td>
 <td>applied in this PR</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="SG-F8F-01">
+<td>SG-F8F-01</td>
+<td>Capture a second game day per club so the injury-replacement delta is measurable</td>
+<td>The measured minutes page publishes top-8 shares and the replacement POOL, but the observed delta (who actually absorbed the minutes when a player was out) is blank. It needs two captured games for the same club, one with the player and one without; this window has exactly one game per club.</td>
+<td>Ingest the official gamebook PDFs for one more completed game day per club and diff the rotation between the two games for each player who missed one.</td>
+<td>Turns a flagged blank into a measurement on the single input the brief asks to be modelled explicitly.</td>
+<td>M — one more capture pass, reusing the loader already committed.</td>
+<td>Low. Same source, same gates; a new failure excludes a club rather than guessing.</td>
+<td>Do next. It is the only thing standing between the rotation model and an observed replacement share.</td>
+<td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="SG-F8F-02">
+<td>SG-F8F-02</td>
+<td>Extend the gamebook capture to the 12 clubs with no box score</td>
+<td>18 clubs are covered (they played 2026-11-13). BKN, BOS, CHA, DAL, DEN, DET, LAL, MIN, PHI, PHX, TOR and WAS have no captured game, so their injured players&#x27; log rows are blank and flagged.</td>
+<td>Capture the most recent completed game for each uncovered club and append to the same artifact, keeping the per-club gate.</td>
+<td>Completes the &#x27;at least the players who appear on an injury report&#x27; requirement across the whole league rather than two-thirds of it.</td>
+<td>M — 6-10 more gamebook fetches.</td>
+<td>Low.</td>
+<td>Do next, in the same pass as SG-F8F-01.</td>
+<td>open</td>
+<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
+</tr>
+<tr id="SG-F8F-03">
+<td>SG-F8F-03</td>
+<td>Re-read the injury release in nba2/v3/official.py (gate G-F3 is failing)</td>
+<td>nba2/v3/official.py carries 11/15/26 06:00 AM ET as the release and 06:15 AM ET as the newest indexed. The official index now lists releases through 06:15 PM ET, twelve hours later, so G-F3 has been failing and every downstream injury number on the v3 pages is half a day stale. Logged as I-F8F-11; not edited here because the file belongs to another session&#x27;s scope.</td>
+<td>Re-read the official index, take the newest release, and refresh the snapshot so G-F3 turns green.</td>
+<td>Removes a standing gate failure and the staleness it represents.</td>
+<td>S — one capture plus a rebuild.</td>
+<td>Low, but it changes every v3 injury-derived number, so it belongs to whoever owns that file.</td>
+<td>Accept, assigned to the owner of nba2/v3/official.py.</td>
+<td>open</td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/COORDINATION.md" target="_blank" rel="noopener">COORDINATION.md</a></td>
 <td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-SUGG-01">FLAG-SUGG-01</a></td>
 </tr>

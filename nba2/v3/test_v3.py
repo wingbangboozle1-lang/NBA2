@@ -16,6 +16,7 @@ import unittest
 from pathlib import Path
 
 from . import official as O
+from . import playerlogs as PL
 from . import model as M
 from . import rotation as ROT
 from . import ledger as LD
@@ -266,7 +267,13 @@ class TestGates(unittest.TestCase):
 class TestPublishedPages(unittest.TestCase):
     def test_pages_exist_and_are_checked(self):
         pages, _ = B.build()
-        self.assertEqual(len(pages), 7)
+        # Derived from the nav rather than a magic number so that adding a page to
+        # V3_NAV cannot silently break this assertion (session arena/f8f8f2b8-nba2
+        # added player-logs.html, minutes.html and injury-diff.html).
+        self.assertEqual(len(pages), len(B.V3_NAV))
+        for href, _label in B.V3_NAV:
+            self.assertIn(href, pages)
+            self.assertTrue((Path(B.SITE) / href).exists(), href)
         self.assertEqual(CK.structural(), [])
         self.assertEqual(CK.semantic(), [])
 
@@ -290,3 +297,84 @@ class TestPublishedPages(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPlayerGameLogs(unittest.TestCase):
+    """Session arena/f8f8f2b8-nba2 — the official gamebook capture and its gates.
+
+    These tests exist because the capture is a human transcription of an official PDF. They
+    assert the properties that make a transcription safe to publish: every row is sourced,
+    the official sums reconcile, and a cell the PDF left blank stays blank.
+    """
+
+    def test_every_log_row_carries_an_official_source(self):
+        for r in PL.game_logs():
+            self.assertTrue(r["source_url"].startswith("https://statsdmz.nba.com/pdfs/"),
+                            r["player"])
+            self.assertEqual(r["source_class"], "official")
+
+    def test_minutes_sum_to_the_official_team_total(self):
+        """The gate the build applies: 240:00 (+25:00 per OT) within a 2s PDF tolerance."""
+        complete = {r["team"] for r in PL.minutes_table()}
+        for g in PL.gamebooks():
+            target = 240 * 60 + g.get("ot_periods", 0) * 25 * 60
+            for tri in (g["away"], g["home"]):
+                if not g["minutes_complete"].get(tri):
+                    self.assertNotIn(tri, complete,
+                                     f"{tri} failed the gate but reached the share table")
+                    continue
+                secs = [p["min_sec"] for p in PL.game_logs()
+                        if p["game_id"] == g["game_id"] and p["team"] == tri]
+                self.assertLessEqual(abs(sum(secs) - target), 2, f"{g['game_id']} {tri}")
+
+    def test_points_sum_to_the_official_final(self):
+        for g in PL.gamebooks():
+            for tri, side in ((g["away"], "away"), (g["home"], "home")):
+                pts = sum(p["pts"] for p in PL.game_logs()
+                          if p["game_id"] == g["game_id"] and p["team"] == tri)
+                self.assertEqual(pts, g[side + "_pts"], f"{g['game_id']} {tri}")
+
+    def test_a_missing_minutes_cell_stays_blank_and_excludes_the_club(self):
+        """I-F8F-07: Memphis' Jerami Grant has no minutes in the official PDF."""
+        grant = [r for r in PL.game_logs()
+                 if r["team"] == "MEM" and r["player"] == "Jerami Grant"]
+        self.assertEqual(len(grant), 1)
+        self.assertIsNone(grant[0]["min"])
+        self.assertIsNone(grant[0]["min_sec"])
+        self.assertNotIn("MEM", {r["team"] for r in PL.minutes_table()})
+        self.assertEqual([e["team"] for e in PL.excluded_teams()], ["MEM"])
+
+    def test_top_eight_shares_are_a_partition_of_the_game(self):
+        for row in PL.minutes_table():
+            self.assertEqual(len(row["top8"]), 8, row["team"])
+            # 1e-3, not exact: the official PDF's own player minutes can sit a second off
+            # its printed 240:00 team total (I-F8F-05), so the shares inherit that second.
+            total = row["top8_share"] + row["bench_share"]
+            self.assertLess(abs(total - 1.0), 1e-3, row["team"])
+            shares = [p["share"] for p in row["top8"]]
+            self.assertEqual(shares, sorted(shares, reverse=True), row["team"])
+
+    def test_injury_coverage_counts_reconcile(self):
+        cov = PL.injury_coverage()
+        self.assertEqual(cov["n_matched"] + cov["n_no_row_in_captured_game"]
+                         + cov["n_club_not_captured"], cov["n_injured_named"])
+        self.assertEqual(len(cov["matched"]), cov["n_matched"])
+        self.assertGreater(cov["n_matched"], 0)
+
+    def test_release_diff_is_mechanical_and_self_consistent(self):
+        d = PL.injury_release_diff()["delta"]
+        c = d["counts"]
+        self.assertEqual(c["status_changed"], len(d["status_changes"]))
+        self.assertEqual(c["added"], len(d["added"]))
+        self.assertEqual(c["removed"], len(d["removed"]))
+        self.assertGreaterEqual(c["status_changed"], 1)
+        for ch in d["status_changes"]:
+            # A row is a change if the designation moved OR the published reason did.
+            self.assertTrue(ch["from_status"] != ch["to_status"] or ch["reason_changed"],
+                            ch["player"])
+
+    def test_release_stamps_are_printed(self):
+        st = PL.release_stamps()
+        self.assertIn("06:15 PM ET", st["revision_time_et"])
+        self.assertIn("06:15 AM ET", st["prior_revision_time_et"])
+        self.assertTrue(st["report_url"].startswith("https://ak-static.cms.nba.com/"))

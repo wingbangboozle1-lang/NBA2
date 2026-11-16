@@ -3605,3 +3605,73 @@ logged request, not an edit.
 `git pull --rebase` before every push; no committed value inferred or filled in — anything not
 confirmable from an official source is left blank and published on the Flagged for Review page;
 the sealed ledgers are never rewritten; the site is never merged in a broken state.
+
+### Completion record — session `arena/f8f8f2b8-nba2` (2026-11-15 brief line items)
+
+*Status: complete. Verified against official sources; every new row carries the official URL it
+was read from.*
+
+**Official capture performed this session (all new files under `data/raw/capture_2026-11-15/`):**
+
+| File | What it is | Official source |
+|---|---|---|
+| `injury_report_2026-11-15_0615PM.json` | 155 rows, the newest release the index listed at retrieval | `https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-15_06_15PM.pdf` |
+| `injury_delta_0615AM_to_0615PM.json` | mechanical diff vs the 06:15 AM release: **20 status changes**, 67 added, 13 removed, 68 unchanged | both PDFs above |
+| `gamebooks_2026-11-13.json` | all 9 games of 2026-11-13 (18 clubs) with per-team box scores, gates, and the failure list | `https://statsdmz.nba.com/pdfs/20261113/<YYYYMMDD>_<AWAY><HOME>_book.pdf` |
+| `gamelogs_2026-11-13.json` | **193 per-player rows** (minutes, points, rebounds, assists, opponent) | same, per-row |
+
+**Published (three new v3 pages, all in the site's shared nav):** `player-logs.html`,
+`minutes.html`, `injury-diff.html`. The minutes page replaces the site's *mechanical* minutes
+rule with a **measurement** off the official box scores; `injury-diff.html` prints the report
+revision time and the retrieval time side by side, as the brief asks.
+
+**Reachability probe is recorded in the claim above** — `stats.nba.com/stats/*` and
+`cdn.nba.com/static/json/liveData/**` return HTTP 500 to this sandbox; the official gamebook PDF
+and the official injury index do fetch. The next session should not re-test this.
+
+**Verification performed:** `python -m nba2.v2` → `.check` = OK (0 structural, 0 semantic);
+`python -m nba2.v3` → `.check` = OK (0 structural, 0 semantic), gates 7 pass / 1 fail
+(`G-F3`, advisory, pre-existing — now disclosed on the site as **I-F8F-11**);
+`tools/check_links_all.py` = ALL INTERNAL LINKS OK (124 files, 5756 internal links);
+232 tests green (129 v2 + 70 v1 + 33→41 v3, including 8 new tests that assert the capture's
+own gates). The v3 page-count test was changed from a magic `7` to `len(B.V3_NAV)` so adding a
+page can no longer break it — the same class of defect that turned v2's workflow red last
+session.
+
+**Irregularities flagged, none corrected (all published with their source on the
+`injury-diff.html` page):**
+`I-F8F-01` continuation rows print with empty team/date/time cells · `I-F8F-02` a second
+"Penda, Noah" row printed under the Boston Celtics cell in the ORL@BOS block · `I-F8F-03` the
+NYK@TOR block has no Knicks rows at all · `I-F8F-04` the PDF prints game times in 12-hour form
+with **no AM/PM marker** (IND@PHI "01:00 (ET)" = a 13:00 ET tip; the 24-hour slate clock is
+authoritative) · `I-F8F-05` player minutes sum ±1s off the printed 240:00 team total in 5 of 18
+club-games · `I-F8F-06` MIL@ORL quarter scores did not extract (row reads 33/33/33/33 against a
+final of 107) — left blank · `I-F8F-07` Memphis' Jerami Grant has no minutes cell in the
+official PDF — left blank, Memphis excluded from the share tables rather than back-solved ·
+`I-F8F-09` UTA@HOU and POR@SAC: the SCORE BY PERIOD table and the gamebook footer disagree for
+the home club; only the footer reconciles — both readings recorded · `I-F8F-11`
+`nba2/v3/official.py` injury stamp is 12h stale (G-F3) · `I-F8F-12` duplicate surnames in one
+club's inactive list.
+
+**Deliberately not done, and why:** the observed injury-replacement *delta* is published blank.
+Measuring who actually absorbed a missing player's minutes needs two captured games for the same
+club; this window has one. Back-solving it from a single game would be a guess dressed as a
+measurement, so the mechanical rule stays as the labelled fallback. Logged as `SG-F8F-01`.
+
+**Cross-scope requests (logged, not edited):**
+* `nba2/v3/official.py` — re-read the injury release (I-F8F-11 / G-F3). Owner: whoever holds
+  that file; PR #71 has merged so it is free, but it is outside this session's claim.
+* `nba2/v2/content.py` — the I-F8F-* flags belong on the Flagged for Review page; this session
+  publishes them on `injury-diff.html` instead rather than edit a file it did not claim.
+
+**Untouched, as claimed:** PR #70 (`arena/d09f8d1e-nba2`) and PR #72 (`arena/04a61ac0-nba2`).
+Both touch `.github/workflows/refresh.yml`; whoever merges second should re-run the chain and
+reconcile the workflow steps, keeping both sides.
+
+**Unavoidable cross-scope touch, logged:** updating `requirements/REQUIREMENTS.json` and
+`suggestions/SUGGESTIONS.json` makes the v1 pipeline rebuild `pages/requirements.html`,
+`pages/suggestions.html` and `data/site.json` — `ci.yml` fails the build if the committed HTML
+does not match a rebuild of `data/site.json`, so this is forced, not chosen. `pages/**` and
+`data/site.json` are named in PR #70's scope (`arena/d09f8d1e-nba2`); the change is a pure
+re-render of the two register tables with no other page touched, and PR #70's own versions
+should win on any conflict inside those two files. `index.html` is untouched.
