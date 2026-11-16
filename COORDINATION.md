@@ -4229,3 +4229,10 @@ Files touched: only this claim/completion record and the new audit note. No sour
 - Z-02: current unit/checker/link/crosscheck results and code-level findings are in `analysis/session-09c0c9a2-audit.md`. Suites passed (79 + 146 + 67 + 53 + 49 tests); v4 gates 8/8; provenance lint 1,427 rows/50 tables; whole-site internal-link scan passed 132 files/6,378 links. `tools/crosscheck_site.py` reports 97 checks, 88 pass, 2 fail, 7 info: CC-DOC-01 stale README counts and CC-FRESH-01 stale legacy snapshot. v3 stored verification also has G-F3 (used injury report is not the newest indexed).
 - Scope respected: only `COORDINATION.md` and the new audit report are edited; source data, seals, generated site files, model code, and workflows are untouched. Generated page diffs caused by the check run were restored.
 - Outstanding integration requests are listed in the audit: correct generated counts, make published freshness contract unambiguous, implement live v4 capture rather than replaying the frozen 11/16 constants, archive injury PDFs as bytes, and refresh v3 from the newest indexed official report. These are not claimed as fixed or verified here.
+
+### PR #99 merge and deploy — `arena/09c0c9a2-nba2`
+
+- PR #99: https://github.com/wingbangboozle1-lang/NBA2/pull/99 — merged with `--merge` at 2026-11-16T18:23:34Z; merge commit `197d63da6e9b6f5beb70debf7f84059056426c38`.
+- PR checks: `verify`, `parity`, `v2`, and `backtest` all passed.
+- GitHub Pages run [43928321223](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43928321223) succeeded on the merged SHA: site rebuild, v3/v4 checks, v4 tests, parity diff, and deploy all passed.
+- The live projection page was independently fetched during this audit at https://wingbangboozle1-lang.github.io/NBA2/projection.html. This confirms the route is live; it does not clear the stale v1/v2 snapshot finding or the data gaps listed above.
