@@ -76,6 +76,25 @@ jobs:
               for page in ("traditional", "opponent", "advanced"):
                   yield f"team_{page}", STATS.format(page)
               yield "injury_index", "https://official.nba.com/nba-injury-report-2026-27-season/"
+              # the slate window: today..today+3, from the page that is server-rendered
+              for i in range(4):
+                  d = (today + dt.timedelta(days=i)).isoformat()
+                  yield f"future_games_{d}", f"https://www.nba.com/games?date={d}"
+              # candidate transports for the two surfaces that are client-rendered
+              # (standings + the three team-stat pages). Each is measured, not assumed:
+              # recorded with status/bytes and stored when it answers 200.
+              for name, url in (
+                  ("probe_standings_all", "https://data.nba.net/prod/v1/current/standings_all.json"),
+                  ("probe_data_scoreboard",
+                   f"https://data.nba.net/prod/v1/{today.strftime('%Y%m%d')}/scoreboard.json"),
+                  ("probe_dmz_standings", "https://statsdmz.nba.com/js/data/widgets/standings.json"),
+                  ("probe_chunk_standings",
+                   "https://www.nba.com/_next/static/chunks/pages/standings-28b434f7094bcd5e.js"),
+                  ("probe_chunk_teamstats",
+                   "https://www.nba.com/_next/static/chunks/pages/stats/teams/"
+                   "traditional-a0b7167e97b76271.js"),
+              ):
+                  yield name, url
               # control rows: transports measured unreachable, re-measured on every run so the
               # claim "these do not work from a runner" keeps a fresh timestamp behind it
               yield "stats_scoreboard_json", ("https://stats.nba.com/stats/scoreboardv2"
