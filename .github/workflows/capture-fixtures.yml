@@ -25,6 +25,9 @@ name: Capture official page fixtures
 on:
   workflow_dispatch:
   pull_request:
+  push:
+    branches:
+      - 'arena/**'
 
 permissions:
   contents: write
