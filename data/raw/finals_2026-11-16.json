@@ -1,0 +1,201 @@
+{
+ "source": "https://www.nba.com/games?date=2026-11-16",
+ "retrieved_at_utc": "2026-11-17T19:34:41+00:00",
+ "date": "2026-11-16",
+ "records": [
+  {
+   "game_id": "0022600245",
+   "date": "2026-11-16",
+   "home_team": "BOS",
+   "away_team": "ORL",
+   "home_pts": 105,
+   "away_pts": 115,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
+   "home_q": [
+    17,
+    24,
+    36,
+    28
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    20,
+    30,
+    25,
+    40
+   ],
+   "source": "https://www.nba.com/game/orl-vs-bos-0022600245"
+  },
+  {
+   "game_id": "0022600247",
+   "date": "2026-11-16",
+   "home_team": "WAS",
+   "away_team": "MEM",
+   "home_pts": 120,
+   "away_pts": 136,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
+   "home_q": [
+    35,
+    34,
+    18,
+    33
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    26,
+    42,
+    35
+   ],
+   "source": "https://www.nba.com/game/mem-vs-was-0022600247"
+  },
+  {
+   "game_id": "0022600246",
+   "date": "2026-11-16",
+   "home_team": "CLE",
+   "away_team": "CHI",
+   "home_pts": 126,
+   "away_pts": 115,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
+   "home_q": [
+    25,
+    32,
+    31,
+    38
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    31,
+    17,
+    31,
+    36
+   ],
+   "source": "https://www.nba.com/game/chi-vs-cle-0022600246"
+  },
+  {
+   "game_id": "0022600249",
+   "date": "2026-11-16",
+   "home_team": "MIA",
+   "away_team": "HOU",
+   "home_pts": 128,
+   "away_pts": 110,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+   "home_q": [
+    29,
+    33,
+    39,
+    27
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    15,
+    31,
+    35,
+    29
+   ],
+   "source": "https://www.nba.com/game/hou-vs-mia-0022600249"
+  },
+  {
+   "game_id": "0022600248",
+   "date": "2026-11-16",
+   "home_team": "BKN",
+   "away_team": "PHI",
+   "home_pts": 123,
+   "away_pts": 135,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+   "home_q": [
+    26,
+    33,
+    36,
+    28
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    45,
+    27,
+    30
+   ],
+   "source": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+  },
+  {
+   "game_id": "0022600251",
+   "date": "2026-11-16",
+   "home_team": "NOP",
+   "away_team": "GSW",
+   "home_pts": 115,
+   "away_pts": 94,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+   "home_q": [
+    35,
+    26,
+    32,
+    22
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    11,
+    25,
+    29,
+    29
+   ],
+   "source": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+  },
+  {
+   "game_id": "0022600250",
+   "date": "2026-11-16",
+   "home_team": "MIN",
+   "away_team": "POR",
+   "home_pts": 106,
+   "away_pts": 98,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/por-vs-min-0022600250",
+   "home_q": [
+    26,
+    33,
+    28,
+    19
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    26,
+    25,
+    22,
+    25
+   ],
+   "source": "https://www.nba.com/game/por-vs-min-0022600250"
+  },
+  {
+   "game_id": "0022600252",
+   "date": "2026-11-16",
+   "home_team": "DEN",
+   "away_team": "PHX",
+   "home_pts": 105,
+   "away_pts": 117,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
+   "home_q": [
+    24,
+    29,
+    29,
+    23
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    20,
+    36,
+    34,
+    27
+   ],
+   "source": "https://www.nba.com/game/phx-vs-den-0022600252"
+  }
+ ],
+ "expected_window_games": 8,
+ "games_missing_from_payload": []
+}

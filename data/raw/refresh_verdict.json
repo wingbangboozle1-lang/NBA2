@@ -1,13 +1,13 @@
 {
  "schema": "nba2.refresh-verdict.v1",
- "run_id": "44107633323",
- "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323",
+ "run_id": "44160029868",
+ "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44160029868",
  "event": "schedule",
- "attempted_at_utc": "2026-11-17T14:54:57Z",
+ "attempted_at_utc": "2026-11-17T19:36:28Z",
  "surfaces": {
   "injuries": "success",
-  "finals": "failure",
-  "rolling": "failure",
+  "finals": "success",
+  "rolling": "success",
   "v4": "success"
  },
  "note": "'failure' for a surface means its official endpoint was unreachable or returned an unexpected schema. Nothing is invented for a failed surface: the affected rows stay blank and the settlement rows that depend on them stay PENDING. A failed surface blocks PUBLISHING, not the recording of the gap."

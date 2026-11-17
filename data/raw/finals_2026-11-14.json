@@ -1,0 +1,129 @@
+{
+ "source": "https://www.nba.com/games?date=2026-11-14",
+ "retrieved_at_utc": "2026-11-17T19:34:40+00:00",
+ "date": "2026-11-14",
+ "records": [
+  {
+   "game_id": "0022600231",
+   "date": "2026-11-14",
+   "home_team": "NOP",
+   "away_team": "DEN",
+   "home_pts": 108,
+   "away_pts": 116,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
+   "home_q": [
+    23,
+    28,
+    31,
+    26
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    29,
+    27,
+    30,
+    30
+   ],
+   "source": "https://www.nba.com/game/den-vs-nop-0022600231"
+  },
+  {
+   "game_id": "0022600232",
+   "date": "2026-11-14",
+   "home_team": "CLE",
+   "away_team": "DAL",
+   "home_pts": 127,
+   "away_pts": 117,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
+   "home_q": [
+    33,
+    38,
+    34,
+    22
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    20,
+    38,
+    26
+   ],
+   "source": "https://www.nba.com/game/dal-vs-cle-0022600232"
+  },
+  {
+   "game_id": "0022600234",
+   "date": "2026-11-14",
+   "home_team": "MEM",
+   "away_team": "BKN",
+   "home_pts": 129,
+   "away_pts": 110,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
+   "home_q": [
+    38,
+    33,
+    32,
+    26
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    23,
+    31,
+    30,
+    26
+   ],
+   "source": "https://www.nba.com/game/bkn-vs-mem-0022600234"
+  },
+  {
+   "game_id": "0022600233",
+   "date": "2026-11-14",
+   "home_team": "MIA",
+   "away_team": "DET",
+   "home_pts": 137,
+   "away_pts": 117,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
+   "home_q": [
+    37,
+    31,
+    35,
+    34
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    39,
+    21,
+    26,
+    31
+   ],
+   "source": "https://www.nba.com/game/det-vs-mia-0022600233"
+  },
+  {
+   "game_id": "0022600235",
+   "date": "2026-11-14",
+   "home_team": "MIN",
+   "away_team": "CHI",
+   "home_pts": 106,
+   "away_pts": 117,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
+   "home_q": [
+    17,
+    28,
+    35,
+    26
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    29,
+    29,
+    30,
+    29
+   ],
+   "source": "https://www.nba.com/game/chi-vs-min-0022600235"
+  }
+ ],
+ "expected_window_games": 5,
+ "games_missing_from_payload": []
+}
