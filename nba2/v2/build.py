@@ -50,6 +50,7 @@ NAV = [
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
+    ("capture-verification.html", "Capture verification"),
 ]
 
 CSS = """
@@ -217,7 +218,7 @@ def page(name, title, body, active=None):
 <main>
 {body}
 <footer>
-  <p>Snapshot as of <b>{O.AS_OF}</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>{O.AS_OF}</b> for the model pages. Built by sessions <code>arena/98b0eae9-nba2</code> (v2 model), <code>arena/8892d20c-nba2</code> (capture verification page).
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
@@ -297,7 +298,8 @@ def build(run_backtest: bool = True):
         "settlement_stamp": settle_stamp,
         "policy": "only games whose final score is published on an official NBA page are settled; "
                   "a game without an official page result stays UNSETTLED, never estimated",
-        "rows": C2.results_rows(), "meta": C2.results_meta()}, indent=1))
+        "rows": C2.results_rows(), "meta": C2.results_meta(),
+        "feed_stamp": C2.feed_stamp(), "feed_rows": C2.feed_rows()}, indent=1))
     # ---- arena coordinates (third-party geocodes, labelled) + travel inputs
     (DATA / "arenas.json").write_text(json.dumps({
         "schema": "nba2.arena-coords.v1",
@@ -368,7 +370,7 @@ def build(run_backtest: bool = True):
         _acc = f"{json.loads((DATA / 'backtest.json').read_text())['headline']['straight_up_accuracy']*100:.1f}%"
     _nscored = lab["meta"]["n_scored"]
     _nleans = len(R.t_picks(lines))
-    settle_stamp = json.loads((DATA / "results.json").read_text())["settlement_stamp"]
+    settle_stamp = json.loads((DATA / "results.json").read_text())["feed_stamp"]
     inj_meta = C2.injury_meta()
     _sa = lab["skill_attribution"]["headline_vs_win_pct_baseline"]
     body = f"""
@@ -786,7 +788,7 @@ row cross-checks within display rounding; the 21 published cross-checks are in
 
     # ------------------------------------------------------------------ results & settlement (SG-22 / SG-17)
     rdoc = json.loads((DATA / "results.json").read_text())
-    stamp = rdoc["settlement_stamp"]
+    stamp = rdoc["feed_stamp"]
     body = f"""<h1>Results &amp; settlement</h1>
 <p class="lede">The official per-game results feed: date, teams, final score, quarter scores — settled only
 when an official NBA page publishes the final. Everything else stays unsettled and says so.</p>
@@ -794,19 +796,26 @@ when an official NBA page publishes the final. Everything else stays unsettled a
 {srclink(stamp['official_results_url'], 'nba.com/games')}. Retrieved {esc(stamp['retrieved_at_utc'])}.
 Quarter sums are asserted equal to the final score at capture time and again at page-build time.</div>
 """
+    def _qcell(q, extra):
+        # a blank quarter row is shown as blank and flagged, never back-solved
+        if q is None:
+            return '<span class="tag">blank — not confirmed</span>'
+        txt = " / ".join(str(x) for x in q)
+        return esc(txt) + (" / OT " + esc(" / ".join(str(x) for x in extra)) if extra else "")
     qrows = []
-    for r in rdoc["rows"]:
+    for r in rdoc["feed_rows"]:
+        gb = srclink(r["gamebook_url"], "game book (PDF)") if r.get("gamebook_url") else "gamebook link not on file"
         qrows.append({"id": r["game_id"], "cells": [
             esc(r["date"]), esc(r["game_id"]), esc(r["away"]), str(r["away_pts"]),
-            esc(" / ".join(str(q) for q in r["away_quarters"])),
+            _qcell(r["away_quarters"], r["ot_quarters"]["away"]),
             esc(r["home"]), str(r["home_pts"]),
-            esc(" / ".join(str(q) for q in r["home_quarters"])),
+            _qcell(r["home_quarters"], r["ot_quarters"]["home"]),
             badge("VERIFIED FINAL", "ok"),
-            srclink(r["source_url"], "game page") + " " + srclink(r["gamebook_url"], "game book (PDF)"),
+            srclink(r["source_url"], "game page") + " " + gb,
         ]})
     body += table(["Date", "Game ID", "Away", "PTS", "Q1 / Q2 / Q3 / Q4", "Home", "PTS",
                    "Q1 / Q2 / Q3 / Q4", "Status", "Official sources"],
-                  qrows, "The 5 finals of 2026-11-14 — quarter scores from the official game pages",
+                  qrows, f"Official finals {stamp['window'][0]} to {stamp['window'][1]} — {stamp['games_settled']} games; quarter scores from the official NBA gamebook and game pages",
                   num_cols=(3, 6), idcol="id")
     body += """<h2>Settlement policy</h2>
 <div class="note"><b>Verified finals only.</b> A game is settled when its final score appears on the official
@@ -2515,6 +2524,15 @@ python3 -m unittest discover -s backtest/tests                 # {sc["backtest"]
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
 message — a remembered count is the most reliably stale number on the site (F-033).</p>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
+
+    # ---- capture verification (session arena/8892d20c-nba2): the dated official capture that
+    # is NEWER than the published snapshot, verified row by row against its own identities.
+    # This page deliberately does not restate the published snapshot; it publishes the fresher
+    # capture beside it so the gap between them is visible instead of implied.
+    from . import capture_verify as CV
+    built["capture-verification.html"] = page(
+        "capture-verification.html", "Capture verification", CV.body(table, esc, srclink, badge, page),
+        "capture-verification.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.
     # This MUST run last: backtest.json and the other JSON files are written earlier in this

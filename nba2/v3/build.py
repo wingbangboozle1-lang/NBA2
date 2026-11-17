@@ -50,6 +50,7 @@ V2_NAV = [
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
+    ("capture-verification.html", "Capture verification"),
 ]
 
 V3_NAV = [

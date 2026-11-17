@@ -1,0 +1,60 @@
+{
+ "schema": "nba2.capture-index.v1",
+ "retrieved_utc": "2026-11-17T15:52:00Z",
+ "session": "arena/8892d20c-nba2",
+ "method": "platform page-fetch tool (fetch_page); bash egress to nba.com/stats.nba.com/cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_pages": {
+  "standings": {
+   "name": "NBA.com Standings (official)",
+   "url": "https://www.nba.com/standings",
+   "read": "30 clubs: W, L, CONF, DIV, HOME, ROAD, NEUTRAL, OT, LAST10, STREAK"
+  },
+  "schedule": {
+   "name": "NBA.com Schedule (official)",
+   "url": "https://www.nba.com/schedule?date=2026-11-17",
+   "read": "the five 2026-11-17 cards in full (game id, ET tip, arena, city, state); inventory counts for 11/18-11/20"
+  },
+  "team_trad": {
+   "name": "NBA.com Stats - Teams Traditional (official)",
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: GP, PTS, +/- (plus FG/rebound/assist splits)"
+  },
+  "team_opp": {
+   "name": "NBA.com Stats - Teams Opponent (official)",
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: Opp PTS (points allowed per game) plus opponent shooting splits"
+  },
+  "team_adv": {
+   "name": "NBA.com Stats - Teams Advanced (official)",
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: OffRtg, DefRtg, NetRtg, PACE, PIE, POSS"
+  },
+  "injury_index": {
+   "name": "NBA Official - Injury Report index (official)",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "read": "the filing rules and every published 11/17 release from 12:00 a.m. ET to 10:30 a.m. ET"
+  }
+ },
+ "unread": {
+  "injury_pdf_rows": {
+   "what": "The row-level contents of the 2026-11-17 injury releases",
+   "why": "The index was read and the newest release URL of 2026-11-17 was identified, but the ~100 row transcriptions were not performed in this session's scope. The published injury pages keep their own dated release with its own stamp; nothing is back-filled.",
+   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_10_30AM.pdf"
+  },
+  "window_dates_11_18_to_11_20": {
+   "what": "Per-game rows for 11/18, 11/19 and 11/20",
+   "why": "inventory counts read; per-game transcription pending a row-by-row re-read (see slate file)",
+   "attempted_url": "https://www.nba.com/schedule?date=2026-11-17"
+  }
+ },
+ "selftest": {
+  "problems": [],
+  "clean": true
+ },
+ "files": [
+  "capture_index.json",
+  "slate_2026-11-17.json",
+  "standings_2026-11-17.json",
+  "team_stats_2026-11-17.json"
+ ]
+}

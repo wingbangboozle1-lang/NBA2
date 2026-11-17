@@ -27,10 +27,13 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## Which tree is published
 
-**One tree reaches a reader: [`site/`](site/), published at the repository root by
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
-site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
-returns 404. The repository still holds the earlier trees — they are kept for history and for
+**One tree reaches a reader: [`site/`](site/), uploaded by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** CORRECTED 2026-11-17 (F-062): the Pages configuration for this repository is
+`build_type: legacy`, source `main /`, so the file served at `/NBA2/` is the **repository-root**
+`index.html`, not the uploaded `site/` artefact. Probed live: `/NBA2/data/teams.json` returns
+**404** and the v2 tree is reachable at `/NBA2/site/`. The root `index.html` is now a generated
+pointer to `site/index.html`; flipping Settings → Pages → Source to **GitHub Actions** (one owner
+action, needs `pages: write`) makes `/NBA2/` serve `site/` directly. The repository still holds the earlier trees — they are kept for history and for
 review, and they are **not** published. Nothing was deleted to get here; moving the rest under
 `archive/` is suggestion SG-28, waiting on an owner decision.
 
@@ -43,10 +46,13 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-**One tree reaches a reader: [`site/`](site/), published at the repository root by
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
-site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
-returns 404. The repository still holds the earlier trees — they are kept for history and for
+**One tree reaches a reader: [`site/`](site/), uploaded by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** CORRECTED 2026-11-17 (F-062): the Pages configuration for this repository is
+`build_type: legacy`, source `main /`, so the file served at `/NBA2/` is the **repository-root**
+`index.html`, not the uploaded `site/` artefact. Probed live: `/NBA2/data/teams.json` returns
+**404** and the v2 tree is reachable at `/NBA2/site/`. The root `index.html` is now a generated
+pointer to `site/index.html`; flipping Settings → Pages → Source to **GitHub Actions** (one owner
+action, needs `pages: write`) makes `/NBA2/` serve `site/` directly. The repository still holds the earlier trees — they are kept for history and for
 review, and they are **not** published. Nothing was deleted to get here; moving the rest under
 `archive/` is suggestion SG-28, waiting on an owner decision.
 
@@ -59,7 +65,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-`index.html` + `pages/**` (21 pages, 50 tables, 1423 rows) are rendered from
+`index.html` + `pages/**` (21 pages, 50 tables, 1436 rows) are rendered from
 [`data/site.json`](data/site.json), which is itself generated only from committed snapshots:
 
 | Page | Contents |
@@ -110,7 +116,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (70 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (79 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -300,8 +306,8 @@ python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (24 pages, inc
 python3 -m nba2.v2.refresh    # rolling ingest with freshness/provenance gates (scheduled nightly)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 98 tests
-python3 -m unittest discover -s nba2/tests -t .                # 70 tests (prior work, unchanged)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 146 tests
+python3 -m unittest discover -s nba2/tests -t .                # 79 tests (counted from the files)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

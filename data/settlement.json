@@ -1,11 +1,12 @@
 {
-  "settled_at_utc": "2026-11-17T16:37:33+00:00",
+  "settled_at_utc": "2026-11-17T16:22:29+00:00",
   "finals_snapshot": "official_finals_union.json",
   "finals_sources_read": [
     "data/raw/finals_2026-11-13.json",
     "data/raw/finals_all.json",
     "data/raw/capture_2026-11-15/results_2026-11-14.json",
     "data/raw/results/results_2026-11-15.json",
+    "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
     "data/raw/results/results_2026-11-16.json",
     "data/v2/results.json"
   ],
@@ -18,17 +19,17 @@
         "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
         "n_predictions": 22
       },
-      "status": "PARTIAL \u2014 3 game(s) have no official final score",
-      "games_settled": 19,
+      "status": "SETTLED",
+      "games_settled": 22,
       "games_expected": 22,
       "metrics": {
-        "n_settled": 19,
-        "missing_games": 3,
-        "spread_mae": 12.895,
-        "total_mae": 14.763,
+        "n_settled": 22,
+        "missing_games": 0,
+        "spread_mae": 12.432,
+        "total_mae": 15.432,
         "total_pushes": 1,
-        "brier": 0.267,
-        "log_loss": 0.7914,
+        "brier": 0.2362,
+        "log_loss": 0.7141,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -144,6 +145,36 @@
           "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
         },
         {
+          "game_id": "0022600242",
+          "matchup": "HOU @ WAS",
+          "final": "147-119",
+          "our_spread_home": 13.0,
+          "spread_err": 15.0,
+          "our_total": 224.0,
+          "total_err": 42.0,
+          "source": "https://www.nba.com/game/hou-vs-was-0022600242"
+        },
+        {
+          "game_id": "0022600243",
+          "matchup": "ATL @ MIL",
+          "final": "113-106",
+          "our_spread_home": 10.0,
+          "spread_err": 3.0,
+          "our_total": 231.5,
+          "total_err": 12.5,
+          "source": "https://www.nba.com/game/atl-vs-mil-0022600243"
+        },
+        {
+          "game_id": "0022600244",
+          "matchup": "OKC @ SAC",
+          "final": "125-103",
+          "our_spread_home": 11.5,
+          "spread_err": 10.5,
+          "our_total": 223.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/okc-vs-sac-0022600244"
+        },
+        {
           "game_id": "0022600245",
           "matchup": "ORL @ BOS",
           "final": "115-105",
@@ -226,10 +257,10 @@
       ],
       "games_in_conflict": [],
       "gate_measurements": {
-        "settled_bets": 19,
-        "line_mae": 12.895,
+        "settled_bets": 22,
+        "line_mae": 12.432,
         "baseline_mae": null,
-        "brier": 0.267,
+        "brier": 0.2362,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -238,7 +269,7 @@
           "gate_id": "G-01",
           "name": "Sample size",
           "result": "BLOCKED",
-          "measured": "19 settled bets (need 300)",
+          "measured": "22 settled bets (need 300)",
           "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
         },
         {
@@ -312,17 +343,17 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PARTIAL \u2014 8 game(s) have no official final score",
-      "games_settled": 19,
+      "status": "PARTIAL \u2014 5 game(s) have no official final score",
+      "games_settled": 22,
       "games_expected": 27,
       "metrics": {
-        "n_settled": 19,
-        "missing_games": 8,
-        "spread_mae": 12.895,
-        "total_mae": 14.763,
+        "n_settled": 22,
+        "missing_games": 5,
+        "spread_mae": 12.432,
+        "total_mae": 15.432,
         "total_pushes": 1,
-        "brier": 0.267,
-        "log_loss": 0.7914,
+        "brier": 0.2362,
+        "log_loss": 0.7141,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -438,6 +469,36 @@
           "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
         },
         {
+          "game_id": "0022600242",
+          "matchup": "HOU @ WAS",
+          "final": "147-119",
+          "our_spread_home": 13.0,
+          "spread_err": 15.0,
+          "our_total": 224.0,
+          "total_err": 42.0,
+          "source": "https://www.nba.com/game/hou-vs-was-0022600242"
+        },
+        {
+          "game_id": "0022600243",
+          "matchup": "ATL @ MIL",
+          "final": "113-106",
+          "our_spread_home": 10.0,
+          "spread_err": 3.0,
+          "our_total": 231.5,
+          "total_err": 12.5,
+          "source": "https://www.nba.com/game/atl-vs-mil-0022600243"
+        },
+        {
+          "game_id": "0022600244",
+          "matchup": "OKC @ SAC",
+          "final": "125-103",
+          "our_spread_home": 11.5,
+          "spread_err": 10.5,
+          "our_total": 223.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/okc-vs-sac-0022600244"
+        },
+        {
           "game_id": "0022600245",
           "matchup": "ORL @ BOS",
           "final": "115-105",
@@ -520,10 +581,10 @@
       ],
       "games_in_conflict": [],
       "gate_measurements": {
-        "settled_bets": 19,
-        "line_mae": 12.895,
+        "settled_bets": 22,
+        "line_mae": 12.432,
         "baseline_mae": null,
-        "brier": 0.267,
+        "brier": 0.2362,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -532,7 +593,7 @@
           "gate_id": "G-01",
           "name": "Sample size",
           "result": "BLOCKED",
-          "measured": "19 settled bets (need 300)",
+          "measured": "22 settled bets (need 300)",
           "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
         },
         {

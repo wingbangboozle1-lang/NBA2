@@ -308,11 +308,11 @@
     34,
     31
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/hou-vs-was-0022600242",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600243",
@@ -347,11 +347,11 @@
     27,
     26
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/atl-vs-mil-0022600243",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600244",
@@ -386,11 +386,11 @@
     30,
     23
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/okc-vs-sac-0022600244",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600245",
@@ -425,7 +425,7 @@
     36,
     28
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/orl-vs-bos-0022600245",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
@@ -464,7 +464,7 @@
     31,
     38
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/chi-vs-cle-0022600246",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
@@ -503,7 +503,7 @@
     18,
     33
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/mem-vs-was-0022600247",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
@@ -542,7 +542,7 @@
     36,
     28
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/phi-vs-bkn-0022600248",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
@@ -569,19 +569,14 @@
    "winner_correct": false,
    "log_loss_model": 1.3314,
    "log_loss_coin": 0.6931,
-   "away_q": [
-    15,
-    31,
-    35,
-    29
-   ],
+   "away_q": null,
    "home_q": [
     29,
     33,
     39,
     27
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/hou-vs-mia-0022600249",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
@@ -620,7 +615,7 @@
     28,
     19
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/por-vs-min-0022600250",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
@@ -659,7 +654,7 @@
     32,
     22
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/gsw-vs-nop-0022600251",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
@@ -698,7 +693,7 @@
     29,
     23
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged)) = gamebook SCORE BY PERIOD final (read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, statsdmz gamebook PDF (per-call time not logged))",
    "official_source": "https://www.nba.com/game/phx-vs-den-0022600252",
    "feed_source": "data/raw/results/results_2026-11-16.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
@@ -850,22 +845,22 @@
    "game_id": "0022600242",
    "final_source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   },
   {
    "game_id": "0022600243",
    "final_source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   },
   {
    "game_id": "0022600244",
    "final_source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   }
  ],
  "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
  "derived_from": "data/v4/settlement/settled-all.json",
- "sha256_after_settlement": "2890d5a660afd46500eba6b3dc1d91747f0b38a74da29cdf0825291f1aaecd93"
+ "sha256_after_settlement": "4a9ffbb1760dd17b1f5d81868c7b725fe5f92329157c9e97ad76714a67d3f0c6"
 }
