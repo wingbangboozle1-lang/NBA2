@@ -45,6 +45,8 @@ class TestStaleness(unittest.TestCase):
         # check is kept: every row must match the fixture-plus-commended-finals reconstruction
         # exactly, and no row may be unexplained.
         self.assertEqual(self.st["match_fixture_plus_finals"], 30)
+        self.assertGreater(len(self.st["stale_rows"]) if "stale_rows" in self.st else 0, 0,
+                           "the fixture is older than the table, so rows must differ from it")
         self.assertEqual(self.st["n_unexplained"], 0)
         self.assertGreater(self.st["match_fixture_plus_finals"], self.st["match_pre_final_state"])
         self.assertGreater(self.st["n_stale"], 0)  # the 5 finals moved 10 rows past the fixture

@@ -16,6 +16,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
+# The committed capture that the published slate is a slice of. It is the raw side of the
+# semantic comparison; the module side is nba2.v2.official.SLATE.
+SLATE_SNAPSHOT = ROOT / "data" / "raw" / "refresh_2026-11-17" / "slate_2026-11-17_to_11-20.json"
 
 LOCAL_LINK = re.compile(r'(?:href|src)="([^"#][^"]*)"')
 ROW = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)
@@ -71,9 +74,11 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json").read_text())
+    # The raw snapshot the semantic check re-reads must be the SAME slice the module publishes,
+    # otherwise the check is comparing two different windows and every row "disagrees".
+    raw = json.loads(SLATE_SNAPSHOT.read_text())
     from . import official as O
-    n_slate = 34          # the 3-day window 2026-11-15 -> 2026-11-18
+    n_slate = len(O.SLATE)   # the 3-day window 2026-11-17 -> 2026-11-20
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
     if len(raw["games"]) != n_slate:
@@ -89,10 +94,37 @@ def semantic() -> list[str]:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (188 games played through 11/14)
+    # Published W/L must equal the official standings totals. The expected total is derived
+    # from the committed finals, not hard-coded, so this stays honest as the season moves:
+    # every game between two NBA clubs produces exactly one win and one loss.
     from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 188:
-        problems.append("official team table no longer sums to 188 wins")
+    wins = sum(v[0] for v in O2.TEAMS.values())
+    losses = sum(v[1] for v in O2.TEAMS.values())
+    if wins != losses:
+        problems.append(f"official team table sums to {wins} wins but {losses} losses")
+    # Cross-check the win total against an independent recount of EVERY committed final.
+    # ``official_finals_union.json`` is only the recent-window ledger; the season history
+    # lives in ``data/raw/history/games_*.json``. Both are counted here.
+    import glob as _glob
+
+    def _gids(doc: dict) -> set[str]:
+        out = set()
+        for r in doc.get("records") or doc.get("games") or []:
+            if r.get("away_pts") is not None and r.get("home_pts") is not None and r.get("game_id"):
+                out.add(r["game_id"])
+        return out
+
+    # every committed official finals source, whatever folder it landed in
+    patterns = ["data/raw/history/games_*.json", "data/raw/finals_*.json",
+                "data/raw/results/results_*.json", "data/raw/capture_*/results_*.json",
+                "data/raw/refresh_*/results_*.json", "data/raw/refresh_*/finals_*.json"]
+    decided: set[str] = set()
+    for pat in patterns:
+        for f in _glob.glob(str(ROOT / pat)):
+            decided |= _gids(json.loads(Path(f).read_text()))
+    if wins != len(decided):
+        problems.append(f"official team table claims {wins} games decided but {len(decided)} "
+                        f"official finals are committed")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

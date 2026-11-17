@@ -188,7 +188,12 @@ class TestLedgerHashes(unittest.TestCase):
         cls.doc = json.loads((root / "data" / "v2" / "ledger.json").read_text())
 
     def test_every_row_has_a_hash_and_a_status(self):
-        self.assertGreaterEqual(len(self.doc["rows"]), 34)
+        # One row per priced game: the count follows the published slate, and every slate game
+        # must appear. Asserting a fixed 34 made a resliced window look like a missing ledger.
+        from . import official as O
+        self.assertEqual(len(self.doc["rows"]), len(O.SLATE))
+        self.assertEqual({r["game_id"] for r in self.doc["rows"]},
+                         {g[4] for g in O.SLATE})
         for r in self.doc["rows"]:
             self.assertEqual(len(r["row_hash"]), 64)
             self.assertEqual(r["hash_alg"], "sha256")

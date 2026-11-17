@@ -1,11 +1,11 @@
 {
  "meta": {
-  "session": "arena/98b0eae9-nba2",
-  "generated": "2026-11-15",
-  "n_games": 188,
-  "n_scored": 172,
+  "session": "arena/45f14c5c-nba2",
+  "generated": "2026-11-17",
+  "n_games": 205,
+  "n_scored": 189,
   "first_date": "2026-10-23",
-  "last_date": "2026-11-14",
+  "last_date": "2026-11-16",
   "source": "data/raw/history/*.json \u2014 official finals, one nba.com/game URL per row",
   "shrink_pseudo_games": 8.0,
   "home_court_pts": 2.0,
@@ -15,36 +15,36 @@
  },
  "leakage": {
   "rule": "ratings for a date use only games with a strictly earlier date",
-  "n_predictions": 172,
+  "n_predictions": 189,
   "n_violations": 0,
   "offending_game_ids": [],
   "verdict": "no look-ahead detected"
  },
  "holdout": {
-  "n_train": 123,
-  "n_test": 49,
-  "train_dates": "2026-10-23 -> 2026-11-07",
-  "test_dates": "2026-11-08 -> 2026-11-14",
-  "in_sample_su_accuracy": 0.6341,
-  "out_of_sample_su_accuracy": 0.6735,
-  "out_of_sample_se": 0.0714,
-  "in_sample_mae": 12.217,
-  "out_of_sample_mae": 13.234,
+  "n_train": 130,
+  "n_test": 59,
+  "train_dates": "2026-10-23 -> 2026-11-08",
+  "test_dates": "2026-11-09 -> 2026-11-16",
+  "in_sample_su_accuracy": 0.6385,
+  "out_of_sample_su_accuracy": 0.678,
+  "out_of_sample_se": 0.0651,
+  "in_sample_mae": 12.238,
+  "out_of_sample_mae": 13.091,
   "verdict": "PASS",
-  "note": "in-sample 63.4% vs out-of-sample 67.3% (+/- 7.1% s.e.); MAE 12.22 -> 13.23. The signal holds out of sample."
+  "note": "in-sample 63.8% vs out-of-sample 67.8% (+/- 6.5% s.e.); MAE 12.24 -> 13.09. The signal holds out of sample."
  },
  "correlations": [
   {
    "quantity": "actual margin vs actual total",
    "what_it_is": "Pearson r between the final margin and the final combined score, over all 183 games.",
    "why_it_matters": "The raw same-game relationship. If it were large, a spread leg and a total leg could never be priced independently.",
-   "n": 172,
-   "r": 0.0044,
+   "n": 189,
+   "r": -0.0303,
    "ci95": [
-    -0.1454,
-    0.1539
+    -0.1723,
+    0.1129
    ],
-   "p_two_sided": 0.9545,
+   "p_two_sided": 0.678,
    "significant_at_5pct": false,
    "status": "MEASURED",
    "note": "not significant at this sample size"
@@ -53,13 +53,13 @@
    "quantity": "residual margin vs residual total",
    "what_it_is": "Pearson r between (actual margin - our predicted margin) and (actual total - our predicted total). This isolates the co-movement the model did not already price in.",
    "why_it_matters": "This is the number a same-game parlay needs: it is the correlation of the two legs' errors, so it is what turns a product of probabilities into a joint probability.",
-   "n": 172,
-   "r": 0.0165,
+   "n": 189,
+   "r": -0.0203,
    "ci95": [
-    -0.1335,
-    0.1657
+    -0.1625,
+    0.1228
    ],
-   "p_two_sided": 0.8295,
+   "p_two_sided": 0.7817,
    "significant_at_5pct": false,
    "status": "MEASURED",
    "note": "not significant at this sample size"
@@ -68,13 +68,13 @@
    "quantity": "phi: home-beats-our-number AND game-goes-over-our-number",
    "what_it_is": "Phi coefficient between the two binary legs priced against our own numbers (home covers our margin, and the total beats our total).",
    "why_it_matters": "Directly multiplies into a two-leg price. At rho = 0 a 0.50 x 0.50 parlay is 25.0%; the measured value says what it actually is.",
-   "n": 172,
-   "r": 0.0679,
+   "n": 189,
+   "r": 0.0667,
    "ci95": [
-    -0.0826,
-    0.2153
+    -0.0768,
+    0.2074
    ],
-   "p_two_sided": 0.3749,
+   "p_two_sided": 0.3609,
    "significant_at_5pct": false,
    "status": "MEASURED",
    "note": "not significant at this sample size"
@@ -83,13 +83,13 @@
    "quantity": "residual margin, game A vs game B on the same date",
    "what_it_is": "Pearson r between the margin residuals of every pair of games sharing a date.",
    "why_it_matters": "Cross-game parlays assume legs are independent. This is the test of that assumption on our own residuals.",
-   "n": 713,
-   "r": -0.0117,
+   "n": 777,
+   "r": -0.0217,
    "ci95": [
-    -0.0851,
-    0.0617
+    -0.0919,
+    0.0487
    ],
-   "p_two_sided": 0.7541,
+   "p_two_sided": 0.5453,
    "significant_at_5pct": false,
    "status": "MEASURED",
    "note": "not significant at this sample size"
@@ -137,7 +137,7 @@
    "name": "Source class",
    "requirement": "Every input field resolves to an official NBA page or the official injury PDF.",
    "verdict": "PASS",
-   "measured": "30 teams + 172 finals, each carrying an nba.com URL",
+   "measured": "30 teams + 189 finals, each carrying an nba.com URL",
    "src": "https://www.nba.com/standings"
   },
   {
@@ -161,7 +161,7 @@
    "name": "Estimator agreement",
    "requirement": "Two independent ratings (net points per game; NetRtg per 100 possessions) must imply spreads within 2.0 points.",
    "verdict": "PASS",
-   "measured": "largest disagreement across 30 teams: 0.66 pts (threshold 2.00)",
+   "measured": "largest disagreement across 30 teams: 0.67 pts (threshold 2.00)",
    "src": "https://www.nba.com/stats/teams/advanced"
   },
   {
@@ -169,7 +169,7 @@
    "name": "Total-estimator agreement",
    "requirement": "The points-based total and the independent pace x efficiency total must stay within 6.0 points.",
    "verdict": "PASS",
-   "measured": "largest gap across the 34-game slate: 4.56 pts (threshold 6.00)",
+   "measured": "largest gap across the 30-game slate: 4.35 pts (threshold 6.00)",
    "src": "https://www.nba.com/stats/teams/traditional"
   },
   {
@@ -185,7 +185,7 @@
    "name": "Backtest with settlement",
    "requirement": "At least 300 settled bets of the strategy's own signals.",
    "verdict": "FAIL",
-   "measured": "largest settled sample: 172 bets (threshold 300)",
+   "measured": "largest settled sample: 189 bets (threshold 300)",
    "src": "https://www.nba.com/games?date=2026-11-13"
   },
   {
@@ -193,7 +193,7 @@
    "name": "Out-of-sample holdout",
    "requirement": "Signals must hold on the last 30% of game-dates, having been built only on the earlier ones.",
    "verdict": "PASS",
-   "measured": "in-sample 63.4% vs out-of-sample 67.3% (+/- 7.1% s.e.); MAE 12.22 -> 13.23. The signal holds out of sample.",
+   "measured": "in-sample 63.8% vs out-of-sample 67.8% (+/- 6.5% s.e.); MAE 12.24 -> 13.09. The signal holds out of sample.",
    "src": "https://www.nba.com/games?date=2026-11-13"
   },
   {
@@ -209,7 +209,7 @@
    "name": "Correlation honesty",
    "requirement": "No parlay may be priced by multiplying legs unless the leg correlation is measured or bounded.",
    "verdict": "PASS",
-   "measured": "same-game rho measured at +0.0679 (95% CI (-0.0826, 0.2153))",
+   "measured": "same-game rho measured at +0.0667 (95% CI (-0.0768, 0.2074))",
    "src": "https://www.nba.com/games?date=2026-11-13"
   },
   {
@@ -217,7 +217,7 @@
    "name": "Freshness",
    "requirement": "Inputs must be dated within 24h of the slate and the injury report within its filing window.",
    "verdict": "PASS",
-   "measured": "snapshot dated 2026-11-15; window 2026-11-15 -> 2026-11-18",
+   "measured": "snapshot dated 2026-11-17; window 2026-11-17 -> 2026-11-20",
    "src": "https://official.nba.com/nba-injury-report-2026-27-season/"
   },
   {
@@ -225,214 +225,190 @@
    "name": "No look-ahead",
    "requirement": "No input timestamped after the decision time may enter that decision.",
    "verdict": "PASS",
-   "measured": "0 violations across 172 predictions",
+   "measured": "0 violations across 189 predictions",
    "src": "https://www.nba.com/games?date=2026-11-13"
   }
  ],
  "gate_g5_total_estimators": [
   {
-   "matchup": "IND @ PHI",
-   "points_estimator": 222.5,
-   "possessions_estimator": 222.47,
-   "gap": 0.03
-  },
-  {
-   "matchup": "LAL @ PHX",
-   "points_estimator": 232.1,
-   "possessions_estimator": 232.08,
-   "gap": 0.02
-  },
-  {
-   "matchup": "CHA @ LAC",
-   "points_estimator": 219.0,
-   "possessions_estimator": 217.86,
-   "gap": 1.14
-  },
-  {
-   "matchup": "SAS @ UTA",
-   "points_estimator": 225.9,
-   "possessions_estimator": 223.17,
-   "gap": 2.73
-  },
-  {
-   "matchup": "DAL @ BOS",
-   "points_estimator": 222.05,
-   "possessions_estimator": 221.11,
-   "gap": 0.94
-  },
-  {
    "matchup": "NYK @ TOR",
    "points_estimator": 220.25,
-   "possessions_estimator": 220.14,
-   "gap": 0.11
-  },
-  {
-   "matchup": "HOU @ WAS",
-   "points_estimator": 224.7,
-   "possessions_estimator": 222.91,
-   "gap": 1.79
-  },
-  {
-   "matchup": "ATL @ MIL",
-   "points_estimator": 230.7,
-   "possessions_estimator": 229.8,
-   "gap": 0.9
-  },
-  {
-   "matchup": "OKC @ SAC",
-   "points_estimator": 223.85,
-   "possessions_estimator": 223.78,
-   "gap": 0.07
-  },
-  {
-   "matchup": "ORL @ BOS",
-   "points_estimator": 219.2,
-   "possessions_estimator": 217.31,
-   "gap": 1.89
-  },
-  {
-   "matchup": "CHI @ CLE",
-   "points_estimator": 236.95,
-   "possessions_estimator": 235.08,
-   "gap": 1.87
-  },
-  {
-   "matchup": "MEM @ WAS",
-   "points_estimator": 229.05,
-   "possessions_estimator": 226.3,
-   "gap": 2.75
-  },
-  {
-   "matchup": "PHI @ BKN",
-   "points_estimator": 223.6,
-   "possessions_estimator": 222.6,
-   "gap": 1.0
-  },
-  {
-   "matchup": "HOU @ MIA",
-   "points_estimator": 231.05,
-   "possessions_estimator": 230.1,
-   "gap": 0.95
+   "possessions_estimator": 218.49,
+   "gap": 1.76
   },
   {
    "matchup": "POR @ MIN",
-   "points_estimator": 228.25,
-   "possessions_estimator": 227.38,
-   "gap": 0.87
-  },
-  {
-   "matchup": "GSW @ NOP",
-   "points_estimator": 234.95,
-   "possessions_estimator": 231.41,
-   "gap": 3.54
-  },
-  {
-   "matchup": "PHX @ DEN",
-   "points_estimator": 227.6,
-   "possessions_estimator": 226.57,
-   "gap": 1.03
-  },
-  {
-   "matchup": "NYK @ TOR",
-   "points_estimator": 220.25,
-   "possessions_estimator": 220.14,
-   "gap": 0.11
-  },
-  {
-   "matchup": "POR @ MIN",
-   "points_estimator": 228.25,
-   "possessions_estimator": 227.38,
-   "gap": 0.87
+   "points_estimator": 226.4,
+   "possessions_estimator": 225.63,
+   "gap": 0.77
   },
   {
    "matchup": "DET @ SAS",
-   "points_estimator": 225.8,
-   "possessions_estimator": 222.97,
-   "gap": 2.83
+   "points_estimator": 225.3,
+   "possessions_estimator": 222.59,
+   "gap": 2.71
   },
   {
    "matchup": "UTA @ LAC",
-   "points_estimator": 227.95,
-   "possessions_estimator": 225.13,
-   "gap": 2.82
+   "points_estimator": 226.95,
+   "possessions_estimator": 224.3,
+   "gap": 2.65
   },
   {
    "matchup": "CHA @ LAL",
-   "points_estimator": 222.3,
-   "possessions_estimator": 222.09,
-   "gap": 0.21
+   "points_estimator": 223.3,
+   "possessions_estimator": 223.04,
+   "gap": 0.26
   },
   {
    "matchup": "MEM @ CLE",
-   "points_estimator": 232.85,
-   "possessions_estimator": 231.06,
-   "gap": 1.79
+   "points_estimator": 233.95,
+   "possessions_estimator": 232.3,
+   "gap": 1.65
   },
   {
    "matchup": "HOU @ IND",
-   "points_estimator": 224.0,
-   "possessions_estimator": 224.04,
-   "gap": -0.04
+   "points_estimator": 226.95,
+   "possessions_estimator": 227.07,
+   "gap": -0.12
   },
   {
    "matchup": "MIL @ MIA",
-   "points_estimator": 232.45,
-   "possessions_estimator": 231.5,
-   "gap": 0.95
+   "points_estimator": 232.15,
+   "possessions_estimator": 231.26,
+   "gap": 0.89
   },
   {
    "matchup": "PHI @ ORL",
-   "points_estimator": 220.85,
-   "possessions_estimator": 219.88,
-   "gap": 0.97
+   "points_estimator": 223.2,
+   "possessions_estimator": 222.28,
+   "gap": 0.92
   },
   {
    "matchup": "CHI @ BKN",
-   "points_estimator": 233.55,
-   "possessions_estimator": 231.49,
-   "gap": 2.06
+   "points_estimator": 234.75,
+   "possessions_estimator": 232.9,
+   "gap": 1.85
   },
   {
    "matchup": "WAS @ TOR",
-   "points_estimator": 226.4,
-   "possessions_estimator": 224.6,
-   "gap": 1.8
+   "points_estimator": 228.55,
+   "possessions_estimator": 226.04,
+   "gap": 2.51
   },
   {
    "matchup": "DET @ NOP",
-   "points_estimator": 233.35,
-   "possessions_estimator": 228.79,
-   "gap": 4.56
+   "points_estimator": 232.3,
+   "possessions_estimator": 227.95,
+   "gap": 4.35
   },
   {
    "matchup": "ATL @ OKC",
-   "points_estimator": 226.8,
-   "possessions_estimator": 225.83,
-   "gap": 0.97
+   "points_estimator": 226.55,
+   "possessions_estimator": 225.65,
+   "gap": 0.9
   },
   {
    "matchup": "GSW @ DAL",
-   "points_estimator": 227.95,
-   "possessions_estimator": 227.08,
+   "points_estimator": 227.2,
+   "possessions_estimator": 226.33,
    "gap": 0.87
   },
   {
    "matchup": "BOS @ DEN",
-   "points_estimator": 222.35,
-   "possessions_estimator": 220.37,
-   "gap": 1.98
+   "points_estimator": 222.55,
+   "possessions_estimator": 220.78,
+   "gap": 1.77
   },
   {
    "matchup": "UTA @ LAL",
-   "points_estimator": 231.25,
-   "possessions_estimator": 229.44,
-   "gap": 1.81
+   "points_estimator": 231.4,
+   "possessions_estimator": 229.68,
+   "gap": 1.72
   },
   {
    "matchup": "PHX @ SAC",
-   "points_estimator": 228.45,
-   "possessions_estimator": 228.47,
-   "gap": -0.02
+   "points_estimator": 229.2,
+   "possessions_estimator": 229.25,
+   "gap": -0.05
+  },
+  {
+   "matchup": "GSW @ MEM",
+   "points_estimator": 230.85,
+   "possessions_estimator": 229.12,
+   "gap": 1.73
+  },
+  {
+   "matchup": "POR @ MIL",
+   "points_estimator": 227.55,
+   "possessions_estimator": 227.55,
+   "gap": -0.0
+  },
+  {
+   "matchup": "NYK @ MIN",
+   "points_estimator": 218.7,
+   "possessions_estimator": 217.15,
+   "gap": 1.55
+  },
+  {
+   "matchup": "LAC @ SAS",
+   "points_estimator": 226.75,
+   "possessions_estimator": 224.92,
+   "gap": 1.83
+  },
+  {
+   "matchup": "CHA @ ATL",
+   "points_estimator": 221.4,
+   "possessions_estimator": 220.37,
+   "gap": 1.03
+  },
+  {
+   "matchup": "ORL @ BKN",
+   "points_estimator": 225.0,
+   "possessions_estimator": 223.2,
+   "gap": 1.8
+  },
+  {
+   "matchup": "IND @ CLE",
+   "points_estimator": 230.25,
+   "possessions_estimator": 229.46,
+   "gap": 0.79
+  },
+  {
+   "matchup": "TOR @ DET",
+   "points_estimator": 226.25,
+   "possessions_estimator": 223.46,
+   "gap": 2.79
+  },
+  {
+   "matchup": "WAS @ CHI",
+   "points_estimator": 235.5,
+   "possessions_estimator": 232.96,
+   "gap": 2.54
+  },
+  {
+   "matchup": "NOP @ OKC",
+   "points_estimator": 228.95,
+   "possessions_estimator": 226.45,
+   "gap": 2.5
+  },
+  {
+   "matchup": "PHX @ UTA",
+   "points_estimator": 227.25,
+   "possessions_estimator": 225.63,
+   "gap": 1.62
+  },
+  {
+   "matchup": "HOU @ DEN",
+   "points_estimator": 227.15,
+   "possessions_estimator": 226.23,
+   "gap": 0.92
+  },
+  {
+   "matchup": "SAC @ LAL",
+   "points_estimator": 233.35,
+   "possessions_estimator": 233.34,
+   "gap": 0.01
   }
  ],
  "strategies": [
@@ -441,126 +417,126 @@
    "name": "Model side (moneyline, all games)",
    "kind": "single bet",
    "rule": "Back the team our originated margin favours, priced at p = Phi(pred_margin / sigma_m).",
-   "n": 172,
-   "wins": 111,
-   "hit_rate": 0.6453,
+   "n": 189,
+   "wins": 123,
+   "hit_rate": 0.6508,
    "wilson95": [
-    0.5714,
-    0.713
+    0.5804,
+    0.7151
    ],
    "base_rate": 0.5,
    "base_rate_meaning": "coin flip",
-   "p_vs_base": 0.0002,
-   "log_loss": 0.6554,
-   "brier": 0.2313,
-   "auroc": 0.5922,
-   "mean_p": 0.5656,
-   "calibration_gap": -0.0797
+   "p_vs_base": 0.0,
+   "log_loss": 0.6537,
+   "brier": 0.2305,
+   "auroc": 0.5941,
+   "mean_p": 0.5674,
+   "calibration_gap": -0.0834
   },
   {
    "sid": "S2",
    "name": "Model total vs league average",
    "kind": "single bet",
-   "rule": "Take the over when our originated total clears the league-average total (227.6), priced at Phi((pred_total - ref) / sigma_t).",
-   "n": 172,
-   "wins": 101,
-   "hit_rate": 0.5872,
+   "rule": "Take the over when our originated total clears the league-average total (227.5), priced at Phi((pred_total - ref) / sigma_t).",
+   "n": 189,
+   "wins": 110,
+   "hit_rate": 0.582,
    "wilson95": [
-    0.5125,
-    0.6581
+    0.5107,
+    0.65
    ],
    "base_rate": 0.5,
    "base_rate_meaning": "coin flip",
-   "p_vs_base": 0.0267,
-   "log_loss": 0.6789,
-   "brier": 0.2429,
-   "auroc": 0.5391,
-   "mean_p": 0.5471,
-   "calibration_gap": -0.0401
+   "p_vs_base": 0.0288,
+   "log_loss": 0.6776,
+   "brier": 0.2423,
+   "auroc": 0.5552,
+   "mean_p": 0.5482,
+   "calibration_gap": -0.0338
   },
   {
    "sid": "S3",
    "name": "Model side, |margin| >= 5 pts",
    "kind": "single bet",
    "rule": "S1 restricted to games where the two ratings disagree by at least 5 points, i.e. where the signal is loudest.",
-   "n": 23,
-   "wins": 17,
-   "hit_rate": 0.7391,
+   "n": 27,
+   "wins": 20,
+   "hit_rate": 0.7407,
    "wilson95": [
-    0.5353,
-    0.8745
+    0.5532,
+    0.8683
    ],
    "base_rate": 0.5,
    "base_rate_meaning": "coin flip",
-   "p_vs_base": 0.0347,
-   "log_loss": 0.5988,
-   "brier": 0.2035,
-   "auroc": 0.4314,
-   "mean_p": 0.6569,
-   "calibration_gap": -0.0822
+   "p_vs_base": 0.0192,
+   "log_loss": 0.602,
+   "brier": 0.205,
+   "auroc": 0.3643,
+   "mean_p": 0.6562,
+   "calibration_gap": -0.0845
   },
   {
    "sid": "S4",
    "name": "Road side when model fades home by 3+",
    "kind": "single bet",
    "rule": "Back the road team only when our number makes the home team an underdog of 3 points or more. Tests whether the market's home bias is a real edge or a story.",
-   "n": 7,
-   "wins": 7,
+   "n": 9,
+   "wins": 9,
    "hit_rate": 1.0,
    "wilson95": [
-    0.6457,
+    0.7008,
     1.0
    ],
    "base_rate": 0.5,
    "base_rate_meaning": "coin flip",
-   "p_vs_base": 0.0156,
-   "log_loss": 0.5118,
-   "brier": 0.1606,
+   "p_vs_base": 0.0039,
+   "log_loss": 0.5085,
+   "brier": 0.1591,
    "auroc": null,
-   "mean_p": 0.5998,
-   "calibration_gap": -0.4002
+   "mean_p": 0.6018,
+   "calibration_gap": -0.3982
   },
   {
    "sid": "S5",
    "name": "Same-game parlay: side + total",
    "kind": "parlay",
    "rule": "In every game take our side and our total as a two-leg parlay. Priced with the measured same-game correlation, not with a product of marginals.",
-   "n": 172,
-   "wins": 68,
-   "hit_rate": 0.3953,
+   "n": 189,
+   "wins": 74,
+   "hit_rate": 0.3915,
    "wilson95": [
-    0.3253,
-    0.4699
+    0.3248,
+    0.4626
    ],
-   "base_rate": 0.3198,
+   "base_rate": 0.3213,
    "base_rate_meaning": "the joint probability this strategy printed",
-   "p_vs_base": 0.0406,
-   "log_loss": 0.6792,
-   "brier": 0.2426,
-   "auroc": 0.5667,
-   "mean_p": 0.3198,
-   "calibration_gap": -0.0755
+   "p_vs_base": 0.0427,
+   "log_loss": 0.6743,
+   "brier": 0.2404,
+   "auroc": 0.5791,
+   "mean_p": 0.3213,
+   "calibration_gap": -0.0703
   },
   {
    "sid": "S6",
    "name": "Cross-game parlay: two model sides",
    "kind": "parlay",
    "rule": "Pair the two loudest side signals on a date into one two-leg parlay, priced as a product. Tests the independence assumption directly.",
-   "n": 22,
-   "wins": 12,
-   "hit_rate": 0.5455,
+   "n": 24,
+   "wins": 13,
+   "hit_rate": 0.5417,
    "wilson95": [
-    0.3466,
-    0.7308
+    0.3507,
+    0.7211
    ],
-   "base_rate": 0.3854,
+   "base_rate": 0.3888,
    "base_rate_meaning": "the joint probability this strategy printed",
-   "p_vs_base": 0.1303,
-   "log_loss": 0.743,
+   "p_vs_base": 0.1439,
+   "log_loss": 0.7428,
    "brier": 0.2744,
-   "auroc": 0.55,
-   "mean_p": 0.3854,
-   "calibration_gap": -0.1601
+   "auroc": 0.5035,
+   "mean_p": 0.3888,
+   "calibration_gap": -0.1528
   },
   {
    "sid": "S7",
@@ -576,132 +552,132 @@
     "sid": "S1",
     "name": "Model side (moneyline, all games)",
     "kind": "single bet",
-    "n": 172,
-    "wins": 111,
-    "hit_rate": 0.6453,
+    "n": 189,
+    "wins": 123,
+    "hit_rate": 0.6508,
     "wilson95": [
-     0.5714,
-     0.713
+     0.5804,
+     0.7151
     ],
     "base_rate": 0.5,
     "base_rate_meaning": "coin flip",
-    "p_vs_base": 0.0002,
+    "p_vs_base": 0.0,
     "interval_contains_base": false,
-    "games_to_prove_at_this_rate": 46,
-    "log_loss": 0.6554,
-    "brier": 0.2313,
-    "mean_stated_probability": 0.5656,
-    "calibration_gap": -0.0797,
+    "games_to_prove_at_this_rate": 43,
+    "log_loss": 0.6537,
+    "brier": 0.2305,
+    "mean_stated_probability": 0.5674,
+    "calibration_gap": -0.0834,
     "verdict": "DISTINGUISHABLE FROM CHANCE"
    },
    {
     "sid": "S2",
     "name": "Model total vs league average",
     "kind": "single bet",
-    "n": 172,
-    "wins": 101,
-    "hit_rate": 0.5872,
+    "n": 189,
+    "wins": 110,
+    "hit_rate": 0.582,
     "wilson95": [
-     0.5125,
-     0.6581
+     0.5107,
+     0.65
     ],
     "base_rate": 0.5,
     "base_rate_meaning": "coin flip",
-    "p_vs_base": 0.0267,
+    "p_vs_base": 0.0288,
     "interval_contains_base": false,
-    "games_to_prove_at_this_rate": 127,
-    "log_loss": 0.6789,
-    "brier": 0.2429,
-    "mean_stated_probability": 0.5471,
-    "calibration_gap": -0.0401,
+    "games_to_prove_at_this_rate": 143,
+    "log_loss": 0.6776,
+    "brier": 0.2423,
+    "mean_stated_probability": 0.5482,
+    "calibration_gap": -0.0338,
     "verdict": "DISTINGUISHABLE FROM CHANCE"
    },
    {
     "sid": "S3",
     "name": "Model side, |margin| >= 5 pts",
     "kind": "single bet",
-    "n": 23,
-    "wins": 17,
-    "hit_rate": 0.7391,
+    "n": 27,
+    "wins": 20,
+    "hit_rate": 0.7407,
     "wilson95": [
-     0.5353,
-     0.8745
+     0.5532,
+     0.8683
     ],
     "base_rate": 0.5,
     "base_rate_meaning": "coin flip",
-    "p_vs_base": 0.0347,
+    "p_vs_base": 0.0192,
     "interval_contains_base": false,
     "games_to_prove_at_this_rate": 17,
-    "log_loss": 0.5988,
-    "brier": 0.2035,
-    "mean_stated_probability": 0.6569,
-    "calibration_gap": -0.0822,
+    "log_loss": 0.602,
+    "brier": 0.205,
+    "mean_stated_probability": 0.6562,
+    "calibration_gap": -0.0845,
     "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
    },
    {
     "sid": "S4",
     "name": "Road side when model fades home by 3+",
     "kind": "single bet",
-    "n": 7,
-    "wins": 7,
+    "n": 9,
+    "wins": 9,
     "hit_rate": 1.0,
     "wilson95": [
-     0.6457,
+     0.7008,
      1.0
     ],
     "base_rate": 0.5,
     "base_rate_meaning": "coin flip",
-    "p_vs_base": 0.0156,
+    "p_vs_base": 0.0039,
     "interval_contains_base": false,
     "games_to_prove_at_this_rate": 4,
-    "log_loss": 0.5118,
-    "brier": 0.1606,
-    "mean_stated_probability": 0.5998,
-    "calibration_gap": -0.4002,
+    "log_loss": 0.5085,
+    "brier": 0.1591,
+    "mean_stated_probability": 0.6018,
+    "calibration_gap": -0.3982,
     "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
    },
    {
     "sid": "S5",
     "name": "Same-game parlay: side + total",
     "kind": "parlay",
-    "n": 172,
-    "wins": 68,
-    "hit_rate": 0.3953,
+    "n": 189,
+    "wins": 74,
+    "hit_rate": 0.3915,
     "wilson95": [
-     0.3253,
-     0.4699
+     0.3248,
+     0.4626
     ],
-    "base_rate": 0.3198,
+    "base_rate": 0.3213,
     "base_rate_meaning": "the joint probability this strategy printed",
-    "p_vs_base": 0.0406,
+    "p_vs_base": 0.0427,
     "interval_contains_base": false,
-    "games_to_prove_at_this_rate": 169,
-    "log_loss": 0.6792,
-    "brier": 0.2426,
-    "mean_stated_probability": 0.3198,
-    "calibration_gap": -0.0755,
+    "games_to_prove_at_this_rate": 195,
+    "log_loss": 0.6743,
+    "brier": 0.2404,
+    "mean_stated_probability": 0.3213,
+    "calibration_gap": -0.0703,
     "verdict": "DISTINGUISHABLE FROM CHANCE"
    },
    {
     "sid": "S6",
     "name": "Cross-game parlay: two model sides",
     "kind": "parlay",
-    "n": 22,
-    "wins": 12,
-    "hit_rate": 0.5455,
+    "n": 24,
+    "wins": 13,
+    "hit_rate": 0.5417,
     "wilson95": [
-     0.3466,
-     0.7308
+     0.3507,
+     0.7211
     ],
-    "base_rate": 0.3854,
+    "base_rate": 0.3888,
     "base_rate_meaning": "the joint probability this strategy printed",
-    "p_vs_base": 0.1303,
+    "p_vs_base": 0.1439,
     "interval_contains_base": true,
-    "games_to_prove_at_this_rate": 38,
-    "log_loss": 0.743,
+    "games_to_prove_at_this_rate": 42,
+    "log_loss": 0.7428,
     "brier": 0.2744,
-    "mean_stated_probability": 0.3854,
-    "calibration_gap": -0.1601,
+    "mean_stated_probability": 0.3888,
+    "calibration_gap": -0.1528,
     "verdict": "SAMPLE TOO SMALL TO CALL \u2014 p is significant but the estimate is not"
    },
    {
@@ -716,45 +692,45 @@
   "seed": 20261114
  },
  "baselines": {
-  "scored_games": 172,
+  "scored_games": 189,
   "baselines": [
    {
     "baseline": "always back the home team",
-    "n": 172,
-    "hits": 89,
+    "n": 189,
+    "hits": 96,
     "ties_skipped": 0,
-    "hit_rate": 0.5174,
+    "hit_rate": 0.5079,
     "wilson95": [
-     0.4432,
-     0.5909
+     0.4372,
+     0.5783
     ],
-    "p_vs_coinflip": 0.7031,
+    "p_vs_coinflip": 0.8844,
     "note": "the home-court prior, nothing else"
    },
    {
     "baseline": "back the better prior win percentage",
-    "n": 153,
-    "hits": 106,
+    "n": 170,
+    "hits": 117,
     "ties_skipped": 19,
-    "hit_rate": 0.6928,
+    "hit_rate": 0.6882,
     "wilson95": [
-     0.6157,
-     0.7604
+     0.6151,
+     0.7531
     ],
     "p_vs_coinflip": 0.0,
     "note": "ties in prior W-L are skipped, not guessed"
    },
    {
     "baseline": "back the better prior average point differential",
-    "n": 169,
-    "hits": 106,
+    "n": 186,
+    "hits": 119,
     "ties_skipped": 3,
-    "hit_rate": 0.6272,
+    "hit_rate": 0.6398,
     "wilson95": [
-     0.5522,
-     0.6965
+     0.5686,
+     0.7053
     ],
-    "p_vs_coinflip": 0.0012,
+    "p_vs_coinflip": 0.0002,
     "note": "a scoring-margin prior, the strongest of the three"
    }
   ],
@@ -1962,6 +1938,125 @@
     "matchup": "CHI @ MIN",
     "actual_margin": -11,
     "source_url": "https://www.nba.com/game/chi-vs-min-0022600235"
+   },
+   {
+    "game_id": "0022600236",
+    "date": "2026-11-15",
+    "matchup": "IND @ PHI",
+    "actual_margin": 7,
+    "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236"
+   },
+   {
+    "game_id": "0022600237",
+    "date": "2026-11-15",
+    "matchup": "LAL @ PHX",
+    "actual_margin": -8,
+    "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237"
+   },
+   {
+    "game_id": "0022600238",
+    "date": "2026-11-15",
+    "matchup": "CHA @ LAC",
+    "actual_margin": 8,
+    "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238"
+   },
+   {
+    "game_id": "0022600239",
+    "date": "2026-11-15",
+    "matchup": "SAS @ UTA",
+    "actual_margin": -8,
+    "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239"
+   },
+   {
+    "game_id": "0022600240",
+    "date": "2026-11-15",
+    "matchup": "DAL @ BOS",
+    "actual_margin": 37,
+    "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240"
+   },
+   {
+    "game_id": "0022600241",
+    "date": "2026-11-15",
+    "matchup": "NYK @ TOR",
+    "actual_margin": -4,
+    "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+   },
+   {
+    "game_id": "0022600242",
+    "date": "2026-11-15",
+    "matchup": "HOU @ WAS",
+    "actual_margin": -28,
+    "source_url": "https://www.nba.com/game/hou-vs-was-0022600242"
+   },
+   {
+    "game_id": "0022600243",
+    "date": "2026-11-15",
+    "matchup": "ATL @ MIL",
+    "actual_margin": -7,
+    "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243"
+   },
+   {
+    "game_id": "0022600244",
+    "date": "2026-11-15",
+    "matchup": "OKC @ SAC",
+    "actual_margin": -22,
+    "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244"
+   },
+   {
+    "game_id": "0022600245",
+    "date": "2026-11-16",
+    "matchup": "ORL @ BOS",
+    "actual_margin": -10,
+    "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
+   },
+   {
+    "game_id": "0022600246",
+    "date": "2026-11-16",
+    "matchup": "CHI @ CLE",
+    "actual_margin": 11,
+    "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
+   },
+   {
+    "game_id": "0022600247",
+    "date": "2026-11-16",
+    "matchup": "MEM @ WAS",
+    "actual_margin": -16,
+    "source_url": "https://www.nba.com/game/mem-vs-was-0022600247"
+   },
+   {
+    "game_id": "0022600248",
+    "date": "2026-11-16",
+    "matchup": "PHI @ BKN",
+    "actual_margin": -12,
+    "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+   },
+   {
+    "game_id": "0022600249",
+    "date": "2026-11-16",
+    "matchup": "HOU @ MIA",
+    "actual_margin": 18,
+    "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
+   },
+   {
+    "game_id": "0022600250",
+    "date": "2026-11-16",
+    "matchup": "POR @ MIN",
+    "actual_margin": 8,
+    "source_url": "https://www.nba.com/game/por-vs-min-0022600250"
+   },
+   {
+    "game_id": "0022600251",
+    "date": "2026-11-16",
+    "matchup": "GSW @ NOP",
+    "actual_margin": 21,
+    "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+   },
+   {
+    "game_id": "0022600252",
+    "date": "2026-11-16",
+    "matchup": "PHX @ DEN",
+    "actual_margin": -12,
+    "source_url": "https://www.nba.com/game/phx-vs-den-0022600252"
    }
   ]
  },
@@ -1970,24 +2065,24 @@
   "note": "A paired comparison needs the same games scored by both rules. The lab's S1 scores every game; the baselines skip ties, so the paired set is the intersection and both sides of the pairing are published with it.",
   "headline_vs_win_pct_baseline": {
    "baseline": "back the better prior win percentage",
-   "baseline_hit_rate": 0.6928,
-   "baseline_n": 153,
-   "model_hit_rate_same_games": 0.6453,
-   "model_n": 172,
-   "discordant_games": 34,
-   "model_won_those": 14,
-   "baseline_won_those": 20,
-   "mcnemar_exact_p": 0.3915,
+   "baseline_hit_rate": 0.6882,
+   "baseline_n": 170,
+   "model_hit_rate_same_games": 0.6508,
+   "model_n": 189,
+   "discordant_games": 37,
+   "model_won_those": 16,
+   "baseline_won_those": 21,
+   "mcnemar_exact_p": 0.5114,
    "verdict": "the model's accuracy is not distinguishable from the favourite prior on the games where they disagree"
   },
   "headline_vs_margin_baseline": {
    "baseline": "back the better prior average point differential",
-   "baseline_hit_rate": 0.6272,
-   "baseline_n": 169,
-   "discordant_games": 42,
+   "baseline_hit_rate": 0.6398,
+   "baseline_n": 186,
+   "discordant_games": 43,
    "model_won_those": 23,
-   "baseline_won_those": 19,
-   "mcnemar_exact_p": 0.644,
+   "baseline_won_those": 20,
+   "mcnemar_exact_p": 0.7608,
    "verdict": "the model's accuracy is not distinguishable from the scoring-margin prior on the games where they disagree"
   },
   "why_this_matters": "S1 backs the side its own ratings favour, and its ratings are built from the same results a reader can see. So the honest question is not 'is 64.7% better than 50%' - of course it is, favourites win - but 'is it better than simply backing the favourite'. The discordant-game test answers that, and it needs far fewer games than the 300-bet bar because only the disagreements carry information."
@@ -2004,12 +2099,12 @@
     "sid": "S4",
     "name": "Road side when model fades home by 3+",
     "kind": "single bet",
-    "n": 7,
+    "n": 9,
     "hit_rate": 1.0,
-    "log_loss": 0.5118,
-    "brier": 0.1606,
+    "log_loss": 0.5085,
+    "brier": 0.1591,
     "auroc": null,
-    "calibration_gap": -0.4002,
+    "calibration_gap": -0.3982,
     "rank_by_log_loss": 1,
     "eligible_for_reward": false,
     "blocked_by": "G6,G7"
@@ -2018,12 +2113,12 @@
     "sid": "S3",
     "name": "Model side, |margin| >= 5 pts",
     "kind": "single bet",
-    "n": 23,
-    "hit_rate": 0.7391,
-    "log_loss": 0.5988,
-    "brier": 0.2035,
-    "auroc": 0.4314,
-    "calibration_gap": -0.0822,
+    "n": 27,
+    "hit_rate": 0.7407,
+    "log_loss": 0.602,
+    "brier": 0.205,
+    "auroc": 0.3643,
+    "calibration_gap": -0.0845,
     "rank_by_log_loss": 2,
     "eligible_for_reward": false,
     "blocked_by": "G6,G7"
@@ -2032,27 +2127,13 @@
     "sid": "S1",
     "name": "Model side (moneyline, all games)",
     "kind": "single bet",
-    "n": 172,
-    "hit_rate": 0.6453,
-    "log_loss": 0.6554,
-    "brier": 0.2313,
-    "auroc": 0.5922,
-    "calibration_gap": -0.0797,
+    "n": 189,
+    "hit_rate": 0.6508,
+    "log_loss": 0.6537,
+    "brier": 0.2305,
+    "auroc": 0.5941,
+    "calibration_gap": -0.0834,
     "rank_by_log_loss": 3,
-    "eligible_for_reward": false,
-    "blocked_by": "G6,G7"
-   },
-   {
-    "sid": "S2",
-    "name": "Model total vs league average",
-    "kind": "single bet",
-    "n": 172,
-    "hit_rate": 0.5872,
-    "log_loss": 0.6789,
-    "brier": 0.2429,
-    "auroc": 0.5391,
-    "calibration_gap": -0.0401,
-    "rank_by_log_loss": 4,
     "eligible_for_reward": false,
     "blocked_by": "G6,G7"
    },
@@ -2060,12 +2141,26 @@
     "sid": "S5",
     "name": "Same-game parlay: side + total",
     "kind": "parlay",
-    "n": 172,
-    "hit_rate": 0.3953,
-    "log_loss": 0.6792,
-    "brier": 0.2426,
-    "auroc": 0.5667,
-    "calibration_gap": -0.0755,
+    "n": 189,
+    "hit_rate": 0.3915,
+    "log_loss": 0.6743,
+    "brier": 0.2404,
+    "auroc": 0.5791,
+    "calibration_gap": -0.0703,
+    "rank_by_log_loss": 4,
+    "eligible_for_reward": false,
+    "blocked_by": "G6,G7"
+   },
+   {
+    "sid": "S2",
+    "name": "Model total vs league average",
+    "kind": "single bet",
+    "n": 189,
+    "hit_rate": 0.582,
+    "log_loss": 0.6776,
+    "brier": 0.2423,
+    "auroc": 0.5552,
+    "calibration_gap": -0.0338,
     "rank_by_log_loss": 5,
     "eligible_for_reward": false,
     "blocked_by": "G6,G7"
@@ -2074,12 +2169,12 @@
     "sid": "S6",
     "name": "Cross-game parlay: two model sides",
     "kind": "parlay",
-    "n": 22,
-    "hit_rate": 0.5455,
-    "log_loss": 0.743,
+    "n": 24,
+    "hit_rate": 0.5417,
+    "log_loss": 0.7428,
     "brier": 0.2744,
-    "auroc": 0.55,
-    "calibration_gap": -0.1601,
+    "auroc": 0.5035,
+    "calibration_gap": -0.1528,
     "rank_by_log_loss": 6,
     "eligible_for_reward": false,
     "blocked_by": "G6,G7"
@@ -2093,12 +2188,12 @@
  },
  "parlay_pricing": {
   "status": "MEASURED",
-  "measured_rho": 0.0679,
+  "measured_rho": 0.0667,
   "rho_ci95": [
-   -0.0826,
-   0.2153
+   -0.0768,
+   0.2074
   ],
-  "n": 172,
+  "n": 189,
   "method": "bivariate normal upper quadrant, deterministic 400-point quadrature",
   "rows": [
    {
@@ -2106,55 +2201,55 @@
     "p_leg_1": 0.55,
     "p_leg_2": 0.55,
     "naive_product": 0.3025,
-    "joint_at_measured_rho": 0.3131,
-    "joint_at_ci_low": 0.2896,
-    "joint_at_ci_high": 0.3365,
-    "error_if_you_multiply": 0.0106,
-    "error_pct": 3.5,
+    "joint_at_measured_rho": 0.313,
+    "joint_at_ci_low": 0.2905,
+    "joint_at_ci_high": 0.3353,
+    "error_if_you_multiply": 0.0105,
+    "error_pct": 3.47,
     "fair_decimal_if_naive": 3.306,
-    "fair_decimal_at_measured": 3.194
+    "fair_decimal_at_measured": 3.195
    },
    {
     "legs": "two modest favourites",
     "p_leg_1": 0.6,
     "p_leg_2": 0.6,
     "naive_product": 0.36,
-    "joint_at_measured_rho": 0.3702,
-    "joint_at_ci_low": 0.3477,
-    "joint_at_ci_high": 0.3926,
-    "error_if_you_multiply": 0.0102,
-    "error_pct": 2.83,
+    "joint_at_measured_rho": 0.37,
+    "joint_at_ci_low": 0.3486,
+    "joint_at_ci_high": 0.3914,
+    "error_if_you_multiply": 0.01,
+    "error_pct": 2.78,
     "fair_decimal_if_naive": 2.778,
-    "fair_decimal_at_measured": 2.701
+    "fair_decimal_at_measured": 2.703
    },
    {
     "legs": "two clear favourites",
     "p_leg_1": 0.65,
     "p_leg_2": 0.65,
     "naive_product": 0.4225,
-    "joint_at_measured_rho": 0.4319,
-    "joint_at_ci_low": 0.4112,
-    "joint_at_ci_high": 0.4527,
-    "error_if_you_multiply": 0.0094,
-    "error_pct": 2.22,
+    "joint_at_measured_rho": 0.4317,
+    "joint_at_ci_low": 0.412,
+    "joint_at_ci_high": 0.4516,
+    "error_if_you_multiply": 0.0092,
+    "error_pct": 2.18,
     "fair_decimal_if_naive": 2.367,
-    "fair_decimal_at_measured": 2.315
+    "fair_decimal_at_measured": 2.316
    },
    {
     "legs": "a strong side with a mild total",
     "p_leg_1": 0.7,
     "p_leg_2": 0.6,
     "naive_product": 0.42,
-    "joint_at_measured_rho": 0.4292,
-    "joint_at_ci_low": 0.409,
-    "joint_at_ci_high": 0.4495,
-    "error_if_you_multiply": 0.0092,
-    "error_pct": 2.19,
+    "joint_at_measured_rho": 0.429,
+    "joint_at_ci_low": 0.4097,
+    "joint_at_ci_high": 0.4484,
+    "error_if_you_multiply": 0.009,
+    "error_pct": 2.14,
     "fair_decimal_if_naive": 2.381,
-    "fair_decimal_at_measured": 2.33
+    "fair_decimal_at_measured": 2.331
    }
   ],
-  "reading": "At the measured rho of +0.0679 the joint is close to the product, but the 95% interval on rho runs -0.0826 to +0.2153 \u2014 wide enough that the honest statement is 'we do not know this correlation precisely enough to price a same-game parlay', not 'the legs are independent'. A two-leg price quoted from the product is therefore a guess with a known error bar, and the site withholds it rather than print the guess."
+  "reading": "At the measured rho of +0.0667 the joint is close to the product, but the 95% interval on rho runs -0.0768 to +0.2074 \u2014 wide enough that the honest statement is 'we do not know this correlation precisely enough to price a same-game parlay', not 'the legs are independent'. A two-leg price quoted from the product is therefore a guess with a known error bar, and the site withholds it rather than print the guess."
  },
  "rows": [
   {
@@ -4392,6 +4487,227 @@
    "correct_side": 0,
    "correct_total": 0,
    "source_url": "https://www.nba.com/game/chi-vs-min-0022600235"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "IND @ PHI",
+   "pred_margin": 3.19,
+   "actual_margin": 7,
+   "pred_total": 224.284,
+   "actual_total": 255,
+   "e_margin": 3.81,
+   "e_total": 30.72,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "LAL @ PHX",
+   "pred_margin": -1.716,
+   "actual_margin": -8,
+   "pred_total": 230.24,
+   "actual_total": 254,
+   "e_margin": -6.28,
+   "e_total": 23.76,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "CHA @ LAC",
+   "pred_margin": 3.774,
+   "actual_margin": 8,
+   "pred_total": 222.266,
+   "actual_total": 218,
+   "e_margin": 4.23,
+   "e_total": -4.27,
+   "correct_side": 1,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "SAS @ UTA",
+   "pred_margin": -5.548,
+   "actual_margin": -8,
+   "pred_total": 226.403,
+   "actual_total": 212,
+   "e_margin": -2.45,
+   "e_total": -14.4,
+   "correct_side": 1,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "DAL @ BOS",
+   "pred_margin": 5.302,
+   "actual_margin": 37,
+   "pred_total": 224.124,
+   "actual_total": 225,
+   "e_margin": 31.7,
+   "e_total": 0.88,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "NYK @ TOR",
+   "pred_margin": 0.6,
+   "actual_margin": -4,
+   "pred_total": 223.048,
+   "actual_total": 220,
+   "e_margin": -4.6,
+   "e_total": -3.05,
+   "correct_side": 0,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "HOU @ WAS",
+   "pred_margin": -2.5,
+   "actual_margin": -28,
+   "pred_total": 225.641,
+   "actual_total": 266,
+   "e_margin": -25.5,
+   "e_total": 40.36,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/hou-vs-was-0022600242"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "ATL @ MIL",
+   "pred_margin": -2.762,
+   "actual_margin": -7,
+   "pred_total": 229.379,
+   "actual_total": 219,
+   "e_margin": -4.24,
+   "e_total": -10.38,
+   "correct_side": 1,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243"
+  },
+  {
+   "date": "2026-11-15",
+   "matchup": "OKC @ SAC",
+   "pred_margin": -2.992,
+   "actual_margin": -22,
+   "pred_total": 225.101,
+   "actual_total": 228,
+   "e_margin": -19.01,
+   "e_total": 2.9,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "ORL @ BOS",
+   "pred_margin": 7.396,
+   "actual_margin": -10,
+   "pred_total": 222.614,
+   "actual_total": 220,
+   "e_margin": -17.4,
+   "e_total": -2.61,
+   "correct_side": 0,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "CHI @ CLE",
+   "pred_margin": 5.923,
+   "actual_margin": 11,
+   "pred_total": 233.267,
+   "actual_total": 241,
+   "e_margin": 5.08,
+   "e_total": 7.73,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "MEM @ WAS",
+   "pred_margin": -3.103,
+   "actual_margin": -16,
+   "pred_total": 229.355,
+   "actual_total": 256,
+   "e_margin": -12.9,
+   "e_total": 26.65,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/mem-vs-was-0022600247"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "PHI @ BKN",
+   "pred_margin": -0.557,
+   "actual_margin": -12,
+   "pred_total": 225.796,
+   "actual_total": 258,
+   "e_margin": -11.44,
+   "e_total": 32.2,
+   "correct_side": 1,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "HOU @ MIA",
+   "pred_margin": -1.584,
+   "actual_margin": 18,
+   "pred_total": 230.624,
+   "actual_total": 238,
+   "e_margin": 19.58,
+   "e_total": 7.38,
+   "correct_side": 0,
+   "correct_total": 1,
+   "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "POR @ MIN",
+   "pred_margin": 3.246,
+   "actual_margin": 8,
+   "pred_total": 227.928,
+   "actual_total": 204,
+   "e_margin": 4.75,
+   "e_total": -23.93,
+   "correct_side": 1,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600250"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "GSW @ NOP",
+   "pred_margin": -2.22,
+   "actual_margin": 21,
+   "pred_total": 232.218,
+   "actual_total": 209,
+   "e_margin": 23.22,
+   "e_total": -23.22,
+   "correct_side": 0,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+  },
+  {
+   "date": "2026-11-16",
+   "matchup": "PHX @ DEN",
+   "pred_margin": 3.926,
+   "actual_margin": -12,
+   "pred_total": 228.24,
+   "actual_total": 222,
+   "e_margin": -15.93,
+   "e_total": -6.24,
+   "correct_side": 0,
+   "correct_total": 0,
+   "source_url": "https://www.nba.com/game/phx-vs-den-0022600252"
   }
  ]
 }

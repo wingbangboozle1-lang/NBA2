@@ -153,12 +153,33 @@ def load_games() -> list[dict]:
             if g["game_id"] in {x["game_id"] for x in games}:
                 continue          # a duplicate id would silently double-count a result
             games.append(g)
-    # 2026-11-15 session (arena/98b0eae9-nba2): the 5 finals of 11/14 live in the dated
-    # capture file, not the history folder — join them so the lab scores every verified final.
+    # The dated finals of 11/14 onwards live in their own capture files, not in the history
+    # folder. They are joined here so the lab scores every verified final, and the pattern is
+    # a glob rather than a list: hard-coding one dated capture is how the 11/15, 11/16 and
+    # later finals silently stopped being scored (found and fixed 2026-11-17).
     from . import capture2 as C2
+    seen = {x["game_id"] for x in games}
+    extra: list[dict] = []
+    for pat in ("results/results_*.json", "capture_*/results_*.json",
+                "refresh_*/results_*.json", "refresh_*/finals_*.json"):
+        for f in sorted(glob.glob(str(ROOT / "data" / "raw" / pat))):
+            for r in json.loads(Path(f).read_text()).get("records", []):
+                if r.get("away_pts") is None or r.get("home_pts") is None:
+                    continue
+                if r["game_id"] in seen:
+                    continue
+                seen.add(r["game_id"])
+                extra.append({"game_id": r["game_id"], "date": r.get("date"), "away": r["away"],
+                              "home": r["home"], "away_pts": r["away_pts"],
+                              "home_pts": r["home_pts"],
+                              "ot": bool(r.get("ot_periods")),
+                              "source_url": (r.get("source_url") or r.get("final_source_url")
+                                             or r.get("gamebook_url") or "")})
+    games += extra
     for r in C2.results_rows():
-        if r["game_id"] in {x["game_id"] for x in games}:
+        if r["game_id"] in seen:
             continue
+        seen.add(r["game_id"])
         games.append({"game_id": r["game_id"], "date": r["date"], "away": r["away"],
                       "home": r["home"], "away_pts": r["away_pts"], "home_pts": r["home_pts"],
                       "ot": bool(r.get("ot_periods")), "source_url": r["source_url"]})

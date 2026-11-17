@@ -66,18 +66,21 @@ class TestOfficialSnapshot(unittest.TestCase):
         i = O.integrity()
         self.assertEqual(i["games_played_team_sum"] % 2, 0)
 
-    def test_slate_is_34_games_and_window_is_three_days(self):
-        self.assertEqual(len(O.SLATE), 34)
+    def test_slate_is_30_games_and_window_is_three_days(self):
+        # Resliced 2026-11-17 from https://www.nba.com/schedule?date=2026-11-17
+        # (data/raw/refresh_2026-11-17/slate_2026-11-17_to_11-20.json).
+        self.assertEqual(len(O.SLATE), 30)
         dates = sorted({g[0] for g in O.SLATE})
-        self.assertEqual(dates[0], "2026-11-15")
-        self.assertEqual(dates[-1], "2026-11-18")
+        self.assertEqual(dates[0], "2026-11-17")
+        self.assertEqual(dates[-1], "2026-11-20")
         self.assertEqual(len(dates), 4)
 
     def test_per_day_counts_match_official_grid(self):
         # counts read off the official schedule pages (nba.com/schedule, day-strip cross-check)
         from collections import Counter
         c = Counter(g[0] for g in O.SLATE)
-        self.assertEqual(dict(c), {"2026-11-15": 9, "2026-11-16": 8, "2026-11-17": 5, "2026-11-18": 12})
+        self.assertEqual(dict(c), {"2026-11-17": 5, "2026-11-18": 12,
+                                  "2026-11-19": 4, "2026-11-20": 9})
 
     def test_window_is_exactly_three_days_ahead(self):
         import datetime as _dt

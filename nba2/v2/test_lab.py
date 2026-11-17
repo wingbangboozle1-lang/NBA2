@@ -24,8 +24,13 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class TestHistoryCompleteness(unittest.TestCase):
-    """The 188 official finals (183 in history + the 5 of 11/14 in the dated capture)
-    must rebuild every standings record exactly."""
+    """Every committed official final — the season history PLUS each dated capture (11/14,
+    11/15, 11/16 and later) — must rebuild every standings record exactly.
+
+    The count is derived, never hard-coded: it used to be pinned to 188 (history + the five
+    11/14 finals), so the lab silently kept scoring an eleven-day-old season while the tree
+    held 205 verified finals.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -35,8 +40,27 @@ class TestHistoryCompleteness(unittest.TestCase):
         ids = [g["game_id"] for g in self.games]
         self.assertEqual(len(ids), len(set(ids)), "a duplicated game id would double-count")
 
-    def test_history_is_188_games(self):
-        self.assertEqual(len(self.games), 188)
+    def test_history_matches_the_committed_finals_count(self):
+        """The lab must score every committed official final, not a remembered count.
+
+        The count is derived by globbing the same folders the module globs, because the union
+        ledger (``official_finals_union.json``) is only the recent window and counting it
+        instead of the sources reports a phantom shortfall.
+        """
+        import glob as _glob
+        decided = set()
+        for pat in ("data/raw/history/games_*.json", "data/raw/results/results_*.json",
+                    "data/raw/capture_*/results_*.json", "data/raw/refresh_*/results_*.json",
+                    "data/raw/refresh_*/finals_*.json"):
+            for f in _glob.glob(str(ROOT / pat)):
+                doc = json.loads(Path(f).read_text())
+                for r in (doc.get("records") or doc.get("games") or []):
+                    if r.get("away_pts") is not None and r.get("home_pts") is not None \
+                            and r.get("game_id"):
+                        decided.add(r["game_id"])
+        self.assertEqual(len(self.games), len(decided))
+        self.assertGreaterEqual(len(self.games), 188,
+                                "the lab must never score fewer finals than it did before")
 
     def test_rebuilt_records_equal_official_standings(self):
         w, l = Counter(), Counter()
@@ -78,9 +102,25 @@ class TestNoLookAhead(unittest.TestCase):
         audit = SL.leakage_audit(self.preds, self.games)
         self.assertEqual(audit["n_violations"], 0, audit["offending_game_ids"])
 
-    def test_predictions_cover_every_game_after_the_first_date(self):
-        # 188 games minus the 16 played on the first date (no prior data exists for those)
-        self.assertEqual(len(self.preds), 172)
+    def test_predictions_cover_every_game_that_has_prior_data(self):
+        # Walk-forward prices a date only from strictly earlier games, so the season's OPENING
+        # date cannot be priced at all. Every game after it must be, and a fixture on a later
+        # date whose clubs have both already played must never be silently skipped: asserting
+        # a fixed 172 previously hid that each later finals file was not being scored.
+        first = min(g["date"] for g in self.games)
+        expected = sum(1 for g in self.games if g["date"] > first)
+        priced = {p.game_id for p in self.preds}
+        unpriced = [g for g in self.games
+                    if g["date"] > first and g["game_id"] not in priced]
+        # The only legitimate skips are the first games of clubs that had never appeared.
+        first_seen = {}
+        for g in sorted(self.games, key=lambda x: (x["date"], x["game_id"])):
+            for club in (g["home"], g["away"]):
+                first_seen.setdefault(club, g["date"])
+        for g in unpriced:
+            self.assertTrue(g["date"] == first_seen[g["home"]] or g["date"] == first_seen[g["away"]],
+                            f"{g['game_id']} is priceable but was not priced")
+        self.assertGreater(len(self.preds), 172)
 
 
 class TestParlayMath(unittest.TestCase):

@@ -87,6 +87,7 @@ def staleness() -> dict:
     # those finals to the fixture so every difference is *explained* rather than stale.
     from . import capture2 as C2
     plus = dict(live)
+    applied = []
     for g in C2.results_rows():
         a, h = g["away"], g["home"]
         if a not in plus or h not in plus:
@@ -99,6 +100,32 @@ def staleness() -> dict:
         else:
             plus[a] = (wa, la + 1)
             plus[h] = (wh + 1, lh)
+        applied.append(g["game_id"])
+    # The published table has moved on from the 11/14 fixture by every final played since,
+    # not only the five of 11/14. Applying just that one file left 29 rows "UNEXPLAINED" —
+    # a false alarm produced by the detector, not a defect in the table. Every committed
+    # final dated after the fixture is now applied so the comparison stays honest as the
+    # season advances. (Fixed 2026-11-17; the fixture itself is left untouched.)
+    import glob as _glob
+    for f in sorted(_glob.glob(str(ROOT / "data" / "raw" / "refresh_*" / "results_*.json"))
+                    + _glob.glob(str(ROOT / "data" / "raw" / "results" / "results_*.json"))):
+        if str(ROOT / "data" / "raw" / "capture_2026-11-15" / "results_2026-11-14.json") == f:
+            continue
+        for g in json.loads(Path(f).read_text()).get("records", []):
+            a, h = g.get("away"), g.get("home")
+            if a not in plus or h not in plus or g.get("away_pts") is None:
+                continue
+            if g["game_id"] in applied:
+                continue
+            wa, la = plus[a]
+            wh, lh = plus[h]
+            if g["away_pts"] > g["home_pts"]:
+                plus[a] = (wa + 1, la)
+                plus[h] = (wh, lh + 1)
+            else:
+                plus[a] = (wa, la + 1)
+                plus[h] = (wh + 1, lh)
+            applied.append(g["game_id"])
     for code, tup in TEAMS.items():
         w, l = tup[0], tup[1]
         lw, ll = live[code]
@@ -132,20 +159,20 @@ def staleness() -> dict:
         # five known 11/14 finals - every difference is explained by a committed finals file.
         "verdict": (
             ("the published team table is CURRENT-with-new-finals: it agrees with the audit "
-             "fixture plus the five committed 11/14 finals on %d of %d rows; the %d rows that "
-             "differ from the raw fixture are all explained by data/raw/capture_2026-11-15/"
-             "results_2026-11-14.json (session arena/98b0eae9-nba2)"
-             % (match_plus, len(TEAMS), len(rows)))
+             "every final dated after it on %d of %d rows; the %d rows that "
+             "differ from the raw fixture are all explained by the committed finals dated "
+             "after it (%d games applied)"
+             % (match_plus, len(TEAMS), len(rows), len(applied)))
             if match_plus >= match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
              "pre-11/13-finals reconstruction on %d of %d rows and with the fixture-plus-finals "
              "state on only %d" % (match_pre, len(TEAMS), match_plus))
         ),
         "published_claim": ("the built site advertises the committed W-L as re-read from live "
-                            "nba.com/standings on 2026-11-15 and rebuilt from 188 official "
-                            "finals - both re-checked by the row-staleness detector: every row "
-                            "that differs from the 11/14 audit fixture is explained by the five "
-                            "committed 11/14 finals, none are unexplained"),
+                            "nba.com/standings and rebuilt from every committed official final - "
+                            "both re-checked by the row-staleness detector: every row that "
+                            "differs from the 11/14 audit fixture is explained by finals played "
+                            "since that fixture, none are unexplained"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,

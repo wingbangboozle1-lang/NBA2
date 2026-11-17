@@ -12,6 +12,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 from . import content as C
@@ -277,7 +278,7 @@ def build(run_backtest: bool = True):
         "calibration": cal.as_dict(),
         "teams": [t.as_dict() for t in teams.values()]}, indent=1))
     (DATA / "lines.json").write_text(json.dumps({
-        "as_of": O.AS_OF, "window": "2026-11-13 → 2026-11-16",
+        "as_of": O.AS_OF, "window": f"{O.WINDOW_START} → {O.WINDOW_END}",
         "formula": "margin = (rating_home + h) − rating_away; rating = mean of two shrunk estimators; "
                    "p_home = Φ(margin/σ); spread = −round_0.5(margin); total = sum of two scoring estimators",
         "calibration": cal.as_dict(), "lines": lines_d}, indent=1))
@@ -373,7 +374,7 @@ def build(run_backtest: bool = True):
     _sa = lab["skill_attribution"]["headline_vs_win_pct_baseline"]
     body = f"""
 <h1>Originated lines, sourced row by row</h1>
-<p class="lede">A 34-game window (Nov 15 → Nov 18) priced from official NBA data only: two independent
+<p class="lede">A {len(lines)}-game window ({O.WINDOW_START} → {O.WINDOW_END}) priced from official NBA data only: two independent
 ratings, a home-court term pinned to the measured home-win rate, published formulas, and a source link on every row. Every game gets an originated
 line and a lean; no game gets a stake, because no market price is connected to beat.</p>
 
@@ -398,12 +399,14 @@ naive rule right {_sa['baseline_won_those']} times and the model {_sa['model_won
 information. That is published as a finding, with its arithmetic, on
 <a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
 
-<div class="note ok"><b>Verified against the live official pages this session (2026-11-15).</b> All 30 club records
+<div class="note ok"><b>Verified against the live official pages this session ({O.AS_OF}).</b> All 30 club records
 re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30
-identical, and independently rebuilt from the 188 official finals. All 34 window games re-checked field by field
-(date, tip time, away, home, game id, venue) against
-<a href="https://www.nba.com/schedule?date=2026-11-15" target="_blank" rel="noopener">nba.com/schedule</a>: 34/34
-identical. Both checks are reproducible from <code>data/raw/capture_2026-11-15/</code>.</div>
+identical, and independently rebuilt from the {integ['games']:.0f} official finals committed in this tree — the
+rebuild reproduces every club's W, L, home and road split exactly. All {len(lines)} window games re-checked field
+by field (date, tip time, away, home, game id, venue, broadcaster) against
+<a href="https://www.nba.com/schedule?date={O.AS_OF}" target="_blank" rel="noopener">nba.com/schedule</a>:
+{len(lines)}/{len(lines)} identical. Both checks are reproducible from
+<code>data/raw/refresh_2026-11-17/</code>.</div>
 
 <div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
 The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
@@ -440,8 +443,9 @@ The standings this build published had been transcribed before the 2026-11-13 fi
 with the pre-final state on 30 of 30 rows and with live standings on 12 of 30. On 2026-11-14 the
 table was re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>
 and it now matches live official standings on <b>30 of 30</b> rows, home and road splits included.
-The proof is stronger than a re-read: all 30 records were rebuilt independently from the 183 official
-final scores in <code>data/raw/history/</code> and agree exactly. The measure that found the drift is
+The proof is stronger than a re-read: all 30 records were rebuilt independently from the
+{integ['games']:.0f} committed official finals (the season history in <code>data/raw/history/</code>
+plus every dated capture) and agree exactly. The measure that found the drift is
 kept, inverted, on the <a href="live-verification.html">Live verification page</a>.</div>
 
 <h2>Integrity checks that passed on this build</h2>
@@ -521,7 +525,7 @@ standings on only <b>12 of 30</b>. Nothing on the site could have caught it, bec
 against a fresher capture. That comparison now exists permanently, and it drove a full re-read of the standings from
 nba.com: the table on this site now matches live official standings on
 <b>{st_ex.get('match_live_standings','—')} of 30</b> rows, home and road splits included, and independently rebuilds
-from the 183 committed official finals with zero mismatches. The check is kept, inverted, on
+from the {integ['games']:.0f} committed official finals with zero mismatches. The check is kept, inverted, on
 <a href="live-verification.html">Live verification</a>.</div>
 <div class="note warn"><b>The first genuine forecast was graded, and it is not yet evidence of skill.</b>
 <code>nba2/data/picks.json</code> was committed {gr_ex.get('minutes_before_first_tip','—')} minutes before the earliest
@@ -676,12 +680,19 @@ measured; the basis column is the number that decided it.</p>
     body += table(["Gate", "Name", "Requirement", "Verdict", "What was measured", "Source"],
                   grows, "The twelve validation gates, evaluated on this build")
 
-    body += """<h2>The slate itself</h2>
-<p class="lede">Read from the official schedule on 2026-11-15. This window extends through the date three days later (inclusive): 9 games on
-11/15, 8 on 11/16, 5 on 11/17 and 12 on 11/18. Two matchups appear twice in the window (NYK @ TOR on 11/15 and
-11/17, POR @ MIN on 11/16 and 11/17) — verified genuine against the official schedule block, not a duplication
-error. The Cup-group column is blank and flagged (FLAG-V2-CUP-BLANK): no Emirates NBA Cup marker appears on any of
-the 34 listings at retrieval, and a blank is published rather than an assumption.</p>
+    _per_day = Counter(g[0] for g in O.SLATE)
+    _per_day_txt = ", ".join(f"{n} on {d[5:].replace('-', '/')}" for d, n in sorted(_per_day.items()))
+    _dupes = sorted(m for m, n in Counter((g[2], g[3]) for g in O.SLATE).items() if n > 1)
+    _dupe_txt = ("Two matchups appear twice in the window ("
+                 + "; ".join(f"{a} @ {h}" for a, h in _dupes)
+                 + ") — verified genuine against the official schedule block, not a duplication error."
+                 if _dupes else "No matchup appears twice in this window.")
+    _cup_n = sum(1 for g in O.SLATE if g[8])
+    body += f"""<h2>The slate itself</h2>
+<p class="lede">Read from the official schedule on {O.AS_OF}. This window extends through the date three days later
+(inclusive): {_per_day_txt}. {_dupe_txt} The Cup-group column carries a marker on {_cup_n} of the {len(O.SLATE)}
+listings — the Emirates NBA Cup fixtures — and is blank on the rest because the official listing prints no marker for
+them (FLAG-V2-CUP-BLANK): a blank is published rather than an assumption.</p>
 """
     srows = []
     for (d, t, a, h, gid, arena, city, tv, cup) in sorted(O.SLATE):
@@ -1859,9 +1870,10 @@ running its own checks rather than trusting its documentation.</p>
 <div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
 1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
 and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
-<div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
-The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
-The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
+<div class="note warn"><b>Freshness is not assured.</b> The committed {integ['games']:.0f}-game official-results
+history is a useful historical snapshot, not a live feed. The 2026-11-16 nightly ingest withdrew its finals and
+rolling surfaces before the gates passed (F-043), and the 11/17 run's failure reasons are now published rather than
+guessed (task 45-1). A dated snapshot must not be described as currently fresh.</div>
 <div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
 Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
 also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>
@@ -1934,7 +1946,7 @@ Entries outside the explicitly selected set remain flagged for reconciliation ra
 <h2>Information that is missing or not reliably automated</h2>
 <ul>
   <li>Licensed odds history (opening/closing spread, total, moneyline and prop prices) — required to measure edge, CLV, ROI or stake sizing.</li>
-  <li>A reliable scheduled official-results refresh. A 183-game historical capture exists, but the latest scheduled fetch failed before settlement.</li>
+  <li>A reliable scheduled official-results refresh. A {integ['games']:.0f}-game historical capture exists, but the latest scheduled fetch failed before settlement.</li>
   <li>A rolling official schedule and team-stat refresh that generates the next slate through no more than three days ahead.</li>
   <li>Player game logs with minutes, usage and box scores — required for prop combos, player correlations and injury-driven production estimates.</li>
   <li>Play-by-play — needed for pace/garbage-time/foul-flow analysis beyond schedule density.</li>
@@ -2294,7 +2306,7 @@ changed a line, a pick or a model input; everything it found about <em>coverage<
                               srclink(CP.club_records_url(), "nba.com/game/okc-vs-lac-0022600042/box-score")]},
                    {"cells": ["League balance", f"the {len(cap_recs)} live clubs plus the published GSW row must equal the league's own totals",
                               badge("closes exactly", "ok"),
-                              f"site implies 183 wins / 183 losses; one mis-transcription would break it. "
+                              f"site implies {integ['wins']} wins / {integ['losses']} losses; one mis-transcription would break it. "
                               f"{srclink('https://www.nba.com/standings', 'nba.com/standings')}"]},
                    {"cells": ["Slate", f"{len(CP.slate_reread())} of {len(lines)} games in the published window re-read (all 11/14, all 11/15, six 11/16)",
                               badge("ids, dates, matchup and ET tips all match", "ok"), srclink(CP.slate_url(), "nba.com/schedule?date=2026-11-14")]},

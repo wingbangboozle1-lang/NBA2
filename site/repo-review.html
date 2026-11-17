@@ -139,9 +139,10 @@ running its own checks rather than trusting its documentation.</p>
 <div class="note"><b>What passed in this audit.</b> 193 unit tests passed (64 v1, 80 v2 and 49 backtest); provenance lint passed for
 1,409 rows across 50 tables; the v2 structural/semantic checker reported 0 issues; all 4,914 internal links across 110 HTML files resolved;
 and the v1, backtest and v2 builders produced deterministic outputs. This audit's v2 copy corrections are regenerated from source.</div>
-<div class="note warn"><b>Freshness is not assured.</b> The committed 183-game official-results history is a useful historical snapshot, not a live feed.
-The 2026-11-14 scheduled ingest archived injury reports but failed at the official-finals fetch before settlement or rebuild (F-043).
-The failure cause remains unverified; the Actions log download ended with EOF. A dated snapshot must not be described as currently fresh.</div>
+<div class="note warn"><b>Freshness is not assured.</b> The committed {integ['games']:.0f}-game official-results
+history is a useful historical snapshot, not a live feed. The 2026-11-16 nightly ingest withdrew its finals and
+rolling surfaces before the gates passed (F-043), and the 11/17 run's failure reasons are now published rather than
+guessed (task 45-1). A dated snapshot must not be described as currently fresh.</div>
 <div class="note bad"><b>What still blocks full use.</b> There is no licensed market-price feed, so no ROI, CLV, stake sizing or reward-bearing leaderboard is valid.
 Player game logs are missing, so player props, prop correlations and injury-driven minute/production impacts remain blank. The current automation
 also does not generate the next rolling three-day slate. These are separate gaps, not values to infer.</div>
@@ -167,7 +168,7 @@ Source URLs and captured provenance remain available for manual review.</p>
   <li>Acquire player-level game logs from a permitted, documented official source before filling props or injury impacts.</li>
 </ul>
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-17</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·

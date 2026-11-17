@@ -65,7 +65,7 @@
 </aside>
 <main>
 <h1>Verification log</h1>
-<p class="lede">The site inputs are dated 2026-11-15. This page records which NBA source pages were reachable, what each supplied, and what could not be reached. Model estimates are derived from the committed inputs, not values copied from an official page.</p>
+<p class="lede">The site inputs are dated 2026-11-17. This page records which NBA source pages were reachable, what each supplied, and what could not be reached. Model estimates are derived from the committed inputs, not values copied from an official page.</p>
 <div class="note"><b>How to re-check any row.</b> Every table row carries a source link and its data class. Official input facts link to NBA sources; derived values link to their input/method evidence; unavailable values stay blank with a reason. The same data is published machine-readably in <code>data/v2/*.json</code> so a reviewer can trace it without trusting the page.</div>
 <div class="scroll"><table>
 <caption>Every source attempted, with the outcome</caption>
@@ -236,7 +236,7 @@
 <td>repo-schedule</td>
 <td>Committed slate snapshot vs the published tree&#x27;s slate (date, away, home, game id)</td>
 <td>36 games</td>
-<td>34 games</td>
+<td>30 games</td>
 <td><span class="badge b-bad">MISMATCH</span></td>
 <td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL&#x27;, &#x27;CHI&#x27;, &#x27;0022600037&#x27;), (&#x27;2026-11-13&#x27;, &#x27;CLE&#x27;, &#x27;MIA&#x27;, &#x27;0022600036&#x27;), (&#x27;2026-11-13&</td>
 <td><a href="https://www.nba.com/schedule?date=2026-11-15" rel="noopener" target="_blank">nba.com/schedule?date=2026-11-15</a></td>
@@ -245,16 +245,16 @@
 <td>finals-reconstruction</td>
 <td>Rebuild every team&#x27;s W-L from the 155 official final scores, then compare with the official card</td>
 <td>183 finals, 183 wins assigned</td>
-<td>188 official wins</td>
+<td>205 official wins</td>
 <td><span class="badge b-bad">CONSISTENT</span></td>
-<td>no team exceeds its official record; the 5 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
+<td>no team exceeds its official record; the 22 missing games are exactly the 11/06 + 11/11 hole that has no reachable score</td>
 <td><a href="https://www.nba.com/games" rel="noopener" target="_blank">nba.com/games</a></td>
 </tr>
 <tr>
 <td>repo-injury</td>
 <td>Committed injury snapshot vs the official 11/13/26 04:15 PM ET PDF</td>
 <td>85 player rows</td>
-<td>26 player rows</td>
+<td>33 player rows</td>
 <td><span class="badge b-bad">MISMATCH</span></td>
 <td>only-in-repo=[(&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Awaka, Tobe&#x27;, &#x27;Out&#x27;), (&#x27;2026-11-13&#x27;, &#x27;ATL@CHI&#x27;, &#x27;Dennis, RayJ&#x27;, &#x27;Questionable&#x27;)</td>
 <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" rel="noopener" target="_blank">ak-static.cms.nba.com/referee/injury/Injury-Report_…</a></td>
@@ -262,19 +262,19 @@
 <tr>
 <td>repo-wl</td>
 <td>The published team&#x27;s official W-L column vs this tree&#x27;s own 2026-11-13 transcription</td>
-<td>20/30 identical</td>
+<td>0/30 identical</td>
 <td>30 teams</td>
 <td><span class="badge b-bad">AGED</span></td>
-<td>10 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;BKN&#x27;, &#x27;CHI&#x27;, &#x27;CLE&#x2</td>
+<td>30 clubs differ because the nine 2026-11-13 games were played in between; the current official table is published on the Methodology page. Differs for: [&#x27;ATL&#x27;, &#x27;BKN&#x27;, &#x27;BOS&#x2</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 <tr>
 <td>repo-wl-current</td>
 <td>The published team&#x27;s official W-L column vs nba.com/standings read 2026-11-14</td>
-<td>20/30 identical</td>
-<td>30 teams, official table read 2026-11-15</td>
+<td>0/30 identical</td>
+<td>30 teams, official table read 2026-11-17</td>
 <td><span class="badge b-bad">MISMATCH</span></td>
-<td>{&#x27;BKN&#x27;: (&#x27;3-8&#x27;, &#x27;3-9&#x27;), &#x27;CHI&#x27;: (&#x27;2-9&#x27;, &#x27;3-9&#x27;), &#x27;CLE&#x27;: (&#x27;6-7&#x27;, &#x27;7-7&#x27;), &#x27;DAL&#x27;: (&#x27;7-5&#x27;, &#x27</td>
+<td>{&#x27;ATL&#x27;: (&#x27;7-6&#x27;, &#x27;8-6&#x27;), &#x27;BKN&#x27;: (&#x27;3-8&#x27;, &#x27;3-10&#x27;), &#x27;BOS&#x27;: (&#x27;10-2&#x27;, &#x27;11-3&#x27;), &#x27;CHA&#x27;: (&#x27;4-8&#x27;, &#</td>
 <td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
 </tr>
 </tbody></table></div><h2>Checks run against the repository itself</h2><div class="scroll"><table>
@@ -933,7 +933,7 @@
 the previous build disclosed and this session resolved: the 28/30-vs-30/30 W-L discrepancy (resolved: 30/30) and the
 stale retrieval date on the published snapshot.</p>
 <footer>
-  <p>Snapshot as of <b>2026-11-15</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>2026-11-17</b>. Built by session <code>arena/98b0eae9-nba2</code>.
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
