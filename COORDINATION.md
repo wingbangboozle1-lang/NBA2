@@ -4833,3 +4833,74 @@ required `git pull --rebase origin main` succeeded cleanly, and the only remaini
 latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
 matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
 site files were edited; they remain byte-identical to `origin/main`.
+
+---
+
+## Session `arena/fc393d2a-nba2` — CLAIM (2026-11-17 UTC, branch `arena/fc393d2a-nba2`, base `d4fde59` = `main`)
+
+**Branch:** `arena/fc393d2a-nba2`, based on `main` @ `d4fde59` (the bot ingest commit
+`ingest(bot): official capture — 2026-11-17T14:54:57Z`). Working tree clean at claim. This is the
+only active session; no other session holds an open claim.
+
+**State read at claim time (verified, not assumed).**
+- `main` = `d4fde59`; this branch is at the same commit, working tree clean.
+- Local checker chain green on the committed tree: v1 tests 79 OK, v2 tests 146 OK, v3 tests 67 OK,
+  v4 tests 61 OK, v5 tests 26 OK; `python -m nba2.v2` builds 24 pages; `nba2.v2.check` /
+  `nba2.v3.check` / `nba2.v4.check` / `nba2.v5.check` all OK; `nba2.pipeline.lint` OK (1436 rows /
+  50 tables); `tools/check_links_all.py` ALL INTERNAL LINKS OK (136 HTML files, 6872 internal links).
+- `tools/crosscheck_site.py`: **97 checks — 87 pass, 2 FAIL, 8 info.**
+  * `CC-DOC-01` — README published counts stale (text 1423 rows / 70 tests vs measured 1436 / 79).
+  * `CC-FRESH-01` — the published snapshot is **3 days old** (`as_of 2026-11-15`, today 2026-11-17);
+    5 published-window games have already tipped.
+  * `CC-FRESH-03` — the latest completed scheduled ingest **failed** at 2026-11-17T14:51:04Z
+    (run [44107633323](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323));
+    the `rolling` and `finals` surfaces failed, so the site was NOT rebuilt.
+- **Root cause of the failing ingest (measured, not assumed):** `data/raw/egress_probe.json`
+  (probed from a GitHub-hosted runner at 2026-11-17T14:28:28Z) shows `stats.nba.com`
+  (`scoreboardv2`) **times out** while `www.nba.com` HTML pages (`/schedule`, `/standings`), the
+  injury index (`official.nba.com`), the injury PDF CDN (`ak-static.cms.nba.com`) and gamebook PDFs
+  all return **200**. `nba2/v2/refresh.py` fetches the four rolling surfaces from `stats.nba.com`,
+  so the rolling + finals surfaces fail on the runner even though the www.nba.com surfaces are
+  reachable.
+- **Second structural gap (measured):** the published `site/` tree is built by `python -m nba2.v2`
+  (+ v3/v4/v5), and the v2/v3 builders consume **hardcoded transcribed snapshots** in
+  `nba2/v2/official.py` and `nba2/v3/official.py` (`as_of 2026-11-15`), not the output of
+  `nba2/v2/refresh.py`. So even a successful refresh would not refresh the published site.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record, append-only.
+- `data/raw/capture_2026-11-17/**` — NEW namespace: the fresh 2026-11-17 official capture
+  (schedule, standings, team-stats ×3, injury report, arrived finals) with a capture index,
+  retrieval stamps and per-row source URLs. New files only.
+- `nba2/v2/official.py`, `nba2/v2/capture2.py`, `nba2/v3/official.py` — refresh the transcribed
+  snapshot to the 2026-11-17 capture (AS_OF, TEAMS, SLATE, INJURIES, SOURCES, paths).
+- `nba2/v2/refresh.py` — re-point the rolling fetchers at the reachable official endpoints
+  (`www.nba.com` HTML, `official.nba.com` index, `ak-static.cms.nba.com` PDFs) and add
+  stdlib HTML/JSON parsers; keep every freshness/provenance gate fail-closed.
+- `README.md` — stale published counts only (rows + test counts), regenerated from the build.
+- Regenerated artefacts: `data/v2/**`, `data/v3/**`, `site/**` — only as direct output of the
+  committed builders, never hand-edited.
+- `analysis/session-fc393d2a-nba2-*.md` — NEW: capture + verification record.
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` — append-only new entries only.
+
+**Explicitly NOT edited:** `nba2/v4/**`, `nba2/v5/**`, `nba2/models/**`, `nba2/pipeline/**`
+(except via the committed builders' output), `data/raw/ledger/**` and `data/v3/ledger/**`
+(sealed — read only), `tools/**`, `.github/workflows/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `archive/**`, `backtest/**`, root `*.html`.
+
+**Rules this session holds itself to:** a value is published only if read from an official source
+(`www.nba.com`, `official.nba.com`, `ak-static.cms.nba.com`, `cdn.nba.com`) in this session or
+reproduced from a committed snapshot by running the committed code; unconfirmed ⇒ blank + flagged,
+never inferred; sealed ledgers are never rewritten; nothing is called verified that was not read
+or reproduced; flagged irregularities do not block the merge but appear on the Flagged page with
+their source link; the site is never merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| FC-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| FC-02 | Fresh 2026-11-17 official capture (schedule 11-17..11-20, standings, team stats ×3, injury report, arrived finals) | pending | `data/raw/capture_2026-11-17/**` | each row: value + official URL + retrieval stamp; arithmetic identities asserted |
+| FC-03 | Re-point `nba2/v2/refresh.py` at reachable official endpoints; add parsers + unit tests | pending | `nba2/v2/refresh.py`, `nba2/v2/test_refresh_reachable.py` | parsers tested against the committed official capture; gates stay fail-closed |
+| FC-04 | Refresh the published v2 + v3 snapshot to 2026-11-17 | pending | `nba2/v2/official.py`, `nba2/v2/capture2.py`, `nba2/v3/official.py` | `nba2.v2.check` / `nba2.v3.check` OK; identities re-asserted |
+| FC-05 | Fix README published counts (CC-DOC-01) | pending | `README.md` | `tools/crosscheck_site.py` CC-DOC-01 passes |
+| FC-06 | Full checker sweep + line-by-line verification record | pending | `analysis/session-fc393d2a-nba2-*.md` | every checker green; each claim tied to a source |
+| FC-07 | Integration: PR → `main`, merge, confirm Pages deploy, record result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, live fetch, `gh run list` |
