@@ -4897,13 +4897,15 @@ The brief's buildable items are already implemented and green in this tree (roll
 | F-6B-02 | 2026-11-17 tip times are blank in the committed slate (the captured transcript did not include ET times). Left blank, not inferred, per no-hallucination rule. | disclosed; blank + reason |
 | F-6B-03 | Published snapshot is as-of the 2026-11-16 09:30 ET refresh (rolling window 11-16 → 11-19). The 2026-11-17 09:45 AM injury release exists as a raw transcript (`data/raw/pdf/Injury-Report_2026-11-17_09_45AM.txt`) but is not yet registered as a pipeline source; unattended refresh is the `refresh.yml` scheduled job's role. | disclosed; not manually forced |
 
-### PR & merge result (to be filled after merge)
+### PR & merge result
 | Step | Result |
 |---|---|
-| PR created | pending |
-| Merge commit | pending |
-| Pages deploy run | pending |
+| PR #114 (session verification record) | https://github.com/wingbangboozle1-lang/NBA2/pull/114 — merged via `gh pr merge 114 --merge`, merge commit `5fcbd76` |
+| PR #116 (CI drift fix: run v5 in publish-parity.yml so the parity check matches the pages.yml deploy) | https://github.com/wingbangboozle1-lang/NBA2/pull/116 — merged via `gh pr merge 116 --merge`, merge commit `71f150f` |
+| Pre-merge blocker fixed | `publish-parity.yml` "Verify the published tree (zero tolerance for drift)` was failing because it ran v2→v4 while `pages.yml` deploys v2→v5 (committed site/ includes the v5 nav). Added the v5 build + tests to publish-parity.yml; verified locally zero drift, and the check now passes on main. |
+| Pages deploy | `Publish GitHub Pages` success on both merge SHAs; `pages build and deployment` success; drift check passes. Pages `status: built`, source `main /`. |
 | Live URL | https://wingbangboozle1-lang.github.io/NBA2/ |
+| Verification on record | schedule 2026-11-17: 5/5 committed games match official nba.com/schedule?date=2026-11-17 (game IDs, teams, arenas, cities; tip times left blank, not inferred); standings sourced to nba.com/standings with per-row retrieval stamps; 379 tests pass (79 v1 + 146 v2 + 67 v3 + 61 v4 + 26 v5); lint OK (1436 rows / 50 tables, every row sourced); all 6,780 internal links OK; site byte-identical to full v2→v3→v4→v5 rebuild. No value inferred or filled in. |
 
 
 ### AA-6 claim — `arena/aa1d3c07-nba2` (2026-11-17 UTC, PR #115 checks)
