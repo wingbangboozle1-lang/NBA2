@@ -4873,3 +4873,19 @@ The brief's buildable items are already implemented and green in this tree (roll
 | Pages deploy run | pending |
 | Live URL | https://wingbangboozle1-lang.github.io/NBA2/ |
 
+## Session `arena/669bccab-nba2` — CLAIM (2026-11-17 UTC, branch `arena/669bccab-nba2`, base `d4fde59` = `main`)
+
+**Why:** the last scheduled refresh (run 44107633323) recorded `finals: failure`, `rolling: failure`. The sealed
+`sealed-2026-11-13.json` ledger (22 games, 11/14–11/16) is settled for only 11 games. Two gaps were confirmed on
+2026-11-17 against NBA.com: (a) 11/15 games 0022600242–44 were captured as "not final at retrieval" on 11/16 at
+02:05 UTC, although the v5 gamebook transcripts (`data/v5/gamebooks_2026-11-15.json`) already hold their official
+SCORE BY PERIOD rows and were never wired into `official_finals_union.json`; (b) the 11/16 games 0022600245–52 are
+Final on NBA.com but have no captured final in the committed union.
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| F-1 | Per-game official results feed for 11/14–11/16 (22 games): date, teams, final, quarter scores, source URLs | in progress | `arena/669bccab-nba2` | `verified/session-669bccab/**` (new), `data/raw/refresh_2026-11-17/**` (new) | NBA.com `games?date=` pages (finals) + statsdmz gamebook PDFs (SCORE BY PERIOD) |
+| F-2 | Wire the verified finals into the union and settle the sealed 11/13 ledger from official finals only | in progress | `arena/669bccab-nba2` | `data/raw/official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/**`, `data/v5/**` (regenerated), `site/**` (rebuilt by builders only) | Settle rule unchanged: final must match NBA.com game page AND quarter row must sum to final where a gamebook is read |
+| F-3 | Verify the Injuries banner shows report revision time and retrieval time; fix only if missing | unclaimed-check | `arena/669bccab-nba2` | `analysis/session-669bccab-*.md` | to be recorded |
+
+Sealed ledgers are not edited (`data/raw/ledger/**` stays byte-identical). Shared board is append-only.
