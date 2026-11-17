@@ -5346,3 +5346,59 @@ discarding either side:
 - Live `/decisions-needed.html` shows the "Integration update, 2026-11-17" section (CR-V5-2 fixed live).
 
 **Notes for the next session:** the transient `nba2/tests` discover failure seen twice right after a v5 rebuild did not reproduce in 9+ consecutive runs (no mtime/network dependence found in those tests) — if it reappears in CI, capture the failing test name from the log. The nightly finals fallback in `nba2/pipeline/refresh.py` is exercised only when the runner's scoreboard endpoints are unreachable; tonight's run [44131269656-ish dynamic legacy build still coexists] — the legacy `pages-build-deployment` (Jekyll from `main /`) also runs; the Actions artifact deploy takes precedence on the URL.
+
+---
+
+## Session `arena/f5ac4e74-nba2` — CLAIM (2026-11-17 UTC)
+
+**Branch:** `arena/f5ac4e74-nba2` · **Base:** `d4fde59` (`main`, the 2026-11-17T14:54:57Z official
+bot capture) · local tree is at 0 ahead / 0 behind `origin/main`.
+
+**Sandbox capability, measured not assumed (this is a load-bearing caveat for every claim below):**
+`bash` egress from this workspace is limited to `github.com`, `api.github.com`,
+`codeload.github.com`, `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org`.
+`https://www.nba.com/` and `https://stats.nba.com/` return `SSL_ERROR_SYSCALL` (HTTP 000).
+**Consequence: no new official value can be read by this session.** Every number published here is
+re-derived from a raw capture that is already committed in `data/raw/**`, and each one carries the
+URL of the official page it was transcribed from. Where a value does not exist in any committed
+capture it is left blank with a reason. This is the same disclosure as `F-V4-01`/`F-V4-02` and it is
+repeated on the site.
+
+### Tasks claimed (K-01 … K-08)
+
+| ID | Task | File scope (all new or additive unless stated) |
+|---|---|---|
+| K-01 | **`README` count drift** — close `CC-DOC-01` (the only cross-check failure that is a defect rather than a disclosure) | `README.md` (counts only) |
+| K-02 | **Market-anchored prior** (brief item 15) — the blend estimator, the out-of-sample log-loss weighting, and an explicit blank+flag where the closing line does not exist | `nba2/v6/__init__.py`, `nba2/v6/market_prior.py`, `data/v6/market_prior.json`, `site/market-prior.html` |
+| K-03 | **Injury-PDF archive inventory** (brief item 3, "store *every* injury PDF") — one row per release: revision stamp, URL, retrieval time, transcript, bytes, sha256, and the reason when bytes are absent | `nba2/v6/injury_archive.py`, `data/v6/injury_archive.json`, `site/injury-archive.html` |
+| K-04 | **Result-feed coverage register** (brief items 2 + 18) — one row per window date: scheduled / finals committed / graded / gap-reason; quarter rows re-summed | `nba2/v6/results_coverage.py`, `data/v6/results_coverage.json`, `site/results-coverage.html` |
+| K-05 | **Player-log coverage for injury-report players** (brief item 20) — which named players on an injury report have a committed game log, and which do not | `nba2/v6/player_coverage.py`, `data/v6/player_coverage.json`, `site/player-coverage.html` |
+| K-06 | **Category navigation + dashboard landing page** — the 48 published pages grouped into categories; every existing link preserved; readable with JS off | `nba2/v6/nav.py`, `nba2/v6/__main__.py`, rendered into every `site/*.html` |
+| K-07 | **v6 verify page + flag integration** — this session's gates and flags, published and linked from `site/flagged.html` | `nba2/v6/check.py`, `site/v6-verify.html`, `nba2/v6/test_v6.py` |
+| K-08 | **Final integration** — rebuild every tree, run every check, PR to `main`, merge, confirm the Pages deploy, record the result here | append-only `COORDINATION.md`, PR + merge record |
+
+### Deliberately NOT in this session's scope
+
+* **Merging another session's open PR.** Seven PRs are open (`#70`, `#72`, `#78`, `#80`, `#82`,
+  `#98`, `#112`). `#112` is a self-described final-integration PR with 176 changed files whose
+  required checks **failed** (`Verify data, model and site`,
+  `Verify the published tree (zero tolerance for drift)`); five of the rest are `CONFLICTING`.
+  Merging a 176-file PR with failing verification checks would violate the brief's "do not merge a
+  broken site", so they are left open and **flagged for owner review** (see `I-F5-01`). Each one is
+  more than 60 minutes old with no commits, so per the takeover rule a later integration session may
+  take them over; this session records the finding instead of resolving it.
+* **Editing another session's page body.** K-06 rewrites the navigation block that v2/v3/v4/v5 each
+  append to; it does not change any page's content, tables or numbers.
+* **Any claim of a fresh official read.** None is made.
+
+### Baseline verification (run before any edit, 2026-11-17)
+
+```
+python3 -m nba2.v2                 -> built 24 pages           python3 -m nba2.v2.check  -> OK - 0 structural, 0 semantic
+python3 -m nba2.v3                 -> 12 pages, 7/8 gates      python3 -m nba2.v3.check  -> OK - 0 structural, 0 semantic
+python3 -m nba2.v4                 -> 5 pages, 8/8 gates       python3 -m nba2.v4.check  -> 8 gates pass / 0 fail
+python3 -m nba2.v5                 -> 4 pages, 8/8 gates, nav injected into 42 pages
+python3 -m nba2.settlement_page    -> site/settlement.html
+git status --porcelain             -> 0 entries  (the committed tree is byte-identical to a rebuild)
+tools/crosscheck_site.py           -> 97 checks: 87 pass, 2 fail (CC-DOC-01, CC-FRESH-01), 8 info
+```
