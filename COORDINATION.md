@@ -4833,3 +4833,40 @@ required `git pull --rebase origin main` succeeded cleanly, and the only remaini
 latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
 matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
 site files were edited; they remain byte-identical to `origin/main`.
+
+## Session `arena/45f14c5c-nba2` — CLAIM (2026-11-17 UTC)
+
+**Base:** `d4fde59ba19d397e751a82415910a832bf497b5a` (main tip after the 2026-11-17T14:54:57Z
+bot capture). Branch is platform-fixed at `arena/45f14c5c-nba2`; no other branch is used.
+
+**Starting evidence (measured this session, not assumed):**
+- `gh run list` shows the nightly job `Nightly ingest + settlement` run
+  [44107633323](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323) finished
+  **failure** at 2026-11-17T14:5xZ. `data/raw/refresh_verdict.json` records
+  `injuries=success, finals=failure, rolling=failure, v4=success`. The `publish` job's step
+  `Rolling refresh must pass; unavailable finals may remain pending` failed and every rebuild /
+  gate / commit step after it was **skipped**, so nothing was republished.
+- The failure *reason text* is not retrievable from this sandbox: `gh api
+  .../actions/jobs/<id>/logs` returns `EOF` from the Actions results-blob host (only github.com,
+  codeload, api.github.com, registry.npmjs.org, pypi.org and files.pythonhosted.org are reachable
+  here). So this session cannot read the runner log, exactly as recorded by the previous session
+  (I-4F-02). **Therefore the pipeline must publish its own diagnostics into the repo** — that is
+  task 45-1 below.
+- Local test baseline on this base commit (all green): `nba2/tests` 79, `nba2/v2` 146,
+  `nba2/v3` 67, `nba2/v4` 61, `nba2/v5` 26, `backtest/tests` 49.
+
+**Task table**
+
+| ID | Task | Status | File scope |
+|---|---|---|---|
+| 45-0 | Claim, baseline, evidence capture | in progress | `COORDINATION.md`, `analysis/session-45f14c5c-*.md` |
+| 45-1 | Make every scheduled-ingest surface publish its own failure reason (bounded log) into `data/raw/refresh_<date>/logs/`, so a failed nightly run is diagnosable from the committed tree instead of an unreachable blob URL | pending | `.github/workflows/refresh.yml`, `tools/capture_surface_log.py` (+ tests), `tools/test_capture_surface_log.py` |
+| 45-2 | Measure, from a real GitHub-hosted runner, which of the four rolling endpoints (`stats.nba.com` JSON, `www.nba.com` HTML) actually answer — extend `probe-egress.yml` to probe the exact URLs and headers `nba2/v2/refresh.py` uses, and commit the raw bytes sample | pending | `.github/workflows/probe-egress.yml`, `data/raw/egress_probe.json`, `data/raw/probe/**` |
+| 45-3 | Re-read the four official surfaces for the current rolling slate and re-verify the published rows against them | pending | `analysis/session-45f14c5c-verification.md`, `data/raw/refresh_2026-11-17/**` |
+| 45-4 | Site: refresh the session-dependent pages (executive summary, questions, suggestions) and keep the Projection / Bet wall intact | pending | `nba2/v2/content.py`, `site/**` |
+| 45-5 | Final integration: rebuild, gates, parity, PR, merge, Pages deploy, post-deploy read of the live page | pending | repo-wide (integration only) |
+
+**Not touched:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `nba2/v3/**` model
+math, `nba2/v4` model math, `nba2/v5` transcripts, `backtest/**`, `dashboard/**`, `docs/**`,
+`originated/**`, `verified/**`, `archive/**`. Open PRs #112/#98/#82/#80/#78/#72/#70 are read for
+overlap but not edited.
