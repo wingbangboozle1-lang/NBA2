@@ -254,6 +254,90 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600248",
+      "matchup": "PHI@BKN",
+      "team": "BKN",
+      "opp": "PHI",
+      "team_minutes_s": 14402,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Michael Porter Jr.",
+          "min": "39:59",
+          "share": 0.1666,
+          "pts": 25,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Julius Randle",
+          "min": "33:54",
+          "share": 0.1412,
+          "pts": 33,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Nolan Traore",
+          "min": "29:57",
+          "share": 0.1248,
+          "pts": 23,
+          "reb": 1,
+          "ast": 4
+        },
+        {
+          "player": "Egor Demin",
+          "min": "26:06",
+          "share": 0.1087,
+          "pts": 9,
+          "reb": 3,
+          "ast": 4
+        },
+        {
+          "player": "Day'Ron Sharpe",
+          "min": "25:25",
+          "share": 0.1059,
+          "pts": 6,
+          "reb": 9,
+          "ast": 5
+        },
+        {
+          "player": "Noah Clowney",
+          "min": "24:20",
+          "share": 0.1014,
+          "pts": 9,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Keon Ellis",
+          "min": "20:12",
+          "share": 0.0842,
+          "pts": 8,
+          "reb": 2,
+          "ast": 0
+        },
+        {
+          "player": "Mikel Brown Jr.",
+          "min": "18:03",
+          "share": 0.0752,
+          "pts": 3,
+          "reb": 1,
+          "ast": 5
+        }
+      ],
+      "top8_share": 0.9079,
+      "dnp": [
+        {
+          "player": "Terance Mann",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+    },
+    {
       "date": "2026-11-15",
       "game_id": "0022600240",
       "matchup": "DAL@BOS",
@@ -336,6 +420,102 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600245",
+      "matchup": "ORL@BOS",
+      "team": "BOS",
+      "opp": "ORL",
+      "team_minutes_s": 14401,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Paul George",
+          "min": "36:05",
+          "share": 0.1503,
+          "pts": 22,
+          "reb": 8,
+          "ast": 3
+        },
+        {
+          "player": "Jayson Tatum",
+          "min": "36:03",
+          "share": 0.1502,
+          "pts": 24,
+          "reb": 12,
+          "ast": 4
+        },
+        {
+          "player": "Derrick White",
+          "min": "31:52",
+          "share": 0.1328,
+          "pts": 9,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Payton Pritchard",
+          "min": "31:40",
+          "share": 0.1319,
+          "pts": 21,
+          "reb": 4,
+          "ast": 5
+        },
+        {
+          "player": "Sam Hauser",
+          "min": "24:54",
+          "share": 0.1037,
+          "pts": 12,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Mitchell Robinson",
+          "min": "17:44",
+          "share": 0.0739,
+          "pts": 4,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Luka Garza",
+          "min": "17:33",
+          "share": 0.0731,
+          "pts": 3,
+          "reb": 0,
+          "ast": 4
+        },
+        {
+          "player": "Jordan Walsh",
+          "min": "16:36",
+          "share": 0.0692,
+          "pts": 6,
+          "reb": 2,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.8851,
+      "dnp": [
+        {
+          "player": "Amari Williams",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Dillon Mitchell",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Mike Conley",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Ron Harper Jr.",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf"
     },
     {
       "date": "2026-11-15",
@@ -584,6 +764,90 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600246",
+      "matchup": "CHI@CLE",
+      "team": "CHI",
+      "opp": "CLE",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Norman Powell",
+          "min": "32:57",
+          "share": 0.1373,
+          "pts": 27,
+          "reb": 2,
+          "ast": 6
+        },
+        {
+          "player": "Isaac Okoro",
+          "min": "32:11",
+          "share": 0.1341,
+          "pts": 13,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Matas Buzelis",
+          "min": "31:26",
+          "share": 0.131,
+          "pts": 23,
+          "reb": 3,
+          "ast": 0
+        },
+        {
+          "player": "Jalen Smith",
+          "min": "27:45",
+          "share": 0.1156,
+          "pts": 17,
+          "reb": 11,
+          "ast": 3
+        },
+        {
+          "player": "Josh Giddey",
+          "min": "23:48",
+          "share": 0.0992,
+          "pts": 4,
+          "reb": 4,
+          "ast": 8
+        },
+        {
+          "player": "Tre Jones",
+          "min": "23:00",
+          "share": 0.0958,
+          "pts": 16,
+          "reb": 2,
+          "ast": 6
+        },
+        {
+          "player": "Buddy Hield",
+          "min": "19:06",
+          "share": 0.0796,
+          "pts": 6,
+          "reb": 4,
+          "ast": 2
+        },
+        {
+          "player": "Nic Claxton",
+          "min": "16:38",
+          "share": 0.0693,
+          "pts": 8,
+          "reb": 2,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.8619,
+      "dnp": [
+        {
+          "player": "Zach Collins",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+    },
+    {
       "date": "2026-11-13",
       "game_id": "0022600036",
       "matchup": "CLE@MIA",
@@ -753,6 +1017,94 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600246",
+      "matchup": "CHI@CLE",
+      "team": "CLE",
+      "opp": "CHI",
+      "team_minutes_s": 14400,
+      "n_played": 10,
+      "top8": [
+        {
+          "player": "Donovan Mitchell",
+          "min": "35:51",
+          "share": 0.1494,
+          "pts": 39,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "James Harden",
+          "min": "34:22",
+          "share": 0.1432,
+          "pts": 9,
+          "reb": 4,
+          "ast": 10
+        },
+        {
+          "player": "Jarrett Allen",
+          "min": "30:12",
+          "share": 0.1258,
+          "pts": 13,
+          "reb": 14,
+          "ast": 3
+        },
+        {
+          "player": "Meleek Thomas",
+          "min": "30:03",
+          "share": 0.1252,
+          "pts": 10,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Tyrese Proctor",
+          "min": "28:54",
+          "share": 0.1204,
+          "pts": 17,
+          "reb": 3,
+          "ast": 2
+        },
+        {
+          "player": "Peyton Watson",
+          "min": "21:31",
+          "share": 0.0897,
+          "pts": 14,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "Thomas Bryant",
+          "min": "17:48",
+          "share": 0.0742,
+          "pts": 9,
+          "reb": 5,
+          "ast": 4
+        },
+        {
+          "player": "Mario Hezonja",
+          "min": "14:46",
+          "share": 0.0615,
+          "pts": 9,
+          "reb": 4,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8894,
+      "dnp": [
+        {
+          "player": "Khalifa Diop",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Riley Minix",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
     },
     {
       "date": "2026-11-14",
@@ -1022,6 +1374,94 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600252",
+      "matchup": "PHX@DEN",
+      "team": "DEN",
+      "opp": "PHX",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Nikola Jokic",
+          "min": "38:00",
+          "share": 0.1583,
+          "pts": 28,
+          "reb": 15,
+          "ast": 7
+        },
+        {
+          "player": "Jamal Murray",
+          "min": "34:41",
+          "share": 0.1445,
+          "pts": 28,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Christian Braun",
+          "min": "33:17",
+          "share": 0.1387,
+          "pts": 10,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Cameron Johnson",
+          "min": "27:10",
+          "share": 0.1132,
+          "pts": 9,
+          "reb": 0,
+          "ast": 1
+        },
+        {
+          "player": "Aaron Gordon",
+          "min": "24:12",
+          "share": 0.1008,
+          "pts": 11,
+          "reb": 1,
+          "ast": 1
+        },
+        {
+          "player": "Trevon Brazile",
+          "min": "23:12",
+          "share": 0.0967,
+          "pts": 9,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "Spencer Jones",
+          "min": "21:22",
+          "share": 0.089,
+          "pts": 4,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "DeMar DeRozan",
+          "min": "14:08",
+          "share": 0.0589,
+          "pts": 2,
+          "reb": 1,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.9001,
+      "dnp": [
+        {
+          "player": "Alpha Diallo",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Zeke Nnaji",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf"
+    },
+    {
       "date": "2026-11-14",
       "game_id": "0022600233",
       "matchup": "DET@MIA",
@@ -1178,6 +1618,85 @@
       "dnp": [],
       "dnp_captured": false,
       "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600251",
+      "matchup": "GSW@NOP",
+      "team": "GSW",
+      "opp": "NOP",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Yaxel Lendeborg",
+          "min": "32:39",
+          "share": 0.136,
+          "pts": 28,
+          "reb": 8,
+          "ast": 3
+        },
+        {
+          "player": "Brandin Podziemski",
+          "min": "29:38",
+          "share": 0.1235,
+          "pts": 15,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Draymond Green",
+          "min": "24:48",
+          "share": 0.1033,
+          "pts": 2,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "LJ Cryer",
+          "min": "24:09",
+          "share": 0.1006,
+          "pts": 7,
+          "reb": 1,
+          "ast": 3
+        },
+        {
+          "player": "Will Richard",
+          "min": "23:25",
+          "share": 0.0976,
+          "pts": 11,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "De'Anthony Melton",
+          "min": "20:37",
+          "share": 0.0859,
+          "pts": 8,
+          "reb": 2,
+          "ast": 1
+        },
+        {
+          "player": "Gui Santos",
+          "min": "18:56",
+          "share": 0.0789,
+          "pts": 12,
+          "reb": 7,
+          "ast": 2
+        },
+        {
+          "player": "Charles Bassey",
+          "min": "15:51",
+          "share": 0.066,
+          "pts": 4,
+          "reb": 0,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.7919,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
     },
     {
       "date": "2026-11-13",
@@ -1345,6 +1864,98 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600249",
+      "matchup": "HOU@MIA",
+      "team": "HOU",
+      "opp": "MIA",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Jabari Smith Jr.",
+          "min": "31:56",
+          "share": 0.1331,
+          "pts": 12,
+          "reb": 10,
+          "ast": 1
+        },
+        {
+          "player": "Alperen Sengun",
+          "min": "29:48",
+          "share": 0.1242,
+          "pts": 23,
+          "reb": 7,
+          "ast": 2
+        },
+        {
+          "player": "Kevin Durant",
+          "min": "28:42",
+          "share": 0.1196,
+          "pts": 22,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Tari Eason",
+          "min": "27:28",
+          "share": 0.1144,
+          "pts": 7,
+          "reb": 7,
+          "ast": 3
+        },
+        {
+          "player": "Fred VanVleet",
+          "min": "25:56",
+          "share": 0.1081,
+          "pts": 8,
+          "reb": 5,
+          "ast": 6
+        },
+        {
+          "player": "Bogdan Bogdanovic",
+          "min": "25:47",
+          "share": 0.1074,
+          "pts": 6,
+          "reb": 0,
+          "ast": 1
+        },
+        {
+          "player": "Isaiah Crawford",
+          "min": "21:14",
+          "share": 0.0885,
+          "pts": 11,
+          "reb": 10,
+          "ast": 3
+        },
+        {
+          "player": "Reed Sheppard",
+          "min": "18:51",
+          "share": 0.0785,
+          "pts": 5,
+          "reb": 2,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8738,
+      "dnp": [
+        {
+          "player": "Amen Thompson",
+          "status": "DND - Left Knee Soreness"
+        },
+        {
+          "player": "Marcus Smart",
+          "status": "NWT - League Suspension"
+        },
+        {
+          "player": "Steven Adams",
+          "status": "DND - Left Lower Leg Injury Management"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
     },
     {
       "date": "2026-11-13",
@@ -1945,6 +2556,85 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600247",
+      "matchup": "MEM@WAS",
+      "team": "MEM",
+      "opp": "WAS",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Cam Spencer",
+          "min": "31:40",
+          "share": 0.1319,
+          "pts": 12,
+          "reb": 6,
+          "ast": 9
+        },
+        {
+          "player": "Cameron Boozer",
+          "min": "29:23",
+          "share": 0.1224,
+          "pts": 29,
+          "reb": 7,
+          "ast": 7
+        },
+        {
+          "player": "Javon Small",
+          "min": "28:57",
+          "share": 0.1206,
+          "pts": 12,
+          "reb": 5,
+          "ast": 12
+        },
+        {
+          "player": "Jaylen Wells",
+          "min": "26:52",
+          "share": 0.1119,
+          "pts": 8,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Cedric Coward",
+          "min": "26:50",
+          "share": 0.1118,
+          "pts": 18,
+          "reb": 8,
+          "ast": 6
+        },
+        {
+          "player": "Jerami Grant",
+          "min": "23:06",
+          "share": 0.0963,
+          "pts": 8,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Zach Edey",
+          "min": "20:43",
+          "share": 0.0863,
+          "pts": 23,
+          "reb": 10,
+          "ast": 1
+        },
+        {
+          "player": "Taylor Hendricks",
+          "min": "18:30",
+          "share": 0.0771,
+          "pts": 9,
+          "reb": 3,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.8584,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+    },
+    {
       "date": "2026-11-13",
       "game_id": "0022600036",
       "matchup": "CLE@MIA",
@@ -2114,6 +2804,98 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600249",
+      "matchup": "HOU@MIA",
+      "team": "MIA",
+      "opp": "HOU",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Andrew Wiggins",
+          "min": "34:14",
+          "share": 0.1426,
+          "pts": 17,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Davion Mitchell",
+          "min": "33:16",
+          "share": 0.1386,
+          "pts": 16,
+          "reb": 3,
+          "ast": 10
+        },
+        {
+          "player": "Ryan Conwell",
+          "min": "30:27",
+          "share": 0.1269,
+          "pts": 14,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "min": "28:32",
+          "share": 0.1189,
+          "pts": 20,
+          "reb": 13,
+          "ast": 6
+        },
+        {
+          "player": "Myron Gardner",
+          "min": "24:28",
+          "share": 0.1019,
+          "pts": 14,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Bobby Portis Jr.",
+          "min": "23:20",
+          "share": 0.0972,
+          "pts": 16,
+          "reb": 6,
+          "ast": 0
+        },
+        {
+          "player": "Klay Thompson",
+          "min": "22:24",
+          "share": 0.0933,
+          "pts": 17,
+          "reb": 0,
+          "ast": 2
+        },
+        {
+          "player": "Simone Fontecchio",
+          "min": "19:09",
+          "share": 0.0798,
+          "pts": 10,
+          "reb": 6,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.8993,
+      "dnp": [
+        {
+          "player": "Dru Smith",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Pelle Larsson",
+          "status": "DND - Illness"
+        },
+        {
+          "player": "Tim Hardaway Jr.",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
     },
     {
       "date": "2026-11-13",
@@ -2375,6 +3157,85 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600250",
+      "matchup": "POR@MIN",
+      "team": "MIN",
+      "opp": "POR",
+      "team_minutes_s": 14400,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Terrence Shannon Jr",
+          "min": "35:11",
+          "share": 0.1466,
+          "pts": 34,
+          "reb": 3,
+          "ast": 6
+        },
+        {
+          "player": "Rudy Gobert",
+          "min": "32:01",
+          "share": 0.1334,
+          "pts": 18,
+          "reb": 15,
+          "ast": 3
+        },
+        {
+          "player": "Jaden McDaniels",
+          "min": "31:09",
+          "share": 0.1298,
+          "pts": 13,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Ayo Dosunmu",
+          "min": "29:32",
+          "share": 0.1231,
+          "pts": 8,
+          "reb": 5,
+          "ast": 2
+        },
+        {
+          "player": "Jonathan Kuminga",
+          "min": "29:24",
+          "share": 0.1225,
+          "pts": 13,
+          "reb": 9,
+          "ast": 1
+        },
+        {
+          "player": "LaMelo Ball",
+          "min": "23:37",
+          "share": 0.0984,
+          "pts": 6,
+          "reb": 5,
+          "ast": 0
+        },
+        {
+          "player": "Trey Lyles",
+          "min": "19:24",
+          "share": 0.0808,
+          "pts": 9,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Joan Beringer",
+          "min": "15:47",
+          "share": 0.0658,
+          "pts": 0,
+          "reb": 4,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9003,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf"
+    },
+    {
       "date": "2026-11-13",
       "game_id": "0022600038",
       "matchup": "MEM@NOP",
@@ -2548,6 +3409,90 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600251",
+      "matchup": "GSW@NOP",
+      "team": "NOP",
+      "opp": "GSW",
+      "team_minutes_s": 14401,
+      "n_played": 12,
+      "top8": [
+        {
+          "player": "Saddiq Bey",
+          "min": "32:35",
+          "share": 0.1358,
+          "pts": 23,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Jordan Poole",
+          "min": "30:46",
+          "share": 0.1282,
+          "pts": 11,
+          "reb": 2,
+          "ast": 5
+        },
+        {
+          "player": "Jeremiah Fears",
+          "min": "29:07",
+          "share": 0.1213,
+          "pts": 19,
+          "reb": 10,
+          "ast": 10
+        },
+        {
+          "player": "Zion Williamson",
+          "min": "24:57",
+          "share": 0.104,
+          "pts": 16,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Herbert Jones",
+          "min": "23:46",
+          "share": 0.099,
+          "pts": 8,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Yves Missi",
+          "min": "22:54",
+          "share": 0.0954,
+          "pts": 6,
+          "reb": 14,
+          "ast": 1
+        },
+        {
+          "player": "Derik Queen",
+          "min": "20:37",
+          "share": 0.0859,
+          "pts": 17,
+          "reb": 10,
+          "ast": 0
+        },
+        {
+          "player": "Karlo Matkovic",
+          "min": "20:06",
+          "share": 0.0837,
+          "pts": 3,
+          "reb": 2,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.8533,
+      "dnp": [
+        {
+          "player": "DeAndre Jordan",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
     },
     {
       "date": "2026-11-13",
@@ -2954,6 +3899,98 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_MILORL_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600245",
+      "matchup": "ORL@BOS",
+      "team": "ORL",
+      "opp": "BOS",
+      "team_minutes_s": 14400,
+      "n_played": 9,
+      "top8": [
+        {
+          "player": "Desmond Bane",
+          "min": "39:13",
+          "share": 0.1634,
+          "pts": 24,
+          "reb": 8,
+          "ast": 5
+        },
+        {
+          "player": "Franz Wagner",
+          "min": "37:34",
+          "share": 0.1565,
+          "pts": 21,
+          "reb": 8,
+          "ast": 9
+        },
+        {
+          "player": "Anthony Black",
+          "min": "32:56",
+          "share": 0.1372,
+          "pts": 20,
+          "reb": 2,
+          "ast": 7
+        },
+        {
+          "player": "Tristan da Silva",
+          "min": "31:13",
+          "share": 0.1301,
+          "pts": 13,
+          "reb": 6,
+          "ast": 3
+        },
+        {
+          "player": "Wendell Carter Jr.",
+          "min": "28:05",
+          "share": 0.117,
+          "pts": 10,
+          "reb": 3,
+          "ast": 1
+        },
+        {
+          "player": "Jalen Suggs",
+          "min": "24:37",
+          "share": 0.1026,
+          "pts": 12,
+          "reb": 6,
+          "ast": 4
+        },
+        {
+          "player": "Goga Bitadze",
+          "min": "19:55",
+          "share": 0.083,
+          "pts": 10,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Jamal Cain",
+          "min": "14:39",
+          "share": 0.061,
+          "pts": 2,
+          "reb": 5,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9508,
+      "dnp": [
+        {
+          "player": "Alex Morales",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jase Richardson",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Nikola Vucevic",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf"
+    },
+    {
       "date": "2026-11-15",
       "game_id": "0022600236",
       "matchup": "IND@PHI",
@@ -3040,6 +4077,90 @@
       ],
       "dnp_captured": true,
       "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600248",
+      "matchup": "PHI@BKN",
+      "team": "PHI",
+      "opp": "BKN",
+      "team_minutes_s": 14403,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Tyrese Maxey",
+          "min": "34:55",
+          "share": 0.1455,
+          "pts": 24,
+          "reb": 1,
+          "ast": 9
+        },
+        {
+          "player": "Jaylen Brown",
+          "min": "33:15",
+          "share": 0.1385,
+          "pts": 31,
+          "reb": 13,
+          "ast": 4
+        },
+        {
+          "player": "VJ Edgecombe",
+          "min": "33:05",
+          "share": 0.1378,
+          "pts": 14,
+          "reb": 9,
+          "ast": 4
+        },
+        {
+          "player": "Joel Embiid",
+          "min": "32:10",
+          "share": 0.134,
+          "pts": 37,
+          "reb": 5,
+          "ast": 1
+        },
+        {
+          "player": "Dean Wade",
+          "min": "32:01",
+          "share": 0.1334,
+          "pts": 8,
+          "reb": 11,
+          "ast": 1
+        },
+        {
+          "player": "Kentavious Caldwell-Pope",
+          "min": "31:17",
+          "share": 0.1303,
+          "pts": 0,
+          "reb": 2,
+          "ast": 3
+        },
+        {
+          "player": "Anfernee Simons",
+          "min": "25:57",
+          "share": 0.1081,
+          "pts": 9,
+          "reb": 1,
+          "ast": 2
+        },
+        {
+          "player": "Jabari Walker",
+          "min": "16:26",
+          "share": 0.0685,
+          "pts": 12,
+          "reb": 5,
+          "ast": 1
+        }
+      ],
+      "top8_share": 0.996,
+      "dnp": [
+        {
+          "player": "Justin Edwards",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
     },
     {
       "date": "2026-11-15",
@@ -3138,6 +4259,102 @@
       "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf"
     },
     {
+      "date": "2026-11-16",
+      "game_id": "0022600252",
+      "matchup": "PHX@DEN",
+      "team": "PHX",
+      "opp": "DEN",
+      "team_minutes_s": 14400,
+      "n_played": 11,
+      "top8": [
+        {
+          "player": "Devin Booker",
+          "min": "37:16",
+          "share": 0.1553,
+          "pts": 20,
+          "reb": 4,
+          "ast": 8
+        },
+        {
+          "player": "Oso Ighodaro",
+          "min": "33:03",
+          "share": 0.1377,
+          "pts": 8,
+          "reb": 11,
+          "ast": 3
+        },
+        {
+          "player": "Miles Bridges",
+          "min": "28:42",
+          "share": 0.1196,
+          "pts": 16,
+          "reb": 8,
+          "ast": 2
+        },
+        {
+          "player": "Dillon Brooks",
+          "min": "27:14",
+          "share": 0.1135,
+          "pts": 15,
+          "reb": 4,
+          "ast": 4
+        },
+        {
+          "player": "Jalen Green",
+          "min": "26:31",
+          "share": 0.1105,
+          "pts": 16,
+          "reb": 5,
+          "ast": 3
+        },
+        {
+          "player": "Collin Gillespie",
+          "min": "26:20",
+          "share": 0.1097,
+          "pts": 10,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Jordan Goodwin",
+          "min": "19:52",
+          "share": 0.0828,
+          "pts": 11,
+          "reb": 6,
+          "ast": 2
+        },
+        {
+          "player": "Luke Kennard",
+          "min": "17:23",
+          "share": 0.0724,
+          "pts": 12,
+          "reb": 2,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9015,
+      "dnp": [
+        {
+          "player": "Duop Reath",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Jamaree Bouyea",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Pat Spencer",
+          "status": "DNP - Coach's Decision"
+        },
+        {
+          "player": "Rasheer Fleming",
+          "status": "DNP - Coach's Decision"
+        }
+      ],
+      "dnp_captured": true,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf"
+    },
+    {
       "date": "2026-11-13",
       "game_id": "0022600041",
       "matchup": "POR@SAC",
@@ -3215,6 +4432,85 @@
       "dnp": [],
       "dnp_captured": false,
       "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_PORSAC_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600250",
+      "matchup": "POR@MIN",
+      "team": "POR",
+      "opp": "MIN",
+      "team_minutes_s": 14402,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Deni Avdija",
+          "min": "29:50",
+          "share": 0.1243,
+          "pts": 27,
+          "reb": 8,
+          "ast": 4
+        },
+        {
+          "player": "Sidy Cissoko",
+          "min": "27:35",
+          "share": 0.1149,
+          "pts": 5,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Toumani Camara",
+          "min": "25:30",
+          "share": 0.1062,
+          "pts": 3,
+          "reb": 0,
+          "ast": 0
+        },
+        {
+          "player": "Jrue Holiday",
+          "min": "25:09",
+          "share": 0.1048,
+          "pts": 10,
+          "reb": 4,
+          "ast": 3
+        },
+        {
+          "player": "Damian Lillard",
+          "min": "23:36",
+          "share": 0.0983,
+          "pts": 9,
+          "reb": 2,
+          "ast": 4
+        },
+        {
+          "player": "Scoot Henderson",
+          "min": "22:40",
+          "share": 0.0944,
+          "pts": 10,
+          "reb": 1,
+          "ast": 0
+        },
+        {
+          "player": "Donovan Clingan",
+          "min": "22:27",
+          "share": 0.0935,
+          "pts": 10,
+          "reb": 10,
+          "ast": 1
+        },
+        {
+          "player": "Robert Williams III",
+          "min": "15:29",
+          "share": 0.0645,
+          "pts": 2,
+          "reb": 5,
+          "ast": 2
+        }
+      ],
+      "top8_share": 0.801,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf"
     },
     {
       "date": "2026-11-13",
@@ -3891,6 +5187,85 @@
       "dnp": [],
       "dnp_captured": false,
       "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600247",
+      "matchup": "MEM@WAS",
+      "team": "WAS",
+      "opp": "MEM",
+      "team_minutes_s": 14400,
+      "n_played": 13,
+      "top8": [
+        {
+          "player": "Kyshawn George",
+          "min": "38:01",
+          "share": 0.1584,
+          "pts": 18,
+          "reb": 6,
+          "ast": 1
+        },
+        {
+          "player": "Anthony Davis",
+          "min": "34:41",
+          "share": 0.1445,
+          "pts": 23,
+          "reb": 4,
+          "ast": 0
+        },
+        {
+          "player": "Trae Young",
+          "min": "33:02",
+          "share": 0.1376,
+          "pts": 13,
+          "reb": 2,
+          "ast": 12
+        },
+        {
+          "player": "AJ Dybantsa",
+          "min": "32:06",
+          "share": 0.1338,
+          "pts": 21,
+          "reb": 5,
+          "ast": 3
+        },
+        {
+          "player": "Alex Sarr",
+          "min": "30:44",
+          "share": 0.1281,
+          "pts": 6,
+          "reb": 4,
+          "ast": 1
+        },
+        {
+          "player": "Tre Johnson",
+          "min": "20:43",
+          "share": 0.0863,
+          "pts": 9,
+          "reb": 1,
+          "ast": 3
+        },
+        {
+          "player": "Khris Middleton",
+          "min": "17:59",
+          "share": 0.0749,
+          "pts": 9,
+          "reb": 3,
+          "ast": 3
+        },
+        {
+          "player": "Bilal Coulibaly",
+          "min": "15:34",
+          "share": 0.0649,
+          "pts": 11,
+          "reb": 5,
+          "ast": 0
+        }
+      ],
+      "top8_share": 0.9285,
+      "dnp": [],
+      "dnp_captured": false,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
     }
   ],
   "replacement_shares": [
@@ -3958,13 +5333,247 @@
       ]
     },
     {
-      "team": "CHI",
-      "player": "Jalen Smith",
+      "team": "BKN",
+      "player": "Drake Powell",
       "n_games_in_window": 2,
       "games_played": 1,
       "games_out": 1,
-      "avg_min_share_when_playing": 0.1192,
-      "avg_min_when_playing_s": 1895,
+      "avg_min_share_when_playing": 0.0074,
+      "avg_min_when_playing_s": 106,
+      "replacements": [
+        {
+          "player": "Michael Porter Jr.",
+          "share_delta": 0.1666,
+          "minutes_delta": 2399,
+          "share_with": 0.0,
+          "share_without": 0.1666,
+          "minutes_with": 0,
+          "minutes_without": 2399
+        },
+        {
+          "player": "Keon Ellis",
+          "share_delta": 0.0544,
+          "minutes_delta": 784,
+          "share_with": 0.0297,
+          "share_without": 0.0842,
+          "minutes_with": 428,
+          "minutes_without": 1212
+        },
+        {
+          "player": "Nolan Traore",
+          "share_delta": 0.0423,
+          "minutes_delta": 609,
+          "share_with": 0.0825,
+          "share_without": 0.1248,
+          "minutes_with": 1188,
+          "minutes_without": 1797
+        },
+        {
+          "player": "Julius Randle",
+          "share_delta": 0.0105,
+          "minutes_delta": 151,
+          "share_with": 0.1308,
+          "share_without": 0.1412,
+          "minutes_with": 1883,
+          "minutes_without": 2034
+        }
+      ],
+      "top_replacement": "Michael Porter Jr.",
+      "top_replacement_minutes_delta": 2399,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+      ]
+    },
+    {
+      "team": "BKN",
+      "player": "Josh Minott",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0074,
+      "avg_min_when_playing_s": 106,
+      "replacements": [
+        {
+          "player": "Michael Porter Jr.",
+          "share_delta": 0.1666,
+          "minutes_delta": 2399,
+          "share_with": 0.0,
+          "share_without": 0.1666,
+          "minutes_with": 0,
+          "minutes_without": 2399
+        },
+        {
+          "player": "Keon Ellis",
+          "share_delta": 0.0544,
+          "minutes_delta": 784,
+          "share_with": 0.0297,
+          "share_without": 0.0842,
+          "minutes_with": 428,
+          "minutes_without": 1212
+        },
+        {
+          "player": "Nolan Traore",
+          "share_delta": 0.0423,
+          "minutes_delta": 609,
+          "share_with": 0.0825,
+          "share_without": 0.1248,
+          "minutes_with": 1188,
+          "minutes_without": 1797
+        },
+        {
+          "player": "Julius Randle",
+          "share_delta": 0.0105,
+          "minutes_delta": 151,
+          "share_with": 0.1308,
+          "share_without": 0.1412,
+          "minutes_with": 1883,
+          "minutes_without": 2034
+        }
+      ],
+      "top_replacement": "Michael Porter Jr.",
+      "top_replacement_minutes_delta": 2399,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+      ]
+    },
+    {
+      "team": "BOS",
+      "player": "Neemias Queta",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.064,
+      "avg_min_when_playing_s": 921,
+      "replacements": [
+        {
+          "player": "Sam Hauser",
+          "share_delta": 0.0585,
+          "minutes_delta": 843,
+          "share_with": 0.0452,
+          "share_without": 0.1037,
+          "minutes_with": 651,
+          "minutes_without": 1494
+        },
+        {
+          "player": "Payton Pritchard",
+          "share_delta": 0.053,
+          "minutes_delta": 764,
+          "share_with": 0.0789,
+          "share_without": 0.1319,
+          "minutes_with": 1136,
+          "minutes_without": 1900
+        },
+        {
+          "player": "Paul George",
+          "share_delta": 0.0468,
+          "minutes_delta": 674,
+          "share_with": 0.1035,
+          "share_without": 0.1503,
+          "minutes_with": 1491,
+          "minutes_without": 2165
+        },
+        {
+          "player": "Derrick White",
+          "share_delta": 0.0372,
+          "minutes_delta": 536,
+          "share_with": 0.0956,
+          "share_without": 0.1328,
+          "minutes_with": 1376,
+          "minutes_without": 1912
+        },
+        {
+          "player": "Jayson Tatum",
+          "share_delta": 0.0246,
+          "minutes_delta": 355,
+          "share_with": 0.1256,
+          "share_without": 0.1502,
+          "minutes_with": 1808,
+          "minutes_without": 2163
+        }
+      ],
+      "top_replacement": "Sam Hauser",
+      "top_replacement_minutes_delta": 843,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf"
+      ]
+    },
+    {
+      "team": "BOS",
+      "player": "Devin Carter",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.05,
+      "avg_min_when_playing_s": 720,
+      "replacements": [
+        {
+          "player": "Sam Hauser",
+          "share_delta": 0.0585,
+          "minutes_delta": 843,
+          "share_with": 0.0452,
+          "share_without": 0.1037,
+          "minutes_with": 651,
+          "minutes_without": 1494
+        },
+        {
+          "player": "Payton Pritchard",
+          "share_delta": 0.053,
+          "minutes_delta": 764,
+          "share_with": 0.0789,
+          "share_without": 0.1319,
+          "minutes_with": 1136,
+          "minutes_without": 1900
+        },
+        {
+          "player": "Paul George",
+          "share_delta": 0.0468,
+          "minutes_delta": 674,
+          "share_with": 0.1035,
+          "share_without": 0.1503,
+          "minutes_with": 1491,
+          "minutes_without": 2165
+        },
+        {
+          "player": "Derrick White",
+          "share_delta": 0.0372,
+          "minutes_delta": 536,
+          "share_with": 0.0956,
+          "share_without": 0.1328,
+          "minutes_with": 1376,
+          "minutes_without": 1912
+        },
+        {
+          "player": "Jayson Tatum",
+          "share_delta": 0.0246,
+          "minutes_delta": 355,
+          "share_with": 0.1256,
+          "share_without": 0.1502,
+          "minutes_with": 1808,
+          "minutes_without": 2163
+        }
+      ],
+      "top_replacement": "Sam Hauser",
+      "top_replacement_minutes_delta": 843,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf"
+      ]
+    },
+    {
+      "team": "CHI",
+      "player": "Jalen Smith",
+      "n_games_in_window": 3,
+      "games_played": 2,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1174,
+      "avg_min_when_playing_s": 1780,
       "replacements": [
         {
           "player": "Zach Collins",
@@ -3977,57 +5586,58 @@
         },
         {
           "player": "Leonard Miller",
-          "share_delta": 0.0721,
-          "minutes_delta": 1038,
-          "share_with": 0.0,
+          "share_delta": 0.0705,
+          "minutes_delta": 1014,
+          "share_with": 0.0016,
           "share_without": 0.0721,
-          "minutes_with": 0,
+          "minutes_with": 24,
           "minutes_without": 1038
         },
         {
+          "player": "Patrick Williams",
+          "share_delta": 0.034,
+          "minutes_delta": 420,
+          "share_with": 0.073,
+          "share_without": 0.107,
+          "minutes_with": 1120,
+          "minutes_without": 1541
+        },
+        {
           "player": "Tre Jones",
-          "share_delta": 0.046,
-          "minutes_delta": 579,
-          "share_with": 0.0552,
+          "share_delta": 0.0257,
+          "minutes_delta": 328,
+          "share_with": 0.0755,
           "share_without": 0.1012,
-          "minutes_with": 878,
+          "minutes_with": 1129,
           "minutes_without": 1457
         },
         {
           "player": "Matas Buzelis",
-          "share_delta": 0.0163,
-          "minutes_delta": 73,
-          "share_with": 0.1079,
+          "share_delta": 0.0047,
+          "minutes_delta": -12,
+          "share_with": 0.1194,
           "share_without": 0.1242,
-          "minutes_with": 1715,
+          "minutes_with": 1800,
           "minutes_without": 1788
-        },
-        {
-          "player": "Patrick Williams",
-          "share_delta": 0.0149,
-          "minutes_delta": 76,
-          "share_with": 0.0921,
-          "share_without": 0.107,
-          "minutes_with": 1465,
-          "minutes_without": 1541
         }
       ],
       "top_replacement": "Zach Collins",
       "top_replacement_minutes_delta": 1691,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
       ]
     },
     {
       "team": "CHI",
       "player": "Nic Claxton",
-      "n_games_in_window": 2,
-      "games_played": 1,
+      "n_games_in_window": 3,
+      "games_played": 2,
       "games_out": 1,
-      "avg_min_share_when_playing": 0.0814,
-      "avg_min_when_playing_s": 1294,
+      "avg_min_share_when_playing": 0.0753,
+      "avg_min_when_playing_s": 1146,
       "replacements": [
         {
           "player": "Zach Collins",
@@ -4040,76 +5650,122 @@
         },
         {
           "player": "Leonard Miller",
-          "share_delta": 0.0721,
-          "minutes_delta": 1038,
-          "share_with": 0.0,
+          "share_delta": 0.0705,
+          "minutes_delta": 1014,
+          "share_with": 0.0016,
           "share_without": 0.0721,
-          "minutes_with": 0,
+          "minutes_with": 24,
           "minutes_without": 1038
         },
         {
+          "player": "Patrick Williams",
+          "share_delta": 0.034,
+          "minutes_delta": 420,
+          "share_with": 0.073,
+          "share_without": 0.107,
+          "minutes_with": 1120,
+          "minutes_without": 1541
+        },
+        {
           "player": "Tre Jones",
-          "share_delta": 0.046,
-          "minutes_delta": 579,
-          "share_with": 0.0552,
+          "share_delta": 0.0257,
+          "minutes_delta": 328,
+          "share_with": 0.0755,
           "share_without": 0.1012,
-          "minutes_with": 878,
+          "minutes_with": 1129,
           "minutes_without": 1457
         },
         {
           "player": "Matas Buzelis",
-          "share_delta": 0.0163,
-          "minutes_delta": 73,
-          "share_with": 0.1079,
+          "share_delta": 0.0047,
+          "minutes_delta": -12,
+          "share_with": 0.1194,
           "share_without": 0.1242,
-          "minutes_with": 1715,
+          "minutes_with": 1800,
           "minutes_without": 1788
-        },
-        {
-          "player": "Patrick Williams",
-          "share_delta": 0.0149,
-          "minutes_delta": 76,
-          "share_with": 0.0921,
-          "share_without": 0.107,
-          "minutes_with": 1465,
-          "minutes_without": 1541
         }
       ],
       "top_replacement": "Zach Collins",
       "top_replacement_minutes_delta": 1691,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+      ]
+    },
+    {
+      "team": "CHI",
+      "player": "Dailyn Swain",
+      "n_games_in_window": 3,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0076,
+      "avg_min_when_playing_s": 110,
+      "replacements": [
+        {
+          "player": "Zach Collins",
+          "share_delta": 0.1174,
+          "minutes_delta": 1691,
+          "share_with": 0.0,
+          "share_without": 0.1174,
+          "minutes_with": 0,
+          "minutes_without": 1691
+        },
+        {
+          "player": "Leonard Miller",
+          "share_delta": 0.0688,
+          "minutes_delta": 991,
+          "share_with": 0.0033,
+          "share_without": 0.0721,
+          "minutes_with": 47,
+          "minutes_without": 1038
+        },
+        {
+          "player": "Patrick Williams",
+          "share_delta": 0.0531,
+          "minutes_delta": 765,
+          "share_with": 0.0539,
+          "share_without": 0.107,
+          "minutes_with": 776,
+          "minutes_without": 1541
+        },
+        {
+          "player": "Josh Giddey",
+          "share_delta": 0.0101,
+          "minutes_delta": 146,
+          "share_with": 0.0992,
+          "share_without": 0.1093,
+          "minutes_with": 1428,
+          "minutes_without": 1574
+        },
+        {
+          "player": "Tre Jones",
+          "share_delta": 0.0053,
+          "minutes_delta": 77,
+          "share_with": 0.0958,
+          "share_without": 0.1012,
+          "minutes_with": 1380,
+          "minutes_without": 1457
+        }
+      ],
+      "top_replacement": "Zach Collins",
+      "top_replacement_minutes_delta": 1691,
+      "window_note": "1 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
       ]
     },
     {
       "team": "CLE",
       "player": "James Harden",
-      "n_games_in_window": 2,
-      "games_played": 1,
+      "n_games_in_window": 3,
+      "games_played": 2,
       "games_out": 1,
-      "avg_min_share_when_playing": 0.1451,
-      "avg_min_when_playing_s": 2089,
+      "avg_min_share_when_playing": 0.1441,
+      "avg_min_when_playing_s": 2076,
       "replacements": [
-        {
-          "player": "Norchad Omier",
-          "share_delta": 0.1115,
-          "minutes_delta": 1605,
-          "share_with": 0.0,
-          "share_without": 0.1115,
-          "minutes_with": 0,
-          "minutes_without": 1605
-        },
-        {
-          "player": "Mario Hezonja",
-          "share_delta": 0.1029,
-          "minutes_delta": 1482,
-          "share_with": 0.039,
-          "share_without": 0.1419,
-          "minutes_with": 561,
-          "minutes_without": 2043
-        },
         {
           "player": "Riley Minix",
           "share_delta": 0.0924,
@@ -4120,59 +5776,60 @@
           "minutes_without": 1330
         },
         {
-          "player": "Craig Porter Jr.",
-          "share_delta": 0.0788,
-          "minutes_delta": 1134,
-          "share_with": 0.0394,
-          "share_without": 0.1182,
-          "minutes_with": 568,
-          "minutes_without": 1702
+          "player": "Mario Hezonja",
+          "share_delta": 0.0916,
+          "minutes_delta": 1320,
+          "share_with": 0.0502,
+          "share_without": 0.1419,
+          "minutes_with": 724,
+          "minutes_without": 2043
         },
         {
-          "player": "Meleek Thomas",
-          "share_delta": 0.0652,
-          "minutes_delta": 939,
-          "share_with": 0.0746,
-          "share_without": 0.1398,
-          "minutes_with": 1074,
-          "minutes_without": 2013
+          "player": "Norchad Omier",
+          "share_delta": 0.0845,
+          "minutes_delta": 1218,
+          "share_with": 0.0269,
+          "share_without": 0.1115,
+          "minutes_with": 388,
+          "minutes_without": 1605
+        },
+        {
+          "player": "Jaylon Tyson",
+          "share_delta": 0.0778,
+          "minutes_delta": 1121,
+          "share_with": 0.0622,
+          "share_without": 0.1401,
+          "minutes_with": 896,
+          "minutes_without": 2017
+        },
+        {
+          "player": "Craig Porter Jr.",
+          "share_delta": 0.0701,
+          "minutes_delta": 1009,
+          "share_with": 0.0481,
+          "share_without": 0.1182,
+          "minutes_with": 693,
+          "minutes_without": 1702
         }
       ],
-      "top_replacement": "Norchad Omier",
-      "top_replacement_minutes_delta": 1605,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "top_replacement": "Riley Minix",
+      "top_replacement_minutes_delta": 1330,
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
       ]
     },
     {
       "team": "CLE",
       "player": "Donovan Mitchell",
-      "n_games_in_window": 2,
-      "games_played": 1,
+      "n_games_in_window": 3,
+      "games_played": 2,
       "games_out": 1,
-      "avg_min_share_when_playing": 0.1369,
-      "avg_min_when_playing_s": 1971,
+      "avg_min_share_when_playing": 0.1431,
+      "avg_min_when_playing_s": 2061,
       "replacements": [
-        {
-          "player": "Norchad Omier",
-          "share_delta": 0.1115,
-          "minutes_delta": 1605,
-          "share_with": 0.0,
-          "share_without": 0.1115,
-          "minutes_with": 0,
-          "minutes_without": 1605
-        },
-        {
-          "player": "Mario Hezonja",
-          "share_delta": 0.1029,
-          "minutes_delta": 1482,
-          "share_with": 0.039,
-          "share_without": 0.1419,
-          "minutes_with": 561,
-          "minutes_without": 2043
-        },
         {
           "player": "Riley Minix",
           "share_delta": 0.0924,
@@ -4183,30 +5840,113 @@
           "minutes_without": 1330
         },
         {
+          "player": "Mario Hezonja",
+          "share_delta": 0.0916,
+          "minutes_delta": 1320,
+          "share_with": 0.0502,
+          "share_without": 0.1419,
+          "minutes_with": 724,
+          "minutes_without": 2043
+        },
+        {
+          "player": "Norchad Omier",
+          "share_delta": 0.0845,
+          "minutes_delta": 1218,
+          "share_with": 0.0269,
+          "share_without": 0.1115,
+          "minutes_with": 388,
+          "minutes_without": 1605
+        },
+        {
+          "player": "Jaylon Tyson",
+          "share_delta": 0.0778,
+          "minutes_delta": 1121,
+          "share_with": 0.0622,
+          "share_without": 0.1401,
+          "minutes_with": 896,
+          "minutes_without": 2017
+        },
+        {
           "player": "Craig Porter Jr.",
-          "share_delta": 0.0788,
-          "minutes_delta": 1134,
-          "share_with": 0.0394,
+          "share_delta": 0.0701,
+          "minutes_delta": 1009,
+          "share_with": 0.0481,
           "share_without": 0.1182,
-          "minutes_with": 568,
+          "minutes_with": 693,
           "minutes_without": 1702
+        }
+      ],
+      "top_replacement": "Riley Minix",
+      "top_replacement_minutes_delta": 1330,
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+      ]
+    },
+    {
+      "team": "CLE",
+      "player": "Jaylon Tyson",
+      "n_games_in_window": 3,
+      "games_played": 2,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1323,
+      "avg_min_when_playing_s": 1904,
+      "replacements": [
+        {
+          "player": "Donovan Mitchell",
+          "share_delta": 0.0809,
+          "minutes_delta": 1166,
+          "share_with": 0.0684,
+          "share_without": 0.1494,
+          "minutes_with": 986,
+          "minutes_without": 2151
+        },
+        {
+          "player": "James Harden",
+          "share_delta": 0.0707,
+          "minutes_delta": 1018,
+          "share_with": 0.0725,
+          "share_without": 0.1432,
+          "minutes_with": 1044,
+          "minutes_without": 2062
+        },
+        {
+          "player": "Jarrett Allen",
+          "share_delta": 0.0599,
+          "minutes_delta": 862,
+          "share_with": 0.066,
+          "share_without": 0.1258,
+          "minutes_with": 950,
+          "minutes_without": 1812
+        },
+        {
+          "player": "Peyton Watson",
+          "share_delta": 0.0263,
+          "minutes_delta": 378,
+          "share_with": 0.0634,
+          "share_without": 0.0897,
+          "minutes_with": 912,
+          "minutes_without": 1291
         },
         {
           "player": "Meleek Thomas",
-          "share_delta": 0.0652,
-          "minutes_delta": 939,
-          "share_with": 0.0746,
-          "share_without": 0.1398,
-          "minutes_with": 1074,
-          "minutes_without": 2013
+          "share_delta": 0.018,
+          "minutes_delta": 260,
+          "share_with": 0.1072,
+          "share_without": 0.1252,
+          "minutes_with": 1544,
+          "minutes_without": 1803
         }
       ],
-      "top_replacement": "Norchad Omier",
-      "top_replacement_minutes_delta": 1605,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "top_replacement": "Donovan Mitchell",
+      "top_replacement_minutes_delta": 1166,
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
       ]
     },
     {
@@ -4336,6 +6076,132 @@
       ]
     },
     {
+      "team": "DEN",
+      "player": "Cam Johnson",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1282,
+      "avg_min_when_playing_s": 1846,
+      "replacements": [
+        {
+          "player": "Cameron Johnson",
+          "share_delta": 0.1132,
+          "minutes_delta": 1630,
+          "share_with": 0.0,
+          "share_without": 0.1132,
+          "minutes_with": 0,
+          "minutes_without": 1630
+        },
+        {
+          "player": "Spencer Jones",
+          "share_delta": 0.0411,
+          "minutes_delta": 592,
+          "share_with": 0.0479,
+          "share_without": 0.089,
+          "minutes_with": 690,
+          "minutes_without": 1282
+        },
+        {
+          "player": "Trevon Brazile",
+          "share_delta": 0.0316,
+          "minutes_delta": 455,
+          "share_with": 0.0651,
+          "share_without": 0.0967,
+          "minutes_with": 937,
+          "minutes_without": 1392
+        },
+        {
+          "player": "Christian Braun",
+          "share_delta": 0.023,
+          "minutes_delta": 331,
+          "share_with": 0.1157,
+          "share_without": 0.1387,
+          "minutes_with": 1666,
+          "minutes_without": 1997
+        },
+        {
+          "player": "Bryce Hopkins",
+          "share_delta": 0.016,
+          "minutes_delta": 230,
+          "share_with": 0.0,
+          "share_without": 0.016,
+          "minutes_with": 0,
+          "minutes_without": 230
+        }
+      ],
+      "top_replacement": "Cameron Johnson",
+      "top_replacement_minutes_delta": 1630,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf"
+      ]
+    },
+    {
+      "team": "DEN",
+      "player": "Cameron Johnson",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1132,
+      "avg_min_when_playing_s": 1630,
+      "replacements": [
+        {
+          "player": "Cam Johnson",
+          "share_delta": 0.1282,
+          "minutes_delta": 1846,
+          "share_with": 0.0,
+          "share_without": 0.1282,
+          "minutes_with": 0,
+          "minutes_without": 1846
+        },
+        {
+          "player": "DeMar DeRozan",
+          "share_delta": 0.0403,
+          "minutes_delta": 581,
+          "share_with": 0.0589,
+          "share_without": 0.0992,
+          "minutes_with": 848,
+          "minutes_without": 1429
+        },
+        {
+          "player": "Aaron Gordon",
+          "share_delta": 0.0347,
+          "minutes_delta": 500,
+          "share_with": 0.1008,
+          "share_without": 0.1356,
+          "minutes_with": 1452,
+          "minutes_without": 1952
+        },
+        {
+          "player": "Jamal Murray",
+          "share_delta": 0.0136,
+          "minutes_delta": 196,
+          "share_with": 0.1445,
+          "share_without": 0.1581,
+          "minutes_with": 2081,
+          "minutes_without": 2277
+        },
+        {
+          "player": "Marvin Bagley III",
+          "share_delta": 0.0129,
+          "minutes_delta": 186,
+          "share_with": 0.0417,
+          "share_without": 0.0546,
+          "minutes_with": 600,
+          "minutes_without": 786
+        }
+      ],
+      "top_replacement": "Cam Johnson",
+      "top_replacement_minutes_delta": 1846,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf"
+      ]
+    },
+    {
       "team": "IND",
       "player": "Andrew Nembhard",
       "n_games_in_window": 2,
@@ -4401,64 +6267,382 @@
     {
       "team": "MEM",
       "player": "Ty Jerome",
-      "n_games_in_window": 2,
+      "n_games_in_window": 3,
       "games_played": 1,
-      "games_out": 1,
+      "games_out": 2,
       "avg_min_share_when_playing": 0.1333,
       "avg_min_when_playing_s": 1715,
       "replacements": [
         {
-          "player": "Kris Murray",
-          "share_delta": 0.0778,
-          "minutes_delta": 1125,
-          "share_with": 0.0034,
-          "share_without": 0.0812,
-          "minutes_with": 44,
-          "minutes_without": 1169
-        },
-        {
           "player": "Olivier-Maxence Prosper",
-          "share_delta": 0.0725,
-          "minutes_delta": 1061,
+          "share_delta": 0.0641,
+          "minutes_delta": 940,
           "share_with": 0.011,
-          "share_without": 0.0835,
+          "share_without": 0.0751,
           "minutes_with": 142,
-          "minutes_without": 1203
+          "minutes_without": 1082
         },
         {
           "player": "Javon Small",
-          "share_delta": 0.0526,
-          "minutes_delta": 867,
+          "share_delta": 0.0508,
+          "minutes_delta": 842,
           "share_with": 0.0716,
-          "share_without": 0.1242,
+          "share_without": 0.1224,
           "minutes_with": 921,
-          "minutes_without": 1788
+          "minutes_without": 1762
+        },
+        {
+          "player": "Kris Murray",
+          "share_delta": 0.05,
+          "minutes_delta": 725,
+          "share_with": 0.0034,
+          "share_without": 0.0534,
+          "minutes_with": 44,
+          "minutes_without": 769
+        },
+        {
+          "player": "Jerami Grant",
+          "share_delta": 0.0481,
+          "minutes_delta": 693,
+          "share_with": 0.0,
+          "share_without": 0.0481,
+          "minutes_with": 0,
+          "minutes_without": 693
+        },
+        {
+          "player": "Zach Edey",
+          "share_delta": 0.0432,
+          "minutes_delta": 622,
+          "share_with": 0.0,
+          "share_without": 0.0432,
+          "minutes_with": 0,
+          "minutes_without": 622
+        }
+      ],
+      "top_replacement": "Olivier-Maxence Prosper",
+      "top_replacement_minutes_delta": 940,
+      "window_note": "1 game(s) played and 2 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
+    },
+    {
+      "team": "MEM",
+      "player": "Jerami Grant",
+      "n_games_in_window": 3,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0963,
+      "avg_min_when_playing_s": 1386,
+      "replacements": [
+        {
+          "player": "Isaiah Stewart",
+          "share_delta": 0.0631,
+          "minutes_delta": 909,
+          "share_with": 0.0,
+          "share_without": 0.0631,
+          "minutes_with": 0,
+          "minutes_without": 909
+        },
+        {
+          "player": "Kris Murray",
+          "share_delta": 0.0556,
+          "minutes_delta": 800,
+          "share_with": 0.0256,
+          "share_without": 0.0812,
+          "minutes_with": 369,
+          "minutes_without": 1169
         },
         {
           "player": "Taylor Hendricks",
-          "share_delta": 0.0336,
-          "minutes_delta": 618,
-          "share_with": 0.0873,
+          "share_delta": 0.0438,
+          "minutes_delta": 631,
+          "share_with": 0.0771,
           "share_without": 0.1209,
-          "minutes_with": 1123,
+          "minutes_with": 1110,
           "minutes_without": 1741
         },
         {
-          "player": "Cam Spencer",
-          "share_delta": 0.0284,
-          "minutes_delta": 583,
-          "share_with": 0.1129,
-          "share_without": 0.1413,
-          "minutes_with": 1452,
-          "minutes_without": 2035
+          "player": "Cedric Coward",
+          "share_delta": 0.0249,
+          "minutes_delta": 359,
+          "share_with": 0.1118,
+          "share_without": 0.1367,
+          "minutes_with": 1610,
+          "minutes_without": 1969
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "share_delta": 0.0169,
+          "minutes_delta": 243,
+          "share_with": 0.0667,
+          "share_without": 0.0835,
+          "minutes_with": 960,
+          "minutes_without": 1203
         }
       ],
-      "top_replacement": "Kris Murray",
-      "top_replacement_minutes_delta": 1125,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "top_replacement": "Isaiah Stewart",
+      "top_replacement_minutes_delta": 909,
+      "window_note": "1 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
+    },
+    {
+      "team": "MEM",
+      "player": "Isaiah Stewart",
+      "n_games_in_window": 3,
+      "games_played": 2,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.079,
+      "avg_min_when_playing_s": 1065,
+      "replacements": [
+        {
+          "player": "Jerami Grant",
+          "share_delta": 0.0963,
+          "minutes_delta": 1386,
+          "share_with": 0.0,
+          "share_without": 0.0963,
+          "minutes_with": 0,
+          "minutes_without": 1386
+        },
+        {
+          "player": "Zach Edey",
+          "share_delta": 0.0863,
+          "minutes_delta": 1243,
+          "share_with": 0.0,
+          "share_without": 0.0863,
+          "minutes_with": 0,
+          "minutes_without": 1243
+        },
+        {
+          "player": "Quinten Post",
+          "share_delta": 0.0356,
+          "minutes_delta": 512,
+          "share_with": 0.0,
+          "share_without": 0.0356,
+          "minutes_with": 0,
+          "minutes_without": 512
+        },
+        {
+          "player": "Javon Small",
+          "share_delta": 0.0227,
+          "minutes_delta": 382,
+          "share_with": 0.0979,
+          "share_without": 0.1206,
+          "minutes_with": 1354,
+          "minutes_without": 1737
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "share_delta": 0.0194,
+          "minutes_delta": 288,
+          "share_with": 0.0473,
+          "share_without": 0.0667,
+          "minutes_with": 672,
+          "minutes_without": 960
+        }
+      ],
+      "top_replacement": "Jerami Grant",
+      "top_replacement_minutes_delta": 1386,
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
+    },
+    {
+      "team": "MEM",
+      "player": "GG Jackson",
+      "n_games_in_window": 3,
+      "games_played": 2,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0581,
+      "avg_min_when_playing_s": 756,
+      "replacements": [
+        {
+          "player": "Jerami Grant",
+          "share_delta": 0.0963,
+          "minutes_delta": 1386,
+          "share_with": 0.0,
+          "share_without": 0.0963,
+          "minutes_with": 0,
+          "minutes_without": 1386
+        },
+        {
+          "player": "Zach Edey",
+          "share_delta": 0.0863,
+          "minutes_delta": 1243,
+          "share_with": 0.0,
+          "share_without": 0.0863,
+          "minutes_with": 0,
+          "minutes_without": 1243
+        },
+        {
+          "player": "Quinten Post",
+          "share_delta": 0.0356,
+          "minutes_delta": 512,
+          "share_with": 0.0,
+          "share_without": 0.0356,
+          "minutes_with": 0,
+          "minutes_without": 512
+        },
+        {
+          "player": "Javon Small",
+          "share_delta": 0.0227,
+          "minutes_delta": 382,
+          "share_with": 0.0979,
+          "share_without": 0.1206,
+          "minutes_with": 1354,
+          "minutes_without": 1737
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "share_delta": 0.0194,
+          "minutes_delta": 288,
+          "share_with": 0.0473,
+          "share_without": 0.0667,
+          "minutes_with": 672,
+          "minutes_without": 960
+        }
+      ],
+      "top_replacement": "Jerami Grant",
+      "top_replacement_minutes_delta": 1386,
+      "window_note": "2 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
+    },
+    {
+      "team": "MEM",
+      "player": "Quinten Post",
+      "n_games_in_window": 3,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0356,
+      "avg_min_when_playing_s": 512,
+      "replacements": [
+        {
+          "player": "Isaiah Stewart",
+          "share_delta": 0.0631,
+          "minutes_delta": 909,
+          "share_with": 0.0,
+          "share_without": 0.0631,
+          "minutes_with": 0,
+          "minutes_without": 909
+        },
+        {
+          "player": "Kris Murray",
+          "share_delta": 0.0556,
+          "minutes_delta": 800,
+          "share_with": 0.0256,
+          "share_without": 0.0812,
+          "minutes_with": 369,
+          "minutes_without": 1169
+        },
+        {
+          "player": "Taylor Hendricks",
+          "share_delta": 0.0438,
+          "minutes_delta": 631,
+          "share_with": 0.0771,
+          "share_without": 0.1209,
+          "minutes_with": 1110,
+          "minutes_without": 1741
+        },
+        {
+          "player": "Cedric Coward",
+          "share_delta": 0.0249,
+          "minutes_delta": 359,
+          "share_with": 0.1118,
+          "share_without": 0.1367,
+          "minutes_with": 1610,
+          "minutes_without": 1969
+        },
+        {
+          "player": "Olivier-Maxence Prosper",
+          "share_delta": 0.0169,
+          "minutes_delta": 243,
+          "share_with": 0.0667,
+          "share_without": 0.0835,
+          "minutes_with": 960,
+          "minutes_without": 1203
+        }
+      ],
+      "top_replacement": "Isaiah Stewart",
+      "top_replacement_minutes_delta": 909,
+      "window_note": "1 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
+    },
+    {
+      "team": "MIA",
+      "player": "Nikola Jovic",
+      "n_games_in_window": 3,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0465,
+      "avg_min_when_playing_s": 669,
+      "replacements": [
+        {
+          "player": "Andrew Wiggins",
+          "share_delta": 0.0472,
+          "minutes_delta": 679,
+          "share_with": 0.0955,
+          "share_without": 0.1426,
+          "minutes_with": 1375,
+          "minutes_without": 2054
+        },
+        {
+          "player": "Bobby Portis Jr.",
+          "share_delta": 0.0239,
+          "minutes_delta": 344,
+          "share_with": 0.0733,
+          "share_without": 0.0972,
+          "minutes_with": 1056,
+          "minutes_without": 1400
+        },
+        {
+          "player": "Simone Fontecchio",
+          "share_delta": 0.0206,
+          "minutes_delta": 297,
+          "share_with": 0.0592,
+          "share_without": 0.0798,
+          "minutes_with": 852,
+          "minutes_without": 1149
+        },
+        {
+          "player": "Ryan Conwell",
+          "share_delta": 0.0194,
+          "minutes_delta": 279,
+          "share_with": 0.1075,
+          "share_without": 0.1269,
+          "minutes_with": 1548,
+          "minutes_without": 1827
+        },
+        {
+          "player": "Nick Richards",
+          "share_delta": 0.012,
+          "minutes_delta": 173,
+          "share_with": 0.0,
+          "share_without": 0.012,
+          "minutes_with": 0,
+          "minutes_without": 173
+        }
+      ],
+      "top_replacement": "Andrew Wiggins",
+      "top_replacement_minutes_delta": 679,
+      "window_note": "1 game(s) played and 1 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
       ]
     },
     {
@@ -4588,66 +6772,130 @@
       ]
     },
     {
-      "team": "NOP",
-      "player": "Bennedict Mathurin",
+      "team": "MIN",
+      "player": "Jaylen Clark",
       "n_games_in_window": 2,
       "games_played": 1,
       "games_out": 1,
+      "avg_min_share_when_playing": 0.014,
+      "avg_min_when_playing_s": 201,
+      "replacements": [
+        {
+          "player": "Terrence Shannon Jr",
+          "share_delta": 0.056,
+          "minutes_delta": 806,
+          "share_with": 0.0906,
+          "share_without": 0.1466,
+          "minutes_with": 1305,
+          "minutes_without": 2111
+        },
+        {
+          "player": "Rudy Gobert",
+          "share_delta": 0.0214,
+          "minutes_delta": 308,
+          "share_with": 0.112,
+          "share_without": 0.1334,
+          "minutes_with": 1613,
+          "minutes_without": 1921
+        },
+        {
+          "player": "Zyon Pullin",
+          "share_delta": 0.0158,
+          "minutes_delta": 228,
+          "share_with": 0.0,
+          "share_without": 0.0158,
+          "minutes_with": 0,
+          "minutes_without": 228
+        },
+        {
+          "player": "Isaiah Evans",
+          "share_delta": 0.0158,
+          "minutes_delta": 228,
+          "share_with": 0.0,
+          "share_without": 0.0158,
+          "minutes_with": 0,
+          "minutes_without": 228
+        },
+        {
+          "player": "Cody Williams",
+          "share_delta": 0.0158,
+          "minutes_delta": 228,
+          "share_with": 0.0,
+          "share_without": 0.0158,
+          "minutes_with": 0,
+          "minutes_without": 228
+        }
+      ],
+      "top_replacement": "Terrence Shannon Jr",
+      "top_replacement_minutes_delta": 806,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf"
+      ]
+    },
+    {
+      "team": "NOP",
+      "player": "Bennedict Mathurin",
+      "n_games_in_window": 3,
+      "games_played": 1,
+      "games_out": 2,
       "avg_min_share_when_playing": 0.0419,
       "avg_min_when_playing_s": 603,
       "replacements": [
         {
           "player": "Yves Missi",
-          "share_delta": 0.0919,
-          "minutes_delta": 1323,
+          "share_delta": 0.0936,
+          "minutes_delta": 1348,
           "share_with": 0.0,
-          "share_without": 0.0919,
+          "share_without": 0.0936,
           "minutes_with": 0,
-          "minutes_without": 1323
+          "minutes_without": 1348
         },
         {
           "player": "Jaron Pierre Jr.",
-          "share_delta": 0.0798,
-          "minutes_delta": 1149,
+          "share_delta": 0.0718,
+          "minutes_delta": 1034,
           "share_with": 0.0173,
-          "share_without": 0.0971,
+          "share_without": 0.0891,
           "minutes_with": 249,
-          "minutes_without": 1398
-        },
-        {
-          "player": "Saddiq Bey",
-          "share_delta": 0.0237,
-          "minutes_delta": 342,
-          "share_with": 0.1452,
-          "share_without": 0.169,
-          "minutes_with": 2091,
-          "minutes_without": 2433
+          "minutes_without": 1283
         },
         {
           "player": "Jordan Poole",
-          "share_delta": 0.0133,
-          "minutes_delta": 192,
+          "share_delta": 0.0276,
+          "minutes_delta": 398,
           "share_with": 0.0863,
-          "share_without": 0.0997,
+          "share_without": 0.1139,
           "minutes_with": 1243,
-          "minutes_without": 1435
+          "minutes_without": 1640
+        },
+        {
+          "player": "Saddiq Bey",
+          "share_delta": 0.0071,
+          "minutes_delta": 103,
+          "share_with": 0.1452,
+          "share_without": 0.1524,
+          "minutes_with": 2091,
+          "minutes_without": 2194
         },
         {
           "player": "Derik Queen",
-          "share_delta": 0.0097,
-          "minutes_delta": 140,
+          "share_delta": 0.0007,
+          "minutes_delta": 10,
           "share_with": 0.0943,
-          "share_without": 0.104,
+          "share_without": 0.095,
           "minutes_with": 1358,
-          "minutes_without": 1498
+          "minutes_without": 1368
         }
       ],
       "top_replacement": "Yves Missi",
-      "top_replacement_minutes_delta": 1323,
-      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "top_replacement_minutes_delta": 1348,
+      "window_note": "1 game(s) played and 2 game(s) out of 3 captured for this club; a measurement over that window, not a fitted effect",
       "source_urls": [
         "https://statsdmz.nba.com/pdfs/20261113/20261113_MEMNOP_book.pdf",
-        "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf"
+        "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
       ]
     },
     {
@@ -4714,6 +6962,195 @@
       ]
     },
     {
+      "team": "PHI",
+      "player": "LeBron James",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.1366,
+      "avg_min_when_playing_s": 1967,
+      "replacements": [
+        {
+          "player": "Joel Embiid",
+          "share_delta": 0.134,
+          "minutes_delta": 1930,
+          "share_with": 0.0,
+          "share_without": 0.134,
+          "minutes_with": 0,
+          "minutes_without": 1930
+        },
+        {
+          "player": "Anfernee Simons",
+          "share_delta": 0.0437,
+          "minutes_delta": 629,
+          "share_with": 0.0644,
+          "share_without": 0.1081,
+          "minutes_with": 928,
+          "minutes_without": 1557
+        },
+        {
+          "player": "Kentavious Caldwell-Pope",
+          "share_delta": 0.0375,
+          "minutes_delta": 541,
+          "share_with": 0.0928,
+          "share_without": 0.1303,
+          "minutes_with": 1336,
+          "minutes_without": 1877
+        },
+        {
+          "player": "VJ Edgecombe",
+          "share_delta": 0.0094,
+          "minutes_delta": 136,
+          "share_with": 0.1284,
+          "share_without": 0.1378,
+          "minutes_with": 1849,
+          "minutes_without": 1985
+        },
+        {
+          "player": "Jaylen Brown",
+          "share_delta": 0.0032,
+          "minutes_delta": 47,
+          "share_with": 0.1353,
+          "share_without": 0.1385,
+          "minutes_with": 1948,
+          "minutes_without": 1995
+        }
+      ],
+      "top_replacement": "Joel Embiid",
+      "top_replacement_minutes_delta": 1930,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+      ]
+    },
+    {
+      "team": "PHI",
+      "player": "Joel Embiid",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.134,
+      "avg_min_when_playing_s": 1930,
+      "replacements": [
+        {
+          "player": "LeBron James",
+          "share_delta": 0.1366,
+          "minutes_delta": 1967,
+          "share_with": 0.0,
+          "share_without": 0.1366,
+          "minutes_with": 0,
+          "minutes_without": 1967
+        },
+        {
+          "player": "Jabari Walker",
+          "share_delta": 0.0345,
+          "minutes_delta": 496,
+          "share_with": 0.0685,
+          "share_without": 0.1029,
+          "minutes_with": 986,
+          "minutes_without": 1482
+        },
+        {
+          "player": "Labaron Philon Jr.",
+          "share_delta": 0.0241,
+          "minutes_delta": 347,
+          "share_with": 0.0013,
+          "share_without": 0.0254,
+          "minutes_with": 19,
+          "minutes_without": 366
+        },
+        {
+          "player": "Tacko Fall",
+          "share_delta": 0.0188,
+          "minutes_delta": 270,
+          "share_with": 0.0013,
+          "share_without": 0.0201,
+          "minutes_with": 19,
+          "minutes_without": 289
+        },
+        {
+          "player": "Dean Wade",
+          "share_delta": 0.0127,
+          "minutes_delta": 182,
+          "share_with": 0.1334,
+          "share_without": 0.146,
+          "minutes_with": 1921,
+          "minutes_without": 2103
+        }
+      ],
+      "top_replacement": "LeBron James",
+      "top_replacement_minutes_delta": 1967,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+      ]
+    },
+    {
+      "team": "PHI",
+      "player": "Rayan Rupert",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0013,
+      "avg_min_when_playing_s": 19,
+      "replacements": [
+        {
+          "player": "LeBron James",
+          "share_delta": 0.1366,
+          "minutes_delta": 1967,
+          "share_with": 0.0,
+          "share_without": 0.1366,
+          "minutes_with": 0,
+          "minutes_without": 1967
+        },
+        {
+          "player": "Jabari Walker",
+          "share_delta": 0.0345,
+          "minutes_delta": 496,
+          "share_with": 0.0685,
+          "share_without": 0.1029,
+          "minutes_with": 986,
+          "minutes_without": 1482
+        },
+        {
+          "player": "Labaron Philon Jr.",
+          "share_delta": 0.0241,
+          "minutes_delta": 347,
+          "share_with": 0.0013,
+          "share_without": 0.0254,
+          "minutes_with": 19,
+          "minutes_without": 366
+        },
+        {
+          "player": "Tacko Fall",
+          "share_delta": 0.0188,
+          "minutes_delta": 270,
+          "share_with": 0.0013,
+          "share_without": 0.0201,
+          "minutes_with": 19,
+          "minutes_without": 289
+        },
+        {
+          "player": "Dean Wade",
+          "share_delta": 0.0127,
+          "minutes_delta": 182,
+          "share_with": 0.1334,
+          "share_without": 0.146,
+          "minutes_with": 1921,
+          "minutes_without": 2103
+        }
+      ],
+      "top_replacement": "LeBron James",
+      "top_replacement_minutes_delta": 1967,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
+      ]
+    },
+    {
       "team": "SAS",
       "player": "De'Aaron Fox",
       "n_games_in_window": 2,
@@ -4775,6 +7212,69 @@
         "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf",
         "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf"
       ]
+    },
+    {
+      "team": "WAS",
+      "player": "Tre Johnson",
+      "n_games_in_window": 2,
+      "games_played": 1,
+      "games_out": 1,
+      "avg_min_share_when_playing": 0.0863,
+      "avg_min_when_playing_s": 1243,
+      "replacements": [
+        {
+          "player": "Bub Carrington",
+          "share_delta": 0.0859,
+          "minutes_delta": 1237,
+          "share_with": 0.0092,
+          "share_without": 0.0951,
+          "minutes_with": 132,
+          "minutes_without": 1369
+        },
+        {
+          "player": "Will Riley",
+          "share_delta": 0.0565,
+          "minutes_delta": 813,
+          "share_with": 0.0092,
+          "share_without": 0.0656,
+          "minutes_with": 132,
+          "minutes_without": 945
+        },
+        {
+          "player": "Tre Mann",
+          "share_delta": 0.0378,
+          "minutes_delta": 545,
+          "share_with": 0.0092,
+          "share_without": 0.047,
+          "minutes_with": 132,
+          "minutes_without": 677
+        },
+        {
+          "player": "Bilal Coulibaly",
+          "share_delta": 0.0228,
+          "minutes_delta": 328,
+          "share_with": 0.0649,
+          "share_without": 0.0876,
+          "minutes_with": 934,
+          "minutes_without": 1262
+        },
+        {
+          "player": "Anthony Gill",
+          "share_delta": 0.0148,
+          "minutes_delta": 213,
+          "share_with": 0.0092,
+          "share_without": 0.024,
+          "minutes_with": 132,
+          "minutes_without": 345
+        }
+      ],
+      "top_replacement": "Bub Carrington",
+      "top_replacement_minutes_delta": 1237,
+      "window_note": "1 game(s) played and 1 game(s) out of 2 captured for this club; a measurement over that window, not a fitted effect",
+      "source_urls": [
+        "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+        "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+      ]
     }
   ],
   "suspect_name_pairs": [
@@ -4823,6 +7323,13 @@
       "spellings": [
         "Nikola Topic",
         "Nikola Topi\u0107"
+      ]
+    },
+    {
+      "key": "nikola vucevic",
+      "spellings": [
+        "Nikola Vucevic",
+        "Nikola Vu\u010devi\u0107"
       ]
     },
     {

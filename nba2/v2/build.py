@@ -1370,6 +1370,33 @@ hold. This is the shortest honest version of that list.</p>
     body += table(["What is missing", "What it blocks", "How to obtain it", "Decision it closes", "Source"],
                   mrows, "The gap list: what we do not have and what it would take to get it")
     body += """
+<h2>Integration update, 2026-11-17 — what the v4/v5 builds changed under these decisions</h2>
+<p class="lede">Added when the v4 (injury/rotation) and v5 (player-log) surfaces were merged into
+this tree, so this page does not contradict them. The register above is unchanged: a decision is
+closed by its owner, not by a build.</p>
+<ul>
+  <li><b>D-02 (player feed) is now half-closed, by an official route.</b> Official per-player game
+      logs (minutes, points, rebounds, assists, opponent) for every player in the official gamebooks
+      of 2026-11-13 → 11-16 are committed and published on the
+      <a href="playerlogs-full.html">v5 player-log pages</a>, read from the league's own gamebook PDFs
+      (<a href="https://statsdmz.nba.com/pdfs/20261115/" target="_blank" rel="noopener">statsdmz.nba.com/pdfs</a>).
+      The per-club <em>season-average</em> table is also reachable
+      (<a href="https://www.nba.com/stats/players/traditional" target="_blank" rel="noopener">nba.com/stats/players/traditional</a>,
+      469 rows — the earlier "blocked" label was wrong); it has been read for team scoring but not yet
+      captured per club, so the v5 rotation-availability model still publishes blanks rather than guesses.</li>
+  <li><b>Injury impact has its own surface now.</b> The v4 build publishes rotation availability and
+      game-flow analysis from the official injury releases (including the 2026-11-17 11:00 AM ET
+      release), each row carrying its official PDF link — see the
+      <a href="v4-injuries.html">injury pages</a> and the settlement stamp page.</li>
+  <li><b>D-01 (odds) stands.</b> No licensed odds feed exists, so the bet surface stays gated: stakes
+      print 0.00 and market-price cells stay blank where the price cannot be sourced
+      (<a href="flagged.html">F-308</a>). Nothing was inferred to fill them.</li>
+  <li><b>Travel distances stay blank where coordinates are unsourced.</b> The 2026-26 capture covers
+      last season's arenas; any 2026-27 venue without sourced coordinates publishes a blank
+      (<a href="flagged.html">F-306</a>).</li>
+</ul>
+"""
+    body += """
 <h2>What we already have, so nobody re-decides it</h2>
 <div class="cards">
   <div class="card"><h4>The whole 3-day slate</h4><p>27 games, 2026-11-14 → 11-17, each verified field by field
@@ -2340,6 +2367,24 @@ superseded (see F-012). Records can still drift as games are played — the snap
         rows.append({"id": fid, "cells": [badge(fid, kind), badge(sev, kind), esc(area), esc(stmt), esc(action), srclink(src)]})
     body += table(["ID", "Severity", "Area", "Finding", "Disposition", "Source to check"],
                   rows, "Flagged irregularities", idcol="id")
+    # CR-V5-1 (arena/1eeb6a21-nba2): the v5 player-log build publishes its own flags on its
+    # own verification page, but a reader working from this page alone would never see them.
+    # Mirror them here, straight from nba2.v5.publish.FLAGS — same list, no paraphrase — so
+    # the two pages cannot drift apart. The v5 build runs after this one; importing the
+    # constants is read-only.
+    from nba2.v5.publish import FLAGS as V5_FLAGS
+    v5rows = []
+    for fid, sev, area, url, wrong, published in V5_FLAGS:
+        kind = "warn" if sev == "gap" else "info"
+        v5rows.append({"id": fid, "cells": [
+            badge(fid, kind), badge(sev, kind), esc(area),
+            esc(wrong), esc(published),
+            f'<a href="{esc(url)}" target="_blank" rel="noopener">official source</a> '
+            f'· <a href="v5-verify.html">v5 verification row</a>',
+        ]})
+    body += table(["ID", "Severity", "Area", "Finding", "Disposition", "Source"],
+                  v5rows, "Player-log build flags (v5, mirrored from the v5 verification page)",
+                  idcol="id")
     body += """<h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

@@ -10,11 +10,11 @@
   "universe": "games in the T+0..T+3 window where the club has a 3-in-4 or 2-in-2 schedule spot computed from official dates",
   "settlement_rule": "Official NBA final score against the originated line. Schedule spots are recomputed from official dates only; no in-game input.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "72f1d4ac12edf8a879a6930c6cf830adb70b5181eec945e32c70fa73c99c1477"
+  "sha256": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09"
 }

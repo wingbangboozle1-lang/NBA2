@@ -9,11 +9,11 @@
   "universe": "games in the T+0..T+3 window; a game is excluded if either club is outside the luck noise band",
   "settlement_rule": "Official NBA final total points, overtime included. Exactly on the number is a PUSH.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "f88f07be464e81fc570e2d7e22c6b3cf67cb493efd3abde7c1869d3c484177ee"
+  "sha256": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c"
 }

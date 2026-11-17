@@ -15,8 +15,8 @@ class TestQuarterGames(unittest.TestCase):
     def test_coverage_counts_are_consistent(self):
         d = GF.decomposition()
         s = d["summary"]
-        # 9 games of 2026-11-13 (gamebooks) + 5 of 2026-11-14 (LINESCORE) = 14 rows
-        self.assertEqual(s["n_games_total"], 14)
+        # 9 games of 2026-11-13 (gamebooks) + 22 snapshot finals (11/14-11/16) = 31 rows
+        self.assertEqual(s["n_games_total"], 31)
         self.assertEqual(s["n_games_with_quarters"] + s["n_games_missing_quarters"],
                          s["n_games_total"])
 

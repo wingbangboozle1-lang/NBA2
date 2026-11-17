@@ -5227,3 +5227,100 @@ present on the deployed `flagged.html` (`?v=8892`).
 **Owner action now outstanding (one, and it needs `pages: write`):**
 Settings → Pages → Source: **GitHub Actions**. Until then `/NBA2/` redirects to `/NBA2/site/` and
 both paths serve the same gated tree.
+
+## Session `arena/1eeb6a21-nba2` — CLAIM (2026-11-17 UTC)
+
+Branch `arena/1eeb6a21-nba2` (platform-fixed; base = `main` @ `d4fde59`, the 2026-11-17T14:54:57Z
+ingest capture). Claim pushed before any other edit, per protocol.
+
+**Handoff (per the 60-minute rule):** PR #112 (`arena/a11505e1-nba2`, "Final integration
+2026-11-16") last commit 2026-11-16T19:36:51Z — >20 h stale — with two red required checks
+("Verify data, model and site", "Verify the published tree"). This session takes over the
+**final integration** role from that stale claim; PR #112 is left untouched (not merged, not
+closed) and its branch is not modified. No other session's file scope is touched.
+
+**Observed state on main @ `d4fde59` (facts, each re-checkable):**
+- Nightly run [44107633323](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323):
+  `capture` job succeeded (commit `d4fde59`), `publish` job **failed fail-closed**.
+  `data/raw/refresh_verdict.json`: injuries=success, v4=success, **finals=failure,
+  rolling=failure** (runner could not reach the scoreboard JSON endpoints; probe
+  `data/raw/egress_probe.json` 2026-11-17T14:28:28Z shows scoreboard_cdn=HTTP 403 and
+  scoreboard_stats=timeout, while schedule/standings/gamebook-PDF/injury surfaces return 200).
+- Known open items carried from session `arena/6e46dbf2-nba2`: `site/flagged.html` lacks the
+  v5 flags; `site/decisions-needed.html` is a pre-v4/v5 rendering; v3/v4 result/settlement
+  pages show the three 11/15 games as unsettled although `data/v5/results_union.json` exists;
+  root `index.html` still says as-of 2026-11-14.
+- Settlement currently stops at games of 2026-11-15; the 11/16 finals are not yet captured
+  (finals surface failed in the last two nightly runs).
+
+| ID | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| 1EEB-1 | Claim + handoff note | in progress | `COORDINATION.md` (append-only) | claim pushed before further work |
+| 1EEB-2 | Capture fresh official standings/slate/injury + 11/16 finals via direct official-page reads with provenance stamps; fix the finals surface so the nightly job can use the reachable official gamebook PDFs | in progress | `data/raw/**`, `nba2/pipeline/**`, `.github/workflows/refresh.yml` | every captured value row-checked against the linked official page/PDF; nothing inferred |
+| 1EEB-3 | Settle sealed picks from official finals for all captured game days; keep settlement stamps visible | in progress | `data/settlement.json`, `data/v4/settlement/**`, `data/v5/results_union.json` | seal digests re-verified before grading; finals only from official sources |
+| 1EEB-4 | Refresh the stale pages (v5 flags on Flagged page, decisions-needed, result/settlement pages, root index as-of) | in progress | `site/flagged.html`, `site/decisions-needed.html`, `site/*.html` renders, `nba2/v2/content.py`, `nba2/v4/publish.py`, `nba2/v5/publish.py`, `data/site.json` | rebuilt pages re-checked; link checker passes |
+| 1EEB-5 | Full local verification (all unit suites, checks, lint, link check, parity rebuild) | in progress | report only | exact commands + results recorded |
+| 1EEB-6 | PR → merge → Pages deploy confirmed by live fetch; record in COORDINATION.md | in progress | PR only | live fetch of deployed pages |
+
+---
+
+## Session `arena/1eeb6a21-nba2` — 2026-11-17, execution + verification complete (tasks 1EEB-2..5)
+
+**All work below is committed on branch `arena/1eeb6a21-nba2`.** Facts, each reproducible:
+
+**1EEB-2 (official snapshot + finals surface):** fresh snapshot executed (`python -m nba2.v3.official`
+→ selftest clean: 30 clubs 205-205, 30-game slate, 22 finals 11/14–11/16, 59 injury rows, 21 arenas;
+AS_OF 2026-11-17T17:05:00Z, window 11-17→11-20). The 8 finals of 11/16 were read from the official
+gamebook PDFs (`statsdmz.nba.com/pdfs/20261116/…_book.pdf`, quarter rows re-derived from printed
+SCORE BY PERIOD, 0 back-solved) + the official schedule page, and committed as
+`data/raw/results/results_2026-11-16.json` (schema `nba2.results-feed.v3`). The **finals surface of the
+nightly job was fixed** for the runner egress outage: `nba2/pipeline/refresh.py::cmd_finals` now falls
+back to a committed official capture (`_committed_capture_snapshot`) when the scoreboard endpoints are
+unreachable/bad-schema — the capture must cover every sealed-window game, must carry per-row official
+URLs, and any quarter row that does not sum to the printed final refuses the whole file (fail-closed,
+nothing inferred). Verified locally: `cmd_finals('2026-11-16', …)` → rc 0, 8 games, quarters intact;
+missing-game guard refuses. No workflow YAML change was needed (the fallback is inside cmd_finals;
+refresh.yml already treats rc 0 as success).
+
+**1EEB-3 (settlement):** `python -m nba2.pipeline.settle` union now 28 games / 0 conflicts / 0 rejected
+rows, latest settled game date 2026-11-16, sha256 `7989e0a6adc0858130bfc1ef859e3b3dcebbfbf18767c8cbf693a3b525a5b2e7`;
+v4 `python -m nba2.v4.settlement` 61/83 graded (22/22, 22/27, 17/34) — all three seals re-verified before grading;
+v3 seal `data/v3/ledger/sealed-2026-11-17.json` (30 picks) verified by sha256 recompute `f4a702159c3f26fd`.
+
+**1EEB-4 (stale pages):** all repaired **in the generators** (site/ is never hand-edited):
+- CR-V5-1: `site/flagged.html` now mirrors all 11 v5 flags from `nba2.v5.publish.FLAGS` (new table
+  "Player-log build flags (v5…)", each row with its official source + the v5 verification page).
+- CR-V5-2: `site/decisions-needed.html` gained a dated "Integration update, 2026-11-17" section
+  (D-02 half-closed by the official gamebook route; D-01 stands; travel blanks explained).
+- CR-V5-3: settlement/result pages rebuilt — stamp shows 28 games, latest 2026-11-16.
+- Root-index provenance: the planned string rewrite was **checked and intentionally not done** —
+  every `capture_2026-11-15/…` provenance string in `nba2/v2/build.py`/`live.py` points to files that
+  exist and are committed (`git ls-files` checked); they describe the 11-15 verification session's own
+  captures. Renaming them to 2026-11-17 would have created false provenance. The rolling window/session
+  tags on all pages now come from the rebuilt snapshot (11-17→11-20, session 1eeb6a21).
+
+**1EEB-5 (verification):** v2 build + check OK (0 structural, 0 semantic); settlement_page OK; v3 build
+gates 8/8 publishable + check OK; v4 gates 8/8 + check publishable=True; v5 gates 8/8; tests:
+v3 58/58, v4+v5 87/87, `nba2/tests` discover 79/79 (the 11/16 union-source failure is fixed:
+`capture_2026_11_16.py` now emits `source_url` alongside `final_source_url`, so
+`pipeline.settle.normalise_source` finds it — no settlement-code change was needed), v5 count pins
+updated for the 22-game window (19/43/44/22). Full CI-order chain run locally
+(v2→v2.check→settlement_page→v3→v3.check→v3 tests→v4→v4.check→v4 tests→v5→v5 tests) with the final
+tree carrying the v4+v5 nav blocks on 42 pages; published `site/` matches a rebuild.
+**Merge reconciliation (2026-11-17, session `arena/1eeb6a21-nba2`):** while preparing the PR,
+`origin/main` advanced to `efb0547` (PR #115 from `arena/aa1d3c07-nba2` + earlier `8892d20c`/`669bccab`
+work) with overlapping scope. Merged `origin/main` into this branch; conflicts resolved without
+discarding either side:
+- `data/raw/results/results_2026-11-16.json` (both-added): kept **this session's** file
+  (`nba2.results-feed.v3`) — the two independent captures agree on every final and every quarter row
+  they share (8/8 finals, 7/8 quarter pairs byte-identical); this file additionally carries the HOU
+  quarter row [15,31,35,29] recovered from the printed per-period team totals, which the PR #115
+  capture left blank. Their capture therefore doubles as independent double-verification of mine.
+- `nba2/v4/settlement.py`: kept both FINALS_SOURCES additions (their 11/15 recheck + this session's
+  11/16 file).
+- `COORDINATION.md`: union — their entries retained in main's order, this session's appended after.
+- Regenerable artifacts (`official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/*`,
+  `data/site.json`, `site/*.html`) taken from main as base and then regenerated from the merged
+  generators. Result: union **31 games, 0 conflicts, 0 rejected quarter rows**, stamp shows
+  22/22 + 22/27 settled, seals VERIFIED, and the merged tree keeps their root pointer page +
+  capture-verification page AND this session's v5-flag mirror + decisions-needed integration update.

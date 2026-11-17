@@ -81,13 +81,13 @@ class TestGates(unittest.TestCase):
     def test_quarters_sum(self):
         g = CH.gate_quarters(self.games)
         self.assertTrue(g["ok"], g["failures"])
-        self.assertEqual(g["tested"], 27)   # 28 club rows, one blank by policy (F-V5-04)
-        self.assertEqual(g["passed"], 27)
+        self.assertEqual(g["tested"], 43)   # 44 club rows, one blank by policy (F-V5-04)
+        self.assertEqual(g["passed"], 43)
 
     def test_player_points_sum(self):
         g = CH.gate_player_points(self.rows, self.games)
         self.assertTrue(g["ok"], g["failures"])
-        self.assertEqual(g["tested"], 28)
+        self.assertEqual(g["tested"], 44)
 
     def test_points_identity_holds_for_every_row(self):
         g = CH.gate_points_identity(self.rows)
@@ -97,7 +97,7 @@ class TestGates(unittest.TestCase):
     def test_cross_source_agreement(self):
         g = CH.gate_cross_source(self.games)
         self.assertTrue(g["ok"], g["failures"])
-        self.assertEqual(g["tested"], 11)   # 14 games, 3 were 'not final' in the feed
+        self.assertEqual(g["tested"], 19)   # 22 games, 3 were 'not final' in the 11/14-11/15 feeds
 
     def test_blank_cells_always_carry_a_reason(self):
         g = CH.gate_provenance(self.rows)
@@ -133,7 +133,7 @@ class TestModel(unittest.TestCase):
         self.res = M.build()
 
     def test_result_rows_match_the_games(self):
-        self.assertEqual(len(self.res["results"]), 14)
+        self.assertEqual(len(self.res["results"]), 22)   # 11/14-11/16 gamebooks
         for r in self.res["results"]:
             self.assertIn(r["matchup"], {f"{r['away']}@{r['home']}"})
 

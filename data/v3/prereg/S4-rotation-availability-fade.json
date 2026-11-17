@@ -10,11 +10,11 @@
   "universe": "games in the window where BOTH clubs have filed a report for that date (an unfiled club is excluded, never assumed healthy)",
   "settlement_rule": "Official NBA final score. Unfiled reports produce no bet.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "97b85e33675ca0b8fd7cf8f7d328094c7b4ddfb30450e5266dff66ff24d9a8db"
+  "sha256": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095"
 }

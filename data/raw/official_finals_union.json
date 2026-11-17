@@ -544,10 +544,7 @@
         28
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600246",
@@ -572,10 +569,7 @@
         38
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600247",
@@ -600,10 +594,7 @@
         33
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600248",
@@ -628,10 +619,7 @@
         28
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600249",
@@ -643,7 +631,12 @@
       "sources": [
         "data/raw/results/results_2026-11-16.json"
       ],
-      "away_quarters": null,
+      "away_quarters": [
+        15,
+        31,
+        35,
+        29
+      ],
       "home_quarters": [
         29,
         33,
@@ -651,10 +644,7 @@
         27
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600250",
@@ -679,10 +669,7 @@
         19
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600251",
@@ -707,10 +694,7 @@
         22
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600252",
@@ -735,10 +719,7 @@
         23
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     }
   ],
   "conflicts": [],

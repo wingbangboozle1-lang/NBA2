@@ -280,6 +280,72 @@ def cmd_injuries(date: str, outdir: Path) -> int:
     return 0
 
 
+def _committed_capture_snapshot(date: str, expected_game_ids: list[str]) -> dict | None:
+    """A session-committed official capture for this date, if it covers the sealed window.
+
+    The scheduled job runs from a GitHub runner where the stats.nba.com / cdn.nba.com JSON
+    endpoints are blocked (egress probe 2026-11-17), but a working session can commit an
+    official capture read through the platform page-fetch tool — official gamebook PDFs at
+    statsdmz.nba.com and the schedule page — under data/raw/results/results_<date>.json.
+    That file is a real official source with per-row provenance, so the finals surface may
+    settle from it instead of failing closed on a network outage it cannot fix. Nothing is
+    inferred here: the capture must cover every sealed-window game with a final score, and
+    any quarter row it carries must sum to the final (mirroring the union's own rejection
+    rule) or the whole file is refused.
+    """
+    path = RAW / "results" / f"results_{date}.json"
+    if not path.exists():
+        return None
+    try:
+        doc = json.loads(path.read_text())
+    except json.JSONDecodeError:
+        print(f"[finals {date}] committed capture {path.name} is not valid JSON — refusing it")
+        return None
+    recs = []
+    for r in doc.get("records", []):
+        gid = r.get("game_id")
+        if gid not in expected_game_ids:
+            continue
+        a, h = r.get("away_pts"), r.get("home_pts")
+        if not isinstance(a, int) or not isinstance(h, int):
+            continue
+        for side, pts, key in (("away", a, "away_q"), ("home", h, "home_q")):
+            q = r.get(key) or r.get(f"{side}_quarters")
+            if isinstance(q, list) and q and all(isinstance(x, int) for x in q):
+                if sum(q) != pts:
+                    print(f"[finals {date}] committed capture {path.name}: {gid} {side} "
+                          f"quarter row sums to {sum(q)}, final prints {pts} — refusing the file")
+                    return None
+        rec = {
+            "game_id": gid, "date": r.get("date") or date,
+            "away": r.get("away"), "home": r.get("home"),
+            "away_pts": a, "home_pts": h, "ot_periods": r.get("ot_periods", 0),
+            "away_q": r.get("away_q") or r.get("away_quarters"),
+            "home_q": r.get("home_q") or r.get("home_quarters"),
+            "quarter_status": r.get("quarter_status") or "read",
+            "final_source_url": r.get("final_source_url") or r.get("source_url"),
+            "gamebook_url": r.get("gamebook_url"),
+            "list_url": r.get("list_url") or doc.get("source_page"),
+        }
+        rec["source"] = (r.get("final_source_url") or r.get("source_url")
+                         or doc.get("source_page") or str(path))
+        recs.append(rec)
+    missing = [g for g in expected_game_ids if g not in {r["game_id"] for r in recs}]
+    if missing or not recs:
+        print(f"[finals {date}] committed capture {path.name} covers "
+              f"{len(expected_game_ids) - len(missing)}/{len(expected_game_ids)} sealed games "
+              f"(missing {missing}) — not usable as the finals source")
+        return None
+    return {
+        "source": f"committed capture {path.relative_to(ROOT)} "
+                  f"(platform page-fetch tool; see the file's retrieval_method)",
+        "retrieved_at_utc": doc.get("retrieved_utc") or doc.get("retrieved_at_utc"),
+        "date": date, "records": recs,
+        "expected_window_games": len(expected_game_ids),
+        "games_missing_from_payload": [],
+    }
+
+
 def cmd_finals(date: str, expected_game_ids: list[str], out: Path) -> int:
     """0  = ok, or no FINAL games yet (expected pre-tip),
        3  = every official endpoint unreachable (network-level failure),
@@ -290,12 +356,21 @@ def cmd_finals(date: str, expected_game_ids: list[str], out: Path) -> int:
         return 0
     print(f"[finals {date}] expecting {len(expected_game_ids)} sealed-window games")
     snap, url, kind = fetch_finals(date, expected_game_ids)
-    if kind == "unreachable":
-        print(f"FAIL: no official endpoint reachable for {date} — refusing to proceed")
-        return 3
-    if kind == "bad_schema":
-        print(f"FAIL: endpoints answered but no payload matched the expected schema for {date}")
-        return 4
+    if kind in ("unreachable", "bad_schema"):
+        # The JSON endpoints are unreachable from the runners (egress probe). A committed
+        # official capture is a real official source; settle from it when it covers the
+        # window, and fail closed only when it does not.
+        fallback = _committed_capture_snapshot(date, expected_game_ids)
+        if fallback is not None:
+            snap, url = fallback, fallback["source"]
+            print(f"[finals {date}] live endpoints unavailable ({kind}); using the committed "
+                  f"official capture for {date}")
+        elif kind == "unreachable":
+            print(f"FAIL: no official endpoint reachable for {date} — refusing to proceed")
+            return 3
+        else:
+            print(f"FAIL: endpoints answered but no payload matched the expected schema for {date}")
+            return 4
     if kind == "no_finals":
         print(f"[finals {date}] endpoints reachable, no FINAL window games yet — expected "
               f"before the evening tips; nothing written")

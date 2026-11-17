@@ -9,11 +9,11 @@
   "universe": "player props on games in the T+0..T+3 window, once a prop line exists",
   "settlement_rule": "Official NBA final box score per player (minutes, points, rebounds, assists). No prop line and no official minutes feed exist, so no bet is placed until gates G6 and G7 pass.",
   "status": "pre-registered, 0 bets placed, inputs BLOCKED (no prop line / no official minutes feed)",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "6d7c50bf906c5a8ec87085cde0583fdb19a411115f7af7873b631b712b1c6068"
+  "sha256": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9"
 }

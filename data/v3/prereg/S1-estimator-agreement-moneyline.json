@@ -10,11 +10,11 @@
   "universe": "every game in the T+0..T+3 window whose two clubs are both inside the luck noise band (|luck z| <= 2.0)",
   "settlement_rule": "Official NBA final score. Win if the named side wins in regulation or overtime. A game with no official final is left UNGRADED and never counted as a loss.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "623f0bdba346133d83dcd188256bec5382286a74f43901f234d38503a03318b3"
+  "sha256": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d"
 }
