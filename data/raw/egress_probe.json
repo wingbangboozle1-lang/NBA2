@@ -1,0 +1,86 @@
+{
+ "schema": "nba2.egress-probe.v1",
+ "probed_at_utc": "2026-11-17T14:28:28Z",
+ "runner": "GitHub-hosted ubuntu-latest",
+ "purpose": "answers, with a timestamp, which official endpoints the nightly job can actually reach from a runner - replacing the assumption inherited from a development sandbox where all nba.com egress is TLS-reset",
+ "rows": [
+  {
+   "name": "injury_index",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "http_status": 200,
+   "bytes": 41174,
+   "elapsed_ms": 193,
+   "ok": true,
+   "error": null,
+   "is_pdf": false
+  },
+  {
+   "name": "injury_pdf",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+   "http_status": 200,
+   "bytes": 95928,
+   "elapsed_ms": 143,
+   "ok": true,
+   "error": null,
+   "is_pdf": true
+  },
+  {
+   "name": "scoreboard_cdn",
+   "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+   "http_status": 403,
+   "bytes": null,
+   "elapsed_ms": 90,
+   "ok": false,
+   "error": "HTTP 403",
+   "is_pdf": null
+  },
+  {
+   "name": "scoreboard_stats",
+   "url": "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=11/16/2026&DayOffset=0",
+   "http_status": null,
+   "bytes": null,
+   "elapsed_ms": 25204,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "is_pdf": null
+  },
+  {
+   "name": "schedule",
+   "url": "https://www.nba.com/schedule?date=2026-11-16",
+   "http_status": 200,
+   "bytes": 232453,
+   "elapsed_ms": 480,
+   "ok": true,
+   "error": null,
+   "is_pdf": false
+  },
+  {
+   "name": "standings",
+   "url": "https://www.nba.com/standings",
+   "http_status": 200,
+   "bytes": 254549,
+   "elapsed_ms": 285,
+   "ok": true,
+   "error": null,
+   "is_pdf": false
+  },
+  {
+   "name": "gamebook_pdf",
+   "url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+   "http_status": 200,
+   "bytes": 146951,
+   "elapsed_ms": 707,
+   "ok": true,
+   "error": null,
+   "is_pdf": true
+  }
+ ],
+ "summary": {
+  "n": 7,
+  "ok": 5,
+  "unreachable": [
+   "scoreboard_cdn",
+   "scoreboard_stats"
+  ]
+ }
+}
