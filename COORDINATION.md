@@ -5289,3 +5289,24 @@ gate result is what gets published.
 | 5314-8 | Registers: requirement/question/suggestion status transitions with evidence | in progress | `requirements/*.json`, `suggestions/*.json` | a status only moves when the code or a fetched page proves it |
 | 5314-9 | Executive summary, questions, suggestions, Flagged-for-Review updates for the above | in progress | generated pages + registers | every new claim on a page has a source or a blank-with-reason |
 | 5314-10 | PR → merge → Pages deploy confirmed live → record here | in progress | `COORDINATION.md` | `gh pr merge` then a fetch of the deployed URL |
+
+### Scope extension, appended 2026-11-17 ~17:05 UTC (same session, `arena/53140f5c-nba2`)
+
+The re-cut (task 5314-5) turns out to require four consumer files that the claim table did not list.
+They are claimed now, before any of them is edited, and each is touched as narrowly as described.
+No other session holds an *open* claim on them: PR #115 (`arena/aa1d3c07-nba2`) merged at
+2026-11-17T16:35:45Z and never touched these paths (its file set was `data/settlement.json`,
+`data/site.json`, `nba2/v2/content.py`, `pages/flagged-review.html`, `pages/session-audit.html`,
+generated `site/**`); the remaining open PRs (#112, #98, #82, #80, #78, #72, #70) are stale
+predecessors whose content is already in `main`. This branch was rebased onto `efb0547` first.
+
+| File | What changes and why it cannot be avoided |
+|---|---|
+| `nba2/v2/model.py` | `_game_totals()` joins `capture2.results_rows()`, which is the 11/14 finals only (5 games). With the card at 205 games the totals-σ would be measured on 188 while every other field is read from 205. Switched to the already-committed `capture2.feed_rows()` merge (dedupe + fail-closed quarter check). Nothing else in the file. |
+| `nba2/v2/strategy_lab.py` | same join point in `load_games()`, for the same reason: the lab scores every verified final, and it must not score a 188-game corpus while the model prices 205. |
+| `nba2/v2/build.py` | two banner/table sentences hard-code "04:30 AM release", "01:30 PM release" and "24 rows added and 4 statuses moved". Those numbers are now wrong for the window; they are derived from the release records instead of typed. No layout change. |
+| `nba2/v2/test_v2.py`, `nba2/v2/test_lab.py`, `nba2/v2/test_session2.py` | the re-cut moves hard-coded row/game counts (188 finals, 26 injury rows, window dates). Updated to the re-derived numbers, with the check that a moved count is *stated* not absorbed. |
+
+`data/raw/history/**` is NOT extended: no new history file is written, because 11/14–11/16 finals
+reach the model through the dated result feeds and the history glob is summed without dedupe in
+`backtest.py` and `report.py` — a second copy of those games would double-count results.
