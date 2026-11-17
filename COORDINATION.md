@@ -5104,3 +5104,10 @@ capture-verification.html`). No settlement content, rule or hash changed.
 - **RQ-8892-03** — transcribe the 2026-11-17 injury release rows and diff against the stored
   11/16 01:00 PM release; and re-read the 11/18–11/20 schedule cards row by row so their tip times
   can be attached to game ids (currently blank with the reason published).
+### Integration record — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+- **PR #117** (`arena/669bccab-nba2` → `main`): https://github.com/wingbangboozle1-lang/NBA2/pull/117 — merged as `f9eadb1` at 16:03:45Z (`--merge`, not `--auto`).
+- **Checks on the merged head (`9a22b58`):** `verify` pass · `parity` pass · `v2` pass · `backtest` pass. `main` deploy runs for `f9eadb1`: `Publish GitHub Pages` success, `pages-build-deployment` success, `Verify data, model and site` success, `Verify the published tree (zero tolerance for drift)` success. `Verify v2 model and site` success.
+- **Live check (fetched):** `https://wingbangboozle1-lang.github.io/NBA2/site/official-results.html` shows the 22-game feed with the window stamp, source links, and blank quarter cells flagged. The bare root `https://wingbangboozle1-lang.github.io/NBA2/` still serves the legacy repository-root tree (FLAG-PAGES-01 / F-033, an owner decision, unchanged). The root `official-results.html` returns 404 because that page exists only under `site/`.
+- **Follow-up fix:** the settlement stamp printed a double full stop ("left blank.."). Fixed in `nba2/v2/capture2.py`, rebuilt, and shipped as its own PR.
+- **Stale items noticed, logged for the integration session (not edited here):** the v2 "Tamper-evident projection ledger" table on `official-results.html` still says `pending official final` for 11/15 rows that are settled in v4 (`data/v4/settlement/**`). The v2 ledger source is outside this session's file scope. The v2 `injuries` banner shows the 11/15 06:15 AM ET release, not the 11/16 or 11/17 releases (F-3 request).
