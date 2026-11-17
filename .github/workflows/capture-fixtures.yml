@@ -76,6 +76,9 @@ jobs:
               for page in ("traditional", "opponent", "advanced"):
                   yield f"team_{page}", STATS.format(page)
               yield "injury_index", "https://official.nba.com/nba-injury-report-2026-27-season/"
+              # the official teams index: a candidate server-rendered source for the
+              # conference grouping, which the standings page prints only as divisions
+              yield "teams_index", "https://www.nba.com/teams"
               # the slate window: today..today+3, from the page that is server-rendered
               for i in range(4):
                   d = (today + dt.timedelta(days=i)).isoformat()
