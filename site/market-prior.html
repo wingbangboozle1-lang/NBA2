@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Market-anchored prior — NBA2</title>
+<link rel="stylesheet" href="assets/site.css"></head>
+<body><div class="wrap">
+<aside>
+  <p class="brand">NBA2 <span>research desk</span></p>
+  <p class="tag">originated lines · sourced row by row</p>
+  <nav>
+<div class="navgroup"><span title="What this desk is, what it has measured, and where the numbers come from.">Start here</span>
+<a href="index.html" title="Dashboard">Dashboard</a>
+<a href="executive-summary.html" title="Executive summary">Executive summary</a>
+<a href="sources.html" title="Sources">Sources</a>
+<a href="methodology.html" title="Methodology">Methodology</a>
+</div>
+<div class="navgroup"><span title="Our originated numbers. Nothing here is priced or actionable: what we think, and how much the two estimators disagree.">Projection — safe to publish</span>
+<a href="lines.html" title="Originated lines">Originated lines</a>
+<a href="teams.html" title="Teams &amp; estimators">Teams &amp; estimators</a>
+<a href="correlations.html" title="Correlations &amp; parlays">Correlations &amp; parlays</a>
+<a href="props.html" title="Player props">Player props</a>
+<a href="gameflow.html" title="Game flow">Game flow</a>
+<a href="slate.html" title="Slate &amp; disagreement">Slate &amp; disagreement</a>
+<a href="projections.html" title="Projection surface">Projection surface</a>
+<a href="rotation.html" title="Rotation &amp; minutes">Rotation &amp; minutes</a>
+<a href="travel.html" title="Rest &amp; travel">Rest &amp; travel</a>
+<a href="minutes.html" title="Measured minutes">Measured minutes</a>
+<a href="lategame.html" title="Late-game &amp; garbage time">Late-game &amp; garbage time</a>
+<a href="projection.html" title="— v4 gated refresh —">— v4 gated refresh —</a>
+<a href="rotation-replacement.html" title="Minutes &amp; replacement">Minutes &amp; replacement</a>
+<a href="market-prior.html" title="Market-anchored prior" class="on">Market-anchored prior</a>
+</div>
+<div class="navgroup"><span title="Gated: no row here is actionable until its gates pass. The trigger level is the only number that would make acting rational.">Bet surface — gated</span>
+<a href="picks.html" title="Picks &amp; slate">Picks &amp; slate</a>
+<a href="strategies.html" title="Strategies &amp; leaderboard">Strategies &amp; leaderboard</a>
+<a href="strategy-lab.html" title="Strategy lab">Strategy lab</a>
+<a href="trials.html" title="Trial registry">Trial registry</a>
+<a href="bet.html" title="Bet surface (gated)">Bet surface (gated)</a>
+</div>
+<div class="navgroup"><span title="What the league published, what the sealed ledger predicted, and what has been settled against an official final.">Official record &amp; settlement</span>
+<a href="official-results.html" title="Official results">Official results</a>
+<a href="results.html" title="Result feed">Result feed</a>
+<a href="ledger.html" title="Sealed ledger">Sealed ledger</a>
+<a href="settlement.html" title="Settlement stamp">Settlement stamp</a>
+<a href="settle.html" title="Result feed &amp; settlement">Result feed &amp; settlement</a>
+<a href="result-feed-v5.html" title="— v5 player logs —">— v5 player logs —</a>
+<a href="results-coverage.html" title="Result-feed coverage">Result-feed coverage</a>
+</div>
+<div class="navgroup"><span title="Every official release this repository holds, the diff between consecutive reports, and the player logs behind the rotation model.">Injuries, rotation &amp; players</span>
+<a href="injuries.html" title="Injuries &amp; rotation">Injuries &amp; rotation</a>
+<a href="player-logs.html" title="Player game logs">Player game logs</a>
+<a href="injury-diff.html" title="Injury release diff">Injury release diff</a>
+<a href="v4-injuries.html" title="Injury releases">Injury releases</a>
+<a href="playerlogs-full.html" title="Player logs (full)">Player logs (full)</a>
+<a href="injury-archive.html" title="Injury PDF archive">Injury PDF archive</a>
+<a href="player-coverage.html" title="Player-log coverage">Player-log coverage</a>
+</div>
+<div class="navgroup"><span title="Gates, backtests, luck attribution and the live checks — the part that says whether any of the above is better than a coin flip.">Verification &amp; measured skill</span>
+<a href="backtest.html" title="Backtest &amp; skill">Backtest &amp; skill</a>
+<a href="skill-attribution.html" title="Skill vs luck">Skill vs luck</a>
+<a href="verification.html" title="Verification log">Verification log</a>
+<a href="live-verification.html" title="Live verification">Live verification</a>
+<a href="verification-v3.html" title="v3 verification">v3 verification</a>
+<a href="v4-verify.html" title="v4 verification">v4 verification</a>
+<a href="v5-verify.html" title="v5 verification">v5 verification</a>
+<a href="endpoints.html" title="Official endpoints">Official endpoints</a>
+<a href="v6-verify.html" title="v6 verification">v6 verification</a>
+</div>
+<div class="navgroup"><span title="What needs an owner decision before it is built, what we do not know, and everything flagged for review.">Decisions, questions &amp; flags</span>
+<a href="repo-review.html" title="Repo review">Repo review</a>
+<a href="questions.html" title="Open questions">Open questions</a>
+<a href="suggestions.html" title="Suggestions queue">Suggestions queue</a>
+<a href="decision-queue.html" title="Decision queue">Decision queue</a>
+<a href="decisions-needed.html" title="Decisions needed">Decisions needed</a>
+<a href="flagged.html" title="Flagged for review">Flagged for review</a>
+</div>
+</nav>
+</aside>
+<main>
+  <div class="crumbs">Dashboard › Market-anchored prior</div>
+  <h1>Market-anchored prior</h1>
+  <p class="lede">Blend the model line with the closing line, weighted by measured out-of-sample log-loss. The rule is pre-registered and published; the weight is <b>blank</b>, because no closing line has ever been captured.</p>
+<div class="kpis"><div class="kpi"><b>blank</b><small>w_market</small></div><div class="kpi"><b>0.6088</b><small>model out-of-sample log-loss</small></div><div class="kpi"><b>0.6931</b><small>coin-flip baseline L₀</small></div><div class="kpi"><b>not measured</b><small>market log-loss</small></div><div class="kpi"><b>no</b><small>blended line published</small></div></div><div class="note bad">The brief asks to blend the model line with the closing line, weighted by measured out-of-sample log-loss. <b>Only one of the two inputs exists.</b> No closing price has ever been captured (R-043 / R-101, <span class="badge b-bad">F-V4-04</span>), so the market's log-loss cannot be measured, so the weight is undefined. It is published as a blank with that reason — not as 0, not as 0.5, and not as a plausible guess.</div><h2>The rule, pre-registered before any price exists</h2><pre>w_market = max(0, L0 − L_market) / (max(0, L0 − L_model) + max(0, L0 − L_market)); blended = (1 − w_market)·model + w_market·market
+
+L0 = ln 2 = 0.6931 nats  (a coin flip on a binary outcome)
+s = L0 − L, floored at 0   (a forecaster worse than a coin flip gets no weight,
+                            never negative weight)</pre><div class="note ">Pre-registering the rule now is the point: it fixes the weight function before there is a market number to fit it to, so the blend cannot later be reverse-engineered from a result.</div><h2>What has actually been measured</h2><div class="scroll"><table><caption>Two independent out-of-sample measurements of the model, scored against the same coin-flip baseline.</caption><thead><tr><th>Sample</th><th>What it is</th><th>Games</th><th>Window</th><th>Log-loss</th><th>Baseline</th><th>Skill vs baseline</th><th>Brier</th><th>AUROC</th><th>Leakage rule</th><th>Source</th></tr></thead><tbody><tr><td>BT-167</td><td>walk-forward backtest, official history</td><td>167</td><td>2026-10-23 → 2026-11-13</td><td>0.6234</td><td>0.6931</td><td>0.0697</td><td>0.217</td><td>0.714</td><td>ratings for a date use only games strictly before that date</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/backtest.json" rel="noopener" target="_blank">data/v2/backtest.json</a></td></tr><tr><td>SETTLED-14</td><td>sealed ledgers settled against official finals</td><td>14</td><td>through 2026-11-15</td><td>0.6088</td><td>0.6931</td><td>0.0843</td><td><span class="blank">— not computed for this sample</span></td><td><span class="blank">— not computed for this sample</span></td><td>predictions were sealed (sha256) before tip and verified unmodified at settlement</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v4/settlement/settled-all.json" rel="noopener" target="_blank">data/v4/settlement/settled-all.json</a></td></tr></tbody></table></div><h2>What the rule would return, for every plausible market log-loss</h2><div class="note ">Every row is the pre-registered rule evaluated at a hypothetical market log-loss. It is arithmetic on the stated formula, not a measurement: no market log-loss has been observed, because no closing price exists in any committed capture.</div><div class="scroll"><table data-derived="1"><caption>Arithmetic on the rule above at L_model = 0.6088 (the sealed-ledger measurement). Not a measurement, and not a value read from any official document: this is the only table on the site whose rows are deliberately unsourced, and it says so.</caption><thead><tr><th>IF the market&#x27;s log-loss were</th><th>market skill vs a coin flip</th><th>THEN w_market</th><th>w_model</th><th>Rule</th></tr></thead><tbody><tr><td>0.6931</td><td>0.0000</td><td>0.0006</td><td>0.9994</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6800</td><td>0.0131</td><td>0.1349</td><td>0.8651</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6700</td><td>0.0231</td><td>0.2153</td><td>0.7847</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6600</td><td>0.0331</td><td>0.2821</td><td>0.7179</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6500</td><td>0.0431</td><td>0.3384</td><td>0.6616</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6400</td><td>0.0531</td><td>0.3865</td><td>0.6135</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6300</td><td>0.0631</td><td>0.4281</td><td>0.5719</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6200</td><td>0.0731</td><td>0.4644</td><td>0.5356</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6100</td><td>0.0831</td><td>0.4964</td><td>0.5036</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.6000</td><td>0.0931</td><td>0.5248</td><td>0.4752</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5900</td><td>0.1031</td><td>0.5501</td><td>0.4499</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5800</td><td>0.1131</td><td>0.5729</td><td>0.4271</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5600</td><td>0.1331</td><td>0.6122</td><td>0.3878</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5400</td><td>0.1531</td><td>0.6448</td><td>0.3552</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5200</td><td>0.1731</td><td>0.6724</td><td>0.3276</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr><tr><td>0.5000</td><td>0.1931</td><td>0.6960</td><td>0.3040</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/market_prior.py" rel="noopener" target="_blank">rule</a></td></tr></tbody></table></div><h2>What would unblock it</h2><ol><li>A licensed odds feed capturing the closing spread, total and moneyline per game with a stated timestamp policy (R-101).</li><li>A decision on storage and display terms for those prices (open question on the Decisions needed page).</li><li>At least one full out-of-sample window of market log-loss scored on the same games as the model, so the two numbers are comparable.</li></ol>
+  <footer>
+    Built by <code>nba2/v6</code> · session <code>arena/f5ac4e74-nba2</code> ·
+    no value on this page was fetched live; every row links to the official document it was
+    read from. Site: <a href="https://wingbangboozle1-lang.github.io/NBA2/">NBA2 on GitHub
+    Pages</a>.
+  </footer>
+</main></div></body></html>

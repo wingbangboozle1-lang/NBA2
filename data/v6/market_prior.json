@@ -1,0 +1,154 @@
+{
+ "schema": "nba2.v6.market-prior.v1",
+ "session": "arena/f5ac4e74-nba2",
+ "rule": "w_market = max(0, L0 − L_market) / (max(0, L0 − L_model) + max(0, L0 − L_market)); blended = (1 − w_market)·model + w_market·market",
+ "baseline_l0": 0.6931,
+ "primary_measurement_id": "SETTLED-14",
+ "model_log_loss": 0.6088,
+ "market_log_loss": null,
+ "market_log_loss_reason": "no closing line exists in any committed capture — requirement R-043 / R-101, flagged F-V4-04 in the v4 capture index",
+ "w_market": null,
+ "w_market_reason": "undefined until a closing line is captured and scored out-of-sample — no closing line exists in any committed capture — requirement R-043 / R-101, flagged F-V4-04 in the v4 capture index",
+ "blended_margin_published": false,
+ "blended_margin_reason": "a blend needs a market number; with no closing line the blend would be the model number wearing a market label",
+ "measurements": [
+  {
+   "id": "BT-167",
+   "sample": "walk-forward backtest, official history",
+   "n_games": 167,
+   "window": "2026-10-23 → 2026-11-13",
+   "log_loss": 0.6234,
+   "log_loss_baseline": 0.6931,
+   "skill_vs_baseline": 0.0697,
+   "leakage_rule": "ratings for a date use only games strictly before that date",
+   "brier": 0.217,
+   "brier_baseline": 0.25,
+   "auroc": 0.714,
+   "calibration_read": "over-confident",
+   "source_file": "data/v2/backtest.json",
+   "source_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/backtest.json",
+   "official_source": "data/raw/history/*.json — 183 official finals, one nba.com/game URL per row"
+  },
+  {
+   "id": "SETTLED-14",
+   "sample": "sealed ledgers settled against official finals",
+   "n_games": 14,
+   "window": "through 2026-11-15",
+   "log_loss": 0.6088,
+   "log_loss_baseline": 0.6931,
+   "skill_vs_baseline": 0.0843,
+   "leakage_rule": "predictions were sealed (sha256) before tip and verified unmodified at settlement",
+   "brier": null,
+   "brier_baseline": null,
+   "auroc": null,
+   "calibration_read": "12 correct winners in 14 distinct games is a hit rate of 0.857 against 0.633 expected under the seals' own probabilities. The Poisson-binomial tail (p_at_least_observed_hits) is the only honest yardstick: below 0.05 the run is outside the noise band, but on 14 games in one week it is not a measured edge, it is not staked, and the bet surface still publishes zero rows.",
+   "source_file": "data/v4/settlement/settled-all.json",
+   "source_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v4/settlement/settled-all.json",
+   "official_source": "https://www.nba.com/games"
+  }
+ ],
+ "sensitivity_grid": [
+  {
+   "hypothetical_market_log_loss": 0.6931,
+   "market_skill_vs_coin": 0.0,
+   "w_market": 0.0005590487245731051,
+   "w_model": 0.9994
+  },
+  {
+   "hypothetical_market_log_loss": 0.68,
+   "market_skill_vs_coin": 0.0131,
+   "w_market": 0.1348506765819812,
+   "w_model": 0.8651
+  },
+  {
+   "hypothetical_market_log_loss": 0.67,
+   "market_skill_vs_coin": 0.0231,
+   "w_market": 0.21533390513506798,
+   "w_model": 0.7847
+  },
+  {
+   "hypothetical_market_log_loss": 0.66,
+   "market_skill_vs_coin": 0.0331,
+   "w_market": 0.28211720327686257,
+   "w_model": 0.7179
+  },
+  {
+   "hypothetical_market_log_loss": 0.65,
+   "market_skill_vs_coin": 0.0431,
+   "w_market": 0.33842422661635524,
+   "w_model": 0.6616
+  },
+  {
+   "hypothetical_market_log_loss": 0.64,
+   "market_skill_vs_coin": 0.0531,
+   "w_market": 0.3865408015795112,
+   "w_model": 0.6135
+  },
+  {
+   "hypothetical_market_log_loss": 0.63,
+   "market_skill_vs_coin": 0.0631,
+   "w_market": 0.42813284576090466,
+   "w_model": 0.5719
+  },
+  {
+   "hypothetical_market_log_loss": 0.62,
+   "market_skill_vs_coin": 0.0731,
+   "w_market": 0.46444317142416885,
+   "w_model": 0.5356
+  },
+  {
+   "hypothetical_market_log_loss": 0.61,
+   "market_skill_vs_coin": 0.0831,
+   "w_market": 0.4964177898528147,
+   "w_model": 0.5036
+  },
+  {
+   "hypothetical_market_log_loss": 0.6,
+   "market_skill_vs_coin": 0.0931,
+   "w_market": 0.5247895199162298,
+   "w_model": 0.4752
+  },
+  {
+   "hypothetical_market_log_loss": 0.59,
+   "market_skill_vs_coin": 0.1031,
+   "w_market": 0.5501348410899105,
+   "w_model": 0.4499
+  },
+  {
+   "hypothetical_market_log_loss": 0.58,
+   "market_skill_vs_coin": 0.1131,
+   "w_market": 0.572913474178933,
+   "w_model": 0.4271
+  },
+  {
+   "hypothetical_market_log_loss": 0.56,
+   "market_skill_vs_coin": 0.1331,
+   "w_market": 0.6121868165885452,
+   "w_model": 0.3878
+  },
+  {
+   "hypothetical_market_log_loss": 0.54,
+   "market_skill_vs_coin": 0.1531,
+   "w_market": 0.6448455442806676,
+   "w_model": 0.3552
+  },
+  {
+   "hypothetical_market_log_loss": 0.52,
+   "market_skill_vs_coin": 0.1731,
+   "w_market": 0.6724309604563619,
+   "w_model": 0.3276
+  },
+  {
+   "hypothetical_market_log_loss": 0.5,
+   "market_skill_vs_coin": 0.1931,
+   "w_market": 0.6960400196258282,
+   "w_model": 0.304
+  }
+ ],
+ "grid_note": "Every row is the pre-registered rule evaluated at a hypothetical market log-loss. It is arithmetic on the stated formula, not a measurement: no market log-loss has been observed, because no closing price exists in any committed capture.",
+ "what_would_unblock_it": [
+  "A licensed odds feed capturing the closing spread, total and moneyline per game with a stated timestamp policy (R-101).",
+  "A decision on storage and display terms for those prices (open question on the Decisions needed page).",
+  "At least one full out-of-sample window of market log-loss scored on the same games as the model, so the two numbers are comparable."
+ ]
+}

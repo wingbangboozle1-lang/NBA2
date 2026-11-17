@@ -1,0 +1,64 @@
+{
+ "schema": "nba2.v6.flags.v1",
+ "session": "arena/f5ac4e74-nba2",
+ "n_flags": 7,
+ "published_on": "site/flagged.html (appended to v2's register)",
+ "flags": [
+  {
+   "id": "F-F5-01",
+   "severity": "info",
+   "official_source": "https://github.com/wingbangboozle1-lang/NBA2/pull/112",
+   "what_is_wrong": "Seven pull requests from earlier sessions are still open, including one (<code>#112</code>) that describes itself as the final integration: 176 changed files, +38,805/−12,790, and its required checks <b>failed</b> (<i>Verify data, model and site</i>, <i>Verify the published tree</i>). Five of the rest are in conflict.",
+   "what_is_published": "Left open and flagged. Merging a 176-file integration whose verification checks fail would publish a tree nobody has verified, which the brief forbids. Each is more than 60 minutes old with no commits, so a later session may take it over.",
+   "where_to_check": "COORDINATION.md"
+  },
+  {
+   "id": "F-F5-02",
+   "severity": "gap",
+   "official_source": "https://www.nba.com/schedule?date=2026-11-16",
+   "what_is_wrong": "The nightly job's finals fetch reads two endpoints and both are dead: <code>cdn.nba.com</code> live scoreboard returns HTTP 403 and <code>stats.nba.com/stats/scoreboardv2</code> times out. Measured, not assumed — see <a href=\"endpoints.html\" rel=\"noopener\" target=\"_blank\">the endpoint register</a>. It is why the 2026-11-16 games (8 of them) have no official final and stay ungraded.",
+   "what_is_published": "The gap is measured and published per date on <a href=\"results-coverage.html\" rel=\"noopener\" target=\"_blank\">the result-feed coverage page</a>; those games are blank and never inferred. Two <i>reachable</i> official endpoints exist (<a href=\"https://www.nba.com/schedule?date=2026-11-16\" title=\"https://www.nba.com/schedule?date=2026-11-16\" rel=\"noopener\" target=\"_blank\">www.nba.com/schedule</a> at HTTP 200 and <a href=\"https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf\" title=\"https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf\" rel=\"noopener\" target=\"_blank\">the official gamebook PDFs</a> at HTTP 200) and the repair is a parser against one of them — filed as a suggestion rather than shipped untested, because a parser that returns a wrong official score is worse than a gap that says so.",
+   "where_to_check": "data/raw/egress_probe.json"
+  },
+  {
+   "id": "F-F5-03",
+   "severity": "gap",
+   "official_source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "what_is_wrong": "Twelve of the sixteen official injury reports this repository knows about are not archived as PDF bytes. Four are (three from 2026-11-16 and one from 2026-11-17); the rest exist only as a transcript or as a citation inside another document.",
+   "what_is_published": "The full inventory is published with one row per release, its revision stamp, its retrieval time and whether bytes exist: <a href=\"injury-archive.html\" rel=\"noopener\" target=\"_blank\">the injury PDF archive</a>. The ingester that closes the gap exists (<a href=\"https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/injury_backfill.py\" rel=\"noopener\" target=\"_blank\">nba2/v6/injury_backfill.py</a>) and runs from a GitHub runner where the CDN answers; a release the league has since withdrawn will be recorded as unreachable with its HTTP status, never backfilled with a substitute.",
+   "where_to_check": "data/v6/injury_archive.json"
+  },
+  {
+   "id": "F-F5-04",
+   "severity": "gap",
+   "official_source": "https://www.nba.com/games",
+   "what_is_wrong": "The market-anchored prior (brief item 15) cannot be computed: no closing line has ever been captured, so the market's out-of-sample log-loss is unmeasured, so the blend weight is undefined. This is R-043 / R-101, carried from the first session as <code>F-V4-04</code>.",
+   "what_is_published": "The <a href=\"market-prior.html\" rel=\"noopener\" target=\"_blank\">market-prior page</a> publishes the pre-registered rule, both measured model log-losses (0.6234 over 167 walk-forward games; 0.6088 over 14 settled sealed games), and a sensitivity grid over hypothetical market log-losses. The weight itself is a blank with this reason — not 0, not 0.5, not a guess.",
+   "where_to_check": "data/v6/market_prior.json"
+  },
+  {
+   "id": "F-F5-05",
+   "severity": "gap",
+   "official_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+   "what_is_wrong": "Per-player game logs cover 22 of the 83 players named on the newest official injury report (26.5%), and only 18 of those actually played in the captured window. The gamebooks for 2026-11-16 and later were never transcribed (<code>F-V4-02</code>).",
+   "what_is_published": "Coverage is measured and published, player by player, on <a href=\"player-coverage.html\" rel=\"noopener\" target=\"_blank\">the player-log coverage page</a>: matched players with their minutes, points, rebounds, assists and opponent straight from the official gamebook, and every unmatched player with the reason. The join is literal — near-miss spellings are listed, never merged.",
+   "where_to_check": "data/v6/player_coverage.json"
+  },
+  {
+   "id": "F-F5-06",
+   "severity": "info",
+   "official_source": "https://www.nba.com/schedule?date=2026-11-15",
+   "what_is_wrong": "Two committed official result feeds store overtime differently: one appends the OT periods to the quarter row, the other keeps regulation in <code>away_quarters</code> and the extra periods in <code>ot_quarters</code>. Summing the first field alone makes the 2026-11-15 NYK@TOR row appear not to reconcile (95 vs a final of 112).",
+   "what_is_published": "Both are correct and both are kept. The gate normalises them before checking, and the per-game table prints which schema each row came from. No score was altered.",
+   "where_to_check": "nba2/v6/results_coverage.py"
+  },
+  {
+   "id": "F-F5-07",
+   "severity": "info",
+   "official_source": "https://github.com/wingbangboozle1-lang/NBA2",
+   "what_is_wrong": "This session's workspace cannot reach <code>nba.com</code>: the TLS handshake is reset, so no new official value could be read. Every number published here was re-derived from a capture already committed under <code>data/raw/</code> and links to the official document it came from.",
+   "what_is_published": "Stated on every v6 page and in the claim on the coordination board. Where a value does not exist in any committed capture, it is blank with a reason.",
+   "where_to_check": "COORDINATION.md"
+  }
+ ]
+}
