@@ -120,7 +120,7 @@ jobs:
                   row["bytes"] = len(raw)
                   row["sha256"] = hashlib.sha256(raw).hexdigest()
                   # control rows are evidence only - never stored as parser fixtures
-                  if not name.startswith(("stats_", "cdn_")):
+                  if not name.startswith(("stats_", "cdn_", "probe_")):
                       path = OUT / f"{name}.html.gz"
                       path.write_bytes(gzip.compress(raw))
                       row["file"] = str(path)
@@ -166,7 +166,7 @@ jobs:
           # Pages the parser must read being unreachable must be visible. The control rows
           # (stats/cdn) are expected to fail; they are measurements, not build inputs.
           critical = [r for r in rows if not r["ok"]
-                      and not r["name"].startswith(("stats_", "cdn_"))]
+                      and not r["name"].startswith(("stats_", "cdn_", "probe_"))]
           if critical:
               print("::error::critical official pages unreachable: " +
                     ", ".join(r["name"] for r in critical))
