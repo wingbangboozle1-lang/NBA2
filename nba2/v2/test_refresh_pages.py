@@ -170,6 +170,31 @@ class TestSlate(unittest.TestCase):
         self.assertIsNone(R._et_clock({}))
 
 
+class TestSlateGateAcceptsTheFetchedUrl(unittest.TestCase):
+    TODAY = "2026-11-17"
+
+    def slate(self, url):
+        return {"covered_dates": ["2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20"],
+                "games": [{"date": "2026-11-17", "game_id": "0022600253",
+                           "home": "TOR", "away": "NYK", "source_url": url}]}
+
+    def test_the_games_url_the_slate_is_read_from_passes(self):
+        gate = R.gate_slate(self.slate("https://www.nba.com/games?date=2026-11-17"), self.TODAY)
+        self.assertTrue(gate["ok"], gate["detail"])
+
+    def test_the_legacy_schedule_url_still_passes(self):
+        gate = R.gate_slate(self.slate("https://www.nba.com/schedule?date=2026-11-17"), self.TODAY)
+        self.assertTrue(gate["ok"], gate["detail"])
+
+    def test_another_date_another_host_or_no_date_still_fails(self):
+        for url in ("https://www.nba.com/games?date=2026-11-18",
+                    "https://example.com/games?date=2026-11-17",
+                    "https://www.nba.com/games",
+                    "https://www.nba.com/standings?date=2026-11-17"):
+            gate = R.gate_slate(self.slate(url), self.TODAY)
+            self.assertFalse(gate["ok"], url)
+
+
 class TestFinals(unittest.TestCase):
     def test_finals_carry_quarters_that_sum_to_the_printed_final(self):
         dates = ["2026-11-14", "2026-11-15", "2026-11-16"]

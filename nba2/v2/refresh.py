@@ -631,6 +631,13 @@ def gate_injuries(inj: dict, most_recent_game_date: str) -> dict:
             "detail": "both stamps recorded" if ok else "a stamp is missing — fail-closed"}
 
 
+# Both are official nba.com pages for one date. The slate used to be read from
+# stats.nba.com's scoreboard JSON and cite /schedule; it is now read from the server-rendered
+# /games page, which is the URL that was actually fetched, so both are accepted — and a row
+# citing a page it was not read from would still be a lie either way.
+SLATE_SOURCE_PATHS = ("/schedule", "/games")
+
+
 def gate_slate(slate: dict, today: str) -> dict:
     """Require fetched coverage for each date in today's four-day rolling window.
 
@@ -678,12 +685,13 @@ def gate_slate(slate: dict, today: str) -> dict:
         try:
             parsed = urlparse(source)
             source_ok = (parsed.scheme == "https" and parsed.hostname == "www.nba.com"
-                         and parsed.path == "/schedule"
+                         and parsed.path in SLATE_SOURCE_PATHS
                          and parse_qs(parsed.query).get("date") == [date])
         except (TypeError, ValueError):
             source_ok = False
         if not source_ok:
-            malformed.append(f"row {i} lacks the matching official NBA schedule URL")
+            malformed.append(f"row {i} lacks the matching official NBA schedule URL "
+                             f"(expected www.nba.com/schedule or /games with date={date})")
 
     duplicates = sorted({gid for gid in gids if gids.count(gid) > 1})
     problems = []
