@@ -5310,3 +5310,20 @@ predecessors whose content is already in `main`. This branch was rebased onto `e
 `data/raw/history/**` is NOT extended: no new history file is written, because 11/14–11/16 finals
 reach the model through the dated result feeds and the history glob is summed without dedupe in
 `backtest.py` and `report.py` — a second copy of those games would double-count results.
+
+### Scope extension 2 (same session), logged 2026-11-17 ~17:25 UTC
+
+Five more files became necessary once the re-cut was actually run, because the model moving forward invalidates
+narrative and checks that were typed rather than derived. **Ordering note, stated plainly: `nba2/v2/check.py` and
+`nba2/v2/live.py` were edited a few minutes *before* this entry was appended.** No other session held an open claim
+on any of the five — checked against `gh pr list --state open` (112, 98, 82, 80, 78, 72, 70; PR #115 merged
+16:35:45Z) and against those PRs' file lists — so nothing was overwritten and no conflict exists, but the claim
+should have been pushed first and this line is the correction rather than a silent fix.
+
+| File | Change |
+|---|---|
+| `nba2/v2/check.py` | the site's own semantic gate hard-coded the *previous* capture: `n_slate = 34` and a dated path `data/raw/capture_2026-11-15/…`, plus `!= 188 wins`. It now reads the snapshot the model names (`official.SLATE_CAPTURE` / `INJURY_CAPTURE`, new constants generated from the capture), checks count *agreement* between model, capture and `lines.json`, checks window containment and per-day counts against the capture, and checks the win total against the committed finals corpus instead of a literal. |
+| `nba2/v2/live.py` | the staleness detector applied only the five 11/14 finals to its 2026-11-14 audit fixture, so a model that is legitimately three days ahead showed 29 rows "UNEXPLAINED". The step is generalised to "fixture + every official final committed after the fixture date" (`capture2.feed_rows()`, 22 games), the row key becomes `fixture_plus_committed_finals`, and the verdict/claim sentences are computed. Every difference is now explained — by committed finals, not by a widening special case. |
+| `nba2/v2/backtest.py` | its `load_games()` read only `data/raw/history/` (183 finals), so after the re-cut the skill page graded 167 games through 11/13 while the strategy lab graded 189 through 11/16 and the model priced a 205-game card. Same finals join as `model.py`/`strategy_lab.py` (dedupe by game id), and the hard-coded `"generated": "2026-11-14"` becomes the snapshot stamp so the build stays deterministic. |
+| `nba2/v2/content.py` | **append-only**: one new `FLAGS += [...]` block (F-063…F-065) recording the re-cut, the superseded 155/167-game measurements the page still quotes as dated history, and the defect this session found in its own prose. No existing entry was edited or renumbered (AA-F-05's duplicate-ID problem is left to its owner). |
+| `nba2/v2/build.py` | narrative derivation only (14 anchors, `audit/session-53140f5c-nba2/patch_build_prose.py`): the homepage's "188 official finals / 34 window games / 04:30 AM release / 24 rows added and 4 statuses moved / no Cup marker on any of the 34 listings", the strategy-lab "167 finals", the verification rows, the slate lede, the PF/PA provenance note and the injuries-page release map. Each is now read from the model, the finals corpus, the labs' JSON and the stored release record at build time. No layout or table-schema change. |
