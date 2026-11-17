@@ -173,13 +173,26 @@ def write() -> list[str]:
     written.append(str((prior / "results_2026-11-15.json").relative_to(ROOT)))
 
     # --------------------------------------------------------- the index of both captures
+    # The injury transcript is written under the *release's* own name, so once a newer
+    # release is stored the directory holds more than this run wrote (measured 2026-11-17:
+    # the 11/17 11:15 AM transcript landed here and the 11/16 01:00 PM transcript, still on
+    # disk, silently left the index). The index now lists every transcript present, and says
+    # which of them this run wrote.
+    on_disk = sorted(str(f.relative_to(ROOT)) for f in today.glob("injury_transcript_*.json"))
+    transcripts = sorted(set(on_disk) | {f for f in written if "injury_transcript_" in f})
     _dump(today / "capture_index.json", {
         "schema": "nba2.capture-index.v1",
         **stamp,
         "source_pages": C.SOURCE_PAGES,
         "unread": {k: {"what": v[0], "why": v[1], "attempted_url": v[2]}
                    for k, v in C.UNREAD.items()},
-        "files": sorted(written + [str((today / "capture_index.json").relative_to(ROOT))]),
+        "files": sorted(set(transcripts) | set(written)
+                        | {str((today / "capture_index.json").relative_to(ROOT))}),
+        "injury_transcripts_on_disk": on_disk,
+        "injury_transcript_note": (
+            "one transcript per stored official release, whichever directory was current when "
+            "it was built; the build writes the newest release it has, so a later release can "
+            "be filed here under its own date - the list is the directory, not the run"),
         "crosschecks": C.crosschecks(),
     })
     written.append(str((today / "capture_index.json").relative_to(ROOT)))

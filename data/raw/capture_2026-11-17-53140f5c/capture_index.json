@@ -1,0 +1,178 @@
+{
+ "schema": "nba2.capture-index.v1",
+ "retrieved_utc": "2026-11-17T16:30:00Z",
+ "session": "arena/53140f5c-nba2",
+ "method": "platform page-fetch tool (fetch_page); bash egress to nba.com / stats.nba.com / cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_pages": {
+  "standings": {
+   "name": "NBA.com Standings (official)",
+   "url": "https://www.nba.com/standings",
+   "read": "30 clubs x 12 printed columns"
+  },
+  "team_adv": {
+   "name": "NBA.com Stats - Teams Advanced (official)",
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 clubs: GP, W, L, MIN, OffRtg, DefRtg, NetRtg, PACE, PIE, POSS"
+  },
+  "team_trad_spot": {
+   "name": "NBA.com Stats - Teams Traditional (official)",
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "2 of 30 rows read directly (LAL, SAS); the rest are verified by identity against the 205 committed official finals"
+  },
+  "schedule": {
+   "name": "NBA.com Schedule (official)",
+   "url": "https://www.nba.com/schedule?date=2026-11-18",
+   "read": "11/16 finals; 11/17 (5), 11/18 (12), 11/19 (4), 11/20 (9) cards with game ids, ET tips, arenas and NBA Cup groups"
+  },
+  "injury_index": {
+   "name": "NBA Official - Injury Report index (official)",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "read": "every published 11/17 release, 12:00 a.m. ET to 11:15 a.m. ET; the newest is the one stored"
+  },
+  "injury_pdf": {
+   "name": "NBA Official Injury Report 11/17/26 11:15 AM ET (official PDF)",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_15AM.pdf",
+   "read": "verbatim rendering stored in nba2/v4/injury_renderings.py; rows derived by nba2/v4/injury_parse.py"
+  }
+ },
+ "unread": {
+  "injury_pdf_bytes": {
+   "what": "the PDF file itself (bytes), not its text",
+   "why": "bash egress to ak-static.cms.nba.com is blocked in this sandbox; nba2/v4/injury_ingest.py archives bytes from a runner and records the outcome either way (F-V4-01)",
+   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_15AM.pdf"
+  },
+  "traditional_and_opponent_pages": {
+   "what": "the full 30-row PTS and OPP PTS tables",
+   "why": "not re-read this session; verified instead by exact re-derivation from the 205 committed official finals, plus two directly read rows",
+   "attempted_url": "https://www.nba.com/stats/teams/traditional"
+  },
+  "closing_lines": {
+   "what": "market closing prices",
+   "why": "no licensed odds feed is connected (gate G6)",
+   "attempted_url": "https://www.nba.com/games"
+  }
+ },
+ "checks": [
+  {
+   "id": "rows-30",
+   "what": "30 clubs on the standings card and 30 on the advanced page, same club set",
+   "value": "30 / 30",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "wins-equals-losses",
+   "what": "league wins = league losses (every game has one of each)",
+   "value": "205 / 205",
+   "result": "PASS",
+   "detail": "205 is also 410 team-games / 2 = the games implied by the card"
+  },
+  {
+   "id": "gp-equals-wl",
+   "what": "every club's games played on the advanced page = its own W+L",
+   "value": "True",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "two-pages-same-record",
+   "what": "W/L printed on the advanced page matches the standings card, 30/30",
+   "value": "True",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "splits-balance",
+   "what": "league home wins = road losses and home losses = road wins",
+   "value": "106/106 and 98/98",
+   "result": "PASS",
+   "detail": "the residual is the neutral-site games, which the card prints outside the splits"
+  },
+  {
+   "id": "netrtg-identity",
+   "what": "NetRtg = OffRtg \u2212 DefRtg for all 30 clubs (0.1 print rounding)",
+   "value": "True",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "finals-count",
+   "what": "committed official finals cover the card exactly",
+   "value": "205 finals vs 205 games on the card",
+   "result": "PASS",
+   "detail": "183 in data/raw/history (10/20-11/13) + 5 (11/14) + 9 (11/15) + 8 (11/16), with the three 11/15 games that were still in progress at their first read taken from the 2026-11-17 recheck feed"
+  },
+  {
+   "id": "rebuilt-record",
+   "what": "every club's reconstructed W-L is inside its card record, no club exceeding it",
+   "value": "hole total 0 club-games; clubs with a hole []",
+   "result": "PASS",
+   "detail": "a positive hole would be printed here rather than smoothed away"
+  },
+  {
+   "id": "captured-points-reproduce",
+   "what": "the prior capture's PTS and OPP PTS reproduce the 205 official finals, club by club",
+   "value": "30/30 clubs; worst residual 0.10 (DET)",
+   "result": "PASS",
+   "detail": "PF and PA are per-game figures the page rounds to 0.1, so 0.1 is the bound"
+  },
+  {
+   "id": "points-balance-exact",
+   "what": "league points scored = league points allowed, exactly (finals are integer)",
+   "value": "46667 / 46667",
+   "result": "PASS",
+   "detail": "a per-page rounding tolerance is not needed here: these are summed box-score points"
+  },
+  {
+   "id": "trad-spot-check",
+   "what": "the traditional-page rows read independently agree with finals-summed points",
+   "value": "LAL 122.8 vs 122.8; SAS 118.8 vs 118.8",
+   "result": "PASS",
+   "detail": "\u00b10.1 is the page's own print precision"
+  },
+  {
+   "id": "prior-standings-agreement",
+   "what": "this standings read vs arena/8892d20c-nba2's 2026-11-17 capture",
+   "value": "30/30 clubs identical on all nine shared columns",
+   "result": "PASS",
+   "detail": "no differences"
+  },
+  {
+   "id": "prior-teamstats-agreement",
+   "what": "this advanced-page read vs the same capture's advanced columns",
+   "value": "30/30 clubs identical on OffRtg/DefRtg/NetRtg/PACE/PIE/GP",
+   "result": "PASS",
+   "detail": "no differences"
+  },
+  {
+   "id": "results-feed-recheck",
+   "what": "the published 11/16 result feed vs this session's fresh read of the same page",
+   "value": "8 games, 0 mismatches",
+   "result": "PASS",
+   "detail": "every final, every team and every score agrees"
+  },
+  {
+   "id": "slate-recheck",
+   "what": "this session's slate read vs the published v2 slate (overlapping games)",
+   "value": "17 overlapping games, 0 mismatches",
+   "result": "PASS",
+   "detail": "game id, date, matchup and ET tip all agree"
+  },
+  {
+   "id": "injury-parsed",
+   "what": "the 11/17 11:15 AM ET release parses with no unread player row",
+   "value": "59 rows, 33 with status, 26 club placeholders, 1 unread",
+   "result": "PASS",
+   "detail": "the one unread line is a page-break fragment (see the release file); no player row is dropped"
+  }
+ ],
+ "files": [
+  "capture_index.json",
+  "finals_2026-11-16_independent.json",
+  "injury_release_2026-11-17_1115AM_ET.json",
+  "points_from_finals.json",
+  "slate_2026-11-17_to_11-20.json",
+  "standings_2026-11-17.json",
+  "team_advanced_2026-11-17.json"
+ ]
+}

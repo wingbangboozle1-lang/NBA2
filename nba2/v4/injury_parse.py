@@ -30,6 +30,26 @@ even when the left-hand cells were dropped:
 A cell whose type is not recognisable is left unassigned. The row is still published with
 a note saying what was unread, and the release publishes a count of unread rows. Nothing is
 coerced to a plausible value.
+
+Page-break rule (added 2026-11-17, session `arena/53140f5c-nba2`)
+-----------------------------------------------------------------
+The converter reprints the report title on every PDF page, and on a continuation page the
+**first table row is printed above that page's separator line**. The old loop only accepted
+rows seen after a separator, so that row was dropped — silently. Measured on the stored
+renderings this lost a club's `NOT YET SUBMITTED` placeholder in each case (2026-11-17
+11:15 AM: `Minnesota Timberwolves` and `Golden State Warriors`), which under-reports how many
+clubs have not filed and can hide a status line altogether. Now:
+
+* a row printed before the separator is **accepted** when it is either the league's
+  `NOT YET SUBMITTED` club placeholder or a complete player row (a `Last, First` cell plus a
+  status word in its tail) — date / time / matchup / team then carry from the block in
+  progress, exactly as they do for the un-split version of the same row;
+* any *other* row printed there is **reported in `unread`** with the reason, never dropped;
+* a row with no non-empty cell at all is counted in `blank_rows_skipped`, so
+  `rows + unread + blank_rows_skipped` equals the number of table lines in the document. That
+  identity is asserted in `nba2/v4/test_v4.py` — a line cannot disappear.
+
+A header row (`Game Date | ...`) is still recognised and skipped on every page.
 """
 
 from __future__ import annotations
@@ -43,6 +63,7 @@ _SEP = re.compile(r"^\|[\s\-|:]+\|\s*$")
 _DATE = re.compile(r"^(\d{2})/(\d{2})/(\d{4})$")
 _TIME = re.compile(r"^(\d{1,2}):(\d{2}) \(ET\)$")
 _MATCHUP = re.compile(r"^[A-Z]{2,3}@[A-Z]{2,3}$")
+_TITLE = re.compile(r"^[#*\s]*Injury Report:\s")
 _REASON = re.compile(r"^(Injury/Illness|G League|League|Illness|Rest|Personal|Trade|"
                      r"Not With Team|Suspension)\b")
 
@@ -77,6 +98,29 @@ def _is_player(cell: str) -> bool:
     return "," in cell
 
 
+def _accept_above_separator(cells: list[str]) -> bool:
+    """Is a row printed *above* a continuation page's separator safe to read?
+
+    Two shapes are, and only these two:
+
+    * ``NOT YET SUBMITTED`` — the league's club-filing placeholder. It carries no status to
+      mis-read, and losing it under-reports how many clubs have not filed;
+    * a row whose tail resolves to a **status word** and which also carries a
+      ``Last, First`` player cell somewhere — a complete player row whose left-hand context
+      simply did not survive the page break. Context then comes from the block in progress,
+      which is how the same row is read when it is not split.
+
+    Anything else (a lone ``Fracture`` or ``Soreness`` fragment) is not a row: it is reported
+    as unread. Inference is not a substitute for a cell that the rendering does not print.
+    """
+    if "NOT YET SUBMITTED" in cells:
+        return True
+    core = [c for c in cells if c]
+    if not core or not any(_is_player(c) for c in core):
+        return False
+    return _is_status(core[-1]) or (len(core) >= 2 and _is_status(core[-2]))
+
+
 def parse_render(text: str) -> dict:
     """Return {rows, unread, counts} for one stored rendering.
 
@@ -85,14 +129,17 @@ def parse_render(text: str) -> dict:
     """
     rows: list[dict] = []
     unread: list[dict] = []
+    blank_rows_skipped = 0
     ctx = {"date": None, "time_et": None, "matchup": None}
     block_team: str | None = None
     in_table = False
+    after_break = False        # just saw a report title: the next row may sit above the separator
 
     for raw in text.splitlines():
         line = raw.rstrip()
-        if line.startswith("**Injury Report:"):
+        if _TITLE.match(line):
             in_table = False
+            after_break = True
             continue
         cells = _cells(line)
         if cells is None:
@@ -100,10 +147,28 @@ def parse_render(text: str) -> dict:
             continue
         if cells == []:
             in_table = True
-            continue
-        if not in_table:
+            after_break = False
             continue
         if cells and cells[0] == "Game Date":
+            continue
+        if not in_table:
+            core = [c for c in cells if c]
+            if not core:
+                blank_rows_skipped += 1
+                continue
+            if after_break and _accept_above_separator(cells):
+                pass          # a placeholder or a complete player row above the page separator
+            else:
+                unread.append({"raw": line,
+                               "why": ("row printed above this page's table separator; it is "
+                                       "neither a header nor a NOT-YET-SUBMITTED placeholder, so "
+                                       "no cell of it is accepted")})
+                after_break = False
+                continue
+            after_break = False
+            cells = cells + [""] * (7 - len(cells)) if len(cells) < 7 else cells
+        if not any(c for c in cells if c):
+            blank_rows_skipped += 1
             continue
 
         core = [c for c in cells]
@@ -204,6 +269,7 @@ def parse_render(text: str) -> dict:
 
     return {"rows": rows, "unread": unread,
             "counts": {"rows": len(rows),
+                       "blank_rows_skipped": blank_rows_skipped,
                        "with_status": sum(1 for r in rows if r["status"]),
                        "blank_status": sum(1 for r in rows
                                            if r["status"] is None and not r["placeholder"]),

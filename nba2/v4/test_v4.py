@@ -30,6 +30,18 @@ from . import settlement as S
 from . import write_capture as WC
 
 ROOT = Path(__file__).resolve().parents[2]
+
+# The rows the pre-2026-11-17 parser dropped because they printed above a continuation page's
+# table separator. Transcribed from the stored renderings themselves (they are in the text);
+# the test asserts the parser now yields them.
+_ABOVE_BREAK_ROWS = {
+    "2026-11-16 09:30 AM ET": [("Memphis Grizzlies", "Jerome, Ty"),
+                               ("Brooklyn Nets", "Bilodeau, Tyler"),
+                               ("New Orleans Pelicans", "Reese, Julian")],
+    "2026-11-16 01:00 PM ET": [("Brooklyn Nets", "Bilodeau, Tyler"),
+                               ("New Orleans Pelicans", "Reese, Julian")],
+    "2026-11-17 11:15 AM ET": [("Minnesota Timberwolves", None)],
+}
 SITE = ROOT / "site"
 
 
@@ -370,11 +382,44 @@ class TestInjuryParse(unittest.TestCase):
         self.assertIsNone(r["status"])
         self.assertNotIn("Maybe", json.dumps(r["status"]))
 
-    def test_every_stored_release_parses_with_no_unread_rows(self):
+    def test_no_table_line_is_silently_dropped(self):
+        """2026-11-17 (session arena/53140f5c-nba2): every line of the rendering is accounted for.
+
+        The old version of this test asserted `unread == []`, which was only true because the
+        parser *dropped* the row printed above a continuation page's separator without
+        reporting it. Three real player rows and one club placeholder per release were
+        disappearing that way. The honest invariant is the identity below: parsed rows +
+        reported-unread + blank lines skipped = table lines in the document.
+        """
         for rel in RR.RENDERS:
             d = PA.parse_render(rel["text"])
-            self.assertEqual(d["unread"], [], f"{rel['stamp_et']} has unread rows")
-            self.assertEqual(d["counts"]["rows"], len(d["rows"]))
+            lines = [l.rstrip() for l in rel["text"].splitlines()]
+            table_lines = [l for l in lines
+                           if PA._cells(l) not in (None, [])
+                           and not l.strip().startswith("| Game Date")]
+            c = d["counts"]
+            self.assertEqual(
+                c["rows"] + c["unread"] + c["blank_rows_skipped"], len(table_lines),
+                f"{rel['stamp_et']}: a table line vanished "
+                f"({c['rows']}+{c['unread']}+{c['blank_rows_skipped']} != {len(table_lines)})")
+            self.assertEqual(c["rows"], len(d["rows"]))
+
+    def test_a_page_break_never_loses_a_filing_status(self):
+        """The rows the old parser dropped are now read, and they read correctly."""
+        by_stamp = {r["stamp_et"]: PA.parse_render(r["text"]) for r in RR.RENDERS}
+        for stamp, d in by_stamp.items():
+            rows = {(r["team"], r["player"]): r for r in d["rows"]}
+            for team, player in _ABOVE_BREAK_ROWS.get(stamp, []):
+                r = rows.get((team, player))
+                self.assertIsNotNone(r, f"{stamp}: {player} ({team}) still missing from the parse")
+                self.assertTrue(r["status"] or r["reason"] == "NOT YET SUBMITTED",
+                                f"{stamp}: {player} recovered but carries no cell")
+
+    def test_unread_entries_are_fragments_with_a_reason(self):
+        for rel in RR.RENDERS:
+            for u in PA.parse_render(rel["text"])["unread"]:
+                self.assertIn("separator", u["why"])
+                self.assertTrue(u["raw"].startswith("|"))
 
     def test_the_stored_rendering_matches_its_own_header(self):
         self.assertEqual(RR.selftest(), [])

@@ -1,0 +1,556 @@
+{
+ "schema": "nba2.points-from-finals.v1",
+ "n_games": 205,
+ "retrieved_by": "committed official finals (data/raw/history + dated result feeds)",
+ "per_game_source": {
+  "0022600001": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600002": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600003": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600004": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600005": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600006": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600007": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600008": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600009": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600015": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600016": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600017": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600018": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600019": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600020": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600021": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600022": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600023": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600024": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600025": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600026": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600027": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600028": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600029": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600030": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600031": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600032": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600033": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600034": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600035": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600036": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600037": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600038": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600039": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600040": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600041": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600042": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600085": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600086": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600087": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600088": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600089": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600090": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600091": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600092": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600093": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600094": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600095": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600096": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600097": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600098": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600099": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600100": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600101": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600102": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600103": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600104": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600105": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600106": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600107": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600108": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600109": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600110": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600111": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600112": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600113": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600114": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600115": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600116": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600117": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600118": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600119": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600120": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600121": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600122": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600123": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600124": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600125": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600126": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600127": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600128": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600129": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600130": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600131": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600132": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600133": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600134": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600135": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600136": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600137": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600138": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600139": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600140": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600141": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600142": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600143": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600144": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600145": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600146": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600147": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600148": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600149": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600150": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600151": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600152": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600153": "data/raw/history/games_2026-10-20_to_2026-10-31.json",
+  "0022600154": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600155": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600156": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600157": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600158": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600159": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600160": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600161": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600162": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600163": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600164": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600165": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600166": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600167": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600168": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600169": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600170": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600171": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600172": "data/raw/history/games_2026-11-01_to_2026-11-02.json",
+  "0022600173": "data/raw/history/games_2026-11-04.json",
+  "0022600174": "data/raw/history/games_2026-11-04.json",
+  "0022600175": "data/raw/history/games_2026-11-04.json",
+  "0022600176": "data/raw/history/games_2026-11-04.json",
+  "0022600177": "data/raw/history/games_2026-11-04.json",
+  "0022600178": "data/raw/history/games_2026-11-04.json",
+  "0022600179": "data/raw/history/games_2026-11-04.json",
+  "0022600180": "data/raw/history/games_2026-11-04.json",
+  "0022600181": "data/raw/history/games_2026-11-04.json",
+  "0022600182": "data/raw/history/games_2026-11-04.json",
+  "0022600183": "data/raw/history/games_2026-11-04.json",
+  "0022600184": "data/raw/history/games_2026-11-04.json",
+  "0022600185": "data/raw/history/games_2026-11-04.json",
+  "0022600186": "data/raw/history/games_2026-11-04.json",
+  "0022600187": "data/raw/history/games_2026-11-05.json",
+  "0022600188": "data/raw/history/games_2026-11-05.json",
+  "0022600189": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600190": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600191": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600192": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600193": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600194": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600195": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600196": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600197": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600198": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600199": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600200": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600201": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600202": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600203": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600204": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600205": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600206": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600207": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600208": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600209": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600210": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600211": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600212": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600213": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600214": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600215": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600216": "data/raw/history/games_2026-11-09_to_2026-11-10.json",
+  "0022600217": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600218": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600219": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600220": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600221": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600222": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600223": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600224": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600225": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600226": "data/raw/history/games_2026-11-06_11-11_11-13.json",
+  "0022600227": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600228": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600229": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600230": "data/raw/history/games_2026-11-07_to_2026-11-08_and_11-12.json",
+  "0022600231": "data/raw/capture_2026-11-15/results_2026-11-14.json",
+  "0022600232": "data/raw/capture_2026-11-15/results_2026-11-14.json",
+  "0022600233": "data/raw/capture_2026-11-15/results_2026-11-14.json",
+  "0022600234": "data/raw/capture_2026-11-15/results_2026-11-14.json",
+  "0022600235": "data/raw/capture_2026-11-15/results_2026-11-14.json",
+  "0022600236": "data/raw/results/results_2026-11-15.json",
+  "0022600237": "data/raw/results/results_2026-11-15.json",
+  "0022600238": "data/raw/results/results_2026-11-15.json",
+  "0022600239": "data/raw/results/results_2026-11-15.json",
+  "0022600240": "data/raw/results/results_2026-11-15.json",
+  "0022600241": "data/raw/results/results_2026-11-15.json",
+  "0022600242": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
+  "0022600243": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
+  "0022600244": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
+  "0022600245": "data/raw/results/results_2026-11-16.json",
+  "0022600246": "data/raw/results/results_2026-11-16.json",
+  "0022600247": "data/raw/results/results_2026-11-16.json",
+  "0022600248": "data/raw/results/results_2026-11-16.json",
+  "0022600249": "data/raw/results/results_2026-11-16.json",
+  "0022600250": "data/raw/results/results_2026-11-16.json",
+  "0022600251": "data/raw/results/results_2026-11-16.json",
+  "0022600252": "data/raw/results/results_2026-11-16.json"
+ },
+ "reconstructed_record": {
+  "PHI": {
+   "w": 12,
+   "l": 3
+  },
+  "BOS": {
+   "w": 11,
+   "l": 3
+  },
+  "DET": {
+   "w": 8,
+   "l": 4
+  },
+  "MIA": {
+   "w": 8,
+   "l": 6
+  },
+  "ATL": {
+   "w": 8,
+   "l": 6
+  },
+  "NYK": {
+   "w": 7,
+   "l": 6
+  },
+  "CLE": {
+   "w": 8,
+   "l": 7
+  },
+  "ORL": {
+   "w": 6,
+   "l": 7
+  },
+  "TOR": {
+   "w": 5,
+   "l": 8
+  },
+  "IND": {
+   "w": 5,
+   "l": 9
+  },
+  "CHA": {
+   "w": 4,
+   "l": 9
+  },
+  "WAS": {
+   "w": 4,
+   "l": 11
+  },
+  "BKN": {
+   "w": 3,
+   "l": 10
+  },
+  "CHI": {
+   "w": 3,
+   "l": 10
+  },
+  "MIL": {
+   "w": 1,
+   "l": 13
+  },
+  "SAS": {
+   "w": 12,
+   "l": 2
+  },
+  "LAL": {
+   "w": 12,
+   "l": 2
+  },
+  "HOU": {
+   "w": 11,
+   "l": 4
+  },
+  "MIN": {
+   "w": 10,
+   "l": 4
+  },
+  "MEM": {
+   "w": 10,
+   "l": 4
+  },
+  "POR": {
+   "w": 9,
+   "l": 4
+  },
+  "OKC": {
+   "w": 9,
+   "l": 5
+  },
+  "DEN": {
+   "w": 7,
+   "l": 5
+  },
+  "GSW": {
+   "w": 8,
+   "l": 6
+  },
+  "DAL": {
+   "w": 7,
+   "l": 7
+  },
+  "PHX": {
+   "w": 6,
+   "l": 7
+  },
+  "LAC": {
+   "w": 4,
+   "l": 8
+  },
+  "NOP": {
+   "w": 5,
+   "l": 10
+  },
+  "SAC": {
+   "w": 1,
+   "l": 12
+  },
+  "UTA": {
+   "w": 1,
+   "l": 13
+  }
+ },
+ "league_points_scored": 46667,
+ "league_points_allowed": 46667,
+ "per_club": {
+  "PHI": {
+   "games": 15,
+   "points_for": 1711,
+   "points_against": 1669,
+   "pf_per_game": 114.1,
+   "pa_per_game": 111.3
+  },
+  "BOS": {
+   "games": 14,
+   "points_for": 1607,
+   "points_against": 1446,
+   "pf_per_game": 114.8,
+   "pa_per_game": 103.3
+  },
+  "DET": {
+   "games": 12,
+   "points_for": 1388,
+   "points_against": 1323,
+   "pf_per_game": 115.7,
+   "pa_per_game": 110.2
+  },
+  "MIA": {
+   "games": 14,
+   "points_for": 1671,
+   "points_against": 1668,
+   "pf_per_game": 119.4,
+   "pa_per_game": 119.1
+  },
+  "ATL": {
+   "games": 14,
+   "points_for": 1649,
+   "points_against": 1625,
+   "pf_per_game": 117.8,
+   "pa_per_game": 116.1
+  },
+  "NYK": {
+   "games": 13,
+   "points_for": 1429,
+   "points_against": 1352,
+   "pf_per_game": 109.9,
+   "pa_per_game": 104.0
+  },
+  "CLE": {
+   "games": 15,
+   "points_for": 1771,
+   "points_against": 1737,
+   "pf_per_game": 118.1,
+   "pa_per_game": 115.8
+  },
+  "ORL": {
+   "games": 13,
+   "points_for": 1415,
+   "points_against": 1458,
+   "pf_per_game": 108.8,
+   "pa_per_game": 112.2
+  },
+  "TOR": {
+   "games": 13,
+   "points_for": 1479,
+   "points_against": 1466,
+   "pf_per_game": 113.8,
+   "pa_per_game": 112.8
+  },
+  "IND": {
+   "games": 14,
+   "points_for": 1569,
+   "points_against": 1603,
+   "pf_per_game": 112.1,
+   "pa_per_game": 114.5
+  },
+  "CHA": {
+   "games": 13,
+   "points_for": 1288,
+   "points_against": 1428,
+   "pf_per_game": 99.1,
+   "pa_per_game": 109.8
+  },
+  "WAS": {
+   "games": 15,
+   "points_for": 1669,
+   "points_against": 1788,
+   "pf_per_game": 111.3,
+   "pa_per_game": 119.2
+  },
+  "BKN": {
+   "games": 13,
+   "points_for": 1445,
+   "points_against": 1532,
+   "pf_per_game": 111.2,
+   "pa_per_game": 117.8
+  },
+  "CHI": {
+   "games": 13,
+   "points_for": 1490,
+   "points_against": 1637,
+   "pf_per_game": 114.6,
+   "pa_per_game": 125.9
+  },
+  "MIL": {
+   "games": 14,
+   "points_for": 1486,
+   "points_against": 1676,
+   "pf_per_game": 106.1,
+   "pa_per_game": 119.7
+  },
+  "SAS": {
+   "games": 14,
+   "points_for": 1663,
+   "points_against": 1483,
+   "pf_per_game": 118.8,
+   "pa_per_game": 105.9
+  },
+  "LAL": {
+   "games": 14,
+   "points_for": 1719,
+   "points_against": 1608,
+   "pf_per_game": 122.8,
+   "pa_per_game": 114.9
+  },
+  "HOU": {
+   "games": 15,
+   "points_for": 1767,
+   "points_against": 1643,
+   "pf_per_game": 117.8,
+   "pa_per_game": 109.5
+  },
+  "MIN": {
+   "games": 14,
+   "points_for": 1644,
+   "points_against": 1486,
+   "pf_per_game": 117.4,
+   "pa_per_game": 106.1
+  },
+  "MEM": {
+   "games": 14,
+   "points_for": 1704,
+   "points_against": 1572,
+   "pf_per_game": 121.7,
+   "pa_per_game": 112.3
+  },
+  "POR": {
+   "games": 13,
+   "points_for": 1533,
+   "points_against": 1448,
+   "pf_per_game": 117.9,
+   "pa_per_game": 111.4
+  },
+  "OKC": {
+   "games": 14,
+   "points_for": 1570,
+   "points_against": 1499,
+   "pf_per_game": 112.1,
+   "pa_per_game": 107.1
+  },
+  "DEN": {
+   "games": 12,
+   "points_for": 1366,
+   "points_against": 1358,
+   "pf_per_game": 113.8,
+   "pa_per_game": 113.2
+  },
+  "GSW": {
+   "games": 14,
+   "points_for": 1611,
+   "points_against": 1576,
+   "pf_per_game": 115.1,
+   "pa_per_game": 112.6
+  },
+  "DAL": {
+   "games": 14,
+   "points_for": 1569,
+   "points_against": 1604,
+   "pf_per_game": 112.1,
+   "pa_per_game": 114.6
+  },
+  "PHX": {
+   "games": 13,
+   "points_for": 1469,
+   "points_against": 1513,
+   "pf_per_game": 113.0,
+   "pa_per_game": 116.4
+  },
+  "LAC": {
+   "games": 12,
+   "points_for": 1348,
+   "points_against": 1398,
+   "pf_per_game": 112.3,
+   "pa_per_game": 116.5
+  },
+  "NOP": {
+   "games": 15,
+   "points_for": 1737,
+   "points_against": 1843,
+   "pf_per_game": 115.8,
+   "pa_per_game": 122.9
+  },
+  "SAC": {
+   "games": 13,
+   "points_for": 1401,
+   "points_against": 1576,
+   "pf_per_game": 107.8,
+   "pa_per_game": 121.2
+  },
+  "UTA": {
+   "games": 14,
+   "points_for": 1499,
+   "points_against": 1652,
+   "pf_per_game": 107.1,
+   "pa_per_game": 118.0
+  }
+ },
+ "clubs_with_neutral_site_games": {
+  "IND": [
+   "0-1"
+  ],
+  "DEN": [
+   "1-0"
+  ]
+ }
+}

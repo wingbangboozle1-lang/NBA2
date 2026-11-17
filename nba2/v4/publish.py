@@ -699,8 +699,12 @@ assigned by <i>content type</i> — a date, a time, a matchup, a status word, a
 <code>Last, First</code> player, a reason — and never by column position. The PDF's layout
 shifts across page breaks, so a positional parser mis-reads it; the previous build did exactly
 that and published a changed status as unchanged. A cell whose type cannot be determined is
-published blank and flagged. The <i>unread</i> column counts them: it is zero for both
-releases below.</div>
+published blank and flagged. The <i>unread</i> column counts those lines. It is not a drop
+list: since 2026-11-17 the parser must account for every table line of the rendering
+(<code>rows + unread + blank = table lines</code>, asserted in <code>nba2/v4/test_v4.py</code>),
+which is what surfaced the rows a page break used to swallow — a club's
+<code>NOT YET SUBMITTED</code> placeholder and, in the 2026-11-16 releases, three complete
+player rows each.</div>
 <h2 id="releases">Releases stored this session</h2>
 {table(['Revision (ET)', 'Retrieved (UTC)', 'Index checked', 'Rows', 'With status',
         'Placeholders', 'Unread', 'Content hash', 'Src'], rel_rows,

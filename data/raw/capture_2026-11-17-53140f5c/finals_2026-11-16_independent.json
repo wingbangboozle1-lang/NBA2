@@ -1,0 +1,108 @@
+{
+ "schema": "nba2.finals-recheck.v1",
+ "game_date": "2026-11-16",
+ "session": "arena/53140f5c-nba2",
+ "retrieved_at_utc": "2026-11-17T16:30:00Z",
+ "retrieval_method": "platform page-fetch tool (fetch_page); bash egress to nba.com / stats.nba.com / cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_url": "https://www.nba.com/schedule?date=2026-11-18",
+ "source_class": "official",
+ "note": "a second, independent read of the 11/16 finals taken from the schedule page on 2026-11-17 - the day after those games. It does not re-settle anything; it re-confirms the published feed.",
+ "records": [
+  {
+   "game_id": "0022600245",
+   "date": "2026-11-16",
+   "away": "ORL",
+   "home": "BOS",
+   "away_pts": 115,
+   "home_pts": 105,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600246",
+   "date": "2026-11-16",
+   "away": "CHI",
+   "home": "CLE",
+   "away_pts": 115,
+   "home_pts": 126,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600247",
+   "date": "2026-11-16",
+   "away": "MEM",
+   "home": "WAS",
+   "away_pts": 136,
+   "home_pts": 120,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600248",
+   "date": "2026-11-16",
+   "away": "PHI",
+   "home": "BKN",
+   "away_pts": 135,
+   "home_pts": 123,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600249",
+   "date": "2026-11-16",
+   "away": "HOU",
+   "home": "MIA",
+   "away_pts": 110,
+   "home_pts": 128,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600250",
+   "date": "2026-11-16",
+   "away": "POR",
+   "home": "MIN",
+   "away_pts": 98,
+   "home_pts": 106,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600250",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600251",
+   "date": "2026-11-16",
+   "away": "GSW",
+   "home": "NOP",
+   "away_pts": 94,
+   "home_pts": 115,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600252",
+   "date": "2026-11-16",
+   "away": "PHX",
+   "home": "DEN",
+   "away_pts": 117,
+   "home_pts": 105,
+   "status": "final",
+   "source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18",
+   "source_class": "official"
+  }
+ ]
+}
