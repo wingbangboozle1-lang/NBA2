@@ -292,8 +292,15 @@ jobs:
             exit 0
           fi
           git commit -q -m "fixtures(bot): official page snapshots + manifest (run ${{ github.run_id }})"
-          git pull --rebase --autostash origin "$BR"
-          git push origin "HEAD:$BR"
+          # two jobs of this workflow can race each other onto the same branch
+          for attempt in 1 2 3; do
+            git fetch origin "$BR" || exit 0
+            if git rebase "origin/$BR"; then
+              git push origin "HEAD:$BR" && break
+            fi
+            git rebase --abort || true
+            sleep 5
+          done
 
   # The scheduled job has failed six consecutive runs and the cause was never measured where
   # it matters — on a runner, which is the environment the schedule uses. This job runs the
@@ -303,6 +310,7 @@ jobs:
   refresh-dry-run:
     runs-on: ubuntu-latest
     needs: capture
+    if: always()          # the fixture job committing (or not) must not decide this proof
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
