@@ -39,7 +39,7 @@
    "id": "G-V4-6",
    "name": "provenance: every captured row carries a source",
    "ok": true,
-   "measured": "7 capture documents scanned",
+   "measured": "10 capture documents scanned",
    "detail": "every row carries a source URL"
   },
   {

@@ -1,0 +1,92 @@
+{
+ "schema": "nba2.slate.v2",
+ "window": {
+  "start": "2026-11-17",
+  "end": "2026-11-20",
+  "days": 3
+ },
+ "anchor_date": "2026-11-17",
+ "session": "arena/8892d20c-nba2",
+ "retrieved_at_utc": "2026-11-17T15:52:00Z",
+ "retrieval_method": "platform page-fetch tool (fetch_page); bash egress to nba.com/stats.nba.com/cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_url": "https://www.nba.com/schedule?date=2026-11-17",
+ "source_class": "official",
+ "games": [
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "tip_et": "19:30",
+   "away": "NYK",
+   "home": "TOR",
+   "arena": "Scotiabank Arena",
+   "city": "Toronto",
+   "state": "ON",
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "tip_et": "20:00",
+   "away": "POR",
+   "home": "MIN",
+   "arena": "Target Center",
+   "city": "Minneapolis",
+   "state": "MN",
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600254",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600255",
+   "date": "2026-11-17",
+   "tip_et": "20:00",
+   "away": "DET",
+   "home": "SAS",
+   "arena": "Frost Bank Center",
+   "city": "San Antonio",
+   "state": "TX",
+   "source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "tip_et": "22:30",
+   "away": "UTA",
+   "home": "LAC",
+   "arena": "Intuit Dome",
+   "city": "Inglewood",
+   "state": "CA",
+   "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
+   "source_class": "official"
+  },
+  {
+   "game_id": "0022600256",
+   "date": "2026-11-17",
+   "tip_et": "23:00",
+   "away": "CHA",
+   "home": "LAL",
+   "arena": "Crypto.com Arena",
+   "city": "Los Angeles",
+   "state": "CA",
+   "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+   "source_class": "official"
+  }
+ ],
+ "n_games_transcribed": 5,
+ "window_inventory_untranscribed": {
+  "2026-11-18": {
+   "games_on_page": 12,
+   "reason": "per-game rows pending re-read; tip labels interleave with broadcast strips"
+  },
+  "2026-11-19": {
+   "games_on_page": 4,
+   "reason": "per-game rows pending re-read; tip labels interleave with broadcast strips"
+  },
+  "2026-11-20": {
+   "games_on_page": 9,
+   "reason": "Emirates NBA Cup group cards; tip labels interleave with broadcast strips"
+  }
+ },
+ "note": "Only the T+0 (2026-11-17) cards are transcribed row by row. The later dates of the window were read for inventory and are deliberately blank per game until a row-by-row re-read attaches each tip time to its own game id."
+}

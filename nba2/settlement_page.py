@@ -26,7 +26,8 @@ from pathlib import Path
 
 from .models import ledger as LD
 from .pipeline import settle as S
-from .v3.build import V2_NAV, V3_NAV
+from .v2.build import NAV as V2_NAV
+from .v3.build import V3_NAV
 
 ROOT = S.ROOT
 SITE = ROOT / "site"

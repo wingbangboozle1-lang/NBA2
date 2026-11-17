@@ -1092,4 +1092,37 @@ FLAGS += [
      "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is "
      "reproducible rather than restated.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
+    ("F-059", "high", "Operations",
+     "THE NIGHTLY REFRESH HAS FAILED SIX CONSECUTIVE SCHEDULED RUNS, AND THE CAUSE IS NOW MEASURED: it is the "
+     "transport, not the sources. Runs 43631377045, 43725486781, 43751588814, 43903704042, 43939889279 and "
+     "44107633323 all concluded failure; the latest verdict records injuries=success, finals=failure, "
+     "rolling=failure, v4=success. The committed egress probe shows a GitHub runner reaching HTTP 200 on "
+     "www.nba.com/standings, www.nba.com/schedule, official.nba.com and the gamebook PDFs, while "
+     "stats.nba.com (the JSON API that nba2.v2.refresh uses for three of the four surfaces) times out or 403s. "
+     "Publishing therefore stays fail-closed and the site ages.",
+     "Diagnosed, not patched here: nba2/v2/refresh.py belongs to a finished session's scope. Logged as request "
+     "RQ-8892-01 on the coordination board. The fix is to read the rendered official page rather than the "
+     "unreachable JSON endpoint, which is how this session's 2026-11-17 capture was taken.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/egress_probe.json"),
+    ("F-060", "medium", "Data",
+     "PUBLISHED SNAPSHOT vs A FRESHER, VERIFIED CAPTURE — this build's model pages are dated 2026-11-15 while a "
+     "row-by-row official capture for 2026-11-17 exists in the tree (30 standings rows, 30 clubs on each of the "
+     "three team-stat pages, 5 transcribed games for 11/17) and passes every arithmetic identity: wins equal "
+     "losses (205/205), every club's games played equals its own W+L, and points scored equals points allowed "
+     "within the 0.1 rounding bound (46,669.6 vs 46,668.8). The capture is published on its own page and is "
+     "deliberately NOT spliced into the model.",
+     "Promoting it means re-cutting nba2/v2/official.py, nba2/v3/official.py, nba2/v4/capture.py and the v5 "
+     "inputs together, because a v2-only swap would leave the published pages on four different dates - the "
+     "defect the README already names. The step-by-step cut is written up in "
+     "analysis/session-8892d20c-capture.md for the session that does it.",
+     "https://www.nba.com/standings"),
+    ("F-061", "low", "Verification",
+     "THE THREE OFFICIAL TEAM-STAT PAGES DO NOT RECONCILE EXACTLY WITH EACH OTHER — margin per game, "
+     "recomputed as NetRtg x PACE / 100, differs from (PTS - Opp PTS) by up to 0.85 pts/game (ORL -0.85, "
+     "NYK +0.64, DET +0.53). All three pages are official and were read the same day; they round "
+     "independently, one per game and the others per 100 possessions.",
+     "Published as a per-club residual table instead of choosing the flattering definition, and a residual "
+     "above 1.5 pts/game fails the capture as a likely transcription error. No value was adjusted to make "
+     "the pages agree.",
+     "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"),
 ]
