@@ -173,6 +173,82 @@ jobs:
               raise SystemExit(1)
           PY
 
+      - name: Measure the transport the refresh actually uses
+        # The nightly job's rolling failure has never been measured from a runner: it was
+        # inferred from a development sandbox (TLS reset) and from a probe that used a
+        # different User-Agent and none of the x-nba-stats headers `nba2/v2/refresh.py`
+        # sends. This step fetches each endpoint with the repository's own header set and
+        # with the plain one, and records which combination answers.
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, json, pathlib, time, urllib.error, urllib.request
+
+          OUT = pathlib.Path("data/raw/page_fixtures")
+          UA_CHROME = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36 nba2-refresh/1.0 "
+                       "(+github.com/wingbangboozle1-lang/NBA2)")
+          UA_PLAIN = "NBA2-research-desk/1.0 (endpoint reachability check)"
+
+          def header_sets():
+              yield "repo_headers", {
+                  "User-Agent": UA_CHROME,
+                  "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
+                  "Referer": "https://www.nba.com/",
+                  "Origin": "https://www.nba.com",
+                  "x-nba-stats-origin": "stats",
+                  "x-nba-stats-token": "true",
+              }
+              yield "plain_ua", {"User-Agent": UA_PLAIN, "Accept": "*/*",
+                                 "Referer": "https://official.nba.com/"}
+
+          TESTS = [
+              ("stats_standings", "https://stats.nba.com/stats/leaguestandingsv3"
+                                  "?LeagueID=00&Season=2026-27&SeasonType=Regular+Season"),
+              ("stats_team_traditional", "https://stats.nba.com/stats/leaguedashteamstats"
+                                         "?LeagueID=00&MeasureType=Base&PerMode=PerGame"
+                                         "&Season=2026-27&SeasonType=Regular+Season"),
+              ("stats_scoreboard", "https://stats.nba.com/stats/scoreboardv3"
+                                   "?GameDate=2026-11-16&LeagueID=00"),
+              ("cdn_scoreboard", "https://cdn.nba.com/static/json/liveData/scoreboard/"
+                                 "todaysScoreboard_00.json"),
+              ("www_standings", "https://www.nba.com/standings"),
+          ]
+
+          rows = []
+          for name, url in TESTS:
+              for hs, headers in header_sets():
+                  t0 = time.time()
+                  row = {"endpoint": name, "url": url, "header_set": hs,
+                         "http_status": None, "bytes": None, "ok": False, "error": None,
+                         "elapsed_ms": None,
+                         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).replace(
+                             microsecond=0).isoformat().replace("+00:00", "Z")}
+                  try:
+                      req = urllib.request.Request(url, headers=headers)
+                      with urllib.request.urlopen(req, timeout=20) as r:
+                          raw = r.read()
+                          row.update(http_status=r.status, bytes=len(raw), ok=True)
+                  except urllib.error.HTTPError as e:
+                      row.update(http_status=e.code, error=f"HTTP {e.code}")
+                  except Exception as e:                     # noqa: BLE001 - the error IS the data
+                      row["error"] = f"{type(e).__name__}: {e}"
+                  row["elapsed_ms"] = int((time.time() - t0) * 1000)
+                  rows.append(row)
+                  print(f"{'OK ' if row['ok'] else 'ERR'} {name:22s} {hs:14s} "
+                        f"{row['http_status']} {row['bytes']} {row['elapsed_ms']}ms "
+                        f"{row['error'] or ''}")
+
+          doc = {"schema": "nba2.transport-probe.v1",
+                 "probed_by": "capture-fixtures.yml",
+                 "run_url": ("https://github.com/${{ github.repository }}/actions/"
+                             "runs/${{ github.run_id }}"),
+                 "question": ("which (endpoint, header-set) pairs answer a GitHub-hosted "
+                              "runner, so the refresh is repaired against a measurement "
+                              "instead of an inference taken from a development sandbox"),
+                 "rows": rows}
+          (OUT / "transport_probe.json").write_text(json.dumps(doc, indent=1) + "\n")
+          PY
+
       - name: Publish the measurement to the job summary
         if: always()
         run: cat data/raw/page_fixtures/SUMMARY.md >> "$GITHUB_STEP_SUMMARY" || true
