@@ -52,10 +52,10 @@ BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book
 # Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
 # every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
 # committed. AS_OF is the timestamp of the most recent official capture in this repository
-# (the 2026-11-17T14:54:57Z ingest-bot run), converted to Eastern with the November UTC-5
+# (the 2026-11-17T15:52:00Z capture by session arena/8892d20c-nba2), converted to Eastern with the November UTC-5
 # offset. It is stated on the page, so a reader can age it.
-AS_OF_UTC = "2026-11-17T14:54:57Z"
-AS_OF_ET = "2026-11-17 09:54 ET"
+AS_OF_UTC = "2026-11-17T15:52:00Z"
+AS_OF_ET = "2026-11-17 10:52 ET"
 AS_OF_DATE = "2026-11-17"
 
 

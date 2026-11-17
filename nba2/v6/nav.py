@@ -59,7 +59,8 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
      "Gates, backtests, luck attribution and the live checks — the part that says whether "
      "any of the above is better than a coin flip.",
      ["verification", "verification-v3", "v4-verify", "v5-verify", "v6-verify",
-      "live-verification", "backtest", "skill-attribution", "endpoints"]),
+      "live-verification", "backtest", "skill-attribution", "endpoints",
+      "capture-verification"]),
     ("Decisions, questions & flags",
      "What needs an owner decision before it is built, what we do not know, and everything "
      "flagged for review.",

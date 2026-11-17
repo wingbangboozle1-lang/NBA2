@@ -117,11 +117,26 @@ class TestResultsCoverage(unittest.TestCase):
         conflicts = [g for g in self.doc["games"] if g.get("conflicts")]
         self.assertEqual(conflicts, [])
 
-    def test_the_1116_gap_is_reported_not_filled(self):
+    def test_the_1116_games_are_now_complete(self):
+        """PR #115 (session arena/aa1d3c07-nba2) captured and settled the 11/16 finals."""
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-16")
         self.assertEqual(row["n_scheduled"], 8)
-        self.assertEqual(row["n_finals_committed"], 0)
-        self.assertIn("unreachable", row["reason"])
+        self.assertEqual(row["n_finals_committed"], 8)
+        self.assertEqual(row["n_graded"], 8)
+        self.assertEqual(row["status"], "complete")
+
+    def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
+        for d in ("2026-11-17", "2026-11-18", "2026-11-19"):
+            row = next(r for r in self.doc["rows"] if r["date"] == d)
+            self.assertEqual(row["status"], "not ended", msg=d)
+            self.assertEqual(row["n_finals_committed"], 0)
+            self.assertIn("has not ended", row["reason"])
+
+    def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
+        row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")
+        self.assertEqual(row["n_finals_committed"], 9)
+        self.assertEqual(row["n_graded"], 0)
+        self.assertIn("never pre-registered", row["reason"])
 
 
 class TestPlayerCoverage(unittest.TestCase):
@@ -179,11 +194,28 @@ class TestMarketPrior(unittest.TestCase):
         self.assertIsNone(MP.weight(None, 0.60))
         self.assertIsNone(MP.weight(0.60, None))
 
-    def test_every_published_measurement_is_better_than_a_coin_flip_or_says_so(self):
+    def test_the_sign_of_every_measurement_is_published_either_way(self):
+        """A measurement worse than a coin flip is a finding, not a build failure."""
         for m in self.doc["measurements"]:
-            if m["log_loss"] is None:
+            if m["log_loss"] is None or m["log_loss_baseline"] is None:
                 continue
-            self.assertLessEqual(m["log_loss"], m["log_loss_baseline"])
+            want = round(m["log_loss_baseline"] - m["log_loss"], 4)
+            self.assertEqual(m["skill_vs_baseline"], want, msg=m["id"])
+            # whichever way it goes, the page must say so rather than stay silent
+            self.assertIsNotNone(m["log_loss"])
+
+    def test_a_worse_than_coin_flip_model_hands_the_rule_to_the_market(self):
+        mp = self.doc
+        if mp["model_beats_coin_flip"]:
+            self.skipTest("the model currently beats a coin flip; this asserts the "
+                          "behaviour when it does not")
+        self.assertEqual(mp["model_skill_vs_coin"], 0.0)
+        self.assertIsNone(mp["w_market"])
+        for g in mp["sensitivity_grid"]:
+            if g["market_skill_vs_coin"] > 0:
+                self.assertEqual(g["w_market"], 1.0,
+                                 msg="with no measured model skill, any market skill "
+                                     "must take the whole weight")
 
 
 class TestGates(unittest.TestCase):

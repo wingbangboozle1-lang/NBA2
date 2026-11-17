@@ -171,26 +171,43 @@ def gate_player_sources(doc: dict) -> dict:
 
 # ------------------------------------------------------------------ K-02 gates
 def gate_market_prior(doc: dict) -> dict:
+    """The weight must be blank, and the rule must behave — checked on a hypothetical model.
+
+    The rule's behaviour is verified against a hypothetical model log-loss of 0.60, not
+    against the measured one: the measured model currently shows no skill on the settled
+    sample, and a skill share with a zero denominator is undefined by construction. Testing
+    the rule on the degenerate case would be testing the wrong thing.
+    """
     bad = []
     if doc["w_market"] is not None:
         bad.append("w_market is published, but no closing line exists in any committed "
                    "capture — a weight would have to be invented")
     if doc["market_log_loss"] is not None:
         bad.append("a market log-loss is published, but no market price was ever captured")
-    w = MP.weight(doc["model_log_loss"], doc["model_log_loss"])
-    if abs((w or 0) - 0.5) > 1e-9:
+    tests = 0
+    w = MP.weight(0.60, 0.60)
+    tests += 1
+    if w is None or abs(w - 0.5) > 1e-9:
         bad.append(f"equal inputs must give w=0.5, got {w}")
-    lo = MP.weight(doc["model_log_loss"], 0.60)
-    hi = MP.weight(doc["model_log_loss"], 0.68)
+    lo, hi = MP.weight(0.60, 0.62), MP.weight(0.60, 0.68)
+    tests += 1
     if lo is None or hi is None or not (lo > hi):
         bad.append("the weight is not monotone in the market's log-loss")
-    if MP.weight(doc["model_log_loss"], 0.75) != 0.0:
+    tests += 1
+    if MP.weight(0.60, 0.75) != 0.0:
         bad.append("a forecaster worse than a coin flip must receive zero weight")
+    tests += 1
+    if MP.weight(0.60, None) is not None or MP.weight(None, 0.60) is not None:
+        bad.append("an unmeasured input must give an undefined weight, never a default")
+    tests += 1
+    if MP.weight(0.72, 0.72) is not None:
+        bad.append("when neither forecaster beats a coin flip the share has no denominator "
+                   "and must be None, not 0.5")
     return _g("G-V6-11", "the market-anchored prior is blank where it must be, and its rule "
                          "is deterministic and monotone",
-              not bad, 5, 5 - len(bad),
-              f"w_market blank ({doc['w_market_reason'][:60]}…); rule verified on 5 cases",
-              bad)
+              not bad, tests, tests - len(bad),
+              f"w_market blank ({doc['w_market_reason'][:60]}…); rule verified on "
+              f"{tests} cases", bad)
 
 
 def gate_market_measurements(doc: dict) -> dict:
@@ -201,15 +218,24 @@ def gate_market_measurements(doc: dict) -> dict:
         if m["log_loss_baseline"] is None:
             bad.append(f"{m['id']}: no baseline to compare against")
         if m["log_loss"] is not None and m["log_loss_baseline"] is not None:
-            if m["log_loss"] > m["log_loss_baseline"]:
-                bad.append(f"{m['id']}: model log-loss worse than a coin flip")
             want = round(m["log_loss_baseline"] - m["log_loss"], 4)
             if m["skill_vs_baseline"] != want:
                 bad.append(f"{m['id']}: skill {m['skill_vs_baseline']} != {want}")
+    # A model worse than a coin flip is a FINDING, not a build failure. Suppressing the
+    # build because the number moved the wrong way is exactly how a research desk stops
+    # being a research desk - so it is measured, printed and flagged (F-F5-08), never
+    # gated away.
+    worse = [m["id"] for m in doc["measurements"]
+             if m["log_loss"] is not None and m["log_loss_baseline"] is not None
+             and m["log_loss"] > m["log_loss_baseline"]]
+    detail = (f"{len(doc['measurements'])} measured samples, {len(bad)} inconsistent")
+    if worse:
+        detail += ("; WORSE THAN A COIN FLIP on " + ", ".join(worse) +
+                   " — published as flag F-F5-08, not suppressed")
     return _g("G-V6-12", "every published out-of-sample log-loss measurement is internally "
-                         "consistent",
+                         "consistent, and its sign is reported either way",
               not bad, len(doc["measurements"]), len(doc["measurements"]) - len(bad),
-              f"{len(doc['measurements'])} measured samples, {len(bad)} inconsistent", bad)
+              detail, bad)
 
 
 # --------------------------------------------------------------- page gates

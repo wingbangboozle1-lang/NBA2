@@ -312,13 +312,26 @@ def page_player_coverage(doc: dict) -> str:
 
 # ------------------------------------------------------ K-02 market prior
 def page_market_prior(doc: dict) -> str:
+    beats = doc["model_beats_coin_flip"]
     body = kpis([
         ("w_market", "blank"),
         ("model out-of-sample log-loss", str(doc["model_log_loss"])),
         ("coin-flip baseline L₀", str(doc["baseline_l0"])),
+        ("model skill vs a coin flip",
+         (f"+{doc['model_skill_vs_coin']}" if beats else f"{doc['model_skill_vs_coin']}")),
         ("market log-loss", "not measured"),
-        ("blended line published", "no"),
     ])
+    if not beats:
+        body += note(
+            "<b>The measured model is currently worse than a coin flip on the settled "
+            f"sample.</b> Log-loss <b>{doc['model_log_loss']}</b> against a baseline of "
+            f"<b>{doc['baseline_l0']}</b> — skill {doc['model_skill_vs_coin']}. "
+            "That is a result, not a bug, and it is published rather than gated away: "
+            f"{badge('F-F5-08', 'bad')}. The immediate consequence for this page is that "
+            "the pre-registered rule gives <b>the entire weight to the market</b> as soon "
+            "as the market shows any skill at all, because the model has shown none on "
+            "these games. It also means the honest blended line right now is the market "
+            "line — which is precisely the thing this repository cannot see.", "bad")
     body += note(
         "The brief asks to blend the model line with the closing line, weighted by measured "
         "out-of-sample log-loss. <b>Only one of the two inputs exists.</b> No closing price "
@@ -352,6 +365,7 @@ def page_market_prior(doc: dict) -> str:
 
     body += "<h2>What the rule would return, for every plausible market log-loss</h2>"
     body += note(esc(doc["grid_note"]))
+    body += note(esc(doc["grid_reads"]))
     g_rows = []
     for g in doc["sensitivity_grid"]:
         g_rows.append([

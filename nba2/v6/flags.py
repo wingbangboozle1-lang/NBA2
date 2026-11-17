@@ -36,14 +36,16 @@ FLAGS = [
      "60 minutes old with no commits, so a later session may take it over.",
      "COORDINATION.md"),
     ("F-F5-02", "gap", SCHEDULE_URL,
-     "The nightly job's finals fetch reads two endpoints and both are dead: "
-     "<code>cdn.nba.com</code> live scoreboard returns HTTP 403 and "
+     "The nightly job's <i>automated</i> finals fetch reads two endpoints and both are "
+     "dead: <code>cdn.nba.com</code> live scoreboard returns HTTP 403 and "
      "<code>stats.nba.com/stats/scoreboardv2</code> times out. Measured, not assumed — see "
-     f"{link('endpoints.html', 'the endpoint register')}. It is why the 2026-11-16 games "
-     "(8 of them) have no official final and stay ungraded.",
-     "The gap is measured and published per date on "
-     f"{link('results-coverage.html', 'the result-feed coverage page')}; those games are "
-     "blank and never inferred. Two <i>reachable</i> official endpoints exist "
+     f"{link('endpoints.html', 'the endpoint register')}.",
+     "The 2026-11-16 games were nevertheless captured and settled by session "
+     "<code>arena/aa1d3c07-nba2</code> (PR #115) reading the official game list directly, "
+     f"so {link('results-coverage.html', 'the coverage page')} now shows 11/16 complete: "
+     "8 of 8 finals, 8 of 8 graded. The finding therefore narrows: the <b>pipeline cannot "
+     "do it unattended</b>, and every future game day will need the same manual capture "
+     "until the fetch is re-pointed. Two <i>reachable</i> official endpoints exist "
      f"({link(SCHEDULE_URL, 'www.nba.com/schedule', SCHEDULE_URL)} at HTTP 200 and "
      f"{link(GAMEBOOK_1116, 'the official gamebook PDFs', GAMEBOOK_1116)} at HTTP 200) and "
      "the repair is a parser against one of them — filed as a suggestion rather than shipped "
@@ -90,6 +92,19 @@ FLAGS = [
      "Both are correct and both are kept. The gate normalises them before checking, and the "
      "per-game table prints which schema each row came from. No score was altered.",
      "nba2/v6/results_coverage.py"),
+    ("F-F5-08", "blocker", "https://www.nba.com/games",
+     "With the 2026-11-16 finals settled (22 distinct graded games, up from 14), the "
+     "model's out-of-sample log-loss is <b>0.7141</b> against a coin-flip baseline of "
+     "<b>0.6931</b> — <b>worse than a coin flip</b>. The winner hit rate is still 16/22 "
+     "(0.727), so the damage is concentrated in confident misses, not in picking sides. "
+     "The Poisson-binomial tail is p = 0.078, i.e. inside the noise band.",
+     "Published, not suppressed. The build does not fail on it — a research desk that "
+     "gates its own bad news stops being one — and the consequence is stated plainly on "
+     f"{link('market-prior.html', 'the market-prior page')}: the pre-registered rule now "
+     "gives the market the entire weight as soon as the market shows any skill, because "
+     "the model has shown none on this sample. 22 games is a small sample and it is not "
+     "staked; the bet surface still publishes zero rows.",
+     "data/v4/settlement/settled-all.json"),
     ("F-F5-07", "info", "https://github.com/wingbangboozle1-lang/NBA2",
      "This session's workspace cannot reach <code>nba.com</code>: the TLS handshake is reset, "
      "so no new official value could be read. Every number published here was re-derived from "

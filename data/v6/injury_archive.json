@@ -1,7 +1,7 @@
 {
  "schema": "nba2.v6.injury-archive.v1",
  "session": "arena/f5ac4e74-nba2",
- "n_releases": 16,
+ "n_releases": 17,
  "releases": [
   {
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
@@ -449,6 +449,31 @@
    "pdf_bytes": 90373,
    "pdf_sha256": "e28bb978bcb099abfb132dcd852ec0fedc8b76c216f1bf569a95917ab6f4c93c",
    "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-17_09_45AM.txt",
+   "manifest_outcome": null,
+   "manifest_detail": null,
+   "text_sha256_matches_extracted": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_10_30AM.pdf",
+   "filename": "Injury-Report_2026-11-17_10_30AM.pdf",
+   "date": "2026-11-17",
+   "stamp_et": "10:30 AM ET",
+   "cited_in": [
+    "data/raw/refresh_2026-11-17/capture_index.json",
+    "data/v6/injury_archive.json"
+   ],
+   "transcripts": [],
+   "transcript_rows": null,
+   "text_sha256": null,
+   "retrieved_at_utc": null,
+   "index_checked_utc": null,
+   "revision_time_et": null,
+   "method": null,
+   "bytes_stored": false,
+   "pdf_path": null,
+   "pdf_bytes": null,
+   "pdf_sha256": null,
+   "text_extracted_path": null,
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null

@@ -40,6 +40,7 @@ BACKTEST = DATA / "v2" / "backtest.json"
 SETTLED_ALL = DATA / "v4" / "settlement" / "settled-all.json"
 
 L0 = math.log(2.0)          # 0.6931… — a coin flip on a binary outcome
+SKILL_EPS = 1e-4            # below this, "skill" is a rounding artefact, not evidence
 BLOCKED_REASON = ("no closing line exists in any committed capture — requirement R-043 / "
                   "R-101, flagged F-V4-04 in the v4 capture index")
 
@@ -49,13 +50,30 @@ GRID = [0.6931, 0.6800, 0.6700, 0.6600, 0.6500, 0.6400, 0.6300, 0.6200, 0.6100,
         0.6000, 0.5900, 0.5800, 0.5600, 0.5400, 0.5200, 0.5000]
 
 
-def weight(l_model: float, l_market: float) -> float | None:
-    """The pre-registered skill-share weight. ``None`` when either input is unmeasured."""
+def skill(l: float | None) -> float | None:
+    """Skill against the coin-flip baseline, floored at zero."""
+    if l is None:
+        return None
+    return max(0.0, L0 - float(l))
+
+
+def weight(l_model: float | None, l_market: float | None) -> float | None:
+    """The pre-registered skill-share weight.
+
+    ``None`` in two distinct situations, and the page says which one applies:
+
+    * either input is **unmeasured** — the weight cannot be computed, or
+    * **neither** forecaster has demonstrated any skill against a coin flip, in which case
+      a skill share has no denominator. Handing the model 100% of a blend because the
+      market was never measured would be an accident of arithmetic, not a judgement.
+    """
     if l_model is None or l_market is None:
         return None
-    s_model = max(0.0, L0 - float(l_model))
-    s_market = max(0.0, L0 - float(l_market))
-    if s_model + s_market <= 0:
+    s_model, s_market = skill(l_model), skill(l_market)
+    # Log-losses are published to four decimals, so a skill below 1e-4 is a rounding
+    # artefact rather than demonstrated skill. Treating it as zero keeps the share from
+    # flipping to 1.0 on a 0.00005-nat difference.
+    if s_model + s_market <= SKILL_EPS:
         return None
     return s_market / (s_model + s_market)
 
@@ -89,7 +107,7 @@ def measurements() -> list[dict]:
     if s:
         st = s.get("settlement") or {}
         out.append({
-            "id": "SETTLED-14",
+            "id": f"SETTLED-{st.get('n_distinct_games_graded')}",
             "sample": "sealed ledgers settled against official finals",
             "n_games": st.get("n_distinct_games_graded"),
             "window": f"through {st.get('latest_graded_game_date')}",
@@ -114,18 +132,18 @@ def build() -> dict:
     ms = measurements()
     # The model's number is the smaller-sample, sealed-ledger measurement when it exists
     # (it is the one that cannot have been fitted after the fact), else the backtest.
-    sealed = next((m for m in ms if m["id"] == "SETTLED-14"), None)
+    sealed = next((m for m in ms if m["id"].startswith("SETTLED-")), None)
     primary = sealed or (ms[0] if ms else None)
     l_model = primary["log_loss"] if primary else None
 
     grid = []
     for lm in GRID:
+        w = weight(l_model, lm)
         grid.append({
             "hypothetical_market_log_loss": lm,
             "market_skill_vs_coin": round(L0 - lm, 4),
-            "w_market": weight(l_model, lm),
-            "w_model": (round(1 - weight(l_model, lm), 4)
-                        if weight(l_model, lm) is not None else None),
+            "w_market": w,
+            "w_model": (round(1 - w, 4) if w is not None else None),
         })
 
     # A worked example needs two numbers; only one exists, so the example is published as a
@@ -138,6 +156,16 @@ def build() -> dict:
         "baseline_l0": round(L0, 4),
         "primary_measurement_id": primary["id"] if primary else None,
         "model_log_loss": l_model,
+        "model_skill_vs_coin": (round(skill(l_model), 4) if l_model is not None else None),
+        "model_beats_coin_flip": (bool(l_model is not None and l_model < L0)),
+        "model_beats_coin_flip_note": (
+            "the model's out-of-sample log-loss on the settled sample is BETTER than a coin "
+            "flip" if (l_model is not None and l_model < L0) else
+            "the model's out-of-sample log-loss on the settled sample is WORSE than a coin "
+            "flip — the rule below therefore gives the market the whole weight as soon as "
+            "the market demonstrates any skill at all, which is the honest answer, not a "
+            "defect in the rule" if l_model is not None else
+            "no settled-sample log-loss is measured"),
         "market_log_loss": None,
         "market_log_loss_reason": BLOCKED_REASON,
         "w_market": None,
@@ -152,6 +180,11 @@ def build() -> dict:
                       "market log-loss. It is arithmetic on the stated formula, not a "
                       "measurement: no market log-loss has been observed, because no "
                       "closing price exists in any committed capture."),
+        "grid_reads": (
+            "Because the model currently shows no skill against a coin flip on the settled "
+            "sample, the rule gives the market the entire weight for any market log-loss "
+            "below the baseline. That is the rule working as pre-registered, and it is a "
+            "statement about the sample (22 graded games), not a proof about the model."),
         "what_would_unblock_it": [
             "A licensed odds feed capturing the closing spread, total and moneyline per game "
             "with a stated timestamp policy (R-101).",
