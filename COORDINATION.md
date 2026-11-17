@@ -4833,3 +4833,37 @@ required `git pull --rebase origin main` succeeded cleanly, and the only remaini
 latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
 matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
 site files were edited; they remain byte-identical to `origin/main`.
+
+## Session `arena/1eeb6a21-nba2` — CLAIM (2026-11-17 UTC)
+
+Branch `arena/1eeb6a21-nba2` (platform-fixed; base = `main` @ `d4fde59`, the 2026-11-17T14:54:57Z
+ingest capture). Claim pushed before any other edit, per protocol.
+
+**Handoff (per the 60-minute rule):** PR #112 (`arena/a11505e1-nba2`, "Final integration
+2026-11-16") last commit 2026-11-16T19:36:51Z — >20 h stale — with two red required checks
+("Verify data, model and site", "Verify the published tree"). This session takes over the
+**final integration** role from that stale claim; PR #112 is left untouched (not merged, not
+closed) and its branch is not modified. No other session's file scope is touched.
+
+**Observed state on main @ `d4fde59` (facts, each re-checkable):**
+- Nightly run [44107633323](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323):
+  `capture` job succeeded (commit `d4fde59`), `publish` job **failed fail-closed**.
+  `data/raw/refresh_verdict.json`: injuries=success, v4=success, **finals=failure,
+  rolling=failure** (runner could not reach the scoreboard JSON endpoints; probe
+  `data/raw/egress_probe.json` 2026-11-17T14:28:28Z shows scoreboard_cdn=HTTP 403 and
+  scoreboard_stats=timeout, while schedule/standings/gamebook-PDF/injury surfaces return 200).
+- Known open items carried from session `arena/6e46dbf2-nba2`: `site/flagged.html` lacks the
+  v5 flags; `site/decisions-needed.html` is a pre-v4/v5 rendering; v3/v4 result/settlement
+  pages show the three 11/15 games as unsettled although `data/v5/results_union.json` exists;
+  root `index.html` still says as-of 2026-11-14.
+- Settlement currently stops at games of 2026-11-15; the 11/16 finals are not yet captured
+  (finals surface failed in the last two nightly runs).
+
+| ID | Task | Status | File scope | Verification rule |
+|---|---|---|---|---|
+| 1EEB-1 | Claim + handoff note | in progress | `COORDINATION.md` (append-only) | claim pushed before further work |
+| 1EEB-2 | Capture fresh official standings/slate/injury + 11/16 finals via direct official-page reads with provenance stamps; fix the finals surface so the nightly job can use the reachable official gamebook PDFs | in progress | `data/raw/**`, `nba2/pipeline/**`, `.github/workflows/refresh.yml` | every captured value row-checked against the linked official page/PDF; nothing inferred |
+| 1EEB-3 | Settle sealed picks from official finals for all captured game days; keep settlement stamps visible | in progress | `data/settlement.json`, `data/v4/settlement/**`, `data/v5/results_union.json` | seal digests re-verified before grading; finals only from official sources |
+| 1EEB-4 | Refresh the stale pages (v5 flags on Flagged page, decisions-needed, result/settlement pages, root index as-of) | in progress | `site/flagged.html`, `site/decisions-needed.html`, `site/*.html` renders, `nba2/v2/content.py`, `nba2/v4/publish.py`, `nba2/v5/publish.py`, `data/site.json` | rebuilt pages re-checked; link checker passes |
+| 1EEB-5 | Full local verification (all unit suites, checks, lint, link check, parity rebuild) | in progress | report only | exact commands + results recorded |
+| 1EEB-6 | PR → merge → Pages deploy confirmed by live fetch; record in COORDINATION.md | in progress | PR only | live fetch of deployed pages |
