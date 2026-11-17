@@ -20,6 +20,8 @@ from . import model as M
 from . import official as O
 from . import capture as CP
 from . import report as R
+from ..injury_archive import view as ARCH
+from . import md_page as MDP
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -663,7 +665,7 @@ build refuses to do.</div>
                    "Lean", "P(lean) win", "P(lean) cover", "Spread trigger dec", "Spread trigger US",
                    "ML trigger dec", "ML trigger US", "Totals trigger dec / US",
                    "Rotation availability (newest release)", "Stake", "Gates", "Blocked by", "Game page"],
-                  rows, f"All {n_lines} games: originated line, lean, both probabilities, all three trigger prices in both quote formats, and the rotation availability printed on the newest official injury release",
+                  rows, f"All {n_lines} games: originated line, lean, both probabilities, all three trigger prices in both quote formats, and the rotation availability printed on the table release (11/15 06:15 AM ET; newer stored releases are listed on the Injuries page, F-064)",
                   num_cols=(4, 5, 7, 8, 9), idcol=None)
 
     body += """<h2>Why the stake is withheld</h2>
@@ -1519,8 +1521,12 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
         f"06:15 AM ET 11/15 release vs the 01:30 PM ET 11/14 release: "
         f"{len(_c2delta['added'])} rows added, {len(_c2delta['status_changed'])} statuses moved, "
         f"{len(_c2delta['removed'])} rows gone")
+    _arch = ARCH.load()
+    _arch_banner = ARCH.banner_html(_arch, esc, srclink)
+    _arch_section = ARCH.section_html(_arch, esc, srclink, table, badge)
     body = f"""<h1>Injuries &amp; rotation</h1>
-<p class="lede"><b>Current release: {inj_meta['report_stamp_et']}</b> — revision time {inj_meta['revision_time_et']},
+{_arch_banner}
+<p class="lede"><b>Table release: {inj_meta['report_stamp_et']}</b> — revision time {inj_meta['revision_time_et']},
 retrieved {inj_meta['retrieval_time_utc']} via the platform page-fetch tool. {inj_meta['row_count']} rows transcribed
 verbatim from the official PDF, every row linking to
 {srclink(inj_meta['pdf_url'], 'the release itself')}. Below it, kept not overwritten: the 11/14 04:30 AM and 01:30 PM
@@ -1660,7 +1666,7 @@ minutes floors) is still blank, still flagged, and still named in (F-061).</div>
       report is stored, so no diff is possible yet (SG-10).</li>
 </ul>"""
     # ---- the CURRENT release: every row, verbatim (SG-21 stamps are on the banner above)
-    body += f"<h2>Current release rows — {inj_meta['report_stamp_et']} ({len(C2.injury_rows())} rows)</h2>"
+    body += f"<h2>Table release rows — {inj_meta['report_stamp_et']} ({len(C2.injury_rows())} rows)</h2>"
     rows = []
     for r in C2.injury_rows():
         rows.append({"id": f"{r['matchup']}-{r['player'] or r['team']}".replace(" ", "-"),
@@ -1674,8 +1680,9 @@ minutes floors) is still blank, still flagged, and still named in (F-061).</div>
                               srclink(_pdf15)]})
     body += table(["Date", "ET", "Matchup", "Team (as printed)", "Player (as printed)", "Status", "Reason",
                    "Transcription note", "Source"], rows,
-                  "The current official release, transcribed verbatim (irregularities flagged inline, never silently corrected)",
+                  "The table release (11/15 06:15 AM ET), transcribed verbatim (irregularities flagged inline, never silently corrected)",
                   idcol="id")
+    body += _arch_section
     # ---- explicit minutes redistribution (SG-12): top-8 shares + replacement shares
     from . import minutes as MIN
     body += """<h2>Minutes redistribution when players are out (explicit rule)</h2>
@@ -2340,6 +2347,11 @@ superseded (see F-012). Records can still drift as games are played — the snap
         rows.append({"id": fid, "cells": [badge(fid, kind), badge(sev, kind), esc(area), esc(stmt), esc(action), srclink(src)]})
     body += table(["ID", "Severity", "Area", "Finding", "Disposition", "Source to check"],
                   rows, "Flagged irregularities", idcol="id")
+    body += ('<h2>Requirements gap map (session arena/3a56251c-nba2)</h2>'
+             '<p class="lede">Every item of the brief, its status, the file that proves it, and the gap that remains. '
+             '<a href="requirements-gap-map.html">Open the gap map</a>. Source document: '
+             '<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/session-3a56251c-requirements-gap-map.md" '
+             'target="_blank" rel="noopener">analysis/session-3a56251c-requirements-gap-map.md</a>.</p>')
     body += """<h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.
@@ -2357,6 +2369,14 @@ superseded (see F-012). Records can still drift as games are played — the snap
 assumption, or when the repository contradicts its own documentation. Flags are never closed by assertion — each one carries
 the page that would settle it.</p>"""
     built["flagged.html"] = page("flagged.html", "Flagged for review", body, "flagged.html")
+    # ---- requirements gap map (session arena/3a56251c-nba2, task 3A-02): rendered from the committed analysis file
+    _gm_md = ROOT / "analysis" / "session-3a56251c-requirements-gap-map.md"
+    _gm_body = ('<h1>Requirements gap map</h1>'
+                '<p class="lede">Each item of the brief with the status the repository supports, the file that proves it, '
+                'and the gap that remains. Statuses are <b>implemented</b>, <b>partial</b>, <b>blocked</b> or <b>not verified</b>. '
+                'Rows link to the repository file they rely on. Nothing here is a model result.</p>'
+                + MDP.render(_gm_md, "https://github.com/wingbangboozle1-lang/NBA2/blob/main/analysis/session-3a56251c-requirements-gap-map.md"))
+    built["requirements-gap-map.html"] = page("requirements-gap-map.html", "Requirements gap map", _gm_body, "flagged.html")
 
     # ------------------------------------------------------------------ sources
     body = """<h1>Sources</h1>

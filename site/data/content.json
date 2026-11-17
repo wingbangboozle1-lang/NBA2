@@ -1319,6 +1319,102 @@
    "THE SITE'S FRONT DOOR WAS SERVING THE OLDEST TREE \u2014 GitHub Pages for this repository is configured build_type=legacy with source main /, so the page a visitor lands on is the repository-root index.html, not the gated site/ artefact that pages.yml uploads. Measured 2026-11-17: the root served the v1 dashboard stamped 'as-of 2026-11-14' while /NBA2/data/teams.json returned 404 and the real v2 tree was only reachable at /NBA2/site/. The README's claim that site/ is the Pages root was therefore false.",
    "The root index.html is now a labelled pointer to site/index.html, emitted by nba2.pipeline.build_site so it is regenerated and parity-checked like everything else. The underlying setting still needs one owner action - Settings > Pages > Source: GitHub Actions - which requires the pages: write scope this session's token does not have (the API returns 403 Resource not accessible by integration). Until that flip, /site/ is the canonical path and the root redirects to it.",
    "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"
+  ],
+  [
+   "F-063",
+   "high",
+   "Data",
+   "THE NEWEST INJURY RELEASE OF 11/17 IS NOT STORED \u2014 the 2026-11-17 capture index names an official release Injury-Report_2026-11-17_10_30AM.pdf (index read at 2026-11-17T15:52:00Z). That PDF is not in data/raw/pdf/, and this sandbox cannot fetch ak-static.cms.nba.com, so it is listed as a gap and not inferred. The newest stored release is 11/17 09:45 AM ET.",
+   "Fetch and store the 10:30 AM PDF from a runner with egress (the scheduled job's injury step), then re-run python -m nba2.injury_archive and the diff to 11/17 09:45 AM.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-064",
+   "medium",
+   "Data",
+   "THE INJURIES TABLE AND THE PICKS' AVAILABILITY COLUMN USE THE 11/15 06:15 AM RELEASE \u2014 three later official releases are stored and parsed (11/16 09:30 AM, 11/16 01:00 PM, 11/16 02:15 PM, 11/17 09:45 AM). The table still reads the 11/15 06:15 AM capture, and the picks caption said 'the newest official injury release'; that caption is corrected to name the table release. Availability on the picks is therefore older than the stored reports. Not swapped in this session, because the v2 model is availability-blind and the swap changes inputs.",
+   "Decide whether availability should read the newest parsed release (owner decision; see the archive diffs on the Injuries page for what would change). Then re-run the v2 parity gate.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-065",
+   "info",
+   "Verification",
+   "ARCHIVE CHECKS PASS ON ALL FOUR STORED RELEASES \u2014 each PDF was parsed by page coordinates with zero parse problems; status-row counts equal an independent plain-text extraction (57, 75, 76, 33); NOT YET SUBMITTED counts equal it (15, 12, 11, 26); the two releases with a stored .txt match it; each PDF's embedded creation time equals the header revision stamp to the minute; every player name appears in the PDF text. Consecutive diffs: 09:30\u219213:00 (added 18, status 3, reason 1), 13:00\u219214:15 (added 1, status 3), 14:15\u219211/17 09:45 (added 33, absent 76 \u2014 the 11/16 games).",
+   "No action. Reproduce with python -m nba2.injury_archive; the page section shows every changed row with its source.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_09_45AM.pdf"
+  ],
+  [
+   "F-066",
+   "medium",
+   "Data",
+   "NEW YORK KNICKS ABSENT FROM THE 11/17 09:45 AM RELEASE \u2014 the NYK@TOR game (11/17, 07:30 ET) lists four Toronto Raptors rows and no New York Knicks row or NOT YET SUBMITTED line anywhere in the PDF (checked against the full text extraction and the stored .txt). Whether the Knicks had nothing to report or the line was omitted cannot be told from the document. Not inferred.",
+   "Re-check the next official release for NYK@TOR before reading the Knicks' availability as 'no injuries'.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_09_45AM.pdf"
+  ],
+  [
+   "F-067",
+   "low",
+   "Data",
+   "SOME INJURY BLOCKS PRINT NO GAME TIME \u2014 the PDF prints a start time once per time group. Eight matchups in the 11/17 09:45 AM release (DET@NOP, GSW@DAL, MEM@CLE, MIL@MIA, PHI@ORL, POR@MIN, UTA@LAL, WAS@TOR) and four in the 11/16 releases (MEM@WAS, ORL@BOS, PHI@BKN, POR@MIN) carry no time. Those time cells are left blank; they are not borrowed from a neighbouring game.",
+   "No action on the data. A tip time for these games must come from the official schedule, not from the injury PDF.",
+   "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_09_45AM.pdf"
+  ],
+  [
+   "F-068",
+   "medium",
+   "Verification",
+   "RETRIEVAL TIMES ARE RECORDED FOR ONLY TWO OF FOUR STORED PDFs \u2014 the 09:30 AM release (retrieved 2026-11-16T14:52:00Z) and the 01:00 PM release (retrieved 2026-11-16T18:38:00Z) have retrieval stamps in repository transcripts. The 02:15 PM and 11/17 09:45 AM PDFs have none, so their retrieval time is shown as 'not recorded' rather than estimated from the commit time (the bot committed them at 2026-11-16T19:33Z and 2026-11-17T14:54:57Z; a commit is not a retrieval).",
+   "Have the capture step write a retrieval stamp next to every PDF it stores.",
+   "https://official.nba.com/nba-injury-report-2026-27-season/"
+  ],
+  [
+   "F-069",
+   "low",
+   "Repo",
+   "PARSER DEPENDENCY IS NOT IN CI \u2014 regenerating data/injuries/archive/archive.json needs the pypdf package, which the repository's CI workflow does not install (the repository is otherwise standard-library only). The unit tests that compare the committed archive with a fresh parse skip when pypdf is absent, so CI does not check the archive's drift.",
+   "Owner decision: add a pip install pypdf step to .github/workflows/ci.yml, or keep the skip and re-run the check locally.",
+   "https://pypi.org/project/pypdf/"
+  ],
+  [
+   "F-070",
+   "medium",
+   "Verification",
+   "A PRE-REGISTRATION REFERENCE POINTS AT A FILE THAT DOES NOT EXIST \u2014 backtest/engine/walkforward.py says the strategies were 'Pre-registered before any outcome was graded (see backtest/data/preregistration.json)'. That file has never been committed (git log --all is empty for the path). The pre-registration that exists is data/v2/preregistration.json with seven per-strategy files under data/v2/prereg/. The citation in the backtest is therefore unverifiable as written.",
+   "Correct the citation to data/v2/preregistration.json, or commit the file the backtest names if it was meant to exist. No value changed in this session.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/preregistration.json"
+  ],
+  [
+   "F-071",
+   "high",
+   "Model",
+   "PRE-REGISTRATIONS ARE REGENERATED ON EVERY BUILD, NOT SEALED \u2014 nba2/v2/build.py rewrites data/v2/prereg/S1\u2013S7.json and their index on each run. Each hash is correct for its file (checked: 7/7 recompute from the document with the prereg_hash field removed), but a changed signal, threshold or universe would silently produce a new hash in the same place. The frozen_at_utc value is a constant (2026-11-15T12:00:00Z), not a time of freezing. The earliest commit that contains the files (e4a2f47, committed 2026-11-15T12:51Z) is the only evidence of the original wording. The thresholds are also not stated as numbers: 'see gates: G1-G12'.",
+   "Treat the seven files as sealed the way data/raw/ledger/sealed-*.json are: write once, refuse to overwrite, CI-verify the hash, and state the numeric thresholds. Until then, no pre-registration claim is independent of the build.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/preregistration.json"
+  ],
+  [
+   "F-072",
+   "medium",
+   "Data",
+   "TRAVEL DISTANCES RESTS ON NON-OFFICIAL ARENA COORDINATES \u2014 the brief asks for travel distance from a sourced arena-coordinate table. The coordinates in data/raw/capture_2026-11-15/arenas_2026-11-15.json are third-party (Wikimedia REST summary, Wikidata P625), and the file says so. Arena names and cities are official; the coordinates are not. The distances derived from them are labelled DERIVED. This session did not search for an official coordinate source.",
+   "Source the coordinates from an official or venue-operator page per arena, or accept the third-party label as an owner decision. Until then, travel miles are not official.",
+   "https://www.nba.com/schedule"
+  ],
+  [
+   "F-073",
+   "high",
+   "Data",
+   "THE OFFICIAL FINALS UNION HAS NO DATE AND BLANK TEAMS OR QUARTERS FOR SOME GAMES \u2014 the brief asks for one row per game with date, teams, final and quarter scores. data/raw/official_finals_union.json (31 records, 0 conflicts) has no date field on any record. Nine games (0022600034 to 0022600042, all 2026-11-13) have away and home set to null, although data/raw/finals_2026-11-13.json names the clubs (for example NYK 104 at IND 106). The same nine games have no quarter scores. Games 0022600240 (DAL) and 0022600249 (HOU) have no away quarter scores. Twenty records have both quarter sets, and their quarter sums equal the finals. The union's conflict rule appears to drop club names when one source lacks them; this was not traced in code.",
+   "Rebuild the union so each record carries the game date and clubs from the schedule-bearing source, and quarters where an official box score gives them. Do not fill the blanks from memory. Until then the results page shows the blanks as not confirmed.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/official_finals_union.json"
+  ],
+  [
+   "F-074",
+   "medium",
+   "Model",
+   "F-053 QUOTES AN OLDER SNAPSHOT OF THE SKILL TEST \u2014 F-053 says 167 graded games, 33 discordant, the naive rule right 20 times and the model 13 (exact McNemar p = 0.2962). The committed skill-attribution data (data/v2/strategy_lab.json, headline_vs_win_pct_baseline) now reads 172 model games, 34 discordant, 20 for the baseline and 14 for the model, McNemar exact p = 0.3915. The scoring-margin comparison (23-19, p = 0.644) is unchanged. The verdict is the same: the model is not distinguishable from the naive rule. F-053 was not edited in place because it is a dated record.",
+   "Read the live numbers from data/v2/strategy_lab.json when quoting the test. Treat F-053's counts as the 11/14 snapshot.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json"
   ]
  ],
  "requirements": [
