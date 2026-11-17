@@ -593,6 +593,46 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>The root index.html is now a labelled pointer to site/index.html, emitted by nba2.pipeline.build_site so it is regenerated and parity-checked like everything else. The underlying setting still needs one owner action - Settings &gt; Pages &gt; Source: GitHub Actions - which requires the pages: write scope this session&#x27;s token does not have (the API returns 403 Resource not accessible by integration). Until that flip, /site/ is the canonical path and the root redirects to it.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/settings/pages" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/settings/pages</a></td>
 </tr>
+<tr id="AA-F-01">
+<td><span class="badge b-bad">AA-F-01</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Freshness</td>
+<td>The 2026-11-17 14:51Z nightly run failed its publish gate: the finals and rolling-refresh surfaces both returned failure (data/raw/refresh_verdict.json), so the published schedule, standings and team stats are still as-of 2026-11-14. Cause inferred from the committed egress probe (stats.nba.com timed out from the runner; cdn.nba.com returned 403). The run log could not be downloaded to confirm the failing call.</td>
+<td>Nothing was published from the failed run. Fixing the refresh path belongs to the owners of .github/workflows/refresh.yml and nba2/v2/refresh.py; options are listed in the session record, section 5.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/refresh_verdict.json" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/data…</a></td>
+</tr>
+<tr id="AA-F-02">
+<td><span class="badge b-bad">AA-F-02</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Settlement</td>
+<td>settle.py did not read the 2026-11-15 refresh capture (data/raw/refresh_*/), so three official finals (0022600242 HOU-WAS, 0022600243 ATL-MIL, 0022600244 OKC-SAC) stayed unsettled although the capture held them. Re-read from the official gamebooks on 2026-11-17: the scores and every period match.</td>
+<td>Settled from data/raw/results/results_2026-11-15_recheck_2026-11-17.json (arena/669bccab-nba2; same scores as the earlier gamebook re-read, which was removed as a duplicate). Discovery code left unchanged for its owner.</td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book…</a></td>
+</tr>
+<tr id="AA-F-03">
+<td><span class="badge b-warn">AA-F-03</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Data</td>
+<td>data/raw/results/results_2026-11-15.json lists 0022600242-44 as &#x27;not final at retrieval&#x27; (read 2026-11-16 ~02:05 UTC). They were final by then. The file is unchanged and is superseded for those games by results_2026-11-15_recheck_2026-11-17.json.</td>
+<td>Superseded row kept for audit; the settlement reads the newer file for these games.</td>
+<td><a href="https://www.nba.com/schedule" rel="noopener" target="_blank">nba.com/schedule</a></td>
+</tr>
+<tr id="AA-F-04">
+<td><span class="badge b-off">AA-F-04</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>Eight games of 2026-11-16 are Final on nba.com and settled. For HOU @ MIA the Houston period row was not transcribed from the gamebook PDF, so its quarter cells are blank. For POR @ MIN the PDF text contains a garbled extra period table; the clean table was used (it sums to the final).</td>
+<td>Blank quarter cells are not back-solved. The HOU final (110) is confirmed by the gamebook team line and by nba.com.</td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book…</a></td>
+</tr>
+<tr id="AA-F-05">
+<td><span class="badge b-warn">AA-F-05</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>Flag IDs F-059, F-060, F-061 and F-062 are each defined twice in nba2/v2/content.py, with different text: an older set in the FLAGS list (single-quoted) and a newer set appended by the 2026-11-17 integration. Both sets are shown on the Flagged for Review page. Not renamed here, because the entries belong to other sessions.</td>
+<td>Renumber one set so each ID is unique. Owner: the session that appended the newer F-059..F-062 (integration, arena/8892d20c-nba2), or the final integration session.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.
