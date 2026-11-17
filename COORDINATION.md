@@ -4833,3 +4833,77 @@ required `git pull --rebase origin main` succeeded cleanly, and the only remaini
 latest `main` is this session's PR #106 merge/deployment record in `COORDINATION.md` and the
 matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player-log, v5, or
 site files were edited; they remain byte-identical to `origin/main`.
+
+---
+
+## Session `arena/8892d20c-nba2` — CLAIM (2026-11-17 ~15:50 UTC)
+
+**Branch:** `arena/8892d20c-nba2`, base `d4fde59` (= `main` @ bot ingest 2026-11-17T14:54:57Z).
+Working tree clean at claim time. Claim written and pushed **before** any product edit, per protocol.
+
+**State read at claim time (verified, not assumed).**
+
+- `git log origin/main -1` = `d4fde59`; this branch is at the same commit. **No open claims**: every
+  prior session block on this board is either `done`, `needs review`, or `superseded`; the newest
+  blocks (`arena/4f780342-nba2`, `arena/2d910a64-nba2`, `arena/6e46dbf2-nba2`) all carry completion
+  records and their PRs (#103, #106, #107, #108–#111) are merged. Open PRs #70/#72/#78/#80/#82/#98
+  are stale branches with no commits after 2026-11-16 and no owner session still running; **this
+  session does not touch their files.**
+- Rebuild is a **fixed point** on the committed tree: `python -m nba2.v2` (24 pages),
+  `nba2.v2.check` (0 structural / 0 semantic), `nba2.v3` (12 pages, seal `data/v3/ledger/sealed-2026-11-15.json`
+  34 rows), `nba2.v4` (0 surface-wall, 0 numeric), `nba2.v5` (8/8 gates) — all exit 0, `git status` clean.
+- `tools/check_links_all.py` — **ALL INTERNAL LINKS OK** (136 HTML files, 6,872 internal links).
+- `tools/crosscheck_site.py` — **97 checks: 87 pass, 2 fail, 8 info**:
+  - **CC-FRESH-01 FAIL** — snapshot 3 days old (`as_of 2026-11-14`), 5 date(s) of games already
+    tipped inside the published window. This is the live defect this session addresses.
+  - **CC-DOC-01 FAIL** — README quotes 1,423 rows / 70 tests; measured 1,436 / 79.
+- The nightly job has **failed 6 consecutive scheduled runs**: 43631377045, 43725486781, 43751588814,
+  43903704042, 43939889279, 44107633323. `data/raw/refresh_verdict.json` for the latest run records
+  `injuries=success, finals=failure, rolling=failure, v4=success`, so the **rolling surface is the
+  blocker** and the publish job correctly refused to rebuild (fail-closed working as designed).
+- Root cause reproduced locally: `python -m nba2.v2.refresh --write` dies at
+  `fetch_standings()` — `stats.nba.com` closes the TLS connection
+  (`urlopen error TLS/SSL connection has been closed (EOF)`). Bash egress from this sandbox to
+  `nba.com` / `stats.nba.com` / `cdn.nba.com` returns HTTP 000, matching every prior session's record.
+  The **platform page-fetch tool does reach official NBA pages** (verified this session: the
+  `official.nba.com` injury index and `www.nba.com/standings` + `www.nba.com/schedule` both returned
+  live 2026-17 regular-season content), which is the documented capture path in
+  `data/raw/refresh_2026-11-16/capture_index.json`.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `audit/session-8892d20c-nba2/**` — new namespace: fresh official capture for 2026-11-17, the
+  line-by-line verification report, and the irregularity register (new files only).
+- `data/raw/refresh_2026-11-17/**` — the new dated capture directory (new files only; no dated
+  capture directory belonging to another session is edited).
+- `analysis/session-8892d20c-*.md` — this session's analysis records (new files only).
+- `README.md` — stale-count sync only (CC-DOC-01), prose preserved.
+- Regenerated artefacts **only as direct build output**: `data/v2/*.json`, `data/v4/**`, `site/**`
+  (never hand-edited), plus `data/v5/*` if v5's own builder rewrites them.
+
+**Explicitly NOT edited (request logged instead if needed):** `nba2/v2/**`, `nba2/v3/**`,
+`nba2/v4/**`, `nba2/v5/**` source unless a defect is reproduced *and* the fix is confined to a
+gated capture/render path this session owns; `data/raw/ledger/**` and `data/v3/ledger/**`
+(**sealed — read only, never rewritten**); `backtest/**`, `tools/**`, `.github/workflows/**`,
+`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `requests/**`,
+`requirements/REQUIREMENTS.json`, `suggestions/SUGGESTIONS.json` (owned by finished sessions;
+changes are logged as requests). The open PRs #70/#72/#78/#80/#82/#98 file sets are untouched.
+
+**Rules this session holds itself to:** a value is published only if it was fetched from an official
+source in this session, or reproduced from a committed snapshot by running the committed code;
+unconfirmed ⇒ blank + flagged, never inferred; seals are never rewritten; nothing is called verified
+that was not fetched or reproduced; a gap is recorded, not filled; flagged irregularities do not
+block the merge but appear on the Flagged for Review page with their source link; the site is never
+merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 8892-1 | Board claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| 8892-2 | Diagnose the 6-run rolling-surface failure end to end | in progress | report only | reproduce with a committed command, not by inspection |
+| 8892-3 | Fresh official capture for the 2026-11-17 slate: schedule (T+0..T+3), standings, three team-stat pages, injury release | in progress | `data/raw/refresh_2026-11-17/**`, `audit/session-8892d20c-nba2/**` | value + official URL + retrieval stamp per row; retry/refresh twice before declaring unreachable |
+| 8892-4 | Repoint the published snapshot at the fresh capture **only after** freshness + provenance gates pass; rebuild v2→v5 | in progress | regenerated `data/v2/**`, `site/**` | gates green, build a fixed point, CC-FRESH-01 turns pass |
+| 8892-5 | Fix CC-DOC-01 stale README counts | in progress | `README.md` (counts only) | counts regenerated, not hand-typed |
+| 8892-6 | Line-by-line verification of the combined published data vs official sources | in progress | `audit/session-8892d20c-nba2/verification_report.md` | every table row checked or flagged; official link per row |
+| 8892-7 | Review requirements / suggestions / flagged pages; publish what changed | in progress | report + append-only board | no unverified claim promoted |
+| 8892-8 | PR → merge → confirm GitHub Pages deploy → record PR link + result here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch of the deployed page |
