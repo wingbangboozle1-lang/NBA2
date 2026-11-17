@@ -560,6 +560,62 @@ superseded (see F-012). Records can still drift as games are played — the snap
 <td>Replaced with the measured diff table and a pointer to the script that produces it, so the claim is reproducible rather than restated.</td>
 <td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/audi…</a></td>
 </tr>
+<tr id="F-059">
+<td><span class="badge b-warn">F-059</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>THE LUCK SENTENCE ON THE SETTLEMENT PAGE CONTRADICTED ITS OWN TABLE. It was a hard-coded literal reading &#x27;12 correct winners in 14 distinct games ... 0.857 against 0.633&#x27; while the columns beside it reported 16 correct in 22 (0.727 vs 0.576). Both numbers were published on the same screen.</td>
+<td>The sentence is now generated from the same rows the table prints, so it cannot drift again. The statistic itself is unchanged and still unflattering: Poisson-binomial tail 0.078, i.e. inside the noise band, no stake anywhere.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v4/settlement.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-060">
+<td><span class="badge b-bad">F-060</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Verification</td>
+<td>TWO SILENT DATA LOSSES IN THE FINALS UNION. The 11/16 results feed spells its source link `final_source_url`/`gamebook_url` and its period rows `away_q`/`home_q`; the union read only `source_url` and `away_quarters`/`home_quarters`. All eight 11/16 records therefore reached the published union with NO source link and NO quarter scores - no error, no warning, just missing data.</td>
+<td>Both spellings are accepted now and the sum-to-final check still gates trust; three regression tests cover the accepted and rejected paths. Nothing on the page looked wrong, which is exactly why it went unnoticed.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/settle.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-061">
+<td><span class="badge b-bad">F-061</span></td>
+<td><span class="badge b-bad">high</span></td>
+<td>Verification</td>
+<td>THE WALK-FORWARD WAS GRADING AN ELEVEN-DAY-OLD SEASON. load_games() joined exactly one dated finals file by name, so the 11/15 and 11/16 finals were never scored even though 205 verified finals were committed. A test asserting &#x27;exactly 172 predictions&#x27; made the omission look like a pass.</td>
+<td>load_games() now globs every dated finals source (205 games), and the coverage test asserts the property instead of the count: every game after the season&#x27;s opening date must be priced, and the only legitimate skips are a club&#x27;s first appearance.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-062">
+<td><span class="badge b-warn">F-062</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>THE STALENESS DETECTOR WAS RAISING A FALSE ALARM. It applied only the 11/14 finals to the 11/14 audit fixture, so 29 of 30 published rows came back UNEXPLAINED - which read as a corrupted table but was the detector being a week out of date.</td>
+<td>It now applies every committed final dated after the fixture: 30 of 30 rows explained, 0 unexplained. The check is unchanged in spirit and now measures what it claims to.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/live.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-063">
+<td><span class="badge b-warn">F-063</span></td>
+<td><span class="badge b-warn">medium</span></td>
+<td>Verification</td>
+<td>A CLUB THAT FILED ITS INJURY REPORT COULD NEVER BE RECORDED AS HAVING FILED. `placeholder_resolved` intersected placeholder keys with player keys, which are disjoint by construction, so it was always 0 - and the page printed &#x27;0 clubs resolved&#x27; beside &#x27;33 rows added&#x27;, describing one event two contradictory ways.</td>
+<td>The comparison is now per club (date, matchup, team) and reports how many player rows replaced each placeholder; the 11/16 09:30 -&gt; 13:00 diff correctly reports 3 clubs resolved.</td>
+<td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v4/injury_diff.py" rel="noopener" target="_blank">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2…</a></td>
+</tr>
+<tr id="F-064">
+<td><span class="badge b-info">F-064</span></td>
+<td><span class="badge b-info">info</span></td>
+<td>Data</td>
+<td>HOU@MIA QUARTER CONTRADICTION, RESOLVED - and it was a reading error, not a discrepancy in the official gamebook. A second read appeared to print HOU halftime 31 and Q3 17. Re-read at the period-block level: 31 is HOU&#x27;s SECOND-QUARTER total, halftime is 46, and no HOU period is 17. Three independent boundaries agree (Q1-Q2 15|31|46; Q3 35/39; second-half cumulative 64/66) and 46+64 = 110 against a final of 110.</td>
+<td>The record carries a quarter_evidence field listing all four boundaries and their locations. This is the third time in this project that a sum-equals-final assertion passed while a split was wrong; a cumulative boundary is the check that catches it.</td>
+<td><a href="https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf" rel="noopener" target="_blank">statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book…</a></td>
+</tr>
+<tr id="F-065">
+<td><span class="badge b-off">F-065</span></td>
+<td><span class="badge b-off">low</span></td>
+<td>Data</td>
+<td>THE TRADITIONAL TEAM-STATS PAGE WAS READ ONLY FAR ENOUGH TO CROSS-CHECK. 11 of 30 PTS rows were transcribed; the other 19 are published as values derived from every committed official final, which is not a transcription and is labelled as derived.</td>
+<td>The 11 transcribed rows agree with the derived values to within 0.04 and the derived points-allowed agrees with the opponent page&#x27;s Opp PTS to within 0.05 for all 30 clubs - both inside half a rounding step. Flagged rather than presented as a full read.</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season&amp;PerMode=PerGame" rel="noopener" target="_blank">nba.com/stats/teams/traditional?Season=2026-27&amp;Seas…</a></td>
+</tr>
 </tbody></table></div><h2>Items that need a human with the site open</h2>
 <ul>
   <li><b>F-003:</b> whether the 11/14 injury report is genuinely unpublished or merely unavailable from this environment.

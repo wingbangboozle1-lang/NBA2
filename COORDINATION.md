@@ -4870,3 +4870,65 @@ bot capture). Branch is platform-fixed at `arena/45f14c5c-nba2`; no other branch
 math, `nba2/v4` model math, `nba2/v5` transcripts, `backtest/**`, `dashboard/**`, `docs/**`,
 `originated/**`, `verified/**`, `archive/**`. Open PRs #112/#98/#82/#80/#78/#72/#70 are read for
 overlap but not edited.
+
+---
+
+## Session `arena/45f14c5c-nba2` — progress update (2026-11-17, later in the same day)
+
+**Task table, updated**
+
+| ID | Task | Status | Notes |
+|---|---|---|---|
+| 45-0 | Claim, baseline, evidence capture | **done** | claim commit `7f21c5f` |
+| 45-1 | Publish each ingest surface's failure reason into the committed tree | **done** | `3758c48` — `tools/surface_reason.py` (+11 tests), `refresh.yml` tees each surface's log, writes `logs/surfaces.md`, and the verdict JSON gains `surface_reasons`; the publish job's `::error` and step summary now name the reason |
+| 45-2 | Replay the nightly job's exact rolling request from a runner | **done** | `3758c48` — `probe-egress.yml` gained a step issuing the six rolling URLs with byte-identical UA/headers, 3 retries, 30 s timeout, no retry on 4xx, writing `data/raw/probe/rolling_<date>.json`; awaits its first scheduled execution |
+| 45-3 | Re-read the official surfaces for the current rolling slate and re-verify | **done** | `analysis/session-45f14c5c-verification.md` + `data/raw/refresh_2026-11-17/` (6 documents + `capture_index.json`) |
+| 45-4 | Refresh the session-dependent pages, keep the Projection/Bet wall intact | **done** | v2 resliced to 11/17; wall re-verified by G-V4-8 |
+| 45-5 | Rebuild, gates, PR, merge, Pages deploy, post-deploy read | **in progress** | this section |
+
+**Settlement for 11/16 is now settled.** `nba2/v4/settlement.py` `FINALS_SOURCES` gained the
+11/16 feed. Committed stamp `2026-11-16T23:59:59Z`; 83 sealed / 61 graded / 22 ungraded /
+22 distinct games. The blocker was `HOU@MIA`, and it was a **reading error, not a data
+contradiction**: the "halftime 31 / Q3 17" reading was HOU's **Q2 = 31** mistaken for a
+halftime total. Halftime is 46, no HOU period is 17, and three independent boundaries in the
+gamebook agree (Q1–Q2 `15|31|46`; Q3 `35/39`; second-half cumulative `64/66`, and
+46+64 = 110). The record now carries a `quarter_evidence` field so a reviewer can re-run the
+argument from the PDF alone.
+
+**Five defects found while doing it — all of the "no error, just wrong output" kind.** Each
+is published as a flag on `flagged.html` (F-059 … F-065) rather than quietly fixed:
+
+- **F-059** the settlement page's luck sentence was a hard-coded literal claiming 12/14
+  (0.857 vs 0.633) while its own columns said 16/22 (0.727 vs 0.576). Now generated.
+- **F-060** the finals union read only `source_url` and `away_quarters`; the 11/16 feed
+  spells them `final_source_url` and `away_q`. Result: eight records published with **no
+  source link and no quarter scores**, silently.
+- **F-061** `strategy_lab.load_games()` joined one dated finals file by name, so the
+  walk-forward was grading an **eleven-day-old season** while 205 finals sat committed. A
+  test asserting "exactly 172 predictions" made the omission look like a pass.
+- **F-062** `live.staleness()` applied only the 11/14 finals to the 11/14 fixture, so 29 of
+  30 rows came back `UNEXPLAINED` — a false alarm from the detector, not a bad table.
+- **F-063** `placeholder_resolved` could only ever be 0 (placeholder keys and player keys
+  are disjoint by construction), so the injuries page printed "0 clubs resolved" beside
+  "33 rows added". Now per-club; the 11/16 diff reports 3.
+
+Two further honest limitations, flagged not papered over: **F-065** only 11 of 30
+traditional-page PTS rows were transcribed (the derived values agree to ≤0.04, and points
+allowed agrees with the opponent page to ≤0.05 on all 30 clubs), and **F-064** records the
+quarter reading.
+
+**Cross-checks that do not rely on one page.** The 30-club standings table was verified by
+re-deriving every club's W, L, home and road split from the 197 committed finals dated on or
+before 11/15 plus the eight 11/16 finals: **30/30 identical**, W = L = 205, home 106-98 ==
+road 98-106. The derived points-per-game agree with two independent official pages. The
+measured home-win rate is 0.5196 and HCA stays pinned to it.
+
+**Gates at this commit:** v2 24 pages + 0 structural / 0 semantic; v3 7/8 publishable
+(pre-existing failure, confirmed unchanged by stashing this session's work and re-running);
+v4 8/8 publishable, hash `d7c0da26…`; v5 8/8; lint 1436 rows across 50 tables all sourced;
+136 HTML files / 6872 internal links OK; backtest 183 games deterministic; unit suites
+79 / 146 / 67 / 61 / 26 / 49 + 11 all OK.
+
+**No sealed ledger was modified.** `data/raw/ledger/**` and `data/v3/ledger/**` are
+untouched; `seal_verified_all` is true and the tamper record is in
+`data/v4/settlement/settled-all.json`.

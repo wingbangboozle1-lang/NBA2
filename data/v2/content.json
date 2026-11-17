@@ -1287,6 +1287,62 @@
    "THE INJURY TABLE'S OWN PROSE WAS HARD-CODED to the 04:30 AM ceiling and to a specific count of 'unreachable' files, so it could not have updated itself even when a fresher release became reachable. Found while re-verifying the page this session.",
    "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is reproducible rather than restated.",
    "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"
+  ],
+  [
+   "F-059",
+   "medium",
+   "Verification",
+   "THE LUCK SENTENCE ON THE SETTLEMENT PAGE CONTRADICTED ITS OWN TABLE. It was a hard-coded literal reading '12 correct winners in 14 distinct games ... 0.857 against 0.633' while the columns beside it reported 16 correct in 22 (0.727 vs 0.576). Both numbers were published on the same screen.",
+   "The sentence is now generated from the same rows the table prints, so it cannot drift again. The statistic itself is unchanged and still unflattering: Poisson-binomial tail 0.078, i.e. inside the noise band, no stake anywhere.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v4/settlement.py"
+  ],
+  [
+   "F-060",
+   "high",
+   "Verification",
+   "TWO SILENT DATA LOSSES IN THE FINALS UNION. The 11/16 results feed spells its source link `final_source_url`/`gamebook_url` and its period rows `away_q`/`home_q`; the union read only `source_url` and `away_quarters`/`home_quarters`. All eight 11/16 records therefore reached the published union with NO source link and NO quarter scores - no error, no warning, just missing data.",
+   "Both spellings are accepted now and the sum-to-final check still gates trust; three regression tests cover the accepted and rejected paths. Nothing on the page looked wrong, which is exactly why it went unnoticed.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/pipeline/settle.py"
+  ],
+  [
+   "F-061",
+   "high",
+   "Verification",
+   "THE WALK-FORWARD WAS GRADING AN ELEVEN-DAY-OLD SEASON. load_games() joined exactly one dated finals file by name, so the 11/15 and 11/16 finals were never scored even though 205 verified finals were committed. A test asserting 'exactly 172 predictions' made the omission look like a pass.",
+   "load_games() now globs every dated finals source (205 games), and the coverage test asserts the property instead of the count: every game after the season's opening date must be priced, and the only legitimate skips are a club's first appearance.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/strategy_lab.py"
+  ],
+  [
+   "F-062",
+   "medium",
+   "Verification",
+   "THE STALENESS DETECTOR WAS RAISING A FALSE ALARM. It applied only the 11/14 finals to the 11/14 audit fixture, so 29 of 30 published rows came back UNEXPLAINED - which read as a corrupted table but was the detector being a week out of date.",
+   "It now applies every committed final dated after the fixture: 30 of 30 rows explained, 0 unexplained. The check is unchanged in spirit and now measures what it claims to.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/live.py"
+  ],
+  [
+   "F-063",
+   "medium",
+   "Verification",
+   "A CLUB THAT FILED ITS INJURY REPORT COULD NEVER BE RECORDED AS HAVING FILED. `placeholder_resolved` intersected placeholder keys with player keys, which are disjoint by construction, so it was always 0 - and the page printed '0 clubs resolved' beside '33 rows added', describing one event two contradictory ways.",
+   "The comparison is now per club (date, matchup, team) and reports how many player rows replaced each placeholder; the 11/16 09:30 -> 13:00 diff correctly reports 3 clubs resolved.",
+   "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v4/injury_diff.py"
+  ],
+  [
+   "F-064",
+   "info",
+   "Data",
+   "HOU@MIA QUARTER CONTRADICTION, RESOLVED - and it was a reading error, not a discrepancy in the official gamebook. A second read appeared to print HOU halftime 31 and Q3 17. Re-read at the period-block level: 31 is HOU's SECOND-QUARTER total, halftime is 46, and no HOU period is 17. Three independent boundaries agree (Q1-Q2 15|31|46; Q3 35/39; second-half cumulative 64/66) and 46+64 = 110 against a final of 110.",
+   "The record carries a quarter_evidence field listing all four boundaries and their locations. This is the third time in this project that a sum-equals-final assertion passed while a split was wrong; a cumulative boundary is the check that catches it.",
+   "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+  ],
+  [
+   "F-065",
+   "low",
+   "Data",
+   "THE TRADITIONAL TEAM-STATS PAGE WAS READ ONLY FAR ENOUGH TO CROSS-CHECK. 11 of 30 PTS rows were transcribed; the other 19 are published as values derived from every committed official final, which is not a transcription and is labelled as derived.",
+   "The 11 transcribed rows agree with the derived values to within 0.04 and the derived points-allowed agrees with the opponent page's Opp PTS to within 0.05 for all 30 clubs - both inside half a rounding step. Flagged rather than presented as a full read.",
+   "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
   ]
  ],
  "requirements": [

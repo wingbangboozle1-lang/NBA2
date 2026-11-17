@@ -1,0 +1,99 @@
+{
+ "schema": "nba2.capture-index.v4",
+ "session": "arena/45f14c5c-nba2",
+ "as_of": "2026-11-17",
+ "retrieved_window_utc": [
+  "2026-11-17T15:02:00Z",
+  "2026-11-17T15:20:00Z"
+ ],
+ "method": "platform page-fetch tool (fetch_page). Direct bash egress from this sandbox to nba.com, cdn.nba.com, statsdmz.nba.com and ak-static.cms.nba.com returns HTTP 000 (TLS blocked), so every official read in this session went through the platform tool and is recorded with that method.",
+ "documents": [
+  {
+   "file": "standings_2026-11-17.json",
+   "schema": "nba2.standings-official.v4",
+   "rows": 30,
+   "source": "https://www.nba.com/standings",
+   "note": "cross-checked club-by-club against a reconstruction from all 205 committed official finals"
+  },
+  {
+   "file": "team_stats_2026-11-17.json",
+   "schema": "nba2.team-stats-3page.v2",
+   "rows": 30,
+   "source": "https://www.nba.com/stats/teams/{advanced,opponent,traditional}?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "note": "advanced 30/30, opponent 30/30, traditional PTS transcribed for 11 clubs (FLAG-45-01)"
+  },
+  {
+   "file": "slate_2026-11-17_to_11-20.json",
+   "schema": "nba2.slate.v4",
+   "rows": 30,
+   "source": "https://www.nba.com/schedule?date=2026-11-17",
+   "note": "5/12/4/9 games across 11/17..11/20; Cup group markers on the 9 games of 11/20"
+  },
+  {
+   "file": "injury_transcript_20261117_1030AM.json",
+   "schema": "nba2.injury-transcript.v4",
+   "rows": 59,
+   "source": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_10_30AM.pdf",
+   "note": "33 player designations + 26 club rows NOT YET SUBMITTED"
+  },
+  {
+   "file": "injury_delta_0100PM_1030AM.json",
+   "schema": "nba2.injury-delta.v3",
+   "rows": 59,
+   "source": "computed by nba2.v4.injury_diff.diff over the 11/16 01:00 PM and 11/17 10:30 AM transcripts",
+   "note": "window rollover: 81 rows dropped with the 11/16 game date, 57 added (33 for 11/17 filings, 24 for 11/18)"
+  },
+  {
+   "file": "results_2026-11-16.json",
+   "schema": "nba2.results-feed.official-gamebook.v1",
+   "rows": 8,
+   "source": "https://statsdmz.nba.com/pdfs/20261116/20261116_<AWAY><HOME>_book.pdf",
+   "note": "per-quarter rows re-read; HOU@MIA split resolved and evidence attached to the record"
+  }
+ ],
+ "gates": {
+  "v2": {
+   "build": "24 pages",
+   "check": "0 structural, 0 semantic"
+  },
+  "v3": {
+   "gates": "7 pass / 1 fail (pre-existing, unchanged)",
+   "publishable": true
+  },
+  "v4": {
+   "gates": "8 pass / 0 fail",
+   "publishable": true,
+   "settlement_hash": "d7c0da26de206131"
+  },
+  "v5": {
+   "gates": "8 pass / 8",
+   "nav_injections": 42
+  },
+  "lint": "1436 rows across 50 tables, every row sourced, every blank explained",
+  "links": "136 HTML files, 6740 internal links, ALL INTERNAL LINKS OK",
+  "backtest": "183 games, deterministic, verification passed"
+ },
+ "flags": [
+  {
+   "id": "FLAG-45-01",
+   "severity": "low",
+   "what": "traditional team-stats page: 11 of 30 PTS rows transcribed",
+   "why": "the page's remaining rows were not needed because the exact per-game points are derivable from every committed official final, and the 11 transcribed rows agree with those exact values to <=0.04 (a rounding artefact). The 19 clubs publish the exact derived value, labelled as such.",
+   "affects": "nothing published: no table claims a transcription it does not have"
+  },
+  {
+   "id": "FLAG-45-02",
+   "severity": "none-now-resolved",
+   "what": "HOU@MIA quarter split",
+   "why": "first read showed only the HEAT banner; a second read appeared to contradict it. Re-read at the period-block level: 31 is HOU's Q2, not its halftime total, and Q3 is 35 not 17. Three independent boundaries agree (Q1-Q2 table 15|31|46; Q3 block 35/39; half-2 cumulative 64/66).",
+   "affects": "the 11/16 result feed, now settled"
+  },
+  {
+   "id": "FLAG-45-03",
+   "severity": "medium",
+   "what": "11/18 injury blocks are all NOT YET SUBMITTED",
+   "why": "the day-before filing deadline (5 p.m. local) had not passed at the 10:30 AM ET release. This is the expected pre-deadline state, not a capture gap, and is published as such.",
+   "affects": "rotation availability for 11/18 is blank by policy"
+  }
+ ]
+}
