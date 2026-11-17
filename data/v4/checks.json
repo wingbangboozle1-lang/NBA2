@@ -39,14 +39,14 @@
    "id": "G-V4-6",
    "name": "provenance: every captured row carries a source",
    "ok": true,
-   "measured": "7 capture documents scanned",
+   "measured": "10 capture documents scanned",
    "detail": "every row carries a source URL"
   },
   {
    "id": "G-V4-7",
    "name": "settlement re-hashes and the seal still verifies",
    "ok": true,
-   "measured": "settlement hash 3364985ed84dda9c",
+   "measured": "settlement hash bd92f7b88e981eb1",
    "detail": "hash matches and the sealed ledger is unmodified"
   },
   {
@@ -59,8 +59,8 @@
  ],
  "settlement_verify": {
   "ok": true,
-  "stored": "3364985ed84dda9cda2168403136b22088e12631ca04feb22d2cf5e813b4e03a",
-  "recomputed": "3364985ed84dda9cda2168403136b22088e12631ca04feb22d2cf5e813b4e03a",
+  "stored": "bd92f7b88e981eb198a8e2807b695e0dc4509be8a4a3f8f2a748c1b8e265d4d2",
+  "recomputed": "bd92f7b88e981eb198a8e2807b695e0dc4509be8a4a3f8f2a748c1b8e265d4d2",
   "seal_still_verified": true,
   "seals_still_verified": {
    "sealed-2026-11-13.json": true,

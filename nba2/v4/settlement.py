@@ -48,9 +48,15 @@ V3_SEALS = ("sealed-2026-11-15.json",)
 FINALS_SOURCES = (
     ("data/raw/refresh_2026-11-15/results_2026-11-15.json", "2026-11-15"),
     ("data/raw/capture_2026-11-15/results_2026-11-14.json", "2026-11-14"),
+    # arena/669bccab-nba2 (2026-11-17): official finals for 2026-11-15 (recheck of 242-244) and 2026-11-16
+    ("data/raw/results/results_2026-11-15_recheck_2026-11-17.json", "2026-11-15"),
+    ("data/raw/results/results_2026-11-16.json", "2026-11-16"),
     # arena/934fce54-nba2 (2026-11-17): the 11/16 game day, transcribed from the eight
-    # official gamebook PDFs at statsdmz.nba.com. Schema nba2.results-feed.v3, same as
-    # the files above, so the two surfaces grade the same rows.
+    # official gamebook PDFs at statsdmz.nba.com. Schema nba2.results-feed.v3. Loaded
+    # last on purpose: finals() keeps one row per game id (last file wins) and refuses
+    # to settle if two files disagree, and this capture carries the verified quarter
+    # rows alongside the finals. Independent of arena/669bccab-nba2's capture above —
+    # the two agree on all eight finals and all sixteen period rows.
     ("data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json", "2026-11-16"),
 )
 

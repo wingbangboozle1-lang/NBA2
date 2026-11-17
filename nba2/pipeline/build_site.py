@@ -394,6 +394,40 @@ def _pages() -> dict[str, list[str]]:
     }
 
 
+def _root_pointer() -> str:
+    """The repo-root entry point: a labelled pointer to the gated v2 dashboard.
+
+    Deliberately a plain redirect with visible text rather than a silent one, because the reader
+    deserves to know which tree they are being handed. The v1 dashboard is NOT deleted - it stays
+    at pages/*.html and is linked from here, per the README's statement that it is retained for
+    history and review but is not the published surface.
+    """
+    return (
+        '<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8">\n'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+        '<title>NBA2 — gated dashboard</title>\n'
+        '<meta http-equiv="refresh" content="0; url=site/index.html">\n'
+        '<link rel="canonical" href="site/index.html">\n'
+        '</head>\n<body style="font:15px/1.55 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,'
+        'Helvetica,Arial,sans-serif;background:#0b0f16;color:#e8eef6;padding:32px;max-width:70ch">\n'
+        '<h1 style="font-size:20px;margin:0 0 8px">NBA2 — the gated dashboard is one link away</h1>\n'
+        '<p>This repository publishes one tree to readers: the v2/v3/v4/v5 dashboard, which is '
+        'built from official NBA sources with a source link on every table row and a reason for '
+        'every blank. It is at <a style="color:#7aa7ff" href="site/index.html">site/index.html</a> '
+        '(redirecting now).</p>\n'
+        '<p>You are not being shown the v1 dashboard on the front door on purpose: it is an older '
+        'snapshot that no longer agrees with the gated tree, and it is retained for history and '
+        'review only. It is still browsable at <a style="color:#7aa7ff" href="pages/picks.html">'
+        'pages/</a>.</p>\n'
+        '<p>Two pages worth opening first: '
+        '<a style="color:#7aa7ff" href="site/capture-verification.html">Capture verification</a> '
+        '(a dated, self-checked official capture) and '
+        '<a style="color:#7aa7ff" href="site/flagged.html">Flagged for review</a> '
+        '(every irregularity, with the source needed to settle it).</p>\n'
+        '</body></html>\n'
+    )
+
+
 def build() -> list[str]:
     _load_data()
     written: list[str] = []
@@ -421,9 +455,18 @@ def build() -> list[str]:
         render_table(sec("anomalies"), False),
         render_table(sec("slate"), False),
     ]
-    write("index.html", page("NBA2 — originated lines & gated strategies", home_sections,
-                             "<p>A line-origination desk that publishes what it can prove and flags what it cannot.</p>",
-                             False, "index.html"))
+    # ------------------------------------------------------------------ root entry point
+    # WHY THE ROOT IS A POINTER AND NOT THE v1 DASHBOARD (session arena/8892d20c-nba2):
+    # GitHub Pages for this repository is configured `build_type: legacy`, source `main /`, so the
+    # file a visitor actually lands on is the ROOT index.html - not the `site/` artefact that
+    # pages.yml uploads. Measured 2026-11-17: https://.../NBA2/ served the v1 dashboard stamped
+    # "as-of 2026-11-14" while the gated v2 site was only reachable at /NBA2/site/. A reader was
+    # therefore being shown the oldest, least verified rendering on the site's front door.
+    # The Pages *setting* needs `pages: write`, which this session's token does not have, so the
+    # fix is made where it can be: the root entry point now points at the gated tree. This works
+    # under either Pages configuration - if the owner later flips build_type to `workflow`, the
+    # root of the uploaded artefact is the v2 site and this page is simply not the entry point.
+    write("index.html", _root_pointer())
 
     for rel, secs in _pages().items():
         title = rel.split("/")[-1].replace(".html", "").replace("-", " ").title()

@@ -308,11 +308,11 @@
     34,
     31
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/hou-vs-was-0022600242",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600243",
@@ -347,11 +347,11 @@
     27,
     26
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/atl-vs-mil-0022600243",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600244",
@@ -386,11 +386,11 @@
     30,
     23
    ],
-   "quarter_status": "read",
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final",
    "official_source": "https://www.nba.com/game/okc-vs-sac-0022600244",
-   "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
+   "feed_source": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
+   "finals_file": "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
   },
   {
    "game_id": "0022600245",
@@ -850,19 +850,19 @@
    "game_id": "0022600242",
    "final_source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   },
   {
    "game_id": "0022600243",
    "final_source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   },
   {
    "game_id": "0022600244",
    "final_source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
-   "quarter_status": "read"
+   "quarter_status": "NBA.com game-list final re-read read 2026-11-17 in session arena/669bccab-nba2 via platform fetch tool, nba.com game-list page (per-call time not logged) = gamebook final; quarter rows sum to final"
   },
   {
    "game_id": "0022600245",
@@ -915,5 +915,5 @@
  ],
  "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
  "derived_from": "data/v4/settlement/settled-all.json",
- "sha256_after_settlement": "c66454d6a2d01ab3310f4d17e76ca723bf3c48c8b174415b657e2de990da2bbb"
+ "sha256_after_settlement": "2f61dffd46a45d00eb2d0b9778a070288d068418f4cd62d46638db8c0de7dec6"
 }
