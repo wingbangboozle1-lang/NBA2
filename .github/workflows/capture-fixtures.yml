@@ -1,16 +1,24 @@
-# Capture raw official pages as CI artifacts so parsers are written against real bytes.
+# Capture raw official pages from a runner and commit them as parser fixtures.
 #
-# WHY: the nightly refresh fails because `nba2/v2/refresh.py` reads stats.nba.com JSON,
-# which times out from GitHub runners, while the rendered www.nba.com pages return 200
-# (measured: data/raw/egress_probe.json, 2026-11-17T14:28:28Z). Repairing the transport
-# means parsing HTML/JSON that we have actually seen — never guessing a page's structure.
-# This workflow fetches every page the refresh needs from a runner (the environment that
-# must work), records status/bytes/SHA-256 per URL in a manifest, and uploads the raw
-# bytes as an artifact. Nothing is committed by this workflow; the session downloads the
-# artifact and commits fixtures with their provenance stamps.
+# WHY: the nightly refresh fails because `nba2/v2/refresh.py` reads stats.nba.com JSON, which
+# times out from GitHub runners, while the rendered www.nba.com pages return 200 (measured:
+# data/raw/egress_probe.json, 2026-11-17T14:28:28Z). Repairing the transport means parsing
+# pages whose bytes we have actually seen — never guessing at a page's structure.
 #
-# Failures are recorded in the manifest, not hidden: an unreachable page shows up as a
-# row with ok=false and the exact error, which is evidence either way.
+# WHY IT COMMITS INSTEAD OF UPLOADING AN ARTIFACT: this repository's review loop cannot fetch
+# GitHub Actions artifacts or job logs (both are served from hosts outside the reachable set),
+# so an uploaded artifact is unreadable evidence. Committing the bytes to the branch is the one
+# channel that can actually be reviewed. Pages are stored gzip-compressed with the SHA-256 and
+# byte length of the *original* response in the manifest, so the raw bytes are recoverable and
+# verifiable: `gunzip -c standings.html.gz | sha256sum` must equal `sha256` in the manifest.
+#
+# MEASURED, DO NOT GUESS: the User-Agent below is the one that returned HTTP 200 from a runner
+# on 2026-11-17. A Chrome-mimicking UA was challenged on every page in the same environment.
+# Change the UA only by re-measuring, never by guessing.
+#
+# LOOP GUARD: the bot commit re-triggers this workflow (pull_request synchronize). The commit
+# step therefore does nothing when the branch tip is already a bot commit, so one human push
+# yields at most one bot commit.
 
 name: Capture official page fixtures
 
@@ -19,7 +27,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: page-fixtures-${{ github.ref }}
@@ -41,43 +49,45 @@ jobs:
           python3 - <<'PY'
           import datetime as dt, gzip, hashlib, json, pathlib, time, urllib.error, urllib.request
 
-          OUT = pathlib.Path("page_fixtures")
+          OUT = pathlib.Path("data/raw/page_fixtures")
           OUT.mkdir(parents=True, exist_ok=True)
           today = dt.date.today()
+
           # NOT a browser string: the nightly probe measured 200 from a runner with this
           # self-identifying UA (data/raw/egress_probe.json, 2026-11-17T14:28:28Z), while a
           # Chrome-mimicking UA was challenged on every page. Do not "improve" it without
           # re-measuring: this is the transport the repository is built on.
-          ua = {"User-Agent": "NBA2-research-desk/1.0 (endpoint reachability check)",
+          UA = {"User-Agent": "NBA2-research-desk/1.0 (endpoint reachability check)",
                 "Accept": "*/*", "Referer": "https://official.nba.com/"}
+          STATS = ("https://www.nba.com/stats/teams/{}?Season=2026-27"
+                   "&SeasonType=Regular+Season")
 
           def urls():
               yield "standings", "https://www.nba.com/standings"
-              for i in range(4):                      # slate window: today..today+3
+              for i in range(4):                       # slate window: today .. today+3
                   d = (today + dt.timedelta(days=i)).isoformat()
                   yield f"schedule_{d}", f"https://www.nba.com/schedule?date={d}"
-              for i in range(1, 8):                   # finals lookback: yesterday..7 days ago
+              for i in range(1, 8):                    # finals lookback: yesterday .. 7 days ago
                   d = (today - dt.timedelta(days=i)).isoformat()
                   yield f"games_{d}", f"https://www.nba.com/games?date={d}"
               for page in ("traditional", "opponent", "advanced"):
-                  yield (f"team_{page}",
-                         "https://www.nba.com/stats/teams/" + page +
-                         "?Season=2026-27&SeasonType=Regular+Season")
+                  yield f"team_{page}", STATS.format(page)
               yield "injury_index", "https://official.nba.com/nba-injury-report-2026-27-season/"
-              # control rows: the transports measured unreachable, re-measured every run
-              yield "stats_standings_json", ("https://stats.nba.com/stats/leaguestandingsv3"
-                                             "?LeagueID=00&Season=2026-27&SeasonType=Regular+Season")
+              # control rows: transports measured unreachable, re-measured on every run so the
+              # claim "these do not work from a runner" keeps a fresh timestamp behind it
+              yield "stats_scoreboard_json", ("https://stats.nba.com/stats/scoreboardv2"
+                                              "?LeagueID=00&GameDate=11/16/2026&DayOffset=0")
               yield "cdn_scoreboard", ("https://cdn.nba.com/static/json/liveData/scoreboard/"
                                        "todaysScoreboard_00.json")
 
           rows = []
           for name, url in urls():
+              t0 = time.time()
               row = {"name": name, "url": url, "retrieved_at_utc": None, "http_status": None,
                      "bytes": None, "sha256": None, "file": None, "ok": False, "error": None,
                      "elapsed_ms": None}
-              t0 = time.time()
               try:
-                  req = urllib.request.Request(url, headers=ua)
+                  req = urllib.request.Request(url, headers=UA)
                   with urllib.request.urlopen(req, timeout=25) as r:
                       raw = r.read()
                       if r.headers.get("Content-Encoding") == "gzip":
@@ -87,18 +97,17 @@ jobs:
                       microsecond=0).isoformat().replace("+00:00", "Z")
                   row["bytes"] = len(raw)
                   row["sha256"] = hashlib.sha256(raw).hexdigest()
-                  # control rows are evidence only — never saved as parser fixtures
+                  # control rows are evidence only - never stored as parser fixtures
                   if not name.startswith(("stats_", "cdn_")):
-                      path = OUT / f"{name}.html"
-                      path.write_bytes(raw)
+                      path = OUT / f"{name}.html.gz"
+                      path.write_bytes(gzip.compress(raw))
                       row["file"] = str(path)
                   row["ok"] = True
               except urllib.error.HTTPError as e:
-                  row["http_status"] = e.code
-                  row["error"] = f"HTTP {e.code}"
+                  row.update(http_status=e.code, error=f"HTTP {e.code}")
                   row["retrieved_at_utc"] = dt.datetime.now(dt.timezone.utc).replace(
                       microsecond=0).isoformat().replace("+00:00", "Z")
-              except Exception as e:  # noqa: BLE001 — the error IS the evidence
+              except Exception as e:                     # noqa: BLE001 - the error IS the data
                   row["error"] = f"{type(e).__name__}: {e}"
                   row["retrieved_at_utc"] = dt.datetime.now(dt.timezone.utc).replace(
                       microsecond=0).isoformat().replace("+00:00", "Z")
@@ -112,25 +121,30 @@ jobs:
               "captured_by": "capture-fixtures.yml",
               "ref": "${{ github.ref }}",
               "run_id": "${{ github.run_id }}",
-              "run_url": f"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "run_url": ("https://github.com/${{ github.repository }}/actions/"
+                          "runs/${{ github.run_id }}"),
+              "note": ("pages are stored gzip-compressed; sha256 and bytes describe the "
+                       "uncompressed response, so `gunzip -c <file> | sha256sum` reproduces it"),
               "rows": rows,
               "summary": {"n": len(rows), "ok": sum(1 for r in rows if r["ok"]),
                           "unreachable": [r["name"] for r in rows if not r["ok"]]},
           }
           (OUT / "manifest.json").write_text(json.dumps(doc, indent=1) + "\n")
           print(json.dumps(doc["summary"], indent=1))
+
           lines = ["| page | url | status | bytes | ms | sha256 | error |",
                    "| --- | --- | --- | --- | --- | --- | --- |"]
           for r in rows:
               lines.append(f"| {r['name']} | {r['url']} | {r['http_status']} | {r['bytes']} "
                            f"| {r['elapsed_ms']} | {(r['sha256'] or '')[:12]} | {r['error'] or ''} |")
-          pathlib.Path("page_fixtures/SUMMARY.md").write_text(
-              "## Official page fixtures\n\n" +
-              f"Retrieved at UTC: {rows[0]['retrieved_at_utc']}&nbsp;·&nbsp;"
-              f"run: {doc['run_url']}\n\n" + "\n".join(lines) + "\n")
-          # a fixture run where the pages the parser depends on are unreachable must be
-          # visible; control rows (stats/cdn) are expected to fail and do not fail the job
-          critical = [r for r in rows if not r["ok"] and not r["name"].startswith(("stats_", "cdn_"))]
+          (OUT / "SUMMARY.md").write_text(
+              "## Official page fixtures\n\nRetrieved at UTC: "
+              f"{rows[0]['retrieved_at_utc']} · run: {doc['run_url']}\n\n"
+              + "\n".join(lines) + "\n")
+          # Pages the parser must read being unreachable must be visible. The control rows
+          # (stats/cdn) are expected to fail; they are measurements, not build inputs.
+          critical = [r for r in rows if not r["ok"]
+                      and not r["name"].startswith(("stats_", "cdn_"))]
           if critical:
               print("::error::critical official pages unreachable: " +
                     ", ".join(r["name"] for r in critical))
@@ -139,13 +153,29 @@ jobs:
 
       - name: Publish the measurement to the job summary
         if: always()
-        run: cat page_fixtures/SUMMARY.md >> "$GITHUB_STEP_SUMMARY" || true
+        run: cat data/raw/page_fixtures/SUMMARY.md >> "$GITHUB_STEP_SUMMARY" || true
 
-      - name: Upload raw fixtures
+      - name: Commit the fixtures to the branch
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: page-fixtures
-          path: page_fixtures/
-          if-no-files-found: error
-          retention-days: 14
+        run: |
+          set -uo pipefail
+          BR="${{ github.event.pull_request.head.ref }}"
+          if [ -z "$BR" ] || [ "$BR" = "null" ]; then BR="${GITHUB_REF_NAME}"; fi
+          git config user.name "nba2-page-fixture-bot"
+          git config user.email "nba2-page-fixture-bot@users.noreply.github.com"
+          git fetch --depth=1 origin "$BR" || exit 0
+          git checkout -B "$BR" "origin/$BR"
+          # LOOP GUARD: a bot commit re-triggers this workflow. One human push, one bot commit.
+          if [ "$(git log -1 --format='%an')" = "nba2-page-fixture-bot" ]; then
+            echo "branch tip is already a fixture-bot commit - not committing again (loop guard)"
+            exit 0
+          fi
+          [ -f data/raw/page_fixtures/manifest.json ] || { echo "no manifest produced"; exit 0; }
+          git add -A data/raw/page_fixtures
+          if git diff --cached --quiet; then
+            echo "fixtures unchanged - nothing to commit"
+            exit 0
+          fi
+          git commit -q -m "fixtures(bot): official page snapshots + manifest (run ${{ github.run_id }})"
+          git pull --rebase --autostash origin "$BR"
+          git push origin "HEAD:$BR"
