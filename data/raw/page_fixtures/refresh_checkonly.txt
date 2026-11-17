@@ -1,20 +1,11 @@
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 822, in <module>
-    raise SystemExit(main())
-                     ^^^^^^
-  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 742, in main
-    "standings": fetch_standings(today),
-                 ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 379, in fetch_standings
-    clubs = fetch_teams_index()
-            ^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 228, in fetch_teams_index
-    clubs = parse_team_index(http_get(url).decode("utf-8", "replace"))
-                             ^^^^^^^^^^^^^
-  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 118, in http_get
-    raise RuntimeError(f"fetch failed after {tries} tries: {url}: {last}")
-RuntimeError: fetch failed after 3 tries: https://www.nba.com/standings: HTTP Error 403: Forbidden
 nba2.v2.refresh: window 2026-11-17..2026-11-20 (anchor 2026-11-17)
-exit=1
+  [UNAVAILABLE] team_traditional: https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season — the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json) (no rows invented; the surface is recorded as unverified)
+  [UNAVAILABLE] team_advanced: https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season — the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json) (no rows invented; the surface is recorded as unverified)
+  [UNAVAILABLE] team_opponent: https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season — the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json) (no rows invented; the surface is recorded as unverified)
+  [PASS] freshness/finals: 51 finals across 7 calendar dates — all scheduled games on covered dates are final; off-days are valid
+  [PASS] freshness/standings: 30 clubs; 205 wins / 205 losses; retrieved 2026-11-17T17:47:28+00:00 — fresh 30-club season record is internally balanced
+  [PASS] freshness/injuries: revision 2026-11-17 12:45 PM ET retrieved 2026-11-17T17:47:38+00:00 — both stamps recorded
+  [FAIL] freshness/slate: 30 games in 2026-11-17..2026-11-20, 30 unique ids; 4/4 dates fetched — row 0 lacks the matching official NBA schedule URL; row 1 lacks the matching official NBA schedule URL; row 2 lacks the matching official NBA schedule URL; row 3 lacks the matching official NBA schedule URL; row 4 lacks the matching official NBA schedule URL; row 5 lacks the matching official NBA schedule URL; row 6 lacks the matching official NBA schedule URL; row 7 lacks the matching official NBA schedule URL; row 8 lacks the matching official NBA schedule URL; row 9 lacks the matching official NBA schedule URL; row 10 lacks the matching official NBA schedule URL; row 11 lacks the matching official NBA schedule URL; row 12 lacks the matching official NBA schedule URL; row 13 lacks the matching official NBA schedule URL; row 14 lacks the matching official NBA schedule URL; row 15 lacks the matching official NBA schedule URL; row 16 lacks the matching official NBA schedule URL; row 17 lacks the matching official NBA schedule URL; row 18 lacks the matching official NBA schedule URL; row 19 lacks the matching official NBA schedule URL; row 20 lacks the matching official NBA schedule URL; row 21 lacks the matching official NBA schedule URL; row 22 lacks the matching official NBA schedule URL; row 23 lacks the matching official NBA schedule URL; row 24 lacks the matching official NBA schedule URL; row 25 lacks the matching official NBA schedule URL; row 26 lacks the matching official NBA schedule URL; row 27 lacks the matching official NBA schedule URL; row 28 lacks the matching official NBA schedule URL; row 29 lacks the matching official NBA schedule URL
+  [PASS] provenance: 5 documents scanned — every row carries a source URL
+REFRESH ABORTED: a freshness/provenance gate failed — nothing written, site not rebuilt
+exit=4
