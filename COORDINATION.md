@@ -4835,3 +4835,72 @@ matching update to `analysis/session-2d910a64-refresh-fix.md`. No PR #107 player
 site files were edited; they remain byte-identical to `origin/main`.
 
 ---\n\n## Session `arena/a8b7476a-nba2` — full repo review, official-source verification, and final integration (claimed 2026-11-17 UTC)\n\n**Branch:** `arena/a8b7476a-nba2`, base `d4fde59` (= `main` @ PR #110 merge, clean worktree at claim).\n\n**Role:** This is the only active session. It acts as the final integration session named in the\nbrief: re-verifies the combined data line by line against official sources, completes any brief\nitems that are still unbuilt, consolidates the published surface into one clean landing page with\ncategory-grouped subpages, verifies the build, and opens + merges the PR to `main` with a\nconfirmed GitHub Pages deploy.\n\n**Claimed file scope:**\n- `COORDINATION.md` (this section, append-only)\n- `audit/session-a8b7476a/**` (new namespace: repo-review findings, official captures, verifier output)\n- `site/**` (regenerated artefacts of the v2/v3/v4/v5 build — never hand-edited)\n- `data/site.json`, root `*.html`, `pages/**` (regenerated v1 artefacts)\n- `nba2/v2/build.py`, `nba2/v2/content.py`, `nba2/v2/capture.py`, `nba2/v2/model.py`, `nba2/v2/refresh.py` (owned by this session for defect repair only; no model parameter changes)\n- `nba2/pipeline/**` (settlement wiring only, fail-closed, never rewrites a sealed ledger)\n- `.github/workflows/pages.yml` (v2 tree publish step only — read-only for everything else)\n- `README.md` (count sync only, prose preserved)\n- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` (registers feeding generated pages)\n\n**Not claimed / not edited (owned by finished sessions, read-only):** `nba2/models/**`,\n`nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `backtest/**`, `docs/**`, `dashboard/**`,\n`originated/**`, `verified/**`, `archive/**`, `tools/**` (except as noted), `scripts/**`,\n`analysis/**` (except this session's own file), `data/raw/ledger/**` (sealed — immutable),\n`data/raw/**` dated snapshots (read-only), `.github/workflows/ci.yml`, `publish-parity.yml`,\n`refresh.yml` (owned by PR #103 / session `arena/4f780342-nba2`).\n\n**Rules:** claims pushed before work; small frequent commits; `git pull --rebase` before every\npush; a row is \"verified\" only if the official document was fetched in this session and can be\nquoted; anything unconfirmable stays blank and is flagged on the Flagged for Review page with a\nsource link; sealed ledgers are never rewritten; the site is never merged broken.\n\n| ID | Task | Status | File scope | Verification rule |\n|----|------|--------|-----------|-------------------|\n| A-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |\n| A-2 | Repo review line by line (all committed surfaces) | pending | `audit/session-a8b7476a/repo-review.md` | every claim tied to a file, command, or official URL; no unverified value promoted |\n| A-3 | Official-source verification: schedule, standings, injury report, team-stat pages | pending | `audit/session-a8b7476a/official-captures/` | value + official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flagged |\n| A-4 | Re-read three official team-stat pages (traditional, opponent, advanced) and re-cut model inputs | pending | `audit/session-a8b7476a/team-stats/` | each page fetched, quoted, and linked; inputs traced to official rows |\n| A-5 | Complete unbuilt brief items: per-player game logs for injury-report players, pre-registration files, rotation-availability column on picks page | pending | `site/**`, `data/**`, `nba2/v2/` | each addition sourced, gated where required, never mixed projection/bet |\n| A-6 | Full checker chain green (tests + lint + v2/v3/v4/v5 checks + links + parity) | pending | `nba2/`, `site/`, `data/` | every checker green; build is a fixed point |\n| A-7 | PR → main, merge without approval, confirm Pages deploy, record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
+
+---
+
+## Session `arena/934fce54-nba2` — CLAIM (2026-11-17 ~15:56 UTC, branch `arena/934fce54-nba2`, base `b3b8e8b` = `main` @ PR #113 merge)
+
+**State read at claim time (verified, not assumed).** `main` = `b3b8e8b` (PR #113 merge, 15:49 UTC);
+this branch is fast-forwarded to it, working tree clean. Two parallel sessions are active and
+their claims are respected: `arena/a8b7476a-nba2` (repo review / official verification / final
+integration; v2 + `site/**` regeneration + `nba2/pipeline/**` + registers) and
+`arena/6b5b24c3-nba2` (verification + publication record; `COORDINATION.md` only). Neither claims
+`nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**` or the v3/v4/v5 data surfaces. The latest scheduled
+refresh (run 44107633323, 2026-11-17T14:54:57Z, `data/raw/refresh_verdict.json`) reports
+`injuries: success, v4: success, finals: failure, rolling: failure` — so the 11/16 game day is
+**not settled anywhere** and the per-game result feed stops at 11/15. The brief says: *"Keep an
+official per-game result feed current and settle only after final scores are verified"* and
+*"Settle the sealed ledger from official finals as soon as each game day ends, and keep the
+settlement stamp visible."* That is this session's task.
+
+**Role:** result-feed + settlement continuity session (v3/v4/v5 scope only). Capture the
+official 11/16 finals and gamebooks through the platform page-fetch tool (bash egress to nba.com
+is blocked; every read records its method and URL), extend the v5 transcript set and result
+union, settle the sealed ledgers from the verified 11/16 finals, close CR-V5-3 (v3 `results.html`
+and v4 `settle.html` must consume `data/v5/results_union.json` instead of stopping at 11/14), and
+publish the settlement stamp.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim section + completion record, append-only.
+- `audit/session-934fce54/**` — new namespace: official-source captures (retrieval window + URL
+  per row) and the verification report (new files only).
+- `data/v5/gamebooks_2026-11-16.json` (new transcript), `data/v5/*.json` (regenerated by
+  `python -m nba2.v5` only, never hand-edited).
+- `data/raw/capture_2026-11-17-934fce54/**` — new capture namespace for the 11/16 results file
+  and provenance block (new files only; no existing `data/raw/**` file is modified).
+- `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**` — result-feed / settlement wiring + their tests.
+- `data/v3/**`, `data/v4/**` — regenerated settlement outputs of `python -m nba2.v3` /
+  `python -m nba2.v4` only.
+- `site/results.html`, `site/settle.html`, `site/settlement.html`, `site/result-feed-v5.html`,
+  `site/player-logs.html`, `site/playerlogs-full.html`, `site/rotation.html`,
+  `site/rotation-replacement.html`, `site/v5-verify.html` — regenerated outputs of the v3/v4/v5
+  build only, never hand-edited. (Nav-block appends v5 makes to other pages are the build's own
+  output and are rebuilt to a fixed point before the PR.)
+- `analysis/session-934fce54-*.md` — new files only.
+
+**Explicitly NOT edited (owned by the active sessions / finished sessions; a request is logged
+in this board instead):** `nba2/v2/**`, `nba2/pipeline/**`, `nba2/models/**`, `data/site.json`,
+root `*.html`, `pages/**`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`,
+`archive/**`, `tools/**`, `scripts/**`, `backtest/**`, `README.md`, registers,
+`.github/workflows/**`, `data/raw/ledger/**` (sealed — immutable), existing `data/raw/**` files.
+CR-V5-1 (`site/flagged.html` must list the v5 flags) and CR-V5-2 (`site/decisions-needed.html`
+stale pre-v4/v5 rendering) fall inside `arena/a8b7476a-nba2`'s claimed scope — they are logged
+below as **requests to that session**, not edited here.
+
+**Rules this session holds itself to:** every published value is fetched from an official source
+(nba.com / statsdmz.nba.com / official.nba.com / ak-static.cms.nba.com) in this session or
+reproduced from a committed snapshot by running the committed code; unconfirmed ⇒ blank +
+flagged, never inferred; sealed ledgers are never rewritten; nothing is called verified that was
+not fetched or reproduced; quarter rows are published only when they sum to the official final;
+flagged irregularities do not block the merge but are published with source links; the site is
+never merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 93-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| 93-2 | Capture official 11/16 finals + quarter scores + gamebook transcripts (8 games) via platform page-fetch; provenance block per file | unclaimed→in progress | `data/raw/capture_2026-11-17-934fce54/**`, `data/v5/gamebooks_2026-11-16.json`, `audit/session-934fce54/**` | value + official URL + retrieval window per row; quarter rows sum to the final or stay blank |
+| 93-3 | Extend v5 result union + player logs to 11/16 (`python -m nba2.v5`) | unclaimed | `nba2/v5/transcript.py`, `data/v5/*.json` | unit tests + `nba2.v5.check`; every row sourced |
+| 93-4 | CR-V5-3: v3 `results.html` and v4 `settle.html` consume the verified union (11/15 three games + 11/16 day), settlement stamp visible | unclaimed | `nba2/v3/**`, `nba2/v4/**`, `data/v3/**`, `data/v4/**`, `site/results.html`, `site/settle.html`, `site/settlement.html` | every sealed game with a verified final is graded; nothing graded without one |
+| 93-5 | Full checker chain green (v1+v2+v3+v4+v5 tests, lint, v2/v3/v4/v5 checks, links, parity) | unclaimed | rebuilt outputs only | every checker green; build is a fixed point |
+| 93-6 | Requests to `arena/a8b7476a-nba2` logged (CR-V5-1, CR-V5-2, refresh-finals diagnosis note) | unclaimed | `COORDINATION.md` | logged, not edited |
+| 93-7 | PR → `main`, merge without approval, confirm Pages deploy by fetching the live pages, record PR link + merge result | unclaimed | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
