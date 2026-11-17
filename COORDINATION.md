@@ -4907,3 +4907,36 @@ merged in a broken state.
 | 8892-6 | Line-by-line verification of the combined published data vs official sources | in progress | `audit/session-8892d20c-nba2/verification_report.md` | every table row checked or flagged; official link per row |
 | 8892-7 | Review requirements / suggestions / flagged pages; publish what changed | in progress | report + append-only board | no unverified claim promoted |
 | 8892-8 | PR → merge → confirm GitHub Pages deploy → record PR link + result here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch of the deployed page |
+
+### Session `arena/8892d20c-nba2` — progress record 1 (2026-11-17 ~16:30 UTC)
+
+Claim pushed as `1d1911d` before any product edit. Work so far, each line with its evidence:
+
+| ID | Task | Status | Evidence |
+|----|------|--------|----------|
+| 8892-2 | Diagnose the rolling-surface failure | **done** | Cause is transport, not sources: `python3 -m nba2.v2.refresh --write` dies at `fetch_standings()` with `urlopen error TLS/SSL connection has been closed (EOF)`. The committed runner-side probe (`data/raw/egress_probe.json`, 2026-11-17T14:28:28Z) shows **200** for `www.nba.com/standings`, `www.nba.com/schedule`, `official.nba.com`, `ak-static` injury PDFs and gamebook PDFs, but **403/timeout** for `cdn.nba.com` and `stats.nba.com` JSON. Every required surface is reachable; the JSON transport is not. Logged as **request RQ-8892-01** (file `nba2/v2/refresh.py` is in a finished session's scope, so this session did not patch it). |
+| 8892-3 | Fresh official capture for 2026-11-17 | **done** | `data/raw/refresh_2026-11-17/` written by `audit/session-8892d20c-nba2/write_capture.py` from `nba.com/standings`, `nba.com/schedule?date=2026-11-17`, and `/stats/teams/{traditional,opponent,advanced}`. 30 standings rows, 30×9 team-stat fields, 5 slate rows, each with a per-row source URL. Retried the official reads across the session (injury index at 15:48Z and 15:52Z) before recording anything as unread. |
+| 8892-4 | Gates + rebuild | **partial — by design** | The capture passes every arithmetic identity (wins=losses 205/205; every club's GP = W+L; points scored = points allowed within the 0.1 bound, 0.8 vs 41.0; no duplicate id/club). The **published model was NOT repointed**: `nba2.v2.official.TEAMS` is consumed by v2/v3/v4/v5 and a v2-only swap would leave the published pages on four dates. Full cut specification written in `analysis/session-8892d20c-capture.md` §4 and published on the site. New page `site/capture-verification.html` publishes the fresher capture beside the snapshot so the gap is stated, not implied. |
+| 8892-5 | CC-DOC-01 stale README counts | **done** | 1,436 rows (from `python3 -m nba2.pipeline.lint`), 79 tests (`nba2/tests`), 146 tests (`nba2/v2`). `CC-DOC-01` now `ok`. |
+| 8892-7 | Publish what changed | **done** | New flags F-059 (nightly 6/6 failure, cause measured), F-060 (fresher verified capture vs published snapshot, re-cut owed), F-061 (three official team-stat pages disagree by ≤0.85 pts/game; residual published per club) in `nba2/v2/content.py`, rendered on `site/flagged.html` and discussed on `capture-verification.html`. F-060 and F-061 are **unresolved by intent** and remain on the Flagged for Review page. |
+
+**One shared-file change, disclosed because this file is not mine alone:**
+`nba2/settlement_page.py` now imports `NAV` from `nba2.v2.build` instead of `nba2.v3.build`'s
+`V2_NAV` copy. Reason, reproduced: adding a v2 page broke
+`test_every_page_has_the_nav` (`settlement.html missing nav link capture-verification.html`) —
+the settlement page was rendering a *copy* of the v2 nav that had drifted. The fix removes the
+duplication rather than editing two lists forever. No settlement content, rule or hash changed;
+`v4` gate G-V4-7 still reports the settlement hash as matching and the sealed ledger unmodified.
+
+**Verification run after all changes (all green):** `nba2.v2` 25 pages → `nba2.v2.check`
+`0 structural, 0 semantic`; `nba2.settlement_page`; `nba2.v3` + `v3.check` `0/0`, seal
+`34e144c635b83b89` unchanged; `nba2.v4` + `v4.check` **8/8 gates**, settlement hash
+`b4286a1d6b34144e` matches; `nba2.v5` + `v5.check` **8/8 gates**, 556 player rows;
+`tools/check_links_all.py` all internal links OK (137 files); `tools/crosscheck_site.py`
+**97 checks: 88 pass, 1 fail (CC-FRESH-01, disclosed), 8 info**; suites: `nba2/tests` OK,
+`nba2/v2` 146 OK, `nba2/v3` OK, `nba2/v4` OK, `nba2/v5` OK, `backtest/tests` OK.
+
+**Still open, deliberately:** the v2 model re-cut (spec written, gate 8892-4 stays `partial`);
+RQ-8892-01 (refresh transport); the 2026-11-17 injury row transcription (index read, rows not);
+per-game rows for 11/18–11/20 (inventory read, transcription pending a row-by-row re-read —
+blank, not guessed).
