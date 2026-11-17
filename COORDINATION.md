@@ -4905,3 +4905,14 @@ The brief's buildable items are already implemented and green in this tree (roll
 | Pages deploy run | pending |
 | Live URL | https://wingbangboozle1-lang.github.io/NBA2/ |
 
+
+### AA-6 claim — `arena/aa1d3c07-nba2` (2026-11-17 UTC, PR #115 checks)
+
+PR #115 failed two CI gates. Diagnosed locally, not from run logs (`gh run view --log-failed` returns EOF):
+
+- **`verify` (ci.yml)** — my change. `pages/*.html` went stale after the settlement re-run (same status text as `data/site.json`). Regenerated with the v1 builder and committed (cross-scope, logged here, same precedent as the earlier `data/site.json` regeneration).
+- **`parity` (publish-parity.yml)** — **pre-existing on `main`** (`5fcbd76` and `b3b8e8b` both fail). The v5 nav links committed to `site/` are not reproduced because the parity rebuild never runs `python -m nba2.v5`; `pages.yml` does. This was G7's promised wiring ("add `python -m nba2.v5` to the Pages and parity rebuild chains") and is not on `main`.
+
+| ID | Task | Status | Owner | File scope | Verification rule |
+|---|---|---|---|---|---|
+| AA-6 | Add `python -m nba2.v5` (last, after v4) to the parity rebuild step, same as pages.yml | in progress | `arena/aa1d3c07-nba2` | `.github/workflows/publish-parity.yml` only | locally: the parity rebuild chain incl. v5 leaves `git diff --cached --stat -- site data/v2 data/v4` empty |
