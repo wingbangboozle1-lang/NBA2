@@ -58,6 +58,11 @@ UA = {"User-Agent": "NBA2-research-desk/1.0 (repository ingestion; contact: repo
       "Accept": "*/*", "Referer": "https://official.nba.com/"}
 
 FINALS_SOURCES = [
+    # The server-rendered games page, first on purpose. Measured from a GitHub-hosted runner
+    # on 2026-11-17 (data/raw/page_fixtures/transport_probe.json): www.nba.com answers 200,
+    # cdn.nba.com answers 403 and stats.nba.com times out — with every header set tried.
+    # Trying the blocked hosts first only spent 25 seconds per night before failing.
+    ("https://www.nba.com/games?date={date}", "official_page"),
     # official NBA CDN live scoreboard (today's slate, ET)
     ("https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json", "cdn_live"),
     # league stats API scoreboard (any date) — official nba.com endpoints
@@ -187,6 +192,60 @@ def final_games_scoreboardv2(payload: dict, date: str) -> list[dict]:
     return out
 
 
+NEXT_DATA_RE = re.compile(
+    r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
+
+
+def final_games_page(raw: bytes, date: str) -> list[dict]:
+    """FINAL games from the league's own rendered games page for that date.
+
+    Same record shape as the JSON transports, plus quarter scores where the page prints
+    them and they add up — the brief asks for a quarter row per game, and this is the
+    only reachable official source measured to carry one.
+    """
+    match = NEXT_DATA_RE.search(raw.decode("utf-8", "replace"))
+    if not match:
+        raise ValueError("no __NEXT_DATA__ payload on the official games page")
+    doc = json.loads(match.group(1))
+    props = doc.get("props", {}).get("pageProps", {}) or {}
+    selected = props.get("selectedDate")
+    if selected and selected != date:
+        raise ValueError(f"the games page answered selectedDate {selected}, not {date}")
+    out = []
+    for module in (props.get("gameCardFeed") or {}).get("modules", []) or []:
+        for card in module.get("cards", []) or []:
+            data = card.get("cardData")
+            if card.get("cardType") != "game" or not isinstance(data, dict):
+                continue
+            if (data.get("seasonType") or "").strip() != "Regular Season":
+                continue
+            if str(data.get("gameStatus")) != "3":
+                continue
+            home, away = data.get("homeTeam") or {}, data.get("awayTeam") or {}
+            hp, ap = home.get("score"), away.get("score")
+            gid = data.get("gameId")
+            if not (isinstance(hp, int) and isinstance(ap, int) and isinstance(gid, str)
+                    and gid.isdigit() and len(gid) == 10 and gid.startswith("002")):
+                continue
+            rec = {"game_id": gid, "date": date,
+                   "home_team": home.get("teamTricode"), "away_team": away.get("teamTricode"),
+                   "home_pts": hp, "away_pts": ap, "status": "final",
+                   "final_source_url": data.get("shareUrl")}
+            for side, team in (("home", home), ("away", away)):
+                periods = team.get("periods") or []
+                if not periods or not all(isinstance(q, dict) and "score" in q for q in periods):
+                    continue
+                row = [q["score"] for q in sorted(periods, key=lambda q: q.get("period", 0))]
+                if not all(isinstance(v, int) for v in row):
+                    continue
+                if sum(row) != (hp if side == "home" else ap):
+                    continue          # a quarter row that does not add up is not published
+                rec[f"{side}_q"] = row
+                rec["ot_periods"] = max(0, len(row) - 4)
+            out.append(rec)
+    return out
+
+
 def fetch_finals(date: str, expected_game_ids: list[str]) -> tuple[dict | None, str, str]:
     """Try each official endpoint.
 
@@ -201,16 +260,20 @@ def fetch_finals(date: str, expected_game_ids: list[str]) -> tuple[dict | None, 
     for tmpl, kind in FINALS_SOURCES:
         url = tmpl.format(date=date)
         try:
-            payload = json.loads(_http_get(url).decode("utf-8"))
+            raw = _http_get(url)
+            if kind == "official_page":
+                recs = final_games_page(raw, date)
+            else:
+                payload = json.loads(raw.decode("utf-8"))
+                recs = (final_games_cdn(payload, date) if kind == "cdn_live"
+                        else final_games_scoreboardv2(payload, date))
+        except (ValueError, json.JSONDecodeError) as e:
+            print(f"  [finals {date}] schema changed in {kind} ({e})")
+            schema_broken += 1
+            continue
         except Exception as e:  # noqa: BLE001 - fail-closed: report and try next endpoint
             print(f"  [finals {date}] endpoint unreachable: {kind} ({e})")
             unreachable += 1
-            continue
-        try:
-            recs = final_games_cdn(payload, date) if kind == "cdn_live" else final_games_scoreboardv2(payload, date)
-        except (KeyError, TypeError) as e:
-            print(f"  [finals {date}] schema changed in {kind} ({e})")
-            schema_broken += 1
             continue
         recs = [r for r in recs if not expected_game_ids or r["game_id"] in expected_game_ids]
         if not recs:
@@ -218,6 +281,8 @@ def fetch_finals(date: str, expected_game_ids: list[str]) -> tuple[dict | None, 
             continue
         for r in recs:
             r["source"] = url
+            if kind == "official_page" and r.get("final_source_url"):
+                r["source"] = r["final_source_url"]
         missing = [gid for gid in expected_game_ids if gid not in {r["game_id"] for r in recs}]
         snap = {"source": url, "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
                 "date": date, "records": recs, "expected_window_games": len(expected_game_ids),
