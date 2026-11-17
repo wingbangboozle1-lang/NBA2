@@ -5489,3 +5489,137 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | ACF-5 | End-to-end proof: refresh runs green on a real GitHub runner (capture + publish gates) | pending | run logs linked from the completion record | `refresh_verdict.json` shows `rolling=success`; publish job commits; no gate weakened |
 | ACF-6 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result; disposition of stale PRs #70/#72/#78/#80/#82/#98/#112 logged (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | ACF-7 | RQ-8892-02 model re-cut to the 2026-11-17 capture (7 ordered steps, §4 spec) — conditional on PR #115 merging/closing first | pending | `nba2/v2/official.py`, `nba2/v2/report.py`, v3/v4/v5 repoint, regenerated artefacts | every checker green; `CC-FRESH-01` turns pass; PF/PA re-basing disclosed on the page |
+
+---
+
+## Session `arena/acf5db08-nba2` — completion record (2026-11-17 UTC)
+
+**Claim:** RQ-8892-01 (repair the rolling refresh transport) + RQ-8892-01b (finals transport) +
+integration. Claimed and pushed before any work, at `COORDINATION.md` line ~5231.
+
+**PR #121** (`arena/acf5db08-nba2` → `main`): https://github.com/wingbangboozle1-lang/NBA2/pull/121
+— merged as `bd7bb82e` at 18:16:41Z (`--merge`, not `--auto`).
+
+**Checks on the merged head:** `Verify data, model and site` success · `Verify v2 model and site`
+success · `Verify the published tree (zero tolerance for drift)` success · `Publish GitHub Pages`
+success · `pages build and deployment` success. Locally, 164 `nba2/v2` tests + 88 `nba2/tests`
+tests pass, and the full rebuild chain (`build_site_data → build_site → backtest → v2 →
+settlement_page → v3 → v4 → v5 → v6`) reproduces the committed `site/` tree byte for byte.
+
+**Live check (fetched after the deploy):** https://wingbangboozle1-lang.github.io/NBA2/methodology.html
+now prints the recounted test totals (167 v2 / 88 pipeline), which is the page this branch
+regenerates. The bare root still serves the repository-root tree and `site/*.html` 404s
+(**FLAG-PAGES-01 / F-062**, an owner decision, unchanged by this session; it is not a regression).
+
+### What was wrong — measured, not inferred
+
+The nightly job had failed six consecutive runs and **no one had read the runner's error**: job
+logs and artifacts are served from hosts this review loop cannot reach, so the cause in
+circulation ("stats.nba.com is blocked") was an inference from a development sandbox where all
+nba.com egress is TLS-reset. This session measured it from a runner.
+
+`.github/workflows/capture-fixtures.yml` (new) fetches every page the refresh needs **from a
+GitHub-hosted runner** and commits the bytes gzip-compressed with the SHA-256 and byte length of
+the original response, plus `manifest.json` (URL, status, bytes, ms, hash per page) and
+`transport_probe.json` (each endpoint under two header sets).
+Evidence run: https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44144007879
+
+| endpoint | repo headers (Chrome UA + `x-nba-stats-origin`/token) | plain UA |
+|---|---|---|
+| `stats.nba.com/stats/leaguestandingsv3` | timeout 20.1 s | timeout 20.1 s |
+| `stats.nba.com/stats/leaguedashteamstats` | timeout 20.1 s | timeout 20.1 s |
+| `stats.nba.com/stats/scoreboardv2` | timeout 20.1 s | timeout 20.1 s |
+| `cdn.nba.com/static/json/liveData/scoreboard/...` | HTTP 403 | HTTP 403 |
+| `www.nba.com/standings` | **HTTP 403** | **HTTP 200, 224 760 B** |
+
+Two findings: (1) the JSON hosts are unusable from a runner with *every* header set; (2) **the
+repository's own User-Agent was blocking the pages that were reachable** — the Chrome-mimicking UA
+measured 403 on `www.nba.com/standings` in the same run where a plain UA measured 200.
+
+What the pages actually contain (read from the committed bytes):
+* `www.nba.com/games?date=YYYY-MM-DD` is **server-rendered**: its `__NEXT_DATA__` payload carries
+  every game of that date — 10-digit id, tricodes, final score, **quarter scores**, status, tip
+  time, a per-game official link, and each club's season W/L beside the game.
+* `www.nba.com/standings`, `/schedule?date=` and `/teams` are **shells** (identical bytes per date;
+  `pageProps` holds only `layout`). The standings page *does* print, server-side, its navigation
+  team list: 30 clubs with tricode, club name, official team id and **division**.
+
+### What changed
+
+* `nba2/v2/refresh.py` — transport headers now use the measured UA verbatim, with a 0.6 s pause
+  between requests (bursting earns a 403 that is indistinguishable from a blocked host).
+  Slate + finals parse the `games?date=` payload; finals now carry **quarter scores** (the brief
+  asks for them; the old JSON path never captured them) and a quarter row that does not sum to the
+  printed final raises. Standings are **derived** from official regular-season finals (60-day scan,
+  `seasonType == "Regular Season"`) + the club/division list read from nba.com/standings, then
+  **cross-checked club by club against the W/L the league prints beside that club's most recent
+  game**; a mismatch raises. Injury: newest release chosen by the timestamp in the filename (the
+  index lists oldest-first, so `links[0]` returned `…_01_00AM.pdf` where the newest was
+  `…_12_45PM.pdf` — a banner up to twelve hours stale). Team stats: recorded `unavailable` with the
+  measured reason; **no row invented**. `gate_slate` accepts `/games?date=` as well as
+  `/schedule?date=` so a row cites the page it was actually read from; the five gates are otherwise
+  unchanged and still fail closed.
+* `nba2/pipeline/refresh.py` — `https://www.nba.com/games?date={date}` added as the **first**
+  finals source (it answers in ~0.3 s, so a run no longer spends 25 s per date on a timeout). JSON
+  endpoints remain as later fallbacks; `cmd_finals` still returns 3 only when *every* source fails
+  at the network level, 4 on a schema change.
+* Tests: `nba2/v2/test_refresh_pages.py` (18) and `nba2/tests/test_finals_pages.py` (9) parse the
+  committed fixture bytes and re-verify the manifest hashes; synthetic data only for cases the real
+  season cannot produce, and labelled where used. Exactly **one** line of another session's
+  `nba2/v2/test_refresh_gates.py` changed: it mocked `http_json` against the dead transport and now
+  mocks the new one, asserting the same rule.
+
+### Verification performed on a runner (the environment the schedule uses)
+
+`python3 -m nba2.v2.refresh --check-only` → **exit 0**, all five gates PASS:
+51 finals across 7 dates · 30 clubs with **205 wins / 205 losses** · injury revision
+2026-11-17 12:45 PM ET · 30 slate games / 30 unique ids / 4-of-4 dates fetched · every row sourced.
+The 205/205 balance independently matches the league total recorded in
+`analysis/session-8892d20c-capture.md`, reached by a different route.
+
+`python3 -m nba2.pipeline.refresh --finals 2026-11-16` → **exit 0**: 8 sealed-window games settled
+from `https://www.nba.com/games?date=2026-11-16`, each with a quarter row
+(e.g. `0022600245 ORL 115 @ BOS 105 q [20,30,25,40] [17,24,36,28]`).
+
+Full write-up with the source table: `analysis/session-acf5db08-refresh-transport.md`.
+
+### Sources (all fetched in-session or reproduced by running the committed code)
+
+`https://www.nba.com/standings` · `https://www.nba.com/games?date=YYYY-MM-DD` ·
+`https://www.nba.com/schedule?date=YYYY-MM-DD` · `https://www.nba.com/teams` ·
+`https://www.nba.com/stats/teams/{traditional,opponent,advanced}` ·
+`https://official.nba.com/nba-injury-report-2026-27-season/` — each with its bytes, status and
+SHA-256 in `data/raw/page_fixtures/manifest.json`, plus `data/raw/page_fixtures/transport_probe.json`
+and `data/raw/egress_probe.json` (earlier runner probe, 2026-11-17T14:28:28Z).
+
+### Flagged — carried forward, none of it blocks anything
+
+1. **The three official team-stat pages cannot be read from a runner.** They are client-rendered
+   from stats.nba.com. The refresh records them `unavailable`; no row is invented. This means the
+   brief's "re-read the three team-stat pages and re-cut the model inputs" can never run on the
+   schedule — only through a platform page-fetch, as `data/raw/refresh_2026-11-17` was.
+   **Owner decision needed: accept a page-fetch-only surface, or drop it from the schedule.**
+2. **RQ-8892-02 (model re-cut to the 2026-11-17 capture) is NOT done by this session.** It needs
+   `nba2/v2/official.py`, `nba2/v2/report.py` and the v3/v4/v5 repoint (other sessions' files) and
+   the seven ordered steps in `analysis/session-8892d20c-capture.md` §4. Repairing the transport is
+   what makes that re-cut possible; it is not a substitute for it.
+3. **Standings `conf` column is blank by choice** — the league prints divisions, not conferences, on
+   any page a runner can read; filling it would be an inference.
+4. **Slate `arena` column is blank** — `games?date=` does not print it and no other reachable
+   official source was measured to.
+5. **`site/*.html` is not what Pages publishes** (FLAG-PAGES-01/F-062, pre-existing): the live site
+   serves the repository root. This branch regenerated `site/methodology.html` *and* the root
+   `methodology.html` (both verified as rebuild-equal), so the recounted test totals are live.
+6. **The fixture workflow commits only on `workflow_dispatch`.** Its bot commits re-trigger this
+   repository's `pull_request` workflows, and runs triggered by a bot commit sit at
+   `action_required` awaiting an approval. Dispatch it when fresh evidence is wanted.
+
+### Stale-PR disposition (logged, not silently closed — the owner's call either way)
+
+* **#80** (touches `nba2/v2/refresh.py`): commented as superseded by #121, which re-implements its
+  newest-injury-release idea (`newest_release_from_index`) and repairs the transport on top.
+  Suggested: close, or re-land `nba2/v2/test_refresh_gate_audit.py` standalone.
+* **#112** (huge, parity+backtest failing since 2026-11-16, now conflicting): commented with status
+  + suggested close-and-re-land-narrowly. Its refresh-transport item is superseded by #121.
+* **#70 / #72 / #78 / #82 / #98**: untouched by this session — they touch files outside this claim
+  and their disposition belongs to their owners. Noted here only so the list is not silent.
