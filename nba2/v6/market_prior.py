@@ -78,6 +78,28 @@ def weight(l_model: float | None, l_market: float | None) -> float | None:
     return s_market / (s_model + s_market)
 
 
+def settlement_stats() -> dict:
+    """The head-line settlement figures, read straight off the settled ledger."""
+    s = maybe_load(SETTLED_ALL) or {}
+    st = s.get("settlement") or {}
+    return {
+        "n_ledgers": len(s.get("ledgers") or []),
+        "n_sealed": st.get("n_sealed"),
+        "n_graded": st.get("n_graded"),
+        "n_ungraded": st.get("n_ungraded"),
+        "n_distinct_games_graded": st.get("n_distinct_games_graded"),
+        "hits_distinct": st.get("hits_distinct"),
+        "distinct_winner_hit_rate": st.get("distinct_winner_hit_rate"),
+        "distinct_log_loss_model": st.get("distinct_log_loss_model"),
+        "distinct_log_loss_coin": st.get("distinct_log_loss_coin"),
+        "p_at_least_observed_hits": st.get("p_at_least_observed_hits"),
+        "margin_mae": st.get("distinct_margin_mae", st.get("margin_mae")),
+        "total_mae": st.get("distinct_total_mae", st.get("total_mae")),
+        "latest_graded_game_date": st.get("latest_graded_game_date"),
+        "settled_at_utc": st.get("settled_at_utc"),
+    }
+
+
 def measurements() -> list[dict]:
     """Every out-of-sample log-loss this repository has actually measured."""
     out = []

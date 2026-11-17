@@ -12,6 +12,8 @@ import unittest
 from pathlib import Path
 
 from nba2.v6 import check as CH
+from nba2.v6 import flags as FL
+from nba2.v6.flags import FLAGS
 from nba2.v6 import inventory as INV
 from nba2.v6 import market_prior as MP
 from nba2.v6 import nav as NAV
@@ -306,3 +308,63 @@ class TestPublishedPages(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestFlags(unittest.TestCase):
+    """The flag prose is computed from data/ so that it cannot go stale."""
+
+    def setUp(self):
+        from nba2.v6 import flags as FL
+        self.by_id = {f[0]: f for f in FL.FLAGS}
+        from nba2.v6 import inventory as INV
+        from nba2.v6 import player_coverage as PC
+        from nba2.v6 import market_prior as MP
+        self.rel = INV.injury_releases()
+        self.pc = PC.build()
+        self.mp = MP.build()
+        self.st = MP.settlement_stats()
+
+    def test_every_flag_id_is_unique_and_well_formed(self):
+        ids = [f[0] for f in FLAGS]
+        self.assertEqual(len(ids), len(set(ids)))
+        for fid in ids:
+            self.assertRegex(fid, r"^F-F5-\d\d$", msg=fid)
+
+    def test_the_injury_archive_flag_counts_come_from_the_inventory(self):
+        text = self.by_id["F-F5-03"][3]
+        self.assertIn(str(len(self.rel)), text)
+        self.assertIn(str(sum(1 for r in self.rel if not r.get("bytes_stored"))), text)
+
+    def test_the_player_coverage_flag_counts_come_from_the_join(self):
+        text = self.by_id["F-F5-05"][3]
+        self.assertIn(str(self.pc["n_report_rows"]), text)
+        self.assertIn(str(self.pc["n_matched"]), text)
+        self.assertIn(f"{self.pc['coverage']:.1%}", text)
+
+    def test_the_coin_flip_flag_counts_come_from_the_settled_ledger(self):
+        text = self.by_id["F-F5-08"][3]
+        self.assertIn(str(self.st["n_distinct_games_graded"]), text)
+        self.assertIn(str(self.mp["model_log_loss"]), text)
+        self.assertIn(str(self.mp["baseline_l0"]), text)
+
+    def test_the_market_prior_flag_quotes_every_measured_log_loss(self):
+        text = self.by_id["F-F5-04"][4]
+        for m in self.mp["measurements"]:
+            if m["log_loss"] is None:
+                continue
+            self.assertIn(str(m["log_loss"]), text, msg=m["id"])
+
+    def test_every_flag_names_a_place_a_reviewer_can_check_it(self):
+        for fid, _sev, url, wrong, instead, where in FLAGS:
+            self.assertTrue(wrong.strip(), msg=fid)
+            self.assertTrue(instead.strip(), msg=fid)
+            self.assertTrue(where.strip(), msg=fid)
+            self.assertTrue(url.startswith("https://"), msg=fid)
+
+    def test_no_flag_hardcodes_a_coverage_number_that_the_data_contradicts(self):
+        """A transcribed count would silently go wrong the next time data/ moves."""
+        stale = {"83 players", "26.5%", "22 of the 83", "0.6088 over 14",
+                 "twelve of the sixteen", "thirteen of the seventeen"}
+        for fid, _sev, _url, wrong, instead, _where in FLAGS:
+            for s in stale:
+                self.assertNotIn(s, (wrong + instead).lower(), msg=f"{fid}: {s!r}")

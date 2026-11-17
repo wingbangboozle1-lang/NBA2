@@ -466,9 +466,9 @@ committed**, one row at a time, with the official document named on every row. S
 
 | Page | What it measures |
 |---|---|
-| [Injury PDF archive](site/injury-archive.html) | one row per official injury release this repository knows about: revision stamp, retrieval time, transcript, and whether the PDF bytes are archived — **4 of 17** |
+| [Injury PDF archive](site/injury-archive.html) | one row per official injury release this repository knows about (18): revision stamp, retrieval time, transcript, and whether the PDF bytes are archived — **4 of 18** |
 | [Result-feed coverage](site/results-coverage.html) | one row per game date (scheduled / finals committed / graded) and one row per game: date, teams, final, quarter scores. **31 of 52 games** have an official final; **22** are settled |
-| [Player-log coverage](site/player-coverage.html) | per-player game logs (MIN, PTS, REB, AST, opponent) for the players named on an official injury report — **22 of 83** (26.5%) |
+| [Player-log coverage](site/player-coverage.html) | per-player game logs (MIN, PTS, REB, AST, opponent) for the players named on an official injury report. The newest official report (2026-11-17 11:00 AM ET) names **116** players and the captured log window ends 11-15, so only **12** join (10.3%) |
 | [Market-anchored prior](site/market-prior.html) | the blend rule, pre-registered, with both measured model log-losses and a sensitivity grid; the weight is **blank** because no closing line has ever been captured |
 | [Official endpoints](site/endpoints.html) | which official endpoints a runner can reach, measured and timestamped — the evidence behind every "we could not read that" |
 | [v6 verification](site/v6-verify.html) | 13 gates, each a count over committed rows |
@@ -482,6 +482,10 @@ python -m nba2.v6                       # measure -> gate -> render -> group the
 python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'   # 40 tests
 python -m nba2.v6.injury_backfill --dry-run   # the 17-release archive inventory
 ```
+
+Coverage moves as other sessions commit new captures, so every count on those pages — and
+every count in the flags below — is recomputed from `data/` at build time rather than
+transcribed into the prose.
 
 ### The sandbox caveat, stated once
 
@@ -507,9 +511,9 @@ as soon as the market shows any skill, because on this sample the model has show
 |---|---|
 | F-F5-01 | Seven PRs from earlier sessions were still open, including `#112`, a 176-file "final integration" whose required checks fail. Left open and flagged rather than merged. |
 | F-F5-02 | The nightly's *automated* finals fetch reads two endpoints and both are dead (HTTP 403 and a timeout). The 11/16 finals were captured by hand in PR #115, so that date is now complete — but the pipeline cannot repeat it unattended. |
-| F-F5-03 | 13 of 17 official injury reports are not archived as PDF bytes. The ingester that closes the gap exists and runs from a runner with CDN access. |
+| F-F5-03 | 14 of the 18 official injury reports are not archived as PDF bytes. The ingester that closes the gap exists and runs from a runner with CDN access. |
 | F-F5-04 | The market-anchored prior cannot be computed: no closing line, so no market log-loss, so no weight. |
-| F-F5-05 | Player logs cover 26.5% of the injury report. The 11/16+ gamebooks were never transcribed. |
+| F-F5-05 | Player logs cover 10.3% of the newest injury report (12 of 116 players) because the captured log window ends 2026-11-15 while the report is from 11-17. The gap is in the logs, not the join. |
 | F-F5-06 | Two committed result feeds store overtime differently (inline vs a separate `ot_quarters`); summing one field alone made NYK@TOR look unreconciled. Both are correct. |
 | F-F5-07 | This session read no live official source. |
 | F-F5-08 | The model is worse than a coin flip on the settled sample. See above. |

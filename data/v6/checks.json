@@ -10,9 +10,9 @@
    "id": "G-V6-1",
    "name": "every injury release in the inventory carries a well-formed official CDN URL",
    "ok": true,
-   "tested": 17,
-   "passed": 17,
-   "detail": "17 releases, 0 malformed",
+   "tested": 18,
+   "passed": 18,
+   "detail": "18 releases, 0 malformed",
    "failures": [],
    "hard": true
   },
@@ -22,7 +22,7 @@
    "ok": true,
    "tested": 4,
    "passed": 4,
-   "detail": "4 PDFs on disk, 17 in the inventory",
+   "detail": "4 PDFs on disk, 18 in the inventory",
    "failures": [],
    "hard": true
   },
@@ -40,9 +40,9 @@
    "id": "G-V6-4",
    "name": "every release's revision stamp parses out of its official filename",
    "ok": true,
-   "tested": 17,
-   "passed": 17,
-   "detail": "17 releases, 0 unparseable stamps",
+   "tested": 18,
+   "passed": 18,
+   "detail": "18 releases, 0 unparseable stamps",
    "failures": [],
    "hard": true
   },
@@ -50,9 +50,9 @@
    "id": "G-V6-5",
    "name": "result-feed coverage is arithmetically consistent per date",
    "ok": true,
-   "tested": 7,
-   "passed": 7,
-   "detail": "7 dates, 52 games",
+   "tested": 8,
+   "passed": 8,
+   "detail": "8 dates, 61 games",
    "failures": [],
    "hard": true
   },
@@ -90,9 +90,9 @@
    "id": "G-V6-9",
    "name": "the injury-report / player-log join is arithmetically consistent",
    "ok": true,
-   "tested": 83,
-   "passed": 83,
-   "detail": "22/83 named players have a committed game log (0.2651)",
+   "tested": 116,
+   "passed": 116,
+   "detail": "12/116 named players have a committed game log (0.1034)",
    "failures": [],
    "hard": true
   },
@@ -100,9 +100,9 @@
    "id": "G-V6-10",
    "name": "every injury-report row in the join carries the official PDF it was read from",
    "ok": true,
-   "tested": 83,
-   "passed": 83,
-   "detail": "83 report rows, 0 unsourced",
+   "tested": 116,
+   "passed": 116,
+   "detail": "116 report rows, 0 unsourced",
    "failures": [],
    "hard": true
   },
@@ -130,21 +130,21 @@
    "id": "G-V6-13",
    "name": "every v6 table row carries an official source link, and every blank carries a reason",
    "ok": true,
-   "tested": 220,
-   "passed": 220,
-   "detail": "220/220 rows clean; 1 table(s) explicitly marked data-derived (arithmetic on a stated rule, captioned as such)",
+   "tested": 256,
+   "passed": 256,
+   "detail": "256/256 rows clean; 1 table(s) explicitly marked data-derived (arithmetic on a stated rule, captioned as such)",
    "failures": [],
    "hard": true
   }
  ],
  "counts": {
-  "injury_releases": 17,
+  "injury_releases": 18,
   "injury_releases_with_bytes": 4,
-  "injury_releases_with_transcript": 7,
+  "injury_releases_with_transcript": 8,
   "games_known": 52,
   "games_with_final": 31,
   "games_graded": 22,
-  "report_rows": 83,
-  "players_matched": 22
+  "report_rows": 116,
+  "players_matched": 12
  }
 }

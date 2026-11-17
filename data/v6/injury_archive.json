@@ -1,7 +1,7 @@
 {
  "schema": "nba2.v6.injury-archive.v1",
  "session": "arena/f5ac4e74-nba2",
- "n_releases": 17,
+ "n_releases": 18,
  "releases": [
   {
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
@@ -232,7 +232,6 @@
    "date": "2026-11-15",
    "stamp_et": "06:00 AM ET",
    "cited_in": [
-    "data/v3/verification.json",
     "data/v6/injury_archive.json"
    ],
    "transcripts": [],
@@ -320,11 +319,8 @@
     "data/v2/content.json",
     "data/v4/injury/binary_manifest.json",
     "data/v4/injury/releases.json",
-    "data/v4/model.json",
-    "data/v5/injury_join.json",
     "data/v6/endpoints.json",
-    "data/v6/injury_archive.json",
-    "data/v6/player_coverage.json"
+    "data/v6/injury_archive.json"
    ],
    "transcripts": [
     "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
@@ -469,6 +465,41 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
+   "bytes_stored": false,
+   "pdf_path": null,
+   "pdf_bytes": null,
+   "pdf_sha256": null,
+   "text_extracted_path": null,
+   "manifest_outcome": null,
+   "manifest_detail": null,
+   "text_sha256_matches_extracted": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
+   "filename": "Injury-Report_2026-11-17_11_00AM.pdf",
+   "date": "2026-11-17",
+   "stamp_et": "11:00 AM ET",
+   "cited_in": [
+    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
+    "data/v3/verification.json",
+    "data/v4/injury/releases.json",
+    "data/v4/model.json",
+    "data/v5/injury_join.json",
+    "data/v6/injury_archive.json",
+    "data/v6/player_coverage.json"
+   ],
+   "transcripts": [
+    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
+    "data/v4/injury/releases.json"
+   ],
+   "transcript_rows": 57,
+   "text_sha256": "25d666bfbfca8ea3a0ef092e390a66e83449a36bbd72d17f9250e641e805932d",
+   "retrieved_at_utc": "2026-11-17T16:41:00Z",
+   "index_checked_utc": "2026-11-17T16:39:00Z",
+   "revision_time_et": "11/17/26 11:00 AM",
+   "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
    "bytes_stored": false,
    "pdf_path": null,
    "pdf_bytes": null,

@@ -24,6 +24,82 @@ INDEX_URL = "https://official.nba.com/nba-injury-report-2026-27-season/"
 SCHEDULE_URL = "https://www.nba.com/schedule?date=2026-11-16"
 GAMEBOOK_1116 = "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf"
 
+
+def _inj_wrong() -> str:
+    """Computed, not transcribed: the inventory changes every time a release lands."""
+    from . import inventory as INV
+    rel = INV.injury_releases()
+    n = len(rel)
+    missing = [r for r in rel if not r.get("bytes_stored")]
+    newest = max((r for r in rel if r.get("stamp_et")), key=lambda r: r["stamp_et"],
+                 default=None)
+    when = f" (the newest is {newest['stamp_et']})" if newest else ""
+    return (f"<b>{len(missing)}</b> of the <b>{n}</b> official injury reports this "
+            f"repository knows about{when} are not archived as PDF bytes. "
+            f"{n - len(missing)} are; the rest exist only as a transcript, or as a "
+            f"citation inside another document, or as a URL in a capture.")
+
+
+def _players_wrong() -> str:
+    from . import player_coverage as PC
+    d = PC.build()
+    return (f"Per-player game logs cover {d['n_matched']} of the {d['n_report_rows']} "
+            f"players named on the newest official injury report "
+            f"({d['coverage']:.1%}), and only {d['n_matched_with_minutes']} of those "
+            f"actually played in the captured window "
+            f"({d['log_window']}). The gamebooks after that window were never "
+            f"transcribed (<code>F-V4-02</code>), so a newer report joins against an "
+            f"older log set and the fraction falls — the gap is in the logs, not the join.")
+
+
+def _prior_wrong() -> str:
+    return ("The market-anchored prior (brief item 15) cannot be computed: no closing line "
+            "has ever been captured, so the market's out-of-sample log-loss is unmeasured, "
+            "so the blend weight is undefined. This is R-043 / R-101, carried from the "
+            "first session as <code>F-V4-04</code>.")
+
+
+def _prior_instead() -> str:
+    from . import market_prior as MP
+    d = MP.build()
+    parts = []
+    for m in d["measurements"]:
+        if m["log_loss"] is None:
+            continue
+        verdict = "worse than" if m["log_loss"] > m["log_loss_baseline"] else "better than"
+        parts.append(f"{m['log_loss']} over {m['n_games']} {m['window']} games "
+                     f"({verdict} the {m['log_loss_baseline']} baseline)")
+    return (f"The {link('market-prior.html', 'market-prior page')} publishes the "
+            f"pre-registered rule, both measured model log-losses ({'; '.join(parts)}), "
+            "and a sensitivity grid over hypothetical market log-losses. The weight itself "
+            "is a blank with this reason — not 0, not 0.5, not a guess.")
+
+
+def _coinflip_wrong() -> str:
+    from . import market_prior as MP
+    d = MP.build()
+    st = MP.settlement_stats()
+    return (f"On the settled sample ({st['n_distinct_games_graded']} distinct graded games), "
+            f"the model's out-of-sample log-loss is <b>{d['model_log_loss']}</b> against a "
+            f"coin-flip baseline of <b>{d['baseline_l0']}</b> — <b>worse than a coin flip</b>. "
+            f"The winner hit rate is still {st['hits_distinct']}/{st['n_distinct_games_graded']} "
+            f"({st['distinct_winner_hit_rate']:.3f}), so the damage is concentrated in "
+            f"confident misses, not in picking sides. The Poisson-binomial tail is "
+            f"p = {st['p_at_least_observed_hits']:.3f}, i.e. inside the noise band.")
+
+
+def _coinflip_instead() -> str:
+    from . import market_prior as MP
+    d = MP.build()
+    st = MP.settlement_stats()
+    return (f"Published, not suppressed. The build does not fail on it — a research desk that "
+            f"gates its own bad news stops being one — and the consequence is stated plainly on "
+            f"{link('market-prior.html', 'the market-prior page')}: the pre-registered rule now "
+            f"gives the market the entire weight as soon as the market shows any skill, because "
+            f"the model has shown none on this sample. {st['n_distinct_games_graded']} games is "
+            f"a small sample and it is not staked; the bet surface still publishes zero rows.")
+
+
 # (id, severity, official document, what is wrong, what is published instead, where to check)
 FLAGS = [
     ("F-F5-01", "info", "https://github.com/wingbangboozle1-lang/NBA2/pull/112",
@@ -52,10 +128,7 @@ FLAGS = [
      "untested, because a parser that returns a wrong official score is worse than a gap "
      "that says so.",
      "data/raw/egress_probe.json"),
-    ("F-F5-03", "gap", INDEX_URL,
-     "Twelve of the sixteen official injury reports this repository knows about are not "
-     "archived as PDF bytes. Four are (three from 2026-11-16 and one from 2026-11-17); the "
-     "rest exist only as a transcript or as a citation inside another document.",
+    ("F-F5-03", "gap", INDEX_URL, _inj_wrong(),
      "The full inventory is published with one row per release, its revision stamp, its "
      "retrieval time and whether bytes exist: "
      f"{link('injury-archive.html', 'the injury PDF archive')}. The ingester that closes the "
@@ -63,20 +136,10 @@ FLAGS = [
      "the CDN answers; a release the league has since withdrawn will be recorded as "
      "unreachable with its HTTP status, never backfilled with a substitute.",
      "data/v6/injury_archive.json"),
-    ("F-F5-04", "gap", "https://www.nba.com/games",
-     "The market-anchored prior (brief item 15) cannot be computed: no closing line has ever "
-     "been captured, so the market's out-of-sample log-loss is unmeasured, so the blend "
-     "weight is undefined. This is R-043 / R-101, carried from the first session as "
-     "<code>F-V4-04</code>.",
-     f"The {link('market-prior.html', 'market-prior page')} publishes the pre-registered "
-     "rule, both measured model log-losses (0.6234 over 167 walk-forward games; 0.6088 over "
-     "14 settled sealed games), and a sensitivity grid over hypothetical market log-losses. "
-     "The weight itself is a blank with this reason — not 0, not 0.5, not a guess.",
+    ("F-F5-04", "gap", "https://www.nba.com/games", _prior_wrong(),
+     _prior_instead(),
      "data/v6/market_prior.json"),
-    ("F-F5-05", "gap", GAMEBOOK_1116,
-     "Per-player game logs cover 22 of the 83 players named on the newest official injury "
-     "report (26.5%), and only 18 of those actually played in the captured window. The "
-     "gamebooks for 2026-11-16 and later were never transcribed (<code>F-V4-02</code>).",
+    ("F-F5-05", "gap", GAMEBOOK_1116, _players_wrong(),
      f"Coverage is measured and published, player by player, on "
      f"{link('player-coverage.html', 'the player-log coverage page')}: matched players with "
      "their minutes, points, rebounds, assists and opponent straight from the official "
@@ -92,18 +155,7 @@ FLAGS = [
      "Both are correct and both are kept. The gate normalises them before checking, and the "
      "per-game table prints which schema each row came from. No score was altered.",
      "nba2/v6/results_coverage.py"),
-    ("F-F5-08", "blocker", "https://www.nba.com/games",
-     "With the 2026-11-16 finals settled (22 distinct graded games, up from 14), the "
-     "model's out-of-sample log-loss is <b>0.7141</b> against a coin-flip baseline of "
-     "<b>0.6931</b> — <b>worse than a coin flip</b>. The winner hit rate is still 16/22 "
-     "(0.727), so the damage is concentrated in confident misses, not in picking sides. "
-     "The Poisson-binomial tail is p = 0.078, i.e. inside the noise band.",
-     "Published, not suppressed. The build does not fail on it — a research desk that "
-     "gates its own bad news stops being one — and the consequence is stated plainly on "
-     f"{link('market-prior.html', 'the market-prior page')}: the pre-registered rule now "
-     "gives the market the entire weight as soon as the market shows any skill, because "
-     "the model has shown none on this sample. 22 games is a small sample and it is not "
-     "staked; the bet surface still publishes zero rows.",
+    ("F-F5-08", "blocker", "https://www.nba.com/games", _coinflip_wrong(), _coinflip_instead(),
      "data/v4/settlement/settled-all.json"),
     ("F-F5-07", "info", "https://github.com/wingbangboozle1-lang/NBA2",
      "This session's workspace cannot reach <code>nba.com</code>: the TLS handshake is reset, "
@@ -120,7 +172,7 @@ SEVERITY_BADGE = {"gap": "bad", "info": "info", "blocker": "warn"}
 
 def build_section() -> str:
     rows = []
-    for fid, sev, url, wrong, instead, where in FLAGS:
+    for fid, sev, url, wrong, instead, where in sorted(FLAGS):
         rows.append([
             f'<b id="{esc(fid)}">{esc(fid)}</b>',
             badge(sev, SEVERITY_BADGE.get(sev, "info")),
@@ -137,7 +189,7 @@ def build_section() -> str:
     body += table(["ID", "Severity", "Official source", "What is wrong",
                    "What is published instead", "Where to check"],
                   rows,
-                  caption="Seven findings from this session's line-by-line pass.")
+                  caption=f"{len(FLAGS)} findings from this session's line-by-line pass.")
     return (f'\n<section id="v6-flags">\n<h2>Flagged by the 2026-11-17 measurement pass '
             f'(v6)</h2>\n{body}\n</section>\n')
 
