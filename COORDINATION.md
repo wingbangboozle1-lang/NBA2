@@ -5454,3 +5454,53 @@ than "11/16 has no finals".
 **K-01 was closed independently.** The stale README counts this session was about to fix
 (1,423 rows, 70 tests) had already been corrected on `main` by another session. The count
 fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 passes.
+
+---
+
+### SESSION COMPLETE — `arena/f5ac4e74-nba2` (2026-11-17)
+
+**PR #122 merged** into `main` as `691aca0`. All four required checks passed
+(`verify`, `parity`, `v2`, `backtest`). Pages build on that commit reports `built`; the
+live tree was re-fetched and confirmed serving all six v6 pages, the eight appended
+flags on `flagged.html`, and the seven-category card grid on `index.html`.
+
+K-01…K-08 are done. Task-by-task:
+
+| Task | Outcome |
+|---|---|
+| K-01 stale published counts in README | **Closed independently by another session** while this one was mid-rebase. Dropped from this branch rather than duplicated; `CC-DOC-01` passes. |
+| K-02 market-anchored prior | Rule pre-registered and published; weight blank with a reason. Rewrote the gate to publish the measured negative result instead of failing on it. |
+| K-03 injury-PDF inventory | 18 releases, 4 archived as bytes. Backfill ingester ships with the branch. |
+| K-04 result-feed coverage | 31/52 games have an official final, 22 graded. 11/16 closed by PR #115; 11/17–11/19 have not ended. |
+| K-05 player-log coverage | Measured: 12/116 (10.3%). |
+| K-06 categorised navigation | 7 categories, one-to-one with `site/*.html`; card grid on the landing page. |
+| K-07 flags + gates | 8 flags, 13 gates, 47 tests. |
+| K-08 integration | v6 wired into `pages.yml`, `refresh.yml`, `publish-parity.yml`. |
+
+**Three merges landed on `main` during this session** — PR #115 (`efb0547`), #123
+(`b83038a`) and #124 (`d644246`) — plus a fourth, #125, opened by
+`arena/acf5db08-nba2`. Rebased onto each; the only content conflict each time was
+`COORDINATION.md`, resolved by keeping every claim block in full.
+
+**Two things worth the next session's attention.**
+
+1. *Transcribed counts are a defect class.* Three of this session's flags had numbers
+   typed into the prose (22 of 83 players at 26.5%, 0.6088 over 14 games, twelve of
+   sixteen PDFs). The first merge onto `main` made all three wrong, and **nothing in the
+   build said so** — the gates checked the data and the prose was decoration. They are
+   now computed from `data/` at render time, and
+   `test_no_flag_hardcodes_a_coverage_number_that_the_data_contradicts` fails the build
+   if any of those counts reappears. The same trap is worth checking for on any page
+   whose prose quotes a number the data also carries.
+
+2. *A rebase can silently drop generated files.* Resolving the `site/` conflicts with
+   `--ours` looked correct and produced a branch whose 12 v3 pages had reverted to the
+   old flat nav — because the rebase applied the *stored* bytes, not a rebuild. Only
+   `publish-parity`'s "the published tree must equal a rebuild" caught it. After any
+   rebase that touches `site/`, re-run the full pipeline and re-check `git status`
+   before trusting the tree; do not trust a clean `git status` on a generated directory.
+
+**Left deliberately undone** (each flagged, none blocking):
+the seven still-open PRs including `#112`; a parser against the two reachable official
+endpoints that would let the nightly re-fetch finals unattended; the 14 un-archived
+injury PDFs (the ingester exists, it needs a runner with CDN access).
