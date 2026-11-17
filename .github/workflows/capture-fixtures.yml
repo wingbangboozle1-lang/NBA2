@@ -339,7 +339,7 @@ jobs:
             echo "=== nba2.pipeline.refresh --finals --date $DATE (live, from this runner) ==="
           } >> data/raw/page_fixtures/refresh_checkonly.txt
           set +e
-          python3 -m nba2.pipeline.refresh --finals --date "$DATE" \
+          python3 -m nba2.pipeline.refresh --finals "$DATE" \
             --out /tmp/finals_"$DATE".json >> data/raw/page_fixtures/refresh_checkonly.txt 2>&1
           echo "exit=$?" >> data/raw/page_fixtures/refresh_checkonly.txt
           set -e
