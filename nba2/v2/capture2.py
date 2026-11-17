@@ -191,7 +191,7 @@ def feed_stamp() -> dict:
                              "2026-11-17 (this session; 11/15 recheck and 11/16 games; per-call times not logged)"),
         "stamp_text": (f"{len(rows)} official finals settled, {FEED_WINDOW[0]} to {dates[-1] if dates else '-'}: "
                        + ", ".join(f"{d} {n}" for d, n in per_date.items())
-                       + ". Each final is on an official NBA page; quarter rows sum to the final or are left blank."),
+                       + ". Each final is on an official NBA page; quarter rows sum to the final or are left blank"),
     }
 
 

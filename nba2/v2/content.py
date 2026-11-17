@@ -1092,6 +1092,51 @@ FLAGS += [
      "Replaced with the measured diff table and a pointer to the script that produces it, so the claim is "
      "reproducible rather than restated.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
+    ("F-059", "high", "Operations",
+     "THE NIGHTLY REFRESH HAS FAILED SIX CONSECUTIVE SCHEDULED RUNS, AND THE CAUSE IS NOW MEASURED: it is the "
+     "transport, not the sources. Runs 43631377045, 43725486781, 43751588814, 43903704042, 43939889279 and "
+     "44107633323 all concluded failure; the latest verdict records injuries=success, finals=failure, "
+     "rolling=failure, v4=success. The committed egress probe shows a GitHub runner reaching HTTP 200 on "
+     "www.nba.com/standings, www.nba.com/schedule, official.nba.com and the gamebook PDFs, while "
+     "stats.nba.com (the JSON API that nba2.v2.refresh uses for three of the four surfaces) times out or 403s. "
+     "Publishing therefore stays fail-closed and the site ages.",
+     "Diagnosed, not patched here: nba2/v2/refresh.py belongs to a finished session's scope. Logged as request "
+     "RQ-8892-01 on the coordination board. The fix is to read the rendered official page rather than the "
+     "unreachable JSON endpoint, which is how this session's 2026-11-17 capture was taken.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/egress_probe.json"),
+    ("F-060", "medium", "Data",
+     "PUBLISHED SNAPSHOT vs A FRESHER, VERIFIED CAPTURE — this build's model pages are dated 2026-11-15 while a "
+     "row-by-row official capture for 2026-11-17 exists in the tree (30 standings rows, 30 clubs on each of the "
+     "three team-stat pages, 5 transcribed games for 11/17) and passes every arithmetic identity: wins equal "
+     "losses (205/205), every club's games played equals its own W+L, and points scored equals points allowed "
+     "within the 0.1 rounding bound (46,669.6 vs 46,668.8). The capture is published on its own page and is "
+     "deliberately NOT spliced into the model.",
+     "Promoting it means re-cutting nba2/v2/official.py, nba2/v3/official.py, nba2/v4/capture.py and the v5 "
+     "inputs together, because a v2-only swap would leave the published pages on four different dates - the "
+     "defect the README already names. The step-by-step cut is written up in "
+     "analysis/session-8892d20c-capture.md for the session that does it.",
+     "https://www.nba.com/standings"),
+    ("F-061", "low", "Verification",
+     "THE THREE OFFICIAL TEAM-STAT PAGES DO NOT RECONCILE EXACTLY WITH EACH OTHER — margin per game, "
+     "recomputed as NetRtg x PACE / 100, differs from (PTS - Opp PTS) by up to 0.85 pts/game (ORL -0.85, "
+     "NYK +0.64, DET +0.53). All three pages are official and were read the same day; they round "
+     "independently, one per game and the others per 100 possessions.",
+     "Published as a per-club residual table instead of choosing the flattering definition, and a residual "
+     "above 1.5 pts/game fails the capture as a likely transcription error. No value was adjusted to make "
+     "the pages agree.",
+     "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"),
+    ("F-062", "high", "Site",
+     "THE SITE'S FRONT DOOR WAS SERVING THE OLDEST TREE — GitHub Pages for this repository is configured "
+     "build_type=legacy with source main /, so the page a visitor lands on is the repository-root index.html, "
+     "not the gated site/ artefact that pages.yml uploads. Measured 2026-11-17: the root served the v1 "
+     "dashboard stamped 'as-of 2026-11-14' while /NBA2/data/teams.json returned 404 and the real v2 tree was "
+     "only reachable at /NBA2/site/. The README's claim that site/ is the Pages root was therefore false.",
+     "The root index.html is now a labelled pointer to site/index.html, emitted by nba2.pipeline.build_site so "
+     "it is regenerated and parity-checked like everything else. The underlying setting still needs one owner "
+     "action - Settings > Pages > Source: GitHub Actions - which requires the pages: write scope this session's "
+     "token does not have (the API returns 403 Resource not accessible by integration). Until that flip, /site/ "
+     "is the canonical path and the root redirects to it.",
+     "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"),
 ]
 
 # ---------------------------------------------------------------- session arena/aa1d3c07-nba2 (2026-11-17)
@@ -1122,4 +1167,9 @@ FLAGS += [
      "garbled extra period table; the clean table was used (it sums to the final).",
      "Blank quarter cells are not back-solved. The HOU final (110) is confirmed by the gamebook team line and by nba.com.",
      "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"),
+    ("AA-F-05", "medium", "Verification",
+     "Flag IDs F-059, F-060, F-061 and F-062 are each defined twice in nba2/v2/content.py, with different text: an older set in the FLAGS list (single-quoted) and a newer set appended by the 2026-11-17 integration. "
+     "Both sets are shown on the Flagged for Review page. Not renamed here, because the entries belong to other sessions.",
+     "Renumber one set so each ID is unique. Owner: the session that appended the newer F-059..F-062 (integration, arena/8892d20c-nba2), or the final integration session.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/content.py"),
 ]

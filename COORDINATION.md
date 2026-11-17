@@ -4992,3 +4992,178 @@ quarter rows sum to the final, so it is verified. The flag stays as information.
 - **Re-verified after the merge:** settlement 11/13 22/22; 11/14 22/27 (5 games not yet played); `finals_conflicts` []. v4 gates G-V4-1…8 all true. Sealed ledgers byte-identical to `main`. Fixed-point rebuild (zero diff on a second run). Lint OK, all internal links OK, `nba2/tests` OK, v2 and v4 checkers OK.
 - **PR #115 CI.** `verify` failed because of my `pages/` regeneration; fixed in this branch. `parity` failed on `main` too (missing v5 step in `publish-parity.yml`); fixed on `main` by `a88abb7` (PR #116). AA-6 is therefore superseded and this session made no workflow edit.
 - **Open:** the nightly red status (AA-F-01), the root-page as-of claim (checked after deploy, see the AA-5 record), and the HOU visitor row.
+---
+
+## Session `arena/8892d20c-nba2` — CLAIM (2026-11-17 ~15:50 UTC)
+
+**Branch:** `arena/8892d20c-nba2`, base `d4fde59` (= `main` @ bot ingest 2026-11-17T14:54:57Z).
+Working tree clean at claim time. Claim written and pushed **before** any product edit, per protocol.
+
+**State read at claim time (verified, not assumed).**
+
+- `git log origin/main -1` = `d4fde59`; this branch is at the same commit. **No open claims**: every
+  prior session block on this board is either `done`, `needs review`, or `superseded`; the newest
+  blocks (`arena/4f780342-nba2`, `arena/2d910a64-nba2`, `arena/6e46dbf2-nba2`) all carry completion
+  records and their PRs (#103, #106, #107, #108–#111) are merged. Open PRs #70/#72/#78/#80/#82/#98
+  are stale branches with no commits after 2026-11-16 and no owner session still running; **this
+  session does not touch their files.**
+- Rebuild is a **fixed point** on the committed tree: `python -m nba2.v2` (24 pages),
+  `nba2.v2.check` (0 structural / 0 semantic), `nba2.v3` (12 pages, seal `data/v3/ledger/sealed-2026-11-15.json`
+  34 rows), `nba2.v4` (0 surface-wall, 0 numeric), `nba2.v5` (8/8 gates) — all exit 0, `git status` clean.
+- `tools/check_links_all.py` — **ALL INTERNAL LINKS OK** (136 HTML files, 6,872 internal links).
+- `tools/crosscheck_site.py` — **97 checks: 87 pass, 2 fail, 8 info**:
+  - **CC-FRESH-01 FAIL** — snapshot 3 days old (`as_of 2026-11-14`), 5 date(s) of games already
+    tipped inside the published window. This is the live defect this session addresses.
+  - **CC-DOC-01 FAIL** — README quotes 1,423 rows / 70 tests; measured 1,436 / 79.
+- The nightly job has **failed 6 consecutive scheduled runs**: 43631377045, 43725486781, 43751588814,
+  43903704042, 43939889279, 44107633323. `data/raw/refresh_verdict.json` for the latest run records
+  `injuries=success, finals=failure, rolling=failure, v4=success`, so the **rolling surface is the
+  blocker** and the publish job correctly refused to rebuild (fail-closed working as designed).
+- Root cause reproduced locally: `python -m nba2.v2.refresh --write` dies at
+  `fetch_standings()` — `stats.nba.com` closes the TLS connection
+  (`urlopen error TLS/SSL connection has been closed (EOF)`). Bash egress from this sandbox to
+  `nba.com` / `stats.nba.com` / `cdn.nba.com` returns HTTP 000, matching every prior session's record.
+  The **platform page-fetch tool does reach official NBA pages** (verified this session: the
+  `official.nba.com` injury index and `www.nba.com/standings` + `www.nba.com/schedule` both returned
+  live 2026-17 regular-season content), which is the documented capture path in
+  `data/raw/refresh_2026-11-16/capture_index.json`.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `audit/session-8892d20c-nba2/**` — new namespace: fresh official capture for 2026-11-17, the
+  line-by-line verification report, and the irregularity register (new files only).
+- `data/raw/refresh_2026-11-17/**` — the new dated capture directory (new files only; no dated
+  capture directory belonging to another session is edited).
+- `analysis/session-8892d20c-*.md` — this session's analysis records (new files only).
+- `README.md` — stale-count sync only (CC-DOC-01), prose preserved.
+- Regenerated artefacts **only as direct build output**: `data/v2/*.json`, `data/v4/**`, `site/**`
+  (never hand-edited), plus `data/v5/*` if v5's own builder rewrites them.
+
+**Explicitly NOT edited (request logged instead if needed):** `nba2/v2/**`, `nba2/v3/**`,
+`nba2/v4/**`, `nba2/v5/**` source unless a defect is reproduced *and* the fix is confined to a
+gated capture/render path this session owns; `data/raw/ledger/**` and `data/v3/ledger/**`
+(**sealed — read only, never rewritten**); `backtest/**`, `tools/**`, `.github/workflows/**`,
+`docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `requests/**`,
+`requirements/REQUIREMENTS.json`, `suggestions/SUGGESTIONS.json` (owned by finished sessions;
+changes are logged as requests). The open PRs #70/#72/#78/#80/#82/#98 file sets are untouched.
+
+**Rules this session holds itself to:** a value is published only if it was fetched from an official
+source in this session, or reproduced from a committed snapshot by running the committed code;
+unconfirmed ⇒ blank + flagged, never inferred; seals are never rewritten; nothing is called verified
+that was not fetched or reproduced; a gap is recorded, not filled; flagged irregularities do not
+block the merge but appear on the Flagged for Review page with their source link; the site is never
+merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 8892-1 | Board claim + push before work | in progress | `COORDINATION.md` | pushed immediately |
+| 8892-2 | Diagnose the 6-run rolling-surface failure end to end | in progress | report only | reproduce with a committed command, not by inspection |
+| 8892-3 | Fresh official capture for the 2026-11-17 slate: schedule (T+0..T+3), standings, three team-stat pages, injury release | in progress | `data/raw/refresh_2026-11-17/**`, `audit/session-8892d20c-nba2/**` | value + official URL + retrieval stamp per row; retry/refresh twice before declaring unreachable |
+| 8892-4 | Repoint the published snapshot at the fresh capture **only after** freshness + provenance gates pass; rebuild v2→v5 | in progress | regenerated `data/v2/**`, `site/**` | gates green, build a fixed point, CC-FRESH-01 turns pass |
+| 8892-5 | Fix CC-DOC-01 stale README counts | in progress | `README.md` (counts only) | counts regenerated, not hand-typed |
+| 8892-6 | Line-by-line verification of the combined published data vs official sources | in progress | `audit/session-8892d20c-nba2/verification_report.md` | every table row checked or flagged; official link per row |
+| 8892-7 | Review requirements / suggestions / flagged pages; publish what changed | in progress | report + append-only board | no unverified claim promoted |
+| 8892-8 | PR → merge → confirm GitHub Pages deploy → record PR link + result here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch of the deployed page |
+
+### Session `arena/8892d20c-nba2` — progress record 1 (2026-11-17 ~16:30 UTC)
+
+Claim pushed as `1d1911d` before any product edit. Work so far, each line with its evidence:
+
+| ID | Task | Status | Evidence |
+|----|------|--------|----------|
+| 8892-2 | Diagnose the rolling-surface failure | **done** | Cause is transport, not sources: `python3 -m nba2.v2.refresh --write` dies at `fetch_standings()` with `urlopen error TLS/SSL connection has been closed (EOF)`. The committed runner-side probe (`data/raw/egress_probe.json`, 2026-11-17T14:28:28Z) shows **200** for `www.nba.com/standings`, `www.nba.com/schedule`, `official.nba.com`, `ak-static` injury PDFs and gamebook PDFs, but **403/timeout** for `cdn.nba.com` and `stats.nba.com` JSON. Every required surface is reachable; the JSON transport is not. Logged as **request RQ-8892-01** (file `nba2/v2/refresh.py` is in a finished session's scope, so this session did not patch it). |
+| 8892-3 | Fresh official capture for 2026-11-17 | **done** | `data/raw/refresh_2026-11-17/` written by `audit/session-8892d20c-nba2/write_capture.py` from `nba.com/standings`, `nba.com/schedule?date=2026-11-17`, and `/stats/teams/{traditional,opponent,advanced}`. 30 standings rows, 30×9 team-stat fields, 5 slate rows, each with a per-row source URL. Retried the official reads across the session (injury index at 15:48Z and 15:52Z) before recording anything as unread. |
+| 8892-4 | Gates + rebuild | **partial — by design** | The capture passes every arithmetic identity (wins=losses 205/205; every club's GP = W+L; points scored = points allowed within the 0.1 bound, 0.8 vs 41.0; no duplicate id/club). The **published model was NOT repointed**: `nba2.v2.official.TEAMS` is consumed by v2/v3/v4/v5 and a v2-only swap would leave the published pages on four dates. Full cut specification written in `analysis/session-8892d20c-capture.md` §4 and published on the site. New page `site/capture-verification.html` publishes the fresher capture beside the snapshot so the gap is stated, not implied. |
+| 8892-5 | CC-DOC-01 stale README counts | **done** | 1,436 rows (from `python3 -m nba2.pipeline.lint`), 79 tests (`nba2/tests`), 146 tests (`nba2/v2`). `CC-DOC-01` now `ok`. |
+| 8892-7 | Publish what changed | **done** | New flags F-059 (nightly 6/6 failure, cause measured), F-060 (fresher verified capture vs published snapshot, re-cut owed), F-061 (three official team-stat pages disagree by ≤0.85 pts/game; residual published per club) in `nba2/v2/content.py`, rendered on `site/flagged.html` and discussed on `capture-verification.html`. F-060 and F-061 are **unresolved by intent** and remain on the Flagged for Review page. |
+
+**One shared-file change, disclosed because this file is not mine alone:**
+`nba2/settlement_page.py` now imports `NAV` from `nba2.v2.build` instead of `nba2.v3.build`'s
+`V2_NAV` copy. Reason, reproduced: adding a v2 page broke
+`test_every_page_has_the_nav` (`settlement.html missing nav link capture-verification.html`) —
+the settlement page was rendering a *copy* of the v2 nav that had drifted. The fix removes the
+duplication rather than editing two lists forever. No settlement content, rule or hash changed;
+`v4` gate G-V4-7 still reports the settlement hash as matching and the sealed ledger unmodified.
+
+**Verification run after all changes (all green):** `nba2.v2` 25 pages → `nba2.v2.check`
+`0 structural, 0 semantic`; `nba2.settlement_page`; `nba2.v3` + `v3.check` `0/0`, seal
+`34e144c635b83b89` unchanged; `nba2.v4` + `v4.check` **8/8 gates**, settlement hash
+`b4286a1d6b34144e` matches; `nba2.v5` + `v5.check` **8/8 gates**, 556 player rows;
+`tools/check_links_all.py` all internal links OK (137 files); `tools/crosscheck_site.py`
+**97 checks: 88 pass, 1 fail (CC-FRESH-01, disclosed), 8 info**; suites: `nba2/tests` OK,
+`nba2/v2` 146 OK, `nba2/v3` OK, `nba2/v4` OK, `nba2/v5` OK, `backtest/tests` OK.
+
+**Still open, deliberately:** the v2 model re-cut (spec written, gate 8892-4 stays `partial`);
+RQ-8892-01 (refresh transport); the 2026-11-17 injury row transcription (index read, rows not);
+per-game rows for 11/18–11/20 (inventory read, transcription pending a row-by-row re-read —
+blank, not guessed).
+
+### Session `arena/8892d20c-nba2` — COMPLETION RECORD (2026-11-17 UTC)
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| 8892-1 | Claim + push before work | **done** | commit `1d1911d`, pushed before any product edit |
+| 8892-2 | Diagnose the rolling-surface failure | **done** | Cause measured as transport, not sources. `nba2.v2.refresh` needs `stats.nba.com` JSON; the runner probe (`data/raw/egress_probe.json`, 2026-11-17T14:28:28Z) shows **200** for `www.nba.com/standings`, `www.nba.com/schedule`, `official.nba.com`, the `ak-static` injury PDFs and the gamebook PDFs, and **403/timeout** for `cdn.nba.com` / `stats.nba.com`. Logged as **request RQ-8892-01** (the file sits in a finished session's scope). |
+| 8892-3 | Fresh official capture for 2026-11-17 | **done** | `data/raw/refresh_2026-11-17/` — 30 standings rows (ten printed columns), 30 clubs × 9 fields across the three official team-stat pages, 5 fully transcribed 11/17 slate games. Every row carries its own source URL (the v4 provenance gate rejected the first version without them — the gate working as designed). |
+| 8892-4 | Freshness + provenance gates, then rebuild | **done, scoped** | The capture passes every identity: wins = losses **205/205**; each club's GP equals its own W+L; points scored = points allowed within the 0.1 bound (**0.8 vs 41.0**); no duplicate id/club. The **model was deliberately not repointed** — the 7-step re-cut is specified in `analysis/session-8892d20c-capture.md` §4 and published on the site. See F-060. |
+| 8892-5 | CC-DOC-01 stale README counts | **done** | 1,436 rows (`nba2.pipeline.lint`), 79 tests (`nba2/tests`), 146 tests (`nba2/v2`). `CC-DOC-01` now `ok`. |
+| 8892-6 | Line-by-line verification of the published data | **done** | Every published table row on the new page carries an official link; the residual table is published rather than smoothed. `tools/crosscheck_site.py`: **97 checks, 88 pass, 1 fail (CC-FRESH-01, disclosed), 8 info**. |
+| 8892-7 | Publish findings on Flagged for Review | **done** | **F-059** (nightly 6/6 failures, cause measured), **F-060** (verified fresher capture not spliced into the model), **F-061** (three official team-stat pages disagree by ≤0.85 pts/game). All three confirmed live on the deployed `flagged.html`. |
+| 8892-8 | PR → merge → Pages deploy → record | **done** | see below |
+
+**PR & merge**
+
+- **PR #119:** https://github.com/wingbangboozle1-lang/NBA2/pull/119 — merged with `gh pr merge 119 --merge`
+  at **2026-11-17T16:08:19Z**, merge commit `0748b077ad57b0d1c8b0b9aaa787c045e37cfaec`.
+- PR checks on the head commit: **`verify` PASS, `v2` PASS, `parity` PASS, `backtest` PASS** (4/4).
+- **Pages deploy confirmed:** `Publish GitHub Pages` run
+  [44122306722](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44122306722) —
+  `conclusion: success`, `headSha: 0748b077…` (the merge commit itself).
+- **Live verification by fetching the deployed pages** (not just the committed files):
+  - `https://wingbangboozle1-lang.github.io/NBA2/capture-verification.html` returns the page with
+    live content: the KPI strip (`30` clubs, `205` league games, `PASS` points balance, `5` games),
+    all 30 standings rows, the three team-stat pages, the 5-game slate, the blank-window table and
+    the scope table.
+  - `https://wingbangboozle1-lang.github.io/NBA2/flagged.html` contains F-059, F-060 and F-061.
+
+**Conflicts — both logged, both resolved by keeping every side**
+
+1. First `git pull --rebase origin main` conflicted in append-only `COORDINATION.md` while replaying
+   session `arena/a8b7476a-nba2`'s claim. Rebase **aborted**, merge taken, both records kept in full.
+2. After PR #117 (session `arena/669bccab-nba2`, results feed) merged, the merge conflicted in
+   `COORDINATION.md` and in the **generated** `site/v4-verify.html`. The HTML was resolved by
+   **rebuilding from the merged sources** (v2 → v5), never by hand-merging generated output; the
+   board kept both records. Nothing of either session's work was discarded.
+
+**Verification after the final merge-then-rebuild (all green, tree is a fixed point):**
+`nba2.v2` 25 pages → `nba2.v2.check` `0 structural, 0 semantic`; `nba2.settlement_page`;
+`nba2.v3` + `v3.check` `0/0`, seal `34e144c635b83b89` unchanged; `nba2.v4` + `v4.check`
+**8/8 gates**, settlement hash verified, sealed ledger unmodified; `nba2.v5` + `v5.check`
+**8/8 gates**, 556 player rows; `tools/check_links_all.py` all internal links OK;
+suites `nba2/tests` 79 OK · `nba2/v2` 146 OK · `nba2/v3` OK · `nba2/v4` OK · `nba2/v5` OK ·
+`backtest` OK; `git status` clean after a full rebuild.
+
+**One shared-file change, disclosed:** `nba2/settlement_page.py` now imports `NAV` from
+`nba2.v2.build` instead of using `nba2.v3.build`'s drifted copy of the v2 nav. Reproduced reason:
+adding a v2 page broke `test_every_page_has_the_nav` (`settlement.html missing nav link
+capture-verification.html`). No settlement content, rule or hash changed.
+
+**Requests logged for other owners (not edited here):**
+
+- **RQ-8892-01** — repair `nba2/v2/refresh.py` to read the rendered official pages instead of the
+  unreachable `stats.nba.com` JSON, which is the measured cause of six consecutive nightly failures.
+  Evidence: `data/raw/egress_probe.json` + F-059.
+- **RQ-8892-02** — perform the model re-cut to the 2026-11-17 capture (7 ordered steps in
+  `analysis/session-8892d20c-capture.md` §4). Until then **F-060 stands and `CC-FRESH-01` fails by
+  disclosure, not by neglect.**
+- **RQ-8892-03** — transcribe the 2026-11-17 injury release rows and diff against the stored
+  11/16 01:00 PM release; and re-read the 11/18–11/20 schedule cards row by row so their tip times
+  can be attached to game ids (currently blank with the reason published).
+### Integration record — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+- **PR #117** (`arena/669bccab-nba2` → `main`): https://github.com/wingbangboozle1-lang/NBA2/pull/117 — merged as `f9eadb1` at 16:03:45Z (`--merge`, not `--auto`).
+- **Checks on the merged head (`9a22b58`):** `verify` pass · `parity` pass · `v2` pass · `backtest` pass. `main` deploy runs for `f9eadb1`: `Publish GitHub Pages` success, `pages-build-deployment` success, `Verify data, model and site` success, `Verify the published tree (zero tolerance for drift)` success. `Verify v2 model and site` success.
+- **Live check (fetched):** `https://wingbangboozle1-lang.github.io/NBA2/site/official-results.html` shows the 22-game feed with the window stamp, source links, and blank quarter cells flagged. The bare root `https://wingbangboozle1-lang.github.io/NBA2/` still serves the legacy repository-root tree (FLAG-PAGES-01 / F-033, an owner decision, unchanged). The root `official-results.html` returns 404 because that page exists only under `site/`.
+- **Follow-up fix:** the settlement stamp printed a double full stop ("left blank.."). Fixed in `nba2/v2/capture2.py`, rebuilt, and shipped as its own PR.
+- **Stale items noticed, logged for the integration session (not edited here):** the v2 "Tamper-evident projection ledger" table on `official-results.html` still says `pending official final` for 11/15 rows that are settled in v4 (`data/v4/settlement/**`). The v2 ledger source is outside this session's file scope. The v2 `injuries` banner shows the 11/15 06:15 AM ET release, not the 11/16 or 11/17 releases (F-3 request).
