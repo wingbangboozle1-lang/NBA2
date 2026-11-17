@@ -1,334 +1,334 @@
 {
  "schema": "nba2.page-fixtures.v1",
  "captured_by": "capture-fixtures.yml",
- "ref": "refs/pull/121/merge",
- "run_id": "44133334591",
- "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44133334591",
+ "ref": "refs/heads/arena/acf5db08-nba2",
+ "run_id": "44135147257",
+ "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44135147257",
  "note": "pages are stored gzip-compressed; sha256 and bytes describe the uncompressed response, so `gunzip -c <file> | sha256sum` reproduces it",
  "rows": [
   {
    "name": "standings",
    "url": "https://www.nba.com/standings",
-   "retrieved_at_utc": "2026-11-17T17:06:50Z",
+   "retrieved_at_utc": "2026-11-17T17:16:33Z",
    "http_status": 200,
-   "bytes": 254408,
-   "sha256": "1bfa3afe1a0e99088743a032cc533f672cccc8894a317b227e815d4382448b56",
+   "bytes": 254488,
+   "sha256": "71a7193db7ddca9c2fe0adf52d3b394540a849b86701578092bda7bb8a87e63f",
    "file": "data/raw/page_fixtures/standings.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 520
+   "elapsed_ms": 319
   },
   {
    "name": "schedule_2026-11-17",
    "url": "https://www.nba.com/schedule?date=2026-11-17",
-   "retrieved_at_utc": "2026-11-17T17:06:51Z",
+   "retrieved_at_utc": "2026-11-17T17:16:33Z",
    "http_status": 200,
-   "bytes": 232582,
-   "sha256": "89644a617cf3bfa245b9cd4de00f916908727aa97f3c3b25b449895c2ee54a0f",
+   "bytes": 232464,
+   "sha256": "224a13ba80dfa28f8edd975e3bdff45f0ca7e210ca73a1ebf2a1a57d854cae7c",
    "file": "data/raw/page_fixtures/schedule_2026-11-17.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 1033
+   "elapsed_ms": 130
   },
   {
    "name": "schedule_2026-11-18",
    "url": "https://www.nba.com/schedule?date=2026-11-18",
-   "retrieved_at_utc": "2026-11-17T17:06:52Z",
+   "retrieved_at_utc": "2026-11-17T17:16:33Z",
    "http_status": 200,
-   "bytes": 232582,
-   "sha256": "11496771b2441646bd1d2c8b65273b682a27cbc4f1b356d4749adad87cf95ec0",
+   "bytes": 232464,
+   "sha256": "504f3e08c1a816394b8fc7249ab7280cc7a837eb04b87e616e507027c35f4f6e",
    "file": "data/raw/page_fixtures/schedule_2026-11-18.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 214
+   "elapsed_ms": 99
   },
   {
    "name": "schedule_2026-11-19",
    "url": "https://www.nba.com/schedule?date=2026-11-19",
-   "retrieved_at_utc": "2026-11-17T17:06:52Z",
+   "retrieved_at_utc": "2026-11-17T17:16:34Z",
    "http_status": 200,
-   "bytes": 232582,
-   "sha256": "73cf57397f12417f669704e8828cf6034be4280092b8acd68198aa14f0f628b4",
+   "bytes": 232464,
+   "sha256": "3833067fab10317137443bb134d1f749cb8780188b12e4886861deb6322b5b14",
    "file": "data/raw/page_fixtures/schedule_2026-11-19.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 386
+   "elapsed_ms": 207
   },
   {
    "name": "schedule_2026-11-20",
    "url": "https://www.nba.com/schedule?date=2026-11-20",
-   "retrieved_at_utc": "2026-11-17T17:06:53Z",
+   "retrieved_at_utc": "2026-11-17T17:16:34Z",
    "http_status": 200,
-   "bytes": 232582,
-   "sha256": "7677548528c56a21be39b25bfca80dd32498e718a60df5d669ffc14fe9775ea6",
+   "bytes": 232464,
+   "sha256": "cee79fb7785adbf4388ab5f4cb7d4b6f7cfc3b17088774141a631340d656cc56",
    "file": "data/raw/page_fixtures/schedule_2026-11-20.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 474
+   "elapsed_ms": 116
   },
   {
    "name": "games_2026-11-16",
    "url": "https://www.nba.com/games?date=2026-11-16",
-   "retrieved_at_utc": "2026-11-17T17:06:53Z",
+   "retrieved_at_utc": "2026-11-17T17:16:34Z",
    "http_status": 200,
-   "bytes": 541526,
-   "sha256": "685816d755c38b0c72d3fbb01e750dd0a307e682fe94876ddbaf3cd710bfe23a",
+   "bytes": 540358,
+   "sha256": "69307a19b427a126b5c27091fe5e31808515f2c5cec2a9e8209fd2ab6a8726c7",
    "file": "data/raw/page_fixtures/games_2026-11-16.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 750
+   "elapsed_ms": 153
   },
   {
    "name": "games_2026-11-15",
    "url": "https://www.nba.com/games?date=2026-11-15",
-   "retrieved_at_utc": "2026-11-17T17:06:54Z",
+   "retrieved_at_utc": "2026-11-17T17:16:34Z",
    "http_status": 200,
-   "bytes": 554184,
-   "sha256": "9118abe1fef89649fb66cc987d16d413df86c7c9ac54c3df53d32e9ccf1c4d10",
+   "bytes": 553004,
+   "sha256": "a8bd3784968bc327405e648048f2c13e1a3c7487a8ca8868813d80bab30d18cc",
    "file": "data/raw/page_fixtures/games_2026-11-15.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 1162
+   "elapsed_ms": 143
   },
   {
    "name": "games_2026-11-14",
    "url": "https://www.nba.com/games?date=2026-11-14",
-   "retrieved_at_utc": "2026-11-17T17:06:55Z",
+   "retrieved_at_utc": "2026-11-17T17:16:34Z",
    "http_status": 200,
-   "bytes": 442494,
-   "sha256": "05859e010ea006070161431a30c90f8997021f8f345589a037650c68af31a5a9",
+   "bytes": 442366,
+   "sha256": "c16a308f94b13eae7fcf2fa451c2142269eb77d1751f2eb164643537a52b5494",
    "file": "data/raw/page_fixtures/games_2026-11-14.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 711
+   "elapsed_ms": 370
   },
   {
    "name": "games_2026-11-13",
    "url": "https://www.nba.com/games?date=2026-11-13",
-   "retrieved_at_utc": "2026-11-17T17:06:56Z",
+   "retrieved_at_utc": "2026-11-17T17:16:35Z",
    "http_status": 200,
-   "bytes": 577574,
-   "sha256": "b8879730e4753408361706d6cd4270c3f06819d5f90c74b481eaf7674cd9b5f2",
+   "bytes": 577446,
+   "sha256": "e2ef9dccacf115115246fb34582a858d64c72e22ccc6ef98d1f6fbd2259103f5",
    "file": "data/raw/page_fixtures/games_2026-11-13.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 635
+   "elapsed_ms": 542
   },
   {
    "name": "games_2026-11-12",
    "url": "https://www.nba.com/games?date=2026-11-12",
-   "retrieved_at_utc": "2026-11-17T17:06:56Z",
+   "retrieved_at_utc": "2026-11-17T17:16:35Z",
    "http_status": 200,
-   "bytes": 411797,
-   "sha256": "167a3f019d4f1a694f9ea0bcb611f1c1618455a15217fee212f616f0ce7b5432",
+   "bytes": 411814,
+   "sha256": "930c3d4a20b5762e66cbd9fccbbb20f6b6d583d6162c1d5779d7b99eb878b264",
    "file": "data/raw/page_fixtures/games_2026-11-12.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 302
+   "elapsed_ms": 439
   },
   {
    "name": "games_2026-11-11",
    "url": "https://www.nba.com/games?date=2026-11-11",
-   "retrieved_at_utc": "2026-11-17T17:06:57Z",
+   "retrieved_at_utc": "2026-11-17T17:16:36Z",
    "http_status": 200,
-   "bytes": 591930,
-   "sha256": "8e245e81d324c3737c786d0bd81721613b9667309af548ee859f40485cd5ab5d",
+   "bytes": 593032,
+   "sha256": "58b708679eed0cbf774b8f25db8ee99c2efbdba8641b74f12bb92786b04f832e",
    "file": "data/raw/page_fixtures/games_2026-11-11.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 478
+   "elapsed_ms": 441
   },
   {
    "name": "games_2026-11-10",
    "url": "https://www.nba.com/games?date=2026-11-10",
-   "retrieved_at_utc": "2026-11-17T17:06:57Z",
+   "retrieved_at_utc": "2026-11-17T17:16:36Z",
    "http_status": 200,
-   "bytes": 467284,
-   "sha256": "7c1c812d294c01ab691d925abe9a2df183147f9957824c41b50fe06e5a942921",
+   "bytes": 467354,
+   "sha256": "8141faa4c3f5b513993adefad101f1c356d1331d153d3040c50e10f668569dc8",
    "file": "data/raw/page_fixtures/games_2026-11-10.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 557
+   "elapsed_ms": 356
   },
   {
    "name": "team_traditional",
    "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season",
-   "retrieved_at_utc": "2026-11-17T17:06:57Z",
+   "retrieved_at_utc": "2026-11-17T17:16:36Z",
    "http_status": 200,
-   "bytes": 322905,
-   "sha256": "3e904e370c0f2e50ce50fb7bc3a9c52da4bf8cdd6552503cb45619a0a640d3a4",
+   "bytes": 322787,
+   "sha256": "b0526859eae4aabf4f8e9f1309ed2aa609719aa36f50f6071917bab5eedcf160",
    "file": "data/raw/page_fixtures/team_traditional.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 184
+   "elapsed_ms": 162
   },
   {
    "name": "team_opponent",
    "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season",
-   "retrieved_at_utc": "2026-11-17T17:06:58Z",
+   "retrieved_at_utc": "2026-11-17T17:16:36Z",
    "http_status": 200,
-   "bytes": 322875,
-   "sha256": "5733ddacc8b1a6c96b46871665c7577fc272edd11a020e4a7937289af3c3f08e",
+   "bytes": 322757,
+   "sha256": "90d01454de455f892e516e65ac9cdd585551e88b0ff11abf15bf23c729c370c9",
    "file": "data/raw/page_fixtures/team_opponent.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 282
+   "elapsed_ms": 114
   },
   {
    "name": "team_advanced",
    "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
-   "retrieved_at_utc": "2026-11-17T17:06:58Z",
+   "retrieved_at_utc": "2026-11-17T17:16:37Z",
    "http_status": 200,
-   "bytes": 322875,
-   "sha256": "4f4cde750b11769162369e03fd111f9a8da4abd144b5e294cc10f50a9bc3a400",
+   "bytes": 322757,
+   "sha256": "70e525f0f7d278207f28fadb366f363ed09af3d1792619d1bb0cfef7159e3191",
    "file": "data/raw/page_fixtures/team_advanced.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 314
+   "elapsed_ms": 230
   },
   {
    "name": "injury_index",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "retrieved_at_utc": "2026-11-17T17:06:58Z",
+   "retrieved_at_utc": "2026-11-17T17:16:37Z",
    "http_status": 200,
-   "bytes": 42648,
-   "sha256": "eb5228cd5fd05175086148134935026cb6734247447f430d92d775b5a2971e57",
+   "bytes": 42649,
+   "sha256": "9d2cb611854e107b50fad6d19223d6aa7c6c9f7b160ff854fec1c153af4a6be8",
    "file": "data/raw/page_fixtures/injury_index.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 348
+   "elapsed_ms": 170
   },
   {
    "name": "future_games_2026-11-17",
    "url": "https://www.nba.com/games?date=2026-11-17",
-   "retrieved_at_utc": "2026-11-17T17:06:58Z",
+   "retrieved_at_utc": "2026-11-17T17:16:37Z",
    "http_status": 200,
-   "bytes": 416008,
-   "sha256": "94714e99763f321b93badf6998c33ec92ba229eb7b35d67e51a4dacb45e18fdc",
+   "bytes": 416150,
+   "sha256": "a03d8df4550b4aef183536a9adecb57feaeb2b8ff7899b9ad5b82784de2c1b64",
    "file": "data/raw/page_fixtures/future_games_2026-11-17.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 216
+   "elapsed_ms": 318
   },
   {
    "name": "future_games_2026-11-18",
    "url": "https://www.nba.com/games?date=2026-11-18",
-   "retrieved_at_utc": "2026-11-17T17:06:59Z",
+   "retrieved_at_utc": "2026-11-17T17:16:37Z",
    "http_status": 200,
-   "bytes": 425422,
-   "sha256": "b2ff6fcae4929b341401fe6bb24651973834fb89e7e4bdce782cf8c23c02cc28",
+   "bytes": 425497,
+   "sha256": "bf0e7d9e6f765de463aee0b694d3dcd644f4b62f622e0e10357b79f42bec6032",
    "file": "data/raw/page_fixtures/future_games_2026-11-18.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 627
+   "elapsed_ms": 244
   },
   {
    "name": "future_games_2026-11-19",
    "url": "https://www.nba.com/games?date=2026-11-19",
-   "retrieved_at_utc": "2026-11-17T17:07:00Z",
+   "retrieved_at_utc": "2026-11-17T17:16:38Z",
    "http_status": 200,
-   "bytes": 327383,
-   "sha256": "9bc9d646eeb8874707b4a12fc4a5c15a28f6664e14dce1c21474912086cbbdbd",
+   "bytes": 327255,
+   "sha256": "575b64ef3861fdee102bdf12329d71d56833fb68ef89d08e3395ef4c6cc18595",
    "file": "data/raw/page_fixtures/future_games_2026-11-19.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 679
+   "elapsed_ms": 579
   },
   {
    "name": "future_games_2026-11-20",
    "url": "https://www.nba.com/games?date=2026-11-20",
-   "retrieved_at_utc": "2026-11-17T17:07:00Z",
+   "retrieved_at_utc": "2026-11-17T17:16:38Z",
    "http_status": 200,
-   "bytes": 390758,
-   "sha256": "d85fd61ad1252f53a5017ee4f2cc174a55f35befe8cd0e0fe5d6c6d8059ba6b2",
+   "bytes": 390833,
+   "sha256": "8ccfacb5ba94f5e5471cbae3ee2f71ec5231ddf4425d7c6445e899c5c87061de",
    "file": "data/raw/page_fixtures/future_games_2026-11-20.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 494
+   "elapsed_ms": 218
   },
   {
    "name": "probe_standings_all",
    "url": "https://data.nba.net/prod/v1/current/standings_all.json",
-   "retrieved_at_utc": "2026-11-17T17:07:01Z",
+   "retrieved_at_utc": "2026-11-17T17:16:38Z",
    "http_status": null,
    "bytes": null,
    "sha256": null,
    "file": null,
    "ok": false,
    "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'data.nba.net'. (_ssl.c:1018)>",
-   "elapsed_ms": 243
+   "elapsed_ms": 157
   },
   {
    "name": "probe_data_scoreboard",
    "url": "https://data.nba.net/prod/v1/20261117/scoreboard.json",
-   "retrieved_at_utc": "2026-11-17T17:07:01Z",
+   "retrieved_at_utc": "2026-11-17T17:16:38Z",
    "http_status": null,
    "bytes": null,
    "sha256": null,
    "file": null,
    "ok": false,
    "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'data.nba.net'. (_ssl.c:1018)>",
-   "elapsed_ms": 67
+   "elapsed_ms": 19
   },
   {
    "name": "probe_dmz_standings",
    "url": "https://statsdmz.nba.com/js/data/widgets/standings.json",
-   "retrieved_at_utc": "2026-11-17T17:07:01Z",
+   "retrieved_at_utc": "2026-11-17T17:16:39Z",
    "http_status": 404,
    "bytes": null,
    "sha256": null,
    "file": null,
    "ok": false,
    "error": "HTTP 404",
-   "elapsed_ms": 307
+   "elapsed_ms": 744
   },
   {
    "name": "probe_chunk_standings",
    "url": "https://www.nba.com/_next/static/chunks/pages/standings-28b434f7094bcd5e.js",
-   "retrieved_at_utc": "2026-11-17T17:07:01Z",
+   "retrieved_at_utc": "2026-11-17T17:16:39Z",
    "http_status": 200,
    "bytes": 358,
    "sha256": "bf1048ea852f07e22f3227bc65f7f93b43d013cbf7d9cb7c975f11fd28a5f057",
    "file": "data/raw/page_fixtures/probe_chunk_standings.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 125
+   "elapsed_ms": 79
   },
   {
    "name": "probe_chunk_teamstats",
    "url": "https://www.nba.com/_next/static/chunks/pages/stats/teams/traditional-a0b7167e97b76271.js",
-   "retrieved_at_utc": "2026-11-17T17:07:01Z",
+   "retrieved_at_utc": "2026-11-17T17:16:39Z",
    "http_status": 200,
    "bytes": 859,
    "sha256": "c20de3a4db90a84c45a4403344a57a1086da2fabd0ec4a8e27d3a0534d6ef893",
    "file": "data/raw/page_fixtures/probe_chunk_teamstats.html.gz",
    "ok": true,
    "error": null,
-   "elapsed_ms": 95
+   "elapsed_ms": 139
   },
   {
    "name": "stats_scoreboard_json",
    "url": "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=11/16/2026&DayOffset=0",
-   "retrieved_at_utc": "2026-11-17T17:07:26Z",
+   "retrieved_at_utc": "2026-11-17T17:17:05Z",
    "http_status": null,
    "bytes": null,
    "sha256": null,
    "file": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 25116
+   "elapsed_ms": 25141
   },
   {
    "name": "cdn_scoreboard",
    "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
-   "retrieved_at_utc": "2026-11-17T17:07:26Z",
+   "retrieved_at_utc": "2026-11-17T17:17:05Z",
    "http_status": 403,
    "bytes": null,
    "sha256": null,
    "file": null,
    "ok": false,
    "error": "HTTP 403",
-   "elapsed_ms": 168
+   "elapsed_ms": 79
   }
  ],
  "summary": {
