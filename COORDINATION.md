@@ -4875,3 +4875,63 @@ The brief's buildable items are already implemented and green in this tree (roll
 | Live URL | https://wingbangboozle1-lang.github.io/NBA2/ |
 | Verification on record | schedule 2026-11-17: 5/5 committed games match official nba.com/schedule?date=2026-11-17 (game IDs, teams, arenas, cities; tip times left blank, not inferred); standings sourced to nba.com/standings with per-row retrieval stamps; 379 tests pass (79 v1 + 146 v2 + 67 v3 + 61 v4 + 26 v5); lint OK (1436 rows / 50 tables, every row sourced); all 6,780 internal links OK; site byte-identical to full v2→v3→v4→v5 rebuild. No value inferred or filled in. |
 
+## Session `arena/669bccab-nba2` — CLAIM (2026-11-17 UTC, branch `arena/669bccab-nba2`, base `d4fde59` = `main`)
+
+**Why:** the last scheduled refresh (run 44107633323) recorded `finals: failure`, `rolling: failure`. The sealed
+`sealed-2026-11-13.json` ledger (22 games, 11/14–11/16) is settled for only 11 games. Two gaps were confirmed on
+2026-11-17 against NBA.com: (a) 11/15 games 0022600242–44 were captured as "not final at retrieval" on 11/16 at
+02:05 UTC, although the v5 gamebook transcripts (`data/v5/gamebooks_2026-11-15.json`) already hold their official
+SCORE BY PERIOD rows and were never wired into `official_finals_union.json`; (b) the 11/16 games 0022600245–52 are
+Final on NBA.com but have no captured final in the committed union.
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| F-1 | Per-game official results feed for 11/14–11/16 (22 games): date, teams, final, quarter scores, source URLs | in progress | `arena/669bccab-nba2` | `verified/session-669bccab/**` (new), `data/raw/refresh_2026-11-17/**` (new) | NBA.com `games?date=` pages (finals) + statsdmz gamebook PDFs (SCORE BY PERIOD) |
+| F-2 | Wire the verified finals into the union and settle the sealed 11/13 ledger from official finals only | in progress | `arena/669bccab-nba2` | `data/raw/official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/**`, `data/v5/**` (regenerated), `site/**` (rebuilt by builders only) | Settle rule unchanged: final must match NBA.com game page AND quarter row must sum to final where a gamebook is read |
+| F-3 | Verify the Injuries banner shows report revision time and retrieval time; fix only if missing | unclaimed-check | `arena/669bccab-nba2` | `analysis/session-669bccab-*.md` | to be recorded |
+
+Sealed ledgers are not edited (`data/raw/ledger/**` stays byte-identical). Shared board is append-only.
+
+### Completion record — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+Scope note: the F-1 claim named `data/raw/refresh_2026-11-17/**`. The two per-game snapshots were written to
+`data/raw/results/` because the legacy union glob and the v4 `FINALS_SOURCES` read that path (amendment, not a conflict).
+Edits outside the listed F-2 file scope, all additive and logged here for integration review:
+`nba2/v4/settlement.py` (`FINALS_SOURCES` += two files), `nba2/v2/capture2.py` (`feed_rows()`, `feed_stamp()`; `results_rows()` unchanged),
+`nba2/v2/build.py` (results page and KPI read the window feed; blank quarters render "blank — not confirmed").
+
+| ID | Result | Evidence |
+|---|---|---|
+| F-1 | **done.** 22-game feed (11/14–11/16): date, teams, final, quarters, source URLs, gamebook URLs. Blank = not confirmed. | `verified/session-669bccab/build_feed.py`, `verified/session-669bccab/official_results_feed_2026-11-15_to_16.json`, `data/raw/results/results_2026-11-16.json`, `data/raw/results/results_2026-11-15_recheck_2026-11-17.json`, `analysis/session-669bccab-results-and-f3.md` |
+| F-2 | **done.** sealed-2026-11-13: **11 → 22 of 22** settled. v4: 37 → **61 of 83** graded, 22 distinct games. sealed-2026-11-14: 11 → 22 of 27 (the 5 open are the 11/17 games 253–257). All seal hashes unchanged; v4 settlement hash `cd93d195…` re-verifies. | `data/raw/official_finals_union.json` (31 records, 0 conflicts, 0 rejected quarter rows), `data/settlement.json`, `data/v4/settlement/**` |
+| F-3 | **checked, no fix needed.** The Injuries banner shows the revision time and the retrieval time. Stale: it shows the 11/15 06:15 AM ET release. Request to the injury chain: store and show the 11/16–11/17 releases. | `site/injuries.html`, `analysis/session-669bccab-results-and-f3.md` |
+
+**Corrections to the notes on this board.** (1) The settle rule is the repo's v4 rule: a game is settled when a committed
+official final covers it AND, where a period row was captured, that row sums to the final. It is **not** a stricter
+"quarters must always be present" rule. Games 240 (DAL quarters blank) and 249 (HOU quarters blank) therefore settle on
+their verified finals, with the blank cells flagged. (2) F-V5-05 (NYK@TOR, 0022600241) is an overtime game. Its OT1
+quarter rows sum to the final, so it is verified. The flag stays as information.
+
+**Flags carried:** F-V5-04 (240, DAL period row header-only), 249 HOU period row absent from the gamebook PDF.
+
+**Not done (carried):** the scheduled refresh root cause (run 44107633323: finals and rolling failed). The probe shows
+`cdn.nba.com` scoreboard 403 and `stats.nba.com` timing out from the runner. Not changed here.
+
+**Verification run (all green on the rebuilt tree):** `nba2/tests` 79 OK · `nba2/v2` OK · `nba2/v3` OK · `nba2/v4` OK ·
+`nba2/v5` OK · `backtest/tests` OK · `nba2.pipeline.lint` LINT OK (1436 rows / 50 tables) · `nba2.v2.check` 0/0 ·
+`nba2.v4.check` 8/8 · `nba2.v3.check` 7 pass / 1 advisory fail (the freshness gate, pre-existing). Sealed-ledger sha256 unchanged.
+
+### Conflict log — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+- **Overlap with open PR #115 (`arena/aa1d3c07-nba2`, created 15:57Z).** That PR covers the same 11/16 finals (8 games) and the
+  same 11/15 finals (0022600242–44) and the same settlement re-run, and it writes `data/raw/results/results_2026-11-16.json`,
+  the same path as this session's file. This session's claim F-1/F-2 is on the board from 15:47:29Z, earlier than that PR.
+  No claim for `aa1d3c07` appears on the board. Not closed and not edited. **Handoff:** PR #117 (this session) is the
+  board-claimed path. Whichever PR merges first, the other must be rebased. Owner of `aa1d3c07` to rebase or close its duplicate,
+  and the integration session to confirm the surviving file.
+- **Scope amendments** (no other session's file was edited): F-1 path moved from `data/raw/refresh_2026-11-17/**` to
+  `data/raw/results/**` (readers of the legacy glob and v4 `FINALS_SOURCES`). `nba2/v4/settlement.py`, `nba2/v2/capture2.py`, and
+  `nba2/v2/build.py` were edited additively (see completion record above).
+- **CI note:** the `verify` job failed on the first run of PR #117 because the v1 `pages/*.html` settlement lines were not regenerated.
+  Fixed in commit `pages/` regeneration on this branch; the job is re-run on the new head.
+- **PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/117
