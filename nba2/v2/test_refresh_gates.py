@@ -96,13 +96,17 @@ class TestSlateGate(unittest.TestCase):
         }
 
     def test_fetch_slate_records_every_successful_date_query(self):
-        empty_scoreboard = {"resultSets": [{"headers": ["gameId", "homeTeamTricode", "awayTeamTricode",
-                                                          "gameEt", "arenaName"], "rowSet": []}]}
-        with mock.patch.object(R, "http_json", return_value=empty_scoreboard) as get:
+        # Transport rewritten 2026-11-17: the slate is read from the server-rendered
+        # www.nba.com/games?date= page, because the stats.nba.com scoreboard JSON this
+        # mocked times out from a GitHub-hosted runner (measured, see
+        # data/raw/page_fixtures/transport_probe.json). The rule under test is unchanged:
+        # a date that was fetched successfully counts as coverage even with no games.
+        with mock.patch.object(R, "fetch_day_games", return_value=[]) as get:
             result = R.fetch_slate(self.DATES)
         self.assertEqual(result["covered_dates"], self.DATES)
         self.assertEqual(result["games"], [])
         self.assertEqual(get.call_count, 4)
+        self.assertEqual([call.args[0] for call in get.call_args_list], self.DATES)
 
     def test_requires_all_four_successful_schedule_fetches(self):
         slate = self.valid_slate()
