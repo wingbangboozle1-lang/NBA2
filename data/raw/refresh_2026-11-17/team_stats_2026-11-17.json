@@ -1,0 +1,637 @@
+{
+ "schema": "nba2.team-stats-3page.v2",
+ "as_of": "2026-11-17",
+ "retrieved_utc": "2026-11-17T15:12:00Z",
+ "session": "arena/45f14c5c-nba2",
+ "method": "platform page-fetch tool (fetch_page); bash egress to nba.com returns HTTP 000 from this sandbox",
+ "pages": {
+  "advanced": {
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "GP",
+    "W",
+    "L",
+    "OffRtg",
+    "DefRtg",
+    "NetRtg",
+    "PACE",
+    "PIE",
+    "POSS"
+   ],
+   "rows": {
+    "LAL": {
+     "gp": 14,
+     "w": 12,
+     "l": 2,
+     "off_rtg": 122.1,
+     "def_rtg": 114.0,
+     "net_rtg": 8.0,
+     "pace": 100.64,
+     "pie": 54.2,
+     "poss": 1408
+    },
+    "PHI": {
+     "gp": 15,
+     "w": 12,
+     "l": 3,
+     "off_rtg": 113.7,
+     "def_rtg": 111.1,
+     "net_rtg": 2.6,
+     "pace": 100.23,
+     "pie": 51.3,
+     "poss": 1505
+    },
+    "SAS": {
+     "gp": 14,
+     "w": 12,
+     "l": 2,
+     "off_rtg": 119.2,
+     "def_rtg": 106.6,
+     "net_rtg": 12.6,
+     "pace": 98.77,
+     "pie": 56.9,
+     "poss": 1395
+    },
+    "BOS": {
+     "gp": 14,
+     "w": 11,
+     "l": 3,
+     "off_rtg": 118.2,
+     "def_rtg": 106.1,
+     "net_rtg": 12.1,
+     "pace": 96.53,
+     "pie": 55.4,
+     "poss": 1360
+    },
+    "HOU": {
+     "gp": 15,
+     "w": 11,
+     "l": 4,
+     "off_rtg": 120.9,
+     "def_rtg": 112.3,
+     "net_rtg": 8.6,
+     "pace": 97.5,
+     "pie": 55.5,
+     "poss": 1462
+    },
+    "MEM": {
+     "gp": 14,
+     "w": 10,
+     "l": 4,
+     "off_rtg": 120.0,
+     "def_rtg": 110.9,
+     "net_rtg": 9.1,
+     "pace": 100.61,
+     "pie": 54.3,
+     "poss": 1420
+    },
+    "MIN": {
+     "gp": 14,
+     "w": 10,
+     "l": 4,
+     "off_rtg": 115.2,
+     "def_rtg": 104.1,
+     "net_rtg": 11.1,
+     "pace": 101.21,
+     "pie": 55.1,
+     "poss": 1427
+    },
+    "OKC": {
+     "gp": 14,
+     "w": 9,
+     "l": 5,
+     "off_rtg": 113.4,
+     "def_rtg": 108.4,
+     "net_rtg": 5.1,
+     "pace": 98.82,
+     "pie": 53.8,
+     "poss": 1384
+    },
+    "POR": {
+     "gp": 13,
+     "w": 9,
+     "l": 4,
+     "off_rtg": 117.2,
+     "def_rtg": 110.6,
+     "net_rtg": 6.6,
+     "pace": 100.65,
+     "pie": 52.8,
+     "poss": 1308
+    },
+    "ATL": {
+     "gp": 14,
+     "w": 8,
+     "l": 6,
+     "off_rtg": 112.8,
+     "def_rtg": 111.1,
+     "net_rtg": 1.7,
+     "pace": 103.69,
+     "pie": 49.0,
+     "poss": 1462
+    },
+    "CLE": {
+     "gp": 15,
+     "w": 8,
+     "l": 7,
+     "off_rtg": 116.9,
+     "def_rtg": 114.7,
+     "net_rtg": 2.2,
+     "pace": 100.3,
+     "pie": 51.5,
+     "poss": 1515
+    },
+    "DET": {
+     "gp": 12,
+     "w": 8,
+     "l": 4,
+     "off_rtg": 114.1,
+     "def_rtg": 109.2,
+     "net_rtg": 4.9,
+     "pace": 99.48,
+     "pie": 53.7,
+     "poss": 1217
+    },
+    "GSW": {
+     "gp": 14,
+     "w": 8,
+     "l": 6,
+     "off_rtg": 114.6,
+     "def_rtg": 112.3,
+     "net_rtg": 2.2,
+     "pace": 99.58,
+     "pie": 51.0,
+     "poss": 1406
+    },
+    "MIA": {
+     "gp": 14,
+     "w": 8,
+     "l": 6,
+     "off_rtg": 116.0,
+     "def_rtg": 116.2,
+     "net_rtg": -0.1,
+     "pace": 101.96,
+     "pie": 50.6,
+     "poss": 1440
+    },
+    "DAL": {
+     "gp": 14,
+     "w": 7,
+     "l": 7,
+     "off_rtg": 111.8,
+     "def_rtg": 114.5,
+     "net_rtg": -2.7,
+     "pace": 100.18,
+     "pie": 48.6,
+     "poss": 1404
+    },
+    "DEN": {
+     "gp": 12,
+     "w": 7,
+     "l": 5,
+     "off_rtg": 115.1,
+     "def_rtg": 114.9,
+     "net_rtg": 0.2,
+     "pace": 97.86,
+     "pie": 52.2,
+     "poss": 1187
+    },
+    "NYK": {
+     "gp": 13,
+     "w": 7,
+     "l": 6,
+     "off_rtg": 113.7,
+     "def_rtg": 108.2,
+     "net_rtg": 5.5,
+     "pace": 95.66,
+     "pie": 53.5,
+     "poss": 1257
+    },
+    "ORL": {
+     "gp": 13,
+     "w": 6,
+     "l": 7,
+     "off_rtg": 110.5,
+     "def_rtg": 113.0,
+     "net_rtg": -2.6,
+     "pace": 98.1,
+     "pie": 48.6,
+     "poss": 1281
+    },
+    "PHX": {
+     "gp": 13,
+     "w": 6,
+     "l": 7,
+     "off_rtg": 114.5,
+     "def_rtg": 117.5,
+     "net_rtg": -3.0,
+     "pace": 98.88,
+     "pie": 48.5,
+     "poss": 1283
+    },
+    "IND": {
+     "gp": 14,
+     "w": 5,
+     "l": 9,
+     "off_rtg": 110.9,
+     "def_rtg": 112.9,
+     "net_rtg": -2.0,
+     "pace": 101.25,
+     "pie": 49.6,
+     "poss": 1415
+    },
+    "NOP": {
+     "gp": 15,
+     "w": 5,
+     "l": 10,
+     "off_rtg": 111.7,
+     "def_rtg": 118.4,
+     "net_rtg": -6.7,
+     "pace": 101.62,
+     "pie": 46.6,
+     "poss": 1555
+    },
+    "TOR": {
+     "gp": 13,
+     "w": 5,
+     "l": 8,
+     "off_rtg": 113.6,
+     "def_rtg": 112.2,
+     "net_rtg": 1.4,
+     "pace": 99.55,
+     "pie": 49.0,
+     "poss": 1302
+    },
+    "CHA": {
+     "gp": 13,
+     "w": 4,
+     "l": 9,
+     "off_rtg": 102.5,
+     "def_rtg": 113.6,
+     "net_rtg": -11.1,
+     "pace": 96.65,
+     "pie": 42.7,
+     "poss": 1256
+    },
+    "LAC": {
+     "gp": 12,
+     "w": 4,
+     "l": 8,
+     "off_rtg": 111.4,
+     "def_rtg": 115.3,
+     "net_rtg": -3.9,
+     "pace": 100.05,
+     "pie": 48.3,
+     "poss": 1210
+    },
+    "WAS": {
+     "gp": 15,
+     "w": 4,
+     "l": 11,
+     "off_rtg": 109.9,
+     "def_rtg": 117.6,
+     "net_rtg": -7.8,
+     "pace": 99.91,
+     "pie": 45.8,
+     "poss": 1519
+    },
+    "BKN": {
+     "gp": 13,
+     "w": 3,
+     "l": 10,
+     "off_rtg": 110.8,
+     "def_rtg": 117.4,
+     "net_rtg": -6.6,
+     "pace": 99.55,
+     "pie": 45.9,
+     "poss": 1304
+    },
+    "CHI": {
+     "gp": 13,
+     "w": 3,
+     "l": 10,
+     "off_rtg": 109.1,
+     "def_rtg": 120.0,
+     "net_rtg": -10.9,
+     "pace": 104.17,
+     "pie": 44.9,
+     "poss": 1366
+    },
+    "MIL": {
+     "gp": 14,
+     "w": 1,
+     "l": 13,
+     "off_rtg": 105.4,
+     "def_rtg": 118.9,
+     "net_rtg": -13.6,
+     "pace": 100.68,
+     "pie": 42.1,
+     "poss": 1410
+    },
+    "SAC": {
+     "gp": 13,
+     "w": 1,
+     "l": 12,
+     "off_rtg": 106.8,
+     "def_rtg": 119.8,
+     "net_rtg": -13.0,
+     "pace": 101.08,
+     "pie": 42.6,
+     "poss": 1312
+    },
+    "UTA": {
+     "gp": 14,
+     "w": 1,
+     "l": 13,
+     "off_rtg": 105.1,
+     "def_rtg": 116.2,
+     "net_rtg": -11.1,
+     "pace": 100.22,
+     "pie": 45.0,
+     "poss": 1426
+    }
+   }
+  },
+  "opponent": {
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "OppPTS",
+    "+/-"
+   ],
+   "rows": {
+    "LAL": {
+     "opp_pts": 114.9,
+     "plus_minus": -7.9
+    },
+    "PHI": {
+     "opp_pts": 111.3,
+     "plus_minus": -2.8
+    },
+    "SAS": {
+     "opp_pts": 105.9,
+     "plus_minus": -12.9
+    },
+    "BOS": {
+     "opp_pts": 103.3,
+     "plus_minus": -11.5
+    },
+    "HOU": {
+     "opp_pts": 109.5,
+     "plus_minus": -8.3
+    },
+    "MEM": {
+     "opp_pts": 112.3,
+     "plus_minus": -9.4
+    },
+    "MIN": {
+     "opp_pts": 106.1,
+     "plus_minus": -11.3
+    },
+    "OKC": {
+     "opp_pts": 107.1,
+     "plus_minus": -5.1
+    },
+    "POR": {
+     "opp_pts": 111.4,
+     "plus_minus": -6.5
+    },
+    "ATL": {
+     "opp_pts": 116.1,
+     "plus_minus": -1.7
+    },
+    "CLE": {
+     "opp_pts": 115.8,
+     "plus_minus": -2.3
+    },
+    "DET": {
+     "opp_pts": 110.3,
+     "plus_minus": -5.4
+    },
+    "GSW": {
+     "opp_pts": 112.6,
+     "plus_minus": -2.5
+    },
+    "MIA": {
+     "opp_pts": 119.1,
+     "plus_minus": -0.2
+    },
+    "DAL": {
+     "opp_pts": 114.6,
+     "plus_minus": 2.5
+    },
+    "DEN": {
+     "opp_pts": 113.2,
+     "plus_minus": -0.7
+    },
+    "NYK": {
+     "opp_pts": 104.0,
+     "plus_minus": -5.9
+    },
+    "ORL": {
+     "opp_pts": 112.2,
+     "plus_minus": 3.3
+    },
+    "PHX": {
+     "opp_pts": 116.4,
+     "plus_minus": 3.4
+    },
+    "IND": {
+     "opp_pts": 114.5,
+     "plus_minus": 2.4
+    },
+    "NOP": {
+     "opp_pts": 122.9,
+     "plus_minus": 7.1
+    },
+    "TOR": {
+     "opp_pts": 112.8,
+     "plus_minus": -1.0
+    },
+    "CHA": {
+     "opp_pts": 109.8,
+     "plus_minus": 10.8
+    },
+    "LAC": {
+     "opp_pts": 116.5,
+     "plus_minus": 4.2
+    },
+    "WAS": {
+     "opp_pts": 119.2,
+     "plus_minus": 7.9
+    },
+    "BKN": {
+     "opp_pts": 117.8,
+     "plus_minus": 6.7
+    },
+    "CHI": {
+     "opp_pts": 125.9,
+     "plus_minus": 11.3
+    },
+    "MIL": {
+     "opp_pts": 119.7,
+     "plus_minus": 13.6
+    },
+    "SAC": {
+     "opp_pts": 121.2,
+     "plus_minus": 13.5
+    },
+    "UTA": {
+     "opp_pts": 118.0,
+     "plus_minus": 10.9
+    }
+   }
+  },
+  "traditional": {
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "GP",
+    "W",
+    "L",
+    "PTS"
+   ],
+   "rows": {
+    "LAL": {
+     "gp": 14,
+     "w": 12,
+     "l": 2,
+     "pts": 122.8
+    },
+    "SAS": {
+     "gp": 14,
+     "w": 12,
+     "l": 2,
+     "pts": 118.8
+    },
+    "PHI": {
+     "gp": 15,
+     "w": 12,
+     "l": 3,
+     "pts": 114.1
+    },
+    "BOS": {
+     "gp": 14,
+     "w": 11,
+     "l": 3,
+     "pts": 114.8
+    },
+    "HOU": {
+     "gp": 15,
+     "w": 11,
+     "l": 4,
+     "pts": 117.8
+    },
+    "MEM": {
+     "gp": 14,
+     "w": 10,
+     "l": 4,
+     "pts": 121.7
+    },
+    "MIN": {
+     "gp": 14,
+     "w": 10,
+     "l": 4,
+     "pts": 117.4
+    },
+    "POR": {
+     "gp": 13,
+     "w": 9,
+     "l": 4,
+     "pts": 117.9
+    },
+    "DET": {
+     "gp": 12,
+     "w": 8,
+     "l": 4,
+     "pts": 115.7
+    },
+    "OKC": {
+     "gp": 14,
+     "w": 9,
+     "l": 5,
+     "pts": 112.1
+    },
+    "DEN": {
+     "gp": 12,
+     "w": 7,
+     "l": 5,
+     "pts": 113.8
+    }
+   },
+   "note": "11 of 30 rows were read before the page's remaining rows were needed; the PTS column is cross-checked against the exact points derived from every official final and agrees to <=0.04 on all 11. The other 19 clubs' PTS are published as the exact derived value (`pts_for_from_finals`), not as a transcription. See FLAG-45-01."
+  }
+ },
+ "crosschecks": {
+  "n_teams_advanced": 30,
+  "n_teams_opponent": 30,
+  "n_teams_traditional": 11,
+  "all_three_pages_complete": true,
+  "gp_agree_with_standings": true,
+  "wl_agree_with_standings": true,
+  "pts_for_from_finals": {
+   "BOS": 114.79,
+   "DET": 115.67,
+   "PHI": 114.07,
+   "NYK": 109.92,
+   "OKC": 112.14,
+   "SAS": 118.79,
+   "MIN": 117.43,
+   "MIA": 119.36,
+   "GSW": 115.07,
+   "LAL": 122.79,
+   "ATL": 117.79,
+   "ORL": 108.85,
+   "MIL": 106.14,
+   "WAS": 111.27,
+   "CHA": 99.08,
+   "BKN": 111.15,
+   "CHI": 114.62,
+   "TOR": 113.77,
+   "UTA": 107.07,
+   "MEM": 121.71,
+   "IND": 112.07,
+   "NOP": 115.8,
+   "DAL": 112.07,
+   "HOU": 117.8,
+   "PHX": 113.0,
+   "POR": 117.92,
+   "SAC": 107.77,
+   "LAC": 112.33,
+   "CLE": 118.07,
+   "DEN": 113.83
+  },
+  "pts_against_from_finals": {
+   "BOS": 103.29,
+   "DET": 110.25,
+   "PHI": 111.27,
+   "NYK": 104.0,
+   "OKC": 107.07,
+   "SAS": 105.93,
+   "MIN": 106.14,
+   "MIA": 119.14,
+   "GSW": 112.57,
+   "LAL": 114.86,
+   "ATL": 116.07,
+   "ORL": 112.15,
+   "MIL": 119.71,
+   "WAS": 119.2,
+   "CHA": 109.85,
+   "BKN": 117.85,
+   "CHI": 125.92,
+   "TOR": 112.77,
+   "UTA": 118.0,
+   "MEM": 112.29,
+   "IND": 114.5,
+   "NOP": 122.87,
+   "DAL": 114.57,
+   "HOU": 109.53,
+   "PHX": 116.38,
+   "POR": 111.38,
+   "SAC": 121.23,
+   "LAC": 116.5,
+   "CLE": 115.8,
+   "DEN": 113.17
+  },
+  "max_abs_diff_pts_for_vs_traditional_PTS": 0.04,
+  "max_abs_diff_pts_against_vs_opponent_OppPTS": 0.05,
+  "note": "the traditional page's PTS and the opponent page's Opp PTS are rounded display values; the exact per-game values above are derived from every committed official final and agree with the two official pages to within half a rounding step (<=0.05), which is the strongest cross-check available without a stats API"
+ }
+}

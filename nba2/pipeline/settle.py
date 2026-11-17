@@ -124,9 +124,17 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
         if a is None or h is None:
             continue
         # Quarter check: a quarter row that does not reproduce the final is not trusted.
+        #
+        # Same schema problem as the source link below: the v4 gamebook feed spells the
+        # period rows ``away_q`` / ``home_q``. Reading only the old spelling meant the
+        # quarters were dropped from the union, so the published results page showed a final
+        # score with no period breakdown even though the gamebook had supplied one. Both
+        # spellings are accepted and the sum check still gates trust.
+        aq = r.get("away_quarters", r.get("away_q"))
+        hq = r.get("home_quarters", r.get("home_q"))
         ot = r.get("ot_quarters") if isinstance(r.get("ot_quarters"), dict) else {}
-        qa = _quarters_ok(a, r.get("away_quarters"), ot.get("away") or [])
-        qh = _quarters_ok(h, r.get("home_quarters"), ot.get("home") or [])
+        qa = _quarters_ok(a, aq, ot.get("away") or [])
+        qh = _quarters_ok(h, hq, ot.get("home") or [])
         if qa is False or qh is False:
             rejected.append({"game_id": gid, "source": name,
                              "reason": "quarter row does not sum to the final score; source ignored for this game"})
@@ -135,10 +143,17 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
             "game_id": gid,
             "away": r.get("away"), "home": r.get("home"),
             "away_pts": a, "home_pts": h,
-            "source": r.get("source_url") or r.get("source") or "",
+            # A results feed may name its link several ways depending on its schema
+            # version. The v4 gamebook feed (nba2.results-feed.official-gamebook.v1) carries
+            # ``final_source_url`` (the nba.com game page) and ``gamebook_url`` (the PDF), and
+            # names no ``source_url`` at all — so before this fallback existed its eight 11/16
+            # records reached the union with an EMPTY source and no link back to the league.
+            # Preference order: the score's own page, then the gamebook it was read from.
+            "source": (r.get("source_url") or r.get("source")
+                       or r.get("final_source_url") or r.get("gamebook_url") or ""),
             "origin": name,
-            "away_quarters": r.get("away_quarters") if qa else None,
-            "home_quarters": r.get("home_quarters") if qh else None,
+            "away_quarters": aq if qa else None,
+            "home_quarters": hq if qh else None,
             "ot_periods": r.get("ot_periods"),
             "ot_quarters": {"away": ot.get("away"), "home": ot.get("home")} if ot else None,
         })

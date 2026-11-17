@@ -63,7 +63,8 @@ def _bucket(rows: list[dict]) -> dict:
 
 def diff(a: dict, b: dict) -> dict:
     """Mechanical diff of two parsed releases."""
-    A, B = _bucket(a["parsed"]["rows"]), _bucket(b["parsed"]["rows"])
+    A_raw, B_raw = a["parsed"]["rows"], b["parsed"]["rows"]
+    A, B = _bucket(A_raw), _bucket(B_raw)
     ka, kb = set(A), set(B)
     status_changes, reason_only, added, removed, became_unread, resolved = [], [], [], [], [], []
 
@@ -84,10 +85,27 @@ def diff(a: dict, b: dict) -> dict:
     for k in sorted(ka - kb):
         removed.append({"key": k, "status": A[k]["status"], "reason": A[k]["reason"]})
 
-    # clubs that moved from "NOT YET SUBMITTED" to a real filing
-    for k in sorted(ka & kb):
-        if A[k]["placeholder"] and not B[k]["placeholder"]:
-            resolved.append({"key": k})
+    # Clubs that moved from "NOT YET SUBMITTED" to a real filing.
+    #
+    # THE BUG THIS REPLACES (found 2026-11-17, session arena/45f14c5c-nba2)
+    # ---------------------------------------------------------------------
+    # The loop used to intersect the two key sets. A placeholder's key ends in the
+    # sentinel "<placeholder>", while every real row's key ends in a player name, so a
+    # club's placeholder and that club's filing can never share a key. The intersection
+    # was therefore empty by construction and ``placeholder_resolved`` could only ever be
+    # 0 - it was never a measurement. The published injury page showed "0 clubs resolved"
+    # beside "33 rows added", which is the same event described two contradictory ways.
+    #
+    # A club is identified by (date, matchup, team); its filing status is that club's
+    # placeholder flag, so the comparison is done at club granularity and each resolution
+    # reports how many player rows replaced the placeholder.
+    club_a = {(r["date"], r["matchup"], r["team"]): r for r in A_raw}
+    club_b = {(r["date"], r["matchup"], r["team"]): r for r in B_raw}
+    for k in sorted(set(club_a) & set(club_b)):
+        if club_a[k]["placeholder"] and not club_b[k]["placeholder"]:
+            resolved.append({"key": k, "players_filed": sum(
+                1 for kk in B if kk[0] == k[0] and kk[1] == k[1] and kk[2] == k[2]
+                and kk[3] != "<placeholder>")})
 
     return {
         "from": {"stamp_et": a["stamp_et"], "url": a["url"],
@@ -101,8 +119,9 @@ def diff(a: dict, b: dict) -> dict:
                    "became_unread": len(became_unread),
                    "reason_changed_only": len(reason_only),
                    "placeholder_resolved": len(resolved),
-                   "still_placeholder": sum(1 for k in ka & kb
-                                            if A[k]["placeholder"] and B[k]["placeholder"])},
+                   "still_placeholder": sum(
+                       1 for k in set(club_a) & set(club_b)
+                       if club_a[k]["placeholder"] and club_b[k]["placeholder"])},
         "status_changes": status_changes,
         "reason_changes": reason_only,
         "added": added,

@@ -1,0 +1,1428 @@
+{
+ "schema": "nba2.injury-delta.v3",
+ "from_release": "2026-11-16 01:00 PM ET",
+ "from_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+ "to_release": "2026-11-17 10:30 AM ET",
+ "to_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_10_30AM.pdf",
+ "computed_at_utc": "2026-11-17T15:20:00Z",
+ "session": "arena/45f14c5c-nba2",
+ "method": "nba2.v4.injury_diff.diff over the two committed transcripts (match key: date, matchup, team, player)",
+ "diff": {
+  "from": {
+   "stamp_et": "2026-11-16 01:00 PM ET",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+   "retrieved_utc": "2026-11-16T18:38:00Z",
+   "rows": 83
+  },
+  "to": {
+   "stamp_et": "2026-11-17 10:30 AM ET",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_10_30AM.pdf",
+   "retrieved_utc": "2026-11-17T15:05:00Z",
+   "rows": 59
+  },
+  "match_key": [
+   "date",
+   "matchup",
+   "team",
+   "player"
+  ],
+  "counts": {
+   "status_changed": 0,
+   "reason_changed_only": 0,
+   "added": 57,
+   "removed": 81,
+   "became_unread": 0,
+   "placeholder_resolved": 0,
+   "still_placeholder": 2
+  },
+  "status_changes": [],
+  "reason_changes": [],
+  "added": [
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "Ajayi, Michael"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "Boswell, Kylan"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "Knueppel, Kon"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hamstring Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "Schroder, Dennis"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hamstring Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "Steinbach, Hannes"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Los Angeles Lakers",
+     "Grimes, Quentin"
+    ],
+    "status": "Available",
+    "reason": "Injury/Illness - Right Finger Splint"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Los Angeles Lakers",
+     "Kessler, Walker"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Lower Leg"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Los Angeles Lakers",
+     "Reaves, Austin"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Heel Contusion / Bone Bruise"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Duren, Jalen"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Hamstring Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Holland II, Ronald"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Knee Contusion / Bone Bruise"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Joe, Isaiah"
+    ],
+    "status": "Doubtful",
+    "reason": "Injury/Illness - Right Hip Contusion"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Okorie, Ebuka"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Onyenso, Ugonna"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Prince, Taurean"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Soreness"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "Detroit Pistons",
+     "Robinson, Duncan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Quadriceps Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "San Antonio Spurs",
+     "Brown, Maliq"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "San Antonio Spurs",
+     "Gillespie, Ja'Kobi"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "San Antonio Spurs",
+     "Harris, Tobias"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Calf Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "San Antonio Spurs",
+     "Quaintance, Jayden"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Surgery"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "Toronto Raptors",
+     "Bittle, Nate"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Foot Avulsion Fracture"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "Toronto Raptors",
+     "Leonard, Kawhi"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Knee Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "Toronto Raptors",
+     "McCullar Jr., Kevin"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "Toronto Raptors",
+     "Smith, Malachi"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "LA Clippers",
+     "Beal, Bradley"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "LA Clippers",
+     "Ingram, Brandon"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Heel Surgery"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "LA Clippers",
+     "Miller, Jordan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Rotator Cuff Surgery"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "LA Clippers",
+     "Niederhauser, Yanic Konan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Lisfranc Surgery"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Bufkin, Kobe"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Hayes, Jaxson"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Knee Strain"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Ingram, Harrison"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Jackson Jr., Jaren"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right MCL Tear"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Markkanen, Lauri"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Hand Fracture"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "Nurkic, Jusuf"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Right Foot; 2nd Plantar Plate Tear"
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "ATL@OKC",
+     "Atlanta Hawks",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "ATL@OKC",
+     "Oklahoma City Thunder",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "BOS@DEN",
+     "Boston Celtics",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "BOS@DEN",
+     "Denver Nuggets",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "CHI@BKN",
+     "Brooklyn Nets",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "CHI@BKN",
+     "Chicago Bulls",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "DET@NOP",
+     "Detroit Pistons",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "DET@NOP",
+     "New Orleans Pelicans",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "GSW@DAL",
+     "Dallas Mavericks",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "GSW@DAL",
+     "Golden State Warriors",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "HOU@IND",
+     "Houston Rockets",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "HOU@IND",
+     "Indiana Pacers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "MEM@CLE",
+     "Cleveland Cavaliers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "MEM@CLE",
+     "Memphis Grizzlies",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "MIL@MIA",
+     "Miami Heat",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "MIL@MIA",
+     "Milwaukee Bucks",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "PHI@ORL",
+     "Orlando Magic",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "PHI@ORL",
+     "Philadelphia 76ers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "PHX@SAC",
+     "Phoenix Suns",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "PHX@SAC",
+     "Sacramento Kings",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "UTA@LAL",
+     "Los Angeles Lakers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "UTA@LAL",
+     "Utah Jazz",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "WAS@TOR",
+     "Toronto Raptors",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-18",
+     "WAS@TOR",
+     "Washington Wizards",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   }
+  ],
+  "removed": [
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Chicago Bulls",
+     "Awaka, Tobe"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Disc Irritation"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Chicago Bulls",
+     "Robinson, Orlando"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Chicago Bulls",
+     "Sellers, Jaylin"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Chicago Bulls",
+     "Smith, Jalen"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Left Finger Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Chicago Bulls",
+     "Wilson, Caleb"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Metacarpal Fracture"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Diop, Khalifa"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Merrill, Sam"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Elbow Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Mobley, Evan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Great Toe Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Tomlin, Nae'Qwan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Low Back Stress Reaction"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Tyson, Jaylon"
+    ],
+    "status": "Doubtful",
+    "reason": "Injury/Illness - Right Ankle Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Udeh, Jr., Ernest"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "CHI@CLE",
+     "Cleveland Cavaliers",
+     "Watson, Peyton"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Right Abdominal Soreness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Butler III, Jimmy"
+    ],
+    "status": "",
+    "reason": "Injury/Illness - Right ACL Repair / Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Curry, Stephen"
+    ],
+    "status": "Out",
+    "reason": ""
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Moody, Moses"
+    ],
+    "status": "Out",
+    "reason": ""
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Porzingis, Kristaps"
+    ],
+    "status": "Out",
+    "reason": ""
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Santos, Gui"
+    ],
+    "status": "Questionable",
+    "reason": ""
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "Golden State Warriors",
+     "Williams, Brandon"
+    ],
+    "status": "Out",
+    "reason": ""
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Dia, Malik"
+    ],
+    "status": "Questionable",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Mathurin, Bennedict"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Plantar Fasciitis"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "McGowens, Bryce"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Elbow Infection"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Murphy III, Trey"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Bilateral Patellar Tendinopathy"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Murray, Dejounte"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Ankle Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Pierre Jr., Jaron"
+    ],
+    "status": "Questionable",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "GSW@NOP",
+     "New Orleans Pelicans",
+     "Watford, Trendon"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Ankle Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Adams, Steven"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Lower Leg Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Capela, Clint"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Ankle Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Copeland, Quadir"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Phillips, Julian"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Smart, Marcus"
+    ],
+    "status": "Out",
+    "reason": "League Suspension"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Houston Rockets",
+     "Thompson, Amen"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Left Knee Soreness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Miami Heat",
+     "Goldin, Vladislav"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Miami Heat",
+     "Jovic, Nikola"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Illness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Miami Heat",
+     "Larsson, Pelle"
+    ],
+    "status": "Doubtful",
+    "reason": "Injury/Illness - Illness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "HOU@MIA",
+     "Miami Heat",
+     "Thompson, Klay"
+    ],
+    "status": "Available",
+    "reason": "Injury/Illness - Left Ankle Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Edey, Zach"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Left Ankle Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Jackson, GG"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left 5th Metatarsal"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Jerome, Ty"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Hip Soreness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Pippen Jr., Scotty"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Lumbar Disc Herniation"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Post, Quinten"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Concussion Protocol"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Saunders, Richie"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Memphis Grizzlies",
+     "Stewart, Isaiah"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Illness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Beekman, Reece"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right AC Joint Injury"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Champagne, Justin"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Foot Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Johnson, Tre"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Low Back Soreness"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Okpara, Felix"
+    ],
+    "status": "Questionable",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Vukcevic, Tristan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hip Impingement"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "MEM@WAS",
+     "Washington Wizards",
+     "Watkins, Jamir"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left ACL Repair / Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "ORL@BOS",
+     "Orlando Magic",
+     "Banchero, Paolo"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right High Ankle Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "ORL@BOS",
+     "Orlando Magic",
+     "Isaac, Jonathan"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Knee Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "ORL@BOS",
+     "Orlando Magic",
+     "Nelson, Izaiyah"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Ankle Injury Recovery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "ORL@BOS",
+     "Orlando Magic",
+     "Penda, Noah"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Partially Torn Hamstring"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Brooklyn Nets",
+     "Jefferson, Joshua"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Brooklyn Nets",
+     "Nelson, Grant"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Brooklyn Nets",
+     "Powell, Drake"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Brooklyn Nets",
+     "Saraf, Ben"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Philadelphia 76ers",
+     "Barlow, Dominick"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Low Back Stress Reaction"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Philadelphia 76ers",
+     "Bona, Adem"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Cervical Spine Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Philadelphia 76ers",
+     "Embiid, Joel"
+    ],
+    "status": "Questionable",
+    "reason": "Injury/Illness - Right Foot Plantar Fascia Injury Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Philadelphia 76ers",
+     "Hukporti, Ariel"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Achilles Tendon Rupture / Tear"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHI@BKN",
+     "Philadelphia 76ers",
+     "James, LeBron"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Low Back/Sciatica Management"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHX@DEN",
+     "Denver Nuggets",
+     "Holmes II, DaRon"
+    ],
+    "status": "Out",
+    "reason": "G League - On Assignment"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHX@DEN",
+     "Denver Nuggets",
+     "Nembhard, Ryan"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHX@DEN",
+     "Denver Nuggets",
+     "Strawther, Julian"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Knee Sprain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHX@DEN",
+     "Denver Nuggets",
+     "Whitmore, Cam"
+    ],
+    "status": "Out",
+    "reason": "G League - Two-Way"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "PHX@DEN",
+     "Phoenix Suns",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Minnesota Timberwolves",
+     "Beringer, Joan"
+    ],
+    "status": "Available",
+    "reason": "Injury/Illness - Face Mask"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Minnesota Timberwolves",
+     "Clark, Jaylen"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Hamstring Strain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Minnesota Timberwolves",
+     "DiVincenzo, Donte"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Minnesota Timberwolves",
+     "Edwards, Anthony"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Arthroscopy"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Portland Trail Blazers",
+     "Krejci, Vit"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Ankle Fracture"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Portland Trail Blazers",
+     "Morant, Ja"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hamstring Strain"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Portland Trail Blazers",
+     "Sharpe, Shaedon"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Surgery"
+   },
+   {
+    "key": [
+     "2026-11-16",
+     "POR@MIN",
+     "Portland Trail Blazers",
+     "Youngblood, Chris"
+    ],
+    "status": "Out",
+    "reason": "Injury/Illness - Right Heel Contusion / Bone Bruise"
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Charlotte Hornets",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "CHA@LAL",
+     "Los Angeles Lakers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "DET@SAS",
+     "San Antonio Spurs",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "New York Knicks",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "NYK@TOR",
+     "Toronto Raptors",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "LA Clippers",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   },
+   {
+    "key": [
+     "2026-11-17",
+     "UTA@LAC",
+     "Utah Jazz",
+     "<placeholder>"
+    ],
+    "status": null,
+    "reason": null
+   }
+  ],
+  "became_unread": [],
+  "placeholder_resolved": [],
+  "note": "Matched on (date, matchup, team, player). A club's first filing replaces its NOT YET SUBMITTED placeholder, so one morning-to-afternoon pair legitimately adds many player rows: that is a filing, not instability. A blank status is diffed as blank and is never coerced to a value."
+ }
+}

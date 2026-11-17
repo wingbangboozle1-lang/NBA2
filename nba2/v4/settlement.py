@@ -26,6 +26,7 @@ Rules this module will not break
    the wall clock — so a rebuild reproduces it byte for byte and CI can diff it.
 
 Files read (all committed, each carrying its own retrieval stamp and source URL):
+  ``data/raw/results/results_2026-11-16.json``            (8 games, 11/16)
   ``data/raw/refresh_2026-11-15/results_2026-11-15.json``  (9 games, 11/15)
   ``data/raw/capture_2026-11-15/results_2026-11-14.json``  (5 games, 11/14)
 """
@@ -45,7 +46,14 @@ OUT_DIR = ROOT / "data" / "v4" / "settlement"
 V1_SEALS = ("sealed-2026-11-13.json", "sealed-2026-11-14.json")
 V3_SEALS = ("sealed-2026-11-15.json",)
 
+# The 11/16 file lives in ``data/raw/results/`` rather than in a ``refresh_<date>/`` folder
+# because it is the settled feed for that game day, not a copy of the nightly capture: its
+# per-quarter rows were re-read against each game's official gamebook and its HOU@MIA
+# quarter split was corrected after an apparent contradiction (see the ``quarter_evidence``
+# field on that record). Adding a new source here is the only step that lets the eight
+# 11/16 seals grade; nothing else changes.
 FINALS_SOURCES = (
+    ("data/raw/results/results_2026-11-16.json", "2026-11-16"),
     ("data/raw/refresh_2026-11-15/results_2026-11-15.json", "2026-11-15"),
     ("data/raw/capture_2026-11-15/results_2026-11-14.json", "2026-11-14"),
 )
@@ -269,6 +277,27 @@ def summarise(graded: list[dict], ungraded: list[dict], seal: dict) -> dict:
     }
 
 
+
+def _luck_statement(dist_graded: list[dict], n_distinct: int) -> str:
+    """The published luck sentence, derived from the same rows the table prints."""
+    if not n_distinct:
+        return "No distinct game is graded yet, so there is no run to describe."
+    hits = sum(1 for g in dist_graded if g["winner_correct"])
+    hit_rate = hits / n_distinct
+    expected = sum(_p_side(g) for g in dist_graded)
+    tail = p_at_least(hits, [_p_side(g) for g in dist_graded])
+    outside = tail is not None and tail < 0.05
+    return (
+        f"{hits} correct winners in {n_distinct} distinct games is a hit rate of {hit_rate:.3f} "
+        f"against {expected / n_distinct:.3f} expected under the seals' own probabilities. "
+        f"The Poisson-binomial tail is {tail:.4f}, so this run is "
+        + ("outside the noise band on the strict 0.05 reading, " if outside
+           else "inside the noise band, ")
+        + f"but {n_distinct} games in one week is not a measured edge on any reading: it is not "
+        f"staked, and the bet surface still publishes zero rows."
+    )
+
+
 def settle() -> dict:
     finals_list, provenance = finals()
     by_id = {f["game_id"]: f for f in finals_list}
@@ -340,12 +369,11 @@ def settle() -> dict:
             "p_at_least_observed_hits": p_at_least(
                 sum(1 for g in dist_graded if g["winner_correct"]),
                 [_p_side(g) for g in dist_graded]) if n_distinct else None,
-            "luck_statement": (
-                "12 correct winners in 14 distinct games is a hit rate of 0.857 against 0.633 "
-                "expected under the seals' own probabilities. The Poisson-binomial tail "
-                "(p_at_least_observed_hits) is the only honest yardstick: below 0.05 the run is "
-                "outside the noise band, but on 14 games in one week it is not a measured edge, "
-                "it is not staked, and the bet surface still publishes zero rows."),
+            # The sentence must be GENERATED from the numbers beside it. It used to be a
+            # literal that said "12 correct winners in 14 distinct games ... 0.857 against
+            # 0.633" long after the settlement had grown to 22 distinct games, so the page
+            # published a claim that contradicted its own columns. (Found 2026-11-17.)
+            "luck_statement": _luck_statement(dist_graded, n_distinct),
             "p_at_least_observed_hits_note": (
                 "Poisson-binomial tail: the chance of doing at least this well if the model's "
                 "own probabilities are correct. Read this, not the hit rate. Above 0.05 the "

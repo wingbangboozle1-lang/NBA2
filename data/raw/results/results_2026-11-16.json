@@ -1,0 +1,268 @@
+{
+ "schema": "nba2.results-feed.official-gamebook.v1",
+ "game_date": "2026-11-16",
+ "retrieved_window_utc": "2026-11-17 ~14:55-15:05 UTC (platform page-fetch tool; per-call times are not logged by the tool)",
+ "retrieval_method": "platform page-fetch tool (fetch_page). Final scores and quarter scores read from each game's official gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final printed on nba.com/schedule?date=2026-11-17. Bash egress to nba.com from this sandbox returns HTTP 000, so the PDFs were read as text and are not archived as binaries (F-V4-01).",
+ "settle_rule": "A game is SETTLED only when (a) the gamebook SCORE BY PERIOD row sums to the final for both clubs and (b) the final matches the official schedule/game page. Any game not Final at retrieval is PENDING and carries no score. Blank quarter cells are never back-solved.",
+ "source_page": "https://www.nba.com/schedule?date=2026-11-17",
+ "session": "arena/45f14c5c-nba2",
+ "records": [
+  {
+   "game_id": "0022600245",
+   "date": "2026-11-16",
+   "away": "ORL",
+   "home": "BOS",
+   "away_pts": 115,
+   "home_pts": 105,
+   "home_margin": -10,
+   "total_pts": 220,
+   "ot_periods": 0,
+   "away_q": [
+    20,
+    30,
+    25,
+    40
+   ],
+   "home_q": [
+    17,
+    24,
+    36,
+    28
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (115, 105)",
+   "final_source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600246",
+   "date": "2026-11-16",
+   "away": "CHI",
+   "home": "CLE",
+   "away_pts": 115,
+   "home_pts": 126,
+   "home_margin": 11,
+   "total_pts": 241,
+   "ot_periods": 0,
+   "away_q": [
+    31,
+    17,
+    31,
+    36
+   ],
+   "home_q": [
+    25,
+    32,
+    31,
+    38
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (115, 126)",
+   "final_source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600247",
+   "date": "2026-11-16",
+   "away": "MEM",
+   "home": "WAS",
+   "away_pts": 136,
+   "home_pts": 120,
+   "home_margin": -16,
+   "total_pts": 256,
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    26,
+    42,
+    35
+   ],
+   "home_q": [
+    35,
+    34,
+    18,
+    33
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (136, 120)",
+   "final_source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600248",
+   "date": "2026-11-16",
+   "away": "PHI",
+   "home": "BKN",
+   "away_pts": 135,
+   "home_pts": 123,
+   "home_margin": -12,
+   "total_pts": 258,
+   "ot_periods": 0,
+   "away_q": [
+    33,
+    45,
+    27,
+    30
+   ],
+   "home_q": [
+    26,
+    33,
+    36,
+    28
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (135, 123)",
+   "final_source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600249",
+   "date": "2026-11-16",
+   "away": "HOU",
+   "home": "MIA",
+   "away_pts": 110,
+   "home_pts": 128,
+   "home_margin": 18,
+   "total_pts": 238,
+   "ot_periods": 0,
+   "away_q": [
+    15,
+    31,
+    35,
+    29
+   ],
+   "home_q": [
+    29,
+    33,
+    39,
+    27
+   ],
+   "quarter_status": "read",
+   "quarter_note": "first read (chunk 0) showed only the HEAT banner 'HEAT 29 33 39 27 128'; a later read appeared to print 'halftime 31 / Q3 17' for HOU. Re-read at the period-block level resolves it: 31 is HOU's SECOND-QUARTER total (Q2), not its halftime total, and there is no 17 in any HOU period. Three independent boundaries in the same PDF agree: (a) the Q1-Q2 score-by-period table prints Rockets 15 | 31 | 46 and HEAT 29 | 33 | 62; (b) the Q3 period block prints Rockets 35 / HEAT 39; (c) the Q3+Q4 cumulative block prints Rockets 64 / HEAT 66. So the sequence is 15/31/35/29 = 110 and 29/33/39/27 = 128, and 46+64 = 110, 62+66 = 128.",
+   "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17",
+   "quarter_evidence": {
+    "half1_table": {
+     "Rockets": [
+      15,
+      31,
+      46
+     ],
+     "HEAT": [
+      29,
+      33,
+      62
+     ],
+     "where": "PDF page with 'SCORE BY PERIOD | 1 | 2 | FINAL'"
+    },
+    "period3_row": {
+     "Rockets": 35,
+     "HEAT": 39,
+     "min_played": "60:00",
+     "where": "quarter-3 box score total row + banner 'HEAT 39 39'"
+    },
+    "half2_cumulative": {
+     "Rockets": 64,
+     "HEAT": 66,
+     "min_played": "120:00",
+     "where": "second-half cumulative block + banner 'HEAT 39 27 66'"
+    },
+    "period1_row": {
+     "Rockets": 15,
+     "HEAT": 29,
+     "where": "banner 'HEAT 29 29'"
+    },
+    "closes_contradiction": "Q2=31 was mistaken for a halftime total; HOU halftime is 46"
+   }
+  },
+  {
+   "game_id": "0022600250",
+   "date": "2026-11-16",
+   "away": "POR",
+   "home": "MIN",
+   "away_pts": 98,
+   "home_pts": 106,
+   "home_margin": 8,
+   "total_pts": 204,
+   "ot_periods": 0,
+   "away_q": [
+    26,
+    25,
+    22,
+    25
+   ],
+   "home_q": [
+    26,
+    33,
+    28,
+    19
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (98, 106)",
+   "final_source_url": "https://www.nba.com/game/por-vs-min-0022600250",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600251",
+   "date": "2026-11-16",
+   "away": "GSW",
+   "home": "NOP",
+   "away_pts": 94,
+   "home_pts": 115,
+   "home_margin": 21,
+   "total_pts": 209,
+   "ot_periods": 0,
+   "away_q": [
+    11,
+    25,
+    29,
+    29
+   ],
+   "home_q": [
+    35,
+    26,
+    32,
+    22
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (94, 115)",
+   "final_source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  },
+  {
+   "game_id": "0022600252",
+   "date": "2026-11-16",
+   "away": "PHX",
+   "home": "DEN",
+   "away_pts": 117,
+   "home_pts": 105,
+   "home_margin": -12,
+   "total_pts": 222,
+   "ot_periods": 0,
+   "away_q": [
+    20,
+    36,
+    34,
+    27
+   ],
+   "home_q": [
+    24,
+    29,
+    29,
+    23
+   ],
+   "quarter_status": "read",
+   "quarter_note": "both period rows sum to the final (117, 105)",
+   "final_source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
+  }
+ ]
+}

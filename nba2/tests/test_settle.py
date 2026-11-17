@@ -100,6 +100,44 @@ class UnionTests(unittest.TestCase):
         self.assertEqual(doc["records"], [])
         self.assertIn("clubs", doc["conflicts"][0]["reason"])
 
+    def test_a_feed_that_names_its_link_final_source_url_still_carries_one(self):
+        """The v4 gamebook feed has no ``source_url``; reading only that spelling lost the link.
+
+        Before this guard the eight 2026-11-16 records reached the union with an empty
+        ``source``, so the published results page showed scores with no way back to the league.
+        """
+        a = _write(self.d, "results_2026-11-16.json", {"records": [
+            {"game_id": "0022600249", "date": "2026-11-16", "away": "HOU", "home": "MIA",
+             "away_pts": 110, "home_pts": 128, "status": "final",
+             "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+             "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"}]})
+        doc = S.build_union([a])
+        self.assertEqual(doc["records"][0]["source"],
+                         "https://www.nba.com/game/hou-vs-mia-0022600249")
+
+    def test_a_feed_that_spells_quarters_away_q_keeps_them_after_the_sum_check(self):
+        """Same defect on the period rows: ``away_q``/``home_q`` were dropped, not checked."""
+        a = _write(self.d, "results_2026-11-16.json", {"records": [
+            {"game_id": "0022600249", "date": "2026-11-16", "away": "HOU", "home": "MIA",
+             "away_pts": 110, "home_pts": 128, "status": "final",
+             "away_q": [15, 31, 35, 29], "home_q": [29, 33, 39, 27],
+             "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"}]})
+        r = S.build_union([a])["records"][0]
+        self.assertEqual(r["away_quarters"], [15, 31, 35, 29])
+        self.assertEqual(r["home_quarters"], [29, 33, 39, 27])
+
+    def test_a_feed_whose_quarters_do_not_sum_is_still_rejected_in_the_new_spelling(self):
+        a = _write(self.d, "results_2026-11-16.json", {"records": [
+            {"game_id": "0022600249", "date": "2026-11-16", "away": "HOU", "home": "MIA",
+             "away_pts": 110, "home_pts": 128, "status": "final",
+             "away_q": [15, 31, 35, 30], "home_q": [29, 33, 39, 27],
+             "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249"}]})
+        doc = S.build_union([a])
+        # A bad period row makes the whole reading untrusted, so the game is dropped rather
+        # than published with the good half kept: a period-row sum mismatch excludes the game.
+        self.assertEqual(len(doc["rejected_quarter_rows"]), 1)
+        self.assertEqual(doc["records"], [])
+
     def test_committed_union_has_no_conflicts_and_only_official_scores(self):
         # Runs against the committed tree: every committed official source must agree.
         doc = S.build_union()

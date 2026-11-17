@@ -103,7 +103,7 @@
      "added": 19,
      "removed": 4,
      "became_unread": 0,
-     "placeholder_resolved": 0,
+     "placeholder_resolved": 3,
      "still_placeholder": 10
     },
     "status_changes": [
@@ -380,7 +380,32 @@
      }
     ],
     "became_unread": [],
-    "placeholder_resolved": [],
+    "placeholder_resolved": [
+     {
+      "key": [
+       "2026-11-16",
+       "HOU@MIA",
+       "Houston Rockets"
+      ],
+      "players_filed": 6
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "MEM@WAS",
+       "Washington Wizards"
+      ],
+      "players_filed": 6
+     },
+     {
+      "key": [
+       "2026-11-16",
+       "PHI@BKN",
+       "Philadelphia 76ers"
+      ],
+      "players_filed": 5
+     }
+    ],
     "note": "Matched on (date, matchup, team, player). A club's first filing replaces its NOT YET SUBMITTED placeholder, so one morning-to-afternoon pair legitimately adds many player rows: that is a filing, not instability. A blank status is diffed as blank and is never coerced to a value."
    }
   ],
