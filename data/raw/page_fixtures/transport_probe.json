@@ -1,0 +1,118 @@
+{
+ "schema": "nba2.transport-probe.v1",
+ "probed_by": "capture-fixtures.yml",
+ "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44135612511",
+ "question": "which (endpoint, header-set) pairs answer a GitHub-hosted runner, so the refresh is repaired against a measurement instead of an inference taken from a development sandbox",
+ "rows": [
+  {
+   "endpoint": "stats_standings",
+   "url": "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=2026-27&SeasonType=Regular+Season",
+   "header_set": "repo_headers",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20100,
+   "retrieved_at_utc": "2026-11-17T17:19:40Z"
+  },
+  {
+   "endpoint": "stats_standings",
+   "url": "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=2026-27&SeasonType=Regular+Season",
+   "header_set": "plain_ua",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20064,
+   "retrieved_at_utc": "2026-11-17T17:20:00Z"
+  },
+  {
+   "endpoint": "stats_team_traditional",
+   "url": "https://stats.nba.com/stats/leaguedashteamstats?LeagueID=00&MeasureType=Base&PerMode=PerGame&Season=2026-27&SeasonType=Regular+Season",
+   "header_set": "repo_headers",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20063,
+   "retrieved_at_utc": "2026-11-17T17:20:21Z"
+  },
+  {
+   "endpoint": "stats_team_traditional",
+   "url": "https://stats.nba.com/stats/leaguedashteamstats?LeagueID=00&MeasureType=Base&PerMode=PerGame&Season=2026-27&SeasonType=Regular+Season",
+   "header_set": "plain_ua",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20063,
+   "retrieved_at_utc": "2026-11-17T17:20:41Z"
+  },
+  {
+   "endpoint": "stats_scoreboard",
+   "url": "https://stats.nba.com/stats/scoreboardv3?GameDate=2026-11-16&LeagueID=00",
+   "header_set": "repo_headers",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20064,
+   "retrieved_at_utc": "2026-11-17T17:21:01Z"
+  },
+  {
+   "endpoint": "stats_scoreboard",
+   "url": "https://stats.nba.com/stats/scoreboardv3?GameDate=2026-11-16&LeagueID=00",
+   "header_set": "plain_ua",
+   "http_status": null,
+   "bytes": null,
+   "ok": false,
+   "error": "TimeoutError: The read operation timed out",
+   "elapsed_ms": 20066,
+   "retrieved_at_utc": "2026-11-17T17:21:21Z"
+  },
+  {
+   "endpoint": "cdn_scoreboard",
+   "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+   "header_set": "repo_headers",
+   "http_status": 403,
+   "bytes": null,
+   "ok": false,
+   "error": "HTTP 403",
+   "elapsed_ms": 96,
+   "retrieved_at_utc": "2026-11-17T17:21:41Z"
+  },
+  {
+   "endpoint": "cdn_scoreboard",
+   "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+   "header_set": "plain_ua",
+   "http_status": 403,
+   "bytes": null,
+   "ok": false,
+   "error": "HTTP 403",
+   "elapsed_ms": 57,
+   "retrieved_at_utc": "2026-11-17T17:21:41Z"
+  },
+  {
+   "endpoint": "www_standings",
+   "url": "https://www.nba.com/standings",
+   "header_set": "repo_headers",
+   "http_status": 403,
+   "bytes": null,
+   "ok": false,
+   "error": "HTTP 403",
+   "elapsed_ms": 79,
+   "retrieved_at_utc": "2026-11-17T17:21:41Z"
+  },
+  {
+   "endpoint": "www_standings",
+   "url": "https://www.nba.com/standings",
+   "header_set": "plain_ua",
+   "http_status": 200,
+   "bytes": 224760,
+   "ok": true,
+   "error": null,
+   "elapsed_ms": 140,
+   "retrieved_at_utc": "2026-11-17T17:21:41Z"
+  }
+ ]
+}
