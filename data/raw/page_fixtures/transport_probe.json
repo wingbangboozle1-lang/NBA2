@@ -1,7 +1,7 @@
 {
  "schema": "nba2.transport-probe.v1",
  "probed_by": "capture-fixtures.yml",
- "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44141015141",
+ "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44143153404",
  "question": "which (endpoint, header-set) pairs answer a GitHub-hosted runner, so the refresh is repaired against a measurement instead of an inference taken from a development sandbox",
  "rows": [
   {
@@ -12,8 +12,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20067,
-   "retrieved_at_utc": "2026-11-17T17:49:13Z"
+   "elapsed_ms": 20183,
+   "retrieved_at_utc": "2026-11-17T18:01:18Z"
   },
   {
    "endpoint": "stats_standings",
@@ -23,8 +23,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20098,
-   "retrieved_at_utc": "2026-11-17T17:49:33Z"
+   "elapsed_ms": 20171,
+   "retrieved_at_utc": "2026-11-17T18:01:38Z"
   },
   {
    "endpoint": "stats_team_traditional",
@@ -34,8 +34,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20065,
-   "retrieved_at_utc": "2026-11-17T17:49:53Z"
+   "elapsed_ms": 20076,
+   "retrieved_at_utc": "2026-11-17T18:01:58Z"
   },
   {
    "endpoint": "stats_team_traditional",
@@ -45,8 +45,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20101,
-   "retrieved_at_utc": "2026-11-17T17:50:13Z"
+   "elapsed_ms": 20082,
+   "retrieved_at_utc": "2026-11-17T18:02:18Z"
   },
   {
    "endpoint": "stats_scoreboard",
@@ -56,8 +56,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20083,
-   "retrieved_at_utc": "2026-11-17T17:50:33Z"
+   "elapsed_ms": 20183,
+   "retrieved_at_utc": "2026-11-17T18:02:39Z"
   },
   {
    "endpoint": "stats_scoreboard",
@@ -67,8 +67,8 @@
    "bytes": null,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
-   "elapsed_ms": 20044,
-   "retrieved_at_utc": "2026-11-17T17:50:53Z"
+   "elapsed_ms": 20130,
+   "retrieved_at_utc": "2026-11-17T18:02:59Z"
   },
   {
    "endpoint": "cdn_scoreboard",
@@ -78,8 +78,8 @@
    "bytes": null,
    "ok": false,
    "error": "HTTP 403",
-   "elapsed_ms": 110,
-   "retrieved_at_utc": "2026-11-17T17:51:14Z"
+   "elapsed_ms": 193,
+   "retrieved_at_utc": "2026-11-17T18:03:19Z"
   },
   {
    "endpoint": "cdn_scoreboard",
@@ -89,8 +89,8 @@
    "bytes": null,
    "ok": false,
    "error": "HTTP 403",
-   "elapsed_ms": 77,
-   "retrieved_at_utc": "2026-11-17T17:51:14Z"
+   "elapsed_ms": 96,
+   "retrieved_at_utc": "2026-11-17T18:03:19Z"
   },
   {
    "endpoint": "www_standings",
@@ -100,19 +100,19 @@
    "bytes": null,
    "ok": false,
    "error": "HTTP 403",
-   "elapsed_ms": 179,
-   "retrieved_at_utc": "2026-11-17T17:51:14Z"
+   "elapsed_ms": 297,
+   "retrieved_at_utc": "2026-11-17T18:03:19Z"
   },
   {
    "endpoint": "www_standings",
    "url": "https://www.nba.com/standings",
    "header_set": "plain_ua",
    "http_status": 200,
-   "bytes": 224914,
+   "bytes": 224873,
    "ok": true,
    "error": null,
-   "elapsed_ms": 273,
-   "retrieved_at_utc": "2026-11-17T17:51:14Z"
+   "elapsed_ms": 268,
+   "retrieved_at_utc": "2026-11-17T18:03:19Z"
   }
  ]
 }
