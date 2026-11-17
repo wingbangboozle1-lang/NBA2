@@ -52,6 +52,10 @@ jobs:
       finals: ${{ steps.finals.outcome }}
       rolling: ${{ steps.rolling.outcome }}
       v4: ${{ steps.v4.outcome }}
+      # the *why*, not just the that. A surface's exit status is evidence of a failure;
+      # the last log line is evidence of its cause. Both are committed under
+      # data/raw/refresh_<date>/logs/ so a failed nightly run can be read from the tree.
+      rolling_reason: ${{ steps.rolling.outputs.reason }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -94,6 +98,7 @@ jobs:
           echo "--- byte-level archive (CDN reachability is measured, not assumed) ---"
           python3 -m nba2.v4.injury_ingest || echo "::warning::PDF bytes not archived from this runner; see data/v4/injury/binary_manifest.json"
           exit $rc
+        # console archived by the 'Record what each official surface did' step
 
       # ---------------------------------------------------------------- surface 2: finals
       - name: 'Surface 2/4 — official finals for arrived game dates'
@@ -132,7 +137,20 @@ jobs:
         run: |
           set -uo pipefail
           # v2's refresh writes the snapshot and runs its own freshness/provenance gates.
-          python3 -m nba2.v2.refresh --write
+          # WHY THE TEE: this job failed on rolling for three consecutive scheduled runs and
+          # the cause could not be read afterwards - GitHub's job-log blob host is not
+          # reachable from the agent sandboxes that maintain this repo, and the step's own
+          # ::error line was never committed anywhere. The console is now written into
+          # data/raw/refresh_<date>/logs/rolling.log and summarised into the job summary, so
+          # the reason travels with the capture instead of living only in a blob URL.
+          mkdir -p "data/raw/refresh_$(date -u +%F)/logs"
+          LOG="data/raw/refresh_$(date -u +%F)/logs/rolling.log"
+          set -o pipefail
+          python3 -m nba2.v2.refresh --write 2>&1 | tee "$LOG"
+          # the exit code of the pipeline is python's, thanks to pipefail; read it back
+          reason="$(python3 tools/surface_reason.py "$LOG" || true)"
+          printf 'reason=%s\n' "$reason" >> "$GITHUB_OUTPUT"
+          echo "### rolling surface: $reason" >> "$GITHUB_STEP_SUMMARY"
 
       # ---------------------------------------------------------------- v4 capture chain
       - name: 'v4 — capture, injury diff, settlement, render'
@@ -170,6 +188,9 @@ jobs:
                 microsecond=0).isoformat().replace("+00:00", "Z"),
             "surfaces": {k: os.environ.get(f"OUT_{k.upper()}") for k in
                          ("injuries", "finals", "rolling", "v4")},
+            "surface_reasons": {k: v for k, v in {
+                "rolling": os.environ.get("REASON_ROLLING"),
+            }.items() if v},
             "note": ("'failure' for a surface means its official endpoint was unreachable or "
                      "returned an unexpected schema. Nothing is invented for a failed "
                      "surface: the affected rows stay blank and the settlement rows that "
@@ -179,6 +200,22 @@ jobs:
           p = pathlib.Path("data/raw/refresh_verdict.json")
           p.parent.mkdir(parents=True, exist_ok=True)
           p.write_text(json.dumps(doc, indent=1) + "\n")
+          # ... and a human-readable copy inside the capture, so the reason is readable
+          # from the tree without opening a log blob this sandbox cannot reach.
+          logdir = pathlib.Path("data/raw") / f"refresh_{dt.date.today().isoformat()}" / "logs"
+          logdir.mkdir(parents=True, exist_ok=True)
+          md = ["# What each official surface did", "",
+                f"run: {doc['run_url']}  ",
+                f"attempted: {doc['attempted_at_utc']}  ",
+                f"event: {doc['event']}", "", "| surface | outcome | reason |", "|---|---|---|"]
+          for k, v in doc["surfaces"].items():
+              r = (doc.get("surface_reasons") or {}).get(k) or ""
+              md.append(f"| {k} | {v} | {r.replace('|', '/')} |")
+          md += ["",
+                 "A failed surface is recorded, not filled in: the affected rows stay blank and",
+                 "the settlement rows that depend on them stay PENDING. A failed surface blocks",
+                 "PUBLISHING, not the recording of the gap.", ""]
+          (logdir / "surfaces.md").write_text("\n".join(md))
           print(json.dumps(doc, indent=1))
           PY
         env:
@@ -186,6 +223,7 @@ jobs:
           OUT_FINALS: ${{ steps.finals.outcome }}
           OUT_ROLLING: ${{ steps.rolling.outcome }}
           OUT_V4: ${{ steps.v4.outcome }}
+          REASON_ROLLING: ${{ steps.rolling.outputs.reason }}
 
       - name: Commit the captured evidence (never the sealed ledgers)
         if: always()
@@ -240,6 +278,7 @@ jobs:
           CAPTURE_FINALS: ${{ needs.capture.outputs.finals }}
           CAPTURE_ROLLING: ${{ needs.capture.outputs.rolling }}
           CAPTURE_V4: ${{ needs.capture.outputs.v4 }}
+          CAPTURE_ROLLING_REASON: ${{ needs.capture.outputs.rolling_reason }}
         run: |
           python3 - <<'PY'
           import json, os, pathlib, sys
@@ -268,9 +307,19 @@ jobs:
           failed = {k: x for k, x in s.items()
                     if x != "success" and not (k == "finals" and x == "failure")}
           if failed:
+              reason = (os.environ.get("CAPTURE_ROLLING_REASON") or "").strip()
               print("::error title=a rolling surface was not captured::" +
                     ", ".join(f"{k}={x}" for k, x in failed.items()) +
+                    (" :: " + reason if reason and "rolling" in failed else "") +
                     " — the site is NOT rebuilt, so the last gate-passing snapshot stays live")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  summary.write("## A rolling surface was not captured" + chr(10) + chr(10))
+                  for k, x in failed.items():
+                      summary.write(f"- **{k}**: {x}" + chr(10))
+                  if reason:
+                      summary.write(chr(10) + "> " + reason + chr(10))
+                  summary.write(chr(10) + "Nothing was rebuilt, so the last gate-passing "
+                                "snapshot stays live." + chr(10))
               sys.exit(1)
           if s.get("finals") == "failure":
               message = ("Official finals were unavailable. No result was inferred; the prior "

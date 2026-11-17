@@ -37,6 +37,116 @@ jobs:
         with:
           python-version: '3.11'
 
+      # WHY THIS STEP EXISTS (session arena/45f14c5c-nba2, 2026-11-17)
+      # -----------------------------------------------------------------------------
+      # The probe above answers "is the host reachable?". It does NOT answer the question
+      # the nightly job actually failed on: `nba2/v2/refresh.py` calls the stats.nba.com
+      # JSON API with specific browser headers and a Referer/Origin pair, and the rolling
+      # surface failed while the HTML pages answered 200 in the same probe window. Reachable
+      # is not the same as accepts-this-request. This step replays the exact request the job
+      # makes - same URL, same headers, same timeout, same three retries - and commits the
+      # first 2000 characters of whatever comes back (or the exact exception), so the next
+      # session reads a fact instead of re-deriving one.
+      - name: Replay the nightly job's exact rolling requests
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, json, pathlib, time, urllib.error, urllib.request
+
+          # kept byte-identical to nba2/v2/refresh.py:UA and its request headers
+          UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/126.0 Safari/537.36 nba2-refresh/1.0 "
+                "(+github.com/wingbangboozle1-lang/NBA2)")
+          HEADERS = {
+              "User-Agent": UA,
+              "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
+              "Referer": "https://www.nba.com/",
+              "Origin": "https://www.nba.com",
+              "x-nba-stats-origin": "stats",
+              "x-nba-stats-token": "true",
+          }
+          SEASON = "2026-27"
+          URLS = [
+            ("standings",      "https://stats.nba.com/stats/leaguestandingsv3"
+                               f"?LeagueID=00&Season={SEASON}&SeasonType=Regular+Season"),
+            ("team_traditional", "https://stats.nba.com/stats/leaguedashteamstats"
+                               f"?LeagueID=00&MeasureType=Base&PerMode=PerGame&Season={SEASON}"
+                               "&SeasonType=Regular+Season"),
+            ("team_advanced",  "https://stats.nba.com/stats/leaguedashteamstats"
+                               f"?LeagueID=00&MeasureType=Advanced&PerMode=PerGame&Season={SEASON}"
+                               "&SeasonType=Regular+Season"),
+            ("team_opponent",  "https://stats.nba.com/stats/leaguedashteamstats"
+                               f"?LeagueID=00&MeasureType=Opponent&PerMode=PerGame&Season={SEASON}"
+                               "&SeasonType=Regular+Season"),
+            ("scoreboard",     "https://stats.nba.com/stats/scoreboardv3"
+                               "?GameDate=2026-11-17&LeagueID=00"),
+            ("boxscore",       "https://stats.nba.com/stats/boxscoretraditionalv2"
+                               "?GameID=0022600245&SeasonType=Regular+Season"),
+          ]
+
+          def attempt(url, tries=3):
+              last = None
+              for i in range(tries):
+                  t0 = time.time()
+                  try:
+                      req = urllib.request.Request(url, headers=HEADERS)
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          body = r.read()
+                          return {"ok": True, "status": r.status, "bytes": len(body),
+                                  "elapsed_ms": int((time.time() - t0) * 1000),
+                                  "error": None, "is_json": body[:1] in (b"{", b"["),
+                                  "sample": body[:2000].decode("utf-8", "replace")}
+                  except urllib.error.HTTPError as e:
+                      body = b""
+                      try:
+                          body = e.read()
+                      except Exception:                       # noqa: BLE001
+                          pass
+                      last = {"ok": False, "status": e.code,
+                              "elapsed_ms": int((time.time() - t0) * 1000),
+                              "error": f"HTTP {e.code}: {e.reason}",
+                              "bytes": len(body), "is_json": False,
+                              "sample": body[:2000].decode("utf-8", "replace")}
+                      # a 4xx will not improve on retry within the job's own semantics
+                      if 400 <= e.code < 500:
+                          return last
+                  except Exception as e:                       # noqa: BLE001
+                      last = {"ok": False, "status": None,
+                              "elapsed_ms": int((time.time() - t0) * 1000),
+                              "error": f"{type(e).__name__}: {e}",
+                              "bytes": None, "is_json": False, "sample": ""}
+                  time.sleep(2 * (i + 1))
+              return last
+
+          rows = []
+          for name, url in URLS:
+              r = attempt(url)
+              r.update({"name": name, "url": url})
+              rows.append(r)
+              print(f"{'OK ' if r['ok'] else 'ERR'} {name:18s} {r['status']} "
+                    f"{r['bytes']} bytes {r['elapsed_ms']}ms json={r['is_json']} "
+                    f"{r['error'] or ''}")
+
+          doc = {
+              "schema": "nba2.rolling-probe.v1",
+              "probed_at_utc": dt.datetime.now(dt.timezone.utc).replace(
+                  microsecond=0).isoformat().replace("+00:00", "Z"),
+              "runner": "GitHub-hosted ubuntu-latest",
+              "purpose": ("replays the live request nba2/v2/refresh.py makes (same headers, "
+                          "timeout and retries) so a rolling-surface failure has a recorded "
+                          "HTTP status and body, not a guess"),
+              "rows": rows,
+              "summary": {"n": len(rows), "ok": sum(1 for r in rows if r["ok"]),
+                          "failed": [r["name"] for r in rows if not r["ok"]]},
+          }
+          out = pathlib.Path("data/raw/probe")
+          out.mkdir(parents=True, exist_ok=True)
+          stamp = dt.date.today().isoformat()
+          (out / f"rolling_{stamp}.json").write_text(json.dumps(doc, indent=1) + "\n")
+          (pathlib.Path("data/raw") / "rolling_probe.json").write_text(
+              json.dumps(doc, indent=1) + "\n")
+          print(json.dumps(doc["summary"], indent=1))
+          PY
+
       - name: Probe every endpoint the nightly job depends on
         run: |
           python3 - <<'PY'
@@ -98,7 +208,7 @@ jobs:
           set -uo pipefail
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
-          git add data/raw/egress_probe.json
+          git add data/raw/egress_probe.json data/raw/rolling_probe.json data/raw/probe
           if git diff --cached --quiet; then
             echo "probe unchanged — nothing to commit"
             exit 0
