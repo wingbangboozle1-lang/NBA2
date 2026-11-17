@@ -5324,3 +5324,25 @@ discarding either side:
   generators. Result: union **31 games, 0 conflicts, 0 rejected quarter rows**, stamp shows
   22/22 + 22/27 settled, seals VERIFIED, and the merged tree keeps their root pointer page +
   capture-verification page AND this session's v5-flag mirror + decisions-needed integration update.
+
+---
+
+## Session `arena/1eeb6a21-nba2` — COMPLETE (2026-11-17T16:55Z): PR #123 merged, Pages deploy verified live
+
+| Task | Result |
+|---|---|
+| 1EEB-1 | claim + handoff ✅ |
+| 1EEB-2 | fresh official snapshot executed + 11/16 finals captured from official gamebook PDFs; nightly finals surface fixed (committed-capture fallback, fail-closed) ✅ |
+| 1EEB-3 | settlement advanced to 11/16: union 31 games, 0 conflicts; ledgers 22/22 + 22/27 (v4: 61/83); seals re-verified before grading ✅ |
+| 1EEB-4 | flagged.html mirrors 11 v5 flags; decisions-needed.html integration update; settlement/result pages rebuilt; root index = pointer (from PR #115, kept) ✅ |
+| 1EEB-5 | all suites green: v3 58, v4+v5 87, nba2/tests 79, v2 check 0/0, v3/v4/v5 gates 8/8 each; site/ byte-identical to rebuild; ci.yml data/site.json parity fixed ✅ |
+| 1EEB-6 | **PR #123** https://github.com/wingbangboozle1-lang/NBA2/pull/123 — all 4 required checks pass (v2, verify, backtest, parity) — **merged** 2026-11-17T16:55:31Z, merge commit `b83038a` ✅ |
+
+**Deploy verification (live fetches of the deployed artifact, per the PR #110 lesson):**
+- "Publish GitHub Pages" run [44131270865](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44131270865): build=success, **deploy=success**; all three verify workflows on `main` also success.
+- https://wingbangboozle1-lang.github.io/NBA2/ now serves the **v2 gated dashboard** (Actions-artifact deploy; the root pointer page is superseded by the artifact root).
+- Live `/flagged.html` shows all 11 F-V5-01..11 rows, each with its official source + v5-verify link (CR-V5-1 fixed live).
+- Live `/settlement.html` stamp: **31 games, latest settled 2026-11-16, 7 source files, 0 conflicts, 0 rejected quarter rows**, seals VERIFIED, and the settled table includes all 8 games of 11/16 with quarter rows and per-row official links (CR-V5-3 fixed live).
+- Live `/decisions-needed.html` shows the "Integration update, 2026-11-17" section (CR-V5-2 fixed live).
+
+**Notes for the next session:** the transient `nba2/tests` discover failure seen twice right after a v5 rebuild did not reproduce in 9+ consecutive runs (no mtime/network dependence found in those tests) — if it reappears in CI, capture the failing test name from the log. The nightly finals fallback in `nba2/pipeline/refresh.py` is exercised only when the runner's scoreboard endpoints are unreachable; tonight's run [44131269656-ish dynamic legacy build still coexists] — the legacy `pages-build-deployment` (Jekyll from `main /`) also runs; the Actions artifact deploy takes precedence on the URL.
