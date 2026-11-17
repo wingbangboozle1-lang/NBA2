@@ -5111,3 +5111,24 @@ capture-verification.html`). No settlement content, rule or hash changed.
 - **Live check (fetched):** `https://wingbangboozle1-lang.github.io/NBA2/site/official-results.html` shows the 22-game feed with the window stamp, source links, and blank quarter cells flagged. The bare root `https://wingbangboozle1-lang.github.io/NBA2/` still serves the legacy repository-root tree (FLAG-PAGES-01 / F-033, an owner decision, unchanged). The root `official-results.html` returns 404 because that page exists only under `site/`.
 - **Follow-up fix:** the settlement stamp printed a double full stop ("left blank.."). Fixed in `nba2/v2/capture2.py`, rebuilt, and shipped as its own PR.
 - **Stale items noticed, logged for the integration session (not edited here):** the v2 "Tamper-evident projection ledger" table on `official-results.html` still says `pending official final` for 11/15 rows that are settled in v4 (`data/v4/settlement/**`). The v2 ledger source is outside this session's file scope. The v2 `injuries` banner shows the 11/15 06:15 AM ET release, not the 11/16 or 11/17 releases (F-3 request).
+
+---
+
+## Session `arena/3a56251c-nba2` — CLAIM (2026-11-17 ~16:20 UTC, branch `arena/3a56251c-nba2`, base `bbb0aa6` = `main`)
+
+**Read at claim time (verified):** `origin/main` = `bbb0aa6` (PR #120 merged). No other session has an open claim on the board
+(last claims `arena/8892d20c` and `arena/669bccab` are `done`). Open PRs #115 (`aa1d3c07`, overlaps finished 669bccab work) and older
+stale PRs are not owned by a running session and are not touched here. Sandbox egress: `nba.com` is not reachable from bash (HTTP 000);
+official PDFs are read only from bytes already stored in `data/raw/pdf/`.
+
+**Scope honesty:** the 22-point brief is far larger than one session. This session takes the parts that can be built and verified
+from the repo and stored official bytes, and records every other item as a gap with a reason (see 3A-02). Nothing in the brief is claimed
+done unless a file in the repo proves it.
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| 3A-01 | Claim + push before work | done | `arena/3a56251c-nba2` | this block | pushed before any product edit |
+| 3A-02 | Requirements gap map: each brief item → implemented / partial / missing / blocked, with repo evidence paths and the questions it raises | in progress | `arena/3a56251c-nba2` | `analysis/session-3a56251c-requirements-gap-map.md` (new) | file paths + `git grep` evidence |
+| 3A-03 | Injury PDF archive: parse all four stored official PDFs (11/16 09:30 AM, 11/16 01:00 PM, 11/16 02:15 PM, 11/17 09:45 AM) by coordinates; sha256 of bytes; PDF CreationDate vs header stamp; consecutive diffs | in progress | `arena/3a56251c-nba2` | `data/injuries/archive/**` (new), `nba2/injury_archive/**` (new), `analysis/session-3a56251c-injury-archive.md` (new) | `data/raw/pdf/*.pdf` bytes; row counts cross-checked against the stored `.txt` extractions |
+| 3A-04 | Injuries page banner shows the newest archived revision time and retrieval time (retrieval blank where not recorded) | in progress | `arena/3a56251c-nba2` | `nba2/v2/build.py` banner function only (additive) | rebuilt via `python -m nba2.v2` |
+| 3A-05 | Flagged for Review entries for every irregularity found; re-run gates; PR → merge → Pages deploy → record here | in progress | `arena/3a56251c-nba2` | `nba2/v2/content.py` (append-only flags), regenerated `site/**`, this block | `nba2.v2.check`, `tools/check_links_all.py`, live fetch |
