@@ -60,14 +60,20 @@ ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw"
 HISTORY = RAW / "history"
 
-# Measured, not assumed. On a GitHub-hosted runner (2026-11-17) this User-Agent returned
-# HTTP 200 for www.nba.com/standings, /games and /schedule and official.nba.com, while the
-# Chrome-mimicking User-Agent this module previously sent measured HTTP 403 on the very
-# same URL in the same run. Change it only by re-measuring, never by guessing.
-UA = "NBA2-research-desk/1.0 (official data refresh; github.com/wingbangboozle1-lang/NBA2)"
+# Measured, not assumed. On a GitHub-hosted runner (2026-11-17) this exact User-Agent
+# returned HTTP 200 for www.nba.com/standings, /games and /schedule and for official.nba.com,
+# while the Chrome-mimicking User-Agent this module previously sent measured HTTP 403 on the
+# very same URL in the same run — and a near-identical rewrite of this string measured 403
+# when the runner had just fetched the same page. Copy it verbatim; change it only by
+# re-measuring, never by tidying it up.
+UA = "NBA2-research-desk/1.0 (endpoint reachability check)"
 HEADERS = {"User-Agent": UA, "Accept": "*/*", "Referer": "https://official.nba.com/"}
 TIMEOUT = 30
 RETRIES = 3
+# Pacing. The season scan reads ~60 dated pages in one run; hitting the league's site back
+# to back from a datacenter address earns a 403 that looks exactly like a blocked host. A
+# short pause between requests is both politer and more reliable than more retries.
+POLITE_DELAY = 0.6
 
 SEASON = "2026-27"
 URLS = {
@@ -102,11 +108,24 @@ SEASON_SCAN_DAYS = 60
 REGULAR_SEASON = "Regular Season"
 
 
+_last_request_at = 0.0
+
+
+def _pace() -> None:
+    """Wait long enough between requests that the league's edge does not answer 403."""
+    global _last_request_at
+    gap = time.monotonic() - _last_request_at
+    if _last_request_at and gap < POLITE_DELAY:
+        time.sleep(POLITE_DELAY - gap)
+    _last_request_at = time.monotonic()
+
+
 def http_get(url: str, tries: int = RETRIES) -> bytes:
-    """GET with retries. Raises on failure — a missing source never becomes a blank."""
+    """GET with retries and pacing. Raises on failure — a missing source is never a blank."""
     last = None
     for i in range(tries):
         try:
+            _pace()
             req = urllib.request.Request(url, headers=HEADERS)
             with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
                 if r.status != 200:
