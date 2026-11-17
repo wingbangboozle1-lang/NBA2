@@ -4852,3 +4852,17 @@ settles 11/16. PRs #98 and #112 touch the same settlement files; this session do
 | AA-3 | Regenerate dependent renders and run the repo's own gates | in progress | `arena/aa1d3c07-nba2` | regenerated outputs only (`site/**`, `data/v4/**`, `data/v5/**`) | `python -m unittest` for touched packages; `nba2.v2.check`; `nba2/pipeline/lint.py` |
 | AA-4 | Record the 2026-11-17 nightly failure diagnosis (evidence only, no workflow edit) | in progress | `arena/aa1d3c07-nba2` | NEW `analysis/session-aa1d3c07-settlement.md` | every claim cites a committed file or a run id |
 | AA-5 | PR → merge → Pages deploy confirmed by fetching the live page | unclaimed → in progress | `arena/aa1d3c07-nba2` | `COORDINATION.md` | live fetch of changed pages |
+
+### Completion record — `arena/aa1d3c07-nba2` (2026-11-17 UTC)
+
+| ID | Status | Result |
+|---|---|---|
+| AA-1 | done | `data/raw/results/results_2026-11-16.json`: 8 finals (0022600245–52). Each final is on nba.com/schedule and matches its gamebook total. 15 of 16 club period rows transcribed and summing to the final; the HOU period row is left blank (AA-F-04). |
+| AA-2 | done | `data/raw/results/results_2026-11-15_gamebook.json`: 0022600242–44 (11/15), which the older results file marked "not final". Re-read from the gamebooks and matched the refresh capture. Settlement re-run: sealed-2026-11-13 **22/22 settled**; sealed-2026-11-14 22/27 (5 games are 11/17, not played); v3 sealed-2026-11-15 17/34 graded (remaining 17 are 11/17–11/18). All three seals re-verify. Sealed ledger files unchanged. |
+| AA-3 | done | Local Pages sequence (identical to `pages.yml`) exits 0 at every step: v2, v2.check, settlement_page, v3, v3.check, v3 tests, v4, v4.check, v4 tests, v5, v5 tests. v2 unit suite: 146 OK. settle tests: 9 OK. |
+| AA-4 | done | `analysis/session-aa1d3c07-settlement.md` — sources, verification, irregularities I-1…I-6, and what was not done. Flags AA-F-01…04 added to `nba2/v2/content.py` (Flagged for review page: 60 → 64). |
+| AA-5 | in progress | PR + merge + Pages confirmation — recorded below when done. |
+
+**Edits outside the strict claim scope (declared):** `nba2/v4/settlement.py` (+3 lines in `FINALS_SOURCES`, to read the two new results files) and `nba2/v2/content.py` (appended `FLAGS += [...]` with AA-F-01…04). Neither changes existing behaviour beyond those additions.
+
+**Not done (honest):** the 2026-11-17 nightly job is still red (AA-F-01): the rolling refresh needs an owner decision (`refresh.yml` / `nba2/v2/refresh.py` are shared with open PRs #98 and #112). The root site still reads as-of 2026-11-14. Most of the session brief (projection/bet split, pre-registration, two-estimator headline, travel distance, minutes redistribution, market prior, etc.) is outside this session's claim and not addressed here.

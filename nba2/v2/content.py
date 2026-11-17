@@ -1093,3 +1093,33 @@ FLAGS += [
      "reproducible rather than restated.",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/audit/2026-11-14-766d/verify_injuries.py"),
 ]
+
+# ---------------------------------------------------------------- session arena/aa1d3c07-nba2 (2026-11-17)
+# Irregularities raised while settling the 2026-11-16 games. Full record: analysis/session-aa1d3c07-settlement.md
+FLAGS += [
+    ("AA-F-01", "high", "Freshness",
+     "The 2026-11-17 14:51Z nightly run failed its publish gate: the finals and rolling-refresh surfaces both "
+     "returned failure (data/raw/refresh_verdict.json), so the published schedule, standings and team stats are "
+     "still as-of 2026-11-14. Cause inferred from the committed egress probe (stats.nba.com timed out from the runner; "
+     "cdn.nba.com returned 403). The run log could not be downloaded to confirm the failing call.",
+     "Nothing was published from the failed run. Fixing the refresh path belongs to the owners of "
+     ".github/workflows/refresh.yml and nba2/v2/refresh.py; options are listed in the session record, section 5.",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/refresh_verdict.json"),
+    ("AA-F-02", "high", "Settlement",
+     "settle.py did not read the 2026-11-15 refresh capture (data/raw/refresh_*/), so three official finals "
+     "(0022600242 HOU-WAS, 0022600243 ATL-MIL, 0022600244 OKC-SAC) stayed unsettled although the capture held them. "
+     "Re-read from the official gamebooks on 2026-11-17: the scores and every period match.",
+     "Settled from data/raw/results/results_2026-11-15_gamebook.json. Discovery code left unchanged for its owner.",
+     "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"),
+    ("AA-F-03", "medium", "Data",
+     "data/raw/results/results_2026-11-15.json lists 0022600242-44 as 'not final at retrieval' (read 2026-11-16 ~02:05 UTC). "
+     "They were final by then. The file is unchanged and is superseded for those games by results_2026-11-15_gamebook.json.",
+     "Superseded row kept for audit; the settlement reads the newer file for these games.",
+     "https://www.nba.com/schedule"),
+    ("AA-F-04", "low", "Data",
+     "Eight games of 2026-11-16 are Final on nba.com and settled. For HOU @ MIA the Houston period row was not "
+     "transcribed from the gamebook PDF, so its quarter cells are blank. For POR @ MIN the PDF text contains a "
+     "garbled extra period table; the clean table was used (it sums to the final).",
+     "Blank quarter cells are not back-solved. The HOU final (110) is confirmed by the gamebook team line and by nba.com.",
+     "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"),
+]

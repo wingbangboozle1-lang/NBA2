@@ -1,11 +1,13 @@
 {
-  "settled_at_utc": "2026-11-16T18:20:03+00:00",
+  "settled_at_utc": "2026-11-17T15:49:00+00:00",
   "finals_snapshot": "official_finals_union.json",
   "finals_sources_read": [
     "data/raw/finals_2026-11-13.json",
     "data/raw/finals_all.json",
     "data/raw/capture_2026-11-15/results_2026-11-14.json",
     "data/raw/results/results_2026-11-15.json",
+    "data/raw/results/results_2026-11-15_gamebook.json",
+    "data/raw/results/results_2026-11-16.json",
     "data/v2/results.json"
   ],
   "finals_conflicts": [],
@@ -17,17 +19,17 @@
         "sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
         "n_predictions": 22
       },
-      "status": "PARTIAL \u2014 11 game(s) have no official final score",
-      "games_settled": 11,
+      "status": "SETTLED",
+      "games_settled": 22,
       "games_expected": 22,
       "metrics": {
-        "n_settled": 11,
-        "missing_games": 11,
-        "spread_mae": 11.273,
-        "total_mae": 13.318,
-        "total_pushes": 0,
-        "brier": 0.2178,
-        "log_loss": 0.7136,
+        "n_settled": 22,
+        "missing_games": 0,
+        "spread_mae": 12.432,
+        "total_mae": 15.432,
+        "total_pushes": 1,
+        "brier": 0.2362,
+        "log_loss": 0.7141,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -141,14 +143,124 @@
           "our_total": 220.5,
           "total_err": 0.5,
           "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+        },
+        {
+          "game_id": "0022600242",
+          "matchup": "HOU @ WAS",
+          "final": "147-119",
+          "our_spread_home": 13.0,
+          "spread_err": 15.0,
+          "our_total": 224.0,
+          "total_err": 42.0,
+          "source": "https://www.nba.com/game/hou-vs-was-0022600242"
+        },
+        {
+          "game_id": "0022600243",
+          "matchup": "ATL @ MIL",
+          "final": "113-106",
+          "our_spread_home": 10.0,
+          "spread_err": 3.0,
+          "our_total": 231.5,
+          "total_err": 12.5,
+          "source": "https://www.nba.com/game/atl-vs-mil-0022600243"
+        },
+        {
+          "game_id": "0022600244",
+          "matchup": "OKC @ SAC",
+          "final": "125-103",
+          "our_spread_home": 11.5,
+          "spread_err": 10.5,
+          "our_total": 223.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/okc-vs-sac-0022600244"
+        },
+        {
+          "game_id": "0022600245",
+          "matchup": "ORL @ BOS",
+          "final": "115-105",
+          "our_spread_home": -12.0,
+          "spread_err": 22.0,
+          "our_total": 220.0,
+          "total_err": 0.0,
+          "source": "https://www.nba.com/game/orl-vs-bos-0022600245"
+        },
+        {
+          "game_id": "0022600246",
+          "matchup": "CHI @ CLE",
+          "final": "115-126",
+          "our_spread_home": -14.0,
+          "spread_err": 3.0,
+          "our_total": 236.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/chi-vs-cle-0022600246"
+        },
+        {
+          "game_id": "0022600247",
+          "matchup": "MEM @ WAS",
+          "final": "136-120",
+          "our_spread_home": 8.5,
+          "spread_err": 7.5,
+          "our_total": 228.0,
+          "total_err": 28.0,
+          "source": "https://www.nba.com/game/mem-vs-was-0022600247"
+        },
+        {
+          "game_id": "0022600248",
+          "matchup": "PHI @ BKN",
+          "final": "135-123",
+          "our_spread_home": 3.5,
+          "spread_err": 8.5,
+          "our_total": 223.0,
+          "total_err": 35.0,
+          "source": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+        },
+        {
+          "game_id": "0022600249",
+          "matchup": "HOU @ MIA",
+          "final": "110-128",
+          "our_spread_home": 10.0,
+          "spread_err": 28.0,
+          "our_total": 229.0,
+          "total_err": 9.0,
+          "source": "https://www.nba.com/game/hou-vs-mia-0022600249"
+        },
+        {
+          "game_id": "0022600250",
+          "matchup": "POR @ MIN",
+          "final": "98-106",
+          "our_spread_home": -5.0,
+          "spread_err": 3.0,
+          "our_total": 228.5,
+          "total_err": 24.5,
+          "source": "https://www.nba.com/game/por-vs-min-0022600250"
+        },
+        {
+          "game_id": "0022600251",
+          "matchup": "GSW @ NOP",
+          "final": "94-115",
+          "our_spread_home": 11.5,
+          "spread_err": 32.5,
+          "our_total": 236.0,
+          "total_err": 27.0,
+          "source": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+        },
+        {
+          "game_id": "0022600252",
+          "matchup": "PHX @ DEN",
+          "final": "117-105",
+          "our_spread_home": -4.5,
+          "spread_err": 16.5,
+          "our_total": 228.0,
+          "total_err": 6.0,
+          "source": "https://www.nba.com/game/phx-vs-den-0022600252"
         }
       ],
       "games_in_conflict": [],
       "gate_measurements": {
-        "settled_bets": 11,
-        "line_mae": 11.273,
+        "settled_bets": 22,
+        "line_mae": 12.432,
         "baseline_mae": null,
-        "brier": 0.2178,
+        "brier": 0.2362,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -157,7 +269,7 @@
           "gate_id": "G-01",
           "name": "Sample size",
           "result": "BLOCKED",
-          "measured": "11 settled bets (need 300)",
+          "measured": "22 settled bets (need 300)",
           "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
         },
         {
@@ -231,17 +343,17 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PARTIAL \u2014 16 game(s) have no official final score",
-      "games_settled": 11,
+      "status": "PARTIAL \u2014 5 game(s) have no official final score",
+      "games_settled": 22,
       "games_expected": 27,
       "metrics": {
-        "n_settled": 11,
-        "missing_games": 16,
-        "spread_mae": 11.273,
-        "total_mae": 13.318,
-        "total_pushes": 0,
-        "brier": 0.2178,
-        "log_loss": 0.7136,
+        "n_settled": 22,
+        "missing_games": 5,
+        "spread_mae": 12.432,
+        "total_mae": 15.432,
+        "total_pushes": 1,
+        "brier": 0.2362,
+        "log_loss": 0.7141,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -355,14 +467,124 @@
           "our_total": 220.5,
           "total_err": 0.5,
           "source": "https://www.nba.com/game/nyk-vs-tor-0022600241"
+        },
+        {
+          "game_id": "0022600242",
+          "matchup": "HOU @ WAS",
+          "final": "147-119",
+          "our_spread_home": 13.0,
+          "spread_err": 15.0,
+          "our_total": 224.0,
+          "total_err": 42.0,
+          "source": "https://www.nba.com/game/hou-vs-was-0022600242"
+        },
+        {
+          "game_id": "0022600243",
+          "matchup": "ATL @ MIL",
+          "final": "113-106",
+          "our_spread_home": 10.0,
+          "spread_err": 3.0,
+          "our_total": 231.5,
+          "total_err": 12.5,
+          "source": "https://www.nba.com/game/atl-vs-mil-0022600243"
+        },
+        {
+          "game_id": "0022600244",
+          "matchup": "OKC @ SAC",
+          "final": "125-103",
+          "our_spread_home": 11.5,
+          "spread_err": 10.5,
+          "our_total": 223.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/okc-vs-sac-0022600244"
+        },
+        {
+          "game_id": "0022600245",
+          "matchup": "ORL @ BOS",
+          "final": "115-105",
+          "our_spread_home": -12.0,
+          "spread_err": 22.0,
+          "our_total": 220.0,
+          "total_err": 0.0,
+          "source": "https://www.nba.com/game/orl-vs-bos-0022600245"
+        },
+        {
+          "game_id": "0022600246",
+          "matchup": "CHI @ CLE",
+          "final": "115-126",
+          "our_spread_home": -14.0,
+          "spread_err": 3.0,
+          "our_total": 236.5,
+          "total_err": 4.5,
+          "source": "https://www.nba.com/game/chi-vs-cle-0022600246"
+        },
+        {
+          "game_id": "0022600247",
+          "matchup": "MEM @ WAS",
+          "final": "136-120",
+          "our_spread_home": 8.5,
+          "spread_err": 7.5,
+          "our_total": 228.0,
+          "total_err": 28.0,
+          "source": "https://www.nba.com/game/mem-vs-was-0022600247"
+        },
+        {
+          "game_id": "0022600248",
+          "matchup": "PHI @ BKN",
+          "final": "135-123",
+          "our_spread_home": 3.5,
+          "spread_err": 8.5,
+          "our_total": 223.0,
+          "total_err": 35.0,
+          "source": "https://www.nba.com/game/phi-vs-bkn-0022600248"
+        },
+        {
+          "game_id": "0022600249",
+          "matchup": "HOU @ MIA",
+          "final": "110-128",
+          "our_spread_home": 10.0,
+          "spread_err": 28.0,
+          "our_total": 229.0,
+          "total_err": 9.0,
+          "source": "https://www.nba.com/game/hou-vs-mia-0022600249"
+        },
+        {
+          "game_id": "0022600250",
+          "matchup": "POR @ MIN",
+          "final": "98-106",
+          "our_spread_home": -5.0,
+          "spread_err": 3.0,
+          "our_total": 228.5,
+          "total_err": 24.5,
+          "source": "https://www.nba.com/game/por-vs-min-0022600250"
+        },
+        {
+          "game_id": "0022600251",
+          "matchup": "GSW @ NOP",
+          "final": "94-115",
+          "our_spread_home": 11.5,
+          "spread_err": 32.5,
+          "our_total": 236.0,
+          "total_err": 27.0,
+          "source": "https://www.nba.com/game/gsw-vs-nop-0022600251"
+        },
+        {
+          "game_id": "0022600252",
+          "matchup": "PHX @ DEN",
+          "final": "117-105",
+          "our_spread_home": -4.5,
+          "spread_err": 16.5,
+          "our_total": 228.0,
+          "total_err": 6.0,
+          "source": "https://www.nba.com/game/phx-vs-den-0022600252"
         }
       ],
       "games_in_conflict": [],
       "gate_measurements": {
-        "settled_bets": 11,
-        "line_mae": 11.273,
+        "settled_bets": 22,
+        "line_mae": 12.432,
         "baseline_mae": null,
-        "brier": 0.2178,
+        "brier": 0.2362,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -371,7 +593,7 @@
           "gate_id": "G-01",
           "name": "Sample size",
           "result": "BLOCKED",
-          "measured": "11 settled bets (need 300)",
+          "measured": "22 settled bets (need 300)",
           "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
         },
         {
