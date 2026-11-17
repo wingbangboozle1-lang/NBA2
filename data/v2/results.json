@@ -605,7 +605,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600246",
@@ -634,7 +634,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600247",
@@ -663,7 +663,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600248",
@@ -692,7 +692,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600249",
@@ -701,7 +701,12 @@
    "home": "MIA",
    "away_pts": 110,
    "home_pts": 128,
-   "away_quarters": null,
+   "away_quarters": [
+    15,
+    31,
+    35,
+    29
+   ],
    "home_quarters": [
     29,
     33,
@@ -713,10 +718,10 @@
     "home": []
    },
    "ot_periods": 0,
-   "quarters_blank_reason": "away quarter row not transcribed from the gamebook PDF read today; left blank, not back-solved",
+   "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600250",
@@ -745,7 +750,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/por-vs-min-0022600250",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600251",
@@ -774,7 +779,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   },
   {
    "game_id": "0022600252",
@@ -803,7 +808,7 @@
    "quarters_blank_reason": null,
    "source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
-   "origin": "results-2026-11-16"
+   "origin": "v5"
   }
  ]
 }

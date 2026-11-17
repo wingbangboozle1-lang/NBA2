@@ -5307,3 +5307,20 @@ v3 58/58, v4+v5 87/87, `nba2/tests` discover 79/79 (the 11/16 union-source failu
 updated for the 22-game window (19/43/44/22). Full CI-order chain run locally
 (v2→v2.check→settlement_page→v3→v3.check→v3 tests→v4→v4.check→v4 tests→v5→v5 tests) with the final
 tree carrying the v4+v5 nav blocks on 42 pages; published `site/` matches a rebuild.
+**Merge reconciliation (2026-11-17, session `arena/1eeb6a21-nba2`):** while preparing the PR,
+`origin/main` advanced to `efb0547` (PR #115 from `arena/aa1d3c07-nba2` + earlier `8892d20c`/`669bccab`
+work) with overlapping scope. Merged `origin/main` into this branch; conflicts resolved without
+discarding either side:
+- `data/raw/results/results_2026-11-16.json` (both-added): kept **this session's** file
+  (`nba2.results-feed.v3`) — the two independent captures agree on every final and every quarter row
+  they share (8/8 finals, 7/8 quarter pairs byte-identical); this file additionally carries the HOU
+  quarter row [15,31,35,29] recovered from the printed per-period team totals, which the PR #115
+  capture left blank. Their capture therefore doubles as independent double-verification of mine.
+- `nba2/v4/settlement.py`: kept both FINALS_SOURCES additions (their 11/15 recheck + this session's
+  11/16 file).
+- `COORDINATION.md`: union — their entries retained in main's order, this session's appended after.
+- Regenerable artifacts (`official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/*`,
+  `data/site.json`, `site/*.html`) taken from main as base and then regenerated from the merged
+  generators. Result: union **31 games, 0 conflicts, 0 rejected quarter rows**, stamp shows
+  22/22 + 22/27 settled, seals VERIFIED, and the merged tree keeps their root pointer page +
+  capture-verification page AND this session's v5-flag mirror + decisions-needed integration update.
