@@ -48,6 +48,7 @@ V3_SEALS = ("sealed-2026-11-15.json",)
 FINALS_SOURCES = (
     ("data/raw/refresh_2026-11-15/results_2026-11-15.json", "2026-11-15"),
     ("data/raw/capture_2026-11-15/results_2026-11-14.json", "2026-11-14"),
+    ("data/raw/results/results_2026-11-16.json", "2026-11-16"),
 )
 
 

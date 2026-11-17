@@ -15,12 +15,12 @@ from collections import defaultdict
 from . import transcript as T
 
 INJURY_DIR = T.DATA / "raw" / "refresh_2026-11-16"
-
-# Read whatever release transcripts are committed, newest report stamp wins. A file
-# renamed "..._superseded.json" by another session is skipped, because that session has
-# already published a later revision of the same filing.
-INJURY_TRANSCRIPTS = sorted(p for p in INJURY_DIR.glob("injury_transcript_*.json")
-                            if "superseded" not in p.name)
+# 1eeb6a21: the 2026-11-17 capture directory is read alongside 11/16 so the newest report
+# stamp (11/17 11:00 AM ET) wins the join; the superseded-file skip is preserved.
+INJURY_DIRS = [INJURY_DIR, T.DATA / "raw" / "refresh_2026-11-17"]
+INJURY_TRANSCRIPTS = sorted(
+    p for d in INJURY_DIRS for p in d.glob("injury_transcript_*.json")
+    if "superseded" not in p.name)
 
 INJURY_INDEX_URL = "https://official.nba.com/nba-injury-report-2026-27-season/"
 

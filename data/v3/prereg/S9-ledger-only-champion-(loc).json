@@ -10,11 +10,11 @@
   "universe": "the sealed ledger's pre-tip predictions, settled only from official finals",
   "settlement_rule": "Official NBA final scores. Strategies sharing >0.7 bet-level overlap are reported as one cluster so one signal cannot be awarded three times. No reward is allocated until the luck checks (G-05) and multiple-testing control (G-06) pass.",
   "status": "pre-registered, 0 bets placed, evaluation rule frozen",
-  "registered_at_utc": "2026-11-15T11:41:00Z",
-  "registered_by": "arena/e675ac3d-nba2",
+  "registered_at_utc": "2026-11-17T17:05:00Z",
+  "registered_by": "arena/1eeb6a21-nba2",
   "window": {
-    "start": "2026-11-15",
-    "end": "2026-11-18"
+    "start": "2026-11-17",
+    "end": "2026-11-20"
   },
-  "sha256": "b69a1125f9b593f17376ecd0c25d295e1848a887526f870c8165facb31a4845f"
+  "sha256": "523b64031ff2d43424feb4aa4c6101c7e2e97dada04f39c2bf213d2174c159b2"
 }

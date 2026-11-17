@@ -424,6 +424,246 @@
       "retrieved_window_utc": "2026-11-16 ~18:27-18:36 UTC (platform page-fetch tool; per-call times are not logged by the tool, so each game carries the window)",
       "_newly_settled": false,
       "_status": "agrees with results_2026-11-15.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600246",
+      "matchup": "CHI@CLE",
+      "away": "CHI",
+      "home": "CLE",
+      "away_pts": 115,
+      "home_pts": 126,
+      "away_quarters": [
+        31,
+        17,
+        31,
+        36
+      ],
+      "home_quarters": [
+        25,
+        32,
+        31,
+        38
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "CHI 31+17+31+36 = 115 sums to the final; CLE 25+32+31+38 = 126 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600251",
+      "matchup": "GSW@NOP",
+      "away": "GSW",
+      "home": "NOP",
+      "away_pts": 94,
+      "home_pts": 115,
+      "away_quarters": [
+        11,
+        25,
+        29,
+        29
+      ],
+      "home_quarters": [
+        35,
+        26,
+        32,
+        22
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "GSW 11+25+29+29 = 94 sums to the final; NOP 35+26+32+22 = 115 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600249",
+      "matchup": "HOU@MIA",
+      "away": "HOU",
+      "home": "MIA",
+      "away_pts": 110,
+      "home_pts": 128,
+      "away_quarters": [
+        15,
+        31,
+        35,
+        29
+      ],
+      "home_quarters": [
+        29,
+        33,
+        39,
+        27
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "HOU 15+31+35+29 = 110 sums to the final; MIA 29+33+39+27 = 128 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600247",
+      "matchup": "MEM@WAS",
+      "away": "MEM",
+      "home": "WAS",
+      "away_pts": 136,
+      "home_pts": 120,
+      "away_quarters": [
+        33,
+        26,
+        42,
+        35
+      ],
+      "home_quarters": [
+        35,
+        34,
+        18,
+        33
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "MEM 33+26+42+35 = 136 sums to the final; WAS 35+34+18+33 = 120 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600245",
+      "matchup": "ORL@BOS",
+      "away": "ORL",
+      "home": "BOS",
+      "away_pts": 115,
+      "home_pts": 105,
+      "away_quarters": [
+        20,
+        30,
+        25,
+        40
+      ],
+      "home_quarters": [
+        17,
+        24,
+        36,
+        28
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "ORL 20+30+25+40 = 115 sums to the final; BOS 17+24+36+28 = 105 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600248",
+      "matchup": "PHI@BKN",
+      "away": "PHI",
+      "home": "BKN",
+      "away_pts": 135,
+      "home_pts": 123,
+      "away_quarters": [
+        33,
+        45,
+        27,
+        30
+      ],
+      "home_quarters": [
+        26,
+        33,
+        36,
+        28
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "PHI 33+45+27+30 = 135 sums to the final; BKN 26+33+36+28 = 123 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600252",
+      "matchup": "PHX@DEN",
+      "away": "PHX",
+      "home": "DEN",
+      "away_pts": 117,
+      "home_pts": 105,
+      "away_quarters": [
+        20,
+        36,
+        34,
+        27
+      ],
+      "home_quarters": [
+        24,
+        29,
+        29,
+        23
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "PHX 20+36+34+27 = 117 sums to the final; DEN 24+29+29+23 = 105 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
+    },
+    {
+      "date": "2026-11-16",
+      "game_id": "0022600250",
+      "matchup": "POR@MIN",
+      "away": "POR",
+      "home": "MIN",
+      "away_pts": 98,
+      "home_pts": 106,
+      "away_quarters": [
+        26,
+        25,
+        22,
+        25
+      ],
+      "home_quarters": [
+        26,
+        33,
+        28,
+        19
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null,
+      "quarter_check": "POR 26+25+22+25 = 98 sums to the final; MIN 26+33+28+19 = 106 sums to the final",
+      "quarters_blank_reason": null,
+      "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
+      "source_class": "official",
+      "retrieved_window_utc": "2026-11-17T16:30:00Z",
+      "_newly_settled": false,
+      "_status": "agrees with results_2026-11-16.json"
     }
   ]
 }

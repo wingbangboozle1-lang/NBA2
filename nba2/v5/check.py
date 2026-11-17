@@ -20,6 +20,8 @@ DATA = T.DATA
 CROSS_SOURCES = [
     DATA / "raw" / "capture_2026-11-15" / "results_2026-11-14.json",
     DATA / "raw" / "results" / "results_2026-11-15.json",
+    # 1eeb6a21: the 11/16 feed committed this session cross-checks its own transcript
+    DATA / "raw" / "results" / "results_2026-11-16.json",
 ]
 
 

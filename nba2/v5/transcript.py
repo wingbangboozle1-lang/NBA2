@@ -26,6 +26,8 @@ SESSION = "arena/6e46dbf2-nba2"
 TRANSCRIPTS = [
     V5 / "gamebooks_2026-11-14.json",
     V5 / "gamebooks_2026-11-15.json",
+    # 1eeb6a21: 2026-11-16 gamebooks captured this session (8 games, 211 player rows)
+    V5 / "gamebooks_2026-11-16.json",
 ]
 
 # The committed 11/13 player logs (session arena/f8f8f2b8-nba2) use schema

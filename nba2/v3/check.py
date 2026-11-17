@@ -75,8 +75,11 @@ def semantic() -> list[str]:
     res = M.build()
     hc = res["home_court"]
     played = M.load_played_games()["games"]
-    if len(played) != 188:
-        problems.append(f"history has {len(played)} finals, expected 188")
+    # 183 historical finals + the snapshot's own RESULTS rows (11/14-11/16). Derived,
+    # so the next snapshot refresh cannot silently desync this check from the capture.
+    expected = 183 + len(O.RESULTS)
+    if len(played) != expected:
+        problems.append(f"history has {len(played)} finals, expected {expected}")
     if sum(1 for g in played if not g["neutral"] and g["home_margin"] > 0) != hc["home_wins"]:
         problems.append("home-win count disagrees with a fresh recomputation")
     if abs(hc["hca_points"] - hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])) > 5e-4:

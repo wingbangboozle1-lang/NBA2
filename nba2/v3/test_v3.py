@@ -30,8 +30,9 @@ class TestSnapshot(unittest.TestCase):
         self.assertEqual(O.selftest(), [])
 
     def test_records_match_the_finals(self):
-        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), 188)
-        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), 188)
+        # 183 historical finals + 5 (11/14) + 9 (11/15) + 8 (11/16) = 205
+        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), 205)
+        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), 205)
 
     def test_every_game_carries_a_source_url(self):
         for g in O.SLATE:
@@ -40,7 +41,7 @@ class TestSnapshot(unittest.TestCase):
     def test_injury_rows_have_a_team_and_a_date(self):
         for r in O.INJURIES:
             self.assertIsNotNone(r["team_abbr"], r)
-            self.assertIn(r["game_date"], ("2026-11-15", "2026-11-16"), r)
+            self.assertIn(r["game_date"], ("2026-11-17", "2026-11-18"), r)
 
     def test_arenas_have_no_fabricated_coordinates(self):
         for a, c, s in O.ARENAS:
@@ -53,7 +54,7 @@ class TestSnapshot(unittest.TestCase):
 class TestHomeCourt(unittest.TestCase):
     def test_hca_is_the_pinned_identity(self):
         hc = M.home_court(M.load_played_games()["games"])
-        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 188)
+        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 205)
         want = hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])
         self.assertLess(abs(hc["hca_points"] - want), 5e-4)
         self.assertAlmostEqual(M.phi(hc["hca_points"] / hc["margin_sd"]),
@@ -207,7 +208,7 @@ class TestLedger(unittest.TestCase):
             try:
                 LD.LEDGER_DIR = Path(td)
                 info = LD.seal(res)
-                ok, stored, recomputed = LD.verify(Path(td) / "sealed-2026-11-15.json")
+                ok, stored, recomputed = LD.verify(Path(td) / Path(info["file"]).name)
                 self.assertTrue(ok)
                 self.assertEqual(stored, info["digest"])
                 self.assertEqual(stored, recomputed)
