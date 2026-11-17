@@ -1,9 +1,9 @@
 {
  "schema": "nba2.refresh-verdict.v1",
- "run_id": "43939889279",
- "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43939889279",
+ "run_id": "44107633323",
+ "run_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44107633323",
  "event": "schedule",
- "attempted_at_utc": "2026-11-16T19:33:00Z",
+ "attempted_at_utc": "2026-11-17T14:54:57Z",
  "surfaces": {
   "injuries": "success",
   "finals": "failure",
