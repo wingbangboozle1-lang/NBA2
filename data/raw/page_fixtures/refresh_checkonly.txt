@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 822, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 742, in main
+    "standings": fetch_standings(today),
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 379, in fetch_standings
+    clubs = fetch_teams_index()
+            ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 228, in fetch_teams_index
+    clubs = parse_team_index(http_get(url).decode("utf-8", "replace"))
+                             ^^^^^^^^^^^^^
+  File "/home/runner/work/NBA2/NBA2/nba2/v2/refresh.py", line 118, in http_get
+    raise RuntimeError(f"fetch failed after {tries} tries: {url}: {last}")
+RuntimeError: fetch failed after 3 tries: https://www.nba.com/standings: HTTP Error 403: Forbidden
+nba2.v2.refresh: window 2026-11-17..2026-11-20 (anchor 2026-11-17)
+exit=1
