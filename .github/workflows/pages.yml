@@ -59,12 +59,24 @@ jobs:
       - name: Rebuild the v5 player-log pages (transcripts -> gates -> render -> nav)
         # v5 reads the committed official gamebook transcripts (it fetches nothing), runs
         # eight fail-closed gates, renders its four pages and appends its nav block to every
-        # page v2/v3/v4 wrote - so it has to run last, or the parity diff below reports v5's
-        # own contribution as drift. Added with PR #107 (session arena/6e46dbf2-nba2);
-        # logged in COORDINATION.md as an integration change to a shared build file.
+        # page v2/v3/v4 wrote - so it has to run after them. Added with PR #107
+        # (session arena/6e46dbf2-nba2); logged in COORDINATION.md as an integration change
+        # to a shared build file.
         run: |
           python -m nba2.v5
           python -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
+
+      - name: Rebuild the v6 measurement pages (inventory -> gates -> render -> nav -> group)
+        # v6 fetches nothing: it measures the coverage of what is already committed (injury
+        # PDF archive, result feed, player-log coverage, market prior, endpoint
+        # reachability), runs thirteen fail-closed gates, renders six pages, injects its nav
+        # block and then GROUPS the whole sidebar into categories - so it must run last.
+        # Before this step the published tree carried a flat 50-link nav; regrouping is a
+        # change to the shared navigation, recorded in COORDINATION.md (session
+        # arena/f5ac4e74-nba2, task K-06). Added with the v6 PR.
+        run: |
+          python -m nba2.v6
+          python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
 
       - name: Fail if the committed site differs from a rebuild
         run: |

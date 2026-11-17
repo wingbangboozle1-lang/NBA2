@@ -1,0 +1,150 @@
+{
+ "schema": "nba2.v6.checks.v1",
+ "session": "arena/f5ac4e74-nba2",
+ "n_gates": 13,
+ "n_gates_pass": 13,
+ "n_gates_fail": 0,
+ "publishable": true,
+ "gates": [
+  {
+   "id": "G-V6-1",
+   "name": "every injury release in the inventory carries a well-formed official CDN URL",
+   "ok": true,
+   "tested": 18,
+   "passed": 18,
+   "detail": "18 releases, 0 malformed",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-2",
+   "name": "every archived injury PDF is listed in the inventory",
+   "ok": true,
+   "tested": 4,
+   "passed": 4,
+   "detail": "4 PDFs on disk, 18 in the inventory",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-3",
+   "name": "each archived PDF's sha256 and byte length recompute",
+   "ok": true,
+   "tested": 4,
+   "passed": 4,
+   "detail": "4/4 archived PDFs verified byte-for-byte",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-4",
+   "name": "every release's revision stamp parses out of its official filename",
+   "ok": true,
+   "tested": 18,
+   "passed": 18,
+   "detail": "18 releases, 0 unparseable stamps",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-5",
+   "name": "result-feed coverage is arithmetically consistent per date",
+   "ok": true,
+   "tested": 8,
+   "passed": 8,
+   "detail": "8 dates, 61 games",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-6",
+   "name": "every committed final either has quarter rows that sum to it, or says why the quarters are blank",
+   "ok": true,
+   "tested": 31,
+   "passed": 31,
+   "detail": "31/31 finals reconcile (quarters or an explained blank)",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-7",
+   "name": "no two committed official feeds disagree about a final score",
+   "ok": true,
+   "tested": 31,
+   "passed": 31,
+   "detail": "31 finals cross-read against every committed feed",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-8",
+   "name": "every game row points at an official nba.com document",
+   "ok": true,
+   "tested": 52,
+   "passed": 52,
+   "detail": "52 game rows, 0 without an official URL",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-9",
+   "name": "the injury-report / player-log join is arithmetically consistent",
+   "ok": true,
+   "tested": 116,
+   "passed": 116,
+   "detail": "12/116 named players have a committed game log (0.1034)",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-10",
+   "name": "every injury-report row in the join carries the official PDF it was read from",
+   "ok": true,
+   "tested": 116,
+   "passed": 116,
+   "detail": "116 report rows, 0 unsourced",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-11",
+   "name": "the market-anchored prior is blank where it must be, and its rule is deterministic and monotone",
+   "ok": true,
+   "tested": 5,
+   "passed": 5,
+   "detail": "w_market blank (undefined until a closing line is captured and scored out-of…); rule verified on 5 cases",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-12",
+   "name": "every published out-of-sample log-loss measurement is internally consistent, and its sign is reported either way",
+   "ok": true,
+   "tested": 2,
+   "passed": 2,
+   "detail": "2 measured samples, 0 inconsistent; WORSE THAN A COIN FLIP on SETTLED-22 — published as flag F-F5-08, not suppressed",
+   "failures": [],
+   "hard": true
+  },
+  {
+   "id": "G-V6-13",
+   "name": "every v6 table row carries an official source link, and every blank carries a reason",
+   "ok": true,
+   "tested": 256,
+   "passed": 256,
+   "detail": "256/256 rows clean; 1 table(s) explicitly marked data-derived (arithmetic on a stated rule, captioned as such)",
+   "failures": [],
+   "hard": true
+  }
+ ],
+ "counts": {
+  "injury_releases": 18,
+  "injury_releases_with_bytes": 4,
+  "injury_releases_with_transcript": 8,
+  "games_known": 52,
+  "games_with_final": 31,
+  "games_graded": 22,
+  "report_rows": 116,
+  "players_matched": 12
+ }
+}
