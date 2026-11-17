@@ -1311,6 +1311,14 @@
    "THE THREE OFFICIAL TEAM-STAT PAGES DO NOT RECONCILE EXACTLY WITH EACH OTHER \u2014 margin per game, recomputed as NetRtg x PACE / 100, differs from (PTS - Opp PTS) by up to 0.85 pts/game (ORL -0.85, NYK +0.64, DET +0.53). All three pages are official and were read the same day; they round independently, one per game and the others per 100 possessions.",
    "Published as a per-club residual table instead of choosing the flattering definition, and a residual above 1.5 pts/game fails the capture as a likely transcription error. No value was adjusted to make the pages agree.",
    "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+  ],
+  [
+   "F-062",
+   "high",
+   "Site",
+   "THE SITE'S FRONT DOOR WAS SERVING THE OLDEST TREE \u2014 GitHub Pages for this repository is configured build_type=legacy with source main /, so the page a visitor lands on is the repository-root index.html, not the gated site/ artefact that pages.yml uploads. Measured 2026-11-17: the root served the v1 dashboard stamped 'as-of 2026-11-14' while /NBA2/data/teams.json returned 404 and the real v2 tree was only reachable at /NBA2/site/. The README's claim that site/ is the Pages root was therefore false.",
+   "The root index.html is now a labelled pointer to site/index.html, emitted by nba2.pipeline.build_site so it is regenerated and parity-checked like everything else. The underlying setting still needs one owner action - Settings > Pages > Source: GitHub Actions - which requires the pages: write scope this session's token does not have (the API returns 403 Resource not accessible by integration). Until that flip, /site/ is the canonical path and the root redirects to it.",
+   "https://github.com/wingbangboozle1-lang/NBA2/settings/pages"
   ]
  ],
  "requirements": [

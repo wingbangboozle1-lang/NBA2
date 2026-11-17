@@ -27,10 +27,13 @@ every such row is flagged), `derived` (computed in-repo from a committed snapsho
 
 ## Which tree is published
 
-**One tree reaches a reader: [`site/`](site/), published at the repository root by
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
-site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
-returns 404. The repository still holds the earlier trees — they are kept for history and for
+**One tree reaches a reader: [`site/`](site/), uploaded by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** CORRECTED 2026-11-17 (F-062): the Pages configuration for this repository is
+`build_type: legacy`, source `main /`, so the file served at `/NBA2/` is the **repository-root**
+`index.html`, not the uploaded `site/` artefact. Probed live: `/NBA2/data/teams.json` returns
+**404** and the v2 tree is reachable at `/NBA2/site/`. The root `index.html` is now a generated
+pointer to `site/index.html`; flipping Settings → Pages → Source to **GitHub Actions** (one owner
+action, needs `pages: write`) makes `/NBA2/` serve `site/` directly. The repository still holds the earlier trees — they are kept for history and for
 review, and they are **not** published. Nothing was deleted to get here; moving the rest under
 `archive/` is suggestion SG-28, waiting on an owner decision.
 
@@ -43,10 +46,13 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 
 ## The v1 dashboard tree (retained, not published)
 
-**One tree reaches a reader: [`site/`](site/), published at the repository root by
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** It was confirmed by probing the live
-site, not assumed: `/NBA2/data/teams.json` returns 200 with v2 content while `/NBA2/pages/…`
-returns 404. The repository still holds the earlier trees — they are kept for history and for
+**One tree reaches a reader: [`site/`](site/), uploaded by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).** CORRECTED 2026-11-17 (F-062): the Pages configuration for this repository is
+`build_type: legacy`, source `main /`, so the file served at `/NBA2/` is the **repository-root**
+`index.html`, not the uploaded `site/` artefact. Probed live: `/NBA2/data/teams.json` returns
+**404** and the v2 tree is reachable at `/NBA2/site/`. The root `index.html` is now a generated
+pointer to `site/index.html`; flipping Settings → Pages → Source to **GitHub Actions** (one owner
+action, needs `pages: write`) makes `/NBA2/` serve `site/` directly. The repository still holds the earlier trees — they are kept for history and for
 review, and they are **not** published. Nothing was deleted to get here; moving the rest under
 `archive/` is suggestion SG-28, waiting on an owner decision.
 
