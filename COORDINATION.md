@@ -5402,3 +5402,55 @@ python3 -m nba2.settlement_page    -> site/settlement.html
 git status --porcelain             -> 0 entries  (the committed tree is byte-identical to a rebuild)
 tools/crosscheck_site.py           -> 97 checks: 87 pass, 2 fail (CC-DOC-01, CC-FRESH-01), 8 info
 ```
+
+---
+
+### Merge-conflict record — session `arena/f5ac4e74-nba2` (2026-11-17)
+
+While this session was working, `origin/main` advanced from `d4fde59` to `efb0547`
+(**PR #115**, session `arena/aa1d3c07-nba2`): it captured the 2026-11-16 official finals
+from the NBA.com game list, settled them, and re-ran settlement + Pages.
+
+`git pull --rebase origin main` therefore conflicted, in **two** commits:
+
+1. `COORDINATION.md` (this session's claim block against `arena/aa1d3c07-nba2`'s claim).
+   **Resolved by keeping both sides in full** — nothing of the other session's record was
+   discarded.
+2. The v6 commit: `README.md`, `.github/workflows/publish-parity.yml` and 46 generated
+   `site/*.html` files. The `site/` conflicts are **generated artefacts**, so they were
+   resolved by taking `origin/main`'s version and **regenerating** the tree with the full
+   pipeline, not by merging HTML text. `README.md` and `publish-parity.yml` were re-applied
+   by hand from this session's side.
+
+**Nothing of PR #115 was lost:** its 2026-11-16 finals are in the tree, the 11/16 rows are
+graded 8/8, and its `capture-verification.html` page is in the v6 navigation
+(Verification & measured skill).
+
+**Force-push, logged as required.** The remote branch `arena/f5ac4e74-nba2` was at
+`badc2a5` (this session's own claim commit, based on the pre-#115 `d4fde59`). An earlier
+push attempt ran while a rebase was in progress and was rejected; after the rebase onto
+`efb0547` the branch had diverged from its remote counterpart. `badc2a5` exists in the
+rebased history as `7c2a94a`, so the only commit not on the remote tip was this session's
+own. Pushed with `--force-with-lease=<the exact old sha>`; no other session had ever
+committed to this branch.
+
+**Numbers that changed because of PR #115** (v6 re-measured them rather than keeping the
+pre-#115 figures):
+
+| Measure | Before #115 | After #115 |
+|---|---|---|
+| games with a committed official final | 23 / 52 | **31 / 52** |
+| games graded against a seal | 14 | **22** |
+| 2026-11-16 coverage | 0/8 finals, 0/8 graded | **8/8 finals, 8/8 graded** |
+| model out-of-sample log-loss (settled) | 0.6088 (14 games) | **0.7141 (22 games)** |
+| model vs coin-flip baseline (0.6931) | better | **worse** — flag F-F5-08 |
+| official injury releases in the inventory | 16 | **17** |
+
+`F-F5-02` was re-scoped: the *automated* finals fetch is still dead (HTTP 403 and a
+timeout, per `data/raw/egress_probe.json`), but the 11/16 date was closed by a manual
+capture in PR #115, so the finding is now "the pipeline cannot do it unattended" rather
+than "11/16 has no finals".
+
+**K-01 was closed independently.** The stale README counts this session was about to fix
+(1,423 rows, 70 tests) had already been corrected on `main` by another session. The count
+fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 passes.
