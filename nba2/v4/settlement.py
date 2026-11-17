@@ -48,6 +48,10 @@ V3_SEALS = ("sealed-2026-11-15.json",)
 FINALS_SOURCES = (
     ("data/raw/refresh_2026-11-15/results_2026-11-15.json", "2026-11-15"),
     ("data/raw/capture_2026-11-15/results_2026-11-14.json", "2026-11-14"),
+    # arena/934fce54-nba2 (2026-11-17): the 11/16 game day, transcribed from the eight
+    # official gamebook PDFs at statsdmz.nba.com. Schema nba2.results-feed.v3, same as
+    # the files above, so the two surfaces grade the same rows.
+    ("data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json", "2026-11-16"),
 )
 
 
@@ -307,6 +311,11 @@ def settle() -> dict:
     p_dist = 1.0
     for g in dist_graded:
         p_dist *= max(_p_side(g), 1e-12)
+    # arena/934fce54-nba2 (CR-V5-3): the luck statement used to hard-code "12 correct
+    # winners in 14 distinct games"; it must derive from the graded rows or it becomes a
+    # lie the moment another game day settles. It is now computed, like every number here.
+    n_hits_distinct = sum(1 for g in dist_graded if g["winner_correct"])
+    exp_hits_distinct = sum(_p_side(g) for g in dist_graded)
     doc = {
         "schema": "nba2.v4.settlement.v2",
         "surface": "all sealed ledgers, one table",
@@ -341,11 +350,15 @@ def settle() -> dict:
                 sum(1 for g in dist_graded if g["winner_correct"]),
                 [_p_side(g) for g in dist_graded]) if n_distinct else None,
             "luck_statement": (
-                "12 correct winners in 14 distinct games is a hit rate of 0.857 against 0.633 "
-                "expected under the seals' own probabilities. The Poisson-binomial tail "
-                "(p_at_least_observed_hits) is the only honest yardstick: below 0.05 the run is "
-                "outside the noise band, but on 14 games in one week it is not a measured edge, "
-                "it is not staked, and the bet surface still publishes zero rows."),
+                (f"{n_hits_distinct} correct winners in {n_distinct} distinct games is a hit "
+                 f"rate of {n_hits_distinct / n_distinct:.3f} against "
+                 f"{exp_hits_distinct / n_distinct:.3f} expected under the seals' own "
+                 f"probabilities. The Poisson-binomial tail (p_at_least_observed_hits) is the "
+                 f"only honest yardstick: below 0.05 the run is outside the noise band, but on "
+                 f"{n_distinct} games in one week it is not a measured edge, it is not staked, "
+                 f"and the bet surface still publishes zero rows.")
+                if n_distinct else
+                "no distinct game has been graded yet, so no hit rate is published"),
             "p_at_least_observed_hits_note": (
                 "Poisson-binomial tail: the chance of doing at least this well if the model's "
                 "own probabilities are correct. Read this, not the hit rate. Above 0.05 the "
@@ -388,9 +401,13 @@ def settle() -> dict:
                               "log_loss_coin", "home_wins_in_graded",
                               "p_observed_run_under_model", "expected_hits_under_model")},
               "graded": v3["graded"], "ungraded": v3["ungraded"],
+              # arena/934fce54-nba2 (CR-V5-3): the filter hard-coded the 11/15 game day,
+              # so the finals actually used to grade the seal's 11/16 rows went unlisted.
+              # List exactly the game days this seal was graded from.
               "finals_used": [{k: f[k] for k in ("game_id", "final_source_url",
                                                  "gamebook_url", "quarter_status")}
-                              for f in finals_list if f["date"] == "2026-11-15"],
+                              for f in finals_list
+                              if f["date"] in {g["date"] for g in v3["graded"]}],
               "settle_rule": doc["settle_rule"],
               "derived_from": "data/v4/settlement/settled-all.json"}
     legacy["sha256_after_settlement"] = sha256(legacy)

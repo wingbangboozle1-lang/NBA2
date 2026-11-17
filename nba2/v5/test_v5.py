@@ -81,13 +81,15 @@ class TestGates(unittest.TestCase):
     def test_quarters_sum(self):
         g = CH.gate_quarters(self.games)
         self.assertTrue(g["ok"], g["failures"])
-        self.assertEqual(g["tested"], 27)   # 28 club rows, one blank by policy (F-V5-04)
-        self.assertEqual(g["passed"], 27)
+        # 44 club rows at the 11/16 capture (22 games 2026-11-13 → 2026-11-16),
+        # one blank by policy (F-V5-04, DAL@BOS 11/15 away period row).
+        self.assertEqual(g["tested"], 43)
+        self.assertEqual(g["passed"], 43)
 
     def test_player_points_sum(self):
         g = CH.gate_player_points(self.rows, self.games)
         self.assertTrue(g["ok"], g["failures"])
-        self.assertEqual(g["tested"], 28)
+        self.assertEqual(g["tested"], 44)   # one per club-game in the union
 
     def test_points_identity_holds_for_every_row(self):
         g = CH.gate_points_identity(self.rows)
@@ -133,7 +135,8 @@ class TestModel(unittest.TestCase):
         self.res = M.build()
 
     def test_result_rows_match_the_games(self):
-        self.assertEqual(len(self.res["results"]), 14)
+        # 22 games at the 11/16 capture: 5 + 9 + 8 for 11/14, 11/15, 11/16.
+        self.assertEqual(len(self.res["results"]), 22)
         for r in self.res["results"]:
             self.assertIn(r["matchup"], {f"{r['away']}@{r['home']}"})
 

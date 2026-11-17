@@ -429,26 +429,27 @@ NBA.com does not publish; see <a href="verification-v3.html">F-306</a>.</div>
 def page_results(res: dict, stamp: dict | None) -> str:
     rows = []
     hist = M.load_played_games()["games"]
-    feed = [g for g in hist if g["date"] == "2026-11-14"]
-    played_map = {r["game_id"]: r for r in O.RESULTS}
+    # CR-V5-3 (arena/934fce54-nba2): one row per committed game day from the v5 result
+    # union (data/v5/results_union.json) instead of the hard-coded 11/14 feed slice.
+    feed = sorted(_union_rows(), key=lambda r: (r["date"], r["game_id"]))
     for g in feed:
-        r = played_map.get(g["game_id"])
-        aq = r["away_q"] if r else None
-        hq = r["home_q"] if r else None
-        def qs(q):
+        def qs(q, reason):
             if not q:
-                return cell(None, reason="F-304 linescore not captured")
+                return cell(None, reason=reason)
             return f"<td class='n'>{' · '.join(str(x) for x in q)}</td>"
+        aq, hq = g.get("away_quarters"), g.get("home_quarters")
+        blank_reason = (g.get("quarters_blank_reason") or
+                        "no official period row captured")
         rows.append(
             "<tr>"
             f"<td>{esc(g['date'])}</td><td>{esc(g['away'])} @ {esc(g['home'])}</td>"
             f"<td>{src('schedule', g['game_id'])}</td>"
             f"<td class='n'>{esc(g['away_pts'])}</td><td class='n'>{esc(g['home_pts'])}</td>"
-            f"<td class='n'>{esc(g['home_margin'])}</td>"
-            f"<td class='n'>{esc(g['total_pts'])}</td>"
-            + qs(aq) + qs(hq)
-            + f"<td>{src('linescore', 'Q')}</td>"
-            f"<td><a href='{esc(g['source_url'])}'>game</a></td></tr>")
+            f"<td class='n'>{esc(g['home_pts'] - g['away_pts'])}</td>"
+            f"<td class='n'>{esc(g['home_pts'] + g['away_pts'])}</td>"
+            + qs(aq, blank_reason) + qs(hq, blank_reason)
+            + f"<td>{esc(g.get('quarter_check') or '—')}</td>"
+            + f"<td><a href=\"{esc(g['source_url'])}\">book</a></td></tr>")
     # history roll-up by date
     by_date: dict[str, list] = {}
     for g in hist:
@@ -469,18 +470,23 @@ def page_results(res: dict, stamp: dict | None) -> str:
                       f"margin MAE {stamp['margin_mae']}, total MAE {stamp['total_mae']}, "
                       f"winner hit rate {stamp['winner_hit_rate']}.</div>")
     body = f"""
-<div class="note"><b>One row per game: date, teams, final score, quarter scores.</b> The final
-scores are official. Quarter scores were captured from the official LINESCORES table for one game;
-the other four are blank and flagged <a href="verification-v3.html">F-304</a> rather than
-estimated.</div>
-<h2>{esc(O.WINDOW[0])} window — the day that just finished</h2>
+<div class="note"><b>One row per game: date, teams, final score, quarter scores.</b> The feed
+covers every committed game day <code>2026-11-13 → 2026-11-16</code> ({len(feed)} games) and
+reads from <code>data/v5/results_union.json</code>, which is transcribed from the official NBA
+gamebook PDF at statsdmz.nba.com for each game and carries its URL on the row. A club whose
+period row was not transcribed keeps blank quarters with the reason printed in the cell; nothing
+is back-solved from the final.</div>
+<h2>Official result feed — every committed final, 2026-11-13 → 2026-11-16</h2>
 {table(['Date', 'Matchup', 'Game', 'Away pts', 'Home pts', 'Home margin', 'Total',
-        'Away quarters', 'Home quarters', 'Linescore src', 'Game page'], rows,
-       caption="Quarter scores come from the official LINESCORES table on the game page.")}
-<h2>Official result feed — every date in the committed history</h2>
+        'Away quarters', 'Home quarters', 'Quarter check', 'Gamebook'], rows,
+       caption="Quarter scores are the official gamebook period rows; the check column states "
+               "their sum against the printed final for each club.")}
+<h2>Ratings-history cut — roll-up by date</h2>
 {table(['Date', 'Games', 'Mean total', 'Mean home margin', 'Home wins', 'Source'], roll,
-       caption=f"{len(hist)} official finals committed in this repository, deduplicated by "
-               f"official game id.")}
+       caption=f"{len(hist)} official finals in the ratings-history cut "
+               f"(data/raw/history/ plus the 11/14 snapshot), deduplicated by official game "
+               f"id. The per-game feed above adds the 2026-11-15 and 2026-11-16 game days "
+               f"read from the official gamebooks.")}
 <h2>Settlement</h2>
 {stamp_html}
 <p>Settlement runs only after the official final scores exist. A game with no official final stays
@@ -1174,6 +1180,31 @@ as the league published it and flagged so a reviewer can check the source docume
                 "revision and retrieval stamps shown side by side.")
 
 
+def _union_rows() -> list[dict]:
+    """The committed v5 result union (data/v5/results_union.json): one row per verified
+    game day 2026-11-13 → 2026-11-16, each carrying the gamebook it was read from.
+    CR-V5-3 (arena/934fce54-nba2): the result feed and the settlement grade from these
+    rows rather than a hard-coded day."""
+    p = ROOT / "data" / "v5" / "results_union.json"
+    if not p.exists():
+        return []
+    return json.loads(p.read_text()).get("records", [])
+
+
+def _settle_finals() -> list[dict]:
+    """Every official final available to grade against: the ratings-history cut plus the
+    committed v5 result union rows (the 11/15 and 11/16 game days). The union rows carry
+    the official gamebook URL as their source."""
+    finals = [dict(g) for g in M.load_played_games()["games"]]
+    for r in _union_rows():
+        finals.append({
+            "game_id": r["game_id"], "date": r["date"],
+            "away_pts": r["away_pts"], "home_pts": r["home_pts"],
+            "source_url": r.get("source_url"),
+        })
+    return finals
+
+
 def build(verbose: bool = False) -> tuple[list[str], dict]:
     SITE.mkdir(exist_ok=True)
     (SITE / "assets").mkdir(exist_ok=True)
@@ -1182,7 +1213,11 @@ def build(verbose: bool = False) -> tuple[list[str], dict]:
     res = M.build()
     prereg = LD.write_prereg()
     seal_info = LD.seal(res)
-    stamp = LD.settle(res, [g for g in M.load_played_games()["games"] if g["date"] < O.WINDOW[0]])
+    # Grade the sealed window as each game day's official final lands. (The previous
+    # filter graded only finals dated before the window itself, so no sealed pick could
+    # ever settle; CR-V5-3, arena/934fce54-nba2.) The stamp stays deterministic: the end
+    # of the latest graded game day, never a wall clock.
+    stamp = LD.settle(res, _settle_finals())
     res["settlement"] = stamp
 
     pages = {

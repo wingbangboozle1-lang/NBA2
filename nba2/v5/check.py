@@ -217,7 +217,8 @@ def gate_provenance(rows: list[dict]) -> dict:
                                 f"official designation")
                 continue
         else:
-            reasons = {"reb": r.get("reb_blank_reason"), "min": r.get("min_blank_reason")}
+            reasons = {"reb": r.get("reb_blank_reason"), "min": r.get("min_blank_reason"),
+                       "ast": r.get("ast_blank_reason")}
             missing = [c for c in ("min", "pts", "reb", "ast") if r.get(c) is None]
             unreasoned = [c for c in missing if not reasons.get(c)]
             if unreasoned:

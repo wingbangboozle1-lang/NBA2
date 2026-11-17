@@ -26,6 +26,8 @@ SESSION = "arena/6e46dbf2-nba2"
 TRANSCRIPTS = [
     V5 / "gamebooks_2026-11-14.json",
     V5 / "gamebooks_2026-11-15.json",
+    # 2026-11-17 session arena/934fce54-nba2: adds the 11/16 slate.
+    V5 / "gamebooks_2026-11-16.json",
 ]
 
 # The committed 11/13 player logs (session arena/f8f8f2b8-nba2) use schema
@@ -65,6 +67,7 @@ def player_rows() -> list[dict]:
         for g in doc["games"]:
             for tri, blk in g["teams"].items():
                 reb_reason = blk.get("reb_blank_reason")
+                ast_reason = blk.get("ast_blank_reason")
                 for p in blk["players"]:
                     rows.append({
                         "date": g["date"],
@@ -87,6 +90,8 @@ def player_rows() -> list[dict]:
                         "status": p.get("status"),
                         "played": p.get("min_sec") is not None or p.get("pts") is not None,
                         "reb_blank_reason": (reb_reason if p.get("reb") is None
+                                             and p.get("min_sec") is not None else None),
+                        "ast_blank_reason": (ast_reason if p.get("ast") is None
                                              and p.get("min_sec") is not None else None),
                         "min_blank_reason": (
                             "F-V5-10: the 11/13 capture records this player's count line "

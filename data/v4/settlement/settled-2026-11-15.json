@@ -10,20 +10,12 @@
  "seal_sealed_at_utc": "2026-11-15T11:41:00Z",
  "seal_sealed_by": "arena/e675ac3d-nba2",
  "settlement": {
-  "settled_at_utc": "2026-11-15T23:59:59Z",
-  "latest_graded_game_date": "2026-11-15",
+  "settled_at_utc": "2026-11-16T23:59:59Z",
+  "latest_graded_game_date": "2026-11-16",
   "n_sealed": 34,
-  "n_graded": 9,
-  "n_ungraded": 25,
+  "n_graded": 17,
+  "n_ungraded": 17,
   "ungraded_game_ids": [
-   "0022600245",
-   "0022600246",
-   "0022600247",
-   "0022600248",
-   "0022600249",
-   "0022600250",
-   "0022600251",
-   "0022600252",
    "0022600253",
    "0022600254",
    "0022600255",
@@ -42,14 +34,14 @@
    "0022600268",
    "0022600269"
   ],
-  "margin_mae": 8.267,
-  "total_mae": 14.2,
-  "winner_hit_rate": 1.0,
-  "log_loss_model": 0.2804,
+  "margin_mae": 11.571,
+  "total_mae": 15.282,
+  "winner_hit_rate": 0.7647,
+  "log_loss_model": 0.5708,
   "log_loss_coin": 0.6931,
-  "home_wins_in_graded": 3,
-  "p_observed_run_under_model": 0.080177,
-  "expected_hits_under_model": 6.87
+  "home_wins_in_graded": 7,
+  "p_observed_run_under_model": 6.1e-05,
+  "expected_hits_under_model": 10.762
  },
  "graded": [
   {
@@ -399,57 +391,321 @@
    "feed_source": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "gamebook_source": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
    "finals_file": "data/raw/refresh_2026-11-15/results_2026-11-15.json"
-  }
- ],
- "ungraded": [
+  },
   {
    "game_id": "0022600245",
    "date": "2026-11-16",
    "matchup": "ORL @ BOS",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": 16.35,
+   "e2_margin": 20.61,
+   "disagreement": 4.26,
+   "consensus_margin": 18.48,
+   "total": 217.3,
+   "p_home": 0.8627,
+   "official_home_pts": 105,
+   "official_away_pts": 115,
+   "official_margin": -10,
+   "official_total": 220,
+   "margin_error": -28.48,
+   "total_error": 2.7,
+   "abs_margin_error": 28.48,
+   "abs_total_error": 2.7,
+   "winner_correct": false,
+   "log_loss_model": 1.9856,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    20,
+    30,
+    25,
+    40
+   ],
+   "home_q": [
+    17,
+    24,
+    36,
+    28
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/orl-vs-bos-0022600245",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600246",
    "date": "2026-11-16",
    "matchup": "CHI @ CLE",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": 13.87,
+   "e2_margin": 16.57,
+   "disagreement": 2.7,
+   "consensus_margin": 15.22,
+   "total": 235.1,
+   "p_home": 0.8158,
+   "official_home_pts": 126,
+   "official_away_pts": 115,
+   "official_margin": 11,
+   "official_total": 241,
+   "margin_error": -4.22,
+   "total_error": 5.9,
+   "abs_margin_error": 4.22,
+   "abs_total_error": 5.9,
+   "winner_correct": true,
+   "log_loss_model": 0.2036,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    31,
+    17,
+    31,
+    36
+   ],
+   "home_q": [
+    25,
+    32,
+    31,
+    38
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/chi-vs-cle-0022600246",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600247",
    "date": "2026-11-16",
    "matchup": "MEM @ WAS",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": -12.96,
+   "e2_margin": -16.36,
+   "disagreement": 3.4,
+   "consensus_margin": -14.66,
+   "total": 226.3,
+   "p_home": 0.1931,
+   "official_home_pts": 120,
+   "official_away_pts": 136,
+   "official_margin": -16,
+   "official_total": 256,
+   "margin_error": -1.34,
+   "total_error": 29.7,
+   "abs_margin_error": 1.34,
+   "abs_total_error": 29.7,
+   "winner_correct": true,
+   "log_loss_model": 0.2146,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    33,
+    26,
+    42,
+    35
+   ],
+   "home_q": [
+    35,
+    34,
+    18,
+    33
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/mem-vs-was-0022600247",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600248",
    "date": "2026-11-16",
    "matchup": "PHI @ BKN",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": -6.43,
+   "e2_margin": -8.7,
+   "disagreement": 2.26,
+   "consensus_margin": -7.56,
+   "total": 222.6,
+   "p_home": 0.3274,
+   "official_home_pts": 123,
+   "official_away_pts": 135,
+   "official_margin": -12,
+   "official_total": 258,
+   "margin_error": -4.44,
+   "total_error": 35.4,
+   "abs_margin_error": 4.44,
+   "abs_total_error": 35.4,
+   "winner_correct": true,
+   "log_loss_model": 0.3966,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    33,
+    45,
+    27,
+    30
+   ],
+   "home_q": [
+    26,
+    33,
+    36,
+    28
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600249",
    "date": "2026-11-16",
    "matchup": "HOU @ MIA",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": -9.35,
+   "e2_margin": -11.99,
+   "disagreement": 2.64,
+   "consensus_margin": -10.67,
+   "total": 230.1,
+   "p_home": 0.2641,
+   "official_home_pts": 128,
+   "official_away_pts": 110,
+   "official_margin": 18,
+   "official_total": 238,
+   "margin_error": 28.67,
+   "total_error": 7.9,
+   "abs_margin_error": 28.67,
+   "abs_total_error": 7.9,
+   "winner_correct": false,
+   "log_loss_model": 1.3314,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    15,
+    31,
+    35,
+    29
+   ],
+   "home_q": [
+    29,
+    33,
+    39,
+    27
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/hou-vs-mia-0022600249",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600250",
    "date": "2026-11-16",
    "matchup": "POR @ MIN",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": 5.08,
+   "e2_margin": 6.74,
+   "disagreement": 1.65,
+   "consensus_margin": 5.91,
+   "total": 227.4,
+   "p_home": 0.6366,
+   "official_home_pts": 106,
+   "official_away_pts": 98,
+   "official_margin": 8,
+   "official_total": 204,
+   "margin_error": 2.09,
+   "total_error": -23.4,
+   "abs_margin_error": 2.09,
+   "abs_total_error": 23.4,
+   "winner_correct": true,
+   "log_loss_model": 0.4516,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    26,
+    25,
+    22,
+    25
+   ],
+   "home_q": [
+    26,
+    33,
+    28,
+    19
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/por-vs-min-0022600250",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600251",
    "date": "2026-11-16",
    "matchup": "GSW @ NOP",
-   "reason": "no verified official final is committed for this game yet"
+   "e1_margin": -11.65,
+   "e2_margin": -14.54,
+   "disagreement": 2.89,
+   "consensus_margin": -13.09,
+   "total": 231.4,
+   "p_home": 0.2194,
+   "official_home_pts": 115,
+   "official_away_pts": 94,
+   "official_margin": 21,
+   "official_total": 209,
+   "margin_error": 34.09,
+   "total_error": -22.4,
+   "abs_margin_error": 34.09,
+   "abs_total_error": 22.4,
+   "winner_correct": false,
+   "log_loss_model": 1.5169,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    11,
+    25,
+    29,
+    29
+   ],
+   "home_q": [
+    35,
+    26,
+    32,
+    22
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
   },
   {
    "game_id": "0022600252",
    "date": "2026-11-16",
    "matchup": "PHX @ DEN",
-   "reason": "no verified official final is committed for this game yet"
-  },
+   "e1_margin": 6.25,
+   "e2_margin": 7.72,
+   "disagreement": 1.47,
+   "consensus_margin": 6.98,
+   "total": 226.6,
+   "p_home": 0.6601,
+   "official_home_pts": 105,
+   "official_away_pts": 117,
+   "official_margin": -12,
+   "official_total": 222,
+   "margin_error": -18.98,
+   "total_error": -4.6,
+   "abs_margin_error": 18.98,
+   "abs_total_error": 4.6,
+   "winner_correct": false,
+   "log_loss_model": 1.0791,
+   "log_loss_coin": 0.6931,
+   "away_q": [
+    20,
+    36,
+    34,
+    27
+   ],
+   "home_q": [
+    24,
+    29,
+    29,
+    23
+   ],
+   "quarter_status": "read",
+   "official_source": "https://www.nba.com/game/phx-vs-den-0022600252",
+   "feed_source": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json",
+   "gamebook_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
+   "finals_file": "data/raw/capture_2026-11-17-934fce54/results_2026-11-16.json"
+  }
+ ],
+ "ungraded": [
   {
    "game_id": "0022600253",
    "date": "2026-11-17",
@@ -607,9 +863,57 @@
    "final_source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
    "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600245",
+   "final_source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600246",
+   "final_source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600247",
+   "final_source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600248",
+   "final_source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600249",
+   "final_source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600250",
+   "final_source_url": "https://www.nba.com/game/por-vs-min-0022600250",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600251",
+   "final_source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
+   "quarter_status": "read"
+  },
+  {
+   "game_id": "0022600252",
+   "final_source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
+   "quarter_status": "read"
   }
  ],
  "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
  "derived_from": "data/v4/settlement/settled-all.json",
- "sha256_after_settlement": "dc0bc3c35695fe1eefe7ea90837c9421689c5bc92c85f2701076253d1ebb7a85"
+ "sha256_after_settlement": "c66454d6a2d01ab3310f4d17e76ca723bf3c48c8b174415b657e2de990da2bbb"
 }

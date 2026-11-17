@@ -52,16 +52,25 @@
       "reason": "Injury/Illness - Left Finger Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-13",
-      "last_matchup": "ATL@CHI",
-      "last_min": "31:35",
-      "last_pts": 15,
-      "last_reb": 12,
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "CHI@CLE",
+      "last_min": "27:45",
+      "last_pts": 17,
+      "last_reb": 11,
       "last_ast": 3,
       "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "CHI@CLE",
+          "min": "27:45",
+          "pts": 17,
+          "reb": 11,
+          "ast": 3,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+        },
         {
           "date": "2026-11-13",
           "matchup": "ATL@CHI",
@@ -86,16 +95,25 @@
       "reason": "G League - On Assignment",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "DAL@CLE",
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "CHI@CLE",
       "last_min": null,
       "last_pts": null,
       "last_reb": null,
       "last_ast": null,
       "last_played": false,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "CHI@CLE",
+          "min": null,
+          "pts": null,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "DAL@CLE",
@@ -163,16 +181,25 @@
       "reason": "Injury/Illness - Right Abdominal Soreness",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 2,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "DAL@CLE",
-      "last_min": null,
-      "last_pts": null,
-      "last_reb": null,
-      "last_ast": null,
-      "last_played": false,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+      "n_logs": 3,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "CHI@CLE",
+      "last_min": "21:31",
+      "last_pts": 14,
+      "last_reb": 4,
+      "last_ast": 0,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "CHI@CLE",
+          "min": "21:31",
+          "pts": 14,
+          "reb": 4,
+          "ast": 0,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "DAL@CLE",
@@ -206,16 +233,25 @@
       "reason": "Injury/Illness - Left Ankle Injury Management",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "BKN@MEM",
-      "last_min": null,
-      "last_pts": null,
-      "last_reb": null,
-      "last_ast": null,
-      "last_played": false,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "MEM@WAS",
+      "last_min": "20:43",
+      "last_pts": 23,
+      "last_reb": 10,
+      "last_ast": 1,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "MEM@WAS",
+          "min": "20:43",
+          "pts": 23,
+          "reb": 10,
+          "ast": 1,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "BKN@MEM",
@@ -312,6 +348,40 @@
       "matchup": "MEM@WAS",
       "team_name": "Memphis Grizzlies",
       "team": "MEM",
+      "player": "Quinten Post",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Concussion Protocol",
+      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+      "transcript": "injury_transcript_20261116_0100PM.json",
+      "n_logs": 1,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "MEM@WAS",
+      "last_min": "08:32",
+      "last_pts": 5,
+      "last_reb": 3,
+      "last_ast": 0,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+      "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "MEM@WAS",
+          "min": "08:32",
+          "pts": 5,
+          "reb": 3,
+          "ast": 0,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+        }
+      ]
+    },
+    {
+      "report_stamp_et": "2026-11-16 01:00 PM ET",
+      "revision_time_et": "2026-11-16 01:00 PM ET",
+      "retrieved_at_utc": "2026-11-16T18:38:00Z",
+      "date": "2026-11-16",
+      "matchup": "MEM@WAS",
+      "team_name": "Memphis Grizzlies",
+      "team": "MEM",
       "player": "Isaiah Stewart",
       "status": "Out",
       "reason": "Injury/Illness - Illness",
@@ -352,6 +422,40 @@
       "revision_time_et": "2026-11-16 01:00 PM ET",
       "retrieved_at_utc": "2026-11-16T18:38:00Z",
       "date": "2026-11-16",
+      "matchup": "MEM@WAS",
+      "team_name": "Washington Wizards",
+      "team": "WAS",
+      "player": "Tre Johnson",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Low Back Soreness",
+      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+      "transcript": "injury_transcript_20261116_0100PM.json",
+      "n_logs": 1,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "MEM@WAS",
+      "last_min": "20:43",
+      "last_pts": 9,
+      "last_reb": null,
+      "last_ast": null,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+      "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "MEM@WAS",
+          "min": "20:43",
+          "pts": 9,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf"
+        }
+      ]
+    },
+    {
+      "report_stamp_et": "2026-11-16 01:00 PM ET",
+      "revision_time_et": "2026-11-16 01:00 PM ET",
+      "retrieved_at_utc": "2026-11-16T18:38:00Z",
+      "date": "2026-11-16",
       "matchup": "HOU@MIA",
       "team_name": "Houston Rockets",
       "team": "HOU",
@@ -360,16 +464,25 @@
       "reason": "Injury/Illness - Left Lower Leg Injury Management",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-15",
-      "last_matchup": "HOU@WAS",
-      "last_min": "12:09",
-      "last_pts": 6,
-      "last_reb": 7,
-      "last_ast": 1,
-      "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "HOU@MIA",
+      "last_min": null,
+      "last_pts": null,
+      "last_reb": null,
+      "last_ast": null,
+      "last_played": false,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "HOU@MIA",
+          "min": null,
+          "pts": null,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+        },
         {
           "date": "2026-11-15",
           "matchup": "HOU@WAS",
@@ -394,16 +507,25 @@
       "reason": "League Suspension",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-15",
-      "last_matchup": "HOU@WAS",
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "HOU@MIA",
       "last_min": null,
       "last_pts": null,
       "last_reb": null,
       "last_ast": null,
       "last_played": false,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "HOU@MIA",
+          "min": null,
+          "pts": null,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+        },
         {
           "date": "2026-11-15",
           "matchup": "HOU@WAS",
@@ -428,16 +550,25 @@
       "reason": "Injury/Illness - Left Knee Soreness",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 2,
-      "last_game_date": "2026-11-15",
-      "last_matchup": "HOU@WAS",
-      "last_min": "29:15",
-      "last_pts": 26,
-      "last_reb": 7,
-      "last_ast": 7,
-      "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+      "n_logs": 3,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "HOU@MIA",
+      "last_min": null,
+      "last_pts": null,
+      "last_reb": null,
+      "last_ast": null,
+      "last_played": false,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "HOU@MIA",
+          "min": null,
+          "pts": null,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+        },
         {
           "date": "2026-11-15",
           "matchup": "HOU@WAS",
@@ -500,21 +631,64 @@
       "matchup": "HOU@MIA",
       "team_name": "Miami Heat",
       "team": "MIA",
+      "player": "Pelle Larsson",
+      "status": "Doubtful",
+      "reason": "Injury/Illness - Illness",
+      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+      "transcript": "injury_transcript_20261116_0100PM.json",
+      "n_logs": 1,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "HOU@MIA",
+      "last_min": null,
+      "last_pts": null,
+      "last_reb": null,
+      "last_ast": null,
+      "last_played": false,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+      "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "HOU@MIA",
+          "min": null,
+          "pts": null,
+          "reb": null,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+        }
+      ]
+    },
+    {
+      "report_stamp_et": "2026-11-16 01:00 PM ET",
+      "revision_time_et": "2026-11-16 01:00 PM ET",
+      "retrieved_at_utc": "2026-11-16T18:38:00Z",
+      "date": "2026-11-16",
+      "matchup": "HOU@MIA",
+      "team_name": "Miami Heat",
+      "team": "MIA",
       "player": "Klay Thompson",
       "status": "Available",
       "reason": "Injury/Illness - Left Ankle Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "DET@MIA",
-      "last_min": "20:13",
-      "last_pts": 26,
-      "last_reb": 1,
-      "last_ast": 4,
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "HOU@MIA",
+      "last_min": "22:24",
+      "last_pts": 17,
+      "last_reb": 0,
+      "last_ast": null,
       "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "HOU@MIA",
+          "min": "22:24",
+          "pts": 17,
+          "reb": 0,
+          "ast": null,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "DET@MIA",
@@ -523,6 +697,40 @@
           "reb": 1,
           "ast": 4,
           "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf"
+        }
+      ]
+    },
+    {
+      "report_stamp_et": "2026-11-16 01:00 PM ET",
+      "revision_time_et": "2026-11-16 01:00 PM ET",
+      "retrieved_at_utc": "2026-11-16T18:38:00Z",
+      "date": "2026-11-16",
+      "matchup": "PHI@BKN",
+      "team_name": "Philadelphia 76ers",
+      "team": "PHI",
+      "player": "Joel Embiid",
+      "status": "Questionable",
+      "reason": "Injury/Illness - Right Foot Plantar Fascia Injury Management",
+      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
+      "transcript": "injury_transcript_20261116_0100PM.json",
+      "n_logs": 1,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "PHI@BKN",
+      "last_min": "32:10",
+      "last_pts": 37,
+      "last_reb": 5,
+      "last_ast": 1,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+      "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "PHI@BKN",
+          "min": "32:10",
+          "pts": 37,
+          "reb": 5,
+          "ast": 1,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf"
         }
       ]
     },
@@ -607,16 +815,25 @@
       "reason": "",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-13",
-      "last_matchup": "GSW@SAS",
-      "last_min": "21:10",
-      "last_pts": 7,
-      "last_reb": 4,
-      "last_ast": 1,
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "GSW@NOP",
+      "last_min": "18:56",
+      "last_pts": 12,
+      "last_reb": 7,
+      "last_ast": 2,
       "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_GSWSAS_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "GSW@NOP",
+          "min": "18:56",
+          "pts": 12,
+          "reb": 7,
+          "ast": 2,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
+        },
         {
           "date": "2026-11-13",
           "matchup": "GSW@SAS",
@@ -641,16 +858,25 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 2,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "DEN@NOP",
-      "last_min": null,
-      "last_pts": null,
-      "last_reb": null,
-      "last_ast": null,
-      "last_played": false,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+      "n_logs": 3,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "GSW@NOP",
+      "last_min": "05:01",
+      "last_pts": 2,
+      "last_reb": 1,
+      "last_ast": 0,
+      "last_played": true,
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "GSW@NOP",
+          "min": "05:01",
+          "pts": 2,
+          "reb": 1,
+          "ast": 0,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "DEN@NOP",
@@ -718,16 +944,25 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 2,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "DEN@NOP",
-      "last_min": "23:18",
-      "last_pts": 13,
-      "last_reb": 2,
+      "n_logs": 3,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "GSW@NOP",
+      "last_min": "19:28",
+      "last_pts": 10,
+      "last_reb": 3,
       "last_ast": 0,
       "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "GSW@NOP",
+          "min": "19:28",
+          "pts": 10,
+          "reb": 3,
+          "ast": 0,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "DEN@NOP",
@@ -761,16 +996,25 @@
       "reason": "Injury/Illness - Face Mask",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "n_logs": 1,
-      "last_game_date": "2026-11-14",
-      "last_matchup": "CHI@MIN",
-      "last_min": "12:39",
-      "last_pts": 2,
-      "last_reb": 5,
+      "n_logs": 2,
+      "last_game_date": "2026-11-16",
+      "last_matchup": "POR@MIN",
+      "last_min": "15:47",
+      "last_pts": 0,
+      "last_reb": 4,
       "last_ast": 0,
       "last_played": true,
-      "last_source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+      "last_source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
       "logs": [
+        {
+          "date": "2026-11-16",
+          "matchup": "POR@MIN",
+          "min": "15:47",
+          "pts": 0,
+          "reb": 4,
+          "ast": 0,
+          "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf"
+        },
         {
           "date": "2026-11-14",
           "matchup": "CHI@MIN",
@@ -831,7 +1075,7 @@
       "reason": "Injury/Illness - Disc Irritation",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -846,7 +1090,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -861,7 +1105,7 @@
       "reason": "Injury/Illness - Right Metacarpal Fracture",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -876,7 +1120,7 @@
       "reason": "Injury/Illness - Right Elbow Injury Management",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -891,7 +1135,7 @@
       "reason": "Injury/Illness - Left Great Toe Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -906,7 +1150,7 @@
       "reason": "Injury/Illness - Low Back Stress Reaction",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -921,7 +1165,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -936,22 +1180,7 @@
       "reason": "Injury/Illness - Lumbar Disc Herniation",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
-    },
-    {
-      "report_stamp_et": "2026-11-16 01:00 PM ET",
-      "revision_time_et": "2026-11-16 01:00 PM ET",
-      "retrieved_at_utc": "2026-11-16T18:38:00Z",
-      "date": "2026-11-16",
-      "matchup": "MEM@WAS",
-      "team_name": "Memphis Grizzlies",
-      "team": "MEM",
-      "player": "Quinten Post",
-      "status": "Questionable",
-      "reason": "Injury/Illness - Concussion Protocol",
-      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
-      "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -966,7 +1195,7 @@
       "reason": "Injury/Illness - Right Knee Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -981,7 +1210,7 @@
       "reason": "Injury/Illness - Right AC Joint Injury",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -996,22 +1225,7 @@
       "reason": "Injury/Illness - Right Foot Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
-    },
-    {
-      "report_stamp_et": "2026-11-16 01:00 PM ET",
-      "revision_time_et": "2026-11-16 01:00 PM ET",
-      "retrieved_at_utc": "2026-11-16T18:38:00Z",
-      "date": "2026-11-16",
-      "matchup": "MEM@WAS",
-      "team_name": "Washington Wizards",
-      "team": "WAS",
-      "player": "Tre Johnson",
-      "status": "Questionable",
-      "reason": "Injury/Illness - Low Back Soreness",
-      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
-      "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1026,7 +1240,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1041,7 +1255,7 @@
       "reason": "Injury/Illness - Left Hip Impingement",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1056,7 +1270,7 @@
       "reason": "Injury/Illness - Left ACL Repair / Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1071,7 +1285,7 @@
       "reason": "Injury/Illness - Right High Ankle Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1086,7 +1300,7 @@
       "reason": "Injury/Illness - Left Knee Injury Management",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1101,7 +1315,7 @@
       "reason": "Injury/Illness - Left Ankle Injury Recovery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1116,7 +1330,7 @@
       "reason": "Injury/Illness - Right Partially Torn Hamstring",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1131,7 +1345,7 @@
       "reason": "Injury/Illness - Right Ankle Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1146,7 +1360,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1161,7 +1375,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1176,22 +1390,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
-    },
-    {
-      "report_stamp_et": "2026-11-16 01:00 PM ET",
-      "revision_time_et": "2026-11-16 01:00 PM ET",
-      "retrieved_at_utc": "2026-11-16T18:38:00Z",
-      "date": "2026-11-16",
-      "matchup": "HOU@MIA",
-      "team_name": "Miami Heat",
-      "team": "MIA",
-      "player": "Pelle Larsson",
-      "status": "Doubtful",
-      "reason": "Injury/Illness - Illness",
-      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
-      "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1206,7 +1405,7 @@
       "reason": "Injury/Illness - Low Back Stress Reaction",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1221,22 +1420,7 @@
       "reason": "Injury/Illness - Cervical Spine Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
-    },
-    {
-      "report_stamp_et": "2026-11-16 01:00 PM ET",
-      "revision_time_et": "2026-11-16 01:00 PM ET",
-      "retrieved_at_utc": "2026-11-16T18:38:00Z",
-      "date": "2026-11-16",
-      "matchup": "PHI@BKN",
-      "team_name": "Philadelphia 76ers",
-      "team": "PHI",
-      "player": "Joel Embiid",
-      "status": "Questionable",
-      "reason": "Injury/Illness - Right Foot Plantar Fascia Injury Management",
-      "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
-      "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1251,7 +1435,7 @@
       "reason": "Injury/Illness - Right Achilles Tendon Rupture / Tear",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1266,7 +1450,7 @@
       "reason": "G League - On Assignment",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1281,7 +1465,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1296,7 +1480,7 @@
       "reason": "G League - On Assignment",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1311,7 +1495,7 @@
       "reason": "Injury/Illness - Right ACL Repair / Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1326,7 +1510,7 @@
       "reason": "",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1341,7 +1525,7 @@
       "reason": "",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1356,7 +1540,7 @@
       "reason": "",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1371,7 +1555,7 @@
       "reason": "",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1386,7 +1570,7 @@
       "reason": "Injury/Illness - Left Elbow Infection",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1401,7 +1585,7 @@
       "reason": "Injury/Illness - Bilateral Patellar Tendinopathy",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1416,7 +1600,7 @@
       "reason": "Injury/Illness - Left Ankle Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1431,7 +1615,7 @@
       "reason": "Injury/Illness - Right Ankle Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 3 of this club's captured game(s) (2026-11-13, 2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1446,7 +1630,7 @@
       "reason": "Injury/Illness - Left Ankle Fracture",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1461,7 +1645,7 @@
       "reason": "Injury/Illness - Left Hamstring Strain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1476,7 +1660,7 @@
       "reason": "Injury/Illness - Right Knee Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1491,7 +1675,7 @@
       "reason": "Injury/Illness - Right Heel Contusion / Bone Bruise",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1506,7 +1690,7 @@
       "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1521,7 +1705,7 @@
       "reason": "Injury/Illness - Right Knee Arthroscopy",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1536,7 +1720,7 @@
       "reason": "NOT YET SUBMITTED",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-15, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1551,7 +1735,7 @@
       "reason": "G League - On Assignment",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1566,7 +1750,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1581,7 +1765,7 @@
       "reason": "Injury/Illness - Left Knee Sprain",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1596,7 +1780,7 @@
       "reason": "G League - Two-Way",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1656,7 +1840,7 @@
       "reason": "NOT YET SUBMITTED",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-13) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-13, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1671,7 +1855,7 @@
       "reason": "NOT YET SUBMITTED",
       "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
       "transcript": "injury_transcript_20261116_0100PM.json",
-      "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-14) - i.e. out for every game we hold, which is what an injured player's report row would predict"
+      "reason_not_matched": "absent from the active list in all 2 of this club's captured game(s) (2026-11-14, 2026-11-16) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     },
     {
       "report_stamp_et": "2026-11-16 01:00 PM ET",
@@ -1734,12 +1918,12 @@
       "reason_not_matched": "absent from the active list in all 1 of this club's captured game(s) (2026-11-15) - i.e. out for every game we hold, which is what an injured player's report row would predict"
     }
   ],
-  "n_matched": 22,
-  "n_matched_played": 16,
-  "n_unmatched": 61,
-  "n_unmatched_out_all_window": 61,
+  "n_matched": 26,
+  "n_matched_played": 20,
+  "n_unmatched": 57,
+  "n_unmatched_out_all_window": 57,
   "n_unmatched_active_no_minutes": 0,
-  "coverage": 0.2651,
-  "coverage_played": 0.1928,
+  "coverage": 0.3133,
+  "coverage_played": 0.241,
   "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/"
 }

@@ -519,5 +519,35 @@
       "price_flag": "F-308"
     }
   ],
-  "sha256": "34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91"
+  "sha256": "34e144c635b83b8991a61e8ca26c164bdfc6c6679b6a62220175debad2e35e91",
+  "settlement": {
+    "settled_at_utc": "2026-11-16T23:59:59Z",
+    "settled_from": "official finals committed under data/raw/history + this session's capture",
+    "n_graded": 17,
+    "n_ungraded": 17,
+    "ungraded_game_ids": [
+      "0022600253",
+      "0022600254",
+      "0022600255",
+      "0022600256",
+      "0022600257",
+      "0022600258",
+      "0022600259",
+      "0022600260",
+      "0022600261",
+      "0022600262",
+      "0022600263",
+      "0022600264",
+      "0022600265",
+      "0022600266",
+      "0022600267",
+      "0022600268",
+      "0022600269"
+    ],
+    "margin_mae": 11.571,
+    "total_mae": 15.282,
+    "winner_hit_rate": 0.7647,
+    "note": "Graded against official finals only. A game with no official final stays UNGRADED and never counts as a loss. The stamp is the end of the latest graded game day, not a wall-clock time, so a rebuild reproduces it."
+  },
+  "sha256_after_settlement": "efa4d4dfa10e7b7173f2fff89dd1d0f11293111c1a9a558efced8c5766232b21"
 }

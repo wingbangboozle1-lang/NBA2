@@ -6,9 +6,9 @@
       "id": "V5-G1",
       "name": "Quarter scores sum to the final",
       "ok": true,
-      "tested": 27,
-      "passed": 27,
-      "detail": "27/27 club quarter rows sum to their final; 1 skipped (blank by policy)",
+      "tested": 43,
+      "passed": 43,
+      "detail": "43/43 club quarter rows sum to their final; 1 skipped (blank by policy)",
       "failures": [],
       "hard": true
     },
@@ -16,9 +16,9 @@
       "id": "V5-G2",
       "name": "Player points sum to the club final",
       "ok": true,
-      "tested": 28,
-      "passed": 28,
-      "detail": "28/28 clubs: the sum of the individual points equals the final printed in the gamebook",
+      "tested": 44,
+      "passed": 44,
+      "detail": "44/44 clubs: the sum of the individual points equals the final printed in the gamebook",
       "failures": [],
       "hard": true
     },
@@ -26,9 +26,9 @@
       "id": "V5-G3",
       "name": "Player minutes sum to the club total",
       "ok": true,
-      "tested": 28,
-      "passed": 28,
-      "detail": "28/28 clubs within 5s of the gamebook team minutes (the PDFs round each player to the second)",
+      "tested": 44,
+      "passed": 44,
+      "detail": "44/44 clubs within 5s of the gamebook team minutes (the PDFs round each player to the second)",
       "failures": [],
       "hard": true
     },
@@ -36,9 +36,9 @@
       "id": "V5-G4",
       "name": "Player rebounds sum to the club total",
       "ok": true,
-      "tested": 27,
-      "passed": 27,
-      "detail": "27/27 clubs; 1 club(s) skipped because their rebound cells are blank by policy (F-V5-02)",
+      "tested": 41,
+      "passed": 41,
+      "detail": "41/41 clubs; 3 club(s) skipped because their rebound cells are blank by policy (F-V5-02)",
       "failures": [],
       "hard": true
     },
@@ -46,9 +46,9 @@
       "id": "V5-G5",
       "name": "Points identity on every row",
       "ok": true,
-      "tested": 306,
-      "passed": 306,
-      "detail": "306/306 player rows satisfy pts = 2*(FG-3P) + 3*3P + FT",
+      "tested": 492,
+      "passed": 492,
+      "detail": "492/492 player rows satisfy pts = 2*(FG-3P) + 3*3P + FT",
       "failures": [],
       "hard": true
     },
@@ -58,7 +58,7 @@
       "ok": true,
       "tested": 11,
       "passed": 11,
-      "detail": "11/11 finals in the committed official feeds agree with this session's reading; 3 game(s) are newly settled here: HOU@WAS (0022600242), ATL@MIL (0022600243), OKC@SAC (0022600244)",
+      "detail": "11/11 finals in the committed official feeds agree with this session's reading; 11 game(s) are newly settled here: HOU@WAS (0022600242), ATL@MIL (0022600243), OKC@SAC (0022600244), ORL@BOS (0022600245), CHI@CLE (0022600246), MEM@WAS (0022600247), PHI@BKN (0022600248), HOU@MIA (0022600249), POR@MIN (0022600250), GSW@NOP (0022600251), PHX@DEN (0022600252)",
       "failures": [],
       "hard": true
     },
@@ -66,9 +66,9 @@
       "id": "V5-G7",
       "name": "Provenance on every row",
       "ok": true,
-      "tested": 556,
-      "passed": 556,
-      "detail": "556/556 rows carry a source URL, a retrieval stamp, and a reason for any blank cell",
+      "tested": 768,
+      "passed": 768,
+      "detail": "768/768 rows carry a source URL, a retrieval stamp, and a reason for any blank cell",
       "failures": [],
       "hard": true
     },
@@ -78,7 +78,7 @@
       "ok": true,
       "tested": 30,
       "passed": 30,
-      "detail": "all 30 clubs present across 23 team-games",
+      "detail": "all 30 clubs present across 31 team-games",
       "failures": [],
       "hard": false
     }
@@ -88,6 +88,6 @@
   "n_gates_fail": 0,
   "n_hard_fail": 0,
   "publishable": true,
-  "n_rows": 556,
-  "n_games": 23
+  "n_rows": 768,
+  "n_games": 31
 }
