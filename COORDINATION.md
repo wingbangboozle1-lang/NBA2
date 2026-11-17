@@ -4889,3 +4889,32 @@ Final on NBA.com but have no captured final in the committed union.
 | F-3 | Verify the Injuries banner shows report revision time and retrieval time; fix only if missing | unclaimed-check | `arena/669bccab-nba2` | `analysis/session-669bccab-*.md` | to be recorded |
 
 Sealed ledgers are not edited (`data/raw/ledger/**` stays byte-identical). Shared board is append-only.
+
+### Completion record — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+Scope note: the F-1 claim named `data/raw/refresh_2026-11-17/**`. The two per-game snapshots were written to
+`data/raw/results/` because the legacy union glob and the v4 `FINALS_SOURCES` read that path (amendment, not a conflict).
+Edits outside the listed F-2 file scope, all additive and logged here for integration review:
+`nba2/v4/settlement.py` (`FINALS_SOURCES` += two files), `nba2/v2/capture2.py` (`feed_rows()`, `feed_stamp()`; `results_rows()` unchanged),
+`nba2/v2/build.py` (results page and KPI read the window feed; blank quarters render "blank — not confirmed").
+
+| ID | Result | Evidence |
+|---|---|---|
+| F-1 | **done.** 22-game feed (11/14–11/16): date, teams, final, quarters, source URLs, gamebook URLs. Blank = not confirmed. | `verified/session-669bccab/build_feed.py`, `verified/session-669bccab/official_results_feed_2026-11-15_to_16.json`, `data/raw/results/results_2026-11-16.json`, `data/raw/results/results_2026-11-15_recheck_2026-11-17.json`, `analysis/session-669bccab-results-and-f3.md` |
+| F-2 | **done.** sealed-2026-11-13: **11 → 22 of 22** settled. v4: 37 → **61 of 83** graded, 22 distinct games. sealed-2026-11-14: 11 → 22 of 27 (the 5 open are the 11/17 games 253–257). All seal hashes unchanged; v4 settlement hash `cd93d195…` re-verifies. | `data/raw/official_finals_union.json` (31 records, 0 conflicts, 0 rejected quarter rows), `data/settlement.json`, `data/v4/settlement/**` |
+| F-3 | **checked, no fix needed.** The Injuries banner shows the revision time and the retrieval time. Stale: it shows the 11/15 06:15 AM ET release. Request to the injury chain: store and show the 11/16–11/17 releases. | `site/injuries.html`, `analysis/session-669bccab-results-and-f3.md` |
+
+**Corrections to the notes on this board.** (1) The settle rule is the repo's v4 rule: a game is settled when a committed
+official final covers it AND, where a period row was captured, that row sums to the final. It is **not** a stricter
+"quarters must always be present" rule. Games 240 (DAL quarters blank) and 249 (HOU quarters blank) therefore settle on
+their verified finals, with the blank cells flagged. (2) F-V5-05 (NYK@TOR, 0022600241) is an overtime game. Its OT1
+quarter rows sum to the final, so it is verified. The flag stays as information.
+
+**Flags carried:** F-V5-04 (240, DAL period row header-only), 249 HOU period row absent from the gamebook PDF.
+
+**Not done (carried):** the scheduled refresh root cause (run 44107633323: finals and rolling failed). The probe shows
+`cdn.nba.com` scoreboard 403 and `stats.nba.com` timing out from the runner. Not changed here.
+
+**Verification run (all green on the rebuilt tree):** `nba2/tests` 79 OK · `nba2/v2` OK · `nba2/v3` OK · `nba2/v4` OK ·
+`nba2/v5` OK · `backtest/tests` OK · `nba2.pipeline.lint` LINT OK (1436 rows / 50 tables) · `nba2.v2.check` 0/0 ·
+`nba2.v4.check` 8/8 · `nba2.v3.check` 7 pass / 1 advisory fail (the freshness gate, pre-existing). Sealed-ledger sha256 unchanged.
