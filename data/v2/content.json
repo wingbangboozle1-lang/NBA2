@@ -1301,14 +1301,14 @@
    "high",
    "Settlement",
    "settle.py did not read the 2026-11-15 refresh capture (data/raw/refresh_*/), so three official finals (0022600242 HOU-WAS, 0022600243 ATL-MIL, 0022600244 OKC-SAC) stayed unsettled although the capture held them. Re-read from the official gamebooks on 2026-11-17: the scores and every period match.",
-   "Settled from data/raw/results/results_2026-11-15_gamebook.json. Discovery code left unchanged for its owner.",
+   "Settled from data/raw/results/results_2026-11-15_recheck_2026-11-17.json (arena/669bccab-nba2; same scores as the earlier gamebook re-read, which was removed as a duplicate). Discovery code left unchanged for its owner.",
    "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf"
   ],
   [
    "AA-F-03",
    "medium",
    "Data",
-   "data/raw/results/results_2026-11-15.json lists 0022600242-44 as 'not final at retrieval' (read 2026-11-16 ~02:05 UTC). They were final by then. The file is unchanged and is superseded for those games by results_2026-11-15_gamebook.json.",
+   "data/raw/results/results_2026-11-15.json lists 0022600242-44 as 'not final at retrieval' (read 2026-11-16 ~02:05 UTC). They were final by then. The file is unchanged and is superseded for those games by results_2026-11-15_recheck_2026-11-17.json.",
    "Superseded row kept for audit; the settlement reads the newer file for these games.",
    "https://www.nba.com/schedule"
   ],

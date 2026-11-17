@@ -48,8 +48,8 @@ V3_SEALS = ("sealed-2026-11-15.json",)
 FINALS_SOURCES = (
     ("data/raw/refresh_2026-11-15/results_2026-11-15.json", "2026-11-15"),
     ("data/raw/capture_2026-11-15/results_2026-11-14.json", "2026-11-14"),
-    # session arena/aa1d3c07-nba2 (2026-11-17): official gamebook-verified feeds
-    ("data/raw/results/results_2026-11-15_gamebook.json", "2026-11-15"),
+    # arena/669bccab-nba2 (2026-11-17): official finals for 2026-11-15 (recheck of 242-244) and 2026-11-16
+    ("data/raw/results/results_2026-11-15_recheck_2026-11-17.json", "2026-11-15"),
     ("data/raw/results/results_2026-11-16.json", "2026-11-16"),
 )
 

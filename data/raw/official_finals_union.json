@@ -6,7 +6,7 @@
     "data/raw/finals_all.json",
     "data/raw/capture_2026-11-15/results_2026-11-14.json",
     "data/raw/results/results_2026-11-15.json",
-    "data/raw/results/results_2026-11-15_gamebook.json",
+    "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
     "data/raw/results/results_2026-11-16.json",
     "data/v2/results.json"
   ],
@@ -445,7 +445,7 @@
       "home_pts": 119,
       "source": "https://www.nba.com/game/hou-vs-was-0022600242",
       "sources": [
-        "data/raw/results/results_2026-11-15_gamebook.json"
+        "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
         36,
@@ -460,7 +460,10 @@
         31
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600243",
@@ -470,7 +473,7 @@
       "home_pts": 106,
       "source": "https://www.nba.com/game/atl-vs-mil-0022600243",
       "sources": [
-        "data/raw/results/results_2026-11-15_gamebook.json"
+        "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
         18,
@@ -485,7 +488,10 @@
         26
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600244",
@@ -495,7 +501,7 @@
       "home_pts": 103,
       "source": "https://www.nba.com/game/okc-vs-sac-0022600244",
       "sources": [
-        "data/raw/results/results_2026-11-15_gamebook.json"
+        "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
         32,
@@ -510,7 +516,10 @@
         23
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600245",
@@ -535,7 +544,10 @@
         28
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600246",
@@ -560,7 +572,10 @@
         38
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600247",
@@ -585,7 +600,10 @@
         33
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600248",
@@ -610,7 +628,10 @@
         28
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600249",
@@ -630,7 +651,10 @@
         27
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600250",
@@ -655,7 +679,10 @@
         19
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600251",
@@ -680,7 +707,10 @@
         22
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600252",
@@ -705,7 +735,10 @@
         23
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     }
   ],
   "conflicts": [],

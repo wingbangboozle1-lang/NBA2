@@ -84,6 +84,117 @@ def settlement_stamp() -> dict:
     }
 
 
+# --------------------------------------------------------------------------- official results feed, all game days
+# arena/669bccab-nba2 (2026-11-17): the page reads every committed official per-game source for the
+# window, not only the 2026-11-14 capture. results_rows() above is deliberately UNCHANGED: the models,
+# the strategy lab, travel and live.py all consume it and must keep their 5-row 2026-11-14 input.
+V5_RESULTS = ROOT / "data" / "v5" / "results_union.json"
+V5_GAMEBOOKS = ROOT / "data" / "v5"
+RECHECK_1115 = ROOT / "data" / "raw" / "results" / "results_2026-11-15_recheck_2026-11-17.json"
+RESULTS_1116 = ROOT / "data" / "raw" / "results" / "results_2026-11-16.json"
+FEED_WINDOW = ("2026-11-14", "2026-11-16")
+
+
+def _nba_game_page(away: str, home: str, gid: str) -> str:
+    return f"https://www.nba.com/game/{away.lower()}-vs-{home.lower()}-{gid}"
+
+
+def _v5_ot(date: str, gid: str) -> dict:
+    """Overtime period points for a v5 game, from its committed gamebook transcript (or empty)."""
+    p = V5_GAMEBOOKS / f"gamebooks_{date}.json"
+    if not p.exists():
+        return {"away": [], "home": []}
+    for g in json.loads(p.read_text()).get("games", []):
+        if g.get("game_id") == gid:
+            q = g.get("quarters") if isinstance(g.get("quarters"), dict) else {}
+            ot = q.get("ot") or {}
+            return {"away": list(ot.get("away") or []), "home": list(ot.get("home") or [])}
+    return {"away": [], "home": []}
+
+
+def _feed_row(r: dict, origin: str) -> dict:
+    gid, away, home = r["game_id"], r["away"], r["home"]
+    src = r.get("source_url") or _nba_game_page(away, home, gid)
+    gamebook = r.get("gamebook_url")
+    if gamebook is None and str(src).endswith(".pdf"):   # v5 rows keep the gamebook PDF in source_url
+        gamebook, src = src, _nba_game_page(away, home, gid)
+    ot = {"away": [], "home": []}
+    if origin == "v5" and (r.get("ot_periods") or 0) > 0:
+        ot = _v5_ot(r["date"], gid)
+    return {
+        "game_id": gid, "date": r["date"], "away": away, "home": home,
+        "away_pts": r["away_pts"], "home_pts": r["home_pts"],
+        "away_quarters": r.get("away_quarters"), "home_quarters": r.get("home_quarters"),
+        "ot_quarters": ot, "ot_periods": r.get("ot_periods") or 0,
+        "quarters_blank_reason": r.get("quarters_blank_reason"),
+        "source_url": src, "gamebook_url": gamebook, "origin": origin,
+    }
+
+
+def feed_rows() -> list[dict]:
+    """One row per official final in FEED_WINDOW, merged from every committed official source.
+
+    Fail-closed: two sources that disagree on a final raise; a quarter row (plus any overtime
+    periods) that does not sum to the final raises; a blank quarter row stays blank with its reason.
+    """
+    candidates: list[dict] = []
+    for r in _load(RESULTS_FILE)["records"]:
+        candidates.append(_feed_row(r, "capture-2026-11-14"))
+    for r in _load(V5_RESULTS)["records"]:
+        candidates.append(_feed_row(r, "v5"))
+    for r in _load(RECHECK_1115)["records"]:
+        candidates.append(_feed_row(r, "recheck-2026-11-17"))
+    for r in _load(RESULTS_1116)["records"]:
+        candidates.append(_feed_row(r, "results-2026-11-16"))
+    by_id: dict[str, dict] = {}
+    for c in candidates:
+        if not (FEED_WINDOW[0] <= c["date"] <= FEED_WINDOW[1]):
+            continue
+        prev = by_id.get(c["game_id"])
+        if prev is not None:
+            if (prev["away_pts"], prev["home_pts"]) != (c["away_pts"], c["home_pts"]):
+                raise ValueError(f"official sources disagree on {c['game_id']}: "
+                                 f"{prev['origin']} {prev['away_pts']}-{prev['home_pts']} vs "
+                                 f"{c['origin']} {c['away_pts']}-{c['home_pts']}")
+            # keep the first source's row; a later source may only fill a blank quarter row
+            for side in ("away", "home"):
+                if prev[f"{side}_quarters"] is None and c[f"{side}_quarters"] is not None:
+                    prev[f"{side}_quarters"] = c[f"{side}_quarters"]
+                    prev[f"{side}_quarter_origin"] = c["origin"]
+            continue
+        by_id[c["game_id"]] = c
+    rows = sorted(by_id.values(), key=lambda r: (r["date"], r["game_id"]))
+    for r in rows:
+        for side in ("away", "home"):
+            q = r[f"{side}_quarters"]
+            if q is None:
+                continue
+            total = sum(q) + sum(r["ot_quarters"][side])
+            pts = r[f"{side}_pts"]
+            if total != pts:
+                raise ValueError(f"quarter sum != final for {r['game_id']} {side}: {total} != {pts}")
+    return rows
+
+
+def feed_stamp() -> dict:
+    """One visible settlement stamp for the whole results feed (window, count, read times)."""
+    rows = feed_rows()
+    dates = sorted({r["date"] for r in rows})
+    per_date = {d: sum(1 for r in rows if r["date"] == d) for d in dates}
+    return {
+        "settled_date": dates[-1] if dates else None,
+        "window": list(FEED_WINDOW),
+        "games_settled": len(rows),
+        "per_date": per_date,
+        "official_results_url": "https://www.nba.com/games",
+        "retrieved_at_utc": ("2026-11-15T12:00Z (11/14 capture) · 2026-11-16 ~18:27-18:36Z (v5 gamebooks, 11/14-11/15) · "
+                             "2026-11-17 (this session; 11/15 recheck and 11/16 games; per-call times not logged)"),
+        "stamp_text": (f"{len(rows)} official finals settled, {FEED_WINDOW[0]} to {dates[-1] if dates else '-'}: "
+                       + ", ".join(f"{d} {n}" for d, n in per_date.items())
+                       + ". Each final is on an official NBA page; quarter rows sum to the final or are left blank."),
+    }
+
+
 # --------------------------------------------------------------------------- injuries
 INJURY_COLS = ["date", "time_et", "matchup", "team", "player", "status", "reason"]
 
