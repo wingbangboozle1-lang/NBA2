@@ -4915,4 +4915,4 @@ PR #115 failed two CI gates. Diagnosed locally, not from run logs (`gh run view 
 
 | ID | Task | Status | Owner | File scope | Verification rule |
 |---|---|---|---|---|---|
-| AA-6 | Add `python -m nba2.v5` (last, after v4) to the parity rebuild step, same as pages.yml | in progress | `arena/aa1d3c07-nba2` | `.github/workflows/publish-parity.yml` only | locally: the parity rebuild chain incl. v5 leaves `git diff --cached --stat -- site data/v2 data/v4` empty |
+| AA-6 | Add `python -m nba2.v5` (last, after v4) to the parity rebuild step, same as pages.yml | **superseded — no edit by this session**: `a88abb7` on `main` (PR #116, another session) already adds it, with the v5 unit tests. This session did not touch `publish-parity.yml`. | `arena/aa1d3c07-nba2` | `.github/workflows/publish-parity.yml` only | locally: the parity rebuild chain incl. v5 leaves `git diff --cached --stat -- site data/v2 data/v4` empty |
