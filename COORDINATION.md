@@ -5167,3 +5167,63 @@ capture-verification.html`). No settlement content, rule or hash changed.
 - **Live check (fetched):** `https://wingbangboozle1-lang.github.io/NBA2/site/official-results.html` shows the 22-game feed with the window stamp, source links, and blank quarter cells flagged. The bare root `https://wingbangboozle1-lang.github.io/NBA2/` still serves the legacy repository-root tree (FLAG-PAGES-01 / F-033, an owner decision, unchanged). The root `official-results.html` returns 404 because that page exists only under `site/`.
 - **Follow-up fix:** the settlement stamp printed a double full stop ("left blank.."). Fixed in `nba2/v2/capture2.py`, rebuilt, and shipped as its own PR.
 - **Stale items noticed, logged for the integration session (not edited here):** the v2 "Tamper-evident projection ledger" table on `official-results.html` still says `pending official final` for 11/15 rows that are settled in v4 (`data/v4/settlement/**`). The v2 ledger source is outside this session's file scope. The v2 `injuries` banner shows the 11/15 06:15 AM ET release, not the 11/16 or 11/17 releases (F-3 request).
+
+### Session `arena/8892d20c-nba2` — ADDENDUM: the front-door defect (F-062) and its fix
+
+Found **after** the completion record above, by reading the deployed page instead of the committed
+file — the same lesson session `arena/6e46dbf2-nba2` recorded, hit again.
+
+**What was measured (not assumed).** `gh api repos/.../pages` returns `build_type: legacy`,
+`source: {branch: main, path: /}`, `status: built`. So the file served at
+`https://wingbangboozle1-lang.github.io/NBA2/` is the **repository-root `index.html`**, not the
+`site/` artefact `pages.yml` uploads. Two probes confirm it:
+
+| URL | Result |
+|---|---|
+| `/NBA2/` and `/NBA2/index.html` | v1 dashboard, stamped **as-of 2026-11-14** |
+| `/NBA2/data/teams.json` | **404** |
+| `/NBA2/site/capture-verification.html` | 200, the v2 page with live content |
+
+Consequence: a reader landing on the site was shown the oldest, least-verified rendering, while
+the gated v2/v3/v4/v5 tree was only reachable at `/NBA2/site/`. The README's sentence "published
+at the repository root" was therefore **false**, and it had been false for the whole life of that
+paragraph. Recorded as **F-062 (high, Site)** and published on the Flagged for Review page with
+the one action that closes it.
+
+**What was fixed, where it could be.** The Pages *setting* needs `pages: write`, which this
+session's token does not have — `PUT /repos/.../pages -f build_type=workflow` returns **403
+"Resource not accessible by integration"**. So the fix was made where it can be, deterministically:
+
+- `nba2/pipeline/build_site.py` now emits the root `index.html` as a **labelled pointer** to
+  `site/index.html` (visible text + redirect, not a silent one). It is generated, so it is
+  regenerated on every build and covered by the existing `ci`/`parity` gates, which both pass.
+- It works under **either** Pages configuration: under `legacy` the root redirects to the gated
+  tree; under `workflow` the artefact root is the v2 site and the pointer is simply not the entry
+  point.
+- The v1 pages are **not deleted** — they remain at `pages/*` and are linked from the pointer, per
+  the README's statement that they are retained for history and review.
+
+**Verified live after the change** (`/NBA2/index.html?v=2`): the front door now returns the v2
+dashboard ("Originated lines, sourced row by row", `+0.77` HCA pinned, `0/30` teams outside luck
+noise). The fetch tool renders its relative links as root-relative because it does not re-base after
+a meta refresh; a browser resolves them against `/NBA2/` → `/NBA2/site/...`. F-062 confirmed
+present on the deployed `flagged.html` (`?v=8892`).
+
+**Post-change checker state (all green except the disclosed freshness gate):**
+
+| Check | Result |
+|---|---|
+| `Verify data, model and site` (ci) | **success** |
+| `Verify v2 model and site` (v2-verify) | **success** |
+| `Verify the published tree` (parity, zero tolerance for drift) | **success** |
+| `Publish GitHub Pages` | **success** |
+| `tools/crosscheck_site.py` | 97 checks: **87 pass, 1 fail (CC-FRESH-01), 9 info** |
+| `tools/check_links_all.py` | ALL INTERNAL LINKS OK |
+| `nba2.v2.check` / `v3.check` / `v4.check` | 0/0 · 0/0 · **8/8 gates** |
+
+**Commits on `main`:** `7da3601` (root pointer), `e8b72c9` (F-062 + README correction),
+`00b793d` (sync merge). Deploy run `44124425085` on `00b793d`.
+
+**Owner action now outstanding (one, and it needs `pages: write`):**
+Settings → Pages → Source: **GitHub Actions**. Until then `/NBA2/` redirects to `/NBA2/site/` and
+both paths serve the same gated tree.
