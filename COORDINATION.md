@@ -4918,3 +4918,18 @@ quarter rows sum to the final, so it is verified. The flag stays as information.
 **Verification run (all green on the rebuilt tree):** `nba2/tests` 79 OK · `nba2/v2` OK · `nba2/v3` OK · `nba2/v4` OK ·
 `nba2/v5` OK · `backtest/tests` OK · `nba2.pipeline.lint` LINT OK (1436 rows / 50 tables) · `nba2.v2.check` 0/0 ·
 `nba2.v4.check` 8/8 · `nba2.v3.check` 7 pass / 1 advisory fail (the freshness gate, pre-existing). Sealed-ledger sha256 unchanged.
+
+### Conflict log — session `arena/669bccab-nba2` (2026-11-17 UTC)
+
+- **Overlap with open PR #115 (`arena/aa1d3c07-nba2`, created 15:57Z).** That PR covers the same 11/16 finals (8 games) and the
+  same 11/15 finals (0022600242–44) and the same settlement re-run, and it writes `data/raw/results/results_2026-11-16.json`,
+  the same path as this session's file. This session's claim F-1/F-2 is on the board from 15:47:29Z, earlier than that PR.
+  No claim for `aa1d3c07` appears on the board. Not closed and not edited. **Handoff:** PR #117 (this session) is the
+  board-claimed path. Whichever PR merges first, the other must be rebased. Owner of `aa1d3c07` to rebase or close its duplicate,
+  and the integration session to confirm the surviving file.
+- **Scope amendments** (no other session's file was edited): F-1 path moved from `data/raw/refresh_2026-11-17/**` to
+  `data/raw/results/**` (readers of the legacy glob and v4 `FINALS_SOURCES`). `nba2/v4/settlement.py`, `nba2/v2/capture2.py`, and
+  `nba2/v2/build.py` were edited additively (see completion record above).
+- **CI note:** the `verify` job failed on the first run of PR #117 because the v1 `pages/*.html` settlement lines were not regenerated.
+  Fixed in commit `pages/` regeneration on this branch; the job is re-run on the new head.
+- **PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/117
