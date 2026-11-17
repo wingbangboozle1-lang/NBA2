@@ -257,12 +257,20 @@ jobs:
         if: always()
         run: |
           set -uo pipefail
-          BR="${{ github.event.pull_request.head.ref }}"
-          if [ -z "$BR" ] || [ "$BR" = "null" ]; then BR="${GITHUB_REF_NAME}"; fi
           git config user.name "nba2-page-fixture-bot"
           git config user.email "nba2-page-fixture-bot@users.noreply.github.com"
-          git fetch --depth=1 origin "$BR" || exit 0
-          git checkout -B "$BR" "origin/$BR"
+          # On a push event the checkout is already the branch tip: commit in place. Only a
+          # pull_request run sits on a detached merge commit and has to move to the head ref.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BR="${{ github.event.pull_request.head.ref }}"
+            if [ -z "$BR" ] || [ "$BR" = "null" ]; then
+              echo "no PR head ref — not committing"; exit 0
+            fi
+            git fetch origin "$BR" || exit 0
+            git checkout -B "$BR" "origin/$BR"
+          else
+            BR="${GITHUB_REF_NAME}"
+          fi
           # LOOP GUARD: a bot commit re-triggers this workflow. One human push, one bot commit.
           if [ "$(git log -1 --format='%an')" = "nba2-page-fixture-bot" ]; then
             echo "branch tip is already a fixture-bot commit - not committing again (loop guard)"
