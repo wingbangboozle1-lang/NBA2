@@ -50,6 +50,7 @@ NAV = [
     ("flagged.html", "Flagged for review"),
     ("sources.html", "Sources"),
     ("methodology.html", "Methodology"),
+    ("capture-verification.html", "Capture verification"),
 ]
 
 CSS = """
@@ -217,7 +218,7 @@ def page(name, title, body, active=None):
 <main>
 {body}
 <footer>
-  <p>Snapshot as of <b>{O.AS_OF}</b>. Built by session <code>arena/98b0eae9-nba2</code>.
+  <p>Snapshot as of <b>{O.AS_OF}</b> for the model pages. Built by sessions <code>arena/98b0eae9-nba2</code> (v2 model), <code>arena/8892d20c-nba2</code> (capture verification page).
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
@@ -2470,6 +2471,15 @@ python3 -m unittest discover -s backtest/tests                 # {sc["backtest"]
 <p class="lede">Those three figures are counted from the test files during this build, not copied from a commit
 message — a remembered count is the most reliably stale number on the site (F-033).</p>"""
     built["methodology.html"] = page("methodology.html", "Methodology", body, "methodology.html")
+
+    # ---- capture verification (session arena/8892d20c-nba2): the dated official capture that
+    # is NEWER than the published snapshot, verified row by row against its own identities.
+    # This page deliberately does not restate the published snapshot; it publishes the fresher
+    # capture beside it so the gap between them is visible instead of implied.
+    from . import capture_verify as CV
+    built["capture-verification.html"] = page(
+        "capture-verification.html", "Capture verification", CV.body(table, esc, srclink, badge, page),
+        "capture-verification.html")
 
     # The same artefacts are served with the site so a reviewer can diff data against rendering.
     # This MUST run last: backtest.json and the other JSON files are written earlier in this
