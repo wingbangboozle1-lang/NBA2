@@ -5316,3 +5316,14 @@ gamebooks and one repo test defect; full text with per-flag official URLs in
 `audit/session-934fce54/NOTES.md` §4 and in the transcript's `notes` array. Sealed ledgers
 were not rewritten: the seal's pre-tip `sha256` is unchanged and settlement appended
 `sha256_after_settlement` only.
+**93-7 record (part 1 — PR opened).** PR **#125** —
+https://github.com/wingbangboozle1-lang/NBA2/pull/125 — from `arena/934fce54-nba2` into
+`main`, containing the 11/16 capture + settlement work and the reconciliation merge with
+the parallel sessions' PRs #115/#117/#119/#120 (both sides kept; the two independent 11/16
+captures agree on all 8 finals and all 16 club period rows). Merged immediately per the
+brief; the merge result and the Pages deploy confirmation are recorded in part 2 below.
+Note on the push protocol: `git pull --rebase` was attempted before the push and choked
+linearizing this branch's merge commit (it tried to replay 28 foreign commits one by one);
+it was aborted with no work lost and the push verified against `origin/arena/934fce54-nba2`
+by fetch + fast-forward check instead. A branch whose history intentionally contains a
+reconciliation merge must not be linearized.
