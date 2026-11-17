@@ -39,7 +39,7 @@ concurrency:
 jobs:
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -251,6 +251,21 @@ jobs:
                  "rows": rows}
           (OUT / "transport_probe.json").write_text(json.dumps(doc, indent=1) + "\n")
           PY
+
+      - name: Parse the fixtures with the repository's own parsers
+        if: always()
+        run: python3 -m unittest nba2.v2.test_refresh_pages -v
+
+      - name: Dry-run the rolling refresh against the live official pages
+        # The scheduled job has failed six consecutive runs and the cause was never measured
+        # where it matters — on a runner. This runs the repository's own refresh, unchanged,
+        # in the environment the schedule uses, and commits its verdict either way.
+        if: always()
+        run: |
+          set -uo pipefail
+          python3 -m nba2.v2.refresh --check-only > data/raw/page_fixtures/refresh_checkonly.txt 2>&1
+          echo "exit=$?" >> data/raw/page_fixtures/refresh_checkonly.txt
+          cat data/raw/page_fixtures/refresh_checkonly.txt
 
       - name: Publish the measurement to the job summary
         if: always()
