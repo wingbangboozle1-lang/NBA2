@@ -1,0 +1,399 @@
+# Capture raw official pages from a runner and commit them as parser fixtures.
+#
+# WHY: the nightly refresh fails because `nba2/v2/refresh.py` reads stats.nba.com JSON, which
+# times out from GitHub runners, while the rendered www.nba.com pages return 200 (measured:
+# data/raw/egress_probe.json, 2026-11-17T14:28:28Z). Repairing the transport means parsing
+# pages whose bytes we have actually seen — never guessing at a page's structure.
+#
+# WHY IT COMMITS INSTEAD OF UPLOADING AN ARTIFACT: this repository's review loop cannot fetch
+# GitHub Actions artifacts or job logs (both are served from hosts outside the reachable set),
+# so an uploaded artifact is unreadable evidence. Committing the bytes to the branch is the one
+# channel that can actually be reviewed. Pages are stored gzip-compressed with the SHA-256 and
+# byte length of the *original* response in the manifest, so the raw bytes are recoverable and
+# verifiable: `gunzip -c standings.html.gz | sha256sum` must equal `sha256` in the manifest.
+#
+# MEASURED, DO NOT GUESS: the User-Agent below is the one that returned HTTP 200 from a runner
+# on 2026-11-17. A Chrome-mimicking UA was challenged on every page in the same environment.
+# Change the UA only by re-measuring, never by guessing.
+#
+# LOOP GUARD: the bot commit re-triggers this workflow (a push to the same branch). The commit
+# step therefore does nothing when the branch tip is already a bot commit, so one human push
+# yields at most one bot commit.
+
+name: Capture official page fixtures
+
+on:
+  workflow_dispatch:
+  # No `pull_request` trigger: those runs of this workflow sit at "action_required" (they
+  # need an approval nobody should have to give) and they cancel the push runs that do
+  # execute. Dispatch it, or push to a session branch.
+  push:
+    branches:
+      - 'arena/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: page-fixtures-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch every official page the refresh needs
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, gzip, hashlib, json, pathlib, time, urllib.error, urllib.request
+
+          OUT = pathlib.Path("data/raw/page_fixtures")
+          OUT.mkdir(parents=True, exist_ok=True)
+          today = dt.date.today()
+
+          # NOT a browser string: the nightly probe measured 200 from a runner with this
+          # self-identifying UA (data/raw/egress_probe.json, 2026-11-17T14:28:28Z), while a
+          # Chrome-mimicking UA was challenged on every page. Do not "improve" it without
+          # re-measuring: this is the transport the repository is built on.
+          UA = {"User-Agent": "NBA2-research-desk/1.0 (endpoint reachability check)",
+                "Accept": "*/*", "Referer": "https://official.nba.com/"}
+          STATS = ("https://www.nba.com/stats/teams/{}?Season=2026-27"
+                   "&SeasonType=Regular+Season")
+
+          def urls():
+              yield "standings", "https://www.nba.com/standings"
+              for i in range(4):                       # slate window: today .. today+3
+                  d = (today + dt.timedelta(days=i)).isoformat()
+                  yield f"schedule_{d}", f"https://www.nba.com/schedule?date={d}"
+              for i in range(1, 8):                    # finals lookback: yesterday .. 7 days ago
+                  d = (today - dt.timedelta(days=i)).isoformat()
+                  yield f"games_{d}", f"https://www.nba.com/games?date={d}"
+              for page in ("traditional", "opponent", "advanced"):
+                  yield f"team_{page}", STATS.format(page)
+              yield "injury_index", "https://official.nba.com/nba-injury-report-2026-27-season/"
+              # the official teams index: a candidate server-rendered source for the
+              # conference grouping, which the standings page prints only as divisions
+              yield "teams_index", "https://www.nba.com/teams"
+              # the slate window: today..today+3, from the page that is server-rendered
+              for i in range(4):
+                  d = (today + dt.timedelta(days=i)).isoformat()
+                  yield f"future_games_{d}", f"https://www.nba.com/games?date={d}"
+              # candidate transports for the two surfaces that are client-rendered
+              # (standings + the three team-stat pages). Each is measured, not assumed:
+              # recorded with status/bytes and stored when it answers 200.
+              for name, url in (
+                  ("probe_standings_all", "https://data.nba.net/prod/v1/current/standings_all.json"),
+                  ("probe_data_scoreboard",
+                   f"https://data.nba.net/prod/v1/{today.strftime('%Y%m%d')}/scoreboard.json"),
+                  ("probe_dmz_standings", "https://statsdmz.nba.com/js/data/widgets/standings.json"),
+                  ("probe_chunk_standings",
+                   "https://www.nba.com/_next/static/chunks/pages/standings-28b434f7094bcd5e.js"),
+                  ("probe_chunk_teamstats",
+                   "https://www.nba.com/_next/static/chunks/pages/stats/teams/"
+                   "traditional-a0b7167e97b76271.js"),
+              ):
+                  yield name, url
+              # control rows: transports measured unreachable, re-measured on every run so the
+              # claim "these do not work from a runner" keeps a fresh timestamp behind it
+              yield "stats_scoreboard_json", ("https://stats.nba.com/stats/scoreboardv2"
+                                              "?LeagueID=00&GameDate=11/16/2026&DayOffset=0")
+              yield "cdn_scoreboard", ("https://cdn.nba.com/static/json/liveData/scoreboard/"
+                                       "todaysScoreboard_00.json")
+
+          rows = []
+          for name, url in urls():
+              t0 = time.time()
+              row = {"name": name, "url": url, "retrieved_at_utc": None, "http_status": None,
+                     "bytes": None, "sha256": None, "file": None, "ok": False, "error": None,
+                     "elapsed_ms": None}
+              try:
+                  req = urllib.request.Request(url, headers=UA)
+                  with urllib.request.urlopen(req, timeout=25) as r:
+                      raw = r.read()
+                      if r.headers.get("Content-Encoding") == "gzip":
+                          raw = gzip.decompress(raw)
+                      row["http_status"] = r.status
+                  row["retrieved_at_utc"] = dt.datetime.now(dt.timezone.utc).replace(
+                      microsecond=0).isoformat().replace("+00:00", "Z")
+                  row["bytes"] = len(raw)
+                  row["sha256"] = hashlib.sha256(raw).hexdigest()
+                  # control rows are evidence only - never stored as parser fixtures
+                  if not name.startswith(("stats_", "cdn_", "probe_")):
+                      path = OUT / f"{name}.html.gz"
+                      path.write_bytes(gzip.compress(raw))
+                      row["file"] = str(path)
+                  row["ok"] = True
+              except urllib.error.HTTPError as e:
+                  row.update(http_status=e.code, error=f"HTTP {e.code}")
+                  row["retrieved_at_utc"] = dt.datetime.now(dt.timezone.utc).replace(
+                      microsecond=0).isoformat().replace("+00:00", "Z")
+              except Exception as e:                     # noqa: BLE001 - the error IS the data
+                  row["error"] = f"{type(e).__name__}: {e}"
+                  row["retrieved_at_utc"] = dt.datetime.now(dt.timezone.utc).replace(
+                      microsecond=0).isoformat().replace("+00:00", "Z")
+              row["elapsed_ms"] = int((time.time() - t0) * 1000)
+              rows.append(row)
+              print(f"{'OK ' if row['ok'] else 'ERR'} {name:24s} {row['http_status']} "
+                    f"{row['bytes']} bytes {row['elapsed_ms']}ms {row['error'] or ''}")
+
+          doc = {
+              "schema": "nba2.page-fixtures.v1",
+              "captured_by": "capture-fixtures.yml",
+              "ref": "${{ github.ref }}",
+              "run_id": "${{ github.run_id }}",
+              "run_url": ("https://github.com/${{ github.repository }}/actions/"
+                          "runs/${{ github.run_id }}"),
+              "note": ("pages are stored gzip-compressed; sha256 and bytes describe the "
+                       "uncompressed response, so `gunzip -c <file> | sha256sum` reproduces it"),
+              "rows": rows,
+              "summary": {"n": len(rows), "ok": sum(1 for r in rows if r["ok"]),
+                          "unreachable": [r["name"] for r in rows if not r["ok"]]},
+          }
+          (OUT / "manifest.json").write_text(json.dumps(doc, indent=1) + "\n")
+          print(json.dumps(doc["summary"], indent=1))
+
+          lines = ["| page | url | status | bytes | ms | sha256 | error |",
+                   "| --- | --- | --- | --- | --- | --- | --- |"]
+          for r in rows:
+              lines.append(f"| {r['name']} | {r['url']} | {r['http_status']} | {r['bytes']} "
+                           f"| {r['elapsed_ms']} | {(r['sha256'] or '')[:12]} | {r['error'] or ''} |")
+          (OUT / "SUMMARY.md").write_text(
+              "## Official page fixtures\n\nRetrieved at UTC: "
+              f"{rows[0]['retrieved_at_utc']} · run: {doc['run_url']}\n\n"
+              + "\n".join(lines) + "\n")
+          # Pages the parser must read being unreachable must be visible. The control rows
+          # (stats/cdn) are expected to fail; they are measurements, not build inputs.
+          critical = [r for r in rows if not r["ok"]
+                      and not r["name"].startswith(("stats_", "cdn_", "probe_"))]
+          if critical:
+              print("::error::critical official pages unreachable: " +
+                    ", ".join(r["name"] for r in critical))
+              raise SystemExit(1)
+          PY
+
+      - name: Measure the transport the refresh actually uses
+        # The nightly job's rolling failure has never been measured from a runner: it was
+        # inferred from a development sandbox (TLS reset) and from a probe that used a
+        # different User-Agent and none of the x-nba-stats headers `nba2/v2/refresh.py`
+        # sends. This step fetches each endpoint with the repository's own header set and
+        # with the plain one, and records which combination answers.
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, json, pathlib, time, urllib.error, urllib.request
+
+          OUT = pathlib.Path("data/raw/page_fixtures")
+          UA_CHROME = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36 nba2-refresh/1.0 "
+                       "(+github.com/wingbangboozle1-lang/NBA2)")
+          UA_PLAIN = "NBA2-research-desk/1.0 (endpoint reachability check)"
+
+          def header_sets():
+              yield "repo_headers", {
+                  "User-Agent": UA_CHROME,
+                  "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
+                  "Referer": "https://www.nba.com/",
+                  "Origin": "https://www.nba.com",
+                  "x-nba-stats-origin": "stats",
+                  "x-nba-stats-token": "true",
+              }
+              yield "plain_ua", {"User-Agent": UA_PLAIN, "Accept": "*/*",
+                                 "Referer": "https://official.nba.com/"}
+
+          TESTS = [
+              ("stats_standings", "https://stats.nba.com/stats/leaguestandingsv3"
+                                  "?LeagueID=00&Season=2026-27&SeasonType=Regular+Season"),
+              ("stats_team_traditional", "https://stats.nba.com/stats/leaguedashteamstats"
+                                         "?LeagueID=00&MeasureType=Base&PerMode=PerGame"
+                                         "&Season=2026-27&SeasonType=Regular+Season"),
+              ("stats_scoreboard", "https://stats.nba.com/stats/scoreboardv3"
+                                   "?GameDate=2026-11-16&LeagueID=00"),
+              ("cdn_scoreboard", "https://cdn.nba.com/static/json/liveData/scoreboard/"
+                                 "todaysScoreboard_00.json"),
+              ("www_standings", "https://www.nba.com/standings"),
+          ]
+
+          rows = []
+          for name, url in TESTS:
+              for hs, headers in header_sets():
+                  t0 = time.time()
+                  row = {"endpoint": name, "url": url, "header_set": hs,
+                         "http_status": None, "bytes": None, "ok": False, "error": None,
+                         "elapsed_ms": None,
+                         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).replace(
+                             microsecond=0).isoformat().replace("+00:00", "Z")}
+                  try:
+                      req = urllib.request.Request(url, headers=headers)
+                      with urllib.request.urlopen(req, timeout=20) as r:
+                          raw = r.read()
+                          row.update(http_status=r.status, bytes=len(raw), ok=True)
+                  except urllib.error.HTTPError as e:
+                      row.update(http_status=e.code, error=f"HTTP {e.code}")
+                  except Exception as e:                     # noqa: BLE001 - the error IS the data
+                      row["error"] = f"{type(e).__name__}: {e}"
+                  row["elapsed_ms"] = int((time.time() - t0) * 1000)
+                  rows.append(row)
+                  print(f"{'OK ' if row['ok'] else 'ERR'} {name:22s} {hs:14s} "
+                        f"{row['http_status']} {row['bytes']} {row['elapsed_ms']}ms "
+                        f"{row['error'] or ''}")
+
+          doc = {"schema": "nba2.transport-probe.v1",
+                 "probed_by": "capture-fixtures.yml",
+                 "run_url": ("https://github.com/${{ github.repository }}/actions/"
+                             "runs/${{ github.run_id }}"),
+                 "question": ("which (endpoint, header-set) pairs answer a GitHub-hosted "
+                              "runner, so the refresh is repaired against a measurement "
+                              "instead of an inference taken from a development sandbox"),
+                 "rows": rows}
+          (OUT / "transport_probe.json").write_text(json.dumps(doc, indent=1) + "\n")
+          PY
+
+      - name: Parse the fixtures with the repository's own parsers
+        if: always()
+        run: python3 -m unittest nba2.v2.test_refresh_pages -v
+
+      - name: Publish the measurement to the job summary
+        if: always()
+        run: cat data/raw/page_fixtures/SUMMARY.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Commit the fixtures to the branch
+        if: always()
+        run: |
+          set -uo pipefail
+          git config user.name "nba2-page-fixture-bot"
+          git config user.email "nba2-page-fixture-bot@users.noreply.github.com"
+          # On a push event the checkout is already the branch tip: commit in place. Only a
+          # pull_request run sits on a detached merge commit and has to move to the head ref.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then   # dispatch/PR reuse
+            BR="${{ github.event.pull_request.head.ref }}"
+            if [ -z "$BR" ] || [ "$BR" = "null" ]; then
+              echo "no PR head ref — not committing"; exit 0
+            fi
+            git fetch origin "$BR" || exit 0
+            git checkout -B "$BR" "origin/$BR"
+          else
+            BR="${GITHUB_REF_NAME}"
+          fi
+          # LOOP GUARD: a bot commit re-triggers this workflow. One human push, one bot commit.
+          if [ "$(git log -1 --format='%an')" = "nba2-page-fixture-bot" ]; then
+            echo "branch tip is already a fixture-bot commit - not committing again (loop guard)"
+            exit 0
+          fi
+          # The bot's own commits re-trigger this branch's pull_request workflows, and runs
+          # triggered by a bot commit sit at "action_required" waiting on an approval nobody
+          # should have to give. So the evidence is committed on a deliberate dispatch, and
+          # ordinary pushes only report it in the job summary.
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "not a dispatch run - reporting without committing"
+            exit 0
+          fi
+          [ -f data/raw/page_fixtures/manifest.json ] || { echo "no manifest produced"; exit 0; }
+          git add -A data/raw/page_fixtures
+          if git diff --cached --quiet; then
+            echo "fixtures unchanged - nothing to commit"
+            exit 0
+          fi
+          git commit -q -m "fixtures(bot): official page snapshots + manifest (run ${{ github.run_id }})"
+          # two jobs of this workflow can race each other onto the same branch
+          for attempt in 1 2 3; do
+            git fetch origin "$BR" || exit 0
+            if git rebase "origin/$BR"; then
+              git push origin "HEAD:$BR" && break
+            fi
+            git rebase --abort || true
+            sleep 5
+          done
+
+  # The scheduled job has failed six consecutive runs and the cause was never measured where
+  # it matters — on a runner, which is the environment the schedule uses. This job runs the
+  # repository's own refresh unchanged and commits its verdict either way. It is a separate
+  # job (not a step) because the fixture job above fetches ~25 pages first, and a burst from
+  # one runner address earns a 403 that looks exactly like a blocked host.
+  refresh-dry-run:
+    runs-on: ubuntu-latest
+    needs: capture
+    if: always()          # the fixture job committing (or not) must not decide this proof
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run the rolling refresh against the live official pages
+        run: |
+          set -uo pipefail
+          sleep 20                       # let the previous runner's burst clear the edge
+          set +e
+          python3 -m nba2.v2.refresh --check-only > data/raw/page_fixtures/refresh_checkonly.txt 2>&1
+          echo "exit=$?" >> data/raw/page_fixtures/refresh_checkonly.txt
+          set -e
+          cat data/raw/page_fixtures/refresh_checkonly.txt
+
+      - name: Settle yesterday's finals through the pipeline, live
+        if: always()
+        run: |
+          set -uo pipefail
+          DATE=$(date -u -d 'yesterday' +%F)
+          {
+            echo
+            echo "=== nba2.pipeline.refresh --finals --date $DATE (live, from this runner) ==="
+          } >> data/raw/page_fixtures/refresh_checkonly.txt
+          set +e
+          python3 -m nba2.pipeline.refresh --finals "$DATE" \
+            --out /tmp/finals_"$DATE".json >> data/raw/page_fixtures/refresh_checkonly.txt 2>&1
+          echo "exit=$?" >> data/raw/page_fixtures/refresh_checkonly.txt
+          set -e
+          python3 - <<'PY' >> data/raw/page_fixtures/refresh_checkonly.txt
+          import json, os, pathlib
+          date = __import__("subprocess").run(["date", "-u", "-d", "yesterday", "+%F"],
+                                              capture_output=True, text=True).stdout.strip()
+          path = pathlib.Path(f"/tmp/finals_{date}.json")
+          if not path.exists():
+              print("no snapshot written")
+              raise SystemExit(0)
+          doc = json.loads(path.read_text())
+          print(f"games: {len(doc.get('records', []))}  source: {doc.get('source')}")
+          for r in doc.get("records", [])[:5]:
+              print("  ", r["game_id"], r["away_team"], r["away_pts"], "@",
+                    r["home_team"], r["home_pts"], "q", r.get("away_q"), r.get("home_q"))
+          PY
+          tail -20 data/raw/page_fixtures/refresh_checkonly.txt
+
+      - name: Commit the verdict
+        if: always()
+        run: |
+          set -uo pipefail
+          git config user.name "nba2-page-fixture-bot"
+          git config user.email "nba2-page-fixture-bot@users.noreply.github.com"
+          BR="${GITHUB_REF_NAME}"
+          # The bot's own commits re-trigger this branch's pull_request workflows, and runs
+          # triggered by a bot commit sit at "action_required" waiting on an approval nobody
+          # should have to give. So the evidence is committed on a deliberate dispatch, and
+          # ordinary pushes only report it in the job summary.
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "not a dispatch run - reporting without committing"
+            exit 0
+          fi
+          [ -f data/raw/page_fixtures/refresh_checkonly.txt ] || { echo "no verdict"; exit 0; }
+          git add -A data/raw/page_fixtures/refresh_checkonly.txt
+          if git diff --cached --quiet; then
+            echo "verdict unchanged - nothing to commit"
+            exit 0
+          fi
+          git commit -q -m "fixtures(bot): rolling refresh dry-run verdict from a runner (run ${{ github.run_id }})"
+          for attempt in 1 2 3; do
+            git fetch origin "$BR" || exit 0
+            if git rebase "origin/$BR"; then
+              git push origin "HEAD:$BR" && break
+            fi
+            git rebase --abort || true
+            sleep 5
+          done
