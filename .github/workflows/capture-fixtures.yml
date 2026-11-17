@@ -285,6 +285,14 @@ jobs:
             echo "branch tip is already a fixture-bot commit - not committing again (loop guard)"
             exit 0
           fi
+          # The bot's own commits re-trigger this branch's pull_request workflows, and runs
+          # triggered by a bot commit sit at "action_required" waiting on an approval nobody
+          # should have to give. So the evidence is committed on a deliberate dispatch, and
+          # ordinary pushes only report it in the job summary.
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "not a dispatch run - reporting without committing"
+            exit 0
+          fi
           [ -f data/raw/page_fixtures/manifest.json ] || { echo "no manifest produced"; exit 0; }
           git add -A data/raw/page_fixtures
           if git diff --cached --quiet; then
@@ -366,6 +374,14 @@ jobs:
           git config user.name "nba2-page-fixture-bot"
           git config user.email "nba2-page-fixture-bot@users.noreply.github.com"
           BR="${GITHUB_REF_NAME}"
+          # The bot's own commits re-trigger this branch's pull_request workflows, and runs
+          # triggered by a bot commit sit at "action_required" waiting on an approval nobody
+          # should have to give. So the evidence is committed on a deliberate dispatch, and
+          # ordinary pushes only report it in the job summary.
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "not a dispatch run - reporting without committing"
+            exit 0
+          fi
           [ -f data/raw/page_fixtures/refresh_checkonly.txt ] || { echo "no verdict"; exit 0; }
           git add -A data/raw/page_fixtures/refresh_checkonly.txt
           if git diff --cached --quiet; then
