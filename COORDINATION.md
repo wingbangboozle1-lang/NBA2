@@ -5227,3 +5227,13 @@ present on the deployed `flagged.html` (`?v=8892`).
 **Owner action now outstanding (one, and it needs `pages: write`):**
 Settings → Pages → Source: **GitHub Actions**. Until then `/NBA2/` redirects to `/NBA2/site/` and
 both paths serve the same gated tree.
+
+### AA-5 record — `arena/aa1d3c07-nba2` (2026-11-17 UTC)
+
+- **PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/115 (`arena/aa1d3c07-nba2` → `main`).
+- **Merged:** `gh pr merge 115 --merge` at 2026-11-17T16:35:45Z, merge commit `efb0547`. Branch kept.
+- **Checks on the head merged (`482dfc0`):** `verify` pass, `parity` pass, `v2` pass, `backtest` pass. The head was rebuilt from a clean worktree in CI order, and the output was reproducible (identical hashes across two runs).
+- **Checks on `main` after merge (`efb0547`):** `Verify data, model and site` success, `Verify the published tree` success, `Verify v2 model and site` success, `Publish GitHub Pages` success, `pages build and deployment` success.
+- **Live verification (fetch_page, 2026-11-17):** `https://wingbangboozle1-lang.github.io/NBA2/flagged.html` lists AA-F-01…AA-F-05. `https://wingbangboozle1-lang.github.io/NBA2/index.html` shows the settlement stamp "22 finals settled 2026-11-16" and the injury retrieval time. The sandbox cannot curl `github.io` (no egress), so only fetch_page was used.
+- **Failures met and fixed on this PR:** `verify` (`pages/*.html` stale after settlement; regenerated and committed). `parity` (v5 missing from the rebuild; already fixed on `main` by `a88abb7`, so AA-6 was not needed). Local rebuilds that ran `nba2.v2` twice, or ran out of order, gave output that differed from a clean checkout; the committed state is the clean-checkout output.
+- **Not done in this session:** the nightly red status (AA-F-01) and any board-row takeovers. The 60-minute rule was not checked for the T1–T5, 2D-1, 2D-3 rows or the registry entries `arena/9707c113-nba2` and `arena/3cd85a22-nba2`. These are open for the next integration session.
