@@ -321,6 +321,36 @@ jobs:
           set -e
           cat data/raw/page_fixtures/refresh_checkonly.txt
 
+      - name: Settle yesterday's finals through the pipeline, live
+        if: always()
+        run: |
+          set -uo pipefail
+          DATE=$(date -u -d 'yesterday' +%F)
+          {
+            echo
+            echo "=== nba2.pipeline.refresh --finals --date $DATE (live, from this runner) ==="
+          } >> data/raw/page_fixtures/refresh_checkonly.txt
+          set +e
+          python3 -m nba2.pipeline.refresh --finals --date "$DATE" \
+            --out /tmp/finals_"$DATE".json >> data/raw/page_fixtures/refresh_checkonly.txt 2>&1
+          echo "exit=$?" >> data/raw/page_fixtures/refresh_checkonly.txt
+          set -e
+          python3 - <<'PY' >> data/raw/page_fixtures/refresh_checkonly.txt
+          import json, os, pathlib
+          date = __import__("subprocess").run(["date", "-u", "-d", "yesterday", "+%F"],
+                                              capture_output=True, text=True).stdout.strip()
+          path = pathlib.Path(f"/tmp/finals_{date}.json")
+          if not path.exists():
+              print("no snapshot written")
+              raise SystemExit(0)
+          doc = json.loads(path.read_text())
+          print(f"games: {len(doc.get('records', []))}  source: {doc.get('source')}")
+          for r in doc.get("records", [])[:5]:
+              print("  ", r["game_id"], r["away_team"], r["away_pts"], "@",
+                    r["home_team"], r["home_pts"], "q", r.get("away_q"), r.get("home_q"))
+          PY
+          tail -20 data/raw/page_fixtures/refresh_checkonly.txt
+
       - name: Commit the verdict
         if: always()
         run: |
