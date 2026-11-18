@@ -1,7 +1,7 @@
 {
  "schema": "nba2.slate.v2",
  "window": "2026-11-18..2026-11-21",
- "retrieved_at_utc": "2026-11-18T14:50:41+00:00",
+ "retrieved_at_utc": "2026-11-18T19:30:08+00:00",
  "retrieval_method": "nba2.v2.refresh (www.nba.com/games?date= server-rendered payload)",
  "note": "the arena column is blank: www.nba.com/games?date= does not print it and no other reachable official source was measured to",
  "games": [
