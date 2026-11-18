@@ -1,0 +1,131 @@
+{
+ "source": "https://www.nba.com/games?date=2026-11-17",
+ "retrieved_at_utc": "2026-11-18T14:49:54+00:00",
+ "date": "2026-11-17",
+ "records": [
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "home_team": "TOR",
+   "away_team": "NYK",
+   "home_pts": 102,
+   "away_pts": 111,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+   "home_q": [
+    29,
+    21,
+    33,
+    19
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    23,
+    31,
+    26,
+    31
+   ],
+   "source": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+  },
+  {
+   "game_id": "0022600255",
+   "date": "2026-11-17",
+   "home_team": "SAS",
+   "away_team": "DET",
+   "home_pts": 93,
+   "away_pts": 105,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
+   "home_q": [
+    33,
+    21,
+    18,
+    21
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    26,
+    29,
+    23,
+    27
+   ],
+   "source": "https://www.nba.com/game/det-vs-sas-0022600255"
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "home_team": "MIN",
+   "away_team": "POR",
+   "home_pts": 106,
+   "away_pts": 105,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/por-vs-min-0022600254",
+   "home_q": [
+    29,
+    20,
+    30,
+    27
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    17,
+    31,
+    31,
+    26
+   ],
+   "source": "https://www.nba.com/game/por-vs-min-0022600254"
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "home_team": "LAC",
+   "away_team": "UTA",
+   "home_pts": 107,
+   "away_pts": 132,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
+   "home_q": [
+    29,
+    33,
+    24,
+    21
+   ],
+   "ot_periods": 0,
+   "away_q": [
+    35,
+    23,
+    30,
+    44
+   ],
+   "source": "https://www.nba.com/game/uta-vs-lac-0022600257"
+  },
+  {
+   "game_id": "0022600256",
+   "date": "2026-11-17",
+   "home_team": "LAL",
+   "away_team": "CHA",
+   "home_pts": 118,
+   "away_pts": 114,
+   "status": "final",
+   "final_source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+   "home_q": [
+    30,
+    29,
+    22,
+    30,
+    7
+   ],
+   "ot_periods": 1,
+   "away_q": [
+    34,
+    32,
+    28,
+    17,
+    3
+   ],
+   "source": "https://www.nba.com/game/cha-vs-lal-0022600256"
+  }
+ ],
+ "expected_window_games": 5,
+ "games_missing_from_payload": []
+}
