@@ -1,0 +1,129 @@
+{
+ "checks": [
+  {
+   "id": "C-V7-1",
+   "what": "every table row carries a source link or an explained blank",
+   "ok": true,
+   "result": "129 rows inspected, 0 without either"
+  },
+  {
+   "id": "C-V7-2",
+   "what": "no table cell is silently empty",
+   "ok": true,
+   "result": "0 empty cells"
+  },
+  {
+   "id": "C-V7-3",
+   "what": "no table publishes a blend where a disagreement belongs",
+   "ok": true,
+   "result": "0 pages with a blend and no disagreement column"
+  },
+  {
+   "id": "C-V7-4",
+   "what": "no page makes a recommendation or a guarantee",
+   "ok": true,
+   "result": "0 advice phrases"
+  },
+  {
+   "id": "C-V7-5",
+   "what": "no blocked row carries a non-zero stake",
+   "ok": true,
+   "result": "0 pages with a stake beside a blocked status"
+  },
+  {
+   "id": "C-V7-6",
+   "what": "every page states the snapshot date its numbers come from",
+   "ok": true,
+   "result": "0 pages without the snapshot date"
+  },
+  {
+   "id": "C-V7-7",
+   "what": "the projection page recommends no bet",
+   "ok": true,
+   "result": "0 phrases"
+  }
+ ],
+ "gates": [
+  {
+   "id": "G-V7-1",
+   "gate": "settled sample",
+   "threshold": 30,
+   "measured": 167,
+   "detail": "167 walk-forward decisions",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-2",
+   "gate": "log-loss vs coin flip",
+   "threshold": "strictly better",
+   "measured": 0.634947015441343,
+   "detail": "log-loss 0.6349 vs ln2 0.6931",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-3",
+   "gate": "beats the better-record rule",
+   "threshold": "not worse",
+   "measured": 0.6706586826347305,
+   "detail": "model 0.671 vs record rule 0.653",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-4",
+   "gate": "paired significance",
+   "threshold": "p < 0.20",
+   "measured": 0.711071103811264,
+   "detail": "p=0.7111 on 29 disagreements",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-5",
+   "gate": "luck exclusion",
+   "threshold": "0 clubs",
+   "measured": 0,
+   "detail": "0 clubs outside the band: none",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-6",
+   "gate": "market price captured",
+   "threshold": ">= 1 quote",
+   "measured": 0,
+   "detail": "no market price was captured \u2014 an edge cannot be priced",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-7",
+   "gate": "pre-registration sealed",
+   "threshold": "hash match",
+   "measured": true,
+   "detail": "10 pre-registrations re-hash",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-8",
+   "gate": "availability filed",
+   "threshold": ">= 1 report",
+   "measured": 0,
+   "detail": "no official injury report for the slate date was read",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-9",
+   "gate": "player sample (props only)",
+   "threshold": ">= 15 games",
+   "measured": 3,
+   "detail": "largest per-player log in the union: 3 games",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-10",
+   "gate": "settlement rule machine-readable",
+   "threshold": "present",
+   "measured": true,
+   "detail": "every strategy carries a machine-readable settlement rule",
+   "status": "PASS"
+  }
+ ],
+ "ok": true
+}

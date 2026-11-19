@@ -1,0 +1,1512 @@
+{
+ "schema": "nba2.v7.strategy.v1",
+ "session": "arena/6023d517-nba2",
+ "prereg": {
+  "dir": "data/v7/prereg",
+  "rows": [
+   {
+    "id": "S-01",
+    "path": "data/v7/prereg/S-01.json",
+    "sha256": "d82811fc430d47eb172d1f896ff713d0bf252724b57e6e3b2e30a032cb813438",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-02",
+    "path": "data/v7/prereg/S-02.json",
+    "sha256": "ea6b4183854ce8102940bb35f4cd83f46589b2ec9afdde14d851e6e064784ad6",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-03",
+    "path": "data/v7/prereg/S-03.json",
+    "sha256": "7f6886fbffdca098a80d9c33fb8831af99cf2e23cccbad3a4ef0e97bcfe16031",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-04",
+    "path": "data/v7/prereg/S-04.json",
+    "sha256": "435549ff155f15c9a707d68d8fa4edb49994407e78c31361c4d0bcd345942f0b",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-05",
+    "path": "data/v7/prereg/S-05.json",
+    "sha256": "8e50da708a3c98c64aefe2791873667b7e165dc54aafdc4d5bdb871741882612",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-06",
+    "path": "data/v7/prereg/S-06.json",
+    "sha256": "003c4673c693aa24c32bc3a51ee24538af64cd8ac3dc43b41928299d166f166e",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-07",
+    "path": "data/v7/prereg/S-07.json",
+    "sha256": "b9730452d86937288c341e546305448bd1aace1c6e847ff6f250c2bec4b369d9",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-08",
+    "path": "data/v7/prereg/S-08.json",
+    "sha256": "82ddd978b7030a9cabcbe23a9a2e59dc2c5168a993de9b91d431ab03bf8c3057",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-09",
+    "path": "data/v7/prereg/S-09.json",
+    "sha256": "0825f5832cc7d1cfb75f55197c33d588e140acda868230bd1c01400138decfd3",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   },
+   {
+    "id": "S-10",
+    "path": "data/v7/prereg/S-10.json",
+    "sha256": "a2a1469625d25182259875ef503af5a8d50fd25e02d1a182c357ace4d9199e79",
+    "state": "already frozen \u2014 left byte-identical",
+    "written": false
+   }
+  ]
+ },
+ "gates": [
+  {
+   "id": "G-V7-1",
+   "gate": "settled sample",
+   "threshold": 30,
+   "measured": 167,
+   "detail": "167 walk-forward decisions",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-2",
+   "gate": "log-loss vs coin flip",
+   "threshold": "strictly better",
+   "measured": 0.634947015441343,
+   "detail": "log-loss 0.6349 vs ln2 0.6931",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-3",
+   "gate": "beats the better-record rule",
+   "threshold": "not worse",
+   "measured": 0.6706586826347305,
+   "detail": "model 0.671 vs record rule 0.653",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-4",
+   "gate": "paired significance",
+   "threshold": "p < 0.20",
+   "measured": 0.711071103811264,
+   "detail": "p=0.7111 on 29 disagreements",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-5",
+   "gate": "luck exclusion",
+   "threshold": "0 clubs",
+   "measured": 0,
+   "detail": "0 clubs outside the band: none",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-6",
+   "gate": "market price captured",
+   "threshold": ">= 1 quote",
+   "measured": 0,
+   "detail": "no market price was captured \u2014 an edge cannot be priced",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-7",
+   "gate": "pre-registration sealed",
+   "threshold": "hash match",
+   "measured": true,
+   "detail": "10 pre-registrations re-hash",
+   "status": "PASS"
+  },
+  {
+   "id": "G-V7-8",
+   "gate": "availability filed",
+   "threshold": ">= 1 report",
+   "measured": 0,
+   "detail": "no official injury report for the slate date was read",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-9",
+   "gate": "player sample (props only)",
+   "threshold": ">= 15 games",
+   "measured": 3,
+   "detail": "largest per-player log in the union: 3 games",
+   "status": "BLOCKED"
+  },
+  {
+   "id": "G-V7-10",
+   "gate": "settlement rule machine-readable",
+   "threshold": "present",
+   "measured": true,
+   "detail": "every strategy carries a machine-readable settlement rule",
+   "status": "PASS"
+  }
+ ],
+ "leaderboard": [
+  {
+   "id": "S-01",
+   "name": "Disagreement fade (single game)",
+   "market": "spread",
+   "signal": "take the side the two estimators disagree about least in the direction of the consensus, i.e. |E1-E2| small and consensus margin large; the bet is that agreement is information",
+   "thresholds": {
+    "max_disagreement_pts": 2.5,
+    "min_abs_consensus_margin": 4.0
+   },
+   "universe": "every game on the published 3-day slate",
+   "settlement_rule": "against official final margin from nba.com/game/<id>; push if the margin equals our line exactly; graded once and hashed",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-02",
+   "name": "Luck-free trend",
+   "market": "moneyline",
+   "signal": "back the side with the better luck-adjusted Pythagorean rate on clubs whose luck z is inside the noise band",
+   "thresholds": {
+    "|z|": 2.0
+   },
+   "universe": "clubs with |luck z| <= 2.0 only",
+   "settlement_rule": "winner of the official final, no push possible",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-03",
+   "name": "Rest and 3-in-4 fade",
+   "market": "spread",
+   "signal": "fade a club on the second night of a back-to-back or 3-in-4, using rest days recomputed from the official schedule",
+   "thresholds": {
+    "rest_days_diff": 2,
+    "three_in_four": true
+   },
+   "universe": "games where the two clubs' rest edges differ by >= 2 days",
+   "settlement_rule": "official final margin vs our originated line",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-04",
+   "name": "Total identity trade",
+   "market": "total",
+   "signal": "take the under when possessions x PPP lands more than 2 points below the market-implied total (market price absent in this build)",
+   "thresholds": {
+    "min_gap_pts": 2.0
+   },
+   "universe": "games where both clubs have all four efficiency columns",
+   "settlement_rule": "official final total, compared to our originated total",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-05",
+   "name": "Two-leg correlated parlay",
+   "market": "parlay",
+   "signal": "spread + total on the same game, priced with the measured rho",
+   "thresholds": {
+    "min_edge_vs_naive": 0.02
+   },
+   "universe": "games with a measured rho and a captured price",
+   "settlement_rule": "both legs settled from the same official final; the parlay is graded once, and a void leg voids the parlay",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-06",
+   "name": "Cross-game independent parlay",
+   "market": "parlay",
+   "signal": "moneyline legs on two games with no shared club",
+   "thresholds": {
+    "max_legs": 2
+   },
+   "universe": "games with no club appearing twice",
+   "settlement_rule": "each leg from its own official final; all legs must win",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-07",
+   "name": "Player points combo",
+   "market": "player prop parlay",
+   "signal": "two player point lines on clubs in the same game",
+   "thresholds": {
+    "min_games_per_player": 15
+   },
+   "universe": "players named on the day's official injury report",
+   "settlement_rule": "official box score, one grade per leg",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-08",
+   "name": "Availability shock",
+   "market": "spread",
+   "signal": "re-price the game when a top-8-minutes player is ruled out between the day-before and game-day injury reports",
+   "thresholds": {
+    "min_minutes_share_out": 0.08
+   },
+   "universe": "games with both reports on file",
+   "settlement_rule": "official final vs the re-priced line, both lines sealed",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-09",
+   "name": "Home-court only fade",
+   "market": "moneyline",
+   "signal": "shade the pinned home edge when the home club's measured home win rate over its own games is below the league rate",
+   "thresholds": {
+    "club_home_rate_lt": 0.52,
+    "min_club_home_games": 6
+   },
+   "universe": "home clubs with at least 6 home games",
+   "settlement_rule": "official final; no push",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  },
+  {
+   "id": "S-10",
+   "name": "Market-anchored blend",
+   "market": "spread",
+   "signal": "blend our margin with the closing line, weight by measured out-of-sample log-loss (needs a price feed)",
+   "thresholds": {
+    "w_market_defined": true
+   },
+   "universe": "games with a captured closing line",
+   "settlement_rule": "official final vs the blended line, sealed before tip",
+   "gates": [
+    {
+     "id": "G-V7-1",
+     "gate": "settled sample",
+     "threshold": 30,
+     "measured": 167,
+     "detail": "167 walk-forward decisions",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-2",
+     "gate": "log-loss vs coin flip",
+     "threshold": "strictly better",
+     "measured": 0.634947015441343,
+     "detail": "log-loss 0.6349 vs ln2 0.6931",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-3",
+     "gate": "beats the better-record rule",
+     "threshold": "not worse",
+     "measured": 0.6706586826347305,
+     "detail": "model 0.671 vs record rule 0.653",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-4",
+     "gate": "paired significance",
+     "threshold": "p < 0.20",
+     "measured": 0.711071103811264,
+     "detail": "p=0.7111 on 29 disagreements",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-5",
+     "gate": "luck exclusion",
+     "threshold": "0 clubs",
+     "measured": 0,
+     "detail": "0 clubs outside the band: none",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-6",
+     "gate": "market price captured",
+     "threshold": ">= 1 quote",
+     "measured": 0,
+     "detail": "no market price was captured \u2014 an edge cannot be priced",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-7",
+     "gate": "pre-registration sealed",
+     "threshold": "hash match",
+     "measured": true,
+     "detail": "10 pre-registrations re-hash",
+     "status": "PASS"
+    },
+    {
+     "id": "G-V7-8",
+     "gate": "availability filed",
+     "threshold": ">= 1 report",
+     "measured": 0,
+     "detail": "no official injury report for the slate date was read",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-9",
+     "gate": "player sample (props only)",
+     "threshold": ">= 15 games",
+     "measured": 3,
+     "detail": "largest per-player log in the union: 3 games",
+     "status": "BLOCKED"
+    },
+    {
+     "id": "G-V7-10",
+     "gate": "settlement rule machine-readable",
+     "threshold": "present",
+     "measured": true,
+     "detail": "every strategy carries a machine-readable settlement rule",
+     "status": "PASS"
+    }
+   ],
+   "n_pass": 6,
+   "n_gates": 10,
+   "stake": 0.0,
+   "status": "BLOCKED",
+   "reason": "blocked by G-V7-4, G-V7-6, G-V7-8, G-V7-9"
+  }
+ ],
+ "props": {
+  "n_players": 421,
+  "n_records": 767,
+  "max_games_per_player": 3,
+  "window": "2026-11-13 \u2192 2026-11-15",
+  "rule": "a player line is published only when that player has at least 15 committed games; the union covers 3 at most, so every prop row is BLOCKED with the arithmetic",
+  "rows": [
+   {
+    "player": "Isaac Okoro",
+    "games": 3,
+    "mean_pts": 12.333333333333334,
+    "sd_pts": 3.055050463303893,
+    "games_needed_for_5pt_halfwidth": 2,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Josh Giddey",
+    "games": 3,
+    "mean_pts": 9.0,
+    "sd_pts": 5.5677643628300215,
+    "games_needed_for_5pt_halfwidth": 5,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Norman Powell",
+    "games": 3,
+    "mean_pts": 28.0,
+    "sd_pts": 4.58257569495584,
+    "games_needed_for_5pt_halfwidth": 4,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Matas Buzelis",
+    "games": 3,
+    "mean_pts": 17.333333333333332,
+    "sd_pts": 6.027713773341707,
+    "games_needed_for_5pt_halfwidth": 6,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Buddy Hield",
+    "games": 3,
+    "mean_pts": 11.333333333333334,
+    "sd_pts": 5.033222956847166,
+    "games_needed_for_5pt_halfwidth": 4,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Patrick Williams",
+    "games": 3,
+    "mean_pts": 9.0,
+    "sd_pts": 7.810249675906654,
+    "games_needed_for_5pt_halfwidth": 10,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Tre Jones",
+    "games": 3,
+    "mean_pts": 12.0,
+    "sd_pts": 6.928203230275509,
+    "games_needed_for_5pt_halfwidth": 8,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Noa Essengue",
+    "games": 3,
+    "mean_pts": 2.0,
+    "sd_pts": 2.6457513110645907,
+    "games_needed_for_5pt_halfwidth": 2,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_ATLCHI_book.pdf"
+   },
+   {
+    "player": "Jarrett Allen",
+    "games": 3,
+    "mean_pts": 11.0,
+    "sd_pts": 2.8284271247461903,
+    "games_needed_for_5pt_halfwidth": 2,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+   },
+   {
+    "player": "Peyton Watson",
+    "games": 3,
+    "mean_pts": 9.0,
+    "sd_pts": 7.0710678118654755,
+    "games_needed_for_5pt_halfwidth": 8,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+   },
+   {
+    "player": "Tyrese Proctor",
+    "games": 3,
+    "mean_pts": 21.0,
+    "sd_pts": 3.605551275463989,
+    "games_needed_for_5pt_halfwidth": 2,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+   },
+   {
+    "player": "Meleek Thomas",
+    "games": 3,
+    "mean_pts": 14.0,
+    "sd_pts": 5.291502622129181,
+    "games_needed_for_5pt_halfwidth": 5,
+    "status": "BLOCKED \u2014 sample below the 15-game gate",
+    "source_url": "https://statsdmz.nba.com/pdfs/20261113/20261113_CLEMIA_book.pdf"
+   }
+  ]
+ },
+ "parlays": [
+  {
+   "game_id": "0022600270",
+   "matchup": "GSW @ MEM",
+   "date": "2026-11-19",
+   "p_leg_a": 0.6196321123366135,
+   "p_leg_b": 0.5,
+   "z_a": 0.3045147257738093,
+   "z_b": 0.0,
+   "naive": 0.30981605616830676,
+   "with_rho": 0.3031284907944362,
+   "delta": -0.006687565373870552,
+   "flag": null
+  },
+  {
+   "game_id": "0022600271",
+   "matchup": "POR @ MIL",
+   "date": "2026-11-19",
+   "p_leg_a": 0.15597156679399493,
+   "p_leg_b": 0.5,
+   "z_a": -1.0111531541273362,
+   "z_b": 0.0,
+   "naive": 0.07798578339699747,
+   "with_rho": 0.07378572346881009,
+   "delta": -0.00420005992818738,
+   "flag": null
+  },
+  {
+   "game_id": "0022600272",
+   "matchup": "NYK @ MIN",
+   "date": "2026-11-19",
+   "p_leg_a": 0.618203221000019,
+   "p_leg_b": 0.5,
+   "z_a": 0.3007651849283193,
+   "z_b": 0.0,
+   "naive": 0.3091016105000095,
+   "with_rho": 0.3024064471214,
+   "delta": -0.006695163378609481,
+   "flag": null
+  },
+  {
+   "game_id": "0022600273",
+   "matchup": "LAC @ SAS",
+   "date": "2026-11-19",
+   "p_leg_a": 0.820020028808664,
+   "p_leg_b": 0.5,
+   "z_a": 0.9154414196509162,
+   "z_b": 0.0,
+   "naive": 0.410010014404332,
+   "with_rho": 0.4054040264161932,
+   "delta": -0.004605987988138771,
+   "flag": null
+  },
+  {
+   "game_id": "0022600043",
+   "matchup": "CHA @ ATL",
+   "date": "2026-11-20",
+   "p_leg_a": 0.7330040854402152,
+   "p_leg_b": 0.5,
+   "z_a": 0.6219240216184949,
+   "z_b": 0.0,
+   "naive": 0.3665020427201076,
+   "with_rho": 0.36072943041911615,
+   "delta": -0.005772612300991464,
+   "flag": null
+  },
+  {
+   "game_id": "0022600044",
+   "matchup": "ORL @ BKN",
+   "date": "2026-11-20",
+   "p_leg_a": 0.43915415197057567,
+   "p_leg_b": 0.5,
+   "z_a": -0.1531140909133079,
+   "z_b": 0.0,
+   "naive": 0.21957707598528783,
+   "with_rho": 0.21265362105642788,
+   "delta": -0.006923454928859957,
+   "flag": null
+  },
+  {
+   "game_id": "0022600045",
+   "matchup": "IND @ CLE",
+   "date": "2026-11-20",
+   "p_leg_a": 0.6194642861966952,
+   "p_leg_b": 0.5,
+   "z_a": 0.30407411378250315,
+   "z_b": 0.0,
+   "naive": 0.3097321430983476,
+   "with_rho": 0.3030436804443453,
+   "delta": -0.006688462654002303,
+   "flag": null
+  },
+  {
+   "game_id": "0022600046",
+   "matchup": "TOR @ DET",
+   "date": "2026-11-20",
+   "p_leg_a": 0.6237195367069179,
+   "p_leg_b": 0.5,
+   "z_a": 0.31526438105501675,
+   "z_b": 0.0,
+   "naive": 0.31185976835345897,
+   "with_rho": 0.3051944579219516,
+   "delta": -0.006665310431507365,
+   "flag": null
+  },
+  {
+   "game_id": "0022600047",
+   "matchup": "WAS @ CHI",
+   "date": "2026-11-20",
+   "p_leg_a": 0.4729161777415839,
+   "p_leg_b": 0.5,
+   "z_a": -0.0679413082963575,
+   "z_b": 0.0,
+   "naive": 0.23645808887079195,
+   "with_rho": 0.22946910658313982,
+   "delta": -0.006988982287652129,
+   "flag": null
+  },
+  {
+   "game_id": "0022600048",
+   "matchup": "NOP @ OKC",
+   "date": "2026-11-20",
+   "p_leg_a": 0.7618949681613045,
+   "p_leg_b": 0.5,
+   "z_a": 0.7124113909034817,
+   "z_b": 0.0,
+   "naive": 0.38094748408065227,
+   "with_rho": 0.3755132668991065,
+   "delta": -0.005434217181545742,
+   "flag": null
+  },
+  {
+   "game_id": "0022600049",
+   "matchup": "PHX @ UTA",
+   "date": "2026-11-20",
+   "p_leg_a": 0.4127235355774761,
+   "p_leg_b": 0.5,
+   "z_a": -0.22054456179291304,
+   "z_b": 0.0,
+   "naive": 0.20636176778873805,
+   "with_rho": 0.1995250430584875,
+   "delta": -0.006836724730250543,
+   "flag": null
+  },
+  {
+   "game_id": "0022600050",
+   "matchup": "HOU @ DEN",
+   "date": "2026-11-20",
+   "p_leg_a": 0.35467299570490873,
+   "p_leg_b": 0.5,
+   "z_a": -0.37273458732313774,
+   "z_b": 0.0,
+   "naive": 0.17733649785245437,
+   "with_rho": 0.1708017483346256,
+   "delta": -0.0065347495178287585,
+   "flag": null
+  },
+  {
+   "game_id": "0022600051",
+   "matchup": "SAC @ LAL",
+   "date": "2026-11-20",
+   "p_leg_a": 0.8496529949260512,
+   "p_leg_b": 0.5,
+   "z_a": 1.0349462587669969,
+   "z_b": 0.0,
+   "naive": 0.4248264974630256,
+   "with_rho": 0.4207275038793443,
+   "delta": -0.004098993583681265,
+   "flag": null
+  },
+  {
+   "game_id": "0022600274",
+   "matchup": "MIL @ PHI",
+   "date": "2026-11-21",
+   "p_leg_a": 0.7964955200385837,
+   "p_leg_b": 0.5,
+   "z_a": 0.8291686879924309,
+   "z_b": 0.0,
+   "naive": 0.39824776001929185,
+   "with_rho": 0.3932815251574431,
+   "delta": -0.004966234861848773,
+   "flag": null
+  },
+  {
+   "game_id": "0022600275",
+   "matchup": "POR @ NYK",
+   "date": "2026-11-21",
+   "p_leg_a": 0.4853846894044138,
+   "p_leg_b": 0.5,
+   "z_a": -0.03664334955292037,
+   "z_b": 0.0,
+   "naive": 0.2426923447022069,
+   "with_rho": 0.2356919071781715,
+   "delta": -0.007000437524035397,
+   "flag": null
+  },
+  {
+   "game_id": "0022600276",
+   "matchup": "LAC @ DAL",
+   "date": "2026-11-21",
+   "p_leg_a": 0.5984544625259092,
+   "p_leg_b": 0.5,
+   "z_a": 0.2493486849246279,
+   "z_b": 0.0,
+   "naive": 0.2992272312629546,
+   "with_rho": 0.2924366470049273,
+   "delta": -0.00679058425802731,
+   "flag": null
+  },
+  {
+   "game_id": "0022600277",
+   "matchup": "MEM @ MIN",
+   "date": "2026-11-21",
+   "p_leg_a": 0.5630483682655338,
+   "p_leg_b": 0.5,
+   "z_a": 0.15870250625479804,
+   "z_b": 0.0,
+   "naive": 0.2815241841327669,
+   "with_rho": 0.27460676272845086,
+   "delta": -0.00691742140431606,
+   "flag": null
+  },
+  {
+   "game_id": "0022600278",
+   "matchup": "NOP @ SAS",
+   "date": "2026-11-21",
+   "p_leg_a": 0.8419598339353369,
+   "p_leg_b": 0.5,
+   "z_a": 1.0025452329633504,
+   "z_b": 0.0,
+   "naive": 0.42097991696766845,
+   "with_rho": 0.4167432739453679,
+   "delta": -0.004236643022300535,
+   "flag": null
+  },
+  {
+   "game_id": "0022600279",
+   "matchup": "BOS @ SAC",
+   "date": "2026-11-21",
+   "p_leg_a": 0.1335220535177379,
+   "p_leg_b": 0.5,
+   "z_a": -1.1098953913041694,
+   "z_b": 0.0,
+   "naive": 0.06676102675886895,
+   "with_rho": 0.06297880126350507,
+   "delta": -0.003782225495363889,
+   "flag": null
+  }
+ ]
+}

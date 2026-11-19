@@ -1,0 +1,2398 @@
+{
+ "schema": "nba2.v7.slate.v1",
+ "session": "arena/6023d517-nba2",
+ "as_of_utc": "2026-11-19T06:05:00Z",
+ "window": {
+  "start": "2026-11-19",
+  "end": "2026-11-21",
+  "n_dates": 3,
+  "n_games": 19,
+  "max_days_ahead": 3,
+  "rule": "3 days ahead of the snapshot date, which is the brief's maximum; the window is printed rather than implied"
+ },
+ "dates": [
+  "2026-11-19",
+  "2026-11-20",
+  "2026-11-21"
+ ],
+ "rows": [
+  {
+   "date": "2026-11-19",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600270",
+   "away": "GSW",
+   "home": "MEM",
+   "cup_group": null,
+   "e1_margin_home": 2.8076622788748224,
+   "e2_margin_home": 7.530588297144034,
+   "disagreement_pts": 4.722926018269211,
+   "consensus_margin_home": 5.169125288009428,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -5.169125288009428,
+   "p_home_e1": 0.5663307828062514,
+   "p_home_e2": 0.6729334418669757,
+   "p_home": 0.6196321123366135,
+   "lean": "MEM",
+   "total": 228.98304,
+   "possessions": 99.84,
+   "ppp_home": 1.1669999999999998,
+   "ppp_away": 1.1265,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-16"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-16"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.044417558734265894,
+    "home_z": -0.09468335612919579,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/gsw-vs-mem-0022600270",
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-19",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600271",
+   "away": "POR",
+   "home": "MIL",
+   "cup_group": null,
+   "e1_margin_home": -15.23236653418587,
+   "e2_margin_home": -18.96941170285595,
+   "disagreement_pts": 3.7370451686700807,
+   "consensus_margin_home": -17.10088911852091,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 17.10088911852091,
+   "p_home_e1": 0.18240428804692793,
+   "p_home_e2": 0.12953884554106193,
+   "p_home": 0.15597156679399493,
+   "lean": "POR",
+   "total": 228.33572,
+   "possessions": 100.85499999999999,
+   "ppp_home": 1.0845,
+   "ppp_away": 1.1795,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "three_in_four": true,
+     "games_last_4_days": 2,
+     "window_dates": [
+      "2026-11-16",
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": -2
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.2592690825729772,
+    "home_z": -1.0405961442875404,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/por-vs-mil-0022600271",
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-19",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600272",
+   "away": "NYK",
+   "home": "MIN",
+   "cup_group": null,
+   "e1_margin_home": 5.051546449955227,
+   "e2_margin_home": 5.059159725715487,
+   "disagreement_pts": 0.007613275760260052,
+   "consensus_margin_home": 5.055353087835357,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -5.055353087835357,
+   "p_home_e1": 0.6181168665676957,
+   "p_home_e2": 0.6182895754323423,
+   "p_home": 0.618203221000019,
+   "lean": "MIN",
+   "total": 216.83757500000002,
+   "possessions": 98.05000000000001,
+   "ppp_home": 1.1175,
+   "ppp_away": 1.094,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "three_in_four": true,
+     "games_last_4_days": 2,
+     "window_dates": [
+      "2026-11-16",
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.9467735283416285,
+    "home_z": -0.5382164334024762,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/nyk-vs-min-0022600272",
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-19",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600273",
+   "away": "LAC",
+   "home": "SAS",
+   "cup_group": null,
+   "e1_margin_home": 13.436008223722526,
+   "e2_margin_home": 17.571247637803395,
+   "disagreement_pts": 4.1352394140808695,
+   "consensus_margin_home": 15.50362793076296,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -15.50362793076296,
+   "p_home_e1": 0.7879612475675208,
+   "p_home_e2": 0.8520788100498071,
+   "p_home": 0.820020028808664,
+   "lean": "SAS",
+   "total": 224.58453749999998,
+   "possessions": 99.04499999999999,
+   "ppp_home": 1.1755,
+   "ppp_away": 1.092,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 1,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.17982794822068138,
+    "home_z": -0.01877621302087754,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/lac-vs-sas-0022600273",
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "7:00 PM ET",
+   "game_id": "0022600043",
+   "away": "CHA",
+   "home": "ATL",
+   "cup_group": "East Group C",
+   "e1_margin_home": 8.463812784114667,
+   "e2_margin_home": 12.602016868572631,
+   "disagreement_pts": 4.138204084457964,
+   "consensus_margin_home": 10.53291482634365,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -10.53291482634365,
+   "p_home_e1": 0.692710989975176,
+   "p_home_e2": 0.7732971809052545,
+   "p_home": 0.7330040854402152,
+   "lean": "ATL",
+   "total": 220.35413999999997,
+   "possessions": 100.07,
+   "ppp_home": 1.1325,
+   "ppp_away": 1.0695,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": -2
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.7602469112262445,
+    "home_z": 0.34024894549451407,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/cha-vs-atl-0022600043",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "7:30 PM ET",
+   "game_id": "0022600044",
+   "away": "ORL",
+   "home": "BKN",
+   "cup_group": "East Group A",
+   "e1_margin_home": -2.364975362502034,
+   "e2_margin_home": -2.782598516042741,
+   "disagreement_pts": 0.4176231535407071,
+   "consensus_margin_home": -2.5737869392723876,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 2.5737869392723876,
+   "p_home_e1": 0.444052371448591,
+   "p_home_e2": 0.43425593249256034,
+   "p_home": 0.43915415197057567,
+   "lean": "ORL",
+   "total": 224.38695000000004,
+   "possessions": 98.67500000000001,
+   "ppp_home": 1.1225,
+   "ppp_away": 1.1515,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.25580288610299295,
+    "home_z": -0.45509207628075454,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/orl-vs-bkn-0022600044",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "7:30 PM ET",
+   "game_id": "0022600045",
+   "away": "IND",
+   "home": "CLE",
+   "cup_group": "East Group B",
+   "e1_margin_home": 4.925311616614937,
+   "e2_margin_home": 5.297254963810714,
+   "disagreement_pts": 0.37194334719577693,
+   "consensus_margin_home": 5.111283290212825,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -5.111283290212825,
+   "p_home_e1": 0.615249798592172,
+   "p_home_e2": 0.6236787738012185,
+   "p_home": 0.6194642861966952,
+   "lean": "CLE",
+   "total": 229.69035750000006,
+   "possessions": 100.45500000000001,
+   "ppp_home": 1.1555,
+   "ppp_away": 1.131,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.5265918052041546,
+    "home_z": -0.47546337737096006,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/ind-vs-cle-0022600045",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "7:30 PM ET",
+   "game_id": "0022600046",
+   "away": "TOR",
+   "home": "DET",
+   "cup_group": "East Group A",
+   "e1_margin_home": 4.375050011796255,
+   "e2_margin_home": 6.239379505935245,
+   "disagreement_pts": 1.8643294941389899,
+   "consensus_margin_home": 5.307214758865751,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -5.307214758865751,
+   "p_home_e1": 0.6026803314068879,
+   "p_home_e2": 0.6447587420069478,
+   "p_home": 0.6237195367069179,
+   "lean": "DET",
+   "total": 221.774055,
+   "possessions": 98.435,
+   "ppp_home": 1.14,
+   "ppp_away": 1.1130000000000002,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -1.2909944487358056,
+    "home_z": 0.18580403623710562,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/tor-vs-det-0022600046",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600047",
+   "away": "WAS",
+   "home": "CHI",
+   "cup_group": "East Group C",
+   "e1_margin_home": 0.4776868121795179,
+   "e2_margin_home": -2.772342105786352,
+   "disagreement_pts": 3.25002891796587,
+   "consensus_margin_home": -1.1473276468034173,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 1.1473276468034173,
+   "p_home_e1": 0.5113362897961476,
+   "p_home_e2": 0.43449606568702015,
+   "p_home": 0.4729161777415839,
+   "lean": "WAS",
+   "total": 232.32618,
+   "possessions": 101.63,
+   "ppp_home": 1.141,
+   "ppp_away": 1.145,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.14000138264140177,
+    "home_z": 0.09224873436688352,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/was-vs-chi-0022600047",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600048",
+   "away": "NOP",
+   "home": "OKC",
+   "cup_group": "West Group B",
+   "e1_margin_home": 11.232825225618608,
+   "e2_margin_home": 12.74011210666785,
+   "disagreement_pts": 1.5072868810492412,
+   "consensus_margin_home": 11.986468666143228,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -11.986468666143228,
+   "p_home_e1": 0.7480258111152992,
+   "p_home_e2": 0.77576412520731,
+   "p_home": 0.7618949681613045,
+   "lean": "OKC",
+   "total": 226.68145249999998,
+   "possessions": 100.235,
+   "ppp_home": 1.1595,
+   "ppp_away": 1.102,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": -1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.14110155153367593,
+    "home_z": -0.2877556614230087,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/nop-vs-okc-0022600048",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "9:30 PM ET",
+   "game_id": "0022600049",
+   "away": "PHX",
+   "home": "UTA",
+   "cup_group": "West Group A",
+   "e1_margin_home": -2.8764164256894746,
+   "e2_margin_home": -4.546701080145327,
+   "disagreement_pts": 1.6702846544558527,
+   "consensus_margin_home": -3.711558752917401,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 3.711558752917401,
+   "p_home_e1": 0.43206051173325166,
+   "p_home_e2": 0.3933865594217005,
+   "p_home": 0.4127235355774761,
+   "lean": "PHX",
+   "total": 226.42905,
+   "possessions": 99.42,
+   "ppp_home": 1.12,
+   "ppp_away": 1.1575,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.3629500557040743,
+    "home_z": -1.0995927147957383,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/phx-vs-uta-0022600049",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "10:00 PM ET",
+   "game_id": "0022600050",
+   "away": "HOU",
+   "home": "DEN",
+   "cup_group": "West Group A",
+   "e1_margin_home": -5.543818202509646,
+   "e2_margin_home": -6.997983131427391,
+   "disagreement_pts": 1.454164928917745,
+   "consensus_margin_home": -6.270900666968519,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 6.270900666968519,
+   "p_home_e1": 0.3707656706453749,
+   "p_home_e2": 0.33858032076444255,
+   "p_home": 0.35467299570490873,
+   "lean": "HOU",
+   "total": 225.37964749999998,
+   "possessions": 97.715,
+   "ppp_home": 1.132,
+   "ppp_away": 1.1744999999999999,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.05600117686577633,
+    "home_z": 0.6109848754583755,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/hou-vs-den-0022600050",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-20",
+   "tip_et": "10:00 PM ET",
+   "game_id": "0022600051",
+   "away": "SAC",
+   "home": "LAL",
+   "cup_group": "West Group C",
+   "e1_margin_home": 13.987249482356761,
+   "e2_margin_home": 21.730221996777743,
+   "disagreement_pts": 7.742972514420982,
+   "consensus_margin_home": 17.85873573956725,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -17.85873573956725,
+   "p_home_e1": 0.7973415271971014,
+   "p_home_e2": 0.901964462655001,
+   "p_home": 0.8496529949260512,
+   "lean": "LAL",
+   "total": 232.53745500000002,
+   "possessions": 100.535,
+   "ppp_home": 1.21,
+   "ppp_away": 1.1030000000000002,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 2,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 1,
+     "window_dates": [
+      "2026-11-17"
+     ],
+     "flag": null
+    },
+    "rest_edge_days": 2
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.8597825914721068,
+    "home_z": 1.3259112977371064,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/sac-vs-lal-0022600051",
+   "list_url": "https://www.nba.com/games?date=2026-11-20"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "1:00 PM ET",
+   "game_id": "0022600274",
+   "away": "MIL",
+   "home": "PHI",
+   "cup_group": null,
+   "e1_margin_home": 11.299008238292222,
+   "e2_margin_home": 16.973445440001186,
+   "disagreement_pts": 5.6744372017089635,
+   "consensus_margin_home": 14.136226839146705,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -14.136226839146705,
+   "p_home_e1": 0.7492806263036498,
+   "p_home_e2": 0.8437104137735176,
+   "p_home": 0.7964955200385837,
+   "lean": "PHI",
+   "total": 227.34594,
+   "possessions": 100.44,
+   "ppp_home": 1.171,
+   "ppp_away": 1.0925,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 5,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -1.0405961442875404,
+    "home_z": 1.822418049604197,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/mil-vs-phi-0022600274",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "7:30 PM ET",
+   "game_id": "0022600275",
+   "away": "POR",
+   "home": "NYK",
+   "cup_group": null,
+   "e1_margin_home": -1.980754825882124,
+   "e2_margin_home": 0.7448740114297563,
+   "disagreement_pts": 2.72562883731188,
+   "consensus_margin_home": -0.6179404072261838,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 0.6179404072261838,
+   "p_home_e1": 0.4530957049752401,
+   "p_home_e2": 0.5176736738335875,
+   "p_home": 0.4853846894044138,
+   "lean": "POR",
+   "total": 220.12528999999998,
+   "possessions": 97.78999999999999,
+   "ppp_home": 1.125,
+   "ppp_away": 1.126,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 0
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.2592690825729772,
+    "home_z": -0.9467735283416285,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/por-vs-nyk-0022600275",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600276",
+   "away": "LAC",
+   "home": "DAL",
+   "cup_group": null,
+   "e1_margin_home": 4.512535191498355,
+   "e2_margin_home": 3.871247637803391,
+   "disagreement_pts": 0.6412875536949638,
+   "consensus_margin_home": 4.191891414650873,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -4.191891414650873,
+   "p_home_e1": 0.6058314367626068,
+   "p_home_e2": 0.5910774882892115,
+   "p_home": 0.5984544625259092,
+   "lean": "DAL",
+   "total": 226.7207775,
+   "possessions": 99.85499999999999,
+   "ppp_home": 1.1465,
+   "ppp_away": 1.124,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 5,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": -2
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.17982794822068138,
+    "home_z": 0.47372348533345415,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/lac-vs-dal-0022600276",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600277",
+   "away": "MEM",
+   "home": "MIN",
+   "cup_group": null,
+   "e1_margin_home": 3.5692121686009406,
+   "e2_margin_home": 1.7734454400012096,
+   "disagreement_pts": 1.795766728599731,
+   "consensus_margin_home": 2.671328804301075,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -2.671328804301075,
+   "p_home_e1": 0.584082276332559,
+   "p_home_e2": 0.5420144601985086,
+   "p_home": 0.5630483682655338,
+   "lean": "MIN",
+   "total": 227.19125,
+   "possessions": 100.75,
+   "ppp_home": 1.1320000000000001,
+   "ppp_away": 1.123,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.09468335612919579,
+    "home_z": -0.5382164334024762,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/mem-vs-min-0022600277",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "8:00 PM ET",
+   "game_id": "0022600278",
+   "away": "NOP",
+   "home": "SAS",
+   "cup_group": null,
+   "e1_margin_home": 15.05104115274248,
+   "e2_margin_home": 18.868683535239285,
+   "disagreement_pts": 3.817642382496805,
+   "consensus_margin_home": 16.95986234399088,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": -16.95986234399088,
+   "p_home_e1": 0.8147274155073001,
+   "p_home_e2": 0.8691922523633737,
+   "p_home": 0.8419598339353369,
+   "lean": "SAS",
+   "total": 227.45126249999998,
+   "possessions": 99.82499999999999,
+   "ppp_home": 1.185,
+   "ppp_away": 1.0935,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-17",
+     "rest_days": 3,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": 1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": 0.14110155153367593,
+    "home_z": -0.01877621302087754,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/nop-vs-sas-0022600278",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-21",
+   "tip_et": "10:00 PM ET",
+   "game_id": "0022600279",
+   "away": "BOS",
+   "home": "SAC",
+   "cup_group": null,
+   "e1_margin_home": -14.545828201137779,
+   "e2_margin_home": -24.359521592965834,
+   "disagreement_pts": 9.813693391828055,
+   "consensus_margin_home": -19.452674897051807,
+   "blend_note": "the blend is published under the disagreement, never instead of it",
+   "spread_home": 19.452674897051807,
+   "p_home_e1": 0.19341092860296405,
+   "p_home_e2": 0.07363317843251177,
+   "p_home": 0.1335220535177379,
+   "lean": "BOS",
+   "total": 222.5495175,
+   "possessions": 98.845,
+   "ppp_home": 1.0645,
+   "ppp_away": 1.187,
+   "total_note": "total = possessions x (ppp_home + ppp_away)",
+   "rest": {
+    "away": {
+     "last_game_date": "2026-11-16",
+     "rest_days": 4,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "home": {
+     "last_game_date": "2026-11-15",
+     "rest_days": 5,
+     "back_to_back": false,
+     "three_in_four": false,
+     "games_last_4_days": 0,
+     "window_dates": [],
+     "flag": null
+    },
+    "rest_edge_days": -1
+   },
+   "availability": {
+    "status": "BLANK",
+    "out": null,
+    "questionable": null,
+    "probable": null,
+    "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+    "flag_id": "F-V7-AVAIL"
+   },
+   "luck_gate": {
+    "away_z": -0.5742128634560707,
+    "home_z": -0.8597825914721068,
+    "outside_band": [],
+    "blocks": false
+   },
+   "stake": 0.0,
+   "source_url": "https://www.nba.com/game/bos-vs-sac-0022600279",
+   "list_url": "https://www.nba.com/games?date=2026-11-21"
+  }
+ ],
+ "by_date": {
+  "2026-11-19": [
+   {
+    "date": "2026-11-19",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600270",
+    "away": "GSW",
+    "home": "MEM",
+    "cup_group": null,
+    "e1_margin_home": 2.8076622788748224,
+    "e2_margin_home": 7.530588297144034,
+    "disagreement_pts": 4.722926018269211,
+    "consensus_margin_home": 5.169125288009428,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -5.169125288009428,
+    "p_home_e1": 0.5663307828062514,
+    "p_home_e2": 0.6729334418669757,
+    "p_home": 0.6196321123366135,
+    "lean": "MEM",
+    "total": 228.98304,
+    "possessions": 99.84,
+    "ppp_home": 1.1669999999999998,
+    "ppp_away": 1.1265,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-16"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-16"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.044417558734265894,
+     "home_z": -0.09468335612919579,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/gsw-vs-mem-0022600270",
+    "list_url": "https://www.nba.com/games?date=2026-11-19"
+   },
+   {
+    "date": "2026-11-19",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600271",
+    "away": "POR",
+    "home": "MIL",
+    "cup_group": null,
+    "e1_margin_home": -15.23236653418587,
+    "e2_margin_home": -18.96941170285595,
+    "disagreement_pts": 3.7370451686700807,
+    "consensus_margin_home": -17.10088911852091,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 17.10088911852091,
+    "p_home_e1": 0.18240428804692793,
+    "p_home_e2": 0.12953884554106193,
+    "p_home": 0.15597156679399493,
+    "lean": "POR",
+    "total": 228.33572,
+    "possessions": 100.85499999999999,
+    "ppp_home": 1.0845,
+    "ppp_away": 1.1795,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 1,
+      "back_to_back": false,
+      "three_in_four": true,
+      "games_last_4_days": 2,
+      "window_dates": [
+       "2026-11-16",
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": -2
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.2592690825729772,
+     "home_z": -1.0405961442875404,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/por-vs-mil-0022600271",
+    "list_url": "https://www.nba.com/games?date=2026-11-19"
+   },
+   {
+    "date": "2026-11-19",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600272",
+    "away": "NYK",
+    "home": "MIN",
+    "cup_group": null,
+    "e1_margin_home": 5.051546449955227,
+    "e2_margin_home": 5.059159725715487,
+    "disagreement_pts": 0.007613275760260052,
+    "consensus_margin_home": 5.055353087835357,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -5.055353087835357,
+    "p_home_e1": 0.6181168665676957,
+    "p_home_e2": 0.6182895754323423,
+    "p_home": 0.618203221000019,
+    "lean": "MIN",
+    "total": 216.83757500000002,
+    "possessions": 98.05000000000001,
+    "ppp_home": 1.1175,
+    "ppp_away": 1.094,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 1,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 1,
+      "back_to_back": false,
+      "three_in_four": true,
+      "games_last_4_days": 2,
+      "window_dates": [
+       "2026-11-16",
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.9467735283416285,
+     "home_z": -0.5382164334024762,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/nyk-vs-min-0022600272",
+    "list_url": "https://www.nba.com/games?date=2026-11-19"
+   },
+   {
+    "date": "2026-11-19",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600273",
+    "away": "LAC",
+    "home": "SAS",
+    "cup_group": null,
+    "e1_margin_home": 13.436008223722526,
+    "e2_margin_home": 17.571247637803395,
+    "disagreement_pts": 4.1352394140808695,
+    "consensus_margin_home": 15.50362793076296,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -15.50362793076296,
+    "p_home_e1": 0.7879612475675208,
+    "p_home_e2": 0.8520788100498071,
+    "p_home": 0.820020028808664,
+    "lean": "SAS",
+    "total": 224.58453749999998,
+    "possessions": 99.04499999999999,
+    "ppp_home": 1.1755,
+    "ppp_away": 1.092,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 1,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 1,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.17982794822068138,
+     "home_z": -0.01877621302087754,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/lac-vs-sas-0022600273",
+    "list_url": "https://www.nba.com/games?date=2026-11-19"
+   }
+  ],
+  "2026-11-20": [
+   {
+    "date": "2026-11-20",
+    "tip_et": "7:00 PM ET",
+    "game_id": "0022600043",
+    "away": "CHA",
+    "home": "ATL",
+    "cup_group": "East Group C",
+    "e1_margin_home": 8.463812784114667,
+    "e2_margin_home": 12.602016868572631,
+    "disagreement_pts": 4.138204084457964,
+    "consensus_margin_home": 10.53291482634365,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -10.53291482634365,
+    "p_home_e1": 0.692710989975176,
+    "p_home_e2": 0.7732971809052545,
+    "p_home": 0.7330040854402152,
+    "lean": "ATL",
+    "total": 220.35413999999997,
+    "possessions": 100.07,
+    "ppp_home": 1.1325,
+    "ppp_away": 1.0695,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": -2
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.7602469112262445,
+     "home_z": 0.34024894549451407,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/cha-vs-atl-0022600043",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "7:30 PM ET",
+    "game_id": "0022600044",
+    "away": "ORL",
+    "home": "BKN",
+    "cup_group": "East Group A",
+    "e1_margin_home": -2.364975362502034,
+    "e2_margin_home": -2.782598516042741,
+    "disagreement_pts": 0.4176231535407071,
+    "consensus_margin_home": -2.5737869392723876,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 2.5737869392723876,
+    "p_home_e1": 0.444052371448591,
+    "p_home_e2": 0.43425593249256034,
+    "p_home": 0.43915415197057567,
+    "lean": "ORL",
+    "total": 224.38695000000004,
+    "possessions": 98.67500000000001,
+    "ppp_home": 1.1225,
+    "ppp_away": 1.1515,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.25580288610299295,
+     "home_z": -0.45509207628075454,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/orl-vs-bkn-0022600044",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "7:30 PM ET",
+    "game_id": "0022600045",
+    "away": "IND",
+    "home": "CLE",
+    "cup_group": "East Group B",
+    "e1_margin_home": 4.925311616614937,
+    "e2_margin_home": 5.297254963810714,
+    "disagreement_pts": 0.37194334719577693,
+    "consensus_margin_home": 5.111283290212825,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -5.111283290212825,
+    "p_home_e1": 0.615249798592172,
+    "p_home_e2": 0.6236787738012185,
+    "p_home": 0.6194642861966952,
+    "lean": "CLE",
+    "total": 229.69035750000006,
+    "possessions": 100.45500000000001,
+    "ppp_home": 1.1555,
+    "ppp_away": 1.131,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.5265918052041546,
+     "home_z": -0.47546337737096006,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/ind-vs-cle-0022600045",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "7:30 PM ET",
+    "game_id": "0022600046",
+    "away": "TOR",
+    "home": "DET",
+    "cup_group": "East Group A",
+    "e1_margin_home": 4.375050011796255,
+    "e2_margin_home": 6.239379505935245,
+    "disagreement_pts": 1.8643294941389899,
+    "consensus_margin_home": 5.307214758865751,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -5.307214758865751,
+    "p_home_e1": 0.6026803314068879,
+    "p_home_e2": 0.6447587420069478,
+    "p_home": 0.6237195367069179,
+    "lean": "DET",
+    "total": 221.774055,
+    "possessions": 98.435,
+    "ppp_home": 1.14,
+    "ppp_away": 1.1130000000000002,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -1.2909944487358056,
+     "home_z": 0.18580403623710562,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/tor-vs-det-0022600046",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600047",
+    "away": "WAS",
+    "home": "CHI",
+    "cup_group": "East Group C",
+    "e1_margin_home": 0.4776868121795179,
+    "e2_margin_home": -2.772342105786352,
+    "disagreement_pts": 3.25002891796587,
+    "consensus_margin_home": -1.1473276468034173,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 1.1473276468034173,
+    "p_home_e1": 0.5113362897961476,
+    "p_home_e2": 0.43449606568702015,
+    "p_home": 0.4729161777415839,
+    "lean": "WAS",
+    "total": 232.32618,
+    "possessions": 101.63,
+    "ppp_home": 1.141,
+    "ppp_away": 1.145,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.14000138264140177,
+     "home_z": 0.09224873436688352,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/was-vs-chi-0022600047",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600048",
+    "away": "NOP",
+    "home": "OKC",
+    "cup_group": "West Group B",
+    "e1_margin_home": 11.232825225618608,
+    "e2_margin_home": 12.74011210666785,
+    "disagreement_pts": 1.5072868810492412,
+    "consensus_margin_home": 11.986468666143228,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -11.986468666143228,
+    "p_home_e1": 0.7480258111152992,
+    "p_home_e2": 0.77576412520731,
+    "p_home": 0.7618949681613045,
+    "lean": "OKC",
+    "total": 226.68145249999998,
+    "possessions": 100.235,
+    "ppp_home": 1.1595,
+    "ppp_away": 1.102,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": -1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.14110155153367593,
+     "home_z": -0.2877556614230087,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/nop-vs-okc-0022600048",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "9:30 PM ET",
+    "game_id": "0022600049",
+    "away": "PHX",
+    "home": "UTA",
+    "cup_group": "West Group A",
+    "e1_margin_home": -2.8764164256894746,
+    "e2_margin_home": -4.546701080145327,
+    "disagreement_pts": 1.6702846544558527,
+    "consensus_margin_home": -3.711558752917401,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 3.711558752917401,
+    "p_home_e1": 0.43206051173325166,
+    "p_home_e2": 0.3933865594217005,
+    "p_home": 0.4127235355774761,
+    "lean": "PHX",
+    "total": 226.42905,
+    "possessions": 99.42,
+    "ppp_home": 1.12,
+    "ppp_away": 1.1575,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.3629500557040743,
+     "home_z": -1.0995927147957383,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/phx-vs-uta-0022600049",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "10:00 PM ET",
+    "game_id": "0022600050",
+    "away": "HOU",
+    "home": "DEN",
+    "cup_group": "West Group A",
+    "e1_margin_home": -5.543818202509646,
+    "e2_margin_home": -6.997983131427391,
+    "disagreement_pts": 1.454164928917745,
+    "consensus_margin_home": -6.270900666968519,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 6.270900666968519,
+    "p_home_e1": 0.3707656706453749,
+    "p_home_e2": 0.33858032076444255,
+    "p_home": 0.35467299570490873,
+    "lean": "HOU",
+    "total": 225.37964749999998,
+    "possessions": 97.715,
+    "ppp_home": 1.132,
+    "ppp_away": 1.1744999999999999,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.05600117686577633,
+     "home_z": 0.6109848754583755,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/hou-vs-den-0022600050",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   },
+   {
+    "date": "2026-11-20",
+    "tip_et": "10:00 PM ET",
+    "game_id": "0022600051",
+    "away": "SAC",
+    "home": "LAL",
+    "cup_group": "West Group C",
+    "e1_margin_home": 13.987249482356761,
+    "e2_margin_home": 21.730221996777743,
+    "disagreement_pts": 7.742972514420982,
+    "consensus_margin_home": 17.85873573956725,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -17.85873573956725,
+    "p_home_e1": 0.7973415271971014,
+    "p_home_e2": 0.901964462655001,
+    "p_home": 0.8496529949260512,
+    "lean": "LAL",
+    "total": 232.53745500000002,
+    "possessions": 100.535,
+    "ppp_home": 1.21,
+    "ppp_away": 1.1030000000000002,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 2,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 1,
+      "window_dates": [
+       "2026-11-17"
+      ],
+      "flag": null
+     },
+     "rest_edge_days": 2
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.8597825914721068,
+     "home_z": 1.3259112977371064,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/sac-vs-lal-0022600051",
+    "list_url": "https://www.nba.com/games?date=2026-11-20"
+   }
+  ],
+  "2026-11-21": [
+   {
+    "date": "2026-11-21",
+    "tip_et": "1:00 PM ET",
+    "game_id": "0022600274",
+    "away": "MIL",
+    "home": "PHI",
+    "cup_group": null,
+    "e1_margin_home": 11.299008238292222,
+    "e2_margin_home": 16.973445440001186,
+    "disagreement_pts": 5.6744372017089635,
+    "consensus_margin_home": 14.136226839146705,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -14.136226839146705,
+    "p_home_e1": 0.7492806263036498,
+    "p_home_e2": 0.8437104137735176,
+    "p_home": 0.7964955200385837,
+    "lean": "PHI",
+    "total": 227.34594,
+    "possessions": 100.44,
+    "ppp_home": 1.171,
+    "ppp_away": 1.0925,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 5,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -1.0405961442875404,
+     "home_z": 1.822418049604197,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/mil-vs-phi-0022600274",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   },
+   {
+    "date": "2026-11-21",
+    "tip_et": "7:30 PM ET",
+    "game_id": "0022600275",
+    "away": "POR",
+    "home": "NYK",
+    "cup_group": null,
+    "e1_margin_home": -1.980754825882124,
+    "e2_margin_home": 0.7448740114297563,
+    "disagreement_pts": 2.72562883731188,
+    "consensus_margin_home": -0.6179404072261838,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 0.6179404072261838,
+    "p_home_e1": 0.4530957049752401,
+    "p_home_e2": 0.5176736738335875,
+    "p_home": 0.4853846894044138,
+    "lean": "POR",
+    "total": 220.12528999999998,
+    "possessions": 97.78999999999999,
+    "ppp_home": 1.125,
+    "ppp_away": 1.126,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 0
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.2592690825729772,
+     "home_z": -0.9467735283416285,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/por-vs-nyk-0022600275",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   },
+   {
+    "date": "2026-11-21",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600276",
+    "away": "LAC",
+    "home": "DAL",
+    "cup_group": null,
+    "e1_margin_home": 4.512535191498355,
+    "e2_margin_home": 3.871247637803391,
+    "disagreement_pts": 0.6412875536949638,
+    "consensus_margin_home": 4.191891414650873,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -4.191891414650873,
+    "p_home_e1": 0.6058314367626068,
+    "p_home_e2": 0.5910774882892115,
+    "p_home": 0.5984544625259092,
+    "lean": "DAL",
+    "total": 226.7207775,
+    "possessions": 99.85499999999999,
+    "ppp_home": 1.1465,
+    "ppp_away": 1.124,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 5,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": -2
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.17982794822068138,
+     "home_z": 0.47372348533345415,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/lac-vs-dal-0022600276",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   },
+   {
+    "date": "2026-11-21",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600277",
+    "away": "MEM",
+    "home": "MIN",
+    "cup_group": null,
+    "e1_margin_home": 3.5692121686009406,
+    "e2_margin_home": 1.7734454400012096,
+    "disagreement_pts": 1.795766728599731,
+    "consensus_margin_home": 2.671328804301075,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -2.671328804301075,
+    "p_home_e1": 0.584082276332559,
+    "p_home_e2": 0.5420144601985086,
+    "p_home": 0.5630483682655338,
+    "lean": "MIN",
+    "total": 227.19125,
+    "possessions": 100.75,
+    "ppp_home": 1.1320000000000001,
+    "ppp_away": 1.123,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.09468335612919579,
+     "home_z": -0.5382164334024762,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/mem-vs-min-0022600277",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   },
+   {
+    "date": "2026-11-21",
+    "tip_et": "8:00 PM ET",
+    "game_id": "0022600278",
+    "away": "NOP",
+    "home": "SAS",
+    "cup_group": null,
+    "e1_margin_home": 15.05104115274248,
+    "e2_margin_home": 18.868683535239285,
+    "disagreement_pts": 3.817642382496805,
+    "consensus_margin_home": 16.95986234399088,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": -16.95986234399088,
+    "p_home_e1": 0.8147274155073001,
+    "p_home_e2": 0.8691922523633737,
+    "p_home": 0.8419598339353369,
+    "lean": "SAS",
+    "total": 227.45126249999998,
+    "possessions": 99.82499999999999,
+    "ppp_home": 1.185,
+    "ppp_away": 1.0935,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-17",
+      "rest_days": 3,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": 1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": 0.14110155153367593,
+     "home_z": -0.01877621302087754,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/nop-vs-sas-0022600278",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   },
+   {
+    "date": "2026-11-21",
+    "tip_et": "10:00 PM ET",
+    "game_id": "0022600279",
+    "away": "BOS",
+    "home": "SAC",
+    "cup_group": null,
+    "e1_margin_home": -14.545828201137779,
+    "e2_margin_home": -24.359521592965834,
+    "disagreement_pts": 9.813693391828055,
+    "consensus_margin_home": -19.452674897051807,
+    "blend_note": "the blend is published under the disagreement, never instead of it",
+    "spread_home": 19.452674897051807,
+    "p_home_e1": 0.19341092860296405,
+    "p_home_e2": 0.07363317843251177,
+    "p_home": 0.1335220535177379,
+    "lean": "BOS",
+    "total": 222.5495175,
+    "possessions": 98.845,
+    "ppp_home": 1.0645,
+    "ppp_away": 1.187,
+    "total_note": "total = possessions x (ppp_home + ppp_away)",
+    "rest": {
+     "away": {
+      "last_game_date": "2026-11-16",
+      "rest_days": 4,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "home": {
+      "last_game_date": "2026-11-15",
+      "rest_days": 5,
+      "back_to_back": false,
+      "three_in_four": false,
+      "games_last_4_days": 0,
+      "window_dates": [],
+      "flag": null
+     },
+     "rest_edge_days": -1
+    },
+    "availability": {
+     "status": "BLANK",
+     "out": null,
+     "questionable": null,
+     "probable": null,
+     "flag": "no official injury report for this date was read in this session \u2014 the column is published empty on purpose",
+     "flag_id": "F-V7-AVAIL"
+    },
+    "luck_gate": {
+     "away_z": -0.5742128634560707,
+     "home_z": -0.8597825914721068,
+     "outside_band": [],
+     "blocks": false
+    },
+    "stake": 0.0,
+    "source_url": "https://www.nba.com/game/bos-vs-sac-0022600279",
+    "list_url": "https://www.nba.com/games?date=2026-11-21"
+   }
+  ]
+ }
+}
