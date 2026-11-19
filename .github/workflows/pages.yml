@@ -78,9 +78,25 @@ jobs:
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
 
+      - name: Rebuild the v7 originated slate (snapshot -> model -> gates -> pages -> nav)
+        # v7 must run after v6, because v6 is what GROUPS the sidebar into categories: a page
+        # written after the grouping pass has to insert itself into the grouped nav (v7 does,
+        # and verifies afterwards that the href set only grew).
+        #
+        # Two things to know about v7:
+        #   * it fetches NOTHING at build time. Its inputs are the v7 modules (a transcription
+        #     of the 2026-11-19 official pages) and the committed official finals captures, so
+        #     a rebuild is reproducible on any machine with Python and no network.
+        #   * it is fail-closed on seven structural checks over its own emitted pages, and it
+        #     exits non-zero if any fails. It also refuses to overwrite a frozen
+        #     pre-registration, so a strategy cannot be edited after its first bet.
+        run: |
+          python -m nba2.v7
+          python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
-          git add -A -- site data/v2 data/v4 data/raw
+          git add -A -- site data/v2 data/v4 data/raw data/v7
           if ! git diff --cached --quiet -- site; then
             echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
             git diff --cached --stat -- site | tail -40

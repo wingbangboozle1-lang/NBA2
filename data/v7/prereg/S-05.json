@@ -1,0 +1,15 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-05",
+ "name": "Two-leg correlated parlay",
+ "signal": "spread + total on the same game, priced with the measured rho",
+ "thresholds": {
+  "min_edge_vs_naive": 0.02
+ },
+ "universe": "games with a measured rho and a captured price",
+ "settlement_rule": "both legs settled from the same official final; the parlay is graded once, and a void leg voids the parlay",
+ "market": "parlay",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}

@@ -61,6 +61,10 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
      ["verification", "verification-v3", "v4-verify", "v5-verify", "v6-verify",
       "live-verification", "backtest", "skill-attribution", "endpoints",
       "capture-verification"]),
+    ("v7 — fresh 2026-11-19 snapshot",
+     "Cut from the official pages read on 2026-11-19: the originated three-day slate, the "
+     "gated strategy lab with its pre-registrations, and the walk-forward skill test.",
+     ["v7-slate", "v7-strategies", "v7-skill", "v7-methodology", "v7-verify"]),
     ("Decisions, questions & flags",
      "What needs an owner decision before it is built, what we do not know, and everything "
      "flagged for review.",
