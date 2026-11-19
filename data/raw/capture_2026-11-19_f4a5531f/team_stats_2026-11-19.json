@@ -1,0 +1,59 @@
+{
+ "schema": "nba2.team-stats-official.v2",
+ "as_of": "2026-11-19",
+ "retrieved_at_utc": "2026-11-19T12:24:30Z",
+ "capture_window_utc": "2026-11-19T12:22:30Z/12:26:00Z",
+ "retrieval_method": "platform page-fetch tool (Arena) reading the three official team-stat pages with Season=2026-27&SeasonType=Regular+Season. MEASURED FINDING: all three pages render their full 30-row tables through the platform page-fetch tool. This updates the repository's transport belief recorded for GitHub-hosted runners (stats pages were blocked from runners, per data/raw/page_fixtures/transport_probe.json); it does NOT change what a runner can reach. This capture stores the leading rows of each table verbatim as evidence of reachability and structure; the full 30-row re-cut of model inputs is the RQ-8892-02 / ACF-7 task owned by another session and is NOT done here.",
+ "pages": {
+  "traditional": {
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season",
+   "columns": "Team | GP | W | L | WIN% | Min | PTS | FGM | FGA | FG% | 3PM | 3PA | 3P% | FTM | FTA | FT% | OREB | DREB | REB | AST | TOV | STL | BLK | BLKA | PF | PFD | +/- (per-game mode)",
+   "sample_rows": [
+    {"team": "Los Angeles Lakers",     "team_id": 1610612747, "GP": 16, "W": 13, "L": 3, "WIN%": ".813", "Min": 48.3, "PTS": 120.9, "FGM": 41.6, "FGA": 85.1, "FG%": 48.9, "3PM": 14.1, "3PA": 37.6, "3P%": 37.5, "FTM": 23.6, "FTA": 30.0, "FT%": 78.8, "PLUS_MINUS": 6.4},
+    {"team": "Philadelphia 76ers",     "team_id": 1610612755, "GP": 16, "W": 13, "L": 3, "WIN%": ".813", "Min": 48.0, "PTS": 114.5, "FGM": 40.6, "FGA": 87.4, "FG%": 46.4, "3PM": 12.3, "3PA": 34.5, "3P%": 35.5, "FTM": 21.1, "FTA": 26.6, "FT%": 79.3, "PLUS_MINUS": 2.9},
+    {"team": "San Antonio Spurs",      "team_id": 1610612759, "GP": 15, "W": 12, "L": 3, "WIN%": ".800", "Min": 48.3, "PTS": 117.1, "FGM": 42.4, "FGA": 91.3, "FG%": 46.4, "3PM": 12.1, "3PA": null, "3P%": null, "FTM": null, "FTA": null, "FT%": null, "PLUS_MINUS": null, "note": "row truncated in extraction at the 3PA field; remaining fields not transcribed"}
+   ],
+   "untranscribed_rows": "the remaining 27 rows render and were visible in the fetched text; they are NOT transcribed here to keep this audit capture minimal — read the page URL above for the full table"
+  },
+  "opponent": {
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season",
+   "columns": "TEAM | GP | W | L | MIN | Opp FGM | Opp FGA | Opp FG% | Opp 3PM | Opp 3PA | Opp 3P% | Opp FTM | Opp FTA | Opp FT% | Opp OREB | Opp DREB | Opp REB | Opp AST | Opp TOV | Opp STL | Opp BLK | Opp BLKA | Opp PF | Opp PFD | Opp PTS | +/- (per-game mode)",
+   "sample_rows": [
+    {"team": "Los Angeles Lakers", "team_id": 1610612747, "GP": 16, "W": 13, "L": 3, "Opp PTS": 114.4, "PLUS_MINUS": -6.4},
+    {"team": "Philadelphia 76ers", "team_id": 1610612755, "GP": 16, "W": 13, "L": 3, "Opp PTS": 111.6, "PLUS_MINUS": -2.9},
+    {"team": "Houston Rockets",    "team_id": 1610612745, "GP": 16, "W": 12, "L": 4, "Opp PTS": 109.2, "PLUS_MINUS": -8.7},
+    {"team": "San Antonio Spurs",  "team_id": 1610612759, "GP": 15, "W": 12, "L": 3, "Opp PTS": 105.9, "PLUS_MINUS": -11.2},
+    {"team": "Boston Celtics",     "team_id": 1610612738, "GP": 15, "W": 11, "L": 4, "Opp PTS": 103.4, "PLUS_MINUS": -10.5},
+    {"team": "Memphis Grizzlies",  "team_id": 1610612763, "GP": 15, "W": 11, "L": 4, "Opp PTS": 112.9, "PLUS_MINUS": -9.0},
+    {"team": "Minnesota Timberwolves", "team_id": 1610612750, "GP": 15, "W": 11, "L": 4, "Opp PTS": 106.1, "PLUS_MINUS": -10.6},
+    {"team": "Detroit Pistons",    "team_id": 1610612765, "GP": 14, "W": 10, "L": 4, "Opp PTS": 108.9, "PLUS_MINUS": -6.4},
+    {"team": "Atlanta Hawks",      "team_id": 1610612737, "GP": 15, "W": 9,  "L": 6, "Opp PTS": 115.8, "PLUS_MINUS": -1.9},
+    {"team": "Miami Heat",         "team_id": 1610612748, "GP": 15, "W": 9,  "L": 6, "Opp PTS": 119.9, "PLUS_MINUS": -0.7}
+   ],
+   "untranscribed_rows": "the remaining 20 rows render and were visible; not transcribed in this audit capture",
+   "identity_check": "PLUS_MINUS on this page equals traditional PTS minus Opp PTS for every transcribed pair (LAL 120.9-114.4=+6.4; PHI 114.5-111.6=+2.9; SAS 117.1-105.9=+11.2 with sign convention -(-11.2)) — the two pages agree"
+  },
+  "advanced": {
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+   "columns": "TEAM | GP | W | L | MIN | OffRtg | DefRtg | NetRtg | AST% | AST/TO | AST Ratio | OREB% | DREB% | REB% | TOV% | eFG% | TS% | PACE | PIE | POSS",
+   "sample_rows": [
+    {"team": "Los Angeles Lakers",     "team_id": 1610612747, "GP": 16, "W": 13, "L": 3, "MIN": 773.0, "OffRtg": 119.8, "DefRtg": 113.2, "NetRtg": 6.7, "eFG%": 57.2, "TS%": 61.5, "PACE": 100.35, "PIE": 53.0, "POSS": 1614},
+    {"team": "Philadelphia 76ers",     "team_id": 1610612755, "GP": 16, "W": 13, "L": 3, "MIN": 768.0, "OffRtg": 114.5, "DefRtg": 111.8, "NetRtg": 2.7, "eFG%": 53.4, "TS%": 57.7, "PACE": 99.88,  "PIE": 51.4, "POSS": 1600},
+    {"team": "Houston Rockets",        "team_id": 1610612745, "GP": 16, "W": 12, "L": 4, "MIN": 768.0, "OffRtg": 121.1, "DefRtg": 112.1, "NetRtg": 9.0, "eFG%": 55.6, "TS%": 59.7, "PACE": 97.41,  "PIE": 55.3, "POSS": 1558},
+    {"team": "San Antonio Spurs",      "team_id": 1610612759, "GP": 15, "W": 12, "L": 3, "MIN": 725.0, "OffRtg": 118.1, "DefRtg": 107.0, "NetRtg": 11.1, "eFG%": 53.0, "TS%": 57.1, "PACE": 98.35, "PIE": 56.0, "POSS": 1487},
+    {"team": "Boston Celtics",         "team_id": 1610612738, "GP": 15, "W": 11, "L": 4, "MIN": 725.0, "OffRtg": 117.0, "DefRtg": 106.0, "NetRtg": 11.0, "eFG%": 54.6, "TS%": 57.9, "PACE": 96.76, "PIE": 54.7, "POSS": 1460},
+    {"team": "Memphis Grizzlies",      "team_id": 1610612763, "GP": 15, "W": 11, "L": 4, "MIN": 725.0, "OffRtg": 120.6, "DefRtg": 111.9, "NetRtg": 8.7, "eFG%": 56.9, "TS%": 61.1, "PACE": 100.27, "PIE": 54.3, "POSS": 1516},
+    {"team": "Minnesota Timberwolves", "team_id": 1610612750, "GP": 15, "W": 11, "L": 4, "MIN": 725.0, "OffRtg": 114.5, "DefRtg": 104.0, "NetRtg": 10.5, "eFG%": 54.8, "TS%": 57.4, "PACE": 101.23, "PIE": 55.0, "POSS": 1528},
+    {"team": "Detroit Pistons",        "team_id": 1610612765, "GP": 14, "W": 10, "L": 4, "MIN": 682.0, "OffRtg": 114.9, "DefRtg": 108.9, "NetRtg": 6.0, "eFG%": 54.5, "TS%": 58.4, "PACE": 98.78, "PIE": 54.2, "POSS": 1406},
+    {"team": "Atlanta Hawks",          "team_id": 1610612737, "GP": 15, "W": 9,  "L": 6, "MIN": 725.0, "OffRtg": 112.8, "DefRtg": 110.8, "NetRtg": 1.9, "eFG%": 52.8, "TS%": 55.7, "PACE": 103.71, "PIE": 49.0, "POSS": 1566},
+    {"team": "Miami Heat",             "team_id": 1610612748, "GP": 15, "W": 9,  "L": 6, "MIN": 725.0, "OffRtg": 116.9, "DefRtg": 116.7, "NetRtg": 0.3, "eFG%": 55.4, "TS%": 59.1, "PACE": 102.19, "PIE": 50.8, "POSS": 1546},
+    {"team": "Oklahoma City Thunder",  "team_id": 1610612760, "GP": 15, "W": 9,  "L": 6, "MIN": 720.0, "OffRtg": 113.0, "DefRtg": 108.7, "NetRtg": 4.4, "eFG%": 52.2, "TS%": 55.9, "PACE": 99.17, "PIE": 53.5, "POSS": 1488},
+    {"team": "Portland Trail Blazers", "team_id": 1610612757, "GP": 14, "W": 9,  "L": 5, "MIN": 672.0, "OffRtg": 116.2, "DefRtg": 110.2, "NetRtg": 6.0, "eFG%": 54.8, "TS%": 59.2, "PACE": 100.71, "PIE": 52.5, "POSS": 1410},
+    {"team": "Cleveland Cavaliers",    "team_id": 1610612739, "GP": 16, "W": 8,  "L": 8, "MIN": 773.0, "OffRtg": 117.5, "DefRtg": 115.5, "NetRtg": 2.0, "eFG%": 55.8, "TS%": 59.1, "PACE": 100.01, "PIE": 51.0, "POSS": 1610}
+   ],
+   "untranscribed_rows": "the remaining 17 rows render and were visible; not transcribed in this audit capture",
+   "identity_check": "OffRtg recomputes from the traditional page for every club transcribed on BOTH pages: PTS-per-game x GP divided by POSS x 100 reproduces OffRtg for LAL (120.9x16/1614x100=119.8), PHI (114.5x16/1600x100=114.5) and SAS (117.1x15/1487x100=118.1), so traditional and advanced pages are mutually consistent for those clubs"
+  }
+ },
+ "note": "GP on all three pages equals W+L and matches the standings captured the same session for every club visible on both. This file is evidence for the audit report; it is not the model re-cut."
+}
