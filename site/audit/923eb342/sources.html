@@ -88,10 +88,9 @@ python3 audit/923eb342/build.py              # rewrite this site
 </pre>
 <p class="note">All three are deterministic over committed inputs plus the capture in
 <code>audit/923eb342/capture_2026-11-19.json</code>. The generator writes this desk twice: the source of
-truth under <code>audit/923eb342/</code>, and a byte-identical copy under <code>site/audit/923eb342/</code>,
-because the repository's Pages source is <code>legacy</code> and only the <code>site/</code> tree is served
-over HTTP. Measured, not assumed: <code>/NBA2/audit/923eb342/</code> returned 404 while
-<code>/NBA2/site/index.html</code> was live.</p>
+truth under <code>audit/923eb342/</code>, and a byte-identical copy under <code>site/audit/923eb342/</code>, so the desk travels inside the artefact that
+<code>pages.yml</code> uploads as well as being readable from the repository. The published URL is
+<code>/NBA2/audit/923eb342/</code> — measured, not assumed.</p>
 </div></main>
 <footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
 confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>

@@ -6494,82 +6494,40 @@ rate being indistinguishable from 0.5 at n=221, the two estimators being algebra
 and the TLS transport limitation of the build sandbox.
 
 **Status: done and merged.**
-### Where the verification desk is published — measured twice, wrong once (session `arena/923eb342-nba2`, 2026-11-19)
+### Where the verification desk is published — measured three times, wrong twice (session `arena/923eb342-nba2`, 2026-11-19)
 
-**First attempt (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's
-Pages root** — after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601)
-the root URL served the desk instead of the canonical dashboard. Fixed in PR #149 by deleting the second
-deployer; run [44530167169](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44530167169) of
-`pages.yml` restored the canonical site at the root.
+**Attempt 1 (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's Pages
+root** — after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601) the
+root URL served the desk instead of the canonical dashboard. Fixed in PR #149 by deleting the second
+deployer; `pages.yml` run [44530167169](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44530167169)
+restored the canonical site.
 
-**Second finding (also wrong, and my own mistake in the opposite direction).** I then assumed a `legacy`
-Pages source serves every committed path. It does not: it serves the artefact that `pages.yml` uploads, which
-is the `site/` tree only. Measured:
+**Attempt 2 (also wrong, recorded as a caution).** I then claimed "under legacy Pages, every committed path
+is served" and published a table asserting that `/NBA2/audit/923eb342/` and `/NBA2/any-root-file.html` return
+404. **Those readings were taken while a deploy was still propagating**, and they were false. Several later
+fetches returned 404 for `/NBA2/site/index.html` and `/NBA2/site/lines.html` — both of which have been live
+for days — which is what exposed the error. A 404 taken minutes after a deploy is not a measurement.
 
-| URL | Result |
-|---|---|
-| `/NBA2/` | 200 — the canonical v2/v7 dashboard (`site/index.html`) |
-| `/NBA2/site/index.html`, `/NBA2/site/v7-slate.html`, `/NBA2/picks.html` | 200 |
-| `/NBA2/oddity-test.html` (a file committed at the repository root) | **404** |
-| `/NBA2/audit/923eb342/`, `/NBA2/audit/923eb342/flagged.html` | **404** |
-| `/NBA2/no-such-file-xyz` (control) | 404 |
+**Attempt 3 (measured after propagation had settled, and the current state).**
 
-So the root `*.html` files and `audit/**` are committed and served by raw GitHub, but **not** by Pages.
+| URL | Result | What it means |
+|---|---|---|
+| `/NBA2/` and `/NBA2/lines.html` | 200 | the uploaded `site/` artefact is served at the **server root**, not under `/site/` |
+| `/NBA2/site/lines.html` | 404 | `/site/` is not a URL prefix at all |
+| `/NBA2/audit/923eb342/` | **200** | a committed subdirectory **is** served — this is the desk's live URL |
+| `/NBA2/audit/923eb342/flagged.html` | 200 | …and so are its children |
+| `/NBA2/no-such-file-xyz` (control) | 404 | the 404s are real 404s, not a blanket response |
 
-**Right answer.** `audit/923eb342/build.py` now writes the desk twice: the source of truth under
-`audit/923eb342/`, and a **byte-identical copy** under `site/audit/923eb342/`. No builder writes that
-subdirectory, every nav/gate pass globs `site/*.html` at the top level only, so nothing existing is touched,
-and the publish-parity diff is a fixed point. The desk's published URL is
-**`/NBA2/site/audit/923eb342/`**, and it needs no workflow of its own — `pages.yml` already ships the tree.
+**Right answer.** The desk is live at **<https://wingbangboozle1-lang.github.io/NBA2/audit/923eb342/>** with
+no workflow of its own. `build.py` additionally mirrors the 13 pages into `site/audit/923eb342/` so they
+travel inside the uploaded artefact; no builder writes that subdirectory and no nav/gate pass scans it
+(they glob `site/*.html`, top level only), so no existing page changes and the publish-parity diff stays a
+fixed point.
 
-**The general lesson, recorded because three sessions have now hit it:** in this repository, "committed" is
-not "published". Only `site/**` reaches a reader, and anything meant for a reader must be written there and
-covered by the parity diff. A separate Pages deployer is never the answer — there is one Pages site.
-
-### Final state — session `arena/585453f5-nba2` (2026-11-19 UTC)
-
-**Merges.** PR **#139** → merge commit `30d67f8`; PR **#146** → merge commit `b0a701c`.
-Both merged without approval after all six required checks passed
-(`verify`, `parity`, `v2`, `backtest`, `capture`, `refresh-dry-run`); every deploy confirmed
-`success` from the Actions API, with the last recorded build `status: built`.
-
-**A correction to my own record.** Earlier in this board and in
-`analysis/session-585453f5-integration.md` I wrote that the GitHub Pages front door serves the
-repository root. That was **wrong** and is withdrawn. Measured on the live host through the
-page-fetch transport: `/NBA2/` and `/NBA2/index.html` serve the v2/v7 dashboard,
-`/NBA2/v7-slate.html`, `/NBA2/v7-verify.html`, `/NBA2/flagged.html` and
-`/NBA2/audit/923eb342/index.html` all return 200, and `/NBA2/site/index.html` returns 404
-because that path does not exist inside the uploaded artefact. The `github-pages` artefact is
-the `site/` directory; `build_type: legacy` refers to the deployment plumbing, not to the
-document root. The repo-root `index.html` pointer is only what github.com shows when browsing
-the repository.
-
-**Verified live at 2026-11-19T13:0x Z** (page-fetch transport; this sandbox has no TLS egress —
-`urllib` fails on every host, which is why `curl`-based probes in this session returned 000):
-`/NBA2/v7-verify.html` prints **433/433 items matched**, 12/13 claims checked against an
-official page, **6/10 gates PASS** with G-V7-4/6/8/9 published BLOCKED, and the integration
-rows V-11 (27/27 advanced stats), V-12 (26/26 standings) and V-13 (13/13 slate ids and tips)
-re-read from nba.com.
-
-**The nightly refresh failure is repaired.** Ten consecutive scheduled runs had failed on the
-publish leg. Reproduced at `a5380e1` (`python3 -m nba2.v6` → `HARD GATE FAILURE G-V6-8` on ten
-rows that *do* carry `https://www.nba.com/game/…` under the key `source` in
-`data/raw/official_finals_union.json`). Two reader defects fixed — the null-wins merge in
-`_records_of`, and an extractor that did not accept every committed URL key — with
-`nba2/v6/test_results_union_source.py` pinning both directions so the gate still fails a row
-that genuinely has no official URL. The eleven-module sequence that failed now completes at
-that same commit. **Not claimed:** that the next scheduled fire will be green — this session
-cannot observe a cron run it did not trigger.
-
-**Final verification on the merged tree** (run here, on `546e6b3`):
-suites **92 / 167 / 67 / 61 / 26 / 59 / 37 = 509 OK**; `nba2.v2/v3/v4/v5/v6.check` all exit 0;
-provenance lint **1436 rows across 50 tables**; **8024 internal links OK** across 148 files;
-both sealed ledgers `cf7dedc6…` (22) and `c841e8f3…` (27) **VERIFIED and unmodified**; the full
-10-module ordered rebuild is a **fixed point (0 files drift)**; Pages deploy `success`.
-
-**Still flagged for owner review, none blocking:** the 2026-11-19 injury report was never read
-(`F-V7-AVAIL`, G-V7-8 blocks); no market price exists anywhere so no edge is computable and
-every stake is 0.00 (`F-V7-MARKET`, G-V7-6 blocks); the props sample is 3 games against the ~15
-needed (`F-V7-PROPS`); the v7 snapshot is one game behind for LAL and NOP (`F-V7-FRESH`);
-`data/raw/v7_fetch/` is not committed, so v7's cited raw page bytes are absent (F-5854-03);
-arena coordinates remain third-party (FLAG-V2-ARENA-COORDS).
+**Lessons recorded for the board:**
+1. There is exactly one Pages site and one deployer (`pages.yml`). A second deployer never helps.
+2. A fetch taken mid-deploy is not evidence. Wait for the Pages build to report `built` and for the content
+   to settle before measuring, and re-test a path that was already known-good as the control — that is how
+   the bad reading above was caught.
+3. A gate that globs `site/*.html` (v2 provenance, v6 nav grouping) does not see subdirectories. Anything
+   added there must carry its own checker, which is why this desk has `audit/923eb342/check.py`.
