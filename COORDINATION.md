@@ -6200,3 +6200,44 @@ G-V7-9). Nothing on the bet surface is rebalanced: every stake is 0.00 by constr
 BLOCKED); suites 92 / 167 / 67 / 61 / 26 / 52 / 37 = **502 OK**; v2–v6 checks 0 structural,
 0 semantic; lint 1436 rows / 50 tables; 148 HTML files / 8024 internal links OK; the 10-module
 ordered rebuild is a **fixed point (0 drift)**; both sealed ledgers VERIFIED and unmodified.
+---
+
+## Session `arena/f4a5531f-nba2` — CLAIM (2026-11-19 UTC, branch `arena/f4a5531f-nba2`, base `41cfd81` = `main` @ PR #133 merge)
+
+**Role:** independent audit session — line-by-line repo review, live official-source verification of
+published numbers, live-site (GitHub Pages) verification, and a fresh official capture of the
+current slate stored in a new namespace for the deferred ACF-7 / RQ-8892-02 model re-cut.
+
+**Deconfliction:** sessions `arena/585453f5-nba2` and `arena/452034cb-nba2` are concurrently
+integrating open PRs #130/#131 and own `site/**`, `data/site.json`, `nba2/**`, `data/v6/**`,
+`data/v7/**`, `requirements/**.json`, `suggestions/**`. This session touches NONE of those.
+Flagged irregularities found here are recorded in this session's own report + the append-only
+board, with an explicit request logged for the integration sessions to surface them on the
+Flagged for Review page.
+
+**Claimed file scope (new files only):**
+- `COORDINATION.md` — this claim + completion record, append-only.
+- `analysis/session-f4a5531f-*.md` — audit notes, new namespace.
+- `audit/session-f4a5531f/**` — checker outputs, verification captures, new namespace.
+- `data/raw/capture_2026-11-19_f4a5531f/**` — fresh official capture, new namespace (only if the platform page-fetch can reach official hosts; otherwise the audit records the block).
+
+**Explicitly NOT edited:** `site/**`, `data/site.json`, `nba2/**`, `data/v2..v7/**`,
+`data/raw/capture_*/**` and `data/raw/refresh_*/**` (existing dated captures), sealed ledgers
+(`data/raw/ledger/**`, `data/v3/ledger/**`), `requirements/**.json`, `suggestions/**`,
+`.github/workflows/**`, `README.md`, root `*.html`, `pages/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `archive/**`, `backtest/**`, `tools/**`, `scripts/**` — owned
+by finished or concurrently active sessions; changes needed there are logged as requests.
+
+**Rules:** claim pushed before work; small frequent commits; `git pull --rebase origin main`
+before every push; a value is "verified" only if the official document was fetched in this
+session and can be quoted with URL + retrieval timestamp; unconfirmed ⇒ blank + flagged, never
+inferred; sealed ledgers never rewritten; the site is never merged broken.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| F4A-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| F4A-2 | Baseline: run the committed checker chain on the checked-out tree, record exact results | pending | `audit/session-f4a5531f/**` (outputs) | every command + rc recorded |
+| F4A-3 | Live official-source verification: standings, schedule, injury report, three team-stat pages | pending | `audit/session-f4a5531f/**`, `data/raw/capture_2026-11-19_f4a5531f/**` | official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flagged |
+| F4A-4 | Live GitHub Pages verification: every page reachable, per-row source links present, spot-check numbers vs official sources | pending | `audit/session-f4a5531f/**` | fetched page quoted; every claim tied to a URL |
+| F4A-5 | Flagged irregularities + requests logged for the integration sessions | pending | `analysis/session-f4a5531f-audit.md` | each item carries a file path, command, or official URL |
+| F4A-6 | PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
