@@ -26,6 +26,12 @@ The dashboard banner now states the v2 `O.AS_OF` date and distinguishes the reco
 
 The v2 suite emitted existing `ResourceWarning`s for unclosed game-history files in `nba2/v2/model.py` and `nba2/v2/travel.py`; they did not fail tests and are outside this claim's scope.
 
+## Integration and deployment
+
+- PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134) merged on 2026-11-19T12:24:47Z as commit `35a41112542e2d48ff19285709575f15b68d6b79`.
+- GitHub Pages workflow [44523644442](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44523644442) completed successfully: build fixed-point check and deploy both passed. Pages API reports `status: built` at that commit.
+- The public landing page was fetched successfully at https://wingbangboozle1-lang.github.io/NBA2/?build=35a4111; it displays the updated 2026-11-18 capture-versus-publish disclosure. A first request during deployment returned a transient GitHub outage/404 page; the cache-busted follow-up returned the expected dashboard.
+
 ## Limits and flagged item
 
 This was a repository/workflow evidence check, not an official NBA live-source verification. It does **not** make the 2026-11-15 model current, and it does not fix the failed publish job or assert a successful Pages deployment. The last successful capture run still did not publish a refreshed model; until a later successful scheduled capture-and-publish is verified, the dashboard should be treated as stale and non-actionable.
