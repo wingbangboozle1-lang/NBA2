@@ -188,7 +188,8 @@ class TestLedgerHashes(unittest.TestCase):
         cls.doc = json.loads((root / "data" / "v2" / "ledger.json").read_text())
 
     def test_every_row_has_a_hash_and_a_status(self):
-        self.assertGreaterEqual(len(self.doc["rows"]), 34)
+        # one row per published line: 26 games in the 2026-11-19..22 window (RQ-8892-02 re-cut)
+        self.assertGreaterEqual(len(self.doc["rows"]), 26)
         for r in self.doc["rows"]:
             self.assertEqual(len(r["row_hash"]), 64)
             self.assertEqual(r["hash_alg"], "sha256")

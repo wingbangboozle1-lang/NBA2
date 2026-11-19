@@ -27,10 +27,10 @@ def repo_integrity() -> dict:
     res = {"checks": [], "notes": []}
     # ---- schedule
     try:
-        snap = json.loads((ROOT / "data/raw/slate_2026-11-14_to_11-17.json").read_text())
+        snap = json.loads((ROOT / "data/raw/slate_2026-11-19_to_11-22.json").read_text())
         cols = snap["columns"]
         idx = {c: i for i, c in enumerate(cols)}
-        snap_rows = {tuple(r[idx[c]] for c in ("date", "away", "home", "game_id")) for r in snap["records"]}
+        snap_rows = {tuple(str(r[idx[c]]) for c in ("date", "away", "home", "game_id")) for r in snap["records"]}
         live_rows = {(d, a, h, g) for (d, t, a, h, g, *_) in O.SLATE}
         res["checks"].append({
             "id": "repo-schedule",
@@ -44,35 +44,76 @@ def repo_integrity() -> dict:
     except Exception as exc:  # pragma: no cover - defensive
         res["checks"].append({"id": "repo-schedule", "what": "schedule cross-check", "repo_value": "n/a",
                               "live_value": "n/a", "result": "ERROR", "detail": str(exc), "src": O.SOURCES["schedule"][1]})
-    # ---- finals: this session rebuilt W-L from the 155 official finals and compared to the card
+    # ---- finals: rebuild W-L from every committed official finals feed and compare to the card
     try:
         import glob as _glob
-        games = []
+        seen: dict[str, dict] = {}
+        conflicts: list[str] = []
+        club_fill = 0
+        feeds: list[tuple[str, list[dict]]] = []
         for f in sorted(_glob.glob(str(ROOT / "data/raw/history/games_*.json"))):
-            games += json.loads(Path(f).read_text())["games"]
-        played = [g for g in games if g.get("away_pts") is not None]
+            feeds.append((f, json.loads(Path(f).read_text())["games"]))
+        for f in sorted(_glob.glob(str(ROOT / "data/raw/finals_2026-*.json"))):
+            feeds.append((f, json.loads(Path(f).read_text()).get("records") or []))
+        for path, recs in feeds:
+            for r in recs:
+                gid = r.get("game_id")
+                if not gid:
+                    continue
+                home = r.get("home_team") or r.get("home")
+                away = r.get("away_team") or r.get("away")
+                hp, ap = r.get("home_pts"), r.get("away_pts")
+                if gid in seen:
+                    p = seen[gid]
+                    if (p["hp"], p["ap"]) != (hp, ap) and p["hp"] is not None and hp is not None:
+                        conflicts.append(f"{gid}: {p['hp']}-{p['ap']} vs {hp}-{ap}")
+                    # the 11/13 finals feed carries blank clubs (R-2b); fill them only from a
+                    # duplicate row with the same game id and an agreeing score
+                    if home and away and not (p["home"] and p["away"]):
+                        p["home"], p["away"] = home, away
+                        club_fill += 1
+                    elif (home and away) and (p["home"], p["away"]) != (home, away) and p["home"]:
+                        conflicts.append(f"{gid}: clubs {p['home']}/{p['away']} vs {home}/{away}")
+                else:
+                    seen[gid] = {"home": home, "away": away, "hp": hp, "ap": ap, "date": r.get("date")}
+        played = [v for v in seen.values() if v["hp"] is not None and v["home"] and v["away"]]
         w = {t: 0 for t in O.TEAMS}
         l = {t: 0 for t in O.TEAMS}
+        unknown_club = 0
         for g in played:
-            if g["home_pts"] > g["away_pts"]:
+            if g["home"] not in w or g["away"] not in w:
+                unknown_club += 1
+                continue
+            if g["hp"] > g["ap"]:
                 w[g["home"]] += 1
                 l[g["away"]] += 1
             else:
                 w[g["away"]] += 1
                 l[g["home"]] += 1
-        # every reconstructed record must be <= the official card (the 19-game hole can only shrink it)
+        # The card is compared EXACTLY when every game the card counts is committed (hole == 0);
+        # when a hole exists the old no-exceeds rule applies and the hole is printed.
         exceed = {t: (w[t], l[t], O.TEAMS[t][0], O.TEAMS[t][1]) for t in O.TEAMS
                   if w[t] > O.TEAMS[t][0] or l[t] > O.TEAMS[t][1]}
         short = sum((O.TEAMS[t][0] + O.TEAMS[t][1]) - (w[t] + l[t]) for t in O.TEAMS) / 2
+        if short == 0 and not exceed:
+            result, detail = "CONSISTENT", (
+                f"exact reconstruction: all {len(played)} committed finals reproduce the official "
+                f"card 30/30 (wins {sum(w.values())} = losses {sum(l.values())}); "
+                f"{club_fill} club cell(s) filled from duplicate same-id rows; "
+                f"{len(conflicts)} score conflict(s); {unknown_club} row(s) with an unrecognised club")
+        elif not exceed:
+            result, detail = "CONSISTENT", (
+                f"no team exceeds its official record; the {short:.0f} missing games are the "
+                f"committed-finals hole ({len(conflicts)} score conflict(s))")
+        else:
+            result, detail = "MISMATCH", str(exceed)
         res["checks"].append({
             "id": "finals-reconstruction",
-            "what": "Rebuild every team's W-L from the 155 official final scores, then compare with the official card",
+            "what": "Rebuild every team's W-L from the committed official finals feeds, then compare with the official card",
             "repo_value": f"{len(played)} finals, {sum(w.values())} wins assigned",
             "live_value": f"{sum(O.TEAMS[t][0] for t in O.TEAMS)} official wins",
-            "result": "CONSISTENT" if not exceed else "MISMATCH",
-            "detail": (f"no team exceeds its official record; the {short:.0f} missing games are exactly the "
-                       f"11/06 + 11/11 hole that has no reachable score" if not exceed
-                       else str(exceed)),
+            "result": result,
+            "detail": detail,
             "src": "https://www.nba.com/games",
         })
     except Exception as exc:  # pragma: no cover

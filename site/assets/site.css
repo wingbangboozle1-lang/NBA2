@@ -55,12 +55,3 @@ pre{background:var(--dim);border:1px solid var(--line);border-radius:10px;paddin
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
 .blank{color:var(--bad);font-style:italic}
 tr:target td{background:rgba(122,167,255,.10)}
-
-/* === v6 nav categories (nba2/v6/nav.py) === */
-.navgroup{margin:0 0 10px}
-.navgroup > span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;
-  color:var(--muted);margin:10px 0 3px;padding:0 10px;font-weight:700}
-.navgroup a{font-size:13px;padding:5px 10px;margin-bottom:1px}
-.cards .card h4 a{color:var(--ink)}
-.cards .card h4 a:hover{color:var(--accent2)}
-.catcount{color:var(--muted);font-size:11px;font-weight:400}

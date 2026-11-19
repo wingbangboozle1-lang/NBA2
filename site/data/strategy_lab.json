@@ -1,7 +1,7 @@
 {
  "meta": {
-  "session": "arena/98b0eae9-nba2",
-  "generated": "2026-11-15",
+  "session": "arena/6b9f3bbe-nba2",
+  "generated": "2026-11-19",
   "n_games": 188,
   "n_scored": 172,
   "first_date": "2026-10-23",
@@ -104,7 +104,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling. The v5 layer captures official gamebook PDFs for the games it covers, which is why player-coverage is windowed rather than season-wide."
   },
   {
    "quantity": "player points vs assists (same player, same game)",
@@ -116,7 +116,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling. The v5 layer captures official gamebook PDFs for the games it covers, which is why player-coverage is windowed rather than season-wide."
   },
   {
    "quantity": "teammate A points vs teammate B points (same game)",
@@ -128,7 +128,7 @@
    "p_two_sided": null,
    "significant_at_5pct": false,
    "status": "BLOCKED",
-   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling."
+   "note": "nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling. The v5 layer captures official gamebook PDFs for the games it covers, which is why player-coverage is windowed rather than season-wide."
   }
  ],
  "gates": [
@@ -146,7 +146,7 @@
    "requirement": "No required team-level input is blank.",
    "verdict": "PASS",
    "measured": "6/6 team strategies produced bets",
-   "src": "https://www.nba.com/stats/teams/advanced"
+   "src": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
   },
   {
    "id": "G3",
@@ -161,16 +161,16 @@
    "name": "Estimator agreement",
    "requirement": "Two independent ratings (net points per game; NetRtg per 100 possessions) must imply spreads within 2.0 points.",
    "verdict": "PASS",
-   "measured": "largest disagreement across 30 teams: 0.66 pts (threshold 2.00)",
-   "src": "https://www.nba.com/stats/teams/advanced"
+   "measured": "largest disagreement across 30 teams: 0.60 pts (threshold 2.00)",
+   "src": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
   },
   {
    "id": "G5",
    "name": "Total-estimator agreement",
    "requirement": "The points-based total and the independent pace x efficiency total must stay within 6.0 points.",
    "verdict": "PASS",
-   "measured": "largest gap across the 34-game slate: 4.56 pts (threshold 6.00)",
-   "src": "https://www.nba.com/stats/teams/traditional"
+   "measured": "largest gap across the 26-game slate: 3.15 pts (threshold 6.00)",
+   "src": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
   },
   {
    "id": "G6",
@@ -186,7 +186,7 @@
    "requirement": "At least 300 settled bets of the strategy's own signals.",
    "verdict": "FAIL",
    "measured": "largest settled sample: 172 bets (threshold 300)",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games?date=2026-11-18"
   },
   {
    "id": "G8",
@@ -194,7 +194,7 @@
    "requirement": "Signals must hold on the last 30% of game-dates, having been built only on the earlier ones.",
    "verdict": "PASS",
    "measured": "in-sample 63.4% vs out-of-sample 67.3% (+/- 7.1% s.e.); MAE 12.22 -> 13.23. The signal holds out of sample.",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games?date=2026-11-18"
   },
   {
    "id": "G9",
@@ -210,14 +210,14 @@
    "requirement": "No parlay may be priced by multiplying legs unless the leg correlation is measured or bounded.",
    "verdict": "PASS",
    "measured": "same-game rho measured at +0.0679 (95% CI (-0.0826, 0.2153))",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games?date=2026-11-18"
   },
   {
    "id": "G11",
    "name": "Freshness",
    "requirement": "Inputs must be dated within 24h of the slate and the injury report within its filing window.",
    "verdict": "PASS",
-   "measured": "snapshot dated 2026-11-15; window 2026-11-15 -> 2026-11-18",
+   "measured": "snapshot dated 2026-11-19; window 2026-11-19 -> 2026-11-22",
    "src": "https://official.nba.com/nba-injury-report-2026-27-season/"
   },
   {
@@ -226,213 +226,165 @@
    "requirement": "No input timestamped after the decision time may enter that decision.",
    "verdict": "PASS",
    "measured": "0 violations across 172 predictions",
-   "src": "https://www.nba.com/games?date=2026-11-13"
+   "src": "https://www.nba.com/games?date=2026-11-18"
   }
  ],
  "gate_g5_total_estimators": [
   {
-   "matchup": "IND @ PHI",
-   "points_estimator": 222.5,
-   "possessions_estimator": 222.47,
-   "gap": 0.03
+   "matchup": "LAC @ SAS",
+   "points_estimator": 226.3,
+   "possessions_estimator": 224.58,
+   "gap": 1.72
   },
   {
-   "matchup": "LAL @ PHX",
-   "points_estimator": 232.1,
-   "possessions_estimator": 232.08,
-   "gap": 0.02
+   "matchup": "GSW @ MEM",
+   "points_estimator": 230.65,
+   "possessions_estimator": 228.98,
+   "gap": 1.67
   },
   {
-   "matchup": "CHA @ LAC",
-   "points_estimator": 219.0,
-   "possessions_estimator": 217.86,
-   "gap": 1.14
+   "matchup": "NYK @ MIN",
+   "points_estimator": 218.35,
+   "possessions_estimator": 216.84,
+   "gap": 1.51
   },
   {
-   "matchup": "SAS @ UTA",
-   "points_estimator": 225.9,
-   "possessions_estimator": 223.17,
-   "gap": 2.73
-  },
-  {
-   "matchup": "DAL @ BOS",
-   "points_estimator": 222.05,
-   "possessions_estimator": 221.11,
-   "gap": 0.94
-  },
-  {
-   "matchup": "NYK @ TOR",
-   "points_estimator": 220.25,
-   "possessions_estimator": 220.14,
-   "gap": 0.11
-  },
-  {
-   "matchup": "HOU @ WAS",
-   "points_estimator": 224.7,
-   "possessions_estimator": 222.91,
-   "gap": 1.79
-  },
-  {
-   "matchup": "ATL @ MIL",
-   "points_estimator": 230.7,
-   "possessions_estimator": 229.8,
-   "gap": 0.9
-  },
-  {
-   "matchup": "OKC @ SAC",
-   "points_estimator": 223.85,
-   "possessions_estimator": 223.78,
-   "gap": 0.07
-  },
-  {
-   "matchup": "ORL @ BOS",
-   "points_estimator": 219.2,
-   "possessions_estimator": 217.31,
-   "gap": 1.89
-  },
-  {
-   "matchup": "CHI @ CLE",
-   "points_estimator": 236.95,
-   "possessions_estimator": 235.08,
-   "gap": 1.87
-  },
-  {
-   "matchup": "MEM @ WAS",
-   "points_estimator": 229.05,
-   "possessions_estimator": 226.3,
-   "gap": 2.75
-  },
-  {
-   "matchup": "PHI @ BKN",
-   "points_estimator": 223.6,
-   "possessions_estimator": 222.6,
-   "gap": 1.0
-  },
-  {
-   "matchup": "HOU @ MIA",
-   "points_estimator": 231.05,
-   "possessions_estimator": 230.1,
-   "gap": 0.95
-  },
-  {
-   "matchup": "POR @ MIN",
-   "points_estimator": 228.25,
-   "possessions_estimator": 227.38,
-   "gap": 0.87
-  },
-  {
-   "matchup": "GSW @ NOP",
-   "points_estimator": 234.95,
-   "possessions_estimator": 231.41,
-   "gap": 3.54
-  },
-  {
-   "matchup": "PHX @ DEN",
-   "points_estimator": 227.6,
-   "possessions_estimator": 226.57,
-   "gap": 1.03
-  },
-  {
-   "matchup": "NYK @ TOR",
-   "points_estimator": 220.25,
-   "possessions_estimator": 220.14,
-   "gap": 0.11
-  },
-  {
-   "matchup": "POR @ MIN",
-   "points_estimator": 228.25,
-   "possessions_estimator": 227.38,
-   "gap": 0.87
-  },
-  {
-   "matchup": "DET @ SAS",
-   "points_estimator": 225.8,
-   "possessions_estimator": 222.97,
-   "gap": 2.83
-  },
-  {
-   "matchup": "UTA @ LAC",
-   "points_estimator": 227.95,
-   "possessions_estimator": 225.13,
-   "gap": 2.82
-  },
-  {
-   "matchup": "CHA @ LAL",
-   "points_estimator": 222.3,
-   "possessions_estimator": 222.09,
-   "gap": 0.21
-  },
-  {
-   "matchup": "MEM @ CLE",
-   "points_estimator": 232.85,
-   "possessions_estimator": 231.06,
-   "gap": 1.79
-  },
-  {
-   "matchup": "HOU @ IND",
-   "points_estimator": 224.0,
-   "possessions_estimator": 224.04,
+   "matchup": "POR @ MIL",
+   "points_estimator": 228.3,
+   "possessions_estimator": 228.34,
    "gap": -0.04
   },
   {
-   "matchup": "MIL @ MIA",
-   "points_estimator": 232.45,
-   "possessions_estimator": 231.5,
-   "gap": 0.95
+   "matchup": "CHA @ ATL",
+   "points_estimator": 222.0,
+   "possessions_estimator": 220.35,
+   "gap": 1.65
   },
   {
-   "matchup": "PHI @ ORL",
-   "points_estimator": 220.85,
-   "possessions_estimator": 219.88,
-   "gap": 0.97
+   "matchup": "TOR @ DET",
+   "points_estimator": 224.15,
+   "possessions_estimator": 221.77,
+   "gap": 2.38
   },
   {
-   "matchup": "CHI @ BKN",
-   "points_estimator": 233.55,
-   "possessions_estimator": 231.49,
-   "gap": 2.06
+   "matchup": "IND @ CLE",
+   "points_estimator": 230.45,
+   "possessions_estimator": 229.69,
+   "gap": 0.76
   },
   {
-   "matchup": "WAS @ TOR",
-   "points_estimator": 226.4,
-   "possessions_estimator": 224.6,
-   "gap": 1.8
+   "matchup": "ORL @ BKN",
+   "points_estimator": 226.15,
+   "possessions_estimator": 224.39,
+   "gap": 1.76
   },
   {
-   "matchup": "DET @ NOP",
-   "points_estimator": 233.35,
-   "possessions_estimator": 228.79,
-   "gap": 4.56
+   "matchup": "NOP @ OKC",
+   "points_estimator": 229.0,
+   "possessions_estimator": 226.68,
+   "gap": 2.32
   },
   {
-   "matchup": "ATL @ OKC",
-   "points_estimator": 226.8,
-   "possessions_estimator": 225.83,
-   "gap": 0.97
+   "matchup": "WAS @ CHI",
+   "points_estimator": 234.75,
+   "possessions_estimator": 232.33,
+   "gap": 2.42
   },
   {
-   "matchup": "GSW @ DAL",
-   "points_estimator": 227.95,
-   "possessions_estimator": 227.08,
+   "matchup": "PHX @ UTA",
+   "points_estimator": 227.3,
+   "possessions_estimator": 225.87,
+   "gap": 1.43
+  },
+  {
+   "matchup": "HOU @ DEN",
+   "points_estimator": 226.25,
+   "possessions_estimator": 225.38,
    "gap": 0.87
   },
   {
-   "matchup": "BOS @ DEN",
-   "points_estimator": 222.35,
-   "possessions_estimator": 220.37,
-   "gap": 1.98
+   "matchup": "SAC @ LAL",
+   "points_estimator": 232.35,
+   "possessions_estimator": 231.62,
+   "gap": 0.73
   },
   {
-   "matchup": "UTA @ LAL",
-   "points_estimator": 231.25,
-   "possessions_estimator": 229.44,
-   "gap": 1.81
+   "matchup": "MIL @ PHI",
+   "points_estimator": 227.35,
+   "possessions_estimator": 227.35,
+   "gap": 0.0
   },
   {
-   "matchup": "PHX @ SAC",
-   "points_estimator": 228.45,
-   "possessions_estimator": 228.47,
-   "gap": -0.02
+   "matchup": "POR @ NYK",
+   "points_estimator": 220.95,
+   "possessions_estimator": 220.13,
+   "gap": 0.82
+  },
+  {
+   "matchup": "NOP @ SAS",
+   "points_estimator": 230.6,
+   "possessions_estimator": 227.45,
+   "gap": 3.15
+  },
+  {
+   "matchup": "MEM @ MIN",
+   "points_estimator": 228.8,
+   "possessions_estimator": 227.19,
+   "gap": 1.61
+  },
+  {
+   "matchup": "LAC @ DAL",
+   "points_estimator": 227.55,
+   "possessions_estimator": 226.72,
+   "gap": 0.83
+  },
+  {
+   "matchup": "BOS @ SAC",
+   "points_estimator": 223.35,
+   "possessions_estimator": 222.55,
+   "gap": 0.8
+  },
+  {
+   "matchup": "DET @ ATL",
+   "points_estimator": 228.9,
+   "possessions_estimator": 226.49,
+   "gap": 2.41
+  },
+  {
+   "matchup": "OKC @ MIA",
+   "points_estimator": 230.1,
+   "possessions_estimator": 229.2,
+   "gap": 0.9
+  },
+  {
+   "matchup": "DAL @ UTA",
+   "points_estimator": 225.15,
+   "possessions_estimator": 223.75,
+   "gap": 1.4
+  },
+  {
+   "matchup": "ORL @ WAS",
+   "points_estimator": 225.45,
+   "possessions_estimator": 223.1,
+   "gap": 2.35
+  },
+  {
+   "matchup": "DEN @ CHI",
+   "points_estimator": 233.1,
+   "possessions_estimator": 231.24,
+   "gap": 1.86
+  },
+  {
+   "matchup": "IND @ NYK",
+   "points_estimator": 220.1,
+   "possessions_estimator": 219.31,
+   "gap": 0.79
+  },
+  {
+   "matchup": "BOS @ GSW",
+   "points_estimator": 221.9,
+   "possessions_estimator": 220.3,
+   "gap": 1.6
   }
  ],
  "strategies": [

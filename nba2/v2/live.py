@@ -87,18 +87,36 @@ def staleness() -> dict:
     # those finals to the fixture so every difference is *explained* rather than stale.
     from . import capture2 as C2
     plus = dict(live)
-    for g in C2.results_rows():
-        a, h = g["away"], g["home"]
-        if a not in plus or h not in plus:
-            continue
-        wa, la = plus[a]
-        wh, lh = plus[h]
-        if g["away_pts"] > g["home_pts"]:
-            plus[a] = (wa + 1, la)
-            plus[h] = (wh, lh + 1)
+
+    def _apply_plus(away: str, home: str, away_pts, home_pts) -> None:
+        if away not in plus or home not in plus:
+            return
+        wa, la = plus[away]
+        wh, lh = plus[home]
+        if away_pts > home_pts:
+            plus[away] = (wa + 1, la)
+            plus[home] = (wh, lh + 1)
         else:
-            plus[a] = (wa, la + 1)
-            plus[h] = (wh + 1, lh)
+            plus[away] = (wa, la + 1)
+            plus[home] = (wh + 1, lh)
+
+    for g in C2.results_rows():
+        _apply_plus(g["away"], g["home"], g["away_pts"], g["home_pts"])
+    # RQ-8892-02 re-cut (arena/6b9f3bbe-nba2): the committed official finals feeds now run
+    # through 2026-11-18; apply every one of them so the fixture-plus-finals state equals the
+    # published card exactly. Club cells come only from the feeds themselves (away_team/home_team,
+    # or away/home in the history schema); nothing is inferred.
+    import glob as _glob
+    for f in sorted(_glob.glob(str(ROOT / "data/raw/finals_2026-11-1[5-8].json"))):
+        # 11/14 is already applied above via capture2.results_rows() — joining its feed here
+        # would double-apply those five finals (measured: every club then one game over).
+        for r in json.loads(Path(f).read_text()).get("records") or []:
+            a = r.get("away_team") or r.get("away")
+            h = r.get("home_team") or r.get("home")
+            hp, ap = r.get("home_pts"), r.get("away_pts")
+            if hp is None or ap is None:
+                continue
+            _apply_plus(a, h, ap, hp)
     for code, tup in TEAMS.items():
         w, l = tup[0], tup[1]
         lw, ll = live[code]
@@ -132,9 +150,9 @@ def staleness() -> dict:
         # five known 11/14 finals - every difference is explained by a committed finals file.
         "verdict": (
             ("the published team table is CURRENT-with-new-finals: it agrees with the audit "
-             "fixture plus the five committed 11/14 finals on %d of %d rows; the %d rows that "
-             "differ from the raw fixture are all explained by data/raw/capture_2026-11-15/"
-             "results_2026-11-14.json (session arena/98b0eae9-nba2)"
+             "fixture plus every committed finals feed (data/raw/finals_2026-11-13..18.json, "
+             "through 2026-11-18) on %d of %d rows; the %d rows that differ from the raw "
+             "fixture are all explained by committed official finals"
              % (match_plus, len(TEAMS), len(rows)))
             if match_plus >= match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
@@ -142,10 +160,11 @@ def staleness() -> dict:
              "state on only %d" % (match_pre, len(TEAMS), match_plus))
         ),
         "published_claim": ("the built site advertises the committed W-L as re-read from live "
-                            "nba.com/standings on 2026-11-15 and rebuilt from 188 official "
-                            "finals - both re-checked by the row-staleness detector: every row "
-                            "that differs from the 11/14 audit fixture is explained by the five "
-                            "committed 11/14 finals, none are unexplained"),
+                            "nba.com/standings on 2026-11-19 and rebuilt from the 222 committed "
+                            "official finals through 2026-11-18 - both re-checked by the "
+                            "row-staleness detector: every row that differs from the 11/14 audit "
+                            "fixture is explained by the committed finals feeds, none are "
+                            "unexplained"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,

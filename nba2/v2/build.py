@@ -218,7 +218,7 @@ def page(name, title, body, active=None):
 <main>
 {body}
 <footer>
-  <p>Snapshot as of <b>{O.AS_OF}</b> for the model pages. Built by sessions <code>arena/98b0eae9-nba2</code> (v2 model), <code>arena/8892d20c-nba2</code> (capture verification page).
+  <p>Snapshot as of <b>{O.AS_OF}</b> for the model pages. Built by sessions <code>arena/98b0eae9-nba2</code> (v2 model, 2026-11-15 snapshot), re-cut to the 2026-11-19 official capture by <code>arena/6b9f3bbe-nba2</code> (RQ-8892-02), <code>arena/8892d20c-nba2</code> (capture verification page).
   Every table row links to the official page it came from; a blank cell is a missing source, never a zero.
   This site publishes projections, not betting advice — no market price is connected, so no pick is stakable.</p>
   <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
@@ -679,15 +679,17 @@ measured; the basis column is the number that decided it.</p>
                   grows, "The twelve validation gates, evaluated on this build")
 
     body += """<h2>The slate itself</h2>
-<p class="lede">Read from the official schedule on 2026-11-15. This window extends through the date three days later (inclusive): 9 games on
-11/15, 8 on 11/16, 5 on 11/17 and 12 on 11/18. Two matchups appear twice in the window (NYK @ TOR on 11/15 and
-11/17, POR @ MIN on 11/16 and 11/17) — verified genuine against the official schedule block, not a duplication
-error. The Cup-group column is blank and flagged (FLAG-V2-CUP-BLANK): no Emirates NBA Cup marker appears on any of
-the 34 listings at retrieval, and a blank is published rather than an assumption.</p>
+<p class="lede">Read from the official /games day strips on 2026-11-19 (session arena/6b9f3bbe-nba2). This window extends through the date three days later (inclusive): 4 games on
+11/19, 9 on 11/20 (Emirates NBA Cup group play), 6 on 11/21 and 7 on 11/22. Tips and game ids were
+cross-checked against the committed 2026-11-17 schedule capture — every shared tip agrees. Arena/city for
+11/19-11/20 come from that committed official schedule read; the 11/21-11/22 rows are blank and flagged
+(FLAG-V2-ARENA-BLANK): the day strips do not print the arena, and a blank is published rather than an assumption.</p>
 """
     srows = []
     for (d, t, a, h, gid, arena, city, tv, cup) in sorted(O.SLATE):
-        srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), esc(arena), esc(city), esc(tv or "—"), esc(cup or "—"),
+        arena_cell = esc(arena) if arena else '<span class="blank">arena unavailable — day strip does not print it</span>'
+        city_cell = esc(city) if city else '<span class="blank">city unavailable — day strip does not print it</span>'
+        srows.append({"cells": [esc(d), esc(t), f"{esc(a)} @ {esc(h)}", esc(gid), arena_cell, city_cell, esc(tv or "—"), esc(cup or "—"),
                                srclink("https://www.nba.com/schedule?date=" + d)]})
     body += table(["Date", "ET", "Matchup", "Game ID", "Arena", "City", "National TV", "Cup group", "Source"],
                   srows, f"{len(srows)} games on the official schedule", idcol=None)

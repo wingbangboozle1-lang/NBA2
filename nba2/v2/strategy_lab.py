@@ -162,6 +162,21 @@ def load_games() -> list[dict]:
         games.append({"game_id": r["game_id"], "date": r["date"], "away": r["away"],
                       "home": r["home"], "away_pts": r["away_pts"], "home_pts": r["home_pts"],
                       "ot": bool(r.get("ot_periods")), "source_url": r["source_url"]})
+    # RQ-8892-02 re-cut (arena/6b9f3bbe-nba2): join every committed official finals feed
+    # (finals_2026-11-13..18.json) so the lab scores every verified final through 2026-11-18.
+    # Dedupe stays exact: a duplicate id is skipped, and a club cell left blank by the 11/13
+    # feed's schema is filled only from a row whose score already agrees.
+    for f in sorted(glob.glob(str(ROOT / "data/raw/finals_2026-11-1[3-8].json"))):
+        for r in json.loads(Path(f).read_text()).get("records") or []:
+            if r.get("game_id") in {x["game_id"] for x in games}:
+                continue
+            away, home = r.get("away_team") or r.get("away"), r.get("home_team") or r.get("home")
+            hp, ap = r.get("home_pts"), r.get("away_pts")
+            if hp is None or ap is None or not (away and home):
+                continue
+            games.append({"game_id": r["game_id"], "date": r.get("date"), "away": away,
+                          "home": home, "away_pts": ap, "home_pts": hp,
+                          "ot": bool(r.get("ot_periods")), "source_url": r.get("source")})
     games.sort(key=lambda g: (g["date"], g["game_id"]))
     return games
 
