@@ -5752,3 +5752,25 @@ nba2.pipeline.settle` re-ran fail-closed: **36 settled games from 11 committed s
 (the **non-published** v1 tree's snapshot is the 2026-11-14 one; the published v2..v6 tree is
 built from the 2026-11-18 capture — disclosed, not fabricated). Backtest tree rebuilt and
 verified (183 sourced rows, deterministic).
+
+### Parallel-session overlap & reconciliation — session `arena/be1ea6bf-nba2` (2026-11-19 UTC)
+
+While this session was running its verification chain, two other sessions moved `main`:
+- **PR #127** (`arena/0b91edfc-nba2`, merged 06:04:21Z, "Baseline repair: v1 build output fixed
+  point + README test counts (0B9)") fixed **the same root causes this session fixed independently**:
+  the stale v6 frozen `AS_OF` clock, the `rows`/`feed_rows` key gap, the multi-key URL normalisation
+  (with an additional https-guard on the `source` field — strictly safer), the URL corroboration
+  fill, the frozen-clock test window, the README test counts, and the v1 build fixed point. It also
+  added `nba2/tests/test_settle_aliases.py` and a settle-alias change, and rebuilt the v1/v6 trees.
+- **PR #78** (`arena/56b96bf0-nba2`) merged the session-56b96bf0 completion record (this session
+  executed the merge; see disposition log below).
+
+**Reconciliation decision (no work discarded):** for every file both sessions changed
+(`nba2/v6/results_coverage.py`, `nba2/v6/test_v6.py`, `README.md`, `data/raw/official_finals_union.json`,
+`data/settlement.json`, the regenerated `data/site*.json`, `pages/**`, `site/**`, `data/v6/**`),
+this session **keeps the merged `main` version** — it is the CI-verified fixed point, and #127's
+README counts (92 tests, incl. its new `test_settle_aliases.py`) match its own tree. This session
+keeps only what is unique to it: the `audit/session-934fce54/**` notes carried from stale PR #125,
+the 28 historical artifacts carried from stale PRs #70/#72/#80/#98/#112, and this session's
+append-only board records. The rebase below resolves conflicts on that basis; nothing of either
+session's work is lost.
