@@ -6480,3 +6480,51 @@ and the publish-parity diff is a fixed point. The desk's published URL is
 **The general lesson, recorded because three sessions have now hit it:** in this repository, "committed" is
 not "published". Only `site/**` reaches a reader, and anything meant for a reader must be written there and
 covered by the parity diff. A separate Pages deployer is never the answer — there is one Pages site.
+
+### Final state — session `arena/585453f5-nba2` (2026-11-19 UTC)
+
+**Merges.** PR **#139** → merge commit `30d67f8`; PR **#146** → merge commit `b0a701c`.
+Both merged without approval after all six required checks passed
+(`verify`, `parity`, `v2`, `backtest`, `capture`, `refresh-dry-run`); every deploy confirmed
+`success` from the Actions API, with the last recorded build `status: built`.
+
+**A correction to my own record.** Earlier in this board and in
+`analysis/session-585453f5-integration.md` I wrote that the GitHub Pages front door serves the
+repository root. That was **wrong** and is withdrawn. Measured on the live host through the
+page-fetch transport: `/NBA2/` and `/NBA2/index.html` serve the v2/v7 dashboard,
+`/NBA2/v7-slate.html`, `/NBA2/v7-verify.html`, `/NBA2/flagged.html` and
+`/NBA2/audit/923eb342/index.html` all return 200, and `/NBA2/site/index.html` returns 404
+because that path does not exist inside the uploaded artefact. The `github-pages` artefact is
+the `site/` directory; `build_type: legacy` refers to the deployment plumbing, not to the
+document root. The repo-root `index.html` pointer is only what github.com shows when browsing
+the repository.
+
+**Verified live at 2026-11-19T13:0x Z** (page-fetch transport; this sandbox has no TLS egress —
+`urllib` fails on every host, which is why `curl`-based probes in this session returned 000):
+`/NBA2/v7-verify.html` prints **433/433 items matched**, 12/13 claims checked against an
+official page, **6/10 gates PASS** with G-V7-4/6/8/9 published BLOCKED, and the integration
+rows V-11 (27/27 advanced stats), V-12 (26/26 standings) and V-13 (13/13 slate ids and tips)
+re-read from nba.com.
+
+**The nightly refresh failure is repaired.** Ten consecutive scheduled runs had failed on the
+publish leg. Reproduced at `a5380e1` (`python3 -m nba2.v6` → `HARD GATE FAILURE G-V6-8` on ten
+rows that *do* carry `https://www.nba.com/game/…` under the key `source` in
+`data/raw/official_finals_union.json`). Two reader defects fixed — the null-wins merge in
+`_records_of`, and an extractor that did not accept every committed URL key — with
+`nba2/v6/test_results_union_source.py` pinning both directions so the gate still fails a row
+that genuinely has no official URL. The eleven-module sequence that failed now completes at
+that same commit. **Not claimed:** that the next scheduled fire will be green — this session
+cannot observe a cron run it did not trigger.
+
+**Final verification on the merged tree** (run here, on `546e6b3`):
+suites **92 / 167 / 67 / 61 / 26 / 59 / 37 = 509 OK**; `nba2.v2/v3/v4/v5/v6.check` all exit 0;
+provenance lint **1436 rows across 50 tables**; **8024 internal links OK** across 148 files;
+both sealed ledgers `cf7dedc6…` (22) and `c841e8f3…` (27) **VERIFIED and unmodified**; the full
+10-module ordered rebuild is a **fixed point (0 files drift)**; Pages deploy `success`.
+
+**Still flagged for owner review, none blocking:** the 2026-11-19 injury report was never read
+(`F-V7-AVAIL`, G-V7-8 blocks); no market price exists anywhere so no edge is computable and
+every stake is 0.00 (`F-V7-MARKET`, G-V7-6 blocks); the props sample is 3 games against the ~15
+needed (`F-V7-PROPS`); the v7 snapshot is one game behind for LAL and NOP (`F-V7-FRESH`);
+`data/raw/v7_fetch/` is not committed, so v7's cited raw page bytes are absent (F-5854-03);
+arena coordinates remain third-party (FLAG-V2-ARENA-COORDS).
