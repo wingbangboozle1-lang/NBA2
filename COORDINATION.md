@@ -5899,3 +5899,24 @@ adds a minimal initialization and regression test, without changing gate behavio
 
 **Scope amendment 3:** add `nba2/v6/__main__.py` and a check-only regression in
 `nba2/v6/test_v6.py`; existing v6 gates and generated output are unchanged by this fix.
+
+### Session `arena/8c7c8828-nba2` — generated-output integration scope (2026-11-19 UTC)
+
+To verify the full Pages/parity chain after the workflow and v6 fixes, the integration session
+must run the committed builders from the just-captured official inputs. Those builders write
+shared, tracked outputs; the board reserves those outputs for final integration. This session
+now explicitly assumes that role for the current branch. It will modify generated files only by
+running their committed builders, and will record the before/after seal digests. No sealed
+ledger or hand-authored result row is in scope.
+
+**Generated-output scope:** `data/settlement.json`, `data/raw/official_finals_union.json`,
+`data/site.json`, `data/v2/**`, `data/v3/**` (derived copies only), `data/v4/**` (derived outputs
+only; never `data/v3/ledger/**` or `data/raw/ledger/**`), `data/v5/**`, `data/v6/**`,
+`index.html`, `flagged.html`, `pages/**`, and `site/**`. These paths are edited only by
+`python -m nba2.pipeline.settle`, `python -m nba2.pipeline.build_site_data`,
+`python -m nba2.pipeline.build_site`, `python -m backtest.engine.build`, and the committed
+v2–v6 builders. This is not permission to hand-edit or overwrite any source capture.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-11 | Regenerate the official settlement, summaries, and published site from committed inputs | in progress | source builds only; sealed-ledger hashes identical before/after; all source/gate checks green |
