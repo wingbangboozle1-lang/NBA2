@@ -5990,3 +5990,21 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/9fef54cf-nba2` — CLAIM (2026-11-19 UTC, branch `arena/9fef54cf-nba2`, base `41cfd81` = `main` @ PR #133)
+
+**Task (narrow, non-overlapping):** independent tamper-evidence and pre-registration audit. Checks the brief items "freeze a pre-registration file per strategy before its first bet" and "tamper-evident ledger: hash each pick, publish the hash before tip, verify after settlement" against the git history and the committed files, line by line. Records every finding with a commit link. It does **not** re-freeze, re-hash, or edit any prereg file, sealed ledger, model input, or published page: a frozen file that has been changed is reported, not repaired silently.
+
+**Claimed file scope:** `audit/9fef54cf/**` (new: reproducible checker script, output JSON), `analysis/session-9fef54cf-prereg-audit.md` (new), and this append-only board entry. Nothing else.
+
+**Overlap check:** does not touch PR #130 (`arena/6023d517-nba2`), PR #131 (`arena/8c7c8828-nba2`), the requirements-coverage audit (`arena/164d832b-nba2`), the official-freshness probe (`arena/22fcf97f-nba2`), or the readiness audit (`arena/ede2dbd0-nba2`). Those sessions are not affected by this audit.
+
+| ID | Task | Status | File scope | Verification |
+|---|---|---|---|---|
+| 9F-1 | Claim + push before work | done | `COORDINATION.md` | pushed before audit work |
+| 9F-2 | Recompute every prereg hash and sealed-ledger digest with the rule each file declares | in progress | `audit/9fef54cf/**` | script output, reproducible |
+| 9F-3 | Timeline from git history: first commit, commit count, content changes after first commit, `frozen_at`/`registered_at` vs first commit, vs first sealed pick and first finals | in progress | `audit/9fef54cf/**` | commit SHAs linked |
+| 9F-4 | Findings record + suggestions (no repair without owner decision) | in progress | `analysis/session-9fef54cf-prereg-audit.md` | every claim cites a SHA or a command |
+| 9F-5 | Commit, `git pull --rebase`, push, mark done | in progress | `COORDINATION.md` | — |
