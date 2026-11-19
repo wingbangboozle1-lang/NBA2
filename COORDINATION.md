@@ -6008,3 +6008,27 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 | 9F-3 | Timeline from git history: first commit, commit count, content changes after first commit, `frozen_at`/`registered_at` vs first commit, vs first sealed pick and first finals | in progress | `audit/9fef54cf/**` | commit SHAs linked |
 | 9F-4 | Findings record + suggestions (no repair without owner decision) | in progress | `analysis/session-9fef54cf-prereg-audit.md` | every claim cites a SHA or a command |
 | 9F-5 | Commit, `git pull --rebase`, push, mark done | in progress | `COORDINATION.md` | — |
+
+### Completion record — session `arena/9fef54cf-nba2` (2026-11-19 UTC)
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| 9F-1 | Claim + push before work | done | claim pushed before any audit work (`68279ed`) |
+| 9F-2 | Recompute every prereg hash and sealed digest | done | sealed-2026-11-13 and -14 verify; v2 prereg 0/7 match under 4 tested rules; v3 8/9 match canonical JSON (S9 never matches) |
+| 9F-3 | Timeline from full git history (clone unshallowed; `origin/main` = 585 commits) | done | v2 re-stamped 4 times; v3 window rolled 11/15→11/16→11/17 with declared times later than commits; sealed-14 header seal time varies (00:58:54 vs 00:49:16) |
+| 9F-4 | Findings + suggestions + owner questions, no repairs | done | `analysis/session-9fef54cf-prereg-audit.md` (F-PR-01…09, S-PR-1…7); reproducible: `audit/9fef54cf/prereg_audit.py` → `audit/9fef54cf/prereg_audit.json` |
+| 9F-5 | Commit, rebase, push | done | see the PR entry below |
+
+**Sources.** Repository evidence only: commit SHAs with GitHub links in the analysis note; committed `data/raw/finals_*.json` first-commit times; committed prereg, ledger and strategy-lab files. **No NBA.com value was read or re-checked in this session**, so no official NBA source is cited.
+
+**Verification.** `python3 audit/9fef54cf/prereg_audit.py` re-run on the final tree; sealed digests recomputed by an independent script and by `nba2.models.ledger.verify` (both True).
+
+**Irregularities (for the integration session to publish on Flagged for Review; not published by this session because site navigation is integration-owned):** FR-PR-01 through FR-PR-06, listed in §6 of `analysis/session-9fef54cf-prereg-audit.md`. These are the most serious findings on the board: the pre-registration is not a valid freeze, its hashes do not reproduce, and the S1–S7 IDs refer to different strategies in different files.
+
+**Requests logged (not edited here):**
+- **RQ-9F-1 → `arena/fb1d73b2-nba2`** (commit `7accb28`, unmerged): the 2026-11-19 v2 re-cut re-stamps `frozen_at_utc`/`frozen_by`/`prereg_hash` on the frozen v2 files (F-PR-01). Request: do not re-stamp a frozen file; create a new versioned ID for any changed strategy, and keep the old file.
+- **RQ-9F-2 → integration session (`arena/d5a9f631-nba2`)**: mirror FR-PR-01…06 to the Flagged for Review page with the commit links; relabel v2/v3 strategies as "retro-specified, not pre-registered" pending owner decision (S-PR-5). Do not change the numbers.
+- **RQ-9F-3 → owner decision**: choose the canonical strategy set (F-PR-03), the hash rule (S-PR-2), an external anchor for pre-tip publication (S-PR-4), and whether to approve S-PR-1 and S-PR-7 as repository policy. Questions are listed in §5 of the analysis note.
+- **RQ-9F-4 → owner decision on the 11/14 ledger seal time** (F-PR-06): only an external record can settle 00:49:16 vs 00:58:54.
+
+**Scope check.** Only `audit/9fef54cf/**`, `analysis/session-9fef54cf-prereg-audit.md` and this board were changed. No prereg file, sealed ledger, model input, official capture, generated site data, or site navigation was touched.

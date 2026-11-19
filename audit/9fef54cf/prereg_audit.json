@@ -1,0 +1,1413 @@
+{
+ "clone_is_shallow": false,
+ "finals_first_commits": {
+  "data/raw/finals_2026-11-13.json": {
+   "first_commit": "2026-11-14T10:25:27+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/13aa58fdebf625f1325b4bed680407072f572ba9"
+  },
+  "data/raw/finals_2026-11-14.json": {
+   "first_commit": "2026-11-15T11:58:28+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/2b32dcdf2cfacfcf7903ff945a6eb47ac0eeea4f"
+  },
+  "data/raw/finals_2026-11-15.json": {
+   "first_commit": "2026-11-17T19:36:28+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bf99f2a1ea85069bc38c4b579b199d530ca3968d"
+  },
+  "data/raw/finals_2026-11-16.json": {
+   "first_commit": "2026-11-17T19:36:28+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bf99f2a1ea85069bc38c4b579b199d530ca3968d"
+  },
+  "data/raw/finals_2026-11-17.json": {
+   "first_commit": "2026-11-18T14:51:20+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/eb9648330e0b9d87143557a8be80b415ad8500a9"
+  },
+  "data/raw/finals_all.json": {
+   "first_commit": "2026-11-14T10:25:27+00:00",
+   "first_commit_url": "https://github.com/wingbangboozle1-lang/NBA2/commit/13aa58fdebf625f1325b4bed680407072f572ba9"
+  }
+ },
+ "generated_by": "audit/9fef54cf/prereg_audit.py",
+ "head": "68279edded0e305fadfb128021347d2596dda638",
+ "origin_main": "41cfd812d2794db529090cd026e7056ca3c1b0cd",
+ "origin_main_commits": 585,
+ "prereg_v2": {
+  "files": [
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "8ca29231d45c1d2bd34f264ac45de6b01609609559892ddcf5d775ba2b8e5a20",
+     "canonical_body_excluding_hash_field": "1e2af36f319c9d27ac74101bc9543155af6ad12e4dd1ccf6005b55dda68e992b",
+     "canonical_full_doc_including_hash_field": "59a4f65d9ca2d26ff39d9f9a1eac9fff2dad627a6c9ac442522912959b4d468b",
+     "raw_file_bytes": "b4710ab0cce82559b63b456528260a8694e810f1393599c5e26a5db985b67c70"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S1.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "b4710ab0cce82559b63b456528260a8694e810f1393599c5e26a5db985b67c70",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S1",
+    "stored_hash": "8cc2cddc2e5fe5ae09246b703496a2f27feadfc9f0b7db7026f4a0a514f80c95",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "8cc2cddc2e5fe5ae09246b703496a2f27feadfc9f0b7db7026f4a0a514f80c95",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "cb80e5b192893cf516b573a54b8ff3f3334379c0ac64ef5e398aff778c647e60",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "8cc2cddc2e5fe5ae09246b703496a2f27feadfc9f0b7db7026f4a0a514f80c95",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "300864103ffceb0f154b68aa1e1f1706661733a357fc455553bc371418781f3c",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "93bc15da27550ef867897f32fd95381d4d4f081d3e14ff026dbecb465d6d8da3",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "b34f483c1a74f3706d734ac7607e3eb30046841a4873449c2b764012e395015d",
+     "canonical_body_excluding_hash_field": "6c66993787e09bfbc748f29bcc5ec2fea49c098960767102b06b5eb82c8c86bb",
+     "canonical_full_doc_including_hash_field": "73cd578071b6c480a28a8c74ae23e072d42780a29b94c716f2b351b0863c5174",
+     "raw_file_bytes": "793b24ac32feabda4e6af88b004e764ddad52b4146bc969ae2dc3f78206e881a"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S2.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "793b24ac32feabda4e6af88b004e764ddad52b4146bc969ae2dc3f78206e881a",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S2",
+    "stored_hash": "730bf57d75ea610792ef7dc4701aaa3892cc539c6d30fc3c191d9d3c1a4b3e05",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "730bf57d75ea610792ef7dc4701aaa3892cc539c6d30fc3c191d9d3c1a4b3e05",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "b980a58ddcefcb8e99b2da493ac20963a84af9359b68ed45256b855042949bb2",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "730bf57d75ea610792ef7dc4701aaa3892cc539c6d30fc3c191d9d3c1a4b3e05",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "245189804a60a2f569c2e0159a4da1217c83266c3f2a52bab1f2a45c95d0fa44",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "4e6c5b5486d290c5c88e4c1116013b6576a97b540c76d9de4eb2d865b6c04798",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "36a4e993d8fbcdd87e97836b9298541e4610bef12d0c7300cf9a64b38f4097d2",
+     "canonical_body_excluding_hash_field": "4c35ebcddd7009e9748ddfddcb6986990f6547713e4a988d5f2802d51502c768",
+     "canonical_full_doc_including_hash_field": "2d56d8715c9e30082a4bcd8c009bbc371a344b40a125129bcd5cd33ce10c9e36",
+     "raw_file_bytes": "926f9ee912d895f48bbff7cde1e2dcf0fb70e5e39f26cac32a5febd02a42693e"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S3.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "926f9ee912d895f48bbff7cde1e2dcf0fb70e5e39f26cac32a5febd02a42693e",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S3",
+    "stored_hash": "3f793972849ec5e24d475c46537ac2beacc3b39147765a356bccc5b23a10580c",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "3f793972849ec5e24d475c46537ac2beacc3b39147765a356bccc5b23a10580c",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "85ce643aa163e1bfbc91f20dcfcc78d804fd2e481d2a0481d2d03b2fc95102e2",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "3f793972849ec5e24d475c46537ac2beacc3b39147765a356bccc5b23a10580c",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "776e4bd7795119ee4257e079fc700f605b345f680b1075203207d1591239bd98",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "5ac59e1f9976db9ddcd6fdbc0bcca5713567cc42111793d100a151d97753997c",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "ddf80646e01e9a843dbbba9f20788b235decfcee3834dfceaf795d3b9378fa17",
+     "canonical_body_excluding_hash_field": "ec4c98ea2f5fef97894f3f98555b11443891cb1d1143fbaedff0923a7fc5269f",
+     "canonical_full_doc_including_hash_field": "1c36ab1b1cd4e3e66291704d5a606a0aa89469903477c71f7a3e38e2932239f6",
+     "raw_file_bytes": "8703c42dfa9c53072eabd7f0ff102f4baf37288dac152b47b5bd4cb83008a853"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S4.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "8703c42dfa9c53072eabd7f0ff102f4baf37288dac152b47b5bd4cb83008a853",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S4",
+    "stored_hash": "47f89f40bb58bd1dc28c75d9054cd59cffaecb2628c51ca53b191ae35ddcc932",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "47f89f40bb58bd1dc28c75d9054cd59cffaecb2628c51ca53b191ae35ddcc932",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "79818d22cf742f971cd62b9fdb30a309f19a58dfcd3a0c88f7976eb7f1b8be17",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "47f89f40bb58bd1dc28c75d9054cd59cffaecb2628c51ca53b191ae35ddcc932",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "ab13483297a46744a922ba45bb6a9ad4a82241430e5aa1494e7023dd59626ed4",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "a6efbf6ee959d74fb3d072f18f8d8406188535d5f82a3f664622396c4150b2a7",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "60c54f9b1248ac84b1cbc7ac8b3b61767e6795d07c424fb4fa08dc75b12d37ea",
+     "canonical_body_excluding_hash_field": "a53a6b69c6366bcbc296099a70cad7868be8983de8103afc96211c4f2ba18734",
+     "canonical_full_doc_including_hash_field": "600a57e45530b5dfb1b89b86b842eb7d23d9bc9539f58376998c7795d00066c9",
+     "raw_file_bytes": "84b8f9e79653c865457bc5950ea51a848e82a892f74d17b7ec8e0a5911499f2f"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S5.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "84b8f9e79653c865457bc5950ea51a848e82a892f74d17b7ec8e0a5911499f2f",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S5",
+    "stored_hash": "fc9c6ddd510fc33226dbc383af592ff0c1ab1d146c7937f0cbb1413b8edac37b",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "fc9c6ddd510fc33226dbc383af592ff0c1ab1d146c7937f0cbb1413b8edac37b",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "00bb5ff19a810078a30485a3c2e9960b7a4d08839e8e5c565e30753e36b4d3b0",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "fc9c6ddd510fc33226dbc383af592ff0c1ab1d146c7937f0cbb1413b8edac37b",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "41145de51cf99a495795c7c2b5ea0c1753f9979c954c0e93beb76e7a34975386",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "78e2125dc8379a06b297f8297ad4a189bed1870b6a7648f70ae6720497f556a6",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "848305db22d273034e13aefde4b4ea690f8ea37586b3f2fa80fad008590f14b2",
+     "canonical_body_excluding_hash_field": "8de220086785fc88bde813d8e2bf86dccf5b1b466b933c44f10b16f6c70629d5",
+     "canonical_full_doc_including_hash_field": "0cd5faed75c12422cfd088f2df402a1ffb360851635130f3bb7b8f6b856fcda1",
+     "raw_file_bytes": "f7d642af1bdd63282589eb39628525790f746df9cb243f043b46d5ef3916b756"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S6.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "f7d642af1bdd63282589eb39628525790f746df9cb243f043b46d5ef3916b756",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S6",
+    "stored_hash": "808a3d50633b22ab29904a80bc9dd5babebecc0ac2ce66dc777e786bd22bc35d",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "808a3d50633b22ab29904a80bc9dd5babebecc0ac2ce66dc777e786bd22bc35d",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "92d869731ce5537e15165accadb87c1aab6b520f22c13d32a1a0f171b22bef84",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "808a3d50633b22ab29904a80bc9dd5babebecc0ac2ce66dc777e786bd22bc35d",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "e00762b9a236f1d7e55762524d4ba30a314803cbd4e2bee07633929efa5d0c4a",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "5839f40e3b3d3799b3c46e493c40e6f0b3d4034dc3c9c48a5144dea94a04b446",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "ed7ab6072a70983b204553abd7d84b4a0b856a46413c26f4da1ec72b70a5b2c7",
+     "canonical_body_excluding_hash_field": "43cc6808527dcf3db68a1adb6db95d95b86479b2c70e3303df09505d132e2669",
+     "canonical_full_doc_including_hash_field": "7cf15c4c57a0023636e865670ea3fd11f98d05e8619fb152635573f31632141f",
+     "raw_file_bytes": "df538ea77ce4d4cf394905a33897188e15b1a756189ac9f580d2877d3ba5abe2"
+    },
+    "commits": 8,
+    "distinct_versions": 5,
+    "file": "data/v2/prereg/S7.json",
+    "first_commit": {
+     "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+     "committed_at": "2026-11-15T12:51:24+00:00",
+     "content_sha256": "df538ea77ce4d4cf394905a33897188e15b1a756189ac9f580d2877d3ba5abe2",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+    },
+    "frozen_at_utc_claimed": "2026-11-15T12:00:00Z",
+    "frozen_claim_precedes_first_commit": true,
+    "hours_between_claim_and_first_commit": 0.86,
+    "id": "S7",
+    "stored_hash": "7b222b926bf4ae47fb2eff2dd9d2d97a1eaf055d61c5c8647acea8e321e60e82",
+    "stored_hash_matches": null,
+    "versions_by_commit": [
+     {
+      "commit": "e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9",
+      "committed_at": "2026-11-15T12:51:24+00:00",
+      "declared_later_than_commit_minutes": -51.4,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": true,
+      "prereg_hash": "7b222b926bf4ae47fb2eff2dd9d2d97a1eaf055d61c5c8647acea8e321e60e82",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/e4a2f47c3bb6f740ba4e6f521acab2a1bcea51a9"
+     },
+     {
+      "commit": "8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde",
+      "committed_at": "2026-11-16T00:16:01+00:00",
+      "declared_later_than_commit_minutes": -751.0,
+      "frozen_at_utc": "2026-11-15T11:45:00Z",
+      "frozen_by": "arena/04a61ac0-nba2",
+      "on_main": false,
+      "prereg_hash": "59df4a7f9fbf18281e84be3db0ab4f481c4836da8a8ffc58f9908f17ce85bfd6",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/8086173cab2d6d9d3ccd0e76b17d00ccc93c4bde"
+     },
+     {
+      "commit": "b777098fcafa70c4d885953da58f7cdb616bbb19",
+      "committed_at": "2026-11-16T18:28:19+00:00",
+      "declared_later_than_commit_minutes": -1828.3,
+      "frozen_at_utc": "2026-11-15T12:00:00Z",
+      "frozen_by": "arena/98b0eae9-nba2",
+      "on_main": false,
+      "prereg_hash": "7b222b926bf4ae47fb2eff2dd9d2d97a1eaf055d61c5c8647acea8e321e60e82",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b777098fcafa70c4d885953da58f7cdb616bbb19"
+     },
+     {
+      "commit": "6a00f61e7a0ac39fe6117c970fac6051c3eccd4d",
+      "committed_at": "2026-11-17T16:10:16+00:00",
+      "declared_later_than_commit_minutes": -58.3,
+      "frozen_at_utc": "2026-11-17T15:12:00Z",
+      "frozen_by": "arena/45f14c5c-nba2",
+      "on_main": false,
+      "prereg_hash": "d1c661826390de77021472b05529accbf800d19eb040037f67cb1e7980c4f845",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/6a00f61e7a0ac39fe6117c970fac6051c3eccd4d"
+     },
+     {
+      "commit": "7accb281c0f2640cf1e57e61f337ae1f93b7ba04",
+      "committed_at": "2026-11-19T06:37:22+00:00",
+      "declared_later_than_commit_minutes": -17.4,
+      "frozen_at_utc": "2026-11-19T06:20:00Z",
+      "frozen_by": "arena/fb1d73b2-nba2",
+      "on_main": false,
+      "prereg_hash": "dcd3dda47357986ce622af904c815848fc4efe4bb91c3252a9090359f5e32004",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7accb281c0f2640cf1e57e61f337ae1f93b7ba04"
+     }
+    ]
+   }
+  ],
+  "manifest": "data/v2/preregistration.json"
+ },
+ "prereg_v3": {
+  "directory": "data/v3/prereg",
+  "files": [
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d",
+     "canonical_body_excluding_hash_field": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d",
+     "canonical_full_doc_including_hash_field": "4ea9f21fd6aaf7c311a786429f07c1013bb0eb78cf4311459e6838d30fcb58d3",
+     "raw_file_bytes": "9b9438f4b995ec83adbc6db4ccc12bfb45c1c7e01f651a5432e8dfe738e71cb4"
+    },
+    "commits": 9,
+    "distinct_versions": 3,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S1-estimator-agreement-moneyline.json",
+    "first_commit": {
+     "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+     "committed_at": "2026-11-15T12:03:51+00:00",
+     "content_sha256": "607c78012db3327fcb3f0f9445ec5fe1aee83312c1fc7156dd1cf3476d2dbf38",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "623f0bdba346133d83dcd188256bec5382286a74f43901f234d38503a03318b3",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S1",
+    "name": "Estimator-agreement moneyline",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d",
+    "versions_by_commit": [
+     {
+      "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "committed_at": "2026-11-15T12:03:51+00:00",
+      "declared_later_than_commit_minutes": -22.9,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "623f0bdba346133d83dcd188256bec5382286a74f43901f234d38503a03318b3",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "committed_at": "2026-11-16T02:34:50+00:00",
+      "declared_later_than_commit_minutes": 10.2,
+      "on_main": false,
+      "registered_at_utc": "2026-11-16T02:45:00Z",
+      "registered_by": "arena/f7186ace-nba2",
+      "sha256": "64dd01184996ce91c62937f0f475b7d173010752239b24cf0e1c9d5a7215b7e2",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "window": {
+       "end": "2026-11-19",
+       "start": "2026-11-16"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9",
+     "canonical_body_excluding_hash_field": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9",
+     "canonical_full_doc_including_hash_field": "f0f40e066fe6bdae82a0d31415bf4bb4ad6393583739bb46cd097099c6ee75c9",
+     "raw_file_bytes": "d619bd5120d178c6fa44af2fe43786ec990e2a570149dfe5ee110aca28a2a507"
+    },
+    "commits": 9,
+    "distinct_versions": 3,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S2-disagreement-fade-spread.json",
+    "first_commit": {
+     "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+     "committed_at": "2026-11-15T12:03:51+00:00",
+     "content_sha256": "a60f9bcedae7b3380bd27ee33eaa933c6a89119f8e705fc0d4ef16e61bd61aa9",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "d27fe0b04f2e0d5b289776e6164c7e380d66dd1b49bba4b6958bf5b30a2c02db",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S2",
+    "name": "Disagreement-fade spread",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9",
+    "versions_by_commit": [
+     {
+      "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "committed_at": "2026-11-15T12:03:51+00:00",
+      "declared_later_than_commit_minutes": -22.9,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "d27fe0b04f2e0d5b289776e6164c7e380d66dd1b49bba4b6958bf5b30a2c02db",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "committed_at": "2026-11-16T02:34:50+00:00",
+      "declared_later_than_commit_minutes": 10.2,
+      "on_main": false,
+      "registered_at_utc": "2026-11-16T02:45:00Z",
+      "registered_by": "arena/f7186ace-nba2",
+      "sha256": "8bc35643dea9aecdb5791641336fa39aaf61d77c51fc18d46e0716423e97609b",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "window": {
+       "end": "2026-11-19",
+       "start": "2026-11-16"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c",
+     "canonical_body_excluding_hash_field": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c",
+     "canonical_full_doc_including_hash_field": "3c13aade2e2195d1977c8f59e5ae2a8cbe133addec05f4383d42424ef2619192",
+     "raw_file_bytes": "312b0e7c0c89e1042310d47a7778d5019f1539e6c325ee7a885a08a8a97ef20e"
+    },
+    "commits": 9,
+    "distinct_versions": 3,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S3-possession-model-total.json",
+    "first_commit": {
+     "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+     "committed_at": "2026-11-15T12:03:51+00:00",
+     "content_sha256": "91c8d5cafb52ba350737559ca1e2d00bb16d324c8d37424f79957faba729786b",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "f88f07be464e81fc570e2d7e22c6b3cf67cb493efd3abde7c1869d3c484177ee",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S3",
+    "name": "Possession-model total",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c",
+    "versions_by_commit": [
+     {
+      "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "committed_at": "2026-11-15T12:03:51+00:00",
+      "declared_later_than_commit_minutes": -22.9,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "f88f07be464e81fc570e2d7e22c6b3cf67cb493efd3abde7c1869d3c484177ee",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "committed_at": "2026-11-16T02:34:50+00:00",
+      "declared_later_than_commit_minutes": 10.2,
+      "on_main": false,
+      "registered_at_utc": "2026-11-16T02:45:00Z",
+      "registered_by": "arena/f7186ace-nba2",
+      "sha256": "8e5c8207f42b9ad7ee86c424c7e574bb041d1182864fe52822f1beb704f32d32",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "window": {
+       "end": "2026-11-19",
+       "start": "2026-11-16"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095",
+     "canonical_body_excluding_hash_field": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095",
+     "canonical_full_doc_including_hash_field": "5e1e95a83859d4167cec56ea119863be0482f7b4096de2e079b43431b23a34ca",
+     "raw_file_bytes": "ef405f6e2dd2f3e7d913235e2c1c7f374a57d20e1d202e316e85791bb81f8a43"
+    },
+    "commits": 9,
+    "distinct_versions": 3,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S4-rotation-availability-fade.json",
+    "first_commit": {
+     "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+     "committed_at": "2026-11-15T12:03:51+00:00",
+     "content_sha256": "3dc42ec1c21f7874407cff143aaf944c154a32d1518f2e98c57ff4dc857baf22",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "97b85e33675ca0b8fd7cf8f7d328094c7b4ddfb30450e5266dff66ff24d9a8db",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S4",
+    "name": "Rotation-availability fade",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095",
+    "versions_by_commit": [
+     {
+      "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "committed_at": "2026-11-15T12:03:51+00:00",
+      "declared_later_than_commit_minutes": -22.9,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "97b85e33675ca0b8fd7cf8f7d328094c7b4ddfb30450e5266dff66ff24d9a8db",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "committed_at": "2026-11-16T02:34:50+00:00",
+      "declared_later_than_commit_minutes": 10.2,
+      "on_main": false,
+      "registered_at_utc": "2026-11-16T02:45:00Z",
+      "registered_by": "arena/f7186ace-nba2",
+      "sha256": "6c071d3a75371304eabfbbe43bb042fc2c59778ca7159a252efc6b27ac68f21d",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "window": {
+       "end": "2026-11-19",
+       "start": "2026-11-16"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "a3e7655c15b9366aafbdbe7a557a22b20d78270c0416254b6cfcfb49c0c46e1e",
+     "canonical_body_excluding_hash_field": "a3e7655c15b9366aafbdbe7a557a22b20d78270c0416254b6cfcfb49c0c46e1e",
+     "canonical_full_doc_including_hash_field": "dd5538fd467f080450544f0de0faaf6dd614f09a4ad5d6dd045e95d5f29d61e0",
+     "raw_file_bytes": "2cfcb652eea69b30aec7a18c7b0069e3d996fa97ce962d9b3c2eac81db9d5d66"
+    },
+    "commits": 9,
+    "distinct_versions": 3,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S5-same-game-parlay:-spread-+-total.json",
+    "first_commit": {
+     "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+     "committed_at": "2026-11-15T12:03:51+00:00",
+     "content_sha256": "5f54f674139ed6a92de2c276ee1435844f6377604723b4381c1d3b4897e6a7b9",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S5",
+    "name": "Same-game parlay: spread + total",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "a3e7655c15b9366aafbdbe7a557a22b20d78270c0416254b6cfcfb49c0c46e1e",
+    "versions_by_commit": [
+     {
+      "commit": "bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "committed_at": "2026-11-15T12:03:51+00:00",
+      "declared_later_than_commit_minutes": -22.9,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "f89a384b156a3fbf80caac1100ff42a2e65697bca1615bcf66f2b228ccf0ed79",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/bbade89616b3d868d67d8e8233d55c669d8d7b18",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "committed_at": "2026-11-16T02:34:50+00:00",
+      "declared_later_than_commit_minutes": 10.2,
+      "on_main": false,
+      "registered_at_utc": "2026-11-16T02:45:00Z",
+      "registered_by": "arena/f7186ace-nba2",
+      "sha256": "35f36d948a3b380dfccf48fb881b2383aede9d8d7af3458f4a9a9313e413c695",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/4a5e930ec4d9905d42f196ecc4a6c0c7bf6021cd",
+      "window": {
+       "end": "2026-11-19",
+       "start": "2026-11-16"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "a3e7655c15b9366aafbdbe7a557a22b20d78270c0416254b6cfcfb49c0c46e1e",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866",
+     "canonical_body_excluding_hash_field": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866",
+     "canonical_full_doc_including_hash_field": "d39ad96a61859adf9367d9f171b5890ed8be9281adeee91099ffd5f29ead8a1f",
+     "raw_file_bytes": "0c0d672e95d94f7d6cbed72173753d8c86478c87c753d5dc4623b8178b39df75"
+    },
+    "commits": 13,
+    "distinct_versions": 2,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S6-availability-blind-guardrail-fade-(abgf).json",
+    "first_commit": {
+     "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+     "committed_at": "2026-11-16T02:38:09+00:00",
+     "content_sha256": "55cc17b00d1122b2cee17662e675ad1d89b7c92ceb5333d24a6041f8d3d75235",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "825fa3a88bf411900f8f86d059e92b4912bda9a4027c64c2d21be906c534d4da",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S6",
+    "name": "Availability-blind guardrail fade (ABGF)",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866",
+    "versions_by_commit": [
+     {
+      "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "committed_at": "2026-11-16T02:38:09+00:00",
+      "declared_later_than_commit_minutes": -897.1,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "825fa3a88bf411900f8f86d059e92b4912bda9a4027c64c2d21be906c534d4da",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09",
+     "canonical_body_excluding_hash_field": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09",
+     "canonical_full_doc_including_hash_field": "c2eb2025e9e99326573e2093e1599833cf9d5be330b3fcd40c61ce9911757e67",
+     "raw_file_bytes": "69de81eb3644fa02866cd0c59255dd5a6c035d069227975afa5ca8eb585da3a8"
+    },
+    "commits": 13,
+    "distinct_versions": 2,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S7-schedule-spot-fade-(ssf).json",
+    "first_commit": {
+     "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+     "committed_at": "2026-11-16T02:38:09+00:00",
+     "content_sha256": "5e9f01796386bc3b9460eee89fe217e7f95d5a953ae685148eafa8ffda7803fd",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "72f1d4ac12edf8a879a6930c6cf830adb70b5181eec945e32c70fa73c99c1477",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S7",
+    "name": "Schedule-spot fade (SSF)",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09",
+    "versions_by_commit": [
+     {
+      "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "committed_at": "2026-11-16T02:38:09+00:00",
+      "declared_later_than_commit_minutes": -897.1,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "72f1d4ac12edf8a879a6930c6cf830adb70b5181eec945e32c70fa73c99c1477",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9",
+     "canonical_body_excluding_hash_field": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9",
+     "canonical_full_doc_including_hash_field": "9cca5b338a0de9467e74ef9dc8cde2737a783dddce7c0ad7525e909cb6409a3c",
+     "raw_file_bytes": "9bb0b4cb7b750d1997160f1beba87ad2d69e5e63b3ae5e819d57b309b7010265"
+    },
+    "commits": 13,
+    "distinct_versions": 2,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S8-player-prop-minutes-model-(ppmm).json",
+    "first_commit": {
+     "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+     "committed_at": "2026-11-16T02:38:09+00:00",
+     "content_sha256": "16fba13785fb2f92f89911bc5ea55afd5bb61a94b5d8a9d7192a5cad24dbb865",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "6d7c50bf906c5a8ec87085cde0583fdb19a411115f7af7873b631b712b1c6068",
+    "first_version_sha256_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S8",
+    "name": "Player-prop minutes model (PPMM)",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": [
+     "canonical_body_excluding_hash_field",
+     "canonical_body_excluding_hash_and_frozen_at"
+    ],
+    "stored_sha256": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9",
+    "versions_by_commit": [
+     {
+      "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "committed_at": "2026-11-16T02:38:09+00:00",
+      "declared_later_than_commit_minutes": -897.1,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "6d7c50bf906c5a8ec87085cde0583fdb19a411115f7af7873b631b712b1c6068",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   },
+   {
+    "candidates_tested": {
+     "canonical_body_excluding_hash_and_frozen_at": "648807d3c0cb0e01d97ec2070d606533c5ece17248322e60f7733101927c8e1c",
+     "canonical_body_excluding_hash_field": "648807d3c0cb0e01d97ec2070d606533c5ece17248322e60f7733101927c8e1c",
+     "canonical_full_doc_including_hash_field": "60f2649b7f749f492f7e29fde4964249b521984c34f9532e54c91ffee1337c8a",
+     "raw_file_bytes": "72b660f79528065fe7d1d256460b156e42b17a9eb29862160e8271e374e882b3"
+    },
+    "commits": 13,
+    "distinct_versions": 2,
+    "edited_after_first_commit": true,
+    "fields_changed_since_first_commit": [
+     "registered_at_utc",
+     "registered_by",
+     "sha256",
+     "window"
+    ],
+    "file": "data/v3/prereg/S9-ledger-only-champion-(loc).json",
+    "first_commit": {
+     "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+     "committed_at": "2026-11-16T02:38:09+00:00",
+     "content_sha256": "271927fffd683875249af0bc0e0a495a121307327b3676902e5a6e8f94c306d6",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f"
+    },
+    "first_version_registered_at_utc": "2026-11-15T11:41:00Z",
+    "first_version_sha256": "b69a1125f9b593f17376ecd0c25d295e1848a887526f870c8165facb31a4845f",
+    "first_version_sha256_matches": null,
+    "first_version_window": {
+     "end": "2026-11-18",
+     "start": "2026-11-15"
+    },
+    "id": "S9",
+    "name": "Ledger-only champion (LOC)",
+    "registered_at_utc_current": "2026-11-17T17:05:00Z",
+    "registered_by_current": "arena/1eeb6a21-nba2",
+    "stored_hash_matches": null,
+    "stored_sha256": "523b64031ff2d43424feb4aa4c6101c7e2e97dada04f39c2bf213d2174c159b2",
+    "versions_by_commit": [
+     {
+      "commit": "7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "committed_at": "2026-11-16T02:38:09+00:00",
+      "declared_later_than_commit_minutes": -897.1,
+      "on_main": true,
+      "registered_at_utc": "2026-11-15T11:41:00Z",
+      "registered_by": "arena/e675ac3d-nba2",
+      "sha256": "b69a1125f9b593f17376ecd0c25d295e1848a887526f870c8165facb31a4845f",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/7459b70554ffe375e638c5c17d40860b744a3e7f",
+      "window": {
+       "end": "2026-11-18",
+       "start": "2026-11-15"
+      }
+     },
+     {
+      "commit": "fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "committed_at": "2026-11-17T16:43:48+00:00",
+      "declared_later_than_commit_minutes": 21.2,
+      "on_main": true,
+      "registered_at_utc": "2026-11-17T17:05:00Z",
+      "registered_by": "arena/1eeb6a21-nba2",
+      "sha256": "523b64031ff2d43424feb4aa4c6101c7e2e97dada04f39c2bf213d2174c159b2",
+      "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/fde5a906d2d5c84ca79ba1cd020f59fcf13f5f0d",
+      "window": {
+       "end": "2026-11-20",
+       "start": "2026-11-17"
+      }
+     }
+    ],
+    "window_current": {
+     "end": "2026-11-20",
+     "start": "2026-11-17"
+    }
+   }
+  ]
+ },
+ "published_before_tip": [
+  {
+   "file": "data/raw/ledger/sealed-2026-11-13.json",
+   "first_commit_utc": "2026-11-13T22:56:51+00:00",
+   "games_checked": 22,
+   "published_after_tip_game_ids": [],
+   "published_before_tip": 22
+  },
+  {
+   "file": "data/raw/ledger/sealed-2026-11-14.json",
+   "first_commit_utc": "2026-11-14T01:03:50+00:00",
+   "games_checked": 27,
+   "published_after_tip_game_ids": [],
+   "published_before_tip": 27
+  }
+ ],
+ "sealed_ledgers": {
+  "directory": "data/raw/ledger",
+  "files": [
+   {
+    "commits": 5,
+    "digest_matches": true,
+    "distinct_versions": 1,
+    "file": "data/raw/ledger/sealed-2026-11-13.json",
+    "first_commit": {
+     "commit": "da55ac4cc8a3324190b2ea96a197ca721c6b2890",
+     "committed_at": "2026-11-13T22:56:51+00:00",
+     "content_sha256": "9974d01e39de00c746496a8bab34948bb69b16a9d2554758e93d3c52b20e61a0",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/da55ac4cc8a3324190b2ea96a197ca721c6b2890"
+    },
+    "game_dates": [
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16"
+    ],
+    "hash_rule": "sha256 over canonical JSON (sorted keys, no whitespace) of the predictions array",
+    "header_n_predictions": 22,
+    "minutes_sealed_before_first_commit": 5.0,
+    "n_predictions": 22,
+    "recomputed_sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209",
+    "sealed_at_utc": "2026-11-13T22:51:54Z",
+    "stored_sha256": "cf7dedc689597cb8ab3dd5bb8516e26524fa545d9fd9c5a5d98b58faebbed209"
+   },
+   {
+    "commits": 5,
+    "digest_matches": true,
+    "distinct_versions": 3,
+    "file": "data/raw/ledger/sealed-2026-11-14.json",
+    "first_commit": {
+     "commit": "b4cb4b767726c61540440af4de7528112d37a226",
+     "committed_at": "2026-11-14T01:03:50+00:00",
+     "content_sha256": "95ff76d77049a68d73dae32fb38e5fe48e97a8ab0e7d85a67b760ef0cb54eb9d",
+     "on_main": true,
+     "url": "https://github.com/wingbangboozle1-lang/NBA2/commit/b4cb4b767726c61540440af4de7528112d37a226"
+    },
+    "game_dates": [
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17"
+    ],
+    "hash_rule": "sha256 over canonical JSON (sorted keys, no whitespace) of the predictions array",
+    "header_n_predictions": 27,
+    "minutes_sealed_before_first_commit": 4.9,
+    "n_predictions": 27,
+    "recomputed_sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
+    "sealed_at_utc": "2026-11-14T00:58:54Z",
+    "stored_sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7"
+   }
+  ]
+ }
+}
