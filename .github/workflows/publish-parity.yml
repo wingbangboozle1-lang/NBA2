@@ -66,10 +66,15 @@ jobs:
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
           python -m unittest discover -s nba2/v8 -t . -p 'test_*.py'
+          # v7 inserts its five links into the sidebar v6 grouped and re-appends its section
+          # to flagged.html (v2 regenerates that page), so it must be in this rebuild or the
+          # diff below reports v7's own contribution as drift. It fetches nothing.
+          python -m nba2.v7
+          python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'
 
       - name: The published tree (site/) must equal a rebuild
         run: |
-          git add -A -- site data/v2 data/v4 data/v5 data/v6
+          git add -A -- site data/v2 data/v4 data/v5 data/v6 data/v7
           if ! git diff --cached --quiet -- site; then
             echo "::error title=site/ differs from a rebuild::the published tree is stale — commit the rebuild of site/"
             git diff --cached --stat -- site | tail -20

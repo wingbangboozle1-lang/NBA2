@@ -1,0 +1,15 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-08",
+ "name": "Availability shock",
+ "signal": "re-price the game when a top-8-minutes player is ruled out between the day-before and game-day injury reports",
+ "thresholds": {
+  "min_minutes_share_out": 0.08
+ },
+ "universe": "games with both reports on file",
+ "settlement_rule": "official final vs the re-priced line, both lines sealed",
+ "market": "spread",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}

@@ -1,0 +1,16 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-03",
+ "name": "Rest and 3-in-4 fade",
+ "signal": "fade a club on the second night of a back-to-back or 3-in-4, using rest days recomputed from the official schedule",
+ "thresholds": {
+  "rest_days_diff": 2,
+  "three_in_four": true
+ },
+ "universe": "games where the two clubs' rest edges differ by >= 2 days",
+ "settlement_rule": "official final margin vs our originated line",
+ "market": "spread",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}

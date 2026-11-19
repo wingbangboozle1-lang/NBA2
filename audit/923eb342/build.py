@@ -46,6 +46,11 @@ PCOV = j("data/v6/player_coverage.json", {})
 PLOGS = j("data/v5/player_logs_union.json", {})
 BT = j("data/v2/backtest.json", {})
 V6CHK = j("data/v6/checks.json", {})
+# recorded by the pipeline itself, so it is a committed fact rather than a live measurement
+_npass = V6CHK.get("n_gates_pass")
+_nall = V6CHK.get("n_gates")
+REPO_CHECKER_RESULT = (f"{_npass}/{_nall} v6 gates pass (recorded by the pipeline)"
+                       if _nall else "not recorded")
 
 NBA_STAND = "https://www.nba.com/standings"
 INJ_INDEX = "https://official.nba.com/nba-injury-report-2026-27-season/"
@@ -407,17 +412,12 @@ SET_METRICS = [(lg["ledger"], lg.get("metrics", {})) for lg in SETTLE.get("ledge
 SEALED = [(lg["ledger"], lg["seal"]["n_predictions"], lg["seal"]["sha256"][:16],
            lg.get("games_settled"), lg.get("games_expected")) for lg in SETTLE.get("ledgers", [])]
 
-# crosscheck (live run of the repository's own semantic checker)
-try:
-    cc = subprocess.run(["python3", "tools/crosscheck_site.py"], cwd=ROOT,
-                        capture_output=True, text=True, timeout=600).stdout
-    CC_LAST = cc.strip().splitlines()[-1] if cc.strip() else "(no output)"
-    CC_FAILS = [ln.strip() for ln in cc.splitlines() if ln.startswith("[FAIL]")]
-except Exception as e:                                        # pragma: no cover
-    CC_LAST, CC_FAILS = f"(crosscheck could not run: {e})", []
+# The dashboard must be a byte-for-byte fixed point of its committed inputs, so it is a pure
+# function of files: nothing here shells out, because a command's output (a live checker, a run
+# list) changes on every build and would make the deployed artefact drift. The repository's own
+# checker is run by the workflow instead, where its output is log evidence, not page content.
 
 
-# ------------------------------------------------------------------ pages
 def p_overview() -> str:
     rows = [
         ["Official finals read and landed this session", (f"<b>{N_GAMES_VERIFIED}</b>"),
@@ -592,7 +592,8 @@ a committed official snapshot. Nothing was repaired, rounded into agreement, or 
  <div class="card"><h4>Read at</h4><div class="big" style="font-size:16px">{esc(CAP["retrieved_at_utc"])}</div>
   <p>Transport: platform page-fetch. Direct TLS from the sandbox to nba.com fails.</p></div>
  <div class="card"><h4>Repository's own checker</h4><div class="big" style="font-size:15px">
-  {esc(CC_LAST[:38])}</div><p>run live during this build</p></div>
+  {esc(REPO_CHECKER_RESULT)}</div><p>the repository's checker is run by this site's workflow;
+ its result is in the run log, not baked into the page, so the page stays a fixed point</p></div>
 </div>
 
 <div class="banner"><h3>How to read a verdict</h3>

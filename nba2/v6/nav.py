@@ -38,13 +38,13 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
     ("Projection — safe to publish",
      "Our originated numbers. Nothing here is priced or actionable: what we think, and how "
      "much the two estimators disagree.",
-     ["slate", "projections", "projection", "lines", "teams", "market-prior",
-      "correlations", "props", "gameflow", "lategame", "travel", "rotation",
-      "rotation-replacement", "minutes"]),
+     ["slate", "v7-slate", "v7-skill", "projections", "projection", "lines", "teams",
+      "market-prior", "correlations", "props", "gameflow", "lategame", "travel",
+      "rotation", "rotation-replacement", "minutes"]),
     ("Bet surface — gated",
      "Gated: no row here is actionable until its gates pass. The trigger level is the only "
      "number that would make acting rational.",
-     ["bet", "picks", "strategies", "strategy-lab", "trials"]),
+     ["bet", "picks", "v7-strategies", "strategies", "strategy-lab", "trials"]),
     ("Official record & settlement",
      "What the league published, what the sealed ledger predicted, and what has been "
      "settled against an official final.",
@@ -58,9 +58,9 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
     ("Verification & measured skill",
      "Gates, backtests, luck attribution and the live checks — the part that says whether "
      "any of the above is better than a coin flip.",
-     ["verification", "verification-v3", "v4-verify", "v5-verify", "v6-verify",
-      "live-verification", "backtest", "skill-attribution", "endpoints",
-      "capture-verification"]),
+     ["verification", "v7-verify", "v7-methodology", "verification-v3", "v4-verify",
+      "v5-verify", "v6-verify", "live-verification", "backtest", "skill-attribution",
+      "endpoints", "capture-verification"]),
     ("Verified today · 2026-11-19",
      "The official pages read on 2026-11-19, what they prove, what is still unknown, and the "
      "proposals that are waiting on a decision before anything is built.",

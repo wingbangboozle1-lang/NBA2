@@ -90,9 +90,21 @@ jobs:
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
 
+      - name: Rebuild the v7 originated-slate layer (gates -> render -> nav -> flags)
+        # v7 reads the committed transcription in nba2/v7/official.py and the committed
+        # official finals under data/raw/ - it fetches nothing. It runs after v6 because it
+        # inserts its five links into the sidebar v6 grouped, and re-appends its section to
+        # flagged.html because v2 regenerates that page on every rebuild. Its own exit code
+        # is a gate: a failing structural check or a lost nav link fails the build rather
+        # than silently shipping a broken page. Added on the integration branch
+        # arena/585453f5-nba2; the four BLOCKED strategy gates are published, not hidden.
+        run: |
+          python -m nba2.v7
+          python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
-          git add -A -- site data/v2 data/v4 data/raw
+          git add -A -- site data/v2 data/v4 data/raw data/v7
           if ! git diff --cached --quiet -- site; then
             echo "::error title=site differs from rebuild::$(git diff --cached --name-only -- site | tr '\n' ' ')"
             git diff --cached --stat -- site | tail -40

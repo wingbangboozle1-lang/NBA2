@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v7 methodology · NBA2 Lines Lab v7</title>
+<link rel="stylesheet" href="assets/site.css"></head>
+<body><div class="wrap">
+<aside><div class="brand">NBA2 <span>Lines Lab</span></div>
+<p class="tag">v7 · originated from the 2026-11-19 official snapshot</p>
+<nav><a href="index.html">Dashboard</a><a href="executive-summary.html">Executive summary</a><a href="sources.html">Sources</a><a href="methodology.html">Methodology</a><a href="lines.html">Originated lines</a><a href="teams.html">Teams &amp; estimators</a><a href="correlations.html">Correlations &amp; parlays</a><a href="props.html">Player props</a><a href="gameflow.html">Game flow</a><a href="slate.html">Slate &amp; disagreement</a><a href="projections.html">Projection surface</a><a href="rotation.html">Rotation &amp; minutes</a><a href="travel.html">Rest &amp; travel</a><a href="minutes.html">Measured minutes</a><a href="lategame.html">Late-game &amp; garbage time</a><a href="projection.html">— v4 gated refresh —</a><a href="rotation-replacement.html">Minutes &amp; replacement</a><a href="market-prior.html">Market-anchored prior</a><a href="picks.html">Picks &amp; slate</a><a href="strategies.html">Strategies &amp; leaderboard</a><a href="strategy-lab.html">Strategy lab</a><a href="trials.html">Trial registry</a><a href="bet.html">Bet surface (gated)</a><a href="official-results.html">Official results</a><a href="results.html">Result feed</a><a href="ledger.html">Sealed ledger</a><a href="settlement.html">Settlement stamp</a><a href="settle.html">Result feed &amp; settlement</a><a href="result-feed-v5.html">— v5 player logs —</a><a href="results-coverage.html">Result-feed coverage</a><a href="injuries.html">Injuries &amp; rotation</a><a href="player-logs.html">Player game logs</a><a href="injury-diff.html">Injury release diff</a><a href="v4-injuries.html">Injury releases</a><a href="playerlogs-full.html">Player logs (full)</a><a href="injury-archive.html">Injury PDF archive</a><a href="player-coverage.html">Player-log coverage</a><a href="backtest.html">Backtest &amp; skill</a><a href="skill-attribution.html">Skill vs luck</a><a href="verification.html">Verification log</a><a href="live-verification.html">Live verification</a><a href="capture-verification.html">Capture verification</a><a href="verification-v3.html">v3 verification</a><a href="v4-verify.html">v4 verification</a><a href="v5-verify.html">v5 verification</a><a href="endpoints.html">Official endpoints</a><a href="v6-verify.html">v6 verification</a><a href="repo-review.html">Repo review</a><a href="questions.html">Open questions</a><a href="suggestions.html">Suggestions queue</a><a href="decision-queue.html">Decision queue</a><a href="decisions-needed.html">Decisions needed</a><a href="flagged.html">Flagged for review</a></nav>
+</aside>
+<main>
+<div class="crumbs"><a href="index.html">Dashboard</a> / v7 methodology</div>
+<h1>v7 methodology</h1>
+
+
+<div class="cards"><div class="kpi"><div class="kl">Home-win rate</div><div class="kv">0.5143</div><div class="ks">210 finals</div></div>
+<div class="kpi"><div class="kl">Pinned h</div><div class="kv">0.602 pts</div><div class="ks">reproduces the rate by construction</div></div>
+<div class="kpi"><div class="kl">σ margin</div><div class="kv">16.808 pts</div><div class="ks">fitted to nothing</div></div>
+<div class="kpi"><div class="kl">ρ</div><div class="kv">-0.0440</div><div class="ks">margin vs total</div></div></div>
+
+<h2>Every constant, and whether it was fitted</h2>
+<p>A parameter that is fitted to the data it is judged on is not a parameter, it is a
+self-fulfilling prophecy. The column that matters is the third one.</p>
+<div class="scroll"><table class=""><thead><tr><th>Set in code?</th><th>Parameter</th><th>Value</th><th>Fitted?</th><th>Where it comes from</th></tr></thead><tbody><tr><td>Y</td><td>Pythagorean exponent</td><td>13.91</td><td>no</td><td>Basketball-Reference convention; stated, not fitted · <a href="https://www.basketball-reference.com/about/glossary.html" rel="noopener" target="_blank">glossary</a></td></tr><tr><td>Y</td><td>Noise band |z|</td><td>2.00</td><td>no</td><td>a strategy leaning on a club outside it is refused · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v7/model.py" rel="noopener" target="_blank">model.py</a></td></tr><tr><td>Y</td><td>Ridge λ (E1 solver)</td><td>4.00</td><td>no</td><td>shrinks a 3-game club toward the mean · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v7/model.py" rel="noopener" target="_blank">model.py</a></td></tr><tr><td>Y</td><td>Min training finals</td><td>40</td><td>no</td><td>floor before the walk-forward starts · <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v7/model.py" rel="noopener" target="_blank">model.py</a></td></tr><tr><td>F</td><td>Home-court h</td><td>0.602</td><td>pinned</td><td>h = sd(margin) × Φ⁻¹(home-win rate) = 16.808 × Φ⁻¹(0.5143) · <a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">finals</a></td></tr><tr><td>F</td><td>Margin σ</td><td>16.808</td><td>measured</td><td>sd of home margin over 210 official finals · <a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">finals</a></td></tr><tr><td>F</td><td>ρ (margin, total)</td><td>-0.0440</td><td>measured</td><td>over 210 official finals · <a href="https://www.nba.com/games?date=2026-11-13" rel="noopener" target="_blank">finals</a></td></tr></tbody></table></div>
+<p class="note">Every input these constants act on is linked in the table at the foot of this
+page; the two that are measured rather than set (h and σ) are measured on the committed
+official finals, whose game pages are linked from
+<a href="v7-slate.html">the slate page</a>.</p>
+
+<h2>The two clocks on the league's own site</h2>
+<p>Measured this session: the three <code>/stats/teams/*</code> pages report games through
+<b>2026-11-17</b>, and <code>/standings</code> includes the games of
+<b>2026-11-18</b>. They are one date apart. This build uses the stats-page W for the
+luck calculation (so the win column matches the games-played column) and publishes the gap,
+rather than silently mixing the two.</p>
+
+<h2>How each input was read</h2>
+<p>platform page-fetch transport, server-rendered HTML converted to markdown; the sandbox has no TLS egress to nba.com and a GitHub runner cannot read stats.nba.com (data/raw/egress_probe.json). This is recorded because it is a limitation: a reader cannot reproduce
+the read from this sandbox, only from an environment with page-fetch access. Everything
+described has a URL, and the three arithmetic identities in <code>nba2/v7/test_v7.py</code>
+are what make the transcription checkable.</p>
+<div class="scroll"><table class=""><thead><tr><th>Surface</th><th>URL</th></tr></thead><tbody><tr><td>traditional</td><td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season</a></td></tr><tr><td>advanced</td><td><a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season</a></td></tr><tr><td>opponent</td><td><a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season</a></td></tr><tr><td>standings</td><td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">https://www.nba.com/standings</a></td></tr><tr><td>games</td><td><a href="https://www.nba.com/games?date=2026-11-19" rel="noopener" target="_blank">https://www.nba.com/games?date={date}</a></td></tr><tr><td>games_1119</td><td><a href="https://www.nba.com/games?date=2026-11-19" rel="noopener" target="_blank">https://www.nba.com/games?date=2026-11-19</a></td></tr><tr><td>games_1120</td><td><a href="https://www.nba.com/games?date=2026-11-20" rel="noopener" target="_blank">https://www.nba.com/games?date=2026-11-20</a></td></tr><tr><td>injury</td><td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">https://official.nba.com/nba-injury-report-2026-27-season/</a></td></tr></tbody></table></div>
+
+</main></div></body></html>
