@@ -6198,3 +6198,73 @@ After PR #129 merged, fetched `origin/main` at `7b16b6d` and rebased this branch
 **Known non-gating crosscheck findings remain visible:** 97 checks = 86 pass, 9 info, 2 fail. `CC-DOC-01` is the README count (92 shown vs 99 measured); `CC-FRESH-01` is the five-day-old legacy snapshot. Both are explicitly non-gating; no values were inferred or marked verified to make the checks green. The full details are in the report.
 
 **PR / merge / Pages deployment:** pending. Update this record with the PR URL, merge commit, Pages workflow result, and live-site verification after completion.
+
+---
+
+## Session `arena/6023d517-nba2` — CLAIM (2026-11-19 UTC, branch `arena/6023d517-nba2`, base `a5380e1` = `main` @ ingest-bot capture 2026-11-18T19:30:52Z)
+
+**State read at claim time (verified by running the committed code, not assumed).**
+- Working tree clean at `a5380e1`. `git status` empty, `main` == `origin/main` == `a5380e1`.
+- Builders on the committed base: `python -m nba2.v2` **0**, `nba2.v3` **0**, `nba2.v4` **0**, `nba2.v5` **0**, `python -m nba2.v6` **exit 1 — HARD GATE FAILURE (G-V6-8)**. Because `nba2.v6` exits non-zero, the v6 step in `pages.yml` fails and the published tree cannot be reproduced from the committed inputs. Reproduced twice.
+- Measured cause of G-V6-8 (not guessed): 14 of 67 game rows in `data/v6/results_coverage.json` have `source_url=None`. Those are exactly the 2026-11-14 (5) and 2026-11-15 (9) finals. Their committed snapshots `data/raw/finals_2026-11-1{4,5}.json` **do** carry the official URL — under the key `final_source_url` — and carry the team names under `away_team`/`home_team`. `nba2/v6/results_coverage.py` reads `source_url`/`official_source` and `away`/`home`, so the value is present in the committed artefact and dropped by the reader. That is a **reader defect, not missing data**: fixing it invents nothing.
+- Nightly job: 10 consecutive scheduled runs, latest `44381003145` **failure**; its committed verdict `data/raw/refresh_verdict.json` records `injuries=success, finals=success, rolling=success, v4=success` while the run itself failed — i.e. the verdict file and the run conclusion disagree. Flagged as an irregularity for review, cause to be measured.
+- Parallel sessions detected live on `origin` while claiming: `arena/8c7c8828-nba2`, `arena/95053469-nba2` (INJ-1..4 injury-PDF archive audit), `arena/0b91edfc-nba2` (baseline repair 0B9-1..6), `arena/53c5afeb-nba2` (docs test count). None claims `nba2/v6/` or `data/v6/`, so the scope below does not collide. Their claims are respected: I edit nothing in `analysis/` files they own and nothing under `data/raw/pdf/`.
+
+**File scope claimed by this session (nothing outside this list is edited).**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `nba2/v6/results_coverage.py`, `nba2/v6/check.py` — reader repair only (read the keys the committed official artefacts actually use). No gate is weakened; no threshold is moved; no value is invented.
+- `nba2/v6/__init__.py`, `nba2/v6/test_v6.py` — regression test for the repaired reader.
+- `data/v6/*.json` and `site/*.html` — regenerated **only** as direct build output.
+- `analysis/session-6023d517-*.md` — new files only.
+
+**Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/v4/settlement/**`, `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `data/raw/pdf/**` (session 95053469), the other sessions' `analysis/` files, the eight workflow files.
+
+**Rules:** a value is published only if it was fetched from an official source this session, or reproduced from a committed snapshot by running the committed code. Unconfirmed ⇒ blank + flagged, never inferred. Gates stay fail-closed. The site is never merged broken.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 6023-1 | Board claim + push before work | done | `COORDINATION.md` | pushed immediately |
+| 6023-2 | Repair the v6 result-feed reader so every committed official URL and team name reaches the row it belongs to | done | `nba2/v6/results_coverage.py` | G-V6-8 goes from 53/67 to 67/67 **only** because the URL was already in the committed file; every gate stays green |
+| 6023-3 | Regression test for the repaired reader (both committed key spellings) | done | `nba2/v6/test_v6.py` | test fails on the pre-repair reader, passes after |
+| 6023-4 | Full-tree rebuild + every checker + every test suite green; committed tree == rebuild | done | `site/**`, `data/v6/**` | `git diff --stat` empty after rebuild |
+| 6023-5 | Independent line-by-line verification against live official nba.com pages; findings + source links on the Flagged page | done | `analysis/session-6023d517-verification.md` | every claim carries a URL; blank where unconfirmed |
+| 6023-6 | PR → `main`, merge without approval, confirm the Pages deploy, record it here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch |
+
+### 6023 — completion record (2026-11-19 UTC, session `arena/6023d517-nba2`)
+
+**Build repaired.** `nba2/v6` went from exit 1 (`G-V6-8`, 53/67 rows sourced) to exit 0 with
+**67/67** rows carrying an official URL. The fix read the keys the committed official artefacts
+already use (`final_source_url`, `away_team`/`home_team`); no value was invented and no gate was
+lowered. The as-of clock is now derived from the newest committed capture instead of typed, so it
+cannot silently age past the evidence again. Regression tests added in `nba2/v6/test_v6.py`.
+
+**A new layer was cut rather than editing the stale ones.** Measured staleness, not an opinion:
+v3 prices Atlanta at 8-6 while the live standings page prints 9-6, and no tree contained the
+twelve 2026-11-18 finals. `nba2/v7` reads nothing at build time — the transcription lives in
+`nba2/v7/official.py`, cut from the official pages read 2026-11-19, and is held by three
+identities over all 30 clubs.
+
+**Verification performed (all in `analysis/session-6023d517-build-and-verification.md` and on
+`site/v7-verify.html`):** 367 items compared against official pages, 367 matched, across 9
+claims — the 11/18 finals (12/12), the 11/19 slate (4/4, tips included), the 11/20 slate and Cup
+groups (6/6), standings (15/15), and the three team-stat pages (30/30 each, with
+`NetRtg = OffRtg − DefRtg` and `PTS − OppPTS = +/−` holding on every club). A tenth claim — the
+11/19 injury report — is **not read** and is published as a blank with `F-V7-AVAIL`, not counted
+as a match.
+
+**What the model measures, and why nothing is staked.** Walk-forward on 167 games, trained only
+on strictly earlier dates: accuracy **0.6707** vs **0.6527** for the better-record rule, log-loss
+**0.6349** vs **0.6931** for a coin. The paired test on the 29 games where the two estimators
+disagree is **p = 0.711** — no demonstrated separation. Every stake on the slate is **0.00** and
+that is printed at the top of the page, not in a footnote.
+
+**Nine new flags** published on `site/flagged.html` (`F-V7-AVAIL`, `-CLOCK`, `-TRANSPORT`,
+`-MARKET`, `-PROPS`, `-PREREG`, `-PAGES`, `-LEAK`, `-STALE-UPSTREAM`). None blocks the merge.
+
+**Nav change logged** (shared output, so recorded here): v6's category list gained a
+"v7 — fresh 2026-11-19 snapshot" group holding the five v7 pages, so v6's
+`test_every_published_page_is_in_some_category` passes again, and v7's sidebar pass now adds only
+*missing* links — it no longer duplicates them. A bug in that pass was caught and fixed this
+session: it scanned the whole document for a v7 href, so the landing page's category card
+satisfied it and the sidebar block was stripped; it now inspects only `<nav>`, with a regression
+test.
