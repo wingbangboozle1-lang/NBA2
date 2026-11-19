@@ -1,0 +1,1542 @@
+{
+ "schema": "nba2.injury-diff.session-95053469.v1",
+ "session": "arena/95053469-nba2",
+ "method": "analysis/session-95053469-injury-diff.py",
+ "key": "(game date, player name); matchup/team not reliably recoverable from flattened PDF text",
+ "releases": [
+  {
+   "file": "Injury-Report_2026-11-13_01_00PM.pdf",
+   "stamp_et": "2026-11-13 13:00 ET",
+   "game_dates_with_rows": [
+    "11/13/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "pdf_sha256": "d4875b8ce4ea20a82ec1cc42553f1bf903eb55f6c31de3ff0a69a1d23027d1b1",
+   "pdf_bytes": 98515,
+   "text_chars": 6361,
+   "pages_header": "7",
+   "player_rows": 91
+  },
+  {
+   "file": "Injury-Report_2026-11-13_04_15PM.pdf",
+   "stamp_et": "2026-11-13 16:15 ET",
+   "game_dates_with_rows": [
+    "11/13/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "pdf_sha256": "3e6786fe6c4a951cae45738fd7e812ff21f264fc31615ef296133875e32df202",
+   "pdf_bytes": 98738,
+   "text_chars": 6335,
+   "pages_header": "7",
+   "player_rows": 91
+  },
+  {
+   "file": "Injury-Report_2026-11-13_05_15PM.pdf",
+   "stamp_et": "2026-11-13 17:15 ET",
+   "game_dates_with_rows": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "pdf_sha256": "502024cff353efce6225d48fef7516b58e8e3c2671368b7983ac3b87a4e541f6",
+   "pdf_bytes": 101887,
+   "text_chars": 7481,
+   "pages_header": "8",
+   "player_rows": 113
+  },
+  {
+   "file": "Injury-Report_2026-11-13_07_15PM.pdf",
+   "stamp_et": "2026-11-13 19:15 ET",
+   "game_dates_with_rows": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "pdf_sha256": "20b9c2f9f3aed67b28e3f48557d94cc4db05cc2aef44773d324b9d4540f766b1",
+   "pdf_bytes": 102349,
+   "text_chars": 7578,
+   "pages_header": "8",
+   "player_rows": 117
+  },
+  {
+   "file": "Injury-Report_2026-11-13_07_30PM.pdf",
+   "stamp_et": "2026-11-13 19:30 ET",
+   "game_dates_with_rows": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "pdf_sha256": "f5434cd9c56e7eb6b5f6f92079f33c23538dab508ad953540a7ebf6d7d037ab9",
+   "pdf_bytes": 102227,
+   "text_chars": 7578,
+   "pages_header": "8",
+   "player_rows": 117
+  },
+  {
+   "file": "Injury-Report_2026-11-14_04_30AM.pdf",
+   "stamp_et": "2026-11-14 04:30 ET",
+   "game_dates_with_rows": [
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/14/2026",
+    "11/15/2026"
+   ],
+   "pdf_sha256": "fbff5f42ec5c5510f1ecca7359eb8216db2ce56ea137493343e0944796e35054",
+   "pdf_bytes": 87960,
+   "text_chars": 2692,
+   "pages_header": "3",
+   "player_rows": 26
+  },
+  {
+   "file": "Injury-Report_2026-11-14_05_00AM.pdf",
+   "stamp_et": "2026-11-14 05:00 ET",
+   "game_dates_with_rows": [
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/14/2026",
+    "11/15/2026"
+   ],
+   "pdf_sha256": "78cb966d8115b1f6de63bc8ba0d071cfb689edde1a3c5c6995f4f991446a2cbd",
+   "pdf_bytes": 87929,
+   "text_chars": 2692,
+   "pages_header": "3",
+   "player_rows": 26
+  },
+  {
+   "file": "Injury-Report_2026-11-14_01_30PM.pdf",
+   "stamp_et": "2026-11-14 13:30 ET",
+   "game_dates_with_rows": [
+    "11/14/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/14/2026",
+    "11/15/2026"
+   ],
+   "pdf_sha256": "b628131492478451a5cf0c3779d43864833501c6daf30fae20630d5305023d3c",
+   "pdf_bytes": 92455,
+   "text_chars": 4168,
+   "pages_header": "5",
+   "player_rows": 50
+  },
+  {
+   "file": "Injury-Report_2026-11-15_06_00AM.pdf",
+   "stamp_et": "2026-11-15 06:00 ET",
+   "game_dates_with_rows": [
+    "11/15/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/15/2026",
+    "11/16/2026"
+   ],
+   "pdf_sha256": "e4d21fe109e41cc5e7a7c4bbfee5afb8669e4a3f8e3f753470883df0e49da4c4",
+   "pdf_bytes": 97577,
+   "text_chars": 6132,
+   "pages_header": "6",
+   "player_rows": 84
+  },
+  {
+   "file": "Injury-Report_2026-11-15_06_15AM.pdf",
+   "stamp_et": "2026-11-15 06:15 ET",
+   "game_dates_with_rows": [
+    "11/15/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/15/2026",
+    "11/16/2026"
+   ],
+   "pdf_sha256": "042868ef01ea1530c182e3253da17947dcdfae1e7075ca26e642c0b240d83f00",
+   "pdf_bytes": 97582,
+   "text_chars": 6132,
+   "pages_header": "6",
+   "player_rows": 84
+  },
+  {
+   "file": "Injury-Report_2026-11-15_06_15PM.pdf",
+   "stamp_et": "2026-11-15 18:15 ET",
+   "game_dates_with_rows": [
+    "11/15/2026",
+    "11/16/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/15/2026",
+    "11/16/2026"
+   ],
+   "pdf_sha256": "17fbcb8d206fa2602a712977af9cdf854a7c8c898767c1d6ac8cd62ba4da3203",
+   "pdf_bytes": 108297,
+   "text_chars": 9676,
+   "pages_header": "10",
+   "player_rows": 149
+  },
+  {
+   "file": "Injury-Report_2026-11-16_09_15AM.pdf",
+   "stamp_et": "2026-11-16 09:15 ET",
+   "game_dates_with_rows": [
+    "11/16/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/16/2026",
+    "11/17/2026"
+   ],
+   "pdf_sha256": "2ae3cc90586e2ad45d174d4c599bcb87185f7b6c3ecf68821d3a9efc7105075b",
+   "pdf_bytes": 93402,
+   "text_chars": 4391,
+   "pages_header": "5",
+   "player_rows": 57
+  },
+  {
+   "file": "Injury-Report_2026-11-16_09_30AM.pdf",
+   "stamp_et": "2026-11-16 09:30 ET",
+   "game_dates_with_rows": [
+    "11/16/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/16/2026",
+    "11/17/2026"
+   ],
+   "pdf_sha256": "8e9592936b389f74eee82306656679cd2d7cd2dc42fc7671dbb14f67465cac28",
+   "pdf_bytes": 93435,
+   "text_chars": 4391,
+   "pages_header": "5",
+   "player_rows": 57
+  },
+  {
+   "file": "Injury-Report_2026-11-16_01_00PM.pdf",
+   "stamp_et": "2026-11-16 13:00 ET",
+   "game_dates_with_rows": [
+    "11/16/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/16/2026",
+    "11/17/2026"
+   ],
+   "pdf_sha256": "e0dbe404b34b616c0acb18427966dad7058ac3e4a743cd76ea46f7e8c7550152",
+   "pdf_bytes": 95928,
+   "text_chars": 5422,
+   "pages_header": "6",
+   "player_rows": 75
+  },
+  {
+   "file": "Injury-Report_2026-11-16_02_15PM.pdf",
+   "stamp_et": "2026-11-16 14:15 ET",
+   "game_dates_with_rows": [
+    "11/16/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/16/2026",
+    "11/17/2026"
+   ],
+   "pdf_sha256": "588d3b9697a58f1ee29f90554ee029c869f5191169615c0790f9eb25a6f58035",
+   "pdf_bytes": 96067,
+   "text_chars": 5425,
+   "pages_header": "6",
+   "player_rows": 76
+  },
+  {
+   "file": "Injury-Report_2026-11-17_09_45AM.pdf",
+   "stamp_et": "2026-11-17 09:45 ET",
+   "game_dates_with_rows": [
+    "11/17/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/17/2026",
+    "11/18/2026"
+   ],
+   "pdf_sha256": "e28bb978bcb099abfb132dcd852ec0fedc8b76c216f1bf569a95917ab6f4c93c",
+   "pdf_bytes": 90373,
+   "text_chars": 24082,
+   "pages_header": "4",
+   "player_rows": 33
+  },
+  {
+   "file": "Injury-Report_2026-11-17_10_30AM.pdf",
+   "stamp_et": "2026-11-17 10:30 ET",
+   "game_dates_with_rows": [
+    "11/17/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/17/2026",
+    "11/18/2026"
+   ],
+   "pdf_sha256": "53a42da5d122e375f5ef8b3eb513ca55024436b925fb971425b9a6e1a6822ffd",
+   "pdf_bytes": 90116,
+   "text_chars": 24082,
+   "pages_header": "4",
+   "player_rows": 33
+  },
+  {
+   "file": "Injury-Report_2026-11-17_11_00AM.pdf",
+   "stamp_et": "2026-11-17 11:00 ET",
+   "game_dates_with_rows": [
+    "11/17/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/17/2026",
+    "11/18/2026"
+   ],
+   "pdf_sha256": "a5ce82b8bf3b18262a4f66861ae031e2a0a5d4b838df2d8edefe3b2bf9cdaae0",
+   "pdf_bytes": 89954,
+   "text_chars": 24082,
+   "pages_header": "4",
+   "player_rows": 33
+  },
+  {
+   "file": "Injury-Report_2026-11-17_02_30PM.pdf",
+   "stamp_et": "2026-11-17 14:30 ET",
+   "game_dates_with_rows": [
+    "11/17/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/17/2026",
+    "11/18/2026"
+   ],
+   "pdf_sha256": "2f190154e150378a0103699577608f986816db08ef84dc4e54e8e407ff1d6612",
+   "pdf_bytes": 92769,
+   "text_chars": 4123,
+   "pages_header": "5",
+   "player_rows": 46
+  },
+  {
+   "file": "Injury-Report_2026-11-18_09_45AM.pdf",
+   "stamp_et": "2026-11-18 09:45 ET",
+   "game_dates_with_rows": [
+    "11/18/2026"
+   ],
+   "game_dates_mentioned": [
+    "11/18/2026",
+    "11/19/2026"
+   ],
+   "pdf_sha256": "3a6c66ac5276cbefb53097febde1be43d2527bd454fd2e5fbd725316b10a2842",
+   "pdf_bytes": 100919,
+   "text_chars": 7059,
+   "pages_header": "7",
+   "player_rows": 102
+  }
+ ],
+ "consecutive_diffs": [
+  {
+   "from": "Injury-Report_2026-11-13_01_00PM.pdf",
+   "from_stamp_et": "2026-11-13 13:00 ET",
+   "to": "Injury-Report_2026-11-13_04_15PM.pdf",
+   "to_stamp_et": "2026-11-13 16:15 ET",
+   "overlapping_game_dates": [
+    "11/13/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 91,
+    "to": 91
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 6,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 85
+   },
+   "status_changed": [
+    {
+     "game_date": "11/13/2026",
+     "player": "Achiuwa, Precious",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Antetokounmpo, Giannis",
+     "from": "Probable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Larsson, Pelle",
+     "from": "Questionable",
+     "to": "Doubtful"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Murray, Dejounte",
+     "from": "Doubtful",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Thompson, Klay",
+     "from": "Questionable",
+     "to": "Probable"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Wilson, Jalen",
+     "from": "Doubtful",
+     "to": "Out"
+    }
+   ],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-13_04_15PM.pdf",
+   "from_stamp_et": "2026-11-13 16:15 ET",
+   "to": "Injury-Report_2026-11-13_05_15PM.pdf",
+   "to_stamp_et": "2026-11-13 17:15 ET",
+   "overlapping_game_dates": [
+    "11/13/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 91,
+    "to": 91
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 22
+   },
+   "counts": {
+    "status_changed": 3,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 88
+   },
+   "status_changed": [
+    {
+     "game_date": "11/13/2026",
+     "player": "Cain, Jamal",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Suggs, Jalen",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "da Silva, Tristan",
+     "from": "Questionable",
+     "to": "Available"
+    }
+   ],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-13_05_15PM.pdf",
+   "from_stamp_et": "2026-11-13 17:15 ET",
+   "to": "Injury-Report_2026-11-13_07_15PM.pdf",
+   "to_stamp_et": "2026-11-13 19:15 ET",
+   "overlapping_game_dates": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 113,
+    "to": 117
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 9,
+    "added": 4,
+    "removed": 0,
+    "unchanged": 104
+   },
+   "status_changed": [
+    {
+     "game_date": "11/13/2026",
+     "player": "Dennis, RayJ",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Flemings, Kingston",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Larsson, Pelle",
+     "from": "Doubtful",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Mathurin, Bennedict",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "McConnell, T.J.",
+     "from": "Probable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Nesmith, Aaron",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Powell, Norman",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Swain, Dailyn",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/13/2026",
+     "player": "Thompson, Klay",
+     "from": "Probable",
+     "to": "Out"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/14/2026",
+     "player": "Holmes II, DaRon",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Nembhard, Ryan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Strawther, Julian",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Whitmore, Cam",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-13_07_15PM.pdf",
+   "from_stamp_et": "2026-11-13 19:15 ET",
+   "to": "Injury-Report_2026-11-13_07_30PM.pdf",
+   "to_stamp_et": "2026-11-13 19:30 ET",
+   "overlapping_game_dates": [
+    "11/13/2026",
+    "11/14/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 117,
+    "to": 117
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 117
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-13_07_30PM.pdf",
+   "from_stamp_et": "2026-11-13 19:30 ET",
+   "to": "Injury-Report_2026-11-14_04_30AM.pdf",
+   "to_stamp_et": "2026-11-14 04:30 ET",
+   "overlapping_game_dates": [
+    "11/14/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 26,
+    "to": 26
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 91,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 26
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-14_04_30AM.pdf",
+   "from_stamp_et": "2026-11-14 04:30 ET",
+   "to": "Injury-Report_2026-11-14_05_00AM.pdf",
+   "to_stamp_et": "2026-11-14 05:00 ET",
+   "overlapping_game_dates": [
+    "11/14/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 26,
+    "to": 26
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 26
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-14_05_00AM.pdf",
+   "from_stamp_et": "2026-11-14 05:00 ET",
+   "to": "Injury-Report_2026-11-14_01_30PM.pdf",
+   "to_stamp_et": "2026-11-14 13:30 ET",
+   "overlapping_game_dates": [
+    "11/14/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 26,
+    "to": 50
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 4,
+    "added": 24,
+    "removed": 0,
+    "unchanged": 22
+   },
+   "status_changed": [
+    {
+     "game_date": "11/14/2026",
+     "player": "Brown Jr., Mikel",
+     "from": "Questionable",
+     "to": "Probable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Christie, Max",
+     "from": "Questionable",
+     "to": "Doubtful"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Harkless, Elijah",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Jones, Isaac",
+     "from": "Questionable",
+     "to": "Available"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/14/2026",
+     "player": "Tomlin, Nae'Qwan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Allen, Jarrett",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Antetokounmpo, Giannis",
+     "status": "Probable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Awaka, Tobe",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Claxton, Nic",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Goldin, Vladislav",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Harden, James",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Larsson, Pelle",
+     "status": "Doubtful"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "McGowens, Bryce",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Merrill, Sam",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Missi, Yves",
+     "status": "Probable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Mitchell, Donovan",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Mobley, Evan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Murphy III, Trey",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Murray, Dejounte",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Powell, Norman",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Sellers, Jaylin",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Smith, Jalen",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Swain, Dailyn",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Thompson, Klay",
+     "status": "Probable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Udeh, Jr., Ernest",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Watford, Trendon",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Watson, Peyton",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/14/2026",
+     "player": "Wilson, Caleb",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-14_01_30PM.pdf",
+   "from_stamp_et": "2026-11-14 13:30 ET",
+   "to": "Injury-Report_2026-11-15_06_00AM.pdf",
+   "to_stamp_et": "2026-11-15 06:00 ET",
+   "overlapping_game_dates": [],
+   "comparable": false,
+   "rows_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 50,
+    "to": 84
+   },
+   "counts": null,
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-15_06_00AM.pdf",
+   "from_stamp_et": "2026-11-15 06:00 ET",
+   "to": "Injury-Report_2026-11-15_06_15AM.pdf",
+   "to_stamp_et": "2026-11-15 06:15 ET",
+   "overlapping_game_dates": [
+    "11/15/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 84,
+    "to": 84
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 84
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-15_06_15AM.pdf",
+   "from_stamp_et": "2026-11-15 06:15 ET",
+   "to": "Injury-Report_2026-11-15_06_15PM.pdf",
+   "to_stamp_et": "2026-11-15 18:15 ET",
+   "overlapping_game_dates": [
+    "11/15/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 84,
+    "to": 96
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 53
+   },
+   "counts": {
+    "status_changed": 19,
+    "added": 12,
+    "removed": 0,
+    "unchanged": 65
+   },
+   "status_changed": [
+    {
+     "game_date": "11/15/2026",
+     "player": "Adams, Steven",
+     "from": "Probable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Barnes, Scottie",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Carrington, Bub",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Carter, Devin",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Cenac Jr., Christopher",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "James, Bronny",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Johnson, Tre",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Landale, Jock",
+     "from": "Available",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "McConnell, T.J.",
+     "from": "Probable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Mitchell, Dillon",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Murray, Keegan",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Nembhard, Andrew",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Nesmith, Aaron",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Okpara, Felix",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Sarr, Alex",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Sexton, Collin",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Thiero, Adou",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Williams, Amari",
+     "from": "Questionable",
+     "to": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Wilson, Jalen",
+     "from": "Doubtful",
+     "to": "Out"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/15/2026",
+     "player": "Fox, De'Aaron",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Aldama, Santi",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Biberovic, Tarik",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Christie, Max",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Gafford, Daniel",
+     "status": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Irving, Kyrie",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Lively II, Dereck",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Martin, Caleb",
+     "status": "Available"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Martinelli, Nick",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Rollins, Ryan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "Timme, Drew",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/15/2026",
+     "player": "de Larrea, Sergio",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-15_06_15PM.pdf",
+   "from_stamp_et": "2026-11-15 18:15 ET",
+   "to": "Injury-Report_2026-11-16_09_15AM.pdf",
+   "to_stamp_et": "2026-11-16 09:15 ET",
+   "overlapping_game_dates": [
+    "11/16/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 53,
+    "to": 57
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 96,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 4,
+    "removed": 0,
+    "unchanged": 53
+   },
+   "status_changed": [],
+   "added": [
+    {
+     "game_date": "11/16/2026",
+     "player": "Holmes II, DaRon",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Nembhard, Ryan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Strawther, Julian",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Whitmore, Cam",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-16_09_15AM.pdf",
+   "from_stamp_et": "2026-11-16 09:15 ET",
+   "to": "Injury-Report_2026-11-16_09_30AM.pdf",
+   "to_stamp_et": "2026-11-16 09:30 ET",
+   "overlapping_game_dates": [
+    "11/16/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 57,
+    "to": 57
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 57
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-16_09_30AM.pdf",
+   "from_stamp_et": "2026-11-16 09:30 ET",
+   "to": "Injury-Report_2026-11-16_01_00PM.pdf",
+   "to_stamp_et": "2026-11-16 13:00 ET",
+   "overlapping_game_dates": [
+    "11/16/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 57,
+    "to": 75
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 3,
+    "added": 18,
+    "removed": 0,
+    "unchanged": 54
+   },
+   "status_changed": [
+    {
+     "game_date": "11/16/2026",
+     "player": "Larsson, Pelle",
+     "from": "Questionable",
+     "to": "Doubtful"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Stewart, Isaiah",
+     "from": "Questionable",
+     "to": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Tyson, Jaylon",
+     "from": "Questionable",
+     "to": "Doubtful"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/16/2026",
+     "player": "Adams, Steven",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Barlow, Dominick",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Beekman, Reece",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Bona, Adem",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Capela, Clint",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Champagnie, Justin",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Copeland, Quadir",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Embiid, Joel",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Hukporti, Ariel",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "James, LeBron",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Johnson, Tre",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Jovic, Nikola",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Okpara, Felix",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Phillips, Julian",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Smart, Marcus",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Thompson, Amen",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Vukcevic, Tristan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Watkins, Jamir",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-16_01_00PM.pdf",
+   "from_stamp_et": "2026-11-16 13:00 ET",
+   "to": "Injury-Report_2026-11-16_02_15PM.pdf",
+   "to_stamp_et": "2026-11-16 14:15 ET",
+   "overlapping_game_dates": [
+    "11/16/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 75,
+    "to": 76
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 3,
+    "added": 1,
+    "removed": 0,
+    "unchanged": 72
+   },
+   "status_changed": [
+    {
+     "game_date": "11/16/2026",
+     "player": "Dia, Malik",
+     "from": "Questionable",
+     "to": "Probable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Pierre Jr., Jaron",
+     "from": "Questionable",
+     "to": "Probable"
+    },
+    {
+     "game_date": "11/16/2026",
+     "player": "Reese, Julian",
+     "from": "Questionable",
+     "to": "Probable"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/16/2026",
+     "player": "Queta, Neemias",
+     "status": "Questionable"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-16_02_15PM.pdf",
+   "from_stamp_et": "2026-11-16 14:15 ET",
+   "to": "Injury-Report_2026-11-17_09_45AM.pdf",
+   "to_stamp_et": "2026-11-17 09:45 ET",
+   "overlapping_game_dates": [],
+   "comparable": false,
+   "rows_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 76,
+    "to": 33
+   },
+   "counts": null,
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-17_09_45AM.pdf",
+   "from_stamp_et": "2026-11-17 09:45 ET",
+   "to": "Injury-Report_2026-11-17_10_30AM.pdf",
+   "to_stamp_et": "2026-11-17 10:30 ET",
+   "overlapping_game_dates": [
+    "11/17/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 33,
+    "to": 33
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 33
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-17_10_30AM.pdf",
+   "from_stamp_et": "2026-11-17 10:30 ET",
+   "to": "Injury-Report_2026-11-17_11_00AM.pdf",
+   "to_stamp_et": "2026-11-17 11:00 ET",
+   "overlapping_game_dates": [
+    "11/17/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 33,
+    "to": 33
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 0,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 33
+   },
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-17_11_00AM.pdf",
+   "from_stamp_et": "2026-11-17 11:00 ET",
+   "to": "Injury-Report_2026-11-17_02_30PM.pdf",
+   "to_stamp_et": "2026-11-17 14:30 ET",
+   "overlapping_game_dates": [
+    "11/17/2026"
+   ],
+   "comparable": true,
+   "rows_compared": {
+    "from": 33,
+    "to": 46
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "counts": {
+    "status_changed": 1,
+    "added": 13,
+    "removed": 0,
+    "unchanged": 32
+   },
+   "status_changed": [
+    {
+     "game_date": "11/17/2026",
+     "player": "Joe, Isaiah",
+     "from": "Doubtful",
+     "to": "Out"
+    }
+   ],
+   "added": [
+    {
+     "game_date": "11/17/2026",
+     "player": "Avdija, Deni",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Barnes, Scottie",
+     "status": "Questionable"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Beringer, Joan",
+     "status": "Available"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Carlson, Branden",
+     "status": "Available"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Clark, Jaylen",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "DiVincenzo, Donte",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Edwards, Anthony",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Krejci, Vit",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Kuminga, Jonathan",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Morant, Ja",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Pullin, Zyon",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Sharpe, Shaedon",
+     "status": "Out"
+    },
+    {
+     "game_date": "11/17/2026",
+     "player": "Youngblood, Chris",
+     "status": "Out"
+    }
+   ],
+   "removed": []
+  },
+  {
+   "from": "Injury-Report_2026-11-17_02_30PM.pdf",
+   "from_stamp_et": "2026-11-17 14:30 ET",
+   "to": "Injury-Report_2026-11-18_09_45AM.pdf",
+   "to_stamp_et": "2026-11-18 09:45 ET",
+   "overlapping_game_dates": [],
+   "comparable": false,
+   "rows_compared": {
+    "from": 0,
+    "to": 0
+   },
+   "rows_outside_overlap_not_compared": {
+    "from": 46,
+    "to": 102
+   },
+   "counts": null,
+   "status_changed": [],
+   "added": [],
+   "removed": []
+  }
+ ],
+ "cross_check_2026-11-15_0615AM_PM": {
+  "capture_file": "data/raw/capture_2026-11-15/injury_delta_0615AM_to_0615PM.json",
+  "capture_status_changes": 20,
+  "pdf_regex_status_changes": 19,
+  "both": [
+   "Adams, Steven",
+   "Barnes, Scottie",
+   "Carrington, Bub",
+   "Carter, Devin",
+   "Cenac Jr., Christopher",
+   "James, Bronny",
+   "Johnson, Tre",
+   "Landale, Jock",
+   "McConnell, T.J.",
+   "Mitchell, Dillon",
+   "Murray, Keegan",
+   "Nembhard, Andrew",
+   "Nesmith, Aaron",
+   "Okpara, Felix",
+   "Sarr, Alex",
+   "Sexton, Collin",
+   "Thiero, Adou",
+   "Williams, Amari",
+   "Wilson, Jalen"
+  ],
+  "only_in_capture_transcript": [
+   "Dieng, Ousmane"
+  ],
+  "only_in_pdf_regex": [],
+  "note": "capture keys on (matchup, team, player); this diff keys on (game date, player); unresolved disagreements are flagged, not reconciled by hand"
+ }
+}
