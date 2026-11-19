@@ -5489,3 +5489,25 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | ACF-5 | End-to-end proof: refresh runs green on a real GitHub runner (capture + publish gates) | pending | run logs linked from the completion record | `refresh_verdict.json` shows `rolling=success`; publish job commits; no gate weakened |
 | ACF-6 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result; disposition of stale PRs #70/#72/#78/#80/#82/#98/#112 logged (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | ACF-7 | RQ-8892-02 model re-cut to the 2026-11-17 capture (7 ordered steps, §4 spec) — conditional on PR #115 merging/closing first | pending | `nba2/v2/official.py`, `nba2/v2/report.py`, v3/v4/v5 repoint, regenerated artefacts | every checker green; `CC-FRESH-01` turns pass; PF/PA re-basing disclosed on the page |
+
+---
+
+## Session `arena/0b91edfc-nba2` — CLAIM (2026-11-19 UTC, branch `arena/0b91edfc-nba2`, base `a5380e1` = `main`)
+
+**State read at claim time (measured this session, not assumed).**
+- `main` = `a5380e1` (bot capture 2026-11-18T19:30:52Z). Official hosts (`www.nba.com`, `stats.nba.com`, `cdn.nba.com`, `ak-static.cms.nba.com`, `official.nba.com`, `statsdmz.nba.com`) return HTTP 000 from this sandbox (egress allowlist is github / npm / pypi only). **No new official value can be read by this session.**
+- Stale claim: `arena/acf5db08-nba2` (2026-11-17, ACF-1..ACF-7) has no remote branch and no commits on `origin`; more than 60 minutes old. Its ACF-3..ACF-5 transport repair cannot be verified from this sandbox, so **this session does not take it over**; it stays open and is listed below.
+- Baseline (run before edits): `python3 -m unittest discover -s nba2/tests -t .` → 88 tests, **1 failure** (`TestReproducibility.test_rebuild_produces_identical_rows`: committed `data/site.json` stamp 2026-11-14 vs rebuilt stamp 2026-11-18 — the committed build output is not a fixed point of its inputs). `tools/crosscheck_site.py` → 97 checks: 86 pass, **2 fail**: `CC-DOC-01` (README says 79 tests, measured 88) and `CC-FRESH-01` (snapshot 5 days old; disclosed, not repairable from this sandbox). v2/v3/v4/v5 checks all pass.
+
+**Tasks claimed (file scope is exactly this list):**
+
+| ID | Task | File scope | Verification rule |
+|----|------|-----------|-------------------|
+| 0B9-1 | Claim + push before any edit | `COORDINATION.md` (this section, append-only) | pushed before further work |
+| 0B9-2 | Make the committed v1 build output a fixed point of its inputs: regenerate `data/site.json` and the v1 pages it feeds by running the committed builders (`python3 -m nba2.pipeline.build_site_data`, then the existing build step) — no hand edits | `data/site.json`, `pages/**`, `index.html` (generated only) | `test_rebuild_produces_identical_rows` passes on the committed tree, run twice; `git diff` limited to builder output |
+| 0B9-3 | Regenerate the README counts with the committed sync mechanism (`audit/2026-11-14-3681/sync_readme_counts.py`), not by typing numbers | `README.md` (counts only) | `tools/crosscheck_site.py` → `CC-DOC-01` ok |
+| 0B9-4 | Re-run every checker and the full unit suite; record exact commands and results | `analysis/session-0b91edfc-repo-check.md` (new) | exact output recorded |
+| 0B9-5 | Disclose, do not fix: `CC-FRESH-01` (5-day-old snapshot), the failing scheduled refresh (`refresh_verdict.json`), and the ACF-3..5 transport repair | `analysis/session-0b91edfc-repo-check.md` | cited to the verdict file and the failing run URL |
+| 0B9-6 | PR → `main` → merge without approval (only if all checks green) → confirm Pages deploy by live fetch → record PR link and merge result here | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+
+**Explicitly NOT edited:** `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `nba2/v6/**`, `nba2/pipeline/refresh.py`, `nba2/v2/refresh.py`, `.github/workflows/**`, `data/raw/**`, sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/settlement.json`, `data/v4/settlement/**`, `site/**` (unless a checker requires a rebuild — then logged).
