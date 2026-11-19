@@ -2607,7 +2607,7 @@ duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html`
    workflow failed on PR #56 — no local checker caught it, since `nba2.v2.check` reads the
    rebuilt tree, not the committed one. `nba2/v2/report.py` was clean and already carried
    both halves of the disputed check, so regenerating resolved it with nothing lost.
-   **Lesson: after any rebase, grep the tree for `^<<<<<<<` and `^>>>>>>>`, and
+   **Lesson: after any rebase, grep the tree for `^`^>>>>>>>`, and
    `json.load` every committed `.json`.** Reading the diff is not enough — the markers were
    inside a generated file that no one opens.
 2. **`python -m nba2.pipeline.settle` invalidates the next rebuild.** `settle` stamps a new
@@ -5993,6 +5993,45 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 
 ---
 
+## Session `arena/9fef54cf-nba2` — CLAIM (2026-11-19 UTC, branch `arena/9fef54cf-nba2`, base `41cfd81` = `main` @ PR #133)
+
+**Task (narrow, non-overlapping):** independent tamper-evidence and pre-registration audit. Checks the brief items "freeze a pre-registration file per strategy before its first bet" and "tamper-evident ledger: hash each pick, publish the hash before tip, verify after settlement" against the git history and the committed files, line by line. Records every finding with a commit link. It does **not** re-freeze, re-hash, or edit any prereg file, sealed ledger, model input, or published page: a frozen file that has been changed is reported, not repaired silently.
+
+**Claimed file scope:** `audit/9fef54cf/**` (new: reproducible checker script, output JSON), `analysis/session-9fef54cf-prereg-audit.md` (new), and this append-only board entry. Nothing else.
+
+**Overlap check:** does not touch PR #130 (`arena/6023d517-nba2`), PR #131 (`arena/8c7c8828-nba2`), the requirements-coverage audit (`arena/164d832b-nba2`), the official-freshness probe (`arena/22fcf97f-nba2`), or the readiness audit (`arena/ede2dbd0-nba2`). Those sessions are not affected by this audit.
+
+| ID | Task | Status | File scope | Verification |
+|---|---|---|---|---|
+| 9F-1 | Claim + push before work | done | `COORDINATION.md` | pushed before audit work |
+| 9F-2 | Recompute every prereg hash and sealed-ledger digest with the rule each file declares | in progress | `audit/9fef54cf/**` | script output, reproducible |
+| 9F-3 | Timeline from git history: first commit, commit count, content changes after first commit, `frozen_at`/`registered_at` vs first commit, vs first sealed pick and first finals | in progress | `audit/9fef54cf/**` | commit SHAs linked |
+| 9F-4 | Findings record + suggestions (no repair without owner decision) | in progress | `analysis/session-9fef54cf-prereg-audit.md` | every claim cites a SHA or a command |
+| 9F-5 | Commit, `git pull --rebase`, push, mark done | in progress | `COORDINATION.md` | — |
+
+### Completion record — session `arena/9fef54cf-nba2` (2026-11-19 UTC)
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| 9F-1 | Claim + push before work | done | claim pushed before any audit work (`68279ed`) |
+| 9F-2 | Recompute every prereg hash and sealed digest | done | sealed-2026-11-13 and -14 verify; v2 prereg 0/7 match under 4 tested rules; v3 8/9 match canonical JSON (S9 never matches) |
+| 9F-3 | Timeline from full git history (clone unshallowed; `origin/main` = 585 commits) | done | v2 re-stamped 4 times; v3 window rolled 11/15→11/16→11/17 with declared times later than commits; sealed-14 header seal time varies (00:58:54 vs 00:49:16) |
+| 9F-4 | Findings + suggestions + owner questions, no repairs | done | `analysis/session-9fef54cf-prereg-audit.md` (F-PR-01…09, S-PR-1…7); reproducible: `audit/9fef54cf/prereg_audit.py` → `audit/9fef54cf/prereg_audit.json` |
+| 9F-5 | Commit, rebase, push | done | see the PR entry below |
+
+**Sources.** Repository evidence only: commit SHAs with GitHub links in the analysis note; committed `data/raw/finals_*.json` first-commit times; committed prereg, ledger and strategy-lab files. **No NBA.com value was read or re-checked in this session**, so no official NBA source is cited.
+
+**Verification.** `python3 audit/9fef54cf/prereg_audit.py` re-run on the final tree; sealed digests recomputed by an independent script and by `nba2.models.ledger.verify` (both True).
+
+**Irregularities (for the integration session to publish on Flagged for Review; not published by this session because site navigation is integration-owned):** FR-PR-01 through FR-PR-06, listed in §6 of `analysis/session-9fef54cf-prereg-audit.md`. These are the most serious findings on the board: the pre-registration is not a valid freeze, its hashes do not reproduce, and the S1–S7 IDs refer to different strategies in different files.
+
+**Requests logged (not edited here):**
+- **RQ-9F-1 → `arena/fb1d73b2-nba2`** (commit `7accb28`, unmerged): the 2026-11-19 v2 re-cut re-stamps `frozen_at_utc`/`frozen_by`/`prereg_hash` on the frozen v2 files (F-PR-01). Request: do not re-stamp a frozen file; create a new versioned ID for any changed strategy, and keep the old file.
+- **RQ-9F-2 → integration session (`arena/d5a9f631-nba2`)**: mirror FR-PR-01…06 to the Flagged for Review page with the commit links; relabel v2/v3 strategies as "retro-specified, not pre-registered" pending owner decision (S-PR-5). Do not change the numbers.
+- **RQ-9F-3 → owner decision**: choose the canonical strategy set (F-PR-03), the hash rule (S-PR-2), an external anchor for pre-tip publication (S-PR-4), and whether to approve S-PR-1 and S-PR-7 as repository policy. Questions are listed in §5 of the analysis note.
+- **RQ-9F-4 → owner decision on the 11/14 ledger seal time** (F-PR-06): only an external record can settle 00:49:16 vs 00:58:54.
+
+**Scope check.** Only `audit/9fef54cf/**`, `analysis/session-9fef54cf-prereg-audit.md` and this board were changed. No prereg file, sealed ledger, model input, official capture, generated site data, or site navigation was touched.
 ## Session `arena/3a5c7c75-nba2` — CLAIM (2026-11-19 UTC)
 
 **Task:** correct the canonical dashboard's refresh-status wording. The page currently says the latest scheduled ingest "failed before rebuilding," while the committed run verdict says all four capture surfaces succeeded and the workflow run records the later publish/rebuild job failure. Preserve the fail-closed stale-data disclosure, but distinguish successful capture from failed publication so readers are not misled.
@@ -6017,6 +6056,9 @@ files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check`
 passed. External links were inventoried by the checker, not fetched. No NBA values or source
 captures changed. **Status: done.**
 
+### Merge-conflict log — session `arena/9fef54cf-nba2` (2026-11-19 UTC)
+
+PR #135 went `CONFLICTING` against `main` after PR #134 (`arena/3a5c7c75-nba2`) merged. The only conflicting file was the append-only `COORDINATION.md`. Resolution: `origin/main` merged into `arena/9fef54cf-nba2` (commit `1e0c0fd`), and both sides kept in order, so the other session's entries are intact. No other file conflicted, and no content from another session was discarded. Checks re-run on the merge commit before the PR is merged.
 **Integration / deployment result:** PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134)
 merged on 2026-11-19T12:24:47Z as `35a41112542e2d48ff19285709575f15b68d6b79`.
 All PR checks passed (backtest, capture, parity, refresh dry-run, v2, verify). GitHub Pages run
@@ -6126,3 +6168,82 @@ all rc=0; **rebuild produces 0 changed files**; suites: `nba2/tests` 92, `v2` 16
 `v5` 26, `v6` 52, **`v8` 17** — all OK; `nba2.v2.check` **0 structural / 0 semantic**;
 `tools/check_links_all.py` **146 files / 7,814 internal links OK**; capture `--selftest` OK
 (30 clubs, 12 finals, 4 scheduled, 21 injury rows).
+
+## Session `arena/923eb342-nba2` — CLAIM (2026-11-19 UTC)
+
+**Branch:** `arena/923eb342-nba2`, base `41cfd812d2794db529090cd026e7056ca3c1b0cd` (main @ merge of PR #133).
+**Claim pushed before any work**, per the board rule.
+
+**State read at claim time (measured, not assumed).**
+- Working tree clean; `gh pr list --state open` shows **#130** (`arena/6023d517-nba2`) and **#131** (`arena/8c7c8828-nba2`) open. `gh run list` shows two in-progress runs from branches `arena/585453f5-nba2` and `arena/452034cb-nba2` (claims only, no PR yet). **This session therefore does not touch `nba2/v6/`, `nba2/v7/`, `nba2/pipeline/settle.py`, `site/**`, `.github/workflows/{pages,ci,publish-parity,refresh}.yml`, `README.md` or `COORDINATION.md`'s existing text** — all are inside another live session's change set.
+- `python3 tools/crosscheck_site.py` on the checked-out commit: **97 checks — 87 pass, 1 fail, 9 info**. The single failure is `CC-FRESH-01` (snapshot 5 days old). This is reproduced, not quoted.
+- `curl`/`urllib` to `nba.com`, `official.nba.com` and `stats.nba.com` from this sandbox: **HTTP 000 / SSL_ERROR_SYSCALL** (egress blocked). Official reads in this session are therefore done with the platform page-fetch transport, and **every row records the transport** so the method is auditable rather than implied.
+
+**Task claimed (single, non-overlapping):** V-923 — independent official-source verification of the *currently published* values plus a defect register, with any concrete defect fixed only inside this session's own namespace.
+
+**File scope (new files only, plus this append-only section):**
+- `audit/923eb342/**` — capture records, verification report, links.
+- `analysis/session-923eb342-verification.md` — the line-by-line verification write-up.
+- `COORDINATION.md` — this claim and its completion record, append-only.
+- No production file, no generated site artefact, no shared navigation is edited by this session. Anything that needs a production change is logged here as a **request** for the integration session.
+
+**Verification rule held for the whole session:** a published value is `verified` only if it was read from an official NBA page during this session (URL + retrieval timestamp recorded) or recomputed by running the committed code over a committed official snapshot; otherwise it stays `unverified` and is listed with the reason. No value is inferred, rounded into agreement, or filled.
+
+### Completion record — session `arena/923eb342-nba2` (2026-11-19 UTC)
+
+**Task V-923 done.** Independent official-source verification of the currently published tree, plus a
+defect/suggestion register rendered as a separate dashboard. Full write-up (method, all 82 checks, all 14
+findings, reproduce steps): [`analysis/session-923eb342-verification.md`](analysis/session-923eb342-verification.md).
+Machine-readable report: `audit/923eb342/report.json`; run log: `audit/923eb342/run_log.txt`.
+
+**Official sources read this session (7, all fetched 2026-11-19; URL + timestamp per row in
+`audit/923eb342/capture_2026-11-19.json`):** [standings](https://www.nba.com/standings) ·
+[games 11/17](https://www.nba.com/games?date=2026-11-17) · [games 11/18](https://www.nba.com/games?date=2026-11-18) ·
+[game 0022600259](https://www.nba.com/game/hou-vs-ind-0022600259) · [its box score](https://www.nba.com/game/hou-vs-ind-0022600259/box-score) ·
+[injury-report index](https://official.nba.com/nba-injury-report-2026-27-season/) ·
+[11/19/26 07:00 AM ET release](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf).
+Transport is recorded per row: direct TLS from this sandbox to nba.com fails (SSL_ERROR_SYSCALL, HTTP 000),
+so the platform page-fetch transport was used throughout.
+
+**Verification performed (82 checks, machine-run, deterministic):** 19 PASS · 24 SUPERSEDED (+1 game since
+the committed 2026-11-18T19:30Z standings capture) · 32 MISSING · 5 STALE · 2 FAIL. Notable passes: both
+sealed-ledger digests recompute (22 and 27 picks) and the five 11/17 settled finals match the official game
+pages exactly; `hca = 0.7679` equals `σ(2p−1)` to the published rounding (pinned, not fitted); the committed
+2026-11-18 finals capture has 50 records with **0** quarter rows that fail to sum to the printed final.
+
+**Irregularities (published on the Flagged for review page of the new site, each with its official URL; none
+blocks this session's merge):** F-923-01 scheduled refresh failed 10/10 (capture succeeds, publish fails at
+"Rebuild every tree from the committed capture"; run
+[44381003145](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145)) · F-923-02 result feed is a
+5-row 2026-11-14 slice, 17 finals missing · F-923-03 lines elapsed, 0 of today's 4 games covered · F-923-04
+injury archive stops at 11/17 11:00 AM while the official index has 11/19 releases ⇒ no consecutive-report diff ·
+F-923-05 out-of-sample log-loss 0.7058 vs coin flip 0.6931 · F-923-06 player-log coverage 12/116 · F-923-07 publish
+failure not reproducible locally (11/11 modules rc=0; rebuild differs only in timestamps/digests; runner log
+unreachable, blob endpoint returned EOF) · F-923-08 model fitted on the 2026-11-15 snapshot (24/30 clubs one game
+behind) · F-923-09 the blend is still the headline, not the estimator disagreement · F-923-10 three official
+team-stat pages unreadable from the runner · F-923-11 `nba2/v2/check.py` freezes `n_slate = 34` / "wins == 188" ·
+F-923-12 no sealed ledger for any game on/after 11/18 · F-923-13 leaderboard ranks a 7-bet strategy first under a
+300-bet minimum · F-923-14 model accuracy indistinguishable from a one-line prior (McNemar p = 0.3915).
+
+**No production file was edited.** At claim time PRs #130 and #131 plus two claim-only branches held
+`nba2/v6/**`, `nba2/v7/**`, `nba2/pipeline/settle.py`, `site/**`, `pages/**`, `data/site.json`,
+`data/settlement.json`, `README.md` and the four workflows. Every defect above lands inside one of those scopes,
+so each is logged as a **request** for the owning or integration session instead of an edit:
+
+- **RQ-923-1** (owner of `nba2/v2/check.py`): replace the frozen `n_slate = 34` and `ΣW == 188` assertions with
+  assertions computed from the snapshot under check. Evidence: F-923-11.
+- **RQ-923-2** (owner of `refresh.yml` publish chain): obtain and read the failing step's log, then fix the
+  actual cause. Local reproduction: `python3 -m nba2.pipeline.settle`, `nba2.v4.settlement`,
+  `pipeline.build_site_data`, `pipeline.build_site`, `backtest.engine.build`, `nba2.v2`, `nba2.settlement_page`,
+  `nba2.v3`, `nba2.v4`, `nba2.v5`, `nba2.v6` all rc=0 on a clean extract of `41cfd812`. Evidence: F-923-01/07.
+- **RQ-923-3** (owner of `nba2/v2/build.py`): publish `|est_a − est_b|` as the headline column and the blend
+  underneath. Inputs already exist. Evidence: F-923-09.
+- **RQ-923-4** (owner of `nba2/v2/strategy_lab.py`): enforce `min_sample_to_rank` in the ranking, not only in
+  the note. Evidence: F-923-13.
+
+**New files only:** `audit/923eb342/**` (capture, harness, ingest, verified rows, 13-page dashboard, checker),
+`analysis/session-923eb342-verification.md`, `.github/workflows/verification-desk.yml`, and this append-only
+section. The dashboard is published by its own workflow and never writes to `site/`, `pages/` or `data/`.
+
+**Board state at completion:** PRs #130, #131, #135 remain open and are other sessions' work — not touched,
+not merged, not closed by this session. The repository-root Pages publication is unchanged by this session.

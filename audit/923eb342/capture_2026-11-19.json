@@ -1,0 +1,476 @@
+{
+ "schema": "nba2.authcheck.capture.v1",
+ "session": "arena/923eb342-nba2",
+ "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here",
+ "retrieved_at_utc": "2026-11-19T12:20Z",
+ "sources": [
+  {
+   "id": "standings-2026-11-19",
+   "url": "https://www.nba.com/standings",
+   "what": "2026-27 regular-season W/L, home/road, division, last-10, streak per club"
+  },
+  {
+   "id": "games-2026-11-17",
+   "url": "https://www.nba.com/games?date=2026-11-17",
+   "what": "five 2026-11-17 finals + records printed beside each game"
+  },
+  {
+   "id": "games-2026-11-18",
+   "url": "https://www.nba.com/games?date=2026-11-18",
+   "what": "twelve 2026-11-18 finals; 2026-11-19 slate of four games with tip ET"
+  },
+  {
+   "id": "game-0022600259",
+   "url": "https://www.nba.com/game/hou-vs-ind-0022600259",
+   "what": "per-game result page for HOU 119 \u2013 IND 104"
+  },
+  {
+   "id": "boxscore-0022600259",
+   "url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "what": "official per-player box score: MIN, PTS, REB, AST per player"
+  },
+  {
+   "id": "injury-policy",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "what": "filing deadlines + release index"
+  },
+  {
+   "id": "injury-2026-11-19-0700",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "what": "11/19/26 07:00 AM ET official injury report (retrieved 2026-11-19)"
+  }
+ ],
+ "games_2026_11_17": [
+  {
+   "game_id": "0022600253",
+   "away": "NYK",
+   "away_pts": 111,
+   "home": "TOR",
+   "home_pts": 102,
+   "url": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+  },
+  {
+   "game_id": "0022600255",
+   "away": "DET",
+   "away_pts": 105,
+   "home": "SAS",
+   "home_pts": 93,
+   "url": "https://www.nba.com/game/det-vs-sas-0022600255"
+  },
+  {
+   "game_id": "0022600254",
+   "away": "POR",
+   "away_pts": 105,
+   "home": "MIN",
+   "home_pts": 106,
+   "url": "https://www.nba.com/game/por-vs-min-0022600254"
+  },
+  {
+   "game_id": "0022600257",
+   "away": "UTA",
+   "away_pts": 132,
+   "home": "LAC",
+   "home_pts": 107,
+   "url": "https://www.nba.com/game/uta-vs-lac-0022600257"
+  },
+  {
+   "game_id": "0022600256",
+   "away": "CHA",
+   "away_pts": 114,
+   "home": "LAL",
+   "home_pts": 118,
+   "url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+   "note": "Final/OT"
+  }
+ ],
+ "games_2026_11_18": [
+  {
+   "game_id": "0022600259",
+   "away": "HOU",
+   "away_pts": 119,
+   "home": "IND",
+   "home_pts": 104
+  },
+  {
+   "game_id": "0022600261",
+   "away": "PHI",
+   "away_pts": 121,
+   "home": "ORL",
+   "home_pts": 116
+  },
+  {
+   "game_id": "0022600260",
+   "away": "MIL",
+   "away_pts": 130,
+   "home": "MIA",
+   "home_pts": 137
+  },
+  {
+   "game_id": "0022600258",
+   "away": "MEM",
+   "away_pts": 124,
+   "home": "CLE",
+   "home_pts": 121
+  },
+  {
+   "game_id": "0022600262",
+   "away": "CHI",
+   "away_pts": 137,
+   "home": "BKN",
+   "home_pts": 107
+  },
+  {
+   "game_id": "0022600263",
+   "away": "WAS",
+   "away_pts": 103,
+   "home": "TOR",
+   "home_pts": 99
+  },
+  {
+   "game_id": "0022600267",
+   "away": "GSW",
+   "away_pts": 94,
+   "home": "DAL",
+   "home_pts": 116
+  },
+  {
+   "game_id": "0022600265",
+   "away": "ATL",
+   "away_pts": 117,
+   "home": "OKC",
+   "home_pts": 112
+  },
+  {
+   "game_id": "0022600264",
+   "away": "DET",
+   "away_pts": 122,
+   "home": "NOP",
+   "home_pts": 109
+  },
+  {
+   "game_id": "0022600266",
+   "away": "BOS",
+   "away_pts": 101,
+   "home": "DEN",
+   "home_pts": 105
+  },
+  {
+   "game_id": "0022600269",
+   "away": "PHX",
+   "away_pts": 128,
+   "home": "SAC",
+   "home_pts": 107
+  },
+  {
+   "game_id": "0022600268",
+   "away": "UTA",
+   "away_pts": 109,
+   "home": "LAL",
+   "home_pts": 97
+  }
+ ],
+ "slate_2026_11_19": [
+  {
+   "game_id": "0022600270",
+   "away": "GSW",
+   "home": "MEM",
+   "tip_et": "8:00 PM"
+  },
+  {
+   "game_id": "0022600271",
+   "away": "POR",
+   "home": "MIL",
+   "tip_et": "8:00 PM"
+  },
+  {
+   "game_id": "0022600272",
+   "away": "NYK",
+   "home": "MIN",
+   "tip_et": "8:00 PM"
+  },
+  {
+   "game_id": "0022600273",
+   "away": "LAC",
+   "home": "SAS",
+   "tip_et": "8:00 PM"
+  }
+ ],
+ "slate_2026_11_20": [
+  {
+   "game_id": "0022600043",
+   "away": "CHA",
+   "home": "ATL",
+   "tip_et": "7:00 PM"
+  },
+  {
+   "game_id": "0022600044",
+   "away": "ORL",
+   "home": "BKN",
+   "tip_et": "7:30 PM"
+  },
+  {
+   "game_id": "0022600045",
+   "away": "IND",
+   "home": "CLE",
+   "tip_et": "7:30 PM"
+  },
+  {
+   "game_id": "0022600046",
+   "away": "TOR",
+   "home": "DET",
+   "tip_et": "7:30 PM"
+  },
+  {
+   "game_id": "",
+   "away": "WAS",
+   "home": "CHI",
+   "tip_et": "8:00 PM",
+   "note": "row truncated in chunk 0/3 of the 11/18 games page; game id not captured \u2014 left blank, not inferred"
+  }
+ ],
+ "standings_2026_11_19": {
+  "PHI": [
+   13,
+   3
+  ],
+  "BOS": [
+   11,
+   4
+  ],
+  "DET": [
+   10,
+   4
+  ],
+  "MIA": [
+   9,
+   6
+  ],
+  "ATL": [
+   9,
+   6
+  ],
+  "NYK": [
+   8,
+   6
+  ],
+  "CLE": [
+   8,
+   8
+  ],
+  "ORL": [
+   6,
+   8
+  ],
+  "TOR": [
+   5,
+   10
+  ],
+  "IND": [
+   5,
+   10
+  ],
+  "WAS": [
+   5,
+   11
+  ],
+  "CHA": [
+   4,
+   10
+  ],
+  "CHI": [
+   4,
+   10
+  ],
+  "BKN": [
+   3,
+   11
+  ],
+  "MIL": [
+   1,
+   14
+  ],
+  "LAL": [
+   13,
+   3
+  ],
+  "SAS": [
+   12,
+   3
+  ],
+  "HOU": [
+   12,
+   4
+  ],
+  "MIN": [
+   11,
+   4
+  ],
+  "MEM": [
+   11,
+   4
+  ],
+  "POR": [
+   9,
+   5
+  ],
+  "DEN": [
+   8,
+   5
+  ],
+  "OKC": [
+   9,
+   6
+  ],
+  "DAL": [
+   8,
+   7
+  ],
+  "GSW": [
+   8,
+   7
+  ],
+  "PHX": [
+   7,
+   7
+  ],
+  "NOP": [
+   5,
+   11
+  ],
+  "LAC": [
+   4,
+   9
+  ],
+  "UTA": [
+   3,
+   13
+  ],
+  "SAC": [
+   1,
+   13
+  ]
+ },
+ "standings_note": "Values transcribed from the 2026-11-19 fetch of https://www.nba.com/standings. SAC 1-13 is transcribed from the final chunk of that page; every other row was read in chunk 0.",
+ "home_away_2026_11_19": {
+  "PHI": {
+   "home": "6-2",
+   "road": "7-1"
+  },
+  "BOS": {
+   "home": "6-1",
+   "road": "5-3"
+  },
+  "MIA": {
+   "home": "5-3",
+   "road": "4-3"
+  }
+ },
+ "boxscore_0022600259_hou": [
+  {
+   "player": "Reed Sheppard",
+   "min": "24:52",
+   "pts": 20,
+   "reb": 4,
+   "ast": 2
+  },
+  {
+   "player": "Steven Adams",
+   "min": "16:22",
+   "pts": 2,
+   "reb": 5,
+   "ast": 2
+  },
+  {
+   "player": "Marcus Smart",
+   "min": "18:16",
+   "pts": 4,
+   "reb": 4,
+   "ast": 2
+  },
+  {
+   "player": "Tari Eason",
+   "min": "24:52",
+   "pts": 4,
+   "reb": 11,
+   "ast": 3
+  },
+  {
+   "player": "Team totals",
+   "min": "",
+   "pts": 119,
+   "reb": 46,
+   "ast": 30
+  }
+ ],
+ "boxscore_note": "Only the Houston rows visible in chunk 3 are transcribed; the Pacers block and the remaining Houston rows are not transcribed, because a partial transcription is honest and a reconstructed one is not.",
+ "injury_2026_11_19_0700": {
+  "report_stamp": "11/19/26 07:00 AM",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+  "rows": [
+   {
+    "date": "11/19/2026",
+    "matchup": "GSW@MEM",
+    "team": "Golden State Warriors",
+    "player": "",
+    "status": "",
+    "reason": "NOT YET SUBMITTED"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "LAC@SAS",
+    "team": "LA Clippers",
+    "player": "Beal, Bradley",
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Injury Management"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "LAC@SAS",
+    "team": "San Antonio Spurs",
+    "player": "Harper, Dylan",
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hip Soreness"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "NYK@MIN",
+    "team": "Minnesota Timberwolves",
+    "player": "Edwards, Anthony",
+    "status": "Out",
+    "reason": "Injury/Illness - Right Knee Arthroscopy"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "NYK@MIN",
+    "team": "Minnesota Timberwolves",
+    "player": "Beringer, Joan",
+    "status": "Available",
+    "reason": "Injury/Illness - Face Mask"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "POR@MIL",
+    "team": "Portland Trail Blazers",
+    "player": "Avdija, Deni",
+    "status": "Questionable",
+    "reason": "Injury/Illness - Left Foot Inflammation / Soreness"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "POR@MIL",
+    "team": "Portland Trail Blazers",
+    "player": "Morant, Ja",
+    "status": "Out",
+    "reason": "Injury/Illness - Left Hamstring Strain"
+   },
+   {
+    "date": "11/19/2026",
+    "matchup": "POR@MIL",
+    "team": "Milwaukee Bucks",
+    "player": "",
+    "status": "",
+    "reason": "NOT YET SUBMITTED"
+   }
+  ]
+ }
+}
