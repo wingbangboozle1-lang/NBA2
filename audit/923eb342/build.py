@@ -322,8 +322,17 @@ ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
 """
 
 
+def md(x) -> str:
+    """Escape, then turn `code` into <code> and **bold** into <b>. Only these two, because only
+    these two are used in the prose fields — anything else stays literal on purpose."""
+    t = html.escape("" if x is None else str(x), quote=False)
+    t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+    t = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", t)
+    return t
+
+
 def esc(x) -> str:
-    return html.escape("" if x is None else str(x))
+    return html.escape("" if x is None else str(x), quote=False)
 
 
 def badge(v: str) -> str:
@@ -479,7 +488,7 @@ official snapshot by running the repository's own code; nothing is estimated.</d
 <h2>The two surfaces, as they stand</h2>
 {table(["Surface", "What is published today", "Gate status", "Source"],
        [["Projection (safe to publish)", "34 originated lines, 30-club ratings, two estimators, luck z-scores",
-         badge("PASS — derivable from official data") + ' <span class="note">but from a stale snapshot</span>',
+         badge("PASS — derivable from official data") + ' <span class="note"> but from a stale snapshot</span>',
          src(NBA_STAND)],
         ["Bet (gated)", "No pick is staked. Every pick row is WITHHELD, because there is no price (G6) and no "
          "sealed ledger for any game on or after 2026-11-18",
@@ -790,6 +799,8 @@ def p_performance() -> str:
                      esc(r_.get("calibration_gap")),
                      badge("yes") if r_.get("eligible_for_reward") else badge("no — " + str(r_.get("blocked_by"))),
                      src("https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json")])
+    N_BELOW_FLOOR = sum(1 for r_ in LEADER.get("ranked", [])
+                        if (r_.get("n") or 0) < (LEADER.get("min_sample_to_rank") or 0))
     sk = (LAB.get("skill_attribution") or {}).get("headline_vs_win_pct_baseline") or {}
     SKILL_TXT = (
         "Model {} on the {} games both rules scored; the \"back the better prior win percentage\" "
@@ -847,10 +858,11 @@ one does, neither number should be quoted alone.</div>
 
 <h2>Luck vs skill: the leaderboard, as it scores itself</h2>
 {table(["Rank", "Strategy", "Bets", "Hit rate", "Log-loss", "Calibration gap", "Eligible for reward", "Source"], lrow,
-       f"The board's own minimum sample to rank is <b>{LEADER.get('min_sample_to_rank')}</b> bets. Two of the "
-       "strategies listed are ranked on fewer than that; the top row has "
-       f"{LEADER.get('ranked', [{}])[0].get('n') if LEADER.get('ranked') else '—'} bets. Ranked on log-loss, "
-       "a proper scoring rule, which is the right choice — the sample floor is what is not enforced.")}
+       f"The board's own minimum sample to rank is <b>{LEADER.get('min_sample_to_rank')}</b> bets. "
+       f"<b>{N_BELOW_FLOOR} of {len(LEADER.get('ranked', []))}</b> ranked strategies sit below that floor — "
+       f"the top row has <b>{LEADER.get('ranked', [{}])[0].get('n') if LEADER.get('ranked') else '—'}</b> bets "
+       "and a 100% hit rate. Ranking on log-loss is the right choice (it is a proper scoring rule); the "
+       "sample floor is what is declared and not enforced.")}
 
 <h2>The paired test that decides whether the model beats a one-line rule</h2>
 <p class="note">{esc(SKILL_TXT)}</p>
@@ -952,7 +964,7 @@ the minimum disclosure that would make it honest.</p>
 
 
 def p_questions() -> str:
-    rows = [[esc(q), esc(sev and badge(sev) or ""), esc(title), esc(detail), esc(next_step),
+    rows = [[esc(q), esc(sev and badge(sev) or ""), md(title), md(detail), md(next_step),
              f'{esc(F_Q[q])} ' + fsrc(F_Q[q])] if q in F_Q else
             [esc(q), esc(sev and badge(sev) or ""), esc(title), esc(detail), esc(next_step),
              f'{esc(F_Q[q])} ' + fsrc(F_Q[q])]
@@ -983,13 +995,13 @@ discover the missing information. Nothing here is rhetorical: an answer changes 
 
 
 def p_suggestions() -> str:
-    rows = [[esc(i), esc(t), esc(d), esc(sev and badge(sev) or ""), esc(impact),
+    rows = [[esc(i), md(t), md(d), esc(sev and badge(sev) or ""), md(impact),
              f'{esc(S_F.get(i, "F-923-01"))} ' + fsrc(S_F.get(i, "F-923-01")),
              f'<a class="chip" href="#{esc(i)}">choose</a>'] for i, t, d, sev, impact in SUGGESTIONS]
     detail = []
     for i, t, d, sev, impact in SUGGESTIONS:
-        detail.append(f"""<div class="finding" id="{esc(i)}"><h4>{esc(i)} · {esc(t)}</h4>
-<p>{esc(d)}</p><div class="meta">Severity {esc(sev)} · Impact: {esc(impact)}</div></div>""")
+        detail.append(f"""<div class="finding" id="{esc(i)}"><h4>{esc(i)} · {md(t)}</h4>
+<p>{md(d)}</p><div class="meta">Severity {esc(sev)} · Impact: {md(impact)}</div></div>""")
     body = f"""
 <h1>Suggestions</h1>
 <p class="lede">A section reserved for proposals, so that one can be reviewed and chosen before anything
@@ -1024,9 +1036,9 @@ branches). Editing them from this session would collide. Each finding therefore 
 and the mechanism to change it with, and is logged on the shared board as a request.</div>
 
 {"".join(f'''<div class="finding" id="{esc(f[0])}">
-<h4>{esc(f[0])} {badge(f[1])} {esc(f[2])}</h4>
-<p>{esc(f[3])}</p>
-<div class="meta"><b>Evidence:</b> {esc(f[4])}<br><b>Confirm at:</b> {src(f[5])}</div></div>'''
+<h4>{esc(f[0])} {badge(f[1])} {md(f[2])}</h4>
+<p>{md(f[3])}</p>
+<div class="meta"><b>Evidence:</b> {md(f[4])}<br><b>Confirm at:</b> {src(f[5])}</div></div>'''
             for f in FINDINGS)}
 
 <h2>Unverified items, listed separately</h2>
