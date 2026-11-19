@@ -5489,3 +5489,81 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | ACF-5 | End-to-end proof: refresh runs green on a real GitHub runner (capture + publish gates) | pending | run logs linked from the completion record | `refresh_verdict.json` shows `rolling=success`; publish job commits; no gate weakened |
 | ACF-6 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result; disposition of stale PRs #70/#72/#78/#80/#82/#98/#112 logged (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | ACF-7 | RQ-8892-02 model re-cut to the 2026-11-17 capture (7 ordered steps, §4 spec) — conditional on PR #115 merging/closing first | pending | `nba2/v2/official.py`, `nba2/v2/report.py`, v3/v4/v5 repoint, regenerated artefacts | every checker green; `CC-FRESH-01` turns pass; PF/PA re-basing disclosed on the page |
+
+---
+
+## Session `arena/af5df7a7-nba2` — CLAIM (2026-11-19 ~05:55 UTC, branch `arena/af5df7a7-nba2`, base `a5380e1` = `main` @ ingest 2026-11-18T19:30:52Z)
+
+**Role:** repair the failing nightly `publish` job (its `capture` leg is green; the
+"Rebuild every tree from the committed capture" step exits 1 on every scheduled run since
+2026-11-17), so the brief's "refresh the four surfaces, then rebuild only after freshness
+and provenance gates pass" actually completes unattended. Diagnosed before claiming; the
+two root causes below are reproduced by committed code over committed data.
+
+**State read at claim time (verified, not assumed).**
+- `git status` clean at `a5380e1`; `data/raw/refresh_verdict.json` run
+  [44381003145](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145):
+  all four surfaces `success`; `publish` job failed at "Rebuild every tree from the
+  committed capture" (exit 1). Same failure on run 44328569212 (14:51Z capture).
+- Local reproduction on the pristine `a5380e1` tree (Python 3.11):
+  `python3 -m nba2.settlement_page` → **exit 1** — `data/raw/official_finals_union.json is
+  stale — run: python -m nba2.pipeline.settle`. Cause: the union is written only by
+  `nba2.pipeline.settle`, which the rebuild chain never runs, while the capture job keeps
+  adding official finals sources (`raw/finals_*.json`, `capture_*/results_*.json`,
+  `data/v2/results.json`). Measured delta at claim time: fresh `build_union()` = 36 records
+  vs 31 on disk — five 11/17 finals (0022600253–257) and four new source files are not in
+  the union, so the settlement page (fail-closed by design) refuses to render.
+  `python3 -m nba2.v6` → **exit 1** — hard gate G-V6-8: games 0022600231–240 report "no
+  official URL at all". Cause: `nba2/v6/results_coverage.py::finals_committed` merges
+  per-game records first-file-wins and does not read the aliases the committed feeds use
+  (`source`, `final_source_url`, `home_team`/`away_team`), so the sparse
+  `data/raw/finals_2026-11-1x.json` rows shadow the URL-carrying
+  `capture_*/results_*.json` rows that are also committed. The URLs exist in the committed
+  official captures (e.g. `https://www.nba.com/game/den-vs-nop-0022600231`); the gate is
+  right to demand them, the reader is wrong to miss them.
+- Concurrent session `arena/53c5afeb-nba2` is active with an append-only docs audit claim
+  (`README.md`, `COORDINATION.md`); no scope overlap. Open PRs #125 (`arena/934fce54-nba2`,
+  last commit 2026-11-17 17:02) and #112 (`arena/a11505e1-nba2`, 2026-11-16) are past the
+  60-minute handoff rule; disposition (merge-if-valuable or close-as-superseded) is task
+  AF-6 and will be logged, never silent.
+
+**File scope claimed (nothing outside this list is edited):**
+- `.github/workflows/refresh.yml` — publish-job rebuild chain + commit list only. Gate
+  logic stays fail-closed and is not weakened: `nba2.pipeline.settle` (the command the
+  error message itself names) is added to the rebuild, run **only when the finals leg
+  succeeded**, and its two outputs (`data/settlement.json`,
+  `data/raw/official_finals_union.json`) join the "Commit the rebuild" add-list, together
+  with `data/site-built.json`/`data/v5`/`data/v6` if and only if the committed rebuild
+  changes them (matched against `publish-parity.yml`'s drift checks).
+- `nba2/v6/results_coverage.py` — reader fix only: cross-file merge fills missing non-null
+  fields (scores that disagree still raise the existing conflict), alias keys normalised
+  exactly as `nba2/pipeline/settle.py::normalise_source` already reads them, and the
+  `matchup` fallback no longer prints "None @ None". No gate is edited; G-V6-8 keeps its
+  wording and its standard (every game row must point at an official nba.com document).
+- New test file `nba2/v6/test_results_merge.py` (new file only).
+- `analysis/session-af5df7a7-*.md` (new files only).
+- Regenerated artefacts, only as direct output of the committed builders: `site/**`,
+  `pages/**`, root `*.html`, `data/site.json`, `data/site-built.json`,
+  `data/settlement.json`, `data/raw/official_finals_union.json`, `data/v5/**`,
+  `data/v6/**`, `backtest/**` if it changes.
+- `COORDINATION.md` — this claim + completion record, append-only.
+
+**Explicitly NOT edited:** `nba2/**` outside the one v6 reader file and the new test,
+`.github/workflows/{ci,pages,publish-parity,v2-verify,probe-egress,capture-fixtures}.yml`,
+`README.md`, `data/raw/ledger/**` + `data/v3/ledger/**` (**sealed — never rewritten**),
+all committed `data/raw/**` snapshots, `tools/**`, `docs/**`, `dashboard/**`,
+`originated/**`, `verified/**`, `archive/**`, `requirements/**`, `suggestions/**`.
+
+**Rules:** values publish only from committed official captures or a fresh fetch of an
+official source; unconfirmed ⇒ blank + flagged, never inferred; sealed ledgers never
+rewritten; every gate stays fail-closed; small frequent commits; `git pull --rebase` before
+every push; the site is never merged broken.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| AF-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| AF-2 | Rebuild-chain repair: `pipeline.settle` runs in publish when the finals leg succeeded; its outputs join the commit list | pending | `.github/workflows/refresh.yml` | `nba2.settlement_page` exits 0 on the rebuilt tree; no gate weakened; finals-failure path unchanged (guard + fail-visible intact) |
+| AF-3 | v6 reader repair: cross-file merge + alias keys + matchup fallback | pending | `nba2/v6/results_coverage.py`, `nba2/v6/test_results_merge.py` | G-V6-8 passes on the committed URLs, fails on a synthetic row with none; gate text unchanged |
+| AF-4 | Regenerate every tree + full local verification (all suites, checks, lint, parity, links) | pending | regenerated artefacts only | exact commands + results recorded; build is a fixed point |
+| AF-5 | PR → `main`, merge without approval, Pages deploy confirmed by live fetch; record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
+| AF-6 | Disposition of stale PRs #125 / #112 (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` | `gh pr` actions logged with reasons |
