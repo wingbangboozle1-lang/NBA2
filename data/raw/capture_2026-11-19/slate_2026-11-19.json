@@ -1,19 +1,21 @@
 {
  "schema": "nba2.slate.v2",
- "window": "2026-11-19..2026-11-21",
+ "window": "2026-11-19..2026-11-22",
  "retrieved_at_utc": "2026-11-19T06:20:00+00:00",
  "retrieval_method": "nba2 platform page-fetch tool reading the live official page (sandbox TLS egress to nba.com is blocked - measured SSL_ERROR_SYSCALL); no stats.nba.com JSON call was attempted or simulated",
  "retrieved_by": "arena/fb1d73b2-nba2",
- "note": "the league's own per-day headings (11/19 '4 Games', 11/20 '9 Games', 11/21 '6 Games') were read off the same page and each matches the row count for that date; the two 11/21 rows whose card fell outside the fetched chunk carry their date/ID/clubs from the committed 2026-11-18 capture (which the live page reproduces) and a blank arena, flagged. NBA Cup group-game rows carry the group the card prints.",
+ "note": "the league's own per-day headings (11/19 '4 Games', 11/20 '9 Games', 11/21 '6 Games', 11/22 '7 Games') were read off the same page family and each matches the row count for that date. The window was extended to today+3 (2026-11-22) so the capture covers exactly the window the site publishes; the two 11/21 rows whose card fell outside the first fetched chunk were picked up on the second read (www.nba.com/schedule?date=2026-11-21 chunk 2), so every row in this file carries an arena that was printed. NBA Cup group-game rows carry the group the card prints; the 11/21 and 11/22 cards print no Cup marker, and that is recorded as blank rather than as 'not a Cup game' — the schedule heading is the only thing that says so.",
  "games_expected": {
   "2026-11-19": 4,
   "2026-11-20": 9,
-  "2026-11-21": 6
+  "2026-11-21": 6,
+  "2026-11-22": 7
  },
  "games_read": {
   "2026-11-19": 4,
   "2026-11-20": 9,
-  "2026-11-21": 6
+  "2026-11-21": 6,
+  "2026-11-22": 7
  },
  "games": [
   {
@@ -56,7 +58,9 @@
    "status": "scheduled",
    "source_url": "https://www.nba.com/schedule?date=2026-11-19",
    "game_url": "https://www.nba.com/game/nyk-vs-min-0022600272",
-   "arena_city": "Minneapolis, MN"
+   "arena_city": "Minneapolis, MN",
+   "broadcast": "NBA TV",
+   "broadcast_status": "read — the broadcast logo the schedule card prints on the game row"
   },
   {
    "date": "2026-11-19",
@@ -126,7 +130,9 @@
    "status": "scheduled",
    "source_url": "https://www.nba.com/schedule?date=2026-11-19",
    "game_url": "https://www.nba.com/game/tor-vs-det-0022600046",
-   "arena_city": "Detroit, MI"
+   "arena_city": "Detroit, MI",
+   "broadcast": "Prime Video",
+   "broadcast_status": "read — the broadcast logo the schedule card prints on the game row"
   },
   {
    "date": "2026-11-20",
@@ -182,7 +188,9 @@
    "status": "scheduled",
    "source_url": "https://www.nba.com/schedule?date=2026-11-19",
    "game_url": "https://www.nba.com/game/hou-vs-den-0022600050",
-   "arena_city": "Denver, CO"
+   "arena_city": "Denver, CO",
+   "broadcast": "Prime Video / ESPN Radio",
+   "broadcast_status": "read — the broadcast logo the schedule card prints on the game row"
   },
   {
    "date": "2026-11-20",
@@ -260,12 +268,13 @@
    "home": "SAS",
    "away": "NOP",
    "time_et": "8:00 pm ET",
-   "arena": null,
-   "arena_status": "unverified - the schedule card for this game was truncated in the fetched chunk; left blank rather than filled from the arena's usual name",
+   "arena": "Frost Bank Center",
+   "arena_status": "read — www.nba.com/schedule?date=2026-11-21 game card (chunk 2)",
    "cup_group": null,
    "status": "scheduled",
-   "source_url": "https://www.nba.com/schedule?date=2026-11-19",
-   "game_url": "https://www.nba.com/game/nop-vs-sas-0022600278"
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/nop-vs-sas-0022600278",
+   "arena_city": "San Antonio, TX"
   },
   {
    "date": "2026-11-21",
@@ -273,12 +282,114 @@
    "home": "SAC",
    "away": "BOS",
    "time_et": "10:00 pm ET",
-   "arena": null,
-   "arena_status": "unverified - the schedule card for this game was truncated in the fetched chunk; left blank rather than filled from the arena's usual name",
+   "arena": "Golden 1 Center",
+   "arena_status": "read — www.nba.com/schedule?date=2026-11-21 game card (chunk 2)",
    "cup_group": null,
    "status": "scheduled",
-   "source_url": "https://www.nba.com/schedule?date=2026-11-19",
-   "game_url": "https://www.nba.com/game/bos-vs-sac-0022600279"
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/bos-vs-sac-0022600279",
+   "arena_city": "Sacramento, CA",
+   "broadcast": "NBA TV"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600280",
+   "home": "ATL",
+   "away": "DET",
+   "time_et": "3:30 PM ET",
+   "arena": "State Farm Arena",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/det-vs-atl-0022600280",
+   "arena_city": "Atlanta, GA"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600281",
+   "home": "MIA",
+   "away": "OKC",
+   "time_et": "6:00 PM ET",
+   "arena": "Kaseya Center",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/okc-vs-mia-0022600281",
+   "arena_city": "Miami, FL"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600282",
+   "home": "WAS",
+   "away": "ORL",
+   "time_et": "7:00 PM ET",
+   "arena": "Capital One Arena",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/orl-vs-was-0022600282",
+   "arena_city": "Washington, DC",
+   "broadcast": "MNMT/Monumental+"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600283",
+   "home": "CHI",
+   "away": "DEN",
+   "time_et": "7:00 PM ET",
+   "arena": "United Center",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/den-vs-chi-0022600283",
+   "arena_city": "Chicago, IL"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600284",
+   "home": "UTA",
+   "away": "DAL",
+   "time_et": "7:00 PM ET",
+   "arena": "Delta Center",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/dal-vs-uta-0022600284",
+   "arena_city": "Salt Lake City, UT"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600285",
+   "home": "NYK",
+   "away": "IND",
+   "time_et": "8:00 PM ET",
+   "arena": "Madison Square Garden",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/ind-vs-nyk-0022600285",
+   "arena_city": "New York, NY"
+  },
+  {
+   "date": "2026-11-22",
+   "game_id": "0022600286",
+   "home": "GSW",
+   "away": "BOS",
+   "time_et": "8:30 PM ET",
+   "arena": "Chase Center",
+   "arena_status": "read — www.nba.com/schedule game card",
+   "cup_group": null,
+   "status": "scheduled",
+   "source_url": "https://www.nba.com/schedule?date=2026-11-21",
+   "game_url": "https://www.nba.com/game/bos-vs-gsw-0022600286",
+   "arena_city": "San Francisco, CA"
   }
- ]
+ ],
+ "arenas_blank": "none — every row carries a printed arena"
 }

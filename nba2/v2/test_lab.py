@@ -24,8 +24,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class TestHistoryCompleteness(unittest.TestCase):
-    """The 188 official finals (183 in history + the 5 of 11/14 in the dated capture)
-    must rebuild every standings record exactly."""
+    """The 222 official finals (183 in history, the 5 of 11/14 in the dated capture, and every
+    night's results feed since) must rebuild every standings record exactly."""
 
     @classmethod
     def setUpClass(cls):
@@ -35,8 +35,9 @@ class TestHistoryCompleteness(unittest.TestCase):
         ids = [g["game_id"] for g in self.games]
         self.assertEqual(len(ids), len(set(ids)), "a duplicated game id would double-count")
 
-    def test_history_is_188_games(self):
-        self.assertEqual(len(self.games), 188)
+    def test_history_is_222_games(self):
+        # one per game played through 2026-11-18, which is what the standings imply: Σ wins = 222
+        self.assertEqual(len(self.games), 222)
 
     def test_rebuilt_records_equal_official_standings(self):
         w, l = Counter(), Counter()
@@ -79,8 +80,11 @@ class TestNoLookAhead(unittest.TestCase):
         self.assertEqual(audit["n_violations"], 0, audit["offending_game_ids"])
 
     def test_predictions_cover_every_game_after_the_first_date(self):
-        # 188 games minus the 16 played on the first date (no prior data exists for those)
-        self.assertEqual(len(self.preds), 172)
+        # the committed finals minus the 16 played on the opening date, for which no prior data
+        # exists; expressed against len(games) so the cold-start rule stays visible when the
+        # history grows again instead of pinning a number that goes stale on purpose
+        self.assertEqual(len(self.preds), len(self.games) - 16)
+        self.assertEqual(len(self.games), 222)
 
 
 class TestParlayMath(unittest.TestCase):

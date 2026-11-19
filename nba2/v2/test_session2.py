@@ -188,7 +188,9 @@ class TestLedgerHashes(unittest.TestCase):
         cls.doc = json.loads((root / "data" / "v2" / "ledger.json").read_text())
 
     def test_every_row_has_a_hash_and_a_status(self):
-        self.assertGreaterEqual(len(self.doc["rows"]), 34)
+        # one ledger row per game in the published window — no more, no less
+        from . import official as O
+        self.assertEqual(len(self.doc["rows"]), len(O.SLATE))
         for r in self.doc["rows"]:
             self.assertEqual(len(r["row_hash"]), 64)
             self.assertEqual(r["hash_alg"], "sha256")

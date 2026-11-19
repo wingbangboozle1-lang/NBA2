@@ -82,12 +82,18 @@ def staleness() -> dict:
 
     match_live = match_pre = match_plus = 0
     rows = []
-    # Session arena/98b0eae9-nba2: the published table (captured 2026-11-15) legitimately
-    # includes the five finals of 11/14, which the 2026-11-14 audit fixture predates. Apply
-    # those finals to the fixture so every difference is *explained* rather than stale.
-    from . import capture2 as C2
+    # Session arena/98b0eae9-nba2 started this: the published table legitimately includes finals
+    # the audit fixture predates, so they must be *applied* to the fixture before a difference
+    # can be called stale. Session arena/fb1d73b2-nba2 generalises it — the fixture is 11/14 and
+    # the table is now current through 11/18, so every committed final after the fixture date is
+    # applied, and a row only counts as explained if that reconstruction lands on it exactly.
+    from . import strategy_lab as SL
+    # The fixture was read on 11/14 BEFORE that night's games, so the bridge has to start on the
+    # fixture date itself, not the day after it: the 5 finals of 11/14 are exactly the gap.
+    FIXTURE_DATE = "2026-11-14"          # the date the audit standings fixture was read
+    later = [g for g in SL.load_games() if g["date"] >= FIXTURE_DATE]
     plus = dict(live)
-    for g in C2.results_rows():
+    for g in later:
         a, h = g["away"], g["home"]
         if a not in plus or h not in plus:
             continue
@@ -114,7 +120,7 @@ def staleness() -> dict:
             rows.append({
                 "team": code, "published": f"{w}-{l}", "live": f"{lw}-{ll}",
                 "pre_final_reconstruction": f"{pw}-{pl}",
-                "fixture_plus_11_14_finals": f"{qw}-{ql}",
+                "fixture_plus_committed_finals": f"{qw}-{ql}",
                 "cause": ("PRE_FINALS" if ok_pre else
                           "FIXTURE_SUPERSEDED" if ok_plus else "UNEXPLAINED"),
             })
@@ -130,22 +136,26 @@ def staleness() -> dict:
         # transcribed before the 11/13 finals; the 2026-11-14 refresh made the table current,
         # and the 2026-11-15 capture moved it *ahead* of the audit fixture by exactly the
         # five known 11/14 finals - every difference is explained by a committed finals file.
+        "finals_applied_after_fixture": len(later),
+        "fixture_date": FIXTURE_DATE,
         "verdict": (
             ("the published team table is CURRENT-with-new-finals: it agrees with the audit "
-             "fixture plus the five committed 11/14 finals on %d of %d rows; the %d rows that "
-             "differ from the raw fixture are all explained by data/raw/capture_2026-11-15/"
-             "results_2026-11-14.json (session arena/98b0eae9-nba2)"
-             % (match_plus, len(TEAMS), len(rows)))
+             "fixture plus the %d committed finals from %s on (inclusive) on %d of %d rows; the %d rows that "
+             "differ from the raw fixture are all explained by those results files, and none is "
+             "unexplained (recomputed at build time by nba2/v2/live.py, session "
+             "arena/fb1d73b2-nba2)"
+             % (len(later), FIXTURE_DATE, match_plus, len(TEAMS), len(rows)))
             if match_plus >= match_pre else
             ("the published team table is a PRE-FINAL snapshot: it agrees with the "
              "pre-11/13-finals reconstruction on %d of %d rows and with the fixture-plus-finals "
              "state on only %d" % (match_pre, len(TEAMS), match_plus))
         ),
         "published_claim": ("the built site advertises the committed W-L as re-read from live "
-                            "nba.com/standings on 2026-11-15 and rebuilt from 188 official "
-                            "finals - both re-checked by the row-staleness detector: every row "
-                            "that differs from the 11/14 audit fixture is explained by the five "
-                            "committed 11/14 finals, none are unexplained"),
+                            "nba.com/standings on 2026-11-19 and rebuilt from the 222 official "
+                            "finals committed in this repository - both re-checked by the "
+                            "row-staleness detector: every row that differs from the 11/14 audit "
+                            "fixture is explained by a committed final after 11/14, and none is "
+                            "unexplained"),
         "source": CAPTURES["standings"],
         "source_second": CAPTURES["games"],
         "fetched_utc": FETCHED_UTC,

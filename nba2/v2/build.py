@@ -400,20 +400,25 @@ naive rule right {_sa['baseline_won_those']} times and the model {_sa['model_won
 information. That is published as a finding, with its arithmetic, on
 <a href="skill-attribution.html">Skill vs luck</a> — and it is why no stake is published anywhere on this site.</div>
 
-<div class="note ok"><b>Verified against the live official pages this session (2026-11-15).</b> All 30 club records
+<div class="note ok"><b>Verified against the live official pages this session ({O.AS_OF}).</b> All 30 club records
 re-read from <a href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a>: 30/30
-identical, and independently rebuilt from the 188 official finals. All 34 window games re-checked field by field
-(date, tip time, away, home, game id, venue) against
-<a href="https://www.nba.com/schedule?date=2026-11-15" target="_blank" rel="noopener">nba.com/schedule</a>: 34/34
-identical. Both checks are reproducible from <code>data/raw/capture_2026-11-15/</code>.</div>
+identical, and independently rebuilt from the 222 official finals committed in this repository (29/30 home splits
+and 29/30 road splits agree too; the two that differ are the neutral-site games the standings keep out of the split).
+All {len(lines)} window games re-checked field by field (date, tip time, away, home, game id, venue) against
+<a href="{O.SOURCES['schedule'][1]}" target="_blank" rel="noopener">nba.com/schedule</a> and
+<a href="{O.SOURCES['schedule_2'][1]}" target="_blank" rel="noopener">the 11/21 read</a>: {len(lines)}/{len(lines)}
+identical, and the per-day row counts equal the game counts the league's own day headings print. Both checks are
+reproducible from <code>data/raw/capture_2026-11-19/</code>.</div>
 
-<div class="note warn"><b>Injury statuses are six releases stale, and four players have moved since.</b>
-The table below is the official 11/14 <b>04:30 AM ET</b> release. Re-checking the league's index this session found
-later releases up to <b>01:30 PM ET</b>, and a player-by-player diff shows <b>4 status changes</b> and
-<b>24 additional rows</b> (Cleveland and Chicago filed after 04:30). None of it changes an originated line, because
-the model is availability-blind — but a reader must not treat the table as current.
-See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the raw capture in
-<code>audit/2026-11-14-766d/</code>.</div>
+<div class="note warn"><b>The injury table is the newest release the league had published at retrieval — and it is
+thin for a reason.</b> The table below is the official 11/19 <b>{O.INJURY_REVISION_ET.split(' ET')[0]} ET</b> release:
+{len(O.INJURIES)} designation rows across the clubs that had filed (LA Clippers, San Antonio Spurs, Minnesota
+Timberwolves, Portland Trail Blazers), {len(O.NOT_SUBMITTED)} rows the report itself prints as NOT YET SUBMITTED, and
+two rows the PDF could not attribute to a club at all (F-19C, published as unattributed rather than guessed). The
+11/21 and 11/22 slates are not in that release because their day-before 5 p.m. filing deadline has not passed — that
+is a fact about the league's schedule, not a scraping gap. None of it changes an originated line, because the model
+is availability-blind; see <a href="injuries.html">Injuries &amp; rotation</a>, where the earlier 11/14-11/15
+releases are kept rather than overwritten.</div>
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
@@ -429,7 +434,7 @@ lean and a trigger price for all {n_lines} games but holds every stake at 0.00 u
   <div class="card"><h4><a href="skill-attribution.html">Skill vs luck</a></h4><p>The naive baselines scored on the same games, and a paired McNemar test on the games where model and baseline disagreed. This is the luck-removal step, and it currently finds no separable skill.</p></div>
   <div class="card"><h4><a href="decisions-needed.html">Decisions needed</a></h4><p>Eight decisions that must be answered before anything further is built, each with what we have, what is missing, how to get it and who decides.</p></div>
   <div class="card"><h4><a href="strategies.html">Strategies &amp; leaderboard</a></h4><p>The competition rules, the reward split, and why the board is currently unfunded.</p></div>
-  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} rows from the 04:30 AM release, {len(CP.latest_rows())} from the 01:30 PM release, and the first production-at-risk numbers measured from official season averages.</p></div>
+  <div class="card"><h4><a href="injuries.html">Injuries &amp; rotation</a></h4><p>{len(O.INJURIES)} designation rows plus {len(O.NOT_SUBMITTED)} explicit NOT-YET-SUBMITTED club rows from the {O.INJURY_REVISION_ET} release; the 11/14 04:30/01:30 PM pair and the 11/15 06:15 AM release are kept below it with their own URLs, and the production-at-risk numbers stay measured from official season averages for the three clubs we have them for.</p></div>
   <div class="card"><h4><a href="questions.html">Open questions</a></h4><p>{question_count()} current questions, each with knowns, unknowns and a route to an answer.</p></div>
   <div class="card"><h4><a href="suggestions.html">Suggestions queue</a></h4><p>{len(C.SUGGESTIONS)} proposals with a decision state, so a path can be chosen before anything is built.</p></div>
   <div class="card"><h4><a href="live-verification.html">Live verification</a></h4><p>What today's official pages say, where this site no longer matches them, and the first out-of-sample grade of its own picks.</p></div>
@@ -573,7 +578,7 @@ blocked on data this repository does not hold, and the routes to obtain it are n
         {"cells": ["Team records verified against nba.com/standings", "30 / 30", "exact match, home and road splits included", srclink(O.SOURCES["standings"][1])]},
         {"cells": ["Team records rebuilt from official final scores", "30 / 30", f"every standings record reconstructed from the {lab['meta']['n_games']} committed finals, 0 mismatches", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Official finals captured", f"{lab['meta']['n_games']} / {lab['meta']['n_games']}", "the full 2026-10-20 → 2026-11-13 window; the count is implied independently by the standings", srclink(O.SOURCES["games"][1])]},
-        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} rows (04:30 AM) + {len(CP.latest_rows())} rows (01:30 PM)", "both releases published, 24 rows added and 4 statuses moved between them", srclink(O.INJURY_PDF_URL) + " · " + srclink(CP.pdf_url(), "1:30 PM PDF")]},
+        {"cells": ["Injury rows transcribed from the official PDF", f"{len(O.INJURIES)} designation rows + {len(O.NOT_SUBMITTED)} NOT-YET-SUBMITTED club rows ({O.INJURY_REVISION_ET})", "the newest release on the league's index at retrieval; earlier 11/14-11/15 releases are kept as history, not diffed across game days", srclink(O.INJURY_PDF_URL) + " · " + srclink(CP.pdf_url(), "11/14 01:30 PM PDF (history)")]},
         {"cells": ["Rotation / production at risk, quantified", f"{len(CP.production_at_risk(teams))} / 30 clubs", "season averages from the official per-club table × the 1:30 PM designations; 27 clubs blank because not captured, not because blocked", srclink("https://www.nba.com/stats/players/traditional?TeamID=1610612739", "per-club stats table")]},
         {"cells": ["Measured correlations", f"{sum(1 for c in lab['correlations'] if c['status'] == 'MEASURED')}", "computed walk-forward from the official finals", srclink(O.SOURCES["games"][1])]},
         {"cells": ["Correlations that cannot be measured", f"{sum(1 for c in lab['correlations'] if c['status'] == 'BLOCKED')}", "all three are player-level; each names the missing dataset", srclink(O.BLOCKED["player_box"][2])]},
@@ -1547,11 +1552,15 @@ a guess dressed as a number, so combos are blocked here (S6) with the exact data
         f"{len(_c2delta['added'])} rows added, {len(_c2delta['status_changed'])} statuses moved, "
         f"{len(_c2delta['removed'])} rows gone")
     body = f"""<h1>Injuries &amp; rotation</h1>
-<p class="lede"><b>Current release: {inj_meta['report_stamp_et']}</b> — revision time {inj_meta['revision_time_et']},
-retrieved {inj_meta['retrieval_time_utc']} via the platform page-fetch tool. {inj_meta['row_count']} rows transcribed
-verbatim from the official PDF, every row linking to
-{srclink(inj_meta['pdf_url'], 'the release itself')}. Below it, kept not overwritten: the 11/14 04:30 AM and 01:30 PM
-releases with their own URLs and deltas.</p>
+<p class="lede"><b>Current release: {O.INJURY_REVISION_ET}</b> — the newest stamp on the league's index at retrieval
+(05:00–06:20 UTC on 2026-11-19), read from the official PDF and transcribed into the snapshot itself:
+{len(O.INJURIES)} designation rows and {len(O.NOT_SUBMITTED)} club rows the report prints as NOT YET SUBMITTED, plus
+{len(O.INJURY_UNATTRIBUTED)} rows the PDF's page break left without a club (F-19C — published unattributed, never
+guessed). {srclink(O.INJURY_PDF_URL, 'the release itself')}, and the full transcript with its revision stamp in
+<code>{O.CAPTURE_DIR}/injury_release_2026-11-19.json</code>.
+Below it, kept not overwritten: the {inj_meta['report_stamp_et']} release ({inj_meta['row_count']} rows, revision time
+{inj_meta['revision_time_et']}, retrieved {inj_meta['retrieval_time_utc']}) and the 11/14 04:30 AM / 01:30 PM pair,
+each with its own URL.</p>
 <div class="note"><b>Filing deadlines, from the league's own page.</b> Teams must report by 5 p.m. local the day before a game
 (other than the second of a back-to-back) and again between 11 a.m. and 1 p.m. on game day; for the second of a back-to-back,
 by 1 p.m. local on game day. Reports are updated continuously. <a href="{O.SOURCES['injury_policy'][1]}" target="_blank" rel="noopener">official.nba.com</a></div>
@@ -1596,14 +1605,22 @@ players' statuses stay blank — never estimated (O.BLOCKED["future_injuries"]).
     # ---- the fresher official release read in this session (2026-11-14, 18:41-18:52 UTC) ----
     cap_latest = CP.latest_rows()
     cap_ns = CP.latest_not_submitted()
-    cap_delta = CP.delta_vs_morning(O.INJURIES)
+    # A release-to-release diff is only meaningful when both releases cover the same game day. The
+    # snapshot now carries 11/19 rows; the 01:30 PM release in capture.py is 11/14. Counting the
+    # difference between them would publish "50 rows added" as if it were filing movement, so the
+    # comparison is switched off by date rather than run and labelled afterwards.
+    _cap_days = {str(r["game_date"]) for r in cap_latest}
+    _snap_days = {str(r[0]) for r in O.INJURIES}
+    _same_day = bool(_cap_days & _snap_days)
+    cap_delta = CP.delta_vs_morning(O.INJURIES) if _same_day else {
+        "added": [], "changed": [], "gone": [], "comparable": False,
+        "n_am": len(O.INJURIES), "n_pm": len(cap_latest)}
     cap_prod = CP.production_at_risk(teams)
     cap_rot = CP.rotation()
     cap_mean_total = sum(l.total for l in lines) / len(lines) if lines else 0.0
     body += f"""<h2>The release the site had not read: 11/14/26 01:30 PM ET</h2>
 <p class="lede">{len(cap_latest)} designation rows and {len(cap_ns)} clubs the league had not received, transcribed from the
-official game-day release read at {esc(CP.meta()['captured_utc'])} — {len(cap_delta['added'])} rows more than the 04:30 AM release
-above, with {len(cap_delta['changed'])} statuses moved. The morning release is kept, not overwritten: this is a superseding
+official game-day release read at {esc(CP.meta()['captured_utc'])}. {"It is " + str(len(cap_delta['added'])) + " rows more than the 04:30 AM release above, with " + str(len(cap_delta['changed'])) + " statuses moved." if cap_delta.get("comparable", True) else "It is <b>not diffed</b> against the table above: that table is now the " + O.INJURY_REVISION_ET + " release and these are 11/14 game-day rows, so a row count between them would be a calendar artefact, not filing movement (F-19E)."} The morning release is kept, not overwritten: this is a superseding
 section, and both are on disk with their own URLs.</p>"""
     rows = []
     for r in cap_latest:
@@ -1612,7 +1629,9 @@ section, and both are on disk with their own URLs.</p>"""
             esc(r["game_date"]), esc(r["game_time_et"]), esc(r["matchup"]), esc(r["team"]), esc(r["player"]),
             badge(r["status"], "bad" if r["status"] == "Out" else "warn" if r["status"] in ("Questionable", "Doubtful") else "off"),
             esc(r["reason"]),
-            (badge(f"moved from {_chg['was']}", "warn") if _chg else "unchanged from 04:30 AM"),
+            (badge(f"moved from {_chg['was']}", "warn") if _chg
+             else ("unchanged from 04:30 AM" if cap_delta.get("comparable", True)
+                   else '<span class="blank">not comparable — different game day (F-19E)</span>')),
             srclink(r["source_url"])]})
     body += table(["Date", "ET", "Matchup", "Team", "Player", "Status", "Reason", "Change vs 04:30 AM release", "Source"],
                   rows, "Official injury report — 11/14/26 01:30 PM ET, every row", idcol="id")

@@ -156,12 +156,39 @@ def load_games() -> list[dict]:
     # 2026-11-15 session (arena/98b0eae9-nba2): the 5 finals of 11/14 live in the dated
     # capture file, not the history folder — join them so the lab scores every verified final.
     from . import capture2 as C2
+    seen = {x["game_id"] for x in games}
+    def _add(r):
+        gid = r.get("game_id")
+        if not gid or gid in seen:
+            return
+        away = r.get("away") or r.get("away_tri")
+        home = r.get("home") or r.get("home_tri")
+        if r.get("away_pts") is None or r.get("home_pts") is None or not r.get("date") or not away or not home:
+            return
+        seen.add(gid)
+        games.append({"game_id": gid, "date": r["date"], "away": away, "home": home,
+                      "away_pts": r["away_pts"], "home_pts": r["home_pts"],
+                      "ot": bool(r.get("ot_periods") or r.get("ot")),
+                      "neutral_site": bool(r.get("neutral_site")),
+                      "home_q": r.get("home_quarters") or r.get("home_q"),
+                      "away_q": r.get("away_quarters") or r.get("away_q"),
+                      "source_url": r.get("source_url", "")})
     for r in C2.results_rows():
-        if r["game_id"] in {x["game_id"] for x in games}:
-            continue
-        games.append({"game_id": r["game_id"], "date": r["date"], "away": r["away"],
-                      "home": r["home"], "away_pts": r["away_pts"], "home_pts": r["home_pts"],
-                      "ot": bool(r.get("ot_periods")), "source_url": r["source_url"]})
+        _add(r)
+    # 2026-11-19 session (arena/fb1d73b2-nba2): the nightly results feed and the dated finals
+    # captures carry every game played since, including the 12 of 11/18. Union by game id, never
+    # by date, so two sources for one game cannot both count.
+    root = Path(__file__).resolve().parents[2]
+    for pat in ("data/raw/results/results_*.json", "data/raw/finals_*.json",
+                "data/raw/capture_*/finals_*.json"):
+        for f in sorted(root.glob(pat)):
+            doc = json.loads(f.read_text())
+            recs = doc.get("records") or doc.get("games") or []
+            if isinstance(recs, dict):
+                recs = list(recs.values())
+            for r in recs:
+                if isinstance(r, dict):
+                    _add(r)
     games.sort(key=lambda g: (g["date"], g["game_id"]))
     return games
 

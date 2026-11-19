@@ -71,9 +71,17 @@ def semantic() -> list[str]:
     import json
 
     problems = []
-    raw = json.loads((ROOT / "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json").read_text())
+    raw = json.loads((ROOT / "data/raw/capture_2026-11-19/slate_2026-11-19.json").read_text())
     from . import official as O
-    n_slate = 34          # the 3-day window 2026-11-15 -> 2026-11-18
+    n_slate = 26          # the 3-day window 2026-11-19 -> 2026-11-22
+    # and the raw capture must agree with the league's own per-day headings
+    from collections import Counter
+    counts = Counter(g["date"] for g in raw["games"])
+    if dict(counts) != raw.get("games_expected"):
+        problems.append(f"slate capture rows {dict(counts)} disagree with the game counts the "
+                        f"official page printed ({raw.get('games_expected')})")
+    if counts != Counter(g[0] for g in O.SLATE):
+        problems.append("official.SLATE per-day counts differ from the raw slate capture")
     if len(O.SLATE) != n_slate:
         problems.append(f"SLATE has {len(O.SLATE)} games, expected {n_slate}")
     if len(raw["games"]) != n_slate:
@@ -89,10 +97,33 @@ def semantic() -> list[str]:
             problems.append(f"lines.json game {gid} is not in the committed slate snapshot")
         elif ln["matchup"] != f"{by_id[gid]['away']} @ {by_id[gid]['home']}":
             problems.append(f"lines.json matchup {ln['matchup']} disagrees with the slate snapshot")
-    # published W/L must equal the official standings totals (188 games played through 11/14)
+    # published W/L must equal the official standings totals (222 games played through 11/18), and
+    # that number must equal an independent recount of every official final committed in this repo
     from . import official as O2
-    if sum(v[0] for v in O2.TEAMS.values()) != 188:
-        problems.append("official team table no longer sums to 188 wins")
+    if sum(v[0] for v in O2.TEAMS.values()) != 222:
+        problems.append("official team table no longer sums to 222 wins")
+    finals = {}
+    for pat in ("data/raw/history/*.json", "data/raw/results/*.json", "data/raw/finals_*.json",
+                "data/raw/capture_*/finals_*.json"):
+        for f in sorted(ROOT.glob(pat)):
+            doc = json.loads(f.read_text())
+            recs = doc.get("records") or doc.get("games") or []
+            for r in recs if isinstance(recs, list) else []:
+                if not isinstance(r, dict):
+                    continue
+                gid, ap, hp = r.get("game_id"), r.get("away_pts"), r.get("home_pts")
+                a, h, d = r.get("away"), r.get("home"), r.get("date")
+                if gid and ap is not None and hp is not None and d and a and h:
+                    finals[gid] = (a, h, int(hp), int(ap))
+    if len(finals) != 222:
+        problems.append(f"{len(finals)} committed official finals, expected 222 for the standings to be current")
+    else:
+        w = Counter()
+        for a, h, hp, ap in finals.values():
+            w[h if hp > ap else a] += 1
+        stale = [t for t, v in O2.TEAMS.items() if v[0] != w[t]]
+        if stale:
+            problems.append(f"standings W-L disagrees with a recount of the finals for {stale}")
     # p_home must equal Φ(margin/σ)
     import math
     s = lines["calibration"]["margin_sd"]

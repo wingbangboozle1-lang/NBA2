@@ -1,12 +1,12 @@
 {
  "schema": "nba2.standings-official.v2",
- "as_of": "2026-11-17",
+ "as_of": "2026-11-18",
  "retrieved_at_utc": "2026-11-19T06:20:00+00:00",
  "retrieval_method": "live https://www.nba.com/standings read with the nba2 platform page-fetch tool (sandbox TLS egress to nba.com is blocked); no derivation, no reconstruction",
  "retrieved_by": "arena/fb1d73b2-nba2",
  "derived": false,
- "as_of_note": "the table is the league's own live standings page, read at 06:20 UTC on 2026-11-19, and every club's W-L on it still equals its record BEFORE the 12 games of 2026-11-18: e.g. the table prints LAL 13-3 while the 11/18 gamebook header also prints 'LOS ANGELES LAKERS (13-3)' at tip-off and the Lakers lost that night; MIL prints 1-14 and the Bucks lost on 11/18. So the standings table lags the official finals by one game day at retrieval, and 'as_of' is recorded as the last game day the league had folded in (2026-11-17), not the fetch date. Flagged F-19A.",
- "integrity": "30 rows; for every row W+L equals home+road+neutral games printed by the same table: OK",
+ "as_of_note": "the league's live standings page, read 2026-11-19T06:20Z, already has every game of 2026-11-18 folded in — proven, not assumed: rebuilding all 30 records from the 222 official finals committed under data/raw/{history,results}+data/raw/finals_*+capture_*/finals_* reproduces this table's W-L for 30 of 30 clubs (Σ wins 222 both ways) and its home/road splits for 30 of 30 on each side once the single neutral-site game of the season so far (2026-11-07 DEN@IND, 114-102) is excluded, which is what the standings do with it (DEN neutral 1-0, IND neutral 0-1). The earlier draft of this file claimed a one-day lag off a gamebook header; that claim is withdrawn — a gamebook prints the record at the final buzzer, and the Nov-19 game cards on www.nba.com/game/* print the same W-L as this table (GSW 8-7, MEM 11-4, MIL 1-14, DET 10-4, SAS 12-3, LAC 4-9), which is the post-11/18 record.",
+ "integrity": "30 rows; W+L equals home+road+neutral for every row; ΣW=222 equals the count of committed official finals (222); home win rate over the 221 neutral-free home games in the split = 111/221 = 0.5023",
  "records": [
   {
    "team": "PHI",
@@ -608,5 +608,41 @@
    "road_l": 4,
    "source_url": "https://www.nba.com/standings"
   }
- ]
+ ],
+ "cross_check_vs_committed_finals": {
+  "wins_losses": "30/30 identical (Σ wins 222 = the count of committed official finals)",
+  "home_splits": "30/30 identical, excluding the neutral-site game",
+  "road_splits": "30/30 identical, excluding the neutral-site game",
+  "neutral_site": "1 game — 2026-11-07 DEN@IND — which the standings print as DEN 1-0 and IND 0-1 and keep out of both splits",
+  "recount_source": "python recount of every committed official final, this session; nba2/v2/check.py::semantic repeats the W-L half of it at every build"
+ },
+ "cup_group_records_read": {
+  "source_urls": [
+   "https://www.nba.com/game/nop-vs-sas-0022600278",
+   "https://www.nba.com/game/bos-vs-sac-0022600279"
+  ],
+  "note": "the day-strip on those pages prints each club's Emirates NBA Cup record in parentheses beside its overall W-L for the 11/20 Cup games; read off the same page load, transcribed for the clubs the fetched chunk reached (the rest fell outside it and is left blank rather than inferred).",
+  "records": {
+   "CHA": "0-2",
+   "ATL": "1-1",
+   "ORL": "2-0",
+   "BKN": "0-1",
+   "IND": "1-1",
+   "CLE": "1-1",
+   "TOR": "1-1",
+   "DET": "1-0",
+   "WAS": "1-1"
+  },
+  "not_read": [
+   "CHI",
+   "NOP",
+   "OKC",
+   "PHX",
+   "UTA",
+   "HOU",
+   "DEN",
+   "SAC",
+   "LAL"
+  ]
+ }
 }

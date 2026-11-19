@@ -30,8 +30,8 @@ class TestStaleness(unittest.TestCase):
         self.assertEqual(self.st["published_rows"], 30)
 
     def test_every_stale_row_is_explained(self):
-        # A single unexplained row would mean the published table is wrong for a reason the
-        # nine 11/13 finals do not account for — i.e. a transcription defect, not ageing.
+        # A single unexplained row would mean the published table is wrong for a reason no
+        # committed final accounts for — i.e. a transcription defect, not ageing.
         self.assertEqual(self.st["n_unexplained"], 0,
                          f"unexplained stale rows: {[r for r in self.st['stale_rows'] if r['cause'] != 'PRE_FINALS']}")
 
@@ -39,15 +39,17 @@ class TestStaleness(unittest.TestCase):
         self.assertEqual(self.st["n_stale"], self.st["published_rows"] - self.st["match_live_standings"])
 
     def test_published_table_matches_live_standings(self):
-        # Direction of the finding AFTER the 2026-11-15 re-read (session arena/98b0eae9-nba2):
-        # the published table was re-transcribed from live nba.com/standings INCLUDING the five
-        # 11/14 finals, so it legitimately sits *ahead* of the 2026-11-14 audit fixture. The
-        # check is kept: every row must match the fixture-plus-commended-finals reconstruction
+        # Direction of the finding AFTER the 2026-11-19 re-read (session arena/fb1d73b2-nba2):
+        # the published table was re-transcribed from live nba.com/standings INCLUDING every game
+        # through 11/18, so it legitimately sits *ahead* of the 2026-11-14 audit fixture. The
+        # check is kept: every row must match the fixture-plus-committed-finals reconstruction
         # exactly, and no row may be unexplained.
         self.assertEqual(self.st["match_fixture_plus_finals"], 30)
         self.assertEqual(self.st["n_unexplained"], 0)
         self.assertGreater(self.st["match_fixture_plus_finals"], self.st["match_pre_final_state"])
-        self.assertGreater(self.st["n_stale"], 0)  # the 5 finals moved 10 rows past the fixture
+        self.assertGreater(self.st["n_stale"], 0)   # the table is ahead of the fixture
+        # the 5 finals of 11/14 plus 11/15..11/18, i.e. every game the fixture predates
+        self.assertEqual(self.st["finals_applied_after_fixture"], 39)
 
 
 class TestGrading(unittest.TestCase):
