@@ -5632,7 +5632,6 @@ PR #127 (parity job) fails at `Rebuild every generated tree` because the committ
   - `site/v6-verify.html`: **13 / 13** gates; G-V6-8 **67/67**; 36 / 67 games with a final.
 - **Open presentation defect (new, R-12):** the settlement stamp's line "latest settled game date 2026-11-16" is not updated for the 11/17 games now graded in the v1 settlement (27 games). It is a label derived from the v4 settlement surface (R-10), which still stops at 11/16.
 - **Follow-up PR:** this record is delivered in a coordination-only PR so it reaches `main` (the session branch cannot push to `main`).
-
 ## Session `arena/be1ea6bf-nba2` — CLAIM (2026-11-19 UTC, branch `arena/be1ea6bf-nba2`, base `a5380e1` = `main` @ bot-ingest squash)
 
 **State read at claim time (verified, not assumed).**
@@ -5976,3 +5975,94 @@ The final integration claim and file scope are recorded in commit `97a26d8` on b
 - Baseline: v2 build/check and v3 build/check succeeded; v4, v5, v6 builders succeeded; working tree returned clean.
 - PR #131 integration initially exposed merge conflicts because branch history was shallow and its parent graph was unavailable locally. Full history was fetched; conflicts are being reconciled without discarding either session's work. `refresh.yml` keeps the newer main-branch settlement safeguards; `results_coverage.py` adopts PR #131's capture-derived clock, strict date-scoped NBA schedule URL validation and nightly settlement stamps while retaining current-main official-final merge protections. Generated coverage/site files will be regenerated from committed inputs.
 - Status: integration in progress; no PR or merge yet.
+
+---
+
+## Session `arena/6023d517-nba2` — CLAIM (2026-11-19 UTC, branch `arena/6023d517-nba2`, base `a5380e1` = `main` @ ingest-bot capture 2026-11-18T19:30:52Z)
+
+**State read at claim time (verified by running the committed code, not assumed).**
+- Working tree clean at `a5380e1`. `git status` empty, `main` == `origin/main` == `a5380e1`.
+- Builders on the committed base: `python -m nba2.v2` **0**, `nba2.v3` **0**, `nba2.v4` **0**, `nba2.v5` **0**, `python -m nba2.v6` **exit 1 — HARD GATE FAILURE (G-V6-8)**. Because `nba2.v6` exits non-zero, the v6 step in `pages.yml` fails and the published tree cannot be reproduced from the committed inputs. Reproduced twice.
+- Measured cause of G-V6-8 (not guessed): 14 of 67 game rows in `data/v6/results_coverage.json` have `source_url=None`. Those are exactly the 2026-11-14 (5) and 2026-11-15 (9) finals. Their committed snapshots `data/raw/finals_2026-11-1{4,5}.json` **do** carry the official URL — under the key `final_source_url` — and carry the team names under `away_team`/`home_team`. `nba2/v6/results_coverage.py` reads `source_url`/`official_source` and `away`/`home`, so the value is present in the committed artefact and dropped by the reader. That is a **reader defect, not missing data**: fixing it invents nothing.
+- Nightly job: 10 consecutive scheduled runs, latest `44381003145` **failure**; its committed verdict `data/raw/refresh_verdict.json` records `injuries=success, finals=success, rolling=success, v4=success` while the run itself failed — i.e. the verdict file and the run conclusion disagree. Flagged as an irregularity for review, cause to be measured.
+- Parallel sessions detected live on `origin` while claiming: `arena/8c7c8828-nba2`, `arena/95053469-nba2` (INJ-1..4 injury-PDF archive audit), `arena/0b91edfc-nba2` (baseline repair 0B9-1..6), `arena/53c5afeb-nba2` (docs test count). None claims `nba2/v6/` or `data/v6/`, so the scope below does not collide. Their claims are respected: I edit nothing in `analysis/` files they own and nothing under `data/raw/pdf/`.
+
+**File scope claimed by this session (nothing outside this list is edited).**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `nba2/v6/results_coverage.py`, `nba2/v6/check.py` — reader repair only (read the keys the committed official artefacts actually use). No gate is weakened; no threshold is moved; no value is invented.
+- `nba2/v6/__init__.py`, `nba2/v6/test_v6.py` — regression test for the repaired reader.
+- `data/v6/*.json` and `site/*.html` — regenerated **only** as direct build output.
+- `analysis/session-6023d517-*.md` — new files only.
+
+**Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/v4/settlement/**`, `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `data/raw/pdf/**` (session 95053469), the other sessions' `analysis/` files, the eight workflow files.
+
+**Rules:** a value is published only if it was fetched from an official source this session, or reproduced from a committed snapshot by running the committed code. Unconfirmed ⇒ blank + flagged, never inferred. Gates stay fail-closed. The site is never merged broken.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 6023-1 | Board claim + push before work | done | `COORDINATION.md` | pushed immediately |
+| 6023-2 | Repair the v6 result-feed reader so every committed official URL and team name reaches the row it belongs to | done | `nba2/v6/results_coverage.py` | G-V6-8 goes from 53/67 to 67/67 **only** because the URL was already in the committed file; every gate stays green |
+| 6023-3 | Regression test for the repaired reader (both committed key spellings) | done | `nba2/v6/test_v6.py` | test fails on the pre-repair reader, passes after |
+| 6023-4 | Full-tree rebuild + every checker + every test suite green; committed tree == rebuild | done | `site/**`, `data/v6/**` | `git diff --stat` empty after rebuild |
+| 6023-5 | Independent line-by-line verification against live official nba.com pages; findings + source links on the Flagged page | done | `analysis/session-6023d517-verification.md` | every claim carries a URL; blank where unconfirmed |
+| 6023-6 | PR → `main`, merge without approval, confirm the Pages deploy, record it here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch |
+
+### 6023 — completion record (2026-11-19 UTC, session `arena/6023d517-nba2`)
+
+**Build repaired.** `nba2/v6` went from exit 1 (`G-V6-8`, 53/67 rows sourced) to exit 0 with
+**67/67** rows carrying an official URL. The fix read the keys the committed official artefacts
+already use (`final_source_url`, `away_team`/`home_team`); no value was invented and no gate was
+lowered. The as-of clock is now derived from the newest committed capture instead of typed, so it
+cannot silently age past the evidence again. Regression tests added in `nba2/v6/test_v6.py`.
+
+**A new layer was cut rather than editing the stale ones.** Measured staleness, not an opinion:
+v3 prices Atlanta at 8-6 while the live standings page prints 9-6, and no tree contained the
+twelve 2026-11-18 finals. `nba2/v7` reads nothing at build time — the transcription lives in
+`nba2/v7/official.py`, cut from the official pages read 2026-11-19, and is held by three
+identities over all 30 clubs.
+
+**Verification performed (all in `analysis/session-6023d517-build-and-verification.md` and on
+`site/v7-verify.html`):** 367 items compared against official pages, 367 matched, across 9
+claims — the 11/18 finals (12/12), the 11/19 slate (4/4, tips included), the 11/20 slate and Cup
+groups (6/6), standings (15/15), and the three team-stat pages (30/30 each, with
+`NetRtg = OffRtg − DefRtg` and `PTS − OppPTS = +/−` holding on every club). A tenth claim — the
+11/19 injury report — is **not read** and is published as a blank with `F-V7-AVAIL`, not counted
+as a match.
+
+**What the model measures, and why nothing is staked.** Walk-forward on 167 games, trained only
+on strictly earlier dates: accuracy **0.6707** vs **0.6527** for the better-record rule, log-loss
+**0.6349** vs **0.6931** for a coin. The paired test on the 29 games where the two estimators
+disagree is **p = 0.711** — no demonstrated separation. Every stake on the slate is **0.00** and
+that is printed at the top of the page, not in a footnote.
+
+**Nine new flags** published on `site/flagged.html` (`F-V7-AVAIL`, `-CLOCK`, `-TRANSPORT`,
+`-MARKET`, `-PROPS`, `-PREREG`, `-PAGES`, `-LEAK`, `-STALE-UPSTREAM`). None blocks the merge.
+
+**Nav change logged** (shared output, so recorded here): v6's category list gained a
+"v7 — fresh 2026-11-19 snapshot" group holding the five v7 pages, so v6's
+`test_every_published_page_is_in_some_category` passes again, and v7's sidebar pass now adds only
+*missing* links — it no longer duplicates them. A bug in that pass was caught and fixed this
+session: it scanned the whole document for a v7 href, so the landing page's category card
+satisfied it and the sidebar block was stripped; it now inspects only `<nav>`, with a regression
+test.
+
+**Scope addition (2026-11-19 UTC):** The completed README count task drifted again when PR #131 added 7 root tests; `tools/crosscheck_site.py` reproduced CC-DOC-01 (README 92 vs 99 measured). No active session claims README; the prior count owner is complete. This final integration session takes the narrow count-only correction using the repository's existing `audit/2026-11-14-bc867bff/sync_readme_tests.py`; prose and historical records remain untouched. Verification is the exact unittest run count plus `CC-DOC-01`.
+
+**Scope addition (2026-11-19 UTC):** The crosscheck also reported `CC-FRESH-02` because the repo-root Pages entry point did not say that the v2–v6 baseline is a committed snapshot. `nba2/pipeline/build_site.py` is included narrowly to add an explicit freshness notice distinguishing the dated v7 snapshot from the older baseline and pointing to Flagged for Review; generated root `index.html` is rebuilt by the committed pipeline. No model or data value is changed.
+
+## Session `arena/452034cb-nba2` — integration outcome before PR (2026-11-19 UTC)
+
+| ID | Task | Status | Evidence |
+|---|---|---|---|
+| 452-1 | Board claim + push before work | done | `97a26d8` pushed on `arena/452034cb-nba2` before edits |
+| 452-2 | Baseline ordered build on main | done | v2 and v3 builds/checks green; v4/v5/v6 builders succeeded; fixed-point check ran |
+| 452-3 | Integrate settlement parity (PR #131) | done | merge commit `b358066`; official-final union rebuilt before rendering; timestamp stable on identical rebuild; no sealed input changed |
+| 452-4 | Integrate v7 originated-slate layer (PR #130), resolve overlaps | done on integration branch | current main/v6 fixes preserved; v7 modules, 10 pre-registrations, source ledger, nine findings and five pages retained; v7 tests 37/37 |
+| 452-5 | Map requirements to evidence and flags | done | `analysis/session-452034cb-brief-audit.md`; `CC-DOC-01` corrected with repository sync script; `CC-FRESH-02` disclosed in generated root pointer |
+| 452-6 | Publish integration PR, merge, verify Pages and record result | in progress | waiting for push/CI; merge only after required checks succeed |
+
+**Combined verification:** v1 99, v2 167, v3 67, v4 61, v5 26, v6 60, v7 37 tests all pass (517 total); v2 structural/semantic check 0/0; v3/v4/v5/v6 checks pass; v7 7/7 structural checks with 6/10 strategy gates passing and four blocked; linter 1,436 sourced-or-explained rows / 50 tables; internal-link checker 148 files / 8,022 links; prediction seals VERIFIED. `tools/crosscheck_site.py` is 87 pass / 1 fail / 9 info: the single failure is `CC-FRESH-01` (five-day-old v2 baseline, disclosed; not repaired by substituting a newer unrelated layer). No live NBA source was fetched by this integration session. The prior v7 source audit and official URLs are recorded in `analysis/session-6023d517-build-and-verification.md` and each flagged item remains visible.
+
+**Pages caveat:** GitHub Pages API was checked via `gh api`; it reports `status=built`, `build_type=legacy`, source `main /`. Root `index.html` is generated as an explicit pointer to `site/index.html`; v7 page routes are in the committed `site/` tree. The successful `pages.yml` run and actual route must still be verified after the integration merge; `F-V7-PAGES` now states this narrowly and makes no unsupported live-read claim.
+
+**Still flagged, non-blocking:** `CC-FRESH-01`; F-V7-AVAIL (11/19 injury report not read); F-V7-MARKET (no closing prices); F-V7-PROPS (short logs); F-V7-TRANSPORT (NBA host egress unavailable); F-V7-PREREG (hash and definition share commit); F-V7-PAGES (legacy routing confirmation); F-V7-CLOCK; F-V7-LEAK (fixed, regression-tested); F-V7-STALE-UPSTREAM (older v2–v5 snapshots retained rather than silently rewritten). See `site/flagged.html` and `site/v7-verify.html`.

@@ -25,6 +25,32 @@ Source classes: `official` (nba.com / ak-static.cms.nba.com / cdn.nba.com), `thi
 every such row is flagged), `derived` (computed in-repo from a committed snapshot), `blocked`
 (we know we need it; we do not have it).
 
+## The v7 layer — the originated slate, cut from the 2026-11-19 snapshot
+
+`site/v7-*` is cut from the three official team-stat pages, the standings page and the games
+list **read on 2026-11-19**, plus every committed official final (222 games with both clubs
+and both scores). It exists because the v3/v4/v5 snapshots had gone measurably stale: v3 priced
+ATL at 8-6 while the live standings page printed 9-6, and no tree had the twelve 2026-11-18
+finals at all.
+
+| Page | What it answers |
+|---|---|
+| [`site/v7-slate.html`](site/v7-slate.html) | Every game up to **three days ahead**: both estimators, **their disagreement as the headline**, the blend underneath, our spread, our total as `possessions × PPP`, rest / B2B / 3-in-4 from the official finals, an availability column that is deliberately blank with its reason, and a 0.00 stake on every row |
+| [`site/v7-strategies.html`](site/v7-strategies.html) | 10 strategies × 10 gates, each printing the number it measured; 10 frozen pre-registrations (signal, thresholds, universe, settlement rule); same-game parlays with the **measured ρ beside the naive product** |
+| [`site/v7-skill.html`](site/v7-skill.html) | Walk-forward on 167 games trained only on earlier dates; luck z per club; the transcription corroborated at r = 0.979 against the results; props blocked with the arithmetic |
+| [`site/v7-methodology.html`](site/v7-methodology.html) | Every constant and whether it was fitted; the two clocks on the league's own site |
+| [`site/v7-verify.html`](site/v7-verify.html) | 7 structural checks and the 10 gates, all re-runnable |
+
+**What the measurement says, in one line.** Log-loss 0.6349 beats a coin flip (0.6931) and
+accuracy 0.671 edges the better-record rule (0.653), but the paired test on the 29 games where
+they disagree is p = 0.711 — no demonstrated separation, so **every stake on the site is
+0.00**. That is the honest result, and it is published at the top of the executive summary
+rather than in a footnote.
+
+`python -m nba2.v7` rebuilds it from committed inputs only. It fetches nothing at build time:
+the transcription lives in [`nba2/v7/official.py`](nba2/v7/official.py) and is held in place by
+three arithmetic identities over all 30 clubs (`nba2/v7/test_v7.py`).
+
 ## Which tree is published
 
 **One tree reaches a reader: [`site/`](site/), uploaded by
@@ -116,7 +142,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (92 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (99 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -125,6 +151,8 @@ python -m nba2.pipeline.settle                      # unmeasured until official 
 
 python -m nba2.v2                                    # the PUBLISHED tree: site/ from data/raw/
 python -m nba2.v2.check                              # every published row sourced, every blank explained
+python -m nba2.v7                                    # the v7 originated slate + strategy lab
+python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'   # transcription identities + gates
 
 python3 nba2/generate.py && python3 build_site.py   # the prior session's root dashboard
 python3 tools/verify_site.py                        # docs-layer source check
@@ -307,7 +335,7 @@ python3 -m nba2.v2.refresh    # rolling ingest with freshness/provenance gates (
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 167 tests
-python3 -m unittest discover -s nba2/tests -t .                # 92 tests (counted from the files)
+python3 -m unittest discover -s nba2/tests -t .                # 99 tests (counted from the files)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only

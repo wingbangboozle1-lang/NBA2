@@ -1,0 +1,15 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-06",
+ "name": "Cross-game independent parlay",
+ "signal": "moneyline legs on two games with no shared club",
+ "thresholds": {
+  "max_legs": 2
+ },
+ "universe": "games with no club appearing twice",
+ "settlement_rule": "each leg from its own official final; all legs must win",
+ "market": "parlay",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}
