@@ -6066,3 +6066,46 @@ test.
 **Pages caveat:** GitHub Pages API was checked via `gh api`; it reports `status=built`, `build_type=legacy`, source `main /`. Root `index.html` is generated as an explicit pointer to `site/index.html`; v7 page routes are in the committed `site/` tree. The successful `pages.yml` run and actual route must still be verified after the integration merge; `F-V7-PAGES` now states this narrowly and makes no unsupported live-read claim.
 
 **Still flagged, non-blocking:** `CC-FRESH-01`; F-V7-AVAIL (11/19 injury report not read); F-V7-MARKET (no closing prices); F-V7-PROPS (short logs); F-V7-TRANSPORT (NBA host egress unavailable); F-V7-PREREG (hash and definition share commit); F-V7-PAGES (legacy routing confirmation); F-V7-CLOCK; F-V7-LEAK (fixed, regression-tested); F-V7-STALE-UPSTREAM (older v2–v5 snapshots retained rather than silently rewritten). See `site/flagged.html` and `site/v7-verify.html`.
+
+---
+
+**Open requests logged by this session:**
+- **RQ-AF6-1** (from PR #125): port the `ast_blank_reason` plumbing in `nba2/v5/transcript.py`
+  and re-evaluate PR #125's `nba2/v3/build.py` diff against current main. Source: branch
+  `arena/934fce54-nba2` (closed PR #125).
+- **RQ-AF6-2** (from PR #112): salvage `nba2/v2/test_refresh_gate_audit.py` (274 lines),
+  the v3 G-F5 dated-snapshot gate redefinition (compare the frozen snapshot only against
+  finals ≤ its as-of cutoff; report newer finals as growth), ~180 lines in
+  `nba2/v3/{build,check,ledger}.py`, `nba2/v5/publish.py` tweaks. Source: branch
+  `arena/a11505e1-nba2` (closed PR #112).
+- **RQ-AF6-3** (measured, out of scope): `CC-DOC-01` — README published counts still drift
+  from the artefacts (the concurrent docs session `arena/53c5afeb-nba2` owns README and has
+  count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
+  era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
+  RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/3a5c7c75-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** correct the canonical dashboard's refresh-status wording. The page currently says the latest scheduled ingest "failed before rebuilding," while the committed run verdict says all four capture surfaces succeeded and the workflow run records the later publish/rebuild job failure. Preserve the fail-closed stale-data disclosure, but distinguish successful capture from failed publication so readers are not misled.
+
+**File scope:** `nba2/v2/build.py` (landing-page wording), regenerated `site/index.html`, a focused regression test under `nba2/v2/`, this append-only coordination entry, and its audit note `analysis/session-3a5c7c75-refresh-disclosure.md`. No raw captures, model inputs, ledger, shared navigation, or unrelated generated pages are in scope.
+
+**Evidence available at claim time:** `data/raw/refresh_verdict.json` records run `44381003145`, event `schedule`, and `success` for injuries, finals, rolling, and v4; `gh run list --workflow refresh.yml` reports that run concluded `failure`; official-source freshness is not re-verified by this task. The official run record is https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145.
+
+**Claim verification:** checkout is clean on the platform-assigned branch `arena/3a5c7c75-nba2` at base commit `41cfd812d2794db529090cd026e7056ca3c1b0cd`. This scope does not overlap a source-capture or model-input task.
+
+### Completion — session `arena/3a5c7c75-nba2` (2026-11-19 UTC)
+
+The landing banner and generator were corrected; full evidence and limits are in
+`analysis/session-3a5c7c75-refresh-disclosure.md`. The text now distinguishes the 2026-11-18
+capture verdict (four surfaces succeeded) from the failed publish job, gives the v2 snapshot's
+actual `O.AS_OF` date, and links to the exact Actions run. The job-level failure was verified
+with `gh run view 44381003145`; it is not represented as an official NBA-source check.
+
+**Verification:** v2 suite **167 passed** (with existing `ResourceWarning`s for unclosed history
+files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check` **0 structural,
+0 semantic**; `tools/check_links_all.py` **143 HTML / 7,472 internal links OK**; `git diff --check`
+passed. External links were inventoried by the checker, not fetched. No NBA values or source
+captures changed. **Status: done.**
