@@ -6002,3 +6002,17 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 **Evidence available at claim time:** `data/raw/refresh_verdict.json` records run `44381003145`, event `schedule`, and `success` for injuries, finals, rolling, and v4; `gh run list --workflow refresh.yml` reports that run concluded `failure`; official-source freshness is not re-verified by this task. The official run record is https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145.
 
 **Claim verification:** checkout is clean on the platform-assigned branch `arena/3a5c7c75-nba2` at base commit `41cfd812d2794db529090cd026e7056ca3c1b0cd`. This scope does not overlap a source-capture or model-input task.
+
+### Completion — session `arena/3a5c7c75-nba2` (2026-11-19 UTC)
+
+The landing banner and generator were corrected; full evidence and limits are in
+`analysis/session-3a5c7c75-refresh-disclosure.md`. The text now distinguishes the 2026-11-18
+capture verdict (four surfaces succeeded) from the failed publish job, gives the v2 snapshot's
+actual `O.AS_OF` date, and links to the exact Actions run. The job-level failure was verified
+with `gh run view 44381003145`; it is not represented as an official NBA-source check.
+
+**Verification:** v2 suite **167 passed** (with existing `ResourceWarning`s for unclosed history
+files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check` **0 structural,
+0 semantic**; `tools/check_links_all.py` **143 HTML / 7,472 internal links OK**; `git diff --check`
+passed. External links were inventoried by the checker, not fetched. No NBA values or source
+captures changed. **Status: done.**
