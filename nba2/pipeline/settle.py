@@ -58,8 +58,8 @@ def finals_sources() -> list[Path]:
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "finals_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "results_*.json")))]
     # gamebook captures carry the team-keyed quarter rows (SCORE BY PERIOD) for games
-    # whose only other committed row is a sparse score line — added 2026-11-19 by
-    # session arena/af5df7a7-nba2 so the union can store quarters, not just scores.
+    # whose only other committed row is a sparse score line (session arena/af5df7a7-nba2,
+    # 2026-11-19): e.g. 0022600231-240 have no quarter row anywhere else.
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "gamebooks_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "results" / "results_*.json")))]
     v2 = ROOT / "data" / "v2" / "results.json"
@@ -91,13 +91,12 @@ def _records_of(doc: dict[str, Any]) -> list[dict[str, Any]]:
 
     ``data/raw/finals_2026-11-13.json`` carries the same nine games twice — a sparse
     ``records`` list (game id, score, source) and a rich ``games`` list (date, teams,
-    venue) — and ``data/raw/capture_2026-11-15/gamebooks_2026-11-13.json`` carries them a
-    third time with team-keyed quarter rows. Reading one key dropped the rest, which is
-    how the union rows for the 11/13 games lost their teams and quarters. Every row is
-    returned as its own candidate: ``build_union`` already keeps one candidate list per
-    game id, rejects disagreeing scores/clubs as conflicts, and prefers a candidate whose
-    quarter row sums to the final — so a within-file disagreement is caught by the same
-    rule as a cross-file one (session arena/af5df7a7-nba2, 2026-11-19).
+    venue) — and the gamebook captures carry them a third time with team-keyed quarter
+    rows. Reading one key dropped the rest, which is how union rows lost their teams and
+    quarters. Every row is returned as its own candidate: ``build_union`` keeps one
+    candidate list per game id, rejects disagreeing scores/clubs as conflicts, and prefers
+    a candidate whose quarter row sums to the final — so a within-file disagreement is
+    caught by the same rule as a cross-file one (session arena/af5df7a7-nba2, 2026-11-19).
     """
     out: list[dict[str, Any]] = []
     for key in ("records", "rows", "games", "results"):
@@ -126,6 +125,15 @@ def _quarters_ok(pts: int, quarters: Any, overtime: Any = ()) -> bool | None:
     return sum(quarters) + sum(overtime) == pts
 
 
+def _first_present(r: dict[str, Any], *keys: str) -> Any:
+    """First key whose value is not None/empty; None if none is present."""
+    for k in keys:
+        v = r.get(k)
+        if v is not None and v != "" and v != []:
+            return v
+    return None
+
+
 def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
     """Return (candidate final scores, rejections) for one committed source file."""
     doc = json.loads(path.read_text())
@@ -143,38 +151,32 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
         a, h = _as_int(r.get("away_pts")), _as_int(r.get("home_pts"))
         if a is None or h is None:
             continue
-        # Committed feeds key the same facts differently; the aliases below are the ones
-        # literally present in data/raw/finals_2026-11-1x.json (away_team/home_team,
-        # away_q/home_q, final_source_url) and in the gamebook captures (a team-keyed
-        # ``quarters`` map). Reading them is what lets the quarter-sum rejection rule
-        # actually run for those rows instead of being silently skipped
-        # (session arena/af5df7a7-nba2, 2026-11-19 — same defect class as the v6 reader).
-        away = r.get("away") or r.get("away_team")
-        home = r.get("home") or r.get("home_team")
-        qa_row = r.get("away_quarters") if r.get("away_quarters") is not None else r.get("away_q")
-        qh_row = r.get("home_quarters") if r.get("home_quarters") is not None else r.get("home_q")
+        # Each official feed names its fields its own way (e.g. finals_2026-11-17.json uses
+        # away_team / home_team / away_q / home_q / final_source_url). Read every known name;
+        # a key that is missing in one feed must not erase a value another feed carries.
+        # The gamebook captures key quarters by side: ``{"quarters": {"away": [...], "home": [...]}}``
+        # (session arena/af5df7a7-nba2, 2026-11-19): without that fallback the quarter-sum
+        # rejection rule was silently skipped for those rows.
         qmap = r.get("quarters") if isinstance(r.get("quarters"), dict) else {}
-        if qa_row is None and isinstance(qmap.get(away), list):
-            qa_row = qmap.get(away)
-        if qh_row is None and isinstance(qmap.get(home), list):
-            qh_row = qmap.get(home)
+        away_q_raw = _first_present(r, "away_quarters", "away_q") or qmap.get("away")
+        home_q_raw = _first_present(r, "home_quarters", "home_q") or qmap.get("home")
         # Quarter check: a quarter row that does not reproduce the final is not trusted.
         ot = r.get("ot_quarters") if isinstance(r.get("ot_quarters"), dict) else {}
-        qa = _quarters_ok(a, qa_row, ot.get("away") or [])
-        qh = _quarters_ok(h, qh_row, ot.get("home") or [])
+        qa = _quarters_ok(a, away_q_raw, ot.get("away") or [])
+        qh = _quarters_ok(h, home_q_raw, ot.get("home") or [])
         if qa is False or qh is False:
             rejected.append({"game_id": gid, "source": name,
                              "reason": "quarter row does not sum to the final score; source ignored for this game"})
             continue
         out.append({
             "game_id": gid,
-            "away": away, "home": home,
+            "away": _first_present(r, "away", "away_team"),
+            "home": _first_present(r, "home", "home_team"),
             "away_pts": a, "home_pts": h,
-            "source": r.get("source_url") or r.get("source")
-                      or r.get("final_source_url") or "",
+            "source": _first_present(r, "source_url", "final_source_url", "source") or "",
             "origin": name,
-            "away_quarters": qa_row if qa else None,
-            "home_quarters": qh_row if qh else None,
+            "away_quarters": away_q_raw if qa else None,
+            "home_quarters": home_q_raw if qh else None,
             "ot_periods": r.get("ot_periods"),
             "ot_quarters": {"away": ot.get("away"), "home": ot.get("home")} if ot else None,
         })
@@ -210,13 +212,17 @@ def build_union(paths: list[Path] | None = None) -> dict[str, Any]:
                               "readings": sorted(list(teams)), "origins": sorted({c["origin"] for c in cs})})
             continue
         best = next((c for c in cs if c["away_quarters"] and c["home_quarters"]), cs[0])
+        # Quarter rows are taken per side: the first candidate that carries a checked row for
+        # that side. A feed with only the home row must not erase the away row from another feed.
+        away_q = next((c["away_quarters"] for c in cs if c["away_quarters"]), None)
+        home_q = next((c["home_quarters"] for c in cs if c["home_quarters"]), None)
         away, home = (teams.pop() if teams else (best["away"], best["home"]))
         records.append({
             "game_id": gid, "away": away, "home": home,
             "away_pts": best["away_pts"], "home_pts": best["home_pts"],
             "source": best["source"] or next((c["source"] for c in cs if c["source"]), ""),
             "sources": sorted({c["origin"] for c in cs}),
-            "away_quarters": best["away_quarters"], "home_quarters": best["home_quarters"],
+            "away_quarters": away_q, "home_quarters": home_q,
             "ot_periods": best["ot_periods"],
             "ot_quarters": best.get("ot_quarters"),
         })

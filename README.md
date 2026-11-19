@@ -116,7 +116,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (79 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (92 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -306,8 +306,8 @@ python3 -m nba2.v2            # rebuild data/v2/*.json and site/  (24 pages, inc
 python3 -m nba2.v2.refresh    # rolling ingest with freshness/provenance gates (scheduled nightly)
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
-python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 146 tests
-python3 -m unittest discover -s nba2/tests -t .                # 79 tests (counted from the files)
+python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 167 tests
+python3 -m unittest discover -s nba2/tests -t .                # 92 tests (counted from the files)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
