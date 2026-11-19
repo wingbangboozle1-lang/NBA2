@@ -86,8 +86,9 @@ def scheduled() -> dict[str, dict]:
                 continue
             row = out.setdefault(gid, {
                 "game_id": gid, "date": g.get("date"),
-                "away": g.get("away"), "home": g.get("home"),
-                "matchup": g.get("matchup") or f"{g.get('away')} @ {g.get('home')}",
+                "away": g.get("away") or g.get("away_team"),
+                "home": g.get("home") or g.get("home_team"),
+                "matchup": g.get("matchup"),
                 "source_url": g.get("source_url"),
                 "snapshots": [],
             })
@@ -333,7 +334,8 @@ def build(today: str = AS_OF_DATE) -> dict:
             "reason": reason,
             "game_ids": gids,
             "missing_final_ids": missing_final,
-            "list_url": next((g.get("list_url") for g in gs if g.get("list_url")), None)
+            "list_url": next((g.get("list_url") for g in gs
+                              if g.get("list_url") and d in g.get("list_url", "")), None)
                         or f"https://www.nba.com/schedule?date={d}",
         })
 
@@ -348,12 +350,19 @@ def build(today: str = AS_OF_DATE) -> dict:
             schema = "regulation quarters + a separate ot_quarters row (both committed feeds)"
         if not f:
             schema = "no final committed — no period row to hold"
+        # Committed feeds name the clubs their own way (away vs away_team); read every
+        # known name, and when no committed row carries the clubs the matchup cell stays
+        # BLANK — never the string "None @ None" (session arena/af5df7a7-nba2, 2026-11-19).
+        a_name = (g.get("away") or g.get("away_team")
+                  or (f or {}).get("away") or (f or {}).get("away_team"))
+        h_name = (g.get("home") or g.get("home_team")
+                  or (f or {}).get("home") or (f or {}).get("home_team"))
         games.append({
             "game_id": gid, "date": g.get("date") or (f or {}).get("date"),
-            "matchup": g.get("matchup") or f"{g.get('away')} @ {g.get('home')}"
-                       or f"{(f or {}).get('away')} @ {(f or {}).get('home')}",
-            "away": g.get("away") or (f or {}).get("away"),
-            "home": g.get("home") or (f or {}).get("home"),
+            "matchup": g.get("matchup")
+                       or (f"{a_name} @ {h_name}" if a_name and h_name else ""),
+            "away": a_name,
+            "home": h_name,
             "away_pts": (f or {}).get("away_pts"), "home_pts": (f or {}).get("home_pts"),
             "away_quarters": (f or {}).get("away_quarters"),
             "home_quarters": (f or {}).get("home_quarters"),
