@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Injuries — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="on" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Injuries</h1>
+<p class="lede">The official injury report as a document: revision time, retrieval time, and the rows it
+prints. This is the one place where a timestamp matters more than a status, because a status without its
+revision time cannot be compared with anything.</p>
+
+<div class="banner"><h3>Report revision time and retrieval time</h3>
+<b>Revision:</b> 11/19/26 07:00 AM (the stamp the PDF itself carries)<br>
+<b>Retrieved:</b> 2026-11-19T12:20Z<br>
+<b>Document:</b> <a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a><br>
+<b>Index:</b> <a class="src" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com/nba-injury-report-2026-27-season/</a><br>
+<span class="note">The two clocks are different: the report is stamped in US Eastern time, the retrieval
+timestamp is UTC. They are printed separately and never collapsed into one.</span></div>
+
+<div class="scroll"><table><thead><tr><th>Game date</th><th>Matchup</th><th>Team</th><th>Player</th><th>Status</th><th>Reason</th><th>Official PDF</th></tr></thead><tbody><tr><td>11/19/2026</td><td>GSW@MEM</td><td>Golden State Warriors</td><td>—</td><td><span class="chip info">not submitted</span></td><td>NOT YET SUBMITTED</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>LAC@SAS</td><td>LA Clippers</td><td>Beal, Bradley</td><td>Out</td><td>Injury/Illness - Right Knee Injury Management</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>LAC@SAS</td><td>San Antonio Spurs</td><td>Harper, Dylan</td><td>Out</td><td>Injury/Illness - Left Hip Soreness</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>NYK@MIN</td><td>Minnesota Timberwolves</td><td>Edwards, Anthony</td><td>Out</td><td>Injury/Illness - Right Knee Arthroscopy</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>NYK@MIN</td><td>Minnesota Timberwolves</td><td>Beringer, Joan</td><td>Available</td><td>Injury/Illness - Face Mask</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>POR@MIL</td><td>Portland Trail Blazers</td><td>Avdija, Deni</td><td>Questionable</td><td>Injury/Illness - Left Foot Inflammation / Soreness</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>POR@MIL</td><td>Portland Trail Blazers</td><td>Morant, Ja</td><td>Out</td><td>Injury/Illness - Left Hamstring Strain</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>11/19/2026</td><td>POR@MIL</td><td>Milwaukee Bucks</td><td>—</td><td><span class="chip info">not submitted</span></td><td>NOT YET SUBMITTED</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr></tbody></table></div><p class="note">8 rows transcribed from the PDF above. A club with no submission prints 'NOT YET SUBMITTED' and is shown as such rather than as a blank.</p>
+
+<h2>The archive gap</h2>
+<p class="note">The repository's own injury archive holds three releases with a newest stamp of
+<b>11/17/26 11:00 AM</b> (index read 2026-11-17T16:41Z). The official index lists 2026-11-19 releases
+from 12:00 AM ET to at least 07:00 AM ET. So no archived release exists for 11/18 or 11/19, and
+<b>no consecutive-report diff can exist for them</b> — the diff feature is intact but starved
+(<a href="flagged.html">F-923-04</a>).</p>
+
+<h2>Filing rules that the retrieval schedule has to match</h2>
+<p class="note">From the official injury-report page: teams must designate a participation status by
+<b>5 p.m. local time the day before a game</b>, and for the second game of a back-to-back by
+<b>1 p.m. local time on game day</b>; a game-day report is due between <b>11 a.m. and 1 p.m. local</b>
+(8–10 a.m. for tip-offs at 5 p.m. or earlier); and reports are updated on a continual basis through the
+day. Source: <a class="src" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com/nba-injury-report-2026-27-season/</a>. That last clause is why the index — not a fixed daily time — is the thing
+to poll.</p>
+
+<h2>Injury effect on rotation minutes</h2>
+<p class="note">Cannot be produced from what is held. Rotation and minutes redistribution need per-player
+logs for the players involved, and coverage of injury-report players is 12 of 116 (10.3%):
+<a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/player_coverage.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a>. This page
+therefore prints the official status and stops there, rather than estimating an effect.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Overview — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="on" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Overview</h1>
+<p class="lede">One screen: what was read from an official NBA source today, what the repository
+publishes beside it, and where the two disagree. The disagreement is the finding — not an opinion
+about it.</p>
+
+<div class="banner"><h3>Read this first</h3>
+Today's date is 2026-11-19. The repository's published dashboard is built from a 2026-11-15 snapshot
+of the season, its originated lines end on 2026-11-18, and its scheduled refresh job has failed ten
+consecutive times. Seventeen games have gone final since the last published result row. Everything on
+this site that is a number was either read from an official page today or recomputed from a committed
+official snapshot by running the repository's own code; nothing is estimated.</div>
+
+<div class="scroll"><table><thead><tr><th></th><th>Value</th><th>What it means</th><th>Official source</th></tr></thead><tbody><tr><td>Official finals read and landed this session</td><td><b>17</b></td><td>5 on 2026-11-17 + 12 on 2026-11-18, each with its own URL</td><td><a class="src" href="https://www.nba.com/games?date=2026-11-18" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>Official injury releases archived here</td><td><b>1</b></td><td>11/19/26 07:00 AM ET — the repository's own archive is 3 releases deep, newest 11/17</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr><tr><td>Clubs in the 2026-11-19 official standings</td><td><b>30</b></td><td>ΣW 222 = ΣL 222</td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>Published lines whose date has elapsed</td><td><b>34 / 34</b></td><td>2026-11-15 → 11-18; today's 4-game slate has 0 lines</td><td><a class="src" href="https://www.nba.com/games?date=2026-11-19" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>Scheduled refreshes that succeeded (last 10)</td><td><b class="fail">0</b></td><td>10/10 concluded failure; capture succeeded, publish failed</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/actions/workflows/refresh.yml" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/actions/workflows/…</a></td></tr><tr><td>Model out-of-sample log-loss vs a coin flip</td><td><b>0.7058 vs 0.6931</b></td><td>the model is worse than a coin flip on the settled sample — the market rule gives the market all the weight</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/market_prior.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></td></tr><tr><td>Injury-report players with a player log</td><td><b>12 / 116 (10.3%)</b></td><td>prop combos and minutes redistribution have no base</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/player_coverage.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></td></tr><tr><td>Checks in this session's line-by-line audit</td><td><b>82</b></td><td>FAIL 2, MISSING 32, PASS 19, STALE 5, SUPERSEDED 24</td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a> <a class="src" href="verification.html" target="_blank" rel="noopener">this site</a></td></tr></tbody></table></div>
+
+<h2>Where to go</h2>
+<div class="cards">
+ <div class="card"><h4>Evidence</h4><div class="big">82</div>
+  <p>Line-by-line checks against today's official reads. <a href="verification.html">Open the log</a></p></div>
+ <div class="card"><h4>Flagged</h4><div class="big">14</div>
+  <p>Defects and irregularities, each with the official URL to confirm it.
+  <a href="flagged.html">Open findings</a></p></div>
+ <div class="card"><h4>Decisions</h4><div class="big">10</div>
+  <p>Questions that must be answered before a change is made.
+  <a href="questions.html">Open questions</a></p></div>
+ <div class="card"><h4>Suggestions</h4><div class="big">10</div>
+  <p>Ranked proposals with a trade-off, for you to choose.
+  <a href="suggestions.html">Open suggestions</a></p></div>
+</div>
+
+<h2>The two surfaces, as they stand</h2>
+<div class="scroll"><table><thead><tr><th>Surface</th><th>What is published today</th><th>Gate status</th><th>Source</th></tr></thead><tbody><tr><td>Projection (safe to publish)</td><td>34 originated lines, 30-club ratings, two estimators, luck z-scores</td><td><span class="chip pass">PASS — derivable from official data</span> <span class="note"> but from a stale snapshot</span></td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>Bet (gated)</td><td>No pick is staked. Every pick row is WITHHELD, because there is no price (G6) and no sealed ledger for any game on or after 2026-11-18</td><td><span class="chip info">BLOCKED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/lines.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>Official record</td><td>5 result rows dated 2026-11-14; settlement of both sealed ledgers against official finals</td><td><span class="chip warn">STALE — 17 finals missing</span></td><td><a class="src" href="https://www.nba.com/games?date=2026-11-18" target="_blank" rel="noopener">nba.com/games</a></td></tr></tbody></table></div><p class="note">The brief requires the projection and bet surfaces never to mix. In the published site they are separate nav groups on one tree; this site keeps them as separate sections and never prints a stake.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>
