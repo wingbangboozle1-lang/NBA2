@@ -5774,3 +5774,46 @@ keeps only what is unique to it: the `audit/session-934fce54/**` notes carried f
 the 28 historical artifacts carried from stale PRs #70/#72/#80/#98/#112, and this session's
 append-only board records. The rebase below resolves conflicts on that basis; nothing of either
 session's work is lost.
+
+---
+
+## Session `arena/8c7c8828-nba2` — CLAIM (2026-11-19 UTC, current branch `arena/8c7c8828-nba2`)
+
+**Base and initial state:** this session is on the Arena-assigned branch, based at
+`a5380e1e7163578b17700f945a99f2c140e67f2f` (the 2026-11-18 official-capture commit); the
+working tree was clean before this claim. The branch name is fixed by Arena and will not be
+renamed or replaced with a worktree/branch.
+
+**Board and handoff check:** the existing `arena/acf5db08-nba2` refresh-transport claim is
+still listed with its transport tasks pending. Its latest board activity is dated 2026-11-17.
+Open PR #80's head is `3dd1961` (last commit 2026-11-16 00:44Z); PR #112's head is `dd90163`
+(last commit 2026-11-16 19:36Z). The latest scheduled refresh runs on 2026-11-18
+(44328569212 and 44381003145) both concluded failure. Under the board's >60-minute no-commit
+handoff rule, this session takes over only the **refresh/finals transport diagnosis and
+repair** portions of the stale ACF claim and the overlapping stale PR scopes. The existing
+claims and records are retained; this is not a takeover of their unrelated audit, data, site,
+or integration work.
+
+**Claimed file scope (no other paths will be edited):**
+- `COORDINATION.md` — append-only claim and completion record.
+- `nba2/v2/refresh.py` — inspect/repair the official-source fetch and provenance plumbing;
+  do not weaken freshness, inventory, standings-reconciliation, or fail-closed gates.
+- `nba2/pipeline/refresh.py` — inspect/repair official-final feed transport only; do not
+  change settlement semantics or rewrite sealed artefacts.
+- `nba2/v2/test_refresh_pages.py` and `nba2/tests/test_finals_pages.py` — new targeted tests
+  only, if required by measured defects.
+- `analysis/session-8c7c8828-refresh.md` — new verification record, source URLs, observed
+  transport results, changed behavior, and unresolved flags.
+
+**Explicit exclusions:** no edits to `data/**`, `data/raw/ledger/**` or `data/v3/ledger/**`
+(sealed/read-only), generated `site/**`, root HTML, model/strategy code, other workflow files,
+other sessions' analysis files, or any existing task registers. If a fix requires one of these,
+record a change request in this board rather than editing it.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-01 | Board claim and push before implementation | in progress | claim commit pushed to this branch |
+| 8C-02 | Reproduce the latest scheduled refresh failure and map it to a concrete stage | in progress | use committed workflow/run evidence; no cause inferred from the conclusion alone |
+| 8C-03 | Repair refresh/finals transport only where the official response and parser contract are demonstrated | pending | retain all gates; record exact official URLs and acquisition method; no fabricated fixtures |
+| 8C-04 | Add targeted regression coverage and run affected suites | pending | positive + failure-path tests; no gate weakened |
+| 8C-05 | Record findings, remaining source/reachability limits, and disposition | pending | report linked here; unresolved values left blank and flagged |
